@@ -66,8 +66,6 @@ BEGIN_MESSAGE_MAP(RightOption, CDialogEx)
 	ON_NOTIFY(LVN_BEGINDRAG, IDC_LIST1, &RightOption::OnAssetsFileList_DragStart)
 	ON_NOTIFY(NM_DBLCLK, IDC_TREE2, &RightOption::OnChoice_Hirearchy_Item)
 	ON_BN_CLICKED(IDC_BUTTON8, &RightOption::OnDelteObject_Button)
-	ON_BN_CLICKED(IDC_BUTTON5, &RightOption::OnUpdateObject_Button)
-	ON_BN_CLICKED(IDC_BUTTON6, &RightOption::OnResetObject_Button)
 	ON_BN_CLICKED(IDC_BUTTON3, &RightOption::OnOpenAssetsFolder)
 	ON_BN_CLICKED(IDC_BUTTON4, &RightOption::OnDeleteFile_Button)
 	ON_BN_CLICKED(IDC_BUTTON7, &RightOption::OnChange_DataFormat)
@@ -76,8 +74,9 @@ ON_WM_TIMER()
 ON_WM_ACTIVATE()
 ON_BN_CLICKED(IDC_BUTTON9, &RightOption::OnOpenExeFile_Button)
 ON_NOTIFY(TCN_SELCHANGE, IDC_TAB1, &RightOption::OnClickTap)
-ON_BN_CLICKED(IDC_BUTTON11, &RightOption::OnCreateTerrain)
+ON_BN_CLICKED(IDC_BUTTON11, &RightOption::OnSaveScene)
 ON_BN_CLICKED(IDC_BUTTON12, &RightOption::OnCreateParticle)
+ON_BN_CLICKED(IDC_BUTTON10, &RightOption::OnCreateTerrain)
 END_MESSAGE_MAP()
 
 void RightOption::Create_Hirearchy_Item(GameObject* Obj, HTREEITEM TOP)
@@ -97,6 +96,22 @@ void RightOption::Create_Hirearchy_Item(GameObject* Obj, HTREEITEM TOP)
 		GameObject* Child = Obj->GetChildMesh(i);
 		HTREEITEM ChildItem = HirearchyTree.InsertItem(ChangeToCString(Child->Name), TOP);
 		Create_Hirearchy_Item(Child, ChildItem);
+	}
+}
+
+void RightOption::Delete_Hirearchy_Item(HTREEITEM TOP)
+{
+	if (HirearchyTree.ItemHasChildren(TOP))
+	{
+		HTREEITEM hNextItem;
+		HTREEITEM hChildItem = HirearchyTree.GetChildItem(TOP);
+
+		while (hChildItem != NULL)
+		{
+			hNextItem = HirearchyTree.GetNextItem(hChildItem, TVGN_NEXT);
+			HirearchyTree.DeleteItem(hChildItem);
+			hChildItem = hNextItem;
+		}
 	}
 }
 
@@ -189,7 +204,7 @@ void RightOption::ChickHirearchyDarg(CPoint point)
 		case SCENE:
 		{
 			Demo::LoadScene(Name);
-			HirearchyTree.DeleteAllItems();
+			//HirearchyTree.DeleteAllItems();
 			std::map<std::string, GameObject*>::iterator Start_it = Demo::ObjectList.begin();
 			std::map<std::string, GameObject*>::iterator End_it = Demo::ObjectList.end();
 			for (Start_it; Start_it != End_it; Start_it++)
@@ -209,8 +224,10 @@ void RightOption::ChickHirearchyDarg(CPoint point)
 GameObject* RightOption::FindGameObjectParent(HTREEITEM mItem)
 {
 	//클릭한 아이템이 부모가 있는 아이템이라면 Demo씬에서 부모안에 오브젝트를 찾아 반환
-	HTREEITEM Parent = HirearchyTree.GetParentItem(mItem);
-	CString Name;
+	HTREEITEM Parent	= mItem;
+	CString	 MeshName	= HirearchyTree.GetItemText(mItem);
+	CString ParentName;
+	GameObject* Object = nullptr;
 	while (true)
 	{
 		if (Parent == NULL)
@@ -219,15 +236,22 @@ GameObject* RightOption::FindGameObjectParent(HTREEITEM mItem)
 		}
 		else
 		{
+			ParentName = HirearchyTree.GetItemText(Parent);
 			Parent = HirearchyTree.GetParentItem(Parent);
-			Name = AssetsTree.GetItemText(Parent);
-			int num = 0;
 		}
 	}
 
+	if (ParentName == "")
+	{
+		Object = Demo::FindMesh(ChangeToString(MeshName));
+	}
+	else
+	{
+		Object = Demo::FindMesh(ChangeToString(MeshName), ChangeToString(ParentName));
+	}
 
 
-	return nullptr;
+	return Object;
 }
 
 void RightOption::AssetsInitialize()
@@ -250,7 +274,7 @@ void RightOption::AssetsInitialize()
 
 	CBitmap bit02;
 	bit02.LoadBitmap(IDB_BITMAP3);
-	ImgList_Big.Create(50, 50, ILC_COLOR8 | ILC_MASK, 5, 1);
+	ImgList_Big.Create(50, 50, ILC_COLOR8 | ILC_MASK, 6, 1);
 	ImgList_Big.Add(&bit02, RGB(255, 0, 255));
 
 	//에셋 트리의 초기값 구현
@@ -461,16 +485,16 @@ void RightOption::OnChoice_Hirearchy_Item(NMHDR* pNMHDR, LRESULT* pResult)
 	CString Name = HirearchyTree.GetItemText(ChoiceItem);
 	std::string MeshName = ChangeToString(Name);
 
-	FindGameObjectParent(ChoiceItem);
-
 	//에디터의 매쉬 이름을 출력
 	ChoiceHirearchyName = MeshName.substr(0, MeshName.rfind('.'));
 	Name = ChoiceHirearchyName.c_str();
 	HirearchyEdit.SetWindowTextW(Name);
 
-
 	Component_TapList.DeleteAllItems();
-	GameObject* ChoiceObject = Demo::FindMesh(ChoiceHirearchyName);
+	GameObject* ChoiceObject = FindGameObjectParent(ChoiceItem);
+	Delete_Hirearchy_Item(ChoiceItem);
+	Create_Hirearchy_Item(ChoiceObject, ChoiceItem);
+
 	Transform*			 TR	= ChoiceObject->GetTransform();
 	AnimationController* AC = ChoiceObject->GetComponent<AnimationController>();
 	MeshFilter*			 MF = ChoiceObject->GetComponent<MeshFilter>();
@@ -491,19 +515,7 @@ void RightOption::OnChoice_Hirearchy_Item(NMHDR* pNMHDR, LRESULT* pResult)
 		mAnimation->SetGameObject(AC);
 		FrontCount++;
 
-		int BoneCount = ChoiceObject->GetChildBoneCount();
-		int MeshCount = ChoiceObject->GetChildMeshCount();
-
-		for (int i = 0; i < BoneCount; i++)
-		{
-			GameObject* Object = ChoiceObject->GetChildBone(i);
-			HirearchyTree.InsertItem(ChangeToCString(Object->Name), ChoiceItem);
-		}
-		for (int i = 0; i < MeshCount; i++)
-		{
-			GameObject* Object = ChoiceObject->GetChildMesh(i);
-			HirearchyTree.InsertItem(ChangeToCString(Object->Name), ChoiceItem);
-		}
+		//Create_Hirearchy_Item(ChoiceObject, ChoiceItem);
 	}
 
 	if (MF != nullptr)
@@ -544,46 +556,6 @@ void RightOption::OnDelteObject_Button()
 	else
 	{
 		AfxMessageBox(_T("Error : 삭제 실패 \n 제대로 선택하였는지 확인"));
-	}
-}
-
-void RightOption::OnUpdateObject_Button()
-{
-	RenderMeshData Data;
-	int Count = Component_TapList.GetItemCount();
-	for (int i = 0; i < Count; i++)
-	{
-		TCHAR buffer[256] = { 0 };
-		TC_ITEM data;
-		data.mask = TCIF_TEXT;
-		data.pszText = buffer;
-		data.cchTextMax = 256;
-		Component_TapList.GetItem(i, &data);
-		CString ComponentName;
-		ComponentName = buffer;
-
-		if (ComponentName == "Transform")
-		{
-			Data.mTransform = mTransform->GetObjectData();
-		}
-		else if (ComponentName == "Animation")
-		{
-			//Data.mAnimation = mAnimation->GetObjectData();
-		}
-		else if (ComponentName == "MeshFilter")
-		{
-			//Data.mAnimation = mAnimation->GetObjectData();
-		}
-	}
-}
-
-void RightOption::OnResetObject_Button()
-{
-	switch (Component_TapList.GetCurSel())
-	{
-	case 0:
-		mTransform->Reset();
-		break;
 	}
 }
 
@@ -749,7 +721,7 @@ BOOL RightOption::PreTranslateMessage(MSG* pMsg)
 	return CDialog::PreTranslateMessage(pMsg);
 }
 
-void RightOption::OnCreateTerrain()
+void RightOption::OnSaveScene()
 {	
 	mScene->DoModal();
 	std::string SaveName = ChangeToString(mScene->Name);
@@ -763,4 +735,10 @@ void RightOption::OnCreateParticle()
 	GameObject* Obj = Demo::CreateParticle();
 	HTREEITEM Top = HirearchyTree.InsertItem(ChangeToCString(Obj->Name));
 	Create_Hirearchy_Item(Obj, Top);
+}
+
+
+void RightOption::OnCreateTerrain()
+{
+	Demo::CreateTerrain("");
 }

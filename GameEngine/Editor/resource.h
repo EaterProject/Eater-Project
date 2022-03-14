@@ -22,6 +22,7 @@
 #define IDD_SCENE_SAVE                  341
 #define IDC_TREE1                       1000
 #define IDC_TREE2                       1001
+#define IDC_TREE3                       1002
 #define IDC_EDIT2                       1003
 #define IDC_BUTTON1                     1004
 #define IDC_BUTTON2                     1005

@@ -110,7 +110,6 @@ void Demo::SaveScene(std::string SaveFilePath,std::string SaveFileName)
 
 void Demo::LoadScene(std::string LoadScenePath)
 {
-	DestroyAll();
 	std::string Path = "../Assets/Scene/" + LoadScenePath;
 	SaveManager->Load(Path);
 }
@@ -118,6 +117,13 @@ void Demo::LoadScene(std::string LoadScenePath)
 GameObject* Demo::FindMesh(std::string MeshName)
 {
 	return ObjectList[MeshName];
+}
+
+GameObject* Demo::FindMesh(std::string MeshName, std::string ParentName)
+{
+	GameObject* Parent =  FindMesh(ParentName);
+	GameObject* Child	= Parent->GetChildObject(MeshName);
+	return Child;
 }
 
 std::string Demo::FindMeshName(std::string MeshName)
