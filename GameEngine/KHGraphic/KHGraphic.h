@@ -16,7 +16,7 @@ public:
 	void Release() override;
 
 public:
-	void RenderSetting(UINT& renderOption) override;
+	void RenderSetting(RenderOption* renderOption) override;
 	void SetGlobalData(GlobalData* globalData) override;
 	void SetEnvironmentMap(bool enable) override;
 

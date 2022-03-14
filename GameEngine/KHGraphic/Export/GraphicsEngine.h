@@ -15,6 +15,7 @@ class IndexBuffer;
 class VertexBuffer;
 class TextureBuffer;
 class LoadMeshData;
+class RenderOption;
 
 namespace ParserData 
 {
@@ -38,7 +39,7 @@ public:
 	virtual GRAPHIC_DLL void Release() abstract;
 
 	/// Graphic Data Setting Function..
-	virtual GRAPHIC_DLL void RenderSetting(UINT& renderOption) abstract;
+	virtual GRAPHIC_DLL void RenderSetting(RenderOption* renderOption) abstract;
 	virtual GRAPHIC_DLL void SetGlobalData(GlobalData* globalData) abstract;
 	virtual GRAPHIC_DLL void SetEnvironmentMap(bool enable) abstract;
 

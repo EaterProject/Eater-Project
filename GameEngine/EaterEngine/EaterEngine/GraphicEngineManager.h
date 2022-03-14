@@ -17,6 +17,7 @@ class LoadMeshData;
 class IndexBuffer;
 class VertexBuffer;
 class TextureBuffer;
+class RenderOption;
 
 namespace ParserData
 {
@@ -30,14 +31,14 @@ public:
 	~GraphicEngineManager();
 public:
 	//선택한 그래픽엔진을 초기화
-	void Initialize(HWND Hwnd, UINT& renderOption, int WinSizeWidth, int WinSizeHeight,ObjectManager* GM);
+	void Initialize(HWND Hwnd, int WinSizeWidth, int WinSizeHeight,ObjectManager* GM);
 
 	//선택한 그래픽 엔진으로 Resize
 	void OnReSize(int Change_Width, int Change_Height);
 	void Release();
 
 	//선택한 그래픽엔진 셋팅
-	void RenderSetting(UINT& renderOption);
+	void RenderSetting(RenderOption* renderOption);
 	void SetEnvironment(bool enable);
 
 	//선택한 그래픽엔진 랜더링

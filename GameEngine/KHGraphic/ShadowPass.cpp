@@ -106,7 +106,7 @@ void ShadowPass::Release()
 
 }
 
-void ShadowPass::SetOption(UINT renderOption)
+void ShadowPass::SetOption(RenderOption* renderOption)
 {
 	g_Context->ClearDepthStencilView(m_ShadowDSV, D3D11_CLEAR_DEPTH, 1.0f, 0);
 }

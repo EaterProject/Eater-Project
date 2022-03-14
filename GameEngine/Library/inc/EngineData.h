@@ -13,6 +13,25 @@ using namespace ParserData;
 
 class Component;
 
+// Render Option
+class RenderOption
+{
+public:
+	UINT DebugOption;
+	UINT RenderingOption;
+	UINT PostProcessOption;
+
+public:
+	bool operator == (const RenderOption& option)
+	{
+		if (DebugOption == option.DebugOption && RenderingOption == option.RenderingOption && PostProcessOption == option.PostProcessOption)
+			return true;
+		else
+			return false;
+	}
+};
+
+// Material Data
 class MaterialData
 {
 public:
@@ -29,12 +48,14 @@ public:
 	Vector4 Color_Add;			// Add Color
 };
 
+// Terrain Data
 class TerrainData
 {
 public:
 	std::vector<MaterialData*> Material_List;		// Material List
 };
 
+// Particle Data
 class OneParticle
 {
 public:
@@ -56,6 +77,7 @@ public:
 	std::vector<OneParticle*> m_Particles;
 };
 
+// RayCast Data
 class RayCastData
 {
 public:
@@ -64,17 +86,12 @@ public:
 	Vector4 RayColor = { 0,1,0,1 };
 };
 
+// Collider Data
 class ColliderData
 {
 public:
 	Matrix ColliderWorld = XMMatrixIdentity();
 	Vector4 ColliderColor = { 1,1,1,1 };
-};
-
-class RenderOption
-{
-public:
-	bool DebugMode;
 };
 
 /// <summary>

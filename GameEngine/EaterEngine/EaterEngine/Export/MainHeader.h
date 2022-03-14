@@ -75,6 +75,7 @@ extern "C" EATER_ENGINEDLL float GetDeltaTime();
 extern "C" EATER_ENGINEDLL bool RayCast(PhysRayCast* ray);
 
 /// µð¹ö±×
+EATER_ENGINEDLL void EditorSetting();
 EATER_ENGINEDLL void DebugDrawLine(Vector3 start, Vector3 end, Vector4 color);
 EATER_ENGINEDLL void DebugDrawLine(Vector3 start, Vector3 dir, float distance, Vector4 color);
 EATER_ENGINEDLL void DebugPrint(std::string str);

@@ -61,9 +61,6 @@ public:
 	//삭제하면 안되는 오브젝트들을 다시 세팅해준다
 	void DontDestroyObjectSetting();
 
-	std::queue<MeshData*>* GetRenderQueue();
-	std::queue<MeshData*>* GetShadowQueue();
-
 	GameObject* FindGameObjectTag(std::string& TagName);
 	GameObject* FindGameObjectString(std::string& ObjectName);
 
@@ -85,11 +82,6 @@ private:
 	std::vector<GameObject*> DontDestroyObjectList;
 	///랜더링까지 모두끝나고 마지막에 삭제될 오브젝트리스트
 	std::queue<GameObject*> DeleteList;
-	
-	///그래픽엔진쪽으로 던저줄 데이터들
-	std::queue<MeshData*> RenderData;
-	std::queue<MeshData*> ShadowData;
-	std::queue<MeshData*> UIData;
 
 	/// 시작단계 한번만 실행됨
 	static Delegate_Map AwakeFunction;		//시작단계 컨퍼넌트 가져오는 함수

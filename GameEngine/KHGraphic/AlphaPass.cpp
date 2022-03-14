@@ -73,7 +73,7 @@ void AlphaPass::Release()
 
 }
 
-void AlphaPass::SetOption(UINT renderOption)
+void AlphaPass::SetOption(RenderOption* renderOption)
 {
 
 }
