@@ -33,6 +33,12 @@ BEGIN_MESSAGE_MAP(CTAP_Transform, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON6, &CTAP_Transform::OnUpRot_Button)
 	ON_BN_CLICKED(IDC_BUTTON8, &CTAP_Transform::OnDownRot_Button)
 	ON_BN_CLICKED(IDC_BUTTON16, &CTAP_Transform::OnResetRot_Button)
+	ON_BN_CLICKED(IDC_BUTTON17, &CTAP_Transform::OnUpPosition_Y_Button)
+	ON_BN_CLICKED(IDC_BUTTON18, &CTAP_Transform::OnDownPosition_Y_Button)
+	ON_BN_CLICKED(IDC_BUTTON19, &CTAP_Transform::OnUpPosition_Z_Button)
+	ON_BN_CLICKED(IDC_BUTTON20, &CTAP_Transform::OnDownPosition_Z_Button)
+	ON_BN_CLICKED(IDC_BUTTON21, &CTAP_Transform::OnUpPosition_X_Button)
+	ON_BN_CLICKED(IDC_BUTTON22, &CTAP_Transform::OnDownPosition_X_Button)
 END_MESSAGE_MAP()
 
 void CTAP_Transform::DoDataExchange(CDataExchange* pDX)
@@ -208,4 +214,46 @@ void CTAP_Transform::OnResetRot_Button()
 	Rot_X.SetWindowTextW(ChangeToCString(ObjectTransform->Rotation.x));
 	Rot_Y.SetWindowTextW(ChangeToCString(ObjectTransform->Rotation.y));
 	Rot_Z.SetWindowTextW(ChangeToCString(ObjectTransform->Rotation.z));
+}
+
+
+void CTAP_Transform::OnUpPosition_Y_Button()
+{
+	ObjectTransform->Position.y += 1;
+	Pos_Y.SetWindowTextW(ChangeToCString(ObjectTransform->Position.y));
+}
+
+
+void CTAP_Transform::OnDownPosition_Y_Button()
+{
+	ObjectTransform->Position.y -= 1;
+	Pos_Y.SetWindowTextW(ChangeToCString(ObjectTransform->Position.y));
+}
+
+
+void CTAP_Transform::OnUpPosition_Z_Button()
+{
+	ObjectTransform->Position.z += 1;
+	Pos_Z.SetWindowTextW(ChangeToCString(ObjectTransform->Position.z));
+}
+
+
+void CTAP_Transform::OnDownPosition_Z_Button()
+{
+	ObjectTransform->Position.z -= 1;
+	Pos_Z.SetWindowTextW(ChangeToCString(ObjectTransform->Position.z));
+}
+
+
+void CTAP_Transform::OnUpPosition_X_Button()
+{
+	ObjectTransform->Position.x += 1;
+	Pos_X.SetWindowTextW(ChangeToCString(ObjectTransform->Position.x));
+}
+
+
+void CTAP_Transform::OnDownPosition_X_Button()
+{
+	ObjectTransform->Position.x -= 1;
+	Pos_X.SetWindowTextW(ChangeToCString(ObjectTransform->Position.x));
 }

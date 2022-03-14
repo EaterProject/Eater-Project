@@ -41,4 +41,10 @@ public:
 	afx_msg void OnUpRot_Button();
 	afx_msg void OnDownRot_Button();
 	afx_msg void OnResetRot_Button();
+	afx_msg void OnUpPosition_Y_Button();
+	afx_msg void OnDownPosition_Y_Button();
+	afx_msg void OnUpPosition_Z_Button();
+	afx_msg void OnDownPosition_Z_Button();
+	afx_msg void OnUpPosition_X_Button();
+	afx_msg void OnDownPosition_X_Button();
 };
