@@ -274,6 +274,7 @@ void DebugPass::GlobalRender()
 	std::vector<SpotLightData*>* spotList = &g_GlobalData->mSpotLights;
 	std::queue<RayCastData>* rayList = &g_GlobalData->mRayCastDebugData;
 
+	// Global Axis..
 	object.gWorldViewProj = Matrix::CreateScale(1000.0f) * Matrix::CreateTranslation(0.0f, 0.1f, 0.0f) * viewproj;
 
 	m_DebugVS->ConstantBufferCopy(&object);
@@ -282,6 +283,7 @@ void DebugPass::GlobalRender()
 	BufferUpdate(DEBUG_TYPE::DEBUG_AXIS);
 	g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
 
+	// Global Grid..
 	object.gWorldViewProj = viewproj;
 
 	m_DebugVS->ConstantBufferCopy(&object);
@@ -290,6 +292,7 @@ void DebugPass::GlobalRender()
 	BufferUpdate(DEBUG_TYPE::DEBUG_GRID);
 	g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
 
+	// Global Data..
 	g_Context->RSSetState(m_NoCullRS);
 
 	for (DirectionalLightData* light : *directionList)
