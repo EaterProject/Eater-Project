@@ -240,7 +240,7 @@ void MeshFilter::SetTexture(std::string texName, UINT texType)
 	if (*nowTexture != changeTexture)
 	{
 		// 최초 설정시가 아닌경우 Renderer 측 동기화를 위해 변경된 Mesh Data 전달..
-		if (DiffuseTextureName != "Dump")
+		if (*nowTexture != nullptr)
 		{
 			GraphicEngine::Get()->AddChangeMeshData(data);
 		}
@@ -365,7 +365,7 @@ void MeshFilter::SetMaterialData(LoadMeshData* LoadMesh, MeshData* mMesh)
 	mMesh->Material_Data->Emissive = LoadManager::GetTexture(LoadMesh->EmissiveName);
 	mMesh->Material_Data->ORM = LoadManager::GetTexture(LoadMesh->ORMName);
 
-	if (mMesh->Material_Data->Albedo == nullptr)
+	if (mMesh->Material_Data->Albedo == nullptr && isLoad_Texture == false)
 	{
 		isLoad_Texture = true;
 		DiffuseTextureName = "Dump";
