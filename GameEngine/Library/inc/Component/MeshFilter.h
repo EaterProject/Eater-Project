@@ -45,6 +45,10 @@ public:
 	EATER_ENGINEDLL void SetORMTextureName(std::string mTextureName);
 	EATER_ENGINEDLL void SetAnimationName(std::string mTextureName);
 
+	EATER_ENGINEDLL void SetEmissiveFactor(float emissiveFactor);
+	EATER_ENGINEDLL void SetRoughnessFactor(float roughnessFactor);
+	EATER_ENGINEDLL void SetMetallicFactor(float metallicFactor);
+
 	EATER_ENGINEDLL std::string GetMeshName();
 	EATER_ENGINEDLL std::string GetDiffuseTextureName();
 	EATER_ENGINEDLL std::string GetNormlaTextureName();

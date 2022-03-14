@@ -100,8 +100,8 @@ void EnvironmentPass::RenderUpdate()
 	g_Context->OMSetDepthStencilState(m_CubeMapDSS, 0);
 	g_Context->OMSetRenderTargets(1, &m_OutPut_RTV, m_DefaltDSV);
 
-	Matrix proj = g_GlobalData->mCamProj;
-	Matrix view = g_GlobalData->mCamView;
+	Matrix proj = g_GlobalData->CamProj;
+	Matrix view = g_GlobalData->CamView;
 	view._41 = 0; view._42 = 0; view._43 = 0;
 
 	CB_CubeObject cubeBuf;

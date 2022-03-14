@@ -11,6 +11,8 @@ class MaterialRenderData
 public:
 	UINT m_MaterialIndex;
 
+	Matrix* m_Tex;
+
 	ID3D11ShaderResourceView* m_Albedo;
 	ID3D11ShaderResourceView* m_Normal;
 	ID3D11ShaderResourceView* m_Emissive;
@@ -55,7 +57,6 @@ public:
 	UINT m_MeshIndex;
 
 	Matrix* m_World;
-	Matrix* m_Tex;
 
 	std::vector<Matrix>* m_BoneOffsetTM;
 

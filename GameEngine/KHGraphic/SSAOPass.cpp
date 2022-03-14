@@ -160,7 +160,7 @@ void SSAOPass::RenderUpdate()
 	g_Context->RSSetViewports(1, m_HalfScreenVP);
 
 	CB_SsaoObject objectBuf;
-	objectBuf.gViewToTexSpace = g_GlobalData->mCamProj * g_GlobalData->mTexSpace;
+	objectBuf.gViewToTexSpace = g_GlobalData->CamProj * g_GlobalData->TexSpace;
 
 	m_SsaoPS->ConstantBufferCopy(&objectBuf);
 

@@ -91,10 +91,10 @@ void GameEngine::Initialize(HWND Hwnd, bool mConsoleDebug)
 
 	//매니저들 초기화
 	BaseManager::Initialize();
-	mGraphicManager->Initialize(Hwnd, WinSizeWidth, WinSizeHeight, mObjectManager);
+	mGraphicManager->Initialize(Hwnd, WinSizeWidth, WinSizeHeight);
 	mKeyManager->Initialize(mHwnd);
 	mDebugManager->Initialize(mKeyManager,mConsoleDebug);
-	mObjectManager->Initialize(mGraphicManager);
+	mObjectManager->Initialize();
 	mSceneManager->Initialize(mObjectManager);
 	mLoadManager->Initialize(mGraphicManager, &g_CS);
 	mTimeManager->Initialize();
@@ -136,6 +136,7 @@ void GameEngine::Update()
 	mDebugManager->Update();
 	mObjectManager->PlayUpdate();
 	mPhysManager->Update(mTimeManager->DeltaTime());
+
 	// 모든 업데이트가 일어난 후 데이터 세팅..
 	BaseManager::UpdateGlobalData(mTimeManager->DeltaTime());
 

@@ -28,7 +28,7 @@ void Terrain::Awake()
 	mMeshFilter = gameobject->GetComponent<MeshFilter>();
 
 	// Tex Transform ¼³Á¤..
-	gameobject->OneMeshData->mTexTM = &m_Tex;
+	gameobject->OneMeshData->Material_Data->TexTM = &m_Tex;
 }
 
 void Terrain::SetUp()

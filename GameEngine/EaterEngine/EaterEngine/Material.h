@@ -5,7 +5,6 @@
 
 class MeshData;
 class MaterialData;
-class LoadMeshData;
 class TextureBuffer;
 class MaterialManager;
 
@@ -21,8 +20,6 @@ public:
 	void SetMeshData(MeshData* meshData);
 	void SetMaterialIndex(UINT index);
 
-	void PushMaterialData(LoadMeshData* mesh);
-
 	void SetTexTransform(DirectX::SimpleMath::Vector3 scale);
 	void SetTexTransform(float x, float y, float z);
 
@@ -31,6 +28,10 @@ public:
 
 	void SetBaseColor(DirectX::SimpleMath::Vector4 color);
 	void SetStartColor(DirectX::SimpleMath::Vector4 color);
+
+	void SetEmissiveFactor(float emissiveFactor);
+	void SetRoughnessFactor(float roughnessFactor);
+	void SetMetallicFactor(float metallicFactor);
 
 public:
 	void Release();

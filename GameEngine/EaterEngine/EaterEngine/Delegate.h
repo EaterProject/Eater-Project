@@ -18,7 +18,7 @@ public:
 	void Pop(Component* Key);				//컨퍼넌트 함수포인터 삭제
 	void Clear();							//모두삭제
 	void Play();							////컨퍼넌트 함수포인터 매 프레임 실행
-	void PlayOnce(bool& isPlay);				////컨퍼넌트 함수포인터 호출시 한번!!! 실행
+	void PlayOnce();						////컨퍼넌트 함수포인터 호출시 한번!!! 실행
 private:
 	std::vector<ComponentFunctionData> FunctionList00;
 	std::vector<ComponentFunctionData> FunctionList01;

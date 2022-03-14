@@ -55,19 +55,13 @@ void Light::SetColor(float r, float g, float b, float a)
 	switch (m_LightType)
 	{
 	case DIRECTION_LIGHT:
-		m_DirectionLight->Ambient = { r, g, b, a };
 		m_DirectionLight->Diffuse = { r, g, b, a };
-		m_DirectionLight->Specular = { r, g, b, a };
 		break;
 	case POINT_LIGHT:
-		m_PointLight->Ambient = { r, g, b, a };
 		m_PointLight->Diffuse = { r, g, b, a };
-		m_PointLight->Specular = { r, g, b, a };
 		break;
 	case SPOT_LIGHT:
-		m_SpotLight->Ambient = { r, g, b, a };
 		m_SpotLight->Diffuse = { r, g, b, a };
-		m_SpotLight->Specular = { r, g, b, a };
 		break;
 	default:
 		break;

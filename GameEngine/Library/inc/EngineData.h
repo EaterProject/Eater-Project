@@ -39,6 +39,8 @@ public:
 
 	MaterialOption* Material_Option = nullptr;	// Material Data
 
+	Matrix* TexTM = nullptr;				//매쉬의 텍스쳐 행렬
+
 	TextureBuffer* Albedo = nullptr;		// DiffuseMap Texture
 	TextureBuffer* Normal = nullptr;		// NormalMap Texture
 	TextureBuffer* Emissive = nullptr;		// Emissive Texture
@@ -100,25 +102,25 @@ public:
 class GlobalData
 {
 public:
-	float mTime;		// Delta Time
+	float Time;		// Delta Time
 
 	//카메라 정보들
-	Matrix mCamInvView;	// Camera Inverse XY View Matrix
-	Matrix mCamView;	// Camera View Matrix
-	Matrix mCamProj;	// Camera Proj Matrix
-	Vector3 mCamPos;	// Camera Pos
+	Matrix CamInvView;	// Camera Inverse XY View Matrix
+	Matrix CamView;	// Camera View Matrix
+	Matrix CamProj;	// Camera Proj Matrix
+	Vector3 CamPos;	// Camera Pos
 
-	Matrix mCamVP;		// Camera Proj * Proj Matrix
+	Matrix CamVP;		// Camera Proj * Proj Matrix
 
-	Matrix mTexSpace;	// Texture Space Matrix
+	Matrix TexSpace;	// Texture Space Matrix
 
-	std::vector<DirectionalLightData*>	mDirectionLights;
-	std::vector<PointLightData*>		mPointLights;
-	std::vector<SpotLightData*>			mSpotLights;
-	std::vector<MaterialOption*>		mMaterials;
+	std::vector<DirectionalLightData*>	DirectionLights;
+	std::vector<PointLightData*>		PointLights;
+	std::vector<SpotLightData*>			SpotLights;
+	std::vector<MaterialOption*>		Materials;
 
 	// Debug Data
-	std::queue<RayCastData> mRayCastDebugData;
+	std::queue<RayCastData> RayCastDebugData;
 };
 
 /// <summary>
@@ -147,9 +149,8 @@ public:
 
 	std::vector<Matrix> BoneOffsetTM;				//본 오프셋 TM
 
-	Matrix* mWorld = nullptr;				//매쉬의 월드 행렬
-	Matrix* mLocal = nullptr;				//매쉬의 로컬 행렬
-	Matrix* mTexTM = nullptr;				//매쉬의 텍스쳐 행렬
+	Matrix* World = nullptr;				//매쉬의 월드 행렬
+	Matrix* Local = nullptr;				//매쉬의 로컬 행렬
 
 	// 추가 데이터
 	MaterialData*	Material_Data	= nullptr;		// Material Data

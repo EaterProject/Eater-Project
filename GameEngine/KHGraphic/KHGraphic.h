@@ -22,8 +22,8 @@ public:
 
 public:
 	void AddMeshData(MeshData* meshData) override;
+	void AddChangeMeshData(MeshData* meshData) override;
 	void DeleteMeshData(MeshData* meshData) override;
-	void ConvertMeshData() override;
 	void Render() override;
 
 public:

@@ -35,13 +35,15 @@ public:
 	void SetEnvironmentMap(bool enable) override;
 
 	void AddMeshData(MeshData* meshData) override;
+	void AddChangeMeshData(MeshData* meshData) override;
 	void DeleteMeshData(MeshData* mesh) override;
-	void ConvertMeshData() override;
 
 	void Render() override;
 
 private:
 	void RenderSetting();
+	void ConvertMeshData();
+	void ChangeMeshData();
 
 	void ShadowRender();
 	void DeferredRender();
@@ -58,6 +60,11 @@ private:
 	void ConvertMeshRenderData(MeshData* meshData, RenderData* renderData);
 	void ConvertParticleRenderData(MeshData* meshData, RenderData* renderData);
 	void ConvertUnRenderData(MeshData* meshData, RenderData* renderData);
+
+	void ChangeMeshRenderData(MeshData* meshData);
+	void ChangeParticleRenderData(MeshData* meshData);
+	void ChangeUnRenderData(MeshData* meshData);
+
 	void DeleteMeshRenderData(MeshData* meshData);
 	void DeleteParticleRenderData(MeshData* meshData);
 	void DeleteUnRenderData(MeshData* meshData);
@@ -67,6 +74,7 @@ private:
 
 private:
 	std::queue<MeshData*> m_UnConvertMeshList;
+	std::queue<MeshData*> m_ChangeMeshList;
 
 	std::vector<MeshIndexData> m_MeshIndexList;
 

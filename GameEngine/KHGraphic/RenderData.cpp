@@ -28,8 +28,7 @@ void RenderData::ConvertData(MeshData* originMesh)
 	m_Alpha = originMesh->Alpha;
 
 	// Mesh Data 설정..
-	m_World = originMesh->mWorld;
-	m_Tex	= originMesh->mTexTM;
+	m_World = originMesh->World;
 
 	m_ColliderData = originMesh->Collider_Data;
 
@@ -109,7 +108,10 @@ void RenderData::ConvertMaterial(MaterialData* originMat)
 {
 	if (originMat == nullptr) return;
 
-	m_MeshData->m_Material = new MaterialRenderData();
+	if (m_MeshData->m_Material == nullptr)
+	{
+		m_MeshData->m_Material = new MaterialRenderData();
+	}
 
 	ConvertMaterial(originMat, m_MeshData->m_Material);
 }
@@ -118,6 +120,7 @@ void RenderData::ConvertMaterial(MaterialData* originMat, MaterialRenderData* co
 {
 	// 해당 Material Data 변환..
 	convertMat->m_MaterialIndex = originMat->Material_Index;
+	convertMat->m_Tex			= originMat->TexTM;
 
 	if (originMat->Albedo) convertMat->m_Albedo		= (ID3D11ShaderResourceView*)originMat->Albedo->pTextureBuf;
 	if (originMat->Normal) convertMat->m_Normal		= (ID3D11ShaderResourceView*)originMat->Normal->pTextureBuf;
