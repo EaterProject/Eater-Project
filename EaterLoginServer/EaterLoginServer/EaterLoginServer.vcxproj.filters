@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Main">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="LoginManager">
+      <UniqueIdentifier>{855a039a-b7f8-4d14-bdfa-80dff63d8799}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PacketData">
+      <UniqueIdentifier>{4d179e76-e2fb-404c-bf37-596108493aff}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="LoginManager.cpp">
+      <Filter>LoginManager</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="LoginManager.h">
+      <Filter>LoginManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ImportLibrary\Inc\LoginLauncher_generated.h">
+      <Filter>PacketData</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ImportLibrary\Inc\LauncherLoginPacketDefine.h">
+      <Filter>PacketData</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ImportLibrary\Inc\PortIPDefine.h">
+      <Filter>PacketData</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

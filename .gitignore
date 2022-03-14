@@ -1,3 +1,13 @@
+# visual studio user file
+x64/
+*.user
+*.vs
+*.suo
+*.csproj
+*.DotSettings
+*.recipe
+*.cso
+
 # Prerequisites
 *.d
 
@@ -14,7 +24,6 @@
 # Compiled Dynamic libraries
 *.so
 *.dylib
-*.dll
 
 # Fortran module files
 *.mod
@@ -24,8 +33,6 @@
 *.lai
 *.la
 *.a
-*.lib
-
 # Executables
 *.exe
 *.out

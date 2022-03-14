@@ -1,0 +1,12 @@
+#pragma once
+#include "HashBase.h"
+
+#define RENDER_TARGET_VIEW(ClassName) CREATE_HASH_CLASS(ClassName, RESOURCE_TYPE::RTV)
+
+///////////////////////////////////////////////////////////////////////////////////////////
+// Global Render Target View
+///////////////////////////////////////////////////////////////////////////////////////////
+
+RENDER_TARGET_VIEW(RTV_Irradiance)
+RENDER_TARGET_VIEW(RTV_Prefilter)
+RENDER_TARGET_VIEW(RTV_BRDF_LUT)

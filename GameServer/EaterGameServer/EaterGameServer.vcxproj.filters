@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Main">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="GameManager">
+      <UniqueIdentifier>{2c23b364-60be-4ee0-a46c-988edfaa3397}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GS-LobbyPacket">
+      <UniqueIdentifier>{309d6edd-4f7a-479c-9d45-a1f3dd6b68e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameProtocol">
+      <UniqueIdentifier>{3a719d39-ba84-4c12-89f4-dd7c26a83331}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameStruct">
+      <UniqueIdentifier>{148bdbfc-65c9-4eb5-8522-78fbaabfebe3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PhysXManager">
+      <UniqueIdentifier>{2e658065-9238-4418-a2b4-a458559f35b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameStruct\Player">
+      <UniqueIdentifier>{e1853e2b-5b62-487c-9863-43178ecdbe16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameStruct\Rigidbody">
+      <UniqueIdentifier>{ea82a908-520b-487a-8d2c-0ba228469f85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameStruct\Enemy">
+      <UniqueIdentifier>{30338f71-c740-45fa-ad45-c880d38cc6c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameStruct\Object">
+      <UniqueIdentifier>{2dffcbbd-74b7-4efb-acad-2ec5aa3c6666}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameStruct\BaseData">
+      <UniqueIdentifier>{8a6c8ba0-91d5-4059-aea7-80be87949d94}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="GameManager.cpp">
+      <Filter>GameManager</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysXManager.cpp">
+      <Filter>PhysXManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>GameStruct\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Rigidbody.cpp">
+      <Filter>GameStruct\Rigidbody</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>GameStruct\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>GameStruct\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseData.cpp">
+      <Filter>GameStruct\BaseData</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GameManager.h">
+      <Filter>GameManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ImportLibrary\Inc\GameClientGameServerPacketDefine.h">
+      <Filter>GS-LobbyPacket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ImportLibrary\Inc\GameServerLobbyPacketDefine.h">
+      <Filter>GS-LobbyPacket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ImportLibrary\Inc\GameProtocol\PlayerData_generated.h">
+      <Filter>GameProtocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ImportLibrary\Inc\PortIPDefine.h">
+      <Filter>GS-LobbyPacket</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysXManager.h">
+      <Filter>PhysXManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>GameStruct\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Rigidbody.h">
+      <Filter>GameStruct\Rigidbody</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>GameStruct\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>GameStruct\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseData.h">
+      <Filter>GameStruct\BaseData</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

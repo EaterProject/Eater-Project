@@ -1,0 +1,86 @@
+﻿// CTAP_2.cpp: 구현 파일
+//
+
+#include "pch.h"
+#include "Editor.h"
+#include "CTAP_Animation.h"
+#include "afxdialogex.h"
+#include "EditorData.h"
+#include "AnimationController.h"
+#include "GrobalFunction.h"
+
+
+// CTAP_2 대화 상자
+
+IMPLEMENT_DYNAMIC(CTAP_Animation, CDialogEx)
+
+CTAP_Animation::CTAP_Animation(CWnd* pParent /*=nullptr*/)
+	: CDialogEx(IDD_TAP_ANIMATION, pParent)
+{
+
+}
+
+CTAP_Animation::~CTAP_Animation()
+{
+
+}
+
+void CTAP_Animation::SetGameObject(AnimationController* Data)
+{
+	AC = Data;
+	AnimationList.ResetContent();
+	std::vector<std::string> NameData;
+	Data->GetAnimationList(&NameData);
+	
+	int Count = (int)NameData.size();
+	for (int i = 0; i < Count; i++)
+	{
+		AnimationList.AddString(GetDataCString(NameData[i]));
+	}
+	AnimationList.SetCurSel(0);
+	Data->Choice(NameData[0]);
+}
+
+//AnimationData CTAP_Animation::GetObjectData()
+//{
+//	//AnimationData Data;
+//	//CString str;
+//	//AnimationList.GetLBText(AnimationList.GetCurSel(), str);
+//	//Data.NowAnimation = GetDataString(str);
+//	//return Data;
+//}
+
+void CTAP_Animation::DoDataExchange(CDataExchange* pDX)
+{
+	CDialogEx::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_COMBO1, AnimationList);
+}
+
+BEGIN_MESSAGE_MAP(CTAP_Animation, CDialogEx)
+	ON_CBN_SELCHANGE(IDC_COMBO1, &CTAP_Animation::OnCbnSelchangeCombo1)
+END_MESSAGE_MAP()
+
+BOOL CTAP_Animation::PreTranslateMessage(MSG* pMsg)
+{
+	if (pMsg->message == WM_KEYDOWN)
+	{
+		switch (pMsg->wParam)
+		{
+		case VK_ESCAPE:
+		case VK_RETURN:
+			//GetObjectData();
+			return TRUE;
+		default:
+			break;
+		}
+	}
+
+	return CDialogEx::PreTranslateMessage(pMsg);
+}
+
+void CTAP_Animation::OnCbnSelchangeCombo1()
+{
+	CString AnimationName;
+	AnimationList.GetLBText(AnimationList.GetCurSel(), AnimationName);
+	AC->Choice(ChangeToString(AnimationName));
+}

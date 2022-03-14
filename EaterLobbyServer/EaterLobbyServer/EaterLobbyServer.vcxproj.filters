@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Main">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="LobbyManager">
+      <UniqueIdentifier>{46cb047d-5b11-4fb0-935d-10ce8912a3bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DefineHeader">
+      <UniqueIdentifier>{7f49aed3-9748-40cb-9e6e-35696e6ac0fe}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="LobbyManager.cpp">
+      <Filter>LobbyManager</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="LobbyManager.h">
+      <Filter>LobbyManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ImportLibrary\Inc\PortIPDefine.h">
+      <Filter>DefineHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ImportLibrary\Inc\SharedDataStruct.h">
+      <Filter>DefineHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ImportLibrary\Inc\GameServerLobbyPacketDefine.h">
+      <Filter>DefineHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="GameStructDefine.h">
+      <Filter>DefineHeader</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

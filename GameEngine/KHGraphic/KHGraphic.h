@@ -1,0 +1,38 @@
+#pragma once
+#include "GraphicsEngine.h"
+
+interface IRenderManager;
+interface IFactoryManager;
+
+class KHGraphic : public GraphicEngine
+{
+public:
+	KHGraphic();
+	~KHGraphic();
+
+public:
+	void Initialize(HWND hwnd, int screenWidth, int screenHeight) override;
+	void OnReSize(int screenWidth, int screenHeight) override;
+	void Release() override;
+
+public:
+	void RenderSetting(UINT& renderOption) override;
+	void SetGlobalData(GlobalData* globalData) override;
+	void SetEnvironmentMap(bool enable) override;
+
+public:
+	void AddMeshData(MeshData* meshData) override;
+	void DeleteMeshData(MeshData* meshData) override;
+	void ConvertMeshData() override;
+	void Render() override;
+
+public:
+	TextureBuffer* CreateTextureBuffer(std::string path) override;
+	void CreateMeshBuffer(ParserData::Mesh* mesh, LoadMeshData* meshData) override;
+	void CreateEnvironmentMap(std::string path) override;
+
+private:
+	IFactoryManager* m_FactoryManager;
+	IRenderManager* m_RenderManager;
+};
+
