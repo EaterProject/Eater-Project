@@ -143,7 +143,7 @@ void SSAOPass::Release()
 
 }
 
-void SSAOPass::SetOption(UINT renderOption)
+void SSAOPass::SetOption(RenderOption* renderOption)
 {
 	// SSAO RenderTargetView ÃÊ±âÈ­..
 	g_Context->ClearRenderTargetView(m_SsaoRTV, reinterpret_cast<const float*>(&DXColors::White));

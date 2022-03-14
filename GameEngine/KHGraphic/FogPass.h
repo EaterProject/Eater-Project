@@ -12,7 +12,7 @@ public:
 	void OnResize(int width, int height) override;
 	void Release() override;
 
-	void SetOption(UINT renderOption) override;
+	void SetOption(RenderOption* renderOption) override;
 
 	void RenderUpdate();
 

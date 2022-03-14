@@ -30,7 +30,7 @@ public:
 	void OnResize(int width, int height) override;
 	void Release() override;
 
-	void RenderSetting(UINT& renderOption) override;
+	void RenderSetting(RenderOption* renderOption) override;
 	void SetGlobalData(GlobalData* globalData) override;
 	void SetEnvironmentMap(bool enable) override;
 
@@ -41,6 +41,8 @@ public:
 	void Render() override;
 
 private:
+	void RenderSetting();
+
 	void ShadowRender();
 	void DeferredRender();
 	void SSAORender();
@@ -77,8 +79,8 @@ private:
 	std::vector<RenderData*> m_MeshList;
 	RenderData* m_RenderData;
 
-	bool m_EnvironmentOption = 0;
-	UINT m_RenderOption = 0;
+	RenderOption* m_RenderOption = 0;
+	RenderOption m_NowRenderOption;
 
 	DeferredPass*		m_Deferred;
 	LightPass*			m_Light;

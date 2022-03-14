@@ -27,19 +27,15 @@ void TestScene::Awake()
 	LoadTerrainMesh("../Resources/Mesh/Terrain/Terrain.fbx", "../Resources/Texture/Terrain/Terrain_RGB.png", SCALING);
 
 	//Load("../Resources/Texture/Particle");
-	//Load("../Assets/Texture/Base/Dump.png");
+	Load("../Assets/Texture/Base/Dump.png");
 	Load("../Assets/Texture/Load");
 	Load("../Assets/Texture/Terrain");
-	//
-	//Load("../Assets/Mesh/Base");
-	//Load("../Assets/Mesh/TestMesh");
-	//Load("../Resources/Mesh/BaseMesh/DayRock3.fbx", SCALING);
-	Load("../Assets/Mesh/Base/Outside_Rock.Eater");
-	Load("../Assets/Mesh/Base/Outside_bossOBJ.Eater");
-	//Load("../Resources/Mesh/BaseMesh/Outside_Grass_example4.fbx", SCALING);
+	Load("../Assets/Mesh/Base");
+	Load("../Assets/Mesh/Animation");
 
 	Load("../Resources/Mesh/TestMesh", SCALING);
 	Load("../Resources/Texture/Test");
+	Load("../Assets/Scene/intro.Scene");
 
 	CreateTestObject();
 	CreateMap();
@@ -65,7 +61,7 @@ void TestScene::CreateTestObject()
 	for (int i = 0; i < 10; i++)
 	{
 		std::string num = std::to_string(9 - i);
-
+	
 		testobj = Instance("box");
 		testobj->AddComponent<MeshFilter>()->SetMeshName("TestSphere");
 		MF = testobj->GetComponent<MeshFilter>();
@@ -91,13 +87,13 @@ void TestScene::CreateMap()
 	MeshFilter* filter = nullptr;
 	GameObject* Object = nullptr;
 
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetMeshName("Outside_Rock");
-	
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetMeshName("Outside_bossOBJ");
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetMeshName("Outside_Rock");
+	//
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetMeshName("Outside_bossOBJ");
 
 	//for (int i = 0; i < 100; i++)
 	//{

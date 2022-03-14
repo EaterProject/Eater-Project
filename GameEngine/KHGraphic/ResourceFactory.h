@@ -81,6 +81,7 @@ private:
 	void CreateLineAxisBuffer();
 	void CreateLineBoxBuffer();
 	void CreateLineCircleBuffer();
+	void CreateLineGridBuffer();
 
 private:
 	ImageParser* m_Parser;

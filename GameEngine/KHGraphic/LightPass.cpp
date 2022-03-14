@@ -89,11 +89,11 @@ void LightPass::Release()
 
 }
 
-void LightPass::SetOption(UINT renderOption)
+void LightPass::SetOption(RenderOption* renderOption)
 {
 	std::string renderType;
 
-	if (renderOption & RENDER_IBL)
+	if (renderOption->RenderingOption & RENDER_IBL)
 	{
 		renderType = "_IBL_PS_";
 	}
@@ -102,7 +102,7 @@ void LightPass::SetOption(UINT renderOption)
 		renderType = "_PBR_PS_";
 	}
 
-	UINT lightOption = renderOption & (RENDER_SHADOW | RENDER_SSAO);
+	UINT lightOption = renderOption->RenderingOption & (RENDER_SHADOW | RENDER_SSAO);
 	
 	switch (lightOption)
 	{
@@ -120,7 +120,7 @@ void LightPass::SetOption(UINT renderOption)
 		break;
 	}
 
-	if (renderOption & RENDER_IBL)
+	if (renderOption->RenderingOption & RENDER_IBL)
 	{
 		SetIBLEnvironmentMapResource(true);
 	}

@@ -119,18 +119,37 @@ void RenderManager::Release()
 	m_RenderPassList.clear();
 }
 
-void RenderManager::RenderSetting(UINT& renderOption)
+void RenderManager::RenderSetting(RenderOption* renderOption)
 {
-	// 이전 프레임 기준 옵션이 바뀌지 않았다면 처리하지 않는다..
-	if (renderOption == m_RenderOption) return;
-
-	// 현재 RenderOption 저장..
+	// RenderOption 저장..
 	m_RenderOption = renderOption;
 
-	// Render Option에 따른 Render Setting..
+	// 현재 Render Option 저장..
+	m_NowRenderOption.DebugOption		= m_RenderOption->DebugOption;
+	m_NowRenderOption.RenderingOption	= m_RenderOption->RenderingOption;
+	m_NowRenderOption.PostProcessOption	= m_RenderOption->PostProcessOption;
+
+	// 최초 Render Setting..
 	for (RenderPassBase* renderPass : m_RenderPassList)
 	{
-		renderPass->SetOption(renderOption);
+		renderPass->SetOption(m_RenderOption);
+	}
+}
+
+void RenderManager::RenderSetting()
+{
+	// 변동된 Render Option이 없을경우..
+	if (*m_RenderOption == m_NowRenderOption) return;
+
+	// 현재 Render Option 저장..
+	m_NowRenderOption.DebugOption		= m_RenderOption->DebugOption;
+	m_NowRenderOption.RenderingOption	= m_RenderOption->RenderingOption;
+	m_NowRenderOption.PostProcessOption = m_RenderOption->PostProcessOption;
+
+	// 최초 Render Setting..
+	for (RenderPassBase* renderPass : m_RenderPassList)
+	{
+		renderPass->SetOption(m_RenderOption);
 	}
 }
 
@@ -141,8 +160,6 @@ void RenderManager::SetGlobalData(GlobalData* globalData)
 
 void RenderManager::SetEnvironmentMap(bool enable)
 {
-	m_EnvironmentOption = enable;
-
 	m_Light->SetIBLEnvironmentMapResource(enable);
 	m_Environment->SetEnvironmentMapResource(enable);
 }
@@ -207,38 +224,50 @@ void RenderManager::ConvertMeshData()
 
 void RenderManager::Render()
 {
+	// Rendering Option Setting..
+	RenderSetting();
+
+	// Shadow Render..
 	GPU_BEGIN_EVENT_DEBUG_NAME("Shadow Pass");
 	ShadowRender();
 	GPU_END_EVENT_DEBUG_NAME();
 
+	// Deferred Render..
 	GPU_BEGIN_EVENT_DEBUG_NAME("Deferred Pass");
 	DeferredRender();
 	GPU_END_EVENT_DEBUG_NAME();
 
+	// SSAO Render..
 	GPU_BEGIN_EVENT_DEBUG_NAME("SSAO Pass");
 	SSAORender();
 	GPU_END_EVENT_DEBUG_NAME();
 
+	// Light Render..
 	GPU_BEGIN_EVENT_DEBUG_NAME("Light Pass");
 	LightRender();
 	GPU_END_EVENT_DEBUG_NAME();
 
+	// Environment Render..
 	GPU_BEGIN_EVENT_DEBUG_NAME("Environment Pass");
 	EnvironmentRender();
 	GPU_END_EVENT_DEBUG_NAME();
 
+	// Alpha Render..
 	GPU_BEGIN_EVENT_DEBUG_NAME("Alpha Pass");
 	AlphaRender();
 	GPU_END_EVENT_DEBUG_NAME();
 
+	// PostProcess Render..
 	GPU_BEGIN_EVENT_DEBUG_NAME("PostProcessing Pass");
 	PostProcessingRender();
 	GPU_END_EVENT_DEBUG_NAME();
 
+	// Debug Render..
 	GPU_BEGIN_EVENT_DEBUG_NAME("Debug Pass");
 	DebugRender();
 	GPU_END_EVENT_DEBUG_NAME();
 
+	// End Render..
 	GPU_BEGIN_EVENT_DEBUG_NAME("Present");
 	EndRender();
 	GPU_END_EVENT_DEBUG_NAME();
@@ -267,8 +296,6 @@ void RenderManager::DeferredRender()
 		//	m_Deferred->RenderUpdate(m_RenderMeshList[i][j]);
 		//}
 	}
-
-	RenderPassBase::GraphicReset();
 }
 
 void RenderManager::SSAORender()
@@ -286,10 +313,7 @@ void RenderManager::LightRender()
 void RenderManager::EnvironmentRender()
 {
 	// Environment Map Render..
-	if (m_EnvironmentOption)
-	{
-		m_Environment->RenderUpdate();
-	}
+	m_Environment->RenderUpdate();
 }
 
 void RenderManager::AlphaRender()
@@ -314,7 +338,7 @@ void RenderManager::PostProcessingRender()
 {
 	GPU_BEGIN_EVENT_DEBUG_NAME("Fog Pass");
 
-	if (m_RenderOption & RENDER_FOG)
+	if (m_NowRenderOption.PostProcessOption & RENDER_FOG)
 	{
 		m_Fog->RenderUpdate();
 	}
@@ -323,7 +347,7 @@ void RenderManager::PostProcessingRender()
 
 	GPU_BEGIN_EVENT_DEBUG_NAME("Bloom Pass");
 
-	if (m_RenderOption & RENDER_BLOOM)
+	if (m_NowRenderOption.PostProcessOption & RENDER_BLOOM)
 	{
 		m_Bloom->RenderUpdate();
 	}
@@ -338,7 +362,7 @@ void RenderManager::PostProcessingRender()
 
 	GPU_BEGIN_EVENT_DEBUG_NAME("FXAA Pass");
 
-	if (m_RenderOption & RENDER_FXAA)
+	if (m_NowRenderOption.PostProcessOption & RENDER_FXAA)
 	{
 		m_FXAA->RenderUpdate();
 	}
@@ -353,7 +377,7 @@ void RenderManager::UIRender()
 
 void RenderManager::DebugRender()
 {
-	if (m_RenderOption & RENDER_DEBUG)
+	if (m_NowRenderOption.RenderingOption & RENDER_DEBUG)
 	{
 		GPU_MARKER_DEBUG_NAME("Object Debug");
 		m_Debug->BeginRender();
@@ -424,8 +448,11 @@ void RenderManager::DebugRender()
 		GPU_MARKER_DEBUG_NAME("Global Debug");
 		m_Debug->GlobalRender();
 
-		GPU_MARKER_DEBUG_NAME("MRT Debug");
-		m_Debug->MRTRender();
+		if (m_NowRenderOption.DebugOption == DEBUG_ENGINE)
+		{
+			GPU_MARKER_DEBUG_NAME("MRT Debug");
+			m_Debug->MRTRender();
+		}
 	}
 }
 
@@ -449,7 +476,7 @@ void RenderManager::ConvertMeshRenderData(MeshData* meshData, RenderData* render
 		{
 			// 해당 Mesh List Index 삽입..
 			meshData->RenderListIndex = index.m_ListIndex;
-			meshData->RenderMeshIndex = m_RenderMeshList[index.m_ListIndex].size();
+			meshData->RenderMeshIndex = (UINT)m_RenderMeshList[index.m_ListIndex].size();
 
 			// 해당 Instance List에 삽입..
 			m_RenderMeshList[index.m_ListIndex].push_back(renderData);
@@ -463,11 +490,11 @@ void RenderManager::ConvertMeshRenderData(MeshData* meshData, RenderData* render
 		// Index List 삽입..
 		MeshIndexData indexData;
 		indexData.m_MeshIndex = meshIndex;
-		indexData.m_ListIndex = m_RenderMeshList.size();
+		indexData.m_ListIndex = (UINT)m_RenderMeshList.size();
 		m_MeshIndexList.push_back(indexData);
 
 		// 해당 Mesh List Index 삽입..
-		meshData->RenderListIndex = m_RenderMeshList.size();
+		meshData->RenderListIndex = (UINT)m_RenderMeshList.size();
 		meshData->RenderMeshIndex = 0;
 
 		// 해당 Instance List에 삽입..
@@ -480,14 +507,14 @@ void RenderManager::ConvertMeshRenderData(MeshData* meshData, RenderData* render
 
 void RenderManager::ConvertParticleRenderData(MeshData* meshData, RenderData* renderData)
 {
-	meshData->RenderMeshIndex = m_ParticleMeshList.size();
+	meshData->RenderMeshIndex = (UINT)m_ParticleMeshList.size();
 
 	m_ParticleMeshList.push_back(renderData);
 }
 
 void RenderManager::ConvertUnRenderData(MeshData* meshData, RenderData* renderData)
 {
-	meshData->RenderMeshIndex = m_UnRenderMeshList.size();
+	meshData->RenderMeshIndex = (UINT)m_UnRenderMeshList.size();
 	
 	m_UnRenderMeshList.push_back(renderData);
 }

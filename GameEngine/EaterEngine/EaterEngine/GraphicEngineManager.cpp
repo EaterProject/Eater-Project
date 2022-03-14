@@ -18,7 +18,7 @@ GraphicEngineManager::~GraphicEngineManager()
 
 }
 
-void GraphicEngineManager::Initialize(HWND Hwnd, UINT& renderOption, int WinSizeWidth, int WinSizeHeight, ObjectManager* GM)
+void GraphicEngineManager::Initialize(HWND Hwnd, int WinSizeWidth, int WinSizeHeight, ObjectManager* GM)
 {
 	ObjManager = GM;
 
@@ -29,7 +29,6 @@ void GraphicEngineManager::Initialize(HWND Hwnd, UINT& renderOption, int WinSize
 	GEngine->Initialize(Hwnd, WinSizeWidth, WinSizeHeight);
 
 	// Graphic Engine RenderSetting..
-	GEngine->RenderSetting(renderOption);
 	GEngine->SetGlobalData(Global);
 }
 
@@ -44,7 +43,7 @@ void GraphicEngineManager::Release()
 	GEngine->Release();
 }
 
-void GraphicEngineManager::RenderSetting(UINT& renderOption)
+void GraphicEngineManager::RenderSetting(RenderOption* renderOption)
 {
 	GEngine->RenderSetting(renderOption);
 }

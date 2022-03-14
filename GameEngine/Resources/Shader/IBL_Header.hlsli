@@ -94,5 +94,5 @@ float3 IBL_EnvironmentLight(in float3 V, in float3 N, in float3 irradiance, in f
     
     float3 specular = prefilterColor * (kS * brdf.x + brdf.y);
     
-    return (diffuse + specular) * ao;
+    return (diffuse + specular) * ao * 0.25f;
 }

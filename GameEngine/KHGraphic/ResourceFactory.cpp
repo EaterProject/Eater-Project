@@ -80,6 +80,7 @@ void GraphicResourceFactory::Create(int width, int height)
 	CreateLineAxisBuffer();
 	CreateLineCircleBuffer();
 	CreateLineBoxBuffer();
+	CreateLineGridBuffer();
 }
 
 void GraphicResourceFactory::Start()
@@ -1981,4 +1982,51 @@ void GraphicResourceFactory::CreateLineCircleBuffer()
 
 	// Draw Buffer 持失..
 	CreateDrawBuffer(DB_Line_Circle::GetName(), DB_Line_Circle::GetHashCode(), format, topology, vByteSize, iByteSize, sizeof(VertexInput::PosColorVertex), iCount, &vertices[0], &indices[0]);
+}
+
+void GraphicResourceFactory::CreateLineGridBuffer()
+{
+	float wSize = 10.0f;
+	float hSize = 10.0f;
+	float width = 100.0f;
+	float height = 100.0f;
+	float wSizeHalf = width * wSize / 2.0f;
+	float hSizeHalf = height * hSize / 2.0f;
+
+	UINT vCount = ((width + 1) + (height + 1)) * 2.0f;
+	UINT iCount = ((width + 1) + (height + 1)) * 2.0f;
+
+	std::vector<VertexInput::PosColorVertex> vertices(vCount);
+	std::vector<UINT> indices(iCount);
+	int index = 0;
+	for (int i = 0; i <= width; i++)
+	{
+		vertices[index].Pos = Vector3(-wSizeHalf, 0, -hSizeHalf + i * hSize);
+		vertices[index + 1].Pos = Vector3(wSizeHalf, 0, -hSizeHalf + i * hSize);
+		vertices[index].Color = Vector4(1, 1, 1, 1);
+		vertices[index + 1].Color = Vector4(1, 1, 1, 1);
+		indices[index] = index;
+		indices[index + 1] = index + 1;
+		index += 2;
+	}
+
+	for (int i = 0; i <= height; i++)
+	{
+		vertices[index].Pos = Vector3(-wSizeHalf + i * wSize, 0, -hSizeHalf);
+		vertices[index + 1].Pos = Vector3(-wSizeHalf + i * wSize, 0, hSizeHalf);
+		vertices[index].Color = Vector4(1, 1, 1, 1);
+		vertices[index + 1].Color = Vector4(1, 1, 1, 1);
+		indices[index] = index;
+		indices[index + 1] = index + 1;
+		index += 2;
+	}
+
+	UINT format = DXGI_FORMAT_R32_UINT;
+	UINT topology = D3D11_PRIMITIVE_TOPOLOGY_LINELIST;
+
+	UINT vByteSize = sizeof(VertexInput::PosColorVertex) * vCount;
+	UINT iByteSize = sizeof(UINT) * iCount;
+
+	// Draw Buffer 持失..
+	CreateDrawBuffer(DB_Line_Grid::GetName(), DB_Line_Grid::GetHashCode(), format, topology, vByteSize, iByteSize, sizeof(VertexInput::PosColorVertex), iCount, &vertices[0], &indices[0]);
 }

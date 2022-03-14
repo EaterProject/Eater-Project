@@ -206,6 +206,11 @@ void CreateSceneSub(Scene* mSceneTemp, std::string SceneName)
 	 return PhysManager::RayCast(ray);
  }
 
+ void EditorSetting()
+ {
+	 gGameEngine->EditorSetting();
+ }
+
  void DebugDrawLine(Vector3 start, Vector3 end, Vector4 color)
  {
 	 gGameEngine->DebugDrawLine(start, end, color);

@@ -74,7 +74,7 @@ void EnvironmentPass::Release()
 
 }
 
-void EnvironmentPass::SetOption(UINT renderOption)
+void EnvironmentPass::SetOption(RenderOption* renderOption)
 {
 
 }
