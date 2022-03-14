@@ -4,6 +4,7 @@
 #include <string>
 #include "EditorData.h"
 #include <map>
+#include <stack>
 
 class SceneSave;
 class GameObject;
@@ -33,6 +34,7 @@ public:
 	static void LoadScene(std::string LoadScenePath);							//씬 로드
 
 	static GameObject* FindMesh(std::string MeshName);		//매쉬를 찾는다
+	static GameObject* FindMesh(std::string MeshName,std::string ParentName);
 	static std::string FindMeshName(std::string MeshName);	//매쉬의 같은이름이있으면 변경해서 가져온다
 
 	static std::map<std::string, GameObject*> ObjectList;
