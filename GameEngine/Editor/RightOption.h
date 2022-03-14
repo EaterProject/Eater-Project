@@ -67,6 +67,7 @@ public:
 	Loading*		mLoading;			//로딩 바
 public:
 	void Create_Hirearchy_Item(GameObject* Obj, HTREEITEM TOP);
+	void Delete_Hirearchy_Item(HTREEITEM TOP);
 	int FindChildFile(HTREEITEM hParentItem, CString str);
 	void ChickTapDrag(CPoint point);
 	void ChickHirearchyDarg(CPoint point);
@@ -83,8 +84,6 @@ public:
 	
 	//버튼들
 	afx_msg void OnDelteObject_Button();
-	afx_msg void OnUpdateObject_Button();
-	afx_msg void OnResetObject_Button();
 	afx_msg void OnOpenAssetsFolder();
 	afx_msg void OnDeleteFile_Button();
 	afx_msg void OnChange_DataFormat();
@@ -92,6 +91,7 @@ public:
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnClickTap(NMHDR* pNMHDR, LRESULT* pResult);
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
-	afx_msg void OnCreateTerrain();
+	afx_msg void OnSaveScene();
 	afx_msg void OnCreateParticle();
+	afx_msg void OnCreateTerrain();
 };

@@ -63,25 +63,25 @@ size_t GameObject::GetTag()
 
 GameObject* GameObject::GetChildBone(std::string FindName)
 {
-	GameObject* temp = nullptr;
+	GameObject* FindObject = nullptr;
 	if (Name == FindName)
 	{
-		temp = this;
-		return temp;
+		FindObject = this;
+		return FindObject;
 	}
 
 
 	std::vector<GameObject*>::iterator it = ChildBoneList.begin();
 	for (it; it != ChildBoneList.end(); it++)
 	{
-		temp = (*it)->GetChildBone(FindName);
-		if (temp != nullptr)
+		FindObject = (*it)->GetChildBone(FindName);
+		if (FindObject != nullptr)
 		{
-			break;
+			return FindObject;
 		}
 	}
 
-	return temp;
+	return FindObject;
 }
 
  GameObject* GameObject::GetChildBone(int num)
@@ -98,15 +98,22 @@ GameObject* GameObject::GetChildBone(std::string FindName)
 
 GameObject* GameObject::GetChildMesh(std::string FindName)
 {
+	GameObject* FindObject = nullptr;
 	if (Name == FindName)
 	{
-		return this;
+		FindObject = this;
+		return FindObject;
 	}
+
 
 	std::vector<GameObject*>::iterator it = ChildMeshList.begin();
 	for (it; it != ChildMeshList.end(); it++)
 	{
-		 (*it)->GetChildMesh(FindName);
+		FindObject = (*it)->GetChildMesh(FindName);
+		if (FindObject != nullptr)
+		{
+			return FindObject;
+		}
 	}
 }
 
@@ -120,6 +127,25 @@ GameObject* GameObject::GetChildMesh(int num)
 	}
 
 	return obj;
+}
+
+GameObject* GameObject::GetChildObject(std::string Name)
+{
+	GameObject* BoneObject = GetChildBone(Name);
+	GameObject* MeshObject = GetChildMesh(Name);
+
+	if (BoneObject != nullptr)
+	{
+		return BoneObject;
+	}
+	else if (MeshObject != nullptr)
+	{
+		return MeshObject;
+	}
+	else
+	{
+		return nullptr;
+	}
 }
 
 
