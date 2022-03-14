@@ -274,6 +274,14 @@ void DebugPass::GlobalRender()
 	std::vector<SpotLightData*>* spotList = &g_GlobalData->mSpotLights;
 	std::queue<RayCastData>* rayList = &g_GlobalData->mRayCastDebugData;
 
+	object.gWorldViewProj = Matrix::CreateScale(1000.0f) * Matrix::CreateTranslation(0.0f, 0.1f, 0.0f) * viewproj;
+
+	m_DebugVS->ConstantBufferCopy(&object);
+	m_DebugVS->Update();
+
+	BufferUpdate(DEBUG_TYPE::DEBUG_AXIS);
+	g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+
 	object.gWorldViewProj = viewproj;
 
 	m_DebugVS->ConstantBufferCopy(&object);
