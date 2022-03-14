@@ -1,28 +1,55 @@
 #GAMEOBJECT
 @MeshType BASE
-@MeshName box
+@MeshName Dome
 $MeshFilter 1 1
-box
+Dome
 $Transform 3 3
-0.000000 3.000000 0.000000
+0.000000 0.000000 0.000000
 0.000000 0.000000 0.000000
 1.000000 1.000000 1.000000
 #GAMEOBJECT
 @MeshType BASE
-@MeshName box(1)
+@MeshName Dome_village
 $MeshFilter 1 1
-box
+Dome_village
 $Transform 3 3
-3.000000 3.000000 0.000000
+0.000000 0.000000 0.000000
 0.000000 0.000000 0.000000
 1.000000 1.000000 1.000000
 #GAMEOBJECT
 @MeshType BASE
-@MeshName box(2)
+@MeshName Outside_Other
 $MeshFilter 1 1
-box
+Outside_Other
 $Transform 3 3
--3.000000 3.000000 0.000000
+0.000000 0.000000 0.000000
+0.000000 0.000000 0.000000
+1.000000 1.000000 1.000000
+#GAMEOBJECT
+@MeshType BASE
+@MeshName Outside_Pebble
+$MeshFilter 1 1
+Outside_Pebble
+$Transform 3 3
+0.000000 0.000000 0.000000
+0.000000 0.000000 0.000000
+1.000000 1.000000 1.000000
+#GAMEOBJECT
+@MeshType BASE
+@MeshName Outside_Rock
+$MeshFilter 1 1
+Outside_Rock
+$Transform 3 3
+0.000000 0.000000 0.000000
+0.000000 0.000000 0.000000
+1.000000 1.000000 1.000000
+#GAMEOBJECT
+@MeshType BASE
+@MeshName Outside_bossOBJ
+$MeshFilter 1 1
+Outside_bossOBJ
+$Transform 3 3
+0.000000 0.000000 0.000000
 0.000000 0.000000 0.000000
 1.000000 1.000000 1.000000
 &
