@@ -82,7 +82,7 @@ void FogPass::Release()
 
 }
 
-void FogPass::SetOption(UINT renderOption)
+void FogPass::SetOption(RenderOption* renderOption)
 {
 
 }

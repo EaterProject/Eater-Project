@@ -19,11 +19,6 @@ void RenderPassBase::Initialize(Microsoft::WRL::ComPtr<ID3D11DeviceContext> cont
 	g_Shader = shaderManager;
 }
 
-void RenderPassBase::SetGlobalData(GlobalData* globalData)
-{
-	g_GlobalData = globalData;
-}
-
 void RenderPassBase::GraphicReset()
 {
 	g_Context->ClearState();

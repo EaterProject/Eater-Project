@@ -34,6 +34,8 @@ class ThreadManager;
 class GameObject;
 class ModelData;
 
+class RenderOption;
+
 class GameEngine
 {
 private:
@@ -109,6 +111,7 @@ public:
 	void NETWORK_CONNECT(int ServerPort, std::string  Local_Connect_IP);
 public:
 	///디버그 관련
+	void EditorSetting();
 	void DebugDrawLine(Vector3 start, Vector3 end, Vector4 color);
 	void DebugDrawLine(Vector3 start, Vector3 dir, float distance, Vector4 color);
 private:
@@ -134,6 +137,6 @@ private:
 	HWND mHwnd; //핸들
 	bool ConsoleDebug;
 private:
-	UINT m_RenderOption;
+	RenderOption* mRenderOption;
 };
 

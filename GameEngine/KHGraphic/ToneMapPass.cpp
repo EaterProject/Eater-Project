@@ -66,9 +66,9 @@ void ToneMapPass::Release()
 
 }
 
-void ToneMapPass::SetOption(UINT renderOption)
+void ToneMapPass::SetOption(RenderOption* renderOption)
 {
-	UINT tonemapOption = renderOption & (RENDER_BLOOM | RENDER_HDR);
+	UINT tonemapOption = renderOption->PostProcessOption & (RENDER_BLOOM | RENDER_HDR);
 
 	switch (tonemapOption)
 	{
@@ -86,7 +86,7 @@ void ToneMapPass::SetOption(UINT renderOption)
 		break;
 	}
 
-	if (renderOption & RENDER_FOG)
+	if (renderOption->PostProcessOption & RENDER_FOG)
 	{
 		m_Origin_RT = g_Resource->GetRenderTexture<RT_OutPut1>();
 	}
@@ -95,7 +95,7 @@ void ToneMapPass::SetOption(UINT renderOption)
 		m_Origin_RT = g_Resource->GetRenderTexture<RT_OutPut2>();
 	}
 
-	if (renderOption & RENDER_FXAA)
+	if (renderOption->PostProcessOption & RENDER_FXAA)
 	{
 		m_OutPut_RT = g_Resource->GetRenderTexture<RT_OutPut3>();
 	}

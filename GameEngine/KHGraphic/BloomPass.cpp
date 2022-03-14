@@ -266,9 +266,9 @@ void BloomPass::Release()
 
 }
 
-void BloomPass::SetOption(UINT renderOption)
+void BloomPass::SetOption(RenderOption* renderOption)
 {
-	if (renderOption & RENDER_FOG)
+	if (renderOption->PostProcessOption & RENDER_FOG)
 	{
 		m_Origin_RT = g_Resource->GetRenderTexture<RT_OutPut1>();
 	}

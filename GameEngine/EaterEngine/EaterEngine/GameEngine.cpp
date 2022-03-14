@@ -58,7 +58,11 @@ GameEngine::GameEngine()
 
 	ConsoleDebug = true;
 
-	m_RenderOption = RENDER_SHADOW | RENDER_SSAO | RENDER_IBL | RENDER_BLOOM | RENDER_HDR | RENDER_FXAA ;
+	mRenderOption = new RenderOption();
+
+	mRenderOption->DebugOption = DEBUG_ENGINE;
+	mRenderOption->RenderingOption = RENDER_DEBUG | RENDER_SHADOW | RENDER_SSAO | RENDER_IBL;
+	mRenderOption->PostProcessOption = RENDER_BLOOM | RENDER_HDR | RENDER_FXAA;
 }
 
 GameEngine::~GameEngine()
@@ -87,7 +91,7 @@ void GameEngine::Initialize(HWND Hwnd, bool mConsoleDebug)
 
 	//매니저들 초기화
 	BaseManager::Initialize();
-	mGraphicManager->Initialize(Hwnd, m_RenderOption, WinSizeWidth, WinSizeHeight, mObjectManager);
+	mGraphicManager->Initialize(Hwnd, WinSizeWidth, WinSizeHeight, mObjectManager);
 	mKeyManager->Initialize(mHwnd);
 	mDebugManager->Initialize(mKeyManager,mConsoleDebug);
 	mObjectManager->Initialize(mGraphicManager);
@@ -99,6 +103,9 @@ void GameEngine::Initialize(HWND Hwnd, bool mConsoleDebug)
 	mNetworkManager->Initialize();
 
 	Component::SetManager(mTimeManager, mKeyManager);
+
+	// 최초 Render Setting..
+	mGraphicManager->RenderSetting(mRenderOption);
 }
 
 void GameEngine::Start()
@@ -148,6 +155,7 @@ void GameEngine::Update()
 
 void GameEngine::Finish()
 {
+	delete mRenderOption;
 	delete mKeyManager;
 	delete mLoadManager;
 
@@ -423,6 +431,11 @@ void GameEngine::NETWORK_CONNECT(int ServerPort, std::string  Local_Connect_IP)
 	mNetworkManager->C2S_CONNECT(ServerPort, Local_Connect_IP);
 }
 
+void GameEngine::EditorSetting()
+{
+	mRenderOption->DebugOption = DEBUG_EDITOR;
+}
+
 void GameEngine::DebugDrawLine(Vector3 start, Vector3 end, Vector4 color)
 {
 	mGraphicManager->DebugDrawLine(start, end, color);
@@ -452,59 +465,44 @@ void GameEngine::CreateObject()
 
 void GameEngine::RenderOptionCheck()
 {
-	bool changeOption = false;
-
 	if (mKeyManager->GetKeyUp(VK_F1))
 	{
 		// Debug On/Off
-		m_RenderOption ^= RENDER_DEBUG;
-		changeOption = true;
+		mRenderOption->RenderingOption ^= RENDER_DEBUG;
 	}
 	if (mKeyManager->GetKeyUp(VK_F2))
 	{
 		// Shadow On/Off
-		m_RenderOption ^= RENDER_SHADOW;
-		changeOption = true;
+		mRenderOption->RenderingOption ^= RENDER_SHADOW;
 	}
 	if (mKeyManager->GetKeyUp(VK_F3))
 	{
 		// SSAO On/Off
-		m_RenderOption ^= RENDER_SSAO;
-		changeOption = true;
+		mRenderOption->RenderingOption ^= RENDER_SSAO;
 	}
 	if (mKeyManager->GetKeyUp(VK_F4))
 	{
 		// IBL On/Off
-		m_RenderOption ^= RENDER_IBL;
-		changeOption = true;
+		mRenderOption->RenderingOption ^= RENDER_IBL;
 	}
 	if (mKeyManager->GetKeyUp(VK_F5))
 	{
 		// Fog On/Off
-		m_RenderOption ^= RENDER_FOG;
-		changeOption = true;
+		mRenderOption->PostProcessOption ^= RENDER_FOG;
 	}
 	if (mKeyManager->GetKeyUp(VK_F6))
 	{
 		// Bloom On/Off
-		m_RenderOption ^= RENDER_BLOOM;
-		changeOption = true;
+		mRenderOption->PostProcessOption ^= RENDER_BLOOM;
 	}
 	if (mKeyManager->GetKeyUp(VK_F7))
 	{
 		// HDR On/Off
-		m_RenderOption ^= RENDER_HDR;
-		changeOption = true;
+		mRenderOption->PostProcessOption ^= RENDER_HDR;
 	}
 	if (mKeyManager->GetKeyUp(VK_F8))
 	{
 		// FXAA On/Off
-		m_RenderOption ^= RENDER_FXAA;
-		changeOption = true;
-	}
-
-	if (changeOption)
-	{
-		mGraphicManager->RenderSetting(m_RenderOption);
+		mRenderOption->PostProcessOption ^= RENDER_FXAA;
 	}
 }

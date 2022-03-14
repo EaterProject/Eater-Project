@@ -75,6 +75,7 @@ void DebugPass::Start(int width, int height)
 	m_AxisBuffer = g_Resource->GetDrawBuffer<DB_Line_Axis>();
 	m_BoxBuffer = g_Resource->GetDrawBuffer<DB_Line_Box>();
 	m_CircleBuffer = g_Resource->GetDrawBuffer<DB_Line_Circle>();
+	m_GridBuffer = g_Resource->GetDrawBuffer<DB_Line_Grid>();
 	m_IconBuffer = g_Resource->GetDrawBuffer<DB_Quad>();
 
 	// Graphic State..
@@ -262,8 +263,6 @@ void DebugPass::RenderUpdate(RenderData* mesh)
 
 void DebugPass::GlobalRender()
 {
-	g_Context->RSSetState(m_NoCullRS);
-
 	CB_DebugObject object;
 	CB_DebugOption option;
 
@@ -275,6 +274,23 @@ void DebugPass::GlobalRender()
 	std::vector<SpotLightData*>* spotList = &g_GlobalData->mSpotLights;
 	std::queue<RayCastData>* rayList = &g_GlobalData->mRayCastDebugData;
 
+	object.gWorldViewProj = Matrix::CreateScale(1000.0f) * Matrix::CreateTranslation(0.0f, 0.1f, 0.0f) * viewproj;
+
+	m_DebugVS->ConstantBufferCopy(&object);
+	m_DebugVS->Update();
+
+	BufferUpdate(DEBUG_TYPE::DEBUG_AXIS);
+	g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+
+	object.gWorldViewProj = viewproj;
+
+	m_DebugVS->ConstantBufferCopy(&object);
+	m_DebugVS->Update();
+
+	BufferUpdate(DEBUG_TYPE::DEBUG_GRID);
+	g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+
+	g_Context->RSSetState(m_NoCullRS);
 
 	for (DirectionalLightData* light : *directionList)
 	{
@@ -481,6 +497,10 @@ void DebugPass::BufferUpdate(DEBUG_TYPE type)
 		break;
 	case DEBUG_CIRCLE:
 		m_DebugBuffer = m_CircleBuffer;
+		g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
+		break;
+	case DEBUG_GRID:
+		m_DebugBuffer = m_GridBuffer;
 		g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
 		break;
 	case DEBUG_QUAD:

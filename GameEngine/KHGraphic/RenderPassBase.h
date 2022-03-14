@@ -5,6 +5,7 @@ interface IFactoryManager;
 interface IGraphicResourceManager;
 
 class GlobalData;
+class RenderOption;
 
 ///
 /// 2021/11/08 2:22
@@ -29,11 +30,10 @@ public:
 	virtual void Release() abstract;
 
 	virtual void SetResize(int width, int height) {}
-	virtual void SetOption(UINT renderOption) {}
+	virtual void SetOption(RenderOption* renderOption) {}
 
 public:
 	static void Initialize(Microsoft::WRL::ComPtr<ID3D11DeviceContext> context, IFactoryManager* factory, IGraphicResourceManager* resource, IShaderManager* shader);
-	static void SetGlobalData(GlobalData* globalData);
 	static void GraphicReset();
 	static void Reset();
 

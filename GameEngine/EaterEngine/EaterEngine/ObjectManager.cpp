@@ -307,29 +307,6 @@ void ObjectManager::PlayUpdate()
 	EndUpdate.Play();
 }
 
-void ObjectManager::CreateRenderQueue()
-{
-	//오브젝트의 사이즈 만큼 돌면서 랜더큐에 MeshData를 전달해준다
-	while ((int)ShadowData.size() != 0)
-	{
-		ShadowData.pop();
-	}
-	
-	while((int)RenderData.size() != 0)
-	{
-		RenderData.pop();
-	}
-
-	std::vector<GameObject*>::iterator it = ObjectList.begin();
-	for (it; it != ObjectList.end(); it++)
-	{	
-		if ((*it) == nullptr) { continue; }
-
-		RenderData.push((*it)->OneMeshData);
-		ShadowData.push((*it)->OneMeshData);
-	}
-}
-
 void ObjectManager::ClearFunctionList()
 {
 	AwakeFunction.Clear();
@@ -391,16 +368,6 @@ void ObjectManager::DeleteObject()
 		//리스트에서도 빼준다
 		DeleteList.pop();
 	}
-}
-
-std::queue<MeshData*>* ObjectManager::GetRenderQueue()
-{
-	return &RenderData;
-}
-
-std::queue<MeshData*>* ObjectManager::GetShadowQueue()
-{
-	return &ShadowData;
 }
 
 GameObject* ObjectManager::FindGameObjectTag(std::string& TagName)
