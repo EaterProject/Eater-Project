@@ -213,8 +213,8 @@ void DeferredPass::RenderUpdate(const std::vector<RenderData*>& meshlist)
 		return;
 	}
 
-	Matrix view = g_GlobalData->mCamView;
-	Matrix proj = g_GlobalData->mCamProj;
+	Matrix view = g_GlobalData->CamView;
+	Matrix proj = g_GlobalData->CamProj;
 	RenderData* mesh = nullptr;
 	MaterialRenderData* mat = nullptr;
 
@@ -325,8 +325,8 @@ void DeferredPass::RenderUpdate(const std::vector<RenderData*>& meshlist)
 void DeferredPass::RenderUpdate(const RenderData* mesh)
 {
 	Matrix world = *mesh->m_World;
-	Matrix view = g_GlobalData->mCamView;
-	Matrix proj = g_GlobalData->mCamProj;
+	Matrix view = g_GlobalData->CamView;
+	Matrix proj = g_GlobalData->CamProj;
 	MaterialRenderData* mat = mesh->m_MeshData->m_Material;
 
 	if (mesh == nullptr) return;
@@ -389,7 +389,7 @@ void DeferredPass::RenderUpdate(const RenderData* mesh)
 		objectBuf.gWorld = world;
 		objectBuf.gView = view;
 		objectBuf.gProj = proj;
-		objectBuf.gTexTransform = *mesh->m_Tex;
+		objectBuf.gTexTransform = *mesh->m_MeshData->m_Material->m_Tex;
 		m_TerrainVS->ConstantBufferCopy(&objectBuf);
 
 		m_TerrainVS->Update();

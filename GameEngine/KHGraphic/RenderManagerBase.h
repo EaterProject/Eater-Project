@@ -36,8 +36,8 @@ public:
 public:
 	// Render Data Add & Delete..
 	virtual void AddMeshData(MeshData* meshData) abstract;
+	virtual void AddChangeMeshData(MeshData* meshData) abstract;
 	virtual void DeleteMeshData(MeshData* meshData) abstract;
-	virtual void ConvertMeshData() abstract;
 
 	// Render Update..
 	virtual void Render() abstract;

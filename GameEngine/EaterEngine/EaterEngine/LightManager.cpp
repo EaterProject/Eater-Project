@@ -26,7 +26,7 @@ void LightManager::PushLight(Light* light)
 
 		// 새로운 Light 추가..
 		g_DirectionLightList.push_back(light);
-		Global->mDirectionLights.push_back(light->GetDirectionLight());
+		Global->DirectionLights.push_back(light->GetDirectionLight());
 	}
 	break;
 	case LIGHT_TYPE::POINT_LIGHT:
@@ -35,7 +35,7 @@ void LightManager::PushLight(Light* light)
 
 		// 새로운 Light 추가..
 		g_PointLightList.push_back(light);
-		Global->mPointLights.push_back(light->GetPointLight());
+		Global->PointLights.push_back(light->GetPointLight());
 	}
 	break;
 	case LIGHT_TYPE::SPOT_LIGHT:
@@ -44,7 +44,7 @@ void LightManager::PushLight(Light* light)
 
 		// 새로운 Light 추가..
 		g_SpotLightList.push_back(light);
-		Global->mSpotLights.push_back(light->GetSpotLight());
+		Global->SpotLights.push_back(light->GetSpotLight());
 	}
 	break;
 	default:
@@ -61,17 +61,17 @@ void LightManager::DeleteLight(Light* light)
 	switch (light->GetType())
 	{
 	case LIGHT_TYPE::DIRECTION_LIGHT:
-		Global->mDirectionLights.erase(std::next(Global->mDirectionLights.begin(), index));
+		Global->DirectionLights.erase(std::next(Global->DirectionLights.begin(), index));
 		g_DirectionLightList.erase(std::next(g_DirectionLightList.begin(), index));
 		lightList = &g_DirectionLightList;
 		break;
 	case LIGHT_TYPE::POINT_LIGHT:
-		Global->mPointLights.erase(std::next(Global->mPointLights.begin(), index));
+		Global->PointLights.erase(std::next(Global->PointLights.begin(), index));
 		g_PointLightList.erase(std::next(g_PointLightList.begin(), index));
 		lightList = &g_PointLightList;
 		break;
 	case LIGHT_TYPE::SPOT_LIGHT:
-		Global->mSpotLights.erase(std::next(Global->mSpotLights.begin(), index));
+		Global->SpotLights.erase(std::next(Global->SpotLights.begin(), index));
 		g_SpotLightList.erase(std::next(g_SpotLightList.begin(), index));
 		lightList = &g_SpotLightList;
 		break;

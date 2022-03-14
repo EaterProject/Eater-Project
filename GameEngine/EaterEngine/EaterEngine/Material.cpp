@@ -36,27 +36,6 @@ void Material::SetMaterialIndex(UINT index)
 	MaterialDatas->Material_Index = index;
 }
 
-void Material::PushMaterialData(LoadMeshData* mesh)
-{
-	// Load한 Material Data가 없을경우..
-	if (mesh->Material == nullptr) return;
-
-	// Material Data 추출..
-	MaterialOption* matData = MaterialDatas->Material_Option;
-
-	// Material Data 삽입..
-	matData->Ambient = mesh->Material->m_Material_Ambient;
-	matData->Diffuse = mesh->Material->m_Material_Diffuse;
-	matData->Specular = mesh->Material->m_Material_Specular;
-	matData->Ambient = mesh->Material->m_Material_Ambient;
-
-	// Texture Map 삽입..
-	//MaterialDatas->Albedo = mesh->Albedo;
-	//MaterialDatas->Normal = mesh->Normal;
-	//MaterialDatas->Emissive = mesh->Emissive;
-	//MaterialDatas->ORM = mesh->ORM;
-}
-
 void Material::SetTexTransform(DirectX::SimpleMath::Vector3 scale)
 {
 
@@ -85,6 +64,21 @@ void Material::SetBaseColor(DirectX::SimpleMath::Vector4 color)
 void Material::SetStartColor(DirectX::SimpleMath::Vector4 color)
 {
 	MaterialDatas->Color_Add = color;
+}
+
+void Material::SetEmissiveFactor(float emissiveFactor)
+{
+	MaterialDatas->Material_Option->EmissiveFactor = emissiveFactor;
+}
+
+void Material::SetRoughnessFactor(float roughnessFactor)
+{
+	MaterialDatas->Material_Option->RoughnessFactor = roughnessFactor;
+}
+
+void Material::SetMetallicFactor(float metallicFactor)
+{
+	MaterialDatas->Material_Option->MetallicFactor = metallicFactor;
 }
 
 void Material::Release()

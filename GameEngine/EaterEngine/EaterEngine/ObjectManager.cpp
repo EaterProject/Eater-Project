@@ -9,7 +9,7 @@
 #include "KeyinputManager.h"
 #include "MeshFilter.h"
 #include "Light.h"
-#include "GraphicEngineManager.h"
+#include "GraphicsEngine.h"
 
 //함수포인터 리스트들
 Delegate_Map ObjectManager::AwakeFunction;
@@ -73,6 +73,8 @@ void ObjectManager::PushDeleteObject(GameObject* obj)
 
 void ObjectManager::AllDeleteObject()
 {
+	GraphicEngine* Graphic = GraphicEngine::Get();
+	
 	int index = 0;
 	while (true)
 	{
@@ -97,7 +99,7 @@ void ObjectManager::AllDeleteObject()
 		}
 
 		// Renderer 측 Mesh Data 제거..
-		GraphicManager->DeleteMeshData(DeleteObject->OneMeshData);
+		Graphic->DeleteMeshData(DeleteObject->OneMeshData);
 
 		int ChildMeshCount = DeleteObject->GetChildMeshCount();
 		int ChildBoneCount = DeleteObject->GetChildBoneCount();
@@ -134,9 +136,9 @@ void ObjectManager::AllDeleteObject()
 	//DontDestroyObjectSetting();
 }
 
-void ObjectManager::Initialize(GraphicEngineManager* graphicManager)
+void ObjectManager::Initialize()
 {
-	GraphicManager = graphicManager;
+
 }
 
 void ObjectManager::PushAwake(Component* mComponent, int Order)
@@ -282,18 +284,18 @@ void ObjectManager::PushStartPlay(Component* mComponent, int Order)
 
 void ObjectManager::InitializeFuntion()
 {
-	//컨퍼넌트들을 가져오는 함수 포인터
-	AwakeFunction.PlayOnce(InitFuncUpdate);
-	//컨퍼넌트 초기화된 값을 한번 실행하는 함수포인터
-	SetUpFunction.PlayOnce(InitFuncUpdate);
-	//컨퍼넌트들을 초기화 하는 함수포인터
-	StartFunction.PlayOnce(InitFuncUpdate);
+
 }
 
 void ObjectManager::PlayUpdate()
 {
 	///각각의 함수포인터들을 재생시킨다
-	InitializeFuntion();
+	//컨퍼넌트들을 가져오는 함수 포인터
+	AwakeFunction.PlayOnce();
+	//컨퍼넌트 초기화된 값을 한번 실행하는 함수포인터
+	SetUpFunction.PlayOnce();
+	//컨퍼넌트들을 초기화 하는 함수포인터
+	StartFunction.PlayOnce();
 
 	//가장 먼저실행되는 StartUpdate 함수 리스트(각 컨퍼넌트들의 초기화작업을 해줄때)
 	StartUpdate.Play();
@@ -322,6 +324,8 @@ void ObjectManager::ClearFunctionList()
 
 void ObjectManager::DeleteObject()
 {
+	GraphicEngine* Graphic = GraphicEngine::Get();
+
 	while(true)
 	{
 		//삭제 종료 조건
@@ -336,7 +340,7 @@ void ObjectManager::DeleteObject()
 		int ChildBoneCount = temp->GetChildBoneCount();
 
 		// Renderer 측 Mesh Data 제거..
-		GraphicManager->DeleteMeshData(temp->OneMeshData);
+		Graphic->DeleteMeshData(temp->OneMeshData);
 
 		//나의 바로 밑에 오브젝트들 을 삭제 할 리스트에 넣는다 
 		for (int i = 0; i < ChildMeshCount; i++) 

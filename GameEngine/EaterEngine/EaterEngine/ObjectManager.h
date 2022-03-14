@@ -15,7 +15,6 @@ class FBXModel;
 class GameObject;
 class Component;
 class MeshFilter;
-class GraphicEngineManager;
 
 class ObjectManager : public BaseManager
 {
@@ -33,7 +32,7 @@ public:
 	void AllDeleteObject();
 
 	//엔진 초기화
-	void Initialize(GraphicEngineManager* graphicManager);
+	void Initialize();
 
 	//초기화 단계
 	static void PushStart(Component* obj,int Order);
@@ -52,8 +51,6 @@ public:
 	void InitializeFuntion();
 	// 업데이트 함수 리스트를 실행시킴
 	void PlayUpdate();
-	//그래픽 엔진쪽으로 보낼 랜더메세지큐를 생성
-	void CreateRenderQueue();
 	// 업데이트와 랜더링 함수리스트를 모두 삭제함
 	void ClearFunctionList();
 	//오브젝트를 삭제한다
@@ -64,15 +61,10 @@ public:
 	GameObject* FindGameObjectTag(std::string& TagName);
 	GameObject* FindGameObjectString(std::string& ObjectName);
 
-	bool InitFuncUpdate = false;
-
 private:
 	//컨퍼넌트 데이터를 텀겨준다
 	static ComponentFunctionData PushComponentData(Component*);
 	void DontDestroyComponentSetting(Component* Com);
-
-	/// Grpahic Engine
-	GraphicEngineManager* GraphicManager;
 
 	///오브젝트 태그 리스트
 	static std::vector<size_t> GameObjectTagList;

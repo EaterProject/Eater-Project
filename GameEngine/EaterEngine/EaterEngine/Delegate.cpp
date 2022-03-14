@@ -79,7 +79,7 @@ void Delegate_Map::Clear()
 	FunctionList04.clear();
 }
 
-void Delegate_Map::PlayOnce(bool& isPlay)
+void Delegate_Map::PlayOnce()
 {
 	for (int i = 0; i < MaxCount; i++)
 	{
@@ -129,9 +129,6 @@ void Delegate_Map::PlayOnce(bool& isPlay)
 			//함수 실행
 			(*temp)[Index].FunctionPointer();
 			Index++;
-
-			//함수 실행 여부 설정
-			isPlay = true;
 		}
 
 		//한번만 실행되는 함수포인터라면 모두 실행후 삭제
