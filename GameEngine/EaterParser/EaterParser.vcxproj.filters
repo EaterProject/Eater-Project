@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="소스 파일\EaterHeader">
+      <UniqueIdentifier>{04cf4ebb-3784-4282-a374-33b63a5e0575}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\EaterDLL">
+      <UniqueIdentifier>{8b86cb5f-9912-48bd-8a42-7f0785d76618}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\EaterParser">
+      <UniqueIdentifier>{e6f29447-9613-4478-ab2b-916305d1e0d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\OutPutData">
+      <UniqueIdentifier>{990283d8-e5b7-4ee9-8a23-73ad3e62dba9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Data">
+      <UniqueIdentifier>{95ead69f-fbc5-48a6-a444-8b5cbb02a88e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Data\List">
+      <UniqueIdentifier>{0a3deca1-ab98-440d-bf70-ba7d166ba2a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Data\Node">
+      <UniqueIdentifier>{d0868268-2389-4e14-b4f9-a85b8bb8bdc9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="framework.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="EaterHeader.h">
+      <Filter>소스 파일\EaterHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="EaterDLL.h">
+      <Filter>소스 파일\EaterDLL</Filter>
+    </ClInclude>
+    <ClInclude Include="EaterParser.h">
+      <Filter>소스 파일\EaterParser</Filter>
+    </ClInclude>
+    <ClInclude Include="EaterSaveData.h">
+      <Filter>소스 파일\OutPutData</Filter>
+    </ClInclude>
+    <ClInclude Include="EaterList.h">
+      <Filter>소스 파일\Data\List</Filter>
+    </ClInclude>
+    <ClInclude Include="EaterNode.h">
+      <Filter>소스 파일\Data\Node</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="dllmain.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="EaterHeader.cpp">
+      <Filter>소스 파일\EaterHeader</Filter>
+    </ClCompile>
+    <ClCompile Include="EaterParser.cpp">
+      <Filter>소스 파일\EaterParser</Filter>
+    </ClCompile>
+    <ClCompile Include="EaterList.cpp">
+      <Filter>소스 파일\Data\List</Filter>
+    </ClCompile>
+    <ClCompile Include="EaterNode.cpp">
+      <Filter>소스 파일\Data\Node</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

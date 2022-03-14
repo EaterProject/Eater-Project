@@ -1,0 +1,107 @@
+#include "Loading.h"
+#include "MainHeader.h"
+#include "GameObject.h"
+#include "Camera.h"
+#include "Light.h"
+#include "Transform.h"
+#include "ParticleSystem.h"
+#include "KeyInput.h"
+#include "ClientNetworkManager.h"
+#include "PortIPDefine.h"
+#include "Camera.h"
+#include "PlayerCamera.h"
+#include "MeshFilter.h"
+
+void Loading::Awake()
+{
+	LoadTexturePath("../Resources/Texture/");
+	//LoadTextureFile("../Resources/Texture/Particle");
+	LoadTexture("Particle/particle_hotCloud.png");
+	LoadTexture("Particle/particle_blast4.png");
+
+	//로딩중일떄 보여줄 파티클을 생성함
+	ParticleObj = Instance();
+	obj = InstanceParticle("Particle12");
+	ParticleObj->ChoiceChild(obj);
+	particles = obj->GetComponent<ParticleSystem>();
+	particles->SetMeshName("Quad");
+	particles->SetRenderType(PARTICLE_RENDER_OPTION::VERTICAL_BILLBOARD);
+	particles->SetDiffuseName("particle_hotCloud");
+	particles->SetStartLifeTime(1.5f, 1.8f);
+	particles->SetStartScale(4.0f, 7.0f);
+	particles->SetStartRotation(-360, 360);
+	particles->SetStartColor(Vector4(255, 174, 73, 28), Vector4(255, 111, 53, 255));
+	particles->SetMaxParticles(60);
+	particles->SetRateOverTime(25.0f);
+	particles->SetShapeRadius(0.1875f);
+	particles->SetStartForce(Vector3(0, 5, 0));
+	particles->SetLifeTimeRotation(-15.0f, 15.0f);
+	particles->SetTextureTiling(8, 8);
+	particles->SetPlayTime(1, true);
+	particles->Play();
+}
+
+
+void Loading::Update()
+{
+	if (ThreadRun == false)
+	{
+		ChoiceScene("intro");
+		//ChoiceScene("inGame");
+	}
+}
+
+void Loading::End()
+{
+
+}
+
+void Loading::ThreadFunction()
+{
+	//LoadTexture("Dump.png");
+<<<<<<< HEAD
+=======
+
+	//LoadMeshFile("../Resources/Mesh/BaseMesh", SCALING);
+	LoadMeshFile("../Resources/Mesh/Enemy/MonsterA");
+	LoadMeshFile("../Resources/Mesh/Player",SCALING);
+	
+>>>>>>> main
+
+	//LoadMeshFile("../Resources/Mesh/BaseMesh", SCALING);
+	//LoadMeshFile("../Resources/Mesh/Enemy/MonsterA");
+	//LoadMeshFile("../Resources/Mesh/Player",SCALING);
+	
+	///텍스쳐 폴더 로드
+	LoadTextureFile("../Resources/Texture/Basic");
+	LoadTextureFile("../Resources/Texture/Map");
+	//LoadFile("../Resources/Texture/Particle");
+
+	LoadEnvironment("../Resources/Texture/Environment/Night.dds");
+
+	///터레인 로드
+	LoadMeshPath("../Resources/Mesh/Terrain/");
+	LoadTexturePath("../Resources/Texture/");
+
+<<<<<<< HEAD
+	//LoadMeshFile("../Resources/Mesh/Map", SCALING);
+=======
+	LoadMeshFile("../Resources/Mesh/Map", SCALING);
+>>>>>>> main
+
+	LoadTerrainMesh("Terrain", "Terrain_RGB.png", SCALING);
+	LoadMesh("TerrainDecimate", SCALING);
+
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
+	LoadTexture("terrain_ground_A_BaseColor.png");
+	LoadTexture("terrain_ground_B_BaseColor.png");
+	LoadTexture("terrain_ground_A_Normal.png");
+	LoadTexture("terrain_ground_B_Normal.png");
+	LoadTexture("terrain_ground_A_ORM.png");
+	LoadTexture("terrain_ground_B_ORM.png");
+}
+
+

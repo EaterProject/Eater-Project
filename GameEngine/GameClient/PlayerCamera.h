@@ -1,0 +1,37 @@
+#pragma once
+#include "Component.h"
+
+/// <summary>
+/// 사용자의 키인풋을받아 움직이는 카메라
+/// </summary>
+class Camera;
+class GameObject;
+class Transform;
+class PlayerCamera : public Component
+{
+public:
+	PlayerCamera();
+	~PlayerCamera();
+
+	void Awake();
+	void EndUpdate();
+
+	GameObject* Userobject;
+	Camera*		MainCam;
+
+	//나의 트렌스폼
+	Transform*	mTransform;
+	//유저캐릭터의 트랜스폼
+	Transform*	mUserTransform;
+
+	Vector3 CamOffet;
+
+	float X_Radian;
+	float Y_Radian;
+	float NowX;
+	float NowY;
+	float PastX;
+	float PastY;
+
+	bool MouseCursor;
+};

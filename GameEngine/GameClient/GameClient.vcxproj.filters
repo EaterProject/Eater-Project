@@ -1,0 +1,178 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="소스 파일\Component">
+      <UniqueIdentifier>{0f1fe710-7256-4e0c-bc2f-cd66e5d514f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Scene">
+      <UniqueIdentifier>{f4fe76d3-6edb-4d2a-ad68-d5564f8f0dcc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\AI">
+      <UniqueIdentifier>{b6bf3055-15fd-4fdc-befd-c0a403936bdd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\Keyinput">
+      <UniqueIdentifier>{e7082ad1-e513-4d75-a040-3b1a44d10385}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Scene\intro">
+      <UniqueIdentifier>{6c66b294-6e2d-45e5-af55-b696ee34abf8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Scene\inGame">
+      <UniqueIdentifier>{e93e28d7-0fc6-4289-b4a5-74957091c4b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\GameManager">
+      <UniqueIdentifier>{f719478b-bad2-44d2-a53c-e5625be7e03e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\Player">
+      <UniqueIdentifier>{a59a5f89-b961-40e7-8282-6208957b9634}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\ClientNetworkManager">
+      <UniqueIdentifier>{52069034-015d-4d9f-a2e9-94fb6c116818}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Scene\Loading">
+      <UniqueIdentifier>{f6aae002-8b2f-4f9e-9f7f-1cf3cad1c77d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\ClientData">
+      <UniqueIdentifier>{0ee1580a-e2a9-46d0-99b1-3b63c3359eb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\ClientData\PlayerStruct">
+      <UniqueIdentifier>{e6b2d29f-8875-4703-a4ef-d5f3958b9542}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\PlayerCamera">
+      <UniqueIdentifier>{925263ad-cb58-4a06-824c-b8133a6978b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\Monster">
+      <UniqueIdentifier>{ffc9e84f-e196-4baa-a051-24a433d4873d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\ManaStone">
+      <UniqueIdentifier>{b125c172-305a-4d80-a3cb-ba9fc70063ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Scene\TestScene">
+      <UniqueIdentifier>{e34409cd-ddb7-43b7-b06e-2610bfda158f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="framework.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="GameClient.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="GameManager.h">
+      <Filter>소스 파일\GameManager</Filter>
+    </ClInclude>
+    <ClInclude Include="AI.h">
+      <Filter>소스 파일\Component\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyInput.h">
+      <Filter>소스 파일\Component\Keyinput</Filter>
+    </ClInclude>
+    <ClInclude Include="intro.h">
+      <Filter>소스 파일\Scene\intro</Filter>
+    </ClInclude>
+    <ClInclude Include="inGame.h">
+      <Filter>소스 파일\Scene\inGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>소스 파일\Component\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientNetworkManager.h">
+      <Filter>소스 파일\Component\ClientNetworkManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Loading.h">
+      <Filter>소스 파일\Scene\Loading</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerData.h">
+      <Filter>소스 파일\ClientData\PlayerStruct</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerCamera.h">
+      <Filter>소스 파일\Component\PlayerCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="TestPlayer.h">
+      <Filter>소스 파일\Component\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>소스 파일\Component\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="ManaStone.h">
+      <Filter>소스 파일\Component\ManaStone</Filter>
+    </ClInclude>
+    <ClInclude Include="TestScene.h">
+      <Filter>소스 파일\Scene\TestScene</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GameClient.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="GameManager.cpp">
+      <Filter>소스 파일\GameManager</Filter>
+    </ClCompile>
+    <ClCompile Include="AI.cpp">
+      <Filter>소스 파일\Component\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyInput.cpp">
+      <Filter>소스 파일\Component\Keyinput</Filter>
+    </ClCompile>
+    <ClCompile Include="intro.cpp">
+      <Filter>소스 파일\Scene\intro</Filter>
+    </ClCompile>
+    <ClCompile Include="inGame.cpp">
+      <Filter>소스 파일\Scene\inGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>소스 파일\Component\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientNetworkManager.cpp">
+      <Filter>소스 파일\Component\ClientNetworkManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Loading.cpp">
+      <Filter>소스 파일\Scene\Loading</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerCamera.cpp">
+      <Filter>소스 파일\Component\PlayerCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="TestPlayer.cpp">
+      <Filter>소스 파일\Component\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>소스 파일\Component\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="ManaStone.cpp">
+      <Filter>소스 파일\Component\ManaStone</Filter>
+    </ClCompile>
+    <ClCompile Include="TestScene.cpp">
+      <Filter>소스 파일\Scene\TestScene</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GameClient.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="small.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="GameClient.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="소스 파일\Image">
+      <UniqueIdentifier>{abeef8ea-824f-4750-b145-1500a86c7d7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\ParserBase">
+      <UniqueIdentifier>{399884c6-03d9-4583-8461-8543cc6ecf40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Model">
+      <UniqueIdentifier>{9b835225-3477-453c-946a-003fc16723d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Model\FBX">
+      <UniqueIdentifier>{68c401e0-8aaf-411d-96a6-8e13712c44f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Model\ASE">
+      <UniqueIdentifier>{ca0eeb09-38f3-44b7-a9e0-b4a3319ba187}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Image\Char">
+      <UniqueIdentifier>{042334ff-5b7e-44fe-9cbd-b601fb9dbf33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Image\Float">
+      <UniqueIdentifier>{e7d4d9bc-0c1b-4099-81f5-e2d9e0e84761}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Lexer.cpp">
+      <Filter>소스 파일\Model\ASE</Filter>
+    </ClCompile>
+    <ClCompile Include="ASEFile.cpp">
+      <Filter>소스 파일\Model\ASE</Filter>
+    </ClCompile>
+    <ClCompile Include="ASEParser.cpp">
+      <Filter>소스 파일\Model\ASE</Filter>
+    </ClCompile>
+    <ClCompile Include="FBXParser.cpp">
+      <Filter>소스 파일\Model\FBX</Filter>
+    </ClCompile>
+    <ClCompile Include="BoneWeights.cpp">
+      <Filter>소스 파일\Model\FBX</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageParser.cpp">
+      <Filter>소스 파일\ParserBase</Filter>
+    </ClCompile>
+    <ClCompile Include="CharImage.cpp">
+      <Filter>소스 파일\Image\Char</Filter>
+    </ClCompile>
+    <ClCompile Include="FloatImage.cpp">
+      <Filter>소스 파일\Image\Float</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelParser.cpp">
+      <Filter>소스 파일\ParserBase</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Lexer.h">
+      <Filter>소스 파일\Model\ASE</Filter>
+    </ClInclude>
+    <ClInclude Include="ASEFile.h">
+      <Filter>소스 파일\Model\ASE</Filter>
+    </ClInclude>
+    <ClInclude Include="ASEParser.h">
+      <Filter>소스 파일\Model\ASE</Filter>
+    </ClInclude>
+    <ClInclude Include="FBXParser.h">
+      <Filter>소스 파일\Model\FBX</Filter>
+    </ClInclude>
+    <ClInclude Include="BoneWeights.h">
+      <Filter>소스 파일\Model\FBX</Filter>
+    </ClInclude>
+    <ClInclude Include="CharImage.h">
+      <Filter>소스 파일\Image\Char</Filter>
+    </ClInclude>
+    <ClInclude Include="FloatImage.h">
+      <Filter>소스 파일\Image\Float</Filter>
+    </ClInclude>
+    <ClInclude Include="Export\ImageParser.h">
+      <Filter>소스 파일\ParserBase</Filter>
+    </ClInclude>
+    <ClInclude Include="Export\ModelParser.h">
+      <Filter>소스 파일\ParserBase</Filter>
+    </ClInclude>
+    <ClInclude Include="Export\ParserDLL.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

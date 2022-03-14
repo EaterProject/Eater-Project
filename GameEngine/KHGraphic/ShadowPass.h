@@ -1,0 +1,42 @@
+#pragma once
+class ShadowPass : public RenderPassBase
+{
+public:
+	ShadowPass();
+	~ShadowPass();
+
+public:
+	void Create(int width, int height) override;
+	void Start(int width, int height) override;
+	void OnResize(int width, int height) override;
+	void Release() override;
+
+	void SetOption(UINT renderOption) override;
+
+public:
+	void BeginRender();
+	void RenderUpdate(const std::vector<RenderData*>& meshlist);
+	void RenderUpdate(const RenderData* mesh);
+
+private:
+	VertexShader* m_MeshShadowVS;
+	VertexShader* m_MeshInstShadowVS;
+	VertexShader* m_SkinShadowVS;
+	VertexShader* m_SkinInstShadowVS;
+
+	DepthStencil* m_ShadowDS;
+
+	InstanceBuffer* m_Mesh_IB;
+	
+	VertexInput::MeshInstance m_MeshData;
+	std::vector<VertexInput::MeshInstance>	m_MeshInstance;
+
+	UINT m_InstanceCount = 0;
+	size_t m_InstanceStride = 0;
+
+
+	ID3D11DepthStencilView* m_ShadowDSV;
+	ID3D11RasterizerState* m_DepthRS;
+	D3D11_VIEWPORT* m_ShadowVP;
+};
+
