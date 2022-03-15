@@ -78,9 +78,7 @@ public:
 	afx_msg void OnDropFiles(HDROP hDropInfo);
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
-	afx_msg void OnAssetsFileList_DragStart(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnChoice_Hirearchy_Item(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnAssetsClick(NMHDR* pNMHDR, LRESULT* pResult);
 	
 	//버튼들
 	afx_msg void OnDelteObject_Button();
@@ -94,4 +92,5 @@ public:
 	afx_msg void OnSaveScene();
 	afx_msg void OnCreateParticle();
 	afx_msg void OnCreateTerrain();
+	afx_msg LRESULT OnUserFun(WPARAM wParam, LPARAM lparam);
 };

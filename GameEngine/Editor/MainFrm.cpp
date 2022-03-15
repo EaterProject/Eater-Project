@@ -10,6 +10,7 @@
 #include "RenderView.h"
 #include "MainHeader.h"
 #include "OptionView.h"
+#include "AssetView.h"
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -70,32 +71,50 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 BOOL CMainFrame::OnCreateClient(LPCREATESTRUCT /*lpcs*/,
 	CCreateContext* pContext)
 {
-	if (m_wndSplitter.CreateStatic(this, 1, 2) == false)
+	if (m_wndSplitter[0].CreateStatic(this, 1, 2) == false)
 	{
 		MessageBox(_T("윈도우 생성실패"));
 		return false;
 	}
 
+	int Right_pane		= m_wndSplitter[0].IdFromRowCol(0, 0);
+	int Left_pane		= m_wndSplitter[0].IdFromRowCol(0, 1);
+	
+	if (m_wndSplitter[1].CreateStatic(&m_wndSplitter[0], 2, 1, WS_CHILD | WS_VISIBLE , Right_pane) == false)
+	{
+		MessageBox(_T("윈도우 생성실패"));
+		return false;
+	}
+	
 	int ClientSizeX = (int)GetSystemMetrics(SM_CXSCREEN);
 	int ClientSizeY = (int)GetSystemMetrics(SM_CYSCREEN);
 	int RenderSize	= ClientSizeX -750;
-
-	if (m_wndSplitter.CreateView(0, 0, RUNTIME_CLASS(RenderView), CSize(RenderSize, 0), pContext) == false)
+	
+	if (m_wndSplitter[1].CreateView(0, 0, RUNTIME_CLASS(RenderView), CSize(0, ClientSizeY - 450), pContext) == false)
+	{
+		MessageBox(_T("윈도우 VIEW 생성실패"));
+		return false;
+	}
+	if (m_wndSplitter[1].CreateView(1, 0, RUNTIME_CLASS(AssetView), CSize(0,0), pContext) == false)
+	{
+		MessageBox(_T("윈도우 VIEW 생성실패"));
+		return false;
+	}
+	
+	if (m_wndSplitter[0].CreateView(0, 1, RUNTIME_CLASS(OptionView), CSize(RenderSize, 0), pContext) == false)
 	{
 		MessageBox(_T("윈도우 VIEW 생성실패"));
 		return false;
 	}
 
-	if (m_wndSplitter.CreateView(0, 1, RUNTIME_CLASS(OptionView), CSize(0, 0), pContext) == false)
-	{
-		MessageBox(_T("윈도우 VIEW 생성실패"));
-		return false;
-	}
+	m_RenderView = static_cast<RenderView*>(m_wndSplitter[1].GetPane(0, 0));
+	m_OptionView = static_cast<OptionView*>(m_wndSplitter[1].GetPane(1, 0));
+	m_AssetView  = static_cast<AssetView*>(m_wndSplitter[0].GetPane(0, 1));
+	//
+	m_wndSplitter[0].SetColumnInfo(0, RenderSize, 10);
 
 
-	m_RenderView = static_cast<RenderView*>(m_wndSplitter.GetPane(0, 0));
-	m_OptionView = static_cast<OptionView*>(m_wndSplitter.GetPane(0, 1));
-
+	
 	return true;
 }
 

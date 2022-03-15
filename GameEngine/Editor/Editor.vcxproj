@@ -201,6 +201,8 @@ copy /Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)" </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AssetsDialog.h" />
+    <ClInclude Include="AssetView.h" />
     <ClInclude Include="CTAP_Light.h" />
     <ClInclude Include="CTAP_Particle.h" />
     <ClInclude Include="CTAP_Transform.h" />
@@ -236,6 +238,8 @@ copy /Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)" </Command>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AssetsDialog.cpp" />
+    <ClCompile Include="AssetView.cpp" />
     <ClCompile Include="CTAP_Light.cpp" />
     <ClCompile Include="CTAP_Particle.cpp" />
     <ClCompile Include="CTAP_Transform.cpp" />

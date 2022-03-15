@@ -20,6 +20,7 @@
 #define IDD_TAP_PARTICLE                339
 #define IDD_TAP_LIGHT                   340
 #define IDD_SCENE_SAVE                  341
+#define IDD_ASSETS                      343
 #define IDC_TREE1                       1000
 #define IDC_TREE2                       1001
 #define IDC_TREE3                       1002
@@ -77,7 +78,9 @@
 #define IDC_EDIT28                      1026
 #define IDC_BUTTON22                    1026
 #define IDC_EDIT29                      1027
+#define IDC_BUTTON23                    1027
 #define IDC_EDIT30                      1028
+#define IDC_BUTTON24                    1028
 #define IDC_MFCSHELLLIST3               1029
 #define IDC_EDIT31                      1029
 #define IDC_LIST1                       1030
@@ -102,6 +105,7 @@
 #define IDC_CHECK3                      1047
 #define IDC_SCROLLBAR2                  1048
 #define IDC_CHECK4                      1049
+#define IDC_LIST2                       1049
 #define IDC_CHECK5                      1050
 #define IDC_CHECK6                      1051
 #define IDC_CHECK7                      1052
@@ -110,9 +114,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        343
+#define _APS_NEXT_RESOURCE_VALUE        345
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1049
+#define _APS_NEXT_CONTROL_VALUE         1050
 #define _APS_NEXT_SYMED_VALUE           311
 #endif
 #endif

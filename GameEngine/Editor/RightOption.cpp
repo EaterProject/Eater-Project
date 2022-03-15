@@ -63,20 +63,19 @@ BEGIN_MESSAGE_MAP(RightOption, CDialogEx)
 	ON_WM_DROPFILES()
 	ON_WM_MOUSEMOVE()
 	ON_WM_LBUTTONUP()
-	ON_NOTIFY(LVN_BEGINDRAG, IDC_LIST1, &RightOption::OnAssetsFileList_DragStart)
 	ON_NOTIFY(NM_DBLCLK, IDC_TREE2, &RightOption::OnChoice_Hirearchy_Item)
 	ON_BN_CLICKED(IDC_BUTTON8, &RightOption::OnDelteObject_Button)
 	ON_BN_CLICKED(IDC_BUTTON3, &RightOption::OnOpenAssetsFolder)
 	ON_BN_CLICKED(IDC_BUTTON4, &RightOption::OnDeleteFile_Button)
 	ON_BN_CLICKED(IDC_BUTTON7, &RightOption::OnChange_DataFormat)
-	ON_NOTIFY(NM_CLICK, IDC_LIST1, &RightOption::OnAssetsClick)
-ON_WM_TIMER()
-ON_WM_ACTIVATE()
-ON_BN_CLICKED(IDC_BUTTON9, &RightOption::OnOpenExeFile_Button)
-ON_NOTIFY(TCN_SELCHANGE, IDC_TAB1, &RightOption::OnClickTap)
-ON_BN_CLICKED(IDC_BUTTON11, &RightOption::OnSaveScene)
-ON_BN_CLICKED(IDC_BUTTON12, &RightOption::OnCreateParticle)
-ON_BN_CLICKED(IDC_BUTTON10, &RightOption::OnCreateTerrain)
+	ON_WM_TIMER()
+	ON_WM_ACTIVATE()
+	ON_BN_CLICKED(IDC_BUTTON9, &RightOption::OnOpenExeFile_Button)
+	ON_NOTIFY(TCN_SELCHANGE, IDC_TAB1, &RightOption::OnClickTap)
+	ON_BN_CLICKED(IDC_BUTTON11, &RightOption::OnSaveScene)
+	ON_BN_CLICKED(IDC_BUTTON12, &RightOption::OnCreateParticle)
+	ON_BN_CLICKED(IDC_BUTTON10, &RightOption::OnCreateTerrain)
+	ON_MESSAGE(M_MSG_MSG1,		&RightOption::OnUserFun)
 END_MESSAGE_MAP()
 
 void RightOption::Create_Hirearchy_Item(GameObject* Obj, HTREEITEM TOP)
@@ -454,29 +453,6 @@ void RightOption::OnLButtonUp(UINT nFlags, CPoint point)
 	CDialogEx::OnLButtonUp(nFlags, point);
 }
 
-void RightOption::OnAssetsFileList_DragStart(NMHDR* pNMHDR, LRESULT* pResult)
-{
-	//이미지 컨트롤 에서 드레그가 시작되었을때
-	LPNMLISTVIEW pNMLV = reinterpret_cast<LPNMLISTVIEW>(pNMHDR);
-	CPoint ptDrag, ptAction;
-
-	DragItemPosOffset = pNMLV->ptAction;
-	DragItemIndex = pNMLV->iItem;
-
-	DragItemName = AssetsFileList.GetItemText(DragItemIndex, 0);
-
-	//이동시킬 아이템 랜더링
-	DragImg = AssetsFileList.CreateDragImage(DragItemIndex, &ptDrag);
-	DragImg->SetBkColor(RGB(0, 0, 0));
-	SetCapture();
-
-	DragImg->BeginDrag(0, ptAction - ptDrag);
-	AssetsFileList.ClientToScreen(&ptAction);
-	DragImg->DragEnter(NULL, ptAction);
-
-	*pResult = 0;
-}
-
 void RightOption::OnChoice_Hirearchy_Item(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	//선택한 아이템의 이름을 가져온다
@@ -514,8 +490,6 @@ void RightOption::OnChoice_Hirearchy_Item(NMHDR* pNMHDR, LRESULT* pResult)
 		mAnimation->ShowWindow(SW_HIDE);
 		mAnimation->SetGameObject(AC);
 		FrontCount++;
-
-		//Create_Hirearchy_Item(ChoiceObject, ChoiceItem);
 	}
 
 	if (MF != nullptr)
@@ -609,23 +583,13 @@ void RightOption::OnChange_DataFormat()
 	}
 }
 
-void RightOption::OnAssetsClick(NMHDR* pNMHDR, LRESULT* pResult)
-{
-	//에셋의 파일을 클릭했을때 이름을 가져온다
-	LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
-	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
-	int ClickItemIndex = pNMListView->iItem;
-	ClickItemName = AssetsFileList.GetItemText(ClickItemIndex, 0);
-	*pResult = 0;
-}
-
 void RightOption::OnTimer(UINT_PTR nIDEvent)
 {
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
 	switch (nIDEvent)
 	{
 	case 1:
-		mLoading->SetUpdate(LoadAssetsCount());
+		//mLoading->SetUpdate(LoadAssetsCount());
 		break;
 	}
 	
@@ -741,4 +705,9 @@ void RightOption::OnCreateParticle()
 void RightOption::OnCreateTerrain()
 {
 	Demo::CreateTerrain("");
+}
+
+LRESULT RightOption::OnUserFun(WPARAM wParam, LPARAM lparam)
+{
+	return LRESULT();
 }
