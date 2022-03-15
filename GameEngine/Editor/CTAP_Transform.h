@@ -19,6 +19,7 @@ public:
 #endif
 
 protected:
+	virtual BOOL OnInitDialog();
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 지원입니다.
 	virtual void UpdateData(BOOL bSaveAndValidate /* = TRUE */);
 	DECLARE_MESSAGE_MAP()
@@ -33,13 +34,9 @@ public:
 	CEdit Rot_X,Rot_Y,Rot_Z;
 	CEdit Scl_X,Scl_Y,Scl_Z;
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
-	afx_msg void OnLeftRot_Button();
-	afx_msg void OnRightRot_Button();
 	afx_msg void OnAllScaleDown_Button();
 	afx_msg void OnAllScaleReset_Button();
 	afx_msg void OnAllScaleUp_Button();
-	afx_msg void OnUpRot_Button();
-	afx_msg void OnDownRot_Button();
 	afx_msg void OnResetRot_Button();
 	afx_msg void OnUpPosition_Y_Button();
 	afx_msg void OnDownPosition_Y_Button();
@@ -47,4 +44,12 @@ public:
 	afx_msg void OnDownPosition_Z_Button();
 	afx_msg void OnUpPosition_X_Button();
 	afx_msg void OnDownPosition_X_Button();
+	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
+	CSliderCtrl Rotation_X_Slider;
+	CSliderCtrl Rotation_Y_Slider;
+	CSliderCtrl Rotation_Z_Slider;
+	afx_msg void OnBnClickedButton2();
+	afx_msg void OnBnClickedButton13();
+	afx_msg void OnBnClickedButton25();
+	afx_msg void OnBnClickedButton23();
 };

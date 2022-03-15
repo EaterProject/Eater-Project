@@ -50,7 +50,7 @@ BOOL AssetsDialog::OnInitDialog()
 	//ChangeWindowMessageFilter(WM_DROPFILES,MSGFLT_ADD);
 	//DragAcceptFiles();
 
-
+	
 	return 0;
 }
 
@@ -108,6 +108,7 @@ int AssetsDialog::FindChildFile(HTREEITEM hParentItem, CString str)
 			Count++;
 		}
 	}
+	
 	return Count + ChildCount;
 }
 
@@ -115,12 +116,12 @@ void AssetsDialog::OnSize(UINT nType, int cx, int cy)
 {
 	if (AssetsTree)
 	{
-		AssetsTree.MoveWindow(0, 0, 300, cy);
+		AssetsTree.MoveWindow(0, 0, 250, cy);
 	}
 
 	if (AssetsFile)
 	{
-		AssetsFile.MoveWindow(300, 0, cx-300, cy);
+		AssetsFile.MoveWindow(250, 0, cx- 250, cy);
 	}
 
 	CDialogEx::OnSize(nType, cx, cy);
@@ -318,8 +319,14 @@ void AssetsDialog::OnLButtonUp(UINT nFlags, CPoint point)
 		DragImg->EndDrag();
 		ReleaseCapture();
 
-		
+		HWND hwnd = AfxGetMainWnd()->GetSafeHwnd();
+		 GetDlgItem(IDD_RIGHT_OPTION, &hwnd);
+	
+		 mRightOption = RightOption::GetThis();
 
+		 mRightOption->DragItemName = DragItemName;
+		 mRightOption->ChickHirearchyDarg(point);
+		 mRightOption->ChickTapDrag(point);
 	}
 	CDialogEx::OnLButtonUp(nFlags, point);
 }

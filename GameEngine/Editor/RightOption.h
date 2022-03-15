@@ -32,9 +32,6 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
-	//에셋창 변수들
-	CTreeCtrl AssetsTree;				//에셋 폴더를 보여주는 트리
-	CListCtrl AssetsFileList;			//에셋 파일을 보여주는 리스트
 	CImageList ImgList_Folder;			//이미지 리스트
 	CImageList ImgList_Big;				//이미지 리스트
 	HTREEITEM AssetsTreeTopParent;		//에셋트리에 최상위 아이템
@@ -66,18 +63,15 @@ public:
 	EditorManager*	m_EditorManager;	//자체포맷 변환 관리 매니저
 	Loading*		mLoading;			//로딩 바
 public:
+	static RightOption* GetThis();
 	void Create_Hirearchy_Item(GameObject* Obj, HTREEITEM TOP);
 	void Delete_Hirearchy_Item(HTREEITEM TOP);
-	int FindChildFile(HTREEITEM hParentItem, CString str);
 	void ChickTapDrag(CPoint point);
 	void ChickHirearchyDarg(CPoint point);
 	GameObject* FindGameObjectParent(HTREEITEM mItem);
 	void AssetsInitialize();
+	static RightOption* thisPointer;
 public:
-	afx_msg void OnAssetsTreeClick(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnDropFiles(HDROP hDropInfo);
-	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
-	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnChoice_Hirearchy_Item(NMHDR* pNMHDR, LRESULT* pResult);
 	
 	//버튼들

@@ -34,7 +34,6 @@ public:
 	CString DragItemName;
 
 	int DragItemIndex;
-
 	POINT DragItemPosOffset;
 	CImageList* DragImg;
 public:

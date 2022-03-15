@@ -90,7 +90,7 @@ BOOL CMainFrame::OnCreateClient(LPCREATESTRUCT /*lpcs*/,
 	int ClientSizeY = (int)GetSystemMetrics(SM_CYSCREEN);
 	int RenderSize	= ClientSizeX -750;
 	
-	if (m_wndSplitter[1].CreateView(0, 0, RUNTIME_CLASS(RenderView), CSize(0, ClientSizeY - 450), pContext) == false)
+	if (m_wndSplitter[1].CreateView(0, 0, RUNTIME_CLASS(RenderView), CSize(0, ClientSizeY - 350), pContext) == false)
 	{
 		MessageBox(_T("윈도우 VIEW 생성실패"));
 		return false;
@@ -110,11 +110,7 @@ BOOL CMainFrame::OnCreateClient(LPCREATESTRUCT /*lpcs*/,
 	m_RenderView = static_cast<RenderView*>(m_wndSplitter[1].GetPane(0, 0));
 	m_OptionView = static_cast<OptionView*>(m_wndSplitter[1].GetPane(1, 0));
 	m_AssetView  = static_cast<AssetView*>(m_wndSplitter[0].GetPane(0, 1));
-	//
 	m_wndSplitter[0].SetColumnInfo(0, RenderSize, 10);
-
-
-	
 	return true;
 }
 
