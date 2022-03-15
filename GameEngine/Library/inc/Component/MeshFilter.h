@@ -40,10 +40,13 @@ public:
 public:
 	//메쉬의 이름을 넣으면 데이터 로드
 	EATER_ENGINEDLL void SetMeshName(std::string mMeshName);
+	EATER_ENGINEDLL void SetMaterialName(std::string mMatName);
+	EATER_ENGINEDLL void SetAnimationName(std::string mTextureName);
+
 	EATER_ENGINEDLL void SetDiffuseTextureName(std::string mTextureName);
 	EATER_ENGINEDLL void SetNormalTextureName(std::string mTextureName);
+	EATER_ENGINEDLL void SetEmissiveTextureName(std::string mTextureName);
 	EATER_ENGINEDLL void SetORMTextureName(std::string mTextureName);
-	EATER_ENGINEDLL void SetAnimationName(std::string mTextureName);
 
 	EATER_ENGINEDLL void SetEmissiveFactor(float emissiveFactor);
 	EATER_ENGINEDLL void SetRoughnessFactor(float roughnessFactor);
@@ -53,6 +56,7 @@ public:
 	EATER_ENGINEDLL std::string GetDiffuseTextureName();
 	EATER_ENGINEDLL std::string GetNormlaTextureName();
 	EATER_ENGINEDLL std::string GetORMTextureName();
+
 public:
 	void SetObjectData() override;
 
@@ -62,10 +66,11 @@ private:
 
 	void CreateMesh();
 
-	//초기설정 Texture Setting
+	void CheckMaterial();
 	void CheckTexture();
 	void CheckAnimation();
 
+	void SetMaterial(std::string matName);
 	void SetTexture(std::string texName, UINT texType);
 
 private:
@@ -78,17 +83,20 @@ private:
 	void SetMatrixData(LoadMeshData* LoadMesh, MeshData* mMesh,GameObject* obj);
 	void SetBufferData(LoadMeshData* LoadMesh, MeshData* mMesh);
 	void SetType(LoadMeshData* LoadMesh, MeshData* mMesh);
-	
 
 	bool isLoad_Mesh;			//매쉬 로드여부
+	bool isLoad_Material;		//매터리얼 로드여부
 	bool isLoad_Texture;		//텍스쳐 로드 여부
 	bool isLoad_Animation;		//애니메이션 로드여부
 
-	std::string MeshName;		//로드한 매쉬 이름
-	std::string DiffuseTextureName;	//로드한 텍스쳐 이름
-	std::string NormlaTextureName;	//로드한 텍스쳐 이름
-	std::string ORMTextureName;	//로드한 텍스쳐 이름
-	std::string AnimationName;	//로드한 애니메이션 이름
+	std::string MeshName;				//로드한 매쉬 이름
+	std::string AnimationName;			//로드한 애니메이션 이름
+
+	std::string MaterialName;			//로드한 매터리얼 이름
+	std::string DiffuseTextureName;		//로드한 텍스쳐 이름
+	std::string NormalTextureName;		//로드한 텍스쳐 이름
+	std::string EmissiveTextureName;	//로드한 텍스쳐 이름
+	std::string ORMTextureName;			//로드한 텍스쳐 이름
 
 	Material* Materials;		//Material Data
 

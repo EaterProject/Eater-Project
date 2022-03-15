@@ -176,6 +176,12 @@ void RenderManager::AddChangeMeshData(MeshData* meshData)
 	m_ChangeMeshList.push(meshData);
 }
 
+void RenderManager::AddChangeMaterialData(MaterialData* materialData)
+{
+	// 현재 바뀐 Material Data 동기화를 위해 삽입..
+	m_ChangeMaterialList.push(materialData);
+}
+
 void RenderManager::DeleteMeshData(MeshData* meshData)
 {
 	// Object Type에 따른 Render Mesh Data 제거..
@@ -539,10 +545,8 @@ void RenderManager::ConvertMeshRenderData(MeshData* meshData, RenderData* render
 		meshData->RenderMeshIndex = 0;
 
 		// 해당 Instance List에 삽입..
-		std::vector<RenderData*> newMeshListData;
-		newMeshListData.push_back(renderData);
-
-		m_RenderMeshList.push_back(newMeshListData);
+		m_RenderMeshList.push_back(std::vector<RenderData*>());
+		m_RenderMeshList.back().push_back(renderData);
 	}
 }
 

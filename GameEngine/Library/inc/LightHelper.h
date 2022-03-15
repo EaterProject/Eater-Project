@@ -55,12 +55,18 @@ struct SpotLightData
 	Matrix LightViewProj = Matrix();
 };
 
-struct MaterialOption
+struct MaterialSubData
 {
-	MaterialOption() = default;
+	MaterialSubData() = default;
+
+	Vector4 BaseColor;					// Base Color
+	Vector4 AddColor;					// Add Color
 
 	float EmissiveFactor = 1.0f;		// Emissive 강도
 	float RoughnessFactor = 1.0f;		// Roughness 강도
 	float MetallicFactor = 1.0f;		// Metallic 강도
+
+	bool Alpha = false;					// Alpha Mesh
+	Matrix TexTM;						// Material의 텍스쳐 행렬
 };
 #endif // LIGHTHELPER_H

@@ -19,6 +19,7 @@
 MeshFilter::MeshFilter()
 {
 	MeshName = "";
+
 	//Component Terrain보다 먼저 실행되어야함
 	SetUp_Order = FUNCTION_ORDER_FIRST;
 	Start_Order = FUNCTION_ORDER_FIRST;
@@ -41,6 +42,11 @@ void MeshFilter::Start()
 		CreateMesh();
 	}
 
+	if (isLoad_Material == true)
+	{
+		CheckMaterial();
+	}
+
 	if (isLoad_Texture == true)
 	{
 		CheckTexture();
@@ -50,9 +56,11 @@ void MeshFilter::Start()
 	{
 		CheckAnimation();
 	}
+
 	//실행도중 텍스쳐나 메쉬를 바꿀수있게 모두 true
-	isLoad_Texture = true;
 	isLoad_Mesh = true;
+	isLoad_Material = true;
+	isLoad_Texture = true;
 	isLoad_Animation = true;
 }
 
@@ -72,6 +80,21 @@ void MeshFilter::SetMeshName(std::string mMeshName)
 	}
 }
 
+void MeshFilter::SetMaterialName(std::string mMatName)
+{
+	if (isLoad_Animation == false)
+	{
+		isLoad_Material = true;
+		MaterialName = mMatName;
+	}
+	else
+	{
+		MaterialName = mMatName;
+
+		SetMaterial(mMatName);
+	}
+}
+
 void MeshFilter::SetDiffuseTextureName(std::string mTextureName)
 {
 	if (isLoad_Texture == false)
@@ -81,6 +104,7 @@ void MeshFilter::SetDiffuseTextureName(std::string mTextureName)
 	}
 	else
 	{
+		DiffuseTextureName = mTextureName;
 		SetTexture(mTextureName, DIFFUSE_TEXTURE);
 	}
 }
@@ -90,11 +114,26 @@ void MeshFilter::SetNormalTextureName(std::string mTextureName)
 	if (isLoad_Texture == false)
 	{
 		isLoad_Texture = true;
-		NormlaTextureName = mTextureName;
+		NormalTextureName = mTextureName;
 	}
 	else
 	{
+		NormalTextureName = mTextureName;
 		SetTexture(mTextureName, NORMAL_TEXTURE);
+	}
+}
+
+void MeshFilter::SetEmissiveTextureName(std::string mTextureName)
+{
+	if (isLoad_Texture == false)
+	{
+		isLoad_Texture = true;
+		EmissiveTextureName = mTextureName;
+	}
+	else
+	{
+		EmissiveTextureName = mTextureName;
+		SetTexture(mTextureName, EMISSIVE_TEXTURE);
 	}
 }
 
@@ -107,6 +146,7 @@ void MeshFilter::SetORMTextureName(std::string mTextureName)
 	}
 	else
 	{
+		ORMTextureName = mTextureName;
 		SetTexture(mTextureName, ORM_TEXTURE);
 	}
 }
@@ -145,7 +185,7 @@ std::string MeshFilter::GetDiffuseTextureName()
 
 std::string MeshFilter::GetNormlaTextureName()
 {
-	return NormlaTextureName;
+	return NormalTextureName;
 }
 
 std::string MeshFilter::GetORMTextureName()
@@ -155,11 +195,16 @@ std::string MeshFilter::GetORMTextureName()
 
 void MeshFilter::SetObjectData()
 {
-	// 기본으로 MeshFilter 생성시 Material을 보유..
-	Materials = new Material();
 
-	// 오브젝트 설정 후 추가 작업
-	Materials->SetMeshData(gameobject->OneMeshData);
+}
+
+void MeshFilter::CheckMaterial()
+{
+	if (MaterialName.empty() == false)
+	{
+		// Material Setting..
+		SetMaterial(MaterialName);
+	}
 }
 
 void MeshFilter::CheckTexture()
@@ -170,17 +215,16 @@ void MeshFilter::CheckTexture()
 		// Diffuse Texture Setting..
 		SetTexture(DiffuseTextureName, DIFFUSE_TEXTURE);
 	}
-	if (NormlaTextureName.empty() == false)
+	if (NormalTextureName.empty() == false)
 	{
 		// Normal Texture Setting..
-		SetTexture(NormlaTextureName, NORMAL_TEXTURE);
+		SetTexture(NormalTextureName, NORMAL_TEXTURE);
 	}
 	if (ORMTextureName.empty() == false)
 	{
 		// ORM Texture Setting..
 		SetTexture(ORMTextureName, ORM_TEXTURE);
 	}
-	isLoad_Texture = true;
 }
 
 void MeshFilter::CheckAnimation()
@@ -198,55 +242,36 @@ void MeshFilter::CheckAnimation()
 	}
 }
 
+void MeshFilter::SetMaterial(std::string matName)
+{
+	Material* material = LoadManager::GetMaterial(matName);
+
+	// 해당 Material이 없다면..
+	if (material == nullptr) return;
+
+	// 해당 Material 설정..
+	Materials = material;
+}
+
 void MeshFilter::SetTexture(std::string texName, UINT texType)
 {
-	// 현재 Mesh Data..
-	MeshData* data = gameobject->OneMeshData;
-
-	// 현재 Mesh의 Material..
-	MaterialData* material = data->Material_Data;
-
-	// 설정 Texture Buffer..
-	TextureBuffer** nowTexture = nullptr;
-	TextureBuffer* changeTexture = LoadManager::GetTexture(texName);
-
-	// 해당 Texture가 Load되지 않은 경우 기존 Texture 사용..
-	if (changeTexture == nullptr && texType == DIFFUSE_TEXTURE)
-	{
-		changeTexture = LoadManager::GetTexture("Dump");
-		DiffuseTextureName = "Dump";
-	}
-
 	// Texture 설정..
 	switch (texType)
 	{
 	case DIFFUSE_TEXTURE:
-		nowTexture = &material->Albedo;
-		DiffuseTextureName = texName;
+		Materials->SetDiffuseTexture(texName);
 		break;
 	case NORMAL_TEXTURE:
-		nowTexture = &material->Normal;
-		NormlaTextureName = texName;
+		Materials->SetNormalTexture(texName);
+		break;
+	case EMISSIVE_TEXTURE:
+		Materials->SetEmissiveTexture(texName);
 		break;
 	case ORM_TEXTURE:
-		nowTexture = &material->ORM;
-		ORMTextureName = texName;
+		Materials->SetORMTexture(texName);
 		break;
 	default:
 		break;
-	}
-
-	// 현재 Texture와 다를 경우 변경..
-	if (*nowTexture != changeTexture)
-	{
-		// 최초 설정시가 아닌경우 Renderer 측 동기화를 위해 변경된 Mesh Data 전달..
-		if (*nowTexture != nullptr)
-		{
-			GraphicEngine::Get()->AddChangeMeshData(data);
-		}
-
-		// 현재 Texture 변경..
-		*nowTexture = changeTexture;
 	}
 }
 
@@ -307,7 +332,6 @@ void MeshFilter::CreateBoneMesh(LoadMeshData* mMesh, GameObject* Object)
 	Data->ObjType = OBJECT_TYPE::BONE;
 	Object->Name = mMesh->Name;
 
-
 	int ChildCount = (int)mMesh->Child.size();
 	for (int i = 0; i < ChildCount; i++)
 	{
@@ -334,7 +358,6 @@ void MeshFilter::CreateSkinMesh(LoadMeshData* mMesh, GameObject* Object)
 		Object->Name = mMesh->Name;
 	}
 
-	Data->Material_Data = new MaterialData();
 	SetMatrixData(mMesh, Data, Object);
 	SetMaterialData(mMesh, Data);
 	SetBufferData(mMesh, Data);
@@ -358,18 +381,29 @@ void MeshFilter::CreateSkinMesh(LoadMeshData* mMesh, GameObject* Object)
 
 void MeshFilter::SetMaterialData(LoadMeshData* LoadMesh, MeshData* mMesh)
 {
-	mMesh->Alpha = LoadMesh->Alpha;
+	/// Material 가져와서 셋팅해줘야함
+	Material* material = LoadManager::GetMaterial(LoadMesh->MaterialName);
 
-	mMesh->Material_Data->Albedo = LoadManager::GetTexture(LoadMesh->AlbedoName);
-	mMesh->Material_Data->Normal = LoadManager::GetTexture(LoadMesh->NormalName);
-	mMesh->Material_Data->Emissive = LoadManager::GetTexture(LoadMesh->EmissiveName);
-	mMesh->Material_Data->ORM = LoadManager::GetTexture(LoadMesh->ORMName);
-
-	if (mMesh->Material_Data->Albedo == nullptr && isLoad_Texture == false)
+	// 로드 여부에 따른 Material 설정..
+	if (material)
 	{
-		isLoad_Texture = true;
-		DiffuseTextureName = "Dump";
+		// 로드한 Material 설정..
+		Materials = material;
 	}
+	else
+	{
+		// 새로운 Material 생성..
+		Materials = new Material();
+	}
+
+	// Render Material Data 설정..
+	mMesh->Material_Data = Materials->m_MaterialData;
+
+	/// 로드한 Material과 Texture가 다를 경우가 있나..?
+	//mMesh->Material_Data->Albedo = LoadManager::GetTexture(LoadMesh->AlbedoName);
+	//mMesh->Material_Data->Normal = LoadManager::GetTexture(LoadMesh->NormalName);
+	//mMesh->Material_Data->Emissive = LoadManager::GetTexture(LoadMesh->EmissiveName);
+	//mMesh->Material_Data->ORM = LoadManager::GetTexture(LoadMesh->ORMName);
 }
 
 void MeshFilter::SetMatrixData(LoadMeshData* LoadMesh, MeshData* mMesh, GameObject* Object)

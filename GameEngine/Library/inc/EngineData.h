@@ -37,17 +37,12 @@ class MaterialData
 public:
 	UINT Material_Index = 0;				// Material Index
 
-	MaterialOption* Material_Option = nullptr;	// Material Data
-
-	Matrix* TexTM = nullptr;				//매쉬의 텍스쳐 행렬
+	MaterialSubData* Material_SubData = nullptr;	// Material SubData
 
 	TextureBuffer* Albedo = nullptr;		// DiffuseMap Texture
 	TextureBuffer* Normal = nullptr;		// NormalMap Texture
 	TextureBuffer* Emissive = nullptr;		// Emissive Texture
 	TextureBuffer* ORM = nullptr;			// AO(R) + Roughness(G) + Metallic(B) Texture
-
-	Vector4 Color_Base;			// Base Color
-	Vector4 Color_Add;			// Add Color
 };
 
 // Terrain Data
@@ -117,7 +112,6 @@ public:
 	std::vector<DirectionalLightData*>	DirectionLights;
 	std::vector<PointLightData*>		PointLights;
 	std::vector<SpotLightData*>			SpotLights;
-	std::vector<MaterialOption*>		Materials;
 
 	// Debug Data
 	std::queue<RayCastData> RayCastDebugData;
@@ -141,8 +135,6 @@ public:
 	UINT MeshIndex = 0;									// Instance 구분을 위한 Index
 	UINT RenderMeshIndex = 0;							// Renderer 측 구분을 위한 Index
 	UINT RenderListIndex = 0;							// Renderer 측 구분을 위한 Index
-
-	bool Alpha = false;						// Alpha Mesh
 
 	IndexBuffer* IndexBuf = nullptr;				//인덱스 버퍼
 	VertexBuffer* VertexBuf = nullptr;				//버텍스 버퍼
@@ -199,6 +191,7 @@ public:
 	IndexBuffer* IndexBuf = nullptr;			//인덱스 버퍼
 	VertexBuffer* VertexBuf = nullptr;			//버텍스 버퍼
 
+	std::string MaterialName;
 	std::string AlbedoName;
 	std::string NormalName;
 	std::string EmissiveName;

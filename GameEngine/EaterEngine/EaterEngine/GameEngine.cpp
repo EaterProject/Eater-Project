@@ -96,7 +96,7 @@ void GameEngine::Initialize(HWND Hwnd, bool mConsoleDebug)
 	mDebugManager->Initialize(mKeyManager,mConsoleDebug);
 	mObjectManager->Initialize();
 	mSceneManager->Initialize(mObjectManager);
-	mLoadManager->Initialize(mGraphicManager, &g_CS);
+	mLoadManager->Initialize(mGraphicManager, mMaterialManager, &g_CS);
 	mTimeManager->Initialize();
 	mMaterialManager->Initialize();
 	mPhysManager->Initialize();
@@ -270,6 +270,15 @@ GameObject* GameEngine::InstanceLight(std::string ObjName, LIGHT_TYPE type)
 	temp->transform = Tr;
 
 	temp->AddComponent<Light>()->SetType(type);
+
+	return temp;
+}
+
+Material* GameEngine::InstanceMaterial(std::string matName /*= "Material"*/)
+{
+	DebugManager::Line("(Material)");
+
+	Material* temp = CreateMaterial();
 
 	return temp;
 }
@@ -456,6 +465,16 @@ GameObject* GameEngine::CreateInstance()
 	mGraphicManager->AddMeshData(newObject->OneMeshData);
 
 	return newObject;
+}
+
+Material* GameEngine::CreateMaterial()
+{
+	// 货肺款 Material 积己..
+	Material* newMaterial = new Material();
+
+	//
+
+	return newMaterial;
 }
 
 void GameEngine::CreateObject()

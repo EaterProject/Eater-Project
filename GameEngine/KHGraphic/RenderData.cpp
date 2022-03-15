@@ -24,9 +24,6 @@ void RenderData::ConvertData(MeshData* originMesh)
 	// Mesh Index 설정..
 	m_MeshIndex = originMesh->MeshIndex;
 
-	// Alpha Mesh 여부 설정..
-	m_Alpha = originMesh->Alpha;
-
 	// Mesh Data 설정..
 	m_World = originMesh->World;
 
@@ -51,6 +48,8 @@ void RenderData::ConvertData(MeshData* originMesh)
 		break;
 	case OBJECT_TYPE::TERRAIN:
 	{
+		m_TerrainData = new TerrainRenderData();
+
 		for (MaterialData* layer : originMesh->Terrain_Data->Material_List)
 		{
 			// 새로운 Material 생성..
@@ -60,7 +59,7 @@ void RenderData::ConvertData(MeshData* originMesh)
 			ConvertMaterial(layer, layerMaterial);
 
 			// Material List 추가..
-			m_MeshData->m_MaterialList.push_back(layerMaterial);
+			m_TerrainData->m_MaterialList.push_back(layerMaterial);
 		}
 	}
 		break;
@@ -77,13 +76,14 @@ void RenderData::ConvertData(MeshData* originMesh)
 
 void RenderData::Release()
 {
-	for (MaterialRenderData* mat : m_MeshData->m_MaterialList)
+	for (MaterialRenderData* mat : m_TerrainData->m_MaterialList)
 	{
 		SAFE_DELETE(mat);
 	}
 
-	m_MeshData->m_MaterialList.clear();
+	m_TerrainData->m_MaterialList.clear();
 
+	SAFE_DELETE(m_TerrainData);
 	SAFE_DELETE(m_MeshData->m_Material);
 	SAFE_DELETE(m_MeshData);
 }
@@ -120,7 +120,7 @@ void RenderData::ConvertMaterial(MaterialData* originMat, MaterialRenderData* co
 {
 	// 해당 Material Data 변환..
 	convertMat->m_MaterialIndex = originMat->Material_Index;
-	convertMat->m_Tex			= originMat->TexTM;
+	convertMat->m_MaterialSubData = originMat->Material_SubData;
 
 	if (originMat->Albedo) convertMat->m_Albedo		= (ID3D11ShaderResourceView*)originMat->Albedo->pTextureBuf;
 	if (originMat->Normal) convertMat->m_Normal		= (ID3D11ShaderResourceView*)originMat->Normal->pTextureBuf;

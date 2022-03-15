@@ -47,6 +47,8 @@ struct SpotLight
 
 struct Material
 {
+    float4 BaseColor;
+    float4 AddColor;
     float EmissiveFactor;
     float RoughnessFactor;
     float MetallicFactor;

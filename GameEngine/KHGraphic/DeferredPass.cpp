@@ -389,14 +389,14 @@ void DeferredPass::RenderUpdate(const RenderData* mesh)
 		objectBuf.gWorld = world;
 		objectBuf.gView = view;
 		objectBuf.gProj = proj;
-		objectBuf.gTexTransform = *mesh->m_MeshData->m_Material->m_Tex;
+		objectBuf.gTexTransform = mesh->m_MeshData->m_Material->m_MaterialSubData->TexTM;
 		m_TerrainVS->ConstantBufferCopy(&objectBuf);
 
 		m_TerrainVS->Update();
 
 		// Pixel Shader Update..
-		MaterialRenderData* layer1 = mesh->m_MeshData->m_MaterialList[0];
-		MaterialRenderData* layer2 = mesh->m_MeshData->m_MaterialList[1];
+		MaterialRenderData* layer1 = mesh->m_TerrainData->m_MaterialList[0];
+		MaterialRenderData* layer2 = mesh->m_TerrainData->m_MaterialList[1];
 		m_TerrainPS->SetShaderResourceView<gDiffuseLayer1>(layer1->m_Albedo);
 		m_TerrainPS->SetShaderResourceView<gNormalLayer1>(layer1->m_Normal);
 		m_TerrainPS->SetShaderResourceView<gORMLayer1>(layer1->m_ORM);

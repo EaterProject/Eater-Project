@@ -229,11 +229,11 @@
     <Filter Include="소스 파일\Shader\HLSL\Render\Deferred">
       <UniqueIdentifier>{9f39ce0a-6c70-4dad-a48b-ef5d341e107f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Resource\Graphic\GraphicStruct\RenderData">
-      <UniqueIdentifier>{1bb63bd9-de1f-44d1-9aa0-c5952d8badba}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Converter">
       <UniqueIdentifier>{2bb44b52-82b7-4764-9351-07b89e586642}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Converter\RenderData">
+      <UniqueIdentifier>{1bb63bd9-de1f-44d1-9aa0-c5952d8badba}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -451,7 +451,13 @@
       <Filter>소스 파일\Hash\HashClass\GraphicResource\GraphicStruct</Filter>
     </ClInclude>
     <ClInclude Include="RenderData.h">
-      <Filter>소스 파일\Resource\Graphic\GraphicStruct\RenderData</Filter>
+      <Filter>소스 파일\Converter\RenderData</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderDataConverter.h">
+      <Filter>소스 파일\Converter</Filter>
+    </ClInclude>
+    <ClInclude Include="ConvertData.h">
+      <Filter>소스 파일\Converter\RenderData</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -570,7 +576,10 @@
       <Filter>소스 파일\RendererPass\PostProcess\Fog</Filter>
     </ClCompile>
     <ClCompile Include="RenderData.cpp">
-      <Filter>소스 파일\Resource\Graphic\GraphicStruct\RenderData</Filter>
+      <Filter>소스 파일\Converter\RenderData</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderDataConverter.cpp">
+      <Filter>소스 파일\Converter</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

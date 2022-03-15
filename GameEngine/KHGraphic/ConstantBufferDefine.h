@@ -7,7 +7,6 @@
 #define DIRECTION_LIGHT_COUNT	1
 #define POINT_LIGHT_COUNT		5
 #define SPOT_LIGHT_COUNT		5
-#define MATERIAL_COUNT			5
 #define GAUSSIAN_RADIUS			7
 
 #define SHADER_CONSTANT_BUFFER(ClassName) CREATE_HASH_CLASS(ClassName, RESOURCE_TYPE::CB) RESOURCE_PUSH(ClassName, RESOURCE_TYPE::CB)
@@ -105,7 +104,6 @@ struct CB_Light : public cbLight
 	DirectionalLightData gDirLights[DIRECTION_LIGHT_COUNT];
 	PointLightData gPointLights[POINT_LIGHT_COUNT];
 	SpotLightData gSpotLights[SPOT_LIGHT_COUNT];
-	MaterialOption gMaterials[MATERIAL_COUNT];
 
 	UINT gDirLightCount;
 	UINT gPointLightCount;
