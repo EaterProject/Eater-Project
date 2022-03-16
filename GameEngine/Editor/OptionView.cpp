@@ -6,9 +6,10 @@
 #include "OptionView.h"
 // OptionView
 
-IMPLEMENT_DYNCREATE(OptionView, CView)
+IMPLEMENT_DYNCREATE(OptionView, CScrollView)
 
 OptionView::OptionView()
+	:CScrollView()
 {
 
 }
@@ -17,10 +18,34 @@ OptionView::~OptionView()
 {
 }
 
-BEGIN_MESSAGE_MAP(OptionView, CView)
+BEGIN_MESSAGE_MAP(OptionView, CScrollView)
 	ON_WM_CREATE()
 	ON_WM_SIZE()
+ON_WM_MOUSEWHEEL()
 END_MESSAGE_MAP()
+
+void OptionView::OnInitialUpdate()
+{
+	CView::OnInitialUpdate();
+	CRect rc;
+	GetClientRect(&rc);
+	CSize sizeViewPage;
+	sizeViewPage.cx = rc.right - rc.left;
+	sizeViewPage.cy = rc.bottom - rc.top;
+
+	CSize sizeViewPageTotal;
+	sizeViewPageTotal.cx = sizeViewPage.cx;
+	sizeViewPageTotal.cy = sizeViewPage.cy; // 3페이지를 설정하고 싶으면 * 3을 하면 되긋지
+
+
+	SetScrollSizes(MM_TEXT, sizeViewPageTotal);
+}
+
+void OptionView::DoDataExchange(CDataExchange* pDX)
+{
+	CScrollView::DoDataExchange(pDX);
+	
+}
 
 void OptionView::OnDraw(CDC* pDC)
 {
@@ -31,13 +56,13 @@ void OptionView::OnDraw(CDC* pDC)
 #ifdef _DEBUG
 void OptionView::AssertValid() const
 {
-	CView::AssertValid();
+	CScrollView::AssertValid();
 }
 
 #ifndef _WIN32_WCE
 void OptionView::Dump(CDumpContext& dc) const
 {
-	CView::Dump(dc);
+	CScrollView::Dump(dc);
 }
 #endif
 #endif //_DEBUG
@@ -46,7 +71,7 @@ void OptionView::Dump(CDumpContext& dc) const
 // OptionView 메시지 처리기
 int OptionView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
-	if (CView::OnCreate(lpCreateStruct) == -1)
+	if (CScrollView::OnCreate(lpCreateStruct) == -1)
 		return -1;
 
 	mOption.Create(IDD_RIGHT_OPTION, this);
@@ -54,10 +79,10 @@ int OptionView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	mLoading.Create(IDD_LOADING, this);
 	mLoading.ShowWindow(SW_SHOW);
-
+	
 	mOption.mLoading = &mLoading;
 	mLoading.mOption = &mOption;
-
+	
 	mLoading.SetData(0, mOption.LoadMaxCount);
 	return 0;
 }
@@ -65,15 +90,29 @@ int OptionView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 void OptionView::OnSize(UINT nType, int cx, int cy)
 {
 	int Offset = 100;
-	if (mLoading.IsWindowVisible() == false)
+	if (mLoading.IsWindowVisible() == true)
 	{
-		mLoading.MoveWindow(0, 0, cx, cy);
-		mOption.MoveWindow(0, 0, cx, cy);
+		//부모의 클라이언트 사이즈 구하기
+		CRect rect;
+		this->GetParent()->GetClientRect(rect);
+		int ParectSizeX = rect.Width() / 2;
+		int ParectSizeY = rect.Height() / 2;
+
+		//나의 클라이언트 사이즈 구하기
+		this->GetClientRect(rect);
+		int ChildSizeX = rect.Width() / 2;
+		int ChildSizeY = rect.Height() / 2;
+
+
+		mLoading.MoveWindow(ParectSizeX - ChildSizeX, ParectSizeY, cx, 150);
+		mOption.MoveWindow(0, 0, cx, 3000);
 	}
-	else
-	{
-		mLoading.MoveWindow(0, 0, cx, Offset);
-		mOption.MoveWindow(0, Offset, cx, cy);
-	}
-	CView::OnSize(nType, cx, cy);
+	CScrollView::OnSize(nType, cx, cy);
 }
+
+BOOL OptionView::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
+{
+	
+	return DoMouseWheel(nFlags, zDelta, pt);
+}
+

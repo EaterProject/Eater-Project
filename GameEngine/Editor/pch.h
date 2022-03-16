@@ -11,5 +11,6 @@
 #include "framework.h"
 #include "MainHeader.h"
 
-#define M_MSG_MSG1  WM_USER +1
+#define M_MSG_MeshFilter	WM_USER +1
+#define M_MSG_Drop			WM_USER +2
 #endif //PCH_H

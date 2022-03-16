@@ -6,6 +6,7 @@
 class RightView;
 class RenderView;
 class OptionView;
+class AssetView;
 class CMainFrame : public CFrameWnd
 {
 	
@@ -15,7 +16,7 @@ protected: // serialization에서만 만들어집니다.
 
 // 특성입니다.
 protected:
-	CSplitterWnd m_wndSplitter;
+	CSplitterWnd m_wndSplitter[2];
 public:
 
 // 작업입니다.
@@ -42,7 +43,7 @@ protected:  // 컨트롤 모음이 포함된 멤버입니다.
 	RightView*		m_RightView;
 	RenderView*		m_RenderView;
 	OptionView*		m_OptionView;
-
+	AssetView*		m_AssetView;
 // 생성된 메시지 맵 함수
 protected:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);

@@ -20,6 +20,7 @@
 #define IDD_TAP_PARTICLE                339
 #define IDD_TAP_LIGHT                   340
 #define IDD_SCENE_SAVE                  341
+#define IDD_ASSETS                      343
 #define IDC_TREE1                       1000
 #define IDC_TREE2                       1001
 #define IDC_TREE3                       1002
@@ -59,19 +60,28 @@
 #define IDC_BUTTON15                    1017
 #define IDC_BUTTON6                     1018
 #define IDC_EDIT18                      1018
+#define IDC_BUTTON25                    1018
 #define IDC_BUTTON8                     1019
 #define IDC_EDIT21                      1019
 #define IDC_EDIT22                      1020
 #define IDC_BUTTON16                    1020
 #define IDC_EDIT23                      1021
+#define IDC_BUTTON17                    1021
 #define IDC_EDIT24                      1022
+#define IDC_BUTTON18                    1022
 #define IDC_EDIT25                      1023
+#define IDC_BUTTON19                    1023
 #define IDC_PROGRESS2                   1024
 #define IDC_EDIT26                      1024
+#define IDC_BUTTON20                    1024
 #define IDC_EDIT27                      1025
+#define IDC_BUTTON21                    1025
 #define IDC_EDIT28                      1026
+#define IDC_BUTTON22                    1026
 #define IDC_EDIT29                      1027
+#define IDC_BUTTON23                    1027
 #define IDC_EDIT30                      1028
+#define IDC_BUTTON24                    1028
 #define IDC_MFCSHELLLIST3               1029
 #define IDC_EDIT31                      1029
 #define IDC_LIST1                       1030
@@ -96,17 +106,21 @@
 #define IDC_CHECK3                      1047
 #define IDC_SCROLLBAR2                  1048
 #define IDC_CHECK4                      1049
+#define IDC_LIST2                       1049
 #define IDC_CHECK5                      1050
+#define IDC_SLIDER1                     1050
 #define IDC_CHECK6                      1051
+#define IDC_SLIDER2                     1051
 #define IDC_CHECK7                      1052
+#define IDC_SLIDER3                     1052
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        343
+#define _APS_NEXT_RESOURCE_VALUE        346
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1049
-#define _APS_NEXT_SYMED_VALUE           311
+#define _APS_NEXT_CONTROL_VALUE         1051
+#define _APS_NEXT_SYMED_VALUE           312
 #endif
 #endif
