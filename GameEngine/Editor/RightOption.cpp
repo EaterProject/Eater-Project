@@ -73,6 +73,7 @@ BEGIN_MESSAGE_MAP(RightOption, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON12, &RightOption::OnCreateParticle)
 	ON_BN_CLICKED(IDC_BUTTON10, &RightOption::OnCreateTerrain)
 	ON_MESSAGE(M_MSG_MeshFilter,		&RightOption::OnUserFun)
+	ON_WM_MOUSEHWHEEL()
 END_MESSAGE_MAP()
 
 RightOption* RightOption::GetThis()
@@ -177,8 +178,8 @@ void RightOption::ChickHirearchyDarg(CPoint point)
 		{
 			Demo::LoadScene(Name);
 			//HirearchyTree.DeleteAllItems();
-			std::map<std::string, GameObject*>::iterator Start_it = Demo::ObjectList.begin();
-			std::map<std::string, GameObject*>::iterator End_it = Demo::ObjectList.end();
+			std::map<std::string, GameObject*>::iterator Start_it	= Demo::ObjectList.begin();
+			std::map<std::string, GameObject*>::iterator End_it		= Demo::ObjectList.end();
 			for (Start_it; Start_it != End_it; Start_it++)
 			{
 				HirearchyTree.InsertItem(ChangeToCString(Start_it->first));
@@ -526,4 +527,16 @@ LRESULT RightOption::OnUserFun(WPARAM wParam, LPARAM lparam)
 
 
 	return LRESULT();
+}
+
+
+void RightOption::OnMouseHWheel(UINT nFlags, short zDelta, CPoint pt)
+{
+	if (nFlags & (MK_SHIFT | MK_CONTROL))
+	{
+		
+	}
+
+
+	CDialogEx::OnMouseHWheel(nFlags, zDelta, pt);
 }

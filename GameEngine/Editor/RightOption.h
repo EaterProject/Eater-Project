@@ -87,4 +87,5 @@ public:
 	afx_msg void OnCreateParticle();
 	afx_msg void OnCreateTerrain();
 	afx_msg LRESULT OnUserFun(WPARAM wParam, LPARAM lparam);
+	afx_msg void OnMouseHWheel(UINT nFlags, short zDelta, CPoint pt);
 };

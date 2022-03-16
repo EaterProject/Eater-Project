@@ -36,6 +36,9 @@ void Demo::Awake()
 	Load("../Assets/Texture/Load");
 	Load("../Assets/Texture/Particle");
 	Load("../Assets/Texture/Terrain");
+
+
+	
 }
 
 void Demo::Update()
@@ -57,6 +60,7 @@ void Demo::ThreadFunction()
 	Load("../Assets/Mesh/Base");
 	Load("../Assets/Mesh/Animation");
 
+	CreateObject("box");
 	LoadEnvironment("../Assets/Texture/Base/Night.dds");
 	SetEnvironment(true);
 }

@@ -47,8 +47,8 @@ BOOL AssetsDialog::OnInitDialog()
 	AssetsFile.DeleteAllItems();
 
 	//ChangeWindowMessageFilter(0x0049, MSGFLT_ADD);
-	//ChangeWindowMessageFilter(WM_DROPFILES,MSGFLT_ADD);
-	//DragAcceptFiles();
+	//ChangeWindowMessageFilter(WM_DROPFILES, MSGFLT_ADD);
+	DragAcceptFiles(TRUE);
 
 	
 	return 0;
@@ -167,6 +167,7 @@ void AssetsDialog::OnAssetsClick(NMHDR* pNMHDR, LRESULT* pResult)
 
 	CFileFind FileFind;
 	CString FilePath = ChangeToCString(ClickItemPath);
+	//RightOption::GetThis()->ClickAssetsPath = ClickAssetsPath;
 	BOOL bFound = FileFind.FindFile(FilePath);
 	while (bFound)
 	{
@@ -179,61 +180,52 @@ void AssetsDialog::OnAssetsClick(NMHDR* pNMHDR, LRESULT* pResult)
 	}
 }
 
-
-//void AssetsDialog::OnDropFiles(HDROP hDropInfo)
-//{
-//	//외부 폴더에서 Tool쪽으로 파일을 옮겼을때 처리
-//	TCHAR FileName[MAXPATH] = { 0, };
-//	UINT count = DragQueryFile(hDropInfo, 0xFFFFFFFF, FileName, MAXPATH);
-//	for (UINT i = 0; i < count; i++)
-//	{
-//		DragQueryFile(hDropInfo, i, FileName, MAXPATH);
-//
-//		CString Change = FileName;
-//		CT2CA convertedString(Change);
-//		std::string Name = convertedString;
-//		for (int i = 0; i < Name.size(); i++)
-//		{
-//			if (Name[i] == '\\')
-//			{
-//				Name[i] = '/';
-//			}
-//		}
-//
-//		//이름 찾기
-//		std::size_t Start = Name.rfind("/") + 1;
-//		std::size_t End = Name.rfind(".") - Start;
-//		std::string MeshName = Name.substr(Start, End);
-//
-//		//타입찾기
-//		Start = Name.rfind(".");
-//		End = Name.length() - Start;
-//		std::string MeshType = Name.substr(Start, End);
-//		MeshName += MeshType;
-//
-//		//파일을 Assets폴더로 복사한다
-//		std::string CopyFilePath = ChangeToString(ClickAssetsPath) + "/" + MeshName;
-//		CString ChangeCopyFile;
-//		ChangeCopyFile = CopyFilePath.c_str();
-//		bool Move = CopyFile(FileName, ChangeCopyFile, TRUE);
-//		if (Move == false) { AfxMessageBox(_T("Error : 파일 이동 실패")); return; }
-//
-//		//아이템 이름으로 UI 보여주기
-//		CString ItemName;
-//		ItemName = MeshName.c_str();
-//		AssetsFile.InsertItem(0, ItemName, 1);
-//
-//		//메쉬 로드
-//		Demo::MeshLoad(CopyFilePath);
-//	}
-//	CDialogEx::OnDropFiles(hDropInfo);
-//}
-
-
 void AssetsDialog::OnDropFiles(HDROP hDropInfo)
 {
-	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+	//외부 폴더에서 Tool쪽으로 파일을 옮겼을때 처리
+	TCHAR FileName[MAXPATH] = { 0, };
+	UINT count = DragQueryFile(hDropInfo, 0xFFFFFFFF, FileName, MAXPATH);
+	for (UINT i = 0; i < count; i++)
+	{
+		DragQueryFile(hDropInfo, i, FileName, MAXPATH);
 
+		CString Change = FileName;
+		CT2CA convertedString(Change);
+		std::string Name = convertedString;
+		for (int i = 0; i < Name.size(); i++)
+		{
+			if (Name[i] == '\\')
+			{
+				Name[i] = '/';
+			}
+		}
+
+		//이름 찾기
+		std::size_t Start = Name.rfind("/") + 1;
+		std::size_t End = Name.rfind(".") - Start;
+		std::string MeshName = Name.substr(Start, End);
+
+		//타입찾기
+		Start = Name.rfind(".");
+		End = Name.length() - Start;
+		std::string MeshType = Name.substr(Start, End);
+		MeshName += MeshType;
+
+		//파일을 Assets폴더로 복사한다
+		std::string CopyFilePath = ChangeToString(ClickAssetsPath) + "/" + MeshName;
+		CString ChangeCopyFile;
+		ChangeCopyFile = CopyFilePath.c_str();
+		bool Move = CopyFile(FileName, ChangeCopyFile, TRUE);
+		if (Move == false) { AfxMessageBox(_T("Error : 파일 이동 실패")); return; }
+
+		//아이템 이름으로 UI 보여주기
+		CString ItemName;
+		ItemName = MeshName.c_str();
+		AssetsFile.InsertItem(0, ItemName, 1);
+
+		//메쉬 로드
+		Demo::MeshLoad(CopyFilePath);
+	}
 	CDialogEx::OnDropFiles(hDropInfo);
 }
 
@@ -268,6 +260,7 @@ void AssetsDialog::OnNMClickList2(NMHDR* pNMHDR, LRESULT* pResult)
 	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
 	int ClickItemIndex = pNMListView->iItem;
 	ClickItemName = AssetsFile.GetItemText(ClickItemIndex, 0);
+	RightOption::GetThis()->ClickItemName = ClickItemName;
 	*pResult = 0;
 }
 
