@@ -297,10 +297,7 @@ void MeshFilter::CreateStaticMesh(LoadMeshData* mMesh, GameObject* Object)
 {
 	MeshData* Data = Object->OneMeshData;
 
-	if (Object->Name == "")
-	{
-		Object->Name = mMesh->Name;
-	}
+	Object->Name = mMesh->Name;
 
 	SetMatrixData(mMesh, Data, Object);
 	SetMaterialData(mMesh, Data);

@@ -36,7 +36,6 @@ void CTAP_Particle::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EDIT8, ShapeRadius_X_Edit);
 	DDX_Control(pDX, IDC_EDIT9, ShapeRadius_Y_Edit);
 	DDX_Control(pDX, IDC_EDIT10, ShapeRadius_Z_Edit);
-	DDX_Control(pDX, IDC_SCROLLBAR2, mScrollbar);
 	DDX_Control(pDX, IDC_EDIT16, StartForce_X);
 	DDX_Control(pDX, IDC_EDIT17, StartForce_Y);
 	DDX_Control(pDX, IDC_EDIT18, StartForce_Z);
@@ -72,6 +71,22 @@ void CTAP_Particle::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EDIT44, LifeForce_Y_max);
 	DDX_Control(pDX, IDC_EDIT45, LifeForce_Z_max);
 	DDX_Control(pDX, IDC_CHECK7, LifeForce_Check);
+	DDX_Control(pDX, IDC_EDIT46, LifeRotation);
+	DDX_Control(pDX, IDC_EDIT47, LifeRotation_min);
+	DDX_Control(pDX, IDC_EDIT48, LifeRotation_max);
+	DDX_Control(pDX, IDC_CHECK8, LifeRotation_Check);
+	DDX_Control(pDX, IDC_EDIT50, LifeScale_min);
+	DDX_Control(pDX, IDC_EDIT51, LifeScale_max);
+	DDX_Control(pDX, IDC_COMBO3, LifeScale_Combo);
+	DDX_Control(pDX, IDC_EDIT49, LifeColor_min_R);
+	DDX_Control(pDX, IDC_EDIT52, LifeColor_min_G);
+	DDX_Control(pDX, IDC_EDIT53, LifeColor_min_B);
+	DDX_Control(pDX, IDC_EDIT54, LifeColor_min_A);
+	DDX_Control(pDX, IDC_EDIT55, LifeColor_max_R);
+	DDX_Control(pDX, IDC_EDIT56, LifeColor_max_G);
+	DDX_Control(pDX, IDC_EDIT57, LifeColor_max_B);
+	DDX_Control(pDX, IDC_EDIT58, LifeColor_max_A);
+	DDX_Control(pDX, IDC_COMBO4, LifeColor_Combo);
 }
 
 BOOL CTAP_Particle::OnInitDialog()
@@ -81,6 +96,12 @@ BOOL CTAP_Particle::OnInitDialog()
 	RenderType_Combo.InsertString(1, L"VERTICAL");
 	RenderType_Combo.InsertString(2, L"HORIZONTAL");
 	RenderType_Combo.InsertString(3, L"MESH");
+	RenderType_Combo.SetCurSel(0);
+
+	LifeColor_Combo.InsertString(0, L"NONE");
+	LifeColor_Combo.InsertString(1, L"UP");
+	LifeColor_Combo.InsertString(2, L"DOWN");
+	LifeColor_Combo.InsertString(3, L"UPDOWN");
 
 	ShapeRadius_X_Edit.ShowWindow(SW_HIDE);
 	ShapeRadius_Y_Edit.ShowWindow(SW_HIDE);
@@ -155,6 +176,34 @@ BOOL CTAP_Particle::OnInitDialog()
 	LifeForce_X_max.ShowWindow(SW_HIDE);
 	LifeForce_Y_max.ShowWindow(SW_HIDE);
 	LifeForce_Z_max.ShowWindow(SW_HIDE);
+
+
+	LifeRotation.SetWindowTextW(L"0");
+	LifeRotation_min.SetWindowTextW(L"0");
+	LifeRotation_max.SetWindowTextW(L"0");
+
+	LifeRotation.ShowWindow(SW_SHOW);
+	LifeRotation_min.ShowWindow(SW_HIDE);
+	LifeRotation_max.ShowWindow(SW_HIDE);
+
+	LifeScale_Combo.InsertString(0, L"NONE");
+	LifeScale_Combo.InsertString(1, L"UP");
+	LifeScale_Combo.InsertString(2, L"DOWN");
+	LifeScale_Combo.InsertString(3, L"UPDOWN");
+	LifeScale_Combo.SetCurSel(0);
+	LifeScale_min.SetWindowTextW(L"1");
+	LifeScale_max.SetWindowTextW(L"1");
+
+	LifeColor_min_R.SetWindowTextW(L"255");
+	LifeColor_min_G.SetWindowTextW(L"255");
+	LifeColor_min_B.SetWindowTextW(L"255");
+	LifeColor_min_A.SetWindowTextW(L"255");
+	LifeColor_max_R.SetWindowTextW(L"255");
+	LifeColor_max_G.SetWindowTextW(L"255");
+	LifeColor_max_B.SetWindowTextW(L"255");
+	LifeColor_max_A.SetWindowTextW(L"255");
+	LifeColor_Combo.SetCurSel(0);
+
 	return 0;
 }
 
@@ -169,6 +218,7 @@ BEGIN_MESSAGE_MAP(CTAP_Particle, CDialogEx)
 	ON_BN_CLICKED(IDC_CHECK6, &CTAP_Particle::OnStartRotationCheck)
 	ON_BN_CLICKED(IDC_CHECK7, &CTAP_Particle::OnLifeForceCheck)
 	ON_WM_MOUSEWHEEL()
+	ON_BN_CLICKED(IDC_CHECK8, &CTAP_Particle::OnBnClickedCheck8)
 END_MESSAGE_MAP()
 
 
@@ -182,7 +232,6 @@ void CTAP_Particle::SetGameObject(ParticleSystem* ObjectParticleSystem)
 	CRect rt;
 	GetWindowRect(rt);
 	int Num = rt.Height();
-	mScrollbar.SetScrollRange(0, rt.Height());
 
 
 	MaxCount_Edit.SetWindowTextW(L"0");
@@ -199,6 +248,24 @@ void CTAP_Particle::GetObjectData()
 	CString Temp03;
 	CString Temp04;
 	int Check;
+
+	int Choice01 = RenderType_Combo.GetCurSel();
+	switch (Choice01)
+	{
+	case 0:
+		mParticleSystem->SetRenderType(PARTICLE_RENDER_OPTION::BILLBOARD);
+		break;
+	case 1:
+		mParticleSystem->SetRenderType(PARTICLE_RENDER_OPTION::VERTICAL_BILLBOARD);
+		break;
+	case 2:
+		mParticleSystem->SetRenderType(PARTICLE_RENDER_OPTION::HORIZONTAL_BILLBOARD);
+		break;
+	case 3:
+		mParticleSystem->SetRenderType(PARTICLE_RENDER_OPTION::MESH);
+		break;
+	}
+
 	MaxCount_Edit.GetWindowTextW(Temp01);
 	mParticleSystem->SetMaxParticles(ChangeToInt(Temp01));
 
@@ -333,6 +400,67 @@ void CTAP_Particle::GetObjectData()
 		mParticleSystem->SetLifeTimeForce(Start);
 	}
 
+	Check = LifeRotation_Check.GetCheck();
+	if (Check == true)
+	{
+		LifeRotation_min.GetWindowTextW(Temp01);
+		LifeRotation_max.GetWindowTextW(Temp02);
+		mParticleSystem->SetLifeTimeRotation(ChangeToFloat(Temp01), ChangeToFloat(Temp02));
+	}
+	else
+	{
+		LifeRotation.GetWindowTextW(Temp01);
+		mParticleSystem->SetLifeTimeRotation(ChangeToFloat(Temp01));
+	}
+
+
+	int Choice = LifeScale_Combo.GetCurSel();
+	LifeScale_min.GetWindowTextW(Temp01);
+	LifeScale_max.GetWindowTextW(Temp02);
+	switch (Choice)
+	{
+	case 0:
+		mParticleSystem->SetLifeTimeScale(ChangeToFloat(Temp01), ChangeToFloat(Temp02),PARTICLE_LIFETIME_OPTION::NONE);
+		break;
+	case 1:
+		mParticleSystem->SetLifeTimeScale(ChangeToFloat(Temp01), ChangeToFloat(Temp02), PARTICLE_LIFETIME_OPTION::UP);
+		break;
+	case 2:
+		mParticleSystem->SetLifeTimeScale(ChangeToFloat(Temp01), ChangeToFloat(Temp02), PARTICLE_LIFETIME_OPTION::DOWN);
+		break;
+	case 3:
+		mParticleSystem->SetLifeTimeScale(ChangeToFloat(Temp01), ChangeToFloat(Temp02), PARTICLE_LIFETIME_OPTION::UPDOWN);
+		break;
+	}
+
+	LifeColor_min_R.GetWindowTextW(Temp01);
+	LifeColor_min_G.GetWindowTextW(Temp02);
+	LifeColor_min_B.GetWindowTextW(Temp03);
+	LifeColor_min_A.GetWindowTextW(Temp04);
+	Vector4 Start = Vector4(ChangeToFloat(Temp01), ChangeToFloat(Temp02), ChangeToFloat(Temp03), ChangeToFloat(Temp04));
+
+	LifeColor_max_R.SetWindowTextW(Temp01);
+	LifeColor_max_G.SetWindowTextW(Temp02);
+	LifeColor_max_B.SetWindowTextW(Temp03);
+	LifeColor_max_A.SetWindowTextW(Temp04);
+	Vector4 End = Vector4(ChangeToFloat(Temp01), ChangeToFloat(Temp02), ChangeToFloat(Temp03), ChangeToFloat(Temp04));
+
+	int Choice02 = LifeColor_Combo.GetCurSel();
+	switch (Choice02)
+	{
+	case 0:
+		mParticleSystem->SetLifeTimeColor(Start, End, PARTICLE_LIFETIME_OPTION::NONE);
+		break;
+	case 1:
+		mParticleSystem->SetLifeTimeColor(Start, End, PARTICLE_LIFETIME_OPTION::UP);
+		break;
+	case 2:
+		mParticleSystem->SetLifeTimeColor(Start, End, PARTICLE_LIFETIME_OPTION::DOWN);
+		break;
+	case 3:
+		mParticleSystem->SetLifeTimeColor(Start, End, PARTICLE_LIFETIME_OPTION::UPDOWN);
+		break;
+	}
 
 }
 
@@ -374,18 +502,6 @@ void CTAP_Particle::OnShapeRadius_Button()
 		ShapeRadius_Y_Edit.ShowWindow(SW_SHOW);
 		ShapeRadius_Z_Edit.ShowWindow(SW_SHOW);
 	}
-}
-
-
-void CTAP_Particle::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
-{
-	if (nSBCode == SB_THUMBTRACK)
-	{
-		int Pos = mScrollbar.GetScrollPos();
-		
-	}
-	
-	//CDialogEx::OnVScroll(nSBCode, nPos, pScrollBar);
 }
 
 
@@ -499,20 +615,19 @@ void CTAP_Particle::OnLifeForceCheck()
 }
 
 
-BOOL CTAP_Particle::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
+void CTAP_Particle::OnBnClickedCheck8()
 {
-	CRect rt;
-	//GetWindowRect(rt);
-	//int number = rt.top;
-	//if (zDelta > 0)
-	//{
-	//	number += 1;
-	//}
-	//else
-	//{
-	//	number -= 1;
-	//}
-	//SetWindowPos(NULL, 0, number, 400, 400, SWP_NOSIZE);
-
-	return CDialogEx::OnMouseWheel(nFlags, zDelta, pt);
+	int Check = LifeRotation_Check.GetCheck();
+	if (Check == true)
+	{
+		LifeRotation_min.ShowWindow(SW_SHOW);
+		LifeRotation_max.ShowWindow(SW_SHOW);
+		LifeRotation.ShowWindow(SW_HIDE);
+	}
+	else
+	{
+		LifeRotation_min.ShowWindow(SW_HIDE);
+		LifeRotation_max.ShowWindow(SW_HIDE);
+		LifeRotation.ShowWindow(SW_SHOW);
+	}
 }

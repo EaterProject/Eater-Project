@@ -214,7 +214,7 @@ GameObject* RightOption::FindGameObjectParent(HTREEITEM mItem)
 		}
 	}
 
-	if (ParentName == "")
+	if (ParentName == MeshName)
 	{
 		Object = Demo::FindMesh(ChangeToString(MeshName));
 	}
