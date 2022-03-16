@@ -33,8 +33,6 @@ public:
 
 	ID3D11Buffer* m_VertexBuf;
 	ID3D11Buffer* m_IndexBuf;
-
-	MaterialRenderData* m_Material;
 };
 
 class TerrainRenderData

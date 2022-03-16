@@ -216,11 +216,11 @@ void DeferredPass::RenderUpdate(const std::vector<RenderData*>& meshlist)
 		if (mesh == nullptr)
 		{
 			mesh = meshlist[i];
-			mat = mesh->m_MeshData->m_Material;
+			mat = mesh->m_Material;
 		}
 
 		// ÇØ´ç Instance Data »ðÀÔ..
-		m_MeshData.World = *meshlist[i]->m_World;
+		m_MeshData.World = *meshlist[i]->m_ObjectData->World;
 
 		m_MeshInstance.push_back(m_MeshData);
 		m_InstanceCount++;
@@ -243,7 +243,7 @@ void DeferredPass::RenderUpdate(const std::vector<RenderData*>& meshlist)
 	// GPU Access UnLock Buffer Data..
 	g_Context->Unmap(m_Mesh_IB->InstanceBuf->Get(), 0);
 
-	switch (mesh->m_ObjectType)
+	switch (mesh->m_ObjectData->ObjType)
 	{
 	case OBJECT_TYPE::BASE:
 	{
@@ -315,14 +315,14 @@ void DeferredPass::RenderUpdate(const std::vector<RenderData*>& meshlist)
 
 void DeferredPass::RenderUpdate(const RenderData* mesh)
 {
-	Matrix world = *mesh->m_World;
+	Matrix world = *mesh->m_ObjectData->World;
 	Matrix view = g_GlobalData->CamView;
 	Matrix proj = g_GlobalData->CamProj;
-	MaterialRenderData* mat = mesh->m_MeshData->m_Material;
+	MaterialRenderData* mat = mesh->m_Material;
 
 	if (mesh == nullptr) return;
 
-	switch (mesh->m_ObjectType)
+	switch (mesh->m_ObjectData->ObjType)
 	{
 	case OBJECT_TYPE::BASE:
 	{
@@ -380,7 +380,7 @@ void DeferredPass::RenderUpdate(const RenderData* mesh)
 		objectBuf.gWorld = world;
 		objectBuf.gView = view;
 		objectBuf.gProj = proj;
-		objectBuf.gTexTransform = mesh->m_MeshData->m_Material->m_MaterialSubData->TexTM;
+		objectBuf.gTexTransform = mesh->m_Material->m_MaterialSubData->TexTM;
 		m_TerrainVS->ConstantBufferCopy(&objectBuf);
 
 		m_TerrainVS->Update();

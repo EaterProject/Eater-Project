@@ -9,7 +9,7 @@ public:
 
 public:
 	void ConvertData(MeshData* originMesh);
-
+	//void ChangeMaterial(MaterialData* )
 	void Release();
 
 private:
@@ -18,14 +18,15 @@ private:
 	void ConvertMaterial(MaterialData* originMat, MaterialRenderData* convertMat);
 	
 public:
-	OBJECT_TYPE m_ObjectType;
-
-	Matrix* m_World;
 	std::vector<Matrix>* m_BoneOffsetTM;
 
 	MeshData* m_OriginData;				// Engine Origin Data..
 
+	ObjectData* m_ObjectData;
+
 	MeshRenderData* m_MeshData;			// 변환된 Mesh Data..
+	MaterialRenderData* m_Material;		// 변환된 Material Data..
+
 	TerrainRenderData* m_TerrainData;	// 변환된 Terrain Data..
 
 	ParticleData* m_ParticleData;
@@ -39,8 +40,11 @@ public:
 	~InstanceRenderData();
 
 public:
+	void SetInstanceData(MeshRenderData* mesh, MaterialRenderData* material);
 
 private:
-	MaterialRenderData* m_Material;
-	std::vector<RenderData*> m_MeshList;
+	MeshRenderData* m_Mesh;					// Instancing 기준이 되는 Mesh Data..
+	MaterialRenderData* m_Material;			// Instancing 기준이 되는 Material Data..
+
+	std::vector<RenderData*> m_MeshList;	// Instancing 기준에 해당하는 Render Data List..
 };

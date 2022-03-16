@@ -55,7 +55,7 @@ void Material::SetNormalTexture(std::string noramlName)
 	if (newTexture == nullptr) return;
 
 	// Texture 최초 설정이 아닌 변경일 경우 Renderer Data 동기화..
-	if (m_MaterialData->Albedo != nullptr)
+	if (m_MaterialData->Normal != nullptr)
 	{
 		GraphicEngine::Get()->AddChangeMaterialData(m_MaterialData);
 	}
@@ -72,7 +72,7 @@ void Material::SetEmissiveTexture(std::string emissiveName)
 	if (newTexture == nullptr) return;
 
 	// Texture 최초 설정이 아닌 변경일 경우 Renderer Data 동기화..
-	if (m_MaterialData->Albedo != nullptr)
+	if (m_MaterialData->Emissive != nullptr)
 	{
 		GraphicEngine::Get()->AddChangeMaterialData(m_MaterialData);
 	}
@@ -89,7 +89,7 @@ void Material::SetORMTexture(std::string ormName)
 	if (newTexture == nullptr) return;
 
 	// Texture 최초 설정이 아닌 변경일 경우 Renderer Data 동기화..
-	if (m_MaterialData->Albedo != nullptr)
+	if (m_MaterialData->ORM != nullptr)
 	{
 		GraphicEngine::Get()->AddChangeMaterialData(m_MaterialData);
 	}

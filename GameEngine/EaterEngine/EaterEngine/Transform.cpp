@@ -48,7 +48,7 @@ void Transform::TransformUpdate()
 	UpdateLocalPosition();
 
 	//업데이트가 끝난후 오브젝트 안에 매쉬데이터를 업데이트
-	gameobject->OneMeshData->World = GetWorld();
+	gameobject->OneMeshData->Object_Data->World = GetWorld();
 }
 
 DirectX::SimpleMath::Vector3 Transform::GetLocalPosition_UP()

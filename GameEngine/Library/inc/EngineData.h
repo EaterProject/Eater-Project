@@ -31,6 +31,19 @@ public:
 	}
 };
 
+// Object Data
+class ObjectData
+{
+public:
+	UINT RenderMeshIndex = 0;						// Renderer 측 구분을 위한 Index
+	UINT RenderListIndex = 0;						// Renderer 측 구분을 위한 Index
+
+	OBJECT_TYPE ObjType = OBJECT_TYPE::DEFALT;		//오브젝트 타입
+
+	Matrix* World = nullptr;						//매쉬의 월드 행렬
+	Matrix* Local = nullptr;						//매쉬의 로컬 행렬
+};
+
 // Material Data
 class MaterialData
 {
@@ -129,20 +142,13 @@ public:
 	}
 
 public:
-	OBJECT_TYPE ObjType = OBJECT_TYPE::DEFALT;		//오브젝트 타입
-	
-	UINT RenderMeshIndex = 0;							// Renderer 측 구분을 위한 Index
-	UINT RenderListIndex = 0;							// Renderer 측 구분을 위한 Index
-
-	MeshBuffer* MeshBuf = nullptr;
-
 	std::vector<Matrix> BoneOffsetTM;				//본 오프셋 TM
 
-	Matrix* World = nullptr;				//매쉬의 월드 행렬
-	Matrix* Local = nullptr;				//매쉬의 로컬 행렬
+	ObjectData*		Object_Data = nullptr;			// Object Data
+	MeshBuffer*		MeshBuffer_Data = nullptr;		// Mesh Buffer Data
+	MaterialData*	Material_Data	= nullptr;		// Material Data
 
 	// 추가 데이터
-	MaterialData*	Material_Data	= nullptr;		// Material Data
 	TerrainData*	Terrain_Data	= nullptr;		// Terrain Data
 	ParticleData*	Particle_Data	= nullptr;		// Particle Data
 
@@ -171,12 +177,12 @@ public:
 	std::string ParentName = "";	//부모의 이름
 	std::string	Name = "";			//자기자신의 이름
 	std::string MaterialName = "";	//매터리얼 이름
-	std::string Mask_Name;			// Terrain 전용 Mask Name
+	std::string Mask_Name = "";		// Terrain 전용 Mask Name
 
 	Matrix WorldTM;					//월드 매트릭스
 	Matrix LocalTM;					//로컬 매트릭스
 
-	MeshBuffer* MeshBuf = nullptr;
+	MeshBuffer* MeshBuffer_Data = nullptr;
 
 	int BoneIndex = -1;				//본일경우 자신의 인덱스
 	std::vector<Matrix>* BoneTMList = nullptr;	//본 매트릭스

@@ -147,7 +147,7 @@ void DebugPass::RenderUpdate(RenderData* mesh)
 {
 	CB_DebugObject object;
 	CB_DebugOption option;
-	Matrix world = *mesh->m_World;
+	Matrix world = *mesh->m_ObjectData->World;
 	Matrix invView = g_GlobalData->CamInvView;
 	Matrix viewproj = g_GlobalData->CamVP;
 	ColliderData* col = mesh->m_ColliderData;
@@ -180,7 +180,7 @@ void DebugPass::RenderUpdate(RenderData* mesh)
 		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
 	}
 
-	switch (mesh->m_ObjectType)
+	switch (mesh->m_ObjectData->ObjType)
 	{
 	case OBJECT_TYPE::BONE:
 	{

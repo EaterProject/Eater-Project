@@ -10,7 +10,6 @@ public:
 
 private:
 	void ConvertMeshBuffer(MeshBuffer* originBuf, MeshRenderData* convertData);
-	void ConvertMaterial(MaterialData* originMat, MeshRenderData* convertData);
 	void ConvertMaterial(MaterialData* originMat, MaterialRenderData* convertMat);
 
 };
