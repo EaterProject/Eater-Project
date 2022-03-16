@@ -46,8 +46,6 @@ private:
 	void Load_Component_Transform(int index, GameObject* Object);	
 	void Load_Component_Skinning(int index, GameObject* Object);//Transform Load
 private:
-	//자체 메테리얼을 로드함
-
 
 
 private:
