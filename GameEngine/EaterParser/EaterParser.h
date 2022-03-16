@@ -48,7 +48,6 @@ private:
 	const char LIST_TYPE	= '$';
 	const char END_TYPE		= '&';
 	const char SP_TYPE		= ' ';
-	
 
 private:
 	bool ListStart = false;

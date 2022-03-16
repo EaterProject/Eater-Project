@@ -25,32 +25,32 @@ Loading::~Loading()
 
 void Loading::SetData(int Min, int Max)
 {
-	LoadingMax = Max;
-	LoadingBar.SetRange(Min, Max);
-	CString Num;
-	Num.Format(_T("0  / %d"), Max);
-	LoadingBar.SetPos(0);
-	TextEdit.SetWindowTextW(Num);
+	//LoadingMax = Max;
+	//LoadingBar.SetRange(Min, Max);
+	//CString Num;
+	//Num.Format(_T("0  / %d"), Max);
+	//LoadingBar.SetPos(0);
+	//TextEdit.SetWindowTextW(Num);
 
 }
 
 void Loading::SetUpdate(int Number)
 {
-	int AnimationCount	= GetLoadAnimationCount();
-	int MeshCount		= GetLoadMeshCount();
-	int TextureCount	= GetLoadTextureCount();
-
-	int AllCount = AnimationCount + MeshCount + TextureCount;
-	CString Num;
-	Num.Format(_T(" %d / %d"), AllCount ,mOption->LoadMaxCount - 2);
-	LoadingBar.SetPos(AllCount);
-	TextEdit.SetWindowTextW(Num);
-
-	if (AllCount >= mOption->LoadMaxCount -2)
-	{
-		this->ShowWindow(SW_HIDE);
-		mOption->SetWindowPos(NULL, 0, 0, 400, 400, SWP_NOSIZE);
-	}
+	//int AnimationCount	= GetLoadAnimationCount();
+	//int MeshCount		= GetLoadMeshCount();
+	//int TextureCount	= GetLoadTextureCount();
+	//
+	//int AllCount = AnimationCount + MeshCount + TextureCount;
+	//CString Num;
+	//Num.Format(_T(" %d / %d"), AllCount ,mOption->LoadMaxCount - 2);
+	//LoadingBar.SetPos(AllCount);
+	//TextEdit.SetWindowTextW(Num);
+	//
+	//if (AllCount >= mOption->LoadMaxCount -2)
+	//{
+	//	this->ShowWindow(SW_HIDE);
+	//	mOption->SetWindowPos(NULL, 0, 0, 400, 400, SWP_NOSIZE);
+	//}
 }
 
 void Loading::DoDataExchange(CDataExchange* pDX)

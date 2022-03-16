@@ -103,6 +103,12 @@
     <Filter Include="소스 파일\MFC\Dialog\SceneSave">
       <UniqueIdentifier>{f173164e-58ee-4853-b86a-381d8d07c698}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\MFC\View\AssetView">
+      <UniqueIdentifier>{c76e772e-3ae3-49dc-8a28-48f6c8da3ca1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\Dialog\Assets">
+      <UniqueIdentifier>{a8cbe88f-567a-4ae8-afc1-2c4ed9b903b7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -186,6 +192,12 @@
     <ClInclude Include="SceneSaveDialog.h">
       <Filter>소스 파일\MFC\Dialog\SceneSave</Filter>
     </ClInclude>
+    <ClInclude Include="AssetView.h">
+      <Filter>소스 파일\MFC\View\AssetView</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetsDialog.h">
+      <Filter>소스 파일\MFC\Dialog\Assets</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainFrm.cpp">
@@ -256,6 +268,12 @@
     </ClCompile>
     <ClCompile Include="SceneSaveDialog.cpp">
       <Filter>소스 파일\MFC\Dialog\SceneSave</Filter>
+    </ClCompile>
+    <ClCompile Include="AssetView.cpp">
+      <Filter>소스 파일\MFC\View\AssetView</Filter>
+    </ClCompile>
+    <ClCompile Include="AssetsDialog.cpp">
+      <Filter>소스 파일\MFC\Dialog\Assets</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
