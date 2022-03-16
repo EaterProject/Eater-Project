@@ -60,7 +60,6 @@ void Demo::ThreadFunction()
 	Load("../Assets/Mesh/Base");
 	Load("../Assets/Mesh/Animation");
 
-	CreateObject("box");
 	LoadEnvironment("../Assets/Texture/Base/Night.dds");
 	SetEnvironment(true);
 }

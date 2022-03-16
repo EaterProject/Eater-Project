@@ -65,7 +65,7 @@ int AssetView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 void AssetView::OnSize(UINT nType, int cx, int cy)
 {
-	//mAssets.MoveWindow(0, 0, cx, cy);
+	mAssets.MoveWindow(0, 0, cx, cy);
 	CView::OnSize(nType, cx, cy);
 }
 
