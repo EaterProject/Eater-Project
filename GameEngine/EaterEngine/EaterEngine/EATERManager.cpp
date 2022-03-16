@@ -122,11 +122,11 @@ LoadMeshData* EATERManager::LoadStaticMesh(int index)
 	LoadTM(index, model);
 
 	// 저장되있는 Mesh Index를 Load 기준 Index로 변환..
-	int Number = std::stoi(EATER_GET_MAP(index, "MeshIndex"));
-	Number = LoadManager::FindInstanceIndex(Number);
+	int meshIndex = std::stoi(EATER_GET_MAP(index, "MeshIndex"));
+	meshIndex = LoadManager::FindInstanceIndex(meshIndex);
 	
 	// 해당 Index의 Mesh Buffer 유무 체크..
-	MeshBuffer* meshBuffer = LoadManager::GetMeshBuffer(Number);
+	MeshBuffer* meshBuffer = LoadManager::GetMeshBuffer(meshIndex);
 
 	// 만약 같은 Mesh Buffer가 없을경우 새로 생성해주고
 	// 있을 경우 해당 Mesh Buffer로 설정..
@@ -143,9 +143,9 @@ LoadMeshData* EATERManager::LoadStaticMesh(int index)
 		LeaveCriticalSection(m_CriticalSection);
 		
 		// Mesh Buffer Index 설정..
-		model->MeshBuf->BufferIndex = Number;
+		model->MeshBuf->BufferIndex = meshIndex;
 
-		LoadManager::MeshBufferList.insert({ Number, model->MeshBuf });
+		LoadManager::MeshBufferList.insert({ meshIndex, model->MeshBuf });
 	}
 	else
 	{
@@ -187,18 +187,36 @@ LoadMeshData* EATERManager::LoadSkinMesh(int index)
 	LoadTM(index, model);
 	LoadBoneOffset(index, model);
 
-	ParserData::Mesh* mesh = new ParserData::Mesh();
-	LoadSkinVertex(index, mesh);
-	LoadIndex(index, mesh);
+	// 저장되있는 Mesh Index를 Load 기준 Index로 변환..
+	int meshIndex = std::stoi(EATER_GET_MAP(index, "MeshIndex"));
+	meshIndex = LoadManager::FindInstanceIndex(meshIndex);
 
-	// 검사하고
-	EnterCriticalSection(m_CriticalSection);
-	m_Graphic->CreateMeshBuffer(mesh, model);
-	LeaveCriticalSection(m_CriticalSection);
+	// 해당 Index의 Mesh Buffer 유무 체크..
+	MeshBuffer* meshBuffer = LoadManager::GetMeshBuffer(meshIndex);
 
-	// 새로 생성했으면 인덱스 설정
-	int Number = std::stoi(EATER_GET_MAP(index, "MeshIndex"));
-	model->MeshBuf->BufferIndex = LoadManager::FindInstanceIndex(Number);
+	// 만약 같은 Mesh Buffer가 없을경우 새로 생성해주고
+	// 있을 경우 해당 Mesh Buffer로 설정..
+	if (meshBuffer == nullptr)
+	{
+		ParserData::Mesh* mesh = new ParserData::Mesh();
+
+		LoadSkinVertex(index, mesh);
+		LoadIndex(index, mesh);
+
+		// 검사하고
+		EnterCriticalSection(m_CriticalSection);
+		m_Graphic->CreateMeshBuffer(mesh, model);
+		LeaveCriticalSection(m_CriticalSection);
+
+		// Mesh Buffer Index 설정..
+		model->MeshBuf->BufferIndex = meshIndex;
+
+		LoadManager::MeshBufferList.insert({ meshIndex, model->MeshBuf });
+	}
+	else
+	{
+		model->MeshBuf = meshBuffer;
+	}
 
 	return model;
 }
@@ -534,49 +552,12 @@ std::string EATERManager::CutStr(std::string& Name)
 void EATERManager::LoadMaterial(int index, LoadMeshData* model)
 {
 	std::string material = EATER_GET_MAP(index, "Material");
-	std::string Diffuse = EATER_GET_MAP(index, "DiffuseMap");
-	std::string Emissive = EATER_GET_MAP(index, "EmissiveMap");
-	std::string Normal = EATER_GET_MAP(index, "NormalMap");
-	std::string ORM = EATER_GET_MAP(index, "ORMMap");
-	std::string Alpha = EATER_GET_MAP(index, "Alpha");
 
-	// 메테리얼을 만들어준당!
-	//model->Material = new ParserData::CMaterial();
-	//
-	//if (Alpha != "NO")
-	//{
-	//	model->Material->m_Alpha = true;
-	//}
-	//
-	//if (Diffuse != "NO")
-	//{
-	//	Diffuse = CutStr(Diffuse);
-	//	model->Material->m_DiffuseMap = new MaterialMap();
-	//	model->Material->m_DiffuseMap->m_BitMap = Diffuse;
-	//	model->AlbedoName = Diffuse;
-	//}
-	//
-	//if (Emissive != "NO")
-	//{
-	//	Emissive = CutStr(Emissive);
-	//	model->Material->m_EmissiveMap = new MaterialMap();
-	//	model->Material->m_EmissiveMap->m_BitMap = Emissive;
-	//	model->EmissiveName = Emissive;
-	//}
-	//if (Normal != "NO")
-	//{
-	//	Normal = CutStr(Normal);
-	//	model->Material->m_NormalMap = new MaterialMap();
-	//	model->Material->m_NormalMap->m_BitMap = Normal;
-	//	model->NormalName = Normal;
-	//}
-	//if (ORM != "NO")
-	//{
-	//	ORM = CutStr(ORM);
-	//	model->Material->m_ORMMap = new MaterialMap();
-	//	model->Material->m_ORMMap->m_BitMap = ORM;
-	//	model->ORMName = ORM;
-	//}
+	// 메테리얼 이름 설정..
+	if (material != "NO")
+	{
+		model->MaterialName = material;
+	}
 }
 
 void EATERManager::LoadName(int index, LoadMeshData* model)

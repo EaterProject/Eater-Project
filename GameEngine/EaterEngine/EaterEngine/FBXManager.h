@@ -46,8 +46,8 @@ private:
 	std::string CutStr(std::string Path);
 	void LinkMesh(std::vector<LoadMeshData*>& List, ModelData* SaveMesh);
 	std::string GetSaveName(std::string& Path);
-	std::map<int, LoadMeshData*> BufferIndexList;
 private:
+	std::string nowFileName;
 	bool isFolder;
 	bool isSkinning;
 	bool isAnimation;

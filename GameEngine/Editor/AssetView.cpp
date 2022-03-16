@@ -48,8 +48,10 @@ void AssetView::Dump(CDumpContext& dc) const
 {
 	CView::Dump(dc);
 }
+
 #endif
 #endif //_DEBUG
+
 int AssetView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CView::OnCreate(lpCreateStruct) == -1)
@@ -57,10 +59,7 @@ int AssetView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	mAssets.Create(IDD_ASSETS, this);
 	mAssets.ShowWindow(SW_SHOW);
-	DragAcceptFiles(TRUE);
 }
-
-
 // AssetView 메시지 처리기
 
 
