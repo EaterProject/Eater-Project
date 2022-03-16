@@ -32,7 +32,7 @@ private:
 	void LinkSkin();
 	void LoadTM(int Index, LoadMeshData* model);
 	void LoadBoneOffset(int index, LoadMeshData* mMesh);
-	void LoadTexture(int index, LoadMeshData* model);
+	void LoadMaterial(int index, LoadMeshData* model);
 	void LoadName(int index, LoadMeshData* model);
 	void LoadGameObject(int index);
 private:

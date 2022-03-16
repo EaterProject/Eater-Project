@@ -10,6 +10,7 @@
 /// </summary>
 
 class MeshData;
+class MaterialData;
 class GlobalData;
 class IndexBuffer;
 class VertexBuffer;
@@ -46,6 +47,7 @@ public:
 	/// Render Mesh Data & Rendering Function..
 	virtual GRAPHIC_DLL void AddMeshData(MeshData* meshData) abstract;
 	virtual GRAPHIC_DLL void AddChangeMeshData(MeshData* meshData) abstract;
+	virtual GRAPHIC_DLL void AddChangeMaterialData(MaterialData* materialData) abstract;
 	virtual GRAPHIC_DLL void DeleteMeshData(MeshData* meshData) abstract;
 
 	virtual GRAPHIC_DLL void Render() abstract;
@@ -58,5 +60,4 @@ public:
 
 private:
 	static GraphicEngine* Graphic;
-
 };

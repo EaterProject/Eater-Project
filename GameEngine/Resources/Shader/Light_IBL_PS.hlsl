@@ -15,7 +15,6 @@ cbuffer cbLight : register(b1)
     DirectionalLight    gDirLights[DIRECTION_LIGHT_COUNT];
     PointLight          gPointLights[POINT_LIGHT_COUNT];
     SpotLight           gSpotLights[SPOT_LIGHT_COUNT];
-    Material            gMaterials[MATERIAL_COUNT];
     
     uint gDirLightCount;
     uint gPointLightCount;

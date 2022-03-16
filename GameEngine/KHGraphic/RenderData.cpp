@@ -21,24 +21,15 @@ void RenderData::ConvertData(MeshData* originMesh)
 	// Object Type 설정..
 	m_ObjectType = originMesh->ObjType;
 
-	// Mesh Index 설정..
-	m_MeshIndex = originMesh->MeshIndex;
-
-	// Alpha Mesh 여부 설정..
-	m_Alpha = originMesh->Alpha;
-
 	// Mesh Data 설정..
 	m_World = originMesh->World;
 
 	m_ColliderData = originMesh->Collider_Data;
 
-	// Index Buffer Data 설정..
-	ConvertIndexBuffer(originMesh->IndexBuf);
+	// Mesh Buffer Data 변환..
+	ConvertMeshBuffer(originMesh->MeshBuf);
 
-	// Vertex Buffer Data 설정..
-	ConvertVertexBuffer(originMesh->VertexBuf);
-
-	// Material Data 설정..
+	// Material Data 변환..
 	ConvertMaterial(originMesh->Material_Data);
 
 	// Obejct Type에 따른 추가 변환 작업..
@@ -51,6 +42,8 @@ void RenderData::ConvertData(MeshData* originMesh)
 		break;
 	case OBJECT_TYPE::TERRAIN:
 	{
+		m_TerrainData = new TerrainRenderData();
+
 		for (MaterialData* layer : originMesh->Terrain_Data->Material_List)
 		{
 			// 새로운 Material 생성..
@@ -60,7 +53,7 @@ void RenderData::ConvertData(MeshData* originMesh)
 			ConvertMaterial(layer, layerMaterial);
 
 			// Material List 추가..
-			m_MeshData->m_MaterialList.push_back(layerMaterial);
+			m_TerrainData->m_MaterialList.push_back(layerMaterial);
 		}
 	}
 		break;
@@ -77,31 +70,32 @@ void RenderData::ConvertData(MeshData* originMesh)
 
 void RenderData::Release()
 {
-	for (MaterialRenderData* mat : m_MeshData->m_MaterialList)
+	for (MaterialRenderData* mat : m_TerrainData->m_MaterialList)
 	{
 		SAFE_DELETE(mat);
 	}
 
-	m_MeshData->m_MaterialList.clear();
+	m_TerrainData->m_MaterialList.clear();
 
+	SAFE_DELETE(m_TerrainData);
 	SAFE_DELETE(m_MeshData->m_Material);
 	SAFE_DELETE(m_MeshData);
 }
 
-void RenderData::ConvertIndexBuffer(IndexBuffer* originBuf)
+void RenderData::ConvertMeshBuffer(MeshBuffer* originBuf)
 {
 	if (originBuf == nullptr) return;
 
-	m_MeshData->m_IndexCount = originBuf->Count;
-	m_MeshData->m_IndexBuf	 = (ID3D11Buffer*)originBuf->pIndexBuf;
-}
+	// Mesh Buffer Index 삽입..
+	m_MeshData->m_BufferIndex = originBuf->BufferIndex;
 
-void RenderData::ConvertVertexBuffer(VertexBuffer* originBuf)
-{
-	if (originBuf == nullptr) return;
+	// Index Buffer Data Convert..
+	m_MeshData->m_IndexCount = originBuf->IndexBuf->Count;
+	m_MeshData->m_IndexBuf = (ID3D11Buffer*)originBuf->IndexBuf->pIndexBuf;
 
-	m_MeshData->m_Stride	= originBuf->Stride;
-	m_MeshData->m_VertexBuf = (ID3D11Buffer*)originBuf->pVertexBuf;
+	// Vertex Buffer Data Convert..
+	m_MeshData->m_Stride = originBuf->VertexBuf->Stride;
+	m_MeshData->m_VertexBuf = (ID3D11Buffer*)originBuf->VertexBuf->pVertexBuf;
 }
 
 void RenderData::ConvertMaterial(MaterialData* originMat)
@@ -120,7 +114,7 @@ void RenderData::ConvertMaterial(MaterialData* originMat, MaterialRenderData* co
 {
 	// 해당 Material Data 변환..
 	convertMat->m_MaterialIndex = originMat->Material_Index;
-	convertMat->m_Tex			= originMat->TexTM;
+	convertMat->m_MaterialSubData = originMat->Material_SubData;
 
 	if (originMat->Albedo) convertMat->m_Albedo		= (ID3D11ShaderResourceView*)originMat->Albedo->pTextureBuf;
 	if (originMat->Normal) convertMat->m_Normal		= (ID3D11ShaderResourceView*)originMat->Normal->pTextureBuf;

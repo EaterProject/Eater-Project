@@ -1,5 +1,6 @@
 #pragma once
 #include <DirectXMath.h>
+#include <windows.h>
 #include <string>
 //리소스 최상위 클래스
 class  Resources
@@ -18,8 +19,9 @@ public:
 		delete pIndexBuf;
 	};
 	
+	UINT Count	= 0;	//인덱스 개수
+
 	void* pIndexBuf = nullptr;
-	unsigned int Count	= 0;	//인덱스 개수
 };
 
 //버텍스 버퍼를 받을 클래스
@@ -31,9 +33,24 @@ public:
 		delete pVertexBuf;
 	};
 
-	void* pVertexBuf = nullptr;
+	UINT Stride = 0;	//stride값 버텍스버퍼를 만든 자료형의 크기
 
-	unsigned int Stride = 0;	//stride값 버텍스버퍼를 만든 자료형의 크기
+	void* pVertexBuf = nullptr;
+};
+
+class MeshBuffer : Resources
+{
+public:
+	virtual ~MeshBuffer()
+	{
+		delete IndexBuf;
+		delete VertexBuf;
+	}
+
+	UINT BufferIndex = 0;
+
+	IndexBuffer* IndexBuf;
+	VertexBuffer* VertexBuf;
 };
 
 //텍스쳐를 받을 클래스
@@ -44,6 +61,8 @@ public:
 	{
 		delete pTextureBuf;
 	};
+
 	std::string Name;
+
 	void* pTextureBuf = nullptr;
 };

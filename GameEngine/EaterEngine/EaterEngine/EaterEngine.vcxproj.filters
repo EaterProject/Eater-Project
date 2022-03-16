@@ -207,9 +207,6 @@
     <ClInclude Include="MaterialManager.h">
       <Filter>소스 파일\Manager\MaterialManager</Filter>
     </ClInclude>
-    <ClInclude Include="Material.h">
-      <Filter>소스 파일\Component\Material</Filter>
-    </ClInclude>
     <ClInclude Include="Export\Light.h">
       <Filter>소스 파일\Component\Light</Filter>
     </ClInclude>
@@ -278,6 +275,9 @@
     </ClInclude>
     <ClInclude Include="EATERManager.h">
       <Filter>소스 파일\Manager\LoadManager\EATER</Filter>
+    </ClInclude>
+    <ClInclude Include="Export\Material.h">
+      <Filter>소스 파일\Component\Material</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -3,21 +3,26 @@
 #include <filesystem>
 #include <iostream>
 
+#include "EngineData.h"
+#include "Material.h"
 #include "FBXManager.h"
 #include "TextureManager.h"
 #include "EATERManager.h"
-#include "EngineData.h"
+#include "MaterialManager.h"
+
 
 std::map<std::string, ModelData*>			LoadManager::ModelList;
 std::map<std::string, TextureBuffer*>		LoadManager::TextureList;
+std::map<std::string, Material*>			LoadManager::MaterialList;
 std::map<std::string, ModelAnimationData*>	LoadManager::AnimationList;
+std::map<UINT, MeshBuffer*>					LoadManager::MeshBufferList;
 std::vector<int>							LoadManager::GrobalInstanceIndexList;
 
 bool LoadManager::isNewMesh = false;
 int LoadManager::GrobalInstanceIndex= 1;
 LoadManager::LoadManager()
 {
-	GEngine = nullptr;
+
 }
 
 LoadManager::~LoadManager()
@@ -25,22 +30,20 @@ LoadManager::~LoadManager()
 
 }
 
-void LoadManager::Initialize(GraphicEngineManager* Graphic, CRITICAL_SECTION* _cs)
+void LoadManager::Initialize(GraphicEngineManager* graphic, MaterialManager* material, CRITICAL_SECTION* _cs)
 {
 	g_CS = _cs;
 
-	//그래픽 엔진 받아오기
-	GEngine = Graphic;
-
+	mMaterial = material;
 
 	mFBX = new FBXManager();
-	mFBX->Initialize(GEngine, _cs);
+	mFBX->Initialize(graphic, _cs);
 
 	mEATER = new EATERManager();
-	mEATER->Initialize(Graphic, _cs);
+	mEATER->Initialize(graphic, _cs);
 
 	mTexture = new TextureManager();
-	mTexture->Initialize(GEngine, _cs);
+	mTexture->Initialize(graphic, _cs);
 
 	GrobalInstanceIndexList.push_back(0);
 }
@@ -48,16 +51,6 @@ void LoadManager::Initialize(GraphicEngineManager* Graphic, CRITICAL_SECTION* _c
 void LoadManager::Start()
 {
 	
-}
-
-int LoadManager::GetMeshCount()
-{
-	return (int)ModelList.size();
-}
-
-int LoadManager::GetTextureCount()
-{
-	return (int)TextureList.size();
 }
 
 void LoadManager::Load(std::string& Path, UINT MODE)
@@ -79,6 +72,21 @@ void LoadManager::LoadTerrain(std::string mMeshName, std::string mMaskName, UINT
 {
 	isNewMesh = true;
 	mFBX->LoadTerrain(mMeshName, mMaskName, parsingMode);
+}
+
+int LoadManager::GetMeshCount()
+{
+	return (int)ModelList.size();
+}
+
+int LoadManager::GetTextureCount()
+{
+	return (int)TextureList.size();
+}
+
+int LoadManager::GetMaterialCount()
+{
+	return (int)MaterialList.size();
 }
 
 int LoadManager::GetAnimationCount()
@@ -108,6 +116,21 @@ TextureBuffer* LoadManager::GetTexture(std::string Path)
 	}
 }
 
+Material* LoadManager::GetMaterial(std::string Path)
+{
+	std::map<std::string, Material*>::iterator End_it = MaterialList.end();
+	std::map<std::string, Material*>::iterator Find_it = MaterialList.find(Path);
+
+	if (End_it == Find_it)
+	{
+		return nullptr;
+	}
+	else
+	{
+		return Find_it->second;
+	}
+}
+
 ModelData* LoadManager::GetMesh(std::string Path)
 {
 	std::map<std::string, ModelData*>::iterator End_it	= ModelList.end();
@@ -120,6 +143,23 @@ ModelData* LoadManager::GetMesh(std::string Path)
 	{
 		return Find_it->second;
 	}
+}
+
+MeshBuffer* LoadManager::GetMeshBuffer(UINT index)
+{
+	std::map<UINT, MeshBuffer*>::iterator End_it = MeshBufferList.end();
+	std::map<UINT, MeshBuffer*>::iterator Find_it = MeshBufferList.find(index);
+
+	if (End_it == Find_it)
+	{
+		return nullptr;
+	}
+	else
+	{
+		return Find_it->second;
+	}
+
+	return nullptr;
 }
 
 ModelAnimationData* LoadManager::GetAnimation(std::string Path)
@@ -210,6 +250,8 @@ void LoadManager::LoadFile(std::string& Path, UINT MODE)
 		//씬 로드
 		mEATER->LoadScene(Path);
 	}
+
+	/// Material Load 추가해야함
 }
 
 void LoadManager::LoadFolder(std::string& Path, UINT MODE)

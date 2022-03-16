@@ -40,8 +40,6 @@ private:
 	std::vector<std::string> NormalNameList;
 	std::vector<std::string> ORMNameList;
 
-	Matrix m_Tex;
-
 	std::string TerrainColliderName;
 	std::string TerrainMeshName;
 

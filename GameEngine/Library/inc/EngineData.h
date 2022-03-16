@@ -37,17 +37,12 @@ class MaterialData
 public:
 	UINT Material_Index = 0;				// Material Index
 
-	MaterialOption* Material_Option = nullptr;	// Material Data
-
-	Matrix* TexTM = nullptr;				//매쉬의 텍스쳐 행렬
+	MaterialSubData* Material_SubData = nullptr;	// Material SubData
 
 	TextureBuffer* Albedo = nullptr;		// DiffuseMap Texture
 	TextureBuffer* Normal = nullptr;		// NormalMap Texture
 	TextureBuffer* Emissive = nullptr;		// Emissive Texture
 	TextureBuffer* ORM = nullptr;			// AO(R) + Roughness(G) + Metallic(B) Texture
-
-	Vector4 Color_Base;			// Base Color
-	Vector4 Color_Add;			// Add Color
 };
 
 // Terrain Data
@@ -117,7 +112,6 @@ public:
 	std::vector<DirectionalLightData*>	DirectionLights;
 	std::vector<PointLightData*>		PointLights;
 	std::vector<SpotLightData*>			SpotLights;
-	std::vector<MaterialOption*>		Materials;
 
 	// Debug Data
 	std::queue<RayCastData> RayCastDebugData;
@@ -131,21 +125,16 @@ class MeshData
 public:
 	~MeshData()
 	{
-		IndexBuf = nullptr;
-		VertexBuf = nullptr;
+
 	}
 
 public:
 	OBJECT_TYPE ObjType = OBJECT_TYPE::DEFALT;		//오브젝트 타입
 	
-	UINT MeshIndex = 0;									// Instance 구분을 위한 Index
 	UINT RenderMeshIndex = 0;							// Renderer 측 구분을 위한 Index
 	UINT RenderListIndex = 0;							// Renderer 측 구분을 위한 Index
 
-	bool Alpha = false;						// Alpha Mesh
-
-	IndexBuffer* IndexBuf = nullptr;				//인덱스 버퍼
-	VertexBuffer* VertexBuf = nullptr;				//버텍스 버퍼
+	MeshBuffer* MeshBuf = nullptr;
 
 	std::vector<Matrix> BoneOffsetTM;				//본 오프셋 TM
 
@@ -170,12 +159,6 @@ class LoadMeshData
 public:
 	~LoadMeshData()
 	{
-		IndexBuf = nullptr;
-		VertexBuf = nullptr;
-
-		Material = nullptr;
-		Animation = nullptr;
-
 		BoneTMList = nullptr;
 		BoneList = nullptr;
 
@@ -183,47 +166,26 @@ public:
 	};
 
 	MESH_TYPE MeshType;				// 매쉬 타입
-	bool Alpha = false;
-	bool Top_Object = false;		//가장 최상위 오브젝트인지 여부
 
-	int BoneIndex = -1;				//본일경우 자신의 인덱스
+	bool Top_Object = false;		//가장 최상위 오브젝트인지 여부
 
 	std::string ParentName = "";	//부모의 이름
 	std::string	Name = "";			//자기자신의 이름
+	std::string MaterialName = "";	//매터리얼 이름
 
 	Matrix WorldTM;					//월드 매트릭스
 	Matrix LocalTM;					//로컬 매트릭스
 
-	UINT MeshIndex;
+	MeshBuffer* MeshBuf = nullptr;
 
-	IndexBuffer* IndexBuf = nullptr;			//인덱스 버퍼
-	VertexBuffer* VertexBuf = nullptr;			//버텍스 버퍼
-
-	std::string AlbedoName;
-	std::string NormalName;
-	std::string EmissiveName;
-	std::string ORMName;
-
-	std::vector<UINT> Index_List;		//	
-	std::vector<Vector3> Vertex_List;	//
-
-	ParserData::CMaterial* Material = nullptr;	//메테리얼 정보
-	ParserData::OneAnimation* Animation = nullptr;	//애니메이션 정보
-
+	int BoneIndex = -1;				//본일경우 자신의 인덱스
 	std::vector<Matrix>* BoneTMList = nullptr;	//본 매트릭스
 	std::vector<Mesh*>* BoneList = nullptr;		//본 매쉬
 
-	Vector3*	m_OriginVertexList		= nullptr;
-	UINT*		m_OriginIndexList		= nullptr;
-	int			m_OriginVertexListCount = 0;
-	int			m_OriginIndexListCount	= 0;
-	
 	std::string Mask_Name;					// Terrain 전용 Mask Name
 
 	LoadMeshData* Parent = nullptr;			//부모 매쉬
 	std::vector<LoadMeshData*> Child;		//자식 매쉬 리스트
-
-	Matrix* BoneOffset = nullptr;			//본 매트릭스
 };
 
 /// <summary>

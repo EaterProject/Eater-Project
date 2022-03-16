@@ -26,9 +26,6 @@ void Terrain::Awake()
 	//Awake 에서는 무조건 GetComponent 만
 	mCollider	= gameobject->GetComponent<Collider>();
 	mMeshFilter = gameobject->GetComponent<MeshFilter>();
-
-	// Tex Transform 설정..
-	gameobject->OneMeshData->Material_Data->TexTM = &m_Tex;
 }
 
 void Terrain::SetUp()
@@ -62,7 +59,7 @@ void Terrain::AddLayer(std::string diffuseName, std::string normalName, std::str
 	Material* newMaterial = new Material();
 
 	// 새로운 Material Data 생성..
-	MaterialData* materialData = newMaterial->GetMaterialData();
+	MaterialData* materialData = newMaterial->m_MaterialData;
 
 	// Material Layer Texture 삽입..
 	materialData->Albedo = LoadManager::GetTexture(diffuseName);
@@ -78,12 +75,12 @@ void Terrain::AddLayer(std::string diffuseName, std::string normalName, std::str
 
 void Terrain::SetTextureTiling(float scale_x, float scale_y)
 {
-	m_Tex = DirectX::SimpleMath::Matrix::CreateScale(scale_x, scale_y, 1.0f);
+	gameobject->OneMeshData->Material_Data->Material_SubData->TexTM = DirectX::SimpleMath::Matrix::CreateScale(scale_x, scale_y, 1.0f);
 }
 
 void Terrain::SetTextureTiling(float scale)
 {
-	m_Tex = DirectX::SimpleMath::Matrix::CreateScale(scale, scale, 1.0f);
+	gameobject->OneMeshData->Material_Data->Material_SubData->TexTM = DirectX::SimpleMath::Matrix::CreateScale(scale, scale, 1.0f);
 }
 
 void Terrain::SetLayerName(std::string diffuseName, std::string normalName, std::string ormName)

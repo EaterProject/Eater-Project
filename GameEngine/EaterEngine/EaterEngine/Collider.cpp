@@ -83,32 +83,32 @@ void Collider::SetCapsuleCollider(float Radius, float Height)
 
 void Collider::SetMeshCollider(std::string MeshName)
 {
-	PhysCollider::TriangleMeshData* Triangle = mColliderData->CreateTriangle();
-	ModelData* data = LoadManager::GetMesh(MeshName);
-	
-	int IndexSize = data->TopMeshList[0]->m_OriginIndexListCount;
-	int VertexSize = data->TopMeshList[0]->m_OriginVertexListCount;
-
-	Triangle->VertexList = data->TopMeshList[0]->m_OriginVertexList;
-	Triangle->VertexListSize = VertexSize;
-
-	Triangle->IndexList = data->TopMeshList[0]->m_OriginIndexList;
-	Triangle->IndexListSize = IndexSize;
+	//PhysCollider::TriangleMeshData* Triangle = mColliderData->CreateTriangle();
+	//ModelData* data = LoadManager::GetMesh(MeshName);
+	//
+	//int IndexSize = data->TopMeshList[0]->m_OriginIndexListCount;
+	//int VertexSize = data->TopMeshList[0]->m_OriginVertexListCount;
+	//
+	//Triangle->VertexList = data->TopMeshList[0]->m_OriginVertexList;
+	//Triangle->VertexListSize = VertexSize;
+	//
+	//Triangle->IndexList = data->TopMeshList[0]->m_OriginIndexList;
+	//Triangle->IndexListSize = IndexSize;
 }
 
 void Collider::SetTerrainCollider(std::string MeshName)
 {
-	PhysCollider::TriangleMeshData* Triangle = mColliderData->CreateTriangle();
-	ModelData* data = LoadManager::GetMesh(MeshName);
-
-	int IndexSize = data->TopMeshList[0]->m_OriginIndexListCount;
-	int VertexSize = data->TopMeshList[0]->m_OriginVertexListCount;
-
-	Triangle->VertexList = data->TopMeshList[0]->m_OriginVertexList;
-	Triangle->VertexListSize = VertexSize;
-
-	Triangle->IndexList = data->TopMeshList[0]->m_OriginIndexList;
-	Triangle->IndexListSize = IndexSize;
+	//PhysCollider::TriangleMeshData* Triangle = mColliderData->CreateTriangle();
+	//ModelData* data = LoadManager::GetMesh(MeshName);
+	//
+	//int IndexSize = data->TopMeshList[0]->m_OriginIndexListCount;
+	//int VertexSize = data->TopMeshList[0]->m_OriginVertexListCount;
+	//
+	//Triangle->VertexList = data->TopMeshList[0]->m_OriginVertexList;
+	//Triangle->VertexListSize = VertexSize;
+	//
+	//Triangle->IndexList = data->TopMeshList[0]->m_OriginIndexList;
+	//Triangle->IndexListSize = IndexSize;
 }
 
 void Collider::SetTrigger(bool trigger)

@@ -5,6 +5,7 @@
 #include "ObjectManager.h"
 #include "Transform.h"
 #include "MeshFilter.h"
+#include "Material.h"
 
 std::vector<size_t> GameObject::TagList;
 GameObject::GameObject()
@@ -174,6 +175,18 @@ Transform* GameObject::GetTransform()
 	{
 		return nullptr;
 	}
+}
+
+Material* GameObject::GetMaterial()
+{
+	MeshFilter* meshfilter = GetComponent<MeshFilter>();
+
+	if (meshfilter)
+	{
+		return meshfilter->GetMaterial();
+	}
+	
+	return nullptr;
 }
 
 Component* GameObject::GetDeleteComponent(int i)

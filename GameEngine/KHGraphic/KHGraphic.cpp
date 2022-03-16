@@ -88,6 +88,11 @@ void KHGraphic::AddChangeMeshData(MeshData* meshData)
 	m_RenderManager->AddChangeMeshData(meshData);
 }
 
+void KHGraphic::AddChangeMaterialData(MaterialData* materialData)
+{
+	m_RenderManager->AddChangeMaterialData(materialData);
+}
+
 void KHGraphic::DeleteMeshData(MeshData* meshData)
 {
 	m_RenderManager->DeleteMeshData(meshData);

@@ -191,6 +191,7 @@ copy/Y "$(ProjectDir)Export\*.h"   "$(SolutionDir)Library\inc\Graphic"</Command>
     <ClInclude Include="BakingFactoryBase.h" />
     <ClInclude Include="BlendStateDefine.h" />
     <ClInclude Include="BloomPass.h" />
+    <ClInclude Include="ConvertData.h" />
     <ClInclude Include="DrawBuffer.h" />
     <ClInclude Include="DrawBufferDefine.h" />
     <ClInclude Include="DebugPass.h" />
@@ -222,6 +223,7 @@ copy/Y "$(ProjectDir)Export\*.h"   "$(SolutionDir)Library\inc\Graphic"</Command>
     <ClInclude Include="OITPass.h" />
     <ClInclude Include="RasterizerStateDefine.h" />
     <ClInclude Include="RenderData.h" />
+    <ClInclude Include="RenderDataConverter.h" />
     <ClInclude Include="RenderTargetDefine.h" />
     <ClInclude Include="RenderTargetViewDefine.h" />
     <ClInclude Include="ResourceBase.h" />
@@ -286,6 +288,7 @@ copy/Y "$(ProjectDir)Export\*.h"   "$(SolutionDir)Library\inc\Graphic"</Command>
     <ClCompile Include="OITPass.cpp" />
     <ClCompile Include="PixelShader.cpp" />
     <ClCompile Include="RenderData.cpp" />
+    <ClCompile Include="RenderDataConverter.cpp" />
     <ClCompile Include="RenderPassBase.cpp" />
     <ClCompile Include="RenderManager.cpp" />
     <ClCompile Include="RenderTarget.cpp" />

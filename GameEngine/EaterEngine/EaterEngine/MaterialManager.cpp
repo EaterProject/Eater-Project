@@ -1,9 +1,11 @@
-#include "BaseManager.h"
 #include "MaterialManager.h"
 #include "Material.h"
 #include "EngineData.h"
 
-std::unordered_map<UINT, MaterialOption*> MaterialManager::g_MaterialList;
+#define SAFE_RELEASE(x) { if(x != nullptr){ x->Release(); delete x; x = nullptr; } }
+
+std::vector<std::pair<UINT, bool>> MaterialManager::g_IndexList;
+std::unordered_map<UINT, Material*> MaterialManager::g_MaterialList;
 
 MaterialManager::MaterialManager()
 {
@@ -17,48 +19,53 @@ MaterialManager::~MaterialManager()
 
 void MaterialManager::Initialize()
 {
-	// Basic Material..
-	MaterialOption* mat = new MaterialOption();
 
-	Global->Materials.push_back(mat);
-
-	UINT material_Index = (UINT)g_MaterialList.size();
-
-	// Material List 추가..
-	g_MaterialList.insert(std::make_pair(material_Index, mat));
 }
 
 void MaterialManager::Release()
 {
 	// Material List 삭제..
-	g_MaterialList.clear();
+	for (auto& material : g_MaterialList)
+	{
+		SAFE_RELEASE(material.second);
+	}
 
-	// Global Data Material Data 삭제..
-	Global->Materials.clear();
+	g_MaterialList.clear();
 }
 
-void MaterialManager::PushMaterial(Material* mat)
+void MaterialManager::PushMaterial(Material* material)
 {
-	// Material 추가 될때마다 Global Data 설정..
-	MaterialData* matBuf = mat->MaterialDatas;
+	// 추가된 Material Index 부여..
+	UINT material_Index = 0;
 
-	UINT material_Index = (UINT)g_MaterialList.size();
+	for (int i = 0; i < g_IndexList.size(); i++)
+	{
+		// Index List에 빈곳이 있다면 해당 Index 부여..
+		if (g_IndexList[i].second == false)
+		{
+			material_Index = g_IndexList[i].first;
+			g_IndexList[i].second = true;
+		}
+	}
+
+	// 만약 Index List에 빈곳이 없다면 다음 Index 추가..
+	if (material_Index == 0)
+	{
+		g_IndexList.push_back(std::pair<UINT, bool>(g_IndexList.size(), true));
+	}
 
 	// 현재 Material Index 설정..
-	matBuf->Material_Index = material_Index;
+	material->m_MaterialData->Material_Index = material_Index;
 	
-	// 현재 Material Data 삽입..
-	Global->Materials.push_back(matBuf->Material_Option);
-
 	// Material List 추가..
-	g_MaterialList.insert(std::make_pair(material_Index, matBuf->Material_Option));
+	g_MaterialList.insert(std::make_pair(material_Index, material));
 }
 
 void MaterialManager::DeleteMaterial(UINT index)
 {
 	// 해당 Material Data 삭제..
-	//g_MaterialList.erase(index);
+	g_MaterialList.erase(index);
 
-	// Global Data Material Data 삭제..
-	//Global->Materials.erase(std::next(Global->Materials.begin(), index));
+	// 해당 Material Index 빈곳으로 설정..
+	g_IndexList[index].second = false;
 }

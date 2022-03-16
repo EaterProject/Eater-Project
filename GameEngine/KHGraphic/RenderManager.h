@@ -36,6 +36,7 @@ public:
 
 	void AddMeshData(MeshData* meshData) override;
 	void AddChangeMeshData(MeshData* meshData) override;
+	void AddChangeMaterialData(MaterialData* materialData) override;
 	void DeleteMeshData(MeshData* mesh) override;
 
 	void Render() override;
@@ -75,6 +76,7 @@ private:
 private:
 	std::queue<MeshData*> m_UnConvertMeshList;
 	std::queue<MeshData*> m_ChangeMeshList;
+	std::queue<MaterialData*> m_ChangeMaterialList;
 
 	std::vector<MeshIndexData> m_MeshIndexList;
 

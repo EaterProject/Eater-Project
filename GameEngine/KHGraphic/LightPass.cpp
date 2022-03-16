@@ -200,11 +200,6 @@ void LightPass::RenderUpdate()
 		lightBuf.gSpotLights[s].LightViewProj *= texSpace;
 	}
 
-	//for (UINT m = 0; m < g_GlobalData->Materials.size(); m++)
-	//{
-	//	lightBuf.gMaterials[m] = *g_GlobalData->Materials[m];
-	//}
-
 	CB_LightSub lightsubBuf;
 	lightsubBuf.gEyePosW = g_GlobalData->CamPos;
 	lightsubBuf.gViewProjTex = g_GlobalData->CamView * g_GlobalData->CamProj * g_GlobalData->TexSpace;
