@@ -32,7 +32,7 @@ void Particle::Awake()
 void Particle::Start()
 {
 	// Object Type 설정..
-	gameobject->OneMeshData->ObjType = OBJECT_TYPE::PARTICLE;
+	gameobject->OneMeshData->Object_Data->ObjType = OBJECT_TYPE::PARTICLE;
 
 	// Frame 설정..
 	m_TexTotalFrame = m_SystemDesc->Total_Frame;

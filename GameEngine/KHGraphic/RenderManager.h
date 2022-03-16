@@ -89,7 +89,7 @@ private:
 	std::vector<RenderData*> m_MeshList;
 	RenderData* m_RenderData;
 
-	RenderOption* m_RenderOption = 0;
+	RenderOption* m_RenderOption;
 	RenderOption m_NowRenderOption;
 
 	DeferredPass*		m_Deferred;

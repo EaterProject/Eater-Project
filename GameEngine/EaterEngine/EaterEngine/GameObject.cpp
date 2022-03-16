@@ -13,7 +13,10 @@ GameObject::GameObject()
 	Tag	= 0;			//테그
 	IsActive = true;	//모든 컨퍼넌트 사용여부
 	Name = "GameObject";
+
 	OneMeshData = new MeshData();
+	OneMeshData->Object_Data = new ObjectData();
+
 	transform = nullptr;
 	DontDestroy = false;
 
@@ -23,6 +26,7 @@ GameObject::GameObject()
 
 GameObject::~GameObject()
 {
+	delete OneMeshData->Object_Data;
 	delete OneMeshData;
 	OneMeshData = nullptr;
 }

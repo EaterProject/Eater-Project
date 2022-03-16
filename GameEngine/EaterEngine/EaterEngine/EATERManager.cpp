@@ -176,13 +176,13 @@ LoadMeshData* EATERManager::LoadStaticMesh(int index)
 		LeaveCriticalSection(m_CriticalSection);
 		
 		// Mesh Buffer Index 설정..
-		model->MeshBuf->BufferIndex = meshIndex;
+		model->MeshBuffer_Data->BufferIndex = meshIndex;
 
-		LoadManager::MeshBufferList.insert({ meshIndex, model->MeshBuf });
+		LoadManager::MeshBufferList.insert({ meshIndex, model->MeshBuffer_Data });
 	}
 	else
 	{
-		model->MeshBuf = meshBuffer;
+		model->MeshBuffer_Data = meshBuffer;
 	}
 
 	return model;
@@ -242,13 +242,13 @@ LoadMeshData* EATERManager::LoadSkinMesh(int index)
 		LeaveCriticalSection(m_CriticalSection);
 
 		// Mesh Buffer Index 설정..
-		model->MeshBuf->BufferIndex = meshIndex;
+		model->MeshBuffer_Data->BufferIndex = meshIndex;
 
-		LoadManager::MeshBufferList.insert({ meshIndex, model->MeshBuf });
+		LoadManager::MeshBufferList.insert({ meshIndex, model->MeshBuffer_Data });
 	}
 	else
 	{
-		model->MeshBuf = meshBuffer;
+		model->MeshBuffer_Data = meshBuffer;
 	}
 
 	return model;
