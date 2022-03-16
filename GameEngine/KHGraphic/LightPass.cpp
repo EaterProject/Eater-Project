@@ -173,41 +173,36 @@ void LightPass::Reset()
 
 void LightPass::RenderUpdate()
 {
-	Matrix texSpace = g_GlobalData->mTexSpace;
+	Matrix texSpace = g_GlobalData->TexSpace;
 
 	g_Context->OMSetRenderTargets(1, &m_OutPut_RTV, nullptr);
 	g_Context->ClearRenderTargetView(m_OutPut_RTV, reinterpret_cast<const float*>(&DXColors::DeepDarkGray));
 	g_Context->RSSetViewports(1, m_Screen_VP);
 
 	CB_Light lightBuf;
-	lightBuf.gDirLightCount = (UINT)g_GlobalData->mDirectionLights.size();
-	lightBuf.gPointLightCount = (UINT)g_GlobalData->mPointLights.size();
-	lightBuf.gSpotLightCount = (UINT)g_GlobalData->mSpotLights.size();
+	lightBuf.gDirLightCount = (UINT)g_GlobalData->DirectionLights.size();
+	lightBuf.gPointLightCount = (UINT)g_GlobalData->PointLights.size();
+	lightBuf.gSpotLightCount = (UINT)g_GlobalData->SpotLights.size();
 
 	for (UINT d = 0; d < lightBuf.gDirLightCount; d++)
 	{
-		lightBuf.gDirLights[d] = *g_GlobalData->mDirectionLights[d];
+		lightBuf.gDirLights[d] = *g_GlobalData->DirectionLights[d];
 		lightBuf.gDirLights[d].LightViewProj *= texSpace;
 	}
 	for (UINT p = 0; p < lightBuf.gPointLightCount; p++)
 	{
-		lightBuf.gPointLights[p] = *g_GlobalData->mPointLights[p];
+		lightBuf.gPointLights[p] = *g_GlobalData->PointLights[p];
 		lightBuf.gPointLights[p].LightViewProj *= texSpace;
 	}
 	for (UINT s = 0; s < lightBuf.gSpotLightCount; s++)
 	{
-		lightBuf.gSpotLights[s] = *g_GlobalData->mSpotLights[s];
+		lightBuf.gSpotLights[s] = *g_GlobalData->SpotLights[s];
 		lightBuf.gSpotLights[s].LightViewProj *= texSpace;
 	}
 
-	for (UINT m = 0; m < g_GlobalData->mMaterials.size(); m++)
-	{
-		lightBuf.gMaterials[m] = *g_GlobalData->mMaterials[m];
-	}
-
 	CB_LightSub lightsubBuf;
-	lightsubBuf.gEyePosW = g_GlobalData->mCamPos;
-	lightsubBuf.gViewProjTex = g_GlobalData->mCamView * g_GlobalData->mCamProj * g_GlobalData->mTexSpace;
+	lightsubBuf.gEyePosW = g_GlobalData->CamPos;
+	lightsubBuf.gViewProjTex = g_GlobalData->CamView * g_GlobalData->CamProj * g_GlobalData->TexSpace;
 
 	// Vertex Shader Update..
 	m_Light_VS->Update();

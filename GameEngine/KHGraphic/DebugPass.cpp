@@ -148,8 +148,8 @@ void DebugPass::RenderUpdate(RenderData* mesh)
 	CB_DebugObject object;
 	CB_DebugOption option;
 	Matrix world = *mesh->m_World;
-	Matrix invView = g_GlobalData->mCamInvView;
-	Matrix viewproj = g_GlobalData->mCamVP;
+	Matrix invView = g_GlobalData->CamInvView;
+	Matrix viewproj = g_GlobalData->CamVP;
 	ColliderData* col = mesh->m_ColliderData;
 
 	// Transform Debug..
@@ -266,14 +266,15 @@ void DebugPass::GlobalRender()
 	CB_DebugObject object;
 	CB_DebugOption option;
 
-	Matrix invView = g_GlobalData->mCamInvView;
-	Matrix viewproj = g_GlobalData->mCamVP;
+	Matrix invView = g_GlobalData->CamInvView;
+	Matrix viewproj = g_GlobalData->CamVP;
 
-	std::vector<DirectionalLightData*>* directionList = &g_GlobalData->mDirectionLights;
-	std::vector<PointLightData*>* pointList = &g_GlobalData->mPointLights;
-	std::vector<SpotLightData*>* spotList = &g_GlobalData->mSpotLights;
-	std::queue<RayCastData>* rayList = &g_GlobalData->mRayCastDebugData;
+	std::vector<DirectionalLightData*>* directionList = &g_GlobalData->DirectionLights;
+	std::vector<PointLightData*>* pointList = &g_GlobalData->PointLights;
+	std::vector<SpotLightData*>* spotList = &g_GlobalData->SpotLights;
+	std::queue<RayCastData>* rayList = &g_GlobalData->RayCastDebugData;
 
+	// Global Axis..
 	object.gWorldViewProj = Matrix::CreateScale(1000.0f) * Matrix::CreateTranslation(0.0f, 0.1f, 0.0f) * viewproj;
 
 	m_DebugVS->ConstantBufferCopy(&object);
@@ -282,6 +283,7 @@ void DebugPass::GlobalRender()
 	BufferUpdate(DEBUG_TYPE::DEBUG_AXIS);
 	g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
 
+	// Global Grid..
 	object.gWorldViewProj = viewproj;
 
 	m_DebugVS->ConstantBufferCopy(&object);
@@ -290,6 +292,7 @@ void DebugPass::GlobalRender()
 	BufferUpdate(DEBUG_TYPE::DEBUG_GRID);
 	g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
 
+	// Global Data..
 	g_Context->RSSetState(m_NoCullRS);
 
 	for (DirectionalLightData* light : *directionList)

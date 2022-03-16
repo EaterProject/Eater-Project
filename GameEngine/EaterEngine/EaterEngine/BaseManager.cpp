@@ -9,7 +9,7 @@ void BaseManager::Initialize()
 {
 	Global = new GlobalData();
 
-	Global->mTexSpace = Matrix(	0.5f, 0.0f, 0.0f, 0.0f,
+	Global->TexSpace = Matrix(	0.5f, 0.0f, 0.0f, 0.0f,
 								0.0f, -0.5f, 0.0f, 0.0f,
 								0.0f, 0.0f, 1.0f, 0.0f,
 								0.5f, 0.5f, 0.0f, 1.0f	);
@@ -34,15 +34,15 @@ void BaseManager::UpdateGlobalData(float dTime)
 	camInvView._21 = camView._21;	camInvView._22 = camView._22;	camInvView._23 = camView._23;
 	camInvView._31 = camView._31;	camInvView._32 = camView._32;	camInvView._33 = camView._33;
 	
-	Global->mCamView = camView;
-	Global->mCamProj = camProj;
-	Global->mCamInvView = camInvView.Invert();
-	Global->mCamPos = Camera::g_MainCam->GetPos();
+	Global->CamView = camView;
+	Global->CamProj = camProj;
+	Global->CamInvView = camInvView.Invert();
+	Global->CamPos = Camera::g_MainCam->GetPos();
 
-	Global->mCamVP = camView * camProj;
+	Global->CamVP = camView * camProj;
 
 	// ½Ã°£
-	Global->mTime = dTime;
+	Global->Time = dTime;
 }
 
 GlobalData* BaseManager::GetGlobalData()

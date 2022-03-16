@@ -1009,8 +1009,13 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::MeshVertex>(ParserDat
 	if (mesh->m_VertexList.empty()) return;
 	
 	// »õ·Î¿î Buffer »ý¼º..
-	meshData->VertexBuf = new VertexBuffer();
-	meshData->IndexBuf = new IndexBuffer();
+	MeshBuffer* newMeshBuf		= new MeshBuffer();
+	VertexBuffer* newVertexBuf	= new VertexBuffer();
+	IndexBuffer* newIndexBuf	= new IndexBuffer();
+
+	meshData->MeshBuf = newMeshBuf;
+	meshData->MeshBuf->VertexBuf = newVertexBuf;
+	meshData->MeshBuf->IndexBuf = newIndexBuf;
 
 	UINT vCount = (UINT)mesh->m_VertexList.size();
 	UINT iCount = (UINT)mesh->m_IndexList.size();
@@ -1070,12 +1075,12 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::MeshVertex>(ParserDat
 	g_Graphic->CreateBuffer(&bufferDesc, &initData, &ib);
 
 	// ³Ñ°ÜÁà¾ßÇÒ VertexBufferData »ðÀÔ..
-	meshData->VertexBuf->pVertexBuf = vb;
-	meshData->VertexBuf->Stride = sizeof(VertexInput::MeshVertex);
+	newVertexBuf->pVertexBuf = vb;
+	newVertexBuf->Stride = sizeof(VertexInput::MeshVertex);
 
 	// ³Ñ°ÜÁà¾ßÇÒ IndexBufferData »ðÀÔ..
-	meshData->IndexBuf->Count = iCount * 3;
-	meshData->IndexBuf->pIndexBuf = ib;
+	newIndexBuf->Count = iCount * 3;
+	newIndexBuf->pIndexBuf = ib;
 
 	// Debug Name..
 	GPU_RESOURCE_DEBUG_NAME(vb, (mesh->m_NodeName + "_VB").c_str());
@@ -1088,8 +1093,13 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::SkinVertex>(ParserDat
 	if (mesh->m_VertexList.empty()) return;
 	
 	// »õ·Î¿î Buffer »ý¼º..
-	meshData->VertexBuf = new VertexBuffer();
-	meshData->IndexBuf = new IndexBuffer();
+	MeshBuffer* newMeshBuf = new MeshBuffer();
+	VertexBuffer* newVertexBuf = new VertexBuffer();
+	IndexBuffer* newIndexBuf = new IndexBuffer();
+
+	meshData->MeshBuf = newMeshBuf;
+	meshData->MeshBuf->VertexBuf = newVertexBuf;
+	meshData->MeshBuf->IndexBuf = newIndexBuf;
 
 	UINT vCount = (UINT)mesh->m_VertexList.size();
 	UINT iCount = (UINT)mesh->m_IndexList.size();
@@ -1169,12 +1179,12 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::SkinVertex>(ParserDat
 	g_Graphic->CreateBuffer(&bufferDesc, &initData, &ib);
 
 	// ³Ñ°ÜÁà¾ßÇÒ VertexBufferData »ðÀÔ..
-	meshData->VertexBuf->pVertexBuf = vb;
-	meshData->VertexBuf->Stride = sizeof(VertexInput::SkinVertex);
+	newVertexBuf->pVertexBuf = vb;
+	newVertexBuf->Stride = sizeof(VertexInput::SkinVertex);
 
 	// ³Ñ°ÜÁà¾ßÇÒ IndexBufferData »ðÀÔ..
-	meshData->IndexBuf->Count = iCount * 3;
-	meshData->IndexBuf->pIndexBuf = ib;
+	newIndexBuf->Count = iCount * 3;
+	newIndexBuf->pIndexBuf = ib;
 
 	// Debug Name..
 	GPU_RESOURCE_DEBUG_NAME(vb, (mesh->m_NodeName + "_VB").c_str());
@@ -1185,8 +1195,13 @@ template<>
 void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(ParserData::Mesh* mesh, LoadMeshData* meshData)
 {
 	// »õ·Î¿î Buffer »ý¼º..
-	meshData->VertexBuf = new VertexBuffer();
-	meshData->IndexBuf = new IndexBuffer();
+	MeshBuffer* newMeshBuf = new MeshBuffer();
+	VertexBuffer* newVertexBuf = new VertexBuffer();
+	IndexBuffer* newIndexBuf = new IndexBuffer();
+
+	meshData->MeshBuf = newMeshBuf;
+	meshData->MeshBuf->VertexBuf = newVertexBuf;
+	meshData->MeshBuf->IndexBuf = newIndexBuf;
 
 	UINT vCount = (UINT)mesh->m_VertexList.size();
 	UINT iCount = (UINT)mesh->m_IndexList.size();
@@ -1268,12 +1283,12 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(Parser
 	g_Graphic->CreateBuffer(&bufferDesc, &initData, &ib);
 
 	// ³Ñ°ÜÁà¾ßÇÒ VertexBufferData »ðÀÔ..
-	meshData->VertexBuf->pVertexBuf = vb;
-	meshData->VertexBuf->Stride = sizeof(VertexInput::TerrainVertex);
+	newVertexBuf->pVertexBuf = vb;
+	newVertexBuf->Stride = sizeof(VertexInput::TerrainVertex);
 
 	// ³Ñ°ÜÁà¾ßÇÒ IndexBufferData »ðÀÔ..
-	meshData->IndexBuf->Count = iCount * 3;
-	meshData->IndexBuf->pIndexBuf = ib;
+	newIndexBuf->Count = iCount * 3;
+	newIndexBuf->pIndexBuf = ib;
 
 	// Debug Name..
 	GPU_RESOURCE_DEBUG_NAME(vb, (mesh->m_NodeName + "_VB").c_str());
@@ -1284,19 +1299,24 @@ template<>
 void GraphicResourceFactory::CreateLoadBuffer<VertexInput::PosTexVertex>(ParserData::Mesh* mesh, LoadMeshData* meshData)
 {
 	// »õ·Î¿î Buffer »ý¼º..
-	meshData->VertexBuf = new VertexBuffer();
-	meshData->IndexBuf = new IndexBuffer();
+	MeshBuffer* newMeshBuf = new MeshBuffer();
+	VertexBuffer* newVertexBuf = new VertexBuffer();
+	IndexBuffer* newIndexBuf = new IndexBuffer();
+
+	meshData->MeshBuf = newMeshBuf;
+	meshData->MeshBuf->VertexBuf = newVertexBuf;
+	meshData->MeshBuf->IndexBuf = newIndexBuf;
 
 	// Quad Buffer..
 	DrawBuffer* quadBuf = g_ResourceManager->GetDrawBuffer<DB_Quad>();
 
 	// ³Ñ°ÜÁà¾ßÇÒ VertexBufferData »ðÀÔ..
-	meshData->VertexBuf->pVertexBuf = quadBuf->VertexBuf->Get();
-	meshData->VertexBuf->Stride = quadBuf->Stride;
+	newVertexBuf->pVertexBuf = quadBuf->VertexBuf->Get();
+	newVertexBuf->Stride = quadBuf->Stride;
 
 	// ³Ñ°ÜÁà¾ßÇÒ IndexBufferData »ðÀÔ..
-	meshData->IndexBuf->Count = quadBuf->IndexCount;
-	meshData->IndexBuf->pIndexBuf = quadBuf->IndexBuf->Get();
+	newIndexBuf->Count = quadBuf->IndexCount;
+	newIndexBuf->pIndexBuf = quadBuf->IndexBuf->Get();
 }
 
 void GraphicResourceFactory::CreateDepthStencilStates()

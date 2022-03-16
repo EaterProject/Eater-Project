@@ -37,7 +37,6 @@ void intro::Awake()
 	//MainCam->ChoiceMainCam();
 	//Cam->SetDontDestroy(true);
 	
-	
 	//GameObject* Obj = Instance();
 	//Obj->AddComponent<MeshFilter>();
 	//Obj->AddComponent<TestPlayer>();

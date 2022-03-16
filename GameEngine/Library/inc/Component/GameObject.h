@@ -22,6 +22,7 @@
 /// 기본 게임 오브젝트
 /// </summary>
 class MeshData;
+class Material;
 class Transform;
 class GameObject
 {
@@ -51,6 +52,7 @@ public:
 	EATER_ENGINEDLL int			GetChildMeshCount();					//자식 매쉬 객체의 개수를 가져옴
 	EATER_ENGINEDLL int			GetChildBoneCount();					//자식 본 객체의 개수를 가져옴
 	EATER_ENGINEDLL	Transform*	GetTransform();							//기본 컨퍼넌트인 Transform을 가져옴
+	EATER_ENGINEDLL Material* GetMaterial();							//
 
 	EATER_ENGINEDLL void ChoiceParent(GameObject* obj);					//나자신을 선택한 오브젝트의 자식으로 넣는다
 	EATER_ENGINEDLL void ChoiceChild(GameObject* obj);					//선택한 오브젝트를 나의 자식으로 넣는다
@@ -99,10 +101,6 @@ inline T* GameObject::AddComponent(typename std::enable_if<std::is_base_of<Compo
 
 	//생성한 컨퍼넌트를 리스트에 넣는다
 	ComponentList.push_back(ComponentBox);
-
-
-	//게임오브젝트 추가 데이터 설정
-	ComponentBox->SetObjectData();
 
 	//나중에 이타입으로 찾아서 가져올수있도록 타입 설정
 	ComponentBox->ComponentType = typeid(T).hash_code();

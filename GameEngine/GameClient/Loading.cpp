@@ -13,6 +13,7 @@
 #include "MeshFilter.h"
 #include "EngineData.h"
 #include "AnimationController.h"
+#include "Material.h"
 
 void Loading::Awake()
 {
@@ -66,6 +67,10 @@ void Loading::ThreadFunction()
 	Load("../Assets/Texture/Terrain");
 	Load("../Assets/Mesh/Base");
 	Load("../Assets/Mesh/Animation");
+
+	Material* Test = new Material();
+	
+	
 }
 
 

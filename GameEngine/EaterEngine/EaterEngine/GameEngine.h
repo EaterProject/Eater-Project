@@ -33,6 +33,7 @@ class ThreadManager;
 //게임 오브젝트
 class GameObject;
 class ModelData;
+class Material;
 
 class RenderOption;
 
@@ -63,6 +64,8 @@ public:
 	GameObject* InstanceParticle(std::string ObjName = "Particle");
 	GameObject* InstanceCamera(std::string ObjName = "Camera");
 	GameObject* InstanceLight(std::string ObjName = "Light", LIGHT_TYPE type = LIGHT_TYPE::DIRECTION_LIGHT);
+
+	Material* InstanceMaterial(std::string matName = "Material");
 
 	GameObject* FindGameObjectTag(std::string& TagName);
 	GameObject* FindGameObjectName(std::string& ObjName);
@@ -100,24 +103,30 @@ public:
 public:
 	///카메라 관련
 	GameObject* GetMainCamera();
+
 public:
 	///시간 관련
 	float GetdeltaTime();
+
 public:
 	///네트워크 관련
 	void SetNetworkManager(NetworkManagerComponent* Manager);
 	void NETWORK_SEND(flatbuffers::FlatBufferBuilder* Builder, int Type);
 	void NETWORK_LOADING_COMPLETE(unsigned int Number);
 	void NETWORK_CONNECT(int ServerPort, std::string  Local_Connect_IP);
+
 public:
 	///디버그 관련
 	void EditorSetting();
 	void DebugDrawLine(Vector3 start, Vector3 end, Vector4 color);
 	void DebugDrawLine(Vector3 start, Vector3 dir, float distance, Vector4 color);
+
 private:
 	GameObject* CreateInstance();
+	Material* CreateMaterial();
 	void CreateObject();			//기본 생성 오브젝트
 	void RenderOptionCheck();
+
 private:
 	///각종 매니저들
 	ObjectManager*			mObjectManager;		// 오브젝트 관리 매니저

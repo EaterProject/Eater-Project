@@ -9,7 +9,6 @@
 ///	여러개의 그래픽엔진을 쉽게 사용하기위해 만든 그래픽엔진 관리 매니저.
 /// </summary>
 
-class ObjectManager;
 class MeshData;
 class GlobalData;
 class GraphicEngine;
@@ -31,7 +30,7 @@ public:
 	~GraphicEngineManager();
 public:
 	//선택한 그래픽엔진을 초기화
-	void Initialize(HWND Hwnd, int WinSizeWidth, int WinSizeHeight,ObjectManager* GM);
+	void Initialize(HWND Hwnd, int WinSizeWidth, int WinSizeHeight);
 
 	//선택한 그래픽 엔진으로 Resize
 	void OnReSize(int Change_Width, int Change_Height);
@@ -43,6 +42,7 @@ public:
 
 	//선택한 그래픽엔진 랜더링
 	void AddMeshData(MeshData* mesh);
+	void AddChangeMeshData(MeshData* mesh);
 	void DeleteMeshData(MeshData* mesh);
 	void Render();
 
@@ -59,6 +59,5 @@ public:
 
 private:
 	GraphicEngine* GEngine;
-	ObjectManager* ObjManager;
 };
 

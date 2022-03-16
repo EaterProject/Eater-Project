@@ -10,6 +10,7 @@
 /// </summary>
 
 class MeshData;
+class MaterialData;
 class GlobalData;
 class IndexBuffer;
 class VertexBuffer;
@@ -30,7 +31,7 @@ protected:
 
 public:
 	/// Graphic Engine Create Function..
-	static GRAPHIC_DLL GraphicEngine* Create();
+	static GRAPHIC_DLL GraphicEngine* Get();
 
 public:
 	/// Graphic Engine Funtion..
@@ -44,9 +45,10 @@ public:
 	virtual GRAPHIC_DLL void SetEnvironmentMap(bool enable) abstract;
 
 	/// Render Mesh Data & Rendering Function..
-	virtual GRAPHIC_DLL void AddMeshData(MeshData* mesh) abstract;
+	virtual GRAPHIC_DLL void AddMeshData(MeshData* meshData) abstract;
+	virtual GRAPHIC_DLL void AddChangeMeshData(MeshData* meshData) abstract;
+	virtual GRAPHIC_DLL void AddChangeMaterialData(MaterialData* materialData) abstract;
 	virtual GRAPHIC_DLL void DeleteMeshData(MeshData* meshData) abstract;
-	virtual GRAPHIC_DLL void ConvertMeshData() abstract;
 
 	virtual GRAPHIC_DLL void Render() abstract;
 
@@ -55,4 +57,7 @@ public:
 	virtual GRAPHIC_DLL void CreateMeshBuffer(ParserData::Mesh* mesh, LoadMeshData* meshData) abstract;
 
 	virtual GRAPHIC_DLL void CreateEnvironmentMap(std::string path) abstract;
+
+private:
+	static GraphicEngine* Graphic;
 };

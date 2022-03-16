@@ -1,9 +1,14 @@
 #include "GraphicsEngine.h"
 #include "KHGraphic.h"
 
-GraphicEngine* GraphicEngine::Create()
-{
-	GraphicEngine* graphicEngine = new KHGraphic();
+GraphicEngine* GraphicEngine::Graphic = nullptr;
 
-	return graphicEngine;
+GraphicEngine* GraphicEngine::Get()
+{
+	if (Graphic == nullptr)
+	{
+		Graphic = new KHGraphic();
+	}
+
+	return Graphic;
 }

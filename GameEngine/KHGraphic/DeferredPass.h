@@ -15,7 +15,6 @@ public:
 	void SetOption(UINT renderOption);
 
 	void BeginRender();
-	void BufferUpdate(MeshData* mesh);
 	void RenderUpdate(const RenderData* mesh);
 	void RenderUpdate(const std::vector<RenderData*>& meshlist);
 

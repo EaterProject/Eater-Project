@@ -15,15 +15,12 @@ GraphicEngineManager::GraphicEngineManager()
 GraphicEngineManager::~GraphicEngineManager()
 {
 
-
 }
 
-void GraphicEngineManager::Initialize(HWND Hwnd, int WinSizeWidth, int WinSizeHeight, ObjectManager* GM)
+void GraphicEngineManager::Initialize(HWND Hwnd, int WinSizeWidth, int WinSizeHeight)
 {
-	ObjManager = GM;
-
 	// Graphic Engine Create..
-	GEngine = GraphicEngine::Create();
+	GEngine = GraphicEngine::Get();
 
 	// Graphic Engine Initialize..
 	GEngine->Initialize(Hwnd, WinSizeWidth, WinSizeHeight);
@@ -58,6 +55,11 @@ void GraphicEngineManager::AddMeshData(MeshData* mesh)
 	GEngine->AddMeshData(mesh);
 }
 
+void GraphicEngineManager::AddChangeMeshData(MeshData* mesh)
+{
+	GEngine->AddChangeMeshData(mesh);
+}
+
 void GraphicEngineManager::DeleteMeshData(MeshData* mesh)
 {
 	GEngine->DeleteMeshData(mesh);
@@ -65,12 +67,6 @@ void GraphicEngineManager::DeleteMeshData(MeshData* mesh)
 
 void GraphicEngineManager::Render()
 {
-	if (ObjManager->InitFuncUpdate)
-	{
-		ObjManager->InitFuncUpdate = false;
-		GEngine->ConvertMeshData();
-	}
-
 	GEngine->Render();
 }
 
@@ -86,7 +82,7 @@ void GraphicEngineManager::DebugDrawLine(DirectX::SimpleMath::Vector3 start, Dir
 	ray.RayEnd = end;
 	ray.RayColor = color;
 
-	Global->mRayCastDebugData.push(ray);
+	Global->RayCastDebugData.push(ray);
 }
 
 void GraphicEngineManager::DebugDrawLine(DirectX::SimpleMath::Vector3 start, DirectX::SimpleMath::Vector3 dir, float distance, DirectX::SimpleMath::Vector4 color)
@@ -96,7 +92,7 @@ void GraphicEngineManager::DebugDrawLine(DirectX::SimpleMath::Vector3 start, Dir
 	ray.RayEnd = start + (dir * distance);
 	ray.RayColor = color;
 
-	Global->mRayCastDebugData.push(ray);
+	Global->RayCastDebugData.push(ray);
 }
 
 void GraphicEngineManager::CreateMeshBuffer(ParserData::Mesh* mModel, LoadMeshData* meshData)

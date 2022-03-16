@@ -170,6 +170,18 @@ void RenderManager::AddMeshData(MeshData* meshData)
 	m_UnConvertMeshList.push(meshData);
 }
 
+void RenderManager::AddChangeMeshData(MeshData* meshData)
+{
+	// 현재 바뀐 Mesh Data 동기화를 위해 삽입..
+	m_ChangeMeshList.push(meshData);
+}
+
+void RenderManager::AddChangeMaterialData(MaterialData* materialData)
+{
+	// 현재 바뀐 Material Data 동기화를 위해 삽입..
+	m_ChangeMaterialList.push(materialData);
+}
+
 void RenderManager::DeleteMeshData(MeshData* meshData)
 {
 	// Object Type에 따른 Render Mesh Data 제거..
@@ -222,10 +234,45 @@ void RenderManager::ConvertMeshData()
 	}
 }
 
+void RenderManager::ChangeMeshData()
+{
+	while (!m_ChangeMeshList.empty())
+	{
+		MeshData* meshData = m_ChangeMeshList.front();
+
+		// Object Type에 따른 Render Mesh Data 동기화..
+		switch (meshData->ObjType)
+		{
+		case OBJECT_TYPE::BASE:
+		case OBJECT_TYPE::SKINNING:
+		case OBJECT_TYPE::TERRAIN:
+			ChangeMeshRenderData(meshData);
+			break;
+		case OBJECT_TYPE::PARTICLE_SYSTEM:
+			ChangeParticleRenderData(meshData);
+			break;
+		case OBJECT_TYPE::PARTICLE:
+			break;
+		default:
+			ChangeUnRenderData(meshData);
+			break;
+		}
+
+		// 변환한 Mesh Data Pop..
+		m_ChangeMeshList.pop();
+	}
+}
+
 void RenderManager::Render()
 {
 	// Rendering Option Setting..
 	RenderSetting();
+
+	// 추가된 Mesh Data 변환..
+	ConvertMeshData();
+
+	// 변경된 Mesh Data 동기화..
+	ChangeMeshData();
 
 	// Shadow Render..
 	GPU_BEGIN_EVENT_DEBUG_NAME("Shadow Pass");
@@ -468,7 +515,7 @@ void RenderManager::EndRender()
 void RenderManager::ConvertMeshRenderData(MeshData* meshData, RenderData* renderData)
 {
 	bool addList = true;
-	UINT meshIndex = renderData->m_MeshIndex;
+	UINT meshIndex = renderData->m_MeshData->m_BufferIndex;
 
 	for (MeshIndexData& index : m_MeshIndexList)
 	{
@@ -498,10 +545,8 @@ void RenderManager::ConvertMeshRenderData(MeshData* meshData, RenderData* render
 		meshData->RenderMeshIndex = 0;
 
 		// 해당 Instance List에 삽입..
-		std::vector<RenderData*> newMeshListData;
-		newMeshListData.push_back(renderData);
-
-		m_RenderMeshList.push_back(newMeshListData);
+		m_RenderMeshList.push_back(std::vector<RenderData*>());
+		m_RenderMeshList.back().push_back(renderData);
 	}
 }
 
@@ -517,6 +562,30 @@ void RenderManager::ConvertUnRenderData(MeshData* meshData, RenderData* renderDa
 	meshData->RenderMeshIndex = (UINT)m_UnRenderMeshList.size();
 	
 	m_UnRenderMeshList.push_back(renderData);
+}
+
+void RenderManager::ChangeMeshRenderData(MeshData* meshData)
+{
+	UINT listIndex = (UINT)meshData->RenderListIndex;
+	UINT meshIndex = (UINT)meshData->RenderMeshIndex;
+
+
+}
+
+void RenderManager::ChangeParticleRenderData(MeshData* meshData)
+{
+	UINT listIndex = (UINT)meshData->RenderListIndex;
+	UINT meshIndex = (UINT)meshData->RenderMeshIndex;
+
+	m_ParticleMeshList[meshIndex]->ConvertData(meshData);
+}
+
+void RenderManager::ChangeUnRenderData(MeshData* meshData)
+{
+	UINT listIndex = (UINT)meshData->RenderListIndex;
+	UINT meshIndex = (UINT)meshData->RenderMeshIndex;
+
+	m_UnRenderMeshList[meshIndex]->ConvertData(meshData);
 }
 
 void RenderManager::DeleteMeshRenderData(MeshData* meshData)

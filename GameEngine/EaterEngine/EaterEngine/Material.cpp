@@ -3,15 +3,17 @@
 #include "BaseManager.h"
 #include "MaterialManager.h"
 #include "LoadManager.h"
-
+#include "GraphicsEngine.h"
 
 Material::Material()
 {
 	// Material Buffer 생성..
-	MaterialDatas = new MaterialData();
+	m_MaterialData = new MaterialData();
 
 	// Material Data 생성..
-	MaterialDatas->Material_Option = new MaterialOption();
+	m_MaterialData->Material_SubData = new MaterialSubData();
+
+	m_MaterialData->Material_SubData->TexTM = DirectX::SimpleMath::Matrix::CreateScale(1.0f, 1.0f, 1.0f);
 
 	// Material 등록..
 	MaterialManager::PushMaterial(this);
@@ -22,87 +24,111 @@ Material::~Material()
 	Release();
 }
 
-void Material::SetMeshData(MeshData* meshData)
+void Material::SetTextureTiling(float scale_x, float scale_y)
 {
-	// 해당 Object Material Data 삽입..
-	meshData->Material_Data = MaterialDatas;
-
-	m_MeshData = meshData;
+	// 설정 Tiling에 따른 Texture Transform 설정..
+	m_MaterialData->Material_SubData->TexTM = DirectX::SimpleMath::Matrix::CreateScale(1.0f / scale_x, 1.0f / scale_y, 1.0f);
 }
 
-void Material::SetMaterialIndex(UINT index)
+void Material::SetDiffuseTexture(std::string diffuseName)
 {
-	// 해당 Material Index 삽입..
-	MaterialDatas->Material_Index = index;
+	TextureBuffer* newTexture = LoadManager::GetTexture(diffuseName);
+
+	// 해당 Texture가 없는 경우..
+	if (newTexture == nullptr) return;
+
+	// Texture 최초 설정이 아닌 변경일 경우 Renderer Data 동기화..
+	if (m_MaterialData->Albedo != nullptr)
+	{
+		GraphicEngine::Get()->AddChangeMaterialData(m_MaterialData);
+	}
+
+	// Texture 변경..
+	m_MaterialData->Albedo = newTexture;
 }
 
-void Material::PushMaterialData(LoadMeshData* mesh)
+void Material::SetNormalTexture(std::string noramlName)
 {
-	// Load한 Material Data가 없을경우..
-	if (mesh->Material == nullptr) return;
+	TextureBuffer* newTexture = LoadManager::GetTexture(noramlName);
 
-	// Material Data 추출..
-	MaterialOption* matData = MaterialDatas->Material_Option;
+	// 해당 Texture가 없는 경우..
+	if (newTexture == nullptr) return;
 
-	// Material Data 삽입..
-	matData->Ambient = mesh->Material->m_Material_Ambient;
-	matData->Diffuse = mesh->Material->m_Material_Diffuse;
-	matData->Specular = mesh->Material->m_Material_Specular;
-	matData->Ambient = mesh->Material->m_Material_Ambient;
+	// Texture 최초 설정이 아닌 변경일 경우 Renderer Data 동기화..
+	if (m_MaterialData->Albedo != nullptr)
+	{
+		GraphicEngine::Get()->AddChangeMaterialData(m_MaterialData);
+	}
 
-	// Texture Map 삽입..
-	//MaterialDatas->Albedo = mesh->Albedo;
-	//MaterialDatas->Normal = mesh->Normal;
-	//MaterialDatas->Emissive = mesh->Emissive;
-	//MaterialDatas->ORM = mesh->ORM;
+	// Texture 변경..
+	m_MaterialData->Normal = newTexture;
 }
 
-void Material::SetTexTransform(DirectX::SimpleMath::Vector3 scale)
+void Material::SetEmissiveTexture(std::string emissiveName)
 {
+	TextureBuffer* newTexture = LoadManager::GetTexture(emissiveName);
 
+	// 해당 Texture가 없는 경우..
+	if (newTexture == nullptr) return;
+
+	// Texture 최초 설정이 아닌 변경일 경우 Renderer Data 동기화..
+	if (m_MaterialData->Albedo != nullptr)
+	{
+		GraphicEngine::Get()->AddChangeMaterialData(m_MaterialData);
+	}
+
+	// Texture 변경..
+	m_MaterialData->Emissive = newTexture;
 }
 
-void Material::SetTexTransform(float x, float y, float z)
+void Material::SetORMTexture(std::string ormName)
 {
+	TextureBuffer* newTexture = LoadManager::GetTexture(ormName);
 
-}
+	// 해당 Texture가 없는 경우..
+	if (newTexture == nullptr) return;
 
-void Material::SetDiffuseMap(std::string diffuseName)
-{
-	MaterialDatas->Albedo = LoadManager::GetTexture(diffuseName);
-}
+	// Texture 최초 설정이 아닌 변경일 경우 Renderer Data 동기화..
+	if (m_MaterialData->Albedo != nullptr)
+	{
+		GraphicEngine::Get()->AddChangeMaterialData(m_MaterialData);
+	}
 
-void Material::SetNormalMap(std::string noramlName)
-{
-	MaterialDatas->Albedo = LoadManager::GetTexture(noramlName);
+	// Texture 변경..
+	m_MaterialData->ORM = newTexture;
 }
 
 void Material::SetBaseColor(DirectX::SimpleMath::Vector4 color)
 {
-	MaterialDatas->Color_Base = color;
+	m_MaterialData->Material_SubData->BaseColor = color;
 }
 
-void Material::SetStartColor(DirectX::SimpleMath::Vector4 color)
+void Material::SetAddColor(DirectX::SimpleMath::Vector4 color)
 {
-	MaterialDatas->Color_Add = color;
+	m_MaterialData->Material_SubData->AddColor = color;
+}
+
+void Material::SetEmissiveFactor(float emissiveFactor)
+{
+	m_MaterialData->Material_SubData->EmissiveFactor = emissiveFactor;
+}
+
+void Material::SetRoughnessFactor(float roughnessFactor)
+{
+	m_MaterialData->Material_SubData->RoughnessFactor = roughnessFactor;
+}
+
+void Material::SetMetallicFactor(float metallicFactor)
+{
+	m_MaterialData->Material_SubData->MetallicFactor = metallicFactor;
 }
 
 void Material::Release()
 {
 	// Manager 내부에 있는 해당 Material Data 삭제..
-	MaterialManager::DeleteMaterial(MaterialDatas->Material_Index);
+	MaterialManager::DeleteMaterial(m_MaterialData->Material_Index);
 	
 	// 해당 Material Data 해제..
-	delete MaterialDatas->Material_Option;
-	delete MaterialDatas;
-}
-
-MaterialData* Material::GetMaterialData()
-{
-	return MaterialDatas;
-}
-
-UINT Material::GetMaterialIndex()
-{
-	return MaterialDatas->Material_Index;
+	delete m_MaterialData->Material_SubData;
+	delete m_MaterialData;
 }

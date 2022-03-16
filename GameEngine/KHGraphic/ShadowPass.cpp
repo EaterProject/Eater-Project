@@ -131,7 +131,7 @@ void ShadowPass::RenderUpdate(const std::vector<RenderData*>& meshlist)
 		return;
 	}
 
-	Matrix viewproj = g_GlobalData->mDirectionLights[0]->LightViewProj;
+	Matrix viewproj = g_GlobalData->DirectionLights[0]->LightViewProj;
 	RenderData* mesh = nullptr;
 	MaterialRenderData* mat = nullptr;
 
@@ -232,7 +232,7 @@ void ShadowPass::RenderUpdate(const std::vector<RenderData*>& meshlist)
 void ShadowPass::RenderUpdate(const RenderData* mesh)
 {
 	Matrix world = *mesh->m_World;
-	Matrix viewproj = g_GlobalData->mDirectionLights[0]->LightViewProj;
+	Matrix viewproj = g_GlobalData->DirectionLights[0]->LightViewProj;
 
 	if (mesh == nullptr) return;
 

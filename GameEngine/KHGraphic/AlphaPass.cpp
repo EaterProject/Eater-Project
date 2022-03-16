@@ -85,10 +85,10 @@ void AlphaPass::BeginRender()
 
 void AlphaPass::RenderUpdate(RenderData* mesh)
 {
-	Matrix view = g_GlobalData->mCamView;
-	Matrix proj = g_GlobalData->mCamProj;
-	Matrix invView = g_GlobalData->mCamInvView;
-	Matrix viewproj = g_GlobalData->mCamVP;
+	Matrix view = g_GlobalData->CamView;
+	Matrix proj = g_GlobalData->CamProj;
+	Matrix invView = g_GlobalData->CamInvView;
+	Matrix viewproj = g_GlobalData->CamVP;
 	MaterialRenderData* mat = mesh->m_MeshData->m_Material;
 
 	switch (mesh->m_ObjectType)

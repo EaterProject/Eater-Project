@@ -93,7 +93,7 @@ void FogPass::RenderUpdate()
 	Vector3 FogHighlightColor = { 0.835f, 0.7f, 0.33f };
 	float FogStartDepth = 50.0f;
 	static float Time = 0;
-	Time += g_GlobalData->mTime * 0.05f;
+	Time += g_GlobalData->Time * 0.05f;
 
 	g_Context->OMSetRenderTargets(1, &m_OutPut_RTV, nullptr);
 	g_Context->RSSetViewports(1, m_Screen_VP);
@@ -104,7 +104,7 @@ void FogPass::RenderUpdate()
 	CB_Fog fogBuf;
 	fogBuf.gFogColor = FogColor;
 	fogBuf.gFogStartPos = FogStartDepth;
-	fogBuf.gEyePosW = g_GlobalData->mCamPos;
+	fogBuf.gEyePosW = g_GlobalData->CamPos;
 	fogBuf.gTime = Time;
 
 	m_Fog_PS->ConstantBufferCopy(&fogBuf);
