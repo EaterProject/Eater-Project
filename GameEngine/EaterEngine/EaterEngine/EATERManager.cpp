@@ -143,6 +143,7 @@ void EATERManager::LoadMaterial(std::string& Path)
 			LoadManager::MaterialList.insert({ SaveName, Mat });
 		}
 	}
+	EATER_CLEAR_NODE();
 }
 
 LoadMeshData* EATERManager::LoadStaticMesh(int index)

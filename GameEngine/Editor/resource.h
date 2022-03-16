@@ -105,6 +105,7 @@
 #define IDC_CHECK2                      1046
 #define IDC_CHECK3                      1047
 #define IDC_SCROLLBAR2                  1048
+#define IDC_EDIT46                      1048
 #define IDC_CHECK4                      1049
 #define IDC_LIST2                       1049
 #define IDC_CHECK5                      1050
@@ -113,6 +114,21 @@
 #define IDC_SLIDER2                     1051
 #define IDC_CHECK7                      1052
 #define IDC_SLIDER3                     1052
+#define IDC_EDIT47                      1053
+#define IDC_EDIT48                      1054
+#define IDC_CHECK8                      1055
+#define IDC_COMBO3                      1056
+#define IDC_EDIT50                      1057
+#define IDC_EDIT51                      1058
+#define IDC_EDIT49                      1059
+#define IDC_EDIT52                      1060
+#define IDC_EDIT53                      1061
+#define IDC_EDIT54                      1062
+#define IDC_EDIT55                      1063
+#define IDC_EDIT56                      1064
+#define IDC_EDIT57                      1065
+#define IDC_EDIT58                      1066
+#define IDC_COMBO4                      1067
 
 // Next default values for new objects
 // 

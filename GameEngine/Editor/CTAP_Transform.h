@@ -33,6 +33,9 @@ public:
 	CEdit Pos_X,Pos_Y,Pos_Z;
 	CEdit Rot_X,Rot_Y,Rot_Z;
 	CEdit Scl_X,Scl_Y,Scl_Z;
+	CSliderCtrl Rotation_X_Slider;
+	CSliderCtrl Rotation_Y_Slider;
+	CSliderCtrl Rotation_Z_Slider;
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	afx_msg void OnAllScaleDown_Button();
 	afx_msg void OnAllScaleReset_Button();
@@ -45,9 +48,6 @@ public:
 	afx_msg void OnUpPosition_X_Button();
 	afx_msg void OnDownPosition_X_Button();
 	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
-	CSliderCtrl Rotation_X_Slider;
-	CSliderCtrl Rotation_Y_Slider;
-	CSliderCtrl Rotation_Z_Slider;
 	afx_msg void OnBnClickedButton2();
 	afx_msg void OnBnClickedButton13();
 	afx_msg void OnBnClickedButton25();
