@@ -2,6 +2,7 @@
 @ParentName RootNode
 @NodeName Cube
 @MeshIndex 0
+@MaterialName box_Material
 $WorldTM 4 4
 100.000000 0.000000 0.000000 0.000000
 0.000000 -0.000016 100.000000 0.000000

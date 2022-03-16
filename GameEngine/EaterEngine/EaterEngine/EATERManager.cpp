@@ -8,6 +8,7 @@
 #include "MeshFilter.h"
 #include "Transform.h"
 #include "AnimationController.h"
+#include "Material.h"
 
 #define LERP(prev, next, time) ((prev * (1.0f - time)) + (next * time))
 EATERManager::EATERManager()
@@ -98,19 +99,49 @@ void EATERManager::LoadScene(std::string& Path)
 
 void EATERManager::LoadMaterial(std::string& Path)
 {
+	std::size_t Start	= Path.rfind('/')+1;
+	std::size_t End		= Path.rfind('.') - Start;
+
+	std::string SaveName = Path.substr(Start, End);
+
 	EATER_OPEN_FILE(Path);
 	int Count = EATER_GET_NODE_COUNT();
-
 	for (int i = 0; i < Count; i++)
 	{
+		Material* Mat = new Material();
+		MaterialData* Data = Mat->m_MaterialData;
 		std::string NodeName = EATER_GET_NODE_NAME(i);
-		if (NodeName == "GAMEOBJECT")
+		if (NodeName == "EATERMAT")
 		{
-			LoadGameObject(i);
+			std::string DiffuseName		= EATER_GET_MAP(i, "Diffuse");
+			std::string NormalName		= EATER_GET_MAP(i, "Normal");
+			std::string EmissiveName	= EATER_GET_MAP(i, "Emissive");
+			std::string ORMName			= EATER_GET_MAP(i, "ORM");
+			Data->Albedo	= LoadManager::GetTexture(DiffuseName);
+			Data->Normal	= LoadManager::GetTexture(NormalName);
+			Data->Emissive	= LoadManager::GetTexture(EmissiveName);
+			Data->ORM		= LoadManager::GetTexture(ORMName);
+
+			Data->Material_SubData->RoughnessFactor = std::stof(EATER_GET_MAP(i, "Roughness"));
+			Data->Material_SubData->MetallicFactor  = std::stof(EATER_GET_MAP(i, "Metallic"));
+
+			float Scale_X = std::stof(EATER_GET_MAP(i, "Tileing_X"));
+			float Scale_Y = std::stof(EATER_GET_MAP(i, "Tileing_Y"));
+			Data->Material_SubData->TexTM = Matrix::CreateScale(1 / Scale_X, 1 / Scale_Y, 1.0f);
+
+			Data->Material_SubData->BaseColor.x =std::stof(EATER_GET_MAP(i, "BaseColor_R"));
+			Data->Material_SubData->BaseColor.y =std::stof(EATER_GET_MAP(i, "BaseColor_G"));
+			Data->Material_SubData->BaseColor.z =std::stof(EATER_GET_MAP(i, "BaseColor_B"));
+			Data->Material_SubData->BaseColor.w =std::stof(EATER_GET_MAP(i, "BaseColor_A"));
+
+			Data->Material_SubData->AddColor.x =std::stof(EATER_GET_MAP(i, "AddColor_R"));
+			Data->Material_SubData->AddColor.y =std::stof(EATER_GET_MAP(i, "AddColor_G"));
+			Data->Material_SubData->AddColor.z =std::stof(EATER_GET_MAP(i, "AddColor_B"));
+			Data->Material_SubData->AddColor.w =std::stof(EATER_GET_MAP(i, "AddColor_A"));
+
+			LoadManager::MaterialList.insert({ SaveName, Mat });
 		}
 	}
-
-
 }
 
 LoadMeshData* EATERManager::LoadStaticMesh(int index)
@@ -551,8 +582,9 @@ std::string EATERManager::CutStr(std::string& Name)
 
 void EATERManager::LoadMaterial(int index, LoadMeshData* model)
 {
-	std::string material = EATER_GET_MAP(index, "Material");
+	std::string material = EATER_GET_MAP(index, "MaterialName");
 
+	
 	// 메테리얼 이름 설정..
 	if (material != "NO")
 	{

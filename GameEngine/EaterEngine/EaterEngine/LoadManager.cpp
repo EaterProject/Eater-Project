@@ -252,7 +252,7 @@ void LoadManager::LoadFile(std::string& Path, UINT MODE)
 	}
 	else if (Type == "EMAT")
 	{
-
+		mEATER->LoadMaterial(Path);
 	}
 
 	/// Material Load 추가해야함

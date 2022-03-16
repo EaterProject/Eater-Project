@@ -33,9 +33,9 @@ public:
 
 	void OpenFile(std::string& Path, MeshOption* Data);
 private:
-	void StaticMesh(ParserData::Mesh* mMesh);
+	void StaticMesh(ParserData::Mesh* mMesh, std::string FileName);
 	void BoneMesh(ParserData::Mesh* mMesh);
-	void SkinMesh(ParserData::Mesh* mMesh);
+	void SkinMesh(ParserData::Mesh* mMesh, std::string FileName);
 	void TerrainMesh(ParserData::Mesh* mMesh);
 	void AnimationMesh(ParserData::Model* mMesh);
 
@@ -43,7 +43,7 @@ private:
 private:
 	void SetParent(ParserData::Mesh* mMesh);
 	void SetMatrix(ParserData::Mesh* mMesh);
-	void SetMaterial(ParserData::Mesh* mMesh);
+	void SetMaterial(ParserData::Mesh* mMesh,std::string FileName);
 	void SetIndex(ParserData::Mesh* mMesh);
 
 	void SetVertexTerrain(ParserData::Mesh* mMesh);

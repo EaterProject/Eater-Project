@@ -52,10 +52,10 @@ void FBXManager::OpenFile(std::string& Path, MeshOption* Data)
 		switch (SaveMode)
 		{
 		case 0:
-			StaticMesh(temp);
+			StaticMesh(temp, name);
 			break;
 		case 1:
-			SkinMesh(temp);
+			SkinMesh(temp,name);
 			break;
 		case 2:
 			TerrainMesh(temp);
@@ -69,14 +69,14 @@ void FBXManager::OpenFile(std::string& Path, MeshOption* Data)
 	MaterialSave(name);
 }
 
-void FBXManager::StaticMesh(ParserData::Mesh* mMesh)
+void FBXManager::StaticMesh(ParserData::Mesh* mMesh, std::string FileName)
 {
 	EATER_SET_NODE("STATIC");
 
 	if (FindInstanceIndex(mMesh->m_MeshIndex) == false)
 	{
 		SetParent(mMesh);
-		SetMaterial(mMesh);
+		SetMaterial(mMesh, FileName);
 		SetMatrix(mMesh);
 		SetVertex(mMesh);
 		SetIndex(mMesh);
@@ -104,14 +104,14 @@ void FBXManager::BoneMesh(ParserData::Mesh* mMesh)
 	SetMatrix(mMesh);
 }
 
-void FBXManager::SkinMesh(ParserData::Mesh* mMesh)
+void FBXManager::SkinMesh(ParserData::Mesh* mMesh, std::string FileName)
 {
 	if (mMesh->m_MeshType == SKIN_MESH)
 	{
 		EATER_SET_NODE("SKIN");
 		SetParent(mMesh);
 		SetMatrix(mMesh);
-		SetMaterial(mMesh);
+		SetMaterial(mMesh, FileName);
 		SetVertexSkin(mMesh);
 		SetIndex(mMesh);
 		SetBoneOffset(mMesh);
@@ -174,20 +174,20 @@ void FBXManager::MaterialSave(std::string FileName)
 	int Size = (int)OneMeshMaterialList.size();
 	for (int i = 0; i < Size; i++)
 	{
-		std::string Name = FileName + "_" + OneMeshMaterialList[i].MeshName;
-		EATER_CREATE_FILE(Name, "../Assets/Mesh/Material/",".Emat");
-
+		std::string Name = OneMeshMaterialList[i].MeshName;
+		EATER_CREATE_FILE(Name, "../Assets/Mesh/Material/",".EMAT");
+		EATER_SET_NODE("EATERMAT");
 		EATER_SET_MAP("Diffuse", OneMeshMaterialList[i].DiffuseMap);
 		EATER_SET_MAP("Normal", OneMeshMaterialList[i].NormalMap);
 		EATER_SET_MAP("Emissive", OneMeshMaterialList[i].EmissiveMap);
 		EATER_SET_MAP("ORM", OneMeshMaterialList[i].ORMMap);
 		if (OneMeshMaterialList[i].Alpha == true) 
 		{
-			EATER_SET_MAP("ORM", "YES");
+			EATER_SET_MAP("Alpha", "YES");
 		}
 		else
 		{
-			EATER_SET_MAP("ORM", "NO");
+			EATER_SET_MAP("Alpha", "NO");
 		}
 		EATER_SET_MAP("Roughness", std::to_string(OneMeshMaterialList[i].Roughness));
 		EATER_SET_MAP("Metallic", std::to_string(OneMeshMaterialList[i].Metallic));
@@ -266,16 +266,15 @@ void FBXManager::SetMatrix(ParserData::Mesh* mMesh)
 	EATER_SET_LIST(SaveLocal._44, true);
 }
 
-void FBXManager::SetMaterial(ParserData::Mesh* mMesh)
+void FBXManager::SetMaterial(ParserData::Mesh* mMesh, std::string FileName)
 {
 	if (mMesh->m_MaterialData == nullptr) { return; }
 	
 	EaterMaterialData Data;
-	Data.MeshName = mMesh->m_MaterialData->m_MaterialName;
-
+	Data.MeshName = FileName + "_" + mMesh->m_MaterialData->m_MaterialName;
+	EATER_SET_MAP("MaterialName", Data.MeshName);
 	if (mMesh->m_MaterialData->m_Alpha == true)
 	{
-		EATER_SET_MAP("Alpha", "YES" );
 		Data.Alpha = "YES";
 	}
 
