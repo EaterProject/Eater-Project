@@ -166,9 +166,9 @@ LoadMeshData* FBXManager::CreateBaseMesh(ParserData::Mesh* mMesh)
 		SetBufferData(mMesh, SaveMesh);		//인덱스 버퍼 버텍스 버퍼 삽입
 
 		// 새로 생성한 Mesh Buffer Index 설정..
-		SaveMesh->MeshBuf->BufferIndex = meshIndex;
+		SaveMesh->MeshBuffer_Data->BufferIndex = meshIndex;
 
-		LoadManager::MeshBufferList.insert({ meshIndex, SaveMesh->MeshBuf });
+		LoadManager::MeshBufferList.insert({ meshIndex, SaveMesh->MeshBuffer_Data });
 	}
 	else
 	{
@@ -176,7 +176,7 @@ LoadMeshData* FBXManager::CreateBaseMesh(ParserData::Mesh* mMesh)
 		SetMaterialData(mMesh, SaveMesh);	//메테리얼 데이터 삽입
 		SetMatrixData(mMesh, SaveMesh);		//매트릭스 데이터 삽입
 
-		SaveMesh->MeshBuf = meshBuffer;
+		SaveMesh->MeshBuffer_Data = meshBuffer;
 	}
 
 	return SaveMesh;
@@ -202,9 +202,9 @@ LoadMeshData* FBXManager::CreateSkinMesh(ParserData::Mesh* mMesh)
 		SetBufferData(mMesh, SaveMesh);		//인덱스 버퍼 버텍스 버퍼 삽입
 
 		// 새로 생성한 Mesh Buffer Index 설정..
-		SaveMesh->MeshBuf->BufferIndex = meshIndex;
+		SaveMesh->MeshBuffer_Data->BufferIndex = meshIndex;
 
-		LoadManager::MeshBufferList.insert({ meshIndex, SaveMesh->MeshBuf });
+		LoadManager::MeshBufferList.insert({ meshIndex, SaveMesh->MeshBuffer_Data });
 	}
 	else
 	{
@@ -212,7 +212,7 @@ LoadMeshData* FBXManager::CreateSkinMesh(ParserData::Mesh* mMesh)
 		SetMaterialData(mMesh, SaveMesh);	//메테리얼 데이터 삽입
 		SetMatrixData(mMesh, SaveMesh);		//매트릭스 데이터 삽입
 
-		SaveMesh->MeshBuf = meshBuffer;
+		SaveMesh->MeshBuffer_Data = meshBuffer;
 	}
 
 	return SaveMesh;

@@ -30,7 +30,7 @@ void Camera::Awake()
 	//오브젝트의 컨퍼넌트 가져오기
 	tranform = gameobject->transform;
 	CreateProj(GameEngine::WinSizeWidth, GameEngine::WinSizeHeight);
-	gameobject->OneMeshData->ObjType = OBJECT_TYPE::CAMERA;
+	gameobject->OneMeshData->Object_Data->ObjType = OBJECT_TYPE::CAMERA;
 }
 
 void Camera::Update()

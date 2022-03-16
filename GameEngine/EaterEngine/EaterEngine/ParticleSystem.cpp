@@ -53,7 +53,7 @@ void ParticleSystem::SetUp()
 void ParticleSystem::Start()
 {
 	// Particle System Data 설정..
-	gameobject->OneMeshData->ObjType = OBJECT_TYPE::PARTICLE_SYSTEM;
+	gameobject->OneMeshData->Object_Data->ObjType = OBJECT_TYPE::PARTICLE_SYSTEM;
 	gameobject->OneMeshData->Particle_Data = m_ParticleData;
 	
 	// Particle 생성..

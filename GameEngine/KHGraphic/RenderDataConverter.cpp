@@ -18,28 +18,19 @@ void RenderDataConverter::ConvertRenderData(MeshData* originData, RenderData* re
 	// Origin Mesh Data 설정..
 	renderData->m_OriginData = originData;
 
-	// Object Type 설정..
-	renderData->m_ObjectType = originData->ObjType;
-
-	// Mesh Index 설정..
-	//renderData->m_MeshIndex = originData->MeshIndex;
-
 	// Mesh Data 설정..
-	renderData->m_World = originData->World;
-
+	renderData->m_ObjectData = originData->Object_Data;
+	renderData->m_ParticleData = originData->Particle_Data;
 	renderData->m_ColliderData = originData->Collider_Data;
 
-	// Index Buffer Data 설정..
-	//ConvertIndexBuffer(originData->IndexBuf, renderData->m_MeshData);
-
-	// Vertex Buffer Data 설정..
-	//ConvertVertexBuffer(originData->VertexBuf, renderData->m_MeshData);
+	// Mesh Data 설정..
+	ConvertMeshBuffer(originData->MeshBuffer_Data, renderData->m_MeshData);
 
 	// Material Data 설정..
-	ConvertMaterial(originData->Material_Data, renderData->m_MeshData);
+	ConvertMaterial(originData->Material_Data, renderData->m_Material);
 
 	// Obejct Type에 따른 추가 변환 작업..
-	switch (originData->ObjType)
+	switch (renderData->m_ObjectData->ObjType)
 	{
 	case OBJECT_TYPE::SKINNING:
 	{
@@ -88,18 +79,6 @@ void RenderDataConverter::ConvertMeshBuffer(MeshBuffer* originBuf, MeshRenderDat
 	// Vertex Buffer Data Convert..
 	convertData->m_Stride = originBuf->VertexBuf->Stride;
 	convertData->m_VertexBuf = (ID3D11Buffer*)originBuf->VertexBuf->pVertexBuf;
-}
-
-void RenderDataConverter::ConvertMaterial(MaterialData* originMat, MeshRenderData* convertData)
-{
-	if (originMat == nullptr) return;
-
-	if (convertData->m_Material == nullptr)
-	{
-		convertData->m_Material = new MaterialRenderData();
-	}
-
-	ConvertMaterial(originMat, convertData->m_Material);
 }
 
 void RenderDataConverter::ConvertMaterial(MaterialData* originMat, MaterialRenderData* convertMat)

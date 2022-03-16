@@ -185,7 +185,7 @@ void RenderManager::AddChangeMaterialData(MaterialData* materialData)
 void RenderManager::DeleteMeshData(MeshData* meshData)
 {
 	// Object Type에 따른 Render Mesh Data 제거..
-	switch (meshData->ObjType)
+	switch (meshData->Object_Data->ObjType)
 	{
 	case OBJECT_TYPE::BASE:
 	case OBJECT_TYPE::SKINNING:
@@ -214,7 +214,7 @@ void RenderManager::ConvertMeshData()
 		newMeshData->ConvertData(originMeshData);
 
 		// Object Type에 따른 리스트 삽입..
-		switch (newMeshData->m_ObjectType)
+		switch (newMeshData->m_ObjectData->ObjType)
 		{
 			case OBJECT_TYPE::BASE:
 			case OBJECT_TYPE::SKINNING:
@@ -241,7 +241,7 @@ void RenderManager::ChangeMeshData()
 		MeshData* meshData = m_ChangeMeshList.front();
 
 		// Object Type에 따른 Render Mesh Data 동기화..
-		switch (meshData->ObjType)
+		switch (meshData->Object_Data->ObjType)
 		{
 		case OBJECT_TYPE::BASE:
 		case OBJECT_TYPE::SKINNING:
@@ -440,7 +440,7 @@ void RenderManager::DebugRender()
 
 				if (m_RenderData == nullptr) continue;
 
-				switch (m_RenderData->m_ObjectType)
+				switch (m_RenderData->m_ObjectData->ObjType)
 				{
 				case OBJECT_TYPE::DEFALT:
 				case OBJECT_TYPE::BASE:
@@ -463,7 +463,7 @@ void RenderManager::DebugRender()
 
 			if (m_RenderData == nullptr) continue;
 
-			switch (m_RenderData->m_ObjectType)
+			switch (m_RenderData->m_ObjectData->ObjType)
 			{
 			case OBJECT_TYPE::PARTICLE_SYSTEM:
 				m_Debug->RenderUpdate(m_RenderData);
@@ -480,7 +480,7 @@ void RenderManager::DebugRender()
 
 			if (m_RenderData == nullptr) continue;
 
-			switch (m_RenderData->m_ObjectType)
+			switch (m_RenderData->m_ObjectData->ObjType)
 			{
 			case OBJECT_TYPE::DEFALT:
 			case OBJECT_TYPE::BONE:
@@ -522,8 +522,8 @@ void RenderManager::ConvertMeshRenderData(MeshData* meshData, RenderData* render
 		if (meshIndex == index.m_MeshIndex)
 		{
 			// 해당 Mesh List Index 삽입..
-			meshData->RenderListIndex = index.m_ListIndex;
-			meshData->RenderMeshIndex = (UINT)m_RenderMeshList[index.m_ListIndex].size();
+			meshData->Object_Data->RenderListIndex = index.m_ListIndex;
+			meshData->Object_Data->RenderMeshIndex = (UINT)m_RenderMeshList[index.m_ListIndex].size();
 
 			// 해당 Instance List에 삽입..
 			m_RenderMeshList[index.m_ListIndex].push_back(renderData);
@@ -541,8 +541,8 @@ void RenderManager::ConvertMeshRenderData(MeshData* meshData, RenderData* render
 		m_MeshIndexList.push_back(indexData);
 
 		// 해당 Mesh List Index 삽입..
-		meshData->RenderListIndex = (UINT)m_RenderMeshList.size();
-		meshData->RenderMeshIndex = 0;
+		meshData->Object_Data->RenderListIndex = (UINT)m_RenderMeshList.size();
+		meshData->Object_Data->RenderMeshIndex = 0;
 
 		// 해당 Instance List에 삽입..
 		m_RenderMeshList.push_back(std::vector<RenderData*>());
@@ -552,46 +552,46 @@ void RenderManager::ConvertMeshRenderData(MeshData* meshData, RenderData* render
 
 void RenderManager::ConvertParticleRenderData(MeshData* meshData, RenderData* renderData)
 {
-	meshData->RenderMeshIndex = (UINT)m_ParticleMeshList.size();
+	meshData->Object_Data->RenderMeshIndex = (UINT)m_ParticleMeshList.size();
 
 	m_ParticleMeshList.push_back(renderData);
 }
 
 void RenderManager::ConvertUnRenderData(MeshData* meshData, RenderData* renderData)
 {
-	meshData->RenderMeshIndex = (UINT)m_UnRenderMeshList.size();
+	meshData->Object_Data->RenderMeshIndex = (UINT)m_UnRenderMeshList.size();
 	
 	m_UnRenderMeshList.push_back(renderData);
 }
 
 void RenderManager::ChangeMeshRenderData(MeshData* meshData)
 {
-	UINT listIndex = (UINT)meshData->RenderListIndex;
-	UINT meshIndex = (UINT)meshData->RenderMeshIndex;
+	UINT listIndex = (UINT)meshData->Object_Data->RenderListIndex;
+	UINT meshIndex = (UINT)meshData->Object_Data->RenderMeshIndex;
 
 
 }
 
 void RenderManager::ChangeParticleRenderData(MeshData* meshData)
 {
-	UINT listIndex = (UINT)meshData->RenderListIndex;
-	UINT meshIndex = (UINT)meshData->RenderMeshIndex;
+	UINT listIndex = (UINT)meshData->Object_Data->RenderListIndex;
+	UINT meshIndex = (UINT)meshData->Object_Data->RenderMeshIndex;
 
 	m_ParticleMeshList[meshIndex]->ConvertData(meshData);
 }
 
 void RenderManager::ChangeUnRenderData(MeshData* meshData)
 {
-	UINT listIndex = (UINT)meshData->RenderListIndex;
-	UINT meshIndex = (UINT)meshData->RenderMeshIndex;
+	UINT listIndex = (UINT)meshData->Object_Data->RenderListIndex;
+	UINT meshIndex = (UINT)meshData->Object_Data->RenderMeshIndex;
 
 	m_UnRenderMeshList[meshIndex]->ConvertData(meshData);
 }
 
 void RenderManager::DeleteMeshRenderData(MeshData* meshData)
 {
-	UINT listIndex = (UINT)meshData->RenderListIndex;
-	UINT meshIndex = (UINT)meshData->RenderMeshIndex;
+	UINT listIndex = (UINT)meshData->Object_Data->RenderListIndex;
+	UINT meshIndex = (UINT)meshData->Object_Data->RenderMeshIndex;
 
 	// 해당 Mesh List 내의 Render Data 제거..
 	SAFE_DELETE(m_RenderMeshList[listIndex][meshIndex]);
@@ -600,8 +600,8 @@ void RenderManager::DeleteMeshRenderData(MeshData* meshData)
 	MeshData* originData = nullptr;
 	for (int i = meshIndex; i < m_RenderMeshList[listIndex].size(); i++)
 	{
-		originData = (MeshData*)m_RenderMeshList[listIndex][i]->m_OriginData;
-		originData->RenderMeshIndex--;
+		originData = m_RenderMeshList[listIndex][i]->m_OriginData;
+		originData->Object_Data->RenderMeshIndex--;
 	}
 
 	if (m_RenderMeshList[listIndex].empty())
@@ -619,8 +619,8 @@ void RenderManager::DeleteMeshRenderData(MeshData* meshData)
 
 			for (int j = 0; j < m_RenderMeshList[i].size(); j++)
 			{
-				originData = (MeshData*)m_RenderMeshList[i][j]->m_OriginData;
-				originData->RenderListIndex--;
+				originData = m_RenderMeshList[i][j]->m_OriginData;
+				originData->Object_Data->RenderListIndex--;
 			}
 		}
 	}
@@ -628,8 +628,8 @@ void RenderManager::DeleteMeshRenderData(MeshData* meshData)
 
 void RenderManager::DeleteParticleRenderData(MeshData* meshData)
 {
-	UINT listIndex = (UINT)meshData->RenderListIndex;
-	UINT meshIndex = (UINT)meshData->RenderMeshIndex;
+	UINT listIndex = (UINT)meshData->Object_Data->RenderListIndex;
+	UINT meshIndex = (UINT)meshData->Object_Data->RenderMeshIndex;
 
 	// 해당 Mesh List 내의 Render Data 제거..
 	SAFE_DELETE(m_ParticleMeshList[meshIndex]);
@@ -638,15 +638,15 @@ void RenderManager::DeleteParticleRenderData(MeshData* meshData)
 	MeshData* originData = nullptr;
 	for (int i = meshIndex; i < m_ParticleMeshList.size(); i++)
 	{
-		originData = (MeshData*)m_ParticleMeshList[i]->m_OriginData;
-		originData->RenderMeshIndex--;
+		originData = m_ParticleMeshList[i]->m_OriginData;
+		originData->Object_Data->RenderMeshIndex--;
 	}
 }
 
 void RenderManager::DeleteUnRenderData(MeshData* meshData)
 {
-	UINT listIndex = (UINT)meshData->RenderListIndex;
-	UINT meshIndex = (UINT)meshData->RenderMeshIndex;
+	UINT listIndex = (UINT)meshData->Object_Data->RenderListIndex;
+	UINT meshIndex = (UINT)meshData->Object_Data->RenderMeshIndex;
 
 	// 해당 Mesh List 내의 Render Data 제거..
 	SAFE_DELETE(m_UnRenderMeshList[meshIndex]);
@@ -655,7 +655,7 @@ void RenderManager::DeleteUnRenderData(MeshData* meshData)
 	MeshData* originData = nullptr;
 	for (int i = meshIndex; i < m_UnRenderMeshList.size(); i++)
 	{
-		originData = (MeshData*)m_UnRenderMeshList[i]->m_OriginData;
-		originData->RenderMeshIndex--;
+		originData = m_UnRenderMeshList[i]->m_OriginData;
+		originData->Object_Data->RenderMeshIndex--;
 	}
 }

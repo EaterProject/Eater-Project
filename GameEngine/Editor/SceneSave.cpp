@@ -28,7 +28,7 @@ void SceneSave::Save(std::string SaveFilePath, std::string SaveFileName, std::ma
 	{
 		GameObject* Object		= Start_it->second;
 
-		Object->OneMeshData->ObjType;
+		Object->OneMeshData->Object_Data->ObjType;
 		MeshData*	OneMesh		= Object->OneMeshData;
 		MeshFilter* mMeshFilter = Object->GetComponent<MeshFilter>();
 		Transform*	mTransform	= Object->GetComponent<Transform>();
@@ -167,7 +167,7 @@ void SceneSave::SaveObject(GameObject* Obj)
 	if (Obj->Name.rfind('+') == std::string::npos) 
 	{
 		MeshData* OneMesh = Obj->OneMeshData;
-		switch (OneMesh->ObjType)
+		switch (OneMesh->Object_Data->ObjType)
 		{
 		case OBJECT_TYPE::BASE:
 		case OBJECT_TYPE::DEFALT:

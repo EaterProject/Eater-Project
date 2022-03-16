@@ -1013,9 +1013,9 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::MeshVertex>(ParserDat
 	VertexBuffer* newVertexBuf	= new VertexBuffer();
 	IndexBuffer* newIndexBuf	= new IndexBuffer();
 
-	meshData->MeshBuf = newMeshBuf;
-	meshData->MeshBuf->VertexBuf = newVertexBuf;
-	meshData->MeshBuf->IndexBuf = newIndexBuf;
+	meshData->MeshBuffer_Data = newMeshBuf;
+	meshData->MeshBuffer_Data->VertexBuf = newVertexBuf;
+	meshData->MeshBuffer_Data->IndexBuf = newIndexBuf;
 
 	UINT vCount = (UINT)mesh->m_VertexList.size();
 	UINT iCount = (UINT)mesh->m_IndexList.size();
@@ -1097,9 +1097,9 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::SkinVertex>(ParserDat
 	VertexBuffer* newVertexBuf = new VertexBuffer();
 	IndexBuffer* newIndexBuf = new IndexBuffer();
 
-	meshData->MeshBuf = newMeshBuf;
-	meshData->MeshBuf->VertexBuf = newVertexBuf;
-	meshData->MeshBuf->IndexBuf = newIndexBuf;
+	meshData->MeshBuffer_Data = newMeshBuf;
+	meshData->MeshBuffer_Data->VertexBuf = newVertexBuf;
+	meshData->MeshBuffer_Data->IndexBuf = newIndexBuf;
 
 	UINT vCount = (UINT)mesh->m_VertexList.size();
 	UINT iCount = (UINT)mesh->m_IndexList.size();
@@ -1199,9 +1199,9 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(Parser
 	VertexBuffer* newVertexBuf = new VertexBuffer();
 	IndexBuffer* newIndexBuf = new IndexBuffer();
 
-	meshData->MeshBuf = newMeshBuf;
-	meshData->MeshBuf->VertexBuf = newVertexBuf;
-	meshData->MeshBuf->IndexBuf = newIndexBuf;
+	meshData->MeshBuffer_Data = newMeshBuf;
+	meshData->MeshBuffer_Data->VertexBuf = newVertexBuf;
+	meshData->MeshBuffer_Data->IndexBuf = newIndexBuf;
 
 	UINT vCount = (UINT)mesh->m_VertexList.size();
 	UINT iCount = (UINT)mesh->m_IndexList.size();
@@ -1303,9 +1303,9 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::PosTexVertex>(ParserD
 	VertexBuffer* newVertexBuf = new VertexBuffer();
 	IndexBuffer* newIndexBuf = new IndexBuffer();
 
-	meshData->MeshBuf = newMeshBuf;
-	meshData->MeshBuf->VertexBuf = newVertexBuf;
-	meshData->MeshBuf->IndexBuf = newIndexBuf;
+	meshData->MeshBuffer_Data = newMeshBuf;
+	meshData->MeshBuffer_Data->VertexBuf = newVertexBuf;
+	meshData->MeshBuffer_Data->IndexBuf = newIndexBuf;
 
 	// Quad Buffer..
 	DrawBuffer* quadBuf = g_ResourceManager->GetDrawBuffer<DB_Quad>();

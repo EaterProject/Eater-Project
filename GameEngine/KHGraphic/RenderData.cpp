@@ -6,6 +6,7 @@ RenderData::RenderData()
 {
 	// Renderer 전용 Mesh Data 생성..
 	m_MeshData = new MeshRenderData();
+	m_Material = new MaterialRenderData();
 }
 
 RenderData::~RenderData()
@@ -18,22 +19,19 @@ void RenderData::ConvertData(MeshData* originMesh)
 	// Origin Mesh Data 설정..
 	m_OriginData = originMesh;
 
-	// Object Type 설정..
-	m_ObjectType = originMesh->ObjType;
-
 	// Mesh Data 설정..
-	m_World = originMesh->World;
-
+	m_ObjectData = originMesh->Object_Data;
+	m_ParticleData = originMesh->Particle_Data;
 	m_ColliderData = originMesh->Collider_Data;
 
 	// Mesh Buffer Data 변환..
-	ConvertMeshBuffer(originMesh->MeshBuf);
+	ConvertMeshBuffer(originMesh->MeshBuffer_Data);
 
 	// Material Data 변환..
 	ConvertMaterial(originMesh->Material_Data);
 
 	// Obejct Type에 따른 추가 변환 작업..
-	switch (m_ObjectType)
+	switch (m_ObjectData->ObjType)
 	{
 	case OBJECT_TYPE::SKINNING:
 	{
@@ -58,10 +56,6 @@ void RenderData::ConvertData(MeshData* originMesh)
 	}
 		break;
 	case OBJECT_TYPE::PARTICLE_SYSTEM:
-	{
-		// 해당 Particle System Data 삽입..
-		m_ParticleData = originMesh->Particle_Data;
-	}
 		break;
 	default:
 		break;
@@ -70,15 +64,19 @@ void RenderData::ConvertData(MeshData* originMesh)
 
 void RenderData::Release()
 {
-	for (MaterialRenderData* mat : m_TerrainData->m_MaterialList)
+	if (m_TerrainData)
 	{
-		SAFE_DELETE(mat);
+		for (MaterialRenderData* mat : m_TerrainData->m_MaterialList)
+		{
+			SAFE_DELETE(mat);
+		}
+
+		m_TerrainData->m_MaterialList.clear();
 	}
 
-	m_TerrainData->m_MaterialList.clear();
 
 	SAFE_DELETE(m_TerrainData);
-	SAFE_DELETE(m_MeshData->m_Material);
+	SAFE_DELETE(m_Material);
 	SAFE_DELETE(m_MeshData);
 }
 
@@ -102,12 +100,7 @@ void RenderData::ConvertMaterial(MaterialData* originMat)
 {
 	if (originMat == nullptr) return;
 
-	if (m_MeshData->m_Material == nullptr)
-	{
-		m_MeshData->m_Material = new MaterialRenderData();
-	}
-
-	ConvertMaterial(originMat, m_MeshData->m_Material);
+	ConvertMaterial(originMat, m_Material);
 }
 
 void RenderData::ConvertMaterial(MaterialData* originMat, MaterialRenderData* convertMat)

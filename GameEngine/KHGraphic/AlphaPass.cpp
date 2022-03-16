@@ -89,9 +89,9 @@ void AlphaPass::RenderUpdate(RenderData* mesh)
 	Matrix proj = g_GlobalData->CamProj;
 	Matrix invView = g_GlobalData->CamInvView;
 	Matrix viewproj = g_GlobalData->CamVP;
-	MaterialRenderData* mat = mesh->m_MeshData->m_Material;
+	MaterialRenderData* mat = mesh->m_Material;
 
-	switch (mesh->m_ObjectType)
+	switch (mesh->m_ObjectData->ObjType)
 	{
 	case OBJECT_TYPE::PARTICLE_SYSTEM:
 	{

@@ -326,7 +326,7 @@ void MeshFilter::CreateBoneMesh(LoadMeshData* mMesh, GameObject* Object)
 	SetMatrixData(mMesh, Data, Object);
 	int index = mMesh->BoneIndex;
 	BoneList[index] = Object;
-	Data->ObjType = OBJECT_TYPE::BONE;
+	Data->Object_Data->ObjType = OBJECT_TYPE::BONE;
 	Object->Name = mMesh->Name;
 
 	int ChildCount = (int)mMesh->Child.size();
@@ -359,7 +359,7 @@ void MeshFilter::CreateSkinMesh(LoadMeshData* mMesh, GameObject* Object)
 	SetMaterialData(mMesh, Data);
 	SetBufferData(mMesh, Data);
 
-	Data->ObjType = OBJECT_TYPE::SKINNING;
+	Data->Object_Data->ObjType = OBJECT_TYPE::SKINNING;
 
 	int ChildCount = (int)mMesh->Child.size();
 	for (int i = 0; i < ChildCount; i++)
@@ -401,13 +401,13 @@ void MeshFilter::SetMatrixData(LoadMeshData* LoadMesh, MeshData* mMesh, GameObje
 	mTransform->Load_Local = LoadMesh->LocalTM;
 	mTransform->Load_World = LoadMesh->WorldTM;
 
-	mMesh->World = &mTransform->Load_Local;
-	mMesh->Local = &mTransform->Load_World;
+	mMesh->Object_Data->World = &mTransform->Load_Local;
+	mMesh->Object_Data->Local = &mTransform->Load_World;
 }
 
 void MeshFilter::SetBufferData(LoadMeshData* LoadMesh, MeshData* mMesh)
 {
-	mMesh->MeshBuf = LoadMesh->MeshBuf;
+	mMesh->MeshBuffer_Data = LoadMesh->MeshBuffer_Data;
 }
 
 void MeshFilter::SetType(LoadMeshData* LoadMesh, MeshData* mMesh)
@@ -415,19 +415,19 @@ void MeshFilter::SetType(LoadMeshData* LoadMesh, MeshData* mMesh)
 	switch (LoadMesh->MeshType)
 	{
 	case MESH_TYPE::STATIC_MESH:
-		mMesh->ObjType = OBJECT_TYPE::BASE;
+		mMesh->Object_Data->ObjType = OBJECT_TYPE::BASE;
 		break;
 	case MESH_TYPE::TERRAIN_MESH:
-		mMesh->ObjType = OBJECT_TYPE::TERRAIN;
+		mMesh->Object_Data->ObjType = OBJECT_TYPE::TERRAIN;
 		break;
 	case MESH_TYPE::QUAD_MESH:
-		mMesh->ObjType = OBJECT_TYPE::TEXTURE;
+		mMesh->Object_Data->ObjType = OBJECT_TYPE::TEXTURE;
 		break;
 	case MESH_TYPE::SKIN_MESH:
-		mMesh->ObjType = OBJECT_TYPE::SKINNING;
+		mMesh->Object_Data->ObjType = OBJECT_TYPE::SKINNING;
 		break;
 	case MESH_TYPE::BONE_MESH:
-		mMesh->ObjType = OBJECT_TYPE::BONE;
+		mMesh->Object_Data->ObjType = OBJECT_TYPE::BONE;
 		break;
 	}
 }

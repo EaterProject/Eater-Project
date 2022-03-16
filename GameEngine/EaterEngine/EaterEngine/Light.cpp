@@ -31,7 +31,7 @@ void Light::Awake()
 
 void Light::Start()
 {
-	gameobject->OneMeshData->ObjType = OBJECT_TYPE::LIGHT;
+	gameobject->OneMeshData->Object_Data->ObjType = OBJECT_TYPE::LIGHT;
 }
 
 void Light::Update()
