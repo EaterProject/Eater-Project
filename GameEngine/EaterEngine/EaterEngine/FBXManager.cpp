@@ -6,6 +6,7 @@
 #include "EngineData.h"
 #include "TextureManager.h"
 #include "GraphicEngineManager.h"
+#include "Material.h"
 #include <filesystem>
 #include <iostream>
 
@@ -152,12 +153,12 @@ LoadMeshData* FBXManager::CreateBaseMesh(ParserData::Mesh* mMesh)
 	LoadMeshData* SaveMesh = new LoadMeshData();
 
 	UINT meshIndex = LoadManager::FindInstanceIndex(mMesh->m_MeshIndex);
-	
-	std::map<int, LoadMeshData*>::iterator End_it = BufferIndexList.end();
-	std::map<int, LoadMeshData*>::iterator Find_it = BufferIndexList.find(meshIndex);
-	
+
+	// 해당 Index의 Mesh Buffer 유무 체크..
+	MeshBuffer* meshBuffer = LoadManager::GetMeshBuffer(meshIndex);
+
 	//못찾음
-	if (End_it == Find_it)
+	if (meshBuffer == nullptr)
 	{
 		SetNameData(mMesh, SaveMesh);		//이름 데이터 삽입
 		SetMaterialData(mMesh, SaveMesh);	//메테리얼 데이터 삽입
@@ -167,7 +168,7 @@ LoadMeshData* FBXManager::CreateBaseMesh(ParserData::Mesh* mMesh)
 		// 새로 생성한 Mesh Buffer Index 설정..
 		SaveMesh->MeshBuf->BufferIndex = meshIndex;
 
-		BufferIndexList.insert({ meshIndex, SaveMesh });
+		LoadManager::MeshBufferList.insert({ meshIndex, SaveMesh->MeshBuf });
 	}
 	else
 	{
@@ -175,7 +176,7 @@ LoadMeshData* FBXManager::CreateBaseMesh(ParserData::Mesh* mMesh)
 		SetMaterialData(mMesh, SaveMesh);	//메테리얼 데이터 삽입
 		SetMatrixData(mMesh, SaveMesh);		//매트릭스 데이터 삽입
 
-		SaveMesh->MeshBuf = Find_it->second->MeshBuf;
+		SaveMesh->MeshBuf = meshBuffer;
 	}
 
 	return SaveMesh;
@@ -189,11 +190,11 @@ LoadMeshData* FBXManager::CreateSkinMesh(ParserData::Mesh* mMesh)
 
 	UINT meshIndex = LoadManager::FindInstanceIndex(mMesh->m_MeshIndex);
 
-	std::map<int, LoadMeshData*>::iterator End_it = BufferIndexList.end();
-	std::map<int, LoadMeshData*>::iterator Find_it = BufferIndexList.find(meshIndex);
+	// 해당 Index의 Mesh Buffer 유무 체크..
+	MeshBuffer* meshBuffer = LoadManager::GetMeshBuffer(meshIndex);
 
 	//못찾음
-	if (End_it == Find_it)
+	if (meshBuffer == nullptr)
 	{
 		SetNameData(mMesh, SaveMesh);		//이름 데이터 삽입
 		SetMaterialData(mMesh, SaveMesh);	//메테리얼 데이터 삽입
@@ -203,7 +204,7 @@ LoadMeshData* FBXManager::CreateSkinMesh(ParserData::Mesh* mMesh)
 		// 새로 생성한 Mesh Buffer Index 설정..
 		SaveMesh->MeshBuf->BufferIndex = meshIndex;
 
-		BufferIndexList.insert({ meshIndex, SaveMesh });
+		LoadManager::MeshBufferList.insert({ meshIndex, SaveMesh->MeshBuf });
 	}
 	else
 	{
@@ -211,7 +212,7 @@ LoadMeshData* FBXManager::CreateSkinMesh(ParserData::Mesh* mMesh)
 		SetMaterialData(mMesh, SaveMesh);	//메테리얼 데이터 삽입
 		SetMatrixData(mMesh, SaveMesh);		//매트릭스 데이터 삽입
 
-		SaveMesh->MeshBuf = Find_it->second->MeshBuf;
+		SaveMesh->MeshBuf = meshBuffer;
 	}
 
 	return SaveMesh;
@@ -228,36 +229,59 @@ LoadMeshData* FBXManager::CreateBoneMesh(ParserData::Mesh* mMesh)
 	return SaveMesh;
 }
 
-
-
 void FBXManager::SetMaterialData(ParserData::Mesh* mMesh, LoadMeshData* SaveData)
 {
 	// Parsing Data 기반 Material 생성..
 	CMaterial* mat = mMesh->m_MaterialData;
-	//if (mat != nullptr)
-	//{
-	//	SaveData->Alpha = mMesh->m_MaterialData->m_Alpha;
-	//
-	//	if (mat->m_TextureBind & DIFFUSE_TEXTURE)
-	//	{
-	//		SaveData->AlbedoName = CutStr(mMesh->m_MaterialData->m_DiffuseMap->m_BitMap);
-	//	}
-	//
-	//	if (mat->m_TextureBind & NORMAL_TEXTURE)
-	//	{
-	//		SaveData->NormalName = CutStr(mMesh->m_MaterialData->m_NormalMap->m_BitMap);
-	//	}
-	//
-	//	if (mat->m_TextureBind & EMISSIVE_TEXTURE)
-	//	{
-	//		SaveData->EmissiveName = CutStr(mMesh->m_MaterialData->m_EmissiveMap->m_BitMap);
-	//	}
-	//
-	//	if (mat->m_TextureBind & ORM_TEXTURE)
-	//	{
-	//		SaveData->ORMName = CutStr(mMesh->m_MaterialData->m_ORMMap->m_BitMap);
-	//	}
-	//}
+
+	if (mat != nullptr)
+	{
+		// Material 이름 설정..
+		std::string matName = nowFileName + "_" + mat->m_MaterialName;
+
+		// 해당 Material 유무 체크..
+		Material* newMaterial = LoadManager::GetMaterial(matName);
+		
+		if (newMaterial == nullptr)
+		{
+			// 해당 Material이 없을 경우 생성..
+			newMaterial = new Material();
+
+			// Alpha 상태 설정..
+			newMaterial->m_MaterialData->Material_SubData->Alpha = mat->m_Alpha;
+
+			std::string mapName;
+			if (mat->m_TextureBind & DIFFUSE_TEXTURE)
+			{
+				mapName = CutStr(mMesh->m_MaterialData->m_DiffuseMap->m_BitMap);
+				newMaterial->m_MaterialData->Albedo = LoadManager::GetTexture(mapName);
+			}
+
+			if (mat->m_TextureBind & NORMAL_TEXTURE)
+			{
+				mapName = CutStr(mMesh->m_MaterialData->m_NormalMap->m_BitMap);
+				newMaterial->m_MaterialData->Normal = LoadManager::GetTexture(mapName);
+			}
+
+			if (mat->m_TextureBind & EMISSIVE_TEXTURE)
+			{
+				mapName = CutStr(mMesh->m_MaterialData->m_EmissiveMap->m_BitMap);
+				newMaterial->m_MaterialData->Emissive = LoadManager::GetTexture(mapName);
+			}
+
+			if (mat->m_TextureBind & ORM_TEXTURE)
+			{
+				mapName = CutStr(mMesh->m_MaterialData->m_ORMMap->m_BitMap);
+				newMaterial->m_MaterialData->ORM = LoadManager::GetTexture(mapName);
+			}
+
+			// 현재 Material 저장..
+			LoadManager::MaterialList.insert({ matName, newMaterial });
+		}
+
+		// 추후 로드를 위해 Material 이름 저장..
+		SaveData->MaterialName = matName;
+	}
 }
 
 void FBXManager::SetMatrixData(ParserData::Mesh* mMesh, LoadMeshData* SaveData)
@@ -355,8 +379,8 @@ void FBXManager::CreateSaveMesh(ParserData::Model* mMesh, ModelData* SaveMesh, s
 	std::vector<LoadMeshData*> SkinMeshList;
 	std::vector<LoadMeshData*> BoneMeshList;
 
-	// Buffer Mesh Index List 초기화..
-	BufferIndexList.clear();
+	// 현재 파일 이름 설정..
+	nowFileName = GetSaveName(Path);
 
 	//모든 매쉬 조사
 	int MeshSize = (int)mMesh->m_MeshList.size();
@@ -395,8 +419,7 @@ void FBXManager::CreateSaveMesh(ParserData::Model* mMesh, ModelData* SaveMesh, s
 	LinkMesh(BoneMeshList, SaveMesh);
 
 	
-	std::string Name = GetSaveName(Path);
-	LoadManager::ModelList.insert({ Name,SaveMesh });
+	LoadManager::ModelList.insert({ nowFileName, SaveMesh });
 }
 
 void FBXManager::LoadQuad()
