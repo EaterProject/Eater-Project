@@ -96,6 +96,23 @@ void EATERManager::LoadScene(std::string& Path)
 	}
 }
 
+void EATERManager::LoadMaterial(std::string& Path)
+{
+	EATER_OPEN_FILE(Path);
+	int Count = EATER_GET_NODE_COUNT();
+
+	for (int i = 0; i < Count; i++)
+	{
+		std::string NodeName = EATER_GET_NODE_NAME(i);
+		if (NodeName == "GAMEOBJECT")
+		{
+			LoadGameObject(i);
+		}
+	}
+
+
+}
+
 LoadMeshData* EATERManager::LoadStaticMesh(int index)
 {
 	LoadMeshData* model = new LoadMeshData();

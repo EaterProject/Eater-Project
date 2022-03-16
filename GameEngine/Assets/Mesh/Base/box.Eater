@@ -2,11 +2,6 @@
 @ParentName RootNode
 @NodeName Cube
 @MeshIndex 0
-@Alpha NO
-@DiffuseMap NO
-@NormalMap NO
-@EmissiveMap NO
-@ORMMap NO
 $WorldTM 4 4
 100.000000 0.000000 0.000000 0.000000
 0.000000 -0.000016 100.000000 0.000000
