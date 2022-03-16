@@ -50,6 +50,13 @@ void Terrain::Start()
 	{
 		AddLayer(DiffuseNameList[i],NormalNameList[i], ORMNameList[i]);
 	}
+
+	if (isLoad_Data == true)
+	{
+		DataUpdate();
+	}
+
+	isLoad_Data = true;
 }
 
 
@@ -73,14 +80,46 @@ void Terrain::AddLayer(std::string diffuseName, std::string normalName, std::str
 	m_MaterialLayer.push_back(newMaterial);
 }
 
+void Terrain::DataUpdate()
+{
+	gameobject->OneMeshData->Material_Data->Material_SubData->TexTM = DirectX::SimpleMath::Matrix::CreateScale(1.0f / Tiling.x, 1.0f / Tiling.y, 1.0f);
+}
+
 void Terrain::SetTextureTiling(float scale_x, float scale_y)
 {
-	gameobject->OneMeshData->Material_Data->Material_SubData->TexTM = DirectX::SimpleMath::Matrix::CreateScale(scale_x, scale_y, 1.0f);
+	if (isLoad_Data == false)
+	{
+		isLoad_Data = true;
+
+		Tiling.x = scale_x;
+		Tiling.y = scale_y;
+	}
+	else
+	{
+		Tiling.x = scale_x;
+		Tiling.y = scale_y;
+
+		// 설정한 데이터 업데이트..
+		DataUpdate();
+	}
 }
 
 void Terrain::SetTextureTiling(float scale)
 {
-	gameobject->OneMeshData->Material_Data->Material_SubData->TexTM = DirectX::SimpleMath::Matrix::CreateScale(scale, scale, 1.0f);
+	if (isLoad_Data == false)
+	{
+		isLoad_Data = true;
+
+		Tiling.x = scale;
+		Tiling.y = scale;
+	}
+	else
+	{
+		Tiling.x = scale;
+		Tiling.y = scale;
+
+		DataUpdate();
+	}
 }
 
 void Terrain::SetLayerName(std::string diffuseName, std::string normalName, std::string ormName)

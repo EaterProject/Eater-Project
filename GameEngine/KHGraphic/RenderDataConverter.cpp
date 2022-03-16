@@ -74,20 +74,20 @@ void RenderDataConverter::ConvertRenderData(MeshData* originData, RenderData* re
 	}
 }
 
-void RenderDataConverter::ConvertIndexBuffer(IndexBuffer* originBuf, MeshRenderData* convertData)
+void RenderDataConverter::ConvertMeshBuffer(MeshBuffer* originBuf, MeshRenderData* convertData)
 {
 	if (originBuf == nullptr) return;
 
-	convertData->m_IndexCount = originBuf->Count;
-	convertData->m_IndexBuf = (ID3D11Buffer*)originBuf->pIndexBuf;
-}
+	// Mesh Buffer Index »ðÀÔ..
+	convertData->m_BufferIndex = originBuf->BufferIndex;
 
-void RenderDataConverter::ConvertVertexBuffer(VertexBuffer* originBuf, MeshRenderData* convertData)
-{
-	if (originBuf == nullptr) return;
+	// Index Buffer Data Convert..
+	convertData->m_IndexCount = originBuf->IndexBuf->Count;
+	convertData->m_IndexBuf = (ID3D11Buffer*)originBuf->IndexBuf->pIndexBuf;
 
-	convertData->m_Stride = originBuf->Stride;
-	convertData->m_VertexBuf = (ID3D11Buffer*)originBuf->pVertexBuf;
+	// Vertex Buffer Data Convert..
+	convertData->m_Stride = originBuf->VertexBuf->Stride;
+	convertData->m_VertexBuf = (ID3D11Buffer*)originBuf->VertexBuf->pVertexBuf;
 }
 
 void RenderDataConverter::ConvertMaterial(MaterialData* originMat, MeshRenderData* convertData)

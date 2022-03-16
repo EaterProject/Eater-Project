@@ -160,7 +160,6 @@ public:
 	~LoadMeshData()
 	{
 		BoneTMList = nullptr;
-		BoneList = nullptr;
 
 		Parent = nullptr;
 	};
@@ -172,6 +171,7 @@ public:
 	std::string ParentName = "";	//부모의 이름
 	std::string	Name = "";			//자기자신의 이름
 	std::string MaterialName = "";	//매터리얼 이름
+	std::string Mask_Name;			// Terrain 전용 Mask Name
 
 	Matrix WorldTM;					//월드 매트릭스
 	Matrix LocalTM;					//로컬 매트릭스
@@ -180,9 +180,6 @@ public:
 
 	int BoneIndex = -1;				//본일경우 자신의 인덱스
 	std::vector<Matrix>* BoneTMList = nullptr;	//본 매트릭스
-	std::vector<Mesh*>* BoneList = nullptr;		//본 매쉬
-
-	std::string Mask_Name;					// Terrain 전용 Mask Name
 
 	LoadMeshData* Parent = nullptr;			//부모 매쉬
 	std::vector<LoadMeshData*> Child;		//자식 매쉬 리스트
@@ -228,7 +225,7 @@ public:
 	//함수 활성화 여부
 	bool* Enabled = nullptr;
 
-	//함수 포인터 
+	//함수 포인터
 	std::function<void()> FunctionPointer;
 
 	//컨퍼넌트 포인터

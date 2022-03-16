@@ -42,6 +42,7 @@ void FBXManager::OpenFile(std::string& Path, MeshOption* Data)
 	MeshIndexList.clear();
 	mMesh = FbxFactory->LoadModel(Path, 0);
 
+	OneMeshMaterialList.clear();
 	EATER_CREATE_FILE(name, SaveFileName);
 	int MeshCount = (int)mMesh->m_MeshList.size();
 	int Anime = mMesh->m_isAnimation;

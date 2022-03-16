@@ -113,10 +113,11 @@ void EATERManager::LoadMaterial(std::string& Path)
 		std::string NodeName = EATER_GET_NODE_NAME(i);
 		if (NodeName == "EATERMAT")
 		{
-			std::string DiffuseName		= EATER_GET_MAP(i, "Diffuse");
-			std::string NormalName		= EATER_GET_MAP(i, "Normal");
-			std::string EmissiveName	= EATER_GET_MAP(i, "Emissive");
-			std::string ORMName			= EATER_GET_MAP(i, "ORM");
+			std::string DiffuseName		= CutStr(EATER_GET_MAP(i, "Diffuse"));
+			std::string NormalName		= CutStr(EATER_GET_MAP(i, "Normal"));
+			std::string EmissiveName	= CutStr(EATER_GET_MAP(i, "Emissive"));
+			std::string ORMName			= CutStr(EATER_GET_MAP(i, "ORM"));
+
 			Data->Albedo	= LoadManager::GetTexture(DiffuseName);
 			Data->Normal	= LoadManager::GetTexture(NormalName);
 			Data->Emissive	= LoadManager::GetTexture(EmissiveName);

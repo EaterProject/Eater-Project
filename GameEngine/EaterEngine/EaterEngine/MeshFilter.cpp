@@ -82,7 +82,7 @@ void MeshFilter::SetMeshName(std::string mMeshName)
 
 void MeshFilter::SetMaterialName(std::string mMatName)
 {
-	if (isLoad_Animation == false)
+	if (isLoad_Material == false)
 	{
 		isLoad_Material = true;
 		MaterialName = mMatName;
