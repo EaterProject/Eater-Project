@@ -21,6 +21,7 @@ public:
 	void Initialize(GraphicEngineManager* Graphic, CRITICAL_SECTION* _cs);
 	void Load(std::string& Path, UINT parsingMode);
 	void LoadScene(std::string& Path);
+	void LoadMaterial(std::string& Path);
 private:
 	LoadMeshData* LoadStaticMesh(int index);
 	LoadMeshData* LoadBoneMesh(int index);
@@ -40,9 +41,15 @@ private:
 	void CreateStaticObject(int index, GameObject* Object);					//스테틱 오브젝트를 생성한다
 	void CreateSkinObject(int index, GameObject* Object);					//스킨 오브젝트를 생성한다
 	void CreateParticleObject(int index, GameObject* Object);				//파티클 오브젝트를 생성한다
+
 	void Load_Component_MeshFilter(int index, GameObject* Object);			//MeshFilter Load
 	void Load_Component_Transform(int index, GameObject* Object);	
 	void Load_Component_Skinning(int index, GameObject* Object);//Transform Load
+private:
+	//자체 메테리얼을 로드함
+
+
+
 private:
 	void LoadVertex(int index, ParserData::Mesh* mMesh);
 	void LoadSkinVertex(int index, ParserData::Mesh* mMesh);

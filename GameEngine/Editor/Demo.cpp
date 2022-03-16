@@ -59,6 +59,7 @@ void Demo::ThreadFunction()
 {
 	Load("../Assets/Mesh/Base");
 	Load("../Assets/Mesh/Animation");
+	Load("../Assets/Mesh/Material");
 
 	LoadEnvironment("../Assets/Texture/Base/Night.dds");
 	SetEnvironment(true);

@@ -52,10 +52,10 @@ void FBXManager::OpenFile(std::string& Path, MeshOption* Data)
 		switch (SaveMode)
 		{
 		case 0:
-			StaticMesh(temp);
+			StaticMesh(temp, name);
 			break;
 		case 1:
-			SkinMesh(temp);
+			SkinMesh(temp,name);
 			break;
 		case 2:
 			TerrainMesh(temp);
@@ -63,16 +63,20 @@ void FBXManager::OpenFile(std::string& Path, MeshOption* Data)
 		}
 	}
 	EATER_CLOSE_FILE();
+
+
+
+	MaterialSave(name);
 }
 
-void FBXManager::StaticMesh(ParserData::Mesh* mMesh)
+void FBXManager::StaticMesh(ParserData::Mesh* mMesh, std::string FileName)
 {
 	EATER_SET_NODE("STATIC");
 
 	if (FindInstanceIndex(mMesh->m_MeshIndex) == false)
 	{
 		SetParent(mMesh);
-		SetMaterial(mMesh);
+		SetMaterial(mMesh, FileName);
 		SetMatrix(mMesh);
 		SetVertex(mMesh);
 		SetIndex(mMesh);
@@ -100,14 +104,14 @@ void FBXManager::BoneMesh(ParserData::Mesh* mMesh)
 	SetMatrix(mMesh);
 }
 
-void FBXManager::SkinMesh(ParserData::Mesh* mMesh)
+void FBXManager::SkinMesh(ParserData::Mesh* mMesh, std::string FileName)
 {
 	if (mMesh->m_MeshType == SKIN_MESH)
 	{
 		EATER_SET_NODE("SKIN");
 		SetParent(mMesh);
 		SetMatrix(mMesh);
-		SetMaterial(mMesh);
+		SetMaterial(mMesh, FileName);
 		SetVertexSkin(mMesh);
 		SetIndex(mMesh);
 		SetBoneOffset(mMesh);
@@ -162,6 +166,46 @@ void FBXManager::AnimationMesh(ParserData::Model* mMesh)
 
 			EATER_SET_LIST(Frame->m_Time, true);
 		}
+	}
+}
+
+void FBXManager::MaterialSave(std::string FileName)
+{
+	int Size = (int)OneMeshMaterialList.size();
+	for (int i = 0; i < Size; i++)
+	{
+		std::string Name = OneMeshMaterialList[i].MeshName;
+		EATER_CREATE_FILE(Name, "../Assets/Mesh/Material/",".EMAT");
+		EATER_SET_NODE("EATERMAT");
+		EATER_SET_MAP("Diffuse", OneMeshMaterialList[i].DiffuseMap);
+		EATER_SET_MAP("Normal", OneMeshMaterialList[i].NormalMap);
+		EATER_SET_MAP("Emissive", OneMeshMaterialList[i].EmissiveMap);
+		EATER_SET_MAP("ORM", OneMeshMaterialList[i].ORMMap);
+		if (OneMeshMaterialList[i].Alpha == true) 
+		{
+			EATER_SET_MAP("Alpha", "YES");
+		}
+		else
+		{
+			EATER_SET_MAP("Alpha", "NO");
+		}
+		EATER_SET_MAP("Roughness", std::to_string(OneMeshMaterialList[i].Roughness));
+		EATER_SET_MAP("Metallic", std::to_string(OneMeshMaterialList[i].Metallic));
+
+		EATER_SET_MAP("Tileing_X", std::to_string(OneMeshMaterialList[i].Tileing.x));
+		EATER_SET_MAP("Tileing_Y", std::to_string(OneMeshMaterialList[i].Tileing.y));
+
+		EATER_SET_MAP("BaseColor_R", std::to_string(OneMeshMaterialList[i].BaseColor.x));
+		EATER_SET_MAP("BaseColor_G", std::to_string(OneMeshMaterialList[i].BaseColor.y));
+		EATER_SET_MAP("BaseColor_B", std::to_string(OneMeshMaterialList[i].BaseColor.z));
+		EATER_SET_MAP("BaseColor_A", std::to_string(OneMeshMaterialList[i].BaseColor.w));
+
+		EATER_SET_MAP("AddColor_R", std::to_string(OneMeshMaterialList[i].BaseColor.x));
+		EATER_SET_MAP("AddColor_G", std::to_string(OneMeshMaterialList[i].BaseColor.y));
+		EATER_SET_MAP("AddColor_B", std::to_string(OneMeshMaterialList[i].BaseColor.z));
+		EATER_SET_MAP("AddColor_A", std::to_string(OneMeshMaterialList[i].BaseColor.w));
+
+		EATER_CLOSE_FILE();
 	}
 }
 
@@ -222,54 +266,42 @@ void FBXManager::SetMatrix(ParserData::Mesh* mMesh)
 	EATER_SET_LIST(SaveLocal._44, true);
 }
 
-void FBXManager::SetMaterial(ParserData::Mesh* mMesh)
+void FBXManager::SetMaterial(ParserData::Mesh* mMesh, std::string FileName)
 {
 	if (mMesh->m_MaterialData == nullptr) { return; }
-
-	if (mMesh->m_MaterialData->m_Alpha)
+	
+	EaterMaterialData Data;
+	Data.MeshName = FileName + "_" + mMesh->m_MaterialData->m_MaterialName;
+	EATER_SET_MAP("MaterialName", Data.MeshName);
+	if (mMesh->m_MaterialData->m_Alpha == true)
 	{
-		EATER_SET_MAP("Alpha", "YES" );
-	}
-	else
-	{
-		EATER_SET_MAP("Alpha", "NO");
-	}
-
-	if (mMesh->m_MaterialData->m_DiffuseMap == nullptr)
-	{
-		EATER_SET_MAP("DiffuseMap", "NO");
-	}
-	else
-	{
-		EATER_SET_MAP("DiffuseMap", CutStr(mMesh->m_MaterialData->m_DiffuseMap->m_BitMap));
+		Data.Alpha = "YES";
 	}
 
-	if (mMesh->m_MaterialData->m_NormalMap == nullptr) 
+
+	if (mMesh->m_MaterialData->m_DiffuseMap != nullptr)
 	{
-		EATER_SET_MAP("NormalMap","NO");
+		Data.DiffuseMap = CutStr(mMesh->m_MaterialData->m_DiffuseMap->m_BitMap);
 	}
-	else
+	
+	if (mMesh->m_MaterialData->m_NormalMap != nullptr) 
 	{
-		EATER_SET_MAP("NormalMap", CutStr(mMesh->m_MaterialData->m_NormalMap->m_BitMap));
+		Data.NormalMap = CutStr(mMesh->m_MaterialData->m_NormalMap->m_BitMap);
+	}
+	
+
+	if (mMesh->m_MaterialData->m_EmissiveMap != nullptr)
+	{
+		Data.EmissiveMap = CutStr(mMesh->m_MaterialData->m_EmissiveMap->m_BitMap);
+	}
+	
+	if (mMesh->m_MaterialData->m_ORMMap != nullptr)
+	{
+		Data.ORMMap = CutStr(mMesh->m_MaterialData->m_ORMMap->m_BitMap);
 	}
 
-	if (mMesh->m_MaterialData->m_EmissiveMap == nullptr)
-	{
-		EATER_SET_MAP("EmissiveMap","NO");
-	}
-	else
-	{
-		EATER_SET_MAP("EmissiveMap", CutStr(mMesh->m_MaterialData->m_EmissiveMap->m_BitMap));
-	}
 
-	if (mMesh->m_MaterialData->m_ORMMap == nullptr)
-	{
-		EATER_SET_MAP("ORMMap", "NO");
-	}
-	else
-	{
-		EATER_SET_MAP("ORMMap", CutStr(mMesh->m_MaterialData->m_ORMMap->m_BitMap));
-	}
+	OneMeshMaterialList.push_back(Data);
 }
 
 void FBXManager::SetVertexTerrain(ParserData::Mesh* mMesh)

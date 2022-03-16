@@ -167,7 +167,7 @@ void AssetsDialog::OnAssetsClick(NMHDR* pNMHDR, LRESULT* pResult)
 
 	CFileFind FileFind;
 	CString FilePath = ChangeToCString(ClickItemPath);
-	//RightOption::GetThis()->ClickAssetsPath = ClickAssetsPath;
+	RightOption::GetThis()->ClickAssetsPath = ClickAssetsPath;
 	BOOL bFound = FileFind.FindFile(FilePath);
 	while (bFound)
 	{
