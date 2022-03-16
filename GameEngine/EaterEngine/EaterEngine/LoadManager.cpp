@@ -250,6 +250,10 @@ void LoadManager::LoadFile(std::string& Path, UINT MODE)
 		//씬 로드
 		mEATER->LoadScene(Path);
 	}
+	else if (Type == "EMAT")
+	{
+		mEATER->LoadMaterial(Path);
+	}
 
 	/// Material Load 추가해야함
 }
