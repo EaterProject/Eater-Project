@@ -1,4 +1,5 @@
 #pragma once
+// Render List Layer 관리를 위한 Class
 class MeshIndexData
 {
 public:
@@ -6,6 +7,7 @@ public:
 	UINT m_ListIndex;
 };
 
+// Game Engine 측 Data와 대응하는 DirectX 11 전용 Material Data Class
 class MaterialRenderData
 {
 public:
@@ -19,6 +21,7 @@ public:
 	ID3D11ShaderResourceView* m_ORM;
 };
 
+// Game Engine 측 Data와 대응하는 DirectX 11 전용 Mesh Data Class
 class MeshRenderData
 {
 public:

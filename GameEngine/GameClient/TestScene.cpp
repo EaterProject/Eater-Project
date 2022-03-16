@@ -130,7 +130,7 @@ void TestScene::CreateMap()
 	mTerrain->SetLayerName("terrain_ground_B_BaseColor", "terrain_ground_B_Normal", "terrain_ground_B_ORM");
 	mTerrain->SetMeshName("Terrain");
 	//mTerrain->SetColliderName("TerrainDecimate");
-	mTerrain->SetTextureTiling(1.0f / 31.0f);
+	mTerrain->SetTextureTiling(31.0f);
 }
 
 void TestScene::CreateParticle(float x, float y, float z)

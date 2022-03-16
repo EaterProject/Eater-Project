@@ -31,11 +31,16 @@ public:
 
 private:
 	void AddLayer(std::string diffuseName, std::string normalName, std::string ormName);
+	void DataUpdate();
 
 private:
 	TerrainData* m_TerrainData;
 	std::vector<Material*> m_MaterialLayer;
 	
+	bool isLoad_Data = false;
+	UINT LayerSize = 0;
+	DirectX::SimpleMath::Vector2 Tiling;
+
 	std::vector<std::string> DiffuseNameList;
 	std::vector<std::string> NormalNameList;
 	std::vector<std::string> ORMNameList;
