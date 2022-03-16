@@ -21,21 +21,15 @@ void RenderData::ConvertData(MeshData* originMesh)
 	// Object Type 설정..
 	m_ObjectType = originMesh->ObjType;
 
-	// Mesh Index 설정..
-	m_MeshIndex = originMesh->MeshIndex;
-
 	// Mesh Data 설정..
 	m_World = originMesh->World;
 
 	m_ColliderData = originMesh->Collider_Data;
 
-	// Index Buffer Data 설정..
-	ConvertIndexBuffer(originMesh->IndexBuf);
+	// Mesh Buffer Data 변환..
+	ConvertMeshBuffer(originMesh->MeshBuf);
 
-	// Vertex Buffer Data 설정..
-	ConvertVertexBuffer(originMesh->VertexBuf);
-
-	// Material Data 설정..
+	// Material Data 변환..
 	ConvertMaterial(originMesh->Material_Data);
 
 	// Obejct Type에 따른 추가 변환 작업..
@@ -88,20 +82,20 @@ void RenderData::Release()
 	SAFE_DELETE(m_MeshData);
 }
 
-void RenderData::ConvertIndexBuffer(IndexBuffer* originBuf)
+void RenderData::ConvertMeshBuffer(MeshBuffer* originBuf)
 {
 	if (originBuf == nullptr) return;
 
-	m_MeshData->m_IndexCount = originBuf->Count;
-	m_MeshData->m_IndexBuf	 = (ID3D11Buffer*)originBuf->pIndexBuf;
-}
+	// Mesh Buffer Index 삽입..
+	m_MeshData->m_BufferIndex = originBuf->BufferIndex;
 
-void RenderData::ConvertVertexBuffer(VertexBuffer* originBuf)
-{
-	if (originBuf == nullptr) return;
+	// Index Buffer Data Convert..
+	m_MeshData->m_IndexCount = originBuf->IndexBuf->Count;
+	m_MeshData->m_IndexBuf = (ID3D11Buffer*)originBuf->IndexBuf->pIndexBuf;
 
-	m_MeshData->m_Stride	= originBuf->Stride;
-	m_MeshData->m_VertexBuf = (ID3D11Buffer*)originBuf->pVertexBuf;
+	// Vertex Buffer Data Convert..
+	m_MeshData->m_Stride = originBuf->VertexBuf->Stride;
+	m_MeshData->m_VertexBuf = (ID3D11Buffer*)originBuf->VertexBuf->pVertexBuf;
 }
 
 void RenderData::ConvertMaterial(MaterialData* originMat)

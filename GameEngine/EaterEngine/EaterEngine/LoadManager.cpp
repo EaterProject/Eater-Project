@@ -15,6 +15,7 @@ std::map<std::string, ModelData*>			LoadManager::ModelList;
 std::map<std::string, TextureBuffer*>		LoadManager::TextureList;
 std::map<std::string, Material*>			LoadManager::MaterialList;
 std::map<std::string, ModelAnimationData*>	LoadManager::AnimationList;
+std::map<UINT, MeshBuffer*>					LoadManager::MeshBufferList;
 std::vector<int>							LoadManager::GrobalInstanceIndexList;
 
 bool LoadManager::isNewMesh = false;
@@ -142,6 +143,23 @@ ModelData* LoadManager::GetMesh(std::string Path)
 	{
 		return Find_it->second;
 	}
+}
+
+MeshBuffer* LoadManager::GetMeshBuffer(UINT index)
+{
+	std::map<UINT, MeshBuffer*>::iterator End_it = MeshBufferList.end();
+	std::map<UINT, MeshBuffer*>::iterator Find_it = MeshBufferList.find(index);
+
+	if (End_it == Find_it)
+	{
+		return nullptr;
+	}
+	else
+	{
+		return Find_it->second;
+	}
+
+	return nullptr;
 }
 
 ModelAnimationData* LoadManager::GetAnimation(std::string Path)

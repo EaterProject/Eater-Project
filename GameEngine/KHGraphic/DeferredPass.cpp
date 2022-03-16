@@ -196,15 +196,6 @@ void DeferredPass::BeginRender()
 	g_Context->RSSetState(m_SolidRS);
 }
 
-void DeferredPass::BufferUpdate(MeshData* mesh)
-{
-	m_IndexBuffer = (ID3D11Buffer*)(mesh->IndexBuf->pIndexBuf);
-	m_VertexBuffer = (ID3D11Buffer*)(mesh->VertexBuf->pVertexBuf);
-
-	m_IndexCount = mesh->IndexBuf->Count;
-	m_Stride = mesh->VertexBuf->Stride;
-}
-
 void DeferredPass::RenderUpdate(const std::vector<RenderData*>& meshlist)
 {
 	if (meshlist.size() == 1)

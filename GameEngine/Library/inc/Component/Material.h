@@ -11,7 +11,7 @@ class MaterialManager;
 class Material
 {
 public:
-	Material();
+	EATER_ENGINEDLL Material();
 	~Material();
 
 public:

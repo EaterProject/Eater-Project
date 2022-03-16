@@ -515,7 +515,7 @@ void RenderManager::EndRender()
 void RenderManager::ConvertMeshRenderData(MeshData* meshData, RenderData* renderData)
 {
 	bool addList = true;
-	UINT meshIndex = renderData->m_MeshIndex;
+	UINT meshIndex = renderData->m_MeshData->m_BufferIndex;
 
 	for (MeshIndexData& index : m_MeshIndexList)
 	{

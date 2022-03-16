@@ -13,15 +13,12 @@ public:
 	void Release();
 
 private:
-	void ConvertIndexBuffer(IndexBuffer* originBuf);
-	void ConvertVertexBuffer(VertexBuffer* originBuf);
+	void ConvertMeshBuffer(MeshBuffer* originBuf);
 	void ConvertMaterial(MaterialData* originMat);
 	void ConvertMaterial(MaterialData* originMat, MaterialRenderData* convertMat);
 	
 public:
 	OBJECT_TYPE m_ObjectType;
-
-	UINT m_MeshIndex;
 
 	Matrix* m_World;
 	std::vector<Matrix>* m_BoneOffsetTM;
@@ -33,4 +30,17 @@ public:
 
 	ParticleData* m_ParticleData;
 	ColliderData* m_ColliderData;
+};
+
+class InstanceRenderData
+{
+public:
+	InstanceRenderData();
+	~InstanceRenderData();
+
+public:
+
+private:
+	MaterialRenderData* m_Material;
+	std::vector<RenderData*> m_MeshList;
 };

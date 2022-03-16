@@ -193,9 +193,9 @@ std::string MeshFilter::GetORMTextureName()
 	return ORMTextureName;
 }
 
-void MeshFilter::SetObjectData()
+Material* MeshFilter::GetMaterial()
 {
-
+	return Materials;
 }
 
 void MeshFilter::CheckMaterial()
@@ -307,9 +307,6 @@ void MeshFilter::CreateStaticMesh(LoadMeshData* mMesh, GameObject* Object)
 	SetBufferData(mMesh, Data);
 	SetType(mMesh, Data);
 
-	// Mesh Index 삽입..
-	Data->MeshIndex = mMesh->MeshIndex;
-
 	int ChildCount = (int)mMesh->Child.size();
 	for (int i = 0; i < ChildCount; i++)
 	{
@@ -364,9 +361,6 @@ void MeshFilter::CreateSkinMesh(LoadMeshData* mMesh, GameObject* Object)
 
 	Data->ObjType = OBJECT_TYPE::SKINNING;
 
-	// Mesh Index 삽입..
-	Data->MeshIndex = mMesh->MeshIndex;
-
 	int ChildCount = (int)mMesh->Child.size();
 	for (int i = 0; i < ChildCount; i++)
 	{
@@ -398,12 +392,6 @@ void MeshFilter::SetMaterialData(LoadMeshData* LoadMesh, MeshData* mMesh)
 
 	// Render Material Data 설정..
 	mMesh->Material_Data = Materials->m_MaterialData;
-
-	/// 로드한 Material과 Texture가 다를 경우가 있나..?
-	//mMesh->Material_Data->Albedo = LoadManager::GetTexture(LoadMesh->AlbedoName);
-	//mMesh->Material_Data->Normal = LoadManager::GetTexture(LoadMesh->NormalName);
-	//mMesh->Material_Data->Emissive = LoadManager::GetTexture(LoadMesh->EmissiveName);
-	//mMesh->Material_Data->ORM = LoadManager::GetTexture(LoadMesh->ORMName);
 }
 
 void MeshFilter::SetMatrixData(LoadMeshData* LoadMesh, MeshData* mMesh, GameObject* Object)
@@ -419,9 +407,7 @@ void MeshFilter::SetMatrixData(LoadMeshData* LoadMesh, MeshData* mMesh, GameObje
 
 void MeshFilter::SetBufferData(LoadMeshData* LoadMesh, MeshData* mMesh)
 {
-	mMesh->MeshIndex = LoadMesh->MeshIndex;
-	mMesh->IndexBuf = LoadMesh->IndexBuf;
-	mMesh->VertexBuf = LoadMesh->VertexBuf;
+	mMesh->MeshBuf = LoadMesh->MeshBuf;
 }
 
 void MeshFilter::SetType(LoadMeshData* LoadMesh, MeshData* mMesh)

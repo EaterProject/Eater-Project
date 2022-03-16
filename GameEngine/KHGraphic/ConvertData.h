@@ -22,6 +22,8 @@ public:
 class MeshRenderData
 {
 public:
+	UINT m_BufferIndex;
+
 	UINT m_IndexCount;
 	UINT m_Stride;
 	UINT m_Offset;

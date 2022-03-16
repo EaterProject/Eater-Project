@@ -20,10 +20,8 @@ public:
 
 	//활성화 여부
 	bool Enabled	= true;
-public:
-	//게임 오브젝트 설정
-	virtual void SetObjectData() {}
 
+public:
 	//매니저 넣어주기
 	static void SetManager(TimeManager* time, KeyinputManager* key);
 

@@ -57,8 +57,10 @@ public:
 	EATER_ENGINEDLL std::string GetNormlaTextureName();
 	EATER_ENGINEDLL std::string GetORMTextureName();
 
+	EATER_ENGINEDLL Material* GetMaterial();
+
 public:
-	void SetObjectData() override;
+	Material* Materials;
 
 private:
 	//Transform을 연결한다
@@ -97,8 +99,6 @@ private:
 	std::string NormalTextureName;		//로드한 텍스쳐 이름
 	std::string EmissiveTextureName;	//로드한 텍스쳐 이름
 	std::string ORMTextureName;			//로드한 텍스쳐 이름
-
-	Material* Materials;		//Material Data
 
 	//본리스트들을 GameObject 타입으로 저장
 	std::vector<GameObject*>	BoneList;

@@ -27,6 +27,7 @@ class ModelParser;
 class FBXParser;
 class FBXModel;
 class TextureBuffer;
+class MeshBuffer;
 
 class GraphicEngineManager;
 class MaterialManager;
@@ -57,6 +58,7 @@ public:
 	static Material*		GetMaterial(std::string Path);
 	static ModelData*		GetMesh(std::string Path);
 	static ModelAnimationData* GetAnimation(std::string Path);
+	static MeshBuffer*		GetMeshBuffer(UINT index);
 	static bool				FindMesh(std::string Name);
 	static bool				FindTexture(std::string Name);
 	static int				FindInstanceIndex(int index);
@@ -74,6 +76,7 @@ private:
 	static std::map<std::string, TextureBuffer*>		TextureList;
 	static std::map<std::string, Material*>				MaterialList;
 	static std::map<std::string, ModelAnimationData*>	AnimationList;
+	static std::map<UINT, MeshBuffer*>					MeshBufferList;
 
 	//인스턴스 인덱스 관리
 	static std::vector<int> GrobalInstanceIndexList;
