@@ -109,7 +109,7 @@ void EATERManager::LoadMaterial(std::string& Path)
 	for (int i = 0; i < Count; i++)
 	{
 		Material* Mat = new Material();
-		MaterialData* Data = Mat->m_MaterialData;
+		MaterialBuffer* Data = Mat->m_MaterialData;
 		std::string NodeName = EATER_GET_NODE_NAME(i);
 		if (NodeName == "EATERMAT")
 		{

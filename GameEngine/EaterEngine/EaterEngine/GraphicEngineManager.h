@@ -41,7 +41,7 @@ public:
 	void SetEnvironment(bool enable);
 
 	//선택한 그래픽엔진 랜더링
-	void AddMeshData(MeshData* mesh);
+	void PushInstance(MeshData* mesh);
 	void AddChangeMeshData(MeshData* mesh);
 	void DeleteMeshData(MeshData* mesh);
 	void Render();

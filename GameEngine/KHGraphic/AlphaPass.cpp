@@ -89,7 +89,7 @@ void AlphaPass::RenderUpdate(RenderData* mesh)
 	Matrix proj = g_GlobalData->CamProj;
 	Matrix invView = g_GlobalData->CamInvView;
 	Matrix viewproj = g_GlobalData->CamVP;
-	MaterialRenderData* mat = mesh->m_Material;
+	MaterialRenderBuffer* mat = mesh->m_MaterialBuffer;
 
 	switch (mesh->m_ObjectData->ObjType)
 	{
@@ -173,16 +173,16 @@ void AlphaPass::RenderUpdate(RenderData* mesh)
 
 		m_ParticlePS->Update();
 
-		ID3D11Buffer* vertexBuffers[2] = { mesh->m_MeshData->m_VertexBuf, m_Particle_IB->InstanceBuf->Get() };
-		UINT strides[2] = { mesh->m_MeshData->m_Stride, m_Particle_IB->Stride };
+		ID3D11Buffer* vertexBuffers[2] = { mesh->m_MeshBuffer->m_VertexBuf, m_Particle_IB->InstanceBuf->Get() };
+		UINT strides[2] = { mesh->m_MeshBuffer->m_Stride, m_Particle_IB->Stride };
 		UINT offsets[2] = { 0,0 };
 
 		g_Context->IASetVertexBuffers(0, 2, vertexBuffers, strides, offsets);
-		g_Context->IASetIndexBuffer(mesh->m_MeshData->m_IndexBuf, DXGI_FORMAT_R32_UINT, 0);
+		g_Context->IASetIndexBuffer(mesh->m_MeshBuffer->m_IndexBuf, DXGI_FORMAT_R32_UINT, 0);
 		g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 		// Draw..
-		g_Context->DrawIndexedInstanced(mesh->m_MeshData->m_IndexCount, m_InstanceCount, 0, 0, 0);
+		g_Context->DrawIndexedInstanced(mesh->m_MeshBuffer->m_IndexCount, m_InstanceCount, 0, 0, 0);
 
 		// Particle Instance Data Clear..
 		m_ParticleInstance.clear();

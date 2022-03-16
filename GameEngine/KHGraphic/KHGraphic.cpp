@@ -78,9 +78,19 @@ void KHGraphic::SetEnvironmentMap(bool enable)
 	m_RenderManager->SetEnvironmentMap(enable);
 }
 
-void KHGraphic::AddMeshData(MeshData* meshData)
+void KHGraphic::PushInstance(MeshData* meshData)
 {
-	m_RenderManager->AddMeshData(meshData);
+	m_RenderManager->PushInstance(meshData);
+}
+
+void KHGraphic::PushMaterial(MaterialBuffer* materialData)
+{
+	m_RenderManager->PushMaterial(materialData);
+}
+
+void KHGraphic::PushMesh(MeshBuffer* meshData)
+{
+	m_RenderManager->PushMesh(meshData);
 }
 
 void KHGraphic::AddChangeMeshData(MeshData* meshData)
@@ -88,7 +98,7 @@ void KHGraphic::AddChangeMeshData(MeshData* meshData)
 	m_RenderManager->AddChangeMeshData(meshData);
 }
 
-void KHGraphic::AddChangeMaterialData(MaterialData* materialData)
+void KHGraphic::AddChangeMaterialData(MaterialBuffer* materialData)
 {
 	m_RenderManager->AddChangeMaterialData(materialData);
 }

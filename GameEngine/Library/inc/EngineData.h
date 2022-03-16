@@ -45,7 +45,7 @@ public:
 };
 
 // Material Data
-class MaterialData
+class MaterialBuffer
 {
 public:
 	UINT Material_Index = 0;				// Material Index
@@ -62,7 +62,7 @@ public:
 class TerrainData
 {
 public:
-	std::vector<MaterialData*> Material_List;		// Material List
+	std::vector<MaterialBuffer*> Material_List;		// Material List
 };
 
 // Particle Data
@@ -145,8 +145,9 @@ public:
 	std::vector<Matrix> BoneOffsetTM;				//본 오프셋 TM
 
 	ObjectData*		Object_Data = nullptr;			// Object Data
-	MeshBuffer*		MeshBuffer_Data = nullptr;		// Mesh Buffer Data
-	MaterialData*	Material_Data	= nullptr;		// Material Data
+
+	MeshBuffer*		Mesh_Buffer = nullptr;			// Mesh Buffer
+	MaterialBuffer*	Material_Buffer	= nullptr;		// Material Buffer
 
 	// 추가 데이터
 	TerrainData*	Terrain_Data	= nullptr;		// Terrain Data

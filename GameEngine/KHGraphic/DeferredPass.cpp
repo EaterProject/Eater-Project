@@ -207,7 +207,7 @@ void DeferredPass::RenderUpdate(const std::vector<RenderData*>& meshlist)
 	Matrix view = g_GlobalData->CamView;
 	Matrix proj = g_GlobalData->CamProj;
 	RenderData* mesh = nullptr;
-	MaterialRenderData* mat = nullptr;
+	MaterialRenderBuffer* mat = nullptr;
 
 	for (int i = 0; i < meshlist.size(); i++)
 	{
@@ -216,7 +216,7 @@ void DeferredPass::RenderUpdate(const std::vector<RenderData*>& meshlist)
 		if (mesh == nullptr)
 		{
 			mesh = meshlist[i];
-			mat = mesh->m_Material;
+			mat = mesh->m_MaterialBuffer;
 		}
 
 		// ÇØ´ç Instance Data »ðÀÔ..
@@ -287,16 +287,16 @@ void DeferredPass::RenderUpdate(const std::vector<RenderData*>& meshlist)
 
 		m_DeferredPS->Update();
 
-		ID3D11Buffer* vertexBuffers[2] = { mesh->m_MeshData->m_VertexBuf, m_Mesh_IB->InstanceBuf->Get() };
-		UINT strides[2] = { mesh->m_MeshData->m_Stride, m_Mesh_IB->Stride };
+		ID3D11Buffer* vertexBuffers[2] = { mesh->m_MeshBuffer->m_VertexBuf, m_Mesh_IB->InstanceBuf->Get() };
+		UINT strides[2] = { mesh->m_MeshBuffer->m_Stride, m_Mesh_IB->Stride };
 		UINT offsets[2] = { 0,0 };
 
 		// Draw..
 		g_Context->IASetVertexBuffers(0, 2, vertexBuffers, strides, offsets);
-		g_Context->IASetIndexBuffer(mesh->m_MeshData->m_IndexBuf, DXGI_FORMAT_R32_UINT, 0);
+		g_Context->IASetIndexBuffer(mesh->m_MeshBuffer->m_IndexBuf, DXGI_FORMAT_R32_UINT, 0);
 		g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-		g_Context->DrawIndexedInstanced(mesh->m_MeshData->m_IndexCount, m_InstanceCount, 0, 0, 0);
+		g_Context->DrawIndexedInstanced(mesh->m_MeshBuffer->m_IndexCount, m_InstanceCount, 0, 0, 0);
 	}
 	break;
 	case OBJECT_TYPE::SKINNING:
@@ -318,7 +318,7 @@ void DeferredPass::RenderUpdate(const RenderData* mesh)
 	Matrix world = *mesh->m_ObjectData->World;
 	Matrix view = g_GlobalData->CamView;
 	Matrix proj = g_GlobalData->CamProj;
-	MaterialRenderData* mat = mesh->m_Material;
+	MaterialRenderBuffer* mat = mesh->m_MaterialBuffer;
 
 	if (mesh == nullptr) return;
 
@@ -367,10 +367,10 @@ void DeferredPass::RenderUpdate(const RenderData* mesh)
 
 		// Draw..
 		g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-		g_Context->IASetVertexBuffers(0, 1, &mesh->m_MeshData->m_VertexBuf, &mesh->m_MeshData->m_Stride, &mesh->m_MeshData->m_Offset);
-		g_Context->IASetIndexBuffer(mesh->m_MeshData->m_IndexBuf, DXGI_FORMAT_R32_UINT, 0);
+		g_Context->IASetVertexBuffers(0, 1, &mesh->m_MeshBuffer->m_VertexBuf, &mesh->m_MeshBuffer->m_Stride, &mesh->m_MeshBuffer->m_Offset);
+		g_Context->IASetIndexBuffer(mesh->m_MeshBuffer->m_IndexBuf, DXGI_FORMAT_R32_UINT, 0);
 
-		g_Context->DrawIndexed(mesh->m_MeshData->m_IndexCount, 0, 0);
+		g_Context->DrawIndexed(mesh->m_MeshBuffer->m_IndexCount, 0, 0);
 	}
 	break;
 	case OBJECT_TYPE::TERRAIN:
@@ -380,14 +380,14 @@ void DeferredPass::RenderUpdate(const RenderData* mesh)
 		objectBuf.gWorld = world;
 		objectBuf.gView = view;
 		objectBuf.gProj = proj;
-		objectBuf.gTexTransform = mesh->m_Material->m_MaterialSubData->TexTM;
+		objectBuf.gTexTransform = mesh->m_MaterialBuffer->m_MaterialSubData->TexTM;
 		m_TerrainVS->ConstantBufferCopy(&objectBuf);
 
 		m_TerrainVS->Update();
 
 		// Pixel Shader Update..
-		MaterialRenderData* layer1 = mesh->m_TerrainData->m_MaterialList[0];
-		MaterialRenderData* layer2 = mesh->m_TerrainData->m_MaterialList[1];
+		MaterialRenderBuffer* layer1 = mesh->m_TerrainData->m_MaterialList[0];
+		MaterialRenderBuffer* layer2 = mesh->m_TerrainData->m_MaterialList[1];
 		m_TerrainPS->SetShaderResourceView<gDiffuseLayer1>(layer1->m_Albedo);
 		m_TerrainPS->SetShaderResourceView<gNormalLayer1>(layer1->m_Normal);
 		m_TerrainPS->SetShaderResourceView<gORMLayer1>(layer1->m_ORM);
@@ -403,10 +403,10 @@ void DeferredPass::RenderUpdate(const RenderData* mesh)
 
 		// Draw..
 		g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-		g_Context->IASetVertexBuffers(0, 1, &mesh->m_MeshData->m_VertexBuf, &mesh->m_MeshData->m_Stride, &mesh->m_MeshData->m_Offset);
-		g_Context->IASetIndexBuffer(mesh->m_MeshData->m_IndexBuf, DXGI_FORMAT_R32_UINT, 0);
+		g_Context->IASetVertexBuffers(0, 1, &mesh->m_MeshBuffer->m_VertexBuf, &mesh->m_MeshBuffer->m_Stride, &mesh->m_MeshBuffer->m_Offset);
+		g_Context->IASetIndexBuffer(mesh->m_MeshBuffer->m_IndexBuf, DXGI_FORMAT_R32_UINT, 0);
 
-		g_Context->DrawIndexed(mesh->m_MeshData->m_IndexCount, 0, 0);
+		g_Context->DrawIndexed(mesh->m_MeshBuffer->m_IndexCount, 0, 0);
 	}
 	break;
 	case OBJECT_TYPE::SKINNING:
@@ -457,10 +457,10 @@ void DeferredPass::RenderUpdate(const RenderData* mesh)
 
 		// Draw..
 		g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-		g_Context->IASetVertexBuffers(0, 1, &mesh->m_MeshData->m_VertexBuf, &mesh->m_MeshData->m_Stride, &mesh->m_MeshData->m_Offset);
-		g_Context->IASetIndexBuffer(mesh->m_MeshData->m_IndexBuf, DXGI_FORMAT_R32_UINT, 0);
+		g_Context->IASetVertexBuffers(0, 1, &mesh->m_MeshBuffer->m_VertexBuf, &mesh->m_MeshBuffer->m_Stride, &mesh->m_MeshBuffer->m_Offset);
+		g_Context->IASetIndexBuffer(mesh->m_MeshBuffer->m_IndexBuf, DXGI_FORMAT_R32_UINT, 0);
 
-		g_Context->DrawIndexed(mesh->m_MeshData->m_IndexCount, 0, 0);
+		g_Context->DrawIndexed(mesh->m_MeshBuffer->m_IndexCount, 0, 0);
 	}
 	break;
 	default:

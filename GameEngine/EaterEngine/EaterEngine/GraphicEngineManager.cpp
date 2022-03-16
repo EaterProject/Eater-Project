@@ -50,9 +50,9 @@ void GraphicEngineManager::SetEnvironment(bool enable)
 	GEngine->SetEnvironmentMap(enable);
 }
 
-void GraphicEngineManager::AddMeshData(MeshData* mesh)
+void GraphicEngineManager::PushInstance(MeshData* mesh)
 {
-	GEngine->AddMeshData(mesh);
+	GEngine->PushInstance(mesh);
 }
 
 void GraphicEngineManager::AddChangeMeshData(MeshData* mesh)
