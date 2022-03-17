@@ -20,7 +20,7 @@ class RenderOption;
 
 namespace ParserData
 {
-	class Mesh;
+	class CMesh;
 }
 
 class GraphicEngineManager : public BaseManager
@@ -52,7 +52,7 @@ public:
 	void DebugDrawLine(DirectX::SimpleMath::Vector3 start, DirectX::SimpleMath::Vector3 dir, float distance, DirectX::SimpleMath::Vector4 color);
 
 	//선택한 그래픽엔진으로 인덱스버퍼를 생성함
-	void CreateMeshBuffer(ParserData::Mesh* mModel, LoadMeshData* meshData);
+	void CreateMeshBuffer(ParserData::CMesh* mModel, LoadMeshData* meshData);
 
 	//선택한 그래픽엔진으로 텍스쳐 생성
 	TextureBuffer* CreateTextureBuffer(std::string Name);

@@ -44,6 +44,36 @@ public:
 	Matrix* Local = nullptr;						//매쉬의 로컬 행렬
 };
 
+// Mesh Buffer
+class MeshBuffer
+{
+public:
+	virtual ~MeshBuffer()
+	{
+		delete IndexBuf;
+		delete VertexBuf;
+	}
+
+	UINT BufferIndex = 0;
+
+	IndexBuffer* IndexBuf;
+	VertexBuffer* VertexBuf;
+};
+
+// Material Buffer
+class MaterialBuffer
+{
+public:
+	UINT BufferIndex = 0;				// Material Index
+
+	MaterialSubData* Material_SubData = nullptr;	// Material SubData
+
+	TextureBuffer* Albedo = nullptr;		// DiffuseMap Texture
+	TextureBuffer* Normal = nullptr;		// NormalMap Texture
+	TextureBuffer* Emissive = nullptr;		// Emissive Texture
+	TextureBuffer* ORM = nullptr;			// AO(R) + Roughness(G) + Metallic(B) Texture
+};
+
 // Terrain Data
 class TerrainData
 {
@@ -191,8 +221,6 @@ public:
 		//
 	}
 
-	UINT Model;
-
 	std::vector<LoadMeshData*> TopMeshList;
 	std::vector<LoadMeshData*> TopSkinList;
 	std::vector<LoadMeshData*> TopBoneList;
@@ -208,7 +236,7 @@ public:
 	{
 
 	}
-	std::map<std::string, std::vector<OneAnimation*>* > AnimList;
+	std::map<std::string, std::vector<CAnimation*>* > AnimList;
 };
 
 //컨퍼넌트들의 함수포인터를 저장할 구조체

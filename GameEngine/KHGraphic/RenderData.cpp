@@ -125,13 +125,12 @@ InstanceRenderData::~InstanceRenderData()
 
 }
 
-void InstanceRenderData::SetInstanceData(MeshRenderBuffer* mesh, MaterialRenderBuffer* material)
+void InstanceRenderData::SetInstanceData(InstanceRenderBuffer* instance)
 {
-	m_Mesh		= mesh;
-	m_Material	= material;
+	m_Instance = instance;
 }
 
 void InstanceRenderData::PushInstance(RenderData* renderData)
 {
-
+	m_MeshList.push_back(renderData);
 }

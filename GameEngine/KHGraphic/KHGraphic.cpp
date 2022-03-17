@@ -118,7 +118,7 @@ TextureBuffer* KHGraphic::CreateTextureBuffer(std::string path)
 	return m_FactoryManager->CreateTextureBuffer(path);
 }
 
-void KHGraphic::CreateMeshBuffer(ParserData::Mesh* mesh, LoadMeshData* meshData)
+void KHGraphic::CreateMeshBuffer(ParserData::CMesh* mesh, LoadMeshData* meshData)
 {
 	m_FactoryManager->CreateMeshBuffer(mesh, meshData);
 }

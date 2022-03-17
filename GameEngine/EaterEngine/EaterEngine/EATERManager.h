@@ -8,8 +8,8 @@ class ModelData;
 class GameObject;
 namespace ParserData
 {
-	class Mesh;
-	class OneAnimation;
+	class CMesh;
+	class CAnimation;
 }
 
 class EATERManager
@@ -49,11 +49,11 @@ private:
 
 
 private:
-	void LoadVertex(int index, ParserData::Mesh* mMesh);
-	void LoadSkinVertex(int index, ParserData::Mesh* mMesh);
-	void LoadIndex(int index, ParserData::Mesh* mMesh);
+	void LoadVertex(int index, ParserData::CMesh* mMesh);
+	void LoadSkinVertex(int index, ParserData::CMesh* mMesh);
+	void LoadIndex(int index, ParserData::CMesh* mMesh);
 
-	void CreateKeyFrame(std::vector<ParserData::OneAnimation*>* Anime, int InputKeyCount);
+	void CreateKeyFrame(std::vector<ParserData::CAnimation*>* Anime, int InputKeyCount);
 private:
 	std::string CutStr(std::string& Name);
 	GraphicEngineManager*	m_Graphic;

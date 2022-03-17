@@ -24,7 +24,7 @@ void RenderDataConverter::ConvertRenderData(MeshData* originData, RenderData* re
 	renderData->m_ColliderData = originData->Collider_Data;
 
 	// 해당 Mesh & Material Buffer 설정..
-	renderData->m_MeshBuffer	 = FindMesh(originData->Mesh_Buffer->BufferIndex);
+	renderData->m_MeshBuffer = FindMesh(originData->Mesh_Buffer->BufferIndex);
 	renderData->m_MaterialBuffer = FindMaterial(originData->Material_Buffer->BufferIndex);
 
 	// Obejct Type에 따른 추가 변환 작업..
@@ -50,7 +50,7 @@ void RenderDataConverter::ConvertRenderData(MeshData* originData, RenderData* re
 	}
 	break;
 	case OBJECT_TYPE::PARTICLE_SYSTEM:
-	break;
+		break;
 	default:
 		break;
 	}
@@ -135,11 +135,79 @@ void RenderDataConverter::PushMaterial(MaterialBuffer* material)
 	m_MaterialList.insert(std::pair<UINT, MaterialRenderBuffer*>(materialIndex, newMaterial));
 }
 
+void RenderDataConverter::PushInstance(MeshRenderBuffer* mesh, MaterialRenderBuffer* material)
+{
+	// 추가된 Material Index 부여..
+	UINT instance_Index = 0;
+
+	for (int i = 0; i < m_InstanceIndexList.size(); i++)
+	{
+		// Index List에 빈곳이 있다면 해당 Index 부여..
+		if (m_InstanceIndexList[i].second == false)
+		{
+			instance_Index = m_InstanceIndexList[i].first;
+			m_InstanceIndexList[i].second = true;
+			break;
+		}
+	}
+
+	// 만약 Index List에 빈곳이 없다면 다음 Index 추가..
+	if (instance_Index == 0)
+	{
+		instance_Index = m_InstanceIndexList.size();
+		m_InstanceIndexList.push_back(std::pair<UINT, bool>(instance_Index, true));
+	}
+
+	// 새로운 Instance Buffer 생성..
+	InstanceRenderBuffer* instance = new InstanceRenderBuffer();
+
+	// 현재 Instance Index 설정..
+	instance->m_InstanceIndex = instance_Index;
+	instance->m_Mesh = mesh;
+	instance->m_Material = material;
+
+	// Instance List 추가..
+	m_InstanceList.insert(std::make_pair(instance_Index, instance));
+}
+
+void RenderDataConverter::DeleteMesh(UINT index)
+{
+	// 해당 Mesh 검색..
+	MeshRenderBuffer* mesh = m_MeshList.find(index)->second;
+
+	// 해당 Instance Buffer 삭제..
+	SAFE_DELETE(mesh);
+	m_MeshList.erase(index);
+}
+
+void RenderDataConverter::DeleteMaterial(UINT index)
+{
+	// 해당 Material 검색..
+	MaterialRenderBuffer* material = m_MaterialList.find(index)->second;
+
+	// 해당 Instance Buffer 삭제..
+	SAFE_DELETE(material);
+	m_MaterialList.erase(index);
+}
+
+void RenderDataConverter::DeleteInstance(UINT index)
+{
+	// 해당 Instance 검색..
+	InstanceRenderBuffer* instance = m_InstanceList.find(index)->second;
+
+	// 해당 Instance Buffer 삭제..
+	SAFE_DELETE(instance);
+	m_InstanceList.erase(index);
+
+	// 해당 Instance Index 빈곳으로 설정..
+	m_InstanceIndexList[index].second = false;
+}
+
 MeshRenderBuffer* RenderDataConverter::FindMesh(UINT index)
 {
 	std::unordered_map<UINT, MeshRenderBuffer*>::iterator itor = m_MeshList.find(index);
 
-	if(itor == m_MeshList.end()) return;
+	if (itor == m_MeshList.end()) return nullptr;
 
 	return itor->second;
 }
@@ -148,18 +216,29 @@ MaterialRenderBuffer* RenderDataConverter::FindMaterial(UINT index)
 {
 	std::unordered_map<UINT, MaterialRenderBuffer*>::iterator itor = m_MaterialList.find(index);
 
-	if(itor == m_MaterialList.end()) return nullptr;
+	if (itor == m_MaterialList.end()) return nullptr;
 
 	return itor->second;
 }
 
-InstanceRenderBuffer* RenderDataConverter::FindInstance(UINT index)
+InstanceRenderBuffer* RenderDataConverter::FindInstance(MeshRenderBuffer* mesh, MaterialRenderBuffer* material)
 {
-	std::unordered_map<UINT, InstanceRenderBuffer*>::iterator itor = m_InstanceList.find(index);
+	InstanceRenderBuffer* instanceBuffer = nullptr;
 
-	if (itor == m_InstanceList.end()) return nullptr;
+	// Instance List에서 동일한 Instance Buffer 찾기..
+	for (auto& instance : m_InstanceList)
+	{
+		// 현재 검색할 Instance Buffer..
+		instanceBuffer = instance.second;
 
-	return itor->second;
+		// Mesh Buffer와 Material Buffer가 같을 경우 같은 Instance 취급..
+		if (instanceBuffer->m_Mesh == mesh && instanceBuffer->m_Material == material)
+		{
+			return instanceBuffer;
+		}
+	}
+
+	return nullptr;
 }
 
 void RenderDataConverter::ConvertMeshData(MeshBuffer* originBuf, MeshRenderBuffer* convertData)
@@ -177,6 +256,8 @@ void RenderDataConverter::ConvertMeshData(MeshBuffer* originBuf, MeshRenderBuffe
 
 void RenderDataConverter::ConvertMaterialData(MaterialBuffer* originMat, MaterialRenderBuffer* convertMat)
 {
+	if (originMat == nullptr) return;
+
 	// 해당 Material Data 변환..
 	if (originMat->Albedo) convertMat->m_Albedo		= (ID3D11ShaderResourceView*)originMat->Albedo->pTextureBuf;
 	if (originMat->Normal) convertMat->m_Normal		= (ID3D11ShaderResourceView*)originMat->Normal->pTextureBuf;

@@ -5,8 +5,8 @@
 
 namespace ParserData
 {
-	class Model;
-	class Mesh;
+	class CModel;
+	class CMesh;
 }
 class ModelParser;
 struct MeshOption;
@@ -33,23 +33,23 @@ public:
 
 	void OpenFile(std::string& Path, MeshOption* Data);
 private:
-	void StaticMesh(ParserData::Mesh* mMesh, std::string FileName);
-	void BoneMesh(ParserData::Mesh* mMesh);
-	void SkinMesh(ParserData::Mesh* mMesh, std::string FileName);
-	void TerrainMesh(ParserData::Mesh* mMesh);
-	void AnimationMesh(ParserData::Model* mMesh);
+	void StaticMesh(ParserData::CMesh* mMesh, std::string FileName);
+	void BoneMesh(ParserData::CMesh* mMesh);
+	void SkinMesh(ParserData::CMesh* mMesh, std::string FileName);
+	void TerrainMesh(ParserData::CMesh* mMesh);
+	void AnimationMesh(ParserData::CModel* mMesh);
 
 	void MaterialSave(std::string FileName);
 private:
-	void SetParent(ParserData::Mesh* mMesh);
-	void SetMatrix(ParserData::Mesh* mMesh);
-	void SetMaterial(ParserData::Mesh* mMesh,std::string FileName);
-	void SetIndex(ParserData::Mesh* mMesh);
+	void SetParent(ParserData::CMesh* mMesh);
+	void SetMatrix(ParserData::CMesh* mMesh);
+	void SetMaterial(ParserData::CMesh* mMesh,std::string FileName);
+	void SetIndex(ParserData::CMesh* mMesh);
 
-	void SetVertexTerrain(ParserData::Mesh* mMesh);
-	void SetVertex(ParserData::Mesh* mMesh);
-	void SetVertexSkin(ParserData::Mesh* mMesh);
-	void SetBoneOffset(ParserData::Mesh* mMesh);
+	void SetVertexTerrain(ParserData::CMesh* mMesh);
+	void SetVertex(ParserData::CMesh* mMesh);
+	void SetVertexSkin(ParserData::CMesh* mMesh);
+	void SetBoneOffset(ParserData::CMesh* mMesh);
 private:
 	std::string CutStr(std::string& Path);
 	bool FindInstanceIndex(int Index);
@@ -58,7 +58,7 @@ private:
 	std::vector<EaterMaterialData> OneMeshMaterialList;
 	ModelParser* FbxFactory;
 	MeshOption* mOption;
-	ParserData::Model* mMesh;
+	ParserData::CModel* mMesh;
 	
 };
 

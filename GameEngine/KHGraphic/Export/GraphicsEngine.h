@@ -21,7 +21,7 @@ class RenderOption;
 
 namespace ParserData 
 {
-	class Mesh;
+	class CMesh;
 }
 
 class GraphicEngine
@@ -58,7 +58,7 @@ public:
 
 	/// Graphic Resource Create Function..
 	virtual GRAPHIC_DLL TextureBuffer* CreateTextureBuffer(std::string path) abstract;
-	virtual GRAPHIC_DLL void CreateMeshBuffer(ParserData::Mesh* mesh, LoadMeshData* meshData) abstract;
+	virtual GRAPHIC_DLL void CreateMeshBuffer(ParserData::CMesh* mesh, LoadMeshData* meshData) abstract;
 
 	virtual GRAPHIC_DLL void CreateEnvironmentMap(std::string path) abstract;
 

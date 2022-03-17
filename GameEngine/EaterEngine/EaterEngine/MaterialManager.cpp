@@ -14,7 +14,7 @@ MaterialManager::MaterialManager()
 
 MaterialManager::~MaterialManager()
 {
-
+	Release();
 }
 
 void MaterialManager::Initialize()
@@ -31,6 +31,7 @@ void MaterialManager::Release()
 	}
 
 	g_MaterialList.clear();
+	g_IndexList.clear();
 }
 
 void MaterialManager::PushMaterial(Material* material)
@@ -45,6 +46,7 @@ void MaterialManager::PushMaterial(Material* material)
 		{
 			material_Index = g_IndexList[i].first;
 			g_IndexList[i].second = true;
+			break;
 		}
 	}
 
@@ -52,7 +54,7 @@ void MaterialManager::PushMaterial(Material* material)
 	if (material_Index == 0)
 	{
 		material_Index = g_IndexList.size();
-		g_IndexList.push_back(std::pair<UINT, bool>(material_Index++, true));
+		g_IndexList.push_back(std::pair<UINT, bool>(material_Index, true));
 	}
 
 	// 현재 Material Index 설정..
@@ -64,7 +66,11 @@ void MaterialManager::PushMaterial(Material* material)
 
 void MaterialManager::DeleteMaterial(UINT index)
 {
+	// 해당 Material 검색..
+	Material* material = g_MaterialList.find(index)->second;
+
 	// 해당 Material Data 삭제..
+	SAFE_RELEASE(material);
 	g_MaterialList.erase(index);
 
 	// 해당 Material Index 빈곳으로 설정..

@@ -50,19 +50,19 @@ void FBXParser::Release()
 	pScene->Destroy();
 	pManager->Destroy();
 
-	for (Model* model : m_ModelList)
+	for (CModel* model : m_ModelList)
 	{
-		for (Mesh* mesh : model->m_MeshList)
+		for (CMesh* mesh : model->m_MeshList)
 		{
-			for (Face* face : mesh->m_MeshFace)
+			for (CFace* face : mesh->m_MeshFace)
 			{
 				SAFE_DELETE(face);
 			}
-			for (Vertex* vertex : mesh->m_VertexList)
+			for (CVertex* vertex : mesh->m_VertexList)
 			{
 				SAFE_DELETE(vertex);
 			}
-			for (IndexList* index : mesh->m_IndexList)
+			for (CIndexList* index : mesh->m_IndexList)
 			{
 				SAFE_DELETE(index);
 			}
@@ -73,7 +73,7 @@ void FBXParser::Release()
 	}
 }
 
-ParserData::Model* FBXParser::LoadModel(std::string fileName, UINT state)
+ParserData::CModel* FBXParser::LoadModel(std::string fileName, UINT state)
 {
 	// Parsing 옵션 설정..
 	m_ParsingMode = state;
@@ -146,7 +146,7 @@ void FBXParser::SceneSetting(std::string fileName)
 
 void FBXParser::CreateModel()
 {
-	m_Model = new Model();
+	m_Model = new CModel();
 	m_ModelList.push_back(m_Model);
 }
 
@@ -275,7 +275,7 @@ void FBXParser::ProcessSkeleton(fbxsdk::FbxNode* node)
 
 	// 현 Node Parent 찾기..
 	const char* parentName = node->GetParent()->GetName();
-	Mesh* parentMesh = FindMesh(parentName);
+	CMesh* parentMesh = FindMesh(parentName);
 	m_OneMesh->m_ParentName = parentName;
 
 	// 부모의 Mesh가 존재한다면 ChildList에 추가..
@@ -353,7 +353,7 @@ void FBXParser::ProcessMesh(fbxsdk::FbxNode* node)
 	const char* parentName = node->GetParent()->GetName();
 
 	// 부모 Mesh 찾기..
-	Mesh* parentMesh = FindMesh(parentName);
+	CMesh* parentMesh = FindMesh(parentName);
 	m_OneMesh->m_ParentName = parentName;
 
 	// 부모의 Mesh가 존재한다면 ChildList에 추가..
@@ -396,9 +396,9 @@ void FBXParser::ProcessMesh(fbxsdk::FbxNode* node)
 	for (int pi = 0; pi < polygonTotalCount; pi++)
 	{
 		// Polygon 개수만큼 Face 생성..
-		m_OneMesh->m_MeshFace.push_back(new Face);
+		m_OneMesh->m_MeshFace.push_back(new CFace);
 
-		Face* nowFace = m_OneMesh->m_MeshFace[pi];
+		CFace* nowFace = m_OneMesh->m_MeshFace[pi];
 
 		for (int vi = 0; vi < 3; vi++)
 		{
@@ -453,7 +453,7 @@ bool FBXParser::ProcessBoneWeights(fbxsdk::FbxNode* node, std::vector<BoneWeight
 			int clusterCount = skin->GetClusterCount();
 
 			// Skin Mesh 체크..
-			Mesh* skinMesh = FindMesh(node->GetName());
+			CMesh* skinMesh = FindMesh(node->GetName());
 
 			// Bone 개수만큼 List Size 설정..
 			skinMesh->m_BoneTMList.resize(m_AllBoneList.size());
@@ -472,7 +472,7 @@ bool FBXParser::ProcessBoneWeights(fbxsdk::FbxNode* node, std::vector<BoneWeight
 				std::string lineNodeName = pLinkNode->GetName();
 
 				// Bone Mesh 체크..
-				Mesh* boneMesh = FindMesh(lineNodeName);
+				CMesh* boneMesh = FindMesh(lineNodeName);
 
 				// 해당 Bone Mesh가 없을경우..
 				if (boneMesh == nullptr) continue;
@@ -563,7 +563,7 @@ void FBXParser::ProcessAnimation(fbxsdk::FbxNode* node)
 	if (nodeAttribute != nullptr)
 	{
 		// 새로운 Animaiton Data 생성..
-		m_OneAnimation = new OneAnimation();
+		m_OneAnimation = new CAnimation();
 
 		// Animation 삽입(본 인덱스와 애니메이션 인덱스 일치)..
 		m_Model->m_AnimationList.push_back(m_OneAnimation);
@@ -599,7 +599,7 @@ void FBXParser::ProcessAnimation(fbxsdk::FbxNode* node)
 
 			XMMatrixDecompose(&scale, &rot, &pos, nodeTRS);
 
-			OneFrame* newAni = new OneFrame;
+			CFrame* newAni = new CFrame;
 
 			newAni->m_Time = (float)index;
 			newAni->m_Pos = DirectX::SimpleMath::Vector3(pos);
@@ -631,7 +631,7 @@ void FBXParser::OptimizeData()
 	}
 }
 
-void FBXParser::OptimizeVertex(ParserData::Mesh* pMesh)
+void FBXParser::OptimizeVertex(ParserData::CMesh* pMesh)
 {
 	if (pMesh->m_VertexList.empty()) return;
 
@@ -645,13 +645,13 @@ void FBXParser::OptimizeVertex(ParserData::Mesh* pMesh)
 	// 각각 Face마다 존재하는 3개의 Vertex 비교..
 	for (unsigned int i = 0; i < pMesh->m_MeshFace.size(); i++)
 	{
-		Face* nowFace = pMesh->m_MeshFace[i];
+		CFace* nowFace = pMesh->m_MeshFace[i];
 
 		for (int j = 0; j < 3; j++)
 		{
 			unsigned int vertexIndex = nowFace->m_VertexIndex[j];
 
-			Vertex* nowVertex = pMesh->m_VertexList[vertexIndex];
+			CVertex* nowVertex = pMesh->m_VertexList[vertexIndex];
 			Vector3 nowNormal = nowFace->m_NormalVertex[j];
 			Vector2 nowUV = nowFace->m_UVvertex[j];
 			int nowIndex = nowFace->m_VertexIndex[j];
@@ -688,7 +688,7 @@ void FBXParser::OptimizeVertex(ParserData::Mesh* pMesh)
 				{
 					for (size_t k = orgin_VertexCount; k < resize_VertexIndex; k++)
 					{
-						Vertex* checkVertex = pMesh->m_VertexList[k];
+						CVertex* checkVertex = pMesh->m_VertexList[k];
 
 						// 새로 추가한 Vertex와 동일한 데이터를 갖고있는 Face 내의 Vertex Index 수정..
 						if (checkVertex->m_Indices == nowIndex)
@@ -710,7 +710,7 @@ void FBXParser::OptimizeVertex(ParserData::Mesh* pMesh)
 			// 새로 추가해야할 Vertex..
 			if (new_VertexSet == true)
 			{
-				Vertex* newVertex = new Vertex();
+				CVertex* newVertex = new CVertex();
 				newVertex->m_Pos = nowVertex->m_Pos;
 				newVertex->m_Indices = nowVertex->m_Indices;
 				newVertex->m_Normal = nowNormal;
@@ -736,9 +736,9 @@ void FBXParser::OptimizeVertex(ParserData::Mesh* pMesh)
 		int index1 = pMesh->m_MeshFace[i]->m_VertexIndex[1];
 		int index2 = pMesh->m_MeshFace[i]->m_VertexIndex[2];
 
-		Vertex* vertex0 = pMesh->m_VertexList[index0];
-		Vertex* vertex1 = pMesh->m_VertexList[index1];
-		Vertex* vertex2 = pMesh->m_VertexList[index2];
+		CVertex* vertex0 = pMesh->m_VertexList[index0];
+		CVertex* vertex1 = pMesh->m_VertexList[index1];
+		CVertex* vertex2 = pMesh->m_VertexList[index2];
 
 		DirectX::SimpleMath::Vector3 ep1 = vertex1->m_Pos - vertex0->m_Pos;
 		DirectX::SimpleMath::Vector3 ep2 = vertex2->m_Pos - vertex0->m_Pos;
@@ -772,10 +772,10 @@ void FBXParser::OptimizeVertex(ParserData::Mesh* pMesh)
 	// 인덱스는 그냥 복사
 	for (unsigned int i = 0; i < pMesh->m_MeshFace.size(); i++)
 	{
-		pMesh->m_IndexList.push_back(new IndexList);
+		pMesh->m_IndexList.push_back(new CIndexList);
 
-		IndexList* nowIndexList = pMesh->m_IndexList[i];
-		Face* nowFace = pMesh->m_MeshFace[i];
+		CIndexList* nowIndexList = pMesh->m_IndexList[i];
+		CFace* nowFace = pMesh->m_MeshFace[i];
 
 		for (unsigned int j = 0; j < 3; j++)
 		{
@@ -799,7 +799,7 @@ void FBXParser::OptimizeVertex(ParserData::Mesh* pMesh)
 	pMesh->m_MeshFace.clear();
 }
 
-void FBXParser::CopyOriginalVertex(ParserData::Mesh* pMesh)
+void FBXParser::CopyOriginalVertex(ParserData::CMesh* pMesh)
 {
 	int vCount = (int)pMesh->m_VertexList.size();
 	int fCount = (int)pMesh->m_MeshFace.size();
@@ -831,7 +831,7 @@ void FBXParser::CopyOriginalVertex(ParserData::Mesh* pMesh)
 	}
 }
 
-void FBXParser::RecombinationTM(ParserData::Mesh* pMesh)
+void FBXParser::RecombinationTM(ParserData::CMesh* pMesh)
 {
 	/// Negative Scale Check
 	// 3D Max의 작업상 Mirroring으로 인해 Scale값이 음수가 나올 경우를 Negative Scale 이라고 한다
@@ -1175,7 +1175,7 @@ void FBXParser::SetTexture(fbxsdk::FbxSurfaceMaterial* material, const char* mat
 						if (textureType == "DiffuseColor")
 						{
 							std::string mapName("Diffuse Map" + count);
-							m_MaterialData->m_DiffuseMap = new MaterialMap();
+							m_MaterialData->m_DiffuseMap = new CMaterialMap();
 							m_MaterialData->m_TextureBind |= DIFFUSE_TEXTURE;
 							m_MaterialData->m_DiffuseMap->m_MapName = mapName;
 							m_MaterialData->m_DiffuseMap->m_BitMap = fileRoute;
@@ -1184,7 +1184,7 @@ void FBXParser::SetTexture(fbxsdk::FbxSurfaceMaterial* material, const char* mat
 						else if (textureType == "AmbientColor")
 						{
 							std::string mapName("ORM Map" + count);
-							m_MaterialData->m_ORMMap = new MaterialMap();
+							m_MaterialData->m_ORMMap = new CMaterialMap();
 							m_MaterialData->m_TextureBind |= ORM_TEXTURE;
 							m_MaterialData->m_ORMMap->m_MapName = mapName;
 							m_MaterialData->m_ORMMap->m_BitMap = fileRoute;
@@ -1193,7 +1193,7 @@ void FBXParser::SetTexture(fbxsdk::FbxSurfaceMaterial* material, const char* mat
 						else if (textureType == "NormalMap")
 						{
 							std::string mapName("Normal Map" + count);
-							m_MaterialData->m_NormalMap = new MaterialMap();
+							m_MaterialData->m_NormalMap = new CMaterialMap();
 							m_MaterialData->m_TextureBind |= NORMAL_TEXTURE;
 							m_MaterialData->m_NormalMap->m_MapName = mapName;
 							m_MaterialData->m_NormalMap->m_BitMap = fileRoute;
@@ -1204,7 +1204,7 @@ void FBXParser::SetTexture(fbxsdk::FbxSurfaceMaterial* material, const char* mat
 							if (m_MaterialData->m_ORMMap == nullptr)
 							{
 								std::string mapName("ORM Map" + count);
-								m_MaterialData->m_ORMMap = new MaterialMap();
+								m_MaterialData->m_ORMMap = new CMaterialMap();
 								m_MaterialData->m_TextureBind |= ORM_TEXTURE;
 								m_MaterialData->m_ORMMap->m_MapName = mapName;
 								m_MaterialData->m_ORMMap->m_BitMap = fileRoute;
@@ -1213,7 +1213,7 @@ void FBXParser::SetTexture(fbxsdk::FbxSurfaceMaterial* material, const char* mat
 							else
 							{
 								std::string mapName("Emissive Map" + count);
-								m_MaterialData->m_EmissiveMap = new MaterialMap();
+								m_MaterialData->m_EmissiveMap = new CMaterialMap();
 								m_MaterialData->m_TextureBind |= EMISSIVE_TEXTURE;
 								m_MaterialData->m_EmissiveMap->m_MapName = mapName;
 								m_MaterialData->m_EmissiveMap->m_BitMap = fileRoute;
@@ -1225,7 +1225,7 @@ void FBXParser::SetTexture(fbxsdk::FbxSurfaceMaterial* material, const char* mat
 							m_MaterialData->m_Alpha = true;
 
 							std::string mapName("Diffuse Map" + count);
-							m_MaterialData->m_DiffuseMap = new MaterialMap();
+							m_MaterialData->m_DiffuseMap = new CMaterialMap();
 							m_MaterialData->m_TextureBind |= DIFFUSE_TEXTURE;
 							m_MaterialData->m_DiffuseMap->m_MapName = mapName;
 							m_MaterialData->m_DiffuseMap->m_BitMap = fileRoute;
@@ -1301,10 +1301,10 @@ void FBXParser::CreateVertex(fbxsdk::FbxMesh* mesh, std::vector<BoneWeights>& bo
 	for (int vertexIndex = 0; vertexIndex < vertexCount; vertexIndex++)
 	{
 		// 새로운 Vertex 생성..
-		m_OneMesh->m_VertexList.push_back(new Vertex);
+		m_OneMesh->m_VertexList.push_back(new CVertex);
 
 		// 현재 Vertex..
-		Vertex* nowVertex = m_OneMesh->m_VertexList[vertexIndex];
+		CVertex* nowVertex = m_OneMesh->m_VertexList[vertexIndex];
 
 		// 해당 Vertex의 Position..
 		fbxPos = mesh->GetControlPointAt(vertexIndex);
@@ -1333,13 +1333,13 @@ void FBXParser::CreateVertex(fbxsdk::FbxMesh* mesh, std::vector<BoneWeights>& bo
 void FBXParser::CreateMesh()
 {
 	m_OneMesh = nullptr;
-	m_OneMesh = new ParserData::Mesh();
+	m_OneMesh = new ParserData::CMesh();
 	m_Model->m_MeshList.push_back(m_OneMesh);
 }
 
 int FBXParser::FindBoneIndex(std::string boneName)
 {
-	for (Mesh* bone : m_AllBoneList)
+	for (CMesh* bone : m_AllBoneList)
 	{
 		if (bone->m_NodeName == boneName)
 			return bone->m_BoneIndex;
@@ -1348,9 +1348,9 @@ int FBXParser::FindBoneIndex(std::string boneName)
 	return -1;
 }
 
-ParserData::Mesh* FBXParser::FindMesh(std::string meshName)
+ParserData::CMesh* FBXParser::FindMesh(std::string meshName)
 {
-	for (Mesh* mesh : m_Model->m_MeshList)
+	for (CMesh* mesh : m_Model->m_MeshList)
 	{
 		if (mesh->m_NodeName == meshName)
 			return mesh;

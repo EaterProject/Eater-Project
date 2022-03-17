@@ -124,7 +124,7 @@ TextureBuffer* GraphicResourceFactory::CreateTextureBuffer(std::string path)
 	return texBuf;
 }
 
-void GraphicResourceFactory::CreateMeshBuffer(ParserData::Mesh* mesh, LoadMeshData* meshData)
+void GraphicResourceFactory::CreateMeshBuffer(ParserData::CMesh* mesh, LoadMeshData* meshData)
 {
 	switch (meshData->MeshType)
 	{
@@ -1004,7 +1004,7 @@ UnorderedAccessView* GraphicResourceFactory::RegisterResource(Hash_Code hash_cod
 }
 
 template<>
-void GraphicResourceFactory::CreateLoadBuffer<VertexInput::MeshVertex>(ParserData::Mesh* mesh, LoadMeshData* meshData)
+void GraphicResourceFactory::CreateLoadBuffer<VertexInput::MeshVertex>(ParserData::CMesh* mesh, LoadMeshData* meshData)
 {
 	if (mesh->m_VertexList.empty()) return;
 	
@@ -1088,7 +1088,7 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::MeshVertex>(ParserDat
 }
 
 template<>
-void GraphicResourceFactory::CreateLoadBuffer<VertexInput::SkinVertex>(ParserData::Mesh* mesh, LoadMeshData* meshData)
+void GraphicResourceFactory::CreateLoadBuffer<VertexInput::SkinVertex>(ParserData::CMesh* mesh, LoadMeshData* meshData)
 {
 	if (mesh->m_VertexList.empty()) return;
 	
@@ -1192,7 +1192,7 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::SkinVertex>(ParserDat
 }
 
 template<>
-void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(ParserData::Mesh* mesh, LoadMeshData* meshData)
+void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(ParserData::CMesh* mesh, LoadMeshData* meshData)
 {
 	// 货肺款 Buffer 积己..
 	MeshBuffer* newMeshBuf = new MeshBuffer();
@@ -1296,7 +1296,7 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(Parser
 }
 
 template<>
-void GraphicResourceFactory::CreateLoadBuffer<VertexInput::PosTexVertex>(ParserData::Mesh* mesh, LoadMeshData* meshData)
+void GraphicResourceFactory::CreateLoadBuffer<VertexInput::PosTexVertex>(ParserData::CMesh* mesh, LoadMeshData* meshData)
 {
 	// 货肺款 Buffer 积己..
 	MeshBuffer* newMeshBuf = new MeshBuffer();

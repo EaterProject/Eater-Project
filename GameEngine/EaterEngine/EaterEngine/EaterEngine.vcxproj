@@ -253,6 +253,7 @@ copy /Y "$(ProjectDir)Network\lib\Release\*lib"  "$(TargetDir)"</Command>
     <ClInclude Include="Export\Light.h" />
     <ClInclude Include="Export\MainHeader.h" />
     <ClInclude Include="Export\Material.h" />
+    <ClInclude Include="Export\Mesh.h" />
     <ClInclude Include="Export\MeshFilter.h" />
     <ClInclude Include="Export\NetworkComponent.h" />
     <ClInclude Include="Export\NetworkManagerComponent.h" />
@@ -271,6 +272,7 @@ copy /Y "$(ProjectDir)Network\lib\Release\*lib"  "$(TargetDir)"</Command>
     <ClInclude Include="LightManager.h" />
     <ClInclude Include="MaterialManager.h" />
     <ClInclude Include="FBXManager.h" />
+    <ClInclude Include="MeshManager.h" />
     <ClInclude Include="NetworkManager.h" />
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="LoadManager.h" />
@@ -294,6 +296,8 @@ copy /Y "$(ProjectDir)Network\lib\Release\*lib"  "$(TargetDir)"</Command>
     <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="FBXManager.cpp" />
+    <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="MeshManager.cpp" />
     <ClCompile Include="NetworkManager.cpp" />
     <ClCompile Include="GraphicEngineManager.cpp" />
     <ClCompile Include="KeyinputManager.cpp" />

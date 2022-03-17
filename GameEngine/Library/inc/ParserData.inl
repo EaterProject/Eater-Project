@@ -4,7 +4,7 @@
 
 namespace ParserData
 {
-	inline OneAnimation::OneAnimation()
+	inline CAnimation::CAnimation()
 	{
 		m_TicksPerFrame = 0.0f;
 		m_TotalFrame = 0;
@@ -13,9 +13,9 @@ namespace ParserData
 		m_NowIndex = 0;
 		m_NextIndex = 1;
 	}
-	inline OneAnimation::~OneAnimation()
+	inline CAnimation::~CAnimation()
 	{
-		for (OneFrame* frame : m_AniData)
+		for (CFrame* frame : m_AniData)
 		{
 			SAFE_DELETE(frame);
 		}
@@ -23,19 +23,19 @@ namespace ParserData
 		m_AniData.clear();
 	}
 
-	inline Vertex::Vertex()
+	inline CVertex::CVertex()
 	{
 		m_IsNormalSet = false;
 		m_IsTextureSet = false;
 	}
 
-	inline Vertex::~Vertex()
+	inline CVertex::~CVertex()
 	{
 		m_BoneWeights.clear();
 		m_BoneIndices.clear();
 	}
 
-	inline Face::Face()
+	inline CFace::CFace()
 	{
 		m_VertexIndex[0] = 0;
 		m_VertexIndex[1] = 0;
@@ -82,7 +82,7 @@ namespace ParserData
 		m_ORMMap	= nullptr;
 		m_EmissiveMap		= nullptr;
 
-		for (MaterialMap* matMap : m_MapList)
+		for (CMaterialMap* matMap : m_MapList)
 		{
 			SAFE_DELETE(matMap);
 		}
@@ -90,7 +90,7 @@ namespace ParserData
 		m_MapList.clear();
 	}
 
-	inline Mesh::Mesh()
+	inline CMesh::CMesh()
 	{
 		m_MeshType			= STATIC_MESH;
 		m_MeshIndex			= 0;
@@ -100,19 +100,19 @@ namespace ParserData
 		m_TopNode			= false;
 	}
 
-	inline Mesh::~Mesh()
+	inline CMesh::~CMesh()
 	{
-		for (Face* face : m_MeshFace)
+		for (CFace* face : m_MeshFace)
 		{
 			SAFE_DELETE(face);
 		}
 
-		for (Vertex* vertex : m_VertexList)
+		for (CVertex* vertex : m_VertexList)
 		{
 			SAFE_DELETE(vertex);
 		}
 
-		for (IndexList* index : m_IndexList)
+		for (CIndexList* index : m_IndexList)
 		{
 			SAFE_DELETE(index);
 		}
@@ -156,19 +156,19 @@ namespace ParserData
 		m_BoneList.clear();
 	}
 
-	inline Model::Model()
+	inline CModel::CModel()
 	{
 		m_isAnimation = false;
 	}
 
-	inline Model::~Model()
+	inline CModel::~CModel()
 	{
 		for (CMaterial* mat : m_MaterialList)
 		{
 			SAFE_DELETE(mat);
 		}
 
-		for (Mesh* mesh : m_MeshList)
+		for (CMesh* mesh : m_MeshList)
 		{
 			SAFE_DELETE(mesh);
 		}

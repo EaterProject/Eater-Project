@@ -21,7 +21,7 @@ public:
 
 public:
 	TextureBuffer* CreateTextureBuffer(std::string path) override;
-	void CreateMeshBuffer(ParserData::Mesh* mesh, LoadMeshData* meshData) override;
+	void CreateMeshBuffer(ParserData::CMesh* mesh, LoadMeshData* meshData) override;
 	void CreateEnvironmentMap(std::string path) override;
 
 private:

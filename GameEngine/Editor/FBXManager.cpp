@@ -49,7 +49,7 @@ void FBXManager::OpenFile(std::string& Path, MeshOption* Data)
 
 	for (int i = 0; i < MeshCount; i++)
 	{
-		ParserData::Mesh* temp = mMesh->m_MeshList[i];
+		ParserData::CMesh* temp = mMesh->m_MeshList[i];
 		switch (SaveMode)
 		{
 		case 0:
@@ -70,7 +70,7 @@ void FBXManager::OpenFile(std::string& Path, MeshOption* Data)
 	MaterialSave(name);
 }
 
-void FBXManager::StaticMesh(ParserData::Mesh* mMesh, std::string FileName)
+void FBXManager::StaticMesh(ParserData::CMesh* mMesh, std::string FileName)
 {
 	EATER_SET_NODE("STATIC");
 
@@ -89,7 +89,7 @@ void FBXManager::StaticMesh(ParserData::Mesh* mMesh, std::string FileName)
 	}
 }
 
-void FBXManager::BoneMesh(ParserData::Mesh* mMesh)
+void FBXManager::BoneMesh(ParserData::CMesh* mMesh)
 {
 	EATER_SET_NODE("BONE");
 	EATER_SET_MAP("BoneIndex", std::to_string(mMesh->m_BoneIndex));
@@ -105,7 +105,7 @@ void FBXManager::BoneMesh(ParserData::Mesh* mMesh)
 	SetMatrix(mMesh);
 }
 
-void FBXManager::SkinMesh(ParserData::Mesh* mMesh, std::string FileName)
+void FBXManager::SkinMesh(ParserData::CMesh* mMesh, std::string FileName)
 {
 	if (mMesh->m_MeshType == SKIN_MESH)
 	{
@@ -123,13 +123,13 @@ void FBXManager::SkinMesh(ParserData::Mesh* mMesh, std::string FileName)
 	}
 }
 
-void FBXManager::TerrainMesh(ParserData::Mesh* mMesh)
+void FBXManager::TerrainMesh(ParserData::CMesh* mMesh)
 {
 
 
 }
 
-void FBXManager::AnimationMesh(ParserData::Model* mMesh)
+void FBXManager::AnimationMesh(ParserData::CModel* mMesh)
 {
 	EATER_SET_NODE("ANIMATION");
 	float m_TicksPerFrame = mMesh->m_AnimationList[0]->m_TicksPerFrame;
@@ -150,7 +150,7 @@ void FBXManager::AnimationMesh(ParserData::Model* mMesh)
 		EATER_SET_LIST_START(std::to_string(i), FrameCount, 11);
 		for (int j = 0; j < FrameCount; j++)
 		{
-			ParserData::OneFrame* Frame = mMesh->m_AnimationList[i]->m_AniData[j];
+			ParserData::CFrame* Frame = mMesh->m_AnimationList[i]->m_AniData[j];
 
 			EATER_SET_LIST(Frame->m_Pos.x);
 			EATER_SET_LIST(Frame->m_Pos.y);
@@ -211,14 +211,14 @@ void FBXManager::MaterialSave(std::string FileName)
 	OneMeshMaterialList.clear();
 }
 
-void FBXManager::SetParent(ParserData::Mesh* mMesh)
+void FBXManager::SetParent(ParserData::CMesh* mMesh)
 {
 	EATER_SET_MAP("ParentName"	, mMesh->m_ParentName);
 	EATER_SET_MAP("NodeName"	, mMesh->m_NodeName);
 	EATER_SET_MAP("MeshIndex"	, std::to_string(mMesh->m_MeshIndex));
 }
 
-void FBXManager::SetMatrix(ParserData::Mesh* mMesh)
+void FBXManager::SetMatrix(ParserData::CMesh* mMesh)
 {
 	EATER_SET_LIST_START("WorldTM", 4, 4);
 	EATER_SET_LIST(mMesh->m_WorldTM._11);
@@ -268,7 +268,7 @@ void FBXManager::SetMatrix(ParserData::Mesh* mMesh)
 	EATER_SET_LIST(SaveLocal._44, true);
 }
 
-void FBXManager::SetMaterial(ParserData::Mesh* mMesh, std::string FileName)
+void FBXManager::SetMaterial(ParserData::CMesh* mMesh, std::string FileName)
 {
 	if (mMesh->m_MaterialData == nullptr) { return; }
 	
@@ -306,7 +306,7 @@ void FBXManager::SetMaterial(ParserData::Mesh* mMesh, std::string FileName)
 	OneMeshMaterialList.push_back(Data);
 }
 
-void FBXManager::SetVertexTerrain(ParserData::Mesh* mMesh)
+void FBXManager::SetVertexTerrain(ParserData::CMesh* mMesh)
 {
 	int VertexCount = (int)mMesh->m_OriginVertexList.size();
 	EATER_SET_LIST_START("Vertex", VertexCount, 3);
@@ -326,7 +326,7 @@ void FBXManager::SetVertexTerrain(ParserData::Mesh* mMesh)
 	}
 }
 
-void FBXManager::SetVertex(ParserData::Mesh* mMesh)
+void FBXManager::SetVertex(ParserData::CMesh* mMesh)
 {
 	int VertexCount = (int)mMesh->m_VertexList.size();
 	
@@ -334,7 +334,7 @@ void FBXManager::SetVertex(ParserData::Mesh* mMesh)
 	EATER_SET_VERTEX_START(VertexCount,VERTEX_TYPE::BASE);
 	for (int i = 0; i < VertexCount; i++)
 	{
-		ParserData::Vertex* V = mMesh->m_VertexList[i];
+		ParserData::CVertex* V = mMesh->m_VertexList[i];
 		EATER_VERTEX_BASE base;
 
 		base.POS_X = V->m_Pos.x;
@@ -356,7 +356,7 @@ void FBXManager::SetVertex(ParserData::Mesh* mMesh)
 	}
 }
 
-void FBXManager::SetVertexSkin(ParserData::Mesh* mMesh)
+void FBXManager::SetVertexSkin(ParserData::CMesh* mMesh)
 {
 	int VertexCount		= (int)mMesh->m_VertexList.size();
 	int BoneIndexCount	= (int)mMesh->m_VertexList[0]->m_BoneIndices.size();
@@ -364,7 +364,7 @@ void FBXManager::SetVertexSkin(ParserData::Mesh* mMesh)
 	EATER_SET_VERTEX_START(VertexCount, VERTEX_TYPE::SKIN);
 	for (int i = 0; i < VertexCount; i++)
 	{
-		ParserData::Vertex* V = mMesh->m_VertexList[i];
+		ParserData::CVertex* V = mMesh->m_VertexList[i];
 		EATER_VERTEX_SKIN skin;
 
 		skin.POS_X = V->m_Pos.x;
@@ -401,7 +401,7 @@ void FBXManager::SetVertexSkin(ParserData::Mesh* mMesh)
 	}
 }
 
-void FBXManager::SetBoneOffset(ParserData::Mesh* mMesh)
+void FBXManager::SetBoneOffset(ParserData::CMesh* mMesh)
 {
 	int index = (int)mMesh->m_BoneTMList.size();
 	EATER_SET_LIST_START("BoneOffset", index ,16);
@@ -457,14 +457,14 @@ bool FBXManager::FindInstanceIndex(int Index)
 	return false;
 }
 
-void FBXManager::SetIndex(ParserData::Mesh* mMesh)
+void FBXManager::SetIndex(ParserData::CMesh* mMesh)
 {
 	int IndexCount = (int)mMesh->m_IndexList.size();
 	EATER_SET_INDEX_START(IndexCount);
 
 	for (int i = 0; i < IndexCount; i++)
 	{
-		ParserData::IndexList* index = mMesh->m_IndexList[i];
+		ParserData::CIndexList* index = mMesh->m_IndexList[i];
 		EATER_SET_INDEX(index->m_Index[0], index->m_Index[1], index->m_Index[2]);
 	}
 }

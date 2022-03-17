@@ -51,33 +51,3 @@ public:
 
 	void* pTextureBuf = nullptr;
 };
-
-
-class MeshBuffer : Resources
-{
-public:
-	virtual ~MeshBuffer()
-	{
-		delete IndexBuf;
-		delete VertexBuf;
-	}
-
-	UINT BufferIndex = 0;
-
-	IndexBuffer* IndexBuf;
-	VertexBuffer* VertexBuf;
-};
-
-// Material Data
-class MaterialBuffer : Resources
-{
-public:
-	UINT BufferIndex = 0;				// Material Index
-
-	MaterialSubData* Material_SubData = nullptr;	// Material SubData
-
-	TextureBuffer* Albedo = nullptr;		// DiffuseMap Texture
-	TextureBuffer* Normal = nullptr;		// NormalMap Texture
-	TextureBuffer* Emissive = nullptr;		// Emissive Texture
-	TextureBuffer* ORM = nullptr;			// AO(R) + Roughness(G) + Metallic(B) Texture
-};

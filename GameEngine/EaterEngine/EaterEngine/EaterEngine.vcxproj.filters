@@ -85,9 +85,6 @@
     <Filter Include="소스 파일\Component\Light">
       <UniqueIdentifier>{94a42d33-37f6-4e8c-bc61-b51a98b6214a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Component\Material">
-      <UniqueIdentifier>{f9010fdf-b65c-4b72-ae7a-ada064a4240d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Component\AnimationController">
       <UniqueIdentifier>{85dbf900-b15b-4f04-8aa6-98d8c0e0cc7d}</UniqueIdentifier>
     </Filter>
@@ -138,6 +135,18 @@
     </Filter>
     <Filter Include="소스 파일\Manager\LoadManager\EATER">
       <UniqueIdentifier>{3042ceed-9197-40f4-b480-b36b166ad20d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\MeshManager">
+      <UniqueIdentifier>{24fc8def-cfa8-4a9c-9522-595351fae0cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Resource">
+      <UniqueIdentifier>{dc083899-344c-4b21-be3d-8715b4306d34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Resource\Material">
+      <UniqueIdentifier>{f9010fdf-b65c-4b72-ae7a-ada064a4240d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Resource\Mesh">
+      <UniqueIdentifier>{843815ed-f69c-4027-91ed-7b1c7453a5d5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -277,7 +286,13 @@
       <Filter>소스 파일\Manager\LoadManager\EATER</Filter>
     </ClInclude>
     <ClInclude Include="Export\Material.h">
-      <Filter>소스 파일\Component\Material</Filter>
+      <Filter>소스 파일\Resource\Material</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshManager.h">
+      <Filter>소스 파일\Manager\MeshManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Export\Mesh.h">
+      <Filter>소스 파일\Resource\Mesh</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -345,7 +360,7 @@
       <Filter>소스 파일\Component\Light</Filter>
     </ClCompile>
     <ClCompile Include="Material.cpp">
-      <Filter>소스 파일\Component\Material</Filter>
+      <Filter>소스 파일\Resource\Material</Filter>
     </ClCompile>
     <ClCompile Include="Animator.cpp">
       <Filter>소스 파일\Component\Animator</Filter>
@@ -397,6 +412,12 @@
     </ClCompile>
     <ClCompile Include="EATERManager.cpp">
       <Filter>소스 파일\Manager\LoadManager\EATER</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshManager.cpp">
+      <Filter>소스 파일\Manager\MeshManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>소스 파일\Resource\Mesh</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

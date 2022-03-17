@@ -31,7 +31,7 @@ public:
 		~TriangleMeshData();
 	public:
 		Vector3* VertexList = nullptr;
-		UINT* IndexList		= nullptr;
+		UINT* CIndexList		= nullptr;
 		int VertexListSize	= 0;
 		int IndexListSize	= 0;
 	};

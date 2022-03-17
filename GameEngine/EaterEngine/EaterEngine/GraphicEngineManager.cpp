@@ -95,7 +95,7 @@ void GraphicEngineManager::DebugDrawLine(DirectX::SimpleMath::Vector3 start, Dir
 	Global->RayCastDebugData.push(ray);
 }
 
-void GraphicEngineManager::CreateMeshBuffer(ParserData::Mesh* mModel, LoadMeshData* meshData)
+void GraphicEngineManager::CreateMeshBuffer(ParserData::CMesh* mModel, LoadMeshData* meshData)
 {
 	//매쉬 생성
 	GEngine->CreateMeshBuffer(mModel, meshData);

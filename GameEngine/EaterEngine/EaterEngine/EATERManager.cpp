@@ -165,7 +165,7 @@ LoadMeshData* EATERManager::LoadStaticMesh(int index)
 	// 있을 경우 해당 Mesh Buffer로 설정..
 	if (meshBuffer == nullptr)
 	{
-		ParserData::Mesh* mesh = new ParserData::Mesh();
+		ParserData::CMesh* mesh = new ParserData::CMesh();
 
 		LoadVertex(index, mesh);
 		LoadIndex(index, mesh);
@@ -231,7 +231,7 @@ LoadMeshData* EATERManager::LoadSkinMesh(int index)
 	// 있을 경우 해당 Mesh Buffer로 설정..
 	if (meshBuffer == nullptr)
 	{
-		ParserData::Mesh* mesh = new ParserData::Mesh();
+		ParserData::CMesh* mesh = new ParserData::CMesh();
 
 		LoadSkinVertex(index, mesh);
 		LoadIndex(index, mesh);
@@ -374,12 +374,12 @@ void EATERManager::LoadTM(int Index, LoadMeshData* model)
 	}
 }
 
-void EATERManager::LoadVertex(int index, ParserData::Mesh* mesh)
+void EATERManager::LoadVertex(int index, ParserData::CMesh* mesh)
 {
 	int VertexCount = EATER_GET_LIST_CHOICE(index, "Vertex");
 	for (int i = 0; i < VertexCount; i++)
 	{
-		ParserData::Vertex* V = new ParserData::Vertex();
+		ParserData::CVertex* V = new ParserData::CVertex();
 
 		std::vector<float> Data;
 		EATER_GET_LIST(&Data, i);
@@ -403,12 +403,12 @@ void EATERManager::LoadVertex(int index, ParserData::Mesh* mesh)
 	}
 }
 
-void EATERManager::LoadSkinVertex(int index, ParserData::Mesh* mesh)
+void EATERManager::LoadSkinVertex(int index, ParserData::CMesh* mesh)
 {
 	int VertexCount = EATER_GET_LIST_CHOICE(index, "Vertex");
 	for (int i = 0; i < VertexCount; i++)
 	{
-		ParserData::Vertex* V = new ParserData::Vertex();
+		ParserData::CVertex* V = new ParserData::CVertex();
 
 		std::vector<float> Data;
 		EATER_GET_LIST(&Data, i);
@@ -452,13 +452,13 @@ void EATERManager::LoadSkinVertex(int index, ParserData::Mesh* mesh)
 	}
 }
 
-void EATERManager::LoadIndex(int index, ParserData::Mesh* mesh)
+void EATERManager::LoadIndex(int index, ParserData::CMesh* mesh)
 {
 	int IndexCount = EATER_GET_LIST_CHOICE(index, "Index");
 	mesh->m_IndexList.reserve(IndexCount);
 	for (int i = 0; i < IndexCount; i++)
 	{
-		ParserData::IndexList* FACE = new ParserData::IndexList();
+		ParserData::CIndexList* FACE = new ParserData::CIndexList();
 
 		std::vector<float> Data;
 		EATER_GET_LIST(&Data, i);
@@ -517,7 +517,7 @@ void EATERManager::LoadAnimation(int index, std::string& Name)
 
 
 	ModelAnimationData* Data = nullptr;
-	std::vector<ParserData::OneAnimation*>* AnimeData = nullptr;
+	std::vector<ParserData::CAnimation*>* AnimeData = nullptr;
 
 	//다른 애니메이션이 없다면 새롭게 생성
 	if (LoadManager::AnimationList.find(MeshName) == LoadManager::AnimationList.end())
@@ -529,7 +529,7 @@ void EATERManager::LoadAnimation(int index, std::string& Name)
 	{
 		Data = LoadManager::AnimationList[MeshName];
 	}
-	Data->AnimList[AnimationName] = new std::vector<ParserData::OneAnimation*>();
+	Data->AnimList[AnimationName] = new std::vector<ParserData::CAnimation*>();
 
 
 	float m_TicksPerFrame = std::stof(EATER_GET_MAP(index, "TickFrame"));
@@ -540,7 +540,7 @@ void EATERManager::LoadAnimation(int index, std::string& Name)
 	int BoneCount = std::stoi(EATER_GET_MAP(index, "BoneCount"));
 	for (int k = 0; k < BoneCount; k++)
 	{
-		ParserData::OneAnimation* OneAnime = new OneAnimation();
+		ParserData::CAnimation* OneAnime = new CAnimation();
 		OneAnime->m_EndFrame = (int)m_EndFrame;
 		OneAnime->m_StartFrame = (int)m_StartFrame;
 		OneAnime->m_TotalFrame = (int)m_TotalFrame;
@@ -551,7 +551,7 @@ void EATERManager::LoadAnimation(int index, std::string& Name)
 		int AnimationCount = EATER_GET_LIST_CHOICE(index, std::to_string(k));
 		for (int i = 0; i < AnimationCount; i++)
 		{
-			ParserData::OneFrame* Frame = new ParserData::OneFrame();
+			ParserData::CFrame* Frame = new ParserData::CFrame();
 			std::vector<float> Data;
 			EATER_GET_LIST(&Data, i);
 			int Size = (int)Data.size();
@@ -683,16 +683,16 @@ void EATERManager::Load_Component_Skinning(int index, GameObject* Object)
 	}
 }
 
-void EATERManager::CreateKeyFrame(std::vector<ParserData::OneAnimation*>* Anime, int InputKeyCount)
+void EATERManager::CreateKeyFrame(std::vector<ParserData::CAnimation*>* Anime, int InputKeyCount)
 {
 	//기존 애니메이션
-	std::vector<ParserData::OneAnimation*>::iterator it = Anime->begin();
+	std::vector<ParserData::CAnimation*>::iterator it = Anime->begin();
 
 	for (it; it != Anime->end(); it++)
 	{
-		std::vector<ParserData::OneFrame*> data = (*it)->m_AniData;
+		std::vector<ParserData::CFrame*> data = (*it)->m_AniData;
 		//새롭게 넣을 데이터 리스트
-		std::vector<ParserData::OneFrame*> CreateData;
+		std::vector<ParserData::CFrame*> CreateData;
 
 		int Size = (int)data.size();
 		for (int i = 0; i < Size - 1; i++)
@@ -718,7 +718,7 @@ void EATERManager::CreateKeyFrame(std::vector<ParserData::OneAnimation*>* Anime,
 			for (int j = 0; j <= KeyCount; j++)
 			{
 				//새로운 키 프레임 생성
-				ParserData::OneFrame* temp = new OneFrame();
+				ParserData::CFrame* temp = new CFrame();
 				temp->m_Pos = Vector3::Lerp(Start_Pos, End_Pos, CountLerp);
 				temp->m_RotQt = Quaternion::Lerp(Start_Rot, End_Rot, CountLerp);
 				temp->m_Scale = Vector3::Lerp(Start_Scl, End_Scl, CountLerp);

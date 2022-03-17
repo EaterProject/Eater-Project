@@ -18,7 +18,7 @@ public:
 public:
 	// Create Output Graphic Resource..
 	virtual TextureBuffer* CreateTextureBuffer(std::string path) abstract;
-	virtual void CreateMeshBuffer(ParserData::Mesh* mesh, LoadMeshData* meshData) abstract;
+	virtual void CreateMeshBuffer(ParserData::CMesh* mesh, LoadMeshData* meshData) abstract;
 	virtual void CreateEnvironmentMap(std::string path) abstract;
 
 public:

@@ -19,7 +19,7 @@ namespace DirectX
 
 namespace ParserData
 {
-	class OneAnimation;	
+	class CAnimation;	
 }
 
 class ModelData;

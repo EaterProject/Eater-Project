@@ -44,7 +44,7 @@ typedef enum EXTENSION_TYPE
 
 namespace ParserData
 {
-	struct OneFrame
+	struct CFrame
 	{
 		float							m_Time;
 		DirectX::SimpleMath::Vector3	m_Pos;
@@ -52,15 +52,15 @@ namespace ParserData
 		DirectX::SimpleMath::Vector3	m_Scale;
 	};
 	
-	class OneAnimation
+	class CAnimation
 	{
 	public:
-		OneAnimation();
-		OneAnimation(const OneAnimation& ani) = default;
-		~OneAnimation();
+		CAnimation();
+		CAnimation(const CAnimation& ani) = default;
+		~CAnimation();
 
 	public:
-		std::vector<OneFrame*>	m_AniData;
+		std::vector<CFrame*>	m_AniData;
 
 		float	m_TicksPerFrame;
 		int		m_TotalFrame;
@@ -73,16 +73,16 @@ namespace ParserData
 
 namespace ParserData
 {
-	struct IndexList
+	struct CIndexList
 	{
 		int m_Index[3];
 	};
 
-	struct Vertex
+	struct CVertex
 	{
 	public:
-		Vertex();
-		~Vertex();
+		CVertex();
+		~CVertex();
 
 	public:
 		DirectX::SimpleMath::Vector3 m_Pos;
@@ -101,11 +101,11 @@ namespace ParserData
 		int m_Indices;
 	};
 
-	struct Face
+	struct CFace
 	{
 	public:
-		Face();
-		~Face() = default;
+		CFace();
+		~CFace() = default;
 
 	public:
 		int	m_VertexIndex[3];	// Face Vertex List Index
@@ -116,7 +116,7 @@ namespace ParserData
 		DirectX::SimpleMath::Vector2 m_UVvertex[3];			// Vertex UV
 	};
 
-	struct MaterialMap
+	struct CMaterialMap
 	{
 		std::string	m_MapName;
 		std::string	m_BitMap;
@@ -145,20 +145,20 @@ namespace ParserData
 
 		UINT m_TextureBind;					// Texture Bind Type
 
-		MaterialMap* m_DiffuseMap = nullptr;		// DiffuseMap Data
-		MaterialMap* m_NormalMap = nullptr;			// NormalMap Data
-		MaterialMap* m_EmissiveMap = nullptr;		// EmissiveMap Data
-		MaterialMap* m_ORMMap = nullptr;			// AO(R) + Roughness(G) + Metallic(B) Map Data
+		CMaterialMap* m_DiffuseMap = nullptr;		// DiffuseMap Data
+		CMaterialMap* m_NormalMap = nullptr;			// NormalMap Data
+		CMaterialMap* m_EmissiveMap = nullptr;		// EmissiveMap Data
+		CMaterialMap* m_ORMMap = nullptr;			// AO(R) + Roughness(G) + Metallic(B) Map Data
 
-		std::vector<MaterialMap*> m_MapList;
+		std::vector<CMaterialMap*> m_MapList;
 	};
 
-	class Mesh
+	class CMesh
 	{
 	public:
-		Mesh();
-		Mesh(const Mesh& mesh) = default;
-		virtual ~Mesh();
+		CMesh();
+		CMesh(const CMesh& mesh) = default;
+		virtual ~CMesh();
 
 	public:
 		std::string	m_NodeName; 
@@ -175,29 +175,29 @@ namespace ParserData
 		DirectX::SimpleMath::Matrix m_WorldTM;		// Mesh WorldTM
 		DirectX::SimpleMath::Matrix m_LocalTM;		// Mesh LocalTM
 
-		Mesh* m_Parent;								// Mesh Parent
-		std::vector<Mesh*> m_ChildList;				// Mesh Child List
+		CMesh* m_Parent;								// Mesh Parent
+		std::vector<CMesh*> m_ChildList;				// Mesh Child List
 
 		/// Material Data
 		CMaterial*					m_MaterialData;		// Mesh Material Data
 
 		/// Face Data (ÆÄ½Ì¿ë)
-		std::vector<Face*>			m_MeshFace;			// Face List
+		std::vector<CFace*>			m_MeshFace;			// Face List
 
 		/// Animation Data
-		OneAnimation*				m_Animation;		// Animation Data
+		CAnimation*				m_Animation;		// Animation Data
 
 		/// Skinning Data
 		std::vector<DirectX::SimpleMath::Matrix> m_BoneTMList;		// Bone Offset TM List
-		std::vector<Mesh*> m_BoneMeshList;							// Bone Mesh List
+		std::vector<CMesh*> m_BoneMeshList;							// Bone Mesh List
 
 		/// Original Data
 		std::vector<DirectX::SimpleMath::Vector3> m_OriginVertexList;
 		std::vector<UINT> m_OriginIndexList;
 
 		/// Final Data
-		std::vector<Vertex*>		m_VertexList;		/// Vertex List
-		std::vector<IndexList*>		m_IndexList;		/// Index List
+		std::vector<CVertex*>		m_VertexList;		/// Vertex List
+		std::vector<CIndexList*>		m_IndexList;		/// Index List
 	};
 }
 
@@ -232,7 +232,7 @@ namespace ParserData
 		int			m_parent_bone_number;
 	};
 
-	class ASEMesh : public Mesh
+	class ASEMesh : public CMesh
 	{
 	public:
 		ASEMesh();
@@ -255,16 +255,16 @@ namespace ParserData
 
 namespace ParserData
 {
-	struct Model
+	struct CModel
 	{
-		Model();
-		~Model();
+		CModel();
+		~CModel();
 
 		bool m_isAnimation;											// Animation À¯¹«
 
-		std::vector<ParserData::OneAnimation*> m_AnimationList;		// Animation List
+		std::vector<ParserData::CAnimation*> m_AnimationList;		// Animation List
 		std::vector<ParserData::CMaterial*> m_MaterialList;			// Material List
-		std::vector<ParserData::Mesh*> m_MeshList;	 				// Mesh List
+		std::vector<ParserData::CMesh*> m_MeshList;	 				// Mesh List
 	};
 
 	struct ImageData

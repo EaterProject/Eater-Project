@@ -39,7 +39,7 @@ TextureBuffer* FactoryManager::CreateTextureBuffer(std::string path)
 	return m_ResourceFactory->CreateTextureBuffer(path);
 }
 
-void FactoryManager::CreateMeshBuffer(ParserData::Mesh* mesh, LoadMeshData* meshData)
+void FactoryManager::CreateMeshBuffer(ParserData::CMesh* mesh, LoadMeshData* meshData)
 {
 	m_ResourceFactory->CreateMeshBuffer(mesh, meshData);
 }

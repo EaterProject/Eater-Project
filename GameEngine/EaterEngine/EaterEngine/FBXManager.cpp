@@ -42,12 +42,12 @@ void FBXManager::Initialize(GraphicEngineManager* Graphic, CRITICAL_SECTION* _cs
 
 void FBXManager::LoadTerrain(std::string Name, std::string MaskName, UINT parsingMode)
 {
-	ParserData::Model * mMesh = FBXLoad->LoadModel(Name, parsingMode);
+	ParserData::CModel * mMesh = FBXLoad->LoadModel(Name, parsingMode);
 	int size =  (int)mMesh->m_MaterialList.size();
-	ParserData::Mesh* TerrainMesh = mMesh->m_MeshList[0];
+	ParserData::CMesh* TerrainMesh = mMesh->m_MeshList[0];
 
 	LoadMeshData* Data = new LoadMeshData();
-	ModelData* Model = new ModelData();
+	ModelData* CModel = new ModelData();
 
 
 	SetMatrixData(TerrainMesh, Data);
@@ -61,8 +61,8 @@ void FBXManager::LoadTerrain(std::string Name, std::string MaskName, UINT parsin
 	std::size_t End		= Name.rfind('.') - Start;
 	Name = Name.substr(Start, End);
 
-	Model->TopMeshList.push_back(Data);
-	LoadManager::ModelList.insert({Name,Model });
+	CModel->TopMeshList.push_back(Data);
+	LoadManager::ModelList.insert({Name,CModel });
 }
 
 void FBXManager::CheckSkinning(std::string& Path)
@@ -91,16 +91,16 @@ void FBXManager::CheckAnimation(std::string& Path)
 	isAnimation = LoadManager::FindMesh(MeshName);
 }
 
-void FBXManager::CreateKeyFrame(std::vector<ParserData::OneAnimation*>* Anime, int InputKeyCount)
+void FBXManager::CreateKeyFrame(std::vector<ParserData::CAnimation*>* Anime, int InputKeyCount)
 {
 	//기존 애니메이션
-	std::vector<ParserData::OneAnimation*>::iterator it = Anime->begin();
+	std::vector<ParserData::CAnimation*>::iterator it = Anime->begin();
 
 	for (it; it != Anime->end(); it++)
 	{
-		std::vector<ParserData::OneFrame*> data = (*it)->m_AniData;
+		std::vector<ParserData::CFrame*> data = (*it)->m_AniData;
 		//새롭게 넣을 데이터 리스트
-		std::vector<ParserData::OneFrame*> CreateData;
+		std::vector<ParserData::CFrame*> CreateData;
 
 		int Size = (int)data.size();
 		for (int i = 0; i < Size - 1; i++)
@@ -126,7 +126,7 @@ void FBXManager::CreateKeyFrame(std::vector<ParserData::OneAnimation*>* Anime, i
 			for (int j = 0; j <= KeyCount; j++)
 			{
 				//새로운 키 프레임 생성
-				ParserData::OneFrame* temp = new OneFrame();
+				ParserData::CFrame* temp = new CFrame();
 				temp->m_Pos = Vector3::Lerp(Start_Pos, End_Pos, CountLerp);
 				temp->m_RotQt = Quaternion::Lerp(Start_Rot, End_Rot, CountLerp);
 				temp->m_Scale = Vector3::Lerp(Start_Scl, End_Scl, CountLerp);
@@ -146,7 +146,7 @@ void FBXManager::CreateKeyFrame(std::vector<ParserData::OneAnimation*>* Anime, i
 	}
 }
 
-LoadMeshData* FBXManager::CreateBaseMesh(ParserData::Mesh* mMesh)
+LoadMeshData* FBXManager::CreateBaseMesh(ParserData::CMesh* mMesh)
 {
 	/// 기본 메쉬 처리
 	if (mMesh == nullptr) { return nullptr; }
@@ -182,7 +182,7 @@ LoadMeshData* FBXManager::CreateBaseMesh(ParserData::Mesh* mMesh)
 	return SaveMesh;
 }
 
-LoadMeshData* FBXManager::CreateSkinMesh(ParserData::Mesh* mMesh)
+LoadMeshData* FBXManager::CreateSkinMesh(ParserData::CMesh* mMesh)
 {
 	///스킨 매쉬 처리
 	if (mMesh == nullptr) { return nullptr; }
@@ -218,7 +218,7 @@ LoadMeshData* FBXManager::CreateSkinMesh(ParserData::Mesh* mMesh)
 	return SaveMesh;
 }
 
-LoadMeshData* FBXManager::CreateBoneMesh(ParserData::Mesh* mMesh)
+LoadMeshData* FBXManager::CreateBoneMesh(ParserData::CMesh* mMesh)
 {
 	///본 매쉬 처리
 	if (mMesh == nullptr) { return nullptr; }
@@ -229,7 +229,7 @@ LoadMeshData* FBXManager::CreateBoneMesh(ParserData::Mesh* mMesh)
 	return SaveMesh;
 }
 
-void FBXManager::SetMaterialData(ParserData::Mesh* mMesh, LoadMeshData* SaveData)
+void FBXManager::SetMaterialData(ParserData::CMesh* mMesh, LoadMeshData* SaveData)
 {
 	// Parsing Data 기반 Material 생성..
 	CMaterial* mat = mMesh->m_MaterialData;
@@ -284,13 +284,13 @@ void FBXManager::SetMaterialData(ParserData::Mesh* mMesh, LoadMeshData* SaveData
 	}
 }
 
-void FBXManager::SetMatrixData(ParserData::Mesh* mMesh, LoadMeshData* SaveData)
+void FBXManager::SetMatrixData(ParserData::CMesh* mMesh, LoadMeshData* SaveData)
 {
 	SaveData->WorldTM = mMesh->m_WorldTM;
 	SaveData->LocalTM = mMesh->m_LocalTM;
 }
 
-void FBXManager::SetNameData(ParserData::Mesh* mMesh, LoadMeshData* SaveData)
+void FBXManager::SetNameData(ParserData::CMesh* mMesh, LoadMeshData* SaveData)
 {
 	SaveData->Name			= mMesh->m_NodeName;
 	SaveData->ParentName	= mMesh->m_ParentName;
@@ -298,7 +298,7 @@ void FBXManager::SetNameData(ParserData::Mesh* mMesh, LoadMeshData* SaveData)
 	SaveData->Top_Object	= mMesh->m_TopNode;
 }
 
-void FBXManager::SetBufferData(ParserData::Mesh* mMesh, LoadMeshData* SaveData)
+void FBXManager::SetBufferData(ParserData::CMesh* mMesh, LoadMeshData* SaveData)
 {
 	EnterCriticalSection(m_CriticalSection);
 	m_Graphic->CreateMeshBuffer(mMesh, SaveData);
@@ -373,7 +373,7 @@ std::string FBXManager::GetSaveName(std::string& Path)
 	}
 }
 
-void FBXManager::CreateSaveMesh(ParserData::Model* mMesh, ModelData* SaveMesh, std::string& Path)
+void FBXManager::CreateSaveMesh(ParserData::CModel* mMesh, ModelData* SaveMesh, std::string& Path)
 {
 	std::vector<LoadMeshData*> BaseMeshList;
 	std::vector<LoadMeshData*> SkinMeshList;
@@ -386,7 +386,7 @@ void FBXManager::CreateSaveMesh(ParserData::Model* mMesh, ModelData* SaveMesh, s
 	int MeshSize = (int)mMesh->m_MeshList.size();
 	for (int i = 0; i < MeshSize; i++)
 	{
-		ParserData::Mesh *OneMesh = mMesh->m_MeshList[i];
+		ParserData::CMesh *OneMesh = mMesh->m_MeshList[i];
 		LoadMeshData* SaveOneMesh = nullptr;
 
 		//타입별로 LoadMeshData로 값을 채워준다
@@ -455,7 +455,7 @@ void FBXManager::Load(std::string& Path, UINT parsingMode)
 
 void FBXManager::LoadFile(std::string& Path, UINT parsingMode)
 {
-	ParserData::Model* mMesh = FBXLoad->LoadModel(Path, parsingMode);
+	ParserData::CModel* mMesh = FBXLoad->LoadModel(Path, parsingMode);
 	ModelData* SaveMesh = new ModelData();
 	LoadAnimation(SaveMesh, mMesh, Path);
 
@@ -466,7 +466,7 @@ void FBXManager::LoadFile(std::string& Path, UINT parsingMode)
 	CreateSaveMesh(mMesh, SaveMesh,Path);
 }
 
-void FBXManager::LoadAnimation(ModelData* SaveMesh, ParserData::Model* MeshData, std::string& Path)
+void FBXManager::LoadAnimation(ModelData* SaveMesh, ParserData::CModel* MeshData, std::string& Path)
 {
 	//if (isAnimation == false) { return; }
 
