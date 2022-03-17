@@ -21,7 +21,7 @@ void AnimationController::StartUpdate()
 
 void AnimationController::Update()
 {
-	if (NowAnimationName != "")
+	if (NowAnimationName != "" && AnimationList != nullptr)
 	{
 		Play(1, true);
 	}

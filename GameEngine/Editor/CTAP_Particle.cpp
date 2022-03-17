@@ -461,7 +461,6 @@ void CTAP_Particle::GetObjectData()
 		mParticleSystem->SetLifeTimeColor(Start, End, PARTICLE_LIFETIME_OPTION::UPDOWN);
 		break;
 	}
-
 }
 
 
