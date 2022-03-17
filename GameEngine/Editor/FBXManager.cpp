@@ -208,6 +208,7 @@ void FBXManager::MaterialSave(std::string FileName)
 
 		EATER_CLOSE_FILE();
 	}
+	OneMeshMaterialList.clear();
 }
 
 void FBXManager::SetParent(ParserData::Mesh* mMesh)

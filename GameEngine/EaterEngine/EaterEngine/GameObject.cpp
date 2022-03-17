@@ -120,6 +120,8 @@ GameObject* GameObject::GetChildMesh(std::string FindName)
 			return FindObject;
 		}
 	}
+
+	return FindObject;
 }
 
 GameObject* GameObject::GetChildMesh(int num)

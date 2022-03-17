@@ -41,10 +41,10 @@ public:
 	CEdit StartLifeTime , StartLifeTime_min , StartLifeTime_max;
 	CEdit StartScale, StartScale_min , StartScale_max;
 	CEdit StartRotation , StartRotation_min , StartRotation_max;
+
 	CEdit LifeForce_X, LifeForce_Y, LifeForce_Z;
 	CEdit LifeForce_X_max, LifeForce_Y_max, LifeForce_Z_max;
 
-	CScrollBar mScrollbar;
 	CButton ShapeRadius_Check;
 	CButton StartForce_Check;
 	CButton StartColor_Check;
@@ -55,7 +55,6 @@ public:
 
 	afx_msg void OnStartColor_Button();
 	afx_msg void OnShapeRadius_Button();
-	afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 	afx_msg void OnStartForce_Button();
 	afx_msg void OnStartLifeTime_Check();
 	afx_msg void OnStartScale_Button();
@@ -63,5 +62,21 @@ public:
 	afx_msg void OnLifeForceCheck();
 
 	
-	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
+	CEdit LifeRotation , LifeRotation_min , LifeRotation_max;
+	
+	CButton LifeRotation_Check;
+	afx_msg void OnBnClickedCheck8();
+	CEdit LifeScale_min;
+	CEdit LifeScale_max;
+	CComboBox LifeScale_Combo;
+
+	CEdit LifeColor_min_R;
+	CEdit LifeColor_min_G;
+	CEdit LifeColor_min_B;
+	CEdit LifeColor_min_A;
+	CEdit LifeColor_max_R;
+	CEdit LifeColor_max_G;
+	CEdit LifeColor_max_B;
+	CEdit LifeColor_max_A;
+	CComboBox LifeColor_Combo;
 };
