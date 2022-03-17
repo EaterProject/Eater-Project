@@ -49,8 +49,8 @@ public:
 
 public:
 	void SetPlay(const PARTICLE_DESC* particleDesc);
+	void DataUpdate();
 	void Reset();
-
 public:
 	void Release();
 

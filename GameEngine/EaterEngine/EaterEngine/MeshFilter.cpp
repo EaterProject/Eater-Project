@@ -27,11 +27,7 @@ MeshFilter::MeshFilter()
 
 MeshFilter::~MeshFilter()
 {
-	if (Materials != nullptr)
-	{
-		delete Materials;
-		Materials = nullptr;
-	}
+
 }
 
 void MeshFilter::Start()

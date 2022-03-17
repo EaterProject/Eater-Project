@@ -27,6 +27,9 @@ public:
 	void Update() override;
 
 public:
+	EATER_ENGINEDLL void DataUpdate();
+
+public:
 	EATER_ENGINEDLL void SetMeshName(std::string meshName);								// 파티클 출력할 매쉬 타입
 	EATER_ENGINEDLL void SetRenderType(PARTICLE_RENDER_OPTION renderType);				// 파티클 출력할 랜더 타입
 	EATER_ENGINEDLL void SetMaxParticles(int maxCount);									// 최대 파티클 출력 개수
