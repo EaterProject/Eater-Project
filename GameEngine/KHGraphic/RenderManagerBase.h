@@ -34,10 +34,16 @@ public:
 	virtual void SetEnvironmentMap(bool enable) abstract;
 
 public:
-	// Render Data Add & Delete..
-	virtual void AddMeshData(MeshData* meshData) abstract;
+	// Render Data Push..
+	virtual void PushInstance(MeshData* meshData) abstract;
+	virtual void PushMaterial(MaterialBuffer* material) abstract;
+	virtual void PushMesh(MeshBuffer* mesh) abstract;
+
+	// Render Data Change..
 	virtual void AddChangeMeshData(MeshData* meshData) abstract;
-	virtual void AddChangeMaterialData(MaterialData* materialData) abstract;
+	virtual void AddChangeMaterialData(MaterialBuffer* materialData) abstract;
+
+	// Render Data Delete..
 	virtual void DeleteMeshData(MeshData* meshData) abstract;
 
 	// Render Update..

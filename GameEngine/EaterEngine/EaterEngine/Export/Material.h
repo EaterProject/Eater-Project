@@ -4,7 +4,7 @@
 #include "EaterEngineDLL.h"
 
 class MeshData;
-class MaterialData;
+class MaterialBuffer;
 class TextureBuffer;
 class MaterialManager;
 
@@ -36,6 +36,6 @@ public:
 
 public:
 	std::string Name;
-	MaterialData* m_MaterialData;
+	MaterialBuffer* m_MaterialData;
 };
 

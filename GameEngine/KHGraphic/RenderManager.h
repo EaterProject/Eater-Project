@@ -34,9 +34,12 @@ public:
 	void SetGlobalData(GlobalData* globalData) override;
 	void SetEnvironmentMap(bool enable) override;
 
-	void AddMeshData(MeshData* meshData) override;
+	void PushInstance(MeshData* meshData) override;
+	void PushMaterial(MaterialBuffer* material) override;
+	void PushMesh(MeshBuffer* mesh) override;
+
 	void AddChangeMeshData(MeshData* meshData) override;
-	void AddChangeMaterialData(MaterialData* materialData) override;
+	void AddChangeMaterialData(MaterialBuffer* materialData) override;
 	void DeleteMeshData(MeshData* mesh) override;
 
 	void Render() override;
@@ -76,7 +79,7 @@ private:
 private:
 	std::queue<MeshData*> m_UnConvertMeshList;
 	std::queue<MeshData*> m_ChangeMeshList;
-	std::queue<MaterialData*> m_ChangeMaterialList;
+	std::queue<MaterialBuffer*> m_ChangeMaterialList;
 
 	std::vector<MeshIndexData> m_MeshIndexList;
 

@@ -164,10 +164,20 @@ void RenderManager::SetEnvironmentMap(bool enable)
 	m_Environment->SetEnvironmentMapResource(enable);
 }
 
-void RenderManager::AddMeshData(MeshData* meshData)
+void RenderManager::PushInstance(MeshData* meshData)
 {
 	// 현재 비어있는 상태이므로 추후 설정을 위해 Mesh Data 삽입..
 	m_UnConvertMeshList.push(meshData);
+}
+
+void RenderManager::PushMaterial(MaterialBuffer* material)
+{
+
+}
+
+void RenderManager::PushMesh(MeshBuffer* mesh)
+{
+
 }
 
 void RenderManager::AddChangeMeshData(MeshData* meshData)
@@ -176,7 +186,7 @@ void RenderManager::AddChangeMeshData(MeshData* meshData)
 	m_ChangeMeshList.push(meshData);
 }
 
-void RenderManager::AddChangeMaterialData(MaterialData* materialData)
+void RenderManager::AddChangeMaterialData(MaterialBuffer* materialData)
 {
 	// 현재 바뀐 Material Data 동기화를 위해 삽입..
 	m_ChangeMaterialList.push(materialData);
@@ -515,7 +525,7 @@ void RenderManager::EndRender()
 void RenderManager::ConvertMeshRenderData(MeshData* meshData, RenderData* renderData)
 {
 	bool addList = true;
-	UINT meshIndex = renderData->m_MeshData->m_BufferIndex;
+	UINT meshIndex = renderData->m_MeshBuffer->m_BufferIndex;
 
 	for (MeshIndexData& index : m_MeshIndexList)
 	{

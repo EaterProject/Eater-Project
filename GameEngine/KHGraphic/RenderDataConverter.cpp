@@ -24,10 +24,10 @@ void RenderDataConverter::ConvertRenderData(MeshData* originData, RenderData* re
 	renderData->m_ColliderData = originData->Collider_Data;
 
 	// Mesh Data 설정..
-	ConvertMeshBuffer(originData->MeshBuffer_Data, renderData->m_MeshData);
+	ConvertMeshBuffer(originData->Mesh_Buffer, renderData->m_MeshBuffer);
 
 	// Material Data 설정..
-	ConvertMaterial(originData->Material_Data, renderData->m_Material);
+	ConvertMaterial(originData->Material_Buffer, renderData->m_MaterialBuffer);
 
 	// Obejct Type에 따른 추가 변환 작업..
 	switch (renderData->m_ObjectData->ObjType)
@@ -41,10 +41,10 @@ void RenderDataConverter::ConvertRenderData(MeshData* originData, RenderData* re
 	{
 		renderData->m_TerrainData = new TerrainRenderData();
 
-		for (MaterialData* layer : originData->Terrain_Data->Material_List)
+		for (MaterialBuffer* layer : originData->Terrain_Data->Material_List)
 		{
 			// 새로운 Material 생성..
-			MaterialRenderData* layerMaterial = new MaterialRenderData();
+			MaterialRenderBuffer* layerMaterial = new MaterialRenderBuffer();
 
 			// Material Data 변환..
 			ConvertMaterial(layer, layerMaterial);
@@ -65,7 +65,35 @@ void RenderDataConverter::ConvertRenderData(MeshData* originData, RenderData* re
 	}
 }
 
-void RenderDataConverter::ConvertMeshBuffer(MeshBuffer* originBuf, MeshRenderData* convertData)
+void RenderDataConverter::ChangeMeshData(UINT index)
+{
+
+}
+
+void RenderDataConverter::ChangeMaterialData(UINT index)
+{
+
+}
+
+MeshRenderBuffer* RenderDataConverter::GetMeshRenderData(UINT index)
+{
+	std::unordered_map<UINT, MeshRenderBuffer*>::iterator itor = m_MeshList.find(index);
+
+	if (itor == m_MeshList.end()) return nullptr;
+
+	return itor->second;
+}
+
+MaterialRenderBuffer* RenderDataConverter::GetMaterialRenderData(UINT index)
+{
+	std::unordered_map<UINT, MaterialRenderBuffer*>::iterator itor = m_MaterialList.find(index);
+
+	if (itor == m_MaterialList.end()) return nullptr;
+
+	return itor->second;
+}
+
+void RenderDataConverter::ConvertMeshBuffer(MeshBuffer* originBuf, MeshRenderBuffer* convertData)
 {
 	if (originBuf == nullptr) return;
 
@@ -81,7 +109,7 @@ void RenderDataConverter::ConvertMeshBuffer(MeshBuffer* originBuf, MeshRenderDat
 	convertData->m_VertexBuf = (ID3D11Buffer*)originBuf->VertexBuf->pVertexBuf;
 }
 
-void RenderDataConverter::ConvertMaterial(MaterialData* originMat, MaterialRenderData* convertMat)
+void RenderDataConverter::ConvertMaterial(MaterialBuffer* originMat, MaterialRenderBuffer* convertMat)
 {
 	// 해당 Material Data 변환..
 	convertMat->m_MaterialIndex = originMat->Material_Index;

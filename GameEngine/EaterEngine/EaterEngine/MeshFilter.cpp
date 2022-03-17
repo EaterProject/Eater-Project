@@ -27,11 +27,7 @@ MeshFilter::MeshFilter()
 
 MeshFilter::~MeshFilter()
 {
-	if (Materials != nullptr)
-	{
-		delete Materials;
-		Materials = nullptr;
-	}
+
 }
 
 void MeshFilter::Start()
@@ -388,7 +384,7 @@ void MeshFilter::SetMaterialData(LoadMeshData* LoadMesh, MeshData* mMesh)
 	}
 
 	// Render Material Data ¼³Á¤..
-	mMesh->Material_Data = Materials->m_MaterialData;
+	mMesh->Material_Buffer = Materials->m_MaterialData;
 }
 
 void MeshFilter::SetMatrixData(LoadMeshData* LoadMesh, MeshData* mMesh, GameObject* Object)
@@ -404,7 +400,7 @@ void MeshFilter::SetMatrixData(LoadMeshData* LoadMesh, MeshData* mMesh, GameObje
 
 void MeshFilter::SetBufferData(LoadMeshData* LoadMesh, MeshData* mMesh)
 {
-	mMesh->MeshBuffer_Data = LoadMesh->MeshBuffer_Data;
+	mMesh->Mesh_Buffer = LoadMesh->MeshBuffer_Data;
 }
 
 void MeshFilter::SetType(LoadMeshData* LoadMesh, MeshData* mMesh)

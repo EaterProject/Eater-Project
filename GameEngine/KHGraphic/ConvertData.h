@@ -8,7 +8,7 @@ public:
 };
 
 // Game Engine 측 Data와 대응하는 DirectX 11 전용 Material Data Class
-class MaterialRenderData
+class MaterialRenderBuffer
 {
 public:
 	UINT m_MaterialIndex;
@@ -22,7 +22,7 @@ public:
 };
 
 // Game Engine 측 Data와 대응하는 DirectX 11 전용 Mesh Data Class
-class MeshRenderData
+class MeshRenderBuffer
 {
 public:
 	UINT m_BufferIndex;
@@ -38,5 +38,5 @@ public:
 class TerrainRenderData
 {
 public:
-	std::vector<MaterialRenderData*> m_MaterialList;
+	std::vector<MaterialRenderBuffer*> m_MaterialList;
 };

@@ -439,10 +439,10 @@ void CTAP_Particle::GetObjectData()
 	LifeColor_min_A.GetWindowTextW(Temp04);
 	Vector4 Start = Vector4(ChangeToFloat(Temp01), ChangeToFloat(Temp02), ChangeToFloat(Temp03), ChangeToFloat(Temp04));
 
-	LifeColor_max_R.SetWindowTextW(Temp01);
-	LifeColor_max_G.SetWindowTextW(Temp02);
-	LifeColor_max_B.SetWindowTextW(Temp03);
-	LifeColor_max_A.SetWindowTextW(Temp04);
+	LifeColor_max_R.GetWindowTextW(Temp01);
+	LifeColor_max_G.GetWindowTextW(Temp02);
+	LifeColor_max_B.GetWindowTextW(Temp03);
+	LifeColor_max_A.GetWindowTextW(Temp04);
 	Vector4 End = Vector4(ChangeToFloat(Temp01), ChangeToFloat(Temp02), ChangeToFloat(Temp03), ChangeToFloat(Temp04));
 
 	int Choice02 = LifeColor_Combo.GetCurSel();
@@ -461,7 +461,9 @@ void CTAP_Particle::GetObjectData()
 		mParticleSystem->SetLifeTimeColor(Start, End, PARTICLE_LIFETIME_OPTION::UPDOWN);
 		break;
 	}
-
+	
+	// 변한 데이터 업데이트..
+	mParticleSystem->DataUpdate();
 }
 
 

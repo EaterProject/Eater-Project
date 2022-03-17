@@ -66,7 +66,7 @@ void Terrain::AddLayer(std::string diffuseName, std::string normalName, std::str
 	Material* newMaterial = new Material();
 
 	// 货肺款 Material Data 积己..
-	MaterialData* materialData = newMaterial->m_MaterialData;
+	MaterialBuffer* materialData = newMaterial->m_MaterialData;
 
 	// Material Layer Texture 火涝..
 	materialData->Albedo = LoadManager::GetTexture(diffuseName);
@@ -82,7 +82,7 @@ void Terrain::AddLayer(std::string diffuseName, std::string normalName, std::str
 
 void Terrain::DataUpdate()
 {
-	gameobject->OneMeshData->Material_Data->Material_SubData->TexTM = DirectX::SimpleMath::Matrix::CreateScale(1.0f / Tiling.x, 1.0f / Tiling.y, 1.0f);
+	gameobject->OneMeshData->Material_Buffer->Material_SubData->TexTM = DirectX::SimpleMath::Matrix::CreateScale(1.0f / Tiling.x, 1.0f / Tiling.y, 1.0f);
 }
 
 void Terrain::SetTextureTiling(float scale_x, float scale_y)

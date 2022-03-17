@@ -462,7 +462,7 @@ GameObject* GameEngine::CreateInstance()
 	GameObject* newObject = new GameObject();
 
 	// Object Mesh Data Renderer측에 추가..
-	mGraphicManager->AddMeshData(newObject->OneMeshData);
+	mGraphicManager->PushInstance(newObject->OneMeshData);
 
 	return newObject;
 }

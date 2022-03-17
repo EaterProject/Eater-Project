@@ -8,7 +8,7 @@
 Material::Material()
 {
 	// Material Buffer 持失..
-	m_MaterialData = new MaterialData();
+	m_MaterialData = new MaterialBuffer();
 
 	// Material Data 持失..
 	m_MaterialData->Material_SubData = new MaterialSubData();

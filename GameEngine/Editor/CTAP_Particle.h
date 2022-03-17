@@ -52,20 +52,9 @@ public:
 	CButton StartScale_Check;
 	CButton StartRotation_Check;
 	CButton LifeForce_Check;
-
-	afx_msg void OnStartColor_Button();
-	afx_msg void OnShapeRadius_Button();
-	afx_msg void OnStartForce_Button();
-	afx_msg void OnStartLifeTime_Check();
-	afx_msg void OnStartScale_Button();
-	afx_msg void OnStartRotationCheck();
-	afx_msg void OnLifeForceCheck();
-
-	
 	CEdit LifeRotation , LifeRotation_min , LifeRotation_max;
 	
 	CButton LifeRotation_Check;
-	afx_msg void OnBnClickedCheck8();
 	CEdit LifeScale_min;
 	CEdit LifeScale_max;
 	CComboBox LifeScale_Combo;
@@ -79,4 +68,12 @@ public:
 	CEdit LifeColor_max_B;
 	CEdit LifeColor_max_A;
 	CComboBox LifeColor_Combo;
+	afx_msg void OnStartColor_Button();
+	afx_msg void OnShapeRadius_Button();
+	afx_msg void OnStartForce_Button();
+	afx_msg void OnStartLifeTime_Check();
+	afx_msg void OnStartScale_Button();
+	afx_msg void OnStartRotationCheck();
+	afx_msg void OnLifeForceCheck();
+	afx_msg void OnBnClickedCheck8();
 };

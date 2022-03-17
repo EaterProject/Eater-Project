@@ -119,6 +119,15 @@ void ParticleSystem::Update()
 	}
 }
 
+void ParticleSystem::DataUpdate()
+{
+	// Data 변경시 호출하면 Particle Data Update..
+	for (Particle* particle : m_Particles)
+	{
+		particle->DataUpdate();
+	}
+}
+
 void ParticleSystem::SetMeshName(std::string meshName)
 {
 	m_ParticleMeshName = meshName;
