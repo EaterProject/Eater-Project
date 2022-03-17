@@ -9,19 +9,26 @@ public:
 
 public:
 	void ConvertRenderData(MeshData* originData, RenderData* renderData);
-	void ChangeMeshData(UINT index);
-	void ChangeMaterialData(UINT index);
+	void ChangeMeshBuffer(MeshBuffer* mesh);
+	void ChangeMaterialBuffer(MaterialBuffer* material);
 
 public:
-	MeshRenderBuffer* GetMeshRenderData(UINT index);
-	MaterialRenderBuffer* GetMaterialRenderData(UINT index);
+	void PushMesh(MeshBuffer* mesh);
+	void PushMaterial(MaterialBuffer* material);
+
+public:
+	MeshRenderBuffer* FindMesh(UINT index);
+	MaterialRenderBuffer* FindMaterial(UINT index);
+	InstanceRenderBuffer* FindInstance(UINT index);
 
 private:
-	void ConvertMeshBuffer(MeshBuffer* originBuf, MeshRenderBuffer* convertData);
-	void ConvertMaterial(MaterialBuffer* originMat, MaterialRenderBuffer* convertMat);
+	void ConvertMeshData(MeshBuffer* originBuf, MeshRenderBuffer* convertData);
+	void ConvertMaterialData(MaterialBuffer* originMat, MaterialRenderBuffer* convertMat);
 
 private:
 	std::unordered_map<UINT, MeshRenderBuffer*> m_MeshList;
 	std::unordered_map<UINT, MaterialRenderBuffer*> m_MaterialList;
+
+	std::unordered_map<UINT, InstanceRenderBuffer*> m_InstanceList;
 };
 

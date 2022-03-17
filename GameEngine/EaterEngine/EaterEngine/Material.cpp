@@ -126,7 +126,7 @@ void Material::SetMetallicFactor(float metallicFactor)
 void Material::Release()
 {
 	// Manager 내부에 있는 해당 Material Data 삭제..
-	MaterialManager::DeleteMaterial(m_MaterialData->Material_Index);
+	MaterialManager::DeleteMaterial(m_MaterialData->BufferIndex);
 	
 	// 해당 Material Data 해제..
 	delete m_MaterialData->Material_SubData;

@@ -56,7 +56,7 @@ void MaterialManager::PushMaterial(Material* material)
 	}
 
 	// 현재 Material Index 설정..
-	material->m_MaterialData->Material_Index = material_Index;
+	material->m_MaterialData->BufferIndex = material_Index;
 	
 	// Material List 추가..
 	g_MaterialList.insert(std::make_pair(material_Index, material));

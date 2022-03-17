@@ -44,20 +44,6 @@ public:
 	Matrix* Local = nullptr;						//매쉬의 로컬 행렬
 };
 
-// Material Data
-class MaterialBuffer
-{
-public:
-	UINT Material_Index = 0;				// Material Index
-
-	MaterialSubData* Material_SubData = nullptr;	// Material SubData
-
-	TextureBuffer* Albedo = nullptr;		// DiffuseMap Texture
-	TextureBuffer* Normal = nullptr;		// NormalMap Texture
-	TextureBuffer* Emissive = nullptr;		// Emissive Texture
-	TextureBuffer* ORM = nullptr;			// AO(R) + Roughness(G) + Metallic(B) Texture
-};
-
 // Terrain Data
 class TerrainData
 {

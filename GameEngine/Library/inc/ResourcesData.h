@@ -38,6 +38,21 @@ public:
 	void* pVertexBuf = nullptr;
 };
 
+//텍스쳐를 받을 클래스
+class TextureBuffer : Resources
+{
+public:
+	virtual ~TextureBuffer()
+	{
+		delete pTextureBuf;
+	};
+
+	std::string Name;
+
+	void* pTextureBuf = nullptr;
+};
+
+
 class MeshBuffer : Resources
 {
 public:
@@ -53,16 +68,16 @@ public:
 	VertexBuffer* VertexBuf;
 };
 
-//텍스쳐를 받을 클래스
-class TextureBuffer : Resources
+// Material Data
+class MaterialBuffer : Resources
 {
 public:
-	virtual ~TextureBuffer()
-	{
-		delete pTextureBuf;
-	};
+	UINT BufferIndex = 0;				// Material Index
 
-	std::string Name;
+	MaterialSubData* Material_SubData = nullptr;	// Material SubData
 
-	void* pTextureBuf = nullptr;
+	TextureBuffer* Albedo = nullptr;		// DiffuseMap Texture
+	TextureBuffer* Normal = nullptr;		// NormalMap Texture
+	TextureBuffer* Emissive = nullptr;		// Emissive Texture
+	TextureBuffer* ORM = nullptr;			// AO(R) + Roughness(G) + Metallic(B) Texture
 };
