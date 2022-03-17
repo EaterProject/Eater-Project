@@ -109,6 +109,7 @@ void EATERManager::LoadMaterial(std::string& Path)
 	for (int i = 0; i < Count; i++)
 	{
 		Material* Mat = new Material();
+		Mat->Name = SaveName;
 		MaterialData* Data = Mat->m_MaterialData;
 		std::string NodeName = EATER_GET_NODE_NAME(i);
 		if (NodeName == "EATERMAT")
@@ -120,8 +121,13 @@ void EATERManager::LoadMaterial(std::string& Path)
 
 			Data->Albedo	= LoadManager::GetTexture(DiffuseName);
 			Data->Normal	= LoadManager::GetTexture(NormalName);
-			Data->Emissive	= LoadManager::GetTexture(EmissiveName);
-			Data->ORM		= LoadManager::GetTexture(ORMName);
+			Data->Emissive = LoadManager::GetTexture(EmissiveName);
+			Data->ORM = LoadManager::GetTexture(ORMName);
+
+			if(Data->Albedo) Data->Albedo->Name = DiffuseName;
+			if(Data->Normal) Data->Normal->Name = NormalName;
+			if(Data->Emissive) Data->Emissive->Name = EmissiveName;
+			if(Data->ORM) Data->ORM->Name = ORMName;
 
 			Data->Material_SubData->RoughnessFactor = std::stof(EATER_GET_MAP(i, "Roughness"));
 			Data->Material_SubData->MetallicFactor  = std::stof(EATER_GET_MAP(i, "Metallic"));

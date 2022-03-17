@@ -27,6 +27,8 @@ public:
 	std::string ChoiceMeshPath;
 	EditorManager* mEditor;
 
+	void OnBoneWorld(bool On);
+
 	void Initialize(EditorManager* _Editor);
 	void SetName(std::string Name,std::string Path);
 	void ChangeDataFormat();
@@ -34,19 +36,19 @@ public:
 	CComboBox FileType_Combo;
 	MeshOption MeshData;
 public:
+	CEdit PosX , PosY , PosZ;
+	CEdit RotX, RotY, RotZ;
+	CEdit SclX , SclY , SclZ;
+
+	CEdit PosX_Bone, PosY_Bone, PosZ_Bone;
+	CEdit RotX_Bone, RotY_Bone, RotZ_Bone;
+	CEdit SclX_Bone, SclY_Bone, SclZ_Bone;
+	
+	CButton BoneTransform_Text;
+	CButton DinamicButton;
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnChange_Button();
 	afx_msg void OnNoChange_Button();
-	CEdit PosX;
-	CEdit PosY;
-	CEdit PosZ;
-	CEdit SclX;
-	CEdit SclY;
-	CEdit SclZ;
-	CEdit RotX;
-	CEdit RotY;
-	CEdit RotZ;
 	afx_msg void OnScaleDown_Button();
-	CButton DinamicButton;
-	afx_msg void OnCbnEditupdateCombo1();
+	afx_msg void OnCbnSelchangeCombo1();
 };

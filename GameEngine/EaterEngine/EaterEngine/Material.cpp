@@ -45,6 +45,7 @@ void Material::SetDiffuseTexture(std::string diffuseName)
 
 	// Texture 변경..
 	m_MaterialData->Albedo = newTexture;
+	m_MaterialData->Albedo->Name = diffuseName;
 }
 
 void Material::SetNormalTexture(std::string noramlName)
@@ -62,6 +63,7 @@ void Material::SetNormalTexture(std::string noramlName)
 
 	// Texture 변경..
 	m_MaterialData->Normal = newTexture;
+	m_MaterialData->Normal->Name = noramlName;
 }
 
 void Material::SetEmissiveTexture(std::string emissiveName)
@@ -79,6 +81,7 @@ void Material::SetEmissiveTexture(std::string emissiveName)
 
 	// Texture 변경..
 	m_MaterialData->Emissive = newTexture;
+	m_MaterialData->Emissive->Name = emissiveName;
 }
 
 void Material::SetORMTexture(std::string ormName)
@@ -96,6 +99,7 @@ void Material::SetORMTexture(std::string ormName)
 
 	// Texture 변경..
 	m_MaterialData->ORM = newTexture;
+	m_MaterialData->ORM->Name = ormName;
 }
 
 void Material::SetBaseColor(DirectX::SimpleMath::Vector4 color)
@@ -131,4 +135,44 @@ void Material::Release()
 	// 해당 Material Data 해제..
 	delete m_MaterialData->Material_SubData;
 	delete m_MaterialData;
+}
+
+std::string Material::GetDiffuseName()
+{
+	if (m_MaterialData->Albedo != nullptr )
+	{
+		return m_MaterialData->Albedo->Name;
+	}
+
+	return std::string();
+}
+
+std::string Material::GetNormalName()
+{
+	if (m_MaterialData->Normal != nullptr)
+	{
+		return m_MaterialData->Normal->Name;
+	}
+
+	return std::string();
+}
+
+std::string Material::GetEmissiveName()
+{
+	if (m_MaterialData->Emissive != nullptr)
+	{
+		return m_MaterialData->Emissive->Name;
+	}
+
+	return std::string();
+}
+
+std::string Material::GetORMName()
+{
+	if (m_MaterialData->ORM != nullptr)
+	{
+		return m_MaterialData->ORM->Name;
+	}
+
+	return std::string();
 }

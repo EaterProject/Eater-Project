@@ -43,6 +43,7 @@ private:
 private:
 	void SetParent(ParserData::Mesh* mMesh);
 	void SetMatrix(ParserData::Mesh* mMesh);
+	void SetBoneMatrix(ParserData::Mesh* mMesh);
 	void SetMaterial(ParserData::Mesh* mMesh,std::string FileName);
 	void SetIndex(ParserData::Mesh* mMesh);
 

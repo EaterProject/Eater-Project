@@ -96,13 +96,14 @@ void FBXManager::BoneMesh(ParserData::Mesh* mMesh)
 	if (mMesh->m_TopNode == true)
 	{
 		EATER_SET_MAP("TopNode", "YES");
+		SetBoneMatrix(mMesh);
 	}
 	else
 	{
 		EATER_SET_MAP("TopNode", "NO");
+		SetMatrix(mMesh);
 	}
 	SetParent(mMesh);
-	SetMatrix(mMesh);
 }
 
 void FBXManager::SkinMesh(ParserData::Mesh* mMesh, std::string FileName)
@@ -245,6 +246,56 @@ void FBXManager::SetMatrix(ParserData::Mesh* mMesh)
 	DirectX::SimpleMath::Matrix Local		= mMesh->m_LocalTM;
 	DirectX::SimpleMath::Matrix Change		= mOption->GetMatrix();
 	DirectX::SimpleMath::Matrix SaveLocal	=  Local * Change;
+
+	EATER_SET_LIST_START("LocalTM", 4, 4);
+	EATER_SET_LIST(SaveLocal._11);
+	EATER_SET_LIST(SaveLocal._12);
+	EATER_SET_LIST(SaveLocal._13);
+	EATER_SET_LIST(SaveLocal._14, true);
+
+	EATER_SET_LIST(SaveLocal._21);
+	EATER_SET_LIST(SaveLocal._22);
+	EATER_SET_LIST(SaveLocal._23);
+	EATER_SET_LIST(SaveLocal._24, true);
+
+	EATER_SET_LIST(SaveLocal._31);
+	EATER_SET_LIST(SaveLocal._32);
+	EATER_SET_LIST(SaveLocal._33);
+	EATER_SET_LIST(SaveLocal._34, true);
+
+	EATER_SET_LIST(SaveLocal._41);
+	EATER_SET_LIST(SaveLocal._42);
+	EATER_SET_LIST(SaveLocal._43);
+	EATER_SET_LIST(SaveLocal._44, true);
+}
+
+void FBXManager::SetBoneMatrix(ParserData::Mesh* mMesh)
+{
+	EATER_SET_LIST_START("WorldTM", 4, 4);
+	EATER_SET_LIST(mMesh->m_WorldTM._11);
+	EATER_SET_LIST(mMesh->m_WorldTM._12);
+	EATER_SET_LIST(mMesh->m_WorldTM._13);
+	EATER_SET_LIST(mMesh->m_WorldTM._14, true);
+
+	EATER_SET_LIST(mMesh->m_WorldTM._21);
+	EATER_SET_LIST(mMesh->m_WorldTM._22);
+	EATER_SET_LIST(mMesh->m_WorldTM._23);
+	EATER_SET_LIST(mMesh->m_WorldTM._24, true);
+
+	EATER_SET_LIST(mMesh->m_WorldTM._31);
+	EATER_SET_LIST(mMesh->m_WorldTM._32);
+	EATER_SET_LIST(mMesh->m_WorldTM._33);
+	EATER_SET_LIST(mMesh->m_WorldTM._34, true);
+
+	EATER_SET_LIST(mMesh->m_WorldTM._41);
+	EATER_SET_LIST(mMesh->m_WorldTM._42);
+	EATER_SET_LIST(mMesh->m_WorldTM._43);
+	EATER_SET_LIST(mMesh->m_WorldTM._44, true);
+
+
+	DirectX::SimpleMath::Matrix Local = mMesh->m_WorldTM;
+	DirectX::SimpleMath::Matrix Change = mOption->GetBoneMatrix();
+	DirectX::SimpleMath::Matrix SaveLocal = Local * Change;
 
 	EATER_SET_LIST_START("LocalTM", 4, 4);
 	EATER_SET_LIST(SaveLocal._11);
