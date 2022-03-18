@@ -36,6 +36,7 @@ void TextureManager::LoadTexture(std::string& Path)
 	else
 	{
 		std::string Name = CutFilePath(Path);
+		buffer->Name = Name;
 		LoadManager::TextureList.insert({ Name,buffer });
 	}
 }
