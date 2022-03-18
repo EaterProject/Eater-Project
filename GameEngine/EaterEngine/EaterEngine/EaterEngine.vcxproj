@@ -233,7 +233,6 @@ copy /Y "$(ProjectDir)Network\lib\Release\*lib"  "$(TargetDir)"</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Library\inc\EngineData.h" />
-    <ClInclude Include="..\..\Library\inc\GraphicsEngine.h" />
     <ClInclude Include="..\..\Library\inc\LightHelper.h" />
     <ClInclude Include="..\..\Library\inc\TypeOptionHeader.h" />
     <ClInclude Include="BaseManager.h" />

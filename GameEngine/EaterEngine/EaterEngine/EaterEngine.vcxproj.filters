@@ -52,9 +52,6 @@
     <Filter Include="소스 파일\Engine">
       <UniqueIdentifier>{08bc5e81-a29e-42c8-a4f8-d7ad3b9970e6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Engine\GraphicsClass">
-      <UniqueIdentifier>{eae1cb74-1f70-430d-b25f-a334f431dc3e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Engine\GameEngine">
       <UniqueIdentifier>{04116a65-6bb9-4e93-895d-39a70b9a06f6}</UniqueIdentifier>
     </Filter>
@@ -203,9 +200,6 @@
     </ClInclude>
     <ClInclude Include="Export\ResourcesData.h">
       <Filter>소스 파일\Data</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Library\inc\GraphicsEngine.h">
-      <Filter>소스 파일\Engine\GraphicsClass</Filter>
     </ClInclude>
     <ClInclude Include="BaseManager.h">
       <Filter>소스 파일\Manager\BaseManager</Filter>

@@ -54,7 +54,7 @@ void MaterialManager::PushMaterial(Material* material)
 	if (material_Index == 0)
 	{
 		material_Index = g_IndexList.size();
-		g_IndexList.push_back(std::pair<UINT, bool>(material_Index, true));
+		g_IndexList.push_back(std::make_pair(material_Index, true));
 	}
 
 	// 현재 Material Index 설정..

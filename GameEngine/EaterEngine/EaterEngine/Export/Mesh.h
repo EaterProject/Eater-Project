@@ -20,7 +20,7 @@ public:
 public:
 	void Release();
 
-private:
+public:
 	std::string Name;
 	MeshBuffer* m_MeshData;
 };

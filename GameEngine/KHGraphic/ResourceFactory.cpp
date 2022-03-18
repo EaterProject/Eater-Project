@@ -93,10 +93,8 @@ void GraphicResourceFactory::Release()
 	SAFE_DELETE(m_Parser);
 }
 
-TextureBuffer* GraphicResourceFactory::CreateTextureBuffer(std::string path)
+void GraphicResourceFactory::CreateTextureBuffer(std::string path, TextureBuffer** ppResource)
 {
-	TextureBuffer* texBuf = nullptr;
-
 	ID3D11Resource* texResource = nullptr;
 	ID3D11ShaderResourceView* newTex = nullptr;
 
@@ -111,8 +109,9 @@ TextureBuffer* GraphicResourceFactory::CreateTextureBuffer(std::string path)
 
 		std::string texName = path.substr(indexSlash, path.size() - indexSlash);
 
-		texBuf = new TextureBuffer();
-		texBuf->pTextureBuf = newTex;
+		// Texture Buffer 积己 棺 Data 火涝..
+		*ppResource = new TextureBuffer();
+		(*ppResource)->pTextureBuf = newTex;
 
 		// Debug Name..
 		GPU_RESOURCE_DEBUG_NAME(newTex, texName.c_str());
@@ -120,25 +119,23 @@ TextureBuffer* GraphicResourceFactory::CreateTextureBuffer(std::string path)
 		// Reset Resource..
 		texResource->Release();
 	}
-
-	return texBuf;
 }
 
-void GraphicResourceFactory::CreateMeshBuffer(ParserData::CMesh* mesh, LoadMeshData* meshData)
+void GraphicResourceFactory::CreateMeshBuffer(ParserData::CMesh* mesh, MeshBuffer** ppResource)
 {
-	switch (meshData->MeshType)
+	switch (mesh->m_MeshType)
 	{
 	case MESH_TYPE::STATIC_MESH:
-		CreateLoadBuffer<VertexInput::MeshVertex>(mesh, meshData);
+		CreateLoadBuffer<VertexInput::MeshVertex>(mesh, ppResource);
 		break;
 	case MESH_TYPE::SKIN_MESH:
-		CreateLoadBuffer<VertexInput::SkinVertex>(mesh, meshData);
+		CreateLoadBuffer<VertexInput::SkinVertex>(mesh, ppResource);
 		break;
 	case MESH_TYPE::TERRAIN_MESH:
-		CreateLoadBuffer<VertexInput::TerrainVertex>(mesh, meshData);
+		CreateLoadBuffer<VertexInput::TerrainVertex>(mesh, ppResource);
 		break;
 	case MESH_TYPE::QUAD_MESH:
-		CreateLoadBuffer<VertexInput::PosTexVertex>(mesh, meshData);
+		CreateLoadBuffer<VertexInput::PosTexVertex>(mesh, ppResource);
 		break;
 	default:
 		break;
@@ -1004,18 +1001,18 @@ UnorderedAccessView* GraphicResourceFactory::RegisterResource(Hash_Code hash_cod
 }
 
 template<>
-void GraphicResourceFactory::CreateLoadBuffer<VertexInput::MeshVertex>(ParserData::CMesh* mesh, LoadMeshData* meshData)
+void GraphicResourceFactory::CreateLoadBuffer<VertexInput::MeshVertex>(ParserData::CMesh* mesh, MeshBuffer** ppResource)
 {
 	if (mesh->m_VertexList.empty()) return;
 	
 	// 货肺款 Buffer 积己..
-	MeshBuffer* newMeshBuf		= new MeshBuffer();
 	VertexBuffer* newVertexBuf	= new VertexBuffer();
 	IndexBuffer* newIndexBuf	= new IndexBuffer();
 
-	meshData->MeshBuffer_Data = newMeshBuf;
-	meshData->MeshBuffer_Data->VertexBuf = newVertexBuf;
-	meshData->MeshBuffer_Data->IndexBuf = newIndexBuf;
+	// 货肺款 Mesh Buffer 积己..
+	if(*ppResource == nullptr) *ppResource = new MeshBuffer();
+	(*ppResource)->VertexBuf = newVertexBuf;
+	(*ppResource)->IndexBuf = newIndexBuf;
 
 	UINT vCount = (UINT)mesh->m_VertexList.size();
 	UINT iCount = (UINT)mesh->m_IndexList.size();
@@ -1088,18 +1085,18 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::MeshVertex>(ParserDat
 }
 
 template<>
-void GraphicResourceFactory::CreateLoadBuffer<VertexInput::SkinVertex>(ParserData::CMesh* mesh, LoadMeshData* meshData)
+void GraphicResourceFactory::CreateLoadBuffer<VertexInput::SkinVertex>(ParserData::CMesh* mesh, MeshBuffer** ppResource)
 {
 	if (mesh->m_VertexList.empty()) return;
 	
 	// 货肺款 Buffer 积己..
-	MeshBuffer* newMeshBuf = new MeshBuffer();
 	VertexBuffer* newVertexBuf = new VertexBuffer();
 	IndexBuffer* newIndexBuf = new IndexBuffer();
 
-	meshData->MeshBuffer_Data = newMeshBuf;
-	meshData->MeshBuffer_Data->VertexBuf = newVertexBuf;
-	meshData->MeshBuffer_Data->IndexBuf = newIndexBuf;
+	// 货肺款 Mesh Buffer 积己..
+	if (*ppResource == nullptr)*ppResource = new MeshBuffer();
+	(*ppResource)->VertexBuf = newVertexBuf;
+	(*ppResource)->IndexBuf = newIndexBuf;
 
 	UINT vCount = (UINT)mesh->m_VertexList.size();
 	UINT iCount = (UINT)mesh->m_IndexList.size();
@@ -1192,16 +1189,18 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::SkinVertex>(ParserDat
 }
 
 template<>
-void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(ParserData::CMesh* mesh, LoadMeshData* meshData)
+void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(ParserData::CMesh* mesh, MeshBuffer** ppResource)
 {
+	if (mesh->m_VertexList.empty()) return;
+	
 	// 货肺款 Buffer 积己..
-	MeshBuffer* newMeshBuf = new MeshBuffer();
 	VertexBuffer* newVertexBuf = new VertexBuffer();
 	IndexBuffer* newIndexBuf = new IndexBuffer();
 
-	meshData->MeshBuffer_Data = newMeshBuf;
-	meshData->MeshBuffer_Data->VertexBuf = newVertexBuf;
-	meshData->MeshBuffer_Data->IndexBuf = newIndexBuf;
+	// 货肺款 Mesh Buffer 积己..
+	if (*ppResource == nullptr) *ppResource = new MeshBuffer();
+	(*ppResource)->VertexBuf = newVertexBuf;
+	(*ppResource)->IndexBuf = newIndexBuf;
 
 	UINT vCount = (UINT)mesh->m_VertexList.size();
 	UINT iCount = (UINT)mesh->m_IndexList.size();
@@ -1209,7 +1208,7 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(Parser
 	UINT iByteSize = sizeof(UINT) * iCount * 3;
 
 	// Mask Pixel Data Parsing..
-	ParserData::ImageData maskImage = m_Parser->LoadImagePixel(meshData->Mask_Name.c_str(), 4);
+	ParserData::ImageData maskImage = m_Parser->LoadImagePixel(mesh->m_MaskName.c_str(), 4);
 
 	Vector3 vMin(+FLT_MAX, +FLT_MAX, +FLT_MAX);
 
@@ -1296,16 +1295,16 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(Parser
 }
 
 template<>
-void GraphicResourceFactory::CreateLoadBuffer<VertexInput::PosTexVertex>(ParserData::CMesh* mesh, LoadMeshData* meshData)
+void GraphicResourceFactory::CreateLoadBuffer<VertexInput::PosTexVertex>(ParserData::CMesh* mesh, MeshBuffer** ppResource)
 {
 	// 货肺款 Buffer 积己..
-	MeshBuffer* newMeshBuf = new MeshBuffer();
 	VertexBuffer* newVertexBuf = new VertexBuffer();
 	IndexBuffer* newIndexBuf = new IndexBuffer();
 
-	meshData->MeshBuffer_Data = newMeshBuf;
-	meshData->MeshBuffer_Data->VertexBuf = newVertexBuf;
-	meshData->MeshBuffer_Data->IndexBuf = newIndexBuf;
+	// 货肺款 Mesh Buffer 积己..
+	if (*ppResource == nullptr) *ppResource = new MeshBuffer();
+	(*ppResource)->VertexBuf = newVertexBuf;
+	(*ppResource)->IndexBuf = newIndexBuf;
 
 	// Quad Buffer..
 	DrawBuffer* quadBuf = g_ResourceManager->GetDrawBuffer<DB_Quad>();

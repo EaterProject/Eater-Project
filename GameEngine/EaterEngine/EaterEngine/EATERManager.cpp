@@ -9,6 +9,7 @@
 #include "Transform.h"
 #include "AnimationController.h"
 #include "Material.h"
+#include "Mesh.h"
 
 #define LERP(prev, next, time) ((prev * (1.0f - time)) + (next * time))
 EATERManager::EATERManager()
@@ -40,6 +41,8 @@ void EATERManager::Load(std::string& Path, UINT parsingMode)
 	std::size_t start = Path.rfind('/') + 1;
 	std::size_t End = Path.rfind('.') - start;
 	std::string SaveName = Path.substr(start, End);
+
+	nowFileName = SaveName;
 
 	int Count = EATER_GET_NODE_COUNT();
 	for (int i = 0; i < Count; i++)
@@ -97,6 +100,12 @@ void EATERManager::LoadScene(std::string& Path)
 	}
 }
 
+void EATERManager::LoadMesh(std::string& Path)
+{
+	/// Mesh Load 해종 ㅎ
+
+}
+
 void EATERManager::LoadMaterial(std::string& Path)
 {
 	std::size_t Start	= Path.rfind('/')+1;
@@ -108,7 +117,9 @@ void EATERManager::LoadMaterial(std::string& Path)
 	int Count = EATER_GET_NODE_COUNT();
 	for (int i = 0; i < Count; i++)
 	{
+		// 새로운 Material 생성..
 		Material* Mat = new Material();
+
 		MaterialBuffer* Data = Mat->m_MaterialData;
 		std::string NodeName = EATER_GET_NODE_NAME(i);
 		if (NodeName == "EATERMAT")
@@ -151,39 +162,9 @@ LoadMeshData* EATERManager::LoadStaticMesh(int index)
 	LoadMeshData* model = new LoadMeshData();
 	model->MeshType = MESH_TYPE::STATIC_MESH;
 	LoadName(index, model);
-	LoadMaterial(index, model);
 	LoadTM(index, model);
-
-	// 저장되있는 Mesh Index를 Load 기준 Index로 변환..
-	int meshIndex = std::stoi(EATER_GET_MAP(index, "MeshIndex"));
-	meshIndex = LoadManager::FindInstanceIndex(meshIndex);
-	
-	// 해당 Index의 Mesh Buffer 유무 체크..
-	MeshBuffer* meshBuffer = LoadManager::GetMeshBuffer(meshIndex);
-
-	// 만약 같은 Mesh Buffer가 없을경우 새로 생성해주고
-	// 있을 경우 해당 Mesh Buffer로 설정..
-	if (meshBuffer == nullptr)
-	{
-		ParserData::CMesh* mesh = new ParserData::CMesh();
-
-		LoadVertex(index, mesh);
-		LoadIndex(index, mesh);
-
-		// 검사하고
-		EnterCriticalSection(m_CriticalSection);
-		m_Graphic->CreateMeshBuffer(mesh, model);
-		LeaveCriticalSection(m_CriticalSection);
-		
-		// Mesh Buffer Index 설정..
-		model->MeshBuffer_Data->BufferIndex = meshIndex;
-
-		LoadManager::MeshBufferList.insert({ meshIndex, model->MeshBuffer_Data });
-	}
-	else
-	{
-		model->MeshBuffer_Data = meshBuffer;
-	}
+	LoadMesh(index, model);
+	LoadMaterial(index, model);
 
 	return model;
 }
@@ -215,41 +196,11 @@ LoadMeshData* EATERManager::LoadSkinMesh(int index)
 	LoadMeshData* model = new LoadMeshData();
 	model->MeshType = MESH_TYPE::SKIN_MESH;
 
-	LoadMaterial(index, model);
 	LoadName(index, model);
 	LoadTM(index, model);
 	LoadBoneOffset(index, model);
-
-	// 저장되있는 Mesh Index를 Load 기준 Index로 변환..
-	int meshIndex = std::stoi(EATER_GET_MAP(index, "MeshIndex"));
-	meshIndex = LoadManager::FindInstanceIndex(meshIndex);
-
-	// 해당 Index의 Mesh Buffer 유무 체크..
-	MeshBuffer* meshBuffer = LoadManager::GetMeshBuffer(meshIndex);
-
-	// 만약 같은 Mesh Buffer가 없을경우 새로 생성해주고
-	// 있을 경우 해당 Mesh Buffer로 설정..
-	if (meshBuffer == nullptr)
-	{
-		ParserData::CMesh* mesh = new ParserData::CMesh();
-
-		LoadSkinVertex(index, mesh);
-		LoadIndex(index, mesh);
-
-		// 검사하고
-		EnterCriticalSection(m_CriticalSection);
-		m_Graphic->CreateMeshBuffer(mesh, model);
-		LeaveCriticalSection(m_CriticalSection);
-
-		// Mesh Buffer Index 설정..
-		model->MeshBuffer_Data->BufferIndex = meshIndex;
-
-		LoadManager::MeshBufferList.insert({ meshIndex, model->MeshBuffer_Data });
-	}
-	else
-	{
-		model->MeshBuffer_Data = meshBuffer;
-	}
+	LoadMesh(index, model);
+	LoadMaterial(index, model);
 
 	return model;
 }
@@ -471,11 +422,11 @@ void EATERManager::LoadIndex(int index, ParserData::CMesh* mesh)
 	}
 }
 
-void EATERManager::LoadBoneOffset(int index, LoadMeshData* mesh)
+void EATERManager::LoadBoneOffset(int index, LoadMeshData* model)
 {
 	int BoneOffsetCount = EATER_GET_LIST_CHOICE(index, "BoneOffset");
-	mesh->BoneTMList = new std::vector<Matrix>();
-	mesh->BoneTMList->reserve(BoneOffsetCount);
+	model->BoneTMList = new std::vector<Matrix>();
+	model->BoneTMList->reserve(BoneOffsetCount);
 	for (int i = 0; i < BoneOffsetCount; i++)
 	{
 		std::vector<float> Data;
@@ -500,7 +451,8 @@ void EATERManager::LoadBoneOffset(int index, LoadMeshData* mesh)
 		TM._42 = Data[13];
 		TM._43 = Data[14];
 		TM._44 = Data[15];
-		mesh->BoneTMList->push_back(TM);
+
+		model->BoneTMList->push_back(TM);
 	}
 }
 
@@ -586,12 +538,65 @@ void EATERManager::LoadMaterial(int index, LoadMeshData* model)
 {
 	std::string material = EATER_GET_MAP(index, "MaterialName");
 
-	
-	// 메테리얼 이름 설정..
+	// Material Name 설정..
 	if (material != "NO")
 	{
 		model->MaterialName = material;
 	}
+}
+
+void EATERManager::LoadMesh(int index, LoadMeshData* model)
+{
+	std::string mesh = EATER_GET_MAP(index, "MeshName");
+
+	// Mesh Name 설정..
+	if (mesh != "NO")
+	{
+		model->MeshName = mesh;
+	}
+	else
+	{
+		// Mesh Buffer가 없을 경우 설정하지 않음..
+		// 자체 포멧에서 이름만 가져올 경우 위 분기도 필요없음..
+		return;
+	}
+
+	/// 자체 포멧이 없을경우에 쓰는중
+	// 저장되있는 Mesh Index를 Load 기준 Index로 변환..
+	int meshIndex = std::stoi(EATER_GET_MAP(index, "MeshIndex"));
+
+	// Mesh 이름 설정..
+	std::string meshName = nowFileName + "_" + std::to_string(meshIndex);
+
+	// 해당 Index의 Mesh Buffer 유무 체크..
+	Mesh* meshBuffer = LoadManager::GetMesh(meshName);
+
+	// 만약 같은 Mesh Buffer가 없을경우 새로 생성해주고
+	// 있을 경우 해당 Mesh Buffer로 설정..
+	if (meshBuffer == nullptr)
+	{
+		ParserData::CMesh* mesh = new ParserData::CMesh();
+
+		LoadVertex(index, mesh);
+		LoadIndex(index, mesh);
+
+		// Mesh 생성..
+		meshBuffer = new Mesh();
+		meshBuffer->Name = meshName;
+
+		EnterCriticalSection(m_CriticalSection);
+		m_Graphic->CreateMeshBuffer(mesh, &meshBuffer->m_MeshData);
+		LeaveCriticalSection(m_CriticalSection);
+
+		// 새로 생성한 Mesh 추가..
+		LoadManager::MeshBufferList.insert({ meshName, meshBuffer });
+
+		delete mesh;
+	}
+
+	// 해당 Mesh Buffer 이름 삽입..
+	// 추후 Mesh Filter Start 에서 Mesh Buffer를 가져오는 기준이 되는 이름..
+	model->MeshName = meshBuffer->Name;
 }
 
 void EATERManager::LoadName(int index, LoadMeshData* model)

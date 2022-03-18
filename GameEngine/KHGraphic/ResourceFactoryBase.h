@@ -5,6 +5,7 @@
 
 class LoadMeshData;
 class TextureBuffer;
+class MeshBuffer;
 
 ///
 /// 2021/11/07 22:59
@@ -22,8 +23,8 @@ public:
 
 public:
 	// Create Output Graphic Resource..
-	virtual TextureBuffer* CreateTextureBuffer(std::string path) abstract;
-	virtual void CreateMeshBuffer(ParserData::CMesh* mesh, LoadMeshData* meshData) abstract;
+	virtual void CreateTextureBuffer(std::string path, TextureBuffer** ppResource) abstract;
+	virtual void CreateMeshBuffer(ParserData::CMesh* mesh, MeshBuffer** ppResource) abstract;
 	virtual void CreateEnvironmentMap(std::string path) abstract;
 
 private:

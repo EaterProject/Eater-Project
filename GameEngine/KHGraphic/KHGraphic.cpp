@@ -113,14 +113,14 @@ void KHGraphic::Render()
 	m_RenderManager->Render();
 }
 
-TextureBuffer* KHGraphic::CreateTextureBuffer(std::string path)
+void KHGraphic::CreateTextureBuffer(std::string path, TextureBuffer** ppResource)
 {
-	return m_FactoryManager->CreateTextureBuffer(path);
+	m_FactoryManager->CreateTextureBuffer(path, ppResource);
 }
 
-void KHGraphic::CreateMeshBuffer(ParserData::CMesh* mesh, LoadMeshData* meshData)
+void KHGraphic::CreateMeshBuffer(ParserData::CMesh* mesh, MeshBuffer** ppResource)
 {
-	m_FactoryManager->CreateMeshBuffer(mesh, meshData);
+	m_FactoryManager->CreateMeshBuffer(mesh, ppResource);
 }
 
 void KHGraphic::CreateEnvironmentMap(std::string path)

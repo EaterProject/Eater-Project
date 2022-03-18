@@ -15,7 +15,6 @@ public:
 	~TextureManager();
 public:
 	void Initialize(GraphicEngineManager* Graphic, CRITICAL_SECTION* _cs);
-	static TextureBuffer* GetTexute(std::string Path);
 	void LoadTexture(std::string& Path);
 private:
 	bool CheckFolder(std::string& Path);

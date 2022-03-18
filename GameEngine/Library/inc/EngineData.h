@@ -193,12 +193,14 @@ public:
 
 	std::string ParentName = "";	//부모의 이름
 	std::string	Name = "";			//자기자신의 이름
+
+	std::string MeshName = "";		//매쉬 이름
 	std::string MaterialName = "";	//매터리얼 이름
-	std::string Mask_Name = "";		// Terrain 전용 Mask Name
 
 	Matrix WorldTM;					//월드 매트릭스
 	Matrix LocalTM;					//로컬 매트릭스
 
+	/// Mesh 자체 포멧 추가후 제거해야함..
 	MeshBuffer* MeshBuffer_Data = nullptr;
 
 	int BoneIndex = -1;				//본일경우 자신의 인덱스

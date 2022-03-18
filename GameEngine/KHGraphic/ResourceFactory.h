@@ -19,8 +19,8 @@ public:
 	friend class FactoryManager;
 
 public:
-	TextureBuffer* CreateTextureBuffer(std::string path) override;
-	void CreateMeshBuffer(ParserData::CMesh* mesh, LoadMeshData* meshData) override;
+	void CreateTextureBuffer(std::string path, TextureBuffer** ppResource) override;
+	void CreateMeshBuffer(ParserData::CMesh* mesh, MeshBuffer** ppResource) override;
 	void CreateEnvironmentMap(std::string path) override;
 
 private:
@@ -56,7 +56,7 @@ private:
 
 private:
 	template<typename VertexData>
-	void CreateLoadBuffer(ParserData::CMesh* mesh, LoadMeshData* meshData);
+	void CreateLoadBuffer(ParserData::CMesh* mesh, MeshBuffer** ppResource);
 
 	void CreateMainRenderTarget(Hash_Code hash_code, UINT width, UINT height);
 	void CreateTextureRenderTarget(UINT width, UINT height);
@@ -121,17 +121,17 @@ namespace VertexInput
 
 #pragma region Create Index & CVertex Buffer Template Function
 template<typename VertexData>
-inline void GraphicResourceFactory::CreateLoadBuffer(ParserData::CMesh* mesh, LoadMeshData* meshData) {}
+inline void GraphicResourceFactory::CreateLoadBuffer(ParserData::CMesh* mesh, MeshBuffer** ppResource) {}
 
 template<>
-inline void GraphicResourceFactory::CreateLoadBuffer<VertexInput::MeshVertex>(ParserData::CMesh* mesh, LoadMeshData* meshData);
+inline void GraphicResourceFactory::CreateLoadBuffer<VertexInput::MeshVertex>(ParserData::CMesh* mesh, MeshBuffer** ppResource);
 
 template<>
-inline void GraphicResourceFactory::CreateLoadBuffer<VertexInput::SkinVertex>(ParserData::CMesh* mesh, LoadMeshData* meshData);
+inline void GraphicResourceFactory::CreateLoadBuffer<VertexInput::SkinVertex>(ParserData::CMesh* mesh, MeshBuffer** ppResource);
 
 template<>
-inline void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(ParserData::CMesh* mesh, LoadMeshData* meshData);
+inline void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(ParserData::CMesh* mesh, MeshBuffer** ppResource);
 
 template<>
-inline void GraphicResourceFactory::CreateLoadBuffer<VertexInput::PosTexVertex>(ParserData::CMesh* mesh, LoadMeshData* meshData);
+inline void GraphicResourceFactory::CreateLoadBuffer<VertexInput::PosTexVertex>(ParserData::CMesh* mesh, MeshBuffer** ppResource);
 #pragma endregion Create Index & CVertex Buffer Template Function

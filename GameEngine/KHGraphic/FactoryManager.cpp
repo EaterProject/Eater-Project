@@ -34,14 +34,14 @@ void FactoryManager::Release()
 	SAFE_RELEASE(m_BakingFactory);
 }
 
-TextureBuffer* FactoryManager::CreateTextureBuffer(std::string path)
+void FactoryManager::CreateTextureBuffer(std::string path, TextureBuffer** ppResource)
 {
-	return m_ResourceFactory->CreateTextureBuffer(path);
+	m_ResourceFactory->CreateTextureBuffer(path, ppResource);
 }
 
-void FactoryManager::CreateMeshBuffer(ParserData::CMesh* mesh, LoadMeshData* meshData)
+void FactoryManager::CreateMeshBuffer(ParserData::CMesh* mesh, MeshBuffer** ppResource)
 {
-	m_ResourceFactory->CreateMeshBuffer(mesh, meshData);
+	m_ResourceFactory->CreateMeshBuffer(mesh, ppResource);
 }
 
 void FactoryManager::CreateEnvironmentMap(std::string path)

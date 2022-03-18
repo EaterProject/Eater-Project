@@ -41,7 +41,7 @@ private:
 	void SetMaterialData(ParserData::CMesh* mMesh, LoadMeshData* SaveData);	//메테리얼 정보 삽입
 	void SetMatrixData(ParserData::CMesh* mMesh, LoadMeshData* SaveData);	//메트릭스 정보 삽입
 	void SetNameData(ParserData::CMesh* mMesh, LoadMeshData* SaveData);		//이름 정보 삽입
-	void SetBufferData(ParserData::CMesh* mMesh, LoadMeshData* SaveData);	//인덱스 버텍스 버퍼 삽입
+	void SetMeshData(ParserData::CMesh* mMesh, LoadMeshData* SaveData);	//인덱스 버텍스 버퍼 삽입
 private:
 	std::string CutStr(std::string Path);
 	void LinkMesh(std::vector<LoadMeshData*>& List, ModelData* SaveMesh);

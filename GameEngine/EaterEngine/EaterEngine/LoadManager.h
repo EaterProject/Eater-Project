@@ -22,14 +22,15 @@ namespace ParserData
 class ModelAnimationData;
 class LoadMeshData;
 class ModelData;
-class Material;
 class ModelParser;
 class FBXParser;
 class FBXModel;
 class TextureBuffer;
-class MeshBuffer;
+class Material;
+class Mesh;
 
 class GraphicEngineManager;
+class MeshManager;
 class MaterialManager;
 class FBXManager;
 class TextureManager;
@@ -45,7 +46,7 @@ public:
 	~LoadManager();
 
 	//초기화 및 경로 설정
-	void Initialize(GraphicEngineManager* graphic, MaterialManager* material, CRITICAL_SECTION* _cs);
+	void Initialize(GraphicEngineManager* graphic, CRITICAL_SECTION* _cs);
 	void Load(std::string& Path, UINT MODE);
 	void LoadTerrain(std::string mMeshName, std::string mMaskName, UINT parsingMode);
 	void Start();
@@ -55,13 +56,12 @@ public:
 	int	GetAnimationCount();
 
 	static TextureBuffer*	GetTexture(std::string Path);
-	static Material*		GetMaterial(std::string Path);
-	static ModelData*		GetMesh(std::string Path);
+	static ModelData*		GetModel(std::string Path);
 	static ModelAnimationData* GetAnimation(std::string Path);
-	static MeshBuffer*		GetMeshBuffer(UINT index);
-	static bool				FindMesh(std::string Name);
+	static Material*		GetMaterial(std::string Path);
+	static Mesh*			GetMesh(std::string Path);
+	static bool				FindModel(std::string Name);
 	static bool				FindTexture(std::string Name);
-	static int				FindInstanceIndex(int index);
 
 private:
 	bool	CheckFolder(std::string& Path);
@@ -76,17 +76,15 @@ private:
 	static std::map<std::string, TextureBuffer*>		TextureList;
 	static std::map<std::string, Material*>				MaterialList;
 	static std::map<std::string, ModelAnimationData*>	AnimationList;
-	static std::map<UINT, MeshBuffer*>					MeshBufferList;
+	static std::map<std::string, Mesh*>					MeshBufferList;
 
-	//인스턴스 인덱스 관리
-	static std::vector<int> GrobalInstanceIndexList;
-	static bool isNewMesh;
-	static int GrobalInstanceIndex;
 private:
 	FBXManager*				mFBX;
 	TextureManager*			mTexture;
-	MaterialManager*		mMaterial;
 	EATERManager*			mEATER;
+
+	MeshManager*			mMeshManager;		// Mesh 관리 매니저
+	MaterialManager*		mMaterialManager;	// Material 관리 매니저
 
 	friend FBXManager;
 	friend TextureManager;

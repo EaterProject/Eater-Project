@@ -163,6 +163,7 @@ namespace ParserData
 	public:
 		std::string	m_NodeName; 
 		std::string	m_ParentName;
+		std::string m_MaskName;					// Terrain Àü¿ë Mask Name
 
 		UINT m_MeshIndex;						// Geometry Index
 
