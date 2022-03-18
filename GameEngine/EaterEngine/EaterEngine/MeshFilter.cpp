@@ -299,7 +299,7 @@ void MeshFilter::CreateStaticMesh(LoadMeshData* mMesh, GameObject* Object)
 	Object->Name = mMesh->Name;
 
 	SetMatrixData(mMesh, Data, Object);
-	SetMaterialData(mMesh, Data);
+	SetMaterialData(mMesh, Data, Object);
 	SetMeshData(mMesh, Data);
 	SetType(mMesh, Data);
 
@@ -346,13 +346,10 @@ void MeshFilter::CreateSkinMesh(LoadMeshData* mMesh, GameObject* Object)
 {
 	MeshData* Data = Object->OneMeshData;
 
-	if (Object->Name == "")
-	{
-		Object->Name = mMesh->Name;
-	}
+	Object->Name = mMesh->Name;
 
 	SetMatrixData(mMesh, Data, Object);
-	SetMaterialData(mMesh, Data);
+	SetMaterialData(mMesh, Data, Object);
 	SetMeshData(mMesh, Data);
 
 	Data->Object_Data->ObjType = OBJECT_TYPE::SKINNING;
@@ -369,25 +366,27 @@ void MeshFilter::CreateSkinMesh(LoadMeshData* mMesh, GameObject* Object)
 	}
 }
 
-void MeshFilter::SetMaterialData(LoadMeshData* LoadMesh, MeshData* mMesh)
+void MeshFilter::SetMaterialData(LoadMeshData* LoadMesh, MeshData* mMesh, GameObject* obj)
 {
 	/// Load시 저장해 둿던 Material Name 기준으로 해당 Material Buffer 설정..
 	Material* material = LoadManager::GetMaterial(LoadMesh->MaterialName);
+	MeshFilter* meshFilter = obj->GetComponent<MeshFilter>();
 
 	// 로드 여부에 따른 Material 설정..
 	if (material)
 	{
 		// 로드한 Material 설정..
-		Materials = material;
+		meshFilter->Materials = material;
 	}
 	else
 	{
 		// 새로운 Material 생성..
-		Materials = new Material();
+		meshFilter->Materials = new Material();
 	}
 
 	// Render Material Data 설정..
-	mMesh->Material_Buffer = Materials->m_MaterialData;
+	mMesh->Material_Buffer = meshFilter->Materials->m_MaterialData;
+	//mMesh->Material_Buffer = Materials->m_MaterialData;
 }
 
 void MeshFilter::SetMatrixData(LoadMeshData* LoadMesh, MeshData* mMesh, GameObject* Object)
@@ -505,6 +504,7 @@ void MeshFilter::CreateMesh()
 		//오브젝트 생성 컨퍼넌트 생성
 		GameObject* Object = Instance("Skin");
 		SkinningFilter* SKFilter = Object->AddComponent<SkinningFilter>();
+		Object->AddComponent<MeshFilter>();
 
 		SKFilter->PushBoneList(&BoneList);
 		SKFilter->PushBone_OffsetList(mMesh->BoneOffsetList);

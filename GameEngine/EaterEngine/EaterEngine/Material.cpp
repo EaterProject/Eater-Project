@@ -37,7 +37,7 @@ void Material::SetDiffuseTexture(std::string diffuseName)
 
 	// Texture 변경..
 	m_MaterialData->Albedo = newTexture;
-
+	m_MaterialData->Albedo->Name = diffuseName;
 	// Renderer Data 동기화..
 	GraphicEngine::Get()->AddChangeMaterialData(m_MaterialData);
 }
@@ -48,6 +48,7 @@ void Material::SetNormalTexture(std::string noramlName)
 
 	// Texture 변경..
 	m_MaterialData->Normal = newTexture;
+	m_MaterialData->Normal->Name = noramlName;
 
 	// Renderer Data 동기화..
 	GraphicEngine::Get()->AddChangeMaterialData(m_MaterialData);
@@ -59,6 +60,7 @@ void Material::SetEmissiveTexture(std::string emissiveName)
 
 	// Texture 변경..
 	m_MaterialData->Emissive = newTexture;
+	m_MaterialData->Emissive->Name = emissiveName;
 
 	// Renderer Data 동기화..
 	GraphicEngine::Get()->AddChangeMaterialData(m_MaterialData);
@@ -70,6 +72,7 @@ void Material::SetORMTexture(std::string ormName)
 
 	// Texture 변경..
 	m_MaterialData->ORM = newTexture;
+	m_MaterialData->ORM->Name = ormName;
 
 	// Renderer Data 동기화..
 	GraphicEngine::Get()->AddChangeMaterialData(m_MaterialData);
@@ -106,6 +109,48 @@ void Material::Release()
 	MaterialManager::DeleteMaterial(m_MaterialData->BufferIndex);
 	
 	// 해당 Material Data 해제..
-	SAFE_DELETE(m_MaterialData->Material_SubData);
-	SAFE_DELETE(m_MaterialData);
+	delete m_MaterialData->Material_SubData;
+	delete m_MaterialData;
+}
+
+std::string Material::GetDiffuseName()
+{
+	if (m_MaterialData->Albedo != nullptr )
+	{
+		return m_MaterialData->Albedo->Name;
+	}
+
+	return std::string();
+}
+
+std::string Material::GetNormalName()
+{
+	if (m_MaterialData->Normal != nullptr)
+	{
+		return m_MaterialData->Normal->Name;
+	}
+
+	return std::string();
+}
+
+std::string Material::GetEmissiveName()
+{
+	if (m_MaterialData->Emissive != nullptr)
+	{
+		return m_MaterialData->Emissive->Name;
+	}
+
+	return std::string();
+}
+
+std::string Material::GetORMName()
+{
+	if (m_MaterialData->ORM != nullptr)
+	{
+		return m_MaterialData->ORM->Name;
+	}
+
+	//SAFE_DELETE(m_MaterialData->Material_SubData);
+	//SAFE_DELETE(m_MaterialData);
+	return std::string();
 }

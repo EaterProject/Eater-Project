@@ -33,6 +33,12 @@ public:
 	void Release();
 
 public:
+	EATER_ENGINEDLL std::string GetDiffuseName();
+	EATER_ENGINEDLL std::string GetNormalName();
+	EATER_ENGINEDLL std::string GetEmissiveName();
+	EATER_ENGINEDLL std::string GetORMName();
+
+public:
 	std::string Name;
 	MaterialBuffer* m_MaterialData;
 };

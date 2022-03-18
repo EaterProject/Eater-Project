@@ -6,10 +6,11 @@
 #include "EaterSaveData.h"
 #include "MainHeader.h"
 #include "EditorData.h"
+#include "EATERManager.h"
+
 FBXManager::FBXManager()
 {
-	FbxFactory = ModelParser::Create(FBX_MODEL);
-	FbxFactory->Initialize();
+	
 }
 
 FBXManager::~FBXManager()
@@ -17,77 +18,67 @@ FBXManager::~FBXManager()
 	FbxFactory->Release();
 }
 
+void FBXManager::Initialize(EaterManager* mManager)
+{
+	//FBX를 로드할 펙토리 생성
+	FbxFactory = ModelParser::Create(FBX_MODEL);
+	FbxFactory->Initialize();
+	
+	
+	//int SaveMode = Data->SaveType;
+	//switch (SaveMode)
+	//{
+	//case 0: // 기본메쉬
+	//case 1:	// 스킨
+	//case 2:	// 터레인
+	//	SaveFileName = SaveFileName.substr(0, SaveFileName.rfind('/')+1);
+	//	break;
+	//case 3: //애니메이션
+	//	mMesh = FbxFactory->LoadModel(Path, ANIMATION_ONLY);
+	//	SaveFileName = "../Assets/Mesh/Animation/";
+	//	EATER_CREATE_FILE(name, SaveFileName);
+	//	AnimationMesh(mMesh);
+	//	EATER_CLOSE_FILE();
+	//	return;
+	//}
+	//MeshIndexList.clear();
+	//mMesh = FbxFactory->LoadModel(Path, 0);
+	//
+	//OneMeshMaterialList.clear();
+	//EATER_CREATE_FILE(name, SaveFileName);
+	//int MeshCount = (int)mMesh->m_MeshList.size();
+	//int Anime = mMesh->m_isAnimation;
+	//
+	//for (int i = 0; i < MeshCount; i++)
+	//{
+	//	ParserData::CMesh* temp = mMesh->m_MeshList[i];
+	//	switch (SaveMode)
+	//	{
+	//	case 0:
+	//		StaticMesh(temp, name);
+	//		break;
+	//	case 1:
+	//		SkinMesh(temp,name);
+	//		break;
+	//	case 2:
+	//		TerrainMesh(temp);
+	//		break;
+	//	}
+	//}
+	//EATER_CLOSE_FILE();
+
+
+
+	mEaterManager = mManager;
+}
+
 void FBXManager::OpenFile(std::string& Path, MeshOption* Data)
 {
-	mOption = Data;
-	std::string name = Data->Name;
-	std::string SaveFileName = Path;
-	
-	int SaveMode = Data->SaveType;
-	switch (SaveMode)
-	{
-	case 0: // 기본메쉬
-	case 1:	// 스킨
-	case 2:	// 터레인
-		SaveFileName = SaveFileName.substr(0, SaveFileName.rfind('/')+1);
-		break;
-	case 3: //애니메이션
-		mMesh = FbxFactory->LoadModel(Path, ANIMATION_ONLY);
-		SaveFileName = "../Assets/Mesh/Animation/";
-		EATER_CREATE_FILE(name, SaveFileName);
-		AnimationMesh(mMesh);
-		EATER_CLOSE_FILE();
-		return;
-	}
-	MeshIndexList.clear();
 	mMesh = FbxFactory->LoadModel(Path, 0);
-
-	OneMeshMaterialList.clear();
-	EATER_CREATE_FILE(name, SaveFileName);
-	int MeshCount = (int)mMesh->m_MeshList.size();
-	int Anime = mMesh->m_isAnimation;
-
-	for (int i = 0; i < MeshCount; i++)
-	{
-		ParserData::CMesh* temp = mMesh->m_MeshList[i];
-		switch (SaveMode)
-		{
-		case 0:
-			StaticMesh(temp, name);
-			break;
-		case 1:
-			SkinMesh(temp,name);
-			break;
-		case 2:
-			TerrainMesh(temp);
-			break;
-		}
-	}
-	EATER_CLOSE_FILE();
-
-
-
-	MaterialSave(name);
+	mEaterManager->Load_FBX_File(Path, mMesh);
 }
 
-void FBXManager::StaticMesh(ParserData::CMesh* mMesh, std::string FileName)
-{
-	EATER_SET_NODE("STATIC");
 
-	if (FindInstanceIndex(mMesh->m_MeshIndex) == false)
-	{
-		SetParent(mMesh);
-		SetMaterial(mMesh, FileName);
-		SetMatrix(mMesh);
-		SetVertex(mMesh);
-		SetIndex(mMesh);
-	}
-	else
-	{
-		SetParent(mMesh);
-		SetMatrix(mMesh);
-	}
-}
 
 void FBXManager::BoneMesh(ParserData::CMesh* mMesh)
 {
@@ -102,7 +93,6 @@ void FBXManager::BoneMesh(ParserData::CMesh* mMesh)
 		EATER_SET_MAP("TopNode", "NO");
 	}
 	SetParent(mMesh);
-	SetMatrix(mMesh);
 }
 
 void FBXManager::SkinMesh(ParserData::CMesh* mMesh, std::string FileName)
@@ -114,7 +104,7 @@ void FBXManager::SkinMesh(ParserData::CMesh* mMesh, std::string FileName)
 		SetMatrix(mMesh);
 		SetMaterial(mMesh, FileName);
 		SetVertexSkin(mMesh);
-		SetIndex(mMesh);
+		//SetIndex(mMesh);
 		SetBoneOffset(mMesh);
 	}
 	else
@@ -152,14 +142,38 @@ void FBXManager::AnimationMesh(ParserData::CModel* mMesh)
 		{
 			ParserData::CFrame* Frame = mMesh->m_AnimationList[i]->m_AniData[j];
 
+			if (i == 0)
+			{
+				Frame->m_Pos.x += mOption->Position.x;
+				Frame->m_Pos.y += mOption->Position.y;
+				Frame->m_Pos.z += mOption->Position.z;
+			}
 			EATER_SET_LIST(Frame->m_Pos.x);
 			EATER_SET_LIST(Frame->m_Pos.y);
 			EATER_SET_LIST(Frame->m_Pos.z);
 
-			EATER_SET_LIST(Frame->m_RotQt.x);
-			EATER_SET_LIST(Frame->m_RotQt.y);
-			EATER_SET_LIST(Frame->m_RotQt.z);
-			EATER_SET_LIST(Frame->m_RotQt.w);
+			if (i == 0)
+			{
+				float radX = mOption->Rotation.x * 3.141592f / 180;
+				float radY = mOption->Rotation.y * 3.141592f / 180;
+				float radZ = mOption->Rotation.z * 3.141592f / 180;
+
+				Quaternion OptionRot	= XMQuaternionRotationRollPitchYaw(radX, radY, radZ);
+				Quaternion LocalRot		= Frame->m_RotQt;
+				Quaternion Change		= LocalRot* OptionRot;
+
+				EATER_SET_LIST(Change.x);
+				EATER_SET_LIST(Change.y);
+				EATER_SET_LIST(Change.z);
+				EATER_SET_LIST(Change.w);
+			}
+			else
+			{
+				EATER_SET_LIST(Frame->m_RotQt.x);
+				EATER_SET_LIST(Frame->m_RotQt.y);
+				EATER_SET_LIST(Frame->m_RotQt.z);
+				EATER_SET_LIST(Frame->m_RotQt.w);
+			}
 
 			EATER_SET_LIST(Frame->m_Scale.x);
 			EATER_SET_LIST(Frame->m_Scale.y);
@@ -268,6 +282,60 @@ void FBXManager::SetMatrix(ParserData::CMesh* mMesh)
 	EATER_SET_LIST(SaveLocal._44, true);
 }
 
+//void FBXManager::SetBoneMatrix(ParserData::CMesh* mMesh,bool TopBone)
+//{
+//	EATER_SET_LIST_START("WorldTM", 4, 4);
+//	EATER_SET_LIST(mMesh->m_WorldTM._11);
+//	EATER_SET_LIST(mMesh->m_WorldTM._12);
+//	EATER_SET_LIST(mMesh->m_WorldTM._13);
+//	EATER_SET_LIST(mMesh->m_WorldTM._14, true);
+//
+//	EATER_SET_LIST(mMesh->m_WorldTM._21);
+//	EATER_SET_LIST(mMesh->m_WorldTM._22);
+//	EATER_SET_LIST(mMesh->m_WorldTM._23);
+//	EATER_SET_LIST(mMesh->m_WorldTM._24, true);
+//
+//	EATER_SET_LIST(mMesh->m_WorldTM._31);
+//	EATER_SET_LIST(mMesh->m_WorldTM._32);
+//	EATER_SET_LIST(mMesh->m_WorldTM._33);
+//	EATER_SET_LIST(mMesh->m_WorldTM._34, true);
+//
+//	EATER_SET_LIST(mMesh->m_WorldTM._41);
+//	EATER_SET_LIST(mMesh->m_WorldTM._42);
+//	EATER_SET_LIST(mMesh->m_WorldTM._43);
+//	EATER_SET_LIST(mMesh->m_WorldTM._44, true);
+//
+//	DirectX::SimpleMath::Matrix SaveLocal = mMesh->m_LocalTM;
+//	//if (TopBone == true)
+//	//{
+//	//	DirectX::SimpleMath::Matrix Local = mMesh->m_LocalTM;
+//	//	DirectX::SimpleMath::Matrix Change = mOption->GetBoneMatrix();
+//	//	SaveLocal = Local * Change;
+//	//}
+//
+//
+//	EATER_SET_LIST_START("LocalTM", 4, 4);
+//	EATER_SET_LIST(SaveLocal._11);
+//	EATER_SET_LIST(SaveLocal._12);
+//	EATER_SET_LIST(SaveLocal._13);
+//	EATER_SET_LIST(SaveLocal._14, true);
+//
+//	EATER_SET_LIST(SaveLocal._21);
+//	EATER_SET_LIST(SaveLocal._22);
+//	EATER_SET_LIST(SaveLocal._23);
+//	EATER_SET_LIST(SaveLocal._24, true);
+//
+//	EATER_SET_LIST(SaveLocal._31);
+//	EATER_SET_LIST(SaveLocal._32);
+//	EATER_SET_LIST(SaveLocal._33);
+//	EATER_SET_LIST(SaveLocal._34, true);
+//
+//	EATER_SET_LIST(SaveLocal._41);
+//	EATER_SET_LIST(SaveLocal._42);
+//	EATER_SET_LIST(SaveLocal._43);
+//	EATER_SET_LIST(SaveLocal._44, true);
+//}
+
 void FBXManager::SetMaterial(ParserData::CMesh* mMesh, std::string FileName)
 {
 	if (mMesh->m_MaterialData == nullptr) { return; }
@@ -291,7 +359,6 @@ void FBXManager::SetMaterial(ParserData::CMesh* mMesh, std::string FileName)
 		Data.NormalMap = CutStr(mMesh->m_MaterialData->m_NormalMap->m_BitMap);
 	}
 	
-
 	if (mMesh->m_MaterialData->m_EmissiveMap != nullptr)
 	{
 		Data.EmissiveMap = CutStr(mMesh->m_MaterialData->m_EmissiveMap->m_BitMap);

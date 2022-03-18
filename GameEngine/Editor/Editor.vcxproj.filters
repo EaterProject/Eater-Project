@@ -109,6 +109,21 @@
     <Filter Include="소스 파일\MFC\Dialog\Assets">
       <UniqueIdentifier>{a8cbe88f-567a-4ae8-afc1-2c4ed9b903b7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Manager\Eater\EaterAnimation">
+      <UniqueIdentifier>{aff7e431-a352-4a0a-82ff-2cce3ab25594}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\Eater\EaterMesh">
+      <UniqueIdentifier>{4dfe9510-17f3-46f4-96e7-26eb70c509d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\Eater\EaterMaterial">
+      <UniqueIdentifier>{58b1aefe-58d2-4a28-bcfb-5b5582c8ed8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\Eater\Manager">
+      <UniqueIdentifier>{0a4fd463-5197-4d4d-925e-9124eab5700b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\Eater\EaterBuffer">
+      <UniqueIdentifier>{41e76107-04c6-4f8b-aaaa-f0c5c2aef00d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -140,9 +155,6 @@
     </ClInclude>
     <ClInclude Include="EditorManager.h">
       <Filter>소스 파일\Manager\Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="EaterManager.h">
-      <Filter>소스 파일\Manager\Eater</Filter>
     </ClInclude>
     <ClInclude Include="YamlManager.h">
       <Filter>소스 파일\Manager\YAML</Filter>
@@ -198,6 +210,21 @@
     <ClInclude Include="AssetsDialog.h">
       <Filter>소스 파일\MFC\Dialog\Assets</Filter>
     </ClInclude>
+    <ClInclude Include="E_MeshManager.h">
+      <Filter>소스 파일\Manager\Eater\EaterMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="E_AnimationManager.h">
+      <Filter>소스 파일\Manager\Eater\EaterAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="E_MaterialManager.h">
+      <Filter>소스 파일\Manager\Eater\EaterMaterial</Filter>
+    </ClInclude>
+    <ClInclude Include="EaterManager.h">
+      <Filter>소스 파일\Manager\Eater\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="E_BufferManager.h">
+      <Filter>소스 파일\Manager\Eater\EaterBuffer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainFrm.cpp">
@@ -220,9 +247,6 @@
     </ClCompile>
     <ClCompile Include="EditorManager.cpp">
       <Filter>소스 파일\Manager\Editor</Filter>
-    </ClCompile>
-    <ClCompile Include="EaterManager.cpp">
-      <Filter>소스 파일\Manager\Eater</Filter>
     </ClCompile>
     <ClCompile Include="YamlManager.cpp">
       <Filter>소스 파일\Manager\YAML</Filter>
@@ -274,6 +298,21 @@
     </ClCompile>
     <ClCompile Include="AssetsDialog.cpp">
       <Filter>소스 파일\MFC\Dialog\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="E_MeshManager.cpp">
+      <Filter>소스 파일\Manager\Eater\EaterMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="E_AnimationManager.cpp">
+      <Filter>소스 파일\Manager\Eater\EaterAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="E_MaterialManager.cpp">
+      <Filter>소스 파일\Manager\Eater\EaterMaterial</Filter>
+    </ClCompile>
+    <ClCompile Include="EaterManager.cpp">
+      <Filter>소스 파일\Manager\Eater\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="E_BufferManager.cpp">
+      <Filter>소스 파일\Manager\Eater\EaterBuffer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

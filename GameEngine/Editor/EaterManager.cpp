@@ -1,32 +1,75 @@
 #include "EaterManager.h"
 #include "EaterHeader.h"
 
+#include "ModelParser.h";
+
+#include "E_MaterialManager.h"
+#include "E_MeshManager.h"
+#include "E_AnimationManager.h"
+#include "E_BufferManager.h"
+
 EaterManager::EaterManager()
 {
+
 
 }
 
 EaterManager::~EaterManager()
 {
 
+
+
 }
 
-void EaterManager::OpenFile(std::string& Path)
+void EaterManager::Initialize()
 {
-	//EATER_OPEN_FILE(Path);
-	//
-	//int Count = EATER_GET_NODE_COUNT();
-	//for (int i = 0; i < Count; i++)
-	//{
-	//	std::string NodeName = EATER_GET_NODE_NAME(i);
-	//
-	//	if (NodeName == "STATIC")
-	//	{
-	//		std::string DiffuseMap	= EATER_GET_MAP(i, "DiffuseMap");
-	//		std::string NormalMap	= EATER_GET_MAP(i, "NormalMap");
-	//		std::string EmissiveMap = EATER_GET_MAP(i, "EmissiveMap");
-	//		std::string ORMMap		= EATER_GET_MAP(i, "ORMMap");
-	//	}
-	//}
-	//EATER_CLEAR_NODE();
+	MeshManager			= new E_MeshManager();
+	AnimationManager	= new E_AnimationManager();
+	MaterialManager		= new E_MaterialManager();
+	BufferManager		= new E_BufferManager();
 }
+
+std::string EaterManager::CutFileName(std::string FilePath)
+{
+	size_t start = FilePath.rfind("/") + 1;
+	size_t end = FilePath.rfind(".") - start;
+	std::string FileType = FilePath.substr(start, end);
+	return FileType;
+}
+
+void EaterManager::LoadEaterFile(std::string& Path)
+{
+	
+
+
+
+
+
+
+}
+
+void EaterManager::Load_FBX_File(std::string& Path, ParserData::CModel* FBXMesh)
+{
+	std::string FileName = CutFileName(Path);
+
+	///Model 정보를 저장한다
+	EATER_CREATE_FILE(FileName,"../Assets/Model/ModelData/",".Eater");
+	MeshManager->SetFileName(FileName);
+	MeshManager->ChangeEaterFile(FBXMesh);
+	EATER_CLOSE_FILE();
+
+	///Material 정보를 저장한다
+	MaterialManager->SetFileName(FileName);
+	MaterialManager->ChangeEaterFile(FBXMesh);
+
+	///MeshBuffer 정보를 저장한다
+	BufferManager->SetFileName(FileName);
+	BufferManager->ChangeEaterFile(FBXMesh);
+
+	///Animation 정보를 저장한다
+	////애니메이션 있으면 체크
+	//EATER_CREATE_FILE(FileName, "../Assets/Model/StaticModel/");
+	////MaterialManager->
+	//EATER_CLOSE_FILE();	
+}
+

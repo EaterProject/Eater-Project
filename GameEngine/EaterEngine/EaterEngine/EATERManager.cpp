@@ -102,8 +102,70 @@ void EATERManager::LoadScene(std::string& Path)
 
 void EATERManager::LoadMesh(std::string& Path)
 {
-	/// Mesh Load 해종 ㅎ
+	EATER_OPEN_FILE(Path);
+	
+	int NodeCount = EATER_GET_NODE_COUNT();
+	for (int j = 0; j < NodeCount; j++)
+	{
+		int VertexCount = EATER_GET_LIST_CHOICE(j, "Vertex");
+		ParserData::CMesh* mesh = new ParserData::CMesh();
 
+		for (int i = 0; i < VertexCount; i++)
+		{
+			ParserData::CVertex* V = new ParserData::CVertex();
+
+			std::vector<float> Data;
+			EATER_GET_LIST(&Data, i);
+
+			V->m_Pos.x = Data[0];
+			V->m_Pos.y = Data[1];
+			V->m_Pos.z = Data[2];
+
+			V->m_UV.x = Data[3];
+			V->m_UV.y = Data[4];
+
+			V->m_Normal.x = Data[5];
+			V->m_Normal.y = Data[6];
+			V->m_Normal.z = Data[7];
+
+			V->m_Tanget.x = Data[8];
+			V->m_Tanget.y = Data[9];
+			V->m_Tanget.z = Data[10];
+
+			mesh->m_VertexList.push_back(V);
+		}
+
+		int IndexCount = EATER_GET_LIST_CHOICE(j, "Index");
+		for (int i = 0; i < IndexCount; i++)
+		{
+			ParserData::CIndexList* IB = new ParserData::CIndexList();
+
+			std::vector<float> Data;
+			EATER_GET_LIST(&Data, i);
+			IB->m_Index[0] = Data[0];
+			IB->m_Index[1] = Data[1];
+			IB->m_Index[2] = Data[2];
+
+			mesh->m_IndexList.push_back(IB);
+		}
+
+
+		Mesh* meshBuffer = new Mesh();
+		
+		EnterCriticalSection(m_CriticalSection);
+		m_Graphic->CreateMeshBuffer(mesh, &meshBuffer->m_MeshData);
+		LeaveCriticalSection(m_CriticalSection);
+
+		std::size_t Start	= Path.rfind('/') + 1;
+		std::size_t End		= Path.rfind('.') -Start;
+		std::string SaveName = Path.substr(Start, End);
+		meshBuffer->Name = SaveName;
+		LoadManager::MeshBufferList.insert({ SaveName ,meshBuffer });
+
+		delete mesh;
+	}
+
+	EATER_CLEAR_NODE();
 }
 
 void EATERManager::LoadMaterial(std::string& Path)
@@ -119,7 +181,8 @@ void EATERManager::LoadMaterial(std::string& Path)
 	{
 		// 새로운 Material 생성..
 		Material* Mat = new Material();
-
+		Mat->Name = SaveName;
+		
 		MaterialBuffer* Data = Mat->m_MaterialData;
 		std::string NodeName = EATER_GET_NODE_NAME(i);
 		if (NodeName == "EATERMAT")
@@ -131,8 +194,13 @@ void EATERManager::LoadMaterial(std::string& Path)
 
 			Data->Albedo	= LoadManager::GetTexture(DiffuseName);
 			Data->Normal	= LoadManager::GetTexture(NormalName);
-			Data->Emissive	= LoadManager::GetTexture(EmissiveName);
-			Data->ORM		= LoadManager::GetTexture(ORMName);
+			Data->Emissive = LoadManager::GetTexture(EmissiveName);
+			Data->ORM = LoadManager::GetTexture(ORMName);
+
+			if(Data->Albedo) Data->Albedo->Name = DiffuseName;
+			if(Data->Normal) Data->Normal->Name = NormalName;
+			if(Data->Emissive) Data->Emissive->Name = EmissiveName;
+			if(Data->ORM) Data->ORM->Name = ORMName;
 
 			Data->Material_SubData->RoughnessFactor = std::stof(EATER_GET_MAP(i, "Roughness"));
 			Data->Material_SubData->MetallicFactor  = std::stof(EATER_GET_MAP(i, "Metallic"));
@@ -554,49 +622,6 @@ void EATERManager::LoadMesh(int index, LoadMeshData* model)
 	{
 		model->MeshName = mesh;
 	}
-	else
-	{
-		// Mesh Buffer가 없을 경우 설정하지 않음..
-		// 자체 포멧에서 이름만 가져올 경우 위 분기도 필요없음..
-		return;
-	}
-
-	/// 자체 포멧이 없을경우에 쓰는중
-	// 저장되있는 Mesh Index를 Load 기준 Index로 변환..
-	int meshIndex = std::stoi(EATER_GET_MAP(index, "MeshIndex"));
-
-	// Mesh 이름 설정..
-	std::string meshName = nowFileName + "_" + std::to_string(meshIndex);
-
-	// 해당 Index의 Mesh Buffer 유무 체크..
-	Mesh* meshBuffer = LoadManager::GetMesh(meshName);
-
-	// 만약 같은 Mesh Buffer가 없을경우 새로 생성해주고
-	// 있을 경우 해당 Mesh Buffer로 설정..
-	if (meshBuffer == nullptr)
-	{
-		ParserData::CMesh* mesh = new ParserData::CMesh();
-
-		LoadVertex(index, mesh);
-		LoadIndex(index, mesh);
-
-		// Mesh 생성..
-		meshBuffer = new Mesh();
-		meshBuffer->Name = meshName;
-
-		EnterCriticalSection(m_CriticalSection);
-		m_Graphic->CreateMeshBuffer(mesh, &meshBuffer->m_MeshData);
-		LeaveCriticalSection(m_CriticalSection);
-
-		// 새로 생성한 Mesh 추가..
-		LoadManager::MeshBufferList.insert({ meshName, meshBuffer });
-
-		delete mesh;
-	}
-
-	// 해당 Mesh Buffer 이름 삽입..
-	// 추후 Mesh Filter Start 에서 Mesh Buffer를 가져오는 기준이 되는 이름..
-	model->MeshName = meshBuffer->Name;
 }
 
 void EATERManager::LoadName(int index, LoadMeshData* model)

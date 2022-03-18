@@ -38,7 +38,11 @@ void CTAP_Animation::SetGameObject(AnimationController* Data)
 		AnimationList.AddString(GetDataCString(NameData[i]));
 	}
 	AnimationList.SetCurSel(0);
-	Data->Choice(NameData[0]);
+
+	if (NameData.size() != 0)
+	{
+		Data->Choice(NameData[0]);
+	}
 }
 
 //AnimationData CTAP_Animation::GetObjectData()

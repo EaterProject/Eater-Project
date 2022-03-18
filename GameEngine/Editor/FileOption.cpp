@@ -25,6 +25,7 @@ FileOption::~FileOption()
 
 void FileOption::DoDataExchange(CDataExchange* pDX)
 {
+	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_EDIT2, FileName_Edit);
 	DDX_Control(pDX, IDC_COMBO1, FileType_Combo);
 	DDX_Control(pDX, IDC_EDIT6, PosX);
@@ -37,15 +38,54 @@ void FileOption::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EDIT10, RotY);
 	DDX_Control(pDX, IDC_EDIT15, RotZ);
 
+
+	DDX_Control(pDX, IDC_CHECK1, DinamicButton);
+	DDX_Control(pDX, IDC_EDIT22, PosX_Bone);
+	DDX_Control(pDX, IDC_EDIT23, PosY_Bone);
+	DDX_Control(pDX, IDC_EDIT24, PosZ_Bone);
+	DDX_Control(pDX, IDC_EDIT25, RotX_Bone);
+	DDX_Control(pDX, IDC_EDIT26, RotY_Bone);
+	DDX_Control(pDX, IDC_EDIT27, RotZ_Bone);
+	DDX_Control(pDX, IDC_EDIT28, SclX_Bone);
+	DDX_Control(pDX, IDC_EDIT29, SclY_Bone);
+	DDX_Control(pDX, IDC_EDIT30, SclZ_Bone);
+	DDX_Control(pDX, IDC_BUTTON1, BoneTransform_Text);
+
 	ChangeDataFormat();
 	FileType_Combo.AddString(_T("1_BaseMesh"));
 	FileType_Combo.AddString(_T("2_SkinMesh"));
 	FileType_Combo.AddString(_T("3_TerrainMesh"));
 	FileType_Combo.AddString(_T("4_Animation"));
 	FileType_Combo.SetCurSel(0);
+	OnBoneWorld(false);
+}
 
-	CDialogEx::DoDataExchange(pDX);
-	DDX_Control(pDX, IDC_CHECK1, DinamicButton);
+void FileOption::OnBoneWorld(bool On)
+{
+	if (On == true)
+	{
+		GetDlgItem(IDC_EDIT22)->SendMessage(EM_SETREADONLY, false, 0);
+		GetDlgItem(IDC_EDIT23)->SendMessage(EM_SETREADONLY, false, 0);
+		GetDlgItem(IDC_EDIT24)->SendMessage(EM_SETREADONLY, false, 0);
+		GetDlgItem(IDC_EDIT25)->SendMessage(EM_SETREADONLY, false, 0);
+		GetDlgItem(IDC_EDIT26)->SendMessage(EM_SETREADONLY, false, 0);
+		GetDlgItem(IDC_EDIT27)->SendMessage(EM_SETREADONLY, false, 0);
+		GetDlgItem(IDC_EDIT28)->SendMessage(EM_SETREADONLY, false, 0);
+		GetDlgItem(IDC_EDIT29)->SendMessage(EM_SETREADONLY, false, 0);
+		GetDlgItem(IDC_EDIT30)->SendMessage(EM_SETREADONLY, false, 0);
+	}
+	else 
+	{
+		GetDlgItem(IDC_EDIT22)->SendMessage(EM_SETREADONLY, true, 0);
+		GetDlgItem(IDC_EDIT23)->SendMessage(EM_SETREADONLY, true, 0);
+		GetDlgItem(IDC_EDIT24)->SendMessage(EM_SETREADONLY, true, 0);
+		GetDlgItem(IDC_EDIT25)->SendMessage(EM_SETREADONLY, true, 0);
+		GetDlgItem(IDC_EDIT26)->SendMessage(EM_SETREADONLY, true, 0);
+		GetDlgItem(IDC_EDIT27)->SendMessage(EM_SETREADONLY, true, 0);
+		GetDlgItem(IDC_EDIT28)->SendMessage(EM_SETREADONLY, true, 0);
+		GetDlgItem(IDC_EDIT29)->SendMessage(EM_SETREADONLY, true, 0);
+		GetDlgItem(IDC_EDIT30)->SendMessage(EM_SETREADONLY, true, 0);
+	}
 }
 
 void FileOption::Initialize(EditorManager* _Editor)
@@ -60,7 +100,7 @@ BEGIN_MESSAGE_MAP(FileOption, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON1, &FileOption::OnChange_Button)
 	ON_BN_CLICKED(IDC_BUTTON2, &FileOption::OnNoChange_Button)
 	ON_BN_CLICKED(IDC_BUTTON8, &FileOption::OnScaleDown_Button)
-	ON_CBN_EDITUPDATE(IDC_COMBO1, &FileOption::OnCbnEditupdateCombo1)
+	ON_CBN_SELCHANGE(IDC_COMBO1, &FileOption::OnCbnSelchangeCombo1)
 END_MESSAGE_MAP()
 
 
@@ -79,6 +119,19 @@ void FileOption::ChangeDataFormat()
 	SclX.SetWindowTextW(L"1.00");
 	SclY.SetWindowTextW(L"1.00");
 	SclZ.SetWindowTextW(L"1.00");
+
+
+	PosX_Bone.SetWindowTextW(L"0");
+	PosY_Bone.SetWindowTextW(L"0");
+	PosZ_Bone.SetWindowTextW(L"0");
+
+	RotX_Bone.SetWindowTextW(L"0");
+	RotY_Bone.SetWindowTextW(L"0");
+	RotZ_Bone.SetWindowTextW(L"0");
+
+	SclX_Bone.SetWindowTextW(L"1");
+	SclY_Bone.SetWindowTextW(L"1");
+	SclZ_Bone.SetWindowTextW(L"1");
 }
 
 void FileOption::SetName(std::string Name, std::string Path)
@@ -127,6 +180,28 @@ void FileOption::OnChange_Button()
 	SclZ.GetWindowTextW(Number);
 	Data.Scale.z = std::stof(GetDataString(Number));
 
+	PosX_Bone.GetWindowTextW(Number);
+	Data.Position_Bone.x = std::stof(GetDataString(Number));
+	PosY_Bone.GetWindowTextW(Number);
+	Data.Position_Bone.y = std::stof(GetDataString(Number));
+	PosZ_Bone.GetWindowTextW(Number);
+	Data.Position_Bone.z = std::stof(GetDataString(Number));
+
+	RotX_Bone.GetWindowTextW(Number);
+	Data.Rotation_Bone.x = std::stof(GetDataString(Number));
+	RotY_Bone.GetWindowTextW(Number);
+	Data.Rotation_Bone.y = std::stof(GetDataString(Number));
+	RotZ_Bone.GetWindowTextW(Number);
+	Data.Rotation_Bone.z = std::stof(GetDataString(Number));
+
+
+	SclX_Bone.GetWindowTextW(Number);
+	Data.Scale_Bone.x = std::stof(GetDataString(Number));
+	SclY_Bone.GetWindowTextW(Number);
+	Data.Scale_Bone.y = std::stof(GetDataString(Number));
+	SclZ_Bone.GetWindowTextW(Number);
+	Data.Scale_Bone.z = std::stof(GetDataString(Number));
+
 	Data.DinamicObject = DinamicButton.GetCheck();
 	
 	mEditor->SetPath(FilePath, &Data);
@@ -147,8 +222,22 @@ void FileOption::OnScaleDown_Button()
 	SclZ.SetWindowTextW(L"0.01");
 }
 
-
-void FileOption::OnCbnEditupdateCombo1()
+void FileOption::OnCbnSelchangeCombo1()
 {
-	int num = 0;
+	int Type = FileType_Combo.GetCurSel();
+	switch (Type)
+	{
+	case 0:
+		OnBoneWorld(false);
+		break;
+	case 1:
+		OnBoneWorld(true);
+		break;
+	case 2:
+		OnBoneWorld(false);
+		break;
+	case 3:
+		OnBoneWorld(false);
+		break;
+	}
 }

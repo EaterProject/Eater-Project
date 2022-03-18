@@ -81,7 +81,7 @@ private:
 	void CreateBoneMesh(LoadMeshData* mMesh, GameObject* Object);
 	void CreateSkinMesh(LoadMeshData* mMesh, GameObject* Object);
 
-	void SetMaterialData(LoadMeshData* LoadMesh, MeshData* mMesh);
+	void SetMaterialData(LoadMeshData* LoadMesh, MeshData* mMesh, GameObject* obj);
 	void SetMatrixData(LoadMeshData* LoadMesh, MeshData* mMesh,GameObject* obj);
 	void SetMeshData(LoadMeshData* LoadMesh, MeshData* mMesh);
 	void SetType(LoadMeshData* LoadMesh, MeshData* mMesh);

@@ -8,6 +8,12 @@ namespace ParserData
 	class CModel;
 	class CMesh;
 }
+
+class E_AnimationManager;
+class E_MaterialManager;
+class E_MeshManager;
+
+class EaterManager;
 class ModelParser;
 struct MeshOption;
 class FBXManager
@@ -32,8 +38,9 @@ public:
 	};
 
 	void OpenFile(std::string& Path, MeshOption* Data);
+	void Initialize(EaterManager* mManager);
 private:
-	void StaticMesh(ParserData::CMesh* mMesh, std::string FileName);
+	//void StaticMesh(ParserData::CMesh* mMesh, std::string FileName);
 	void BoneMesh(ParserData::CMesh* mMesh);
 	void SkinMesh(ParserData::CMesh* mMesh, std::string FileName);
 	void TerrainMesh(ParserData::CMesh* mMesh);
@@ -58,6 +65,7 @@ private:
 	std::vector<EaterMaterialData> OneMeshMaterialList;
 	ModelParser* FbxFactory;
 	MeshOption* mOption;
+	EaterManager* mEaterManager;
 	ParserData::CModel* mMesh;
 	
 };
