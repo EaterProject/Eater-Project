@@ -43,28 +43,28 @@ void FBXManager::Initialize(GraphicEngineManager* Graphic, CRITICAL_SECTION* _cs
 
 void FBXManager::LoadTerrain(std::string Name, std::string MaskName, UINT parsingMode)
 {
-	ParserData::CModel * mMesh = FBXLoad->LoadModel(Name, parsingMode);
+	ParserData::CModel* mMesh = FBXLoad->LoadModel(Name, parsingMode);
 	int size =  (int)mMesh->m_MaterialList.size();
 	ParserData::CMesh* TerrainMesh = mMesh->m_MeshList[0];
 
 	// Terrain Mask Name »ðÀÔ..
+	TerrainMesh->m_MeshType = TERRAIN_MESH;
 	TerrainMesh->m_MaskName = MaskName;
 
 	LoadMeshData* Data = new LoadMeshData();
-	ModelData* CModel = new ModelData();
+	ModelData* model = new ModelData();
+	Data->MeshType = TERRAIN_MESH;
 
 	SetMatrixData(TerrainMesh, Data);
 	SetNameData(TerrainMesh, Data);
-
-	Data->MeshType = TERRAIN_MESH;
 	SetMeshData(TerrainMesh, Data);
 
 	std::size_t Start	= Name.rfind('/')+1;
 	std::size_t End		= Name.rfind('.') - Start;
 	Name = Name.substr(Start, End);
 
-	CModel->TopMeshList.push_back(Data);
-	LoadManager::ModelList.insert({Name,CModel });
+	model->TopMeshList.push_back(Data);
+	LoadManager::ModelList.insert({ Name, model });
 }
 
 void FBXManager::CheckSkinning(std::string& Path)
