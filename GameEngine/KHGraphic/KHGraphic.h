@@ -21,15 +21,18 @@ public:
 	void SetEnvironmentMap(bool enable) override;
 
 public:
-	void AddMeshData(MeshData* meshData) override;
+	void PushInstance(MeshData* meshData) override;
+	void PushMaterial(MaterialBuffer* material) override;
+	void PushMesh(MeshBuffer* mesh) override;
+
 	void AddChangeMeshData(MeshData* meshData) override;
-	void AddChangeMaterialData(MaterialData* materialData) override;
+	void AddChangeMaterialData(MaterialBuffer* materialData) override;
 	void DeleteMeshData(MeshData* meshData) override;
 	void Render() override;
 
 public:
-	TextureBuffer* CreateTextureBuffer(std::string path) override;
-	void CreateMeshBuffer(ParserData::Mesh* mesh, LoadMeshData* meshData) override;
+	void CreateTextureBuffer(std::string path, TextureBuffer** ppResource) override;
+	void CreateMeshBuffer(ParserData::CMesh* mesh, MeshBuffer** ppResource) override;
 	void CreateEnvironmentMap(std::string path) override;
 
 private:

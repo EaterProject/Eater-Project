@@ -2591,12 +2591,12 @@ class Table {
     return field_offset ? reinterpret_cast<P>(p) : nullptr;
   }
 
-  template<typename Raw, typename Face>
-  flatbuffers::Optional<Face> GetOptional(voffset_t field) const {
+  template<typename Raw, typename CFace>
+  flatbuffers::Optional<CFace> GetOptional(voffset_t field) const {
     auto field_offset = GetOptionalFieldOffset(field);
     auto p = data_ + field_offset;
-    return field_offset ? Optional<Face>(static_cast<Face>(ReadScalar<Raw>(p)))
-                        : Optional<Face>();
+    return field_offset ? Optional<CFace>(static_cast<CFace>(ReadScalar<Raw>(p)))
+                        : Optional<CFace>();
   }
 
   template<typename T> bool SetField(voffset_t field, T val, T def) {

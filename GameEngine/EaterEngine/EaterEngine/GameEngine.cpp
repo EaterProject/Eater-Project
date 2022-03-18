@@ -44,7 +44,6 @@ GameEngine::GameEngine()
 	mKeyManager = nullptr;
 	mPhysManager = nullptr;
 	mLightManager = nullptr;
-	mMaterialManager = nullptr;
 	mTimeManager = nullptr;
 	mGraphicManager = nullptr;
 	mNetworkManager = nullptr;
@@ -84,7 +83,6 @@ void GameEngine::Initialize(HWND Hwnd, bool mConsoleDebug)
 	mDebugManager		= new DebugManager();
 	mGraphicManager		= new GraphicEngineManager();
 	mTimeManager		= new TimeManager();
-	mMaterialManager	= new MaterialManager();
 	mLightManager		= new LightManager();
 	mPhysManager		= new PhysManager();
 	mNetworkManager		= new NetworkManager();
@@ -96,9 +94,8 @@ void GameEngine::Initialize(HWND Hwnd, bool mConsoleDebug)
 	mDebugManager->Initialize(mKeyManager,mConsoleDebug);
 	mObjectManager->Initialize();
 	mSceneManager->Initialize(mObjectManager);
-	mLoadManager->Initialize(mGraphicManager, mMaterialManager, &g_CS);
+	mLoadManager->Initialize(mGraphicManager, &g_CS);
 	mTimeManager->Initialize();
-	mMaterialManager->Initialize();
 	mPhysManager->Initialize();
 	mNetworkManager->Initialize();
 
@@ -341,7 +338,7 @@ int GameEngine::LoadAnimationCount()
 }
 ModelData* GameEngine::GetLoadMeshData(std::string& Path)
 {
-	return mLoadManager->GetMesh(Path);
+	return mLoadManager->GetModel(Path);
 }
 void GameEngine::LoadEnvironment(std::string mPath)
 {
@@ -462,7 +459,7 @@ GameObject* GameEngine::CreateInstance()
 	GameObject* newObject = new GameObject();
 
 	// Object Mesh Data Renderer측에 추가..
-	mGraphicManager->AddMeshData(newObject->OneMeshData);
+	mGraphicManager->PushInstance(newObject->OneMeshData);
 
 	return newObject;
 }

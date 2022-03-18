@@ -21,18 +21,12 @@ TextureManager::~TextureManager()
 	m_CriticalSection	= nullptr;
 }
 
-TextureBuffer* TextureManager::GetTexute(std::string Path)
-{
-	EnterCriticalSection(m_CriticalSection);
-	TextureBuffer* buffer = m_Graphic->CreateTextureBuffer(Path);
-	LeaveCriticalSection(m_CriticalSection);
-	return buffer;
-}
-
 void TextureManager::LoadTexture(std::string& Path)
 {
+	TextureBuffer* buffer = nullptr;
+
 	EnterCriticalSection(m_CriticalSection);
-	TextureBuffer* buffer = m_Graphic->CreateTextureBuffer(Path);
+	m_Graphic->CreateTextureBuffer(Path, &buffer);
 	LeaveCriticalSection(m_CriticalSection);
 
 	if (buffer == nullptr)
@@ -42,6 +36,7 @@ void TextureManager::LoadTexture(std::string& Path)
 	else
 	{
 		std::string Name = CutFilePath(Path);
+		buffer->Name = Name;
 		LoadManager::TextureList.insert({ Name,buffer });
 	}
 }
@@ -102,10 +97,11 @@ void TextureManager::LoadFolder(std::string& Path)
 
 void TextureManager::LoadFile(std::string& Path)
 {
-	EnterCriticalSection(m_CriticalSection);
-	TextureBuffer* buffer = m_Graphic->CreateTextureBuffer(Path);
-	LeaveCriticalSection(m_CriticalSection);
+	TextureBuffer* buffer = nullptr;
 
+	EnterCriticalSection(m_CriticalSection);
+	m_Graphic->CreateTextureBuffer(Path, &buffer);
+	LeaveCriticalSection(m_CriticalSection);
 	
 	TextureList.insert({CutFilePath(Path),buffer});
 }

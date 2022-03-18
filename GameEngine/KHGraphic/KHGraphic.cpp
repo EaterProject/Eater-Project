@@ -78,9 +78,19 @@ void KHGraphic::SetEnvironmentMap(bool enable)
 	m_RenderManager->SetEnvironmentMap(enable);
 }
 
-void KHGraphic::AddMeshData(MeshData* meshData)
+void KHGraphic::PushInstance(MeshData* meshData)
 {
-	m_RenderManager->AddMeshData(meshData);
+	m_RenderManager->PushInstance(meshData);
+}
+
+void KHGraphic::PushMaterial(MaterialBuffer* materialData)
+{
+	m_RenderManager->PushMaterial(materialData);
+}
+
+void KHGraphic::PushMesh(MeshBuffer* meshData)
+{
+	m_RenderManager->PushMesh(meshData);
 }
 
 void KHGraphic::AddChangeMeshData(MeshData* meshData)
@@ -88,7 +98,7 @@ void KHGraphic::AddChangeMeshData(MeshData* meshData)
 	m_RenderManager->AddChangeMeshData(meshData);
 }
 
-void KHGraphic::AddChangeMaterialData(MaterialData* materialData)
+void KHGraphic::AddChangeMaterialData(MaterialBuffer* materialData)
 {
 	m_RenderManager->AddChangeMaterialData(materialData);
 }
@@ -103,14 +113,14 @@ void KHGraphic::Render()
 	m_RenderManager->Render();
 }
 
-TextureBuffer* KHGraphic::CreateTextureBuffer(std::string path)
+void KHGraphic::CreateTextureBuffer(std::string path, TextureBuffer** ppResource)
 {
-	return m_FactoryManager->CreateTextureBuffer(path);
+	m_FactoryManager->CreateTextureBuffer(path, ppResource);
 }
 
-void KHGraphic::CreateMeshBuffer(ParserData::Mesh* mesh, LoadMeshData* meshData)
+void KHGraphic::CreateMeshBuffer(ParserData::CMesh* mesh, MeshBuffer** ppResource)
 {
-	m_FactoryManager->CreateMeshBuffer(mesh, meshData);
+	m_FactoryManager->CreateMeshBuffer(mesh, ppResource);
 }
 
 void KHGraphic::CreateEnvironmentMap(std::string path)

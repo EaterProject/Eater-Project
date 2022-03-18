@@ -1,14 +1,15 @@
 #include "Material.h"
 #include "EngineData.h"
-#include "BaseManager.h"
 #include "MaterialManager.h"
 #include "LoadManager.h"
 #include "GraphicsEngine.h"
 
+#define SAFE_RELEASE(x) { if(x != nullptr){ x->Release(); delete x; x = nullptr; } }
+
 Material::Material()
 {
 	// Material Buffer 생성..
-	m_MaterialData = new MaterialData();
+	m_MaterialData = new MaterialBuffer();
 
 	// Material Data 생성..
 	m_MaterialData->Material_SubData = new MaterialSubData();
@@ -34,72 +35,60 @@ void Material::SetDiffuseTexture(std::string diffuseName)
 {
 	TextureBuffer* newTexture = LoadManager::GetTexture(diffuseName);
 
-	// 해당 Texture가 없는 경우..
-	if (newTexture == nullptr) return;
-
-	// Texture 최초 설정이 아닌 변경일 경우 Renderer Data 동기화..
-	if (m_MaterialData->Albedo != nullptr)
-	{
-		GraphicEngine::Get()->AddChangeMaterialData(m_MaterialData);
-	}
-
 	// Texture 변경..
 	m_MaterialData->Albedo = newTexture;
+<<<<<<< HEAD
 	m_MaterialData->Albedo->Name = diffuseName;
+=======
+
+	// Renderer Data 동기화..
+	GraphicEngine::Get()->AddChangeMaterialData(m_MaterialData);
+>>>>>>> main
 }
 
 void Material::SetNormalTexture(std::string noramlName)
 {
 	TextureBuffer* newTexture = LoadManager::GetTexture(noramlName);
 
-	// 해당 Texture가 없는 경우..
-	if (newTexture == nullptr) return;
-
-	// Texture 최초 설정이 아닌 변경일 경우 Renderer Data 동기화..
-	if (m_MaterialData->Normal != nullptr)
-	{
-		GraphicEngine::Get()->AddChangeMaterialData(m_MaterialData);
-	}
-
 	// Texture 변경..
 	m_MaterialData->Normal = newTexture;
+<<<<<<< HEAD
 	m_MaterialData->Normal->Name = noramlName;
+=======
+
+	// Renderer Data 동기화..
+	GraphicEngine::Get()->AddChangeMaterialData(m_MaterialData);
+>>>>>>> main
 }
 
 void Material::SetEmissiveTexture(std::string emissiveName)
 {
 	TextureBuffer* newTexture = LoadManager::GetTexture(emissiveName);
 
-	// 해당 Texture가 없는 경우..
-	if (newTexture == nullptr) return;
-
-	// Texture 최초 설정이 아닌 변경일 경우 Renderer Data 동기화..
-	if (m_MaterialData->Emissive != nullptr)
-	{
-		GraphicEngine::Get()->AddChangeMaterialData(m_MaterialData);
-	}
-
 	// Texture 변경..
 	m_MaterialData->Emissive = newTexture;
+<<<<<<< HEAD
 	m_MaterialData->Emissive->Name = emissiveName;
+=======
+
+	// Renderer Data 동기화..
+	GraphicEngine::Get()->AddChangeMaterialData(m_MaterialData);
+>>>>>>> main
 }
 
 void Material::SetORMTexture(std::string ormName)
 {
 	TextureBuffer* newTexture = LoadManager::GetTexture(ormName);
 
-	// 해당 Texture가 없는 경우..
-	if (newTexture == nullptr) return;
-
-	// Texture 최초 설정이 아닌 변경일 경우 Renderer Data 동기화..
-	if (m_MaterialData->ORM != nullptr)
-	{
-		GraphicEngine::Get()->AddChangeMaterialData(m_MaterialData);
-	}
-
 	// Texture 변경..
 	m_MaterialData->ORM = newTexture;
+<<<<<<< HEAD
 	m_MaterialData->ORM->Name = ormName;
+=======
+
+	// Renderer Data 동기화..
+	GraphicEngine::Get()->AddChangeMaterialData(m_MaterialData);
+>>>>>>> main
 }
 
 void Material::SetBaseColor(DirectX::SimpleMath::Vector4 color)
@@ -130,9 +119,10 @@ void Material::SetMetallicFactor(float metallicFactor)
 void Material::Release()
 {
 	// Manager 내부에 있는 해당 Material Data 삭제..
-	MaterialManager::DeleteMaterial(m_MaterialData->Material_Index);
+	MaterialManager::DeleteMaterial(m_MaterialData->BufferIndex);
 	
 	// 해당 Material Data 해제..
+<<<<<<< HEAD
 	delete m_MaterialData->Material_SubData;
 	delete m_MaterialData;
 }
@@ -176,3 +166,8 @@ std::string Material::GetORMName()
 
 	return std::string();
 }
+=======
+	SAFE_DELETE(m_MaterialData->Material_SubData);
+	SAFE_DELETE(m_MaterialData);
+}
+>>>>>>> main

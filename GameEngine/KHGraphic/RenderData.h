@@ -9,25 +9,24 @@ public:
 
 public:
 	void ConvertData(MeshData* originMesh);
-	//void ChangeMaterial(MaterialData* )
 	void Release();
 
 private:
 	void ConvertMeshBuffer(MeshBuffer* originBuf);
-	void ConvertMaterial(MaterialData* originMat);
-	void ConvertMaterial(MaterialData* originMat, MaterialRenderData* convertMat);
+	void ConvertMaterial(MaterialBuffer* originMat);
+	void ConvertMaterial(MaterialBuffer* originMat, MaterialRenderBuffer* convertMat);
 	
 public:
 	std::vector<Matrix>* m_BoneOffsetTM;
 
-	MeshData* m_OriginData;				// Engine Origin Data..
+	MeshData* m_OriginData;					// Engine Origin Data..
 
 	ObjectData* m_ObjectData;
 
-	MeshRenderData* m_MeshData;			// 변환된 Mesh Data..
-	MaterialRenderData* m_Material;		// 변환된 Material Data..
+	MeshRenderBuffer* m_MeshBuffer;			// 변환된 Mesh Buffer..
+	MaterialRenderBuffer* m_MaterialBuffer;	// 변환된 Material Buffer..
 
-	TerrainRenderData* m_TerrainData;	// 변환된 Terrain Data..
+	TerrainRenderData* m_TerrainData;		// 변환된 Terrain Data..
 
 	ParticleData* m_ParticleData;
 	ColliderData* m_ColliderData;
@@ -40,11 +39,11 @@ public:
 	~InstanceRenderData();
 
 public:
-	void SetInstanceData(MeshRenderData* mesh, MaterialRenderData* material);
+	void SetInstanceData(InstanceRenderBuffer* instance);
+	void PushInstance(RenderData* renderData);
 
 private:
-	MeshRenderData* m_Mesh;					// Instancing 기준이 되는 Mesh Data..
-	MaterialRenderData* m_Material;			// Instancing 기준이 되는 Material Data..
+	InstanceRenderBuffer* m_Instance;		// Instancing 기준이 되는 Mesh Data..
 
 	std::vector<RenderData*> m_MeshList;	// Instancing 기준에 해당하는 Render Data List..
 };

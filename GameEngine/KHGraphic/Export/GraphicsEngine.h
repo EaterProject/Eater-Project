@@ -10,7 +10,9 @@
 /// </summary>
 
 class MeshData;
-class MaterialData;
+class MeshBuffer;
+class TextureBuffer;
+class MaterialBuffer;
 class GlobalData;
 class IndexBuffer;
 class VertexBuffer;
@@ -20,7 +22,7 @@ class RenderOption;
 
 namespace ParserData 
 {
-	class Mesh;
+	class CMesh;
 }
 
 class GraphicEngine
@@ -45,16 +47,19 @@ public:
 	virtual GRAPHIC_DLL void SetEnvironmentMap(bool enable) abstract;
 
 	/// Render Mesh Data & Rendering Function..
-	virtual GRAPHIC_DLL void AddMeshData(MeshData* meshData) abstract;
+	virtual GRAPHIC_DLL void PushInstance(MeshData* meshData) abstract;
+	virtual GRAPHIC_DLL void PushMaterial(MaterialBuffer* material) abstract;
+	virtual GRAPHIC_DLL void PushMesh(MeshBuffer* mesh) abstract;
+
 	virtual GRAPHIC_DLL void AddChangeMeshData(MeshData* meshData) abstract;
-	virtual GRAPHIC_DLL void AddChangeMaterialData(MaterialData* materialData) abstract;
+	virtual GRAPHIC_DLL void AddChangeMaterialData(MaterialBuffer* material) abstract;
 	virtual GRAPHIC_DLL void DeleteMeshData(MeshData* meshData) abstract;
 
 	virtual GRAPHIC_DLL void Render() abstract;
 
 	/// Graphic Resource Create Function..
-	virtual GRAPHIC_DLL TextureBuffer* CreateTextureBuffer(std::string path) abstract;
-	virtual GRAPHIC_DLL void CreateMeshBuffer(ParserData::Mesh* mesh, LoadMeshData* meshData) abstract;
+	virtual GRAPHIC_DLL void CreateTextureBuffer(std::string path, TextureBuffer** ppResource) abstract;
+	virtual GRAPHIC_DLL void CreateMeshBuffer(ParserData::CMesh* mesh, MeshBuffer** ppResource) abstract;
 
 	virtual GRAPHIC_DLL void CreateEnvironmentMap(std::string path) abstract;
 

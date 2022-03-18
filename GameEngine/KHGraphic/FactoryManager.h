@@ -20,8 +20,8 @@ public:
 	void Release() override;
 
 public:
-	TextureBuffer* CreateTextureBuffer(std::string path) override;
-	void CreateMeshBuffer(ParserData::Mesh* mesh, LoadMeshData* meshData) override;
+	void CreateTextureBuffer(std::string path, TextureBuffer** ppResource) override;
+	void CreateMeshBuffer(ParserData::CMesh* mesh, MeshBuffer** ppResource) override;
 	void CreateEnvironmentMap(std::string path) override;
 
 private:

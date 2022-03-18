@@ -30,9 +30,9 @@ void ASEParser::Release()
 {
 	SAFE_DELETE(m_lexer);
 
-	for (Model* model : m_ModelList)
+	for (CModel* model : m_ModelList)
 	{
-		for (Mesh* mesh : model->m_MeshList)
+		for (CMesh* mesh : model->m_MeshList)
 		{
 			ASEMesh* aseMesh = static_cast<ASEMesh*>(mesh);
 
@@ -44,15 +44,15 @@ void ASEParser::Release()
 			{
 				SAFE_DELETE(bone);
 			}
-			for (Face* face : aseMesh->m_MeshFace)
+			for (CFace* face : aseMesh->m_MeshFace)
 			{
 				SAFE_DELETE(face);
 			}
-			for (Vertex* vertex : aseMesh->m_VertexList)
+			for (CVertex* vertex : aseMesh->m_VertexList)
 			{
 				SAFE_DELETE(vertex);
 			}
-			for (IndexList* index : aseMesh->m_IndexList)
+			for (CIndexList* index : aseMesh->m_IndexList)
 			{
 				SAFE_DELETE(index);
 			}
@@ -63,7 +63,7 @@ void ASEParser::Release()
 	}
 }
 
-ParserData::Model* ASEParser::LoadModel(std::string fileName)
+ParserData::CModel* ASEParser::LoadModel(std::string fileName)
 {
 	// 새로운 Model 생성..
 	CreateModel();
@@ -99,7 +99,7 @@ void ASEParser::OptimizeVertex(ASEMesh* pMesh)
 		{
 			unsigned int vertexIndex = pMesh->m_MeshFace[i]->m_VertexIndex[j];
 
-			Vertex* nowVertex = pMesh->m_VertexList[vertexIndex];
+			CVertex* nowVertex = pMesh->m_VertexList[vertexIndex];
 
 			// 텍스처가 있고, 설정하지 않았으면 텍스처 u,v 설정..
 			if (pMesh->m_Mesh_NumTVertex > 0 && nowVertex->m_IsTextureSet == false)
@@ -165,7 +165,7 @@ void ASEParser::OptimizeVertex(ASEMesh* pMesh)
 				// 새로 추가해야할 Vertex..
 				if (new_VertexSet == true)
 				{
-					Vertex* newVertex = new Vertex;
+					CVertex* newVertex = new CVertex;
 					newVertex->m_Pos = nowVertex->m_Pos;
 					newVertex->m_Indices = nowVertex->m_Indices;
 					newVertex->m_Normal = pMesh->m_MeshFace[i]->m_NormalVertex[j];
@@ -195,9 +195,9 @@ void ASEParser::OptimizeVertex(ASEMesh* pMesh)
 		int index1 = pMesh->m_MeshFace[i]->m_VertexIndex[1];
 		int index2 = pMesh->m_MeshFace[i]->m_VertexIndex[2];
 
-		Vertex* vertex0 = pMesh->m_VertexList[index0];
-		Vertex* vertex1 = pMesh->m_VertexList[index0];
-		Vertex* vertex2 = pMesh->m_VertexList[index0];
+		CVertex* vertex0 = pMesh->m_VertexList[index0];
+		CVertex* vertex1 = pMesh->m_VertexList[index0];
+		CVertex* vertex2 = pMesh->m_VertexList[index0];
 
 		DirectX::SimpleMath::Vector3 ep1 = vertex1->m_Pos - vertex0->m_Pos;
 		DirectX::SimpleMath::Vector3 ep2 = pMesh->m_VertexList[index2]->m_Pos - vertex0->m_Pos;
@@ -225,7 +225,7 @@ void ASEParser::OptimizeVertex(ASEMesh* pMesh)
 	// 인덱스는 그냥 복사
 	for (unsigned int i = 0; i < pMesh->m_MeshFace.size(); i++)
 	{
-		pMesh->m_IndexList.push_back(new IndexList);
+		pMesh->m_IndexList.push_back(new CIndexList);
 
 		for (int j = 0; j < 3; j++)
 		{
@@ -371,7 +371,7 @@ void ASEParser::SetBoneTM(ParserData::ASEMesh* pMesh)
 void ASEParser::CreateModel()
 {
 	m_Model = nullptr;
-	m_Model = new Model();
+	m_Model = new CModel();
 	m_ModelList.push_back(m_Model);
 }
 
@@ -768,7 +768,7 @@ void ASEParser::DataParsing()
 		{
 			for (int i = 0; i < m_OneMesh->m_Mesh_NumVertex; i++)
 			{
-				m_OneMesh->m_VertexList.push_back(new Vertex);
+				m_OneMesh->m_VertexList.push_back(new CVertex);
 			}
 		}
 		break;
@@ -790,7 +790,7 @@ void ASEParser::DataParsing()
 			// 이전에 넣어둔 Face 개수만큼 생성해두자..
 			for (int i = 0; i < m_OneMesh->m_Mesh_NumFaces; i++)
 			{
-				m_OneMesh->m_MeshFace.push_back(new Face);
+				m_OneMesh->m_MeshFace.push_back(new CFace);
 			}
 			break;
 		case TOKENR_MESH_FACE:
@@ -888,7 +888,7 @@ void ASEParser::DataParsing()
 		case TOKENR_TM_ANIMATION:
 			Create_AnimationData_to_mesh(m_OneMesh);
 			m_OneMesh->m_Type = eAnimation;
-			m_OneMesh->m_Animation->m_AniData.push_back(new OneFrame);
+			m_OneMesh->m_Animation->m_AniData.push_back(new CFrame);
 			break;
 		case TOKENR_CONTROL_POS_TRACK:
 			break;
@@ -1052,7 +1052,7 @@ void ASEParser::Create_MaterialData_to_list()
 
 void ASEParser::Create_DiffuseMap_to_list()
 {
-	MaterialMap* temp = new MaterialMap;
+	CMaterialMap* temp = new CMaterialMap;
 	m_materialmap = temp;
 	m_MaterialData->m_MapList.push_back(temp);
 	m_MaterialData->m_DiffuseMap = temp;
@@ -1061,7 +1061,7 @@ void ASEParser::Create_DiffuseMap_to_list()
 
 void ASEParser::Create_BumpMap_to_list()
 {
-	MaterialMap* temp = new MaterialMap;
+	CMaterialMap* temp = new CMaterialMap;
 	m_materialmap = temp;
 	m_MaterialData->m_MapList.push_back(temp);
 	m_MaterialData->m_NormalMap = temp;
@@ -1070,7 +1070,7 @@ void ASEParser::Create_BumpMap_to_list()
 
 void ASEParser::Create_SpecularMap_to_list()
 {
-	MaterialMap* temp = new MaterialMap;
+	CMaterialMap* temp = new CMaterialMap;
 	m_materialmap = temp;
 	m_MaterialData->m_MapList.push_back(temp);
 	m_MaterialData->m_ORMMap = temp;
@@ -1079,16 +1079,16 @@ void ASEParser::Create_SpecularMap_to_list()
 
 void ASEParser::Create_ShineMap_to_list()
 {
-	MaterialMap* temp = new MaterialMap;
+	CMaterialMap* temp = new CMaterialMap;
 	m_materialmap = temp;
 	m_MaterialData->m_MapList.push_back(temp);
 	m_MaterialData->m_EmissiveMap = temp;
 	m_MaterialData->m_TextureBind |= EMISSIVE_TEXTURE;
 }
 
-void ASEParser::Create_AnimationData_to_mesh(Mesh* nowMesh)
+void ASEParser::Create_AnimationData_to_mesh(CMesh* nowMesh)
 {
-	OneAnimation* temp = new OneAnimation;
+	CAnimation* temp = new CAnimation;
 	m_Animation = temp;
 	m_Animation->m_TicksPerFrame = m_scenedata.m_TicksPerFrame;
 	m_Animation->m_StartFrame = m_scenedata.m_FirstFrame;

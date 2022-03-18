@@ -50,9 +50,9 @@ void GraphicEngineManager::SetEnvironment(bool enable)
 	GEngine->SetEnvironmentMap(enable);
 }
 
-void GraphicEngineManager::AddMeshData(MeshData* mesh)
+void GraphicEngineManager::PushInstance(MeshData* mesh)
 {
-	GEngine->AddMeshData(mesh);
+	GEngine->PushInstance(mesh);
 }
 
 void GraphicEngineManager::AddChangeMeshData(MeshData* mesh)
@@ -95,14 +95,14 @@ void GraphicEngineManager::DebugDrawLine(DirectX::SimpleMath::Vector3 start, Dir
 	Global->RayCastDebugData.push(ray);
 }
 
-void GraphicEngineManager::CreateMeshBuffer(ParserData::Mesh* mModel, LoadMeshData* meshData)
+void GraphicEngineManager::CreateMeshBuffer(ParserData::CMesh* model, MeshBuffer** ppResource)
 {
-	//概浆 积己
-	GEngine->CreateMeshBuffer(mModel, meshData);
+	// Mesh 积己..
+	GEngine->CreateMeshBuffer(model, ppResource);
 }
 
-TextureBuffer* GraphicEngineManager::CreateTextureBuffer(std::string Name)
+void GraphicEngineManager::CreateTextureBuffer(std::string Name, TextureBuffer** ppResource)
 {
-	//咆胶媚 积己
-	return GEngine->CreateTextureBuffer(Name);
+	// Texture 积己..
+	GEngine->CreateTextureBuffer(Name, ppResource);
 }

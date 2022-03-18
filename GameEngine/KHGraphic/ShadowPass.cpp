@@ -133,7 +133,7 @@ void ShadowPass::RenderUpdate(const std::vector<RenderData*>& meshlist)
 
 	Matrix viewproj = g_GlobalData->DirectionLights[0]->LightViewProj;
 	RenderData* mesh = nullptr;
-	MaterialRenderData* mat = nullptr;
+	MaterialRenderBuffer* mat = nullptr;
 
 	for (int i = 0; i < meshlist.size(); i++)
 	{
@@ -142,7 +142,7 @@ void ShadowPass::RenderUpdate(const std::vector<RenderData*>& meshlist)
 		if (mesh == nullptr)
 		{
 			mesh = meshlist[i];
-			mat = mesh->m_Material;
+			mat = mesh->m_MaterialBuffer;
 		}
 
 		// ÇØ´ç Instance Data »ðÀÔ..
@@ -181,16 +181,16 @@ void ShadowPass::RenderUpdate(const std::vector<RenderData*>& meshlist)
 
 		m_MeshInstShadowVS->Update();
 
-		ID3D11Buffer* vertexBuffers[2] = { mesh->m_MeshData->m_VertexBuf, m_Mesh_IB->InstanceBuf->Get() };
-		UINT strides[2] = { mesh->m_MeshData->m_Stride, m_Mesh_IB->Stride };
+		ID3D11Buffer* vertexBuffers[2] = { mesh->m_MeshBuffer->m_VertexBuf, m_Mesh_IB->InstanceBuf->Get() };
+		UINT strides[2] = { mesh->m_MeshBuffer->m_Stride, m_Mesh_IB->Stride };
 		UINT offsets[2] = { 0,0 };
 
 		// Draw..
 		g_Context->IASetVertexBuffers(0, 2, vertexBuffers, strides, offsets);
-		g_Context->IASetIndexBuffer(mesh->m_MeshData->m_IndexBuf, DXGI_FORMAT_R32_UINT, 0);
+		g_Context->IASetIndexBuffer(mesh->m_MeshBuffer->m_IndexBuf, DXGI_FORMAT_R32_UINT, 0);
 		g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-		g_Context->DrawIndexedInstanced(mesh->m_MeshData->m_IndexCount, m_InstanceCount, 0, 0, 0);
+		g_Context->DrawIndexedInstanced(mesh->m_MeshBuffer->m_IndexCount, m_InstanceCount, 0, 0, 0);
 	}
 	break;
 	case OBJECT_TYPE::SKINNING:
@@ -207,16 +207,16 @@ void ShadowPass::RenderUpdate(const std::vector<RenderData*>& meshlist)
 
 		m_SkinInstShadowVS->Update();
 
-		ID3D11Buffer* vertexBuffers[2] = { mesh->m_MeshData->m_VertexBuf, m_Mesh_IB->InstanceBuf->Get() };
-		UINT strides[2] = { mesh->m_MeshData->m_Stride, m_Mesh_IB->Stride };
+		ID3D11Buffer* vertexBuffers[2] = { mesh->m_MeshBuffer->m_VertexBuf, m_Mesh_IB->InstanceBuf->Get() };
+		UINT strides[2] = { mesh->m_MeshBuffer->m_Stride, m_Mesh_IB->Stride };
 		UINT offsets[2] = { 0,0 };
 
 		// Draw..
 		g_Context->IASetVertexBuffers(0, 2, vertexBuffers, strides, offsets);
-		g_Context->IASetIndexBuffer(mesh->m_MeshData->m_IndexBuf, DXGI_FORMAT_R32_UINT, 0);
+		g_Context->IASetIndexBuffer(mesh->m_MeshBuffer->m_IndexBuf, DXGI_FORMAT_R32_UINT, 0);
 		g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-		g_Context->DrawIndexedInstanced(mesh->m_MeshData->m_IndexCount, m_InstanceCount, 0, 0, 0);
+		g_Context->DrawIndexedInstanced(mesh->m_MeshBuffer->m_IndexCount, m_InstanceCount, 0, 0, 0);
 	}
 	break;
 	default:
@@ -272,8 +272,8 @@ void ShadowPass::RenderUpdate(const RenderData* mesh)
 
 	// Draw..
 	g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	g_Context->IASetVertexBuffers(0, 1, &mesh->m_MeshData->m_VertexBuf, &mesh->m_MeshData->m_Stride, &mesh->m_MeshData->m_Offset);
-	g_Context->IASetIndexBuffer(mesh->m_MeshData->m_IndexBuf, DXGI_FORMAT_R32_UINT, 0);
+	g_Context->IASetVertexBuffers(0, 1, &mesh->m_MeshBuffer->m_VertexBuf, &mesh->m_MeshBuffer->m_Stride, &mesh->m_MeshBuffer->m_Offset);
+	g_Context->IASetIndexBuffer(mesh->m_MeshBuffer->m_IndexBuf, DXGI_FORMAT_R32_UINT, 0);
 
-	g_Context->DrawIndexed(mesh->m_MeshData->m_IndexCount, 0, 0);
+	g_Context->DrawIndexed(mesh->m_MeshBuffer->m_IndexCount, 0, 0);
 }

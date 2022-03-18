@@ -9,7 +9,7 @@ class GameObject;
 
 namespace ParserData 
 {
-	class Mesh;
+	class CMesh;
 }
 
 namespace DirectX

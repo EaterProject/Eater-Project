@@ -13,14 +13,13 @@ class MeshData;
 class GlobalData;
 class GraphicEngine;
 class LoadMeshData;
-class IndexBuffer;
-class VertexBuffer;
+class MeshBuffer;
 class TextureBuffer;
 class RenderOption;
 
 namespace ParserData
 {
-	class Mesh;
+	class CMesh;
 }
 
 class GraphicEngineManager : public BaseManager
@@ -41,7 +40,7 @@ public:
 	void SetEnvironment(bool enable);
 
 	//선택한 그래픽엔진 랜더링
-	void AddMeshData(MeshData* mesh);
+	void PushInstance(MeshData* mesh);
 	void AddChangeMeshData(MeshData* mesh);
 	void DeleteMeshData(MeshData* mesh);
 	void Render();
@@ -52,10 +51,10 @@ public:
 	void DebugDrawLine(DirectX::SimpleMath::Vector3 start, DirectX::SimpleMath::Vector3 dir, float distance, DirectX::SimpleMath::Vector4 color);
 
 	//선택한 그래픽엔진으로 인덱스버퍼를 생성함
-	void CreateMeshBuffer(ParserData::Mesh* mModel, LoadMeshData* meshData);
+	void CreateMeshBuffer(ParserData::CMesh* model, MeshBuffer** ppResource);
 
 	//선택한 그래픽엔진으로 텍스쳐 생성
-	TextureBuffer* CreateTextureBuffer(std::string Name);
+	void CreateTextureBuffer(std::string Name, TextureBuffer** ppResource);
 
 private:
 	GraphicEngine* GEngine;

@@ -18,7 +18,7 @@ public:
 public:
 	void Initialize() override;
 	void Release() override;
-	ParserData::Model* LoadModel(std::string fileName) override;
+	ParserData::CModel* LoadModel(std::string fileName) override;
 
 	void OptimizeVertex(ParserData::ASEMesh* pMesh);		// 버텍스(노말), 텍스쳐 값으로 최적화를 해 준다.
 	void RecombinationTM(ParserData::ASEMesh* pMesh);
@@ -29,8 +29,8 @@ public:
 	void ResetData();
 
 private:
-	ParserData::Model* m_Model;
-	std::vector<ParserData::Model*> m_ModelList;
+	ParserData::CModel* m_Model;
+	std::vector<ParserData::CModel*> m_ModelList;
 
 private:
 	// 토큰을 구별해내기 위한 스트링
@@ -41,7 +41,7 @@ private:
 
 	/// 매트리얼 관련
 	ParserData::CMaterial* m_MaterialData;				// Material의 데이터가 들어갈 구조체
-	ParserData::MaterialMap* m_materialmap;
+	ParserData::CMaterialMap* m_materialmap;
 	std::vector<ParserData::CMaterial*> m_MaterialList;	// Material들의 리스트
 
 	/// 한 씬에 N개의 메시가 존재할 수 있다.
@@ -52,7 +52,7 @@ private:
 
 	/// 애니메이션
 	bool m_IsAnimation;
-	ParserData::OneAnimation* m_Animation;					// 한 오브젝트의 애니메이션 데이터(파싱용)
+	ParserData::CAnimation* m_Animation;					// 한 오브젝트의 애니메이션 데이터(파싱용)
 
 	std::string m_TexRoute;
 
@@ -75,6 +75,6 @@ private:
 	void Create_BumpMap_to_list();				// Material BumpMap Data
 	void Create_SpecularMap_to_list();			// Material SpecularMap Data
 	void Create_ShineMap_to_list();				// Material ShineMap Data
-	void Create_AnimationData_to_mesh(ParserData::Mesh* nowMesh);
+	void Create_AnimationData_to_mesh(ParserData::CMesh* nowMesh);
 	void Create_BoneData_to_list();
 };

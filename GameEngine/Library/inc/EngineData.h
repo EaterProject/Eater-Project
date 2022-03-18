@@ -44,11 +44,27 @@ public:
 	Matrix* Local = nullptr;						//매쉬의 로컬 행렬
 };
 
-// Material Data
-class MaterialData
+// Mesh Buffer
+class MeshBuffer
 {
 public:
-	UINT Material_Index = 0;				// Material Index
+	virtual ~MeshBuffer()
+	{
+		delete IndexBuf;
+		delete VertexBuf;
+	}
+
+	UINT BufferIndex = 0;
+
+	IndexBuffer* IndexBuf;
+	VertexBuffer* VertexBuf;
+};
+
+// Material Buffer
+class MaterialBuffer
+{
+public:
+	UINT BufferIndex = 0;				// Material Index
 
 	MaterialSubData* Material_SubData = nullptr;	// Material SubData
 
@@ -62,7 +78,7 @@ public:
 class TerrainData
 {
 public:
-	std::vector<MaterialData*> Material_List;		// Material List
+	std::vector<MaterialBuffer*> Material_List;		// Material List
 };
 
 // Particle Data
@@ -145,8 +161,9 @@ public:
 	std::vector<Matrix> BoneOffsetTM;				//본 오프셋 TM
 
 	ObjectData*		Object_Data = nullptr;			// Object Data
-	MeshBuffer*		MeshBuffer_Data = nullptr;		// Mesh Buffer Data
-	MaterialData*	Material_Data	= nullptr;		// Material Data
+
+	MeshBuffer*		Mesh_Buffer = nullptr;			// Mesh Buffer
+	MaterialBuffer*	Material_Buffer	= nullptr;		// Material Buffer
 
 	// 추가 데이터
 	TerrainData*	Terrain_Data	= nullptr;		// Terrain Data
@@ -176,12 +193,14 @@ public:
 
 	std::string ParentName = "";	//부모의 이름
 	std::string	Name = "";			//자기자신의 이름
+
+	std::string MeshName = "";		//매쉬 이름
 	std::string MaterialName = "";	//매터리얼 이름
-	std::string Mask_Name = "";		// Terrain 전용 Mask Name
 
 	Matrix WorldTM;					//월드 매트릭스
 	Matrix LocalTM;					//로컬 매트릭스
 
+	/// Mesh 자체 포멧 추가후 제거해야함..
 	MeshBuffer* MeshBuffer_Data = nullptr;
 
 	int BoneIndex = -1;				//본일경우 자신의 인덱스
@@ -204,8 +223,6 @@ public:
 		//
 	}
 
-	UINT Model;
-
 	std::vector<LoadMeshData*> TopMeshList;
 	std::vector<LoadMeshData*> TopSkinList;
 	std::vector<LoadMeshData*> TopBoneList;
@@ -221,7 +238,7 @@ public:
 	{
 
 	}
-	std::map<std::string, std::vector<OneAnimation*>* > AnimList;
+	std::map<std::string, std::vector<CAnimation*>* > AnimList;
 };
 
 //컨퍼넌트들의 함수포인터를 저장할 구조체

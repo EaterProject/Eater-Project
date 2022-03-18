@@ -4,12 +4,12 @@ using namespace DirectX;
 class GeometryGenerator
 {
 public:
-	struct Vertex
+	struct CVertex
 	{
-		Vertex() {}
-		Vertex(const XMFLOAT3& p, const XMFLOAT3& n, const XMFLOAT3& t, const XMFLOAT2& uv)
+		CVertex() {}
+		CVertex(const XMFLOAT3& p, const XMFLOAT3& n, const XMFLOAT3& t, const XMFLOAT2& uv)
 			: Position(p), Normal(n), TangentU(t), TexC(uv) {}
-		Vertex(
+		CVertex(
 			float px, float py, float pz,
 			float nx, float ny, float nz,
 			float tx, float ty, float tz,
@@ -25,7 +25,7 @@ public:
 
 	struct MeshData
 	{
-		std::vector<Vertex> Vertices;
+		std::vector<CVertex> Vertices;
 		std::vector<UINT> Indices;
 	};
 

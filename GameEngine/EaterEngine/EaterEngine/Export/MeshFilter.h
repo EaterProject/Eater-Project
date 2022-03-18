@@ -19,7 +19,7 @@ namespace DirectX
 
 namespace ParserData
 {
-	class OneAnimation;	
+	class CAnimation;	
 }
 
 class ModelData;
@@ -83,7 +83,7 @@ private:
 
 	void SetMaterialData(LoadMeshData* LoadMesh, MeshData* mMesh, GameObject* obj);
 	void SetMatrixData(LoadMeshData* LoadMesh, MeshData* mMesh,GameObject* obj);
-	void SetBufferData(LoadMeshData* LoadMesh, MeshData* mMesh);
+	void SetMeshData(LoadMeshData* LoadMesh, MeshData* mMesh);
 	void SetType(LoadMeshData* LoadMesh, MeshData* mMesh);
 
 	bool isLoad_Mesh;			//매쉬 로드여부

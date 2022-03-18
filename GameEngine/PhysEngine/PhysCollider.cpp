@@ -23,7 +23,7 @@ PhysCollider::~PhysCollider()
 PhysCollider::TriangleMeshData::TriangleMeshData()
 {
 	VertexList		= nullptr;
-	IndexList		= nullptr;
+	CIndexList		= nullptr;
 	VertexListSize	= 0;
 	IndexListSize	= 0;
 }
@@ -37,7 +37,7 @@ PhysCollider::TriangleMeshData::~TriangleMeshData()
 
 	if (IndexListSize != 0)
 	{
-		delete[] IndexList;
+		delete[] CIndexList;
 	}
 }
 

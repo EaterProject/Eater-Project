@@ -9,6 +9,7 @@
 #include "Transform.h"
 #include "AnimationController.h"
 #include "Material.h"
+#include "Mesh.h"
 
 #define LERP(prev, next, time) ((prev * (1.0f - time)) + (next * time))
 EATERManager::EATERManager()
@@ -40,6 +41,8 @@ void EATERManager::Load(std::string& Path, UINT parsingMode)
 	std::size_t start = Path.rfind('/') + 1;
 	std::size_t End = Path.rfind('.') - start;
 	std::string SaveName = Path.substr(start, End);
+
+	nowFileName = SaveName;
 
 	int Count = EATER_GET_NODE_COUNT();
 	for (int i = 0; i < Count; i++)
@@ -97,6 +100,12 @@ void EATERManager::LoadScene(std::string& Path)
 	}
 }
 
+void EATERManager::LoadMesh(std::string& Path)
+{
+	/// Mesh Load 해종 ㅎ
+
+}
+
 void EATERManager::LoadMaterial(std::string& Path)
 {
 	std::size_t Start	= Path.rfind('/')+1;
@@ -108,9 +117,15 @@ void EATERManager::LoadMaterial(std::string& Path)
 	int Count = EATER_GET_NODE_COUNT();
 	for (int i = 0; i < Count; i++)
 	{
+		// 새로운 Material 생성..
 		Material* Mat = new Material();
+<<<<<<< HEAD
 		Mat->Name = SaveName;
 		MaterialData* Data = Mat->m_MaterialData;
+=======
+
+		MaterialBuffer* Data = Mat->m_MaterialData;
+>>>>>>> main
 		std::string NodeName = EATER_GET_NODE_NAME(i);
 		if (NodeName == "EATERMAT")
 		{
@@ -157,39 +172,9 @@ LoadMeshData* EATERManager::LoadStaticMesh(int index)
 	LoadMeshData* model = new LoadMeshData();
 	model->MeshType = MESH_TYPE::STATIC_MESH;
 	LoadName(index, model);
-	LoadMaterial(index, model);
 	LoadTM(index, model);
-
-	// 저장되있는 Mesh Index를 Load 기준 Index로 변환..
-	int meshIndex = std::stoi(EATER_GET_MAP(index, "MeshIndex"));
-	meshIndex = LoadManager::FindInstanceIndex(meshIndex);
-	
-	// 해당 Index의 Mesh Buffer 유무 체크..
-	MeshBuffer* meshBuffer = LoadManager::GetMeshBuffer(meshIndex);
-
-	// 만약 같은 Mesh Buffer가 없을경우 새로 생성해주고
-	// 있을 경우 해당 Mesh Buffer로 설정..
-	if (meshBuffer == nullptr)
-	{
-		ParserData::Mesh* mesh = new ParserData::Mesh();
-
-		LoadVertex(index, mesh);
-		LoadIndex(index, mesh);
-
-		// 검사하고
-		EnterCriticalSection(m_CriticalSection);
-		m_Graphic->CreateMeshBuffer(mesh, model);
-		LeaveCriticalSection(m_CriticalSection);
-		
-		// Mesh Buffer Index 설정..
-		model->MeshBuffer_Data->BufferIndex = meshIndex;
-
-		LoadManager::MeshBufferList.insert({ meshIndex, model->MeshBuffer_Data });
-	}
-	else
-	{
-		model->MeshBuffer_Data = meshBuffer;
-	}
+	LoadMesh(index, model);
+	LoadMaterial(index, model);
 
 	return model;
 }
@@ -221,41 +206,11 @@ LoadMeshData* EATERManager::LoadSkinMesh(int index)
 	LoadMeshData* model = new LoadMeshData();
 	model->MeshType = MESH_TYPE::SKIN_MESH;
 
-	LoadMaterial(index, model);
 	LoadName(index, model);
 	LoadTM(index, model);
 	LoadBoneOffset(index, model);
-
-	// 저장되있는 Mesh Index를 Load 기준 Index로 변환..
-	int meshIndex = std::stoi(EATER_GET_MAP(index, "MeshIndex"));
-	meshIndex = LoadManager::FindInstanceIndex(meshIndex);
-
-	// 해당 Index의 Mesh Buffer 유무 체크..
-	MeshBuffer* meshBuffer = LoadManager::GetMeshBuffer(meshIndex);
-
-	// 만약 같은 Mesh Buffer가 없을경우 새로 생성해주고
-	// 있을 경우 해당 Mesh Buffer로 설정..
-	if (meshBuffer == nullptr)
-	{
-		ParserData::Mesh* mesh = new ParserData::Mesh();
-
-		LoadSkinVertex(index, mesh);
-		LoadIndex(index, mesh);
-
-		// 검사하고
-		EnterCriticalSection(m_CriticalSection);
-		m_Graphic->CreateMeshBuffer(mesh, model);
-		LeaveCriticalSection(m_CriticalSection);
-
-		// Mesh Buffer Index 설정..
-		model->MeshBuffer_Data->BufferIndex = meshIndex;
-
-		LoadManager::MeshBufferList.insert({ meshIndex, model->MeshBuffer_Data });
-	}
-	else
-	{
-		model->MeshBuffer_Data = meshBuffer;
-	}
+	LoadMesh(index, model);
+	LoadMaterial(index, model);
 
 	return model;
 }
@@ -380,12 +335,12 @@ void EATERManager::LoadTM(int Index, LoadMeshData* model)
 	}
 }
 
-void EATERManager::LoadVertex(int index, ParserData::Mesh* mesh)
+void EATERManager::LoadVertex(int index, ParserData::CMesh* mesh)
 {
 	int VertexCount = EATER_GET_LIST_CHOICE(index, "Vertex");
 	for (int i = 0; i < VertexCount; i++)
 	{
-		ParserData::Vertex* V = new ParserData::Vertex();
+		ParserData::CVertex* V = new ParserData::CVertex();
 
 		std::vector<float> Data;
 		EATER_GET_LIST(&Data, i);
@@ -409,12 +364,12 @@ void EATERManager::LoadVertex(int index, ParserData::Mesh* mesh)
 	}
 }
 
-void EATERManager::LoadSkinVertex(int index, ParserData::Mesh* mesh)
+void EATERManager::LoadSkinVertex(int index, ParserData::CMesh* mesh)
 {
 	int VertexCount = EATER_GET_LIST_CHOICE(index, "Vertex");
 	for (int i = 0; i < VertexCount; i++)
 	{
-		ParserData::Vertex* V = new ParserData::Vertex();
+		ParserData::CVertex* V = new ParserData::CVertex();
 
 		std::vector<float> Data;
 		EATER_GET_LIST(&Data, i);
@@ -458,13 +413,13 @@ void EATERManager::LoadSkinVertex(int index, ParserData::Mesh* mesh)
 	}
 }
 
-void EATERManager::LoadIndex(int index, ParserData::Mesh* mesh)
+void EATERManager::LoadIndex(int index, ParserData::CMesh* mesh)
 {
 	int IndexCount = EATER_GET_LIST_CHOICE(index, "Index");
 	mesh->m_IndexList.reserve(IndexCount);
 	for (int i = 0; i < IndexCount; i++)
 	{
-		ParserData::IndexList* FACE = new ParserData::IndexList();
+		ParserData::CIndexList* FACE = new ParserData::CIndexList();
 
 		std::vector<float> Data;
 		EATER_GET_LIST(&Data, i);
@@ -477,11 +432,11 @@ void EATERManager::LoadIndex(int index, ParserData::Mesh* mesh)
 	}
 }
 
-void EATERManager::LoadBoneOffset(int index, LoadMeshData* mesh)
+void EATERManager::LoadBoneOffset(int index, LoadMeshData* model)
 {
 	int BoneOffsetCount = EATER_GET_LIST_CHOICE(index, "BoneOffset");
-	mesh->BoneTMList = new std::vector<Matrix>();
-	mesh->BoneTMList->reserve(BoneOffsetCount);
+	model->BoneTMList = new std::vector<Matrix>();
+	model->BoneTMList->reserve(BoneOffsetCount);
 	for (int i = 0; i < BoneOffsetCount; i++)
 	{
 		std::vector<float> Data;
@@ -506,7 +461,8 @@ void EATERManager::LoadBoneOffset(int index, LoadMeshData* mesh)
 		TM._42 = Data[13];
 		TM._43 = Data[14];
 		TM._44 = Data[15];
-		mesh->BoneTMList->push_back(TM);
+
+		model->BoneTMList->push_back(TM);
 	}
 }
 
@@ -523,7 +479,7 @@ void EATERManager::LoadAnimation(int index, std::string& Name)
 
 
 	ModelAnimationData* Data = nullptr;
-	std::vector<ParserData::OneAnimation*>* AnimeData = nullptr;
+	std::vector<ParserData::CAnimation*>* AnimeData = nullptr;
 
 	//다른 애니메이션이 없다면 새롭게 생성
 	if (LoadManager::AnimationList.find(MeshName) == LoadManager::AnimationList.end())
@@ -535,7 +491,7 @@ void EATERManager::LoadAnimation(int index, std::string& Name)
 	{
 		Data = LoadManager::AnimationList[MeshName];
 	}
-	Data->AnimList[AnimationName] = new std::vector<ParserData::OneAnimation*>();
+	Data->AnimList[AnimationName] = new std::vector<ParserData::CAnimation*>();
 
 
 	float m_TicksPerFrame = std::stof(EATER_GET_MAP(index, "TickFrame"));
@@ -546,7 +502,7 @@ void EATERManager::LoadAnimation(int index, std::string& Name)
 	int BoneCount = std::stoi(EATER_GET_MAP(index, "BoneCount"));
 	for (int k = 0; k < BoneCount; k++)
 	{
-		ParserData::OneAnimation* OneAnime = new OneAnimation();
+		ParserData::CAnimation* OneAnime = new CAnimation();
 		OneAnime->m_EndFrame = (int)m_EndFrame;
 		OneAnime->m_StartFrame = (int)m_StartFrame;
 		OneAnime->m_TotalFrame = (int)m_TotalFrame;
@@ -557,7 +513,7 @@ void EATERManager::LoadAnimation(int index, std::string& Name)
 		int AnimationCount = EATER_GET_LIST_CHOICE(index, std::to_string(k));
 		for (int i = 0; i < AnimationCount; i++)
 		{
-			ParserData::OneFrame* Frame = new ParserData::OneFrame();
+			ParserData::CFrame* Frame = new ParserData::CFrame();
 			std::vector<float> Data;
 			EATER_GET_LIST(&Data, i);
 			int Size = (int)Data.size();
@@ -592,12 +548,65 @@ void EATERManager::LoadMaterial(int index, LoadMeshData* model)
 {
 	std::string material = EATER_GET_MAP(index, "MaterialName");
 
-	
-	// 메테리얼 이름 설정..
+	// Material Name 설정..
 	if (material != "NO")
 	{
 		model->MaterialName = material;
 	}
+}
+
+void EATERManager::LoadMesh(int index, LoadMeshData* model)
+{
+	std::string mesh = EATER_GET_MAP(index, "MeshName");
+
+	// Mesh Name 설정..
+	if (mesh != "NO")
+	{
+		model->MeshName = mesh;
+	}
+	else
+	{
+		// Mesh Buffer가 없을 경우 설정하지 않음..
+		// 자체 포멧에서 이름만 가져올 경우 위 분기도 필요없음..
+		return;
+	}
+
+	/// 자체 포멧이 없을경우에 쓰는중
+	// 저장되있는 Mesh Index를 Load 기준 Index로 변환..
+	int meshIndex = std::stoi(EATER_GET_MAP(index, "MeshIndex"));
+
+	// Mesh 이름 설정..
+	std::string meshName = nowFileName + "_" + std::to_string(meshIndex);
+
+	// 해당 Index의 Mesh Buffer 유무 체크..
+	Mesh* meshBuffer = LoadManager::GetMesh(meshName);
+
+	// 만약 같은 Mesh Buffer가 없을경우 새로 생성해주고
+	// 있을 경우 해당 Mesh Buffer로 설정..
+	if (meshBuffer == nullptr)
+	{
+		ParserData::CMesh* mesh = new ParserData::CMesh();
+
+		LoadVertex(index, mesh);
+		LoadIndex(index, mesh);
+
+		// Mesh 생성..
+		meshBuffer = new Mesh();
+		meshBuffer->Name = meshName;
+
+		EnterCriticalSection(m_CriticalSection);
+		m_Graphic->CreateMeshBuffer(mesh, &meshBuffer->m_MeshData);
+		LeaveCriticalSection(m_CriticalSection);
+
+		// 새로 생성한 Mesh 추가..
+		LoadManager::MeshBufferList.insert({ meshName, meshBuffer });
+
+		delete mesh;
+	}
+
+	// 해당 Mesh Buffer 이름 삽입..
+	// 추후 Mesh Filter Start 에서 Mesh Buffer를 가져오는 기준이 되는 이름..
+	model->MeshName = meshBuffer->Name;
 }
 
 void EATERManager::LoadName(int index, LoadMeshData* model)
@@ -689,16 +698,16 @@ void EATERManager::Load_Component_Skinning(int index, GameObject* Object)
 	}
 }
 
-void EATERManager::CreateKeyFrame(std::vector<ParserData::OneAnimation*>* Anime, int InputKeyCount)
+void EATERManager::CreateKeyFrame(std::vector<ParserData::CAnimation*>* Anime, int InputKeyCount)
 {
 	//기존 애니메이션
-	std::vector<ParserData::OneAnimation*>::iterator it = Anime->begin();
+	std::vector<ParserData::CAnimation*>::iterator it = Anime->begin();
 
 	for (it; it != Anime->end(); it++)
 	{
-		std::vector<ParserData::OneFrame*> data = (*it)->m_AniData;
+		std::vector<ParserData::CFrame*> data = (*it)->m_AniData;
 		//새롭게 넣을 데이터 리스트
-		std::vector<ParserData::OneFrame*> CreateData;
+		std::vector<ParserData::CFrame*> CreateData;
 
 		int Size = (int)data.size();
 		for (int i = 0; i < Size - 1; i++)
@@ -724,7 +733,7 @@ void EATERManager::CreateKeyFrame(std::vector<ParserData::OneAnimation*>* Anime,
 			for (int j = 0; j <= KeyCount; j++)
 			{
 				//새로운 키 프레임 생성
-				ParserData::OneFrame* temp = new OneFrame();
+				ParserData::CFrame* temp = new CFrame();
 				temp->m_Pos = Vector3::Lerp(Start_Pos, End_Pos, CountLerp);
 				temp->m_RotQt = Quaternion::Lerp(Start_Rot, End_Rot, CountLerp);
 				temp->m_Scale = Vector3::Lerp(Start_Scl, End_Scl, CountLerp);

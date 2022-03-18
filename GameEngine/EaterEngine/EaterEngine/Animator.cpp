@@ -30,7 +30,7 @@ Animator::~Animator()
 	AnimeData.clear();
 }
 
-void Animator::SetAnimation(ParserData::OneAnimation* data)
+void Animator::SetAnimation(ParserData::CAnimation* data)
 {
 	NowAnimationData = data;
 }
@@ -70,7 +70,7 @@ void Animator::ReStart()
 	mStop = false;
 }
 
-void Animator::ChoiceAnime(ParserData::OneAnimation* Anime)
+void Animator::ChoiceAnime(ParserData::CAnimation* Anime)
 {
 	NowAnimationData = Anime;
 	AnimeIndex = 0;

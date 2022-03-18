@@ -9,7 +9,7 @@ public:
 public:
 	void Initialize() override;
 	void Release() override;
-	ParserData::Model* LoadModel(std::string fileName, UINT state) override;
+	ParserData::CModel* LoadModel(std::string fileName, UINT state) override;
 
 	void SceneSetting(std::string fileName);
 	void CreateModel();
@@ -27,9 +27,9 @@ public:
 	void ProcessAnimation(fbxsdk::FbxNode* node);
 
 	void OptimizeData();
-	void OptimizeVertex(ParserData::Mesh* pMesh);
-	void CopyOriginalVertex(ParserData::Mesh* pMesh);
-	void RecombinationTM(ParserData::Mesh* pMesh);
+	void OptimizeVertex(ParserData::CMesh* pMesh);
+	void CopyOriginalVertex(ParserData::CMesh* pMesh);
+	void RecombinationTM(ParserData::CMesh* pMesh);
 
 	DirectX::SimpleMath::Vector2 ConvertVector2(fbxsdk::FbxVector2 v2);
 	DirectX::SimpleMath::Vector2 ConvertVector2(fbxsdk::FbxVector4 v4);
@@ -53,7 +53,7 @@ public:
 	void CreateMesh();
 
 	int FindBoneIndex(std::string boneName);
-	ParserData::Mesh* FindMesh(std::string meshName);
+	ParserData::CMesh* FindMesh(std::string meshName);
 
 private:
 	fbxsdk::FbxManager* pManager;
@@ -68,16 +68,16 @@ private:
 	std::vector<fbxsdk::FbxGeometry*> fbxGeometries;
 
 private:
-	ParserData::Model* m_Model;
-	std::vector<ParserData::Model*> m_ModelList;
+	ParserData::CModel* m_Model;
+	std::vector<ParserData::CModel*> m_ModelList;
 
 	ParserData::CMaterial* m_MaterialData;			// Material Data Struct
 
-	ParserData::Mesh* m_OneMesh;					// Mesh Data Struct
+	ParserData::CMesh* m_OneMesh;					// Mesh Data Struct
 
-	std::vector<ParserData::Mesh*> m_AllBoneList;			// Skinning Object Bone List
+	std::vector<ParserData::CMesh*> m_AllBoneList;			// Skinning Object Bone List
 
-	ParserData::OneAnimation* m_OneAnimation;		// Object One Animation Data
+	ParserData::CAnimation* m_OneAnimation;		// Object One Animation Data
 
 	int m_KeyFrames;		// Animation Total Frame
 	int m_StartTime;		// Animation Start Frame

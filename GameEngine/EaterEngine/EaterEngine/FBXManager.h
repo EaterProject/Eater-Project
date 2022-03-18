@@ -8,8 +8,8 @@
 
 namespace ParserData
 {
-	struct Model;
-	class OneAnimation;
+	struct CModel;
+	class CAnimation;
 }
 class ModelData;
 class ModelParser;
@@ -27,21 +27,21 @@ public:
 	void Load(std::string& Path, UINT parsingMode);
 private:
 	void LoadFile(std::string& Path, UINT parsingMode);
-	void LoadAnimation(ModelData* SaveMesh, ParserData::Model* MeshData,std::string& Path);
+	void LoadAnimation(ModelData* SaveMesh, ParserData::CModel* MeshData,std::string& Path);
 private:
 	void CheckSkinning(std::string& Path);
 	void CheckAnimation(std::string& Path);
 private:
-	void CreateSaveMesh(ParserData::Model* mMesh , ModelData* SaveMesh,std::string& Path);
-	void CreateKeyFrame(std::vector<ParserData::OneAnimation*>* Anime, int InputKeyCount);	//애니메이션 키생성
-	LoadMeshData* CreateBaseMesh(ParserData::Mesh* mMesh);	//기본 메쉬 생성
-	LoadMeshData* CreateSkinMesh(ParserData::Mesh* mMesh);	//스킨 매쉬 생성
-	LoadMeshData* CreateBoneMesh(ParserData::Mesh* mMesh);	//스킨 매쉬 생성
+	void CreateSaveMesh(ParserData::CModel* mMesh , ModelData* SaveMesh,std::string& Path);
+	void CreateKeyFrame(std::vector<ParserData::CAnimation*>* Anime, int InputKeyCount);	//애니메이션 키생성
+	LoadMeshData* CreateBaseMesh(ParserData::CMesh* mMesh);	//기본 메쉬 생성
+	LoadMeshData* CreateSkinMesh(ParserData::CMesh* mMesh);	//스킨 매쉬 생성
+	LoadMeshData* CreateBoneMesh(ParserData::CMesh* mMesh);	//스킨 매쉬 생성
 private:
-	void SetMaterialData(ParserData::Mesh* mMesh, LoadMeshData* SaveData);	//메테리얼 정보 삽입
-	void SetMatrixData(ParserData::Mesh* mMesh, LoadMeshData* SaveData);	//메트릭스 정보 삽입
-	void SetNameData(ParserData::Mesh* mMesh, LoadMeshData* SaveData);		//이름 정보 삽입
-	void SetBufferData(ParserData::Mesh* mMesh, LoadMeshData* SaveData);	//인덱스 버텍스 버퍼 삽입
+	void SetMaterialData(ParserData::CMesh* mMesh, LoadMeshData* SaveData);	//메테리얼 정보 삽입
+	void SetMatrixData(ParserData::CMesh* mMesh, LoadMeshData* SaveData);	//메트릭스 정보 삽입
+	void SetNameData(ParserData::CMesh* mMesh, LoadMeshData* SaveData);		//이름 정보 삽입
+	void SetMeshData(ParserData::CMesh* mMesh, LoadMeshData* SaveData);	//인덱스 버텍스 버퍼 삽입
 private:
 	std::string CutStr(std::string Path);
 	void LinkMesh(std::vector<LoadMeshData*>& List, ModelData* SaveMesh);

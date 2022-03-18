@@ -10,6 +10,7 @@
 #include "BaseManager.h"
 #include "ObjectManager.h"
 #include "Material.h"
+#include "Mesh.h"
 #include "Terrain.h"
 #include "MainHeader.h"
 #include "TextureManager.h"
@@ -247,6 +248,8 @@ void MeshFilter::SetMaterial(std::string matName)
 
 	// 해당 Material 설정..
 	Materials = material;
+
+	// 그래픽 측 동기화 필요..
 }
 
 void MeshFilter::SetTexture(std::string texName, UINT texType)
@@ -296,8 +299,13 @@ void MeshFilter::CreateStaticMesh(LoadMeshData* mMesh, GameObject* Object)
 	Object->Name = mMesh->Name;
 
 	SetMatrixData(mMesh, Data, Object);
+<<<<<<< HEAD
 	SetMaterialData(mMesh, Data, Object);
 	SetBufferData(mMesh, Data);
+=======
+	SetMaterialData(mMesh, Data);
+	SetMeshData(mMesh, Data);
+>>>>>>> main
 	SetType(mMesh, Data);
 
 	int ChildCount = (int)mMesh->Child.size();
@@ -346,8 +354,13 @@ void MeshFilter::CreateSkinMesh(LoadMeshData* mMesh, GameObject* Object)
 	Object->Name = mMesh->Name;
 
 	SetMatrixData(mMesh, Data, Object);
+<<<<<<< HEAD
 	SetMaterialData(mMesh, Data, Object);
 	SetBufferData(mMesh, Data);
+=======
+	SetMaterialData(mMesh, Data);
+	SetMeshData(mMesh, Data);
+>>>>>>> main
 
 	Data->Object_Data->ObjType = OBJECT_TYPE::SKINNING;
 
@@ -365,7 +378,7 @@ void MeshFilter::CreateSkinMesh(LoadMeshData* mMesh, GameObject* Object)
 
 void MeshFilter::SetMaterialData(LoadMeshData* LoadMesh, MeshData* mMesh, GameObject* obj)
 {
-	/// Material 가져와서 셋팅해줘야함
+	/// Load시 저장해 둿던 Material Name 기준으로 해당 Material Buffer 설정..
 	Material* material = LoadManager::GetMaterial(LoadMesh->MaterialName);
 	MeshFilter* meshFilter = obj->GetComponent<MeshFilter>();
 
@@ -382,7 +395,11 @@ void MeshFilter::SetMaterialData(LoadMeshData* LoadMesh, MeshData* mMesh, GameOb
 	}
 
 	// Render Material Data 설정..
+<<<<<<< HEAD
 	mMesh->Material_Data = meshFilter->Materials->m_MaterialData;
+=======
+	mMesh->Material_Buffer = Materials->m_MaterialData;
+>>>>>>> main
 }
 
 void MeshFilter::SetMatrixData(LoadMeshData* LoadMesh, MeshData* mMesh, GameObject* Object)
@@ -396,9 +413,16 @@ void MeshFilter::SetMatrixData(LoadMeshData* LoadMesh, MeshData* mMesh, GameObje
 	mMesh->Object_Data->Local = &mTransform->Load_World;
 }
 
-void MeshFilter::SetBufferData(LoadMeshData* LoadMesh, MeshData* mMesh)
+void MeshFilter::SetMeshData(LoadMeshData* LoadMesh, MeshData* mMesh)
 {
-	mMesh->MeshBuffer_Data = LoadMesh->MeshBuffer_Data;
+	/// Load시 저장해 둿던 Mesh Name 기준으로 해당 Mesh Buffer 설정..
+	Mesh* mesh = LoadManager::GetMesh(LoadMesh->MeshName);
+
+	// 해당 Mesh Buffer 설정..
+	mMesh->Mesh_Buffer = mesh->m_MeshData;
+
+	/// 그래픽 측 동기화 필요..
+
 }
 
 void MeshFilter::SetType(LoadMeshData* LoadMesh, MeshData* mMesh)
@@ -432,7 +456,7 @@ void MeshFilter::LinkHierarchy(Transform* my, Transform* parent)
 void MeshFilter::CreateMesh()
 {
 	///이름으로 로드할 데이터를 찾아서 가져옴
-	ModelData* mMesh = LoadManager::GetMesh(MeshName);
+	ModelData* mMesh = LoadManager::GetModel(MeshName);
 	Transform* Tr = gameobject->GetTransform();
 
 	if (mMesh == nullptr) { return; }

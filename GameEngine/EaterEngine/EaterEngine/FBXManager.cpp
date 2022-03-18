@@ -7,6 +7,7 @@
 #include "TextureManager.h"
 #include "GraphicEngineManager.h"
 #include "Material.h"
+#include "Mesh.h"
 #include <filesystem>
 #include <iostream>
 
@@ -42,27 +43,28 @@ void FBXManager::Initialize(GraphicEngineManager* Graphic, CRITICAL_SECTION* _cs
 
 void FBXManager::LoadTerrain(std::string Name, std::string MaskName, UINT parsingMode)
 {
-	ParserData::Model * mMesh = FBXLoad->LoadModel(Name, parsingMode);
+	ParserData::CModel* mMesh = FBXLoad->LoadModel(Name, parsingMode);
 	int size =  (int)mMesh->m_MaterialList.size();
-	ParserData::Mesh* TerrainMesh = mMesh->m_MeshList[0];
+	ParserData::CMesh* TerrainMesh = mMesh->m_MeshList[0];
+
+	// Terrain Mask Name 삽입..
+	TerrainMesh->m_MeshType = TERRAIN_MESH;
+	TerrainMesh->m_MaskName = MaskName;
 
 	LoadMeshData* Data = new LoadMeshData();
-	ModelData* Model = new ModelData();
-
+	ModelData* model = new ModelData();
+	Data->MeshType = TERRAIN_MESH;
 
 	SetMatrixData(TerrainMesh, Data);
 	SetNameData(TerrainMesh, Data);
-
-	Data->Mask_Name = MaskName;
-	Data->MeshType = TERRAIN_MESH;
-	SetBufferData(TerrainMesh, Data);
+	SetMeshData(TerrainMesh, Data);
 
 	std::size_t Start	= Name.rfind('/')+1;
 	std::size_t End		= Name.rfind('.') - Start;
 	Name = Name.substr(Start, End);
 
-	Model->TopMeshList.push_back(Data);
-	LoadManager::ModelList.insert({Name,Model });
+	model->TopMeshList.push_back(Data);
+	LoadManager::ModelList.insert({ Name, model });
 }
 
 void FBXManager::CheckSkinning(std::string& Path)
@@ -88,19 +90,19 @@ void FBXManager::CheckAnimation(std::string& Path)
 	std::size_t Start	= Path.rfind('/')+1;
 	std::size_t End		= Path.rfind('+') - Start;
 	std::string MeshName = Path.substr(Start,End);
-	isAnimation = LoadManager::FindMesh(MeshName);
+	isAnimation = LoadManager::FindModel(MeshName);
 }
 
-void FBXManager::CreateKeyFrame(std::vector<ParserData::OneAnimation*>* Anime, int InputKeyCount)
+void FBXManager::CreateKeyFrame(std::vector<ParserData::CAnimation*>* Anime, int InputKeyCount)
 {
 	//기존 애니메이션
-	std::vector<ParserData::OneAnimation*>::iterator it = Anime->begin();
+	std::vector<ParserData::CAnimation*>::iterator it = Anime->begin();
 
 	for (it; it != Anime->end(); it++)
 	{
-		std::vector<ParserData::OneFrame*> data = (*it)->m_AniData;
+		std::vector<ParserData::CFrame*> data = (*it)->m_AniData;
 		//새롭게 넣을 데이터 리스트
-		std::vector<ParserData::OneFrame*> CreateData;
+		std::vector<ParserData::CFrame*> CreateData;
 
 		int Size = (int)data.size();
 		for (int i = 0; i < Size - 1; i++)
@@ -126,7 +128,7 @@ void FBXManager::CreateKeyFrame(std::vector<ParserData::OneAnimation*>* Anime, i
 			for (int j = 0; j <= KeyCount; j++)
 			{
 				//새로운 키 프레임 생성
-				ParserData::OneFrame* temp = new OneFrame();
+				ParserData::CFrame* temp = new CFrame();
 				temp->m_Pos = Vector3::Lerp(Start_Pos, End_Pos, CountLerp);
 				temp->m_RotQt = Quaternion::Lerp(Start_Rot, End_Rot, CountLerp);
 				temp->m_Scale = Vector3::Lerp(Start_Scl, End_Scl, CountLerp);
@@ -146,79 +148,35 @@ void FBXManager::CreateKeyFrame(std::vector<ParserData::OneAnimation*>* Anime, i
 	}
 }
 
-LoadMeshData* FBXManager::CreateBaseMesh(ParserData::Mesh* mMesh)
+LoadMeshData* FBXManager::CreateBaseMesh(ParserData::CMesh* mMesh)
 {
 	/// 기본 메쉬 처리
 	if (mMesh == nullptr) { return nullptr; }
 	LoadMeshData* SaveMesh = new LoadMeshData();
 
-	UINT meshIndex = LoadManager::FindInstanceIndex(mMesh->m_MeshIndex);
-
-	// 해당 Index의 Mesh Buffer 유무 체크..
-	MeshBuffer* meshBuffer = LoadManager::GetMeshBuffer(meshIndex);
-
-	//못찾음
-	if (meshBuffer == nullptr)
-	{
-		SetNameData(mMesh, SaveMesh);		//이름 데이터 삽입
-		SetMaterialData(mMesh, SaveMesh);	//메테리얼 데이터 삽입
-		SetMatrixData(mMesh, SaveMesh);		//매트릭스 데이터 삽입
-		SetBufferData(mMesh, SaveMesh);		//인덱스 버퍼 버텍스 버퍼 삽입
-
-		// 새로 생성한 Mesh Buffer Index 설정..
-		SaveMesh->MeshBuffer_Data->BufferIndex = meshIndex;
-
-		LoadManager::MeshBufferList.insert({ meshIndex, SaveMesh->MeshBuffer_Data });
-	}
-	else
-	{
-		SetNameData(mMesh, SaveMesh);		//이름 데이터 삽입
-		SetMaterialData(mMesh, SaveMesh);	//메테리얼 데이터 삽입
-		SetMatrixData(mMesh, SaveMesh);		//매트릭스 데이터 삽입
-
-		SaveMesh->MeshBuffer_Data = meshBuffer;
-	}
+	SetNameData(mMesh, SaveMesh);		//이름 데이터 삽입
+	SetMaterialData(mMesh, SaveMesh);	//메테리얼 데이터 삽입
+	SetMatrixData(mMesh, SaveMesh);		//매트릭스 데이터 삽입
+	SetMeshData(mMesh, SaveMesh);		//매쉬 데이터 삽입
 
 	return SaveMesh;
 }
 
-LoadMeshData* FBXManager::CreateSkinMesh(ParserData::Mesh* mMesh)
+LoadMeshData* FBXManager::CreateSkinMesh(ParserData::CMesh* mMesh)
 {
 	///스킨 매쉬 처리
 	if (mMesh == nullptr) { return nullptr; }
 	LoadMeshData* SaveMesh = new LoadMeshData();
 
-	UINT meshIndex = LoadManager::FindInstanceIndex(mMesh->m_MeshIndex);
-
-	// 해당 Index의 Mesh Buffer 유무 체크..
-	MeshBuffer* meshBuffer = LoadManager::GetMeshBuffer(meshIndex);
-
-	//못찾음
-	if (meshBuffer == nullptr)
-	{
-		SetNameData(mMesh, SaveMesh);		//이름 데이터 삽입
-		SetMaterialData(mMesh, SaveMesh);	//메테리얼 데이터 삽입
-		SetMatrixData(mMesh, SaveMesh);		//매트릭스 데이터 삽입
-		SetBufferData(mMesh, SaveMesh);		//인덱스 버퍼 버텍스 버퍼 삽입
-
-		// 새로 생성한 Mesh Buffer Index 설정..
-		SaveMesh->MeshBuffer_Data->BufferIndex = meshIndex;
-
-		LoadManager::MeshBufferList.insert({ meshIndex, SaveMesh->MeshBuffer_Data });
-	}
-	else
-	{
-		SetNameData(mMesh, SaveMesh);		//이름 데이터 삽입
-		SetMaterialData(mMesh, SaveMesh);	//메테리얼 데이터 삽입
-		SetMatrixData(mMesh, SaveMesh);		//매트릭스 데이터 삽입
-
-		SaveMesh->MeshBuffer_Data = meshBuffer;
-	}
+	SetNameData(mMesh, SaveMesh);		//이름 데이터 삽입
+	SetMaterialData(mMesh, SaveMesh);	//메테리얼 데이터 삽입
+	SetMatrixData(mMesh, SaveMesh);		//매트릭스 데이터 삽입
+	SetMeshData(mMesh, SaveMesh);		//매쉬 데이터 삽입
 
 	return SaveMesh;
 }
 
-LoadMeshData* FBXManager::CreateBoneMesh(ParserData::Mesh* mMesh)
+LoadMeshData* FBXManager::CreateBoneMesh(ParserData::CMesh* mMesh)
 {
 	///본 매쉬 처리
 	if (mMesh == nullptr) { return nullptr; }
@@ -229,7 +187,7 @@ LoadMeshData* FBXManager::CreateBoneMesh(ParserData::Mesh* mMesh)
 	return SaveMesh;
 }
 
-void FBXManager::SetMaterialData(ParserData::Mesh* mMesh, LoadMeshData* SaveData)
+void FBXManager::SetMaterialData(ParserData::CMesh* mMesh, LoadMeshData* SaveData)
 {
 	// Parsing Data 기반 Material 생성..
 	CMaterial* mat = mMesh->m_MaterialData;
@@ -284,13 +242,13 @@ void FBXManager::SetMaterialData(ParserData::Mesh* mMesh, LoadMeshData* SaveData
 	}
 }
 
-void FBXManager::SetMatrixData(ParserData::Mesh* mMesh, LoadMeshData* SaveData)
+void FBXManager::SetMatrixData(ParserData::CMesh* mMesh, LoadMeshData* SaveData)
 {
 	SaveData->WorldTM = mMesh->m_WorldTM;
 	SaveData->LocalTM = mMesh->m_LocalTM;
 }
 
-void FBXManager::SetNameData(ParserData::Mesh* mMesh, LoadMeshData* SaveData)
+void FBXManager::SetNameData(ParserData::CMesh* mMesh, LoadMeshData* SaveData)
 {
 	SaveData->Name			= mMesh->m_NodeName;
 	SaveData->ParentName	= mMesh->m_ParentName;
@@ -298,11 +256,31 @@ void FBXManager::SetNameData(ParserData::Mesh* mMesh, LoadMeshData* SaveData)
 	SaveData->Top_Object	= mMesh->m_TopNode;
 }
 
-void FBXManager::SetBufferData(ParserData::Mesh* mMesh, LoadMeshData* SaveData)
+void FBXManager::SetMeshData(ParserData::CMesh* mMesh, LoadMeshData* SaveData)
 {
-	EnterCriticalSection(m_CriticalSection);
-	m_Graphic->CreateMeshBuffer(mMesh, SaveData);
-	LeaveCriticalSection(m_CriticalSection);
+	// Mesh 이름 설정..
+	std::string meshName = nowFileName + "_" + std::to_string(mMesh->m_MeshIndex);
+
+	// 해당 Index의 Mesh Buffer 유무 체크..
+	Mesh* meshBuffer = LoadManager::GetMesh(meshName);
+
+	if (meshBuffer == nullptr)
+	{
+		// Mesh 생성..
+		meshBuffer = new Mesh();
+		meshBuffer->Name = meshName;
+
+		EnterCriticalSection(m_CriticalSection);
+		m_Graphic->CreateMeshBuffer(mMesh, &meshBuffer->m_MeshData);
+		LeaveCriticalSection(m_CriticalSection);
+
+		// 현재 Mesh 저장..
+		LoadManager::MeshBufferList.insert({meshName, meshBuffer });
+	}
+
+	// 해당 Mesh Buffer 이름 삽입..
+	// 추후 Mesh Filter Start 에서 Mesh Buffer를 가져오는 기준이 되는 이름..
+	SaveData->MeshName = meshBuffer->Name;
 }
 
 std::string FBXManager::CutStr(std::string Path)
@@ -373,7 +351,7 @@ std::string FBXManager::GetSaveName(std::string& Path)
 	}
 }
 
-void FBXManager::CreateSaveMesh(ParserData::Model* mMesh, ModelData* SaveMesh, std::string& Path)
+void FBXManager::CreateSaveMesh(ParserData::CModel* mMesh, ModelData* SaveMesh, std::string& Path)
 {
 	std::vector<LoadMeshData*> BaseMeshList;
 	std::vector<LoadMeshData*> SkinMeshList;
@@ -386,7 +364,7 @@ void FBXManager::CreateSaveMesh(ParserData::Model* mMesh, ModelData* SaveMesh, s
 	int MeshSize = (int)mMesh->m_MeshList.size();
 	for (int i = 0; i < MeshSize; i++)
 	{
-		ParserData::Mesh *OneMesh = mMesh->m_MeshList[i];
+		ParserData::CMesh *OneMesh = mMesh->m_MeshList[i];
 		LoadMeshData* SaveOneMesh = nullptr;
 
 		//타입별로 LoadMeshData로 값을 채워준다
@@ -426,17 +404,27 @@ void FBXManager::LoadQuad()
 {
 	ModelData* SaveMesh = new ModelData();
 	LoadMeshData* quad = new LoadMeshData();
-
+	MeshBuffer* quadBuf = nullptr;
 	// Quad Mesh 설정..
 	quad->MeshType = QUAD_MESH;
+	quad->MeshName = "Quad";
+
+	ParserData::CMesh* mesh = new ParserData::CMesh();
+	mesh->m_MeshType = QUAD_MESH;
 
 	//버퍼값 읽어오기
 	EnterCriticalSection(m_CriticalSection);
-	m_Graphic->CreateMeshBuffer(nullptr, quad);
+	m_Graphic->CreateMeshBuffer(mesh, &quadBuf);
 	LeaveCriticalSection(m_CriticalSection);
+
+	/// 매쉬 자체포멧 생기면 이름만 저장하자..
+	quad->MeshBuffer_Data = quadBuf;
+
 	SaveMesh->TopMeshList.push_back(quad);
 
 	LoadManager::ModelList.insert({ "Quad" ,SaveMesh });
+
+	delete mesh;
 }
 
 void FBXManager::Load(std::string& Path, UINT parsingMode)
@@ -455,7 +443,7 @@ void FBXManager::Load(std::string& Path, UINT parsingMode)
 
 void FBXManager::LoadFile(std::string& Path, UINT parsingMode)
 {
-	ParserData::Model* mMesh = FBXLoad->LoadModel(Path, parsingMode);
+	ParserData::CModel* mMesh = FBXLoad->LoadModel(Path, parsingMode);
 	ModelData* SaveMesh = new ModelData();
 	LoadAnimation(SaveMesh, mMesh, Path);
 
@@ -466,7 +454,7 @@ void FBXManager::LoadFile(std::string& Path, UINT parsingMode)
 	CreateSaveMesh(mMesh, SaveMesh,Path);
 }
 
-void FBXManager::LoadAnimation(ModelData* SaveMesh, ParserData::Model* MeshData, std::string& Path)
+void FBXManager::LoadAnimation(ModelData* SaveMesh, ParserData::CModel* MeshData, std::string& Path)
 {
 	//if (isAnimation == false) { return; }
 

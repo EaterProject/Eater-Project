@@ -34,27 +34,8 @@ void Particle::Start()
 	// Object Type 설정..
 	gameobject->OneMeshData->Object_Data->ObjType = OBJECT_TYPE::PARTICLE;
 
-	// Frame 설정..
-	m_TexTotalFrame = m_SystemDesc->Total_Frame;
-
-	m_AniTotalFrame = 60;
-
-	// Option에 따른 Scale Turning Frame 지정..
-	if (m_SystemDesc->ScaleType == UPDOWN)
-		m_ScaleTurningFrame = m_AniTotalFrame / 2;
-	else
-		m_ScaleTurningFrame = m_AniTotalFrame;
-
-	// Option에 따른 Color Turning Frame 지정..
-	if (m_SystemDesc->ColorType == UPDOWN)
-		m_ColorTurningFrame = m_AniTotalFrame / 2;
-	else
-		m_ColorTurningFrame = m_AniTotalFrame;
-
-	m_WidthCount = m_SystemDesc->Tile_Width;
-	m_HeightCount = m_SystemDesc->Tile_Height;
-
-	m_Tex = DirectX::SimpleMath::Matrix::CreateScale(1.0f / m_SystemDesc->Tile_Width, 1.0f / m_SystemDesc->Tile_Height, 1.0f);
+	// 초기 Data 설정..
+	DataUpdate();
 }
 
 void Particle::Update()
@@ -308,6 +289,31 @@ void Particle::SetPlay(const PARTICLE_DESC* particleDesc)
 	if (m_OneRot != 0.0f)				m_AniType |= ROTATION_ANI;
 	if (m_OneScale != 0.0f)				m_AniType |= SCALE_ANI;
 	if (m_TexTotalFrame > 1)			m_AniType |= TEXTURE_ANI;
+}
+
+void Particle::DataUpdate()
+{
+	// Frame 설정..
+	m_TexTotalFrame = m_SystemDesc->Total_Frame;
+
+	m_AniTotalFrame = 60;
+
+	// Option에 따른 Scale Turning Frame 지정..
+	if (m_SystemDesc->ScaleType == UPDOWN)
+		m_ScaleTurningFrame = m_AniTotalFrame / 2;
+	else
+		m_ScaleTurningFrame = m_AniTotalFrame;
+
+	// Option에 따른 Color Turning Frame 지정..
+	if (m_SystemDesc->ColorType == UPDOWN)
+		m_ColorTurningFrame = m_AniTotalFrame / 2;
+	else
+		m_ColorTurningFrame = m_AniTotalFrame;
+
+	m_WidthCount = m_SystemDesc->Tile_Width;
+	m_HeightCount = m_SystemDesc->Tile_Height;
+
+	m_Tex = DirectX::SimpleMath::Matrix::CreateScale(1.0f / m_SystemDesc->Tile_Width, 1.0f / m_SystemDesc->Tile_Height, 1.0f);
 }
 
 void Particle::Reset()

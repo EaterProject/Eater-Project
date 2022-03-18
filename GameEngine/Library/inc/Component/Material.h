@@ -1,11 +1,8 @@
 #pragma once
 #include <string>
-#include "Component.h"
 #include "EaterEngineDLL.h"
 
-class MeshData;
-class MaterialData;
-class TextureBuffer;
+class MaterialBuffer;
 class MaterialManager;
 
 class Material
@@ -32,6 +29,7 @@ public:
 	EATER_ENGINEDLL void SetRoughnessFactor(float roughnessFactor);
 	EATER_ENGINEDLL void SetMetallicFactor(float metallicFactor);
 
+public:
 	void Release();
 
 public:
@@ -42,6 +40,6 @@ public:
 
 public:
 	std::string Name;
-	MaterialData* m_MaterialData;
+	MaterialBuffer* m_MaterialData;
 };
 
