@@ -21,6 +21,7 @@ void E_MaterialManager::ChangeEaterFile(ParserData::Model* FBXMesh)
 		if (OneMesh->m_MaterialData == nullptr) { continue; }
 
 		std::string ModelName = SaveFileName + "_" + OneMesh->m_MaterialData->m_MaterialName;
+		EATER_CREATE_FILE(ModelName, "../Assets/Texture/Material/", ".Emat");
 
 		EATER_SET_NODE("EATERMAT");
 		
@@ -85,6 +86,8 @@ void E_MaterialManager::ChangeEaterFile(ParserData::Model* FBXMesh)
 		EATER_SET_MAP("AddColor_G", "1");
 		EATER_SET_MAP("AddColor_B", "1");
 		EATER_SET_MAP("AddColor_A", "1");
+
+		EATER_CLOSE_FILE();
 	}
 }
 

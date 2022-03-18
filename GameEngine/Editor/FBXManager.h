@@ -5,8 +5,8 @@
 
 namespace ParserData
 {
-	class Model;
-	class Mesh;
+	struct Model;
+	struct Mesh;
 }
 
 class E_AnimationManager;
@@ -40,7 +40,7 @@ public:
 	void OpenFile(std::string& Path, MeshOption* Data);
 	void Initialize(EaterManager* mManager);
 private:
-	void StaticMesh(ParserData::Mesh* mMesh, std::string FileName);
+	//void StaticMesh(ParserData::Mesh* mMesh, std::string FileName);
 	void BoneMesh(ParserData::Mesh* mMesh);
 	void SkinMesh(ParserData::Mesh* mMesh, std::string FileName);
 	void TerrainMesh(ParserData::Mesh* mMesh);
@@ -51,7 +51,7 @@ private:
 	void SetMatrix(ParserData::Mesh* mMesh);
 	void SetBoneMatrix(ParserData::Mesh* mMesh, bool TopBone);
 	void SetMaterial(ParserData::Mesh* mMesh,std::string FileName);
-	void SetIndex(ParserData::Mesh* mMesh);
+	//void SetIndex(ParserData::Mesh* mMesh);
 
 	void SetVertexTerrain(ParserData::Mesh* mMesh);
 	void SetVertexSkin(ParserData::Mesh* mMesh);

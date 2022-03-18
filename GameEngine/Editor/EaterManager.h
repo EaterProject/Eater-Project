@@ -3,14 +3,15 @@
 
 namespace ParserData
 {
-	class Model;
-	class Mesh;
+	struct Model;
+	struct Mesh;
 }
 
 
 class E_MaterialManager;
 class E_MeshManager;
 class E_AnimationManager;
+class E_BufferManager;
 
 class EaterManager
 {

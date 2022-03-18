@@ -62,7 +62,7 @@ void FBXManager::SkinMesh(ParserData::Mesh* mMesh, std::string FileName)
 		SetMatrix(mMesh);
 		SetMaterial(mMesh, FileName);
 		SetVertexSkin(mMesh);
-		SetIndex(mMesh);
+		//SetIndex(mMesh);
 		SetBoneOffset(mMesh);
 	}
 	else
@@ -453,15 +453,5 @@ bool FBXManager::FindInstanceIndex(int Index)
 	return false;
 }
 
-void FBXManager::SetIndex(ParserData::Mesh* mMesh)
-{
-	int IndexCount = (int)mMesh->m_IndexList.size();
-	EATER_SET_INDEX_START(IndexCount);
 
-	for (int i = 0; i < IndexCount; i++)
-	{
-		ParserData::IndexList* index = mMesh->m_IndexList[i];
-		EATER_SET_INDEX(index->m_Index[0], index->m_Index[1], index->m_Index[2]);
-	}
-}
 

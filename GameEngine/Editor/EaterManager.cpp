@@ -50,33 +50,21 @@ void EaterManager::LoadEaterFile(std::string& Path)
 
 void EaterManager::Load_FBX_File(std::string& Path, ParserData::Model* FBXMesh)
 {
-	std::string SaveFileName = Path;
-	
-
-	int MeshSize = (int)FBXMesh->m_MeshList.size();
-
-	FBXMesh->m_MeshList[0]->m_MeshType;
-
-	
-	std::string FileName = CutFileName(SaveFileName);
+	std::string FileName = CutFileName(Path);
 
 	///Model 정보를 저장한다
-	EATER_CREATE_FILE(FileName,"../Assets/Model/ModelData/");
+	EATER_CREATE_FILE(FileName,"../Assets/Model/ModelData/",".Eater");
 	MeshManager->SetFileName(FileName);
 	MeshManager->ChangeEaterFile(FBXMesh);
 	EATER_CLOSE_FILE();
 
 	///Material 정보를 저장한다
-	EATER_CREATE_FILE(FileName, "../Assets/Texture/Material/",".EMAT");
 	MaterialManager->SetFileName(FileName);
 	MaterialManager->ChangeEaterFile(FBXMesh);
-	EATER_CLOSE_FILE();
 
 	///MeshBuffer 정보를 저장한다
-	EATER_CREATE_FILE(FileName, "../Assets/Model/MeshBuffer/",".EMESH");
 	BufferManager->SetFileName(FileName);
 	BufferManager->ChangeEaterFile(FBXMesh);
-	EATER_CLOSE_FILE();
 
 	///Animation 정보를 저장한다
 	////애니메이션 있으면 체크

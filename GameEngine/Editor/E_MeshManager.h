@@ -24,9 +24,8 @@ private:
 	void SetDataName(ParserData::Mesh* mMesh);
 	void SetMatrix(ParserData::Mesh* mMesh);
 
-	void SetIndexBuffer(ParserData::Mesh* mMesh);
-	void SetVertexBuffer(ParserData::Mesh* mMesh);
-	bool FindInstanceIndex(int Index);
+	void SetBoneOffset(ParserData::Mesh* mMesh);
+	//bool FindInstanceIndex(int Index);
 private:
 	std::string CutFileName(std::string FilePath);
 private:

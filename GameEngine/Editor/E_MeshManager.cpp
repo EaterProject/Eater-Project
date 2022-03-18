@@ -60,13 +60,20 @@ void E_MeshManager::ChangeEaterFile_Skin(ParserData::Mesh* OneMesh)
 {
 	if (OneMesh->m_MeshType == BONE_MESH)
 	{
+		EATER_SET_NODE("BONE");
 
+		EATER_SET_MAP("ParentName", OneMesh->m_ParentName);
+		EATER_SET_MAP("NodeName", OneMesh->m_NodeName);
 
+		SetMatrix(OneMesh);
 	}
 	else if (OneMesh->m_MeshType == SKIN_MESH)
 	{
+		EATER_SET_NODE("SKIN");
 
-
+		SetDataName(OneMesh);
+		SetMatrix(OneMesh);
+		SetBoneOffset(OneMesh);
 	}
 }
 
@@ -131,65 +138,33 @@ void E_MeshManager::SetMatrix(ParserData::Mesh* mMesh)
 	EATER_SET_LIST(SaveLocal._44, true);
 }
 
-void E_MeshManager::SetIndexBuffer(ParserData::Mesh* mMesh)
+void E_MeshManager::SetBoneOffset(ParserData::Mesh* mMesh)
 {
-	//인덱스를 저장
-
-	int IndexCount = (int)mMesh->m_IndexList.size();
-	EATER_SET_INDEX_START(IndexCount);
-	for (int i = 0; i < IndexCount; i++)
+	int index = (int)mMesh->m_BoneTMList.size();
+	EATER_SET_LIST_START("BoneOffset", index, 16);
+	for (int i = 0; i < index; i++)
 	{
-		ParserData::IndexList* index = mMesh->m_IndexList[i];
-		EATER_SET_INDEX(index->m_Index[0], index->m_Index[1], index->m_Index[2]);
+		DirectX::SimpleMath::Matrix* Data = &(mMesh->m_BoneTMList[i]);
+		EATER_SET_LIST(Data->_11);
+		EATER_SET_LIST(Data->_12);
+		EATER_SET_LIST(Data->_13);
+		EATER_SET_LIST(Data->_14);
+
+		EATER_SET_LIST(Data->_21);
+		EATER_SET_LIST(Data->_22);
+		EATER_SET_LIST(Data->_23);
+		EATER_SET_LIST(Data->_24);
+
+		EATER_SET_LIST(Data->_31);
+		EATER_SET_LIST(Data->_32);
+		EATER_SET_LIST(Data->_33);
+		EATER_SET_LIST(Data->_34);
+
+		EATER_SET_LIST(Data->_41);
+		EATER_SET_LIST(Data->_42);
+		EATER_SET_LIST(Data->_43);
+		EATER_SET_LIST(Data->_44, true);
 	}
-}
-
-void E_MeshManager::SetVertexBuffer(ParserData::Mesh* mMesh)
-{
-	//버텍스들을 저장
-
-	int VertexCount = (int)mMesh->m_VertexList.size();
-	EATER_SET_VERTEX_START(VertexCount, VERTEX_TYPE::BASE);
-	for (int i = 0; i < VertexCount; i++)
-	{
-		ParserData::Vertex* V = mMesh->m_VertexList[i];
-		EATER_VERTEX_BASE base;
-
-		base.POS_X = V->m_Pos.x;
-		base.POS_Y = V->m_Pos.y;
-		base.POS_Z = V->m_Pos.z;
-
-		base.UV_X = V->m_UV.x;
-		base.UV_Y = V->m_UV.y;
-
-		base.NOMAL_X = V->m_Normal.x;
-		base.NOMAL_Y = V->m_Normal.y;
-		base.NOMAL_Z = V->m_Normal.z;
-
-		base.TANGENT_X = V->m_Tanget.x;
-		base.TANGENT_Y = V->m_Tanget.y;
-		base.TANGENT_Z = V->m_Tanget.z;
-
-		EATER_SET_VERTEX(base);
-	}
-}
-
-bool E_MeshManager::FindInstanceIndex(int Index)
-{
-	bool Instance = false;
-
-	int size =  (int)MeshIndexList.size();
-	for (int i = 0; i < size;i++)
-	{
-		if (MeshIndexList[i] == Index)
-		{
-			return true;
-		}
-	}
-
-	//같은 인덱스를 찾지 못했다면 인덱스를 리스트에 넣어주고 매쉬정보를 저장
-	MeshIndexList.push_back(Index);
-	return false;
 }
 
 std::string E_MeshManager::CutFileName(std::string FilePath)
