@@ -10,6 +10,7 @@
 #include "BaseManager.h"
 #include "ObjectManager.h"
 #include "Material.h"
+#include "Mesh.h"
 #include "Terrain.h"
 #include "MainHeader.h"
 #include "TextureManager.h"
@@ -297,7 +298,7 @@ void MeshFilter::CreateStaticMesh(LoadMeshData* mMesh, GameObject* Object)
 
 	SetMatrixData(mMesh, Data, Object);
 	SetMaterialData(mMesh, Data);
-	SetBufferData(mMesh, Data);
+	SetMeshData(mMesh, Data);
 	SetType(mMesh, Data);
 
 	int ChildCount = (int)mMesh->Child.size();
@@ -350,7 +351,7 @@ void MeshFilter::CreateSkinMesh(LoadMeshData* mMesh, GameObject* Object)
 
 	SetMatrixData(mMesh, Data, Object);
 	SetMaterialData(mMesh, Data);
-	SetBufferData(mMesh, Data);
+	SetMeshData(mMesh, Data);
 
 	Data->Object_Data->ObjType = OBJECT_TYPE::SKINNING;
 
@@ -368,7 +369,7 @@ void MeshFilter::CreateSkinMesh(LoadMeshData* mMesh, GameObject* Object)
 
 void MeshFilter::SetMaterialData(LoadMeshData* LoadMesh, MeshData* mMesh)
 {
-	/// Material 가져와서 셋팅해줘야함
+	/// Load시 저장해 둿던 Material Name 기준으로 해당 Material Buffer 설정..
 	Material* material = LoadManager::GetMaterial(LoadMesh->MaterialName);
 
 	// 로드 여부에 따른 Material 설정..
@@ -398,9 +399,13 @@ void MeshFilter::SetMatrixData(LoadMeshData* LoadMesh, MeshData* mMesh, GameObje
 	mMesh->Object_Data->Local = &mTransform->Load_World;
 }
 
-void MeshFilter::SetBufferData(LoadMeshData* LoadMesh, MeshData* mMesh)
+void MeshFilter::SetMeshData(LoadMeshData* LoadMesh, MeshData* mMesh)
 {
-	mMesh->Mesh_Buffer = LoadMesh->MeshBuffer_Data;
+	/// Load시 저장해 둿던 Mesh Name 기준으로 해당 Mesh Buffer 설정..
+	Mesh* mesh = LoadManager::GetMesh(LoadMesh->MeshName);
+
+	// 해당 Mesh Buffer 설정..
+	mMesh->Mesh_Buffer = mesh->m_MeshData;
 }
 
 void MeshFilter::SetType(LoadMeshData* LoadMesh, MeshData* mMesh)
@@ -434,7 +439,7 @@ void MeshFilter::LinkHierarchy(Transform* my, Transform* parent)
 void MeshFilter::CreateMesh()
 {
 	///이름으로 로드할 데이터를 찾아서 가져옴
-	ModelData* mMesh = LoadManager::GetMesh(MeshName);
+	ModelData* mMesh = LoadManager::GetModel(MeshName);
 	Transform* Tr = gameobject->GetTransform();
 
 	if (mMesh == nullptr) { return; }

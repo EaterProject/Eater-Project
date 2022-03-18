@@ -35,6 +35,16 @@ public:
 	ID3D11Buffer* m_IndexBuf;
 };
 
+// Instance Layer를 관리하기 위한 Render Buffer Class
+class InstanceRenderBuffer
+{
+public:
+	UINT m_InstanceIndex = 0;
+
+	MeshRenderBuffer* m_Mesh;			// Instance의 기준이 되는 Mesh Buffer..
+	MaterialRenderBuffer* m_Material;	// Instance의 기준이 되는 Material Buffer..
+};
+
 class TerrainRenderData
 {
 public:

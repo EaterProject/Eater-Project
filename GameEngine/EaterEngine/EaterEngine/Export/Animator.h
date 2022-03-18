@@ -8,7 +8,7 @@
 
 namespace ParserData
 {
-	class OneAnimation;
+	class CAnimation;
 }
 
 class Transform;
@@ -19,13 +19,13 @@ public:
 	virtual ~Animator();
 
 	//애니메이션을 넣어준다
-	void SetAnimation(ParserData::OneAnimation*);
+	void SetAnimation(ParserData::CAnimation*);
 
 	//매개변수로 받은 시간만큼 애니메이션한개를 재생시킴
 	void Play(float Speed = 1 ,bool Loop = true);
 	void Stop();
 	void ReStart();
-	void ChoiceAnime(ParserData::OneAnimation* Anime);
+	void ChoiceAnime(ParserData::CAnimation* Anime);
 
 
 	int GetNowFrame();
@@ -36,10 +36,10 @@ private:
 	void AnimeFrameIndex();
 
 	//애니메이션 재생 리스트
-	std::vector<ParserData::OneAnimation*> AnimeData;
+	std::vector<ParserData::CAnimation*> AnimeData;
 
 	//현재 애니메이션 
-	ParserData::OneAnimation* NowAnimationData;
+	ParserData::CAnimation* NowAnimationData;
 
 
 	DirectX::XMMATRIX XM_ROT;

@@ -3,7 +3,7 @@
 
 namespace VertexInput
 {
-#pragma region Defalt Vertex Data Struct
+#pragma region Defalt CVertex Data Struct
 	struct MeshVertex
 	{
 		DirectX::SimpleMath::Vector3 Pos;
@@ -57,9 +57,9 @@ namespace VertexInput
 		DirectX::SimpleMath::Vector2 Tex;
 		DirectX::SimpleMath::Vector3 Normal;
 	};
-#pragma endregion Defalt Vertex Data Struct
+#pragma endregion Defalt CVertex Data Struct
 
-#pragma region Instance Vertex Data Struct
+#pragma region Instance CVertex Data Struct
 	struct MeshInstance
 	{
 		DirectX::SimpleMath::Matrix World;
@@ -71,5 +71,5 @@ namespace VertexInput
 		DirectX::SimpleMath::Matrix TexTransform;
 		DirectX::SimpleMath::Vector4 Color;
 	};
-#pragma endregion Instance Vertex Data Struct
+#pragma endregion Instance CVertex Data Struct
 }

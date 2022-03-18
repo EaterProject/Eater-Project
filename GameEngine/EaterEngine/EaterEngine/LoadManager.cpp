@@ -5,9 +5,11 @@
 
 #include "EngineData.h"
 #include "Material.h"
+#include "Mesh.h"
 #include "FBXManager.h"
 #include "TextureManager.h"
 #include "EATERManager.h"
+#include "MeshManager.h"
 #include "MaterialManager.h"
 
 
@@ -15,11 +17,8 @@ std::map<std::string, ModelData*>			LoadManager::ModelList;
 std::map<std::string, TextureBuffer*>		LoadManager::TextureList;
 std::map<std::string, Material*>			LoadManager::MaterialList;
 std::map<std::string, ModelAnimationData*>	LoadManager::AnimationList;
-std::map<UINT, MeshBuffer*>					LoadManager::MeshBufferList;
-std::vector<int>							LoadManager::GrobalInstanceIndexList;
+std::map<std::string, Mesh*>				LoadManager::MeshBufferList;
 
-bool LoadManager::isNewMesh = false;
-int LoadManager::GrobalInstanceIndex= 1;
 LoadManager::LoadManager()
 {
 
@@ -30,11 +29,12 @@ LoadManager::~LoadManager()
 
 }
 
-void LoadManager::Initialize(GraphicEngineManager* graphic, MaterialManager* material, CRITICAL_SECTION* _cs)
+void LoadManager::Initialize(GraphicEngineManager* graphic, CRITICAL_SECTION* _cs)
 {
 	g_CS = _cs;
 
-	mMaterial = material;
+	mMeshManager = new MeshManager();
+	mMaterialManager = new MaterialManager();
 
 	mFBX = new FBXManager();
 	mFBX->Initialize(graphic, _cs);
@@ -44,8 +44,6 @@ void LoadManager::Initialize(GraphicEngineManager* graphic, MaterialManager* mat
 
 	mTexture = new TextureManager();
 	mTexture->Initialize(graphic, _cs);
-
-	GrobalInstanceIndexList.push_back(0);
 }
 
 void LoadManager::Start()
@@ -66,11 +64,12 @@ void LoadManager::Load(std::string& Path, UINT MODE)
 		//파일경로가 들어왔다면 파일을 읽음
 		LoadFile(Path, MODE);
 	}
+
+	int a = 0;
 }
 
 void LoadManager::LoadTerrain(std::string mMeshName, std::string mMaskName, UINT parsingMode)
 {
-	isNewMesh = true;
 	mFBX->LoadTerrain(mMeshName, mMaskName, parsingMode);
 }
 
@@ -131,7 +130,7 @@ Material* LoadManager::GetMaterial(std::string Path)
 	}
 }
 
-ModelData* LoadManager::GetMesh(std::string Path)
+ModelData* LoadManager::GetModel(std::string Path)
 {
 	std::map<std::string, ModelData*>::iterator End_it	= ModelList.end();
 	std::map<std::string, ModelData*>::iterator Find_it = ModelList.find(Path);
@@ -145,10 +144,10 @@ ModelData* LoadManager::GetMesh(std::string Path)
 	}
 }
 
-MeshBuffer* LoadManager::GetMeshBuffer(UINT index)
+Mesh* LoadManager::GetMesh(std::string Path)
 {
-	std::map<UINT, MeshBuffer*>::iterator End_it = MeshBufferList.end();
-	std::map<UINT, MeshBuffer*>::iterator Find_it = MeshBufferList.find(index);
+	std::map<std::string, Mesh*>::iterator End_it = MeshBufferList.end();
+	std::map<std::string, Mesh*>::iterator Find_it = MeshBufferList.find(Path);
 
 	if (End_it == Find_it)
 	{
@@ -176,7 +175,7 @@ ModelAnimationData* LoadManager::GetAnimation(std::string Path)
 	}
 }
 
-bool LoadManager::FindMesh(std::string Name)
+bool LoadManager::FindModel(std::string Name)
 {
 	std::map<std::string, ModelData*>::iterator End_it	= ModelList.end();
 	std::map<std::string, ModelData*>::iterator Find_it = ModelList.find(Name);
@@ -236,13 +235,11 @@ void LoadManager::LoadFile(std::string& Path, UINT MODE)
 	else if(Type == "fbx")
 	{
 		//FBX로드
-		isNewMesh = true;
 		mFBX->Load(Path, MODE);
 	}
 	else if (Type == "Eater")
 	{
 		//자체 포멧 로드
-		isNewMesh = true;
 		mEATER->Load(Path, MODE);
 	}
 	else if (Type == "Scene")
@@ -254,8 +251,10 @@ void LoadManager::LoadFile(std::string& Path, UINT MODE)
 	{
 		mEATER->LoadMaterial(Path);
 	}
-
-	/// Material Load 추가해야함
+	else if (Type == "EMESH") /// Mesh Load 추가해야함
+	{
+		mEATER->LoadMesh(Path);
+	}
 }
 
 void LoadManager::LoadFolder(std::string& Path, UINT MODE)
@@ -291,43 +290,3 @@ void LoadManager::LoadFolder(std::string& Path, UINT MODE)
 		itr++;
 	}
 }
-
-int LoadManager::FindInstanceIndex(int index)
-{
-	//이함수에서만 사용할 스테틱 인덱스
-	static int Nowindex = 0;
-	
-	//새로운 매쉬가 들어왔다면 시작부분을 재설정
-	if (isNewMesh == true)
-	{
-		Nowindex = GrobalInstanceIndexList.size();
-		isNewMesh = false;
-	}
-
-	//들어온 인덱스를 글로벌 인덱스로 변환
-	index += Nowindex;
-
-	int Size = (int)GrobalInstanceIndexList.size();
-	for (int i = 0; i < Size; i++)
-	{
-		//해당값에 인덱스가 있다면 
-		if (GrobalInstanceIndexList[i] == index)
-		{
-			return index;
-		}
-	}
-
-	GrobalInstanceIndexList.push_back(index);
-	return index;
-}
-
-
-
-
-
-
-
-
-
-
-

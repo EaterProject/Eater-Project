@@ -106,7 +106,7 @@ void RenderData::ConvertMaterial(MaterialBuffer* originMat)
 void RenderData::ConvertMaterial(MaterialBuffer* originMat, MaterialRenderBuffer* convertMat)
 {
 	// 해당 Material Data 변환..
-	convertMat->m_MaterialIndex = originMat->Material_Index;
+	convertMat->m_MaterialIndex = originMat->BufferIndex;
 	convertMat->m_MaterialSubData = originMat->Material_SubData;
 
 	if (originMat->Albedo) convertMat->m_Albedo		= (ID3D11ShaderResourceView*)originMat->Albedo->pTextureBuf;
@@ -125,13 +125,12 @@ InstanceRenderData::~InstanceRenderData()
 
 }
 
-void InstanceRenderData::SetInstanceData(MeshRenderBuffer* mesh, MaterialRenderBuffer* material)
+void InstanceRenderData::SetInstanceData(InstanceRenderBuffer* instance)
 {
-	m_Mesh		= mesh;
-	m_Material	= material;
+	m_Instance = instance;
 }
 
 void InstanceRenderData::PushInstance(RenderData* renderData)
 {
-
+	m_MeshList.push_back(renderData);
 }

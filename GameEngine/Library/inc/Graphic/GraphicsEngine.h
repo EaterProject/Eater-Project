@@ -11,6 +11,7 @@
 
 class MeshData;
 class MeshBuffer;
+class TextureBuffer;
 class MaterialBuffer;
 class GlobalData;
 class IndexBuffer;
@@ -21,7 +22,7 @@ class RenderOption;
 
 namespace ParserData 
 {
-	class Mesh;
+	class CMesh;
 }
 
 class GraphicEngine
@@ -57,8 +58,8 @@ public:
 	virtual GRAPHIC_DLL void Render() abstract;
 
 	/// Graphic Resource Create Function..
-	virtual GRAPHIC_DLL TextureBuffer* CreateTextureBuffer(std::string path) abstract;
-	virtual GRAPHIC_DLL void CreateMeshBuffer(ParserData::Mesh* mesh, LoadMeshData* meshData) abstract;
+	virtual GRAPHIC_DLL void CreateTextureBuffer(std::string path, TextureBuffer** ppResource) abstract;
+	virtual GRAPHIC_DLL void CreateMeshBuffer(ParserData::CMesh* mesh, MeshBuffer** ppResource) abstract;
 
 	virtual GRAPHIC_DLL void CreateEnvironmentMap(std::string path) abstract;
 

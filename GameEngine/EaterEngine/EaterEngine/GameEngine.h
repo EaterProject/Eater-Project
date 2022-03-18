@@ -136,7 +136,6 @@ private:
 	KeyinputManager*		mKeyManager;		// 키인풋 관련 매니저
 	GraphicEngineManager*	mGraphicManager;	// 그래픽엔진 관리 매니저
 	TimeManager*			mTimeManager;		// 시간 관련 타임매니저
-	MaterialManager*		mMaterialManager;	// 메테리얼 관리 매니저
 	LightManager*			mLightManager;		// 라이트 관리 매니저
 	PhysManager*			mPhysManager;		// 물리 관리 매니저
 	NetworkManager*			mNetworkManager;	// 네트워크 매니저

@@ -236,7 +236,7 @@ physx::PxShape* Factory::CreateTriangleCollider(physx::PxMaterial* m, PhysCollid
 	///페이스 관련 데이터
 	meshDesc.triangles.count	= Triangle->IndexListSize / 3;
 	meshDesc.triangles.stride	= 3 * sizeof(UINT);
-	meshDesc.triangles.data		= Triangle->IndexList;
+	meshDesc.triangles.data		= Triangle->CIndexList;
 
 	PxTriangleMesh* triMesh = m_Cooking->createTriangleMesh(meshDesc, m_Phys->getPhysicsInsertionCallback());
 	PxTriangleMeshGeometry geom;

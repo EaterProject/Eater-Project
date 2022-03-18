@@ -1,11 +1,8 @@
 #pragma once
 #include <string>
-#include "Component.h"
 #include "EaterEngineDLL.h"
 
-class MeshData;
 class MaterialBuffer;
-class TextureBuffer;
 class MaterialManager;
 
 class Material
@@ -32,6 +29,7 @@ public:
 	EATER_ENGINEDLL void SetRoughnessFactor(float roughnessFactor);
 	EATER_ENGINEDLL void SetMetallicFactor(float metallicFactor);
 
+public:
 	void Release();
 
 public:

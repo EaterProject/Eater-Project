@@ -1,9 +1,10 @@
 #include "Material.h"
 #include "EngineData.h"
-#include "BaseManager.h"
 #include "MaterialManager.h"
 #include "LoadManager.h"
 #include "GraphicsEngine.h"
+
+#define SAFE_RELEASE(x) { if(x != nullptr){ x->Release(); delete x; x = nullptr; } }
 
 Material::Material()
 {
@@ -126,9 +127,9 @@ void Material::SetMetallicFactor(float metallicFactor)
 void Material::Release()
 {
 	// Manager 내부에 있는 해당 Material Data 삭제..
-	MaterialManager::DeleteMaterial(m_MaterialData->Material_Index);
+	MaterialManager::DeleteMaterial(m_MaterialData->BufferIndex);
 	
 	// 해당 Material Data 해제..
-	delete m_MaterialData->Material_SubData;
-	delete m_MaterialData;
+	SAFE_DELETE(m_MaterialData->Material_SubData);
+	SAFE_DELETE(m_MaterialData);
 }

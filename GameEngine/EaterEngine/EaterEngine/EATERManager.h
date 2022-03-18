@@ -8,8 +8,8 @@ class ModelData;
 class GameObject;
 namespace ParserData
 {
-	class Mesh;
-	class OneAnimation;
+	class CMesh;
+	class CAnimation;
 }
 
 class EATERManager
@@ -21,6 +21,7 @@ public:
 	void Initialize(GraphicEngineManager* Graphic, CRITICAL_SECTION* _cs);
 	void Load(std::string& Path, UINT parsingMode);
 	void LoadScene(std::string& Path);
+	void LoadMesh(std::string& Path);
 	void LoadMaterial(std::string& Path);
 private:
 	LoadMeshData* LoadStaticMesh(int index);
@@ -32,8 +33,9 @@ private:
 	void LinkBone(ModelData*);
 	void LinkSkin();
 	void LoadTM(int Index, LoadMeshData* model);
-	void LoadBoneOffset(int index, LoadMeshData* mMesh);
+	void LoadBoneOffset(int index, LoadMeshData* model);
 	void LoadMaterial(int index, LoadMeshData* model);
+	void LoadMesh(int index, LoadMeshData* model);
 	void LoadName(int index, LoadMeshData* model);
 	void LoadGameObject(int index);
 private:
@@ -49,16 +51,17 @@ private:
 
 
 private:
-	void LoadVertex(int index, ParserData::Mesh* mMesh);
-	void LoadSkinVertex(int index, ParserData::Mesh* mMesh);
-	void LoadIndex(int index, ParserData::Mesh* mMesh);
+	void LoadVertex(int index, ParserData::CMesh* mMesh);
+	void LoadSkinVertex(int index, ParserData::CMesh* mMesh);
+	void LoadIndex(int index, ParserData::CMesh* mMesh);
 
-	void CreateKeyFrame(std::vector<ParserData::OneAnimation*>* Anime, int InputKeyCount);
+	void CreateKeyFrame(std::vector<ParserData::CAnimation*>* Anime, int InputKeyCount);
 private:
 	std::string CutStr(std::string& Name);
 	GraphicEngineManager*	m_Graphic;
 	CRITICAL_SECTION*		m_CriticalSection;
 
+	std::string nowFileName;
 	std::vector<LoadMeshData*> BoneList;
 	std::vector<LoadMeshData*> SkinList;
 };

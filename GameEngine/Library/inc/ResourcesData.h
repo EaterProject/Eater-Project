@@ -38,21 +38,6 @@ public:
 	void* pVertexBuf = nullptr;
 };
 
-class MeshBuffer : Resources
-{
-public:
-	virtual ~MeshBuffer()
-	{
-		delete IndexBuf;
-		delete VertexBuf;
-	}
-
-	UINT BufferIndex = 0;
-
-	IndexBuffer* IndexBuf;
-	VertexBuffer* VertexBuf;
-};
-
 //텍스쳐를 받을 클래스
 class TextureBuffer : Resources
 {
