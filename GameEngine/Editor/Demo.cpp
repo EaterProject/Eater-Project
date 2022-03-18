@@ -31,7 +31,8 @@ void Demo::Awake()
 {
 	SaveManager = new SceneSave();
 	//텍스쳐를 로드
-	//Load("../Assets/Texture");
+	Load("../Assets/Texture/ModelTexture");
+	Load("../Assets/Texture/Material");
 }
 
 void Demo::Update()
@@ -50,7 +51,8 @@ void Demo::End()
 
 void Demo::ThreadFunction()
 {
-	//Load("../Assets/Model");
+	Load("../Assets/Model/MeshBuffer");
+	Load("../Assets/Model/ModelData");
 	//
 	//LoadEnvironment("../Assets/Texture/Environment/Night.dds");
 	//SetEnvironment(true);

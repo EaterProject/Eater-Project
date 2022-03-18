@@ -12,12 +12,12 @@ E_MaterialManager::~E_MaterialManager()
 
 }
 
-void E_MaterialManager::ChangeEaterFile(ParserData::Model* FBXMesh)
+void E_MaterialManager::ChangeEaterFile(ParserData::CModel* FBXMesh)
 {
 	int MeshSize = FBXMesh->m_MeshList.size();
 	for (int i = 0; i < MeshSize; i++)
 	{
-		ParserData::Mesh* OneMesh = FBXMesh->m_MeshList[i];
+		ParserData::CMesh* OneMesh = FBXMesh->m_MeshList[i];
 		if (OneMesh->m_MaterialData == nullptr) { continue; }
 
 		std::string ModelName = SaveFileName + "_" + OneMesh->m_MaterialData->m_MaterialName;

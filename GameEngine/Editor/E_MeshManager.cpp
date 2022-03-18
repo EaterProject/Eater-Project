@@ -11,13 +11,13 @@ E_MeshManager::~E_MeshManager()
 
 }
 
-void E_MeshManager::ChangeEaterFile(ParserData::Model* FBXMesh)
+void E_MeshManager::ChangeEaterFile(ParserData::CModel* FBXMesh)
 {
 	
 	int MeshSize = FBXMesh->m_MeshList.size();
 	for (int i = 0; i < MeshSize; i++)
 	{
-		ParserData::Mesh* OneMesh = FBXMesh->m_MeshList[i];
+		ParserData::CMesh* OneMesh = FBXMesh->m_MeshList[i];
 		switch (OneMesh->m_MeshType)
 		{
 		case MESH_TYPE::BONE_MESH:
@@ -40,14 +40,14 @@ void E_MeshManager::SetFileName(std::string& FileName)
 	SaveFileName = FileName;
 }
 
-void E_MeshManager::ChangeEaterFile_Static(ParserData::Mesh* OneMesh)
+void E_MeshManager::ChangeEaterFile_Static(ParserData::CMesh* OneMesh)
 {
 	EATER_SET_NODE("STATIC");
 	SetDataName(OneMesh);
 	SetMatrix(OneMesh);
 }
 
-void E_MeshManager::ChangeEaterFile_Bone(ParserData::Mesh* OneMesh)
+void E_MeshManager::ChangeEaterFile_Bone(ParserData::CMesh* OneMesh)
 {
 
 
@@ -56,7 +56,7 @@ void E_MeshManager::ChangeEaterFile_Bone(ParserData::Mesh* OneMesh)
 
 }
 
-void E_MeshManager::ChangeEaterFile_Skin(ParserData::Mesh* OneMesh)
+void E_MeshManager::ChangeEaterFile_Skin(ParserData::CMesh* OneMesh)
 {
 	if (OneMesh->m_MeshType == BONE_MESH)
 	{
@@ -77,7 +77,7 @@ void E_MeshManager::ChangeEaterFile_Skin(ParserData::Mesh* OneMesh)
 	}
 }
 
-void E_MeshManager::SetDataName(ParserData::Mesh* mMesh)
+void E_MeshManager::SetDataName(ParserData::CMesh* mMesh)
 {
 
 	EATER_SET_MAP("ParentName", mMesh->m_ParentName);
@@ -92,7 +92,7 @@ void E_MeshManager::SetDataName(ParserData::Mesh* mMesh)
 	EATER_SET_MAP("MaterialName",MatName);
 }
 
-void E_MeshManager::SetMatrix(ParserData::Mesh* mMesh)
+void E_MeshManager::SetMatrix(ParserData::CMesh* mMesh)
 {
 	EATER_SET_LIST_START("WorldTM", 4, 4);
 	EATER_SET_LIST(mMesh->m_WorldTM._11);
@@ -138,7 +138,7 @@ void E_MeshManager::SetMatrix(ParserData::Mesh* mMesh)
 	EATER_SET_LIST(SaveLocal._44, true);
 }
 
-void E_MeshManager::SetBoneOffset(ParserData::Mesh* mMesh)
+void E_MeshManager::SetBoneOffset(ParserData::CMesh* mMesh)
 {
 	int index = (int)mMesh->m_BoneTMList.size();
 	EATER_SET_LIST_START("BoneOffset", index, 16);

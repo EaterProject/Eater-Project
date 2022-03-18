@@ -37,13 +37,9 @@ void Material::SetDiffuseTexture(std::string diffuseName)
 
 	// Texture 변경..
 	m_MaterialData->Albedo = newTexture;
-<<<<<<< HEAD
 	m_MaterialData->Albedo->Name = diffuseName;
-=======
-
 	// Renderer Data 동기화..
 	GraphicEngine::Get()->AddChangeMaterialData(m_MaterialData);
->>>>>>> main
 }
 
 void Material::SetNormalTexture(std::string noramlName)
@@ -52,13 +48,10 @@ void Material::SetNormalTexture(std::string noramlName)
 
 	// Texture 변경..
 	m_MaterialData->Normal = newTexture;
-<<<<<<< HEAD
 	m_MaterialData->Normal->Name = noramlName;
-=======
 
 	// Renderer Data 동기화..
 	GraphicEngine::Get()->AddChangeMaterialData(m_MaterialData);
->>>>>>> main
 }
 
 void Material::SetEmissiveTexture(std::string emissiveName)
@@ -67,13 +60,10 @@ void Material::SetEmissiveTexture(std::string emissiveName)
 
 	// Texture 변경..
 	m_MaterialData->Emissive = newTexture;
-<<<<<<< HEAD
 	m_MaterialData->Emissive->Name = emissiveName;
-=======
 
 	// Renderer Data 동기화..
 	GraphicEngine::Get()->AddChangeMaterialData(m_MaterialData);
->>>>>>> main
 }
 
 void Material::SetORMTexture(std::string ormName)
@@ -82,13 +72,10 @@ void Material::SetORMTexture(std::string ormName)
 
 	// Texture 변경..
 	m_MaterialData->ORM = newTexture;
-<<<<<<< HEAD
 	m_MaterialData->ORM->Name = ormName;
-=======
 
 	// Renderer Data 동기화..
 	GraphicEngine::Get()->AddChangeMaterialData(m_MaterialData);
->>>>>>> main
 }
 
 void Material::SetBaseColor(DirectX::SimpleMath::Vector4 color)
@@ -122,7 +109,6 @@ void Material::Release()
 	MaterialManager::DeleteMaterial(m_MaterialData->BufferIndex);
 	
 	// 해당 Material Data 해제..
-<<<<<<< HEAD
 	delete m_MaterialData->Material_SubData;
 	delete m_MaterialData;
 }
@@ -164,10 +150,7 @@ std::string Material::GetORMName()
 		return m_MaterialData->ORM->Name;
 	}
 
+	//SAFE_DELETE(m_MaterialData->Material_SubData);
+	//SAFE_DELETE(m_MaterialData);
 	return std::string();
 }
-=======
-	SAFE_DELETE(m_MaterialData->Material_SubData);
-	SAFE_DELETE(m_MaterialData);
-}
->>>>>>> main

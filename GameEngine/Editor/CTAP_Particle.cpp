@@ -461,12 +461,9 @@ void CTAP_Particle::GetObjectData()
 		mParticleSystem->SetLifeTimeColor(Start, End, PARTICLE_LIFETIME_OPTION::UPDOWN);
 		break;
 	}
-<<<<<<< HEAD
-=======
 	
 	// 변한 데이터 업데이트..
 	mParticleSystem->DataUpdate();
->>>>>>> main
 }
 
 

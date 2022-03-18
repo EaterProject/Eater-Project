@@ -4,8 +4,8 @@
 #include <vector>
 namespace ParserData
 {
-	class Mesh;
-	class Model;
+	class CMesh;
+	class CModel;
 }
 
 class E_MeshManager
@@ -14,17 +14,17 @@ public:
 	E_MeshManager();
 	~E_MeshManager();
 
-	void ChangeEaterFile(ParserData::Model* FBXMesh);
+	void ChangeEaterFile(ParserData::CModel* FBXMesh);
 	void SetFileName(std::string& FileName);
 private:
-	void ChangeEaterFile_Static(ParserData::Mesh* OneMesh);
-	void ChangeEaterFile_Bone(ParserData::Mesh* OneMesh);
-	void ChangeEaterFile_Skin(ParserData::Mesh* OneMesh);
+	void ChangeEaterFile_Static(ParserData::CMesh* OneMesh);
+	void ChangeEaterFile_Bone(ParserData::CMesh* OneMesh);
+	void ChangeEaterFile_Skin(ParserData::CMesh* OneMesh);
 private:
-	void SetDataName(ParserData::Mesh* mMesh);
-	void SetMatrix(ParserData::Mesh* mMesh);
+	void SetDataName(ParserData::CMesh* mMesh);
+	void SetMatrix(ParserData::CMesh* mMesh);
 
-	void SetBoneOffset(ParserData::Mesh* mMesh);
+	void SetBoneOffset(ParserData::CMesh* mMesh);
 	//bool FindInstanceIndex(int Index);
 private:
 	std::string CutFileName(std::string FilePath);

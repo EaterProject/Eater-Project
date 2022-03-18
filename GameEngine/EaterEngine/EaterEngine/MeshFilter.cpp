@@ -299,13 +299,8 @@ void MeshFilter::CreateStaticMesh(LoadMeshData* mMesh, GameObject* Object)
 	Object->Name = mMesh->Name;
 
 	SetMatrixData(mMesh, Data, Object);
-<<<<<<< HEAD
 	SetMaterialData(mMesh, Data, Object);
-	SetBufferData(mMesh, Data);
-=======
-	SetMaterialData(mMesh, Data);
 	SetMeshData(mMesh, Data);
->>>>>>> main
 	SetType(mMesh, Data);
 
 	int ChildCount = (int)mMesh->Child.size();
@@ -354,13 +349,8 @@ void MeshFilter::CreateSkinMesh(LoadMeshData* mMesh, GameObject* Object)
 	Object->Name = mMesh->Name;
 
 	SetMatrixData(mMesh, Data, Object);
-<<<<<<< HEAD
 	SetMaterialData(mMesh, Data, Object);
-	SetBufferData(mMesh, Data);
-=======
-	SetMaterialData(mMesh, Data);
 	SetMeshData(mMesh, Data);
->>>>>>> main
 
 	Data->Object_Data->ObjType = OBJECT_TYPE::SKINNING;
 
@@ -395,11 +385,8 @@ void MeshFilter::SetMaterialData(LoadMeshData* LoadMesh, MeshData* mMesh, GameOb
 	}
 
 	// Render Material Data ¼³Á¤..
-<<<<<<< HEAD
-	mMesh->Material_Data = meshFilter->Materials->m_MaterialData;
-=======
-	mMesh->Material_Buffer = Materials->m_MaterialData;
->>>>>>> main
+	mMesh->Material_Buffer = meshFilter->Materials->m_MaterialData;
+	//mMesh->Material_Buffer = Materials->m_MaterialData;
 }
 
 void MeshFilter::SetMatrixData(LoadMeshData* LoadMesh, MeshData* mMesh, GameObject* Object)

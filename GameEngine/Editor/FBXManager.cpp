@@ -20,93 +20,77 @@ FBXManager::~FBXManager()
 
 void FBXManager::Initialize(EaterManager* mManager)
 {
-<<<<<<< HEAD
 	//FBX를 로드할 펙토리 생성
 	FbxFactory = ModelParser::Create(FBX_MODEL);
 	FbxFactory->Initialize();
-=======
-	mOption = Data;
-	std::string name = Data->Name;
-	std::string SaveFileName = Path;
 	
-	int SaveMode = Data->SaveType;
-	switch (SaveMode)
-	{
-	case 0: // 기본메쉬
-	case 1:	// 스킨
-	case 2:	// 터레인
-		SaveFileName = SaveFileName.substr(0, SaveFileName.rfind('/')+1);
-		break;
-	case 3: //애니메이션
-		mMesh = FbxFactory->LoadModel(Path, ANIMATION_ONLY);
-		SaveFileName = "../Assets/Mesh/Animation/";
-		EATER_CREATE_FILE(name, SaveFileName);
-		AnimationMesh(mMesh);
-		EATER_CLOSE_FILE();
-		return;
-	}
-	MeshIndexList.clear();
-	mMesh = FbxFactory->LoadModel(Path, 0);
+	
+	//int SaveMode = Data->SaveType;
+	//switch (SaveMode)
+	//{
+	//case 0: // 기본메쉬
+	//case 1:	// 스킨
+	//case 2:	// 터레인
+	//	SaveFileName = SaveFileName.substr(0, SaveFileName.rfind('/')+1);
+	//	break;
+	//case 3: //애니메이션
+	//	mMesh = FbxFactory->LoadModel(Path, ANIMATION_ONLY);
+	//	SaveFileName = "../Assets/Mesh/Animation/";
+	//	EATER_CREATE_FILE(name, SaveFileName);
+	//	AnimationMesh(mMesh);
+	//	EATER_CLOSE_FILE();
+	//	return;
+	//}
+	//MeshIndexList.clear();
+	//mMesh = FbxFactory->LoadModel(Path, 0);
+	//
+	//OneMeshMaterialList.clear();
+	//EATER_CREATE_FILE(name, SaveFileName);
+	//int MeshCount = (int)mMesh->m_MeshList.size();
+	//int Anime = mMesh->m_isAnimation;
+	//
+	//for (int i = 0; i < MeshCount; i++)
+	//{
+	//	ParserData::CMesh* temp = mMesh->m_MeshList[i];
+	//	switch (SaveMode)
+	//	{
+	//	case 0:
+	//		StaticMesh(temp, name);
+	//		break;
+	//	case 1:
+	//		SkinMesh(temp,name);
+	//		break;
+	//	case 2:
+	//		TerrainMesh(temp);
+	//		break;
+	//	}
+	//}
+	//EATER_CLOSE_FILE();
 
-	OneMeshMaterialList.clear();
-	EATER_CREATE_FILE(name, SaveFileName);
-	int MeshCount = (int)mMesh->m_MeshList.size();
-	int Anime = mMesh->m_isAnimation;
 
-	for (int i = 0; i < MeshCount; i++)
-	{
-		ParserData::CMesh* temp = mMesh->m_MeshList[i];
-		switch (SaveMode)
-		{
-		case 0:
-			StaticMesh(temp, name);
-			break;
-		case 1:
-			SkinMesh(temp,name);
-			break;
-		case 2:
-			TerrainMesh(temp);
-			break;
-		}
-	}
-	EATER_CLOSE_FILE();
-
-
->>>>>>> main
 
 	mEaterManager = mManager;
 }
 
-<<<<<<< HEAD
 void FBXManager::OpenFile(std::string& Path, MeshOption* Data)
-=======
-void FBXManager::StaticMesh(ParserData::CMesh* mMesh, std::string FileName)
->>>>>>> main
 {
 	mMesh = FbxFactory->LoadModel(Path, 0);
 	mEaterManager->Load_FBX_File(Path, mMesh);
 }
 
-<<<<<<< HEAD
 
 
-
-void FBXManager::BoneMesh(ParserData::Mesh* mMesh)
-=======
 void FBXManager::BoneMesh(ParserData::CMesh* mMesh)
->>>>>>> main
 {
 	EATER_SET_NODE("BONE");
 	EATER_SET_MAP("BoneIndex", std::to_string(mMesh->m_BoneIndex));
 	if (mMesh->m_TopNode == true)
 	{
 		EATER_SET_MAP("TopNode", "YES");
-		SetBoneMatrix(mMesh,true);
 	}
 	else
 	{
 		EATER_SET_MAP("TopNode", "NO");
-		SetBoneMatrix(mMesh, false);
 	}
 	SetParent(mMesh);
 }
@@ -298,65 +282,61 @@ void FBXManager::SetMatrix(ParserData::CMesh* mMesh)
 	EATER_SET_LIST(SaveLocal._44, true);
 }
 
-<<<<<<< HEAD
-void FBXManager::SetBoneMatrix(ParserData::Mesh* mMesh,bool TopBone)
-{
-	EATER_SET_LIST_START("WorldTM", 4, 4);
-	EATER_SET_LIST(mMesh->m_WorldTM._11);
-	EATER_SET_LIST(mMesh->m_WorldTM._12);
-	EATER_SET_LIST(mMesh->m_WorldTM._13);
-	EATER_SET_LIST(mMesh->m_WorldTM._14, true);
+//void FBXManager::SetBoneMatrix(ParserData::CMesh* mMesh,bool TopBone)
+//{
+//	EATER_SET_LIST_START("WorldTM", 4, 4);
+//	EATER_SET_LIST(mMesh->m_WorldTM._11);
+//	EATER_SET_LIST(mMesh->m_WorldTM._12);
+//	EATER_SET_LIST(mMesh->m_WorldTM._13);
+//	EATER_SET_LIST(mMesh->m_WorldTM._14, true);
+//
+//	EATER_SET_LIST(mMesh->m_WorldTM._21);
+//	EATER_SET_LIST(mMesh->m_WorldTM._22);
+//	EATER_SET_LIST(mMesh->m_WorldTM._23);
+//	EATER_SET_LIST(mMesh->m_WorldTM._24, true);
+//
+//	EATER_SET_LIST(mMesh->m_WorldTM._31);
+//	EATER_SET_LIST(mMesh->m_WorldTM._32);
+//	EATER_SET_LIST(mMesh->m_WorldTM._33);
+//	EATER_SET_LIST(mMesh->m_WorldTM._34, true);
+//
+//	EATER_SET_LIST(mMesh->m_WorldTM._41);
+//	EATER_SET_LIST(mMesh->m_WorldTM._42);
+//	EATER_SET_LIST(mMesh->m_WorldTM._43);
+//	EATER_SET_LIST(mMesh->m_WorldTM._44, true);
+//
+//	DirectX::SimpleMath::Matrix SaveLocal = mMesh->m_LocalTM;
+//	//if (TopBone == true)
+//	//{
+//	//	DirectX::SimpleMath::Matrix Local = mMesh->m_LocalTM;
+//	//	DirectX::SimpleMath::Matrix Change = mOption->GetBoneMatrix();
+//	//	SaveLocal = Local * Change;
+//	//}
+//
+//
+//	EATER_SET_LIST_START("LocalTM", 4, 4);
+//	EATER_SET_LIST(SaveLocal._11);
+//	EATER_SET_LIST(SaveLocal._12);
+//	EATER_SET_LIST(SaveLocal._13);
+//	EATER_SET_LIST(SaveLocal._14, true);
+//
+//	EATER_SET_LIST(SaveLocal._21);
+//	EATER_SET_LIST(SaveLocal._22);
+//	EATER_SET_LIST(SaveLocal._23);
+//	EATER_SET_LIST(SaveLocal._24, true);
+//
+//	EATER_SET_LIST(SaveLocal._31);
+//	EATER_SET_LIST(SaveLocal._32);
+//	EATER_SET_LIST(SaveLocal._33);
+//	EATER_SET_LIST(SaveLocal._34, true);
+//
+//	EATER_SET_LIST(SaveLocal._41);
+//	EATER_SET_LIST(SaveLocal._42);
+//	EATER_SET_LIST(SaveLocal._43);
+//	EATER_SET_LIST(SaveLocal._44, true);
+//}
 
-	EATER_SET_LIST(mMesh->m_WorldTM._21);
-	EATER_SET_LIST(mMesh->m_WorldTM._22);
-	EATER_SET_LIST(mMesh->m_WorldTM._23);
-	EATER_SET_LIST(mMesh->m_WorldTM._24, true);
-
-	EATER_SET_LIST(mMesh->m_WorldTM._31);
-	EATER_SET_LIST(mMesh->m_WorldTM._32);
-	EATER_SET_LIST(mMesh->m_WorldTM._33);
-	EATER_SET_LIST(mMesh->m_WorldTM._34, true);
-
-	EATER_SET_LIST(mMesh->m_WorldTM._41);
-	EATER_SET_LIST(mMesh->m_WorldTM._42);
-	EATER_SET_LIST(mMesh->m_WorldTM._43);
-	EATER_SET_LIST(mMesh->m_WorldTM._44, true);
-
-	DirectX::SimpleMath::Matrix SaveLocal = mMesh->m_LocalTM;
-	if (TopBone == true)
-	{
-		DirectX::SimpleMath::Matrix Local = mMesh->m_LocalTM;
-		DirectX::SimpleMath::Matrix Change = mOption->GetBoneMatrix();
-		SaveLocal = Local * Change;
-	}
-
-
-	EATER_SET_LIST_START("LocalTM", 4, 4);
-	EATER_SET_LIST(SaveLocal._11);
-	EATER_SET_LIST(SaveLocal._12);
-	EATER_SET_LIST(SaveLocal._13);
-	EATER_SET_LIST(SaveLocal._14, true);
-
-	EATER_SET_LIST(SaveLocal._21);
-	EATER_SET_LIST(SaveLocal._22);
-	EATER_SET_LIST(SaveLocal._23);
-	EATER_SET_LIST(SaveLocal._24, true);
-
-	EATER_SET_LIST(SaveLocal._31);
-	EATER_SET_LIST(SaveLocal._32);
-	EATER_SET_LIST(SaveLocal._33);
-	EATER_SET_LIST(SaveLocal._34, true);
-
-	EATER_SET_LIST(SaveLocal._41);
-	EATER_SET_LIST(SaveLocal._42);
-	EATER_SET_LIST(SaveLocal._43);
-	EATER_SET_LIST(SaveLocal._44, true);
-}
-
-void FBXManager::SetMaterial(ParserData::Mesh* mMesh, std::string FileName)
-=======
 void FBXManager::SetMaterial(ParserData::CMesh* mMesh, std::string FileName)
->>>>>>> main
 {
 	if (mMesh->m_MaterialData == nullptr) { return; }
 	
@@ -413,8 +393,6 @@ void FBXManager::SetVertexTerrain(ParserData::CMesh* mMesh)
 	}
 }
 
-<<<<<<< HEAD
-=======
 void FBXManager::SetVertex(ParserData::CMesh* mMesh)
 {
 	int VertexCount = (int)mMesh->m_VertexList.size();
@@ -444,7 +422,6 @@ void FBXManager::SetVertex(ParserData::CMesh* mMesh)
 		EATER_SET_VERTEX(base);
 	}
 }
->>>>>>> main
 
 void FBXManager::SetVertexSkin(ParserData::CMesh* mMesh)
 {
@@ -547,9 +524,6 @@ bool FBXManager::FindInstanceIndex(int Index)
 	return false;
 }
 
-<<<<<<< HEAD
-
-=======
 void FBXManager::SetIndex(ParserData::CMesh* mMesh)
 {
 	int IndexCount = (int)mMesh->m_IndexList.size();
@@ -561,5 +535,4 @@ void FBXManager::SetIndex(ParserData::CMesh* mMesh)
 		EATER_SET_INDEX(index->m_Index[0], index->m_Index[1], index->m_Index[2]);
 	}
 }
->>>>>>> main
 

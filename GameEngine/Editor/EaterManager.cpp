@@ -48,7 +48,7 @@ void EaterManager::LoadEaterFile(std::string& Path)
 
 }
 
-void EaterManager::Load_FBX_File(std::string& Path, ParserData::Model* FBXMesh)
+void EaterManager::Load_FBX_File(std::string& Path, ParserData::CModel* FBXMesh)
 {
 	std::string FileName = CutFileName(Path);
 

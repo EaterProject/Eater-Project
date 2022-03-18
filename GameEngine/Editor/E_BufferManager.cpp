@@ -10,14 +10,15 @@ E_BufferManager::~E_BufferManager()
 {
 }
 
-void E_BufferManager::ChangeEaterFile(ParserData::Model* FBXMesh)
+void E_BufferManager::ChangeEaterFile(ParserData::CModel* FBXMesh)
 {
+	MeshIndexList.clear();
 	int Size = FBXMesh->m_MeshList.size();
 	for (int i = 0; i < Size; i++)
 	{
-		ParserData::Mesh* mMesh = FBXMesh->m_MeshList[i];
+		ParserData::CMesh* mMesh = FBXMesh->m_MeshList[i];
 
-		if (FindInstanceIndex(mMesh->m_MeshIndex) == true) { return; }
+		if (FindInstanceIndex(mMesh->m_MeshIndex) == true) { continue; }
 
 		std::string FileName = SaveFileName + "_" + std::to_string(mMesh->m_MeshIndex);
 		EATER_CREATE_FILE(FileName, "../Assets/Model/MeshBuffer/", ".Emesh");
@@ -36,13 +37,13 @@ void E_BufferManager::SetFileName(std::string& FileName)
 	SaveFileName = FileName;
 }
 
-void E_BufferManager::SetVertexBuffer(ParserData::Mesh* mMesh)
+void E_BufferManager::SetVertexBuffer(ParserData::CMesh* mMesh)
 {
 	int VertexCount = (int)mMesh->m_VertexList.size();
 	EATER_SET_VERTEX_START(VertexCount, VERTEX_TYPE::BASE);
 	for (int i = 0; i < VertexCount; i++)
 	{
-		ParserData::Vertex* V = mMesh->m_VertexList[i];
+		ParserData::CVertex* V = mMesh->m_VertexList[i];
 		EATER_VERTEX_BASE base;
 
 		base.POS_X = V->m_Pos.x;
@@ -64,13 +65,13 @@ void E_BufferManager::SetVertexBuffer(ParserData::Mesh* mMesh)
 	}
 }
 
-void E_BufferManager::SetIndexBuffer(ParserData::Mesh* mMesh)
+void E_BufferManager::SetIndexBuffer(ParserData::CMesh* mMesh)
 {
 	int IndexCount = (int)mMesh->m_IndexList.size();
 	EATER_SET_INDEX_START(IndexCount);
 	for (int i = 0; i < IndexCount; i++)
 	{
-		ParserData::IndexList* index = mMesh->m_IndexList[i];
+		ParserData::CIndexList* index = mMesh->m_IndexList[i];
 		EATER_SET_INDEX(index->m_Index[0], index->m_Index[1], index->m_Index[2]);
 	}
 }

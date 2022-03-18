@@ -247,11 +247,11 @@ void LoadManager::LoadFile(std::string& Path, UINT MODE)
 		//씬 로드
 		mEATER->LoadScene(Path);
 	}
-	else if (Type == "EMAT")
+	else if (Type == "Emat")
 	{
 		mEATER->LoadMaterial(Path);
 	}
-	else if (Type == "EMESH") /// Mesh Load 추가해야함
+	else if (Type == "Emesh") /// Mesh Load 추가해야함
 	{
 		mEATER->LoadMesh(Path);
 	}

@@ -3,8 +3,8 @@
 
 namespace ParserData
 {
-	struct Model;
-	struct Mesh;
+	struct CModel;
+	struct CMesh;
 }
 
 
@@ -20,7 +20,7 @@ public:
 	~EaterManager();
 
 	void LoadEaterFile(std::string& Path);
-	void Load_FBX_File(std::string& Path,ParserData::Model* FBXMesh);
+	void Load_FBX_File(std::string& Path,ParserData::CModel* FBXMesh);
 	void Initialize();
 private:
 	static const int E_STATIC_MESH	= 0;
