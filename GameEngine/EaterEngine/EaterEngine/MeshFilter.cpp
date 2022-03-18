@@ -248,6 +248,8 @@ void MeshFilter::SetMaterial(std::string matName)
 
 	// 해당 Material 설정..
 	Materials = material;
+
+	// 그래픽 측 동기화 필요..
 }
 
 void MeshFilter::SetTexture(std::string texName, UINT texType)
@@ -406,6 +408,9 @@ void MeshFilter::SetMeshData(LoadMeshData* LoadMesh, MeshData* mMesh)
 
 	// 해당 Mesh Buffer 설정..
 	mMesh->Mesh_Buffer = mesh->m_MeshData;
+
+	/// 그래픽 측 동기화 필요..
+
 }
 
 void MeshFilter::SetType(LoadMeshData* LoadMesh, MeshData* mMesh)
