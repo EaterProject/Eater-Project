@@ -6,10 +6,11 @@
 #include "EaterSaveData.h"
 #include "MainHeader.h"
 #include "EditorData.h"
+#include "EATERManager.h"
+
 FBXManager::FBXManager()
 {
-	FbxFactory = ModelParser::Create(FBX_MODEL);
-	FbxFactory->Initialize();
+	
 }
 
 FBXManager::~FBXManager()
@@ -17,77 +18,23 @@ FBXManager::~FBXManager()
 	FbxFactory->Release();
 }
 
+void FBXManager::Initialize(EaterManager* mManager)
+{
+	//FBX를 로드할 펙토리 생성
+	FbxFactory = ModelParser::Create(FBX_MODEL);
+	FbxFactory->Initialize();
+
+	mEaterManager = mManager;
+}
+
 void FBXManager::OpenFile(std::string& Path, MeshOption* Data)
 {
-	mOption = Data;
-	std::string name = Data->Name;
-	std::string SaveFileName = Path;
-	
-	int SaveMode = Data->SaveType;
-	switch (SaveMode)
-	{
-	case 0: // 기본메쉬
-	case 1:	// 스킨
-	case 2:	// 터레인
-		SaveFileName = SaveFileName.substr(0, SaveFileName.rfind('/')+1);
-		break;
-	case 3: //애니메이션
-		mMesh = FbxFactory->LoadModel(Path, ANIMATION_ONLY);
-		SaveFileName = "../Assets/Mesh/Animation/";
-		EATER_CREATE_FILE(name, SaveFileName);
-		AnimationMesh(mMesh);
-		EATER_CLOSE_FILE();
-		return;
-	}
-	MeshIndexList.clear();
 	mMesh = FbxFactory->LoadModel(Path, 0);
-
-	OneMeshMaterialList.clear();
-	EATER_CREATE_FILE(name, SaveFileName);
-	int MeshCount = (int)mMesh->m_MeshList.size();
-	int Anime = mMesh->m_isAnimation;
-
-	for (int i = 0; i < MeshCount; i++)
-	{
-		ParserData::Mesh* temp = mMesh->m_MeshList[i];
-		switch (SaveMode)
-		{
-		case 0:
-			StaticMesh(temp, name);
-			break;
-		case 1:
-			SkinMesh(temp,name);
-			break;
-		case 2:
-			TerrainMesh(temp);
-			break;
-		}
-	}
-	EATER_CLOSE_FILE();
-
-
-
-	MaterialSave(name);
+	mEaterManager->Load_FBX_File(Path, mMesh);
 }
 
-void FBXManager::StaticMesh(ParserData::Mesh* mMesh, std::string FileName)
-{
-	EATER_SET_NODE("STATIC");
 
-	if (FindInstanceIndex(mMesh->m_MeshIndex) == false)
-	{
-		SetParent(mMesh);
-		SetMaterial(mMesh, FileName);
-		SetMatrix(mMesh);
-		SetVertex(mMesh);
-		SetIndex(mMesh);
-	}
-	else
-	{
-		SetParent(mMesh);
-		SetMatrix(mMesh);
-	}
-}
+
 
 void FBXManager::BoneMesh(ParserData::Mesh* mMesh)
 {
@@ -153,18 +100,26 @@ void FBXManager::AnimationMesh(ParserData::Model* mMesh)
 		{
 			ParserData::OneFrame* Frame = mMesh->m_AnimationList[i]->m_AniData[j];
 
+			if (i == 0)
+			{
+				Frame->m_Pos.x += mOption->Position.x;
+				Frame->m_Pos.y += mOption->Position.y;
+				Frame->m_Pos.z += mOption->Position.z;
+			}
 			EATER_SET_LIST(Frame->m_Pos.x);
 			EATER_SET_LIST(Frame->m_Pos.y);
 			EATER_SET_LIST(Frame->m_Pos.z);
 
 			if (i == 0)
 			{
-				float Rot_X = mOption->Rotation.x;
-				float Rot_Y = mOption->Rotation.y;
-				float Rot_Z = mOption->Rotation.z;
-				Quaternion OptionRot	= XMQuaternionRotationRollPitchYaw(Rot_X, Rot_Y, Rot_Z);
+				float radX = mOption->Rotation.x * 3.141592f / 180;
+				float radY = mOption->Rotation.y * 3.141592f / 180;
+				float radZ = mOption->Rotation.z * 3.141592f / 180;
+
+				Quaternion OptionRot	= XMQuaternionRotationRollPitchYaw(radX, radY, radZ);
 				Quaternion LocalRot		= Frame->m_RotQt;
 				Quaternion Change		= LocalRot* OptionRot;
+
 				EATER_SET_LIST(Change.x);
 				EATER_SET_LIST(Change.y);
 				EATER_SET_LIST(Change.z);
@@ -362,7 +317,6 @@ void FBXManager::SetMaterial(ParserData::Mesh* mMesh, std::string FileName)
 		Data.NormalMap = CutStr(mMesh->m_MaterialData->m_NormalMap->m_BitMap);
 	}
 	
-
 	if (mMesh->m_MaterialData->m_EmissiveMap != nullptr)
 	{
 		Data.EmissiveMap = CutStr(mMesh->m_MaterialData->m_EmissiveMap->m_BitMap);
@@ -397,35 +351,6 @@ void FBXManager::SetVertexTerrain(ParserData::Mesh* mMesh)
 	}
 }
 
-void FBXManager::SetVertex(ParserData::Mesh* mMesh)
-{
-	int VertexCount = (int)mMesh->m_VertexList.size();
-	
-
-	EATER_SET_VERTEX_START(VertexCount,VERTEX_TYPE::BASE);
-	for (int i = 0; i < VertexCount; i++)
-	{
-		ParserData::Vertex* V = mMesh->m_VertexList[i];
-		EATER_VERTEX_BASE base;
-
-		base.POS_X = V->m_Pos.x;
-		base.POS_Y = V->m_Pos.y;
-		base.POS_Z = V->m_Pos.z;
-
-		base.UV_X = V->m_UV.x;
-		base.UV_Y = V->m_UV.y;
-
-		base.NOMAL_X = V->m_Normal.x;
-		base.NOMAL_Y = V->m_Normal.y;
-		base.NOMAL_Z = V->m_Normal.z;
-
-		base.TANGENT_X = V->m_Tanget.x;
-		base.TANGENT_Y = V->m_Tanget.y;
-		base.TANGENT_Z = V->m_Tanget.z;
-
-		EATER_SET_VERTEX(base);
-	}
-}
 
 void FBXManager::SetVertexSkin(ParserData::Mesh* mMesh)
 {

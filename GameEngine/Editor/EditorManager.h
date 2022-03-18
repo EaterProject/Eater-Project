@@ -1,4 +1,6 @@
 #pragma once
+#include <filesystem>
+#include <iostream>
 #include <string>
 
 class YamlManager;
@@ -14,6 +16,19 @@ public:
 	void Initialize();
 	void SetPath(std::string Path, MeshOption* Data);
 private:
+	void CreateAssetsFile();
+	void LoadAssets();
+
+	void LoadFolder(std::string& Path);
+	void LoadFile(std::string& Path);
+
+	//파일 경로
+	std::string SaveStaticFilePath	= "../Assets/Model/StaticModel";
+	std::string SaveSkinFilePath		= "../Assets/Model/SkinModel";
+	std::string SaveAnimationFilePath = "../Assets/Model/Animation";
+	std::string SaveMaterialFilePath	= "../Assets/Model/TerrainModel";
+	std::string SaveMeshFilePath		= "../Assets/Model/Mesh";
+
 	YamlManager*	mYaml;
 	FBXManager*		mFbx;
 	EaterManager*	mEater;

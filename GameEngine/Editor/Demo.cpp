@@ -14,7 +14,6 @@
 
 
 std::map<std::string, GameObject*> Demo::ObjectList;
-//std::map<std::string, AnimationController*> Demo::SkinList;
 
 SceneSave*		Demo::SaveManager = nullptr;
 GameObject*		Demo::Object		= nullptr;
@@ -32,13 +31,7 @@ void Demo::Awake()
 {
 	SaveManager = new SceneSave();
 	//텍스쳐를 로드
-	Load("../Assets/Texture/Icon");
-	Load("../Assets/Texture/Load");
-	Load("../Assets/Texture/Particle");
-	Load("../Assets/Texture/Terrain");
-
-
-	
+	//Load("../Assets/Texture");
 }
 
 void Demo::Update()
@@ -57,12 +50,10 @@ void Demo::End()
 
 void Demo::ThreadFunction()
 {
-	Load("../Assets/Mesh/Base");
-	Load("../Assets/Mesh/Animation");
-	Load("../Assets/Mesh/Material");
-
-	LoadEnvironment("../Assets/Texture/Base/Night.dds");
-	SetEnvironment(true);
+	//Load("../Assets/Model");
+	//
+	//LoadEnvironment("../Assets/Texture/Environment/Night.dds");
+	//SetEnvironment(true);
 }
 
 GameObject* Demo::CreateObject(std::string MeshName)
