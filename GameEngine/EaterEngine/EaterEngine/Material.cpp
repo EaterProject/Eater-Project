@@ -35,68 +35,44 @@ void Material::SetDiffuseTexture(std::string diffuseName)
 {
 	TextureBuffer* newTexture = LoadManager::GetTexture(diffuseName);
 
-	// 해당 Texture가 없는 경우..
-	if (newTexture == nullptr) return;
-
-	// Texture 최초 설정이 아닌 변경일 경우 Renderer Data 동기화..
-	if (m_MaterialData->Albedo != nullptr)
-	{
-		GraphicEngine::Get()->AddChangeMaterialData(m_MaterialData);
-	}
-
 	// Texture 변경..
 	m_MaterialData->Albedo = newTexture;
+
+	// Renderer Data 동기화..
+	GraphicEngine::Get()->AddChangeMaterialData(m_MaterialData);
 }
 
 void Material::SetNormalTexture(std::string noramlName)
 {
 	TextureBuffer* newTexture = LoadManager::GetTexture(noramlName);
 
-	// 해당 Texture가 없는 경우..
-	if (newTexture == nullptr) return;
-
-	// Texture 최초 설정이 아닌 변경일 경우 Renderer Data 동기화..
-	if (m_MaterialData->Normal != nullptr)
-	{
-		GraphicEngine::Get()->AddChangeMaterialData(m_MaterialData);
-	}
-
 	// Texture 변경..
 	m_MaterialData->Normal = newTexture;
+
+	// Renderer Data 동기화..
+	GraphicEngine::Get()->AddChangeMaterialData(m_MaterialData);
 }
 
 void Material::SetEmissiveTexture(std::string emissiveName)
 {
 	TextureBuffer* newTexture = LoadManager::GetTexture(emissiveName);
 
-	// 해당 Texture가 없는 경우..
-	if (newTexture == nullptr) return;
-
-	// Texture 최초 설정이 아닌 변경일 경우 Renderer Data 동기화..
-	if (m_MaterialData->Emissive != nullptr)
-	{
-		GraphicEngine::Get()->AddChangeMaterialData(m_MaterialData);
-	}
-
 	// Texture 변경..
 	m_MaterialData->Emissive = newTexture;
+
+	// Renderer Data 동기화..
+	GraphicEngine::Get()->AddChangeMaterialData(m_MaterialData);
 }
 
 void Material::SetORMTexture(std::string ormName)
 {
 	TextureBuffer* newTexture = LoadManager::GetTexture(ormName);
 
-	// 해당 Texture가 없는 경우..
-	if (newTexture == nullptr) return;
-
-	// Texture 최초 설정이 아닌 변경일 경우 Renderer Data 동기화..
-	if (m_MaterialData->ORM != nullptr)
-	{
-		GraphicEngine::Get()->AddChangeMaterialData(m_MaterialData);
-	}
-
 	// Texture 변경..
 	m_MaterialData->ORM = newTexture;
+
+	// Renderer Data 동기화..
+	GraphicEngine::Get()->AddChangeMaterialData(m_MaterialData);
 }
 
 void Material::SetBaseColor(DirectX::SimpleMath::Vector4 color)
