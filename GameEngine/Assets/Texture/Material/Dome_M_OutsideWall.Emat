@@ -1,0 +1,20 @@
+#EATERMAT
+@MaterialName Dome_M_OutsideWall
+@Alpha NO
+@Diffuse Dome_OutsideWall_BaseColor.png
+@Normal Dome_OutsideWall_Normal.png
+@Emissive NO
+@ORM Dome_OutsideWall_ORM.png
+@Roughness 0
+@Metallic 0
+@Tileing_X 1
+@Tileing_Y 1
+@BaseColor_R 1
+@BaseColor_G 0.5
+@BaseColor_B 0.5
+@BaseColor_A 1
+@AddColor_R 1
+@AddColor_G 1
+@AddColor_B 1
+@AddColor_A 1
+&

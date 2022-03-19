@@ -32,6 +32,7 @@ void Demo::Awake()
 	SaveManager = new SceneSave();
 	//텍스쳐를 로드
 	Load("../Assets/Texture/ModelTexture");
+	Load("../Assets/Texture/Terrain");
 	Load("../Assets/Texture/Material");
 }
 
@@ -54,8 +55,8 @@ void Demo::ThreadFunction()
 	Load("../Assets/Model/MeshBuffer");
 	Load("../Assets/Model/ModelData");
 	//
-	//LoadEnvironment("../Assets/Texture/Environment/Night.dds");
-	//SetEnvironment(true);
+	LoadEnvironment("../Assets/Texture/Environment/Night.dds");
+	SetEnvironment(true);
 }
 
 GameObject* Demo::CreateObject(std::string MeshName)
@@ -174,7 +175,7 @@ GameObject* Demo::CreateSkinObject(std::string ObjectName, std::string MeshName)
 
 GameObject* Demo::CreateTerrain(std::string MeshName)
 {
-	LoadTerrainMesh("../Assets/Mesh/Terrain/Terrain.fbx", "../Resources/Texture/Terrain/Terrain_RGB.png", SCALING);
+	LoadTerrainMesh("../Assets/Model/TerrainModel/Terrain.fbx", "../Assets/Texture/Terrain/Terrain_RGB.png", SCALING);
 	GameObject* TerrainObect = InstanceTerrain("Terrain");
 
 	Terrain* mTerrain = TerrainObect->GetComponent<Terrain>();

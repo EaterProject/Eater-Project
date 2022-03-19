@@ -160,7 +160,12 @@ void EATERManager::LoadMesh(std::string& Path)
 		std::size_t End		= Path.rfind('.') -Start;
 		std::string SaveName = Path.substr(Start, End);
 		meshBuffer->Name = SaveName;
+
+		// Mesh Buffer 리스트 삽입..
 		LoadManager::MeshBufferList.insert({ SaveName ,meshBuffer });
+
+		// Mesh Buffer Graphic 측 연동..
+		m_Graphic->PushMesh(meshBuffer->m_MeshData);
 
 		delete mesh;
 	}
@@ -219,7 +224,11 @@ void EATERManager::LoadMaterial(std::string& Path)
 			Data->Material_SubData->AddColor.z =std::stof(EATER_GET_MAP(i, "AddColor_B"));
 			Data->Material_SubData->AddColor.w =std::stof(EATER_GET_MAP(i, "AddColor_A"));
 
+			// Material Buffer 리스트 삽입..
 			LoadManager::MaterialList.insert({ SaveName, Mat });
+
+			// Material Buffer Graphic 측 연동..
+			m_Graphic->PushMaterial(Mat->m_MaterialData);
 		}
 	}
 	EATER_CLEAR_NODE();
