@@ -64,8 +64,6 @@ void LoadManager::Load(std::string& Path, UINT MODE)
 		//파일경로가 들어왔다면 파일을 읽음
 		LoadFile(Path, MODE);
 	}
-
-	int a = 0;
 }
 
 void LoadManager::LoadTerrain(std::string mMeshName, std::string mMaskName, UINT parsingMode)

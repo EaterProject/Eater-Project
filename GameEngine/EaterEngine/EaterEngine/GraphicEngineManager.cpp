@@ -55,6 +55,16 @@ void GraphicEngineManager::PushInstance(MeshData* mesh)
 	GEngine->PushInstance(mesh);
 }
 
+void GraphicEngineManager::PushMesh(MeshBuffer* meshData)
+{
+	GEngine->PushMesh(meshData);
+}
+
+void GraphicEngineManager::PushMaterial(MaterialBuffer* materialData)
+{
+	GEngine->PushMaterial(materialData);
+}
+
 void GraphicEngineManager::AddChangeMeshData(MeshData* mesh)
 {
 	GEngine->AddChangeMeshData(mesh);

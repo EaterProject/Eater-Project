@@ -235,6 +235,9 @@ void FBXManager::SetMaterialData(ParserData::CMesh* mMesh, LoadMeshData* SaveDat
 
 			// 현재 Material 저장..
 			LoadManager::MaterialList.insert({ matName, newMaterial });
+
+			// Material Buffer Graphic 측 연동..
+			m_Graphic->PushMaterial(newMaterial->m_MaterialData);
 		}
 
 		// 추후 로드를 위해 Material 이름 저장..
@@ -276,6 +279,9 @@ void FBXManager::SetMeshData(ParserData::CMesh* mMesh, LoadMeshData* SaveData)
 
 		// 현재 Mesh 저장..
 		LoadManager::MeshBufferList.insert({meshName, meshBuffer });
+
+		// Mesh Buffer Graphic 측 연동..
+		m_Graphic->PushMesh(meshBuffer->m_MeshData);
 	}
 
 	// 해당 Mesh Buffer 이름 삽입..
@@ -423,6 +429,9 @@ void FBXManager::LoadQuad()
 	SaveMesh->TopMeshList.push_back(quad);
 
 	LoadManager::ModelList.insert({ "Quad" ,SaveMesh });
+
+	// Mesh Buffer Graphic 측 연동..
+	m_Graphic->PushMesh(quadBuf);
 
 	delete mesh;
 }

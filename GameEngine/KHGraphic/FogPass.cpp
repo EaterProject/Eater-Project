@@ -35,7 +35,7 @@ FogPass::~FogPass()
 void FogPass::Create(int width, int height)
 {
 	// Noise Texture »ý¼º..
-	g_Factory->CreateImage<gNoiseVolume>("NoiseVolume.dds");
+	g_Factory->CreateImage<gNoiseVolume>("Noise/NoiseVolume.dds");
 
 }
 

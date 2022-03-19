@@ -14,6 +14,7 @@ class GlobalData;
 class GraphicEngine;
 class LoadMeshData;
 class MeshBuffer;
+class MaterialBuffer;
 class TextureBuffer;
 class RenderOption;
 
@@ -41,6 +42,8 @@ public:
 
 	//선택한 그래픽엔진 랜더링
 	void PushInstance(MeshData* mesh);
+	void PushMesh(MeshBuffer* meshData);
+	void PushMaterial(MaterialBuffer* materialData);
 	void AddChangeMeshData(MeshData* mesh);
 	void DeleteMeshData(MeshData* mesh);
 	void Render();

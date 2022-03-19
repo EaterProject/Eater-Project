@@ -42,7 +42,7 @@ GraphicResourceFactory::GraphicResourceFactory()
 	m_Parser->Initialize();
 
 	// Icon Texture Route ¼³Á¤..
-	m_TextureRoute = "../Resources/Texture/";
+	m_TextureRoute = "../Assets/Texture/Graphic/";
 }
 
 GraphicResourceFactory::~GraphicResourceFactory()
