@@ -17,9 +17,9 @@ private:
 	void ConvertMaterial(MaterialBuffer* originMat, MaterialRenderBuffer* convertMat);
 	
 public:
-	std::vector<Matrix>* m_BoneOffsetTM;
-
 	MeshData* m_OriginData;					// Engine Origin Data..
+
+	std::vector<Matrix>* m_BoneOffsetTM;
 
 	ObjectData* m_ObjectData;
 
