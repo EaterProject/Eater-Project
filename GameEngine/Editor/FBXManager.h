@@ -50,7 +50,6 @@ private:
 private:
 	void SetParent(ParserData::CMesh* mMesh);
 	void SetMatrix(ParserData::CMesh* mMesh);
-	void SetMaterial(ParserData::CMesh* mMesh,std::string FileName);
 	void SetIndex(ParserData::CMesh* mMesh);
 
 	void SetVertexTerrain(ParserData::CMesh* mMesh);

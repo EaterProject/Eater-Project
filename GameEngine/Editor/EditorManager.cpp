@@ -131,24 +131,4 @@ void EditorManager::LoadFile(std::string& Path)
 	{
 		mFbx->OpenFile(Path, nullptr);
 	}
-
-
-
-	//if (FileType == "txt")
-	//{
-	//
-	//}
-	//else if (FileType == "Eater")
-	//{
-	//	return;
-	//	mEater->LoadEaterFile(Path);
-	//}
-	//else if (FileType == "fbx")
-	//{
-	//	mFbx->OpenFile(Path, nullptr);
-	//}
-	//else if (FileType == "unity")
-	//{
-	//	mYaml->OpenFile(Path);
-	//}
 }

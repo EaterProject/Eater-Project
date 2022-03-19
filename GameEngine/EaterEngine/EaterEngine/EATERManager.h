@@ -11,7 +11,7 @@ namespace ParserData
 	class CMesh;
 	class CAnimation;
 }
-
+class Mesh;
 class EATERManager
 {
 public:
@@ -35,7 +35,7 @@ private:
 	void LoadTM(int Index, LoadMeshData* model);
 	void LoadBoneOffset(int index, LoadMeshData* model);
 	void LoadMaterial(int index, LoadMeshData* model);
-	void LoadMesh(int index, LoadMeshData* model);
+	void LoadMeshName(int index, LoadMeshData* model);
 	void LoadName(int index, LoadMeshData* model);
 	void LoadGameObject(int index);
 private:
@@ -51,13 +51,16 @@ private:
 
 
 private:
-	void LoadVertex(int index, ParserData::CMesh* mMesh);
-	void LoadSkinVertex(int index, ParserData::CMesh* mMesh);
+	ParserData::CMesh* LoadStaticBuffer(int index, ParserData::CMesh* mesh);
+	ParserData::CMesh* LoadSkinBuffer(int index, ParserData::CMesh* mesh);
+	Mesh* CreateBuffer(ParserData::CMesh* mesh);
+	
 	void LoadIndex(int index, ParserData::CMesh* mMesh);
 
 	void CreateKeyFrame(std::vector<ParserData::CAnimation*>* Anime, int InputKeyCount);
 private:
 	std::string CutStr(std::string& Name);
+
 	GraphicEngineManager*	m_Graphic;
 	CRITICAL_SECTION*		m_CriticalSection;
 

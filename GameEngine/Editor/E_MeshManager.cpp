@@ -47,15 +47,6 @@ void E_MeshManager::ChangeEaterFile_Static(ParserData::CMesh* OneMesh)
 	SetMatrix(OneMesh);
 }
 
-void E_MeshManager::ChangeEaterFile_Bone(ParserData::CMesh* OneMesh)
-{
-
-
-
-
-
-}
-
 void E_MeshManager::ChangeEaterFile_Skin(ParserData::CMesh* OneMesh)
 {
 	if (OneMesh->m_MeshType == BONE_MESH)
@@ -64,7 +55,15 @@ void E_MeshManager::ChangeEaterFile_Skin(ParserData::CMesh* OneMesh)
 
 		EATER_SET_MAP("ParentName", OneMesh->m_ParentName);
 		EATER_SET_MAP("NodeName", OneMesh->m_NodeName);
-
+		EATER_SET_MAP("BoneIndex", std::to_string(OneMesh->m_BoneIndex));
+		if (OneMesh->m_TopNode == true)
+		{
+			EATER_SET_MAP("TopNode", "YES");
+		}
+		else
+		{
+			EATER_SET_MAP("TopNode", "NO");
+		}
 		SetMatrix(OneMesh);
 	}
 	else if (OneMesh->m_MeshType == SKIN_MESH)
@@ -88,8 +87,16 @@ void E_MeshManager::SetDataName(ParserData::CMesh* mMesh)
 	EATER_SET_MAP("MeshName", ModelName);
 
 	//메테리얼 이름
-	std::string MatName = SaveFileName + "_" + mMesh->m_MaterialData->m_MaterialName;
-	EATER_SET_MAP("MaterialName",MatName);
+	if (mMesh->m_MaterialData != nullptr)
+	{
+		std::string MatName = SaveFileName + "_" + mMesh->m_MaterialData->m_MaterialName;
+		EATER_SET_MAP("MaterialName",MatName);
+	}
+	else
+	{
+		EATER_SET_MAP("MaterialName", "NO");
+	}
+
 }
 
 void E_MeshManager::SetMatrix(ParserData::CMesh* mMesh)

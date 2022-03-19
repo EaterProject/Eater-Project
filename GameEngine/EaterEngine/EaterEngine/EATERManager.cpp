@@ -103,68 +103,32 @@ void EATERManager::LoadScene(std::string& Path)
 void EATERManager::LoadMesh(std::string& Path)
 {
 	EATER_OPEN_FILE(Path);
-	
 	int NodeCount = EATER_GET_NODE_COUNT();
-	for (int j = 0; j < NodeCount; j++)
+	Mesh* meshBuffer = nullptr;
+	for (int i = 0; i < NodeCount; i++)
 	{
-		int VertexCount = EATER_GET_LIST_CHOICE(j, "Vertex");
-		ParserData::CMesh* mesh = new ParserData::CMesh();
-
-		for (int i = 0; i < VertexCount; i++)
+		std::string NodeName = EATER_GET_NODE_NAME(i);
+		if (NodeName == "SKIN_BUFFER")
 		{
-			ParserData::CVertex* V = new ParserData::CVertex();
-
-			std::vector<float> Data;
-			EATER_GET_LIST(&Data, i);
-
-			V->m_Pos.x = Data[0];
-			V->m_Pos.y = Data[1];
-			V->m_Pos.z = Data[2];
-
-			V->m_UV.x = Data[3];
-			V->m_UV.y = Data[4];
-
-			V->m_Normal.x = Data[5];
-			V->m_Normal.y = Data[6];
-			V->m_Normal.z = Data[7];
-
-			V->m_Tanget.x = Data[8];
-			V->m_Tanget.y = Data[9];
-			V->m_Tanget.z = Data[10];
-
-			mesh->m_VertexList.push_back(V);
+			std::string SaveName = CutStr(Path);
+			ParserData::CMesh* mMesh = new ParserData::CMesh();
+			LoadSkinBuffer(i, mMesh);
+			LoadIndex(i, mMesh);
+			Mesh* Buffer = CreateBuffer(mMesh);
+			Buffer->Name = SaveName;
+			LoadManager::MeshBufferList.insert({ SaveName,Buffer });
 		}
-
-		int IndexCount = EATER_GET_LIST_CHOICE(j, "Index");
-		for (int i = 0; i < IndexCount; i++)
+		else if (NodeName == "STATIC_BUFFER")
 		{
-			ParserData::CIndexList* IB = new ParserData::CIndexList();
-
-			std::vector<float> Data;
-			EATER_GET_LIST(&Data, i);
-			IB->m_Index[0] = Data[0];
-			IB->m_Index[1] = Data[1];
-			IB->m_Index[2] = Data[2];
-
-			mesh->m_IndexList.push_back(IB);
+			std::string SaveName = CutStr(Path);
+			ParserData::CMesh* mMesh = new ParserData::CMesh();
+			LoadStaticBuffer(i, mMesh);
+			LoadIndex(i,mMesh);
+			Mesh* Buffer = CreateBuffer(mMesh);
+			Buffer->Name = SaveName;
+			LoadManager::MeshBufferList.insert({SaveName,Buffer});
 		}
-
-
-		Mesh* meshBuffer = new Mesh();
-		
-		EnterCriticalSection(m_CriticalSection);
-		m_Graphic->CreateMeshBuffer(mesh, &meshBuffer->m_MeshData);
-		LeaveCriticalSection(m_CriticalSection);
-
-		std::size_t Start	= Path.rfind('/') + 1;
-		std::size_t End		= Path.rfind('.') -Start;
-		std::string SaveName = Path.substr(Start, End);
-		meshBuffer->Name = SaveName;
-		LoadManager::MeshBufferList.insert({ SaveName ,meshBuffer });
-
-		delete mesh;
 	}
-
 	EATER_CLEAR_NODE();
 }
 
@@ -231,7 +195,7 @@ LoadMeshData* EATERManager::LoadStaticMesh(int index)
 	model->MeshType = MESH_TYPE::STATIC_MESH;
 	LoadName(index, model);
 	LoadTM(index, model);
-	LoadMesh(index, model);
+	LoadMeshName(index, model);
 	LoadMaterial(index, model);
 
 	return model;
@@ -267,7 +231,7 @@ LoadMeshData* EATERManager::LoadSkinMesh(int index)
 	LoadName(index, model);
 	LoadTM(index, model);
 	LoadBoneOffset(index, model);
-	LoadMesh(index, model);
+	LoadMeshName(index, model);
 	LoadMaterial(index, model);
 
 	return model;
@@ -314,12 +278,6 @@ void EATERManager::LinkBone(ModelData* SaveData)
 			}
 		}
 	}
-}
-
-void EATERManager::LinkSkin()
-{
-
-
 }
 
 void EATERManager::LoadTM(int Index, LoadMeshData* model)
@@ -393,7 +351,7 @@ void EATERManager::LoadTM(int Index, LoadMeshData* model)
 	}
 }
 
-void EATERManager::LoadVertex(int index, ParserData::CMesh* mesh)
+ParserData::CMesh* EATERManager::LoadStaticBuffer(int index, ParserData::CMesh* mesh)
 {
 	int VertexCount = EATER_GET_LIST_CHOICE(index, "Vertex");
 	for (int i = 0; i < VertexCount; i++)
@@ -420,9 +378,10 @@ void EATERManager::LoadVertex(int index, ParserData::CMesh* mesh)
 
 		mesh->m_VertexList.push_back(V);
 	}
+	return mesh;
 }
 
-void EATERManager::LoadSkinVertex(int index, ParserData::CMesh* mesh)
+ParserData::CMesh* EATERManager::LoadSkinBuffer(int index,ParserData::CMesh* mesh)
 {
 	int VertexCount = EATER_GET_LIST_CHOICE(index, "Vertex");
 	for (int i = 0; i < VertexCount; i++)
@@ -466,9 +425,19 @@ void EATERManager::LoadSkinVertex(int index, ParserData::CMesh* mesh)
 			Boneindex++;
 		}
 
-
 		mesh->m_VertexList.push_back(V);
 	}
+
+	return mesh;
+}
+
+Mesh* EATERManager::CreateBuffer(ParserData::CMesh* mesh)
+{
+	Mesh* meshBuffer = new Mesh();
+	EnterCriticalSection(m_CriticalSection);
+	m_Graphic->CreateMeshBuffer(mesh, &meshBuffer->m_MeshData);
+	LeaveCriticalSection(m_CriticalSection);
+	return meshBuffer;
 }
 
 void EATERManager::LoadIndex(int index, ParserData::CMesh* mesh)
@@ -597,8 +566,8 @@ void EATERManager::LoadAnimation(int index, std::string& Name)
 
 std::string EATERManager::CutStr(std::string& Name)
 {
-	std::size_t Start = 0;
-	std::size_t End = Name.rfind('.');
+	std::size_t Start = Name.rfind('/')+1;
+	std::size_t End = Name.rfind('.') - Start;
 	return Name.substr(Start, End);
 }
 
@@ -613,7 +582,7 @@ void EATERManager::LoadMaterial(int index, LoadMeshData* model)
 	}
 }
 
-void EATERManager::LoadMesh(int index, LoadMeshData* model)
+void EATERManager::LoadMeshName(int index, LoadMeshData* model)
 {
 	std::string mesh = EATER_GET_MAP(index, "MeshName");
 

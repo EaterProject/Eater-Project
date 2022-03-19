@@ -25,7 +25,6 @@ private:
 	void SetMatrix(ParserData::CMesh* mMesh);
 
 	void SetBoneOffset(ParserData::CMesh* mMesh);
-	//bool FindInstanceIndex(int Index);
 private:
 	std::string CutFileName(std::string FilePath);
 private:
