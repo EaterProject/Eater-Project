@@ -42,7 +42,11 @@ void Material::SetDiffuseTexture(std::string diffuseName)
 
 	// Texture 변경..
 	m_MaterialData->Albedo = newTexture;
-	m_MaterialData->Albedo->Name = diffuseName;
+
+	if (newTexture != nullptr)
+	{
+		m_MaterialData->Albedo->Name = diffuseName;
+	}
 
 	// Renderer Data 동기화..
 	GraphicEngine::Get()->ChangeMaterial(m_MaterialData);
@@ -51,10 +55,14 @@ void Material::SetDiffuseTexture(std::string diffuseName)
 void Material::SetNormalTexture(std::string noramlName)
 {
 	TextureBuffer* newTexture = LoadManager::GetTexture(noramlName);
-
+	
 	// Texture 변경..
 	m_MaterialData->Normal = newTexture;
-	m_MaterialData->Normal->Name = noramlName;
+
+	if (newTexture != nullptr)
+	{
+		m_MaterialData->Normal->Name = noramlName;
+	}
 
 	// Renderer Data 동기화..
 	GraphicEngine::Get()->ChangeMaterial(m_MaterialData);
@@ -66,7 +74,11 @@ void Material::SetEmissiveTexture(std::string emissiveName)
 
 	// Texture 변경..
 	m_MaterialData->Emissive = newTexture;
-	m_MaterialData->Emissive->Name = emissiveName;
+
+	if (newTexture != nullptr)
+	{
+		m_MaterialData->Emissive->Name = emissiveName;
+	}
 
 	// Renderer Data 동기화..
 	GraphicEngine::Get()->ChangeMaterial(m_MaterialData);
@@ -78,7 +90,11 @@ void Material::SetORMTexture(std::string ormName)
 
 	// Texture 변경..
 	m_MaterialData->ORM = newTexture;
-	m_MaterialData->ORM->Name = ormName;
+
+	if (newTexture != nullptr)
+	{
+		m_MaterialData->ORM->Name = ormName;
+	}
 
 	// Renderer Data 동기화..
 	GraphicEngine::Get()->ChangeMaterial(m_MaterialData);
@@ -120,7 +136,7 @@ void Material::Release()
 
 std::string Material::GetDiffuseName()
 {
-	if (m_MaterialData->Albedo != nullptr )
+	if (m_MaterialData->Albedo != nullptr)
 	{
 		return m_MaterialData->Albedo->Name;
 	}

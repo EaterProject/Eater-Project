@@ -255,6 +255,7 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const std:
 
 		// Pixel Shader Update..
 		CB_Material materialBuf;
+		materialBuf.gColor = mat->m_MaterialSubData->BaseColor;
 
 		if (mat->m_Albedo)
 		{
@@ -335,6 +336,7 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rend
 
 		// Pixel Shader Update..
 		CB_Material materialBuf;
+		materialBuf.gColor = mat->m_MaterialSubData->BaseColor;
 
 		if (mat->m_Albedo)
 		{
@@ -422,6 +424,7 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rend
 
 		// Pixel Shader Update..
 		CB_Material materialBuf;
+		materialBuf.gColor = mat->m_MaterialSubData->BaseColor;
 
 		if (mat->m_Albedo)
 		{
