@@ -188,19 +188,19 @@ void RenderManager::PushMaterial(MaterialBuffer* material)
 	m_Converter->PushMaterial(material);
 }
 
-void RenderManager::ChangeInstance(MeshData* instance)
+void RenderManager::PushChangeInstance(MeshData* instance)
 {
 	// 해당 Mesh의 Mesh Buffer가 바뀌거나, Material Buffer가 바뀔경우 동기화..
-
+	m_ChangeInstanceList.push(instance);
 }
 
-void RenderManager::ChangeMesh(MeshBuffer* mesh)
+void RenderManager::PushChangeMesh(MeshBuffer* mesh)
 {
 	// 현재 바뀐 Mesh Buffer 동기화를 위해 삽입..
 	m_Converter->PushChangeMesh(mesh);
 }
 
-void RenderManager::ChangeMaterial(MaterialBuffer* material)
+void RenderManager::PushChangeMaterial(MaterialBuffer* material)
 {
 	// 현재 바뀐 Material Buffer 동기화를 위해 삽입..
 	m_Converter->PushChangeMaterial(material);
@@ -242,34 +242,11 @@ void RenderManager::ConvertRenderData()
 	// Render Resource 동기화 작업..
 	m_Converter->ResourceUpdate();
 
-	//
-	while (!m_PushInstanceList.empty())
-	{
-		// 해당 원본 Mesh Data 추출..
-		MeshData* originMeshData = m_PushInstanceList.front();
+	// 현재 프레임 동안 추가된 Render Data Convert 작업..
+	ConvertPushInstance();
 
-		// Mesh Data 변환..
-		RenderData* newMeshData = m_Converter->ConvertRenderData(originMeshData);
-
-		// Object Type에 따른 리스트 삽입..
-		switch (newMeshData->m_ObjectData->ObjType)
-		{
-			case OBJECT_TYPE::BASE:
-			case OBJECT_TYPE::SKINNING:
-			case OBJECT_TYPE::TERRAIN:
-				PushMeshRenderData(newMeshData);
-				break;
-			case OBJECT_TYPE::PARTICLE_SYSTEM:
-				PushParticleRenderData(newMeshData);
-				break;
-			default:
-				PushUnRenderData(newMeshData);
-				break;
-		}
-
-		// 변환한 Mesh Data Pop..
-		m_PushInstanceList.pop();
-	}
+	// 현재 프레임 동안 변경된 Render Data Convert 작업..
+	ConvertChangeInstance();
 }
 
 void RenderManager::Render()
@@ -277,7 +254,7 @@ void RenderManager::Render()
 	// Rendering Option Setting..
 	RenderSetting();
 
-	// 추가된 Mesh Data 변환..
+	// Rendering Resource 동기화 작업..
 	ConvertRenderData();
 
 	// Shadow Render..
@@ -520,13 +497,78 @@ void RenderManager::EndRender()
 	m_SwapChain->Present(0, 0);
 }
 
+void RenderManager::ConvertPushInstance()
+{
+	// 현재 프레임 진행중 쌓아둔 추가된 Render Data List 삽입 작업..
+	while (!m_PushInstanceList.empty())
+	{
+		// 해당 원본 Mesh Data 추출..
+		MeshData* originMeshData = m_PushInstanceList.front();
+
+		// 새로운 Render Data 생성..
+		RenderData* convertRenderData = new RenderData();
+
+		// Mesh Data -> Render Data 변환..
+		m_Converter->ConvertMeshData(originMeshData, convertRenderData);
+
+		// Object Type에 따른 리스트 삽입..
+		switch (convertRenderData->m_ObjectData->ObjType)
+		{
+		case OBJECT_TYPE::BASE:
+		case OBJECT_TYPE::SKINNING:
+		case OBJECT_TYPE::TERRAIN:
+			PushMeshRenderData(convertRenderData);
+			break;
+		case OBJECT_TYPE::PARTICLE_SYSTEM:
+			PushParticleRenderData(convertRenderData);
+			break;
+		default:
+			PushUnRenderData(convertRenderData);
+			break;
+		}
+
+		// 변환한 Mesh Data Pop..
+		m_PushInstanceList.pop();
+	}
+}
+
+void RenderManager::ConvertChangeInstance()
+{
+	// 현재 프레임 진행중 쌓아둔 변경된 Render Data List 삽입 작업..
+	while (!m_ChangeInstanceList.empty())
+	{
+		// 해당 원본 Mesh Data 추출..
+		MeshData* originMeshData = m_ChangeInstanceList.front();
+
+		// Object Type에 따른 List 삽입 제거 작업..
+		switch (originMeshData->Object_Data->ObjType)
+		{
+		case OBJECT_TYPE::BASE:
+		case OBJECT_TYPE::SKINNING:
+		case OBJECT_TYPE::TERRAIN:
+			ChangeMeshRenderData(originMeshData);
+			break;
+		case OBJECT_TYPE::PARTICLE_SYSTEM:
+			ChangeParticleRenderData(originMeshData);
+			break;
+		default:
+			ChangeUnRenderData(originMeshData);
+			break;
+		}
+
+		// 변환한 Mesh Data Pop..
+		m_ChangeInstanceList.pop();
+	}
+
+	// 모든 변환이 끝난후 List 재설정..
+	CheckInstanceLayer(m_RenderMeshList);
+	CheckInstanceLayer(m_ParticleMeshList);
+}
+
 void RenderManager::PushMeshRenderData(RenderData* renderData)
 {
 	// 해당 Layer 검색..
 	InstanceLayer* instanceLayer = m_Converter->GetLayer(renderData->m_InstanceLayerIndex);
-
-	// Render Data 추가..
-	instanceLayer->m_MeshList.push_back(renderData);
 
 	// List 내의 Layer 유무 확인..
 	for (InstanceLayer* layer : m_RenderMeshList)
@@ -546,9 +588,6 @@ void RenderManager::PushParticleRenderData(RenderData* renderData)
 {
 	// 해당 Layer 검색..
 	InstanceLayer* instanceLayer = m_Converter->GetLayer(renderData->m_InstanceLayerIndex);
-
-	// Render Data 추가..
-	instanceLayer->m_MeshList.push_back(renderData);
 
 	// List 내의 Layer 유무 확인..
 	for (InstanceLayer* layer : m_ParticleMeshList)
@@ -571,12 +610,64 @@ void RenderManager::PushUnRenderData(RenderData* renderData)
 
 void RenderManager::ChangeMeshRenderData(MeshData* meshData)
 {
+	// Render Data 변환..
+	RenderData* convertRenderData = (RenderData*)meshData->Render_Data;
 
+	// 현재 변경 전 Layer 검색..
+	InstanceLayer* layer = m_Converter->GetLayer(convertRenderData->m_InstanceLayerIndex);
+
+	int index = -1;
+
+	for (int i = 0; i < layer->m_MeshList.size(); i++)
+	{
+		if (layer->m_MeshList[i] == convertRenderData)
+		{
+			index = i;
+			break;
+		}
+	}
+
+	assert(index != -1);
+
+	// 해당 Render Data List에서 제거..
+	layer->DeleteRenderData(index);
+
+	// Render Data 재설정..
+	m_Converter->ConvertRenderData(meshData, convertRenderData);
+
+	// 해당 Layer가 등록되어 있는지 확인..
+	FindInstanceLayer(m_RenderMeshList, layer);
 }
 
 void RenderManager::ChangeParticleRenderData(MeshData* meshData)
 {
+	// Render Data 변환..
+	RenderData* convertRenderData = (RenderData*)meshData->Render_Data;
 
+	// 현재 변경 전 Layer 검색..
+	InstanceLayer* layer = m_Converter->GetLayer(convertRenderData->m_InstanceLayerIndex);
+
+	int index = -1;
+
+	for (int i = 0; i < layer->m_MeshList.size(); i++)
+	{
+		if (layer->m_MeshList[i] == convertRenderData)
+		{
+			index = i;
+			break;
+		}
+	}
+
+	assert(index != -1);
+
+	// 해당 Render Data List에서 제거..
+	layer->DeleteRenderData(index);
+
+	// Render Data 재설정..
+	m_Converter->ConvertRenderData(meshData, convertRenderData);
+
+	// 해당 Layer가 등록되어 있는지 확인..
+	FindInstanceLayer(m_ParticleMeshList, layer);
 }
 
 void RenderManager::ChangeUnRenderData(MeshData* meshData)
@@ -586,13 +677,18 @@ void RenderManager::ChangeUnRenderData(MeshData* meshData)
 
 void RenderManager::DeleteMeshRenderData(MeshData* meshData)
 {
+	// Render Data 변환..
 	RenderData* renderData = (RenderData*)meshData->Render_Data;
+
+	// 해당 Layer 검색..
 	InstanceLayer* instanceLayer = m_Converter->GetLayer(renderData->m_InstanceLayerIndex);
 
+	// Render Data의 List 내에서의 Index..
 	int index = -1;
 
 	for (int i = 0; i < instanceLayer->m_MeshList.size(); i++)
 	{
+		// 해당 Render Data List Index 검색..
 		if (instanceLayer->m_MeshList[i] == renderData)
 		{
 			index = i;
@@ -600,11 +696,14 @@ void RenderManager::DeleteMeshRenderData(MeshData* meshData)
 		}
 	}
 
+	// Index가 검색이 안되면 안된다..
 	assert(index != -1);
 
 	// 해당 Instance 제거..
 	SAFE_DELETE(instanceLayer->m_MeshList[index]);
-	instanceLayer->m_MeshList.erase(std::next(instanceLayer->m_MeshList.begin(), index));
+
+	// 해당 Instance List에서 제거...
+	instanceLayer->DeleteRenderData(index);
 
 	// Instance Layer 빈곳 체크..
 	CheckInstanceLayer(m_RenderMeshList);
@@ -612,13 +711,18 @@ void RenderManager::DeleteMeshRenderData(MeshData* meshData)
 
 void RenderManager::DeleteParticleRenderData(MeshData* meshData)
 {
+	// Render Data 변환..
 	RenderData* renderData = (RenderData*)meshData->Render_Data;
+
+	// 해당 Layer 검색..
 	InstanceLayer* instanceLayer = m_Converter->GetLayer(renderData->m_InstanceLayerIndex);
 
+	// Render Data의 List 내에서의 Index..
 	int index = -1;
 
 	for (int i = 0; i < instanceLayer->m_MeshList.size(); i++)
 	{
+		// 해당 Render Data List Index 검색..
 		if (instanceLayer->m_MeshList[i] == renderData)
 		{
 			index = i;
@@ -626,11 +730,14 @@ void RenderManager::DeleteParticleRenderData(MeshData* meshData)
 		}
 	}
 
+	// Index가 검색이 안되면 안된다..
 	assert(index != -1);
 
 	// 해당 Instance 제거..
 	SAFE_DELETE(instanceLayer->m_MeshList[index]);
-	instanceLayer->m_MeshList.erase(std::next(instanceLayer->m_MeshList.begin(), index));
+
+	// 해당 Instance List에서 제거...
+	instanceLayer->DeleteRenderData(index);
 
 	// Instance Layer 빈곳 체크..
 	CheckInstanceLayer(m_ParticleMeshList);
@@ -638,12 +745,15 @@ void RenderManager::DeleteParticleRenderData(MeshData* meshData)
 
 void RenderManager::DeleteUnRenderData(MeshData* meshData)
 {
+	// Render Data 변환..
 	RenderData* renderData = (RenderData*)meshData->Render_Data;
 
+	// Render Data의 List 내에서의 Index..
 	int index = -1;
 
 	for (int i = 0; i < m_UnRenderMeshList.size(); i++)
 	{
+		// 해당 Render Data List Index 검색..
 		if (m_UnRenderMeshList[i] == renderData)
 		{
 			index = i;
@@ -653,15 +763,19 @@ void RenderManager::DeleteUnRenderData(MeshData* meshData)
 
 	// 해당 Instance 제거..
 	SAFE_DELETE(m_UnRenderMeshList[index]);
+
+	// 해당 Instance List에서 제거...
 	m_UnRenderMeshList.erase(std::next(m_UnRenderMeshList.begin(), index));
 }
 
 void RenderManager::CheckInstanceLayer(std::vector<InstanceLayer*>& layerList)
 {
+	// Layer List 내에서의 Layer Index..
 	int index = -1;
 
 	for (int i = 0; i < layerList.size(); i ++)
 	{
+		// 해당 Layer List Index 검색..
 		if (layerList[i]->m_MeshList.empty())
 		{
 			// 해당 Layer가 비어있다면 Layer 삭제..
@@ -675,4 +789,19 @@ void RenderManager::CheckInstanceLayer(std::vector<InstanceLayer*>& layerList)
 
 	// 해당 Layer 리스트에서 제거..
 	layerList.erase(std::next(layerList.begin(), index));
+}
+
+void RenderManager::FindInstanceLayer(std::vector<InstanceLayer*>& layerList, InstanceLayer* layer)
+{
+	for (InstanceLayer* instanceLayer : layerList)
+	{
+		// 해당 Layer가 이미 등록되어 있다면 추가하지 않는다..
+		if (instanceLayer == layer)
+		{
+			return;
+		}
+	}
+
+	// 만약 Layer가 검색되지 않았다면 Layer List에 삽입..
+	layerList.push_back(layer);
 }

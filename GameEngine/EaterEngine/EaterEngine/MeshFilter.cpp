@@ -249,14 +249,20 @@ void MeshFilter::SetMaterial(std::string matName)
 	// 해당 Material이 없다면..
 	if (material == nullptr) return;
 
+	// 최초 설정이 아닌 변경인 경우 그래픽 동기화..
+	if (Materials != nullptr)
+	{
+		GraphicEngine::Get()->PushChangeInstance(gameobject->OneMeshData);
+	}
+
 	// 해당 Material 설정..
 	Materials = material;
-
-	// 그래픽 측 동기화 필요..
 }
 
 void MeshFilter::SetTexture(std::string texName, UINT texType)
 {
+	if (Materials == nullptr) return;
+
 	// Texture 설정..
 	switch (texType)
 	{
