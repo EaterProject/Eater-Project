@@ -255,10 +255,41 @@ void RenderDataConverter::ConvertMaterial(MaterialBuffer* originMat, MaterialRen
 	if (originMat == nullptr) return;
 
 	// 해당 Material Data 변환..
-	if (originMat->Albedo) convertMat->m_Albedo = (ID3D11ShaderResourceView*)originMat->Albedo->pTextureBuf;
-	if (originMat->Normal) convertMat->m_Normal = (ID3D11ShaderResourceView*)originMat->Normal->pTextureBuf;
-	if (originMat->Emissive) convertMat->m_Emissive = (ID3D11ShaderResourceView*)originMat->Emissive->pTextureBuf;
-	if (originMat->ORM) convertMat->m_ORM = (ID3D11ShaderResourceView*)originMat->ORM->pTextureBuf;
+	if (originMat->Albedo)
+	{
+		convertMat->m_Albedo = (ID3D11ShaderResourceView*)originMat->Albedo->pTextureBuf;
+	}
+	else
+	{
+		convertMat->m_Albedo = nullptr;
+	}
+
+	if (originMat->Normal)
+	{
+		convertMat->m_Normal = (ID3D11ShaderResourceView*)originMat->Normal->pTextureBuf;
+	}
+	else
+	{
+		convertMat->m_Normal = nullptr;
+	}
+
+	if (originMat->Emissive)
+	{
+		convertMat->m_Emissive = (ID3D11ShaderResourceView*)originMat->Emissive->pTextureBuf;
+	}
+	else
+	{
+		convertMat->m_Emissive = nullptr;
+	}
+
+	if (originMat->ORM)
+	{
+		convertMat->m_ORM = (ID3D11ShaderResourceView*)originMat->ORM->pTextureBuf;
+	}
+	else
+	{
+		convertMat->m_ORM = nullptr;
+	}
 }
 
 InstanceRenderBuffer* RenderDataConverter::FindInstance(RenderData* renderData, MeshRenderBuffer* mesh, MaterialRenderBuffer* material)
