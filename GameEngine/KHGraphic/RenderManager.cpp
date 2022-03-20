@@ -191,7 +191,7 @@ void RenderManager::PushMaterial(MaterialBuffer* material)
 void RenderManager::ChangeInstance(MeshData* instance)
 {
 	// 해당 Mesh의 Mesh Buffer가 바뀌거나, Material Buffer가 바뀔경우 동기화..
-	
+
 }
 
 void RenderManager::ChangeMesh(MeshBuffer* mesh)

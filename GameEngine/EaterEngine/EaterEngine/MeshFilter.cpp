@@ -28,7 +28,7 @@ MeshFilter::MeshFilter()
 
 MeshFilter::~MeshFilter()
 {
-	if (Materials->Defalt)
+	if (Materials && Materials->Defalt)
 	{
 		delete Materials;
 	}

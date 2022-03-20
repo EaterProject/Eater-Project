@@ -24,7 +24,7 @@ RenderData* RenderDataConverter::ConvertRenderData(MeshData* originData)
 	renderData->m_ColliderData = originData->Collider_Data;
 
 	// 변환된 Render Data 저장..
-	originData->Render_Data = renderData;
+	originData->Render_Data = (void*)renderData;
 
 	// 해당 Instance Data 추출..
 	MeshBuffer* originMesh = originData->Mesh_Buffer;
