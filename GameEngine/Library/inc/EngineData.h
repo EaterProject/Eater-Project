@@ -35,10 +35,9 @@ public:
 class ObjectData
 {
 public:
-	UINT RenderMeshIndex = 0;						// Renderer 측 구분을 위한 Index
-	UINT RenderListIndex = 0;						// Renderer 측 구분을 위한 Index
-
 	OBJECT_TYPE ObjType = OBJECT_TYPE::DEFALT;		//오브젝트 타입
+
+	std::vector<Matrix> BoneOffsetTM;				//본 오프셋 TM
 
 	Matrix* World = nullptr;						//매쉬의 월드 행렬
 	Matrix* Local = nullptr;						//매쉬의 로컬 행렬
@@ -54,17 +53,23 @@ public:
 		delete VertexBuf;
 	}
 
-	UINT BufferIndex = 0;
+	UINT BufferIndex = 0;		// Mesh Buffer Index
 
-	IndexBuffer* IndexBuf;
-	VertexBuffer* VertexBuf;
+	IndexBuffer* IndexBuf;		// Index Buffer
+	VertexBuffer* VertexBuf;	// Vertex Buffer
 };
 
 // Material Buffer
 class MaterialBuffer
 {
 public:
-	UINT BufferIndex = 0;				// Material Index
+	virtual ~MaterialBuffer()
+	{
+		delete Material_SubData;
+	}
+
+public:
+	UINT BufferIndex = 0;					// Material Buffer Index
 
 	MaterialSubData* Material_SubData = nullptr;	// Material SubData
 
@@ -78,6 +83,7 @@ public:
 class TerrainData
 {
 public:
+	Matrix Tex;										// Terrain Mesh 의 텍스쳐 행렬
 	std::vector<MaterialBuffer*> Material_List;		// Material List
 };
 
@@ -130,9 +136,9 @@ public:
 
 	//카메라 정보들
 	Matrix CamInvView;	// Camera Inverse XY View Matrix
-	Matrix CamView;	// Camera View Matrix
-	Matrix CamProj;	// Camera Proj Matrix
-	Vector3 CamPos;	// Camera Pos
+	Matrix CamView;		// Camera View Matrix
+	Matrix CamProj;		// Camera Proj Matrix
+	Vector3 CamPos;		// Camera Pos
 
 	Matrix CamVP;		// Camera Proj * Proj Matrix
 
@@ -158,7 +164,7 @@ public:
 	}
 
 public:
-	std::vector<Matrix> BoneOffsetTM;				//본 오프셋 TM
+	void* Render_Data;								// 변환된 Render Data
 
 	ObjectData*		Object_Data = nullptr;			// Object Data
 

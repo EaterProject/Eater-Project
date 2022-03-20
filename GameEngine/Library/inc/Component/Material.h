@@ -39,7 +39,9 @@ public:
 	EATER_ENGINEDLL std::string GetORMName();
 
 public:
+	bool Defalt;
 	std::string Name;
+
 	MaterialBuffer* m_MaterialData;
 };
 

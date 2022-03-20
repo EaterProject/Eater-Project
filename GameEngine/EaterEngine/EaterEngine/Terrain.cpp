@@ -26,6 +26,9 @@ void Terrain::Awake()
 	//Awake 에서는 무조건 GetComponent 만
 	mCollider	= gameobject->GetComponent<Collider>();
 	mMeshFilter = gameobject->GetComponent<MeshFilter>();
+
+	// 새로운 Material Layer 삽입..
+	gameobject->OneMeshData->Terrain_Data = m_TerrainData;
 }
 
 void Terrain::SetUp()
@@ -73,16 +76,13 @@ void Terrain::AddLayer(std::string diffuseName, std::string normalName, std::str
 	materialData->Normal = LoadManager::GetTexture(normalName);
 	materialData->ORM	 = LoadManager::GetTexture(ormName);
 
-	// 새로운 Material Layer 삽입..
-	gameobject->OneMeshData->Terrain_Data = m_TerrainData;
-
 	m_TerrainData->Material_List.push_back(materialData);
 	m_MaterialLayer.push_back(newMaterial);
 }
 
 void Terrain::DataUpdate()
 {
-	gameobject->OneMeshData->Material_Buffer->Material_SubData->TexTM = DirectX::SimpleMath::Matrix::CreateScale(1.0f / Tiling.x, 1.0f / Tiling.y, 1.0f);
+	gameobject->OneMeshData->Terrain_Data->Tex = DirectX::SimpleMath::Matrix::CreateScale(1.0f / Tiling.x, 1.0f / Tiling.y, 1.0f);
 }
 
 void Terrain::SetTextureTiling(float scale_x, float scale_y)

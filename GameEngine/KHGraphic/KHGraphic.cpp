@@ -78,34 +78,49 @@ void KHGraphic::SetEnvironmentMap(bool enable)
 	m_RenderManager->SetEnvironmentMap(enable);
 }
 
-void KHGraphic::PushInstance(MeshData* meshData)
+void KHGraphic::PushInstance(MeshData* instance)
 {
-	m_RenderManager->PushInstance(meshData);
+	m_RenderManager->PushInstance(instance);
 }
 
-void KHGraphic::PushMaterial(MaterialBuffer* materialData)
+void KHGraphic::PushMesh(MeshBuffer* mesh)
 {
-	m_RenderManager->PushMaterial(materialData);
+	m_RenderManager->PushMesh(mesh);
 }
 
-void KHGraphic::PushMesh(MeshBuffer* meshData)
+void KHGraphic::PushMaterial(MaterialBuffer* material)
 {
-	m_RenderManager->PushMesh(meshData);
+	m_RenderManager->PushMaterial(material);
 }
 
-void KHGraphic::AddChangeMeshData(MeshData* meshData)
+void KHGraphic::ChangeInstance(MeshData* instance)
 {
-	m_RenderManager->AddChangeMeshData(meshData);
+	m_RenderManager->ChangeInstance(instance);
 }
 
-void KHGraphic::AddChangeMaterialData(MaterialBuffer* materialData)
+void KHGraphic::ChangeMesh(MeshBuffer* mesh)
 {
-	m_RenderManager->AddChangeMaterialData(materialData);
+	m_RenderManager->ChangeMesh(mesh);
 }
 
-void KHGraphic::DeleteMeshData(MeshData* meshData)
+void KHGraphic::ChangeMaterial(MaterialBuffer* material)
 {
-	m_RenderManager->DeleteMeshData(meshData);
+	m_RenderManager->ChangeMaterial(material);
+}
+
+void KHGraphic::DeleteInstance(MeshData* meshData)
+{
+	m_RenderManager->DeleteInstance(meshData);
+}
+
+void KHGraphic::DeleteMesh(MeshBuffer* mesh)
+{
+	m_RenderManager->DeleteMesh(mesh);
+}
+
+void KHGraphic::DeleteMaterial(MaterialBuffer* material)
+{
+	m_RenderManager->DeleteMaterial(material);
 }
 
 void KHGraphic::Render()

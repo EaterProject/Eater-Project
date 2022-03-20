@@ -21,13 +21,18 @@ public:
 	void SetEnvironmentMap(bool enable) override;
 
 public:
-	void PushInstance(MeshData* meshData) override;
-	void PushMaterial(MaterialBuffer* material) override;
+	void PushInstance(MeshData* instance) override;
 	void PushMesh(MeshBuffer* mesh) override;
+	void PushMaterial(MaterialBuffer* material) override;
 
-	void AddChangeMeshData(MeshData* meshData) override;
-	void AddChangeMaterialData(MaterialBuffer* materialData) override;
-	void DeleteMeshData(MeshData* meshData) override;
+	void ChangeInstance(MeshData* instance) override;
+	void ChangeMesh(MeshBuffer* mesh) override;
+	void ChangeMaterial(MaterialBuffer* material) override;
+
+	void DeleteInstance(MeshData* meshData) override;
+	void DeleteMesh(MeshBuffer* mesh) override;
+	void DeleteMaterial(MaterialBuffer* material) override;
+
 	void Render() override;
 
 public:

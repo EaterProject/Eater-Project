@@ -196,6 +196,7 @@ void FBXParser::LoadMaterial()
 void FBXParser::LoadNode(fbxsdk::FbxNode* node, fbxsdk::FbxNodeAttribute::EType attribute)
 {
 	FbxNodeAttribute* nodeAttribute = node->GetNodeAttribute();
+	const char* name = node->GetName();
 	if (nodeAttribute != nullptr)
 	{
 		FbxNodeAttribute::EType attributeType = nodeAttribute->GetAttributeType();
@@ -562,6 +563,20 @@ void FBXParser::ProcessAnimation(fbxsdk::FbxNode* node)
 	FbxNodeAttribute* nodeAttribute = node->GetNodeAttribute();
 	if (nodeAttribute != nullptr)
 	{
+		// 현 Node Parent 찾기..
+		const char* parentName = node->GetParent()->GetName();
+		CMesh* parentMesh = FindMesh(parentName);
+
+		// 부모의 Mesh가 존재하지 않으면 TopNode List에 추가..
+		if (parentMesh == nullptr)
+		{
+			m_Model->m_TopNodeList.push_back(true);
+		}
+		else
+		{
+			m_Model->m_TopNodeList.push_back(false);
+		}
+
 		// 새로운 Animaiton Data 생성..
 		m_OneAnimation = new CAnimation();
 
@@ -634,9 +649,6 @@ void FBXParser::OptimizeData()
 void FBXParser::OptimizeVertex(ParserData::CMesh* pMesh)
 {
 	if (pMesh->m_VertexList.empty()) return;
-
-	// 충돌 체크용 원본 버텍스 리스트
-	CopyOriginalVertex(pMesh);
 
 	int orgin_VertexCount = (int)pMesh->m_VertexList.size();
 	bool new_VertexSet = false;
@@ -797,38 +809,6 @@ void FBXParser::OptimizeVertex(ParserData::CMesh* pMesh)
 	}
 
 	pMesh->m_MeshFace.clear();
-}
-
-void FBXParser::CopyOriginalVertex(ParserData::CMesh* pMesh)
-{
-	int vCount = (int)pMesh->m_VertexList.size();
-	int fCount = (int)pMesh->m_MeshFace.size();
-
-	for (int i = 0; i < vCount; i++)
-	{
-		pMesh->m_OriginVertexList.push_back(pMesh->m_VertexList[i]->m_Pos);
-	}
-
-	for (int i = 0; i < fCount; i++)
-	{
-		for (int j = 0; j < 3; j++)
-		{
-			switch (j)
-			{
-			case 0:
-				pMesh->m_OriginIndexList.push_back(pMesh->m_MeshFace[i]->m_VertexIndex[0]);
-				break;
-			case 1:
-				pMesh->m_OriginIndexList.push_back(pMesh->m_MeshFace[i]->m_VertexIndex[2]);
-				break;
-			case 2:
-				pMesh->m_OriginIndexList.push_back(pMesh->m_MeshFace[i]->m_VertexIndex[1]);
-				break;
-			default:
-				break;
-			}
-		}
-	}
 }
 
 void FBXParser::RecombinationTM(ParserData::CMesh* pMesh)

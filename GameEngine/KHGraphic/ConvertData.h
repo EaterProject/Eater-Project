@@ -1,18 +1,8 @@
 #pragma once
-// Render List Layer 관리를 위한 Class
-class MeshIndexData
-{
-public:
-	UINT m_MeshIndex;
-	UINT m_ListIndex;
-};
-
 // Game Engine 측 Data와 대응하는 DirectX 11 전용 Material Data Class
 class MaterialRenderBuffer
 {
 public:
-	UINT m_MaterialIndex;
-
 	MaterialSubData* m_MaterialSubData;
 
 	ID3D11ShaderResourceView* m_Albedo;
@@ -25,8 +15,6 @@ public:
 class MeshRenderBuffer
 {
 public:
-	UINT m_BufferIndex;
-
 	UINT m_IndexCount;
 	UINT m_Stride;
 	UINT m_Offset;
@@ -35,18 +23,22 @@ public:
 	ID3D11Buffer* m_IndexBuf;
 };
 
+// Game Engine 측 Data와 대응하는 DirectX 11 전용 Terrain Data Class
+class TerrainRenderBuffer
+{
+public:
+	Matrix* m_Tex;
+	std::vector<MaterialRenderBuffer*> m_MaterialList;
+};
+
 // Instance Layer를 관리하기 위한 Render Buffer Class
 class InstanceRenderBuffer
 {
 public:
-	UINT m_InstanceIndex = 0;
+	UINT m_BufferIndex = 0;
+
+	UINT m_Type = 0;					// Instance Object Type.. 아마 Shader Type으로 바뀔 것 이다..
 
 	MeshRenderBuffer* m_Mesh;			// Instance의 기준이 되는 Mesh Buffer..
 	MaterialRenderBuffer* m_Material;	// Instance의 기준이 되는 Material Buffer..
-};
-
-class TerrainRenderData
-{
-public:
-	std::vector<MaterialRenderBuffer*> m_MaterialList;
 };

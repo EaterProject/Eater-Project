@@ -65,14 +65,14 @@ void GraphicEngineManager::PushMaterial(MaterialBuffer* materialData)
 	GEngine->PushMaterial(materialData);
 }
 
-void GraphicEngineManager::AddChangeMeshData(MeshData* mesh)
+void GraphicEngineManager::ChangeInstance(MeshData* mesh)
 {
-	GEngine->AddChangeMeshData(mesh);
+	GEngine->ChangeInstance(mesh);
 }
 
-void GraphicEngineManager::DeleteMeshData(MeshData* mesh)
+void GraphicEngineManager::DeleteInstance(MeshData* mesh)
 {
-	GEngine->DeleteMeshData(mesh);
+	GEngine->DeleteInstance(mesh);
 }
 
 void GraphicEngineManager::Render()

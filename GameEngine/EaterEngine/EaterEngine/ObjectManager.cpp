@@ -99,7 +99,7 @@ void ObjectManager::AllDeleteObject()
 		}
 
 		// Renderer 측 Mesh Data 제거..
-		Graphic->DeleteMeshData(DeleteObject->OneMeshData);
+		Graphic->DeleteInstance(DeleteObject->OneMeshData);
 
 		int ChildMeshCount = DeleteObject->GetChildMeshCount();
 		int ChildBoneCount = DeleteObject->GetChildBoneCount();
@@ -340,7 +340,7 @@ void ObjectManager::DeleteObject()
 		int ChildBoneCount = temp->GetChildBoneCount();
 
 		// Renderer 측 Mesh Data 제거..
-		Graphic->DeleteMeshData(temp->OneMeshData);
+		Graphic->DeleteInstance(temp->OneMeshData);
 
 		//나의 바로 밑에 오브젝트들 을 삭제 할 리스트에 넣는다 
 		for (int i = 0; i < ChildMeshCount; i++) 

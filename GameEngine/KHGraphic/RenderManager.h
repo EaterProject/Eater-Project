@@ -16,7 +16,8 @@ class FogPass;
 class DebugPass;
 
 class RenderData;
-class MeshIndexData;
+class InstanceLayer;
+class RenderDataConverter;
 
 class RenderManager : public IRenderManager
 {
@@ -34,20 +35,25 @@ public:
 	void SetGlobalData(GlobalData* globalData) override;
 	void SetEnvironmentMap(bool enable) override;
 
-	void PushInstance(MeshData* meshData) override;
-	void PushMaterial(MaterialBuffer* material) override;
+public:
+	void PushInstance(MeshData* instance) override;
 	void PushMesh(MeshBuffer* mesh) override;
+	void PushMaterial(MaterialBuffer* material) override;
 
-	void AddChangeMeshData(MeshData* meshData) override;
-	void AddChangeMaterialData(MaterialBuffer* materialData) override;
-	void DeleteMeshData(MeshData* mesh) override;
+	void ChangeInstance(MeshData* instance) override;
+	void ChangeMesh(MeshBuffer* mesh) override;
+	void ChangeMaterial(MaterialBuffer* material) override;
+
+	void DeleteInstance(MeshData* instance) override;
+	void DeleteMesh(MeshBuffer* mesh) override;
+	void DeleteMaterial(MaterialBuffer* material) override;
 
 	void Render() override;
 
 private:
 	void RenderSetting();
-	void ConvertMeshData();
-	void ChangeMeshData();
+
+	void ConvertRenderData();
 
 	void ShadowRender();
 	void DeferredRender();
@@ -61,9 +67,9 @@ private:
 	void EndRender();
 
 private:
-	void ConvertMeshRenderData(MeshData* meshData, RenderData* renderData);
-	void ConvertParticleRenderData(MeshData* meshData, RenderData* renderData);
-	void ConvertUnRenderData(MeshData* meshData, RenderData* renderData);
+	void PushMeshRenderData(RenderData* renderData);
+	void PushParticleRenderData(RenderData* renderData);
+	void PushUnRenderData(RenderData* renderData);
 
 	void ChangeMeshRenderData(MeshData* meshData);
 	void ChangeParticleRenderData(MeshData* meshData);
@@ -73,24 +79,24 @@ private:
 	void DeleteParticleRenderData(MeshData* meshData);
 	void DeleteUnRenderData(MeshData* meshData);
 
+	void CheckInstanceLayer(std::vector<InstanceLayer*>& layerList);
+
 private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain> m_SwapChain;
 
 private:
-	std::queue<MeshData*> m_UnConvertMeshList;
-	std::queue<MeshData*> m_ChangeMeshList;
-	std::queue<MaterialBuffer*> m_ChangeMaterialList;
+	std::queue<MeshData*> m_PushInstanceList;
 
-	std::vector<MeshIndexData> m_MeshIndexList;
-
-	std::vector<std::vector<RenderData*>> m_RenderMeshList;
-	std::vector<RenderData*> m_ParticleMeshList;
+	std::vector<InstanceLayer*> m_RenderMeshList;
+	std::vector<InstanceLayer*> m_ParticleMeshList;
 	std::vector<RenderData*> m_UnRenderMeshList;
 
 	std::vector<RenderPassBase*> m_RenderPassList;
 
-	std::vector<RenderData*> m_MeshList;
+	InstanceLayer* m_InstanceLayer;
 	RenderData* m_RenderData;
+
+	RenderDataConverter* m_Converter;
 
 	RenderOption* m_RenderOption;
 	RenderOption m_NowRenderOption;

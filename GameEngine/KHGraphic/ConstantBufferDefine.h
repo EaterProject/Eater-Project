@@ -116,9 +116,6 @@ struct CB_Material : public cbMaterial
 	DirectX::SimpleMath::Vector4 gColor = DirectX::SimpleMath::Vector4(0.5f, 0.5f, 0.5f, 1.0f);
 	
 	UINT gTexID = 0;
-
-	// Legacy Àü¿ë..
-	UINT gMatID = 0;
 };
 
 SHADER_CONSTANT_BUFFER(cbFog)

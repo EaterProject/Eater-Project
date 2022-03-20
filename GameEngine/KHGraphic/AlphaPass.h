@@ -15,7 +15,11 @@ public:
 	void SetOption(RenderOption* renderOption) override;
 
 	void BeginRender();
-	void RenderUpdate(RenderData* mesh);
+	void RenderUpdate(const InstanceRenderBuffer* instance, const std::vector<RenderData*>& meshlist);
+	void RenderUpdate(const InstanceRenderBuffer* instance, const RenderData* meshData);
+
+private:
+	void ParticleUpdate(ParticleData* particleSystem);
 
 private:
 	VertexShader* m_ParticleVS;

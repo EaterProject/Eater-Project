@@ -192,12 +192,8 @@ namespace ParserData
 		std::vector<DirectX::SimpleMath::Matrix> m_BoneTMList;		// Bone Offset TM List
 		std::vector<CMesh*> m_BoneMeshList;							// Bone Mesh List
 
-		/// Original Data
-		std::vector<DirectX::SimpleMath::Vector3> m_OriginVertexList;
-		std::vector<UINT> m_OriginIndexList;
-
 		/// Final Data
-		std::vector<CVertex*>		m_VertexList;		/// Vertex List
+		std::vector<CVertex*>			m_VertexList;		/// Vertex List
 		std::vector<CIndexList*>		m_IndexList;		/// Index List
 	};
 }
@@ -263,6 +259,7 @@ namespace ParserData
 
 		bool m_isAnimation;											// Animation À¯¹«
 
+		std::vector<bool> m_TopNodeList;							// TopNode List
 		std::vector<ParserData::CAnimation*> m_AnimationList;		// Animation List
 		std::vector<ParserData::CMaterial*> m_MaterialList;			// Material List
 		std::vector<ParserData::CMesh*> m_MeshList;	 				// Mesh List

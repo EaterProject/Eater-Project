@@ -7,6 +7,7 @@
 #define SAFE_RELEASE(x) { if(x != nullptr){ x->Release(); delete x; x = nullptr; } }
 
 Material::Material()
+	:Defalt(false)
 {
 	// Material Buffer 생성..
 	m_MaterialData = new MaterialBuffer();
@@ -18,11 +19,15 @@ Material::Material()
 
 	// Material 등록..
 	MaterialManager::PushMaterial(this);
+
+	// Material Graphic 측 등록..
+	GraphicEngine::Get()->PushMaterial(m_MaterialData);
 }
 
 Material::~Material()
 {
-	Release();
+	// Manager 내부에 있는 해당 Material Data 삭제..
+	MaterialManager::DeleteMaterial(m_MaterialData->BufferIndex);
 }
 
 void Material::SetTextureTiling(float scale_x, float scale_y)
@@ -38,8 +43,9 @@ void Material::SetDiffuseTexture(std::string diffuseName)
 	// Texture 변경..
 	m_MaterialData->Albedo = newTexture;
 	m_MaterialData->Albedo->Name = diffuseName;
+
 	// Renderer Data 동기화..
-	GraphicEngine::Get()->AddChangeMaterialData(m_MaterialData);
+	GraphicEngine::Get()->ChangeMaterial(m_MaterialData);
 }
 
 void Material::SetNormalTexture(std::string noramlName)
@@ -51,7 +57,7 @@ void Material::SetNormalTexture(std::string noramlName)
 	m_MaterialData->Normal->Name = noramlName;
 
 	// Renderer Data 동기화..
-	GraphicEngine::Get()->AddChangeMaterialData(m_MaterialData);
+	GraphicEngine::Get()->ChangeMaterial(m_MaterialData);
 }
 
 void Material::SetEmissiveTexture(std::string emissiveName)
@@ -63,7 +69,7 @@ void Material::SetEmissiveTexture(std::string emissiveName)
 	m_MaterialData->Emissive->Name = emissiveName;
 
 	// Renderer Data 동기화..
-	GraphicEngine::Get()->AddChangeMaterialData(m_MaterialData);
+	GraphicEngine::Get()->ChangeMaterial(m_MaterialData);
 }
 
 void Material::SetORMTexture(std::string ormName)
@@ -75,7 +81,7 @@ void Material::SetORMTexture(std::string ormName)
 	m_MaterialData->ORM->Name = ormName;
 
 	// Renderer Data 동기화..
-	GraphicEngine::Get()->AddChangeMaterialData(m_MaterialData);
+	GraphicEngine::Get()->ChangeMaterial(m_MaterialData);
 }
 
 void Material::SetBaseColor(DirectX::SimpleMath::Vector4 color)
@@ -105,11 +111,10 @@ void Material::SetMetallicFactor(float metallicFactor)
 
 void Material::Release()
 {
-	// Manager 내부에 있는 해당 Material Data 삭제..
-	MaterialManager::DeleteMaterial(m_MaterialData->BufferIndex);
-	
+	// Graphic 내부에 있는 해당 Materail Buffer 삭제..
+	GraphicEngine::Get()->DeleteMaterial(m_MaterialData);
+
 	// 해당 Material Data 해제..
-	delete m_MaterialData->Material_SubData;
 	delete m_MaterialData;
 }
 
@@ -150,7 +155,5 @@ std::string Material::GetORMName()
 		return m_MaterialData->ORM->Name;
 	}
 
-	//SAFE_DELETE(m_MaterialData->Material_SubData);
-	//SAFE_DELETE(m_MaterialData);
 	return std::string();
 }

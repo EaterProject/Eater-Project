@@ -28,7 +28,10 @@ MeshFilter::MeshFilter()
 
 MeshFilter::~MeshFilter()
 {
-
+	if (Materials && Materials->Defalt)
+	{
+		delete Materials;
+	}
 }
 
 void MeshFilter::Start()
@@ -382,6 +385,7 @@ void MeshFilter::SetMaterialData(LoadMeshData* LoadMesh, MeshData* mMesh, GameOb
 	{
 		// 货肺款 Material 积己..
 		meshFilter->Materials = new Material();
+		meshFilter->Materials->Defalt = true;
 	}
 
 	// Render Material Data 汲沥..

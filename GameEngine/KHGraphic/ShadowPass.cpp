@@ -123,27 +123,22 @@ void ShadowPass::BeginRender()
 	g_Context->RSSetState(m_DepthRS);
 }
 
-void ShadowPass::RenderUpdate(const std::vector<RenderData*>& meshlist)
+void ShadowPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::vector<RenderData*>& meshlist)
 {
 	if (meshlist.size() == 1)
 	{
-		RenderUpdate(meshlist[0]);
+		RenderUpdate(instance, meshlist[0]);
 		return;
 	}
 
 	Matrix viewproj = g_GlobalData->DirectionLights[0]->LightViewProj;
-	RenderData* mesh = nullptr;
-	MaterialRenderBuffer* mat = nullptr;
+
+	MeshRenderBuffer* mesh = instance->m_Mesh;
+	MaterialRenderBuffer* mat = instance->m_Material;
 
 	for (int i = 0; i < meshlist.size(); i++)
 	{
 		if (meshlist[i] == nullptr) continue;
-		
-		if (mesh == nullptr)
-		{
-			mesh = meshlist[i];
-			mat = mesh->m_MaterialBuffer;
-		}
 
 		// ÇØ´ç Instance Data »ðÀÔ..
 		m_MeshData.World = *meshlist[i]->m_ObjectData->World;
@@ -169,7 +164,7 @@ void ShadowPass::RenderUpdate(const std::vector<RenderData*>& meshlist)
 	// GPU Access UnLock Buffer Data..
 	g_Context->Unmap(m_Mesh_IB->InstanceBuf->Get(), 0);
 
-	switch (mesh->m_ObjectData->ObjType)
+	switch (instance->m_Type)
 	{
 	case OBJECT_TYPE::BASE:
 	case OBJECT_TYPE::TERRAIN:
@@ -181,42 +176,42 @@ void ShadowPass::RenderUpdate(const std::vector<RenderData*>& meshlist)
 
 		m_MeshInstShadowVS->Update();
 
-		ID3D11Buffer* vertexBuffers[2] = { mesh->m_MeshBuffer->m_VertexBuf, m_Mesh_IB->InstanceBuf->Get() };
-		UINT strides[2] = { mesh->m_MeshBuffer->m_Stride, m_Mesh_IB->Stride };
+		ID3D11Buffer* vertexBuffers[2] = { mesh->m_VertexBuf, m_Mesh_IB->InstanceBuf->Get() };
+		UINT strides[2] = { mesh->m_Stride, m_Mesh_IB->Stride };
 		UINT offsets[2] = { 0,0 };
 
 		// Draw..
 		g_Context->IASetVertexBuffers(0, 2, vertexBuffers, strides, offsets);
-		g_Context->IASetIndexBuffer(mesh->m_MeshBuffer->m_IndexBuf, DXGI_FORMAT_R32_UINT, 0);
+		g_Context->IASetIndexBuffer(mesh->m_IndexBuf, DXGI_FORMAT_R32_UINT, 0);
 		g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-		g_Context->DrawIndexedInstanced(mesh->m_MeshBuffer->m_IndexCount, m_InstanceCount, 0, 0, 0);
+		g_Context->DrawIndexedInstanced(mesh->m_IndexCount, m_InstanceCount, 0, 0, 0);
 	}
 	break;
 	case OBJECT_TYPE::SKINNING:
 	{
-		CB_InstanceShadowSkinMesh shadowBuf;
-		shadowBuf.gViewProj = viewproj;
-
-		for (int i = 0; i < mesh->m_BoneOffsetTM->size(); i++)
-		{
-			shadowBuf.gBoneTransforms[i] = (*mesh->m_BoneOffsetTM)[i];
-		}
-
-		m_SkinInstShadowVS->ConstantBufferCopy(&shadowBuf);
-
-		m_SkinInstShadowVS->Update();
-
-		ID3D11Buffer* vertexBuffers[2] = { mesh->m_MeshBuffer->m_VertexBuf, m_Mesh_IB->InstanceBuf->Get() };
-		UINT strides[2] = { mesh->m_MeshBuffer->m_Stride, m_Mesh_IB->Stride };
-		UINT offsets[2] = { 0,0 };
-
-		// Draw..
-		g_Context->IASetVertexBuffers(0, 2, vertexBuffers, strides, offsets);
-		g_Context->IASetIndexBuffer(mesh->m_MeshBuffer->m_IndexBuf, DXGI_FORMAT_R32_UINT, 0);
-		g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-		g_Context->DrawIndexedInstanced(mesh->m_MeshBuffer->m_IndexCount, m_InstanceCount, 0, 0, 0);
+		//CB_InstanceShadowSkinMesh shadowBuf;
+		//shadowBuf.gViewProj = viewproj;
+		//
+		//for (int i = 0; i < mesh->m_BoneOffsetTM->size(); i++)
+		//{
+		//	shadowBuf.gBoneTransforms[i] = (*mesh->m_BoneOffsetTM)[i];
+		//}
+		//
+		//m_SkinInstShadowVS->ConstantBufferCopy(&shadowBuf);
+		//
+		//m_SkinInstShadowVS->Update();
+		//
+		//ID3D11Buffer* vertexBuffers[2] = { mesh->m_VertexBuf, m_Mesh_IB->InstanceBuf->Get() };
+		//UINT strides[2] = { mesh->m_Stride, m_Mesh_IB->Stride };
+		//UINT offsets[2] = { 0,0 };
+		//
+		//// Draw..
+		//g_Context->IASetVertexBuffers(0, 2, vertexBuffers, strides, offsets);
+		//g_Context->IASetIndexBuffer(mesh->m_IndexBuf, DXGI_FORMAT_R32_UINT, 0);
+		//g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		//
+		//g_Context->DrawIndexedInstanced(mesh->m_IndexCount, m_InstanceCount, 0, 0, 0);
 	}
 	break;
 	default:
@@ -229,14 +224,18 @@ void ShadowPass::RenderUpdate(const std::vector<RenderData*>& meshlist)
 	m_InstanceCount = 0;
 }
 
-void ShadowPass::RenderUpdate(const RenderData* mesh)
+void ShadowPass::RenderUpdate(const InstanceRenderBuffer* instance, const RenderData* meshData)
 {
-	Matrix world = *mesh->m_ObjectData->World;
+	ObjectData* obj = meshData->m_ObjectData;
+	MeshRenderBuffer* mesh = instance->m_Mesh;
+	MaterialRenderBuffer* mat = instance->m_Material;
+
+	Matrix world = *obj->World;
 	Matrix viewproj = g_GlobalData->DirectionLights[0]->LightViewProj;
 
 	if (mesh == nullptr) return;
 
-	switch (mesh->m_ObjectData->ObjType)
+	switch (instance->m_Type)
 	{
 	case OBJECT_TYPE::BASE:
 	case OBJECT_TYPE::TERRAIN:
@@ -256,9 +255,9 @@ void ShadowPass::RenderUpdate(const RenderData* mesh)
 		shadowBuf.gWorld = world;
 		shadowBuf.gViewProj = viewproj;
 
-		for (int i = 0; i < mesh->m_BoneOffsetTM->size(); i++)
+		for (int i = 0; i < obj->BoneOffsetTM.size(); i++)
 		{
-			shadowBuf.gBoneTransforms[i] = (*mesh->m_BoneOffsetTM)[i];
+			shadowBuf.gBoneTransforms[i] = (obj->BoneOffsetTM)[i];
 		}
 
 		m_SkinShadowVS->ConstantBufferCopy(&shadowBuf);
@@ -272,8 +271,8 @@ void ShadowPass::RenderUpdate(const RenderData* mesh)
 
 	// Draw..
 	g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	g_Context->IASetVertexBuffers(0, 1, &mesh->m_MeshBuffer->m_VertexBuf, &mesh->m_MeshBuffer->m_Stride, &mesh->m_MeshBuffer->m_Offset);
-	g_Context->IASetIndexBuffer(mesh->m_MeshBuffer->m_IndexBuf, DXGI_FORMAT_R32_UINT, 0);
+	g_Context->IASetVertexBuffers(0, 1, &mesh->m_VertexBuf, &mesh->m_Stride, &mesh->m_Offset);
+	g_Context->IASetIndexBuffer(mesh->m_IndexBuf, DXGI_FORMAT_R32_UINT, 0);
 
-	g_Context->DrawIndexed(mesh->m_MeshBuffer->m_IndexCount, 0, 0);
+	g_Context->DrawIndexed(mesh->m_IndexCount, 0, 0);
 }

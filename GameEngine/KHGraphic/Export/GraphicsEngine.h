@@ -47,13 +47,17 @@ public:
 	virtual GRAPHIC_DLL void SetEnvironmentMap(bool enable) abstract;
 
 	/// Render Mesh Data & Rendering Function..
-	virtual GRAPHIC_DLL void PushInstance(MeshData* meshData) abstract;
+	virtual GRAPHIC_DLL void PushInstance(MeshData* instance) abstract;
 	virtual GRAPHIC_DLL void PushMaterial(MaterialBuffer* material) abstract;
 	virtual GRAPHIC_DLL void PushMesh(MeshBuffer* mesh) abstract;
 
-	virtual GRAPHIC_DLL void AddChangeMeshData(MeshData* meshData) abstract;
-	virtual GRAPHIC_DLL void AddChangeMaterialData(MaterialBuffer* material) abstract;
-	virtual GRAPHIC_DLL void DeleteMeshData(MeshData* meshData) abstract;
+	virtual GRAPHIC_DLL void ChangeInstance(MeshData* instance) abstract;
+	virtual GRAPHIC_DLL void ChangeMesh(MeshBuffer* mesh) abstract;
+	virtual GRAPHIC_DLL void ChangeMaterial(MaterialBuffer* material) abstract;
+
+	virtual GRAPHIC_DLL void DeleteInstance(MeshData* meshData) abstract;
+	virtual GRAPHIC_DLL void DeleteMesh(MeshBuffer* mesh) abstract;
+	virtual GRAPHIC_DLL void DeleteMaterial(MaterialBuffer* material) abstract;
 
 	virtual GRAPHIC_DLL void Render() abstract;
 

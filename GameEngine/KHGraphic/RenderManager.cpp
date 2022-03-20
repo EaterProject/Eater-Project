@@ -16,6 +16,7 @@
 #include "ComputeShader.h"
 
 #include "MathDefine.h"
+#include "EngineData.h"
 #include "RenderData.h"
 
 #include "VertexDefine.h"
@@ -32,6 +33,8 @@
 #include "FogPass.h"
 #include "DebugPass.h"
 
+#include "RenderDataConverter.h"
+
 #include <algorithm>
 
 RenderManager::RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, IGraphicResourceManager* resource, IShaderManager* shader)
@@ -41,6 +44,10 @@ RenderManager::RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, I
 
 	m_SwapChain = graphic->GetSwapChain();
 
+	// Render Data Converter 생성..
+	m_Converter = new RenderDataConverter();
+
+	// Render Pass 생성..
 	m_Deferred = new DeferredPass();
 	m_Light = new LightPass();
 	m_Environment = new EnvironmentPass();
@@ -54,6 +61,7 @@ RenderManager::RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, I
 	m_Fog = new FogPass();
 	m_Debug = new DebugPass();
 
+	// 설정을 위한 Render Pass List Up..
 	m_RenderPassList.push_back(m_Deferred);
 	m_RenderPassList.push_back(m_Light);
 	m_RenderPassList.push_back(m_Environment);
@@ -164,64 +172,84 @@ void RenderManager::SetEnvironmentMap(bool enable)
 	m_Environment->SetEnvironmentMapResource(enable);
 }
 
-void RenderManager::PushInstance(MeshData* meshData)
+void RenderManager::PushInstance(MeshData* instance)
 {
 	// 현재 비어있는 상태이므로 추후 설정을 위해 Mesh Data 삽입..
-	m_UnConvertMeshList.push(meshData);
-}
-
-void RenderManager::PushMaterial(MaterialBuffer* material)
-{
-
+	m_PushInstanceList.push(instance);
 }
 
 void RenderManager::PushMesh(MeshBuffer* mesh)
 {
-
+	m_Converter->PushMesh(mesh);
 }
 
-void RenderManager::AddChangeMeshData(MeshData* meshData)
+void RenderManager::PushMaterial(MaterialBuffer* material)
 {
-	// 현재 바뀐 Mesh Data 동기화를 위해 삽입..
-	m_ChangeMeshList.push(meshData);
+	m_Converter->PushMaterial(material);
 }
 
-void RenderManager::AddChangeMaterialData(MaterialBuffer* materialData)
+void RenderManager::ChangeInstance(MeshData* instance)
 {
-	// 현재 바뀐 Material Data 동기화를 위해 삽입..
-	m_ChangeMaterialList.push(materialData);
+	// 해당 Mesh의 Mesh Buffer가 바뀌거나, Material Buffer가 바뀔경우 동기화..
+
 }
 
-void RenderManager::DeleteMeshData(MeshData* meshData)
+void RenderManager::ChangeMesh(MeshBuffer* mesh)
+{
+	// 현재 바뀐 Mesh Buffer 동기화를 위해 삽입..
+	m_Converter->PushChangeMesh(mesh);
+}
+
+void RenderManager::ChangeMaterial(MaterialBuffer* material)
+{
+	// 현재 바뀐 Material Buffer 동기화를 위해 삽입..
+	m_Converter->PushChangeMaterial(material);
+}
+
+void RenderManager::DeleteInstance(MeshData* instance)
 {
 	// Object Type에 따른 Render Mesh Data 제거..
-	switch (meshData->Object_Data->ObjType)
+	switch (instance->Object_Data->ObjType)
 	{
 	case OBJECT_TYPE::BASE:
 	case OBJECT_TYPE::SKINNING:
 	case OBJECT_TYPE::TERRAIN:
-		DeleteMeshRenderData(meshData);
+		DeleteMeshRenderData(instance);
 		break;
 	case OBJECT_TYPE::PARTICLE_SYSTEM:
-		DeleteParticleRenderData(meshData);
+		DeleteParticleRenderData(instance);
 		break;
 	case OBJECT_TYPE::PARTICLE:
 		break;
 	default:
-		DeleteUnRenderData(meshData);
+		DeleteUnRenderData(instance);
 		break;
 	}
 }
 
-void RenderManager::ConvertMeshData()
+void RenderManager::DeleteMesh(MeshBuffer* mesh)
 {
-	while (!m_UnConvertMeshList.empty())
-	{
-		MeshData* originMeshData = m_UnConvertMeshList.front();
-		RenderData* newMeshData = new RenderData();
+	m_Converter->DeleteMesh(mesh->BufferIndex);
+}
 
-		// Renderer 전용 Data로 변환..
-		newMeshData->ConvertData(originMeshData);
+void RenderManager::DeleteMaterial(MaterialBuffer* material)
+{
+	m_Converter->DeleteMaterial(material->BufferIndex);
+}
+
+void RenderManager::ConvertRenderData()
+{
+	// Render Resource 동기화 작업..
+	m_Converter->ResourceUpdate();
+
+	//
+	while (!m_PushInstanceList.empty())
+	{
+		// 해당 원본 Mesh Data 추출..
+		MeshData* originMeshData = m_PushInstanceList.front();
+
+		// Mesh Data 변환..
+		RenderData* newMeshData = m_Converter->ConvertRenderData(originMeshData);
 
 		// Object Type에 따른 리스트 삽입..
 		switch (newMeshData->m_ObjectData->ObjType)
@@ -229,47 +257,18 @@ void RenderManager::ConvertMeshData()
 			case OBJECT_TYPE::BASE:
 			case OBJECT_TYPE::SKINNING:
 			case OBJECT_TYPE::TERRAIN:
-				ConvertMeshRenderData(originMeshData, newMeshData);
+				PushMeshRenderData(newMeshData);
 				break;
 			case OBJECT_TYPE::PARTICLE_SYSTEM:
-				ConvertParticleRenderData(originMeshData, newMeshData);
+				PushParticleRenderData(newMeshData);
 				break;
 			default:
-				ConvertUnRenderData(originMeshData, newMeshData);
+				PushUnRenderData(newMeshData);
 				break;
 		}
 
 		// 변환한 Mesh Data Pop..
-		m_UnConvertMeshList.pop();
-	}
-}
-
-void RenderManager::ChangeMeshData()
-{
-	while (!m_ChangeMeshList.empty())
-	{
-		MeshData* meshData = m_ChangeMeshList.front();
-
-		// Object Type에 따른 Render Mesh Data 동기화..
-		switch (meshData->Object_Data->ObjType)
-		{
-		case OBJECT_TYPE::BASE:
-		case OBJECT_TYPE::SKINNING:
-		case OBJECT_TYPE::TERRAIN:
-			ChangeMeshRenderData(meshData);
-			break;
-		case OBJECT_TYPE::PARTICLE_SYSTEM:
-			ChangeParticleRenderData(meshData);
-			break;
-		case OBJECT_TYPE::PARTICLE:
-			break;
-		default:
-			ChangeUnRenderData(meshData);
-			break;
-		}
-
-		// 변환한 Mesh Data Pop..
-		m_ChangeMeshList.pop();
+		m_PushInstanceList.pop();
 	}
 }
 
@@ -279,10 +278,7 @@ void RenderManager::Render()
 	RenderSetting();
 
 	// 추가된 Mesh Data 변환..
-	ConvertMeshData();
-
-	// 변경된 Mesh Data 동기화..
-	ChangeMeshData();
+	ConvertRenderData();
 
 	// Shadow Render..
 	GPU_BEGIN_EVENT_DEBUG_NAME("Shadow Pass");
@@ -336,7 +332,9 @@ void RenderManager::ShadowRender()
 
 	for (int i = 0; i < m_RenderMeshList.size(); i++)
 	{
-		m_Shadow->RenderUpdate(m_RenderMeshList[i]);
+		m_InstanceLayer = m_RenderMeshList[i];
+
+		m_Shadow->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_MeshList);
 	}
 }
 
@@ -346,12 +344,9 @@ void RenderManager::DeferredRender()
 
 	for (int i = 0; i < m_RenderMeshList.size(); i++)
 	{
-		m_Deferred->RenderUpdate(m_RenderMeshList[i]);
-
-		//for (int j = 0; j < m_RenderMeshList[i].size(); j++)
-		//{
-		//	m_Deferred->RenderUpdate(m_RenderMeshList[i][j]);
-		//}
+		m_InstanceLayer = m_RenderMeshList[i];
+		
+		m_Deferred->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_MeshList);
 	}
 }
 
@@ -379,11 +374,9 @@ void RenderManager::AlphaRender()
 
 	for (int i = 0; i < m_ParticleMeshList.size(); i++)
 	{
-		m_RenderData = m_ParticleMeshList[i];
+		m_InstanceLayer = m_ParticleMeshList[i];
 
-		if (m_RenderData == nullptr) continue;
-
-		m_Alpha->RenderUpdate(m_RenderData);
+		m_Alpha->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_MeshList);
 	}
 
 	GPU_BEGIN_EVENT_DEBUG_NAME("OIT Pass");
@@ -442,11 +435,11 @@ void RenderManager::DebugRender()
 		// Render Mesh Debugging..
 		for (int i = 0; i < m_RenderMeshList.size(); i++)
 		{
-			m_MeshList = m_RenderMeshList[i];
+			m_InstanceLayer = m_RenderMeshList[i];
 
-			for (int j = 0; j < m_MeshList.size(); j++)
+			for (int j = 0; j < m_InstanceLayer->m_MeshList.size(); j++)
 			{
-				m_RenderData = m_MeshList[j];
+				m_RenderData = m_InstanceLayer->m_MeshList[j];
 
 				if (m_RenderData == nullptr) continue;
 
@@ -469,17 +462,22 @@ void RenderManager::DebugRender()
 		// Particle Mesh Debugging..
 		for (int i = 0; i < m_ParticleMeshList.size(); i++)
 		{
-			m_RenderData = m_ParticleMeshList[i];
+			m_InstanceLayer = m_ParticleMeshList[i];
 
-			if (m_RenderData == nullptr) continue;
-
-			switch (m_RenderData->m_ObjectData->ObjType)
+			for (int j = 0; j < m_InstanceLayer->m_MeshList.size(); j++)
 			{
-			case OBJECT_TYPE::PARTICLE_SYSTEM:
-				m_Debug->RenderUpdate(m_RenderData);
-				break;
-			default:
-				break;
+				m_RenderData = m_InstanceLayer->m_MeshList[j];
+
+				if (m_RenderData == nullptr) continue;
+
+				switch (m_RenderData->m_ObjectData->ObjType)
+				{
+				case OBJECT_TYPE::PARTICLE_SYSTEM:
+					m_Debug->RenderUpdate(m_RenderData);
+					break;
+				default:
+					break;
+				}
 			}
 		}
 
@@ -522,150 +520,159 @@ void RenderManager::EndRender()
 	m_SwapChain->Present(0, 0);
 }
 
-void RenderManager::ConvertMeshRenderData(MeshData* meshData, RenderData* renderData)
+void RenderManager::PushMeshRenderData(RenderData* renderData)
 {
-	bool addList = true;
-	UINT meshIndex = renderData->m_MeshBuffer->m_BufferIndex;
+	// 해당 Layer 검색..
+	InstanceLayer* instanceLayer = m_Converter->GetLayer(renderData->m_InstanceLayerIndex);
 
-	for (MeshIndexData& index : m_MeshIndexList)
+	// Render Data 추가..
+	instanceLayer->m_MeshList.push_back(renderData);
+
+	// List 내의 Layer 유무 확인..
+	for (InstanceLayer* layer : m_RenderMeshList)
 	{
-		if (meshIndex == index.m_MeshIndex)
+		// 이미 현재 Layer가 List에 등록 됬다면 등록하지 않는다..
+		if (layer->m_LayerIndex == instanceLayer->m_LayerIndex)
 		{
-			// 해당 Mesh List Index 삽입..
-			meshData->Object_Data->RenderListIndex = index.m_ListIndex;
-			meshData->Object_Data->RenderMeshIndex = (UINT)m_RenderMeshList[index.m_ListIndex].size();
-
-			// 해당 Instance List에 삽입..
-			m_RenderMeshList[index.m_ListIndex].push_back(renderData);
-			addList = false;
-			break;
+			return;
 		}
 	}
 
-	if (addList)
+	// 등록되지 않은 Layer 삽입..
+	m_RenderMeshList.push_back(instanceLayer);
+}
+
+void RenderManager::PushParticleRenderData(RenderData* renderData)
+{
+	// 해당 Layer 검색..
+	InstanceLayer* instanceLayer = m_Converter->GetLayer(renderData->m_InstanceLayerIndex);
+
+	// Render Data 추가..
+	instanceLayer->m_MeshList.push_back(renderData);
+
+	// List 내의 Layer 유무 확인..
+	for (InstanceLayer* layer : m_ParticleMeshList)
 	{
-		// Index List 삽입..
-		MeshIndexData indexData;
-		indexData.m_MeshIndex = meshIndex;
-		indexData.m_ListIndex = (UINT)m_RenderMeshList.size();
-		m_MeshIndexList.push_back(indexData);
-
-		// 해당 Mesh List Index 삽입..
-		meshData->Object_Data->RenderListIndex = (UINT)m_RenderMeshList.size();
-		meshData->Object_Data->RenderMeshIndex = 0;
-
-		// 해당 Instance List에 삽입..
-		m_RenderMeshList.push_back(std::vector<RenderData*>());
-		m_RenderMeshList.back().push_back(renderData);
+		// 이미 현재 Layer가 List에 등록 됬다면 등록하지 않는다..
+		if (layer->m_LayerIndex == instanceLayer->m_LayerIndex)
+		{
+			return;
+		}
 	}
+
+	// 등록되지 않은 Layer 삽입..
+	m_ParticleMeshList.push_back(instanceLayer);
 }
 
-void RenderManager::ConvertParticleRenderData(MeshData* meshData, RenderData* renderData)
+void RenderManager::PushUnRenderData(RenderData* renderData)
 {
-	meshData->Object_Data->RenderMeshIndex = (UINT)m_ParticleMeshList.size();
-
-	m_ParticleMeshList.push_back(renderData);
-}
-
-void RenderManager::ConvertUnRenderData(MeshData* meshData, RenderData* renderData)
-{
-	meshData->Object_Data->RenderMeshIndex = (UINT)m_UnRenderMeshList.size();
-	
 	m_UnRenderMeshList.push_back(renderData);
 }
 
 void RenderManager::ChangeMeshRenderData(MeshData* meshData)
 {
-	UINT listIndex = (UINT)meshData->Object_Data->RenderListIndex;
-	UINT meshIndex = (UINT)meshData->Object_Data->RenderMeshIndex;
-
 
 }
 
 void RenderManager::ChangeParticleRenderData(MeshData* meshData)
 {
-	UINT listIndex = (UINT)meshData->Object_Data->RenderListIndex;
-	UINT meshIndex = (UINT)meshData->Object_Data->RenderMeshIndex;
 
-	m_ParticleMeshList[meshIndex]->ConvertData(meshData);
 }
 
 void RenderManager::ChangeUnRenderData(MeshData* meshData)
 {
-	UINT listIndex = (UINT)meshData->Object_Data->RenderListIndex;
-	UINT meshIndex = (UINT)meshData->Object_Data->RenderMeshIndex;
 
-	m_UnRenderMeshList[meshIndex]->ConvertData(meshData);
 }
 
 void RenderManager::DeleteMeshRenderData(MeshData* meshData)
 {
-	UINT listIndex = (UINT)meshData->Object_Data->RenderListIndex;
-	UINT meshIndex = (UINT)meshData->Object_Data->RenderMeshIndex;
+	RenderData* renderData = (RenderData*)meshData->Render_Data;
+	InstanceLayer* instanceLayer = m_Converter->GetLayer(renderData->m_InstanceLayerIndex);
 
-	// 해당 Mesh List 내의 Render Data 제거..
-	SAFE_DELETE(m_RenderMeshList[listIndex][meshIndex]);
-	m_RenderMeshList[listIndex].erase(std::next(m_RenderMeshList[listIndex].begin(), meshIndex));
+	int index = -1;
 
-	MeshData* originData = nullptr;
-	for (int i = meshIndex; i < m_RenderMeshList[listIndex].size(); i++)
+	for (int i = 0; i < instanceLayer->m_MeshList.size(); i++)
 	{
-		originData = m_RenderMeshList[listIndex][i]->m_OriginData;
-		originData->Object_Data->RenderMeshIndex--;
-	}
-
-	if (m_RenderMeshList[listIndex].empty())
-	{
-		// 해당 Mesh List가 비어있다면 해당 Mesh List 제거..
-		m_RenderMeshList.erase(std::next(m_RenderMeshList.begin(), listIndex));
-
-		// 해당 Mesh에 해당하는 Index Data 제거..
-		m_MeshIndexList.erase(std::next(m_MeshIndexList.begin(), listIndex));
-
-		for (int i = listIndex; i < m_RenderMeshList.size(); i++)
+		if (instanceLayer->m_MeshList[i] == renderData)
 		{
-			// Index List의 List Index 변경..
-			m_MeshIndexList[i].m_ListIndex--;
-
-			for (int j = 0; j < m_RenderMeshList[i].size(); j++)
-			{
-				originData = m_RenderMeshList[i][j]->m_OriginData;
-				originData->Object_Data->RenderListIndex--;
-			}
+			index = i;
+			break;
 		}
 	}
+
+	assert(index != -1);
+
+	// 해당 Instance 제거..
+	SAFE_DELETE(instanceLayer->m_MeshList[index]);
+	instanceLayer->m_MeshList.erase(std::next(instanceLayer->m_MeshList.begin(), index));
+
+	// Instance Layer 빈곳 체크..
+	CheckInstanceLayer(m_RenderMeshList);
 }
 
 void RenderManager::DeleteParticleRenderData(MeshData* meshData)
 {
-	UINT listIndex = (UINT)meshData->Object_Data->RenderListIndex;
-	UINT meshIndex = (UINT)meshData->Object_Data->RenderMeshIndex;
+	RenderData* renderData = (RenderData*)meshData->Render_Data;
+	InstanceLayer* instanceLayer = m_Converter->GetLayer(renderData->m_InstanceLayerIndex);
 
-	// 해당 Mesh List 내의 Render Data 제거..
-	SAFE_DELETE(m_ParticleMeshList[meshIndex]);
-	m_ParticleMeshList.erase(std::next(m_ParticleMeshList.begin(), meshIndex));
+	int index = -1;
 
-	MeshData* originData = nullptr;
-	for (int i = meshIndex; i < m_ParticleMeshList.size(); i++)
+	for (int i = 0; i < instanceLayer->m_MeshList.size(); i++)
 	{
-		originData = m_ParticleMeshList[i]->m_OriginData;
-		originData->Object_Data->RenderMeshIndex--;
+		if (instanceLayer->m_MeshList[i] == renderData)
+		{
+			index = i;
+			break;
+		}
 	}
+
+	assert(index != -1);
+
+	// 해당 Instance 제거..
+	SAFE_DELETE(instanceLayer->m_MeshList[index]);
+	instanceLayer->m_MeshList.erase(std::next(instanceLayer->m_MeshList.begin(), index));
+
+	// Instance Layer 빈곳 체크..
+	CheckInstanceLayer(m_ParticleMeshList);
 }
 
 void RenderManager::DeleteUnRenderData(MeshData* meshData)
 {
-	UINT listIndex = (UINT)meshData->Object_Data->RenderListIndex;
-	UINT meshIndex = (UINT)meshData->Object_Data->RenderMeshIndex;
+	RenderData* renderData = (RenderData*)meshData->Render_Data;
 
-	// 해당 Mesh List 내의 Render Data 제거..
-	SAFE_DELETE(m_UnRenderMeshList[meshIndex]);
-	m_UnRenderMeshList.erase(std::next(m_UnRenderMeshList.begin(), meshIndex));
+	int index = -1;
 
-	MeshData* originData = nullptr;
-	for (int i = meshIndex; i < m_UnRenderMeshList.size(); i++)
+	for (int i = 0; i < m_UnRenderMeshList.size(); i++)
 	{
-		originData = m_UnRenderMeshList[i]->m_OriginData;
-		originData->Object_Data->RenderMeshIndex--;
+		if (m_UnRenderMeshList[i] == renderData)
+		{
+			index = i;
+			break;
+		}
 	}
+
+	// 해당 Instance 제거..
+	SAFE_DELETE(m_UnRenderMeshList[index]);
+	m_UnRenderMeshList.erase(std::next(m_UnRenderMeshList.begin(), index));
+}
+
+void RenderManager::CheckInstanceLayer(std::vector<InstanceLayer*>& layerList)
+{
+	int index = -1;
+
+	for (int i = 0; i < layerList.size(); i ++)
+	{
+		if (layerList[i]->m_MeshList.empty())
+		{
+			// 해당 Layer가 비어있다면 Layer 삭제..
+			index = i;
+			break;
+		}
+	}
+
+	// 비어있는 Layer가 없다면 처리하지 않음..
+	if (index == -1) return;
+
+	// 해당 Layer 리스트에서 제거..
+	layerList.erase(std::next(layerList.begin(), index));
 }
