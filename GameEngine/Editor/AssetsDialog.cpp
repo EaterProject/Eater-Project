@@ -9,6 +9,8 @@
 #include <stack>
 #include "Demo.h"
 #include "RightOption.h"
+#include "EditorManager.h"
+#include "Loading.h"
 #define MAXPATH 256
 // AssetsDialog 대화 상자
 
@@ -182,6 +184,8 @@ void AssetsDialog::OnAssetsClick(NMHDR* pNMHDR, LRESULT* pResult)
 
 void AssetsDialog::OnDropFiles(HDROP hDropInfo)
 {
+	RightOption::GetThis()->mLoading->ShowWindow(SW_SHOW);
+
 	//외부 폴더에서 Tool쪽으로 파일을 옮겼을때 처리
 	TCHAR FileName[MAXPATH] = { 0, };
 	UINT count = DragQueryFile(hDropInfo, 0xFFFFFFFF, FileName, MAXPATH);
@@ -204,7 +208,7 @@ void AssetsDialog::OnDropFiles(HDROP hDropInfo)
 		std::size_t Start = Name.rfind("/") + 1;
 		std::size_t End = Name.rfind(".") - Start;
 		std::string MeshName = Name.substr(Start, End);
-
+		std::string ChangeName = MeshName;
 		//타입찾기
 		Start = Name.rfind(".");
 		End = Name.length() - Start;
@@ -215,18 +219,16 @@ void AssetsDialog::OnDropFiles(HDROP hDropInfo)
 		std::string CopyFilePath = ChangeToString(ClickAssetsPath) + "/" + MeshName;
 		CString ChangeCopyFile;
 		ChangeCopyFile = CopyFilePath.c_str();
-		bool Move = CopyFile(FileName, ChangeCopyFile, TRUE);
-		if (Move == false) { AfxMessageBox(_T("Error : 파일 이동 실패")); return; }
 
-		//아이템 이름으로 UI 보여주기
-		CString ItemName;
-		ItemName = MeshName.c_str();
-		AssetsFile.InsertItem(0, ItemName, 1);
+		RightOption::GetThis()->m_EditorManager->SetPath(Name,nullptr);
 
 		//메쉬 로드
-		Demo::MeshLoad(CopyFilePath);
+		std::string MeshPath = "../Assets/Model/ModelData/" + ChangeName + ".Eater";
+		Demo::MeshLoad(MeshPath);
 	}
 	CDialogEx::OnDropFiles(hDropInfo);
+
+	RightOption::GetThis()->mLoading->ShowWindow(SW_HIDE);
 }
 
 
@@ -261,6 +263,7 @@ void AssetsDialog::OnNMClickList2(NMHDR* pNMHDR, LRESULT* pResult)
 	int ClickItemIndex = pNMListView->iItem;
 	ClickItemName = AssetsFile.GetItemText(ClickItemIndex, 0);
 	RightOption::GetThis()->ClickItemName = ClickItemName;
+	RightOption::GetThis()->FilePathEdit.SetWindowTextW(ClickItemName);
 	*pResult = 0;
 }
 

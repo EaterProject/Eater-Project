@@ -12,7 +12,6 @@
 #include "ParticleSystem.h"
 #include "Light.h"
 
-
 std::map<std::string, GameObject*> Demo::ObjectList;
 
 SceneSave*		Demo::SaveManager = nullptr;
@@ -55,7 +54,8 @@ void Demo::ThreadFunction()
 {
 	Load("../Assets/Model/MeshBuffer");
 	Load("../Assets/Model/ModelData");
-	//
+	Load("../Assets/Model/Animation");
+	
 	LoadEnvironment("../Assets/Texture/Environment/Night.dds");
 	SetEnvironment(true);
 }

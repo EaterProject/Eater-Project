@@ -31,9 +31,9 @@ private:
 	std::string CutFileName(std::string FilePath);
 	
 
-	E_MeshManager*		MeshManager;
-	E_AnimationManager* AnimationManager;
-	E_MaterialManager*	MaterialManager;
-	E_BufferManager*	BufferManager;
+	E_MeshManager*		mMeshManager;
+	E_AnimationManager* mAnimationManager;
+	E_MaterialManager*	mMaterialManager;
+	E_BufferManager*	mBufferManager;
 };
 

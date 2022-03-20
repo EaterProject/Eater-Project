@@ -64,6 +64,7 @@ void LoadManager::Load(std::string& Path, UINT MODE)
 		//파일경로가 들어왔다면 파일을 읽음
 		LoadFile(Path, MODE);
 	}
+	int num = 0;
 }
 
 void LoadManager::LoadTerrain(std::string mMeshName, std::string mMaskName, UINT parsingMode)
@@ -249,7 +250,7 @@ void LoadManager::LoadFile(std::string& Path, UINT MODE)
 	{
 		mEATER->LoadMaterial(Path);
 	}
-	else if (Type == "Emesh") /// Mesh Load 추가해야함
+	else if (Type == "Emesh")
 	{
 		mEATER->LoadMesh(Path);
 	}

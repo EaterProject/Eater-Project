@@ -77,37 +77,53 @@ int OptionView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	mOption.Create(IDD_RIGHT_OPTION, this);
 	mOption.ShowWindow(SW_SHOW);
 
-	mLoading.Create(IDD_LOADING, this);
-	mLoading.ShowWindow(SW_SHOW);
+
+	//mOption.mLoading = &mLoading;
+	//mLoading.mOption = &mOption;
 	
-	mOption.mLoading = &mLoading;
-	mLoading.mOption = &mOption;
-	
-	mLoading.SetData(0, mOption.LoadMaxCount);
+	//mLoading.SetData(0, mOption.LoadMaxCount);
 	return 0;
 }
 
 void OptionView::OnSize(UINT nType, int cx, int cy)
 {
 	int Offset = 100;
-	if (mLoading.IsWindowVisible() == true)
-	{
-		//부모의 클라이언트 사이즈 구하기
-		CRect rect;
-		this->GetParent()->GetClientRect(rect);
-		int ParectSizeX = rect.Width() / 2;
-		int ParectSizeY = rect.Height() / 2;
 
-		//나의 클라이언트 사이즈 구하기
-		this->GetClientRect(rect);
-		int ChildSizeX = rect.Width() / 2;
-		int ChildSizeY = rect.Height() / 2;
+	CRect rect;
+	this->GetParent()->GetClientRect(rect);
+	int ParectSizeX = rect.Width() / 2;
+	int ParectSizeY = rect.Height() / 2;
 
+	//나의 클라이언트 사이즈 구하기
+	this->GetClientRect(rect);
+	int ChildSizeX = rect.Width() / 2;
+	int ChildSizeY = rect.Height() / 2;
+	mOption.MoveWindow(0, 0, cx, 3000);
 
-		mLoading.MoveWindow(ParectSizeX - ChildSizeX, ParectSizeY, cx, 150);
-		mOption.MoveWindow(0, 0, cx, 3000);
-	}
 	CScrollView::OnSize(nType, cx, cy);
+
+
+
+
+
+
+	//if (mLoading.IsWindowVisible() == true)
+	//{
+	//	//부모의 클라이언트 사이즈 구하기
+	//	CRect rect;
+	//	this->GetParent()->GetClientRect(rect);
+	//	int ParectSizeX = rect.Width() / 2;
+	//	int ParectSizeY = rect.Height() / 2;
+	//
+	//	//나의 클라이언트 사이즈 구하기
+	//	this->GetClientRect(rect);
+	//	int ChildSizeX = rect.Width() / 2;
+	//	int ChildSizeY = rect.Height() / 2;
+	//	mOption.MoveWindow(0, 0, cx, 3000);
+	//
+	//
+	//	mLoading.MoveWindow(ParectSizeX - ChildSizeX, ParectSizeY, cx, 150);
+	//}
 }
 
 BOOL OptionView::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)

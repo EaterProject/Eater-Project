@@ -58,4 +58,12 @@ public:
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 	afx_msg void OnEmissive_Button();
+	CEdit BaseColor_R;
+	CEdit BaseColor_G;
+	CEdit BaseColor_B;
+	CEdit BaseColor_A;
+	CEdit AddColor_R;
+	CEdit AddColor_G;
+	CEdit AddColor_B;
+	CEdit AddColor_A;
 };

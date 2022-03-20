@@ -72,27 +72,55 @@ std::string ChangeToString(float Data)
 float ChangeToFloat(std::string Data)
 {
 	//string -> float
-	return stof(Data);
+	if (Data == "")
+	{
+		return 0;
+	}
+	else
+	{
+		return stof(Data);
+	}
 }
 
 float ChangeToFloat(CString Data)
 {
 	//Cstring -> float
-	std::string str = ChangeToString(Data);
-	return stof(str);
+	if (Data == L"")
+	{
+		return 0;
+	}
+	else
+	{
+		std::string str = ChangeToString(Data);
+		return stof(str);
+	}
 }
 
 int ChangeToInt(CString Data)
 {
 	//Cstring -> int
-	std::string str = ChangeToString(Data);
-	return stoi(str);
+	if (Data == L"")
+	{
+		return 0;
+	}
+	else
+	{
+		std::string str = ChangeToString(Data);
+		return stoi(str);
+	}
 }
 
 int ChangeToInt(std::string Data)
 {
 	//string -> int
-	return stoi(Data);
+	if (Data == "")
+	{
+		return 0;
+	}
+	else
+	{
+		return stoi(Data);
+	}
 }
 
 inline int GetFileNameType(std::string Name)

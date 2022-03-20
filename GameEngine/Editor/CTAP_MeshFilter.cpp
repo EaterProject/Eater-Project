@@ -56,6 +56,26 @@ void CTAP_MeshFilter::SetGameObject(MeshFilter* ObjectMeshFilter)
 		float RoughnessF = mMaterial->m_MaterialData->Material_SubData->RoughnessFactor;
 		float MetallicF = mMaterial->m_MaterialData->Material_SubData->MetallicFactor;
 
+		float AddColorR = mMaterial->m_MaterialData->Material_SubData->AddColor.x;
+		float AddColorG = mMaterial->m_MaterialData->Material_SubData->AddColor.y;
+		float AddColorB = mMaterial->m_MaterialData->Material_SubData->AddColor.z;
+		float AddColorA = mMaterial->m_MaterialData->Material_SubData->AddColor.w;
+
+		float BaseColorR = mMaterial->m_MaterialData->Material_SubData->BaseColor.x;
+		float BaseColorG = mMaterial->m_MaterialData->Material_SubData->BaseColor.y;
+		float BaseColorB = mMaterial->m_MaterialData->Material_SubData->BaseColor.z;
+		float BaseColorA = mMaterial->m_MaterialData->Material_SubData->BaseColor.w;
+
+		BaseColor_R.SetWindowTextW(ChangeToCString(BaseColorR));
+		BaseColor_G.SetWindowTextW(ChangeToCString(BaseColorG));
+		BaseColor_B.SetWindowTextW(ChangeToCString(BaseColorB));
+		BaseColor_A.SetWindowTextW(ChangeToCString(BaseColorA));
+
+		AddColor_R.SetWindowTextW(ChangeToCString(BaseColorR));
+		AddColor_G.SetWindowTextW(ChangeToCString(BaseColorG));
+		AddColor_B.SetWindowTextW(ChangeToCString(BaseColorB));
+		AddColor_A.SetWindowTextW(ChangeToCString(BaseColorA));
+
 		Emissive_Edit.SetWindowTextW(ChangeToCString(EmissiveF));
 		Roughness_Edit.SetWindowTextW(ChangeToCString(RoughnessF));
 		Matallic_Edit.SetWindowTextW(ChangeToCString(MetallicF));
@@ -89,6 +109,40 @@ void CTAP_MeshFilter::UpdateGameObject()
 	{
 		mMaterial->m_MaterialData->Material_SubData->MetallicFactor = ChangeToFloat(Name02);
 	}
+
+	CString GetNumber;
+	Vector4 BaseColor;
+	Vector4 AddColor;
+	BaseColor_R.GetWindowTextW(GetNumber);
+	BaseColor.x = ChangeToFloat(GetNumber);
+
+	BaseColor_G.GetWindowTextW(GetNumber);
+	BaseColor.y = ChangeToFloat(GetNumber);
+
+	BaseColor_B.GetWindowTextW(GetNumber);
+	BaseColor.z = ChangeToFloat(GetNumber);
+
+	BaseColor_A.GetWindowTextW(GetNumber);
+	BaseColor.w = ChangeToFloat(GetNumber);
+
+
+	AddColor_R.GetWindowTextW(GetNumber);
+	AddColor.x = ChangeToFloat(GetNumber);
+
+	AddColor_G.GetWindowTextW(GetNumber);
+	AddColor.y = ChangeToFloat(GetNumber);
+
+	AddColor_B.GetWindowTextW(GetNumber);
+	AddColor.z = ChangeToFloat(GetNumber);
+
+	AddColor_A.GetWindowTextW(GetNumber);
+	AddColor.w = ChangeToFloat(GetNumber);
+
+	if (mMaterial != nullptr)
+	{
+		mMaterial->SetAddColor(AddColor);
+		mMaterial->SetBaseColor(BaseColor);
+	}
 }
 
 void CTAP_MeshFilter::DoDataExchange(CDataExchange* pDX)
@@ -105,6 +159,14 @@ void CTAP_MeshFilter::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EDIT7, Roughness_Edit);
 	DDX_Control(pDX, IDC_EDIT8, Matallic_Edit);
 	DDX_Control(pDX, IDC_EDIT9, EmissiveName_Edit);
+	DDX_Control(pDX, IDC_EDIT15, BaseColor_R);
+	DDX_Control(pDX, IDC_EDIT16, BaseColor_G);
+	DDX_Control(pDX, IDC_EDIT17, BaseColor_B);
+	DDX_Control(pDX, IDC_EDIT18, BaseColor_A);
+	DDX_Control(pDX, IDC_EDIT21, AddColor_R);
+	DDX_Control(pDX, IDC_EDIT22, AddColor_G);
+	DDX_Control(pDX, IDC_EDIT23, AddColor_B);
+	DDX_Control(pDX, IDC_EDIT24, AddColor_A);
 }
 
 BOOL CTAP_MeshFilter::OnInitDialog()
@@ -119,6 +181,15 @@ BOOL CTAP_MeshFilter::OnInitDialog()
 	Roughness_Edit.SetWindowTextW(L"");
 	Matallic_Edit.SetWindowTextW(L"");
 
+	BaseColor_R.SetWindowTextW(L"255");
+	BaseColor_G.SetWindowTextW(L"255");
+	BaseColor_B.SetWindowTextW(L"255");
+	BaseColor_A.SetWindowTextW(L"255");
+
+	AddColor_R.SetWindowTextW(L"255");
+	AddColor_G.SetWindowTextW(L"255");
+	AddColor_B.SetWindowTextW(L"255");
+	AddColor_A.SetWindowTextW(L"255");
 
 	return 0;
 }
