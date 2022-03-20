@@ -1,6 +1,7 @@
 #pragma once
 #include "ConvertData.h"
 
+// Game Engine 측 MeshData와 대응하는 DirectX 11 전용 Render Data Class
 class RenderData
 {
 public:
@@ -14,8 +15,20 @@ public:
 	ColliderData* m_ColliderData;
 };
 
+// 동일 Instance를 관리하기 위한 Instance Layer Class
 class InstanceLayer
 {
+public:
+	void PushRenderData(RenderData* renderData)
+	{
+		m_MeshList.push_back(renderData);
+	}
+
+	void DeleteRenderData(UINT index)
+	{
+		m_MeshList.erase(std::next(m_MeshList.begin(), index));
+	}
+
 public:
 	UINT m_LayerIndex = 0;
 

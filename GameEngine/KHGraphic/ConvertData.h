@@ -1,5 +1,5 @@
 #pragma once
-// Game Engine 측 Data와 대응하는 DirectX 11 전용 Material Data Class
+// Game Engine 측 MaterialBuffer와 대응하는 DirectX 11 전용 Material Data Class
 class MaterialRenderBuffer
 {
 public:
@@ -11,7 +11,7 @@ public:
 	ID3D11ShaderResourceView* m_ORM;
 };
 
-// Game Engine 측 Data와 대응하는 DirectX 11 전용 Mesh Data Class
+// Game Engine 측 MeshBuffer와 대응하는 DirectX 11 전용 Mesh Data Class
 class MeshRenderBuffer
 {
 public:
@@ -23,7 +23,7 @@ public:
 	ID3D11Buffer* m_IndexBuf;
 };
 
-// Game Engine 측 Data와 대응하는 DirectX 11 전용 Terrain Data Class
+// Game Engine 측 TerrainBuffer와 대응하는 DirectX 11 전용 Terrain Data Class
 class TerrainRenderBuffer
 {
 public:

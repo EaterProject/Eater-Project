@@ -25,9 +25,9 @@ public:
 	void PushMesh(MeshBuffer* mesh) override;
 	void PushMaterial(MaterialBuffer* material) override;
 
-	void ChangeInstance(MeshData* instance) override;
-	void ChangeMesh(MeshBuffer* mesh) override;
-	void ChangeMaterial(MaterialBuffer* material) override;
+	void PushChangeInstance(MeshData* instance) override;
+	void PushChangeMesh(MeshBuffer* mesh) override;
+	void PushChangeMaterial(MaterialBuffer* material) override;
 
 	void DeleteInstance(MeshData* meshData) override;
 	void DeleteMesh(MeshBuffer* mesh) override;

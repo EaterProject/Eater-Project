@@ -93,19 +93,19 @@ void KHGraphic::PushMaterial(MaterialBuffer* material)
 	m_RenderManager->PushMaterial(material);
 }
 
-void KHGraphic::ChangeInstance(MeshData* instance)
+void KHGraphic::PushChangeInstance(MeshData* instance)
 {
-	m_RenderManager->ChangeInstance(instance);
+	m_RenderManager->PushChangeInstance(instance);
 }
 
-void KHGraphic::ChangeMesh(MeshBuffer* mesh)
+void KHGraphic::PushChangeMesh(MeshBuffer* mesh)
 {
-	m_RenderManager->ChangeMesh(mesh);
+	m_RenderManager->PushChangeMesh(mesh);
 }
 
-void KHGraphic::ChangeMaterial(MaterialBuffer* material)
+void KHGraphic::PushChangeMaterial(MaterialBuffer* material)
 {
-	m_RenderManager->ChangeMaterial(material);
+	m_RenderManager->PushChangeMaterial(material);
 }
 
 void KHGraphic::DeleteInstance(MeshData* meshData)
