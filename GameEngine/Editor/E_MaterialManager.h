@@ -4,8 +4,8 @@
 #include <vector>
 namespace ParserData
 {
-	struct CMesh;
-	struct CModel;
+	class CMesh;
+	class CModel;
 }
 
 class E_MaterialManager

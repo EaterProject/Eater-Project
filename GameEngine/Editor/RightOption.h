@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include <string>
 
 
 // RightOption 대화 상자
@@ -11,8 +12,8 @@ class CTAP_Particle;
 class FileOption;
 class SceneSaveDialog;
 class Loading;
+//class Loading;
 class EditorManager;
-#include <string>
 class RightOption : public CDialogEx
 {
 	DECLARE_DYNAMIC(RightOption)
@@ -71,6 +72,7 @@ public:
 	GameObject* FindGameObjectParent(HTREEITEM mItem);
 	void AssetsInitialize();
 	static RightOption* thisPointer;
+	CEdit FilePathEdit;
 public:
 	afx_msg void OnChoice_Hirearchy_Item(NMHDR* pNMHDR, LRESULT* pResult);
 	

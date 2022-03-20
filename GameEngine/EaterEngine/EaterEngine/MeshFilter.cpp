@@ -386,7 +386,6 @@ void MeshFilter::SetMaterialData(LoadMeshData* LoadMesh, MeshData* mMesh, GameOb
 
 	// Render Material Data ¼³Á¤..
 	mMesh->Material_Buffer = meshFilter->Materials->m_MaterialData;
-	//mMesh->Material_Buffer = Materials->m_MaterialData;
 }
 
 void MeshFilter::SetMatrixData(LoadMeshData* LoadMesh, MeshData* mMesh, GameObject* Object)

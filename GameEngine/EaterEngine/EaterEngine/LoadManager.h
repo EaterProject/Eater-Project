@@ -12,6 +12,7 @@
 #include "ParserData.h"
 #include "SimpleMath.h"
 
+
 namespace ParserData
 {
 	struct CModel;
@@ -35,6 +36,10 @@ class MaterialManager;
 class FBXManager;
 class TextureManager;
 class EATERManager;
+class Eater_LoadAnimation;
+class Eater_LoadBuffer;
+class Eater_LoadMaterial;
+class Eater_LoadMesh;
 
 class LoadManager
 {
@@ -89,4 +94,9 @@ private:
 	friend FBXManager;
 	friend TextureManager;
 	friend EATERManager;
+
+	friend Eater_LoadAnimation;
+	friend Eater_LoadBuffer;
+	friend Eater_LoadMaterial;
+	friend Eater_LoadMesh;
 };

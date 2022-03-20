@@ -28,7 +28,6 @@ void EditorManager::Initialize()
 
 	//에셋폴더안에 필요한 폴더들을 미리 생성한다
 	CreateAssetsFile();
-	LoadAssets();
 }
 
 void EditorManager::SetPath(std::string Path,MeshOption* Data)
@@ -47,11 +46,20 @@ void EditorManager::SetPath(std::string Path,MeshOption* Data)
 	}
 	else if (FileType == "fbx")
 	{
-		mFbx->OpenFile(Path, Data);
+		ParserData::CModel* Model = mFbx->OpenFile(Path, Data);
+		mEater->Load_FBX_File(Path, Model);
 	}
 	else if (FileType == "unity")
 	{
 		mYaml->OpenFile(Path);
+	}
+	else if (FileType == "Emat")
+	{
+		mEater->LoadEaterFile(Path);
+	}
+	else if (FileType == "Emesh")
+	{
+		mEater->LoadEaterFile(Path);
 	}
 }
 
@@ -64,7 +72,6 @@ void EditorManager::CreateAssetsFile()
 	std::filesystem::create_directory("../Assets/Model");
 	std::filesystem::create_directory("../Assets/Scene");
 	std::filesystem::create_directory("../Assets/Texture");
-	std::filesystem::create_directory("../Assets/FBX");
 
 	//Model 폴더 생성
 	std::filesystem::create_directory("../Assets/Model/Animation");
@@ -74,10 +81,15 @@ void EditorManager::CreateAssetsFile()
 
 	//텍스쳐 폴더 생성
 	std::filesystem::create_directory("../Assets/Texture/Particle");
-	std::filesystem::create_directory("../Assets/Texture/Icon");
+	std::filesystem::create_directory("../Assets/Texture/Graphic");
 	std::filesystem::create_directory("../Assets/Texture/Environment");
 	std::filesystem::create_directory("../Assets/Texture/ModelTexture");
 	std::filesystem::create_directory("../Assets/Texture/Material");
+
+	//그래픽용 폴더 생성
+	std::filesystem::create_directory("../Assets/Texture/Graphic/Icon");
+	std::filesystem::create_directory("../Assets/Texture/Graphic/Noise");
+	std::filesystem::create_directory("../Assets/Texture/Graphic/Shader");
 }
 
 void EditorManager::LoadAssets()
@@ -131,24 +143,4 @@ void EditorManager::LoadFile(std::string& Path)
 	{
 		mFbx->OpenFile(Path, nullptr);
 	}
-
-
-
-	//if (FileType == "txt")
-	//{
-	//
-	//}
-	//else if (FileType == "Eater")
-	//{
-	//	return;
-	//	mEater->LoadEaterFile(Path);
-	//}
-	//else if (FileType == "fbx")
-	//{
-	//	mFbx->OpenFile(Path, nullptr);
-	//}
-	//else if (FileType == "unity")
-	//{
-	//	mYaml->OpenFile(Path);
-	//}
 }

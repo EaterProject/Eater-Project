@@ -11,7 +11,7 @@
 // Loading 대화 상자
 
 IMPLEMENT_DYNAMIC(Loading, CDialogEx)
-
+std::string Loading::mMsg = "";
 Loading::Loading(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_LOADING, pParent)
 {
@@ -58,6 +58,10 @@ void Loading::DoDataExchange(CDataExchange* pDX)
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_PROGRESS1, LoadingBar);
 	DDX_Control(pDX, IDC_EDIT1, TextEdit);
+}
+void Loading::SetMessage(std::string Msg)
+{
+	mMsg = Msg;
 }
 BEGIN_MESSAGE_MAP(Loading, CDialogEx)
 END_MESSAGE_MAP()
