@@ -39,7 +39,7 @@ BOOL AssetsDialog::OnInitDialog()
 
 	CBitmap bit02;
 	bit02.LoadBitmap(IDB_BITMAP3);
-	ImgList_Big.Create(50, 50, ILC_COLOR8 | ILC_MASK, 6, 1);
+	ImgList_Big.Create(50, 50, ILC_COLOR8 | ILC_MASK, 8, 1);
 	ImgList_Big.Add(&bit02, RGB(255, 0, 255));
 
 	AssetsTreeTopParent = AssetsTree.InsertItem(_T("Assets"), 0, 0, NULL);

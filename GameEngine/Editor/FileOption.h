@@ -51,4 +51,6 @@ public:
 	afx_msg void OnNoChange_Button();
 	afx_msg void OnScaleDown_Button();
 	afx_msg void OnCbnSelchangeCombo1();
+	afx_msg LRESULT OnUserFunc(WPARAM wParam, LPARAM lParam);
+	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
 };

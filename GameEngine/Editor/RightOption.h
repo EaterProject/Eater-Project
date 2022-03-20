@@ -70,9 +70,8 @@ public:
 	void ChickTapDrag(CPoint point);
 	void ChickHirearchyDarg(CPoint point);
 	GameObject* FindGameObjectParent(HTREEITEM mItem);
-	void AssetsInitialize();
-	static RightOption* thisPointer;
 	CEdit FilePathEdit;
+	static RightOption* thisPointer;
 public:
 	afx_msg void OnChoice_Hirearchy_Item(NMHDR* pNMHDR, LRESULT* pResult);
 	
@@ -82,12 +81,9 @@ public:
 	afx_msg void OnDeleteFile_Button();
 	afx_msg void OnChange_DataFormat();
 	afx_msg void OnOpenExeFile_Button();
-	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnClickTap(NMHDR* pNMHDR, LRESULT* pResult);
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	afx_msg void OnSaveScene();
 	afx_msg void OnCreateParticle();
 	afx_msg void OnCreateTerrain();
-	afx_msg LRESULT OnUserFun(WPARAM wParam, LPARAM lparam);
-	afx_msg void OnMouseHWheel(UINT nFlags, short zDelta, CPoint pt);
 };

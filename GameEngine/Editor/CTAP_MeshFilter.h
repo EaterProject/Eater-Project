@@ -61,9 +61,14 @@ public:
 	CEdit BaseColor_R;
 	CEdit BaseColor_G;
 	CEdit BaseColor_B;
-	CEdit BaseColor_A;
+
 	CEdit AddColor_R;
 	CEdit AddColor_G;
 	CEdit AddColor_B;
-	CEdit AddColor_A;
+	CSliderCtrl Base_R_Slider;
+	CSliderCtrl Base_G_Slider;
+	CSliderCtrl Base_B_Slider;
+	CSliderCtrl Add_R_Slider;
+	CSliderCtrl Add_G_Slider;
+	CSliderCtrl Add_B_Slider;
 };

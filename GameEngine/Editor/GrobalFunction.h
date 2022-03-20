@@ -7,6 +7,9 @@
 #define EATER	2
 #define DDS		3
 #define SCENE	4
+#define PREFAB	5
+#define EMAT	6
+#define EMESH	7
 
 inline CString ChangeToCString(float Data);			//float		-> Cstring
 inline CString ChangeToCString(int Data);			//int		-> Cstring
@@ -148,6 +151,14 @@ inline int GetFileNameType(std::string Name)
 	else if (Name == "Scene")
 	{
 		Type = SCENE;
+	}
+	else if (Name == "Emat")
+	{
+		Type = EMAT;
+	}
+	else if (Name == "Emesh")
+	{
+		Type = EMESH;
 	}
 	return Type;
 }

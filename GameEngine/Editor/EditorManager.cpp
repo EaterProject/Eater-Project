@@ -6,6 +6,7 @@
 #include "EditorData.h"
 
 
+
 EditorManager::EditorManager()
 {
 	mYaml	= nullptr;

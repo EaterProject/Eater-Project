@@ -101,6 +101,8 @@ BEGIN_MESSAGE_MAP(FileOption, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON2, &FileOption::OnNoChange_Button)
 	ON_BN_CLICKED(IDC_BUTTON8, &FileOption::OnScaleDown_Button)
 	ON_CBN_SELCHANGE(IDC_COMBO1, &FileOption::OnCbnSelchangeCombo1)
+	ON_MESSAGE(M_MSG_FILE_CHANGE, &FileOption::OnUserFunc)
+	ON_WM_LBUTTONUP()
 END_MESSAGE_MAP()
 
 
@@ -240,4 +242,17 @@ void FileOption::OnCbnSelchangeCombo1()
 		OnBoneWorld(false);
 		break;
 	}
+}
+
+LRESULT FileOption::OnUserFunc(WPARAM wParam, LPARAM lParam)
+{
+	return LRESULT();
+}
+
+
+void FileOption::OnLButtonUp(UINT nFlags, CPoint point)
+{
+	
+
+	CDialogEx::OnLButtonUp(nFlags, point);
 }
