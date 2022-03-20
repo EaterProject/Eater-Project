@@ -28,7 +28,6 @@ public:
 
 	void OptimizeData();
 	void OptimizeVertex(ParserData::CMesh* pMesh);
-	void CopyOriginalVertex(ParserData::CMesh* pMesh);
 	void RecombinationTM(ParserData::CMesh* pMesh);
 
 	DirectX::SimpleMath::Vector2 ConvertVector2(fbxsdk::FbxVector2 v2);

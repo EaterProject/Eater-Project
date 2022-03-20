@@ -61,7 +61,7 @@ typedef enum PARTICLE_LIFETIME_OPTION
 }PARTICLE_LIFETIME_OPTION;
 
 // Object Type
-typedef enum class OBJECT_TYPE
+typedef enum OBJECT_TYPE
 {
 	DEFALT,			//값을 넣지않았을때 기본형
 	GAMEOBJECT,		//다른 오브젝트들을 묶어놓는 용도

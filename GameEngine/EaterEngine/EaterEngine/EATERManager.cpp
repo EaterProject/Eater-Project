@@ -149,7 +149,7 @@ void EATERManager::LoadMesh(std::string& Path)
 			mesh->m_IndexList.push_back(IB);
 		}
 
-
+		// 새로운 Mesh 생성..
 		Mesh* meshBuffer = new Mesh();
 		
 		EnterCriticalSection(m_CriticalSection);
@@ -163,9 +163,6 @@ void EATERManager::LoadMesh(std::string& Path)
 
 		// Mesh Buffer 리스트 삽입..
 		LoadManager::MeshBufferList.insert({ SaveName ,meshBuffer });
-
-		// Mesh Buffer Graphic 측 연동..
-		m_Graphic->PushMesh(meshBuffer->m_MeshData);
 
 		delete mesh;
 	}
@@ -226,9 +223,6 @@ void EATERManager::LoadMaterial(std::string& Path)
 
 			// Material Buffer 리스트 삽입..
 			LoadManager::MaterialList.insert({ SaveName, Mat });
-
-			// Material Buffer Graphic 측 연동..
-			m_Graphic->PushMaterial(Mat->m_MaterialData);
 		}
 	}
 	EATER_CLEAR_NODE();

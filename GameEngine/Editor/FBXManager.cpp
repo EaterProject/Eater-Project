@@ -373,26 +373,6 @@ void FBXManager::SetMaterial(ParserData::CMesh* mMesh, std::string FileName)
 	OneMeshMaterialList.push_back(Data);
 }
 
-void FBXManager::SetVertexTerrain(ParserData::CMesh* mMesh)
-{
-	int VertexCount = (int)mMesh->m_OriginVertexList.size();
-	EATER_SET_LIST_START("Vertex", VertexCount, 3);
-	for (int i = 0; i < VertexCount; i++)
-	{
-		EATER_SET_LIST(mMesh->m_OriginVertexList[i].x);
-		EATER_SET_LIST(mMesh->m_OriginVertexList[i].y);
-		EATER_SET_LIST(mMesh->m_OriginVertexList[i].z,true);
-	}
-
-
-	int IndexCount = (int)mMesh->m_OriginIndexList.size();
-	EATER_SET_LIST_START("Index", IndexCount, 1);
-	for (int i = 0; i < IndexCount; i++)
-	{
-		EATER_SET_LIST((int)mMesh->m_OriginIndexList[i],true);
-	}
-}
-
 void FBXManager::SetVertex(ParserData::CMesh* mMesh)
 {
 	int VertexCount = (int)mMesh->m_VertexList.size();

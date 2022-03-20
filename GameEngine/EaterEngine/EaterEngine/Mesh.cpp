@@ -12,6 +12,9 @@ Mesh::Mesh()
 
 	// Mesh 등록..
 	MeshManager::PushMesh(this);
+
+	// Mesh Graphic 측 등록..
+	GraphicEngine::Get()->PushMesh(m_MeshData);
 }
 
 Mesh::~Mesh()
@@ -23,6 +26,9 @@ void Mesh::Release()
 {
 	// Manager 내부에 있는 해당 Mesh Data 삭제..
 	MeshManager::DeleteMesh(m_MeshData->BufferIndex);
+
+	// Graphic 내부에 있는 해당 Mesh Buffer 삭제..
+	GraphicEngine::Get()->DeleteMesh(m_MeshData);
 
 	// 해당 Mesh Data 해제..
 	SAFE_DELETE(m_MeshData);

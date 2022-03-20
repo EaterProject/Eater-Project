@@ -575,9 +575,6 @@
     <ClCompile Include="FogPass.cpp">
       <Filter>소스 파일\RendererPass\PostProcess\Fog</Filter>
     </ClCompile>
-    <ClCompile Include="RenderData.cpp">
-      <Filter>소스 파일\Converter\RenderData</Filter>
-    </ClCompile>
     <ClCompile Include="RenderDataConverter.cpp">
       <Filter>소스 파일\Converter</Filter>
     </ClCompile>

@@ -32,7 +32,7 @@ void SkinningFilter::Update()
 		DirectX::XMMATRIX Offset = DirectX::XMLoadFloat4x4(&temp);
 	
 		//그래픽 랜더링쪽으로 넘겨줄수있도록 값을 넣어줌
-		(data->BoneOffsetTM)[i] = ((Offset * BoneWorld));
+		(data->Object_Data->BoneOffsetTM)[i] = ((Offset * BoneWorld));
 	}
 }
 
@@ -55,5 +55,5 @@ void SkinningFilter::PushBone_OffsetList(std::vector<DirectX::SimpleMath::Matrix
 	BoneOffsetTM = mBoneOffsetTM;
 
 	BoneOffsetTM->resize(BoneSize);
-	gameobject->OneMeshData->BoneOffsetTM.resize(BoneSize);
+	gameobject->OneMeshData->Object_Data->BoneOffsetTM.resize(BoneSize);
 }

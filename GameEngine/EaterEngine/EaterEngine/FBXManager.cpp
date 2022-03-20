@@ -235,9 +235,6 @@ void FBXManager::SetMaterialData(ParserData::CMesh* mMesh, LoadMeshData* SaveDat
 
 			// 현재 Material 저장..
 			LoadManager::MaterialList.insert({ matName, newMaterial });
-
-			// Material Buffer Graphic 측 연동..
-			m_Graphic->PushMaterial(newMaterial->m_MaterialData);
 		}
 
 		// 추후 로드를 위해 Material 이름 저장..
@@ -279,9 +276,6 @@ void FBXManager::SetMeshData(ParserData::CMesh* mMesh, LoadMeshData* SaveData)
 
 		// 현재 Mesh 저장..
 		LoadManager::MeshBufferList.insert({meshName, meshBuffer });
-
-		// Mesh Buffer Graphic 측 연동..
-		m_Graphic->PushMesh(meshBuffer->m_MeshData);
 	}
 
 	// 해당 Mesh Buffer 이름 삽입..
@@ -410,7 +404,7 @@ void FBXManager::LoadQuad()
 {
 	ModelData* SaveMesh = new ModelData();
 	LoadMeshData* quad = new LoadMeshData();
-	MeshBuffer* quadBuf = nullptr;
+	Mesh* quadMesh = new Mesh();
 	// Quad Mesh 설정..
 	quad->MeshType = QUAD_MESH;
 	quad->MeshName = "Quad";
@@ -420,18 +414,16 @@ void FBXManager::LoadQuad()
 
 	//버퍼값 읽어오기
 	EnterCriticalSection(m_CriticalSection);
-	m_Graphic->CreateMeshBuffer(mesh, &quadBuf);
+	m_Graphic->CreateMeshBuffer(mesh, &quadMesh->m_MeshData);
 	LeaveCriticalSection(m_CriticalSection);
 
 	/// 매쉬 자체포멧 생기면 이름만 저장하자..
-	quad->MeshBuffer_Data = quadBuf;
+	quad->MeshBuffer_Data = quadMesh->m_MeshData;
 
 	SaveMesh->TopMeshList.push_back(quad);
 
-	LoadManager::ModelList.insert({ "Quad" ,SaveMesh });
-
-	// Mesh Buffer Graphic 측 연동..
-	m_Graphic->PushMesh(quadBuf);
+	LoadManager::ModelList.insert({ "Quad" , SaveMesh });
+	LoadManager::MeshBufferList.insert({ "Quad", quadMesh });
 
 	delete mesh;
 }

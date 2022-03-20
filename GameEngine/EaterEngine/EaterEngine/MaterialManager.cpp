@@ -68,9 +68,9 @@ void MaterialManager::DeleteMaterial(UINT index)
 {
 	// 해당 Material 검색..
 	Material* material = g_MaterialList.find(index)->second;
-
+	
 	// 해당 Material Data 삭제..
-	SAFE_RELEASE(material);
+	material->Release();
 	g_MaterialList.erase(index);
 
 	// 해당 Material Index 빈곳으로 설정..

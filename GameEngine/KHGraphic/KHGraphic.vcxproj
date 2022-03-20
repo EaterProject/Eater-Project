@@ -287,7 +287,6 @@ copy/Y "$(ProjectDir)Export\*.h"   "$(SolutionDir)Library\inc\Graphic"</Command>
     <ClCompile Include="MathHelper.cpp" />
     <ClCompile Include="OITPass.cpp" />
     <ClCompile Include="PixelShader.cpp" />
-    <ClCompile Include="RenderData.cpp" />
     <ClCompile Include="RenderDataConverter.cpp" />
     <ClCompile Include="RenderPassBase.cpp" />
     <ClCompile Include="RenderManager.cpp" />

@@ -34,6 +34,7 @@ void Demo::Awake()
 	Load("../Assets/Texture/ModelTexture");
 	Load("../Assets/Texture/Terrain");
 	Load("../Assets/Texture/Material");
+	Load("../Assets/Texture/Particle");
 }
 
 void Demo::Update()

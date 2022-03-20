@@ -53,7 +53,6 @@ private:
 	void SetMaterial(ParserData::CMesh* mMesh,std::string FileName);
 	void SetIndex(ParserData::CMesh* mMesh);
 
-	void SetVertexTerrain(ParserData::CMesh* mMesh);
 	void SetVertex(ParserData::CMesh* mMesh);
 	void SetVertexSkin(ParserData::CMesh* mMesh);
 	void SetBoneOffset(ParserData::CMesh* mMesh);

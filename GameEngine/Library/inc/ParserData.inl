@@ -92,7 +92,7 @@ namespace ParserData
 
 	inline CMesh::CMesh()
 	{
-		m_MeshType			= STATIC_MESH;
+		m_MeshType			= MESH_TYPE::STATIC_MESH;
 		m_MeshIndex			= 0;
 		m_MaterialData		= nullptr;
 		m_Animation			= nullptr;
