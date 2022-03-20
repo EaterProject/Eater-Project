@@ -14,8 +14,8 @@
 
 #include "FileOption.h"
 #include "EditorManager.h"
-#include "Loading.h"
 #include "SceneSaveDialog.h"
+#include "Loading.h"
 
 #include <stack>
 #include "MainHeader.h"
@@ -43,7 +43,49 @@ RightOption::~RightOption()
 BOOL RightOption::OnInitDialog()
 {
 	CDialog::OnInitDialog();
-	AssetsInitialize();
+	m_EditorManager = new EditorManager();
+	m_EditorManager->Initialize();
+
+	mFileOption = new FileOption();
+	mFileOption->Initialize(m_EditorManager);
+
+	mScene = new SceneSaveDialog();
+	mScene->Initialize(this);
+
+	mLoading = new Loading();
+	mLoading->Create(IDD_LOADING);
+	mLoading->ShowWindow(SW_HIDE);
+
+
+	//텝정보들 생성
+	CRect rect;
+	Component_TapList.GetWindowRect(&rect);
+
+	mTransform = new CTAP_Transform();
+	mTransform->Create(IDD_TAP_TRANSFORM, &Component_TapList);
+	mTransform->MoveWindow(0, 25, rect.Width() - 5, rect.Height() - 25);
+	mTransform->ShowWindow(SW_HIDE);
+
+	mAnimation = new CTAP_Animation();
+	mAnimation->Create(IDD_TAP_ANIMATION, &Component_TapList);
+	mAnimation->MoveWindow(0, 25, rect.Width() - 5, rect.Height() - 25);
+	mAnimation->ShowWindow(SW_HIDE);
+
+	mMeshFilter = new CTAP_MeshFilter();
+	mMeshFilter->Create(IDD_TAP_MESHFILTER, &Component_TapList);
+	mMeshFilter->MoveWindow(0, 25, rect.Width() - 5, rect.Height() - 25);
+	mMeshFilter->ShowWindow(SW_HIDE);
+
+
+	mPrticle = new CTAP_Particle();
+	mPrticle->Create(IDD_TAP_PARTICLE, &Component_TapList);
+	mPrticle->MoveWindow(0, 25, rect.Width() - 5, rect.Height() - 25);
+	mPrticle->ShowWindow(SW_HIDE);
+
+	thisPointer = this;
+	SetTimer(1, 1000, NULL);
+
+	
 	return 0;
 }
 
@@ -53,6 +95,7 @@ void RightOption::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_TREE2, HirearchyTree);
 	DDX_Control(pDX, IDC_EDIT2, HirearchyEdit);
 	DDX_Control(pDX, IDC_TAB1, Component_TapList);
+	DDX_Control(pDX, IDC_EDIT9, FilePathEdit);
 }
 
 BEGIN_MESSAGE_MAP(RightOption, CDialogEx)
@@ -229,42 +272,7 @@ GameObject* RightOption::FindGameObjectParent(HTREEITEM mItem)
 
 void RightOption::AssetsInitialize()
 {
-	m_EditorManager = new EditorManager();
-	m_EditorManager->Initialize();
-
-	mFileOption = new FileOption();
-	mFileOption->Initialize(m_EditorManager);
-
-	mScene = new SceneSaveDialog();
-	mScene->Initialize(this);
 	
-	//텝정보들 생성
-	CRect rect;
-	Component_TapList.GetWindowRect(&rect);
-
-	mTransform = new CTAP_Transform();
-	mTransform->Create(IDD_TAP_TRANSFORM, &Component_TapList);
-	mTransform->MoveWindow(0, 25, rect.Width() - 5, rect.Height() - 25);
-	mTransform->ShowWindow(SW_HIDE);
-
-	mAnimation = new CTAP_Animation();
-	mAnimation->Create(IDD_TAP_ANIMATION, &Component_TapList);
-	mAnimation->MoveWindow(0, 25, rect.Width() - 5, rect.Height() - 25);
-	mAnimation->ShowWindow(SW_HIDE);
-
-	mMeshFilter = new CTAP_MeshFilter();
-	mMeshFilter->Create(IDD_TAP_MESHFILTER, &Component_TapList);
-	mMeshFilter->MoveWindow(0, 25, rect.Width() - 5, rect.Height() - 25);
-	mMeshFilter->ShowWindow(SW_HIDE);
-
-
-	mPrticle = new CTAP_Particle();
-	mPrticle->Create(IDD_TAP_PARTICLE, &Component_TapList);
-	mPrticle->MoveWindow(0, 25, rect.Width() - 5, rect.Height() - 25);
-	mPrticle->ShowWindow(SW_HIDE);
-
-	thisPointer = this;
-	SetTimer(1, 1000, NULL);
 }
 
 void RightOption::OnChoice_Hirearchy_Item(NMHDR* pNMHDR, LRESULT* pResult)
@@ -383,18 +391,11 @@ void RightOption::OnChange_DataFormat()
 {
 	//클리한 파일을 자체포멧으로 변경한다
 	std::string Name = ChangeToString(ClickItemName);
-	
-	//fbx파일 일경우만 변경
-	if (Name.rfind(".fbx") != std::string::npos)
-	{
-		mFileOption->SetName(Name,ChangeToString(ClickAssetsPath));
-		mFileOption->Initialize(m_EditorManager);
-		mFileOption->DoModal();
-	}
-	else
-	{
-		AfxMessageBox(_T("Error : FBX파일을 선택해 주세요"));
-	}
+	std::string Path = ChangeToString(ClickAssetsPath);
+	Path += "/";
+	Path += Name;
+
+	m_EditorManager->SetPath(Path, nullptr);
 }
 
 void RightOption::OnTimer(UINT_PTR nIDEvent)

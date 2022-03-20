@@ -1,6 +1,7 @@
 #include "E_BufferManager.h"
 #include "ParserData.h"
 #include "EaterHeader.h"
+#include "Demo.h"
 
 E_BufferManager::E_BufferManager()
 {
@@ -28,7 +29,7 @@ void E_BufferManager::ChangeEaterFile(ParserData::CModel* FBXMesh)
 		{
 		case MESH_TYPE::SKIN_MESH:
 			EATER_CREATE_FILE(FileName, "../Assets/Model/MeshBuffer/", ".Emesh");	//파일 생성
-			EATER_SET_NODE("SKIN_BUFFER");												//노드 생성
+			EATER_SET_NODE("SKIN_BUFFER");											//노드 생성
 			SetSkinVertexBuffer(mMesh);												//버텍스값 쓰기
 			SetIndexBuffer(mMesh);													//인덱스값 쓰기
 			EATER_CLOSE_FILE();														//파일 닫기
@@ -42,6 +43,8 @@ void E_BufferManager::ChangeEaterFile(ParserData::CModel* FBXMesh)
 			break;
 		}
 		
+		std::string LoadName = "../Assets/Model/MeshBuffer/" + FileName + ".Emesh";
+		Demo::MeshLoad(LoadName);
 	}
 }
 
@@ -92,8 +95,6 @@ void E_BufferManager::SetIndexBuffer(ParserData::CMesh* mMesh)
 void E_BufferManager::SetSkinVertexBuffer(ParserData::CMesh* mMesh)
 {
 	int VertexCount = (int)mMesh->m_VertexList.size();
-	int BoneIndexCount = (int)mMesh->m_VertexList[0]->m_BoneIndices.size();
-
 	EATER_SET_VERTEX_START(VertexCount, VERTEX_TYPE::SKIN);
 	for (int i = 0; i < VertexCount; i++)
 	{

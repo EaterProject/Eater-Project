@@ -23,9 +23,9 @@ private:
 	void LoadFile(std::string& Path);
 
 	//파일 경로
-	std::string SaveStaticFilePath	= "../Assets/Model/StaticModel";
+	std::string SaveStaticFilePath		= "../Assets/Model/StaticModel";
 	std::string SaveSkinFilePath		= "../Assets/Model/SkinModel";
-	std::string SaveAnimationFilePath = "../Assets/Model/Animation";
+	std::string SaveAnimationFilePath	= "../Assets/Model/Animation";
 	std::string SaveMaterialFilePath	= "../Assets/Model/TerrainModel";
 	std::string SaveMeshFilePath		= "../Assets/Model/Mesh";
 

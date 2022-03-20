@@ -18,7 +18,6 @@ public:
 	void SetFileName(std::string& FileName);
 private:
 	void ChangeEaterFile_Static(ParserData::CMesh* OneMesh);
-	void ChangeEaterFile_Bone(ParserData::CMesh* OneMesh);
 	void ChangeEaterFile_Skin(ParserData::CMesh* OneMesh);
 private:
 	void SetDataName(ParserData::CMesh* mMesh);

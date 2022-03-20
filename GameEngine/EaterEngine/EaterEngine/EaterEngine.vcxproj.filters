@@ -145,6 +145,24 @@
     <Filter Include="소스 파일\Resource\Mesh">
       <UniqueIdentifier>{843815ed-f69c-4027-91ed-7b1c7453a5d5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Manager\LoadManager\EATER\EaterScene">
+      <UniqueIdentifier>{0bd7df29-391a-4107-b3da-c816c707cbb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\LoadManager\EATER\Manager">
+      <UniqueIdentifier>{5288aa1d-0bf5-4b35-85c8-62a71487f109}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\LoadManager\EATER\EaterBuffer">
+      <UniqueIdentifier>{2da47d89-ab72-44b2-811b-a74a9edbc4bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\LoadManager\EATER\EaterMesh">
+      <UniqueIdentifier>{0eddee7f-7a80-4631-8aeb-72072960aadc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\LoadManager\EATER\EaterMaterial">
+      <UniqueIdentifier>{8b570963-0941-4894-b30f-aa2a030d069f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\LoadManager\EATER\EaterInterface">
+      <UniqueIdentifier>{610439c6-177f-45c9-8e56-b0f7483da393}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -276,9 +294,6 @@
     <ClInclude Include="FBXManager.h">
       <Filter>소스 파일\Manager\LoadManager\FBX</Filter>
     </ClInclude>
-    <ClInclude Include="EATERManager.h">
-      <Filter>소스 파일\Manager\LoadManager\EATER</Filter>
-    </ClInclude>
     <ClInclude Include="Export\Material.h">
       <Filter>소스 파일\Resource\Material</Filter>
     </ClInclude>
@@ -287,6 +302,24 @@
     </ClInclude>
     <ClInclude Include="Export\Mesh.h">
       <Filter>소스 파일\Resource\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="EATERManager.h">
+      <Filter>소스 파일\Manager\LoadManager\EATER\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Eater_LoadMesh.h">
+      <Filter>소스 파일\Manager\LoadManager\EATER\EaterMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Eater_LoadMaterial.h">
+      <Filter>소스 파일\Manager\LoadManager\EATER\EaterMaterial</Filter>
+    </ClInclude>
+    <ClInclude Include="Eater_LoadBuffer.h">
+      <Filter>소스 파일\Manager\LoadManager\EATER\EaterBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Eater_LoadScene.h">
+      <Filter>소스 파일\Manager\LoadManager\EATER\EaterScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Eater_Interface.h">
+      <Filter>소스 파일\Manager\LoadManager\EATER\EaterInterface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -404,14 +437,29 @@
     <ClCompile Include="FBXManager.cpp">
       <Filter>소스 파일\Manager\LoadManager\FBX</Filter>
     </ClCompile>
-    <ClCompile Include="EATERManager.cpp">
-      <Filter>소스 파일\Manager\LoadManager\EATER</Filter>
-    </ClCompile>
     <ClCompile Include="MeshManager.cpp">
       <Filter>소스 파일\Manager\MeshManager</Filter>
     </ClCompile>
     <ClCompile Include="Mesh.cpp">
       <Filter>소스 파일\Resource\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="EATERManager.cpp">
+      <Filter>소스 파일\Manager\LoadManager\EATER\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Eater_LoadMesh.cpp">
+      <Filter>소스 파일\Manager\LoadManager\EATER\EaterMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Eater_LoadMaterial.cpp">
+      <Filter>소스 파일\Manager\LoadManager\EATER\EaterMaterial</Filter>
+    </ClCompile>
+    <ClCompile Include="Eater_LoadBuffer.cpp">
+      <Filter>소스 파일\Manager\LoadManager\EATER\EaterBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Eater_LoadScene.cpp">
+      <Filter>소스 파일\Manager\LoadManager\EATER\EaterScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Eater_Interface.cpp">
+      <Filter>소스 파일\Manager\LoadManager\EATER\EaterInterface</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

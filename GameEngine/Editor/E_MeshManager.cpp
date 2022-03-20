@@ -69,8 +69,15 @@ void E_MeshManager::ChangeEaterFile_Skin(ParserData::CMesh* OneMesh)
 	else if (OneMesh->m_MeshType == SKIN_MESH)
 	{
 		EATER_SET_NODE("SKIN");
-
 		SetDataName(OneMesh);
+		if (OneMesh->m_TopNode == true)
+		{
+			EATER_SET_MAP("TopNode", "YES");
+		}
+		else
+		{
+			EATER_SET_MAP("TopNode", "NO");
+		}
 		SetMatrix(OneMesh);
 		SetBoneOffset(OneMesh);
 	}
