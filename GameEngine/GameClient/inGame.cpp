@@ -94,7 +94,7 @@ void InGame::Awake()
 	//	std::string num = std::to_string(9 - i);
 	//
 	//	testobj = Instance("box");
-	//	testobj->AddComponent<MeshFilter>()->SetMeshName("TestSphere");
+	//	testobj->AddComponent<MeshFilter>()->SetModelName("TestSphere");
 	//	MF = testobj->GetComponent<MeshFilter>();
 	//	MF->SetDiffuseTextureName("Albedo_" + num);
 	//	MF->SetNormalTextureName("Normal_" + num);
@@ -108,7 +108,7 @@ void InGame::Awake()
 
 
 	//testobj = Instance("box");
-	//testobj->AddComponent<MeshFilter>()->SetMeshName("TestSphere");
+	//testobj->AddComponent<MeshFilter>()->SetModelName("TestSphere");
 	//MF = testobj->GetComponent<MeshFilter>();
 	//MF->SetDiffuseTextureName("Albedo_0");
 	//MF->SetNormalTextureName("Normal_0");
@@ -118,7 +118,7 @@ void InGame::Awake()
 	//testobj->GetTransform()->Scale = { 2.5f, 2.5f, 2.5f };
 
 	testobj = Instance("Scar");
-	testobj->AddComponent<MeshFilter>()->SetMeshName("Scar");
+	testobj->AddComponent<MeshFilter>()->SetModelName("Scar");
 	testobj->GetTransform()->Position = { -100.0f, 75.0f, 0.0f };
 	testobj->GetTransform()->Scale = { 0.01f, 0.01f, 0.01f };
 	testobj->GetTransform()->Rotation = { -90.0f, -90.0f, -90.0f };
@@ -126,7 +126,7 @@ void InGame::Awake()
 	ObjList.push_back(testobj);
 
 	testobj = Instance("Gun");
-	testobj->AddComponent<MeshFilter>()->SetMeshName("Gun");
+	testobj->AddComponent<MeshFilter>()->SetModelName("Gun");
 	testobj->GetTransform()->Position = { -60.0f, 75.0f, 0.0f };
 	testobj->GetTransform()->Scale = { 1.0f, 1.0f, 1.0f };
 	testobj->GetTransform()->Rotation = { -90.0f, -90.0f, -90.0f };
@@ -134,7 +134,7 @@ void InGame::Awake()
 	ObjList.push_back(testobj);
 
 	testobj = Instance("Sword1");
-	testobj->AddComponent<MeshFilter>()->SetMeshName("Sword1");
+	testobj->AddComponent<MeshFilter>()->SetModelName("Sword1");
 	testobj->GetTransform()->Position = { -40.0f, 75.0f, 0.0f };
 	testobj->GetTransform()->Scale = { 0.1f, 0.1f, 0.1f };
 	testobj->GetTransform()->Rotation = { -90.0f, 0.0f, 0.0f };
@@ -142,7 +142,7 @@ void InGame::Awake()
 	ObjList.push_back(testobj);
 
 	testobj = Instance("LampA");
-	testobj->AddComponent<MeshFilter>()->SetMeshName("LampA");
+	testobj->AddComponent<MeshFilter>()->SetModelName("LampA");
 	testobj->GetTransform()->Position = { 0.0f, 85.0f, 0.0f };
 	testobj->GetTransform()->Scale = { 0.1f, 0.1f, 0.1f };
 	testobj->GetTransform()->Rotation = { 0.0f, 90.0f, 0.0f };
@@ -150,7 +150,7 @@ void InGame::Awake()
 	ObjList.push_back(testobj);
 
 	testobj = Instance("SciFiBox");
-	testobj->AddComponent<MeshFilter>()->SetMeshName("SciFiBox");
+	testobj->AddComponent<MeshFilter>()->SetModelName("SciFiBox");
 	testobj->GetTransform()->Position = { 50.0f, 75.0f, 0.0f };
 	testobj->GetTransform()->Scale = { 0.5f, 0.5f, 0.5f };
 	testobj->GetTransform()->Rotation = { 0.0f, 0.0f, 0.0f };
@@ -158,7 +158,7 @@ void InGame::Awake()
 	ObjList.push_back(testobj);
 
 	testobj = Instance("Sword2");
-	testobj->AddComponent<MeshFilter>()->SetMeshName("Sword2");
+	testobj->AddComponent<MeshFilter>()->SetModelName("Sword2");
 	testobj->GetTransform()->Position = { 90.0f, 75.0f, 0.0f };
 	testobj->GetTransform()->Scale = { 1.0f, 1.0f, 1.0f };
 	testobj->GetTransform()->Rotation = { 0.0f, 0.0f, 0.0f };
@@ -166,7 +166,7 @@ void InGame::Awake()
 	ObjList.push_back(testobj);
 
 	testobj = Instance("Chair");
-	testobj->AddComponent<MeshFilter>()->SetMeshName("Chair");
+	testobj->AddComponent<MeshFilter>()->SetModelName("Chair");
 	testobj->GetTransform()->Position = { 120.0f, 50.0f, 0.0f };
 	testobj->GetTransform()->Scale = { 0.01f, 0.01f, 0.01f };
 	testobj->GetTransform()->Rotation = { -90.0f, 0.0f, 90.0f };
@@ -176,17 +176,17 @@ void InGame::Awake()
 	//testobj = Instance("monster_A");
 	//testobj->GetTransform()->Rotation.x -= 90.0f;
 	//testobj->GetTransform()->Scale = { 1.0f, 1.0f, 1.0f };
-	//testobj->AddComponent<MeshFilter>()->SetMeshName("monster");
+	//testobj->AddComponent<MeshFilter>()->SetModelName("monster");
 	//AC =testobj->AddComponent<AnimationController>();
 	//testobj->GetComponent<MeshFilter>()->SetAnimationName("monster");
 
 	//testobj = Instance("Dome");
-	//testobj->AddComponent<MeshFilter>()->SetMeshName("Dome");
+	//testobj->AddComponent<MeshFilter>()->SetModelName("Dome");
 	//testobj->GetComponent<MeshFilter>()->SetDiffuseTextureName("ColorMap_1");
 	//testobj->GetTransform()->Scale = { 1, 1, 1 };
 
 	//testobj = Instance("Inside");
-	//testobj->AddComponent<MeshFilter>()->SetMeshName("Inside");
+	//testobj->AddComponent<MeshFilter>()->SetModelName("Inside");
 	//testobj->GetComponent<MeshFilter>()->SetDiffuseTextureName("ColorMap_1");
 	//testobj->GetTransform()->Scale = { 0.01f, 0.01f, 0.01f };
 

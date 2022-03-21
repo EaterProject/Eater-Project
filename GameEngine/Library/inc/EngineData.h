@@ -53,6 +53,7 @@ public:
 		delete VertexBuf;
 	}
 
+public:
 	UINT BufferIndex = 0;		// Mesh Buffer Index
 
 	IndexBuffer* IndexBuf;		// Index Buffer
@@ -205,9 +206,6 @@ public:
 
 	Matrix WorldTM;					//월드 매트릭스
 	Matrix LocalTM;					//로컬 매트릭스
-
-	/// Mesh 자체 포멧 추가후 제거해야함..
-	MeshBuffer* MeshBuffer_Data = nullptr;
 
 	int BoneIndex = -1;				//본일경우 자신의 인덱스
 	std::vector<Matrix>* BoneTMList = nullptr;	//본 매트릭스

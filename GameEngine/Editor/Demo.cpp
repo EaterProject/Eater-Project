@@ -151,7 +151,7 @@ GameObject* Demo::CreateBaseObject(std::string ObjectName, std::string MeshName)
 	MeshFilter* mMeshFilter = Object->AddComponent<MeshFilter>();
 	Transform* mTransform = Object->GetTransform();
 
-	mMeshFilter->SetMeshName(MeshName);
+	mMeshFilter->SetModelName(MeshName);
 	ObjectList.insert({ ObjectName, Object });
 	return Object;
 }
@@ -168,7 +168,7 @@ GameObject* Demo::CreateSkinObject(std::string ObjectName, std::string MeshName)
 	std::string SkinMeshName = MeshName.substr(Start, End);
 
 	
-	MF->SetMeshName(SkinMeshName);
+	MF->SetModelName(SkinMeshName);
 	MF->SetAnimationName(SkinMeshName);
 	ObjectList.insert({ ObjectName,Skin });
 	return Skin;

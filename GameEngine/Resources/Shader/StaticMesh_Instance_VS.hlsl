@@ -11,7 +11,7 @@ cbuffer cbInstanceStaticMesh
 MeshVertexOut StaticMesh_Instance_VS(MeshVertexIn vin, MeshInstanceIn instance)
 {
     MeshVertexOut vout;
-
+    
     vout.PosW = mul(instance.World, float4(vin.PosL, 1.0f)).xyz;
     vout.PosV = mul(gView, float4(vout.PosW, 1.0f)).xyz;
     vout.PosH = mul(gProj, float4(vout.PosV, 1.0f));

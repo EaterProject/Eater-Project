@@ -226,7 +226,7 @@ LRESULT CTAP_MeshFilter::OnUserFun(WPARAM wParam, LPARAM lparam)
 		if (Type == FBX || Type == EATER)
 		{
 			MeshName_Edit.SetWindowTextW(strString);
-			mMeshFilter->SetMeshName(FileName);
+			mMeshFilter->SetModelName(FileName);
 		}
 		else
 		{

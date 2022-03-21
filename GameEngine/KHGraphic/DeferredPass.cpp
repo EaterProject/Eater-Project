@@ -107,7 +107,7 @@ void DeferredPass::Create(int width, int height)
 
 	// RenderTarget »ý¼º..
 	g_Factory->CreateRenderTexture<RT_Deffered_Albedo>(&texDescDiffuse, nullptr, &rtvDescDiffuse, &srvDescDiffuse, nullptr);
-	g_Factory->CreateRenderTexture<RT_Deffered_Emissive>(&texDescDiffuse, nullptr, &rtvDescDiffuse, &srvDescDiffuse, nullptr);
+	g_Factory->CreateRenderTexture<RT_Deffered_Emissive>(&texDescPosNormal, nullptr, &rtvDescPosNormal, &srvDescPosNormal, nullptr);
 	g_Factory->CreateRenderTexture<RT_Deffered_Normal>(&texDescPosNormal, nullptr, &rtvDescPosNormal, &srvDescPosNormal, nullptr);
 	g_Factory->CreateRenderTexture<RT_Deffered_Position>(&texDescPosNormal, nullptr, &rtvDescPosNormal, &srvDescPosNormal, nullptr);
 	g_Factory->CreateRenderTexture<RT_Deffered_NormalDepth>(&texDescPosNormal, nullptr, &rtvDescPosNormal, &srvDescPosNormal, nullptr);
@@ -209,6 +209,7 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const std:
 
 	MeshRenderBuffer* mesh = instance->m_Mesh;
 	MaterialRenderBuffer* mat = instance->m_Material;
+	MaterialSubData* matSub = mat->m_MaterialSubData;
 
 	for (int i = 0; i < meshlist.size(); i++)
 	{
@@ -255,7 +256,10 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const std:
 
 		// Pixel Shader Update..
 		CB_Material materialBuf;
-		materialBuf.gColor = mat->m_MaterialSubData->BaseColor;
+		materialBuf.gColor = matSub->BaseColor;
+		materialBuf.gEmissiveFactor = matSub->EmissiveFactor;
+		materialBuf.gRoughnessFactor = matSub->RoughnessFactor;
+		materialBuf.gMetallicFactor = matSub->MetallicFactor;
 
 		if (mat->m_Albedo)
 		{
@@ -313,6 +317,7 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rend
 	ObjectData* obj = meshData->m_ObjectData;
 	MeshRenderBuffer* mesh = instance->m_Mesh;
 	MaterialRenderBuffer* mat = instance->m_Material;
+	MaterialSubData* matSub = mat->m_MaterialSubData;
 
 	Matrix world = *obj->World;
 	Matrix view = g_GlobalData->CamView;
@@ -336,7 +341,10 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rend
 
 		// Pixel Shader Update..
 		CB_Material materialBuf;
-		materialBuf.gColor = mat->m_MaterialSubData->BaseColor;
+		materialBuf.gColor = matSub->BaseColor;
+		materialBuf.gEmissiveFactor = matSub->EmissiveFactor;
+		materialBuf.gRoughnessFactor = matSub->RoughnessFactor;
+		materialBuf.gMetallicFactor = matSub->MetallicFactor;
 
 		if (mat->m_Albedo)
 		{
@@ -424,7 +432,10 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rend
 
 		// Pixel Shader Update..
 		CB_Material materialBuf;
-		materialBuf.gColor = mat->m_MaterialSubData->BaseColor;
+		materialBuf.gColor = matSub->BaseColor;
+		materialBuf.gEmissiveFactor = matSub->EmissiveFactor;
+		materialBuf.gRoughnessFactor = matSub->RoughnessFactor;
+		materialBuf.gMetallicFactor = matSub->MetallicFactor;
 
 		if (mat->m_Albedo)
 		{

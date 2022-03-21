@@ -19,7 +19,7 @@
 
 MeshFilter::MeshFilter()
 {
-	MeshName = "";
+	ModelName = "";
 
 	//Component Terrain보다 먼저 실행되어야함
 	SetUp_Order = FUNCTION_ORDER_FIRST;
@@ -28,18 +28,23 @@ MeshFilter::MeshFilter()
 
 MeshFilter::~MeshFilter()
 {
-	if (Materials && Materials->Defalt)
+	if (m_Material && m_Material->Defalt)
 	{
-		delete Materials;
+		delete m_Material;
 	}
 }
 
 void MeshFilter::Start()
 {
 	//클라이언트쪽에서 텍스쳐의 이름을 넣고 애니메이션을 넣고 모두 끝난상태
+	if (isLoad_Model == true)
+	{
+		CreateModel();
+	}
+
 	if (isLoad_Mesh == true)
 	{
-		CreateMesh();
+		CheckMesh();
 	}
 
 	if (isLoad_Material == true)
@@ -58,10 +63,27 @@ void MeshFilter::Start()
 	}
 
 	//실행도중 텍스쳐나 메쉬를 바꿀수있게 모두 true
+	isLoad_Model = true;
 	isLoad_Mesh = true;
 	isLoad_Material = true;
 	isLoad_Texture = true;
 	isLoad_Animation = true;
+}
+
+void MeshFilter::SetModelName(std::string mModelName)
+{
+	if (isLoad_Model == false)
+	{
+		isLoad_Model = true;
+		ModelName = mModelName;
+	}
+	else
+	{
+		ModelName = mModelName;
+		//매쉬를 새롭게 넣어주기전에 기존 생성한 자식오브젝트들을 삭제
+		DeleteChildObject();
+		CreateModel();
+	}
 }
 
 void MeshFilter::SetMeshName(std::string mMeshName)
@@ -74,9 +96,7 @@ void MeshFilter::SetMeshName(std::string mMeshName)
 	else
 	{
 		MeshName = mMeshName;
-		//매쉬를 새롭게 넣어주기전에 기존 생성한 자식오브젝트들을 삭제
-		DeleteChildObject();
-		CreateMesh();
+		SetMesh(mMeshName);
 	}
 }
 
@@ -160,22 +180,22 @@ void MeshFilter::SetAnimationName(std::string mAnimeName)
 
 void MeshFilter::SetEmissiveFactor(float emissiveFactor)
 {
-	Materials->SetEmissiveFactor(emissiveFactor);
+	m_Material->SetEmissiveFactor(emissiveFactor);
 }
 
 void MeshFilter::SetRoughnessFactor(float roughnessFactor)
 {
-	Materials->SetRoughnessFactor(roughnessFactor);
+	m_Material->SetRoughnessFactor(roughnessFactor);
 }
 
 void MeshFilter::SetMetallicFactor(float metallicFactor)
 {
-	Materials->SetMetallicFactor(metallicFactor);
+	m_Material->SetMetallicFactor(metallicFactor);
 }
 
 std::string MeshFilter::GetMeshName()
 {
-	return MeshName;
+	return ModelName;
 }
 
 std::string MeshFilter::GetDiffuseTextureName()
@@ -195,7 +215,16 @@ std::string MeshFilter::GetORMTextureName()
 
 Material* MeshFilter::GetMaterial()
 {
-	return Materials;
+	return m_Material;
+}
+
+void MeshFilter::CheckMesh()
+{
+	if (MeshName.empty() == false)
+	{
+		// Mesh Setting..
+		SetMesh(MeshName);
+	}
 }
 
 void MeshFilter::CheckMaterial()
@@ -242,6 +271,20 @@ void MeshFilter::CheckAnimation()
 	}
 }
 
+void MeshFilter::SetMesh(std::string meshName)
+{
+	Mesh* mesh = LoadManager::GetMesh(MeshName);
+
+	// 해당 Mesh가 없다면..
+	if (mesh == nullptr) return;
+
+	// 변경된 Mesh 그래픽 동기화..
+	GraphicEngine::Get()->PushChangeInstance(gameobject->OneMeshData);
+
+	// 해당 Mesh 설정..
+	m_Mesh = mesh;
+}
+
 void MeshFilter::SetMaterial(std::string matName)
 {
 	Material* material = LoadManager::GetMaterial(matName);
@@ -249,34 +292,31 @@ void MeshFilter::SetMaterial(std::string matName)
 	// 해당 Material이 없다면..
 	if (material == nullptr) return;
 
-	// 최초 설정이 아닌 변경인 경우 그래픽 동기화..
-	if (Materials != nullptr)
-	{
-		GraphicEngine::Get()->PushChangeInstance(gameobject->OneMeshData);
-	}
+	// 변경된 Material 그래픽 동기화..
+	GraphicEngine::Get()->PushChangeInstance(gameobject->OneMeshData);
 
 	// 해당 Material 설정..
-	Materials = material;
+	m_Material = material;
 }
 
 void MeshFilter::SetTexture(std::string texName, UINT texType)
 {
-	if (Materials == nullptr) return;
+	if (m_Material == nullptr) return;
 
 	// Texture 설정..
 	switch (texType)
 	{
 	case DIFFUSE_TEXTURE:
-		Materials->SetDiffuseTexture(texName);
+		m_Material->SetDiffuseTexture(texName);
 		break;
 	case NORMAL_TEXTURE:
-		Materials->SetNormalTexture(texName);
+		m_Material->SetNormalTexture(texName);
 		break;
 	case EMISSIVE_TEXTURE:
-		Materials->SetEmissiveTexture(texName);
+		m_Material->SetEmissiveTexture(texName);
 		break;
 	case ORM_TEXTURE:
-		Materials->SetORMTexture(texName);
+		m_Material->SetORMTexture(texName);
 		break;
 	default:
 		break;
@@ -309,7 +349,7 @@ void MeshFilter::CreateStaticMesh(LoadMeshData* mMesh, GameObject* Object)
 
 	SetMatrixData(mMesh, Data, Object);
 	SetMaterialData(mMesh, Data, Object);
-	SetMeshData(mMesh, Data);
+	SetMeshData(mMesh, Data, Object);
 	SetType(mMesh, Data);
 
 	int ChildCount = (int)mMesh->Child.size();
@@ -359,7 +399,7 @@ void MeshFilter::CreateSkinMesh(LoadMeshData* mMesh, GameObject* Object)
 
 	SetMatrixData(mMesh, Data, Object);
 	SetMaterialData(mMesh, Data, Object);
-	SetMeshData(mMesh, Data);
+	SetMeshData(mMesh, Data, Object);
 
 	Data->Object_Data->ObjType = OBJECT_TYPE::SKINNING;
 
@@ -385,17 +425,17 @@ void MeshFilter::SetMaterialData(LoadMeshData* LoadMesh, MeshData* mMesh, GameOb
 	if (material)
 	{
 		// 로드한 Material 설정..
-		meshFilter->Materials = material;
+		meshFilter->m_Material = material;
 	}
 	else
 	{
 		// 새로운 Material 생성..
-		meshFilter->Materials = new Material();
-		meshFilter->Materials->Defalt = true;
+		meshFilter->m_Material = new Material();
+		meshFilter->m_Material->Defalt = true;
 	}
 
 	// Render Material Data 설정..
-	mMesh->Material_Buffer = meshFilter->Materials->m_MaterialData;
+	mMesh->Material_Buffer = meshFilter->m_Material->m_MaterialData;
 }
 
 void MeshFilter::SetMatrixData(LoadMeshData* LoadMesh, MeshData* mMesh, GameObject* Object)
@@ -409,16 +449,21 @@ void MeshFilter::SetMatrixData(LoadMeshData* LoadMesh, MeshData* mMesh, GameObje
 	mMesh->Object_Data->Local = &mTransform->Load_World;
 }
 
-void MeshFilter::SetMeshData(LoadMeshData* LoadMesh, MeshData* mMesh)
+void MeshFilter::SetMeshData(LoadMeshData* LoadMesh, MeshData* mMesh, GameObject* obj)
 {
 	/// Load시 저장해 둿던 Mesh Name 기준으로 해당 Mesh Buffer 설정..
 	Mesh* mesh = LoadManager::GetMesh(LoadMesh->MeshName);
+	MeshFilter* meshFilter = obj->GetComponent<MeshFilter>();
 
-	// 해당 Mesh Buffer 설정..
-	mMesh->Mesh_Buffer = mesh->m_MeshData;
+	// 로드 여부에 따른 Mesh 설정..
+	if (mesh)
+	{
+		// 로드한 Mesh 설정..
+		meshFilter->m_Mesh = mesh;
 
-	/// 그래픽 측 동기화 필요..
-
+		// Render Mesh Data 설정..
+		mMesh->Mesh_Buffer = mesh->m_MeshData;
+	}
 }
 
 void MeshFilter::SetType(LoadMeshData* LoadMesh, MeshData* mMesh)
@@ -449,10 +494,10 @@ void MeshFilter::LinkHierarchy(Transform* my, Transform* parent)
 	parent->SetChild(my);
 }
 
-void MeshFilter::CreateMesh()
+void MeshFilter::CreateModel()
 {
 	///이름으로 로드할 데이터를 찾아서 가져옴
-	ModelData* mMesh = LoadManager::GetModel(MeshName);
+	ModelData* mMesh = LoadManager::GetModel(ModelName);
 	Transform* Tr = gameobject->GetTransform();
 
 	if (mMesh == nullptr) { return; }
