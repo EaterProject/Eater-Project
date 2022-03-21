@@ -629,7 +629,6 @@ void FBXParser::ProcessAnimation(fbxsdk::FbxNode* node)
 		{
 			m_OneMesh->m_Animation = m_OneAnimation;
 		}
-
 	}
 }
 
