@@ -256,7 +256,7 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const std:
 
 		// Pixel Shader Update..
 		CB_Material materialBuf;
-		materialBuf.gColor = matSub->BaseColor;
+		materialBuf.gAddColor = matSub->AddColor;
 		materialBuf.gEmissiveFactor = matSub->EmissiveFactor;
 		materialBuf.gRoughnessFactor = matSub->RoughnessFactor;
 		materialBuf.gMetallicFactor = matSub->MetallicFactor;
@@ -341,7 +341,7 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rend
 
 		// Pixel Shader Update..
 		CB_Material materialBuf;
-		materialBuf.gColor = matSub->BaseColor;
+		materialBuf.gAddColor = matSub->AddColor;
 		materialBuf.gEmissiveFactor = matSub->EmissiveFactor;
 		materialBuf.gRoughnessFactor = matSub->RoughnessFactor;
 		materialBuf.gMetallicFactor = matSub->MetallicFactor;
@@ -432,7 +432,7 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rend
 
 		// Pixel Shader Update..
 		CB_Material materialBuf;
-		materialBuf.gColor = matSub->BaseColor;
+		materialBuf.gAddColor = matSub->AddColor;
 		materialBuf.gEmissiveFactor = matSub->EmissiveFactor;
 		materialBuf.gRoughnessFactor = matSub->RoughnessFactor;
 		materialBuf.gMetallicFactor = matSub->MetallicFactor;

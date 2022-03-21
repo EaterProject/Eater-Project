@@ -40,7 +40,7 @@ void RenderDataConverter::ConvertMeshData(MeshData* originData, RenderData* rend
 			renderData->m_TerrainBuffer->m_MaterialList.push_back(layerMaterial);
 		}
 
-		m_LayerList.insert(std::make_pair(m_LayerList.size(), renderData->m_TerrainBuffer));
+		m_LayerList.insert(std::make_pair((UINT)m_LayerList.size(), renderData->m_TerrainBuffer));
 	}
 	break;
 	default:

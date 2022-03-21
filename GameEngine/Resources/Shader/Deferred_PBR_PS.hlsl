@@ -8,7 +8,7 @@
 
 cbuffer cbMaterial : register(b0)
 {
-    float4 gColor           : packoffset(c0);
+    float4 gAddColor        : packoffset(c0);
     float gEmissiveFactor   : packoffset(c1.x);
     float gRoughnessFactor  : packoffset(c1.y);
     float gMetallicFactor   : packoffset(c1.z);
@@ -66,11 +66,11 @@ MeshPixelOut Deferred_PBR_PS(MeshPixelIn pin)
 #else
     if (gTexID & ALBEDO_MAP)
     {
-        albedo = gDiffuseMap.Sample(gSamWrapLinear, pin.Tex);
+        albedo = gDiffuseMap.Sample(gSamWrapLinear, pin.Tex) + gAddColor;
     }
     else
     {
-        albedo = gColor;
+        albedo = gAddColor;
     }
     if (gTexID & NORMAL_MAP)
     {

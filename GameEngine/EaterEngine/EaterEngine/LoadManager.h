@@ -15,7 +15,7 @@
 
 namespace ParserData
 {
-	struct CModel;
+	class CModel;
 	class CMesh;
 	class CAnimation;
 }

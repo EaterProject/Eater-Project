@@ -56,11 +56,6 @@ void Eater_LoadMaterial::LoadData(std::string& Path)
 			float Scale_Y = std::stof(EATER_GET_MAP(i, "Tileing_Y"));
 			Data->Material_SubData->TexTM = Matrix::CreateScale(1 / Scale_X, 1 / Scale_Y, 1.0f);
 
-			Data->Material_SubData->BaseColor.x = std::stof(EATER_GET_MAP(i, "BaseColor_R"));
-			Data->Material_SubData->BaseColor.y = std::stof(EATER_GET_MAP(i, "BaseColor_G"));
-			Data->Material_SubData->BaseColor.z = std::stof(EATER_GET_MAP(i, "BaseColor_B"));
-			Data->Material_SubData->BaseColor.w = std::stof(EATER_GET_MAP(i, "BaseColor_A"));
-
 			Data->Material_SubData->AddColor.x = std::stof(EATER_GET_MAP(i, "AddColor_R"));
 			Data->Material_SubData->AddColor.y = std::stof(EATER_GET_MAP(i, "AddColor_G"));
 			Data->Material_SubData->AddColor.z = std::stof(EATER_GET_MAP(i, "AddColor_B"));

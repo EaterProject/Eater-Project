@@ -121,7 +121,7 @@ void Eater_LoadBuffer::LoadSkinBuffer(int index, ParserData::CMesh* mesh)
 		{
 			if (Data[Boneindex] != -1)
 			{
-				V->m_BoneIndices.push_back(Data[Boneindex]);
+				V->m_BoneIndices.push_back((UINT)Data[Boneindex]);
 			}
 			Boneindex++;
 		}

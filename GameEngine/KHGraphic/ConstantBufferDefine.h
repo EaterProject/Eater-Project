@@ -113,7 +113,7 @@ struct CB_Light : public cbLight
 SHADER_CONSTANT_BUFFER(cbMaterial)
 struct CB_Material : public cbMaterial
 {
-	DirectX::SimpleMath::Vector4 gColor = DirectX::SimpleMath::Vector4(0.5f, 0.5f, 0.5f, 1.0f);
+	DirectX::SimpleMath::Vector4 gAddColor = DirectX::SimpleMath::Vector4(0.5f, 0.5f, 0.5f, 1.0f);
 	float gEmissiveFactor = 1.0f;
 	float gRoughnessFactor = 1.0f;
 	float gMetallicFactor = 1.0f;

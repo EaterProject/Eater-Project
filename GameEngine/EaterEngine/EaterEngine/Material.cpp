@@ -100,11 +100,6 @@ void Material::SetORMTexture(std::string ormName)
 	GraphicEngine::Get()->PushChangeMaterial(m_MaterialData);
 }
 
-void Material::SetBaseColor(DirectX::SimpleMath::Vector4 color)
-{
-	m_MaterialData->Material_SubData->BaseColor = color;
-}
-
 void Material::SetAddColor(DirectX::SimpleMath::Vector4 color)
 {
 	m_MaterialData->Material_SubData->AddColor = color;
