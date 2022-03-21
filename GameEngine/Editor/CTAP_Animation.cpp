@@ -35,7 +35,7 @@ void CTAP_Animation::SetGameObject(AnimationController* Data)
 	int Count = (int)NameData.size();
 	for (int i = 0; i < Count; i++)
 	{
-		AnimationList.AddString(GetDataCString(NameData[i]));
+		AnimationList.AddString(ChangeToCString(NameData[i]));
 	}
 	AnimationList.SetCurSel(0);
 

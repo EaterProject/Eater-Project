@@ -3,6 +3,7 @@
 
 // AssetsDialog 대화 상자
 class RightOption;
+class FileOption;
 class AssetsDialog : public CDialogEx
 {
 	DECLARE_DYNAMIC(AssetsDialog)
@@ -39,7 +40,8 @@ public:
 public:
 	void Initialize(RightOption* mRight);
 	int FindChildFile(HTREEITEM hParentItem, CString str);
-	RightOption* mRightOption;
+	RightOption*	mRightOption;
+	FileOption*		mFileOption;
 public:
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnAssetsClick(NMHDR* pNMHDR, LRESULT* pResult);

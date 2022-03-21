@@ -61,28 +61,52 @@ void CTAP_MeshFilter::SetGameObject(MeshFilter* ObjectMeshFilter)
 		float AddColorB = mMaterial->m_MaterialData->Material_SubData->AddColor.z;
 		float AddColorA = mMaterial->m_MaterialData->Material_SubData->AddColor.w;
 
-		float BaseColorR = mMaterial->m_MaterialData->Material_SubData->BaseColor.x;
-		float BaseColorG = mMaterial->m_MaterialData->Material_SubData->BaseColor.y;
-		float BaseColorB = mMaterial->m_MaterialData->Material_SubData->BaseColor.z;
-		float BaseColorA = mMaterial->m_MaterialData->Material_SubData->BaseColor.w;
-
-		BaseColor_R.SetWindowTextW(ChangeToCString(BaseColorR));
-		BaseColor_G.SetWindowTextW(ChangeToCString(BaseColorG));
-		BaseColor_B.SetWindowTextW(ChangeToCString(BaseColorB));
-		BaseColor_A.SetWindowTextW(ChangeToCString(BaseColorA));
-
-		AddColor_R.SetWindowTextW(ChangeToCString(BaseColorR));
-		AddColor_G.SetWindowTextW(ChangeToCString(BaseColorG));
-		AddColor_B.SetWindowTextW(ChangeToCString(BaseColorB));
-		AddColor_A.SetWindowTextW(ChangeToCString(BaseColorA));
-
+	
 		Emissive_Edit.SetWindowTextW(ChangeToCString(EmissiveF));
 		Roughness_Edit.SetWindowTextW(ChangeToCString(RoughnessF));
 		Matallic_Edit.SetWindowTextW(ChangeToCString(MetallicF));
 
-		Emissive_Slider.SetPos(EmissiveF);
-		Roughnees_Slider.SetPos(RoughnessF);
-		Matallic_Slider.SetPos(MetallicF);
+		Emissive_Slider.SetPos(EmissiveF*10);
+		Roughnees_Slider.SetPos(RoughnessF* 100 + 100);
+		Matallic_Slider.SetPos(MetallicF*100 + 100);
+
+		Emissive_Slider.SetRange(0, 100);
+		Matallic_Slider.SetRange(0, 200);
+		Roughnees_Slider.SetRange(0, 200);
+
+		Vector4 Add = mMaterial->m_MaterialData->Material_SubData->AddColor;
+		Vector4 Base = mMaterial->m_MaterialData->Material_SubData->BaseColor;
+
+	
+		Add_R_Slider.SetRange(0, 255);
+		Add_G_Slider.SetRange(0, 255);
+		Add_B_Slider.SetRange(0, 255);
+		Add_R_Slider.SetPos(Add.x * 255);
+		Add_G_Slider.SetPos(Add.y * 255);
+		Add_B_Slider.SetPos(Add.z * 255);
+
+		AddColor_R.SetWindowTextW(ChangeToCString(AddColorR));
+		AddColor_G.SetWindowTextW(ChangeToCString(AddColorG));
+		AddColor_B.SetWindowTextW(ChangeToCString(AddColorB));
+
+	}
+	else
+	{
+		Add_R_Slider.SetRange(0, 255);
+		Add_G_Slider.SetRange(0, 255);
+		Add_B_Slider.SetRange(0, 255);
+		Add_R_Slider.SetPos(255);
+		Add_G_Slider.SetPos(255);
+		Add_B_Slider.SetPos(255);
+
+
+		Emissive_Slider.SetRange(0, 100);
+		Matallic_Slider.SetRange(0, 200);
+		Roughnees_Slider.SetRange(0, 200);
+
+		Emissive_Slider.SetPos(10);
+		Roughnees_Slider.SetPos(100);
+		Matallic_Slider.SetPos(100);
 	}
 }
 
@@ -91,12 +115,13 @@ void CTAP_MeshFilter::UpdateGameObject()
 	CString Name00;
 	CString Name01;
 	CString Name02;
-	Emissive_Edit.SetWindowTextW(Name00);
-	Roughness_Edit.SetWindowTextW(Name01);
-	Matallic_Edit.SetWindowTextW(Name02);
+	Emissive_Edit.GetWindowTextW(Name00);
+	Roughness_Edit.GetWindowTextW(Name01);
+	Matallic_Edit.GetWindowTextW(Name02);
 
 	if (Name00 != "")
 	{
+		float Emissive = ChangeToFloat(Name00);
 		mMaterial->m_MaterialData->Material_SubData->EmissiveFactor = ChangeToFloat(Name00);
 	}
 
@@ -111,20 +136,7 @@ void CTAP_MeshFilter::UpdateGameObject()
 	}
 
 	CString GetNumber;
-	Vector4 BaseColor;
 	Vector4 AddColor;
-	BaseColor_R.GetWindowTextW(GetNumber);
-	BaseColor.x = ChangeToFloat(GetNumber);
-
-	BaseColor_G.GetWindowTextW(GetNumber);
-	BaseColor.y = ChangeToFloat(GetNumber);
-
-	BaseColor_B.GetWindowTextW(GetNumber);
-	BaseColor.z = ChangeToFloat(GetNumber);
-
-	BaseColor_A.GetWindowTextW(GetNumber);
-	BaseColor.w = ChangeToFloat(GetNumber);
-
 
 	AddColor_R.GetWindowTextW(GetNumber);
 	AddColor.x = ChangeToFloat(GetNumber);
@@ -135,13 +147,10 @@ void CTAP_MeshFilter::UpdateGameObject()
 	AddColor_B.GetWindowTextW(GetNumber);
 	AddColor.z = ChangeToFloat(GetNumber);
 
-	AddColor_A.GetWindowTextW(GetNumber);
-	AddColor.w = ChangeToFloat(GetNumber);
 
 	if (mMaterial != nullptr)
 	{
 		mMaterial->SetAddColor(AddColor);
-		mMaterial->SetBaseColor(BaseColor);
 	}
 }
 
@@ -159,14 +168,12 @@ void CTAP_MeshFilter::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EDIT7, Roughness_Edit);
 	DDX_Control(pDX, IDC_EDIT8, Matallic_Edit);
 	DDX_Control(pDX, IDC_EDIT9, EmissiveName_Edit);
-	DDX_Control(pDX, IDC_EDIT15, BaseColor_R);
-	DDX_Control(pDX, IDC_EDIT16, BaseColor_G);
-	DDX_Control(pDX, IDC_EDIT17, BaseColor_B);
-	DDX_Control(pDX, IDC_EDIT18, BaseColor_A);
 	DDX_Control(pDX, IDC_EDIT21, AddColor_R);
 	DDX_Control(pDX, IDC_EDIT22, AddColor_G);
 	DDX_Control(pDX, IDC_EDIT23, AddColor_B);
-	DDX_Control(pDX, IDC_EDIT24, AddColor_A);
+	DDX_Control(pDX, IDC_SLIDER7, Add_R_Slider);
+	DDX_Control(pDX, IDC_SLIDER8, Add_G_Slider);
+	DDX_Control(pDX, IDC_SLIDER9, Add_B_Slider);
 }
 
 BOOL CTAP_MeshFilter::OnInitDialog()
@@ -181,19 +188,21 @@ BOOL CTAP_MeshFilter::OnInitDialog()
 	Roughness_Edit.SetWindowTextW(L"");
 	Matallic_Edit.SetWindowTextW(L"");
 
-	BaseColor_R.SetWindowTextW(L"255");
-	BaseColor_G.SetWindowTextW(L"255");
-	BaseColor_B.SetWindowTextW(L"255");
-	BaseColor_A.SetWindowTextW(L"255");
-
 	AddColor_R.SetWindowTextW(L"255");
 	AddColor_G.SetWindowTextW(L"255");
 	AddColor_B.SetWindowTextW(L"255");
-	AddColor_A.SetWindowTextW(L"255");
 
 	return 0;
 }
 
+void CTAP_MeshFilter::SetSlider(CSliderCtrl& Silder,int Number)
+{
+	CString str;
+	str.Format(_T("%d"), Number); //Format을 이용하여 int값을 변경
+	Silder.SetWindowTextW(str);
+	UpdateData(false); //set을 해주기 위해서 UpdateData(false); 를 사용
+
+}
 
 BEGIN_MESSAGE_MAP(CTAP_MeshFilter, CDialogEx)
 	ON_WM_LBUTTONUP()
@@ -318,29 +327,56 @@ BOOL CTAP_MeshFilter::PreTranslateMessage(MSG* pMsg)
 void CTAP_MeshFilter::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 {
 	mMaterial = mMeshFilter->GetMaterial();
+	if (mMaterial == nullptr) { return; }
 
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
 	if (pScrollBar->GetDlgCtrlID() == Emissive_Slider.GetDlgCtrlID())
 	{
-		int Emissive = Emissive_Slider.GetPos();
+		float Emissive = Emissive_Slider.GetPos();
+		Emissive *= 0.1f;
+
 		Emissive_Edit.SetWindowTextW(ChangeToCString(Emissive));
-		mMaterial->SetEmissiveFactor(Emissive * 0.1);
+		mMaterial->SetEmissiveFactor(Emissive);
 	}
 
 	if (pScrollBar->GetDlgCtrlID() == Roughnees_Slider.GetDlgCtrlID())
 	{
-		int Roughnees = Roughnees_Slider.GetPos();
+		float Roughnees = Roughnees_Slider.GetPos();
+		Roughnees -= 100;
+		Roughnees *= 0.01f;
 		Roughness_Edit.SetWindowTextW(ChangeToCString(Roughnees));
-		mMaterial->SetRoughnessFactor(Roughnees * 0.01);
+		mMaterial->SetRoughnessFactor(Roughnees);
 	}
 
 	if (pScrollBar->GetDlgCtrlID() == Matallic_Slider.GetDlgCtrlID())
 	{
-		int Matallic = Matallic_Slider.GetPos();
+		float Matallic = Matallic_Slider.GetPos();
+		Matallic -= 100;
+		Matallic *= 0.01f;
 		Matallic_Edit.SetWindowTextW(ChangeToCString(Matallic));
-		mMaterial->SetMetallicFactor(Matallic * 0.01);
+		mMaterial->SetMetallicFactor(Matallic);
 	}
 
+	if (pScrollBar->GetDlgCtrlID() == Add_R_Slider.GetDlgCtrlID())
+	{
+		int AddColor = Add_R_Slider.GetPos();
+		mMaterial->m_MaterialData->Material_SubData->AddColor.x = AddColor / 255.0f;
+		AddColor_R.SetWindowTextW(ChangeToCString(AddColor / 255.0f));
+	}
+
+	if (pScrollBar->GetDlgCtrlID() == Add_G_Slider.GetDlgCtrlID())
+	{
+		int AddColor = Add_G_Slider.GetPos();
+		mMaterial->m_MaterialData->Material_SubData->AddColor.y = AddColor / 255.0f;
+		AddColor_G.SetWindowTextW(ChangeToCString(AddColor / 255.0f));
+	}
+
+	if (pScrollBar->GetDlgCtrlID() == Add_B_Slider.GetDlgCtrlID())
+	{
+		int AddColor = Add_B_Slider.GetPos();
+		mMaterial->m_MaterialData->Material_SubData->AddColor.z = AddColor / 255.0f;
+		AddColor_B.SetWindowTextW(ChangeToCString(AddColor / 255.0f));
+	}
 
 	CDialogEx::OnHScroll(nSBCode, nPos, pScrollBar);
 }

@@ -115,12 +115,22 @@
 #define IDC_SLIDER2                     1051
 #define IDC_CHECK7                      1052
 #define IDC_SLIDER3                     1052
+#define IDC_RADIO2                      1052
 #define IDC_EDIT47                      1053
+#define IDC_SLIDER4                     1053
 #define IDC_EDIT48                      1054
+#define IDC_SLIDER5                     1054
 #define IDC_CHECK8                      1055
+#define IDC_SLIDER6                     1055
 #define IDC_COMBO3                      1056
+#define IDC_SLIDER7                     1056
+#define IDC_RADIO3                      1056
 #define IDC_EDIT50                      1057
+#define IDC_SLIDER8                     1057
+#define IDC_RADIO4                      1057
 #define IDC_EDIT51                      1058
+#define IDC_SLIDER9                     1058
+#define IDC_RADIO5                      1058
 #define IDC_EDIT49                      1059
 #define IDC_EDIT52                      1060
 #define IDC_EDIT53                      1061
@@ -137,7 +147,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        346
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1051
+#define _APS_NEXT_CONTROL_VALUE         1053
 #define _APS_NEXT_SYMED_VALUE           312
 #endif
 #endif

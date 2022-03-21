@@ -14,7 +14,8 @@ public:
 	~EditorManager();
 	
 	void Initialize();
-	void SetPath(std::string Path, MeshOption* Data);
+	void SetPath(std::string Path);
+	void OpenEaterFile(std::string Path, int Type);
 private:
 	void CreateAssetsFile();
 	void LoadAssets();

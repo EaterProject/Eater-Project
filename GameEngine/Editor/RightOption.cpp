@@ -48,6 +48,7 @@ BOOL RightOption::OnInitDialog()
 
 	mFileOption = new FileOption();
 	mFileOption->Initialize(m_EditorManager);
+	mFileOption->Create(IDD_FILE_OPTION);
 
 	mScene = new SceneSaveDialog();
 	mScene->Initialize(this);
@@ -115,7 +116,6 @@ BEGIN_MESSAGE_MAP(RightOption, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON11, &RightOption::OnSaveScene)
 	ON_BN_CLICKED(IDC_BUTTON12, &RightOption::OnCreateParticle)
 	ON_BN_CLICKED(IDC_BUTTON10, &RightOption::OnCreateTerrain)
-	ON_MESSAGE(M_MSG_MeshFilter,		&RightOption::OnUserFun)
 	ON_WM_MOUSEHWHEEL()
 END_MESSAGE_MAP()
 
@@ -231,7 +231,7 @@ void RightOption::ChickHirearchyDarg(CPoint point)
 		}
 		default:
 			//나머지는 에러 
-			AfxMessageBox(_T("Error : fbx, Eater,Scene 파일만 가능합니다"));
+			AfxMessageBox(_T("Error : .Eater, .Scene 파일만 가능합니다"));
 			break;
 		}		
 	}
@@ -268,11 +268,6 @@ GameObject* RightOption::FindGameObjectParent(HTREEITEM mItem)
 
 
 	return Object;
-}
-
-void RightOption::AssetsInitialize()
-{
-	
 }
 
 void RightOption::OnChoice_Hirearchy_Item(NMHDR* pNMHDR, LRESULT* pResult)
@@ -390,25 +385,13 @@ void RightOption::OnDeleteFile_Button()
 void RightOption::OnChange_DataFormat()
 {
 	//클리한 파일을 자체포멧으로 변경한다
-	std::string Name = ChangeToString(ClickItemName);
-	std::string Path = ChangeToString(ClickAssetsPath);
-	Path += "/";
-	Path += Name;
+	//std::string Name = ChangeToString(ClickItemName);
+	//std::string Path = ChangeToString(ClickAssetsPath);
+	//Path += "/";
+	//Path += Name;
 
-	m_EditorManager->SetPath(Path, nullptr);
-}
-
-void RightOption::OnTimer(UINT_PTR nIDEvent)
-{
-	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
-	switch (nIDEvent)
-	{
-	case 1:
-		//mLoading->SetUpdate(LoadAssetsCount());
-		break;
-	}
-	
-	CDialogEx::OnTimer(nIDEvent);
+	mFileOption->ShowWindow(SW_SHOW);
+	//m_EditorManager->SetPath(Path, nullptr);
 }
 
 void RightOption::OnOpenExeFile_Button()
@@ -522,22 +505,3 @@ void RightOption::OnCreateTerrain()
 	Demo::CreateTerrain("");
 }
 
-LRESULT RightOption::OnUserFun(WPARAM wParam, LPARAM lparam)
-{
-
-
-
-	return LRESULT();
-}
-
-
-void RightOption::OnMouseHWheel(UINT nFlags, short zDelta, CPoint pt)
-{
-	if (nFlags & (MK_SHIFT | MK_CONTROL))
-	{
-		
-	}
-
-
-	CDialogEx::OnMouseHWheel(nFlags, zDelta, pt);
-}

@@ -3,19 +3,6 @@
 #include <atlstr.h>
 #include "EngineData.h"
 
-static std::string GetDataString(CString Num)
-{
-	CT2CA convertedString(Num);
-	return convertedString;
-}
-
-static CString GetDataCString(std::string Num)
-{
-	CString Number;
-	Number = Num.c_str();
-	return Number;
-}
-
 struct MeshOption
 {
 	std::string Name;

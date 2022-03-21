@@ -58,36 +58,34 @@ public:
 	CTAP_Particle*	 mPrticle;		//MeshFiltet를 보여줄 탭
 public:
 	CString SaveSceneName;
+	bool isDrag = false;
 public:
-	FileOption*		mFileOption;		//자체포맷 변환 창
-	SceneSaveDialog* mScene;			//씬 저장 창
-	EditorManager*	m_EditorManager;	//자체포맷 변환 관리 매니저
-	Loading*		mLoading;			//로딩 바
+	FileOption*			mFileOption;		//자체포맷 변환 창
+	SceneSaveDialog*	mScene;				//씬 저장 창
+	EditorManager*		m_EditorManager;	//자체포맷 변환 관리 매니저
+	Loading*			mLoading;			//로딩 바
 public:
-	static RightOption* GetThis();
 	void Create_Hirearchy_Item(GameObject* Obj, HTREEITEM TOP);
 	void Delete_Hirearchy_Item(HTREEITEM TOP);
 	void ChickTapDrag(CPoint point);
 	void ChickHirearchyDarg(CPoint point);
 	GameObject* FindGameObjectParent(HTREEITEM mItem);
-	void AssetsInitialize();
-	static RightOption* thisPointer;
 	CEdit FilePathEdit;
+
+	static RightOption* GetThis();
+	static RightOption* thisPointer;
 public:
-	afx_msg void OnChoice_Hirearchy_Item(NMHDR* pNMHDR, LRESULT* pResult);
 	
 	//버튼들
+	afx_msg void OnChoice_Hirearchy_Item(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDelteObject_Button();
 	afx_msg void OnOpenAssetsFolder();
 	afx_msg void OnDeleteFile_Button();
 	afx_msg void OnChange_DataFormat();
 	afx_msg void OnOpenExeFile_Button();
-	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnClickTap(NMHDR* pNMHDR, LRESULT* pResult);
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	afx_msg void OnSaveScene();
 	afx_msg void OnCreateParticle();
 	afx_msg void OnCreateTerrain();
-	afx_msg LRESULT OnUserFun(WPARAM wParam, LPARAM lparam);
-	afx_msg void OnMouseHWheel(UINT nFlags, short zDelta, CPoint pt);
 };
