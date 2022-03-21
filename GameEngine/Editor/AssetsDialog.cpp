@@ -10,7 +10,9 @@
 #include "Demo.h"
 #include "RightOption.h"
 #include "EditorManager.h"
+#include "FileOption.h"
 #include "Loading.h"
+#include "FileOption.h"
 #define MAXPATH 256
 // AssetsDialog 대화 상자
 
@@ -81,7 +83,8 @@ BEGIN_MESSAGE_MAP(AssetsDialog, CDialogEx)
 
 void AssetsDialog::Initialize(RightOption* mRight)
 {
-	mRightOption = mRight;
+	mRightOption	= mRight;
+	mFileOption		= mRight->GetThis()->mFileOption;
 }
 
 int AssetsDialog::FindChildFile(HTREEITEM hParentItem, CString str)
@@ -220,7 +223,7 @@ void AssetsDialog::OnDropFiles(HDROP hDropInfo)
 		CString ChangeCopyFile;
 		ChangeCopyFile = CopyFilePath.c_str();
 
-		RightOption::GetThis()->m_EditorManager->SetPath(Name,nullptr);
+		RightOption::GetThis()->m_EditorManager->SetPath(Name);
 
 		//메쉬 로드
 		std::string MeshPath = "../Assets/Model/ModelData/" + ChangeName + ".Eater";
@@ -319,10 +322,16 @@ void AssetsDialog::OnLButtonUp(UINT nFlags, CPoint point)
 		 GetDlgItem(IDD_RIGHT_OPTION, &hwnd);
 	
 		 mRightOption = RightOption::GetThis();
-
 		 mRightOption->DragItemName = DragItemName;
 		 mRightOption->ChickHirearchyDarg(point);
 		 mRightOption->ChickTapDrag(point);
+
+		 mFileOption = mRightOption->GetThis()->mFileOption;
+		 if (mFileOption->IsWindowVisible() == true)
+		 {
+			mFileOption->ChickDrag(point);
+		 }
+
 	}
 	CDialogEx::OnLButtonUp(nFlags, point);
 }

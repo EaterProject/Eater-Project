@@ -22,7 +22,7 @@ public:
 	FBXManager();
 	~FBXManager();
 
-	ParserData::CModel* OpenFile(std::string& Path, MeshOption* Data);
+	ParserData::CModel* OpenFile(std::string& Path);
 	void Initialize(EaterManager* mManager);
 private:
 	ModelParser* FbxFactory;

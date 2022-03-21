@@ -11,6 +11,7 @@
 #define EMAT	6
 #define EMESH	7
 
+
 inline CString ChangeToCString(float Data);			//float		-> Cstring
 inline CString ChangeToCString(int Data);			//int		-> Cstring
 inline CString ChangeToCString(std::string Data);	//string	-> Cstring

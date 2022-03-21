@@ -27,15 +27,22 @@ public:
 	std::string ChoiceMeshPath;
 	EditorManager* mEditor;
 
-	void OnBoneWorld(bool On);
-
+	void OnEater(bool On);
+	void ChickDrag(CPoint point);
 	void Initialize(EditorManager* _Editor);
 	void SetName(std::string Name,std::string Path);
 	void ChangeDataFormat();
+
+	void DragFileOpen_Material(CString Name);
+	void DragFileOpen_Buffer(CString Name);
+	void DragFileOpen_Mesh(CString Name);
+	void DragFileOpen_Eater(CString Name);
+
 	CEdit FileName_Edit;
-	CComboBox FileType_Combo;
+	CEdit FileType_Edit;
 	MeshOption MeshData;
 public:
+
 	CEdit PosX , PosY , PosZ;
 	CEdit RotX, RotY, RotZ;
 	CEdit SclX , SclY , SclZ;
@@ -44,8 +51,7 @@ public:
 	CEdit RotX_Bone, RotY_Bone, RotZ_Bone;
 	CEdit SclX_Bone, SclY_Bone, SclZ_Bone;
 	
-	CButton BoneTransform_Text;
-	CButton DinamicButton;
+	CButton Eater_ON;
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnChange_Button();
 	afx_msg void OnNoChange_Button();
