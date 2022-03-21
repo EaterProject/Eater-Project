@@ -82,11 +82,11 @@ float4 Light_IBL_PS(ScreenPixelIn pin) : SV_TARGET
     litColor += PBR_DirectionalLight(ViewDirection, normal, gDirLights[0],
                                 albedo, ao, roughness, metallic, shadows);
 
-    //litColor += PBR_PointLight(ViewDirection, normal, gPointLights[0], positionRT.xyz,
-    //                            albedo, ao, roughness, metallic, shadows);
+    litColor += PBR_PointLight(ViewDirection, normal, gPointLights, gPointLightCount, positionRT.xyz,
+                                albedo, ao, roughness, metallic, shadows);
     
-    //litColor += PBR_SpotLight(ViewDirection, normal, gSpotLights[0], positionRT.xyz,
-    //                            albedo, ao, roughness, metallic, shadows);
+    litColor += PBR_SpotLight(ViewDirection, normal, gSpotLights, gSpotLightCount, positionRT.xyz,
+                                albedo, ao, roughness, metallic, shadows);
     
     float3 irradiance = gIBLIrradiance.Sample(gSamClampLinear, normal).rgb;
     float3 prefilteredColor = gIBLPrefilter.SampleLevel(gSamClampLinear, reflect(-ViewDirection, normal), roughness * MAX_REF_LOD).rgb;

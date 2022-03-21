@@ -28,7 +28,7 @@ void TestScene::Awake()
 
 	Load("../Assets/Texture/ModelTexture");
 	Load("../Assets/Texture/Terrain");
-	Load("../Assets/Texture/Particle");
+	//Load("../Assets/Texture/Particle");
 	Load("../Assets/Texture/Material");
 	Load("../Assets/Model/MeshBuffer");
 	Load("../Assets/Model/ModelData");
@@ -81,27 +81,87 @@ void TestScene::CreateMap()
 {
 	Transform* Tr = nullptr;
 	MeshFilter* filter = nullptr;
-	GameObject* Object = nullptr;
+	Light* light = nullptr;
 
 	Object = Instance();
-	Object->GetTransform()->Scale = { 0.01f, 0.01f, 0.01f };
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("Outside_Rock");
-	
-	Object = Instance();
-	Object->GetTransform()->Scale = { 0.01f, 0.01f, 0.01f };
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("Outside_Other");
-
-	Object = Instance();
-	Object->GetTransform()->Scale = { 0.01f, 0.01f, 0.01f };
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("Outside_bossOBJ");
-
-	Object = Instance();
-	Object->GetTransform()->Scale = { 0.01f, 0.01f, 0.01f };
+	Object->GetTransform()->Scale = { 0.1f, 0.1f, 0.1f };
 	filter = Object->AddComponent<MeshFilter>();
 	filter->SetModelName("bossB");
+
+	Object = InstanceLight("Light4", SPOT_LIGHT);
+	Object->GetTransform()->Position.y += 10;
+	Object->GetTransform()->Position.z += 30;
+	light = Object->GetComponent<Light>();
+	light->SetRange(10.0f);
+	light->SetPower(10.0f);
+	light->SetColor(1.0f, 0.0f, 0.0f);
+	light->SetInAngle(15.0f);
+	light->SetOutAngle(25.0f);
+
+	Object = InstanceLight("Light5", SPOT_LIGHT);
+	Object->GetTransform()->Position.y += 10;
+	Object->GetTransform()->Position.x += 10;
+	Object->GetTransform()->Position.z += 30;
+	light = Object->GetComponent<Light>();
+	light->SetRange(10.0f);
+	light->SetPower(10.0f);
+	light->SetColor(1.0f, 1.0f, 0.0f);
+	light->SetInAngle(15.0f);
+	light->SetOutAngle(25.0f);
+	
+	Object = InstanceLight("Light6", SPOT_LIGHT);
+	Object->GetTransform()->Position.y += 10;
+	Object->GetTransform()->Position.x -= 10;
+	Object->GetTransform()->Position.z += 30;
+	light = Object->GetComponent<Light>();
+	light->SetRange(10.0f);
+	light->SetPower(10.0f);
+	light->SetColor(1.0f, 0.0f, 1.0f);
+	light->SetInAngle(15.0f);
+	light->SetOutAngle(25.0f);
+	
+	Object1 = InstanceLight("Light", POINT_LIGHT);
+	Object1->GetTransform()->Position.y += 10;
+	light = Object1->GetComponent<Light>();
+	light->SetRange(10.0f);
+	light->SetPower(10.0f);
+	light->SetColor(1.0f, 0.0f, 0.0f);
+
+	Object1 = InstanceLight("Light1", POINT_LIGHT);
+	Object1->GetTransform()->Position.y += 10;
+	Object1->GetTransform()->Position.x += 10;
+	light = Object1->GetComponent<Light>();
+	light->SetRange(10.0f);
+	light->SetPower(10.0f);
+	light->SetColor(0.0f, 1.0f, 0.0f);
+
+	Object1 = InstanceLight("Light2", POINT_LIGHT);
+	Object1->GetTransform()->Position.y += 10;
+	Object1->GetTransform()->Position.x -= 10;
+	light = Object1->GetComponent<Light>();
+	light->SetRange(10.0f);
+	light->SetPower(10.0f);
+	light->SetColor(0.0f, 0.0f, 1.0f);
+
+	//Object = Instance();
+	//Object->GetTransform()->Scale = { 0.01f, 0.01f, 0.01f };
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("Outside_Rock");
+	
+	//Object = Instance();
+	//Object->GetTransform()->Scale = { 0.01f, 0.01f, 0.01f };
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("Outside_Other");
+	//
+	//Object = Instance();
+	//Object->GetTransform()->Scale = { 0.01f, 0.01f, 0.01f };
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("Outside_bossOBJ");
+	//
+	//Object = Instance();
+	//Object->GetTransform()->Scale = { 0.01f, 0.01f, 0.01f };
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("bossB");
 
 
 	//for (int i = 0; i < 100; i++)
@@ -230,6 +290,27 @@ void TestScene::CreateParticle(float x, float y, float z)
 
 void TestScene::ChangeCubeMap()
 {
+	if (GetKey(VK_UP))
+	{
+		Object1->GetTransform()->Position.y += 0.1f;
+		Object->GetTransform()->Position.y += 0.1f;
+	}
+	if (GetKey(VK_DOWN))
+	{
+		Object1->GetTransform()->Position.y -= 0.1f;
+		Object->GetTransform()->Position.y -= 0.1f;
+	}
+	if (GetKey(VK_LEFT))
+	{
+		Object1->GetTransform()->Position.x -= 0.1f;
+		Object->GetTransform()->Position.x -= 0.1f;
+	}
+	if (GetKey(VK_RIGHT))
+	{
+		Object1->GetTransform()->Position.x += 0.1f;
+		Object->GetTransform()->Position.x += 0.1f;
+	}
+
 	if (GetKeyUp('1'))
 	{
 		LoadEnvironment("../Resources/Texture/Environment/Day.dds");

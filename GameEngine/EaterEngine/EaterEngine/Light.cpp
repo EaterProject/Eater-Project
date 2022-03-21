@@ -5,6 +5,7 @@
 #include "Light.h"
 #include "EngineData.h"
 
+#define PI    ((FLOAT)  3.141592654f)
 #define SAFE_DELETE(x) { if(x != nullptr) {delete x; x = nullptr;} }
 
 using namespace DirectX;
@@ -17,6 +18,9 @@ Light::Light()
 {
 	m_CenterPos = Vector3(0, 100, 0);
 	m_ShadowRadius = sqrtf(10.0f * 10.0f + 15.0f * 15.0f) * 15;
+
+	m_InAngle = 45.0f;
+	m_OutAngle = 55.0f;
 }
 
 void Light::SetDirectionLight(Light* light)
@@ -50,18 +54,18 @@ void Light::Update()
 	}
 }
 
-void Light::SetColor(float r, float g, float b, float a)
+void Light::SetColor(float r, float g, float b)
 {
 	switch (m_LightType)
 	{
 	case DIRECTION_LIGHT:
-		m_DirectionLight->Diffuse = { r, g, b, a };
+		m_DirectionLight->Diffuse = { r, g, b };
 		break;
 	case POINT_LIGHT:
-		m_PointLight->Diffuse = { r, g, b, a };
+		m_PointLight->Diffuse = { r, g, b };
 		break;
 	case SPOT_LIGHT:
-		m_SpotLight->Diffuse = { r, g, b, a };
+		m_SpotLight->Diffuse = { r, g, b };
 		break;
 	default:
 		break;
@@ -105,12 +109,27 @@ void Light::SetPosition(float x, float y, float z)
 	}
 }
 
-void Light::SetAtt(float x, float y, float z)
+void Light::SetInAngle(float angle)
 {
 	switch (m_LightType)
 	{
 	case SPOT_LIGHT:
-		m_SpotLight->Att = { x, y, z };
+		m_InAngle = PI * angle / 180.0f;
+		m_SpotLight->AttRange = cosf(m_InAngle) - cosf(m_OutAngle);
+		break;
+	default:
+		break;
+	}
+}
+
+void Light::SetOutAngle(float angle)
+{
+	switch (m_LightType)
+	{
+	case SPOT_LIGHT:
+		m_OutAngle = PI * angle / 180.0f;
+		m_SpotLight->AttRange = cosf(m_InAngle) - cosf(m_OutAngle);
+		m_SpotLight->OuterCone = cosf(m_OutAngle);
 		break;
 	default:
 		break;
@@ -132,12 +151,18 @@ void Light::SetRange(float range)
 	}
 }
 
-void Light::SetSpot(float spot)
+void Light::SetPower(float power)
 {
 	switch (m_LightType)
 	{
+	case DIRECTION_LIGHT:
+		m_DirectionLight->Power = power;
+		break;
+	case POINT_LIGHT:
+		m_PointLight->Power = power;
+		break;
 	case SPOT_LIGHT:
-		m_SpotLight->Spot = spot;
+		m_SpotLight->Power = power;
 		break;
 	default:
 		break;

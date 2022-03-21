@@ -292,7 +292,7 @@ struct CB_DebugObject : public cbDebugObject
 SHADER_CONSTANT_BUFFER(cbDebugOption)
 struct CB_DebugOption : public cbDebugOption
 {
-	DirectX::SimpleMath::Vector4 gColor = DirectX::SimpleMath::Vector4(1.0f);
+	DirectX::SimpleMath::Vector3 gColor = DirectX::SimpleMath::Vector3(1.0f);
 };
 
 

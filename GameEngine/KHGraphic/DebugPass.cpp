@@ -355,6 +355,50 @@ void DebugPass::GlobalRender()
 
 		BufferUpdate(DEBUG_TYPE::DEBUG_TEXTURE);
 		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+
+		RayCastData ray;
+		//ray.RayStart = light->Position;
+		//ray.RayEnd = light->Position + (light->Direction * Vector3(light->Range));
+		//ray.RayColor = Vector3(1.0f, 0.0f, 0.0f);
+		//
+		//// Ray Buffer Update
+		//SetRay(ray.RayStart, ray.RayEnd);
+		//
+		//option.gColor = ray.RayColor;
+		//object.gWorldViewProj = viewproj;
+		//
+		//m_DebugVS->ConstantBufferCopy(&object);
+		//m_DebugVS->Update();
+		//
+		//m_DebugColorPS->ConstantBufferCopy(&option);
+		//m_DebugColorPS->Update();
+		//
+		//BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
+		//g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+		
+		Quaternion q = XMQuaternionRotationRollPitchYaw(0.0f, 0.0f, light->OuterCone);
+		XMVECTOR axis = light->Direction * Vector3(light->Range);
+		Vector3 r = XMVector3Rotate(axis, q);
+		r += light->Position;
+
+		ray.RayStart = light->Position;
+		ray.RayEnd = r;
+		ray.RayColor = Vector3(1.0f, 0.0f, 0.0f);
+
+		// Ray Buffer Update
+		SetRay(ray.RayStart, ray.RayEnd);
+
+		option.gColor = ray.RayColor;
+		object.gWorldViewProj = viewproj;
+
+		m_DebugVS->ConstantBufferCopy(&object);
+		m_DebugVS->Update();
+
+		m_DebugColorPS->ConstantBufferCopy(&option);
+		m_DebugColorPS->Update();
+
+		BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
+		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
 	}
 
 	while (rayList->size() != 0)
@@ -363,24 +407,8 @@ void DebugPass::GlobalRender()
 
 		option.gColor = ray.RayColor;
 
-		VertexInput::PosColorVertex vertices[2];
-		vertices[0].Pos = ray.RayStart;
-		vertices[1].Pos = ray.RayEnd;
-
-		ID3D11Buffer* buffer = m_RayBuffer->VertexBuf->Get();
-
-		// Mapping SubResource Data..
-		D3D11_MAPPED_SUBRESOURCE mappedResource;
-		ZeroMemory(&mappedResource, sizeof(D3D11_MAPPED_SUBRESOURCE));
-
-		// GPU Access Lock Buffer Data..
-		g_Context->Map(buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
-
-		// Copy Resource Data..
-		memcpy(mappedResource.pData, vertices, sizeof(vertices));
-
-		// GPU Access UnLock Buffer Data..
-		g_Context->Unmap(buffer, 0);
+		// Ray Buffer Update
+		SetRay(ray.RayStart, ray.RayEnd);
 
 		object.gWorldViewProj = viewproj;
 
@@ -524,4 +552,27 @@ void DebugPass::BufferUpdate(DEBUG_TYPE type)
 
 	g_Context->IASetVertexBuffers(0, 1, m_DebugBuffer->VertexBuf->GetAddress(), &m_DebugBuffer->Stride, &m_DebugBuffer->Offset);
 	g_Context->IASetIndexBuffer(m_DebugBuffer->IndexBuf->Get(), DXGI_FORMAT_R32_UINT, 0);
+}
+
+void DebugPass::SetRay(Vector3 start, Vector3 end)
+{
+	VertexInput::PosColorVertex vertices[2];
+	vertices[0].Pos = start;
+	vertices[1].Pos = end;
+
+	ID3D11Buffer* buffer = m_RayBuffer->VertexBuf->Get();
+
+	// Mapping SubResource Data..
+	D3D11_MAPPED_SUBRESOURCE mappedResource;
+	ZeroMemory(&mappedResource, sizeof(D3D11_MAPPED_SUBRESOURCE));
+
+	// GPU Access Lock Buffer Data..
+	g_Context->Map(buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
+
+	// Copy Resource Data..
+	memcpy(mappedResource.pData, vertices, sizeof(vertices));
+
+	// GPU Access UnLock Buffer Data..
+	g_Context->Unmap(buffer, 0);
+
 }

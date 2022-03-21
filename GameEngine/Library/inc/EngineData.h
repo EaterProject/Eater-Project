@@ -116,7 +116,7 @@ class RayCastData
 public:
 	Vector3 RayStart = { 0,0,0 };
 	Vector3 RayEnd = { 0,0,0 };
-	Vector4 RayColor = { 0,1,0,1 };
+	Vector3 RayColor = { 0,1,0 };
 };
 
 // Collider Data
@@ -124,7 +124,7 @@ class ColliderData
 {
 public:
 	Matrix ColliderWorld = XMMatrixIdentity();
-	Vector4 ColliderColor = { 1,1,1,1 };
+	Vector3 ColliderColor = { 1,1,1 };
 };
 
 /// <summary>

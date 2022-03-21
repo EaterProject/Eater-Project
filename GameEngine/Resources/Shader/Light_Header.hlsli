@@ -11,36 +11,34 @@
 
 struct DirectionalLight
 {
-    float4 Diffuse;
-    
-    float3 Direction;
+    float3 Diffuse;
     float Power;
+    float3 Direction;
+    float Pad;
     
     float4x4 LightViewProj;
 };
 
 struct PointLight
 {
-    float4 Diffuse;
-    
-    float3 Position;
+    float3 Diffuse;
     float Range;
+    float3 Position;
+    float Power;
     
     float4x4 LightViewProj;
 };
 
 struct SpotLight
 {
-    float4 Diffuse;
-
-    float3 Position;
+    float3 Diffuse;
     float Range;
-
+    float3 Position;
+    float OuterCone;
     float3 Direction;
-    float Spot;
-
-    float3 Att;
-    float pad;
+    float AttRange;
+    float3 Pad;
+    float Power;
     
     float4x4 LightViewProj;
 };

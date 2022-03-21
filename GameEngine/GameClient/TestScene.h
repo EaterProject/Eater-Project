@@ -26,6 +26,8 @@ public:
 	void ChangeCubeMap();
 
 private:
+	GameObject* Object;
+	GameObject* Object1;
 	GameObject* testobj;
 	GameObject* ParticleObj;
 
