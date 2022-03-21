@@ -41,7 +41,7 @@ void Terrain::SetUp()
 
 	if (TerrainMeshName != "" && mMeshFilter != nullptr)
 	{
-		mMeshFilter->SetMeshName(TerrainMeshName);
+		mMeshFilter->SetModelName(TerrainMeshName);
 	}
 }
 

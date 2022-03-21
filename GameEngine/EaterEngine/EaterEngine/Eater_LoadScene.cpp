@@ -52,7 +52,7 @@ void Eater_LoadScene::Load_Component_MeshFilter(int index, GameObject* Object)
 	{
 		std::vector<std::string> Data;
 		EATER_GET_LIST(&Data, i);
-		mMeshFilter->SetMeshName(Data[0]);
+		mMeshFilter->SetModelName(Data[0]);
 	}
 }
 
@@ -95,7 +95,7 @@ void Eater_LoadScene::Load_Component_Skinning(int index, GameObject* Object)
 	{
 		std::vector<std::string> Data;
 		EATER_GET_LIST(&Data, i);
-		MF->SetMeshName(Data[0]);
+		MF->SetModelName(Data[0]);
 		MeshName = Data[0];
 	}
 

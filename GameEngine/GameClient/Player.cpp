@@ -54,7 +54,7 @@ void Player::Awake()
 void Player::SetUp()
 {
 	//매쉬, 애니메이션 정보 입력
-	mMeshFilter->SetMeshName("MOdNA");
+	mMeshFilter->SetModelName("MOdNA");
 	mMeshFilter->SetAnimationName("MOdNA");
 	mAnimation->Choice("Idle");
 

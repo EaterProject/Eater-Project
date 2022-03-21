@@ -66,24 +66,22 @@ void CTAP_MeshFilter::SetGameObject(MeshFilter* ObjectMeshFilter)
 		Roughness_Edit.SetWindowTextW(ChangeToCString(RoughnessF));
 		Matallic_Edit.SetWindowTextW(ChangeToCString(MetallicF));
 
-		Emissive_Slider.SetPos(EmissiveF*10);
-		Roughnees_Slider.SetPos(RoughnessF* 100 + 100);
-		Matallic_Slider.SetPos(MetallicF*100 + 100);
+		Emissive_Slider.SetPos(EmissiveF*10.0f);
+		Roughnees_Slider.SetPos(RoughnessF* 100.0f + 100.0f);
+		Matallic_Slider.SetPos(MetallicF*100.0f + 100.0f);
 
 		Emissive_Slider.SetRange(0, 100);
 		Matallic_Slider.SetRange(0, 200);
 		Roughnees_Slider.SetRange(0, 200);
 
 		Vector4 Add = mMaterial->m_MaterialData->Material_SubData->AddColor;
-		Vector4 Base = mMaterial->m_MaterialData->Material_SubData->BaseColor;
-
 	
 		Add_R_Slider.SetRange(0, 255);
 		Add_G_Slider.SetRange(0, 255);
 		Add_B_Slider.SetRange(0, 255);
-		Add_R_Slider.SetPos(Add.x * 255);
-		Add_G_Slider.SetPos(Add.y * 255);
-		Add_B_Slider.SetPos(Add.z * 255);
+		Add_R_Slider.SetPos((int)(Add.x * 255.0f));
+		Add_G_Slider.SetPos((int)(Add.y * 255.0f));
+		Add_B_Slider.SetPos((int)(Add.z * 255.0f));
 
 		AddColor_R.SetWindowTextW(ChangeToCString(AddColorR));
 		AddColor_G.SetWindowTextW(ChangeToCString(AddColorG));
@@ -235,7 +233,7 @@ LRESULT CTAP_MeshFilter::OnUserFun(WPARAM wParam, LPARAM lparam)
 		if (Type == FBX || Type == EATER)
 		{
 			MeshName_Edit.SetWindowTextW(strString);
-			mMeshFilter->SetMeshName(FileName);
+			mMeshFilter->SetModelName(FileName);
 		}
 		else
 		{

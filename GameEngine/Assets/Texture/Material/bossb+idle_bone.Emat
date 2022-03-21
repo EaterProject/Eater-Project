@@ -1,0 +1,20 @@
+#EATERMAT
+@MaterialName bossb+idle_bone
+@Alpha NO
+@Diffuse bossb_bone_BaseColor.png
+@Normal bossb_bone_Normal.png
+@Emissive bossb_bone_Emissive.png
+@ORM bossb_bone_ORM.png
+@Roughness 0
+@Metallic 0
+@Tileing_X 1
+@Tileing_Y 1
+@BaseColor_R 1
+@BaseColor_G 0.5
+@BaseColor_B 0.5
+@BaseColor_A 1
+@AddColor_R 1
+@AddColor_G 1
+@AddColor_B 1
+@AddColor_A 1
+&

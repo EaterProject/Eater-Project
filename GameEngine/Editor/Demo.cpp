@@ -34,6 +34,7 @@ void Demo::Awake()
 	Load("../Assets/Texture/Terrain");
 	Load("../Assets/Texture/Material");
 	Load("../Assets/Texture/Particle");
+
 }
 
 void Demo::Update()
@@ -52,9 +53,9 @@ void Demo::End()
 
 void Demo::ThreadFunction()
 {
+	Load("../Assets/Model/Animation");
 	Load("../Assets/Model/MeshBuffer");
 	Load("../Assets/Model/ModelData");
-	Load("../Assets/Model/Animation");
 	
 	LoadEnvironment("../Assets/Texture/Environment/Night.dds");
 	SetEnvironment(true);
@@ -151,7 +152,7 @@ GameObject* Demo::CreateBaseObject(std::string ObjectName, std::string MeshName)
 	MeshFilter* mMeshFilter = Object->AddComponent<MeshFilter>();
 	Transform* mTransform = Object->GetTransform();
 
-	mMeshFilter->SetMeshName(MeshName);
+	mMeshFilter->SetModelName(MeshName);
 	ObjectList.insert({ ObjectName, Object });
 	return Object;
 }
@@ -168,7 +169,7 @@ GameObject* Demo::CreateSkinObject(std::string ObjectName, std::string MeshName)
 	std::string SkinMeshName = MeshName.substr(Start, End);
 
 	
-	MF->SetMeshName(SkinMeshName);
+	MF->SetModelName(SkinMeshName);
 	MF->SetAnimationName(SkinMeshName);
 	ObjectList.insert({ ObjectName,Skin });
 	return Skin;

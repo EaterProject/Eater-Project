@@ -23,21 +23,17 @@
 
 void TestScene::Awake()
 {
-	LoadEnvironment("../Resources/Texture/Environment/Night.dds");
-	LoadTerrainMesh("../Resources/Mesh/Terrain/Terrain.fbx", "../Resources/Texture/Terrain/Terrain_RGB.png", SCALING);
+	LoadEnvironment("../Assets/Texture/Environment/Day.dds");
+	LoadTerrainMesh("../Assets/Model/TerrainModel/Terrain.fbx", "../Assets/Texture/Terrain/Terrain_RGB.png", SCALING);
 
-	//Load("../Resources/Texture/Particle");
-	Load("../Assets/Texture/Base/Dump.png");
-	Load("../Assets/Texture/Load");
+	Load("../Assets/Texture/ModelTexture");
 	Load("../Assets/Texture/Terrain");
-	Load("../Assets/Mesh/Base");
-	Load("../Assets/Mesh/Animation");
+	Load("../Assets/Texture/Particle");
+	Load("../Assets/Texture/Material");
+	Load("../Assets/Model/MeshBuffer");
+	Load("../Assets/Model/ModelData");
 
-	Load("../Resources/Mesh/TestMesh", SCALING);
-	Load("../Resources/Texture/Test");
-	Load("../Assets/Scene/intro.Scene");
-
-	CreateTestObject();
+	//CreateTestObject();
 	CreateMap();
 	//CreateParticle(0,0,0);
 
@@ -63,7 +59,7 @@ void TestScene::CreateTestObject()
 		std::string num = std::to_string(9 - i);
 	
 		testobj = Instance("box");
-		testobj->AddComponent<MeshFilter>()->SetMeshName("TestSphere");
+		testobj->AddComponent<MeshFilter>()->SetModelName("TestSphere");
 		MF = testobj->GetComponent<MeshFilter>();
 		MF->SetDiffuseTextureName("Albedo_" + num);
 		MF->SetNormalTextureName("Normal_" + num);
@@ -75,7 +71,7 @@ void TestScene::CreateTestObject()
 
 
 	//testobj = Instance("LampA");
-	//testobj->AddComponent<MeshFilter>()->SetMeshName("LampA");
+	//testobj->AddComponent<MeshFilter>()->SetModelName("LampA");
 	//testobj->GetTransform()->Position = { 0.0f, 85.0f, 0.0f };
 	//testobj->GetTransform()->Scale = { 10.0f, 10.0f, 10.0f };
 	//testobj->GetTransform()->Rotation = { 0.0f, 90.0f, 0.0f };
@@ -87,49 +83,61 @@ void TestScene::CreateMap()
 	MeshFilter* filter = nullptr;
 	GameObject* Object = nullptr;
 
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetMeshName("Outside_Rock");
-	//
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetMeshName("Outside_bossOBJ");
+	Object = Instance();
+	Object->GetTransform()->Scale = { 0.01f, 0.01f, 0.01f };
+	filter = Object->AddComponent<MeshFilter>();
+	filter->SetModelName("Outside_Rock");
+	
+	Object = Instance();
+	Object->GetTransform()->Scale = { 0.01f, 0.01f, 0.01f };
+	filter = Object->AddComponent<MeshFilter>();
+	filter->SetModelName("Outside_Other");
+
+	Object = Instance();
+	Object->GetTransform()->Scale = { 0.01f, 0.01f, 0.01f };
+	filter = Object->AddComponent<MeshFilter>();
+	filter->SetModelName("Outside_bossOBJ");
+
+	Object = Instance();
+	Object->GetTransform()->Scale = { 0.01f, 0.01f, 0.01f };
+	filter = Object->AddComponent<MeshFilter>();
+	filter->SetModelName("bossB");
+
 
 	//for (int i = 0; i < 100; i++)
 	//{
 	//	Object = Instance();
 	//	Object->GetTransform()->Position = { 0.0f, i * 100.0f, 0.0f };
 	//	filter = Object->AddComponent<MeshFilter>();
-	//	filter->SetMeshName("DayRock3");
+	//	filter->SetModelName("DayRock3");
 	//}
 
 	//Object = Instance();
 	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetMeshName("Inside_village");
+	//filter->SetModelName("Inside_village");
 	//
 	//Object = Instance();
 	//filter = Object->AddComponent<MeshFilter>();
 	//Tr = Object->GetTransform();
-	//filter->SetMeshName("Outside_Rock");
+	//filter->SetModelName("Outside_Rock");
 	//
 	//Object = Instance();
 	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetMeshName("Outside_bossOBJ");
+	//filter->SetModelName("Outside_bossOBJ");
 	//
 	//Object = Instance();
 	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetMeshName("Outside_Other");
+	//filter->SetModelName("Outside_Other");
 	//
 	//Object = Instance();
 	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetMeshName("Outside_Pebble");
+	//filter->SetModelName("Outside_Pebble");
 
 	testobj = InstanceTerrain("Terrain");
 	Terrain* mTerrain = testobj->GetComponent<Terrain>();
 	mTerrain->SetLayerName("terrain_ground_A_BaseColor", "terrain_ground_A_Normal", "terrain_ground_A_ORM");
 	mTerrain->SetLayerName("terrain_ground_B_BaseColor", "terrain_ground_B_Normal", "terrain_ground_B_ORM");
 	mTerrain->SetMeshName("Terrain");
-	//mTerrain->SetColliderName("TerrainDecimate");
 	mTerrain->SetTextureTiling(31.0f);
 }
 

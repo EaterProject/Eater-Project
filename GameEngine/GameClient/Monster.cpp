@@ -27,7 +27,7 @@ void Monster::Awake()
 }
 void Monster::SetUp()
 {
-	mMeshFilter->SetMeshName("MonsterA");
+	mMeshFilter->SetModelName("MonsterA");
 	mMeshFilter->SetAnimationName("MonsterA");
 
 	//mTransform->Rotation = { -90,0,0 };

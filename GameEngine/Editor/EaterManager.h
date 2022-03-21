@@ -3,10 +3,9 @@
 
 namespace ParserData
 {
-	struct CModel;
-	struct CMesh;
+	class CModel;
+	class CMesh;
 }
-
 
 class E_MaterialManager;
 class E_MeshManager;

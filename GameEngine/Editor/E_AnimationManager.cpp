@@ -1,6 +1,7 @@
 #include "E_AnimationManager.h"
 #include "EaterHeader.h"
 #include "ParserData.h"
+#include "Demo.h"
 
 E_AnimationManager::E_AnimationManager()
 {
@@ -56,6 +57,9 @@ void E_AnimationManager::ChangeEaterFile(ParserData::CModel* FBXMesh)
 		}
 	}
 	EATER_CLOSE_FILE();
+
+	std::string LoadName = "../Assets/Model/Animation/" + SaveFileName + ".Eater";
+	Demo::MeshLoad(LoadName);
 }
 
 void E_AnimationManager::SetFileName(std::string& FileName)

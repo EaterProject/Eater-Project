@@ -40,7 +40,7 @@ void RenderDataConverter::ConvertMeshData(MeshData* originData, RenderData* rend
 			renderData->m_TerrainBuffer->m_MaterialList.push_back(layerMaterial);
 		}
 
-		m_LayerList.insert(std::make_pair(m_LayerList.size(), renderData->m_TerrainBuffer));
+		m_LayerList.insert(std::make_pair((UINT)m_LayerList.size(), renderData->m_TerrainBuffer));
 	}
 	break;
 	default:
@@ -65,7 +65,7 @@ void RenderDataConverter::ConvertRenderData(MeshData* originData, RenderData* re
 	MaterialRenderBuffer* convertMaterial = GetMaterial(originMaterial->BufferIndex);
 
 	// Mesh & Material Buffer 기준 Instance 검색 및 Render Data 삽입..
-	CheckInstance(renderData, convertMesh, convertMaterial);
+	RegisterInstance(renderData, convertMesh, convertMaterial);
 }
 
 void RenderDataConverter::ResourceUpdate()
@@ -173,6 +173,7 @@ void RenderDataConverter::ConvertPushMesh(MeshBuffer* mesh)
 
 	// 새로운 Mesh Render Buffer 생성..
 	MeshRenderBuffer* newMesh = new MeshRenderBuffer();
+	newMesh->m_BufferIndex = meshIndex;
 
 	// Mesh Render Buffer 변환..
 	ConvertMesh(mesh, newMesh);
@@ -194,6 +195,7 @@ void RenderDataConverter::ConvertPushMaterial(MaterialBuffer* material)
 
 	// 새로운 Material Render Buffer 생성..
 	MaterialRenderBuffer* newMaterial = new MaterialRenderBuffer();
+	newMaterial->m_BufferIndex = materialIndex;
 
 	// Material 기본 Data 설정..
 	newMaterial->m_MaterialSubData = material->Material_SubData;
@@ -393,7 +395,7 @@ InstanceLayer* RenderDataConverter::GetLayer(UINT index)
 	return itor->second;
 }
 
-void RenderDataConverter::CheckInstance(RenderData* renderData, MeshRenderBuffer* mesh, MaterialRenderBuffer* material)
+void RenderDataConverter::RegisterInstance(RenderData* renderData, MeshRenderBuffer* mesh, MaterialRenderBuffer* material)
 {
 	InstanceLayer* instanceLayer = nullptr;
 	InstanceRenderBuffer* instanceBuffer = nullptr;

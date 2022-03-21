@@ -540,6 +540,20 @@ void RenderManager::ConvertChangeInstance()
 		// 해당 원본 Mesh Data 추출..
 		MeshData* originMeshData = m_ChangeInstanceList.front();
 
+		// 해당 Render Data 추출..
+		RenderData* convertRenderData = (RenderData*)originMeshData->Render_Data;
+		
+		// 해당 Instance Buffer 추출..
+		InstanceRenderBuffer* instance = m_Converter->GetInstance(convertRenderData->m_InstanceIndex);
+
+		// 혹시라도 변하지 않은 경우 변환하지 않음..
+		if (instance->m_Mesh->m_BufferIndex == originMeshData->Mesh_Buffer->BufferIndex &&
+			instance->m_Material->m_BufferIndex == originMeshData->Material_Buffer->BufferIndex)
+		{
+			m_ChangeInstanceList.pop();
+			continue;
+		}
+
 		// Object Type에 따른 List 삽입 제거 작업..
 		switch (originMeshData->Object_Data->ObjType)
 		{
