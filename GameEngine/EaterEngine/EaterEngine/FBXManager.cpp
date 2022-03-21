@@ -280,7 +280,7 @@ void FBXManager::SetMeshData(ParserData::CMesh* mMesh, LoadMeshData* SaveData)
 
 	// 해당 Mesh Buffer 이름 삽입..
 	// 추후 Mesh Filter Start 에서 Mesh Buffer를 가져오는 기준이 되는 이름..
-	SaveData->MeshName = meshBuffer->Name;
+	SaveData->BufferName = meshBuffer->Name;
 }
 
 std::string FBXManager::CutStr(std::string Path)
@@ -407,7 +407,7 @@ void FBXManager::LoadQuad()
 	Mesh* quadMesh = new Mesh();
 	// Quad Mesh 설정..
 	quad->MeshType = QUAD_MESH;
-	quad->MeshName = "Quad";
+	quad->BufferName = "Quad";
 
 	ParserData::CMesh* mesh = new ParserData::CMesh();
 	mesh->m_MeshType = QUAD_MESH;

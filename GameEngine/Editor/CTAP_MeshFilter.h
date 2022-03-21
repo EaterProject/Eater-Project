@@ -27,22 +27,24 @@ protected:
 	void SetSlider(CSliderCtrl& Silder, int Number);
 	DECLARE_MESSAGE_MAP()
 public:
+	CEdit ModelName_Edit;
 	CEdit MeshName_Edit;
 	CEdit Diffuse_Edit;
 	CEdit Nomal_Eidt;
 	CEdit EmissiveName_Edit;
 	CEdit ORM_Edit;
 
-	CRect EditRect[5];
+	CRect EditRect[6];
 
 	MeshFilter* mMeshFilter;
 	Material*	mMaterial;
 
 	const int MeshName_Index	= 0;
-	const int Diffuse_Index		= 1;
-	const int Nomal_Index		= 2;
-	const int ORM_Index			= 3;
-	const int Emissive_Index	= 4;
+	const int ModelName_Index	= 1;
+	const int Diffuse_Index		= 2;
+	const int Nomal_Index		= 3;
+	const int ORM_Index			= 4;
+	const int Emissive_Index	= 5;
 
 	CSliderCtrl Emissive_Slider;
 	CSliderCtrl Roughnees_Slider;

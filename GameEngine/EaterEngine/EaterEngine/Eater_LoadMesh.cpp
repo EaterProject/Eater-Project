@@ -18,7 +18,7 @@ void Eater_LoadMesh::LoadData(std::string& Path)
 	SkinList.clear();
 
 	ModelData* SaveData = new ModelData();
-	EATER_OPEN_FILE(Path);
+	EATER_OPEN_READ_FILE(Path);
 
 	std::size_t start = Path.rfind('/') + 1;
 	std::size_t End = Path.rfind('.') - start;
@@ -32,6 +32,7 @@ void Eater_LoadMesh::LoadData(std::string& Path)
 		if (NodeName == "STATIC")
 		{
 			LoadMeshData* Data = LoadStaticMesh(i);
+			Data->ModelName = SaveName;
 			SaveData->TopMeshList.push_back(Data);
 		}
 		else if (NodeName == "BONE")
@@ -46,6 +47,7 @@ void Eater_LoadMesh::LoadData(std::string& Path)
 			if (SaveName.rfind('+') != std::string::npos)
 			{
 				SaveName.erase(SaveName.rfind('+'));
+				//Data->ModelName = SaveName;
 			}
 			SaveData->BoneOffsetList = Data->BoneTMList;
 		}
@@ -56,11 +58,11 @@ void Eater_LoadMesh::LoadData(std::string& Path)
 		else if (NodeName == "ANIMATION")
 		{
 			LoadAnimation(i, Path);
-			EATER_CLEAR_NODE();
+			EATER_CLOSE_READ_FILE();
 			return;
 		}
 	}
-	EATER_CLEAR_NODE();
+	EATER_CLOSE_READ_FILE();
 
 	LinkBone(SaveData);
 
@@ -238,15 +240,15 @@ void Eater_LoadMesh::LoadMeshName(int index, LoadMeshData* model)
 	// Mesh Name ¼³Á¤..
 	if (mesh != "NO")
 	{
-		model->MeshName = mesh;
+		model->BufferName = mesh;
 	}
 }
 
 void Eater_LoadMesh::LoadName(int index, LoadMeshData* model)
 {
-	model->Name = EATER_GET_MAP(index, "NodeName");
-	model->ParentName = EATER_GET_MAP(index, "ParentName");
-	std::string Top = EATER_GET_MAP(index, "TopNode");
+	model->Name			= EATER_GET_MAP(index, "NodeName");
+	model->ParentName	= EATER_GET_MAP(index, "ParentName");
+	std::string Top		= EATER_GET_MAP(index, "TopNode");
 	if (Top != "NO")
 	{
 		model->Top_Object = true;

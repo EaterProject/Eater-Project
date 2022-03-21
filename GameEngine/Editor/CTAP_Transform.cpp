@@ -118,9 +118,9 @@ TransformData CTAP_Transform::GetObjectData()
 	X = ChangeToFloat(Cx);
 	Y = ChangeToFloat(Cy);
 	Z = ChangeToFloat(Cz);
-	Rotation_X_Slider.SetPos(X);
-	Rotation_Y_Slider.SetPos(Y);
-	Rotation_Z_Slider.SetPos(Z);
+	Rotation_X_Slider.SetPos((int)X);
+	Rotation_Y_Slider.SetPos((int)Y);
+	Rotation_Z_Slider.SetPos((int)Z);
 	ObjectTransform->Rotation = { X,Y,Z };
 
 	Scl_X.GetWindowTextW(Cx);

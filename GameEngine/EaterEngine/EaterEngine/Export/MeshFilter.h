@@ -54,7 +54,9 @@ public:
 	EATER_ENGINEDLL void SetRoughnessFactor(float roughnessFactor);
 	EATER_ENGINEDLL void SetMetallicFactor(float metallicFactor);
 
-	EATER_ENGINEDLL std::string GetMeshName();
+	EATER_ENGINEDLL std::string GetBufferName();
+	EATER_ENGINEDLL std::string GetModelName();
+	EATER_ENGINEDLL std::string GetMaterialName();
 	EATER_ENGINEDLL std::string GetDiffuseTextureName();
 	EATER_ENGINEDLL std::string GetNormlaTextureName();
 	EATER_ENGINEDLL std::string GetORMTextureName();
@@ -100,7 +102,7 @@ private:
 	std::string ModelName;				//로드한 모델 이름
 	std::string AnimationName;			//로드한 애니메이션 이름
 
-	std::string MeshName;				//로드한 매쉬 이름
+	std::string BufferName;				//로드한 매쉬 이름
 	std::string MaterialName;			//로드한 매터리얼 이름
 	std::string DiffuseTextureName;		//로드한 텍스쳐 이름
 	std::string NormalTextureName;		//로드한 텍스쳐 이름

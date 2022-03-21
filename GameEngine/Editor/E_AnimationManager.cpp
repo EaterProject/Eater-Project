@@ -18,13 +18,13 @@ void E_AnimationManager::ChangeEaterFile(ParserData::CModel* FBXMesh)
 	int Size = FBXMesh->m_AnimationList.size();
 	if (Size == 0) { return;}
 
-	EATER_CREATE_FILE(SaveFileName, "../Assets/Model/Animation/", ".Eater");
+	EATER_OPEN_WRITE_FILE(SaveFileName, "../Assets/Model/Animation/", ".Eater");
 	EATER_SET_NODE("ANIMATION");
-	float m_TicksPerFrame = FBXMesh->m_AnimationList[0]->m_TicksPerFrame;
-	float m_TotalFrame = FBXMesh->m_AnimationList[0]->m_TotalFrame;
-	float m_StartFrame = FBXMesh->m_AnimationList[0]->m_StartFrame;
-	float m_EndFrame = FBXMesh->m_AnimationList[0]->m_EndFrame;
-	int AnimationCount = (int)FBXMesh->m_AnimationList.size();
+	float m_TicksPerFrame	= (float)FBXMesh->m_AnimationList[0]->m_TicksPerFrame;
+	float m_TotalFrame		= (float)FBXMesh->m_AnimationList[0]->m_TotalFrame;
+	float m_StartFrame		= (float)FBXMesh->m_AnimationList[0]->m_StartFrame;
+	float m_EndFrame		= (float)FBXMesh->m_AnimationList[0]->m_EndFrame;
+	int AnimationCount		= (int)FBXMesh->m_AnimationList.size();
 
 	EATER_SET_MAP("TickFrame", std::to_string(m_TicksPerFrame));
 	EATER_SET_MAP("TotalFrame", std::to_string(m_TotalFrame));
@@ -56,7 +56,7 @@ void E_AnimationManager::ChangeEaterFile(ParserData::CModel* FBXMesh)
 			EATER_SET_LIST(Frame->m_Time, true);
 		}
 	}
-	EATER_CLOSE_FILE();
+	EATER_CLOSE_WRITE_FILE();
 
 	std::string LoadName = "../Assets/Model/Animation/" + SaveFileName + ".Eater";
 	Demo::MeshLoad(LoadName);

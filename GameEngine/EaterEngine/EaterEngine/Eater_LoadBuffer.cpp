@@ -27,7 +27,7 @@ void Eater_LoadBuffer::Initialize(GraphicEngineManager* Graphic, CRITICAL_SECTIO
 void Eater_LoadBuffer::LoadData(std::string& Path)
 {
 	//인덱스,버텍스 버퍼를 로드
-	EATER_OPEN_FILE(Path);
+	EATER_OPEN_READ_FILE(Path);
 	int NodeCount = EATER_GET_NODE_COUNT();
 	Mesh* meshBuffer = nullptr;
 	for (int i = 0; i < NodeCount; i++)
@@ -57,7 +57,7 @@ void Eater_LoadBuffer::LoadData(std::string& Path)
 			delete mMesh;
 		}
 	}
-	EATER_CLEAR_NODE();
+	EATER_CLOSE_READ_FILE();
 }
 
 void Eater_LoadBuffer::LoadStaticBuffer(int index, ParserData::CMesh* mesh)

@@ -201,7 +201,8 @@ public:
 	std::string ParentName = "";	//부모의 이름
 	std::string	Name = "";			//자기자신의 이름
 
-	std::string MeshName = "";		//매쉬 이름
+	std::string BufferName	 = "";	//매쉬 이름
+	std::string ModelName	 = "";	//매쉬 이름
 	std::string MaterialName = "";	//매터리얼 이름
 
 	Matrix WorldTM;					//월드 매트릭스

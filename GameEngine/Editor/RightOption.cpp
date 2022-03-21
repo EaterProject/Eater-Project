@@ -117,6 +117,7 @@ BEGIN_MESSAGE_MAP(RightOption, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON12, &RightOption::OnCreateParticle)
 	ON_BN_CLICKED(IDC_BUTTON10, &RightOption::OnCreateTerrain)
 	ON_WM_MOUSEHWHEEL()
+	ON_WM_SIZE()
 END_MESSAGE_MAP()
 
 RightOption* RightOption::GetThis()
@@ -386,7 +387,7 @@ void RightOption::OnChange_DataFormat()
 {
 	//클리한 파일을 자체포멧으로 변경한다
 	m_EditorManager->OpenEaterGameObject(ChoiceObject);
-	mFileOption->ShowWindow(SW_SHOW);
+	//mFileOption->ShowWindow(SW_SHOW);
 	
 	
 
@@ -504,3 +505,9 @@ void RightOption::OnCreateTerrain()
 	Demo::CreateTerrain("");
 }
 
+
+
+void RightOption::OnSize(UINT nType, int cx, int cy)
+{
+	CDialogEx::OnSize(nType, cx, cy);
+}

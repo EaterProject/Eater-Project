@@ -91,11 +91,11 @@ void MeshFilter::SetMeshName(std::string mMeshName)
 	if (isLoad_Mesh == false)
 	{
 		isLoad_Mesh = true;
-		MeshName = mMeshName;
+		BufferName = mMeshName;
 	}
 	else
 	{
-		MeshName = mMeshName;
+		BufferName = mMeshName;
 		SetMesh(mMeshName);
 	}
 }
@@ -193,9 +193,19 @@ void MeshFilter::SetMetallicFactor(float metallicFactor)
 	m_Material->SetMetallicFactor(metallicFactor);
 }
 
-std::string MeshFilter::GetMeshName()
+std::string MeshFilter::GetBufferName()
+{
+	return BufferName;
+}
+
+std::string MeshFilter::GetModelName()
 {
 	return ModelName;
+}
+
+std::string MeshFilter::GetMaterialName()
+{
+	return MaterialName;
 }
 
 std::string MeshFilter::GetDiffuseTextureName()
@@ -220,10 +230,10 @@ Material* MeshFilter::GetMaterial()
 
 void MeshFilter::CheckMesh()
 {
-	if (MeshName.empty() == false)
+	if (BufferName.empty() == false)
 	{
 		// Mesh Setting..
-		SetMesh(MeshName);
+		SetMesh(BufferName);
 	}
 }
 
@@ -273,7 +283,7 @@ void MeshFilter::CheckAnimation()
 
 void MeshFilter::SetMesh(std::string meshName)
 {
-	Mesh* mesh = LoadManager::GetMesh(MeshName);
+	Mesh* mesh = LoadManager::GetMesh(BufferName);
 
 	// 해당 Mesh가 없다면..
 	if (mesh == nullptr) return;
@@ -452,7 +462,7 @@ void MeshFilter::SetMatrixData(LoadMeshData* LoadMesh, MeshData* mMesh, GameObje
 void MeshFilter::SetMeshData(LoadMeshData* LoadMesh, MeshData* mMesh, GameObject* obj)
 {
 	/// Load시 저장해 둿던 Mesh Name 기준으로 해당 Mesh Buffer 설정..
-	Mesh* mesh = LoadManager::GetMesh(LoadMesh->MeshName);
+	Mesh* mesh = LoadManager::GetMesh(LoadMesh->BufferName);
 	MeshFilter* meshFilter = obj->GetComponent<MeshFilter>();
 
 	// 로드 여부에 따른 Mesh 설정..
@@ -460,7 +470,8 @@ void MeshFilter::SetMeshData(LoadMeshData* LoadMesh, MeshData* mMesh, GameObject
 	{
 		// 로드한 Mesh 설정..
 		meshFilter->m_Mesh = mesh;
-
+		meshFilter->BufferName  = LoadMesh->BufferName;
+		meshFilter->ModelName	= LoadMesh->ModelName;
 		// Render Mesh Data 설정..
 		mMesh->Mesh_Buffer = mesh->m_MeshData;
 	}
@@ -514,7 +525,7 @@ void MeshFilter::CreateModel()
 		{
 			//오브젝트 생성
 			GameObject* Object = Instance();
-			MeshFilter* mMeshFilter = Object->AddComponent<MeshFilter>();
+			Object->AddComponent<MeshFilter>();
 
 			//링크 연결
 			gameobject->PushChildMeshObject(Object);

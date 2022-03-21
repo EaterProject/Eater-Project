@@ -73,8 +73,6 @@ void EditorManager::OpenEaterFile(std::string Path,int Type)
 void EditorManager::OpenEaterGameObject(GameObject* Object)
 {
 	mEater->Load_GameObject_File(Object);
-
-
 }
 
 void EditorManager::CreateAssetsFile()

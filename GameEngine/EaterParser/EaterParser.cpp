@@ -14,16 +14,16 @@ EaterParser::~EaterParser()
 
 }
 
-void EaterParser::OPEN_File(std::string& Path)
+void EaterParser::OPEN_FILE(std::string& Path)
 {
 	char Buffer[256];
-	FILE* fp = fopen(Path.c_str(), "r");
+	ReadFile = fopen(Path.c_str(), "r+");
 
-	if (fp == nullptr) { return; }
-	while (feof(fp) == 0)
+	if (ReadFile == nullptr) { return; }
+	while (feof(ReadFile) == 0)
 	{
 		//한줄을 읽어온다
-		fgets(Buffer, 256, fp);
+		fgets(Buffer, 256, ReadFile);
 
 		//첫번째 문자로 어떤타입인지 알아온다
 		if (Buffer[0] == NODE_TYPE)
@@ -86,19 +86,24 @@ void EaterParser::OPEN_File(std::string& Path)
 			}
 		}
 	}
-	fclose(fp);
 }
 
-void EaterParser::CREATE_File(std::string& FileName, std::string& OutPath, std::string& FileType)
+void EaterParser::CREATE_FILE(std::string& FileName, std::string& OutPath, std::string& FileType)
 {
 	std::string Name = OutPath + FileName + FileType;
 	WriteFile = fopen(Name.c_str(), "w");
 }
 
-void EaterParser::CLOSE_File()
+void EaterParser::CLOSE_WRITE_FILE()
 {
 	fputs("&",WriteFile);
 	fclose(WriteFile);
+}
+
+void EaterParser::CLOSE_READ_FILE()
+{
+	ClearNode();
+	fclose(ReadFile);
 }
 
 void EaterParser::SetNode(std::string& name)
@@ -282,6 +287,12 @@ void EaterParser::GetList(std::vector<std::string>* Data, int index)
 		OutData = OutData.substr(0, OutData.rfind("\n") );
 		Data->push_back(OutData);
 	}
+}
+
+void EaterParser::ChangeMap(int NodeCount, std::string& Key, std::string& ChangeValue)
+{
+
+
 }
 
 void EaterParser::ClearNode()

@@ -10,9 +10,10 @@ enum class VERTEX_TYPE
 };
 
 ///파일의 열기,닫기,생성을 담당하는 함수들
-EATER_PARSER_DLL void EATER_OPEN_FILE(std::string Path);
-EATER_PARSER_DLL void EATER_CREATE_FILE(std::string FileName, std::string OutPath, std::string FileType = ".Eater");
-EATER_PARSER_DLL void EATER_CLOSE_FILE();
+EATER_PARSER_DLL void EATER_OPEN_READ_FILE(std::string Path);
+EATER_PARSER_DLL void EATER_OPEN_WRITE_FILE(std::string FileName, std::string OutPath, std::string FileType = ".Eater");
+EATER_PARSER_DLL void EATER_CLOSE_WRITE_FILE(); ///쓰기 파일닫기
+EATER_PARSER_DLL void EATER_CLOSE_READ_FILE();	///읽은 파일닫기
 
 ///최상위를 구분하기위한 함수들
 EATER_PARSER_DLL void EATER_SET_NODE(std::string NodeName);
@@ -44,6 +45,3 @@ EATER_PARSER_DLL int EATER_GET_LIST_CHOICE(int NodeCount, std::string ListName);
 
 EATER_PARSER_DLL void EATER_GET_LIST(std::vector<float>* Data, int index);
 EATER_PARSER_DLL void EATER_GET_LIST(std::vector<std::string>* Data, int index);
-
-///노드 정보 클리어
-EATER_PARSER_DLL void EATER_CLEAR_NODE();

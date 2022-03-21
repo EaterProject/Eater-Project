@@ -18,7 +18,7 @@ Eater_LoadScene::~Eater_LoadScene()
 
 void Eater_LoadScene::LoadData(std::string& Path)
 {
-	EATER_OPEN_FILE(Path);
+	EATER_OPEN_READ_FILE(Path);
 	int Count = EATER_GET_NODE_COUNT();
 	for (int i = 0; i < Count; i++)
 	{

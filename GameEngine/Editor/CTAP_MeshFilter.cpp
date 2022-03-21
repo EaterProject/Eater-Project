@@ -30,12 +30,15 @@ void CTAP_MeshFilter::SetGameObject(MeshFilter* ObjectMeshFilter)
 	mMeshFilter = ObjectMeshFilter;
 	mMaterial = ObjectMeshFilter->GetMaterial();
 
-	std::string MeshName = ObjectMeshFilter->GetMeshName();
+	std::string MeshName = ObjectMeshFilter->GetBufferName();
+	std::string ModelName = ObjectMeshFilter->GetModelName();
 	
 	MeshName_Edit.SetWindowTextW(ChangeToCString(MeshName));
+	ModelName_Edit.SetWindowTextW(ChangeToCString(ModelName));
 
 	Diffuse_Edit.GetWindowRect(EditRect[Diffuse_Index]);
 	MeshName_Edit.GetWindowRect(EditRect[MeshName_Index]);
+	ModelName_Edit.GetWindowRect(EditRect[ModelName_Index]);
 	Nomal_Eidt.GetWindowRect(EditRect[Nomal_Index]);
 	ORM_Edit.GetWindowRect(EditRect[ORM_Index]);
 	EmissiveName_Edit.GetWindowRect(EditRect[Emissive_Index]);
@@ -172,6 +175,7 @@ void CTAP_MeshFilter::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_SLIDER7, Add_R_Slider);
 	DDX_Control(pDX, IDC_SLIDER8, Add_G_Slider);
 	DDX_Control(pDX, IDC_SLIDER9, Add_B_Slider);
+	DDX_Control(pDX, IDC_EDIT15, ModelName_Edit);
 }
 
 BOOL CTAP_MeshFilter::OnInitDialog()

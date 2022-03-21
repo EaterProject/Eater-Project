@@ -57,10 +57,10 @@ void EaterManager::Load_FBX_File(std::string& Path, ParserData::CModel* FBXMesh)
 	std::string FileName = CutFileName(Path);
 
 	///Model 정보를 저장한다
-	EATER_CREATE_FILE(FileName,"../Assets/Model/ModelData/",".Eater");
+	EATER_OPEN_WRITE_FILE(FileName,"../Assets/Model/ModelData/",".Eater");
 	mMeshManager->SetFileName(FileName);
 	mMeshManager->ChangeEaterFile(FBXMesh);
-	EATER_CLOSE_FILE();
+	EATER_CLOSE_WRITE_FILE();
 
 	///Material 정보를 저장한다
 	mMaterialManager->SetFileName(FileName);
@@ -78,7 +78,31 @@ void EaterManager::Load_FBX_File(std::string& Path, ParserData::CModel* FBXMesh)
 void EaterManager::Load_GameObject_File(GameObject* Object)
 {
 	MeshFilter* MF = Object->GetComponent<MeshFilter>();
-	int num = 0;
+	
+	std::string BufferName		= MF->GetBufferName();
+	std::string MaterialName	= MF->GetMaterialName();
+	std::string ModelName		= MF->GetModelName();
 
+	std::string FilePath = "../Assets/Model/ModelData/" + ModelName + ".Eater";
+	EATER_OPEN_READ_FILE(FilePath);
+	int Count = EATER_GET_NODE_COUNT();
+	for (int i = 0; i < Count; i++)
+	{
+		std::string NodeName = EATER_GET_NODE_NAME(i);
+
+		if (NodeName == "STATIC")
+		{
+			std::string MeshName = EATER_GET_MAP(i, "MeshName");
+			if (MeshName == BufferName)
+			{
+				///파일 변환이 일어나야함
+
+
+
+				
+			}
+		}
+	}
+	EATER_CLOSE_READ_FILE();
 }
 

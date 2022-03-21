@@ -14,9 +14,10 @@ public:
 	EaterParser();
 	~EaterParser();
 
-	void OPEN_File(std::string& Path);
-	void CREATE_File(std::string& FileName,std::string& OutPath,std::string& FileType);
-	void CLOSE_File();
+	void OPEN_FILE(std::string& Path);
+	void CREATE_FILE(std::string& FileName,std::string& OutPath,std::string& FileType);
+	void CLOSE_WRITE_FILE();
+	void CLOSE_READ_FILE();
 public:
 	void SetNode(std::string& name);
 	void SetMap(std::string& Key, std::string& value);
@@ -38,6 +39,9 @@ public:
 
 	void GetList(std::vector<float>* Data, int index);
 	void GetList(std::vector<std::string>* Data, int index);
+public:
+	void ChangeMap(int NodeCount,std::string& Key,std::string& ChangeValue);
+
 public:
 	void ClearNode();
 private:
@@ -61,6 +65,7 @@ private:
 	//std::ofstream WriteFile;
 
 	FILE* WriteFile;
+	FILE* ReadFile;
 
 	std::vector<EaterNode*> NodeList;
 	EaterNode* mNode;
