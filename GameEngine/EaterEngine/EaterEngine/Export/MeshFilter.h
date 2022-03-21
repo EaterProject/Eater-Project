@@ -25,6 +25,7 @@ namespace ParserData
 class ModelData;
 class LoadMeshData;
 class Transform;
+class Mesh;
 class Material;
 class MeshData;
 
@@ -39,6 +40,7 @@ public:
 
 public:
 	//메쉬의 이름을 넣으면 데이터 로드
+	EATER_ENGINEDLL void SetModelName(std::string mModelName);
 	EATER_ENGINEDLL void SetMeshName(std::string mMeshName);
 	EATER_ENGINEDLL void SetMaterialName(std::string mMatName);
 	EATER_ENGINEDLL void SetAnimationName(std::string mTextureName);
@@ -60,18 +62,21 @@ public:
 	EATER_ENGINEDLL Material* GetMaterial();
 
 public:
-	Material* Materials;
+	Mesh* m_Mesh;
+	Material* m_Material;
 
 private:
 	//Transform을 연결한다
 	void LinkHierarchy(Transform* my,Transform*parent);
 
-	void CreateMesh();
+	void CreateModel();
 
+	void CheckMesh();
 	void CheckMaterial();
 	void CheckTexture();
 	void CheckAnimation();
 
+	void SetMesh(std::string meshName);
 	void SetMaterial(std::string matName);
 	void SetTexture(std::string texName, UINT texType);
 
@@ -82,18 +87,20 @@ private:
 	void CreateSkinMesh(LoadMeshData* mMesh, GameObject* Object);
 
 	void SetMaterialData(LoadMeshData* LoadMesh, MeshData* mMesh, GameObject* obj);
-	void SetMatrixData(LoadMeshData* LoadMesh, MeshData* mMesh,GameObject* obj);
-	void SetMeshData(LoadMeshData* LoadMesh, MeshData* mMesh);
+	void SetMatrixData(LoadMeshData* LoadMesh, MeshData* mMesh, GameObject* obj);
+	void SetMeshData(LoadMeshData* LoadMesh, MeshData* mMesh, GameObject* obj);
 	void SetType(LoadMeshData* LoadMesh, MeshData* mMesh);
 
+	bool isLoad_Model;			//모델 로드여부
 	bool isLoad_Mesh;			//매쉬 로드여부
 	bool isLoad_Material;		//매터리얼 로드여부
-	bool isLoad_Texture;		//텍스쳐 로드 여부
+	bool isLoad_Texture;		//텍스쳐 로드여부
 	bool isLoad_Animation;		//애니메이션 로드여부
 
-	std::string MeshName;				//로드한 매쉬 이름
+	std::string ModelName;				//로드한 모델 이름
 	std::string AnimationName;			//로드한 애니메이션 이름
 
+	std::string MeshName;				//로드한 매쉬 이름
 	std::string MaterialName;			//로드한 매터리얼 이름
 	std::string DiffuseTextureName;		//로드한 텍스쳐 이름
 	std::string NormalTextureName;		//로드한 텍스쳐 이름

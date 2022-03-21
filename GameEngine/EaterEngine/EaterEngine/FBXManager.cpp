@@ -417,9 +417,6 @@ void FBXManager::LoadQuad()
 	m_Graphic->CreateMeshBuffer(mesh, &quadMesh->m_MeshData);
 	LeaveCriticalSection(m_CriticalSection);
 
-	/// 매쉬 자체포멧 생기면 이름만 저장하자..
-	quad->MeshBuffer_Data = quadMesh->m_MeshData;
-
 	SaveMesh->TopMeshList.push_back(quad);
 
 	LoadManager::ModelList.insert({ "Quad" , SaveMesh });

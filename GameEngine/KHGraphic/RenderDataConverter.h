@@ -62,7 +62,7 @@ private:
 	void ConvertMesh(MeshBuffer* originBuf, MeshRenderBuffer* convertData);				// 생성된 Mesh Resource 변환..
 	void ConvertMaterial(MaterialBuffer* originMat, MaterialRenderBuffer* convertMat);	// 생성된 Material Resource 변환..
 
-	void CheckInstance(RenderData* renderData, MeshRenderBuffer* mesh, MaterialRenderBuffer* material);		// Mesh & Material Resource 기준 Instance 검색 및 생성..
+	void RegisterInstance(RenderData* renderData, MeshRenderBuffer* mesh, MaterialRenderBuffer* material);		// Mesh & Material Resource 기준 Instance 검색 및 등록..
 	
 	void CheckEmptyInstance(MeshRenderBuffer* mesh);			// Mesh Resource 삭제시 관련된 Instance 삭제..
 	void CheckEmptyInstance(MaterialRenderBuffer* material);	// Material Resource 삭제시 관련된 Instance 삭제..

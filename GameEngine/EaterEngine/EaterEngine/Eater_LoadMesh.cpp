@@ -43,7 +43,10 @@ void Eater_LoadMesh::LoadData(std::string& Path)
 		{
 			LoadMeshData* Data = LoadSkinMesh(i);
 			SaveData->TopSkinList.push_back(Data);
-			SaveName.erase(SaveName.rfind('+'));
+			if (SaveName.rfind('+') != std::string::npos)
+			{
+				SaveName.erase(SaveName.rfind('+'));
+			}
 			SaveData->BoneOffsetList = Data->BoneTMList;
 		}
 		else if (NodeName == "TERRAIN")
@@ -383,7 +386,7 @@ void Eater_LoadMesh::LoadAnimation(int index, std::string& Name)
 	float m_TicksPerFrame = std::stof(EATER_GET_MAP(index, "TickFrame"));
 	float m_TotalFrame = std::stof(EATER_GET_MAP(index, "TotalFrame"));
 	float m_StartFrame = std::stof(EATER_GET_MAP(index, "StartFrame"));
-	float m_EndFrame = std::stoi(EATER_GET_MAP(index, "EndFrame"));
+	float m_EndFrame = std::stof(EATER_GET_MAP(index, "EndFrame"));
 
 	int BoneCount = std::stoi(EATER_GET_MAP(index, "BoneCount"));
 	for (int k = 0; k < BoneCount; k++)

@@ -44,8 +44,9 @@ typedef enum EXTENSION_TYPE
 
 namespace ParserData
 {
-	struct CFrame
+	class CFrame
 	{
+	public:
 		float							m_Time;
 		DirectX::SimpleMath::Vector3	m_Pos;
 		DirectX::SimpleMath::Quaternion m_RotQt;
@@ -73,12 +74,13 @@ namespace ParserData
 
 namespace ParserData
 {
-	struct CIndexList
+	class CIndexList
 	{
+	public:
 		int m_Index[3];
 	};
 
-	struct CVertex
+	class CVertex
 	{
 	public:
 		CVertex();
@@ -101,7 +103,7 @@ namespace ParserData
 		int m_Indices;
 	};
 
-	struct CFace
+	class CFace
 	{
 	public:
 		CFace();
@@ -116,13 +118,14 @@ namespace ParserData
 		DirectX::SimpleMath::Vector2 m_UVvertex[3];			// Vertex UV
 	};
 
-	struct CMaterialMap
+	class CMaterialMap
 	{
+	public:
 		std::string	m_MapName;
 		std::string	m_BitMap;
 	};
 
-	struct CMaterial
+	class CMaterial
 	{
 	public:
 		CMaterial();
@@ -200,7 +203,7 @@ namespace ParserData
 
 namespace ParserData
 {
-	struct Scenedata
+	class Scenedata
 	{
 	public:
 		Scenedata();
@@ -213,15 +216,17 @@ namespace ParserData
 		float				m_TicksPerFrame;
 	};
 
-	struct TVertex
+	class TVertex
 	{
+	public:
 		TVertex();
 
 		float m_U, m_V, m_W;
 	};
 
-	struct Bone
+	class Bone
 	{
+	public:
 		Bone();
 
 		std::string	m_BoneName;
@@ -252,8 +257,9 @@ namespace ParserData
 
 namespace ParserData
 {
-	struct CModel
+	class CModel
 	{
+	public:
 		CModel();
 		~CModel();
 
@@ -265,8 +271,9 @@ namespace ParserData
 		std::vector<ParserData::CMesh*> m_MeshList;	 				// Mesh List
 	};
 
-	struct ImageData
+	class ImageData
 	{
+	public:
 		IMAGE_TYPE type;
 		unsigned int channels;
 

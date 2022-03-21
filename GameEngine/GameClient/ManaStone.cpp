@@ -25,7 +25,7 @@ void ManaStone::Awake()
 
 void ManaStone::SetUp()
 {
-	mMeshFilter->SetMeshName("box");
+	mMeshFilter->SetModelName("box");
 }
 
 void ManaStone::Update()

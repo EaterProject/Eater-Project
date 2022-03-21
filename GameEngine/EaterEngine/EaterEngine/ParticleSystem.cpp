@@ -47,7 +47,7 @@ void ParticleSystem::SetUp()
 	m_MeshFilter->SetDiffuseTextureName(m_DiffuseName);
 
 	// Particle Mesh ¼³Á¤..
-	m_MeshFilter->SetMeshName(m_ParticleMeshName);
+	m_MeshFilter->SetModelName(m_ParticleMeshName);
 }
 
 void ParticleSystem::Start()

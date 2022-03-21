@@ -59,8 +59,7 @@ struct MaterialSubData
 {
 	MaterialSubData() = default;
 
-	Vector4 BaseColor;					// Base Color
-	Vector4 AddColor;					// Add Color
+	Vector4 AddColor = Vector4(0.0f, 0.0f, 0.0, 1.0f);	// Add Color
 
 	float EmissiveFactor = 1.0f;		// Emissive 강도
 	float RoughnessFactor = 1.0f;		// Roughness 강도

@@ -8,8 +8,11 @@
 
 cbuffer cbMaterial : register(b0)
 {
-    float4 gColor   : packoffset(c0);
-    uint gTexID     : packoffset(c1.x);
+    float4 gAddColor        : packoffset(c0);
+    float gEmissiveFactor   : packoffset(c1.x);
+    float gRoughnessFactor  : packoffset(c1.y);
+    float gMetallicFactor   : packoffset(c1.z);
+    uint gTexID             : packoffset(c1.w);
 };
 
 #ifdef TERRAIN_MESH
@@ -63,11 +66,11 @@ MeshPixelOut Deferred_PBR_PS(MeshPixelIn pin)
 #else
     if (gTexID & ALBEDO_MAP)
     {
-        albedo = gDiffuseMap.Sample(gSamWrapLinear, pin.Tex);
+        albedo = gDiffuseMap.Sample(gSamWrapLinear, pin.Tex) + gAddColor;
     }
     else
     {
-        albedo = gColor;
+        albedo = gAddColor;
     }
     if (gTexID & NORMAL_MAP)
     {
@@ -82,18 +85,25 @@ MeshPixelOut Deferred_PBR_PS(MeshPixelIn pin)
     }
     if (gTexID & EMISSIVE_MAP)
     {
-        emissive = gEmissiveMap.Sample(gSamWrapLinear, pin.Tex);
+        emissive = gEmissiveMap.Sample(gSamWrapLinear, pin.Tex) * gEmissiveFactor;
     }
     if (gTexID & ORM_MAP)
     {
         orm = gORMMap.Sample(gSamWrapLinear, pin.Tex).rgb;
+        orm.g += gRoughnessFactor;
+        orm.b += gMetallicFactor;
+    }
+    else
+    {
+        orm.g = gRoughnessFactor;
+        orm.b = gMetallicFactor;
     }
 #endif
     
     pout.Albedo = albedo;
     pout.Emissive = emissive;
-    pout.Normal = float4(normalW, orm.g);
-    pout.Position = float4(pin.PosW, orm.b);
+    pout.Normal = float4(normalW, saturate(orm.g));
+    pout.Position = float4(pin.PosW, saturate(orm.b));
     pout.NormalDepth = float4(normalV, pin.PosV.z);
     
     return pout;

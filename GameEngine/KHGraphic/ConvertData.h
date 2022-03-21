@@ -3,6 +3,8 @@
 class MaterialRenderBuffer
 {
 public:
+	UINT m_BufferIndex;
+	
 	MaterialSubData* m_MaterialSubData;
 
 	ID3D11ShaderResourceView* m_Albedo;
@@ -15,6 +17,8 @@ public:
 class MeshRenderBuffer
 {
 public:
+	UINT m_BufferIndex;
+
 	UINT m_IndexCount;
 	UINT m_Stride;
 	UINT m_Offset;

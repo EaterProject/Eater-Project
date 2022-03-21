@@ -39,7 +39,7 @@ void TestPlayer::Awake()
 void TestPlayer::SetUp()
 {
 	//매쉬, 애니메이션 정보 입력
-	mMeshFilter->SetMeshName("box");
+	mMeshFilter->SetModelName("box");
 	//mMeshFilter->SetAnimationName("MOdNA");
 	//mAnimation->Choice("Idle");
 

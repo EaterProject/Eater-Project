@@ -42,7 +42,7 @@ void AI::SetUp()
 
 	
 
-	mMeshFilter->SetMeshName("MOdNA");
+	mMeshFilter->SetModelName("MOdNA");
 	mMeshFilter->SetAnimationName("MOdNA");
 	
 	mAnimationController->Choice("Idle");
