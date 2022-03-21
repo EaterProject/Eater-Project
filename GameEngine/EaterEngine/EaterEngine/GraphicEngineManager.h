@@ -44,7 +44,7 @@ public:
 	void PushInstance(MeshData* mesh);
 	void PushMesh(MeshBuffer* meshData);
 	void PushMaterial(MaterialBuffer* materialData);
-	void ChangeInstance(MeshData* mesh);
+	void PushChangeInstance(MeshData* mesh);
 	void DeleteInstance(MeshData* mesh);
 	void Render();
 

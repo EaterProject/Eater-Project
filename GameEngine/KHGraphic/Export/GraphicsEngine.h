@@ -51,9 +51,9 @@ public:
 	virtual GRAPHIC_DLL void PushMaterial(MaterialBuffer* material) abstract;
 	virtual GRAPHIC_DLL void PushMesh(MeshBuffer* mesh) abstract;
 
-	virtual GRAPHIC_DLL void ChangeInstance(MeshData* instance) abstract;
-	virtual GRAPHIC_DLL void ChangeMesh(MeshBuffer* mesh) abstract;
-	virtual GRAPHIC_DLL void ChangeMaterial(MaterialBuffer* material) abstract;
+	virtual GRAPHIC_DLL void PushChangeInstance(MeshData* instance) abstract;
+	virtual GRAPHIC_DLL void PushChangeMesh(MeshBuffer* mesh) abstract;
+	virtual GRAPHIC_DLL void PushChangeMaterial(MaterialBuffer* material) abstract;
 
 	virtual GRAPHIC_DLL void DeleteInstance(MeshData* meshData) abstract;
 	virtual GRAPHIC_DLL void DeleteMesh(MeshBuffer* mesh) abstract;

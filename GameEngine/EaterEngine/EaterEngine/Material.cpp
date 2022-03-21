@@ -49,7 +49,7 @@ void Material::SetDiffuseTexture(std::string diffuseName)
 	}
 
 	// Renderer Data 동기화..
-	GraphicEngine::Get()->ChangeMaterial(m_MaterialData);
+	GraphicEngine::Get()->PushChangeMaterial(m_MaterialData);
 }
 
 void Material::SetNormalTexture(std::string noramlName)
@@ -65,7 +65,7 @@ void Material::SetNormalTexture(std::string noramlName)
 	}
 
 	// Renderer Data 동기화..
-	GraphicEngine::Get()->ChangeMaterial(m_MaterialData);
+	GraphicEngine::Get()->PushChangeMaterial(m_MaterialData);
 }
 
 void Material::SetEmissiveTexture(std::string emissiveName)
@@ -81,7 +81,7 @@ void Material::SetEmissiveTexture(std::string emissiveName)
 	}
 
 	// Renderer Data 동기화..
-	GraphicEngine::Get()->ChangeMaterial(m_MaterialData);
+	GraphicEngine::Get()->PushChangeMaterial(m_MaterialData);
 }
 
 void Material::SetORMTexture(std::string ormName)
@@ -97,7 +97,7 @@ void Material::SetORMTexture(std::string ormName)
 	}
 
 	// Renderer Data 동기화..
-	GraphicEngine::Get()->ChangeMaterial(m_MaterialData);
+	GraphicEngine::Get()->PushChangeMaterial(m_MaterialData);
 }
 
 void Material::SetBaseColor(DirectX::SimpleMath::Vector4 color)

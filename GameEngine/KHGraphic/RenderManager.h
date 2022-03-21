@@ -40,9 +40,9 @@ public:
 	void PushMesh(MeshBuffer* mesh) override;
 	void PushMaterial(MaterialBuffer* material) override;
 
-	void ChangeInstance(MeshData* instance) override;
-	void ChangeMesh(MeshBuffer* mesh) override;
-	void ChangeMaterial(MaterialBuffer* material) override;
+	void PushChangeInstance(MeshData* instance) override;
+	void PushChangeMesh(MeshBuffer* mesh) override;
+	void PushChangeMaterial(MaterialBuffer* material) override;
 
 	void DeleteInstance(MeshData* instance) override;
 	void DeleteMesh(MeshBuffer* mesh) override;
@@ -67,6 +67,9 @@ private:
 	void EndRender();
 
 private:
+	void ConvertPushInstance();
+	void ConvertChangeInstance();
+
 	void PushMeshRenderData(RenderData* renderData);
 	void PushParticleRenderData(RenderData* renderData);
 	void PushUnRenderData(RenderData* renderData);
@@ -80,12 +83,14 @@ private:
 	void DeleteUnRenderData(MeshData* meshData);
 
 	void CheckInstanceLayer(std::vector<InstanceLayer*>& layerList);
+	void FindInstanceLayer(std::vector<InstanceLayer*>& layerList, InstanceLayer* layer);
 
 private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain> m_SwapChain;
 
 private:
 	std::queue<MeshData*> m_PushInstanceList;
+	std::queue<MeshData*> m_ChangeInstanceList;
 
 	std::vector<InstanceLayer*> m_RenderMeshList;
 	std::vector<InstanceLayer*> m_ParticleMeshList;
