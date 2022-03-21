@@ -37,9 +37,10 @@ std::string EaterManager::CutFileName(std::string FilePath)
 	return FileType;
 }
 
-void EaterManager::LoadEaterFile(std::string& Path)
+void EaterManager::Load_Eater_File(std::string& Path)
 {
 	
+
 
 
 

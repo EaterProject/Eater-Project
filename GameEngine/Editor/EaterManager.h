@@ -19,7 +19,7 @@ public:
 	EaterManager();
 	~EaterManager();
 
-	void LoadEaterFile(std::string& Path);
+	void Load_Eater_File(std::string& Path);
 	void Load_FBX_File(std::string& Path,ParserData::CModel* FBXMesh);
 	void Initialize();
 private:
@@ -30,7 +30,7 @@ private:
 private:
 	std::string CutFileName(std::string FilePath);
 	
-
+	//FBX를 로드해서 Eater파일로 변환
 	E_MeshManager*		mMeshManager;
 	E_AnimationManager* mAnimationManager;
 	E_MaterialManager*	mMaterialManager;

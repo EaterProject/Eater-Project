@@ -6,6 +6,7 @@
 #include "EditorData.h"
 
 
+
 EditorManager::EditorManager()
 {
 	mYaml	= nullptr;
@@ -30,7 +31,7 @@ void EditorManager::Initialize()
 	CreateAssetsFile();
 }
 
-void EditorManager::SetPath(std::string Path,MeshOption* Data)
+void EditorManager::SetPath(std::string Path)
 {
 	size_t start = Path.rfind(".")+1;
 	size_t end = Path.length()- start;
@@ -42,11 +43,11 @@ void EditorManager::SetPath(std::string Path,MeshOption* Data)
 	}
 	else if (FileType == "Eater")
 	{
-		mEater->LoadEaterFile(Path);
+		mEater->Load_Eater_File(Path);
 	}
 	else if (FileType == "fbx")
 	{
-		ParserData::CModel* Model = mFbx->OpenFile(Path, Data);
+		ParserData::CModel* Model = mFbx->OpenFile(Path);
 		mEater->Load_FBX_File(Path, Model);
 	}
 	else if (FileType == "unity")
@@ -55,12 +56,17 @@ void EditorManager::SetPath(std::string Path,MeshOption* Data)
 	}
 	else if (FileType == "Emat")
 	{
-		mEater->LoadEaterFile(Path);
+		mEater->Load_Eater_File(Path);
 	}
 	else if (FileType == "Emesh")
 	{
-		mEater->LoadEaterFile(Path);
+		mEater->Load_Eater_File(Path);
 	}
+}
+
+void EditorManager::OpenEaterFile(std::string Path,int Type)
+{
+	mEater->Load_Eater_File(Path);
 }
 
 void EditorManager::CreateAssetsFile()
@@ -141,6 +147,6 @@ void EditorManager::LoadFile(std::string& Path)
 
 	if (FileType == "fbx" || FileType == "FBX")
 	{
-		mFbx->OpenFile(Path, nullptr);
+		mFbx->OpenFile(Path);
 	}
 }

@@ -109,20 +109,20 @@
     <Filter Include="소스 파일\MFC\Dialog\Assets">
       <UniqueIdentifier>{a8cbe88f-567a-4ae8-afc1-2c4ed9b903b7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Manager\Eater\Manager">
+      <UniqueIdentifier>{0a4fd463-5197-4d4d-925e-9124eab5700b}</UniqueIdentifier>
+    </Filter>
     <Filter Include="소스 파일\Manager\Eater\EaterAnimation">
       <UniqueIdentifier>{aff7e431-a352-4a0a-82ff-2cce3ab25594}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Manager\Eater\EaterMesh">
-      <UniqueIdentifier>{4dfe9510-17f3-46f4-96e7-26eb70c509d8}</UniqueIdentifier>
+    <Filter Include="소스 파일\Manager\Eater\EaterBuffer">
+      <UniqueIdentifier>{41e76107-04c6-4f8b-aaaa-f0c5c2aef00d}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\Manager\Eater\EaterMaterial">
       <UniqueIdentifier>{58b1aefe-58d2-4a28-bcfb-5b5582c8ed8b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Manager\Eater\Manager">
-      <UniqueIdentifier>{0a4fd463-5197-4d4d-925e-9124eab5700b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Manager\Eater\EaterBuffer">
-      <UniqueIdentifier>{41e76107-04c6-4f8b-aaaa-f0c5c2aef00d}</UniqueIdentifier>
+    <Filter Include="소스 파일\Manager\Eater\EaterMesh">
+      <UniqueIdentifier>{4dfe9510-17f3-46f4-96e7-26eb70c509d8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
