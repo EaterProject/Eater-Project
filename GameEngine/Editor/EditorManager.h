@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 
+class GameObject;
 class YamlManager;
 class FBXManager;
 class EaterManager;
@@ -16,6 +17,7 @@ public:
 	void Initialize();
 	void SetPath(std::string Path);
 	void OpenEaterFile(std::string Path, int Type);
+	void OpenEaterGameObject(GameObject* Object);
 private:
 	void CreateAssetsFile();
 	void LoadAssets();

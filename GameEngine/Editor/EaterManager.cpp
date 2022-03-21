@@ -3,6 +3,9 @@
 
 #include "ModelParser.h";
 
+#include "GameObject.h"
+#include "MeshFilter.h"
+
 #include "E_MaterialManager.h"
 #include "E_MeshManager.h"
 #include "E_AnimationManager.h"
@@ -70,5 +73,12 @@ void EaterManager::Load_FBX_File(std::string& Path, ParserData::CModel* FBXMesh)
 	///Animation 정보를 저장한다
 	mAnimationManager->SetFileName(FileName);
 	mAnimationManager->ChangeEaterFile(FBXMesh);
+}
+
+void EaterManager::Load_GameObject_File(GameObject* Object)
+{
+	MeshFilter* MF = Object->GetComponent<MeshFilter>();
+	int num = 0;
+
 }
 

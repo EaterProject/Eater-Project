@@ -5,12 +5,13 @@
 #include "EaterManager.h"
 #include "EditorData.h"
 
-
+#include "GameObject.h"
 
 EditorManager::EditorManager()
 {
 	mYaml	= nullptr;
 	mFbx	= nullptr;
+	mEater	= nullptr;
 }
 
 EditorManager::~EditorManager()
@@ -67,6 +68,13 @@ void EditorManager::SetPath(std::string Path)
 void EditorManager::OpenEaterFile(std::string Path,int Type)
 {
 	mEater->Load_Eater_File(Path);
+}
+
+void EditorManager::OpenEaterGameObject(GameObject* Object)
+{
+	mEater->Load_GameObject_File(Object);
+
+
 }
 
 void EditorManager::CreateAssetsFile()

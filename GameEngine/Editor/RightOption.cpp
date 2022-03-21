@@ -284,7 +284,7 @@ void RightOption::OnChoice_Hirearchy_Item(NMHDR* pNMHDR, LRESULT* pResult)
 	HirearchyEdit.SetWindowTextW(Name);
 
 	Component_TapList.DeleteAllItems();
-	GameObject* ChoiceObject = FindGameObjectParent(ChoiceItem);
+	ChoiceObject = FindGameObjectParent(ChoiceItem);
 	Delete_Hirearchy_Item(ChoiceItem);
 	Create_Hirearchy_Item(ChoiceObject, ChoiceItem);
 
@@ -385,12 +385,11 @@ void RightOption::OnDeleteFile_Button()
 void RightOption::OnChange_DataFormat()
 {
 	//클리한 파일을 자체포멧으로 변경한다
-	//std::string Name = ChangeToString(ClickItemName);
-	//std::string Path = ChangeToString(ClickAssetsPath);
-	//Path += "/";
-	//Path += Name;
-
+	m_EditorManager->OpenEaterGameObject(ChoiceObject);
 	mFileOption->ShowWindow(SW_SHOW);
+	
+	
+
 	//m_EditorManager->SetPath(Path, nullptr);
 }
 
