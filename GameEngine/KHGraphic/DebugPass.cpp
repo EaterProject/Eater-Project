@@ -74,7 +74,7 @@ void DebugPass::Start(int width, int height)
 	m_QuadBuffer = g_Resource->GetDrawBuffer<DB_Line_Quad>();
 	m_AxisBuffer = g_Resource->GetDrawBuffer<DB_Line_Axis>();
 	m_BoxBuffer = g_Resource->GetDrawBuffer<DB_Line_Box>();
-	m_CircleBuffer = g_Resource->GetDrawBuffer<DB_Line_Circle>();
+	m_CircleBuffer = g_Resource->GetDrawBuffer<DB_Line_CircleSphere>();
 	m_GridBuffer = g_Resource->GetDrawBuffer<DB_Line_Grid>();
 	m_IconBuffer = g_Resource->GetDrawBuffer<DB_Quad>();
 

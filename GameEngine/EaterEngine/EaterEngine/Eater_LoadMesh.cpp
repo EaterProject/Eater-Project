@@ -46,8 +46,8 @@ void Eater_LoadMesh::LoadData(std::string& Path)
 			SaveData->TopSkinList.push_back(Data);
 			if (SaveName.rfind('+') != std::string::npos)
 			{
-				SaveName.erase(SaveName.rfind('+'));
-				//Data->ModelName = SaveName;
+				//SaveName.erase(SaveName.rfind('+'));
+				Data->ModelName = SaveName;
 			}
 			SaveData->BoneOffsetList = Data->BoneTMList;
 		}
