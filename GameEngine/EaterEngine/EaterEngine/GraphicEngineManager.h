@@ -50,8 +50,8 @@ public:
 
 	void LoadEnvironment(std::string mPath);
 
-	void DebugDrawLine(DirectX::SimpleMath::Vector3 start, DirectX::SimpleMath::Vector3 end, DirectX::SimpleMath::Vector4 color);
-	void DebugDrawLine(DirectX::SimpleMath::Vector3 start, DirectX::SimpleMath::Vector3 dir, float distance, DirectX::SimpleMath::Vector4 color);
+	void DebugDrawLine(DirectX::SimpleMath::Vector3 start, DirectX::SimpleMath::Vector3 end, DirectX::SimpleMath::Vector3 color);
+	void DebugDrawLine(DirectX::SimpleMath::Vector3 start, DirectX::SimpleMath::Vector3 dir, float distance, DirectX::SimpleMath::Vector3 color);
 
 	//선택한 그래픽엔진으로 인덱스버퍼를 생성함
 	void CreateMeshBuffer(ParserData::CMesh* model, MeshBuffer** ppResource);

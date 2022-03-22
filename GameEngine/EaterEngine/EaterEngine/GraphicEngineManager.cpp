@@ -85,7 +85,7 @@ void GraphicEngineManager::LoadEnvironment(std::string mPath)
 	GEngine->CreateEnvironmentMap(mPath);
 }
 
-void GraphicEngineManager::DebugDrawLine(DirectX::SimpleMath::Vector3 start, DirectX::SimpleMath::Vector3 end, DirectX::SimpleMath::Vector4 color)
+void GraphicEngineManager::DebugDrawLine(DirectX::SimpleMath::Vector3 start, DirectX::SimpleMath::Vector3 end, DirectX::SimpleMath::Vector3 color)
 {
 	RayCastData ray;
 	ray.RayStart = start;
@@ -95,7 +95,7 @@ void GraphicEngineManager::DebugDrawLine(DirectX::SimpleMath::Vector3 start, Dir
 	Global->RayCastDebugData.push(ray);
 }
 
-void GraphicEngineManager::DebugDrawLine(DirectX::SimpleMath::Vector3 start, DirectX::SimpleMath::Vector3 dir, float distance, DirectX::SimpleMath::Vector4 color)
+void GraphicEngineManager::DebugDrawLine(DirectX::SimpleMath::Vector3 start, DirectX::SimpleMath::Vector3 dir, float distance, DirectX::SimpleMath::Vector3 color)
 {
 	RayCastData ray;
 	ray.RayStart = start;
