@@ -32,6 +32,9 @@ private:
 	static const int E_MAT_MESH		= 3;
 private:
 	std::string CutFileName(std::string FilePath);
+	bool isSkin = false;
+	std::string SkinName;
+	std::string AnimationName;
 	
 	//FBX를 로드해서 Eater파일로 변환
 	E_MeshManager*		mMeshManager;

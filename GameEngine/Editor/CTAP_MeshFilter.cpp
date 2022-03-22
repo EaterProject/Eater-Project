@@ -304,7 +304,7 @@ LRESULT CTAP_MeshFilter::OnUserFun(WPARAM wParam, LPARAM lparam)
 	}
 
 
-	for (int i = 1; i <= 4; i++)
+	for (int i = 0; i <= 3; i++)
 	{
 		if (EditRect[i].left	<= point.x &&
 			EditRect[i].right	>= point.x &&
@@ -315,19 +315,19 @@ LRESULT CTAP_MeshFilter::OnUserFun(WPARAM wParam, LPARAM lparam)
 			{
 				switch (i)
 				{
-				case 1:
+				case 0:
 					Diffuse_Edit.SetWindowTextW(strString);
 					mMeshFilter->SetDiffuseTextureName(FileName);
 					break;
-				case 2:
+				case 1:
 					Nomal_Eidt.SetWindowTextW(strString);
 					mMeshFilter->SetNormalTextureName(FileName);
 					break;
-				case 3:
+				case 2:
 					ORM_Edit.SetWindowTextW(strString);
 					mMeshFilter->SetORMTextureName(FileName);
 					break;
-				case 4:
+				case 3:
 					EmissiveName_Edit.SetWindowTextW(strString);
 					mMeshFilter->SetEmissiveTextureName(FileName);
 					break;

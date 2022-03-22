@@ -43,6 +43,15 @@ std::string EaterManager::CutFileName(std::string FilePath)
 	size_t start = FilePath.rfind("/") + 1;
 	size_t end = FilePath.rfind(".") - start;
 	std::string FileType = FilePath.substr(start, end);
+
+	if(FileType.rfind('+'))
+	{
+		isSkin = true;
+		SkinName		= FileType.substr(0, FileType.rfind('+'));
+		AnimationName	= FileType.substr(FileType.rfind('+'), FileType.length());
+	}
+
+
 	return FileType;
 }
 
@@ -61,6 +70,7 @@ void EaterManager::Load_Eater_File(std::string& Path)
 void EaterManager::Load_FBX_File(std::string& Path, ParserData::CModel* FBXMesh)
 {
 	std::string FileName = CutFileName(Path);
+
 
 	///Model 정보를 저장한다
 	EATER_OPEN_WRITE_FILE(FileName,"../Assets/Model/ModelData/",".Eater");
@@ -88,6 +98,16 @@ void EaterManager::Load_GameObject_File(GameObject* Object ,ObjectOption* mOptio
 	std::string ModelName		= MF->GetModelName();
 	std::string MaterialName	= MF->GetMaterialName();
 
+	if (Object->OneMeshData->Object_Data->ObjType == SKINNING)
+	{
+		ModelName += "+Idle";
+	}
+	else if (Object->OneMeshData->Object_Data->ObjType == BONE_MESH)
+	{
+		int num = 0;
+	}
+
+
 	//읽어올 파일의 경로를 설정
 	std::string ModelPath		= "../Assets/Model/ModelData/" + ModelName + ".Eater";
 	std::string MaterialPath	= "../Assets/Texture/Material/" + MaterialName + ".Emat";
@@ -110,6 +130,11 @@ void EaterManager::Load_GameObject_File(GameObject* Object ,ObjectOption* mOptio
 		else if (NodeName == "BONE")
 		{
 			mChangeManager->Change_Bone(i, Object);
+		}
+		else
+		{
+		
+
 		}
 	}
 	EATER_CLOSE_CHANGE_FILE(ModelName, "../Assets/Model/ModelData/",".Eater");
