@@ -90,4 +90,5 @@ public:
 	afx_msg void OnCreateParticle();
 	afx_msg void OnCreateTerrain();
 	afx_msg void OnSize(UINT nType, int cx, int cy);
+	afx_msg void OnCreateLight();
 };

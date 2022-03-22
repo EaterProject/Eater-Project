@@ -191,7 +191,12 @@ GameObject* Demo::CreateTerrain(std::string MeshName)
 
 GameObject* Demo::CreateLight()
 {
-	return nullptr;
+	GameObject* LightObject = InstanceLight("Test",LIGHT_TYPE::SPOT_LIGHT);
+	LightObject->Name = "Test";
+	ObjectList.insert({ LightObject->Name, LightObject });
+	
+
+	return LightObject;
 }
 
 GameObject* Demo::CreateParticle()

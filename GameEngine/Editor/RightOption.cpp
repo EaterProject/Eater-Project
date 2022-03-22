@@ -118,6 +118,7 @@ BEGIN_MESSAGE_MAP(RightOption, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON10, &RightOption::OnCreateTerrain)
 	ON_WM_MOUSEHWHEEL()
 	ON_WM_SIZE()
+	ON_BN_CLICKED(IDC_BUTTON26, &RightOption::OnCreateLight)
 END_MESSAGE_MAP()
 
 RightOption* RightOption::GetThis()
@@ -502,7 +503,7 @@ void RightOption::OnCreateParticle()
 
 void RightOption::OnCreateTerrain()
 {
-	Demo::CreateTerrain("");
+	GameObject* object = Demo::CreateTerrain("");
 }
 
 
@@ -510,4 +511,12 @@ void RightOption::OnCreateTerrain()
 void RightOption::OnSize(UINT nType, int cx, int cy)
 {
 	CDialogEx::OnSize(nType, cx, cy);
+}
+
+
+void RightOption::OnCreateLight()
+{
+	GameObject* Object = Demo::CreateLight();
+	HTREEITEM Top = HirearchyTree.InsertItem(ChangeToCString(Object->Name));
+	Create_Hirearchy_Item(Object, Top);
 }
