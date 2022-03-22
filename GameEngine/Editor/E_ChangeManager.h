@@ -22,6 +22,8 @@ public:
 	void SetModelName(std::string ModelName);
 public:
 	void Change_Static(int index, GameObject* Object);
+	void Change_Skin(int index, GameObject* Object);
+	void Change_Bone(int index, GameObject* Object);
 	void Change_Material(int index, GameObject* Object);
 public:
 	void Change_LocalTM(int Nodeindex, Transform* TR);

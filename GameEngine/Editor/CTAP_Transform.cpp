@@ -303,15 +303,17 @@ void CTAP_Transform::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 		ObjectTransform->Rotation.x = Rotation_X_Slider.GetPos();
 		Rot_X.SetWindowTextW(ChangeToCString(ObjectTransform->Rotation.x));
 	}
-	else if (pScrollBar->GetDlgCtrlID() == Rotation_Y_Slider.GetDlgCtrlID())
+
+	if (pScrollBar->GetDlgCtrlID() == Rotation_Y_Slider.GetDlgCtrlID())
 	{
 		ObjectTransform->Rotation.y = Rotation_Y_Slider.GetPos();
-		Rot_X.SetWindowTextW(ChangeToCString(ObjectTransform->Rotation.y));
+		Rot_Y.SetWindowTextW(ChangeToCString(ObjectTransform->Rotation.y));
 	}
-	else if (pScrollBar->GetDlgCtrlID() == Rotation_Z_Slider.GetDlgCtrlID())
+
+	if (pScrollBar->GetDlgCtrlID() == Rotation_Z_Slider.GetDlgCtrlID())
 	{
 		ObjectTransform->Rotation.z = Rotation_Z_Slider.GetPos();
-		Rot_X.SetWindowTextW(ChangeToCString(ObjectTransform->Rotation.z));
+		Rot_Z.SetWindowTextW(ChangeToCString(ObjectTransform->Rotation.z));
 	}
 
 
@@ -332,7 +334,7 @@ void CTAP_Transform::OnBnClickedButton13()
 {
 	ObjectTransform->Rotation.y = 0;
 	Rotation_Y_Slider.SetPos(0);
-	Rot_X.SetWindowTextW(ChangeToCString(ObjectTransform->Rotation.y));
+	Rot_Y.SetWindowTextW(ChangeToCString(ObjectTransform->Rotation.y));
 }
 
 
@@ -340,7 +342,7 @@ void CTAP_Transform::OnBnClickedButton25()
 {
 	ObjectTransform->Rotation.z = 0;
 	Rotation_Z_Slider.SetPos(0);
-	Rot_X.SetWindowTextW(ChangeToCString(ObjectTransform->Rotation.z));
+	Rot_Z.SetWindowTextW(ChangeToCString(ObjectTransform->Rotation.z));
 }
 
 

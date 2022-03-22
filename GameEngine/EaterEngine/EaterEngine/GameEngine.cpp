@@ -261,7 +261,7 @@ GameObject* GameEngine::InstanceLight(std::string ObjName, LIGHT_TYPE type)
 {
 	DebugManager::Line("(Light)");
 	GameObject* temp = CreateInstance();
-	
+	temp->Name = "Light";
 	Transform* Tr = temp->AddComponent<Transform>();
 	temp->transform = Tr;
 

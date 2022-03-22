@@ -1,10 +1,10 @@
 #EATERMAT
-@MaterialName bossB_waphon.001
+@MaterialName box_Material
 @Alpha NO
-@Diffuse bossb_weapon_BaseColor.png
-@Normal bossb_weapon_Normal.png
+@Diffuse NO
+@Normal NO
 @Emissive NO
-@ORM bossb_weapon_ORM.png
+@ORM NO
 @Roughness 0
 @Metallic 0
 @Tileing_X 1

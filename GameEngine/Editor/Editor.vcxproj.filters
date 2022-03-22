@@ -76,9 +76,6 @@
     <Filter Include="소스 파일\MFC\Dialog\TAP\TAP_Animation">
       <UniqueIdentifier>{54a11f13-f90f-45f2-af9a-143804cf378f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\MFC\Dialog\Loading">
-      <UniqueIdentifier>{d75bf0cc-b2b0-40a4-8468-23a3724434c1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\MFC\Dialog\RightOption">
       <UniqueIdentifier>{b4a31b4e-e33f-4873-8f61-9b9ab4b3e54b}</UniqueIdentifier>
     </Filter>
@@ -126,6 +123,9 @@
     </Filter>
     <Filter Include="소스 파일\Manager\Eater\EaterChange">
       <UniqueIdentifier>{251eda48-e89d-4ff2-8061-1c3529e20f11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\Dialog\Loading">
+      <UniqueIdentifier>{d75bf0cc-b2b0-40a4-8468-23a3724434c1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
