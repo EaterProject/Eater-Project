@@ -1,0 +1,16 @@
+#EATERMAT
+@ORM NO
+@Alpha NO
+@MaterialName box_Material
+@Roughness 0.000000
+@Diffuse NO
+@Normal NO
+@Emissive NO
+@Metallic 0.000000
+@Tileing_X 1
+@Tileing_Y 1
+@AddColor_R 1.000000
+@AddColor_G 0.129412
+@AddColor_B 0.098039
+@AddColor_A 1
+&
