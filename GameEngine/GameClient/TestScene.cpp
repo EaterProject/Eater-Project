@@ -136,8 +136,7 @@ void TestScene::CreateMap()
 	light->SetRange(100.0f);
 	light->SetPower(100.0f);
 	light->SetColor(1.0f, 0.0f, 1.0f);
-	light->SetInAngle(15.0f);
-	light->SetOutAngle(25.0f);
+	light->SetAngle(15.0f);
 	
 	//Object1 = InstanceLight("Light", POINT_LIGHT);
 	//Object1->GetTransform()->Position.y += 10;

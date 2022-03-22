@@ -4,6 +4,7 @@ typedef enum DEBUG_TYPE
 	DEBUG_AXIS,
 	DEBUG_BOX,
 	DEBUG_CIRCLE,
+	DEBUG_CIRCLESPHERE,
 	DEBUG_GRID,
 	DEBUG_QUAD,
 	DEBUG_RAY,
@@ -46,6 +47,7 @@ private:
 	DrawBuffer* m_AxisBuffer;
 	DrawBuffer* m_BoxBuffer;
 	DrawBuffer* m_CircleBuffer;
+	DrawBuffer* m_CircleSphereBuffer;
 	DrawBuffer* m_GridBuffer;
 	DrawBuffer* m_IconBuffer;
 

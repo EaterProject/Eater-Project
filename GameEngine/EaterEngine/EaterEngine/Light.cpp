@@ -19,8 +19,7 @@ Light::Light()
 	m_CenterPos = Vector3(0, 100, 0);
 	m_ShadowRadius = sqrtf(10.0f * 10.0f + 15.0f * 15.0f) * 15;
 
-	m_InAngle = 45.0f;
-	m_OutAngle = 55.0f;
+	m_Angle = 25.0f;
 }
 
 void Light::SetDirectionLight(Light* light)
@@ -61,6 +60,9 @@ void Light::Update()
 		break;
 	case SPOT_LIGHT:
 		m_SpotLight->Position = m_Transform->Position;
+		m_SpotLight->Rotate.x = PI * m_Transform->Rotation.x / 180.0f;
+		m_SpotLight->Rotate.y = PI * m_Transform->Rotation.y / 180.0f;
+		m_SpotLight->Rotate.z = PI * m_Transform->Rotation.z / 180.0f;
 		m_SpotLight->Direction = m_Transform->GetLocalPosition_Look();
 		break;
 	default:
@@ -103,28 +105,14 @@ void Light::SetPosition(float x, float y, float z)
 	}
 }
 
-void Light::SetInAngle(float angle)
+void Light::SetAngle(float angle)
 {
 	switch (m_LightType)
 	{
 	case SPOT_LIGHT:
-		m_InAngle = PI * angle / 180.0f;
-		m_SpotLight->AttRange = cosf(m_InAngle) - cosf(m_OutAngle);
-		break;
-	default:
-		break;
-	}
-}
-
-void Light::SetOutAngle(float angle)
-{
-	switch (m_LightType)
-	{
-	case SPOT_LIGHT:
-		m_OutAngle = PI * angle / 180.0f;
-		m_SpotLight->AttRange = cosf(m_InAngle) - cosf(m_OutAngle);
-		m_SpotLight->OuterCone = cosf(m_OutAngle);
-		m_SpotLight->Angle = m_OutAngle;
+		m_Angle = PI * angle / 180.0f;
+		m_SpotLight->AttRange = cosf(m_Angle * 0.5f) - cosf(m_Angle);
+		m_SpotLight->Angle = m_Angle;
 		break;
 	default:
 		break;
@@ -204,6 +192,7 @@ void Light::SetType(LIGHT_TYPE lightType)
 		break;
 	case SPOT_LIGHT:
 		m_SpotLight = new SpotLightData();
+		m_SpotLight->AttRange = cosf(m_SpotLight->Angle);
 		break;
 	default:
 		break;

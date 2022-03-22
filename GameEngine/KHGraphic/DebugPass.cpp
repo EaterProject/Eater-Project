@@ -74,7 +74,8 @@ void DebugPass::Start(int width, int height)
 	m_QuadBuffer = g_Resource->GetDrawBuffer<DB_Line_Quad>();
 	m_AxisBuffer = g_Resource->GetDrawBuffer<DB_Line_Axis>();
 	m_BoxBuffer = g_Resource->GetDrawBuffer<DB_Line_Box>();
-	m_CircleBuffer = g_Resource->GetDrawBuffer<DB_Line_CircleSphere>();
+	m_CircleBuffer = g_Resource->GetDrawBuffer<DB_Line_Circle>();
+	m_CircleSphereBuffer = g_Resource->GetDrawBuffer<DB_Line_CircleSphere>();
 	m_GridBuffer = g_Resource->GetDrawBuffer<DB_Line_Grid>();
 	m_IconBuffer = g_Resource->GetDrawBuffer<DB_Quad>();
 
@@ -445,6 +446,38 @@ void DebugPass::GlobalRender()
 		// Draw Ray..
 		BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
 		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+
+		// Light Look 최대 Range가 곧 해당 Position..
+		Vector3 pos = light->Position + light->Direction * Vector3(light->Range);
+
+		// 해당 위치 기준 Look, Right, Up Vector 추출..
+		look = -light->Direction * Vector3(light->Range);
+		right = look.Cross(Vector3(0.0f, 1.0f, 0.0f));
+		up = right.Cross(look);
+
+		// 해당 Vector Normalize..
+		right.Normalize();
+		up.Normalize();
+		look.Normalize();
+
+		// Look, Right, Up 기준 Matrix 설정..
+		Matrix world;
+		world.m[0][0] = right.x;	world.m[0][1] = right.y;	world.m[0][2] = right.z;
+		world.m[1][0] = up.x;		world.m[1][1] = up.y;		world.m[1][2] = up.z;
+		world.m[2][0] = look.x;		world.m[2][1] = look.y;		world.m[2][2] = look.z;
+		world.m[3][0] = pos.x;		world.m[3][1] = pos.y;		world.m[3][2] = pos.z;
+
+		// Light Look 기준 Angle 회전한 지점의 거리가 곧 Size..
+
+
+		object.gWorldViewProj = world * viewproj;
+
+		m_DebugVS->ConstantBufferCopy(&object);
+		m_DebugVS->Update();
+
+		// Draw Ray..
+		BufferUpdate(DEBUG_TYPE::DEBUG_CIRCLE);
+		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
 	}
 
 	while (rayList->size() != 0)
@@ -574,6 +607,10 @@ void DebugPass::BufferUpdate(DEBUG_TYPE type)
 		break;
 	case DEBUG_CIRCLE:
 		m_DebugBuffer = m_CircleBuffer;
+		g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
+		break;
+	case DEBUG_CIRCLESPHERE:
+		m_DebugBuffer = m_CircleSphereBuffer;
 		g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
 		break;
 	case DEBUG_GRID:

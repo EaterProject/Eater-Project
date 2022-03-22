@@ -43,21 +43,20 @@ ALIGNED_MEMORY(16) struct PointLightData
 	Matrix LightViewProj = Matrix();
 };
 
-ALIGNED_MEMORY(16) struct SpotLightData
+struct SpotLightData
 {
 	SpotLightData() = default;
 	
 	Vector3 Diffuse = Vector3(1.0f, 1.0f, 1.0f);
-	float Range = 100.0f;
+	float Range = 10.0f;
 
 	Vector3 Position = Vector3(0.0f, 0.0f, 0.0f);
-	float OuterCone = 45.0f;
+	float AttRange = 0.0f;
 
 	Vector3 Direction = Vector3(0.0f, -1.0f, 0.0f);
-	float AttRange = 55.0f;
+	float Angle = 25.0f;
 
-	Vector2 Pad = Vector2(0.0f, 0.0f);
-	float Angle = 0.0f;
+	Vector3 Rotate = Vector3(0.0f, 0.0f, 0.0f);
 	float Power = 1.0f;
 
 	Matrix LightViewProj = Matrix();
