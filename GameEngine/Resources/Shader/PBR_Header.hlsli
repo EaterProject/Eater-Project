@@ -94,7 +94,7 @@ float3 BRDF(in float roughness2, in float metallic, in float3 diffuseColor, in f
     float3 specular_factor = (D * F * G) / denom * 2.0f;
     float3 diffuse_factor = kD * diffuseColor / PI;
     
-    return (diffuse_factor + specular_factor);
+    return (diffuse_factor + specular_factor) * NdotL;
 }
 
 float3 PBR_DirectionalLight(
@@ -104,14 +104,12 @@ float3 PBR_DirectionalLight(
     // Output color
     float3 acc_color = float3(0.0f, 0.0f, 0.0f);
     
-    
     // Burley roughness bias
     const float roughness2 = max(roughness * roughness, 0.01f);
     
     // Blend base colors
     const float3 c_diff = lerp(albedo, float3(0, 0, 0), metallic) * ambientOcclusion;
     const float3 c_spec = lerp(F_ZERO, albedo, metallic) * ambientOcclusion;
-
 
     // Calculate Directional Light
     const float3 L = normalize(-light.Direction);
@@ -120,114 +118,124 @@ float3 PBR_DirectionalLight(
     // products
     float NdotL = max(dot(N, L) * 0.5f + 0.5f, EPSILON);
     float NdotV = max(dot(N, V), EPSILON);
-    float LdotH = max(dot(L, H), EPSILON);
     float NdotH = max(dot(N, H), EPSILON);
     float HdotV = max(dot(H, V), EPSILON);
-    float VdotH = max(dot(V, H), EPSILON);
 
     // BRDF
     float3 brdf_factor = BRDF(roughness2, metallic, c_diff, c_spec, NdotH, NdotV, NdotL, HdotV);
     
     // Directional light
-    acc_color += light.Diffuse.rgb * NdotL * shadow * brdf_factor;
+    acc_color += light.Diffuse.rgb * shadow * brdf_factor;
 
     return acc_color;
 }
 
 float3 PBR_PointLight(
-    in float3 V, in float3 N, in PointLight light, in float3 position,
+    in float3 V, in float3 N, in PointLight lights[POINT_LIGHT_COUNT], in uint lightCount, in float3 position,
     in float3 albedo, in float ambientOcclusion, in float roughness, in float metallic, in float shadow)
 {
-    // Light vector (to light)
-    float3 lightVec = light.Position - position;
-    float distance = length(lightVec);
-    
-    if (distance > light.Range)
-        return float3(0.0f, 0.0f, 0.0f);
-    
-    float specIntensity = max(dot(reflect(-lightVec, N), V), 0.0f);
-    float range = light.Range;
-    float att = 1.0f / ((0.1f + (0.2f * distance) + (0.1f * pow(distance, 5))) / (range * range));
-    float3 radiance = light.Diffuse * att;
-    
     // Output color
     float3 acc_color = float3(0.0f, 0.0f, 0.0f);
     
-    const float NdotV = max(dot(N, V), 0.0f);
+    PointLight light;
     
-    // Burley roughness bias
-    const float roughness2 = max(roughness * roughness, 0.01f);
-    
-    // Blend base colors
-    const float3 c_diff = lerp(albedo, float3(0, 0, 0), metallic) * ambientOcclusion;
-    const float3 c_spec = lerp(F_ZERO, albedo, metallic) * ambientOcclusion;
+    [unroll]
+    for (int i = 0; i < lightCount; i++)
+    {
+        light = lights[i];
+        
+        // Light vector (to light)
+        float3 lightVec = light.Position - position;
+        float distance = length(lightVec);
+                                    
+        if (distance > light.Range)
+            continue;
+        
+        const float3 L = normalize(lightVec);
+        const float3 H = normalize(L + V);
+        
+        // products
+        const float NdotL = max(dot(N, L), 0.0f);
+        const float NdotH = max(dot(N, H), 0.0f);
+        const float HdotV = max(dot(H, V), 0.0f);
+        const float NdotV = max(dot(N, V), 0.0f);
 
-    const float3 L = normalize(lightVec);
-    const float3 H = normalize(L + V);
-
-    // products
-    float NdotL = max(dot(N, L), 0.0f);
-    float LdotH = max(dot(L, H), 0.0f);
-    float NdotH = max(dot(N, H), 0.0f);
-    float HdotV = max(dot(H, V), 0.0f);
-                                          
-    // BRDF
-    float3 brdf_factor = BRDF(roughness2, metallic, c_diff, c_spec, NdotH, NdotV, NdotL, HdotV);
+        // Attenuation
+        float DistToLightNorm = 1.0 - saturate(distance * (1.0f / light.Range));
+        float Attn = DistToLightNorm * DistToLightNorm;
     
-    // Point light
-    acc_color += radiance * NdotL * brdf_factor;
+        float3 radiance = Attn * light.Power;
+    
+        // Burley roughness bias
+        const float roughness2 = max(roughness * roughness, 0.01f);
+    
+        // Blend base colors
+        const float3 c_diff = lerp(albedo, float3(0, 0, 0), metallic) * ambientOcclusion;
+        const float3 c_spec = lerp(F_ZERO, albedo, metallic) * ambientOcclusion;
+
+        // BRDF
+        float3 brdf_factor = BRDF(roughness2, metallic, c_diff, c_spec, NdotH, NdotV, NdotL, HdotV);
+    
+        // Point light
+        acc_color += light.Diffuse * radiance * brdf_factor;
+    }
 
     return acc_color;
 }
 
 float3 PBR_SpotLight(
-    in float3 V, in float3 N, in SpotLight light, in float3 position,
+    in float3 V, in float3 N, in SpotLight lights[SPOT_LIGHT_COUNT], in uint lightCount, in float3 position,
     in float3 albedo, in float ambientOcclusion, in float roughness, in float metallic, in float shadow)
 {
-    float3 lightVec = light.Position - position;
-    float distance = length(lightVec);
-    
-    if (distance > light.Range)
-        return float3(0.0f, 0.0f, 0.0f);
-    
-    float theta = acos(dot(-lightVec, light.Direction));
-    
-    float specIntensity = max(dot(reflect(-lightVec, N), V), 0.0f);
-    
-    // Scale by spotlight factor and attenuate.
-    float spot = pow(max(dot(-lightVec, light.Direction), 0.0f), light.Spot);
-
-	// Scale by spotlight factor and attenuate.
-    float att = spot / ((0.1f + (0.2f * distance) + (0.1f * pow(distance, 5))) / light.Range);
-    
-    float3 radiance = light.Diffuse.rgb * att * specIntensity;
-    
     // Output color
     float3 acc_color = float3(0.0f, 0.0f, 0.0f);
+        
+    SpotLight light;
     
-    const float NdotV = max(dot(N, V), 0.0f);
-    
-    // Burley roughness bias
-    const float roughness2 = max(roughness * roughness, 0.01f);
-    
-    // Blend base colors
-    const float3 c_diff = lerp(albedo, float3(0, 0, 0), metallic) * ambientOcclusion;
-    const float3 c_spec = lerp(F_ZERO, albedo, metallic) * ambientOcclusion;
+    [unroll]
+    for (int i = 0; i < lightCount; i++)
+    {
+        light = lights[i];
+        
+        float3 lightVec = light.Position - position;
+        float distance = length(lightVec);
+                            
+        if (distance > light.Range)
+            continue;
+        
+        const float3 L = normalize(lightVec);
+        const float3 H = normalize(L + V);
 
-    const float3 L = normalize(lightVec);
-    const float3 H = normalize(L + V);
+        // products
+        const float NdotL = max(dot(N, L), 0.0f);
+        const float NdotH = max(dot(N, H), 0.0f);
+        const float HdotV = max(dot(H, V), 0.0f);
+        const float NdotV = max(dot(N, V), 0.0f);
 
-    // products
-    float NdotL = max(dot(N, L), 0.0f);
-    float LdotH = max(dot(L, H), 0.0f);
-    float NdotH = max(dot(N, H), 0.0f);
-    float HdotV = max(dot(H, V), 0.0f);
-                                          
-    // BRDF
-    float3 brdf_factor = BRDF(roughness2, metallic, c_diff, c_spec, NdotH, NdotV, NdotL, HdotV);
+	    // Cone attenuation
+        float cosAng = dot(-light.Direction, L);
+        float conAtt = saturate((cosAng - light.OuterCone) / light.AttRange);
+        conAtt *= conAtt;
+   
+        // Attenuation
+        float DistToLightNorm = 1.0 - saturate(distance * (1.0f / light.Range));
+        float Attn = DistToLightNorm * DistToLightNorm;
     
-    // Spot light
-    acc_color += radiance * NdotL * brdf_factor;
+        float3 radiance = Attn * conAtt * light.Power;
 
+        // Burley roughness bias
+        const float roughness2 = max(roughness * roughness, 0.01f);
+    
+        // Blend base colors
+        const float3 c_diff = lerp(albedo, float3(0, 0, 0), metallic) * ambientOcclusion;
+        const float3 c_spec = lerp(F_ZERO, albedo, metallic) * ambientOcclusion;
+                  
+        // BRDF
+        float3 brdf_factor = BRDF(roughness2, metallic, c_diff, c_spec, NdotH, NdotV, NdotL, HdotV);
+    
+        // Spot light
+        acc_color += light.Diffuse * radiance * brdf_factor;
+    }
+    
     return acc_color;
 }

@@ -30,15 +30,15 @@ public:
 	void Update() override;
 
 public:
-	EATER_ENGINEDLL void SetColor(float r, float g, float b, float a = 1.0f);
-	EATER_ENGINEDLL void SetDirection(float x, float y, float z);
+	EATER_ENGINEDLL void SetColor(float r, float g, float b);
 
 	EATER_ENGINEDLL void SetPosition(float x, float y, float z);
-	EATER_ENGINEDLL void SetAtt(float x, float y, float z);
+	EATER_ENGINEDLL void SetInAngle(float angle);
+	EATER_ENGINEDLL void SetOutAngle(float angle);
 
 	EATER_ENGINEDLL void SetRange(float range);
-	EATER_ENGINEDLL void SetSpot(float spot);
-
+	EATER_ENGINEDLL void SetPower(float power);
+	
 	EATER_ENGINEDLL void SetType(LIGHT_TYPE lightType);
 
 public:
@@ -67,6 +67,9 @@ private:
 	DirectionalLightData* m_DirectionLight;
 	PointLightData* m_PointLight;
 	SpotLightData* m_SpotLight;
+
+	float m_InAngle;
+	float m_OutAngle;
 
 private:
 	DirectX::SimpleMath::Vector3 m_CenterPos;

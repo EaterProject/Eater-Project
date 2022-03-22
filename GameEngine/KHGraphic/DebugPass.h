@@ -29,6 +29,10 @@ public:
 	void BufferUpdate(DEBUG_TYPE type);
 
 private:
+	void SetRay(Vector3 start, Vector3 end);
+	void DrawSpotLight();
+
+private:
 	VertexShader* m_DebugVS;
 	VertexShader* m_DebugIconVS;
 	VertexShader* m_DebugMRTVS;

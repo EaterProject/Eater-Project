@@ -211,12 +211,12 @@ void CreateSceneSub(Scene* mSceneTemp, std::string SceneName)
 	 gGameEngine->EditorSetting();
  }
 
- void DebugDrawLine(Vector3 start, Vector3 end, Vector4 color)
+ void DebugDrawLine(Vector3 start, Vector3 end, Vector3 color)
  {
 	 gGameEngine->DebugDrawLine(start, end, color);
  }
 
- void DebugDrawLine(Vector3 start, Vector3 dir, float distance, Vector4 color)
+ void DebugDrawLine(Vector3 start, Vector3 dir, float distance, Vector3 color)
  {
 	 gGameEngine->DebugDrawLine(start, dir, distance, color);
  }

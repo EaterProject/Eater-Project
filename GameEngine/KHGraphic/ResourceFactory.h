@@ -80,7 +80,9 @@ private:
 	void CreateLineQuadBuffer();
 	void CreateLineAxisBuffer();
 	void CreateLineBoxBuffer();
+	void CreateLineSphereBuffer();
 	void CreateLineCircleBuffer();
+	void CreateLineCircleSphereBuffer();
 	void CreateLineGridBuffer();
 
 private:

@@ -6,6 +6,7 @@
 
 #ifndef LIGHTHELPER_H
 #define LIGHTHELPER_H
+#define ALIGNED_MEMORY(byte) __declspec(align(byte))
 
 #include <Windows.h>
 #include "SimpleMath.h"
@@ -16,56 +17,50 @@
 
 using namespace DirectX::SimpleMath;
 
-struct DirectionalLightData
+ALIGNED_MEMORY(16) struct DirectionalLightData
 {
 	DirectionalLightData() = default;
 
-	Vector4 Diffuse = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
+	Vector3 Diffuse = Vector3(1.0f, 1.0f, 1.0f);
+	float Power = 1.0f;
+
 	Vector3 Direction = Vector3(-0.707f, -1.0f, 0.707f);
-	float Power; 
+	float Pad;
 
 	Matrix LightViewProj = Matrix();
 };
 
-struct PointLightData
+ALIGNED_MEMORY(16) struct PointLightData
 {
 	PointLightData() = default;
 	
-	Vector4 Diffuse = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
-	Vector3 Position = Vector3(0.0f, 0.0f, 0.0f);
+	Vector3 Diffuse = Vector3(1.0f, 1.0f, 1.0f);
 	float Range = 100.0f;
+
+	Vector3 Position = Vector3(0.0f, 0.0f, 0.0f);
+	float Power = 1.0f;
 
 	Matrix LightViewProj = Matrix();
 };
 
-struct SpotLightData
+ALIGNED_MEMORY(16) struct SpotLightData
 {
 	SpotLightData() = default;
 	
-	Vector4 Diffuse = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
+	Vector3 Diffuse = Vector3(1.0f, 1.0f, 1.0f);
+	float Range = 100.0f;
+
 	Vector3 Position = Vector3(0.0f, 0.0f, 0.0f);
-	float Range = 1000.0f;
+	float OuterCone = 45.0f;
 
 	Vector3 Direction = Vector3(0.0f, -1.0f, 0.0f);
-	float Spot = 9.6f;
+	float AttRange = 55.0f;
 
-	Vector3 Att = Vector3(0.9f, 0.9f, 0.0f);
-	float Index; // Pad the last float so we can set an array of lights if we wanted.
-	
+	Vector2 Pad = Vector2(0.0f, 0.0f);
+	float Angle = 0.0f;
+	float Power = 1.0f;
+
 	Matrix LightViewProj = Matrix();
 };
 
-struct MaterialSubData
-{
-	MaterialSubData() = default;
-
-	Vector4 AddColor = Vector4(0.0f, 0.0f, 0.0, 1.0f);	// Add Color
-
-	float EmissiveFactor = 1.0f;		// Emissive 강도
-	float RoughnessFactor = 1.0f;		// Roughness 강도
-	float MetallicFactor = 1.0f;		// Metallic 강도
-
-	bool Alpha = false;					// Alpha Mesh
-	Matrix TexTM;						// Material의 텍스쳐 행렬
-};
 #endif // LIGHTHELPER_H

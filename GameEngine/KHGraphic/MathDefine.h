@@ -2,6 +2,7 @@
 #include "SimpleMath.h"
 
 #define PI 3.1415926535f
+#define H_PI 1.57079632679f;
 
 namespace DXColors
 {

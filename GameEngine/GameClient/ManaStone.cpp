@@ -30,9 +30,9 @@ void ManaStone::SetUp()
 
 void ManaStone::Update()
 {
-	DebugDrawLine(mTransform->Position, mTransform->Position + Vector3(1, 0, 0), Vector4(1, 0, 0, 1));
-	DebugDrawLine(mTransform->Position, mTransform->Position + Vector3(0, 1, 0), Vector4(0, 1, 0, 1));
-	DebugDrawLine(mTransform->Position, mTransform->Position + Vector3(0, 0, 1), Vector4(0, 0, 1, 1));
+	DebugDrawLine(mTransform->Position, mTransform->Position + Vector3(1, 0, 0), Vector3(1, 0, 0));
+	DebugDrawLine(mTransform->Position, mTransform->Position + Vector3(0, 1, 0), Vector3(0, 1, 0));
+	DebugDrawLine(mTransform->Position, mTransform->Position + Vector3(0, 0, 1), Vector3(0, 0, 1));
 
 }
 

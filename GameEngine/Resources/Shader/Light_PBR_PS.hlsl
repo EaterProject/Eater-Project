@@ -75,7 +75,13 @@ float4 Light_PBR_PS(ScreenPixelIn pin) : SV_TARGET
 
     float3 litColor = PBR_DirectionalLight(ViewDirection, normal, gDirLights[0],
                                 albedo, ao, roughness, metallic, shadows);
-
+    
+    litColor += PBR_PointLight(ViewDirection, normal, gPointLights, gPointLightCount, positionRT.xyz,
+                                albedo, ao, roughness, metallic, shadows);
+    
+    litColor += PBR_SpotLight(ViewDirection, normal, gSpotLights, gSpotLightCount, positionRT.xyz,
+                                albedo, ao, roughness, metallic, shadows);
+    
     litColor += emissive * 7.0f;
 
     return float4(litColor, 1.0f);
