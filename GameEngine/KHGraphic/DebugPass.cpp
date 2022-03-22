@@ -356,37 +356,38 @@ void DebugPass::GlobalRender()
 		BufferUpdate(DEBUG_TYPE::DEBUG_TEXTURE);
 		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
 
+		Vector3 lookEnd = light->Position + (light->Direction * Vector3(light->Range));
+
 		RayCastData ray;
-		//ray.RayStart = light->Position;
-		//ray.RayEnd = light->Position + (light->Direction * Vector3(light->Range));
-		//ray.RayColor = Vector3(1.0f, 0.0f, 0.0f);
-		//
-		//// Ray Buffer Update
-		//SetRay(ray.RayStart, ray.RayEnd);
-		//
-		//option.gColor = ray.RayColor;
-		//object.gWorldViewProj = viewproj;
-		//
-		//m_DebugVS->ConstantBufferCopy(&object);
-		//m_DebugVS->Update();
-		//
-		//m_DebugColorPS->ConstantBufferCopy(&option);
-		//m_DebugColorPS->Update();
-		//
-		//BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
-		//g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
-		
-		Quaternion q = XMQuaternionRotationRollPitchYaw(0.0f, 0.0f, light->OuterCone);
-		XMVECTOR axis = light->Direction * Vector3(light->Range);
-		Vector3 r = XMVector3Rotate(axis, q);
-		r += light->Position;
-
 		ray.RayStart = light->Position;
-		ray.RayEnd = r;
+		ray.RayEnd = lookEnd;
 		ray.RayColor = Vector3(1.0f, 0.0f, 0.0f);
-
+		
 		// Ray Buffer Update
 		SetRay(ray.RayStart, ray.RayEnd);
+		
+		option.gColor = ray.RayColor;
+		object.gWorldViewProj = viewproj;
+		
+		m_DebugVS->ConstantBufferCopy(&object);
+		m_DebugVS->Update();
+		
+		m_DebugColorPS->ConstantBufferCopy(&option);
+		m_DebugColorPS->Update();
+		
+		BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
+		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+
+		XMVECTOR q;
+		XMVECTOR axis;
+		Vector3 r;
+
+		Vector3 look = light->Direction;
+		Vector3 right = light->Direction.Cross(Vector3(0.0f, 1.0f, 0.0f));
+		Vector3 up = right.Cross(look);
+
+		ray.RayStart = light->Position;
+		ray.RayColor = Vector3(1.0f, 1.0f, 0.0f);
 
 		option.gColor = ray.RayColor;
 		object.gWorldViewProj = viewproj;
@@ -396,6 +397,63 @@ void DebugPass::GlobalRender()
 
 		m_DebugColorPS->ConstantBufferCopy(&option);
 		m_DebugColorPS->Update();
+
+		q = XMQuaternionRotationRollPitchYaw(0.0f, 0.0f, light->Angle);
+		axis = light->Direction;
+		r = XMVector3Rotate(axis, q);
+
+		ray.RayEnd = light->Position + (r * Vector3(light->Range));
+
+		// Ray Buffer Update
+		SetRay(ray.RayStart, ray.RayEnd);
+
+		BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
+		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+
+		q = XMQuaternionRotationRollPitchYaw(0.0f, 0.0f, -light->Angle);
+		axis = light->Direction;
+		r = XMVector3Rotate(axis, q);
+
+		ray.RayEnd = light->Position + r * Vector3(light->Range);
+
+		// Ray Buffer Update
+		SetRay(ray.RayStart, ray.RayEnd);
+
+		BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
+		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+
+
+		ray.RayColor = Vector3(0.0f, 0.0f, 1.0f);
+
+		option.gColor = ray.RayColor;
+		object.gWorldViewProj = viewproj;
+
+		m_DebugVS->ConstantBufferCopy(&object);
+		m_DebugVS->Update();
+
+		m_DebugColorPS->ConstantBufferCopy(&option);
+		m_DebugColorPS->Update();
+
+		q = XMQuaternionRotationRollPitchYaw(-light->Angle, 0.0f, 0.0f);
+		axis = light->Direction;
+		r = XMVector3Rotate(axis, q);
+
+		ray.RayEnd = light->Position + r * Vector3(light->Range);
+
+		// Ray Buffer Update
+		SetRay(ray.RayStart, ray.RayEnd);
+
+		BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
+		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+
+		q = XMQuaternionRotationRollPitchYaw(light->Angle, 0.0f, 0.0f);
+		axis = light->Direction;
+		r = XMVector3Rotate(axis, q);
+
+		ray.RayEnd = light->Position + r * Vector3(light->Range);
+
+		// Ray Buffer Update
+		SetRay(ray.RayStart, ray.RayEnd);
 
 		BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
 		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
@@ -574,5 +632,10 @@ void DebugPass::SetRay(Vector3 start, Vector3 end)
 
 	// GPU Access UnLock Buffer Data..
 	g_Context->Unmap(buffer, 0);
+
+}
+
+void DebugPass::DrawSpotLight()
+{
 
 }

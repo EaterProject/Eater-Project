@@ -30,6 +30,7 @@ public:
 
 private:
 	void SetRay(Vector3 start, Vector3 end);
+	void DrawSpotLight();
 
 private:
 	VertexShader* m_DebugVS;

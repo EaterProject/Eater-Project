@@ -78,7 +78,7 @@ void GraphicResourceFactory::Create(int width, int height)
 	CreateLineRayBuffer();
 	CreateLineQuadBuffer();
 	CreateLineAxisBuffer();
-	CreateLineCircleBuffer();
+	CreateLineCircleSphereBuffer();
 	CreateLineBoxBuffer();
 	CreateLineGridBuffer();
 }
@@ -1945,7 +1945,24 @@ void GraphicResourceFactory::CreateLineBoxBuffer()
 	CreateDrawBuffer(DB_Line_Box::GetName(), DB_Line_Box::GetHashCode(), format, topology, vByteSize, iByteSize, sizeof(VertexInput::PosColorVertex), iCount, &vertices[0], &indices[0]);
 }
 
+void GraphicResourceFactory::CreateLineSphereBuffer()
+{
+
+}
+
 void GraphicResourceFactory::CreateLineCircleBuffer()
+{
+	UINT format = DXGI_FORMAT_R32_UINT;
+	UINT topology = D3D11_PRIMITIVE_TOPOLOGY_LINELIST;
+
+	UINT vCount = 180;
+	UINT iCount = 360;
+
+	UINT vByteSize = sizeof(VertexInput::PosColorVertex) * vCount;
+	UINT iByteSize = sizeof(UINT) * iCount;
+}
+
+void GraphicResourceFactory::CreateLineCircleSphereBuffer()
 {
 	UINT format = DXGI_FORMAT_R32_UINT;
 	UINT topology = D3D11_PRIMITIVE_TOPOLOGY_LINELIST;
@@ -2000,7 +2017,7 @@ void GraphicResourceFactory::CreateLineCircleBuffer()
 	indices[1079] = 360;
 
 	// Draw Buffer »ý¼º..
-	CreateDrawBuffer(DB_Line_Circle::GetName(), DB_Line_Circle::GetHashCode(), format, topology, vByteSize, iByteSize, sizeof(VertexInput::PosColorVertex), iCount, &vertices[0], &indices[0]);
+	CreateDrawBuffer(DB_Line_CircleSphere::GetName(), DB_Line_CircleSphere::GetHashCode(), format, topology, vByteSize, iByteSize, sizeof(VertexInput::PosColorVertex), iCount, &vertices[0], &indices[0]);
 }
 
 void GraphicResourceFactory::CreateLineGridBuffer()

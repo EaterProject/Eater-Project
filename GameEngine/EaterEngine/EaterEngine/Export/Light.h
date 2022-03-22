@@ -31,7 +31,6 @@ public:
 
 public:
 	EATER_ENGINEDLL void SetColor(float r, float g, float b);
-	EATER_ENGINEDLL void SetDirection(float x, float y, float z);
 
 	EATER_ENGINEDLL void SetPosition(float x, float y, float z);
 	EATER_ENGINEDLL void SetInAngle(float angle);

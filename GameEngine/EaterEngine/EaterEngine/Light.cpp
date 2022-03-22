@@ -36,6 +36,19 @@ void Light::Awake()
 void Light::Start()
 {
 	gameobject->OneMeshData->Object_Data->ObjType = OBJECT_TYPE::LIGHT;
+	
+	switch (m_LightType)
+	{
+	case DIRECTION_LIGHT:
+		break;
+	case POINT_LIGHT:
+		break;
+	case SPOT_LIGHT:
+		m_Transform->Rotation.x -= 90.0f;
+		break;
+	default:
+		break;
+	}
 }
 
 void Light::Update()
@@ -48,6 +61,7 @@ void Light::Update()
 		break;
 	case SPOT_LIGHT:
 		m_SpotLight->Position = m_Transform->Position;
+		m_SpotLight->Direction = m_Transform->GetLocalPosition_Look();
 		break;
 	default:
 		break;
@@ -72,26 +86,6 @@ void Light::SetColor(float r, float g, float b)
 	}
 }
 
-void Light::SetDirection(float x, float y, float z)
-{
-	switch (m_LightType)
-	{
-	case DIRECTION_LIGHT:
-		m_DirectionLight->Direction = { x, y, z };
-
-		// Light Direction 값 변동시 View Proj 재설정..
-		SetLightViewProj();
-		break;
-	case SPOT_LIGHT:
-		m_SpotLight->Direction = { x, y, z };
-
-		// Light Direction 값 변동시 View Proj 재설정..
-		SetLightViewProj();
-		break;
-	default:
-		break;
-	}
-}
 void Light::SetPosition(float x, float y, float z)
 {
 	switch (m_LightType)
@@ -130,6 +124,7 @@ void Light::SetOutAngle(float angle)
 		m_OutAngle = PI * angle / 180.0f;
 		m_SpotLight->AttRange = cosf(m_InAngle) - cosf(m_OutAngle);
 		m_SpotLight->OuterCone = cosf(m_OutAngle);
+		m_SpotLight->Angle = m_OutAngle;
 		break;
 	default:
 		break;
