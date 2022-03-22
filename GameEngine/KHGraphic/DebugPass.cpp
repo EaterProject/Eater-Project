@@ -378,10 +378,10 @@ void DebugPass::GlobalRender()
 		BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
 		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
 
-		XMVECTOR q;
-		XMVECTOR axis;
-		Vector3 r;
+		// 변환 Vector..
+		Vector3 axis;
 
+		// Look Vector 기준 Right, Up Vector 추출..
 		Vector3 look = light->Direction;
 		Vector3 right = light->Direction.Cross(Vector3(0.0f, 1.0f, 0.0f));
 		Vector3 up = right.Cross(look);
@@ -398,63 +398,51 @@ void DebugPass::GlobalRender()
 		m_DebugColorPS->ConstantBufferCopy(&option);
 		m_DebugColorPS->Update();
 
-		q = XMQuaternionRotationRollPitchYaw(0.0f, 0.0f, light->Angle);
-		axis = light->Direction;
-		r = XMVector3Rotate(axis, q);
+		// Look Vector를 Right Vector 기준 Angle로 이동..
+		axis = XMQuaternionRotationAxis(right, light->Angle * 2.0f);
 
-		ray.RayEnd = light->Position + (r * Vector3(light->Range));
+		ray.RayEnd = light->Position + (axis + light->Direction) * Vector3(light->Range);
 
 		// Ray Buffer Update
 		SetRay(ray.RayStart, ray.RayEnd);
 
+		// Draw Ray..
 		BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
 		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
 
-		q = XMQuaternionRotationRollPitchYaw(0.0f, 0.0f, -light->Angle);
-		axis = light->Direction;
-		r = XMVector3Rotate(axis, q);
+		// Look Vector를 Right Vector 기준 -Angle로 이동..
+		axis = XMQuaternionRotationAxis(right, -light->Angle * 2.0f);
 
-		ray.RayEnd = light->Position + r * Vector3(light->Range);
+		ray.RayEnd = light->Position + (axis + light->Direction) * Vector3(light->Range);
 
 		// Ray Buffer Update
 		SetRay(ray.RayStart, ray.RayEnd);
 
+		// Draw Ray..
 		BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
 		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
 
+		// Look Vector를 Up Vector 기준 Angle로 이동..
+		axis = XMQuaternionRotationAxis(up, light->Angle * 2.0f);
 
-		ray.RayColor = Vector3(0.0f, 0.0f, 1.0f);
-
-		option.gColor = ray.RayColor;
-		object.gWorldViewProj = viewproj;
-
-		m_DebugVS->ConstantBufferCopy(&object);
-		m_DebugVS->Update();
-
-		m_DebugColorPS->ConstantBufferCopy(&option);
-		m_DebugColorPS->Update();
-
-		q = XMQuaternionRotationRollPitchYaw(-light->Angle, 0.0f, 0.0f);
-		axis = light->Direction;
-		r = XMVector3Rotate(axis, q);
-
-		ray.RayEnd = light->Position + r * Vector3(light->Range);
-
+		ray.RayEnd = light->Position + (axis + light->Direction) * Vector3(light->Range);
+		
 		// Ray Buffer Update
 		SetRay(ray.RayStart, ray.RayEnd);
-
+		
+		// Draw Ray..
 		BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
 		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+		
+		// Look Vector를 Up Vector 기준 -Angle로 이동..
+		axis = XMQuaternionRotationAxis(up, -light->Angle * 2.0f);
 
-		q = XMQuaternionRotationRollPitchYaw(light->Angle, 0.0f, 0.0f);
-		axis = light->Direction;
-		r = XMVector3Rotate(axis, q);
-
-		ray.RayEnd = light->Position + r * Vector3(light->Range);
-
+		ray.RayEnd = light->Position + (axis + light->Direction) * Vector3(light->Range);
+		
 		// Ray Buffer Update
 		SetRay(ray.RayStart, ray.RayEnd);
-
+		
+		// Draw Ray..
 		BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
 		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
 	}

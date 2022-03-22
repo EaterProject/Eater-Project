@@ -72,6 +72,8 @@ struct MaterialSubData
 	float MetallicFactor = 1.0f;		// Metallic 강도
 
 	bool Alpha = false;					// Alpha Mesh
+
+	Vector2 Tile;						// X, Y Tiling
 	Matrix TexTM;						// Material의 텍스쳐 행렬
 };
 
