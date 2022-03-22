@@ -84,7 +84,7 @@ void EaterManager::Load_FBX_File(std::string& Path, ParserData::CModel* FBXMesh)
 void EaterManager::Load_GameObject_File(GameObject* Object ,ObjectOption* mOption)
 {
 	//오브젝트의 정보를 읽어온다
-	MeshFilter* MF = Object->GetComponent<MeshFilter>();
+	MeshFilter* MF				= Object->GetComponent<MeshFilter>();
 	std::string ModelName		= MF->GetModelName();
 	std::string MaterialName	= MF->GetMaterialName();
 
@@ -105,11 +105,11 @@ void EaterManager::Load_GameObject_File(GameObject* Object ,ObjectOption* mOptio
 		}
 		else if (NodeName == "SKIN")
 		{
-			mChangeManager->Change_Static(i, Object);
+			mChangeManager->Change_Skin(i, Object);
 		}
 		else if (NodeName == "BONE")
 		{
-
+			mChangeManager->Change_Bone(i, Object);
 		}
 	}
 	EATER_CLOSE_CHANGE_FILE(ModelName, "../Assets/Model/ModelData/",".Eater");

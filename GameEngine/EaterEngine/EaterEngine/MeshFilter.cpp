@@ -411,7 +411,7 @@ void MeshFilter::CreateBoneMesh(LoadMeshData* mMesh, GameObject* Object)
 void MeshFilter::CreateSkinMesh(LoadMeshData* mMesh, GameObject* Object)
 {
 	MeshData* Data = Object->OneMeshData;
-
+	//MeshFilter* mMeshFilter = Object->AddComponent<MeshFilter>();
 	Object->Name = mMesh->Name;
 
 	SetMatrixData(mMesh, Data, Object);

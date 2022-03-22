@@ -35,7 +35,7 @@ void OptionView::OnInitialUpdate()
 
 	CSize sizeViewPageTotal;
 	sizeViewPageTotal.cx = sizeViewPage.cx;
-	sizeViewPageTotal.cy = sizeViewPage.cy; // 3페이지를 설정하고 싶으면 * 3을 하면 되긋지
+	sizeViewPageTotal.cy = sizeViewPage.cy+500; // 3페이지를 설정하고 싶으면 * 3을 하면 되긋지
 
 
 	SetScrollSizes(MM_TEXT, sizeViewPageTotal);
@@ -98,7 +98,7 @@ void OptionView::OnSize(UINT nType, int cx, int cy)
 	this->GetClientRect(rect);
 	int ChildSizeX = rect.Width() / 2;
 	int ChildSizeY = rect.Height() / 2;
-	mOption.MoveWindow(0, 0, cx, cy);
+	mOption.MoveWindow(0, 0, cx, cy + 500);
 
 	CScrollView::OnSize(nType, cx, cy);
 
