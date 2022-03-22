@@ -191,8 +191,9 @@ GameObject* Demo::CreateTerrain(std::string MeshName)
 
 GameObject* Demo::CreateLight()
 {
-	GameObject* LightObject = InstanceLight("Test",LIGHT_TYPE::SPOT_LIGHT);
-	LightObject->Name = "Test";
+	GameObject* LightObject = InstanceLight("Light",LIGHT_TYPE::SPOT_LIGHT);
+	LightObject->Name = FindMeshName(LightObject->Name);
+
 	ObjectList.insert({ LightObject->Name, LightObject });
 	
 

@@ -500,19 +500,15 @@ void RightOption::OnCreateParticle()
 	Create_Hirearchy_Item(Obj, Top);
 }
 
-
 void RightOption::OnCreateTerrain()
 {
 	GameObject* object = Demo::CreateTerrain("");
 }
 
-
-
 void RightOption::OnSize(UINT nType, int cx, int cy)
 {
 	CDialogEx::OnSize(nType, cx, cy);
 }
-
 
 void RightOption::OnCreateLight()
 {
