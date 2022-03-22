@@ -205,7 +205,14 @@ std::string MeshFilter::GetModelName()
 
 std::string MeshFilter::GetMaterialName()
 {
-	return MaterialName;
+	if (m_Material != nullptr)
+	{
+		return m_Material->Name;
+	}
+	else
+	{
+		return "";
+	}
 }
 
 std::string MeshFilter::GetDiffuseTextureName()

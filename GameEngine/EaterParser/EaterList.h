@@ -7,6 +7,6 @@ public:
 	EaterList() = default;
 	~EaterList() = default;
 
-	std::vector<std::vector<std::string>>		F_Data;
+	std::vector<std::vector<std::string>> F_Data;
 };
 

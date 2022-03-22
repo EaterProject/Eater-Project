@@ -29,9 +29,11 @@ void CTAP_MeshFilter::SetGameObject(MeshFilter* ObjectMeshFilter)
 {
 	mMeshFilter = ObjectMeshFilter;
 	mMaterial = ObjectMeshFilter->GetMaterial();
+	
 
 	std::string MeshName = ObjectMeshFilter->GetBufferName();
 	std::string ModelName = ObjectMeshFilter->GetModelName();
+	
 	
 	MeshName_Edit.SetWindowTextW(ChangeToCString(MeshName));
 	ModelName_Edit.SetWindowTextW(ChangeToCString(ModelName));
@@ -41,6 +43,7 @@ void CTAP_MeshFilter::SetGameObject(MeshFilter* ObjectMeshFilter)
 	ModelName_Edit.GetWindowRect(EditRect[ModelName_Index]);
 	Nomal_Eidt.GetWindowRect(EditRect[Nomal_Index]);
 	ORM_Edit.GetWindowRect(EditRect[ORM_Index]);
+	MaterialName_Edit.GetWindowRect(EditRect[Material_Index]);
 	EmissiveName_Edit.GetWindowRect(EditRect[Emissive_Index]);
 
 	if (mMaterial != nullptr)
@@ -54,10 +57,11 @@ void CTAP_MeshFilter::SetGameObject(MeshFilter* ObjectMeshFilter)
 		Nomal_Eidt.SetWindowTextW(ChangeToCString(Nomal));
 		ORM_Edit.SetWindowTextW(ChangeToCString(ORM));
 		EmissiveName_Edit.SetWindowTextW(ChangeToCString(Emissive));
+		//MaterialName_Edit.SetWindowTextW(ChangeToCString(mMaterial->Name));
 
-		float EmissiveF = mMaterial->m_MaterialData->Material_SubData->EmissiveFactor;
-		float RoughnessF = mMaterial->m_MaterialData->Material_SubData->RoughnessFactor;
-		float MetallicF = mMaterial->m_MaterialData->Material_SubData->MetallicFactor;
+		float EmissiveF		= mMaterial->m_MaterialData->Material_SubData->EmissiveFactor;
+		float RoughnessF	= mMaterial->m_MaterialData->Material_SubData->RoughnessFactor;
+		float MetallicF		= mMaterial->m_MaterialData->Material_SubData->MetallicFactor;
 
 		float AddColorR = mMaterial->m_MaterialData->Material_SubData->AddColor.x;
 		float AddColorG = mMaterial->m_MaterialData->Material_SubData->AddColor.y;
@@ -89,7 +93,6 @@ void CTAP_MeshFilter::SetGameObject(MeshFilter* ObjectMeshFilter)
 		AddColor_R.SetWindowTextW(ChangeToCString(AddColorR));
 		AddColor_G.SetWindowTextW(ChangeToCString(AddColorG));
 		AddColor_B.SetWindowTextW(ChangeToCString(AddColorB));
-
 	}
 	else
 	{
@@ -109,6 +112,43 @@ void CTAP_MeshFilter::SetGameObject(MeshFilter* ObjectMeshFilter)
 		Roughnees_Slider.SetPos(100);
 		Matallic_Slider.SetPos(100);
 	}
+}
+
+void CTAP_MeshFilter::GetData(ObjectOption& Option)
+{
+	CString Diffuse;
+	CString Normal;
+	CString Emissive;
+	CString ORM;
+	Diffuse_Edit.GetWindowTextW(Diffuse);
+	Nomal_Eidt.GetWindowTextW(Normal);
+	EmissiveName_Edit.GetWindowTextW(Emissive);
+	ORM_Edit.GetWindowTextW(ORM);
+
+
+	Option.Diffuse	= ChangeToString(Diffuse);
+	Option.Normal	= ChangeToString(Normal);
+	Option.Emissive = ChangeToString(Emissive);
+	Option.ORM		= ChangeToString(ORM);
+
+
+	CString Roughness;
+	Roughness_Edit.GetWindowTextW(Roughness);
+	Option.Roughness = ChangeToFloat(Roughness);
+
+	CString Metallic;
+	Matallic_Edit.GetWindowTextW(Metallic);
+	Option.Metallic = ChangeToFloat(Metallic);
+
+
+	CString Add_R;
+	CString Add_G;
+	CString Add_B;
+	AddColor_R.GetWindowTextW(Add_R);
+	AddColor_G.GetWindowTextW(Add_G);
+	AddColor_B.GetWindowTextW(Add_B);
+
+	Option.AddColor = { ChangeToFloat(Add_R),ChangeToFloat(Add_G) ,ChangeToFloat(Add_B) };
 }
 
 void CTAP_MeshFilter::UpdateGameObject()
@@ -176,6 +216,7 @@ void CTAP_MeshFilter::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_SLIDER8, Add_G_Slider);
 	DDX_Control(pDX, IDC_SLIDER9, Add_B_Slider);
 	DDX_Control(pDX, IDC_EDIT15, ModelName_Edit);
+	DDX_Control(pDX, IDC_EDIT16, MaterialName_Edit);
 }
 
 BOOL CTAP_MeshFilter::OnInitDialog()
@@ -215,6 +256,7 @@ BEGIN_MESSAGE_MAP(CTAP_MeshFilter, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON10, &CTAP_MeshFilter::OnORM_Button)
 	ON_WM_HSCROLL()
 	ON_BN_CLICKED(IDC_BUTTON26, &CTAP_MeshFilter::OnEmissive_Button)
+	ON_BN_CLICKED(IDC_BUTTON5, &CTAP_MeshFilter::OnMaterialName_Button)
 END_MESSAGE_MAP()
 
 LRESULT CTAP_MeshFilter::OnUserFun(WPARAM wParam, LPARAM lparam)
@@ -244,6 +286,23 @@ LRESULT CTAP_MeshFilter::OnUserFun(WPARAM wParam, LPARAM lparam)
 			AfxMessageBox(L"Error : FBX , EATER 파일만 가능합니다");
 		}
 	}
+
+	if (EditRect[Material_Index].left	<= point.x &&
+		EditRect[Material_Index].right	>= point.x &&
+		EditRect[Material_Index].top	<= point.y &&
+		EditRect[Material_Index].bottom >= point.y)
+	{
+		if (Type == EMAT)
+		{
+			MaterialName_Edit.SetWindowTextW(strString);
+			mMeshFilter->SetMaterialName(FileName);
+		}
+		else
+		{
+			AfxMessageBox(L"Error : Emat 파일만 가능합니다");
+		}
+	}
+
 
 	for (int i = 1; i <= 4; i++)
 	{
@@ -383,4 +442,9 @@ void CTAP_MeshFilter::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 	CDialogEx::OnHScroll(nSBCode, nPos, pScrollBar);
 }
 
+void CTAP_MeshFilter::OnMaterialName_Button()
+{
 
+
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}

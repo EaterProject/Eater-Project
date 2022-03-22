@@ -210,6 +210,7 @@ copy /Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)" </Command>
     <ClInclude Include="CTAP_MeshFilter.h" />
     <ClInclude Include="E_AnimationManager.h" />
     <ClInclude Include="E_BufferManager.h" />
+    <ClInclude Include="E_ChangeManager.h" />
     <ClInclude Include="E_MaterialManager.h" />
     <ClInclude Include="E_MeshManager.h" />
     <ClInclude Include="GrobalFunction.h" />
@@ -252,6 +253,7 @@ copy /Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)" </Command>
     <ClCompile Include="EditorData.cpp" />
     <ClCompile Include="E_AnimationManager.cpp" />
     <ClCompile Include="E_BufferManager.cpp" />
+    <ClCompile Include="E_ChangeManager.cpp" />
     <ClCompile Include="E_MaterialManager.cpp" />
     <ClCompile Include="E_MeshManager.cpp" />
     <ClCompile Include="Loading.cpp" />

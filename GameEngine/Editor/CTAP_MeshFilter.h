@@ -1,5 +1,5 @@
 ﻿#pragma once
-
+#include "EditorData.h"
 
 // CTAP_MeshFilter 대화 상자
 class MeshFilter;
@@ -13,6 +13,7 @@ public:
 	virtual ~CTAP_MeshFilter();
 
 	void SetGameObject(MeshFilter* ObjectMeshFilter);
+	void GetData(ObjectOption& Option);
 	void UpdateGameObject();
 	
 
@@ -34,7 +35,7 @@ public:
 	CEdit EmissiveName_Edit;
 	CEdit ORM_Edit;
 
-	CRect EditRect[6];
+	CRect EditRect[7];
 
 	MeshFilter* mMeshFilter;
 	Material*	mMaterial;
@@ -45,6 +46,7 @@ public:
 	const int Nomal_Index		= 3;
 	const int ORM_Index			= 4;
 	const int Emissive_Index	= 5;
+	const int Material_Index	= 6;
 
 	CSliderCtrl Emissive_Slider;
 	CSliderCtrl Roughnees_Slider;
@@ -69,4 +71,6 @@ public:
 	CSliderCtrl Add_R_Slider;
 	CSliderCtrl Add_G_Slider;
 	CSliderCtrl Add_B_Slider;
+	CEdit MaterialName_Edit;
+	afx_msg void OnMaterialName_Button();
 };

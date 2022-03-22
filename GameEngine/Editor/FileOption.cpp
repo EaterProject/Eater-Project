@@ -240,7 +240,7 @@ void FileOption::OnTimer(UINT_PTR nIDEvent)
 
 void FileOption::OnChange_Button()
 {
-	MeshOption Data;
+	ObjectOption Data;
 	std::string FilePath = ChoiceMeshPath;
 	FilePath += "/";
 	FilePath += ChoiceMeshName;

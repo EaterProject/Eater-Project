@@ -40,8 +40,11 @@ public:
 	void GetList(std::vector<float>* Data, int index);
 	void GetList(std::vector<std::string>* Data, int index);
 public:
+	//맵을 변경한다
 	void ChangeMap(int NodeCount,std::string& Key,std::string& ChangeValue);
-
+	void ChangeList(int NodeCount, std::string& ListName, int cx_index, int cy_index, std::string& ChangeData);
+	//변경된 값으로 저장한다
+	void ChangeDataSave(std::string& FileName, std::string& OutPath, std::string& FileType);
 public:
 	void ClearNode();
 private:
@@ -61,13 +64,10 @@ private:
 	int LineCount = 0;
 	std::string NowKey;
 
-	//std::ifstream ReadFile;
-	//std::ofstream WriteFile;
-
 	FILE* WriteFile;
 	FILE* ReadFile;
 
-	std::vector<EaterNode*> NodeList;
+	std::vector<EaterNode*> mNodeList;
 	EaterNode* mNode;
 	EaterList* GetListData;
 };

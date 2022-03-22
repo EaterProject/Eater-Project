@@ -70,9 +70,9 @@ void EditorManager::OpenEaterFile(std::string Path,int Type)
 	mEater->Load_Eater_File(Path);
 }
 
-void EditorManager::OpenEaterGameObject(GameObject* Object)
+void EditorManager::OpenEaterGameObject(GameObject* Object,ObjectOption* Option)
 {
-	mEater->Load_GameObject_File(Object);
+	mEater->Load_GameObject_File(Object, Option);
 }
 
 void EditorManager::CreateAssetsFile()

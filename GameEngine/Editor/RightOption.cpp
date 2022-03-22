@@ -385,13 +385,13 @@ void RightOption::OnDeleteFile_Button()
 
 void RightOption::OnChange_DataFormat()
 {
-	//클리한 파일을 자체포멧으로 변경한다
-	m_EditorManager->OpenEaterGameObject(ChoiceObject);
-	//mFileOption->ShowWindow(SW_SHOW);
-	
-	
+	//자체포멧의 값을 변경한다
+	ObjectOption mObjectOption;
+	mTransform->GetData(mObjectOption);
+	mMeshFilter->GetData(mObjectOption);
 
-	//m_EditorManager->SetPath(Path, nullptr);
+	m_EditorManager->OpenEaterGameObject(ChoiceObject,&mObjectOption);
+	AfxMessageBox(L"변환 완료");
 }
 
 void RightOption::OnOpenExeFile_Button()

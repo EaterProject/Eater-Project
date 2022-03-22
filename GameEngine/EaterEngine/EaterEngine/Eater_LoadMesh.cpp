@@ -66,6 +66,14 @@ void Eater_LoadMesh::LoadData(std::string& Path)
 
 	LinkBone(SaveData);
 
+
+	std::map<std::string, ModelData*>::iterator Fine_it = LoadManager::ModelList.find(SaveName);
+	std::map<std::string, ModelData*>::iterator End_it	= LoadManager::ModelList.end();
+	if (Fine_it != End_it)
+	{
+		LoadManager::ModelList.erase(SaveName);
+	}
+
 	LoadManager::ModelList.insert({ SaveName ,SaveData });
 }
 

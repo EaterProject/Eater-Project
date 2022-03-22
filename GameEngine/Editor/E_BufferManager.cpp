@@ -15,7 +15,7 @@ void E_BufferManager::ChangeEaterFile(ParserData::CModel* FBXMesh)
 {
 	MeshIndexList.clear();
 
-	int Size = FBXMesh->m_MeshList.size();
+	int Size = (int)FBXMesh->m_MeshList.size();
 	for (int i = 0; i < Size; i++)
 	{
 		ParserData::CMesh* mMesh = FBXMesh->m_MeshList[i];

@@ -22,6 +22,11 @@ void EATER_CLOSE_READ_FILE()
 	Parser->CLOSE_READ_FILE();
 }
 
+void EATER_CLOSE_CHANGE_FILE(std::string FileName, std::string OutPath, std::string FileType)
+{
+	Parser->ChangeDataSave(FileName,OutPath,FileType);
+}
+
  void EATER_SET_NODE(std::string NodeName)
 {
 	 Parser->SetNode(NodeName);
@@ -32,9 +37,10 @@ void EATER_CLOSE_READ_FILE()
 	 Parser->SetMap(key, value);
  }
 
- void EATER_CHANGE_MAP(std::string key, std::string value)
+ void EATER_CHANGE_MAP(int NodeIndex, std::string key, std::string value)
  {
-
+	 if (value == "") { value = "NO"; }
+	 Parser->ChangeMap(NodeIndex, key, value);
  }
 
  void EATER_SET_LIST_START(std::string Name, int LineCount, int WordCount)
@@ -92,14 +98,19 @@ void EATER_CLOSE_READ_FILE()
 	 return Parser->ChoiceListData(NodeCount, ListName);
  }
 
-
  void EATER_GET_LIST(std::vector<float>* Data, int index)
  {
 	Parser->GetList(Data, index);
  }
+
  void EATER_GET_LIST(std::vector<std::string>* Data, int index)
  {
 	 Parser->GetList(Data, index);
+ }
+
+ void EATER_CHANGE_LIST(int NodeCount, std::string ListName, int cx_index, int cy_index, std::string ChangeData)
+ {
+	 Parser->ChangeList(NodeCount, ListName, cx_index, cy_index, ChangeData);
  }
 
  void EATER_CLEAR_NODE()

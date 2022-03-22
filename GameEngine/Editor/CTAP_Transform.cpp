@@ -99,39 +99,82 @@ void CTAP_Transform::SetGameObject(Transform* mTransform)
 	//Rotation_Z_Slider.ShowWindow(SW_SHOW);
 }
 
-TransformData CTAP_Transform::GetObjectData()
+void CTAP_Transform::UpdateGameObject()
 {
-	TransformData Data;
-	CString Cx, Cy, Cz;
-	float X, Y, Z;
+	CString Cx;
+	CString Cy;
+	CString Cz;
+	Vector3 Pos;
+	Vector3 Rot;
+	Vector3 Scl;
+
 	Pos_X.GetWindowTextW(Cx);
 	Pos_Y.GetWindowTextW(Cy);
 	Pos_Z.GetWindowTextW(Cz);
-	X = ChangeToFloat(Cx);
-	Y = ChangeToFloat(Cy);
-	Z = ChangeToFloat(Cz);
-	ObjectTransform->Position = {X,Y,Z};
+	Pos.x = ChangeToFloat(Cx);
+	Pos.y = ChangeToFloat(Cy);
+	Pos.z = ChangeToFloat(Cz);
+	ObjectTransform->Position = { Pos.x,Pos.y,Pos.z };
 
 	Rot_X.GetWindowTextW(Cx);
 	Rot_Y.GetWindowTextW(Cy);
 	Rot_Z.GetWindowTextW(Cz);
-	X = ChangeToFloat(Cx);
-	Y = ChangeToFloat(Cy);
-	Z = ChangeToFloat(Cz);
-	Rotation_X_Slider.SetPos((int)X);
-	Rotation_Y_Slider.SetPos((int)Y);
-	Rotation_Z_Slider.SetPos((int)Z);
-	ObjectTransform->Rotation = { X,Y,Z };
+	Rot.x = ChangeToFloat(Cx);
+	Rot.y = ChangeToFloat(Cy);
+	Rot.z = ChangeToFloat(Cz);
+	Rotation_X_Slider.SetPos((int)Rot.x);
+	Rotation_Y_Slider.SetPos((int)Rot.y);
+	Rotation_Z_Slider.SetPos((int)Rot.z);
+	ObjectTransform->Rotation = { Rot.x,Rot.y,Rot.z };
 
 	Scl_X.GetWindowTextW(Cx);
 	Scl_Y.GetWindowTextW(Cy);
 	Scl_Z.GetWindowTextW(Cz);
-	X = ChangeToFloat(Cx);
-	Y = ChangeToFloat(Cy);
-	Z = ChangeToFloat(Cz);
-	ObjectTransform->Scale = { X,Y,Z }; 
+	Scl.x = ChangeToFloat(Cx);
+	Scl.y = ChangeToFloat(Cy);
+	Scl.z = ChangeToFloat(Cz);
+	ObjectTransform->Scale = { Scl.x,Scl.y,Scl.z };
+}
 
-	return Data;
+void CTAP_Transform::GetData(ObjectOption& Obj)
+{
+	CString Cx;
+	CString Cy;
+	CString Cz;
+	Vector3 Pos;
+	Vector3 Rot;
+	Vector3 Scl;
+
+	Pos_X.GetWindowTextW(Cx);
+	Pos_Y.GetWindowTextW(Cy);
+	Pos_Z.GetWindowTextW(Cz);
+	Pos.x = ChangeToFloat(Cx);
+	Pos.y = ChangeToFloat(Cy);
+	Pos.z = ChangeToFloat(Cz);
+	ObjectTransform->Position = { Pos.x,Pos.y,Pos.z };
+
+	Rot_X.GetWindowTextW(Cx);
+	Rot_Y.GetWindowTextW(Cy);
+	Rot_Z.GetWindowTextW(Cz);
+	Rot.x = ChangeToFloat(Cx);
+	Rot.y = ChangeToFloat(Cy);
+	Rot.z = ChangeToFloat(Cz);
+	Rotation_X_Slider.SetPos((int)Rot.x);
+	Rotation_Y_Slider.SetPos((int)Rot.y);
+	Rotation_Z_Slider.SetPos((int)Rot.z);
+	ObjectTransform->Rotation = { Rot.x,Rot.y,Rot.z };
+
+	Scl_X.GetWindowTextW(Cx);
+	Scl_Y.GetWindowTextW(Cy);
+	Scl_Z.GetWindowTextW(Cz);
+	Scl.x = ChangeToFloat(Cx);
+	Scl.y = ChangeToFloat(Cy);
+	Scl.z = ChangeToFloat(Cz);
+	ObjectTransform->Scale = { Scl.x,Scl.y,Scl.z };
+
+	Obj.Position	= Pos;
+	Obj.Rotation	= Rot;
+	Obj.Scale		= Scl;
 }
 
 void CTAP_Transform::Reset()
@@ -162,7 +205,7 @@ BOOL CTAP_Transform::PreTranslateMessage(MSG* pMsg)
 		{
 		case VK_ESCAPE:
 		case VK_RETURN:
-			GetObjectData();
+			UpdateGameObject();
 			return TRUE;
 		default:
 			break;
