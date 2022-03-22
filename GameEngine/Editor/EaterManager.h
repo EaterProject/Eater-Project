@@ -11,6 +11,9 @@ class E_MaterialManager;
 class E_MeshManager;
 class E_AnimationManager;
 class E_BufferManager;
+class E_ChangeManager;
+class GameObject;
+struct ObjectOption;
 
 class EaterManager
 {
@@ -20,6 +23,7 @@ public:
 
 	void Load_Eater_File(std::string& Path);
 	void Load_FBX_File(std::string& Path,ParserData::CModel* FBXMesh);
+	void Load_GameObject_File(GameObject* Object, ObjectOption* mOption);
 	void Initialize();
 private:
 	static const int E_STATIC_MESH	= 0;
@@ -34,5 +38,6 @@ private:
 	E_AnimationManager* mAnimationManager;
 	E_MaterialManager*	mMaterialManager;
 	E_BufferManager*	mBufferManager;
+	E_ChangeManager*	mChangeManager;
 };
 

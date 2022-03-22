@@ -3,10 +3,11 @@
 #include <iostream>
 #include <string>
 
+class GameObject;
 class YamlManager;
 class FBXManager;
 class EaterManager;
-struct MeshOption;
+struct ObjectOption;
 class EditorManager
 {
 public:
@@ -16,6 +17,7 @@ public:
 	void Initialize();
 	void SetPath(std::string Path);
 	void OpenEaterFile(std::string Path, int Type);
+	void OpenEaterGameObject(GameObject* Object, ObjectOption* Option);
 private:
 	void CreateAssetsFile();
 	void LoadAssets();

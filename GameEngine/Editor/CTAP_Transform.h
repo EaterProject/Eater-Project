@@ -4,6 +4,7 @@
 // CTAP_1 대화 상자
 #include "EditorData.h"
 #include "GrobalFunction.h"
+#include "SimpleMath.h"
 class Transform;
 class CTAP_Transform : public CDialogEx
 {
@@ -26,7 +27,8 @@ protected:
 	
 public:
 	void SetGameObject(Transform* ObjectTransform);
-	TransformData GetObjectData();
+	void UpdateGameObject();
+	void GetData(ObjectOption& Obj);
 	void Reset();
 	
 	Transform* ObjectTransform;

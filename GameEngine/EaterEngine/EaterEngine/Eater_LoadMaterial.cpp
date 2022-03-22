@@ -22,7 +22,7 @@ void Eater_LoadMaterial::LoadData(std::string& Path)
 
 	std::string SaveName = Path.substr(Start, End);
 
-	EATER_OPEN_FILE(Path);
+	EATER_OPEN_READ_FILE(Path);
 	int Count = EATER_GET_NODE_COUNT();
 	for (int i = 0; i < Count; i++)
 	{
@@ -65,5 +65,5 @@ void Eater_LoadMaterial::LoadData(std::string& Path)
 			LoadManager::MaterialList.insert({ SaveName, Mat });
 		}
 	}
-	EATER_CLEAR_NODE();
+	EATER_CLOSE_READ_FILE();
 }

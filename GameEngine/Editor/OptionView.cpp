@@ -98,7 +98,7 @@ void OptionView::OnSize(UINT nType, int cx, int cy)
 	this->GetClientRect(rect);
 	int ChildSizeX = rect.Width() / 2;
 	int ChildSizeY = rect.Height() / 2;
-	mOption.MoveWindow(0, 0, cx, 3000);
+	mOption.MoveWindow(0, 0, cx, cy);
 
 	CScrollView::OnSize(nType, cx, cy);
 

@@ -19,7 +19,7 @@ SceneSave::~SceneSave()
 
 void SceneSave::Save(std::string SaveFilePath, std::string SaveFileName, std::map<std::string, GameObject*>& Data)
 {
-	EATER_CREATE_FILE(SaveFileName, SaveFilePath,".Scene");
+	EATER_OPEN_WRITE_FILE(SaveFileName, SaveFilePath,".Scene");
 	std::map<std::string, GameObject*>::iterator Start_it = Data.begin();
 	std::map<std::string, GameObject*>::iterator End_it = Data.end();
 
@@ -37,12 +37,12 @@ void SceneSave::Save(std::string SaveFilePath, std::string SaveFileName, std::ma
 		
 		SaveObject(Object);
 	}
-	EATER_CLOSE_FILE();
+	EATER_CLOSE_WRITE_FILE();
 }
 
 void SceneSave::Load(std::string FileName)
 {
-	EATER_OPEN_FILE(FileName);
+	EATER_OPEN_READ_FILE(FileName);
 	int Count = EATER_GET_NODE_COUNT();
 	for (int i = 0; i < Count; i++)
 	{
@@ -65,7 +65,7 @@ void SceneSave::Load(std::string FileName)
 		}
 	}
 
-	EATER_CLEAR_NODE();
+	EATER_CLOSE_READ_FILE();
 }
 
 void SceneSave::SaveTransform(GameObject* Obj)
@@ -150,7 +150,7 @@ void SceneSave::SaveMeshFilter(GameObject* Obj)
 	//매쉬필터 데이터를 저장
 	MeshFilter* mMeshFilter = Obj->GetComponent<MeshFilter>();
 	EATER_SET_LIST_START("MeshFilter",1,1);
-	EATER_SET_LIST(mMeshFilter->GetMeshName(),true);
+	EATER_SET_LIST(mMeshFilter->GetBufferName(),true);
 }
 
 void SceneSave::SaveAnimation(GameObject* Obj)

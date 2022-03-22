@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include <map>
+#include <unordered_map>
 #include <string>
 #include "EaterSaveData.h"
 #include "EaterList.h"
@@ -11,8 +11,8 @@ public:
 	~EaterNode();
 
 	std::string Name;
-	std::map<std::string, std::string> MapData;
-	std::map<std::string, EaterList> ListData;
+	std::unordered_map<std::string, std::string> MapData;
+	std::unordered_map<std::string, EaterList> ListData;
 
 
 	std::vector<EATER_VERTEX_BASE> BaseVertex;

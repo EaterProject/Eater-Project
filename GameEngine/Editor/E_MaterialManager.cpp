@@ -22,7 +22,7 @@ void E_MaterialManager::ChangeEaterFile(ParserData::CModel* FBXMesh)
 		if (OneMesh->m_MaterialData == nullptr) { continue; }
 
 		std::string ModelName = SaveFileName + "_" + OneMesh->m_MaterialData->m_MaterialName;
-		EATER_CREATE_FILE(ModelName, "../Assets/Texture/Material/", ".Emat");
+		EATER_OPEN_WRITE_FILE(ModelName, "../Assets/Texture/Material/", ".Emat");
 
 		EATER_SET_NODE("EATERMAT");
 		
@@ -78,17 +78,12 @@ void E_MaterialManager::ChangeEaterFile(ParserData::CModel* FBXMesh)
 		EATER_SET_MAP("Tileing_X", "1");
 		EATER_SET_MAP("Tileing_Y", "1");
 
-		EATER_SET_MAP("BaseColor_R", "1");
-		EATER_SET_MAP("BaseColor_G", "0.5");
-		EATER_SET_MAP("BaseColor_B", "0.5");
-		EATER_SET_MAP("BaseColor_A", "1");
+		EATER_SET_MAP("AddColor_R", "0");
+		EATER_SET_MAP("AddColor_G", "0");
+		EATER_SET_MAP("AddColor_B", "0");
+		EATER_SET_MAP("AddColor_A", "0");
 
-		EATER_SET_MAP("AddColor_R", "1");
-		EATER_SET_MAP("AddColor_G", "1");
-		EATER_SET_MAP("AddColor_B", "1");
-		EATER_SET_MAP("AddColor_A", "1");
-
-		EATER_CLOSE_FILE();
+		EATER_CLOSE_WRITE_FILE();
 
 		std::string LoadName = "../Assets/Texture/Material/" + ModelName + ".Emat";
 		Demo::MeshLoad(LoadName);

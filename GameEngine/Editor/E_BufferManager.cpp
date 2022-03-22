@@ -15,7 +15,7 @@ void E_BufferManager::ChangeEaterFile(ParserData::CModel* FBXMesh)
 {
 	MeshIndexList.clear();
 
-	int Size = FBXMesh->m_MeshList.size();
+	int Size = (int)FBXMesh->m_MeshList.size();
 	for (int i = 0; i < Size; i++)
 	{
 		ParserData::CMesh* mMesh = FBXMesh->m_MeshList[i];
@@ -28,18 +28,18 @@ void E_BufferManager::ChangeEaterFile(ParserData::CModel* FBXMesh)
 		switch (mMesh->m_MeshType)
 		{
 		case MESH_TYPE::SKIN_MESH:
-			EATER_CREATE_FILE(FileName, "../Assets/Model/MeshBuffer/", ".Emesh");	//파일 생성
+			EATER_OPEN_WRITE_FILE(FileName, "../Assets/Model/MeshBuffer/", ".Emesh");	//파일 생성
 			EATER_SET_NODE("SKIN_BUFFER");											//노드 생성
 			SetSkinVertexBuffer(mMesh);												//버텍스값 쓰기
 			SetIndexBuffer(mMesh);													//인덱스값 쓰기
-			EATER_CLOSE_FILE();														//파일 닫기
+			EATER_CLOSE_WRITE_FILE();														//파일 닫기
 			break;
 		case MESH_TYPE::STATIC_MESH:
-			EATER_CREATE_FILE(FileName, "../Assets/Model/MeshBuffer/", ".Emesh");	//파일 생성
+			EATER_OPEN_WRITE_FILE(FileName, "../Assets/Model/MeshBuffer/", ".Emesh");	//파일 생성
 			EATER_SET_NODE("STATIC_BUFFER");												//노드 생성
 			SetVertexBuffer(mMesh);													//버텍스값 쓰기
 			SetIndexBuffer(mMesh);													//인덱스값 쓰기
-			EATER_CLOSE_FILE();														//파일 닫기
+			EATER_CLOSE_WRITE_FILE();														//파일 닫기
 			break;
 		}
 		

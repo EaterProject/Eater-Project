@@ -124,6 +124,9 @@
     <Filter Include="소스 파일\Manager\Eater\EaterMesh">
       <UniqueIdentifier>{4dfe9510-17f3-46f4-96e7-26eb70c509d8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Manager\Eater\EaterChange">
+      <UniqueIdentifier>{251eda48-e89d-4ff2-8061-1c3529e20f11}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -225,6 +228,9 @@
     <ClInclude Include="E_BufferManager.h">
       <Filter>소스 파일\Manager\Eater\EaterBuffer</Filter>
     </ClInclude>
+    <ClInclude Include="E_ChangeManager.h">
+      <Filter>소스 파일\Manager\Eater\EaterChange</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainFrm.cpp">
@@ -313,6 +319,9 @@
     </ClCompile>
     <ClCompile Include="E_BufferManager.cpp">
       <Filter>소스 파일\Manager\Eater\EaterBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="E_ChangeManager.cpp">
+      <Filter>소스 파일\Manager\Eater\EaterChange</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

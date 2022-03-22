@@ -4,7 +4,7 @@
 // FileOption 대화 상자
 #include <string>
 #include "EditorData.h"
-struct MeshOption;
+struct ObjectOption;
 class EditorManager;
 class FileOption : public CDialogEx
 {
@@ -40,7 +40,7 @@ public:
 
 	CEdit FileName_Edit;
 	CEdit FileType_Edit;
-	MeshOption MeshData;
+	ObjectOption MeshData;
 public:
 
 	CEdit PosX , PosY , PosZ;

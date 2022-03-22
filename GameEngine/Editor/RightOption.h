@@ -60,6 +60,7 @@ public:
 	CString SaveSceneName;
 	bool isDrag = false;
 public:
+	GameObject*			ChoiceObject;
 	FileOption*			mFileOption;		//자체포맷 변환 창
 	SceneSaveDialog*	mScene;				//씬 저장 창
 	EditorManager*		m_EditorManager;	//자체포맷 변환 관리 매니저
@@ -88,4 +89,6 @@ public:
 	afx_msg void OnSaveScene();
 	afx_msg void OnCreateParticle();
 	afx_msg void OnCreateTerrain();
+	afx_msg void OnSize(UINT nType, int cx, int cy);
+	afx_msg void OnCreateLight();
 };

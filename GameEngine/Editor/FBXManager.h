@@ -15,7 +15,7 @@ class E_MeshManager;
 
 class EaterManager;
 class ModelParser;
-struct MeshOption;
+struct ObjectOption;
 class FBXManager
 {
 public:

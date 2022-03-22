@@ -117,6 +117,8 @@ BEGIN_MESSAGE_MAP(RightOption, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON12, &RightOption::OnCreateParticle)
 	ON_BN_CLICKED(IDC_BUTTON10, &RightOption::OnCreateTerrain)
 	ON_WM_MOUSEHWHEEL()
+	ON_WM_SIZE()
+	ON_BN_CLICKED(IDC_BUTTON26, &RightOption::OnCreateLight)
 END_MESSAGE_MAP()
 
 RightOption* RightOption::GetThis()
@@ -284,7 +286,7 @@ void RightOption::OnChoice_Hirearchy_Item(NMHDR* pNMHDR, LRESULT* pResult)
 	HirearchyEdit.SetWindowTextW(Name);
 
 	Component_TapList.DeleteAllItems();
-	GameObject* ChoiceObject = FindGameObjectParent(ChoiceItem);
+	ChoiceObject = FindGameObjectParent(ChoiceItem);
 	Delete_Hirearchy_Item(ChoiceItem);
 	Create_Hirearchy_Item(ChoiceObject, ChoiceItem);
 
@@ -384,14 +386,13 @@ void RightOption::OnDeleteFile_Button()
 
 void RightOption::OnChange_DataFormat()
 {
-	//클리한 파일을 자체포멧으로 변경한다
-	//std::string Name = ChangeToString(ClickItemName);
-	//std::string Path = ChangeToString(ClickAssetsPath);
-	//Path += "/";
-	//Path += Name;
+	//자체포멧의 값을 변경한다
+	ObjectOption mObjectOption;
+	mTransform->GetData(mObjectOption);
+	mMeshFilter->GetData(mObjectOption);
 
-	mFileOption->ShowWindow(SW_SHOW);
-	//m_EditorManager->SetPath(Path, nullptr);
+	m_EditorManager->OpenEaterGameObject(ChoiceObject,&mObjectOption);
+	AfxMessageBox(L"변환 완료");
 }
 
 void RightOption::OnOpenExeFile_Button()
@@ -499,9 +500,19 @@ void RightOption::OnCreateParticle()
 	Create_Hirearchy_Item(Obj, Top);
 }
 
-
 void RightOption::OnCreateTerrain()
 {
-	Demo::CreateTerrain("");
+	GameObject* object = Demo::CreateTerrain("");
 }
 
+void RightOption::OnSize(UINT nType, int cx, int cy)
+{
+	CDialogEx::OnSize(nType, cx, cy);
+}
+
+void RightOption::OnCreateLight()
+{
+	GameObject* Object = Demo::CreateLight();
+	HTREEITEM Top = HirearchyTree.InsertItem(ChangeToCString(Object->Name));
+	Create_Hirearchy_Item(Object, Top);
+}
