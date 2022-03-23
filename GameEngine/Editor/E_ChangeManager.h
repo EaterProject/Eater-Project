@@ -25,12 +25,11 @@ public:
 	void Change_Skin(int index, GameObject* Object);
 	void Change_Bone(int index, GameObject* Object);
 	void Change_Material(int index, GameObject* Object);
+	void Change_Animation(int index, GameObject* Object);
 public:
 	void Change_LocalTM(int Nodeindex, Transform* TR);
 	void Change_Name(int Nodeindex,MeshFilter* MF);
 	std::string GetOriginalName(std::string Original);
-
-
 	std::string ModelName;
 };
 

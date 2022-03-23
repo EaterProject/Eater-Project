@@ -7,6 +7,8 @@
 #define IDR_EditorTYPE                  130
 #define IDD_DIALOG1                     313
 #define IDD_FILE_OPTION                 313
+#define IDD_Button_Option               313
+#define IDD_BUTTON_OPTION               313
 #define IDD_DIALOG2                     315
 #define IDD_TAP_TRANSFORM               315
 #define IDB_BITMAP1                     318
@@ -21,12 +23,15 @@
 #define IDD_TAP_LIGHT                   340
 #define IDD_SCENE_SAVE                  341
 #define IDD_ASSETS                      343
+#define IDD_CAM_ANIMATION               346
 #define IDC_TREE1                       1000
 #define IDC_TREE2                       1001
 #define IDC_TREE3                       1002
 #define IDC_EDIT2                       1003
 #define IDC_BUTTON1                     1004
+#define IDC_EDIT59                      1004
 #define IDC_BUTTON2                     1005
+#define IDC_EDIT60                      1005
 #define IDC_BUTTON3                     1006
 #define IDC_EDIT1                       1006
 #define IDC_EDIT11                      1006
@@ -40,6 +45,7 @@
 #define IDC_EDIT5                       1009
 #define IDC_EDIT14                      1009
 #define IDC_BUTTON9                     1009
+#define IDC_EDIT61                      1009
 #define IDC_EDIT6                       1010
 #define IDC_BUTTON10                    1010
 #define IDC_EDIT19                      1010
@@ -49,6 +55,7 @@
 #define IDC_EDIT8                       1012
 #define IDC_BUTTON12                    1012
 #define IDC_EDIT9                       1013
+#define IDC_BUTTON27                    1013
 #define IDC_EDIT10                      1014
 #define IDC_BUTTON26                    1014
 #define IDC_EDIT15                      1015
@@ -107,6 +114,7 @@
 #define IDC_CHECK3                      1047
 #define IDC_SCROLLBAR2                  1048
 #define IDC_EDIT46                      1048
+#define IDC_CHECK9                      1048
 #define IDC_CHECK4                      1049
 #define IDC_LIST2                       1049
 #define IDC_CHECK5                      1050
@@ -116,6 +124,7 @@
 #define IDC_CHECK7                      1052
 #define IDC_SLIDER3                     1052
 #define IDC_RADIO2                      1052
+#define IDC_CHECK10                     1052
 #define IDC_EDIT47                      1053
 #define IDC_SLIDER4                     1053
 #define IDC_EDIT48                      1054
@@ -145,9 +154,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        346
+#define _APS_NEXT_RESOURCE_VALUE        348
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1053
+#define _APS_NEXT_CONTROL_VALUE         1054
 #define _APS_NEXT_SYMED_VALUE           312
 #endif
 #endif

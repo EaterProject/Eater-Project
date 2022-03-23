@@ -36,9 +36,15 @@ public:
 	EATER_ENGINEDLL void SetAttenuate(float range);				// Spot Light 전용 Angle 기준 흐려지는 시작 지점
 	EATER_ENGINEDLL void SetRange(float range);					// Spot & Point Light 전용 Light 적용 범위
 	EATER_ENGINEDLL void SetPower(float power);					// All Light 전용 Light 강도
-	
+
 	EATER_ENGINEDLL void SetType(LIGHT_TYPE lightType);
 
+	EATER_ENGINEDLL LIGHT_TYPE GetType() { return m_LightType; }
+	EATER_ENGINEDLL float GetAngle();
+	EATER_ENGINEDLL float GetAttenuate();
+	EATER_ENGINEDLL float GetRange();
+	EATER_ENGINEDLL float GetPower();
+	EATER_ENGINEDLL Vector3 GetColor();
 public:
 	EATER_ENGINEDLL void SetShadowRadius(float radius);
 	EATER_ENGINEDLL void SetCenterPos(DirectX::SimpleMath::Vector3 pos);
@@ -51,10 +57,9 @@ private:
 	DirectionalLightData* GetDirectionLight() { return m_DirectionLight; }
 	PointLightData* GetPointLight() { return m_PointLight; }
 	SpotLightData* GetSpotLight() { return m_SpotLight; }
-
 public:
-	LIGHT_TYPE GetType() { return m_LightType; }
 
+	
 private:
 	Transform* m_Transform;
 
@@ -71,7 +76,6 @@ private:
 
 	Vector3 m_PrevLook;
 	Vector3 m_NowLook;
-
 private:
 	DirectX::SimpleMath::Vector3 m_CenterPos;
 	float m_ShadowRadius;
