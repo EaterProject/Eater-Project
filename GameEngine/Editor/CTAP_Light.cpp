@@ -39,6 +39,8 @@ void CTAP_Light::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EDIT59, Range_Edit);
 	DDX_Control(pDX, IDC_SLIDER3, Power_Slider);
 	DDX_Control(pDX, IDC_EDIT60, Power_Edit);
+	DDX_Control(pDX, IDC_SLIDER7, Attenuate_Slider);
+	DDX_Control(pDX, IDC_EDIT61, Attenuate_Edit);
 }
 
 BOOL CTAP_Light::OnInitDialog()
@@ -58,10 +60,13 @@ BOOL CTAP_Light::OnInitDialog()
 	Angle_Slider.SetRange(0, 90);
 	Range_Slider.SetRange(0, 100);
 	Power_Slider.SetRange(0, 1000);
+	Attenuate_Slider.SetRange(0, 99);
+
 
 	Color_R_Slider.SetPos(0);
 	Color_G_Slider.SetPos(0);
 	Color_B_Slider.SetPos(0);
+	Attenuate_Slider.SetPos(0);
 
 	Angle_Slider.SetPos(0);
 	Range_Slider.SetPos(0);
@@ -97,10 +102,12 @@ void CTAP_Light::SetGameObject(Light* TempLight)
 	float Range		= mLight->GetRange();
 	float Power		= mLight->GetPower();
 	Vector3 mColor	= mLight->GetColor();
+	float mAttenuate = mLight->GetAttenuate();
 
 	Color_R_Slider.SetPos(mColor.x*255);
 	Color_G_Slider.SetPos(mColor.y*255);
 	Color_B_Slider.SetPos(mColor.z*255);
+	Attenuate_Slider.SetPos(mAttenuate*0.01);
 
 	Angle_Slider.SetPos(Angle);
 	Range_Slider.SetPos(Range);
@@ -113,6 +120,7 @@ void CTAP_Light::SetGameObject(Light* TempLight)
 	Angle_Edit.SetWindowTextW(ChangeToCString(Angle));
 	Range_Edit.SetWindowTextW(ChangeToCString(Range));
 	Power_Edit.SetWindowTextW(ChangeToCString(Power));
+	Attenuate_Edit.SetWindowTextW(ChangeToCString(mAttenuate));
 }
 
 BOOL CTAP_Light::PreTranslateMessage(MSG* pMsg)
@@ -187,6 +195,12 @@ void CTAP_Light::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 		int Power = Power_Slider.GetPos();
 		mLight->SetPower(Power);
 		Power_Edit.SetWindowTextW(ChangeToCString(Power));
+	}
+	if (pScrollBar->GetDlgCtrlID() == Attenuate_Slider.GetDlgCtrlID())
+	{
+		float Attenuate = (float)Attenuate_Slider.GetPos();
+		mLight->SetAttenuate(Attenuate* 0.01f);
+		Attenuate_Edit.SetWindowTextW(ChangeToCString(Attenuate * 0.01f));
 	}
 
 	CDialogEx::OnHScroll(nSBCode, nPos, pScrollBar);

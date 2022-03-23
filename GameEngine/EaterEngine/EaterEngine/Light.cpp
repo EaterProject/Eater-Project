@@ -116,7 +116,7 @@ void Light::SetAngle(float angle)
 		break;
 	}
 }
-
+
 void Light::SetAttenuate(float range)
 {
 	switch (m_LightType)
@@ -221,14 +221,12 @@ void Light::SetType(LIGHT_TYPE lightType)
 
 float Light::GetAngle()
 {
-	switch (m_LightType)
-	{
-	case SPOT_LIGHT:
-		return m_SpotLight->Angle;
-		break;
-	default:
-		break;
-	}
+	return m_Angle;
+}
+
+float Light::GetAttenuate()
+{
+	return m_AttStart;
 }
 
 float Light::GetRange()

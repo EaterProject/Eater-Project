@@ -40,4 +40,6 @@ public:
 	CSliderCtrl Power_Slider;
 	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 	afx_msg void OnCbnSelchangeCombo1();
+	CSliderCtrl Attenuate_Slider;
+	CEdit Attenuate_Edit;
 };
