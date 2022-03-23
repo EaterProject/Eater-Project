@@ -4,6 +4,9 @@
 #include "Transform.h"
 #include "DebugManager.h"
 #include "GameEngine.h"
+#include "EngineData.h"
+#include "MainHeader.h"
+#include "MainHeader.h"
 
 using namespace DirectX;
 std::vector<Camera*> Camera::CamList;
@@ -31,6 +34,10 @@ void Camera::Awake()
 	tranform = gameobject->transform;
 	CreateProj(GameEngine::WinSizeWidth, GameEngine::WinSizeHeight);
 	gameobject->OneMeshData->Object_Data->ObjType = OBJECT_TYPE::CAMERA;
+
+	Collider_Data = new ColliderData();
+	Collider_Data->ColliderColor = {1,0,0};
+	
 }
 
 void Camera::Update()
@@ -45,7 +52,16 @@ void Camera::Update()
 			true
 		);
 	}
+
 	CreateView();
+
+	if (this != g_MainCam)
+	{
+		Transform* TR = gameobject->GetTransform();
+		Collider_Data->ColliderWorld = *TR->GetWorld();
+		DebugDrawLine(TR->Position, TR->GetLocalPosition_Look(), Vector3(255,255,0));
+		gameobject->OneMeshData->Collider_Data = Collider_Data;
+	}
 }
 
 DirectX::SimpleMath::Matrix Camera::GetProj()

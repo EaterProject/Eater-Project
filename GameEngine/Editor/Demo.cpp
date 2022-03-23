@@ -11,11 +11,15 @@
 #include "Terrain.h"
 #include "ParticleSystem.h"
 #include "Light.h"
+#include "CameraDebugKeyInput.h"
+#include "Camera.h"
 
 std::map<std::string, GameObject*> Demo::ObjectList;
 
 SceneSave*		Demo::SaveManager = nullptr;
 GameObject*		Demo::Object		= nullptr;
+GameObject*		Demo::CamObject		= nullptr;
+GameObject*		Demo::DebugCamObject = nullptr;
 Demo::Demo()
 {
 	Object = nullptr;
@@ -35,6 +39,7 @@ void Demo::Awake()
 	Load("../Assets/Texture/Material");
 	Load("../Assets/Texture/Particle");
 
+	DebugCamObject = GetMainCamera();
 }
 
 void Demo::Update()
@@ -146,6 +151,26 @@ std::string Demo::FindMeshName(std::string MeshName)
 	}
 }
 
+GameObject* Demo::GetCamera()
+{
+	GameObject* Object = CreateCamera();
+	Object->AddComponent<CameraDebugKeyInput>();
+	return Object;
+}
+
+void Demo::ChangeCam()
+{
+	GameObject* Main =GetMainCamera();
+	if (Main == DebugCamObject)
+	{
+		CamObject->GetComponent<Camera>()->ChoiceMainCam();
+	}
+	else
+	{
+		DebugCamObject->GetComponent<Camera>()->ChoiceMainCam();
+	}
+}
+
 GameObject* Demo::CreateBaseObject(std::string ObjectName, std::string MeshName)
 {
 	GameObject* Object	= Instance(ObjectName);
@@ -168,6 +193,16 @@ GameObject* Demo::CreateSkinObject(std::string ObjectName, std::string MeshName)
 	MF->SetAnimationName(MeshName);
 	ObjectList.insert({ ObjectName,Skin });
 	return Skin;
+}
+
+GameObject* Demo::CreateCamera()
+{
+	if (CamObject == nullptr)
+	{
+		CamObject = InstanceCamera("Cam");
+	}
+
+	return CamObject;
 }
 
 GameObject* Demo::CreateTerrain(std::string MeshName)

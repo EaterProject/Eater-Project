@@ -52,7 +52,7 @@ void intro::Awake()
 	//LoadUnityFile("../Resources/Data/Collider.Eater");
 
 	
-	Load("../Assets/Scene/intro.Scene");
+	//Load("../Assets/Scene/intro.Scene");
 	//CreateMap();
 	SetEnvironment(true);
 	CreateTerrain();
