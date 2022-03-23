@@ -193,6 +193,12 @@ GameObject* Demo::CreateLight()
 {
 	GameObject* LightObject = InstanceLight("Light",LIGHT_TYPE::SPOT_LIGHT);
 	LightObject->Name = FindMeshName(LightObject->Name);
+	Light* light = LightObject->GetComponent<Light>();
+	light->SetRange(10.0f);
+	light->SetPower(100.0f);
+	light->SetColor(1.0f, 0.0f, 1.0f);
+	light->SetInAngle(15.0f);
+	light->SetOutAngle(25.0f);
 
 	ObjectList.insert({ LightObject->Name, LightObject });
 	
