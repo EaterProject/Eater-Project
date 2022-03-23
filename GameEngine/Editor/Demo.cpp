@@ -11,7 +11,6 @@
 #include "Terrain.h"
 #include "ParticleSystem.h"
 #include "Light.h"
-#include "CameraDebugKeyInput.h"
 #include "Camera.h"
 
 std::map<std::string, GameObject*> Demo::ObjectList;
@@ -153,9 +152,7 @@ std::string Demo::FindMeshName(std::string MeshName)
 
 GameObject* Demo::GetCamera()
 {
-	GameObject* Object = CreateCamera();
-	Object->AddComponent<CameraDebugKeyInput>();
-	return Object;
+	return DebugCamObject;
 }
 
 void Demo::ChangeCam()
@@ -193,16 +190,6 @@ GameObject* Demo::CreateSkinObject(std::string ObjectName, std::string MeshName)
 	MF->SetAnimationName(MeshName);
 	ObjectList.insert({ ObjectName,Skin });
 	return Skin;
-}
-
-GameObject* Demo::CreateCamera()
-{
-	if (CamObject == nullptr)
-	{
-		CamObject = InstanceCamera("Cam");
-	}
-
-	return CamObject;
 }
 
 GameObject* Demo::CreateTerrain(std::string MeshName)

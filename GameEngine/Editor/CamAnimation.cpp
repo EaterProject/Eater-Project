@@ -14,7 +14,7 @@
 // CamAnimation 대화 상자
 
 IMPLEMENT_DYNAMIC(CamAnimation, CDialogEx)
-
+#define LERP(prev, next, time) ((prev * (1.0f - time)) + (next * time))
 CamAnimation::CamAnimation(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_CAM_ANIMATION, pParent)
 {
@@ -51,9 +51,11 @@ BOOL CamAnimation::OnInitDialog()
 	mListCtrl.InsertColumn(5, _T("회전_Y"), LVCFMT_LEFT, Size6);
 	mListCtrl.InsertColumn(6, _T("회전_Z"), LVCFMT_LEFT, Size6);
 
-	CamAnime_slider.SetRange(0, 1000);
+	CamAnime_slider.SetRange(0, 1);
 	CamAnime_slider.SetPos(0);
 	NowTime_Eidt.SetWindowTextW(L"0.00");
+
+	SetTimer(0, 10,NULL);
 
 	return 0;
 }
@@ -71,8 +73,10 @@ BEGIN_MESSAGE_MAP(CamAnimation, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON2, &CamAnimation::OnDeleteKey)
 	ON_BN_CLICKED(IDC_BUTTON4, &CamAnimation::OnPlay)
 	ON_WM_HSCROLL()
-	ON_NOTIFY(LVN_COLUMNCLICK, IDC_LIST1, &CamAnimation::OnLvnColumnclickList1)
 	ON_BN_CLICKED(IDC_BUTTON7, &CamAnimation::OnBnClickedButton7)
+	ON_BN_CLICKED(IDC_BUTTON9, &CamAnimation::OnAllDelete)
+	ON_BN_CLICKED(IDC_BUTTON10, &CamAnimation::OnBnClickedButton10)
+	ON_WM_TIMER()
 END_MESSAGE_MAP()
 
 
@@ -96,6 +100,17 @@ BOOL CamAnimation::PreTranslateMessage(MSG* pMsg)
 	return CDialogEx::PreTranslateMessage(pMsg);
 }
 
+
+void CamAnimation::AddItem(int index, KeyNode& Node)
+{
+	mListCtrl.InsertItem(index, ChangeToCString(index));
+	mListCtrl.SetItemText(index, 1, ChangeToCString(Node.PosX));
+	mListCtrl.SetItemText(index, 2, ChangeToCString(Node.PosY));
+	mListCtrl.SetItemText(index, 3, ChangeToCString(Node.PosZ));
+	mListCtrl.SetItemText(index, 4, ChangeToCString(Node.RotX));
+	mListCtrl.SetItemText(index, 5, ChangeToCString(Node.RotY));
+	mListCtrl.SetItemText(index, 6, ChangeToCString(Node.RotZ));
+}
 
 void CamAnimation::OnAddKey()
 {
@@ -123,7 +138,7 @@ void CamAnimation::OnAddKey()
 	mListCtrl.SetItemText(0, 6, ChangeToCString(Node.RotZ));
 
 	
-	KeyList.insert({Node.Time,Node});
+	KeyList.push_back(Node);
 }
 
 
@@ -135,37 +150,104 @@ void CamAnimation::OnDeleteKey()
 
 void CamAnimation::OnPlay()
 {
-	
+	isPlay = true;
 }
 
 
 void CamAnimation::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 {
+	CamAnime_slider.SetRange(0, (int)AddKeyList.size()-1);
+
 	if (pScrollBar->GetDlgCtrlID() == CamAnime_slider.GetDlgCtrlID())
 	{
-		SliderPos = (float)CamAnime_slider.GetPos() * 0.1f;
+		SliderPos = CamAnime_slider.GetPos();
 		NowTime_Eidt.SetWindowTextW(ChangeToCString(SliderPos));
-		
-
+		MainCam->GetTransform()->Position = { AddKeyList[SliderPos].PosX,AddKeyList[SliderPos].PosY ,AddKeyList[SliderPos].PosZ};
+		MainCam->GetTransform()->Rotation = { AddKeyList[SliderPos].RotX,AddKeyList[SliderPos].RotY ,AddKeyList[SliderPos].RotZ };
 	}
 
 	CDialogEx::OnHScroll(nSBCode, nPos, pScrollBar);
 }
 
-
-void CamAnimation::OnLvnColumnclickList1(NMHDR* pNMHDR, LRESULT* pResult)
+void CamAnimation::OnBnClickedButton7()
 {
-	LPNMLISTVIEW pNMLV = reinterpret_cast<LPNMLISTVIEW>(pNMHDR);
-	
-
-
-
-
-	*pResult = 0;
+	PlayIndex = 0;
+	isPlay = false;
 }
 
 
-void CamAnimation::OnBnClickedButton7()
+void CamAnimation::OnAllDelete()
 {
-	Demo::ChangeCam();
+	mListCtrl.DeleteAllItems();
+	CamAnime_slider.SetRange(0, 0);
+	KeyList.clear();
+}
+
+
+void CamAnimation::OnBnClickedButton10()
+{
+	int LerpCount = 100;
+	mListCtrl.DeleteAllItems();
+	AddKeyList.clear();
+
+	int StartKeySize = KeyList.size();
+	
+	float ADD = (1.0f / LerpCount);
+	for (int i = 0; i < StartKeySize-2; i++)
+	{
+		float Number = ADD;
+		KeyNode StartNode = KeyList[i];
+		KeyNode EndNode = KeyList[i + 1];
+
+		Vector3 StartPos = { StartNode.PosX,StartNode.PosY,StartNode.PosZ };
+		Vector3 EndPos = { EndNode.PosX,EndNode.PosY,EndNode.PosZ };
+
+		Vector3 StartRot = { StartNode.RotX,StartNode.RotY,StartNode.RotZ };
+		Vector3 EndRot = { EndNode.RotX,EndNode.RotY,EndNode.RotZ };
+
+		AddKeyList.push_back(StartNode);
+		AddItem((int)AddKeyList.size() - 1, StartNode);
+		for (int j = 0; j < LerpCount-2; j++)
+		{
+			Vector3 PosKey = Vector3::Lerp(StartPos, EndPos, Number);
+			Vector3 RotKey = Vector3::Lerp(StartRot, EndRot, Number);
+
+			KeyNode Temp = StartNode;
+			Temp.PosX = PosKey.x;
+			Temp.PosY = PosKey.y;
+			Temp.PosZ = PosKey.z;
+
+			//Temp.RotX = RotKey.z;
+			//Temp.RotY = RotKey.y;
+			//Temp.RotZ = RotKey.z;
+			AddKeyList.push_back(Temp);
+			AddItem((int)AddKeyList.size() - 1, Temp);
+
+			Number += ADD;
+		}
+		AddKeyList.push_back(EndNode);
+		AddItem((int)AddKeyList.size() - 1, EndNode);
+	}
+}
+
+
+void CamAnimation::OnTimer(UINT_PTR nIDEvent)
+{
+	if (nIDEvent == 0 && isPlay == true)
+	{
+		if (PlayIndex >= AddKeyList.size() - 1)
+		{
+			isPlay = false;
+			PlayIndex = 0;
+		}
+		else
+		{
+			NowTime_Eidt.SetWindowTextW(ChangeToCString(PlayIndex));
+			MainCam->GetTransform()->Position = { AddKeyList[PlayIndex].PosX,AddKeyList[PlayIndex].PosY ,AddKeyList[PlayIndex].PosZ };
+			MainCam->GetTransform()->Rotation = { AddKeyList[PlayIndex].RotX,AddKeyList[PlayIndex].RotY ,AddKeyList[PlayIndex].RotZ };
+			PlayIndex++;
+		}
+	}
+
+	CDialogEx::OnTimer(nIDEvent);
 }

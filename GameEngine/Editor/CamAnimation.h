@@ -2,7 +2,7 @@
 
 
 // CamAnimation 대화 상자
-#include <map>
+#include <vector>
 class GameObject;
 struct KeyNode 
 {
@@ -40,15 +40,19 @@ public:
 	CSliderCtrl CamAnime_slider;
 	CEdit NowTime_Eidt;
 	float SliderPos;
-
+	bool isPlay = false;
+	int PlayIndex = 0;
 	GameObject* MainCam;
-	std::map<float, KeyNode> KeyList;
-
+	std::vector<KeyNode> KeyList;
+	std::vector<KeyNode> AddKeyList;
+	void AddItem(int index,KeyNode& Node);
 
 	afx_msg void OnAddKey();
 	afx_msg void OnDeleteKey();
 	afx_msg void OnPlay();
 	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
-	afx_msg void OnLvnColumnclickList1(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnBnClickedButton7();
+	afx_msg void OnAllDelete();
+	afx_msg void OnBnClickedButton10();
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 };

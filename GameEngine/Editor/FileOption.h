@@ -23,7 +23,7 @@ public:
 protected:
 	virtual BOOL OnInitDialog();
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 지원입니다.
-	RightOption* mRightOption;
+	RightOption*		mRightOption;
 	SceneSaveDialog*	mScene;
 	DECLARE_MESSAGE_MAP()
 public:
