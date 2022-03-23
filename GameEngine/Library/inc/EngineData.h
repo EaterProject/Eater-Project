@@ -56,6 +56,8 @@ public:
 public:
 	UINT BufferIndex = 0;		// Mesh Buffer Index
 
+	DirectX::BoundingBox BoundingBox;
+
 	IndexBuffer* IndexBuf;		// Index Buffer
 	VertexBuffer* VertexBuf;	// Vertex Buffer
 };

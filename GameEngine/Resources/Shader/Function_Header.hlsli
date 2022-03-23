@@ -18,7 +18,7 @@ float3 UnpackNormal(in float3 normalMapSample, in float3 normal, in float3 tange
 	// Transform from tangent space to world space.
     float3 bumpedNormalW = mul(normalT, TBN);
 
-    return bumpedNormalW;
+    return normalize(bumpedNormalW);
 }
 
 half3 GammaToLinearSpace (half3 sRGB)

@@ -41,7 +41,7 @@ RenderManager::RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, I
 {
 	// Rendering Initialize..
 	RenderPassBase::Initialize(graphic->GetContext(), factory, resource, shader);
-
+	
 	m_SwapChain = graphic->GetSwapChain();
 
 	// Render Data Converter »ý¼º..
@@ -305,13 +305,16 @@ void RenderManager::Render()
 
 void RenderManager::ShadowRender()
 {
-	m_Shadow->BeginRender();
-
-	for (int i = 0; i < m_RenderMeshList.size(); i++)
+	if (m_NowRenderOption.RenderingOption & RENDER_SHADOW)
 	{
-		m_InstanceLayer = m_RenderMeshList[i];
+		m_Shadow->BeginRender();
 
-		m_Shadow->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_MeshList);
+		for (int i = 0; i < m_RenderMeshList.size(); i++)
+		{
+			m_InstanceLayer = m_RenderMeshList[i];
+
+			m_Shadow->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_MeshList);
+		}
 	}
 }
 
