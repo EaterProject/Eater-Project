@@ -264,7 +264,9 @@ namespace ParserData
 		~CModel();
 
 		bool m_isAnimation;											// Animation À¯¹«
-
+		int m_SkinCount		= 0;
+		int m_StaticCount	= 0;
+		int m_BoneCount		= 0;
 		std::vector<bool> m_TopNodeList;							// TopNode List
 		std::vector<ParserData::CAnimation*> m_AnimationList;		// Animation List
 		std::vector<ParserData::CMaterial*> m_MaterialList;			// Material List

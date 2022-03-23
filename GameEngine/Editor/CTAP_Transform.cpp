@@ -316,8 +316,6 @@ void CTAP_Transform::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 		Rot_Z.SetWindowTextW(ChangeToCString(ObjectTransform->Rotation.z));
 	}
 
-
-
 	CDialogEx::OnHScroll(nSBCode, nPos, pScrollBar);
 }
 

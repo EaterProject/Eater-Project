@@ -582,7 +582,6 @@ void MeshFilter::CreateModel()
 		SKFilter->PushBone_OffsetList(mMesh->BoneOffsetList);
 
 		gameobject->PushChildMeshObject(Object);
-
 		CreateSkinMesh(mMesh->TopSkinList[i], Object);
 	}
 }

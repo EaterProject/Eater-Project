@@ -40,12 +40,13 @@ public:
 	MeshFilter* mMeshFilter;
 	Material*	mMaterial;
 
-	const int MeshName_Index	= 0;
-	const int ModelName_Index	= 1;
-	const int Diffuse_Index		= 2;
-	const int Nomal_Index		= 3;
-	const int ORM_Index			= 4;
-	const int Emissive_Index	= 5;
+	const int Diffuse_Index		= 0;
+	const int Nomal_Index		= 1;
+	const int ORM_Index			= 2;
+	const int Emissive_Index	= 3;
+
+	const int ModelName_Index	= 4;
+	const int MeshName_Index	= 5;
 	const int Material_Index	= 6;
 
 	CSliderCtrl Emissive_Slider;
