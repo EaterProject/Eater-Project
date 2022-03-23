@@ -57,13 +57,22 @@ void RenderView::Dump(CDumpContext& dc) const
 
 void RenderView::Update()
 {
+	if (GetFocus()->GetSafeHwnd() == hwnd)
+	{
+		WindowFocus(true);
+	}
+	else
+	{
+		WindowFocus(false);
+	}
+
 	UpdateEngine();
 }
 
 void RenderView::OnInitialUpdate()
 {
 	//컨퍼넌트 엔진을 초기화 시키고 씬을 적용시킨다
-	HWND hwnd = this->GetSafeHwnd();
+	hwnd = this->GetSafeHwnd();
 	EngineInitialize(hwnd,false);
 	EditorSetting();
 	CreateScene<Demo>("Demo");

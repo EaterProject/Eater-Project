@@ -13,6 +13,7 @@ void EngineInitialize(HWND _g_hWnd, bool ON_DEBUG)
 	gGameEngine = new GameEngine();
 	gGameEngine->Initialize(_g_hWnd, ON_DEBUG);
 	gGameEngine->Start();
+	gGameEngine->SetFocus(true);
 }
 
 void EndEngine()
@@ -190,7 +191,14 @@ void CreateSceneSub(Scene* mSceneTemp, std::string SceneName)
 	 gGameEngine->MouseCursorClip(Clip);
  }
 
-  GameObject* GetMainCamera()
+ void WindowFocus(bool focus)
+ {
+	 if (gGameEngine == nullptr) return;
+
+	 gGameEngine->SetFocus(focus);
+ }
+
+ GameObject* GetMainCamera()
  {
 	 return gGameEngine->GetMainCamera();
  }

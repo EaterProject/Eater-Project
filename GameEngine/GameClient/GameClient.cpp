@@ -19,7 +19,6 @@
 
 // 윈도 프로시저의 전방선언
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
-bool g_Focus = true;
 
 // 메인 함수
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR    lpCmdLine, _In_ int nCmdShow)
@@ -68,7 +67,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 
 	GM->Start(hWnd);
 
-
 	while (true)
 	{
 		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
@@ -96,12 +94,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	{
 	case WM_SETFOCUS:
 	{
-		g_Focus = true;
+		WindowFocus(true);
 	}
 	break;
 	case WM_KILLFOCUS:
 	{
-		g_Focus = false;
+		WindowFocus(false);
 	}
 	break;
 	case WM_SIZE:
@@ -121,7 +119,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		EndPaint(hWnd, &pr);
 		break;
 	case WM_MOUSEMOVE:
-		break;
+	break;
 	default:
 		return DefWindowProc(hWnd, message, wParam, lParam);
 	}
