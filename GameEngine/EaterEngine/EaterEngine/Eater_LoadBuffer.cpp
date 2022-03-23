@@ -44,6 +44,7 @@ void Eater_LoadBuffer::LoadData(std::string& Path)
 			LoadIndex(i, mMesh);
 			Mesh* Buffer = CreateBuffer(mMesh);
 			Buffer->Name = SaveName;
+			Buffer->m_MeshData->Name = SaveName;
 			LoadManager::MeshBufferList.insert({ SaveName,Buffer });
 			delete mMesh;
 		}
@@ -53,6 +54,7 @@ void Eater_LoadBuffer::LoadData(std::string& Path)
 			LoadIndex(i, mMesh);
 			Mesh* Buffer = CreateBuffer(mMesh);
 			Buffer->Name = SaveName;
+			Buffer->m_MeshData->Name = SaveName; 
 			LoadManager::MeshBufferList.insert({ SaveName,Buffer });
 			delete mMesh;
 		}

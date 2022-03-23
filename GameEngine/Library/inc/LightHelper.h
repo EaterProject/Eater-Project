@@ -17,7 +17,7 @@
 
 using namespace DirectX::SimpleMath;
 
-ALIGNED_MEMORY(16) struct DirectionalLightData
+struct DirectionalLightData
 {
 	DirectionalLightData() = default;
 
@@ -30,7 +30,7 @@ ALIGNED_MEMORY(16) struct DirectionalLightData
 	Matrix LightViewProj = Matrix();
 };
 
-ALIGNED_MEMORY(16) struct PointLightData
+struct PointLightData
 {
 	PointLightData() = default;
 	
@@ -51,13 +51,14 @@ struct SpotLightData
 	float Range = 10.0f;
 
 	Vector3 Position = Vector3(0.0f, 0.0f, 0.0f);
-	float AttRange = 0.0f;
+	float Power = 1.0f;
 
 	Vector3 Direction = Vector3(0.0f, -1.0f, 0.0f);
 	float Angle = 25.0f;
 
-	Vector3 Rotate = Vector3(0.0f, 0.0f, 0.0f);
-	float Power = 1.0f;
+	float AttStart = 0.0f;
+	float AttRange = 0.0f;
+	Vector2 Pad = Vector2(0.0f, 0.0f);
 
 	Matrix LightViewProj = Matrix();
 };

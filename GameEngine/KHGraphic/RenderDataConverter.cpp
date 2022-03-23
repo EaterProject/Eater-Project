@@ -241,6 +241,9 @@ void RenderDataConverter::ConvertMesh(MeshBuffer* originBuf, MeshRenderBuffer* c
 {
 	if (originBuf == nullptr) return;
 
+	// Mesh Buffer Name..
+	convertData->m_Name = originBuf->Name;
+
 	// Index Buffer Data Convert..
 	convertData->m_IndexCount = originBuf->IndexBuf->Count;
 	convertData->m_IndexBuf = (ID3D11Buffer*)originBuf->IndexBuf->pIndexBuf;
@@ -253,6 +256,9 @@ void RenderDataConverter::ConvertMesh(MeshBuffer* originBuf, MeshRenderBuffer* c
 void RenderDataConverter::ConvertMaterial(MaterialBuffer* originMat, MaterialRenderBuffer* convertMat)
 {
 	if (originMat == nullptr) return;
+
+	// Material Buffer Name..
+	convertMat->m_Name = originMat->Name;
 
 	// 해당 Material Data 변환..
 	if (originMat->Albedo)

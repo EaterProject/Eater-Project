@@ -3,15 +3,18 @@
 #include <windows.h>
 #include <string>
 //리소스 최상위 클래스
-class  Resources
+class Resources
 {
 public:
 	Resources() {};
 	virtual ~Resources() {};
+
+public:
+	std::string Name;
 };
 
 //인덱스 버퍼를 받을 클래스
-class IndexBuffer : Resources
+class IndexBuffer : public Resources
 {
 public:
 	virtual ~IndexBuffer()
@@ -25,7 +28,7 @@ public:
 };
 
 //버텍스 버퍼를 받을 클래스
-class VertexBuffer : Resources
+class VertexBuffer : public Resources
 {
 public:
 	virtual ~VertexBuffer()
@@ -39,15 +42,13 @@ public:
 };
 
 //텍스쳐를 받을 클래스
-class TextureBuffer : Resources
+class TextureBuffer : public Resources
 {
 public:
 	virtual ~TextureBuffer()
 	{
 		delete pTextureBuf;
 	};
-
-	std::string Name;
 
 	void* pTextureBuf = nullptr;
 };
