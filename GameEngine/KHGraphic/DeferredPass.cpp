@@ -320,6 +320,7 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rend
 	MaterialSubData* matSub = mat->m_MaterialSubData;
 
 	Matrix world = *obj->World;
+	Matrix invWorld = MathHelper::InverseTranspose(world);
 	Matrix view = g_GlobalData->CamView;
 	Matrix proj = g_GlobalData->CamProj;
 
@@ -332,6 +333,7 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rend
 		// Vertex Shader Update..
 		CB_StaticMesh objectBuf;
 		objectBuf.gWorld = world;
+		objectBuf.gInvWorld = invWorld;
 		objectBuf.gView = view;
 		objectBuf.gProj = proj;
 
@@ -386,6 +388,7 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rend
 		// Vertex Shader Update..
 		CB_StaticMesh objectBuf;
 		objectBuf.gWorld = world;
+		objectBuf.gInvWorld = invWorld;
 		objectBuf.gView = view;
 		objectBuf.gProj = proj;
 		objectBuf.gTexTransform = *terrain->m_Tex;
@@ -418,6 +421,7 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rend
 		// Vertex Shader Update..
 		CB_SkinMesh objectBuf;
 		objectBuf.gWorld = world;
+		objectBuf.gInvWorld = invWorld;
 		objectBuf.gView = view;
 		objectBuf.gProj = proj;
 

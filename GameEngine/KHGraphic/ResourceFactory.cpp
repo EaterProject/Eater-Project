@@ -1672,7 +1672,7 @@ void GraphicResourceFactory::CreateInstanceBuffers()
 {
 	// Defalt Instance Buffer »ý¼º..
 	UINT meshInstanceMax = 500;
-	UINT particleInstanceMax = 100;
+	UINT particleInstanceMax = 500;
 
 	std::vector<VertexInput::MeshInstance> meshInstance(meshInstanceMax);
 	std::vector<VertexInput::ParticleInstance> particleInstance(particleInstanceMax);

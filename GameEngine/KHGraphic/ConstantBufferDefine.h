@@ -31,6 +31,7 @@ SHADER_CONSTANT_BUFFER(cbStaticMesh)
 struct CB_StaticMesh : public cbStaticMesh
 {
 	DirectX::SimpleMath::Matrix gWorld;
+	DirectX::SimpleMath::Matrix gInvWorld;
 	DirectX::SimpleMath::Matrix gView;
 	DirectX::SimpleMath::Matrix gProj;
 	DirectX::SimpleMath::Matrix gTexTransform;
@@ -48,6 +49,7 @@ SHADER_CONSTANT_BUFFER(cbSkinMesh)
 struct CB_SkinMesh : public cbSkinMesh
 {
 	DirectX::SimpleMath::Matrix gWorld;
+	DirectX::SimpleMath::Matrix gInvWorld;
 	DirectX::SimpleMath::Matrix gView;
 	DirectX::SimpleMath::Matrix gProj;
 	DirectX::SimpleMath::Matrix gTexTransform;
