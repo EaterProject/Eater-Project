@@ -404,6 +404,7 @@ void MeshFilter::CreateBoneMesh(LoadMeshData* mMesh, GameObject* Object)
 	BoneList[index] = Object;
 	Data->Object_Data->ObjType = OBJECT_TYPE::BONE;
 	Object->Name = mMesh->Name;
+	Object->GetComponent<MeshFilter>()->ModelName = mMesh->ModelName;
 
 	int ChildCount = (int)mMesh->Child.size();
 	for (int i = 0; i < ChildCount; i++)

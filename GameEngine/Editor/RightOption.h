@@ -56,6 +56,7 @@ public:
 	CTAP_Animation*	 mAnimation;	//Animation를 보여줄 탭
 	CTAP_MeshFilter* mMeshFilter;	//MeshFiltet를 보여줄 탭
 	CTAP_Particle*	 mPrticle;		//MeshFiltet를 보여줄 탭
+	CTAP_Light*		 mLight;		//Light 를 보여줄탭
 public:
 	CString SaveSceneName;
 	bool isDrag = false;

@@ -116,7 +116,7 @@ void Light::SetAngle(float angle)
 		break;
 	}
 }
-
+
 void Light::SetAttenuate(float range)
 {
 	switch (m_LightType)
@@ -217,6 +217,53 @@ void Light::SetType(LIGHT_TYPE lightType)
 
 	// Light Data µî·Ï..
 	LightManager::PushLight(this);
+}
+
+float Light::GetAngle()
+{
+	return m_Angle;
+}
+
+float Light::GetAttenuate()
+{
+	return m_AttStart;
+}
+
+float Light::GetRange()
+{
+	switch (m_LightType)
+	{
+	case SPOT_LIGHT:
+		return m_SpotLight->Range;
+	case POINT_LIGHT:
+		return m_PointLight->Range;
+	}
+}
+
+float Light::GetPower()
+{
+	switch (m_LightType)
+	{
+	case SPOT_LIGHT:
+		return m_SpotLight->Power;
+	case POINT_LIGHT:
+		return m_PointLight->Power;
+	case DIRECTION_LIGHT:
+		return m_DirectionLight->Power;
+	}
+}
+
+Vector3 Light::GetColor()
+{
+	switch (m_LightType)
+	{
+	case SPOT_LIGHT:
+		return m_SpotLight->Diffuse;
+	case POINT_LIGHT:
+		return m_PointLight->Diffuse;
+	case DIRECTION_LIGHT:
+		return m_DirectionLight->Diffuse;
+	}
 }
 
 void Light::SetCenterPos(DirectX::SimpleMath::Vector3 pos)
