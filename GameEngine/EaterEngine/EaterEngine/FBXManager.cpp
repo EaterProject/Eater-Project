@@ -233,6 +233,8 @@ void FBXManager::SetMaterialData(ParserData::CMesh* mMesh, LoadMeshData* SaveDat
 				newMaterial->m_MaterialData->ORM = LoadManager::GetTexture(mapName);
 			}
 
+			newMaterial->m_MaterialData->Name = matName;
+
 			// 현재 Material 저장..
 			LoadManager::MaterialList.insert({ matName, newMaterial });
 		}
@@ -269,6 +271,7 @@ void FBXManager::SetMeshData(ParserData::CMesh* mMesh, LoadMeshData* SaveData)
 		// Mesh 생성..
 		meshBuffer = new Mesh();
 		meshBuffer->Name = meshName;
+		meshBuffer->m_MeshData->Name = meshName;
 
 		EnterCriticalSection(m_CriticalSection);
 		m_Graphic->CreateMeshBuffer(mMesh, &meshBuffer->m_MeshData);
@@ -405,7 +408,11 @@ void FBXManager::LoadQuad()
 	ModelData* SaveMesh = new ModelData();
 	LoadMeshData* quad = new LoadMeshData();
 	Mesh* quadMesh = new Mesh();
+
 	// Quad Mesh 설정..
+	quadMesh->Name = "Quad";
+	quadMesh->m_MeshData->Name = "Quad";
+
 	quad->MeshType = QUAD_MESH;
 	quad->BufferName = "Quad";
 

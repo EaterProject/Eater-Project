@@ -276,12 +276,14 @@ GameObject* GameEngine::InstanceLight(std::string ObjName, LIGHT_TYPE type)
 		break;
 	case POINT_LIGHT:
 		light->SetColor(1.0f, 1.0f, 0.0f);
-		light->SetPower(10.0f);
+		light->SetPower(100.0f);
 		break;
 	case SPOT_LIGHT:
 		Tr->Rotation.x = -90.0f;
 		light->SetColor(1.0f, 1.0f, 0.0f);
-		light->SetPower(10.0f);
+		light->SetPower(100.0f);
+		light->SetAttenuate(0.5f);
+		light->SetAngle(25.0f);
 		break;
 	default:
 		break;

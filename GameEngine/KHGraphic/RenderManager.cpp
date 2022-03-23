@@ -546,12 +546,15 @@ void RenderManager::ConvertChangeInstance()
 		// 해당 Instance Buffer 추출..
 		InstanceRenderBuffer* instance = m_Converter->GetInstance(convertRenderData->m_InstanceIndex);
 
-		// 혹시라도 변하지 않은 경우 변환하지 않음..
-		if (instance->m_Mesh->m_BufferIndex == originMeshData->Mesh_Buffer->BufferIndex &&
-			instance->m_Material->m_BufferIndex == originMeshData->Material_Buffer->BufferIndex)
+		if (instance)
 		{
-			m_ChangeInstanceList.pop();
-			continue;
+			// 혹시라도 변하지 않은 경우 변환하지 않음..
+			if (instance->m_Mesh->m_BufferIndex == originMeshData->Mesh_Buffer->BufferIndex &&
+				instance->m_Material->m_BufferIndex == originMeshData->Material_Buffer->BufferIndex)
+			{
+				m_ChangeInstanceList.pop();
+				continue;
+			}
 		}
 
 		// Object Type에 따른 List 삽입 제거 작업..
@@ -648,6 +651,9 @@ void RenderManager::ChangeMeshRenderData(MeshData* meshData)
 
 	// Render Data 재설정..
 	m_Converter->ConvertRenderData(meshData, convertRenderData);
+
+	// 재설정된 Layer 검색..
+	layer = m_Converter->GetLayer(convertRenderData->m_InstanceLayerIndex);
 
 	// 해당 Layer가 등록되어 있는지 확인..
 	FindInstanceLayer(m_RenderMeshList, layer);

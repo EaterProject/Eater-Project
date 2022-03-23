@@ -30,10 +30,13 @@ public:
 	void Update() override;
 
 public:
-	EATER_ENGINEDLL void SetColor(float r, float g, float b);
-	EATER_ENGINEDLL void SetAngle(float angle);
-	EATER_ENGINEDLL void SetRange(float range);
-	EATER_ENGINEDLL void SetPower(float power);
+	EATER_ENGINEDLL void SetColor(float r, float g, float b);	// All Light 전용 Light 색상
+
+	EATER_ENGINEDLL void SetAngle(float angle);					// Spot Light 전용 Half Angle 값
+	EATER_ENGINEDLL void SetAttenuate(float range);				// Spot Light 전용 Angle 기준 흐려지는 시작 지점
+	EATER_ENGINEDLL void SetRange(float range);					// Spot & Point Light 전용 Light 적용 범위
+	EATER_ENGINEDLL void SetPower(float power);					// All Light 전용 Light 강도
+
 	EATER_ENGINEDLL void SetType(LIGHT_TYPE lightType);
 
 	EATER_ENGINEDLL LIGHT_TYPE GetType() { return m_LightType; }
@@ -68,6 +71,8 @@ private:
 	SpotLightData* m_SpotLight;
 
 	float m_Angle;
+	float m_AttStart;
+
 	Vector3 m_PrevLook;
 	Vector3 m_NowLook;
 private:
