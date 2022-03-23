@@ -1,5 +1,5 @@
 #EATERMAT
-@MaterialName bossb+idle_bone
+@MaterialName bossb_bone
 @Alpha NO
 @ORM bossb_body_ ORM
 @Diffuse bossb_body_BaseColor

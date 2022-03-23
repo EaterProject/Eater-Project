@@ -55,6 +55,20 @@ std::string EaterManager::CutFileName(std::string FilePath)
 	return FileType;
 }
 
+int EaterManager::CheckModelType(ParserData::CModel* FBXModel)
+{
+	int TYPE = E_STATIC_MESH;
+	int BoneCount	= FBXModel->m_BoneCount;
+	int StaticCount = FBXModel->m_StaticCount;
+	int SkinCount	= FBXModel->m_SkinCount;
+
+	if (SkinCount > 0)
+	{
+		TYPE = E_SKIN_MESH;
+	}
+	return TYPE;
+}
+
 void EaterManager::Load_Eater_File(std::string& Path)
 {
 	
@@ -70,17 +84,21 @@ void EaterManager::Load_Eater_File(std::string& Path)
 void EaterManager::Load_FBX_File(std::string& Path, ParserData::CModel* FBXMesh)
 {
 	std::string FileName = CutFileName(Path);
+	int ModelType = CheckModelType(FBXMesh);
 
+	//스킨 오브젝트라면 이름을 짤라줘야한다
+	if (ModelType == E_SKIN_MESH)
+	{
+		std::size_t Start	= FileName.rfind('+')+1;
+		std::size_t End		= FileName.length() - Start;
+		FileName = FileName.substr(0, FileName.rfind('+'));
+	}
 
 	///Model 정보를 저장한다
-	EATER_OPEN_WRITE_FILE(FileName,"../Assets/Model/ModelData/",".Eater");
+	EATER_OPEN_WRITE_FILE(FileName+"+", "../Assets/Model/ModelData/", ".Eater");
 	mMeshManager->SetFileName(FileName);
 	mMeshManager->ChangeEaterFile(FBXMesh);
 	EATER_CLOSE_WRITE_FILE();
-
-	///Material 정보를 저장한다
-	mMaterialManager->SetFileName(FileName);
-	mMaterialManager->ChangeEaterFile(FBXMesh);
 
 	///MeshBuffer 정보를 저장한다
 	mBufferManager->SetFileName(FileName);
@@ -89,6 +107,10 @@ void EaterManager::Load_FBX_File(std::string& Path, ParserData::CModel* FBXMesh)
 	///Animation 정보를 저장한다
 	mAnimationManager->SetFileName(FileName);
 	mAnimationManager->ChangeEaterFile(FBXMesh);
+
+	///Material 정보를 저장한다
+	mMaterialManager->SetFileName(FileName);
+	mMaterialManager->ChangeEaterFile(FBXMesh);
 }
 
 void EaterManager::Load_GameObject_File(GameObject* Object ,ObjectOption* mOption)
@@ -97,15 +119,6 @@ void EaterManager::Load_GameObject_File(GameObject* Object ,ObjectOption* mOptio
 	MeshFilter* MF				= Object->GetComponent<MeshFilter>();
 	std::string ModelName		= MF->GetModelName();
 	std::string MaterialName	= MF->GetMaterialName();
-
-	if (Object->OneMeshData->Object_Data->ObjType == SKINNING)
-	{
-		ModelName += "+Idle";
-	}
-	else if (Object->OneMeshData->Object_Data->ObjType == BONE_MESH)
-	{
-		int num = 0;
-	}
 
 
 	//읽어올 파일의 경로를 설정
@@ -130,11 +143,6 @@ void EaterManager::Load_GameObject_File(GameObject* Object ,ObjectOption* mOptio
 		else if (NodeName == "BONE")
 		{
 			mChangeManager->Change_Bone(i, Object);
-		}
-		else
-		{
-		
-
 		}
 	}
 	EATER_CLOSE_CHANGE_FILE(ModelName, "../Assets/Model/ModelData/",".Eater");
