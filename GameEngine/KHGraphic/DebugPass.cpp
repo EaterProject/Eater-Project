@@ -74,7 +74,8 @@ void DebugPass::Start(int width, int height)
 	m_QuadBuffer = g_Resource->GetDrawBuffer<DB_Line_Quad>();
 	m_AxisBuffer = g_Resource->GetDrawBuffer<DB_Line_Axis>();
 	m_BoxBuffer = g_Resource->GetDrawBuffer<DB_Line_Box>();
-	m_CircleBuffer = g_Resource->GetDrawBuffer<DB_Line_CircleSphere>();
+	m_CircleBuffer = g_Resource->GetDrawBuffer<DB_Line_Circle>();
+	m_CircleSphereBuffer = g_Resource->GetDrawBuffer<DB_Line_CircleSphere>();
 	m_GridBuffer = g_Resource->GetDrawBuffer<DB_Line_Grid>();
 	m_IconBuffer = g_Resource->GetDrawBuffer<DB_Quad>();
 
@@ -265,6 +266,9 @@ void DebugPass::GlobalRender()
 {
 	CB_DebugObject object;
 	CB_DebugOption option;
+	RayCastData ray;
+
+	Vector3 axis, look, right, up, pos;
 
 	Matrix invView = g_GlobalData->CamInvView;
 	Matrix viewproj = g_GlobalData->CamVP;
@@ -297,12 +301,17 @@ void DebugPass::GlobalRender()
 
 	for (DirectionalLightData* light : *directionList)
 	{
+		float RayLength = 10.0f;
+		float RayOffset = 1.0f;
+		float LightPos = 100.0f;
+
+		// Icon Draw
 		option.gColor = light->Diffuse;
 
 		Matrix lightWorld = invView;
-		lightWorld._42 = 100.0f;
+		lightWorld._42 = LightPos;
 
-		object.gWorldViewProj = lightWorld * viewproj;
+		object.gWorldViewProj = Matrix::CreateScale(2.0f) * lightWorld * viewproj;
 
 		m_DebugIconVS->ConstantBufferCopy(&object);
 		m_DebugIconVS->Update();
@@ -313,9 +322,101 @@ void DebugPass::GlobalRender()
 
 		BufferUpdate(DEBUG_TYPE::DEBUG_TEXTURE);
 		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+
+		// Light Look 최대 Range가 곧 해당 Position..
+		pos = Vector3(0.0f, LightPos, 0.0f); + light->Direction * Vector3(RayLength);
+		look = light->Direction * Vector3(RayLength);
+
+		Matrix world = LookAt_Matrix(pos, look);
+
+		object.gWorldViewProj = world * viewproj;
+		option.gColor = Vector3(1.0f, 1.0f, 0.0f);
+
+		m_DebugVS->ConstantBufferCopy(&object);
+		m_DebugVS->Update();
+
+		m_DebugColorPS->ConstantBufferCopy(&option);
+		m_DebugColorPS->Update();
+
+		// Draw Ray..
+		BufferUpdate(DEBUG_TYPE::DEBUG_CIRCLE);
+		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+
+		// Look Vector 기준 Right, Up Vector 추출..
+		look = light->Direction;
+		right = light->Direction.Cross(Vector3(0.0f, 1.0f, 0.0f));
+		up = right.Cross(look);
+
+		right.Normalize();
+		up.Normalize();
+
+		// Light Direction Ray Center..
+		ray.RayStart = Vector3(0.0f, LightPos, 0.0f);
+		ray.RayEnd = ray.RayStart + light->Direction * RayLength;
+
+		object.gWorldViewProj = viewproj;
+		option.gColor = Vector3(1.0f, 0.0f, 0.0f);
+
+		m_DebugVS->ConstantBufferCopy(&object);
+		m_DebugVS->Update();
+
+		m_DebugColorPS->ConstantBufferCopy(&option);
+		m_DebugColorPS->Update();
+
+		// Ray Buffer Update
+		SetRay(ray.RayStart, ray.RayEnd);
+
+		BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
+		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+
+		// Light Direction Ray Up..
+		ray.RayStart = Vector3(0.0f, LightPos, 0.0f) - up * Vector3(RayOffset);
+		ray.RayEnd = ray.RayStart + light->Direction * RayLength;
+		
+		option.gColor = Vector3(1.0f, 1.0f, 0.0f);
+
+		m_DebugColorPS->ConstantBufferCopy(&option);
+		m_DebugColorPS->Update();
+
+		// Ray Buffer Update
+		SetRay(ray.RayStart, ray.RayEnd);
+
+		BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
+		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+
+		// Light Direction Ray Down..
+		ray.RayStart = Vector3(0.0f, LightPos, 0.0f) + up * Vector3(RayOffset);
+		ray.RayEnd = ray.RayStart + light->Direction * RayLength;
+
+		// Ray Buffer Update
+		SetRay(ray.RayStart, ray.RayEnd);
+
+		BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
+		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+
+		// Light Direction Ray Left..
+		ray.RayStart = Vector3(0.0f, LightPos, 0.0f) - right * Vector3(RayOffset);
+		ray.RayEnd = ray.RayStart + light->Direction * RayLength;
+
+		// Ray Buffer Update
+		SetRay(ray.RayStart, ray.RayEnd);
+
+		BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
+		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+
+		// Light Direction Ray Right..
+		ray.RayStart = Vector3(0.0f, LightPos, 0.0f) + right * Vector3(RayOffset);
+		ray.RayEnd = ray.RayStart + light->Direction * RayLength;
+
+		// Ray Buffer Update
+		SetRay(ray.RayStart, ray.RayEnd);
+
+		BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
+		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
 	}
 	for (PointLightData* light : *pointList)
 	{
+		// Icon Draw
 		option.gColor = light->Diffuse;
 
 		Matrix lightWorld = invView;
@@ -334,9 +435,66 @@ void DebugPass::GlobalRender()
 
 		BufferUpdate(DEBUG_TYPE::DEBUG_TEXTURE);
 		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+
+		// Light Range Sphere..
+		lightWorld = Matrix::CreateScale(light->Range) * Matrix::CreateTranslation(light->Position);
+		
+		object.gWorldViewProj = lightWorld * viewproj;
+		option.gColor = Vector3(1.0f, 1.0f, 0.0f);
+
+		m_DebugVS->ConstantBufferCopy(&object);
+		m_DebugVS->Update();
+
+		m_DebugColorPS->ConstantBufferCopy(&option);
+		m_DebugColorPS->Update();
+
+		BufferUpdate(DEBUG_TYPE::DEBUG_CIRCLESPHERE);
+		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+
+		// Light Range X Ray..
+		ray.RayStart = light->Position + Vector3(light->Range, 0.0f, 0.0f);
+		ray.RayEnd = light->Position + Vector3(-light->Range, 0.0f, 0.0f);
+		ray.RayColor = Vector3(1.0f, 0.0f, 0.0f);
+
+		option.gColor = ray.RayColor;
+		object.gWorldViewProj = viewproj;
+
+		m_DebugVS->ConstantBufferCopy(&object);
+		m_DebugVS->Update();
+
+		m_DebugColorPS->ConstantBufferCopy(&option);
+		m_DebugColorPS->Update();
+
+		// Ray Buffer Update
+		SetRay(ray.RayStart, ray.RayEnd);
+
+		BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
+		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+
+		// Light Range Y Ray..
+		ray.RayStart = light->Position + Vector3(0.0f, light->Range, 0.0f);
+		ray.RayEnd = light->Position + Vector3(0.0f, -light->Range, 0.0f);
+
+		// Ray Buffer Update
+		SetRay(ray.RayStart, ray.RayEnd);
+
+		BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
+		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+
+		// Light Range Z Ray..
+		ray.RayStart = light->Position + Vector3(0.0f, 0.0f, light->Range);
+		ray.RayEnd = light->Position + Vector3(0.0f, 0.0f, -light->Range);
+
+		// Ray Buffer Update
+		SetRay(ray.RayStart, ray.RayEnd);
+
+		BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
+		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+
 	}
 	for (SpotLightData* light : *spotList)
 	{
+		// Icon Draw
 		option.gColor = light->Diffuse;
 
 		Matrix lightWorld = invView;
@@ -356,11 +514,9 @@ void DebugPass::GlobalRender()
 		BufferUpdate(DEBUG_TYPE::DEBUG_TEXTURE);
 		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
 
-		Vector3 lookEnd = light->Position + (light->Direction * Vector3(light->Range));
-
-		RayCastData ray;
+		// Light Direction Ray..
 		ray.RayStart = light->Position;
-		ray.RayEnd = lookEnd;
+		ray.RayEnd = light->Position + (light->Direction * Vector3(light->Range));
 		ray.RayColor = Vector3(1.0f, 0.0f, 0.0f);
 		
 		// Ray Buffer Update
@@ -378,13 +534,10 @@ void DebugPass::GlobalRender()
 		BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
 		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
 
-		// 변환 Vector..
-		Vector3 axis;
-
 		// Look Vector 기준 Right, Up Vector 추출..
-		Vector3 look = light->Direction;
-		Vector3 right = light->Direction.Cross(Vector3(0.0f, 1.0f, 0.0f));
-		Vector3 up = right.Cross(look);
+		look = light->Direction;
+		right = light->Direction.Cross(Vector3(0.0f, 1.0f, 0.0f));
+		up = right.Cross(look);
 
 		ray.RayStart = light->Position;
 		ray.RayColor = Vector3(1.0f, 1.0f, 0.0f);
@@ -444,6 +597,27 @@ void DebugPass::GlobalRender()
 		
 		// Draw Ray..
 		BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
+		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+
+		// Light Look 최대 Range가 곧 해당 Position..
+		pos = light->Position + light->Direction * Vector3(light->Range);
+		look = -light->Direction * Vector3(light->Range);
+
+		// Look, Right, Up 기준 Matrix 설정..
+		Matrix world = LookAt_Matrix(pos, look);
+
+		// Light Look 기준 Angle 회전한 지점의 거리가 곧 Scale..
+		float length = (axis * Vector3(light->Range)).Length();
+
+		Matrix scale = Matrix::CreateScale(length);
+
+		object.gWorldViewProj = scale * world * viewproj;
+
+		m_DebugVS->ConstantBufferCopy(&object);
+		m_DebugVS->Update();
+
+		// Draw Ray..
+		BufferUpdate(DEBUG_TYPE::DEBUG_CIRCLE);
 		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
 	}
 
@@ -576,6 +750,10 @@ void DebugPass::BufferUpdate(DEBUG_TYPE type)
 		m_DebugBuffer = m_CircleBuffer;
 		g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
 		break;
+	case DEBUG_CIRCLESPHERE:
+		m_DebugBuffer = m_CircleSphereBuffer;
+		g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
+		break;
 	case DEBUG_GRID:
 		m_DebugBuffer = m_GridBuffer;
 		g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
@@ -623,7 +801,25 @@ void DebugPass::SetRay(Vector3 start, Vector3 end)
 
 }
 
-void DebugPass::DrawSpotLight()
+Matrix DebugPass::LookAt_Matrix(Vector3 pos, Vector3 look)
 {
+	Vector3 right, up;
 
+	// 해당 위치 기준 Look, Right, Up Vector 추출..
+	right = look.Cross(Vector3(0.0f, 1.0f, 0.0f));
+	up = right.Cross(look);
+
+	// 해당 Vector Normalize..
+	right.Normalize();
+	up.Normalize();
+	look.Normalize();
+
+	// Look, Right, Up 기준 Matrix 설정..
+	Matrix world;
+	world.m[0][0] = right.x;	world.m[0][1] = right.y;	world.m[0][2] = right.z;
+	world.m[1][0] = up.x;		world.m[1][1] = up.y;		world.m[1][2] = up.z;
+	world.m[2][0] = look.x;		world.m[2][1] = look.y;		world.m[2][2] = look.z;
+	world.m[3][0] = pos.x;		world.m[3][1] = pos.y;		world.m[3][2] = pos.z;
+
+	return world;
 }

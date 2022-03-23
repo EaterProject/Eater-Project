@@ -83,29 +83,29 @@ void TestScene::CreateMap()
 	MeshFilter* filter = nullptr;
 	Light* light = nullptr;
 
-	Object = Instance();
-	Object->GetTransform()->Position ={ 10.0f, 0.0f, 10.0f };
-	Object->GetTransform()->Scale = { 0.1f, 0.1f, 0.1f };
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("bossB");
-
-	Object = Instance();
-	Object->GetTransform()->Position ={ -10.0f, 0.0f, 10.0f };
-	Object->GetTransform()->Scale = { 0.1f, 0.1f, 0.1f };
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("bossB");
-
-	Object = Instance();
-	Object->GetTransform()->Position = { 10.0f, 0.0f, -10.0f };
-	Object->GetTransform()->Scale = { 0.1f, 0.1f, 0.1f };
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("bossB");
-
-	Object = Instance();
-	Object->GetTransform()->Position = { -10.0f, 0.0f, -10.0f };
-	Object->GetTransform()->Scale = { 0.1f, 0.1f, 0.1f };
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("bossB");
+	//Object = Instance();
+	//Object->GetTransform()->Position ={ 10.0f, 0.0f, 10.0f };
+	//Object->GetTransform()->Scale = { 0.1f, 0.1f, 0.1f };
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("bossB");
+	//
+	//Object = Instance();
+	//Object->GetTransform()->Position ={ -10.0f, 0.0f, 10.0f };
+	//Object->GetTransform()->Scale = { 0.1f, 0.1f, 0.1f };
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("bossB");
+	//
+	//Object = Instance();
+	//Object->GetTransform()->Position = { 10.0f, 0.0f, -10.0f };
+	//Object->GetTransform()->Scale = { 0.1f, 0.1f, 0.1f };
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("bossB");
+	//
+	//Object = Instance();
+	//Object->GetTransform()->Position = { -10.0f, 0.0f, -10.0f };
+	//Object->GetTransform()->Scale = { 0.1f, 0.1f, 0.1f };
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("bossB");
 
 	//Object = InstanceLight("Light4", SPOT_LIGHT);
 	//Object->GetTransform()->Position.y += 10;
@@ -136,8 +136,7 @@ void TestScene::CreateMap()
 	light->SetRange(100.0f);
 	light->SetPower(100.0f);
 	light->SetColor(1.0f, 0.0f, 1.0f);
-	light->SetInAngle(15.0f);
-	light->SetOutAngle(25.0f);
+	light->SetAngle(15.0f);
 	
 	//Object1 = InstanceLight("Light", POINT_LIGHT);
 	//Object1->GetTransform()->Position.y += 10;

@@ -78,6 +78,7 @@ void GraphicResourceFactory::Create(int width, int height)
 	CreateLineRayBuffer();
 	CreateLineQuadBuffer();
 	CreateLineAxisBuffer();
+	CreateLineCircleBuffer();
 	CreateLineCircleSphereBuffer();
 	CreateLineBoxBuffer();
 	CreateLineGridBuffer();
@@ -1966,13 +1967,23 @@ void GraphicResourceFactory::CreateLineCircleBuffer()
 	{
 		float angle = (float)(i * 2);
 		float x = cosf(angle * 3.14f / 180.0f);
-		float z = -sinf(angle * 3.14f / 180.0f);
+		float y = -sinf(angle * 3.14f / 180.0f);
 
-		vertices[i].Pos = Vector3(x, 0, z);
+		vertices[i].Pos = Vector3(x, y, 0);
 		vertices[i].Color = Vector4(0, 1, 0, 1);
 	}
 
-	//CreateDrawBuffer(DB_Line_Circle::GetName(), DB_Line_Circle::GetHashCode(), format, topology, vByteSize, iByteSize, sizeof(VertexInput::PosColorVertex), iCount, &vertices[0], &indices[0]);
+	std::vector<UINT> indices(iCount);
+	int index = 0;
+	for (int i = 0; i < 180; i++)
+	{
+		indices[index] = i;
+		indices[index + 1] = i + 1;
+		index += 2;
+	}
+	indices[359] = 0;
+
+	CreateDrawBuffer(DB_Line_Circle::GetName(), DB_Line_Circle::GetHashCode(), format, topology, vByteSize, iByteSize, sizeof(VertexInput::PosColorVertex), iCount, &vertices[0], &indices[0]);
 }
 
 void GraphicResourceFactory::CreateLineCircleSphereBuffer()

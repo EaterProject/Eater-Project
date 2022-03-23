@@ -212,9 +212,11 @@ float3 PBR_SpotLight(
         const float HdotV = max(dot(H, V), 0.0f);
         const float NdotV = max(dot(N, V), 0.0f);
 
+        float outAtt = cos(light.Angle * 0.5f) - light.AttRange;
+
 	    // Cone attenuation
         float cosAng = dot(-light.Direction, L);
-        float conAtt = saturate((cosAng - light.OuterCone) / light.AttRange);
+        float conAtt = saturate((cosAng - outAtt) / light.AttRange);
         conAtt *= conAtt;
    
         // Attenuation

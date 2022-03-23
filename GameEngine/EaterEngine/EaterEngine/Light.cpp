@@ -18,9 +18,6 @@ Light::Light()
 {
 	m_CenterPos = Vector3(0, 100, 0);
 	m_ShadowRadius = sqrtf(10.0f * 10.0f + 15.0f * 15.0f) * 15;
-
-	m_InAngle = 45.0f;
-	m_OutAngle = 55.0f;
 }
 
 void Light::SetDirectionLight(Light* light)
@@ -40,32 +37,53 @@ void Light::Start()
 	switch (m_LightType)
 	{
 	case DIRECTION_LIGHT:
+		m_Transform->Position.y = 100.0f;
 		break;
 	case POINT_LIGHT:
 		break;
 	case SPOT_LIGHT:
-		m_Transform->Rotation.x -= 90.0f;
+		m_Angle = m_SpotLight->Angle;
+		m_SpotLight->AttRange = cosf(m_Angle * 0.5f) - cosf(m_Angle);
 		break;
 	default:
 		break;
 	}
+
+	// 비교용 Look Vector 저장..
+	m_PrevLook = m_Transform->GetLocalPosition_Look();
+	m_NowLook = m_Transform->GetLocalPosition_Look();
 }
 
 void Light::Update()
 {
+	// 현재 Look Vector 저장..
+	m_NowLook = m_Transform->GetLocalPosition_Look();
+
 	// 매 프레임 Light Position 연동..
 	switch (m_LightType)
 	{
+	case DIRECTION_LIGHT:
+		m_DirectionLight->Direction = m_NowLook;
+		break;
 	case POINT_LIGHT:
 		m_PointLight->Position = m_Transform->Position;
 		break;
 	case SPOT_LIGHT:
 		m_SpotLight->Position = m_Transform->Position;
-		m_SpotLight->Direction = m_Transform->GetLocalPosition_Look();
+		m_SpotLight->Direction = m_NowLook;
 		break;
 	default:
 		break;
 	}
+
+	// Look Vector가 변경되었다면 LightViewProj 재설정..
+	if (m_NowLook != m_PrevLook)
+	{
+		SetLightViewProj();
+	}
+
+	// 이전 Look Vetor 저장..
+	m_PrevLook = m_NowLook;
 }
 
 void Light::SetColor(float r, float g, float b)
@@ -86,45 +104,14 @@ void Light::SetColor(float r, float g, float b)
 	}
 }
 
-void Light::SetPosition(float x, float y, float z)
-{
-	switch (m_LightType)
-	{
-	case POINT_LIGHT:
-		m_PointLight->Position = { x, y, z };
-		m_Transform->Position = { x, y, z };
-		break;
-	case SPOT_LIGHT:
-		m_SpotLight->Position = { x, y, z };
-		m_Transform->Position = { x, y, z };
-		break;
-	default:
-		break;
-	}
-}
-
-void Light::SetInAngle(float angle)
+void Light::SetAngle(float angle)
 {
 	switch (m_LightType)
 	{
 	case SPOT_LIGHT:
-		m_InAngle = PI * angle / 180.0f;
-		m_SpotLight->AttRange = cosf(m_InAngle) - cosf(m_OutAngle);
-		break;
-	default:
-		break;
-	}
-}
-
-void Light::SetOutAngle(float angle)
-{
-	switch (m_LightType)
-	{
-	case SPOT_LIGHT:
-		m_OutAngle = PI * angle / 180.0f;
-		m_SpotLight->AttRange = cosf(m_InAngle) - cosf(m_OutAngle);
-		m_SpotLight->OuterCone = cosf(m_OutAngle);
-		m_SpotLight->Angle = m_OutAngle;
+		m_Angle = PI * angle / 180.0f;
+		m_SpotLight->AttRange = cosf(m_Angle * 0.5f) - cosf(m_Angle);
+		m_SpotLight->Angle = m_Angle;
 		break;
 	default:
 		break;

@@ -67,7 +67,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 
 	GM->Start(hWnd);
 
-
 	while (true)
 	{
 		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
@@ -93,6 +92,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
+	case WM_SETFOCUS:
+	{
+		WindowFocus(true);
+	}
+	break;
+	case WM_KILLFOCUS:
+	{
+		WindowFocus(false);
+	}
+	break;
 	case WM_SIZE:
 	{
 		int SizeX = LOWORD(lParam);
@@ -110,7 +119,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		EndPaint(hWnd, &pr);
 		break;
 	case WM_MOUSEMOVE:
-		break;
+	break;
 	default:
 		return DefWindowProc(hWnd, message, wParam, lParam);
 	}

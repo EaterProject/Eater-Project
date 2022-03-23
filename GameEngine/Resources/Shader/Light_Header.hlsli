@@ -34,10 +34,10 @@ struct SpotLight
     float3 Diffuse;
     float Range;
     float3 Position;
-    float OuterCone;
-    float3 Direction;
     float AttRange;
-    float3 Pad;
+    float3 Direction;
+    float Angle;
+    float3 Rotate;
     float Power;
     
     float4x4 LightViewProj;
