@@ -44,7 +44,7 @@ public:
 };
 
 // Mesh Buffer
-class MeshBuffer
+class MeshBuffer : public Resources
 {
 public:
 	virtual ~MeshBuffer()
@@ -78,7 +78,7 @@ struct MaterialSubData
 };
 
 // Material Buffer
-class MaterialBuffer
+class MaterialBuffer : public Resources
 {
 public:
 	virtual ~MaterialBuffer()

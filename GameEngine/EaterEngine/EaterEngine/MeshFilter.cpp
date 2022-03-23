@@ -307,13 +307,27 @@ void MeshFilter::SetMaterial(std::string matName)
 	Material* material = LoadManager::GetMaterial(matName);
 
 	// 해당 Material이 없다면..
-	if (material == nullptr) return;
+	if (material == nullptr)
+	{
+		// 새로운 Material 생성..
+		material = new Material();
+		material->Name = "Defalt";
+		material->Defalt = true;
+		material->m_MaterialData->Name = "Defalt";
+	}
 
 	// 변경된 Material 그래픽 동기화..
 	GraphicEngine::Get()->PushChangeInstance(gameobject->OneMeshData);
 
+	// 기본 Material이였다면 삭제..
+	if (m_Material && m_Material->Defalt)
+	{
+		delete m_Material;
+	}
+
 	// 해당 Material 설정..
 	m_Material = material;
+	gameobject->OneMeshData->Material_Buffer = m_Material->m_MaterialData;
 }
 
 void MeshFilter::SetTexture(std::string texName, UINT texType)
@@ -448,6 +462,8 @@ void MeshFilter::SetMaterialData(LoadMeshData* LoadMesh, MeshData* mMesh, GameOb
 	{
 		// 새로운 Material 생성..
 		meshFilter->m_Material = new Material();
+		meshFilter->m_Material->Name = "Defalt";
+		meshFilter->m_Material->m_MaterialData->Name = "Defalt";
 		meshFilter->m_Material->Defalt = true;
 	}
 

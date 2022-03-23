@@ -1,6 +1,12 @@
 #pragma once
+class RenderResource
+{
+public:
+	std::string m_Name;
+};
+
 // Game Engine 측 MaterialBuffer와 대응하는 DirectX 11 전용 Material Data Class
-class MaterialRenderBuffer
+class MaterialRenderBuffer : public RenderResource
 {
 public:
 	UINT m_BufferIndex;
@@ -14,7 +20,7 @@ public:
 };
 
 // Game Engine 측 MeshBuffer와 대응하는 DirectX 11 전용 Mesh Data Class
-class MeshRenderBuffer
+class MeshRenderBuffer : public RenderResource
 {
 public:
 	UINT m_BufferIndex;
@@ -28,7 +34,7 @@ public:
 };
 
 // Game Engine 측 TerrainBuffer와 대응하는 DirectX 11 전용 Terrain Data Class
-class TerrainRenderBuffer
+class TerrainRenderBuffer : public RenderResource
 {
 public:
 	Matrix* m_Tex;
@@ -36,7 +42,7 @@ public:
 };
 
 // Instance Layer를 관리하기 위한 Render Buffer Class
-class InstanceRenderBuffer
+class InstanceRenderBuffer : public RenderResource
 {
 public:
 	UINT m_BufferIndex = 0;

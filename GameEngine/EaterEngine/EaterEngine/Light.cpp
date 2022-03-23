@@ -42,8 +42,6 @@ void Light::Start()
 	case POINT_LIGHT:
 		break;
 	case SPOT_LIGHT:
-		m_Angle = m_SpotLight->Angle;
-		m_SpotLight->AttRange = cosf(m_Angle * 0.5f) - cosf(m_Angle);
 		break;
 	default:
 		break;
@@ -110,8 +108,23 @@ void Light::SetAngle(float angle)
 	{
 	case SPOT_LIGHT:
 		m_Angle = PI * angle / 180.0f;
-		m_SpotLight->AttRange = cosf(m_Angle * 0.5f) - cosf(m_Angle);
+		m_SpotLight->AttRange = cosf(m_Angle * m_AttStart) - cosf(m_Angle);
+		m_SpotLight->AttStart = cosf(m_Angle);
 		m_SpotLight->Angle = m_Angle;
+		break;
+	default:
+		break;
+	}
+}
+
+void Light::SetAttenuate(float range)
+{
+	switch (m_LightType)
+	{
+	case SPOT_LIGHT:
+		m_AttStart = range;
+		m_SpotLight->AttRange = cosf(m_Angle * m_AttStart) - cosf(m_Angle);
+		m_SpotLight->AttStart = cosf(m_Angle);
 		break;
 	default:
 		break;
