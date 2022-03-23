@@ -18,6 +18,8 @@ public:
 
 	void Initialize(HWND hwnd);
 	void Update();
+
+	void SetFocus(bool focus);
 private:
 	//현재 눌린키상태
 	bool isCurrent[256];
@@ -37,7 +39,9 @@ private:
 	POINT CursorPos;
 	HWND hwnd;
 
-	void UpdataMouseCursor(HWND hwnd);
+	bool isFocus;
+
+	void UpdataMouseCursor();
 	void KeyUpDate();
 };
 

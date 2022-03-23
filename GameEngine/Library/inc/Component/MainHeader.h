@@ -65,6 +65,9 @@ extern "C" EATER_ENGINEDLL void  SetMousePosCenter();			//마우스 위치 Y
 extern "C" EATER_ENGINEDLL void ShowMouseCursor(bool Cursor);	//마우스 커서 보이기여부
 extern "C" EATER_ENGINEDLL void MouseCursorClip(bool Clip);		//마우스 커서 보이기여부
 
+///윈도우 관련
+extern "C" EATER_ENGINEDLL void WindowFocus(bool focus);		//현재 윈도우 포커싱 상태
+
 ///카메라 관련
 extern "C" EATER_ENGINEDLL GameObject * GetMainCamera();	//현재 메인 카메라를 가져온다
 

@@ -100,6 +100,9 @@ public:
 	void  SetMousePosCenter();
 	void  ShowMouseCursor(bool Show);
 	void  MouseCursorClip(bool Clip);
+
+	///윈도우 관련
+	void SetFocus(bool focus);
 public:
 	///카메라 관련
 	GameObject* GetMainCamera();

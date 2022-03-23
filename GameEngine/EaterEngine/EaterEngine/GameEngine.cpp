@@ -427,6 +427,12 @@ void GameEngine::MouseCursorClip(bool Clip)
 
 }
 
+void GameEngine::SetFocus(bool focus)
+{
+	// 현재 Window Focus 상태에 따라 상태변화는 여기에서..
+	mKeyManager->SetFocus(focus);
+}
+
 GameObject* GameEngine::GetMainCamera()
 {
 	return Camera::g_MainCam->gameobject;
