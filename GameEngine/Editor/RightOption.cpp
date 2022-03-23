@@ -24,6 +24,7 @@
 #include "AnimationController.h"
 #include "MeshFilter.h"
 #include "ParticleSystem.h"
+#include "Light.h"
 
 // RightOption 대화 상자
 
@@ -77,11 +78,16 @@ BOOL RightOption::OnInitDialog()
 	mMeshFilter->MoveWindow(0, 25, rect.Width() - 5, rect.Height() - 25);
 	mMeshFilter->ShowWindow(SW_HIDE);
 
-
 	mPrticle = new CTAP_Particle();
 	mPrticle->Create(IDD_TAP_PARTICLE, &Component_TapList);
 	mPrticle->MoveWindow(0, 25, rect.Width() - 5, rect.Height() - 25);
 	mPrticle->ShowWindow(SW_HIDE);
+
+	mLight = new CTAP_Light();
+	mLight->Create(IDD_TAP_LIGHT, &Component_TapList);
+	mLight->MoveWindow(0, 25, rect.Width() - 5, rect.Height() - 25);
+	mLight->ShowWindow(SW_HIDE);
+
 
 	thisPointer = this;
 	SetTimer(1, 1000, NULL);
@@ -294,6 +300,7 @@ void RightOption::OnChoice_Hirearchy_Item(NMHDR* pNMHDR, LRESULT* pResult)
 	AnimationController* AC = ChoiceObject->GetComponent<AnimationController>();
 	MeshFilter*			 MF = ChoiceObject->GetComponent<MeshFilter>();
 	ParticleSystem*		 PS = ChoiceObject->GetComponent<ParticleSystem>();
+	Light*				LT	= ChoiceObject->GetComponent<Light>();
 
 	int FrontCount = 0;
 	if (TR != nullptr)
@@ -324,6 +331,14 @@ void RightOption::OnChoice_Hirearchy_Item(NMHDR* pNMHDR, LRESULT* pResult)
 		Component_TapList.InsertItem(FrontCount, L"Particle");
 		mPrticle->ShowWindow(SW_HIDE);
 		mPrticle->SetGameObject(PS);
+		FrontCount++;
+	}
+
+	if (LT != nullptr)
+	{
+		Component_TapList.InsertItem(FrontCount, L"Light");
+		mLight->ShowWindow(SW_HIDE);
+		mLight->SetGameObject(LT);
 		FrontCount++;
 	}
 	Component_TapList.SetCurSel(0);
@@ -442,6 +457,7 @@ void RightOption::OnClickTap(NMHDR* pNMHDR, LRESULT* pResult)
 		mAnimation->ShowWindow(SW_HIDE);
 		mMeshFilter->ShowWindow(SW_HIDE);
 		mPrticle->ShowWindow(SW_HIDE);
+		mLight->ShowWindow(SW_HIDE);
 	}
 	else if (ComponentName == L"Animation")
 	{
@@ -449,6 +465,7 @@ void RightOption::OnClickTap(NMHDR* pNMHDR, LRESULT* pResult)
 		mAnimation->ShowWindow(SW_SHOW);
 		mMeshFilter->ShowWindow(SW_HIDE);
 		mPrticle->ShowWindow(SW_HIDE);
+		mLight->ShowWindow(SW_HIDE);
 	}
 	else if (ComponentName == L"MeshFilter")
 	{
@@ -456,6 +473,7 @@ void RightOption::OnClickTap(NMHDR* pNMHDR, LRESULT* pResult)
 		mAnimation->ShowWindow(SW_HIDE);
 		mMeshFilter->ShowWindow(SW_SHOW);
 		mPrticle->ShowWindow(SW_HIDE);
+		mLight->ShowWindow(SW_HIDE);
 	}
 	else if (ComponentName == L"Particle")
 	{
@@ -463,6 +481,15 @@ void RightOption::OnClickTap(NMHDR* pNMHDR, LRESULT* pResult)
 		mAnimation->ShowWindow(SW_HIDE);
 		mMeshFilter->ShowWindow(SW_HIDE);
 		mPrticle->ShowWindow(SW_SHOW);
+		mLight->ShowWindow(SW_HIDE);
+	}
+	else if (ComponentName == L"Light")
+	{
+		mTransform->ShowWindow(SW_HIDE);
+		mAnimation->ShowWindow(SW_HIDE);
+		mMeshFilter->ShowWindow(SW_HIDE);
+		mPrticle->ShowWindow(SW_HIDE);
+		mLight->ShowWindow(SW_SHOW);
 	}
 }
 

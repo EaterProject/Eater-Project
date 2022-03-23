@@ -106,11 +106,11 @@ void EaterManager::Load_FBX_File(std::string& Path, ParserData::CModel* FBXMesh)
 	mBufferManager->ChangeEaterFile(FBXMesh);
 
 	///Animation 정보를 저장한다
-	mAnimationManager->SetFileName(FileName);
+	mAnimationManager->SetFileName(AnimationName);
 	mAnimationManager->ChangeEaterFile(FBXMesh);
 
 	///Material 정보를 저장한다
-	mMaterialManager->SetFileName(AnimationName);
+	mMaterialManager->SetFileName(FileName);
 	mMaterialManager->ChangeEaterFile(FBXMesh);
 }
 

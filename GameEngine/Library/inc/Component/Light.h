@@ -31,13 +31,16 @@ public:
 
 public:
 	EATER_ENGINEDLL void SetColor(float r, float g, float b);
-
 	EATER_ENGINEDLL void SetAngle(float angle);
 	EATER_ENGINEDLL void SetRange(float range);
 	EATER_ENGINEDLL void SetPower(float power);
-	
 	EATER_ENGINEDLL void SetType(LIGHT_TYPE lightType);
 
+	EATER_ENGINEDLL LIGHT_TYPE GetType() { return m_LightType; }
+	EATER_ENGINEDLL float GetAngle();
+	EATER_ENGINEDLL float GetRange();
+	EATER_ENGINEDLL float GetPower();
+	EATER_ENGINEDLL Vector3 GetColor();
 public:
 	EATER_ENGINEDLL void SetShadowRadius(float radius);
 	EATER_ENGINEDLL void SetCenterPos(DirectX::SimpleMath::Vector3 pos);
@@ -50,10 +53,9 @@ private:
 	DirectionalLightData* GetDirectionLight() { return m_DirectionLight; }
 	PointLightData* GetPointLight() { return m_PointLight; }
 	SpotLightData* GetSpotLight() { return m_SpotLight; }
-
 public:
-	LIGHT_TYPE GetType() { return m_LightType; }
 
+	
 private:
 	Transform* m_Transform;
 
@@ -68,7 +70,6 @@ private:
 	float m_Angle;
 	Vector3 m_PrevLook;
 	Vector3 m_NowLook;
-
 private:
 	DirectX::SimpleMath::Vector3 m_CenterPos;
 	float m_ShadowRadius;

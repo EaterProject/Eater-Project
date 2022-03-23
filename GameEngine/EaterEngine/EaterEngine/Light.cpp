@@ -206,6 +206,55 @@ void Light::SetType(LIGHT_TYPE lightType)
 	LightManager::PushLight(this);
 }
 
+float Light::GetAngle()
+{
+	switch (m_LightType)
+	{
+	case SPOT_LIGHT:
+		return m_SpotLight->Angle;
+		break;
+	default:
+		break;
+	}
+}
+
+float Light::GetRange()
+{
+	switch (m_LightType)
+	{
+	case SPOT_LIGHT:
+		return m_SpotLight->Range;
+	case POINT_LIGHT:
+		return m_PointLight->Range;
+	}
+}
+
+float Light::GetPower()
+{
+	switch (m_LightType)
+	{
+	case SPOT_LIGHT:
+		return m_SpotLight->Power;
+	case POINT_LIGHT:
+		return m_PointLight->Power;
+	case DIRECTION_LIGHT:
+		return m_DirectionLight->Power;
+	}
+}
+
+Vector3 Light::GetColor()
+{
+	switch (m_LightType)
+	{
+	case SPOT_LIGHT:
+		return m_SpotLight->Diffuse;
+	case POINT_LIGHT:
+		return m_PointLight->Diffuse;
+	case DIRECTION_LIGHT:
+		return m_DirectionLight->Diffuse;
+	}
+}
+
 void Light::SetCenterPos(DirectX::SimpleMath::Vector3 pos)
 {
 	m_CenterPos = pos;
