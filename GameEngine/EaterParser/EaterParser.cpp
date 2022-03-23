@@ -334,16 +334,17 @@ void EaterParser::ChangeDataSave(std::string& FileName, std::string& OutPath, st
 			int HorizontalSize	= (int)Data.F_Data.size();
 
 			//리스트의 시작부분을 나타내는 부분을 넣어줌 ex)Vectrex 32(열 개수) 11(행 개수)
-			SetData = LIST_TYPE + ListName+SP_TYPE+std::to_string(VerticlaSize)+SP_TYPE+std::to_string(HorizontalSize)+LINE_TYPE;
+			SetData = LIST_TYPE + ListName+SP_TYPE+std::to_string(HorizontalSize)+SP_TYPE+std::to_string(VerticlaSize)+LINE_TYPE;
+		
 			fputs(SetData.c_str(), WriteFile);
 
 			//행,열 된 리스트를 쓰기
-			for (int i = 0; i < VerticlaSize; i++)
+			for (int i = 0; i < HorizontalSize; i++)
 			{
-				for (int j = 0; j< HorizontalSize; j++)
+				for (int j = 0; j< VerticlaSize; j++)
 				{	
 					//마지막부분은 줄바꿈 아닌경우에는 띄어쓰기만
-					if (j == HorizontalSize - 1)
+					if (j == VerticlaSize - 1)
 					{
 						SetData = Data.F_Data[i][j] + LINE_TYPE;
 						fputs(SetData.c_str(), WriteFile);

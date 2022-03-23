@@ -226,8 +226,8 @@ void AssetsDialog::OnDropFiles(HDROP hDropInfo)
 		RightOption::GetThis()->m_EditorManager->SetPath(Name);
 
 		//메쉬 로드
-		std::string MeshPath = "../Assets/Model/ModelData/" + ChangeName + ".Eater";
-		Demo::MeshLoad(MeshPath);
+		//std::string MeshPath = "../Assets/Model/ModelData/" + ChangeName + ".Eater";
+		//Demo::MeshLoad(MeshPath);
 	}
 	CDialogEx::OnDropFiles(hDropInfo);
 

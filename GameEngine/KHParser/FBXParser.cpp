@@ -313,6 +313,9 @@ void FBXParser::ProcessSkeleton(fbxsdk::FbxNode* node)
 	// 해당 Bone Index 삽입..
 	m_OneMesh->m_BoneIndex = (int)m_AllBoneList.size();
 
+	// Bone Count 추가..
+	m_Model->m_BoneCount++;
+
 	// 새로운 Bone 삽입..
 	m_AllBoneList.push_back(m_OneMesh);
 }
@@ -388,6 +391,11 @@ void FBXParser::ProcessMesh(fbxsdk::FbxNode* node)
 	if (isSkin)
 	{
 		m_OneMesh->m_MeshType = SKIN_MESH;
+		m_Model->m_SkinCount++;
+	}
+	else
+	{
+		m_Model->m_StaticCount++;
 	}
 
 	// 새로운 버텍스 생성..

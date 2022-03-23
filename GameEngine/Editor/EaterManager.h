@@ -15,6 +15,11 @@ class E_ChangeManager;
 class GameObject;
 struct ObjectOption;
 
+namespace ParserData
+{
+	class CModel;
+}
+
 class EaterManager
 {
 public:
@@ -32,6 +37,10 @@ private:
 	static const int E_MAT_MESH		= 3;
 private:
 	std::string CutFileName(std::string FilePath);
+	int CheckModelType(ParserData::CModel* FBXModel);
+	bool isSkin = false;
+	std::string SkinName;
+	std::string AnimationName;
 	
 	//FBX를 로드해서 Eater파일로 변환
 	E_MeshManager*		mMeshManager;

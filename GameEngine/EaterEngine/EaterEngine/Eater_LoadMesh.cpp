@@ -44,11 +44,7 @@ void Eater_LoadMesh::LoadData(std::string& Path)
 		{
 			LoadMeshData* Data = LoadSkinMesh(i);
 			SaveData->TopSkinList.push_back(Data);
-			if (SaveName.rfind('+') != std::string::npos)
-			{
-				//SaveName.erase(SaveName.rfind('+'));
-				Data->ModelName = SaveName;
-			}
+			Data->ModelName = SaveName;
 			SaveData->BoneOffsetList = Data->BoneTMList;
 		}
 		else if (NodeName == "TERRAIN")
@@ -369,7 +365,7 @@ void Eater_LoadMesh::LoadAnimation(int index, std::string& Name)
 {
 	//첫번째 키 생성
 	std::size_t Start_Mesh = Name.rfind('/') + 1;
-	std::size_t End_Mesh = Name.rfind('+') - Start_Mesh;
+	std::size_t End_Mesh = Name.rfind('+')+1 - Start_Mesh;
 	std::string MeshName = Name.substr(Start_Mesh, End_Mesh);
 
 	std::size_t Start_Anime = Name.rfind('+') + 1;
