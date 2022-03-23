@@ -38,6 +38,7 @@ void Eater_LoadMesh::LoadData(std::string& Path)
 		else if (NodeName == "BONE")
 		{
 			LoadMeshData* Data = LoadBoneMesh(i);
+			Data->ModelName = SaveName;
 			BoneList.push_back(Data);
 		}
 		else if (NodeName == "SKIN")

@@ -28,6 +28,7 @@ public:
 public:
 	void Change_LocalTM(int Nodeindex, Transform* TR);
 	void Change_Name(int Nodeindex,MeshFilter* MF);
+	void Change_BoneName(int Nodeindex,MeshFilter* MF);
 	std::string GetOriginalName(std::string Original);
 
 
