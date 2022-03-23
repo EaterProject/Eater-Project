@@ -1,0 +1,16 @@
+#EATERMAT
+@MaterialName Outside_bossOBJ_M_gate00_ground_cable
+@Alpha NO
+@Diffuse gate00_ground_cable_BaseColor.png
+@Normal gate00_ground_cable_Normal.png
+@Emissive NO
+@ORM gate00_ground_cable_ORM.png
+@Roughness 0
+@Metallic 0
+@Tileing_X 1
+@Tileing_Y 1
+@AddColor_R 0
+@AddColor_G 0
+@AddColor_B 0
+@AddColor_A 0
+&

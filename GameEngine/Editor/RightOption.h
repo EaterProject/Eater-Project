@@ -10,7 +10,6 @@ class CTAP_Light;
 class CTAP_Particle;
 
 class FileOption;
-class SceneSaveDialog;
 class Loading;
 //class Loading;
 class EditorManager;
@@ -63,7 +62,6 @@ public:
 public:
 	GameObject*			ChoiceObject;
 	FileOption*			mFileOption;		//자체포맷 변환 창
-	SceneSaveDialog*	mScene;				//씬 저장 창
 	EditorManager*		m_EditorManager;	//자체포맷 변환 관리 매니저
 	Loading*			mLoading;			//로딩 바
 public:
@@ -81,15 +79,9 @@ public:
 	//버튼들
 	afx_msg void OnChoice_Hirearchy_Item(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDelteObject_Button();
-	afx_msg void OnOpenAssetsFolder();
 	afx_msg void OnDeleteFile_Button();
 	afx_msg void OnChange_DataFormat();
-	afx_msg void OnOpenExeFile_Button();
 	afx_msg void OnClickTap(NMHDR* pNMHDR, LRESULT* pResult);
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
-	afx_msg void OnSaveScene();
-	afx_msg void OnCreateParticle();
-	afx_msg void OnCreateTerrain();
-	afx_msg void OnSize(UINT nType, int cx, int cy);
-	afx_msg void OnCreateLight();
+	afx_msg void OnOpenOption();
 };

@@ -164,11 +164,6 @@ GameObject* Demo::CreateSkinObject(std::string ObjectName, std::string MeshName)
 	Transform* TR			= Skin->GetTransform();
 	AnimationController* AC = Skin->AddComponent<AnimationController>();
 
-	//std::size_t Start = 0;
-	//std::size_t End = MeshName.rfind('+');
-	//std::string SkinMeshName = MeshName.substr(Start, End);
-
-	
 	MF->SetModelName(MeshName);
 	MF->SetAnimationName(MeshName);
 	ObjectList.insert({ ObjectName,Skin });

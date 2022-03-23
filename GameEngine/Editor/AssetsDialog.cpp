@@ -326,12 +326,11 @@ void AssetsDialog::OnLButtonUp(UINT nFlags, CPoint point)
 		 mRightOption->ChickHirearchyDarg(point);
 		 mRightOption->ChickTapDrag(point);
 
-		 mFileOption = mRightOption->GetThis()->mFileOption;
-		 if (mFileOption->IsWindowVisible() == true)
-		 {
-			mFileOption->ChickDrag(point);
-		 }
-
+		 //mFileOption = mRightOption->GetThis()->mFileOption;
+		 //if (mFileOption->IsWindowVisible() == true)
+		 //{
+		//	mFileOption->ChickDrag(point);
+		 //}
 	}
 	CDialogEx::OnLButtonUp(nFlags, point);
 }

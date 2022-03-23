@@ -14,7 +14,6 @@
 
 #include "FileOption.h"
 #include "EditorManager.h"
-#include "SceneSaveDialog.h"
 #include "Loading.h"
 
 #include <stack>
@@ -48,11 +47,10 @@ BOOL RightOption::OnInitDialog()
 	m_EditorManager->Initialize();
 
 	mFileOption = new FileOption();
-	mFileOption->Initialize(m_EditorManager);
 	mFileOption->Create(IDD_FILE_OPTION);
+	mFileOption->Initialize(this);
+	mFileOption->ShowWindow(SW_HIDE);
 
-	mScene = new SceneSaveDialog();
-	mScene->Initialize(this);
 
 	mLoading = new Loading();
 	mLoading->Create(IDD_LOADING);
@@ -90,8 +88,6 @@ BOOL RightOption::OnInitDialog()
 
 
 	thisPointer = this;
-	SetTimer(1, 1000, NULL);
-
 	
 	return 0;
 }
@@ -112,19 +108,14 @@ BEGIN_MESSAGE_MAP(RightOption, CDialogEx)
 	ON_WM_LBUTTONUP()
 	ON_NOTIFY(NM_DBLCLK, IDC_TREE2, &RightOption::OnChoice_Hirearchy_Item)
 	ON_BN_CLICKED(IDC_BUTTON8, &RightOption::OnDelteObject_Button)
-	ON_BN_CLICKED(IDC_BUTTON3, &RightOption::OnOpenAssetsFolder)
 	ON_BN_CLICKED(IDC_BUTTON4, &RightOption::OnDeleteFile_Button)
 	ON_BN_CLICKED(IDC_BUTTON7, &RightOption::OnChange_DataFormat)
 	ON_WM_TIMER()
 	ON_WM_ACTIVATE()
-	ON_BN_CLICKED(IDC_BUTTON9, &RightOption::OnOpenExeFile_Button)
 	ON_NOTIFY(TCN_SELCHANGE, IDC_TAB1, &RightOption::OnClickTap)
-	ON_BN_CLICKED(IDC_BUTTON11, &RightOption::OnSaveScene)
-	ON_BN_CLICKED(IDC_BUTTON12, &RightOption::OnCreateParticle)
-	ON_BN_CLICKED(IDC_BUTTON10, &RightOption::OnCreateTerrain)
 	ON_WM_MOUSEHWHEEL()
 	ON_WM_SIZE()
-	ON_BN_CLICKED(IDC_BUTTON26, &RightOption::OnCreateLight)
+	ON_BN_CLICKED(IDC_BUTTON10, &RightOption::OnOpenOption)
 END_MESSAGE_MAP()
 
 RightOption* RightOption::GetThis()
@@ -367,21 +358,6 @@ void RightOption::OnDelteObject_Button()
 	}
 }
 
-void RightOption::OnOpenAssetsFolder()
-{
-	//에셋폴더를 연다
-	TCHAR chFilePath[256] = { 0, };
-	GetModuleFileName(NULL, chFilePath, 256);
-
-	CString strFolderPath(chFilePath);
-	for (int i = 0; i < 2; i++)
-	{
-		strFolderPath = strFolderPath.Left(strFolderPath.ReverseFind('\\'));
-	}
-	strFolderPath += _T("\\Assets");
-	ShellExecute(NULL, _T("open"), _T("explorer"), strFolderPath, NULL, SW_SHOW);
-}
-
 void RightOption::OnDeleteFile_Button()
 {
 	//에셋폴더안에 파일을 삭제한다
@@ -408,33 +384,6 @@ void RightOption::OnChange_DataFormat()
 
 	m_EditorManager->OpenEaterGameObject(ChoiceObject,&mObjectOption);
 	AfxMessageBox(L"변환 완료");
-}
-
-void RightOption::OnOpenExeFile_Button()
-{
-	//exe 파일을 실행시킨다
-	wchar_t path[256] = { 0 };
-	GetModuleFileName(NULL, path, 256);
-
-	USES_CONVERSION;
-	std::string str = W2A(path);
-	std::size_t Start = 0;
-	std::size_t End = str.rfind('\\');
-	str = str.substr(Start, End);
-	str += "\\GameClient.exe";
-	CString FileName;
-	FileName = str.c_str();
-
-	STARTUPINFO Startupinfo = { 0 };
-	PROCESS_INFORMATION processInfo;
-	Startupinfo.cb = sizeof(STARTUPINFO);
-	::CreateProcess
-	(
-		FileName,
-		NULL, NULL, NULL,
-		false, 0, NULL, NULL,
-		&Startupinfo, &processInfo
-	);
 }
 
 void RightOption::OnClickTap(NMHDR* pNMHDR, LRESULT* pResult)
@@ -511,35 +460,7 @@ BOOL RightOption::PreTranslateMessage(MSG* pMsg)
 	return CDialog::PreTranslateMessage(pMsg);
 }
 
-void RightOption::OnSaveScene()
-{	
-	mScene->DoModal();
-	std::string SaveName = ChangeToString(mScene->Name);
-	std::string SavePath = "../Assets/Scene/";
-	Demo::SaveScene(SavePath,SaveName);
-	AfxMessageBox(L"저장 완료");
-}
-
-void RightOption::OnCreateParticle()
+void RightOption::OnOpenOption()
 {
-	GameObject* Obj = Demo::CreateParticle();
-	HTREEITEM Top = HirearchyTree.InsertItem(ChangeToCString(Obj->Name));
-	Create_Hirearchy_Item(Obj, Top);
-}
-
-void RightOption::OnCreateTerrain()
-{
-	GameObject* object = Demo::CreateTerrain("");
-}
-
-void RightOption::OnSize(UINT nType, int cx, int cy)
-{
-	CDialogEx::OnSize(nType, cx, cy);
-}
-
-void RightOption::OnCreateLight()
-{
-	GameObject* Object = Demo::CreateLight();
-	HTREEITEM Top = HirearchyTree.InsertItem(ChangeToCString(Object->Name));
-	Create_Hirearchy_Item(Object, Top);
+	mFileOption->ShowWindow(SW_SHOW);
 }
