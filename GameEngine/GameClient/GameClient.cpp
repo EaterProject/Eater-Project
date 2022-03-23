@@ -19,6 +19,7 @@
 
 // 윈도 프로시저의 전방선언
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
+bool g_Focus = true;
 
 // 메인 함수
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR    lpCmdLine, _In_ int nCmdShow)
@@ -93,6 +94,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
+	case WM_SETFOCUS:
+	{
+		g_Focus = true;
+	}
+	break;
+	case WM_KILLFOCUS:
+	{
+		g_Focus = false;
+	}
+	break;
 	case WM_SIZE:
 	{
 		int SizeX = LOWORD(lParam);
