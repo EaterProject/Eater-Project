@@ -4,6 +4,7 @@
 struct MeshInstanceIn
 {
     float4x4 World          : INSTANCE_SEMANTIC(WOLRD);
+    float4x4 InvWorld       : INSTANCE_SEMANTIC(INVWOLRD);
 };
 
 struct ParticleInstanceIn

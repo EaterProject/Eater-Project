@@ -1,0 +1,16 @@
+#EATERMAT
+@MaterialName Outside_Other_M_gate00_panel
+@Alpha NO
+@Diffuse gate00_panel_BaseColor.png
+@Normal gate00_panel_Normal.png
+@Emissive NO
+@ORM gate00_panel_ORM.png
+@Roughness 0
+@Metallic 0
+@Tileing_X 1
+@Tileing_Y 1
+@AddColor_R 0
+@AddColor_G 0
+@AddColor_B 0
+@AddColor_A 0
+&

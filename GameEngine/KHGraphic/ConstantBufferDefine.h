@@ -166,6 +166,7 @@ SHADER_CONSTANT_BUFFER(cbSsaoObject)
 struct CB_SsaoObject : public cbSsaoObject
 {
 	DirectX::SimpleMath::Matrix  gViewToTexSpace;
+	DirectX::SimpleMath::Matrix  gProj;
 };
 
 SHADER_CONSTANT_BUFFER(cbSsaoFrustum)

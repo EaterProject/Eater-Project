@@ -63,6 +63,7 @@ namespace VertexInput
 	struct MeshInstance
 	{
 		DirectX::SimpleMath::Matrix World;
+		DirectX::SimpleMath::Matrix InvWorld;
 	};
 
 	struct ParticleInstance

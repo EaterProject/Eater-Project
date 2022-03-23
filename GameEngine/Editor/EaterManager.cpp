@@ -44,7 +44,7 @@ std::string EaterManager::CutFileName(std::string FilePath)
 	size_t end = FilePath.rfind(".") - start;
 	std::string FileType = FilePath.substr(start, end);
 
-	if(FileType.rfind('+'))
+	if(FileType.rfind('+') != std::string::npos)
 	{
 		isSkin = true;
 		SkinName		= FileType.substr(0, FileType.rfind('+'));
@@ -95,7 +95,7 @@ void EaterManager::Load_FBX_File(std::string& Path, ParserData::CModel* FBXMesh)
 	}
 
 	///Model 정보를 저장한다
-	EATER_OPEN_WRITE_FILE(FileName+"+", "../Assets/Model/ModelData/", ".Eater");
+	EATER_OPEN_WRITE_FILE(FileName, "../Assets/Model/ModelData/", ".Eater");
 	mMeshManager->SetFileName(FileName);
 	mMeshManager->ChangeEaterFile(FBXMesh);
 	EATER_CLOSE_WRITE_FILE();

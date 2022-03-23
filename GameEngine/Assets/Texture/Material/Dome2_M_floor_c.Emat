@@ -1,0 +1,16 @@
+#EATERMAT
+@MaterialName Dome2_M_floor_c
+@Alpha NO
+@Diffuse Dome_Floor_C_BaseColor.png
+@Normal Dome_Floor_C_Normal.png
+@Emissive NO
+@ORM Dome_Floor_C_ORM.png
+@Roughness 0
+@Metallic 0
+@Tileing_X 1
+@Tileing_Y 1
+@AddColor_R 0
+@AddColor_G 0
+@AddColor_B 0
+@AddColor_A 0
+&

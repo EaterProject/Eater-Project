@@ -329,8 +329,11 @@ void RenderManager::DeferredRender()
 
 void RenderManager::SSAORender()
 {
-	m_SSAO->RenderUpdate();
-	m_SSAO->BlurRender(4);
+	if (m_NowRenderOption.RenderingOption & RENDER_SSAO)
+	{
+		m_SSAO->RenderUpdate();
+		m_SSAO->BlurRender(4);
+	}
 }
 
 void RenderManager::LightRender()

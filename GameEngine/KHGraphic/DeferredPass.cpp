@@ -28,7 +28,7 @@
 #include "BlendStateDefine.h"
 #include "DrawBufferDefine.h"
 #include "InstanceBufferDefine.h"
-
+#include "MathHelper.h"
 #define ALBEDO_MAP		0x00000001
 #define NORMAL_MAP		0x00000010
 #define EMISSIVE_MAP    0x00000100
@@ -206,7 +206,6 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const std:
 
 	Matrix view = g_GlobalData->CamView;
 	Matrix proj = g_GlobalData->CamProj;
-
 	MeshRenderBuffer* mesh = instance->m_Mesh;
 	MaterialRenderBuffer* mat = instance->m_Material;
 	MaterialSubData* matSub = mat->m_MaterialSubData;
@@ -217,6 +216,7 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const std:
 
 		// ÇØ´ç Instance Data »ðÀÔ..
 		m_MeshData.World = *meshlist[i]->m_ObjectData->World;
+		m_MeshData.InvWorld = MathHelper::InverseTranspose(m_MeshData.World);
 
 		m_MeshInstance.push_back(m_MeshData);
 		m_InstanceCount++;

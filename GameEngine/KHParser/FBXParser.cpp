@@ -768,7 +768,7 @@ void FBXParser::OptimizeVertex(ParserData::CMesh* pMesh)
 											 vertex2->m_UV.y - vertex0->m_UV.y };
 
 		float value = uv1.x * uv2.y - uv2.x * uv1.y;
-		float den = 0.0f;
+		float den = 1.0f;
 
 		if (value != 0.0f)
 		{
