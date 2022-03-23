@@ -32,10 +32,7 @@ public:
 public:
 	EATER_ENGINEDLL void SetColor(float r, float g, float b);
 
-	EATER_ENGINEDLL void SetPosition(float x, float y, float z);
-	EATER_ENGINEDLL void SetInAngle(float angle);
-	EATER_ENGINEDLL void SetOutAngle(float angle);
-
+	EATER_ENGINEDLL void SetAngle(float angle);
 	EATER_ENGINEDLL void SetRange(float range);
 	EATER_ENGINEDLL void SetPower(float power);
 	
@@ -68,8 +65,9 @@ private:
 	PointLightData* m_PointLight;
 	SpotLightData* m_SpotLight;
 
-	float m_InAngle;
-	float m_OutAngle;
+	float m_Angle;
+	Vector3 m_PrevLook;
+	Vector3 m_NowLook;
 
 private:
 	DirectX::SimpleMath::Vector3 m_CenterPos;
