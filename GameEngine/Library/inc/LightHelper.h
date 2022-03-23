@@ -35,7 +35,7 @@ ALIGNED_MEMORY(16) struct PointLightData
 	PointLightData() = default;
 	
 	Vector3 Diffuse = Vector3(1.0f, 1.0f, 1.0f);
-	float Range = 100.0f;
+	float Range = 10.0f;
 
 	Vector3 Position = Vector3(0.0f, 0.0f, 0.0f);
 	float Power = 1.0f;

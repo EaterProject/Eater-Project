@@ -117,8 +117,7 @@ void GameEngine::Start()
 	obj->SetTag("MainCamera");
 
 	//디렉션 라이트 생성
-	obj = InstanceLight();
-	obj->transform->Position.y += 10.0f;
+	obj = InstanceLight("DirectionLight", LIGHT_TYPE::DIRECTION_LIGHT);
 	obj->SetDontDestroy(true);
 }
 
@@ -266,7 +265,27 @@ GameObject* GameEngine::InstanceLight(std::string ObjName, LIGHT_TYPE type)
 	Transform* Tr = temp->AddComponent<Transform>();
 	temp->transform = Tr;
 
-	temp->AddComponent<Light>()->SetType(type);
+	Light* light = temp->AddComponent<Light>();
+	light->SetType(type);
+
+	// Light 별 초기값..
+	switch (type)
+	{
+	case DIRECTION_LIGHT:
+		Tr->Rotation = { -45.0f, 30.0f, 0.0f };
+		break;
+	case POINT_LIGHT:
+		light->SetColor(1.0f, 1.0f, 0.0f);
+		light->SetPower(10.0f);
+		break;
+	case SPOT_LIGHT:
+		Tr->Rotation.x = -90.0f;
+		light->SetColor(1.0f, 1.0f, 0.0f);
+		light->SetPower(10.0f);
+		break;
+	default:
+		break;
+	}
 
 	return temp;
 }

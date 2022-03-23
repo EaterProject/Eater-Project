@@ -31,7 +31,7 @@ public:
 
 private:
 	void SetRay(Vector3 start, Vector3 end);
-	void DrawSpotLight();
+	Matrix LookAt_Matrix(Vector3 pos, Vector3 look);
 
 private:
 	VertexShader* m_DebugVS;
