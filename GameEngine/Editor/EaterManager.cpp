@@ -5,6 +5,7 @@
 
 #include "GameObject.h"
 #include "MeshFilter.h"
+#include "AnimationController.h"
 
 #include "E_MaterialManager.h"
 #include "E_MeshManager.h"
@@ -13,8 +14,8 @@
 #include "E_ChangeManager.h"
 
 #include "Demo.h"
-
 #include "EditorData.h"
+
 
 EaterManager::EaterManager()
 {
@@ -44,7 +45,7 @@ std::string EaterManager::CutFileName(std::string FilePath)
 	size_t end = FilePath.rfind(".") - start;
 	std::string FileType = FilePath.substr(start, end);
 
-	if(FileType.rfind('+'))
+	if(FileType.rfind('+') != std::string::npos)
 	{
 		isSkin = true;
 		SkinName		= FileType.substr(0, FileType.rfind('+'));
@@ -96,10 +97,12 @@ void EaterManager::Load_FBX_File(std::string& Path, ParserData::CModel* FBXMesh)
 	}
 
 	///Model 정보를 저장한다
-	EATER_OPEN_WRITE_FILE(FileName+"+", "../Assets/Model/ModelData/", ".Eater");
+	EATER_OPEN_WRITE_FILE(FileName, "../Assets/Model/ModelData/", ".Eater");
 	mMeshManager->SetFileName(FileName);
 	mMeshManager->ChangeEaterFile(FBXMesh);
 	EATER_CLOSE_WRITE_FILE();
+	std::string LoadPath = "../Assets/Model/ModelData/" + FileName + ".Eater";
+	Demo::MeshLoad(LoadPath);
 
 	///MeshBuffer 정보를 저장한다
 	mBufferManager->SetFileName(FileName);
@@ -118,6 +121,7 @@ void EaterManager::Load_GameObject_File(GameObject* Object ,ObjectOption* mOptio
 {
 	//오브젝트의 정보를 읽어온다
 	MeshFilter* MF				= Object->GetComponent<MeshFilter>();
+	AnimationController* AC		= Object->GetComponent<AnimationController>();
 	std::string ModelName		= MF->GetModelName();
 	std::string MaterialName	= MF->GetMaterialName();
 
@@ -150,8 +154,6 @@ void EaterManager::Load_GameObject_File(GameObject* Object ,ObjectOption* mOptio
 	//변환한 파일로 다시로드한다
 	Demo::MeshLoad(ModelPath);
 
-
-
 	//메테리얼 정보를 수정한다
 	EATER_OPEN_READ_FILE(MaterialPath);
 	NodeCount = EATER_GET_NODE_COUNT();
@@ -164,5 +166,12 @@ void EaterManager::Load_GameObject_File(GameObject* Object ,ObjectOption* mOptio
 		}
 	}
 	
+	if (AC != nullptr)
+	{
+		//애니메이션 정보를 수정한다
+		EATER_OPEN_READ_FILE("");
+
+		EATER_CLOSE_READ_FILE();
+	}
 }
 
