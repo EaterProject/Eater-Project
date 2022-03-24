@@ -221,6 +221,7 @@ copy/Y "$(ProjectDir)Export\*.h"   "$(SolutionDir)Library\inc\Graphic"</Command>
     <ClInclude Include="MathDefine.h" />
     <ClInclude Include="MathHelper.h" />
     <ClInclude Include="OITPass.h" />
+    <ClInclude Include="PickingPass.h" />
     <ClInclude Include="RasterizerStateDefine.h" />
     <ClInclude Include="RenderData.h" />
     <ClInclude Include="RenderDataConverter.h" />
@@ -286,6 +287,7 @@ copy/Y "$(ProjectDir)Export\*.h"   "$(SolutionDir)Library\inc\Graphic"</Command>
     <ClCompile Include="LightPass.cpp" />
     <ClCompile Include="MathHelper.cpp" />
     <ClCompile Include="OITPass.cpp" />
+    <ClCompile Include="PickingPass.cpp" />
     <ClCompile Include="PixelShader.cpp" />
     <ClCompile Include="RenderDataConverter.cpp" />
     <ClCompile Include="RenderPassBase.cpp" />

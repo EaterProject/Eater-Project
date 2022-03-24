@@ -1,9 +1,9 @@
 #EATERMAT
-@ORM bossb_body_ ORM
-@Alpha NO
 @MaterialName bossb_bone
-@Roughness 0.000000
+@Alpha NO
+@ORM bossb_body_ ORM
 @Diffuse bossb_body_BaseColor
+@Roughness 0.000000
 @Normal bossb_body_Normal
 @Emissive bossb_body_Emissive
 @Metallic 0.000000

@@ -29,6 +29,7 @@
 #include "DrawBufferDefine.h"
 #include "InstanceBufferDefine.h"
 #include "MathHelper.h"
+
 #define ALBEDO_MAP		0x00000001
 #define NORMAL_MAP		0x00000010
 #define EMISSIVE_MAP    0x00000100
