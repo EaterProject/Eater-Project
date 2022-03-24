@@ -217,9 +217,9 @@ void CamAnimation::OnBnClickedButton10()
 			Temp.PosY = PosKey.y;
 			Temp.PosZ = PosKey.z;
 
-			//Temp.RotX = RotKey.z;
-			//Temp.RotY = RotKey.y;
-			//Temp.RotZ = RotKey.z;
+			Temp.RotX = RotKey.z;
+			Temp.RotY = RotKey.y;
+			Temp.RotZ = RotKey.z;
 			AddKeyList.push_back(Temp);
 			AddItem((int)AddKeyList.size() - 1, Temp);
 
