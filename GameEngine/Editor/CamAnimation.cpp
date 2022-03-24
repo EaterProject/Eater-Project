@@ -9,6 +9,7 @@
 #include "Demo.h"
 #include "GameObject.h"
 #include "Transform.h"
+#include "EaterHeader.h"
 
 
 // CamAnimation 대화 상자
@@ -41,7 +42,7 @@ BOOL CamAnimation::OnInitDialog()
 	int Size6 = (SizeX*2) / 6;
 
 
-	mListCtrl.InsertColumn(0, _T("시간"), LVCFMT_LEFT, SizeX);
+	mListCtrl.InsertColumn(0, _T("인덱스"), LVCFMT_LEFT, SizeX);
 
 	mListCtrl.InsertColumn(1, _T("위치_X"), LVCFMT_LEFT, Size6);
 	mListCtrl.InsertColumn(2, _T("위치_Y"), LVCFMT_LEFT, Size6);
@@ -55,7 +56,20 @@ BOOL CamAnimation::OnInitDialog()
 	CamAnime_slider.SetPos(0);
 	NowTime_Eidt.SetWindowTextW(L"0.00");
 
-	SetTimer(0, 10,NULL);
+	AddKeyCount		= 100;
+	PlayIndex		= 0;
+	isPlay			= false;
+	NowSliderPos	= 0;
+	OneFrameTime	= 0.01;
+	OriginalIndex	= 0;
+
+	AddKeyCount_Edit.SetWindowTextW(L"100");
+	OneFrameTime_Eidt.SetWindowTextW(L"0.01");
+	PlayTime_Edit.SetWindowTextW(L"1");
+	Original_Edit.SetWindowTextW(L"0");
+	OriginalMax_Edit.SetWindowTextW(L"0");
+
+	SetTimer(0, (1000 * OneFrameTime),NULL);
 
 	return 0;
 }
@@ -66,6 +80,14 @@ void CamAnimation::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_LIST1, mListCtrl);
 	DDX_Control(pDX, IDC_SLIDER1, CamAnime_slider);
 	DDX_Control(pDX, IDC_EDIT2, NowTime_Eidt);
+	DDX_Control(pDX, IDC_EDIT60, Max_Edit);
+	DDX_Control(pDX, IDC_EDIT1, AddKeyCount_Edit);
+	DDX_Control(pDX, IDC_EDIT7, OneFrameTime_Eidt);
+	DDX_Control(pDX, IDC_EDIT8, PlayTime_Edit);
+	DDX_Control(pDX, IDC_EDIT9, Original_Edit);
+	DDX_Control(pDX, IDC_SLIDER2, Original_Slider);
+	DDX_Control(pDX, IDC_EDIT62, OriginalMax_Edit);
+	DDX_Control(pDX, IDC_EDIT16, SaveButton_Edit);
 }
 
 BEGIN_MESSAGE_MAP(CamAnimation, CDialogEx)
@@ -73,10 +95,12 @@ BEGIN_MESSAGE_MAP(CamAnimation, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON2, &CamAnimation::OnDeleteKey)
 	ON_BN_CLICKED(IDC_BUTTON4, &CamAnimation::OnPlay)
 	ON_WM_HSCROLL()
-	ON_BN_CLICKED(IDC_BUTTON7, &CamAnimation::OnBnClickedButton7)
+	ON_BN_CLICKED(IDC_BUTTON7, &CamAnimation::OnPlayerButton)
 	ON_BN_CLICKED(IDC_BUTTON9, &CamAnimation::OnAllDelete)
-	ON_BN_CLICKED(IDC_BUTTON10, &CamAnimation::OnBnClickedButton10)
+	ON_BN_CLICKED(IDC_BUTTON10, &CamAnimation::OnBnChangeKey)
 	ON_WM_TIMER()
+	ON_BN_CLICKED(IDC_BUTTON5, &CamAnimation::OnAddOption)
+	ON_BN_CLICKED(IDC_BUTTON13, &CamAnimation::OnSaveButton)
 END_MESSAGE_MAP()
 
 
@@ -115,21 +139,20 @@ void CamAnimation::AddItem(int index, KeyNode& Node)
 void CamAnimation::OnAddKey()
 {
 	MainCam = Demo::GetCamera();
-	Transform* CamTR = MainCam->GetTransform();
+	MainCamTR = MainCam->GetTransform();
 
 	KeyNode Node;
-	Node.index = 0;
-	Node.Time = SliderPos;
-	Node.PosX = CamTR->Position.x;
-	Node.PosY = CamTR->Position.y;
-	Node.PosZ = CamTR->Position.z;
+	Node.Time = NowSliderPos;
+	Node.PosX = MainCamTR->Position.x;
+	Node.PosY = MainCamTR->Position.y;
+	Node.PosZ = MainCamTR->Position.z;
 
-	Node.RotX = CamTR->Rotation.x;
-	Node.RotY = CamTR->Rotation.y;
-	Node.RotZ = CamTR->Rotation.z;
+	Node.RotX = MainCamTR->Rotation.x;
+	Node.RotY = MainCamTR->Rotation.y;
+	Node.RotZ = MainCamTR->Rotation.z;
 
 	
-	mListCtrl.InsertItem(0, ChangeToCString(SliderPos));
+	mListCtrl.InsertItem(0, ChangeToCString((int)KeyList.size()));
 	mListCtrl.SetItemText(0, 1, ChangeToCString(Node.PosX));
 	mListCtrl.SetItemText(0, 2, ChangeToCString(Node.PosY));
 	mListCtrl.SetItemText(0, 3, ChangeToCString(Node.PosZ));
@@ -139,6 +162,8 @@ void CamAnimation::OnAddKey()
 
 	
 	KeyList.push_back(Node);
+	OriginalMax_Edit.SetWindowTextW(ChangeToCString((int)KeyList.size()));
+	Original_Slider.SetRange(0, (int)KeyList.size() - 1);
 }
 
 
@@ -151,25 +176,72 @@ void CamAnimation::OnDeleteKey()
 void CamAnimation::OnPlay()
 {
 	isPlay = true;
+	AddKeyList.clear();
+
+	int StartKeySize = KeyList.size();
+
+	float ADD = (1.0f / AddKeyCount);
+	for (int i = 0; i < StartKeySize-1; i++)
+	{
+		float Number = ADD;
+		KeyNode StartNode = KeyList[i];
+		KeyNode EndNode = KeyList[i + 1];
+
+		Vector3 StartPos = { StartNode.PosX,StartNode.PosY,StartNode.PosZ };
+		Vector3 EndPos = { EndNode.PosX,EndNode.PosY,EndNode.PosZ };
+
+		Vector3 StartRot = { StartNode.RotX,StartNode.RotY,StartNode.RotZ };
+		Vector3 EndRot = { EndNode.RotX,EndNode.RotY,EndNode.RotZ };
+
+		for (int j = 0; j < AddKeyCount; j++)
+		{
+			Vector3 PosKey = Vector3::Lerp(StartPos, EndPos, Number);
+			Vector3 RotKey = Vector3::Lerp(StartRot, EndRot, Number);
+
+			KeyNode Temp = StartNode;
+			Temp.PosX = PosKey.x;
+			Temp.PosY = PosKey.y;
+			Temp.PosZ = PosKey.z;
+
+			Temp.RotX = RotKey.x;
+			Temp.RotY = RotKey.y;
+			Temp.RotZ = RotKey.z;
+			AddKeyList.push_back(Temp);
+			Number += ADD;
+		}
+	}
+	CamAnime_slider.SetRange(0, (int)AddKeyList.size() - 1);
+	CamAnime_slider.SetPos(0);
+	Max_Edit.SetWindowTextW(ChangeToCString((int)AddKeyList.size() - 1));
+	NowTime_Eidt.SetWindowTextW(L"0");
 }
 
 
 void CamAnimation::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 {
+	if (AddKeyList.size() == 0) { return; }
 	CamAnime_slider.SetRange(0, (int)AddKeyList.size()-1);
-
+	
 	if (pScrollBar->GetDlgCtrlID() == CamAnime_slider.GetDlgCtrlID())
 	{
-		SliderPos = CamAnime_slider.GetPos();
-		NowTime_Eidt.SetWindowTextW(ChangeToCString(SliderPos));
-		MainCam->GetTransform()->Position = { AddKeyList[SliderPos].PosX,AddKeyList[SliderPos].PosY ,AddKeyList[SliderPos].PosZ};
-		MainCam->GetTransform()->Rotation = { AddKeyList[SliderPos].RotX,AddKeyList[SliderPos].RotY ,AddKeyList[SliderPos].RotZ };
+		NowSliderPos = CamAnime_slider.GetPos();
+		NowTime_Eidt.SetWindowTextW(ChangeToCString(NowSliderPos));
+		MainCam->GetTransform()->Position = { AddKeyList[NowSliderPos].PosX,AddKeyList[NowSliderPos].PosY ,AddKeyList[NowSliderPos].PosZ};
+		MainCam->GetTransform()->Rotation = { AddKeyList[NowSliderPos].RotX,AddKeyList[NowSliderPos].RotY ,AddKeyList[NowSliderPos].RotZ };
+	}
+
+	if (pScrollBar->GetDlgCtrlID() == Original_Slider.GetDlgCtrlID())
+	{
+		OriginalSliderPos = Original_Slider.GetPos();
+		Original_Edit.SetWindowTextW(ChangeToCString(OriginalSliderPos));
+		MainCam->GetTransform()->Position = { KeyList[OriginalSliderPos].PosX,KeyList[OriginalSliderPos].PosY ,KeyList[OriginalSliderPos].PosZ };
+		MainCam->GetTransform()->Rotation = { KeyList[OriginalSliderPos].RotX,KeyList[OriginalSliderPos].RotY ,KeyList[OriginalSliderPos].RotZ };
 	}
 
 	CDialogEx::OnHScroll(nSBCode, nPos, pScrollBar);
 }
 
-void CamAnimation::OnBnClickedButton7()
+void CamAnimation::OnPlayerButton()
 {
 	PlayIndex = 0;
 	isPlay = false;
@@ -184,58 +256,33 @@ void CamAnimation::OnAllDelete()
 }
 
 
-void CamAnimation::OnBnClickedButton10()
+void CamAnimation::OnBnChangeKey()
 {
-	int LerpCount = 100;
 	mListCtrl.DeleteAllItems();
-	AddKeyList.clear();
-
-	int StartKeySize = KeyList.size();
-	
-	float ADD = (1.0f / LerpCount);
-	for (int i = 0; i < StartKeySize-2; i++)
+	int Size = (int)KeyList.size();
+	for (int i = 0; i < (int)KeyList.size(); i++) 
 	{
-		float Number = ADD;
-		KeyNode StartNode = KeyList[i];
-		KeyNode EndNode = KeyList[i + 1];
-
-		Vector3 StartPos = { StartNode.PosX,StartNode.PosY,StartNode.PosZ };
-		Vector3 EndPos = { EndNode.PosX,EndNode.PosY,EndNode.PosZ };
-
-		Vector3 StartRot = { StartNode.RotX,StartNode.RotY,StartNode.RotZ };
-		Vector3 EndRot = { EndNode.RotX,EndNode.RotY,EndNode.RotZ };
-
-		AddKeyList.push_back(StartNode);
-		AddItem((int)AddKeyList.size() - 1, StartNode);
-		for (int j = 0; j < LerpCount-2; j++)
-		{
-			Vector3 PosKey = Vector3::Lerp(StartPos, EndPos, Number);
-			Vector3 RotKey = Vector3::Lerp(StartRot, EndRot, Number);
-
-			KeyNode Temp = StartNode;
-			Temp.PosX = PosKey.x;
-			Temp.PosY = PosKey.y;
-			Temp.PosZ = PosKey.z;
-
-			Temp.RotX = RotKey.z;
-			Temp.RotY = RotKey.y;
-			Temp.RotZ = RotKey.z;
-			AddKeyList.push_back(Temp);
-			AddItem((int)AddKeyList.size() - 1, Temp);
-
-			Number += ADD;
-		}
-		AddKeyList.push_back(EndNode);
-		AddItem((int)AddKeyList.size() - 1, EndNode);
+		AddItem(i,KeyList[i]);
 	}
+	KeyList[OriginalSliderPos].PosX = MainCamTR->Position.x;
+	KeyList[OriginalSliderPos].PosY = MainCamTR->Position.y;
+	KeyList[OriginalSliderPos].PosZ = MainCamTR->Position.z;
+
+	KeyList[OriginalSliderPos].RotX = MainCamTR->Rotation.x;
+	KeyList[OriginalSliderPos].RotY = MainCamTR->Rotation.y;
+	KeyList[OriginalSliderPos].RotZ = MainCamTR->Rotation.z;
+
+	AfxMessageBox(L"변경완료");
 }
 
 
 void CamAnimation::OnTimer(UINT_PTR nIDEvent)
 {
+	if (AddKeyList.size() == 0) { return; }
+
 	if (nIDEvent == 0 && isPlay == true)
 	{
-		if (PlayIndex >= AddKeyList.size() - 1)
+		if (PlayIndex > AddKeyList.size() - 1)
 		{
 			isPlay = false;
 			PlayIndex = 0;
@@ -243,6 +290,7 @@ void CamAnimation::OnTimer(UINT_PTR nIDEvent)
 		else
 		{
 			NowTime_Eidt.SetWindowTextW(ChangeToCString(PlayIndex));
+			CamAnime_slider.SetPos(PlayIndex);
 			MainCam->GetTransform()->Position = { AddKeyList[PlayIndex].PosX,AddKeyList[PlayIndex].PosY ,AddKeyList[PlayIndex].PosZ };
 			MainCam->GetTransform()->Rotation = { AddKeyList[PlayIndex].RotX,AddKeyList[PlayIndex].RotY ,AddKeyList[PlayIndex].RotZ };
 			PlayIndex++;
@@ -250,4 +298,55 @@ void CamAnimation::OnTimer(UINT_PTR nIDEvent)
 	}
 
 	CDialogEx::OnTimer(nIDEvent);
+}
+
+
+void CamAnimation::OnAddOption()
+{
+	CString Data;
+	AddKeyCount_Edit.GetWindowTextW(Data);
+	AddKeyCount = ChangeToInt(Data);
+
+	OneFrameTime_Eidt.GetWindowTextW(Data);
+	OneFrameTime = ChangeToFloat(Data);
+
+	PlayTime_Edit.GetWindowTextW(Data);
+	OneFrameTime *= ChangeToFloat(Data);
+
+	KillTimer(0);
+	SetTimer(0, (1000* OneFrameTime ), NULL);
+	AfxMessageBox(L"적용완료");
+}
+
+
+void CamAnimation::OnSaveButton()
+{
+	CString Data;
+	SaveButton_Edit.GetWindowTextW(Data);
+	if (Data == "")
+	{
+		AfxMessageBox(L"Error : 저장할 데이터 이름이 없습니다 \n 이름을 입력해주세요");
+		return;
+	}
+
+	int KeySize = KeyList.size();
+	EATER_OPEN_WRITE_FILE(ChangeToString(Data),"../Assets/Model/Animation/",".Eater");
+	EATER_SET_NODE("CAM_ANIMATION");
+
+	EATER_SET_MAP("Frame",ChangeToString(OneFrameTime));
+	EATER_SET_MAP("Frame",ChangeToString(OneFrameTime));
+
+	EATER_SET_LIST_START("KEY", KeySize, 6);
+	for (int i = 0; i < KeySize; i++)
+	{
+		EATER_SET_LIST(KeyList[i].PosX);
+		EATER_SET_LIST(KeyList[i].PosY);
+		EATER_SET_LIST(KeyList[i].PosZ);
+
+		EATER_SET_LIST(KeyList[i].RotX);
+		EATER_SET_LIST(KeyList[i].RotY);
+		EATER_SET_LIST(KeyList[i].RotZ, true);
+	}
+	EATER_CLOSE_WRITE_FILE();
+	AfxMessageBox(L"성공 : ../Assets/Model/Animation경로에 저장됨");
 }

@@ -20,6 +20,7 @@ namespace ParserData
 	class CAnimation;
 }
 
+class CameraAnimation;
 class ModelAnimationData;
 class LoadMeshData;
 class ModelData;
@@ -65,6 +66,7 @@ public:
 	static ModelAnimationData* GetAnimation(std::string Path);
 	static Material*		GetMaterial(std::string Path);
 	static Mesh*			GetMesh(std::string Path);
+	static CameraAnimation* GetCamAnimation(std::string Path);
 	static bool				FindModel(std::string Name);
 	static bool				FindTexture(std::string Name);
 
@@ -82,7 +84,7 @@ private:
 	static std::map<std::string, Material*>				MaterialList;
 	static std::map<std::string, ModelAnimationData*>	AnimationList;
 	static std::map<std::string, Mesh*>					MeshBufferList;
-
+	static std::map<std::string, CameraAnimation*>		CamAnimationList;
 private:
 	FBXManager*				mFBX;
 	TextureManager*			mTexture;

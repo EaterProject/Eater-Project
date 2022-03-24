@@ -163,6 +163,9 @@
     <Filter Include="소스 파일\Manager\LoadManager\EATER\EaterInterface">
       <UniqueIdentifier>{610439c6-177f-45c9-8e56-b0f7483da393}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Manager\LoadManager\EATER\EaterCamera">
+      <UniqueIdentifier>{8525a853-a4dd-4374-9df0-373ac77606d5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -321,6 +324,9 @@
     <ClInclude Include="Export\CameraDebugKeyInput.h">
       <Filter>소스 파일\Component\Camera</Filter>
     </ClInclude>
+    <ClInclude Include="Eater_LoadCamera.h">
+      <Filter>소스 파일\Manager\LoadManager\EATER\EaterCamera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -460,6 +466,9 @@
     </ClCompile>
     <ClCompile Include="Eater_Interface.cpp">
       <Filter>소스 파일\Manager\LoadManager\EATER\EaterInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="Eater_LoadCamera.cpp">
+      <Filter>소스 파일\Manager\LoadManager\EATER\EaterCamera</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
