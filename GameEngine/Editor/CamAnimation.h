@@ -41,6 +41,7 @@ protected:
 	int		OriginalIndex;			//보간하지 않은 인덱스
 	int		AddKeyCount;			//보간시 추가할 키 개수
 	float	OneFrameTime;			//한프레임이 지나가는 속도
+	float	PlayTime;
 public:
 	DECLARE_MESSAGE_MAP()
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
@@ -54,7 +55,6 @@ public:
 
 	CEdit AddKeyCount_Edit;		//추가할 키 개수를 보여줄 에디터
 	CEdit OneFrameTime_Eidt;	//한프레임 속도를 보여줄 에디터
-	CEdit PlayTime_Edit;		//플레이타임 속도를 보여줄 에디터
 
 	CEdit Original_Edit;		//보간하지 않은 값 인덱스
 	CEdit OriginalMax_Edit;		//보간하지 않은 값 Max

@@ -1,6 +1,6 @@
 #pragma once
-
 #include "Eater_Interface.h"
+
 class GameObject;
 class Eater_LoadScene : Eater_Interface
 {

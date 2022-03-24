@@ -16,6 +16,7 @@ Eater_LoadMesh::~Eater_LoadMesh()
 
 void Eater_LoadMesh::Initialize()
 {
+	mCamera = new Eater_LoadCamera();
 	mCamera->Initialize();
 }
 void Eater_LoadMesh::LoadData(std::string& Path)
@@ -66,6 +67,7 @@ void Eater_LoadMesh::LoadData(std::string& Path)
 		}
 		else if (NodeName == "CAM_ANIMATION")
 		{
+			mCamera->SetPath(Path);
 			mCamera->LoadData(i);
 		}
 	}

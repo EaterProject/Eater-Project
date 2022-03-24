@@ -62,10 +62,10 @@ BOOL CamAnimation::OnInitDialog()
 	NowSliderPos	= 0;
 	OneFrameTime	= 0.01;
 	OriginalIndex	= 0;
+	PlayTime		= 1.0f;
 
 	AddKeyCount_Edit.SetWindowTextW(L"100");
 	OneFrameTime_Eidt.SetWindowTextW(L"0.01");
-	PlayTime_Edit.SetWindowTextW(L"1");
 	Original_Edit.SetWindowTextW(L"0");
 	OriginalMax_Edit.SetWindowTextW(L"0");
 
@@ -83,7 +83,6 @@ void CamAnimation::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EDIT60, Max_Edit);
 	DDX_Control(pDX, IDC_EDIT1, AddKeyCount_Edit);
 	DDX_Control(pDX, IDC_EDIT7, OneFrameTime_Eidt);
-	DDX_Control(pDX, IDC_EDIT8, PlayTime_Edit);
 	DDX_Control(pDX, IDC_EDIT9, Original_Edit);
 	DDX_Control(pDX, IDC_SLIDER2, Original_Slider);
 	DDX_Control(pDX, IDC_EDIT62, OriginalMax_Edit);
@@ -184,14 +183,13 @@ void CamAnimation::OnPlay()
 	for (int i = 0; i < StartKeySize-1; i++)
 	{
 		float Number = ADD;
-		KeyNode StartNode = KeyList[i];
-		KeyNode EndNode = KeyList[i + 1];
+		KeyNode StartNode	= KeyList[i];
+		KeyNode EndNode		= KeyList[i + 1];
 
-		Vector3 StartPos = { StartNode.PosX,StartNode.PosY,StartNode.PosZ };
-		Vector3 EndPos = { EndNode.PosX,EndNode.PosY,EndNode.PosZ };
-
-		Vector3 StartRot = { StartNode.RotX,StartNode.RotY,StartNode.RotZ };
-		Vector3 EndRot = { EndNode.RotX,EndNode.RotY,EndNode.RotZ };
+		Vector3 StartPos	= { StartNode.PosX,StartNode.PosY,StartNode.PosZ };
+		Vector3 EndPos		= { EndNode.PosX,EndNode.PosY,EndNode.PosZ };
+		Vector3 StartRot	= { StartNode.RotX,StartNode.RotY,StartNode.RotZ };
+		Vector3 EndRot		= { EndNode.RotX,EndNode.RotY,EndNode.RotZ };
 
 		for (int j = 0; j < AddKeyCount; j++)
 		{
@@ -310,11 +308,8 @@ void CamAnimation::OnAddOption()
 	OneFrameTime_Eidt.GetWindowTextW(Data);
 	OneFrameTime = ChangeToFloat(Data);
 
-	PlayTime_Edit.GetWindowTextW(Data);
-	OneFrameTime *= ChangeToFloat(Data);
-
 	KillTimer(0);
-	SetTimer(0, (1000* OneFrameTime ), NULL);
+	SetTimer(0, (1000* OneFrameTime), NULL);
 	AfxMessageBox(L"적용완료");
 }
 
@@ -333,7 +328,7 @@ void CamAnimation::OnSaveButton()
 	EATER_OPEN_WRITE_FILE(ChangeToString(Data),"../Assets/Model/Animation/",".Eater");
 	EATER_SET_NODE("CAM_ANIMATION");
 
-	EATER_SET_MAP("Frame",ChangeToString(OneFrameTime));
+	EATER_SET_MAP("AddKeyCount",ChangeToString(AddKeyCount));
 	EATER_SET_MAP("Frame",ChangeToString(OneFrameTime));
 
 	EATER_SET_LIST_START("KEY", KeySize, 6);
