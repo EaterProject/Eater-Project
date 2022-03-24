@@ -9,6 +9,7 @@ Mesh::Mesh()
 {
 	// Mesh Buffer 생성..
 	m_MeshData = new MeshBuffer();
+	m_MeshData->Name = "None";
 
 	// Mesh 등록..
 	MeshManager::PushMesh(this);

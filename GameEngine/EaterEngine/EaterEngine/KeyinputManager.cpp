@@ -85,30 +85,30 @@ void KeyinputManager::KeyUpDate()
 void KeyinputManager::UpdataMouseCursor()
 {
 	GetCursorPos(&CursorPos);
-	ScreenToClient(hwnd,&CursorPos);
+	ScreenToClient(hwnd, &CursorPos);
 }
 
- const LPPOINT KeyinputManager::GetMousePos()
+const LPPOINT KeyinputManager::GetMousePos()
 {
 	return &CursorPos;
 }
 
- void KeyinputManager::Initialize(HWND mhwnd)
- {
-	 hwnd = mhwnd;
- }
+void KeyinputManager::Initialize(HWND mhwnd)
+{
+	hwnd = mhwnd;
+}
 
- void KeyinputManager::Update()
- {
-	 // 현재 Window가 Focus 상태일때만 Update..
-	 if (isFocus)
-	 {
+void KeyinputManager::Update()
+{
+	// 현재 Window가 Focus 상태일때만 Update..
+	if (isFocus)
+	{
 		UpdataMouseCursor();
 		KeyUpDate();
-	 }
- }
+	}
+}
 
- void KeyinputManager::SetFocus(bool focus)
- {
-	 isFocus = focus;
- }
+void KeyinputManager::SetFocus(bool focus)
+{
+	isFocus = focus;
+}

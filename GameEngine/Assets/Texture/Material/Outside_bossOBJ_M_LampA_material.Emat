@@ -1,16 +1,16 @@
 #EATERMAT
 @MaterialName Outside_bossOBJ_M_LampA_material
 @Alpha NO
-@Diffuse gate00_lamp_A_BaseColor.png
-@Normal gate00_lamp_A_Normal.png
-@Emissive gate00_lamp_A_Emissive.png
-@ORM gate00_lamp_A_ORM.png
-@Roughness 0
-@Metallic 0
+@ORM gate00_lamp_A_ORM
+@Diffuse gate00_lamp_A_BaseColor
+@Roughness 0.000000
+@Normal gate00_lamp_A_Normal
+@Emissive gate00_lamp_A_Emissive
+@Metallic 0.000000
 @Tileing_X 1
 @Tileing_Y 1
-@AddColor_R 0
-@AddColor_G 0
-@AddColor_B 0
-@AddColor_A 0
+@AddColor_R 0.000000
+@AddColor_G 0.000000
+@AddColor_B 0.000000
+@AddColor_A 1
 &

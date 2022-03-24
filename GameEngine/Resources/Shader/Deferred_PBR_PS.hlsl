@@ -1,10 +1,6 @@
 #include "Output_Header.hlsli"
 #include "Function_Header.hlsli"
-
-#define ALBEDO_MAP      0x00000001
-#define NORMAL_MAP      0x00000010
-#define EMISSIVE_MAP    0x00000100
-#define ORM_MAP         0x00001000
+#include "Define_Header.hlsli"
 
 cbuffer cbMaterial : register(b0)
 {

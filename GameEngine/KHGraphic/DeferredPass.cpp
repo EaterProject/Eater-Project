@@ -209,7 +209,7 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const std:
 	MeshRenderBuffer* mesh = instance->m_Mesh;
 	MaterialRenderBuffer* mat = instance->m_Material;
 	MaterialSubData* matSub = mat->m_MaterialSubData;
-
+	
 	for (int i = 0; i < meshlist.size(); i++)
 	{
 		if (meshlist[i] == nullptr) continue;

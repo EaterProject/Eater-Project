@@ -67,9 +67,6 @@
     <Filter Include="소스 파일\Component\Transform">
       <UniqueIdentifier>{85e0042f-5eda-4ce6-9cac-7a212ad26da6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Component\SkinningFilter">
-      <UniqueIdentifier>{0db28258-c4dd-46c9-b56d-fa34d7f861c0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Manager\BaseManager">
       <UniqueIdentifier>{7515b128-a908-4f50-9f37-1bebd61f2db9}</UniqueIdentifier>
     </Filter>
@@ -162,6 +159,9 @@
     </Filter>
     <Filter Include="소스 파일\Manager\LoadManager\EATER\EaterInterface">
       <UniqueIdentifier>{610439c6-177f-45c9-8e56-b0f7483da393}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\SkinningFilter">
+      <UniqueIdentifier>{0db28258-c4dd-46c9-b56d-fa34d7f861c0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

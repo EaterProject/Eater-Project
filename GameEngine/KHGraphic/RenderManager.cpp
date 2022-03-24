@@ -41,7 +41,7 @@ RenderManager::RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, I
 {
 	// Rendering Initialize..
 	RenderPassBase::Initialize(graphic->GetContext(), factory, resource, shader);
-	
+
 	m_SwapChain = graphic->GetSwapChain();
 
 	// Render Data Converter 생성..
@@ -133,9 +133,9 @@ void RenderManager::RenderSetting(RenderOption* renderOption)
 	m_RenderOption = renderOption;
 
 	// 현재 Render Option 저장..
-	m_NowRenderOption.DebugOption		= m_RenderOption->DebugOption;
-	m_NowRenderOption.RenderingOption	= m_RenderOption->RenderingOption;
-	m_NowRenderOption.PostProcessOption	= m_RenderOption->PostProcessOption;
+	m_NowRenderOption.DebugOption = m_RenderOption->DebugOption;
+	m_NowRenderOption.RenderingOption = m_RenderOption->RenderingOption;
+	m_NowRenderOption.PostProcessOption = m_RenderOption->PostProcessOption;
 
 	// 최초 Render Setting..
 	for (RenderPassBase* renderPass : m_RenderPassList)
@@ -150,8 +150,8 @@ void RenderManager::RenderSetting()
 	if (*m_RenderOption == m_NowRenderOption) return;
 
 	// 현재 Render Option 저장..
-	m_NowRenderOption.DebugOption		= m_RenderOption->DebugOption;
-	m_NowRenderOption.RenderingOption	= m_RenderOption->RenderingOption;
+	m_NowRenderOption.DebugOption = m_RenderOption->DebugOption;
+	m_NowRenderOption.RenderingOption = m_RenderOption->RenderingOption;
 	m_NowRenderOption.PostProcessOption = m_RenderOption->PostProcessOption;
 
 	// 최초 Render Setting..
@@ -325,7 +325,7 @@ void RenderManager::DeferredRender()
 	for (int i = 0; i < m_RenderMeshList.size(); i++)
 	{
 		m_InstanceLayer = m_RenderMeshList[i];
-		
+
 		m_Deferred->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_MeshList);
 	}
 }
@@ -548,7 +548,7 @@ void RenderManager::ConvertChangeInstance()
 
 		// 해당 Render Data 추출..
 		RenderData* convertRenderData = (RenderData*)originMeshData->Render_Data;
-		
+
 		// 해당 Instance Buffer 추출..
 		InstanceRenderBuffer* instance = m_Converter->GetInstance(convertRenderData->m_InstanceIndex);
 
@@ -639,21 +639,25 @@ void RenderManager::ChangeMeshRenderData(MeshData* meshData)
 	// 현재 변경 전 Layer 검색..
 	InstanceLayer* layer = m_Converter->GetLayer(convertRenderData->m_InstanceLayerIndex);
 
-	int index = -1;
-
-	for (int i = 0; i < layer->m_MeshList.size(); i++)
+	// 해당 Layer가 존재한다면..
+	if (layer)
 	{
-		if (layer->m_MeshList[i] == convertRenderData)
+		int index = -1;
+
+		for (int i = 0; i < layer->m_MeshList.size(); i++)
 		{
-			index = i;
-			break;
+			if (layer->m_MeshList[i] == convertRenderData)
+			{
+				index = i;
+				break;
+			}
 		}
+
+		assert(index != -1);
+
+		// 해당 Render Data List에서 제거..
+		layer->DeleteRenderData(index);
 	}
-
-	assert(index != -1);
-
-	// 해당 Render Data List에서 제거..
-	layer->DeleteRenderData(index);
 
 	// Render Data 재설정..
 	m_Converter->ConvertRenderData(meshData, convertRenderData);
@@ -799,7 +803,7 @@ void RenderManager::CheckInstanceLayer(std::vector<InstanceLayer*>& layerList)
 	// Layer List 내에서의 Layer Index..
 	int index = -1;
 
-	for (int i = 0; i < layerList.size(); i ++)
+	for (int i = 0; i < layerList.size(); i++)
 	{
 		// 해당 Layer List Index 검색..
 		if (layerList[i]->m_MeshList.empty())

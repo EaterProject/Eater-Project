@@ -577,7 +577,7 @@ void DebugPass::GlobalRender()
 
 		// Look Vector를 Up Vector 기준 Angle로 이동..
 		axis = XMQuaternionRotationAxis(up, light->Angle * 2.0f);
-
+		
 		ray.RayEnd = light->Position + (axis + light->Direction) * Vector3(light->Range);
 		
 		// Ray Buffer Update

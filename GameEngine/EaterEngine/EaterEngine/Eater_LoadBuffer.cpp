@@ -162,8 +162,8 @@ void Eater_LoadBuffer::LoadIndex(int index, ParserData::CMesh* mMesh)
 
 Mesh* Eater_LoadBuffer::CreateBuffer(ParserData::CMesh* mesh)
 {
-	Mesh* meshBuffer = new Mesh();
 	EnterCriticalSection(m_CriticalSection);
+	Mesh* meshBuffer = new Mesh();
 	m_Graphic->CreateMeshBuffer(mesh, &meshBuffer->m_MeshData);
 	LeaveCriticalSection(m_CriticalSection);
 	return meshBuffer;

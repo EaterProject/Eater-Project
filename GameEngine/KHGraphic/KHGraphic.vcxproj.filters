@@ -235,6 +235,9 @@
     <Filter Include="소스 파일\Converter\RenderData">
       <UniqueIdentifier>{1bb63bd9-de1f-44d1-9aa0-c5952d8badba}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\RendererPass\DrawID">
+      <UniqueIdentifier>{d6f3936a-19e2-4002-9a55-d4007c86ccc0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
