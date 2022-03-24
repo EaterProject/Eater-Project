@@ -11,8 +11,8 @@ class CTAP_Particle;
 
 class FileOption;
 class Loading;
-//class Loading;
 class EditorManager;
+class CamAnimation;
 class RightOption : public CDialogEx
 {
 	DECLARE_DYNAMIC(RightOption)
@@ -64,6 +64,7 @@ public:
 	FileOption*			mFileOption;		//자체포맷 변환 창
 	EditorManager*		m_EditorManager;	//자체포맷 변환 관리 매니저
 	Loading*			mLoading;			//로딩 바
+	CamAnimation*		mCam;
 public:
 	void Create_Hirearchy_Item(GameObject* Obj, HTREEITEM TOP);
 	void Delete_Hirearchy_Item(HTREEITEM TOP);
@@ -84,4 +85,5 @@ public:
 	afx_msg void OnClickTap(NMHDR* pNMHDR, LRESULT* pResult);
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	afx_msg void OnOpenOption();
+	afx_msg void OnOpenCamAnimation();
 };

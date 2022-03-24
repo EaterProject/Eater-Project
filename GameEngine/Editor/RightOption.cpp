@@ -24,6 +24,7 @@
 #include "MeshFilter.h"
 #include "ParticleSystem.h"
 #include "Light.h"
+#include "CamAnimation.h"
 
 // RightOption 대화 상자
 
@@ -51,11 +52,13 @@ BOOL RightOption::OnInitDialog()
 	mFileOption->Initialize(this);
 	mFileOption->ShowWindow(SW_HIDE);
 
-
 	mLoading = new Loading();
 	mLoading->Create(IDD_LOADING);
 	mLoading->ShowWindow(SW_HIDE);
 
+	mCam = new CamAnimation();
+	mCam->Create(IDD_CAM_ANIMATION);
+	mCam->ShowWindow(SW_HIDE);
 
 	//텝정보들 생성
 	CRect rect;
@@ -116,6 +119,7 @@ BEGIN_MESSAGE_MAP(RightOption, CDialogEx)
 	ON_WM_MOUSEHWHEEL()
 	ON_WM_SIZE()
 	ON_BN_CLICKED(IDC_BUTTON10, &RightOption::OnOpenOption)
+	ON_BN_CLICKED(IDC_BUTTON11, &RightOption::OnOpenCamAnimation)
 END_MESSAGE_MAP()
 
 RightOption* RightOption::GetThis()
@@ -463,4 +467,10 @@ BOOL RightOption::PreTranslateMessage(MSG* pMsg)
 void RightOption::OnOpenOption()
 {
 	mFileOption->ShowWindow(SW_SHOW);
+}
+
+
+void RightOption::OnOpenCamAnimation()
+{
+	mCam->ShowWindow(SW_SHOW);
 }

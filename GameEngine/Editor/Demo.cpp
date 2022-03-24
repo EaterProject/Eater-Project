@@ -11,11 +11,14 @@
 #include "Terrain.h"
 #include "ParticleSystem.h"
 #include "Light.h"
+#include "Camera.h"
 
 std::map<std::string, GameObject*> Demo::ObjectList;
 
 SceneSave*		Demo::SaveManager = nullptr;
 GameObject*		Demo::Object		= nullptr;
+GameObject*		Demo::CamObject		= nullptr;
+GameObject*		Demo::DebugCamObject = nullptr;
 Demo::Demo()
 {
 	Object = nullptr;
@@ -35,6 +38,7 @@ void Demo::Awake()
 	Load("../Assets/Texture/Material");
 	Load("../Assets/Texture/Particle");
 
+	DebugCamObject = GetMainCamera();
 }
 
 void Demo::Update()
@@ -143,6 +147,24 @@ std::string Demo::FindMeshName(std::string MeshName)
 			Meshindex++;
 			ObjectName = MeshName + "(" + std::to_string(Meshindex) + ")";
 		}
+	}
+}
+
+GameObject* Demo::GetCamera()
+{
+	return DebugCamObject;
+}
+
+void Demo::ChangeCam()
+{
+	GameObject* Main =GetMainCamera();
+	if (Main == DebugCamObject)
+	{
+		CamObject->GetComponent<Camera>()->ChoiceMainCam();
+	}
+	else
+	{
+		DebugCamObject->GetComponent<Camera>()->ChoiceMainCam();
 	}
 }
 

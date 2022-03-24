@@ -276,9 +276,6 @@
     <ClInclude Include="..\..\Library\inc\TypeOptionHeader.h">
       <Filter>소스 파일\Data</Filter>
     </ClInclude>
-    <ClInclude Include="CameraDebugKeyInput.h">
-      <Filter>소스 파일\Component\Camera</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Library\inc\LightHelper.h">
       <Filter>소스 파일\Data</Filter>
     </ClInclude>
@@ -320,6 +317,9 @@
     </ClInclude>
     <ClInclude Include="Eater_Interface.h">
       <Filter>소스 파일\Manager\LoadManager\EATER\EaterInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="Export\CameraDebugKeyInput.h">
+      <Filter>소스 파일\Component\Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

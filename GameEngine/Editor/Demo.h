@@ -38,10 +38,17 @@ public:
 	static std::string FindMeshName(std::string MeshName);	//매쉬의 같은이름이있으면 변경해서 가져온다
 
 	static std::map<std::string, GameObject*> ObjectList;
+
+	static GameObject* GetCamera();
+	static void ChangeCam();
 private:
 	static GameObject* Object;
+
+	static GameObject* CamObject;
+	static GameObject* DebugCamObject;
 	static GameObject* CreateBaseObject(std::string ObjectName,std::string MeshName); 
 	static GameObject* CreateSkinObject(std::string ObjectName, std::string MeshName);
+	static GameObject* CreateCamera();
 
 
 	static SceneSave* SaveManager;

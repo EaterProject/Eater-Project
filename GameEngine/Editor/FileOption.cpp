@@ -11,6 +11,7 @@
 #include "GrobalFunction.h"
 #include "Demo.h"
 #include "GameObject.h"
+#include "CamAnimation.h"
 #include "SceneSaveDialog.h"
 
 
@@ -27,6 +28,12 @@ FileOption::FileOption(CWnd* pParent /*=nullptr*/)
 FileOption::~FileOption()
 {
 
+}
+
+BOOL FileOption::OnInitDialog()
+{
+	CDialog::OnInitDialog();
+	return 0;
 }
 
 void FileOption::DoDataExchange(CDataExchange* pDX)
@@ -144,4 +151,20 @@ void FileOption::OnOpenExe()
 		false, 0, NULL, NULL,
 		&Startupinfo, &processInfo
 	);
+}
+
+BOOL FileOption::PreTranslateMessage(MSG* pMsg)
+{
+	if (pMsg->message == WM_KEYDOWN)
+	{
+		switch (pMsg->wParam)
+		{
+		case VK_ESCAPE:
+		case VK_RETURN:
+			return TRUE;
+		default:
+			break;
+		}
+	}
+	return CDialogEx::PreTranslateMessage(pMsg);
 }

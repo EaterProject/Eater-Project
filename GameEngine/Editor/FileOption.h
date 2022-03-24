@@ -21,9 +21,10 @@ public:
 #endif
 
 protected:
+	virtual BOOL OnInitDialog();
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 지원입니다.
-	RightOption* mRightOption;
-	SceneSaveDialog* mScene;
+	RightOption*		mRightOption;
+	SceneSaveDialog*	mScene;
 	DECLARE_MESSAGE_MAP()
 public:
 	void Initialize(RightOption* mOption);
@@ -37,4 +38,5 @@ public:
 	afx_msg void OnSceneSave();
 	afx_msg void OnOpenAssetsFolder();
 	afx_msg void OnOpenExe();
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
 };

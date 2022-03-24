@@ -127,6 +127,9 @@
     <Filter Include="소스 파일\MFC\Dialog\Loading">
       <UniqueIdentifier>{d75bf0cc-b2b0-40a4-8468-23a3724434c1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\MFC\Dialog\CamAnimation">
+      <UniqueIdentifier>{a203aa94-bb5a-4e2e-bd09-aa41386b252a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -231,6 +234,9 @@
     <ClInclude Include="E_ChangeManager.h">
       <Filter>소스 파일\Manager\Eater\EaterChange</Filter>
     </ClInclude>
+    <ClInclude Include="CamAnimation.h">
+      <Filter>소스 파일\MFC\Dialog\CamAnimation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainFrm.cpp">
@@ -322,6 +328,9 @@
     </ClCompile>
     <ClCompile Include="E_ChangeManager.cpp">
       <Filter>소스 파일\Manager\Eater\EaterChange</Filter>
+    </ClCompile>
+    <ClCompile Include="CamAnimation.cpp">
+      <Filter>소스 파일\MFC\Dialog\CamAnimation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
