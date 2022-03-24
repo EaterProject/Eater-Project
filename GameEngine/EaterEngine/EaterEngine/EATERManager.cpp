@@ -22,7 +22,6 @@ EATERManager::EATERManager()
 	m_Graphic = nullptr;
 	m_CriticalSection = nullptr;
 
-	
 	mEaterScene		= nullptr;
 	mEaterBuffer	= nullptr;
 	mEaterMaterial	= nullptr;

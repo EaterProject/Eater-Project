@@ -242,6 +242,7 @@ copy /Y "$(ProjectDir)Network\lib\Release\*lib"  "$(TargetDir)"</Command>
     <ClInclude Include="EATERManager.h" />
     <ClInclude Include="Eater_Interface.h" />
     <ClInclude Include="Eater_LoadBuffer.h" />
+    <ClInclude Include="Eater_LoadCamera.h" />
     <ClInclude Include="Eater_LoadMaterial.h" />
     <ClInclude Include="Eater_LoadMesh.h" />
     <ClInclude Include="Eater_LoadScene.h" />
@@ -299,6 +300,7 @@ copy /Y "$(ProjectDir)Network\lib\Release\*lib"  "$(TargetDir)"</Command>
     <ClCompile Include="EATERManager.cpp" />
     <ClCompile Include="Eater_Interface.cpp" />
     <ClCompile Include="Eater_LoadBuffer.cpp" />
+    <ClCompile Include="Eater_LoadCamera.cpp" />
     <ClCompile Include="Eater_LoadMaterial.cpp" />
     <ClCompile Include="Eater_LoadMesh.cpp" />
     <ClCompile Include="Eater_LoadScene.cpp" />
