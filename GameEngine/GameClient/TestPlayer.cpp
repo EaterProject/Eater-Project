@@ -133,7 +133,7 @@ void TestPlayer::PlayerKeyinput()
 	}
 	else
 	{
-		//mRigidbody->SetVelocity(DirPos.x, 0, DirPos.z);
+		
 	}
 	
 

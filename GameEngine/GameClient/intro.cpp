@@ -26,32 +26,31 @@ void intro::Awake()
 {
 	LoadEnvironment("../Assets/Texture/Base/Night.dds");
 
-	//GameObject* gameobject = GetMainCamera();
-	//DebugCam = gameobject->GetComponent<Camera>();
+	GameObject* gameobject = GetMainCamera();
+	DebugCam = gameobject->GetComponent<Camera>();
 	////
-	//////게임에 사용할 카메라를 만들어준다
-	//GameObject* Cam = InstanceCamera();
-	//MainCam = Cam->GetComponent<Camera>();
-	//PlayerCamera* PC = Cam->AddComponent<PlayerCamera>();
-	//MainCam->ChoiceMainCam();
-	//Cam->SetDontDestroy(true);
+	////게임에 사용할 카메라를 만들어준다
+	GameObject* Cam = InstanceCamera();
+	MainCam = Cam->GetComponent<Camera>();
+	PlayerCamera* PC = Cam->AddComponent<PlayerCamera>();
+	MainCam->ChoiceMainCam();
+	Cam->SetDontDestroy(true);
 	//
-	//GameObject* Obj = Instance();
-	//Obj->AddComponent<MeshFilter>();
-	//Obj->AddComponent<TestPlayer>();
-	////Obj->AddComponent<AnimationController>();
-	////Obj->AddComponent<Rigidbody>();
-	////Obj->AddComponent<Collider>();
-	//Obj->SetDontDestroy(true);
-	//Obj->GetTransform()->Scale = { 0.25f,0.25f ,0.25f };
-	//PC->Userobject = Obj;
+	GameObject* Obj = Instance();
+	Obj->AddComponent<MeshFilter>();
+	Obj->AddComponent<TestPlayer>();
+	Obj->AddComponent<AnimationController>();
+	//Obj->AddComponent<Rigidbody>();
+	//Obj->AddComponent<Collider>();
+	Obj->SetDontDestroy(true);
+	PC->Userobject = Obj;
 
 	//StartNetwork();
 
 	//LoadUnityFile("../Resources/Data/Collider.Eater");
 
 	
-	Load("../Assets/Scene/intro.Scene");
+	//Load("../Assets/Scene/intro.Scene");
 	//CreateMap();
 	SetEnvironment(true);
 	//CreateTerrain();
