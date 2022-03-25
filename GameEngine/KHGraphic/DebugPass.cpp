@@ -290,6 +290,8 @@ void DebugPass::GlobalRender()
 	m_DebugVS->ConstantBufferCopy(&object);
 	m_DebugVS->Update();
 
+	m_DebugPS->Update();
+
 	BufferUpdate(DEBUG_TYPE::DEBUG_AXIS);
 	g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
 

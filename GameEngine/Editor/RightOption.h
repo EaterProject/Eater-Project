@@ -1,5 +1,7 @@
 ﻿#pragma once
 #include <string>
+#include <map>
+
 
 
 // RightOption 대화 상자
@@ -11,8 +13,8 @@ class CTAP_Particle;
 
 class FileOption;
 class Loading;
-//class Loading;
 class EditorManager;
+class CamAnimation;
 class RightOption : public CDialogEx
 {
 	DECLARE_DYNAMIC(RightOption)
@@ -57,6 +59,11 @@ public:
 	CTAP_Particle*	 mPrticle;		//MeshFiltet를 보여줄 탭
 	CTAP_Light*		 mLight;		//Light 를 보여줄탭
 public:
+	//Tag 관련
+	CComboBox	Tag_Combo;
+	CEdit		AddTag_Edit;
+	std::map<int,std::string> TagList;
+public:
 	CString SaveSceneName;
 	bool isDrag = false;
 public:
@@ -64,6 +71,7 @@ public:
 	FileOption*			mFileOption;		//자체포맷 변환 창
 	EditorManager*		m_EditorManager;	//자체포맷 변환 관리 매니저
 	Loading*			mLoading;			//로딩 바
+	CamAnimation*		mCam;
 public:
 	void Create_Hirearchy_Item(GameObject* Obj, HTREEITEM TOP);
 	void Delete_Hirearchy_Item(HTREEITEM TOP);
@@ -84,4 +92,8 @@ public:
 	afx_msg void OnClickTap(NMHDR* pNMHDR, LRESULT* pResult);
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	afx_msg void OnOpenOption();
+	afx_msg void OnOpenCamAnimation();
+	afx_msg void OnAddTag_Button();
+	afx_msg void OnChoiceTag();
+	afx_msg void OnDeleteTagButton();
 };

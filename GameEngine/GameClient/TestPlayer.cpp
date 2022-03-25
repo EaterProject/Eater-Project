@@ -32,24 +32,24 @@ void TestPlayer::Awake()
 	mTransform = gameobject->GetTransform();
 	mMeshFilter = gameobject->GetComponent<MeshFilter>();
 	//mAnimation = gameobject->GetComponent<AnimationController>();
-	mRigidbody = gameobject->GetComponent<Rigidbody>();
-	mCollider  = gameobject->GetComponent<Collider>();
+	//mRigidbody = gameobject->GetComponent<Rigidbody>();
+	//mCollider  = gameobject->GetComponent<Collider>();
 }
 
 void TestPlayer::SetUp()
 {
 	//매쉬, 애니메이션 정보 입력
-	mMeshFilter->SetModelName("box");
-	//mMeshFilter->SetAnimationName("MOdNA");
+	mMeshFilter->SetModelName("bossb+");
+	mMeshFilter->SetAnimationName("bossb+");
 	//mAnimation->Choice("Idle");
 
 	GameObject* MainCam = GetMainCamera();
 	MainCam->GetComponent<PlayerCamera>()->Userobject = gameobject;
 	mCameraTR = MainCam->GetTransform();
 	mTransform->Rotation = { 0,0,0 };
-	mCollider->SetBoxCollider(0.25f);
-	mRigidbody->SetPosition(5, 10, 0);
-	mRigidbody->SetFreezeRotation(true, true, true);
+	//mCollider->SetBoxCollider(0.25f);
+	//mRigidbody->SetPosition(5, 10, 0);
+	//mRigidbody->SetFreezeRotation(true, true, true);
 	
 	//사이즈 조정
 	mTransform->Scale = { 0.25f,0.25f ,0.25f };
@@ -73,20 +73,20 @@ void TestPlayer::Update()
 		mRigidbody->SetPosition(5, 0, 0);
 	}
 
-	if (mRigidbody->GetTriggerEnter() == true)
-	{
-		DebugPrint("충돌시작");
-	}
-
-	if (mRigidbody->GetTriggerStay() == true)
-	{
-		DebugPrint("충돌중");
-	}
-
-	if (mRigidbody->GetTriggerExit() == true)
-	{
-		DebugPrint("충돌끝");
-	}
+	//if (mRigidbody->GetTriggerEnter() == true)
+	//{
+	//	DebugPrint("충돌시작");
+	//}
+	//
+	//if (mRigidbody->GetTriggerStay() == true)
+	//{
+	//	DebugPrint("충돌중");
+	//}
+	//
+	//if (mRigidbody->GetTriggerExit() == true)
+	//{
+	//	DebugPrint("충돌끝");
+	//}
 }
 
 void TestPlayer::StartUpdate()
@@ -133,7 +133,7 @@ void TestPlayer::PlayerKeyinput()
 	}
 	else
 	{
-		mRigidbody->SetVelocity(DirPos.x, 0, DirPos.z);
+		//mRigidbody->SetVelocity(DirPos.x, 0, DirPos.z);
 	}
 	
 
@@ -145,6 +145,6 @@ void TestPlayer::PlayerKeyinput()
 	//MeshObject->GetTransform()->Slow_Y_Rotation(Dir, 300);
 	//MeshObject->GetTransform()->SetRotate(0, 0, 1);
 	DirPos*= Speed;
-	mRigidbody->SetVelocity(DirPos.x, 0, DirPos.z);
+	//mRigidbody->SetVelocity(DirPos.x, 0, DirPos.z);
 	DirPos = { 0,0,0 };
 }

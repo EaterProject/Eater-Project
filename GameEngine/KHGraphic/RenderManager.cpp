@@ -491,6 +491,7 @@ void RenderManager::DebugRender()
 			switch (m_RenderData->m_ObjectData->ObjType)
 			{
 			case OBJECT_TYPE::DEFALT:
+			case OBJECT_TYPE::CAMERA:
 			case OBJECT_TYPE::BONE:
 			case OBJECT_TYPE::LIGHT:
 				m_Debug->RenderUpdate(m_RenderData);

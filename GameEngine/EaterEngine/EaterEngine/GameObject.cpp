@@ -7,7 +7,7 @@
 #include "MeshFilter.h"
 #include "Material.h"
 
-std::vector<size_t> GameObject::TagList;
+std::vector<int> GameObject::TagList;
 GameObject::GameObject()
 {
 	Tag	= 0;			//ев╠в
@@ -56,9 +56,25 @@ void GameObject::SetDontDestroy(bool mDontDestroy)
 	}
 }
 
-void GameObject::SetTag(std::string TagName)
+bool GameObject::SetTag(std::string TagName)
 {
-	Tag = ObjectManager::SetTag(TagName);
+	int Number = ObjectManager::FindTag(TagName);
+	if (Number == -1)
+	{
+		Tag = 0;
+		return false;
+	}
+	else
+	{
+		Tag = Number;
+		return true;
+	}
+}
+
+bool GameObject::SetTag(int TagNumber)
+{
+	Tag = TagNumber;
+	return true;
 }
 
 size_t GameObject::GetTag()

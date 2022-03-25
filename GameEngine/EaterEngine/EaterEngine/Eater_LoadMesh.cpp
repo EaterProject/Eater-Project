@@ -2,6 +2,7 @@
 #include "EaterHeader.h"
 #include "EngineData.h"
 #include "LoadManager.h"
+#include "Eater_LoadCamera.h"
 
 #define LERP(prev, next, time) ((prev * (1.0f - time)) + (next * time))
 Eater_LoadMesh::Eater_LoadMesh()
@@ -10,8 +11,14 @@ Eater_LoadMesh::Eater_LoadMesh()
 
 Eater_LoadMesh::~Eater_LoadMesh()
 {
+
 }
 
+void Eater_LoadMesh::Initialize()
+{
+	mCamera = new Eater_LoadCamera();
+	mCamera->Initialize();
+}
 void Eater_LoadMesh::LoadData(std::string& Path)
 {
 	BoneList.clear();
@@ -58,6 +65,11 @@ void Eater_LoadMesh::LoadData(std::string& Path)
 			EATER_CLOSE_READ_FILE();
 			return;
 		}
+		else if (NodeName == "CAM_ANIMATION")
+		{
+			mCamera->SetPath(Path);
+			mCamera->LoadData(i);
+		}
 	}
 	EATER_CLOSE_READ_FILE();
 
@@ -73,6 +85,8 @@ void Eater_LoadMesh::LoadData(std::string& Path)
 
 	LoadManager::ModelList.insert({ SaveName ,SaveData });
 }
+
+
 
 LoadMeshData* Eater_LoadMesh::LoadStaticMesh(int index)
 {

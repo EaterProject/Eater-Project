@@ -67,6 +67,9 @@
     <Filter Include="소스 파일\Component\Transform">
       <UniqueIdentifier>{85e0042f-5eda-4ce6-9cac-7a212ad26da6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Component\SkinningFilter">
+      <UniqueIdentifier>{0db28258-c4dd-46c9-b56d-fa34d7f861c0}</UniqueIdentifier>
+    </Filter>
     <Filter Include="소스 파일\Manager\BaseManager">
       <UniqueIdentifier>{7515b128-a908-4f50-9f37-1bebd61f2db9}</UniqueIdentifier>
     </Filter>
@@ -160,8 +163,8 @@
     <Filter Include="소스 파일\Manager\LoadManager\EATER\EaterInterface">
       <UniqueIdentifier>{610439c6-177f-45c9-8e56-b0f7483da393}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Component\SkinningFilter">
-      <UniqueIdentifier>{0db28258-c4dd-46c9-b56d-fa34d7f861c0}</UniqueIdentifier>
+    <Filter Include="소스 파일\Manager\LoadManager\EATER\EaterCamera">
+      <UniqueIdentifier>{8525a853-a4dd-4374-9df0-373ac77606d5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -276,9 +279,6 @@
     <ClInclude Include="..\..\Library\inc\TypeOptionHeader.h">
       <Filter>소스 파일\Data</Filter>
     </ClInclude>
-    <ClInclude Include="CameraDebugKeyInput.h">
-      <Filter>소스 파일\Component\Camera</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Library\inc\LightHelper.h">
       <Filter>소스 파일\Data</Filter>
     </ClInclude>
@@ -320,6 +320,12 @@
     </ClInclude>
     <ClInclude Include="Eater_Interface.h">
       <Filter>소스 파일\Manager\LoadManager\EATER\EaterInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="Export\CameraDebugKeyInput.h">
+      <Filter>소스 파일\Component\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Eater_LoadCamera.h">
+      <Filter>소스 파일\Manager\LoadManager\EATER\EaterCamera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -460,6 +466,9 @@
     </ClCompile>
     <ClCompile Include="Eater_Interface.cpp">
       <Filter>소스 파일\Manager\LoadManager\EATER\EaterInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="Eater_LoadCamera.cpp">
+      <Filter>소스 파일\Manager\LoadManager\EATER\EaterCamera</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

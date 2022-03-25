@@ -13,11 +13,13 @@
 #include "MaterialManager.h"
 
 
+
 std::map<std::string, ModelData*>			LoadManager::ModelList;
 std::map<std::string, TextureBuffer*>		LoadManager::TextureList;
 std::map<std::string, Material*>			LoadManager::MaterialList;
 std::map<std::string, ModelAnimationData*>	LoadManager::AnimationList;
 std::map<std::string, Mesh*>				LoadManager::MeshBufferList;
+std::map<std::string, CameraAnimation*>		LoadManager::CamAnimationList;
 
 LoadManager::LoadManager()
 {
@@ -158,6 +160,20 @@ Mesh* LoadManager::GetMesh(std::string Path)
 	}
 
 	return nullptr;
+}
+
+CameraAnimation* LoadManager::GetCamAnimation(std::string Path)
+{
+	std::map<std::string, CameraAnimation*>::iterator End_it = CamAnimationList.end();
+	std::map<std::string, CameraAnimation*>::iterator Find_it = CamAnimationList.find(Path);
+	if (End_it == Find_it)
+	{
+		return nullptr;
+	}
+	else
+	{
+		return Find_it->second;
+	}
 }
 
 ModelAnimationData* LoadManager::GetAnimation(std::string Path)

@@ -6,6 +6,7 @@ namespace ParserData
 	class CAnimation;
 }
 
+class Eater_LoadCamera;
 class LoadMeshData;
 class ModelData;
 class Eater_LoadMesh: public Eater_Interface
@@ -14,9 +15,9 @@ public:
 	Eater_LoadMesh();
 	virtual~Eater_LoadMesh();
 
-
 	// Eater_Interface을(를) 통해 상속됨
 	virtual void LoadData(std::string& Path) override;
+	virtual void Initialize();
 private:
 	LoadMeshData* LoadStaticMesh(int index);
 	LoadMeshData* LoadBoneMesh(int index);
@@ -33,5 +34,7 @@ private:
 	void LoadAnimation(int index, std::string& Name);
 	std::vector<LoadMeshData*> BoneList;
 	std::vector<LoadMeshData*> SkinList;
+
+	Eater_LoadCamera* mCamera;
 };
 

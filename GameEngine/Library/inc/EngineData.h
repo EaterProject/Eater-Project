@@ -111,6 +111,15 @@ public:
 	std::vector<MaterialBuffer*> Material_List;		// Material List
 };
 
+class CameraAnimation 
+{
+public:
+	float OneFrame;
+	int AddKeyCount;
+	std::vector<Vector3> Position;
+	std::vector<Vector3> Rotation;
+};
+
 // Particle Data
 class OneParticle
 {

@@ -22,9 +22,8 @@ Delegate_Map ObjectManager::Update;
 Delegate_Map ObjectManager::EndUpdate;
 
 //오브젝트 리스트
-std::vector<GameObject*> ObjectManager::ObjectList;
-std::vector<size_t> ObjectManager::GameObjectTagList;
-
+std::vector<GameObject*>	ObjectManager::ObjectList;
+std::map<int, std::string>	ObjectManager::TagList;
 ObjectManager::ObjectManager()
 {
 
@@ -211,29 +210,23 @@ void ObjectManager::PushUpdate(Component* mComponent, int Order)
 	Update.Push(data);
 }
 
-size_t ObjectManager::SetTag(std::string TagName)
+int ObjectManager::FindTag(std::string TagName)
 {
-	int result = 0;
-	for (unsigned int ch : TagName)
-	{
-		result = ch + (result << 4) + (result << 10) - result;
-	}
+	//들어온 이름에 따라 태그의 번호를찾고 해당하는 오브젝트를 가져온다
+	std::map<int, std::string>::iterator Start_it = TagList.begin();
+	std::map<int, std::string>::iterator End_it = TagList.begin();
+	int FindIndex = -1;
 
-	size_t TagTemp = result;
-	int Size = (int)GameObjectTagList.size();
-	for (int i = 0; i < Size; i++)
+	//들어온 이름으로 태그의 인덱스 번호를 찾는다
+	for (Start_it; Start_it != End_it; Start_it++)
 	{
-		//같은 이름의 태그가 있다면 그대로 태그
-		if (GameObjectTagList[i] == TagTemp)
+		if (TagName == Start_it->second)
 		{
-			return TagTemp;
+			FindIndex = Start_it->first;
 		}
 	}
 
-	//여기로 내려왔다는것은 새로운 이름의 태그가 들어왔다는것
-	GameObjectTagList.push_back(TagTemp);
-
-	return TagTemp;
+	return FindIndex;
 }
 
 void ObjectManager::PushEndUpdate(Component* mComponent, int Order)
@@ -376,29 +369,30 @@ void ObjectManager::DeleteObject()
 
 GameObject* ObjectManager::FindGameObjectTag(std::string& TagName)
 {
-	//입력받은 값을 변경한다
-	size_t TagTemp = typeid(TagName).hash_code();
-	
-	//태그 리스트에서 입력받은 태그가 있는지 체크함
-	int Size = (int)GameObjectTagList.size();
-	for (int i = 0; i < Size; i++)
+	//들어온 이름에 따라 태그의 번호를찾고 해당하는 오브젝트를 가져온다
+	std::map<int, std::string>::iterator Start_it	= TagList.begin();
+	std::map<int, std::string>::iterator End_it		= TagList.begin();
+	int FindIndex = -1;
+
+	//들어온 이름으로 태그의 인덱스 번호를 찾는다
+	for (Start_it; Start_it != End_it; Start_it++)
 	{
-		//같은 이름의 태그를 찾기 
-		if (GameObjectTagList[i] == TagTemp)
+		if (TagName == Start_it->second) 
 		{
-			//모든 오브젝트에서 같은 이름의 태그를 찾는다
-			std::vector<GameObject*>::iterator it = ObjectList.begin();
-			for (it; it != ObjectList.end(); it++)
-			{
-				if ((*it)->GetTag() == TagTemp)
-				{
-					return (*it);
-				}
-			}
+			FindIndex = Start_it->first;
 		}
 	}
 
-	DebugManager::Print(DebugManager::MSG_TYPE::MSG_SYSTEM, "같은 이름의 태그를 찾지 못했습니다---->",TagName,true);
+	//인덱스 번호로 모든 오브젝트를 순환후 같은 오브젝트를 가져온다
+	int ObjectMaxCount = (int)ObjectList.size();
+	for (int i = 0; i < ObjectMaxCount; i++)
+	{
+		if (ObjectList[i]->GetTag() == FindIndex)
+		{
+			return ObjectList[i];
+		}
+	}
+
 	return nullptr;
 }
 
