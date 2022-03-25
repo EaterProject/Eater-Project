@@ -14,7 +14,7 @@ class Light : public Component
 {
 public:
 	Light();
-	virtual ~Light() = default;
+	virtual ~Light();
 
 public:
 	friend class LightManager;
