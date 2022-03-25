@@ -72,7 +72,7 @@ void Eater_LoadScene::Load_Component_Transform(int index, GameObject* Object)
 void Eater_LoadScene::LoadGameObject(int index)
 {
 	GameObject* Object = Instance();
-	std::string Type = EATER_GET_MAP(index, "MeshType");
+	std::string Type = EATER_GET_MAP(index, "ModelType");
 
 	if (Type == "BASE")
 	{

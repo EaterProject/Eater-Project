@@ -21,36 +21,36 @@ public:
 	virtual void End() override;
 	virtual void ThreadFunction();
 
-	static GameObject* CreateObject(std::string MeshName);		//오브젝트 생성
-	static GameObject* CreateTerrain(std::string MeshName);		//터레인 생성
-	static GameObject* CreateLight();							//라이트 생성
-	static GameObject* CreateParticle();						//파티클 생성
-
-	static void MeshLoad(std::string Path);						//매쉬 로드
-	static bool DeleteObject(std::string MeshName);				//오브젝스 삭제
-	static void DeleteScene();									//모든 삭제
-
+public:
+	///Create
+	static GameObject* Create_GameObject();						//빈 게임 오브젝트 생성
+	static GameObject* Create_Object(std::string MeshName);		//오브젝트 생성
+	static GameObject* Create_Terrain(std::string MeshName);	//터레인 생성
+	static GameObject* Create_Light();							//라이트 생성
+	static GameObject* Create_Particle();						//파티클 생성
+	static GameObject* Create_Camera();							//카메라 생성
+public:
+	///Load,Save,Delete
+	static void MeshLoad(std::string Path);						//Object 로드
+	static bool DeleteObject(std::string MeshName);				//Object 삭제
+public:
+	///Scene
 	static void SaveScene(std::string SaveFilePath,std::string SaveFileName);	//씬 저장
 	static void LoadScene(std::string LoadScenePath);							//씬 로드
-
-	static GameObject* FindMesh(std::string MeshName);		//매쉬를 찾는다
-	static GameObject* FindMesh(std::string MeshName,std::string ParentName);
-	static std::string FindMeshName(std::string MeshName);	//매쉬의 같은이름이있으면 변경해서 가져온다
-
+public:
+	///Find
+	static GameObject* FindMesh(std::string MeshName);							//매쉬를 찾는다
+	static GameObject* FindMesh(std::string MeshName,std::string ParentName);	//메쉬의 자식오브젝트를찾는다
+	static std::string FindMeshName(std::string MeshName);						//매쉬의 같은이름이있으면 변경해서 가져온다
+	static GameObject* FindMainCamera();										//현재 메인 카메라를 가져온다
 	static std::map<std::string, GameObject*> ObjectList;
-
-	static GameObject* GetCamera();
-	static void ChangeCam();
 private:
-	static GameObject* Object;
-
 	static GameObject* CamObject;
 	static GameObject* DebugCamObject;
 	static GameObject* CreateBaseObject(std::string ObjectName,std::string MeshName); 
 	static GameObject* CreateSkinObject(std::string ObjectName, std::string MeshName);
-	static GameObject* CreateCamera();
-
-
+private:
+	///Manager
 	static SceneSave* SaveManager;
 };
 

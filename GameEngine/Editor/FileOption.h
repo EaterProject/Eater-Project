@@ -39,4 +39,6 @@ public:
 	afx_msg void OnOpenAssetsFolder();
 	afx_msg void OnOpenExe();
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
+	afx_msg void OnCreateCamera();
+	afx_msg void OnCreateGameObject();
 };

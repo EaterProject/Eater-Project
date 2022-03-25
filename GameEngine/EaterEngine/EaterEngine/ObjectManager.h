@@ -46,7 +46,10 @@ public:
 	static void PushEndUpdate(Component* obj, int Order);
 	static void PushUpdate(Component* obj, int Order);
 
-	static size_t SetTag(std::string TagName);
+	//static int CreateTag(int TagNumber);
+	static int FindTag(std::string TagName);
+	//static void DeleteTag(int TagNumber);
+
 	// 최초 한번 호출되는 함수 리스트를 실행시킴
 	void InitializeFuntion();
 	// 업데이트 함수 리스트를 실행시킴
@@ -67,7 +70,7 @@ private:
 	void DontDestroyComponentSetting(Component* Com);
 
 	///오브젝트 태그 리스트
-	static std::vector<size_t> GameObjectTagList;
+	static std::map<int,std::string> TagList;
 	///오브젝트 리스트
 	static std::vector<GameObject*> ObjectList;
 	///삭제되면 안되는 오브젝트 리스트

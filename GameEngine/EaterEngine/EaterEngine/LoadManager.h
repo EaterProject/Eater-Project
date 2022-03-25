@@ -41,6 +41,7 @@ class Eater_LoadAnimation;
 class Eater_LoadBuffer;
 class Eater_LoadMaterial;
 class Eater_LoadMesh;
+class Eater_LoadCamera;
 
 class LoadManager
 {
@@ -61,15 +62,14 @@ public:
 	int	GetMaterialCount();
 	int	GetAnimationCount();
 
-	static TextureBuffer*	GetTexture(std::string Path);
-	static ModelData*		GetModel(std::string Path);
-	static ModelAnimationData* GetAnimation(std::string Path);
-	static Material*		GetMaterial(std::string Path);
-	static Mesh*			GetMesh(std::string Path);
-	static CameraAnimation* GetCamAnimation(std::string Path);
-	static bool				FindModel(std::string Name);
+	static TextureBuffer*	GetTexture(std::string Path);			//텍스쳐 버퍼를 가져옴
+	static ModelData*		GetModel(std::string Path);				//모델 데이터를 가져옴
+	static ModelAnimationData* GetAnimation(std::string Path);		//애니메이션 데이터를 가져옴
+	static Material*		GetMaterial(std::string Path);			//메테리얼 데이터를 가져옴
+	static Mesh*			GetMesh(std::string Path);				//메쉬 데이터를 가져옴
+	static CameraAnimation* GetCamAnimation(std::string Path);		//카메라 애니메이션 데이터를가져옴
+	static bool				FindModel(std::string Name);			
 	static bool				FindTexture(std::string Name);
-
 private:
 	bool	CheckFolder(std::string& Path);
 	void	LoadFile(std::string& Path, UINT MODE);
@@ -101,4 +101,5 @@ private:
 	friend Eater_LoadBuffer;
 	friend Eater_LoadMaterial;
 	friend Eater_LoadMesh;
+	friend Eater_LoadCamera;
 };

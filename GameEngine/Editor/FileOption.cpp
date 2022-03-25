@@ -52,6 +52,8 @@ BEGIN_MESSAGE_MAP(FileOption, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON11, &FileOption::OnSceneSave)
 	ON_BN_CLICKED(IDC_BUTTON12, &FileOption::OnOpenAssetsFolder)
 	ON_BN_CLICKED(IDC_BUTTON27, &FileOption::OnOpenExe)
+	ON_BN_CLICKED(IDC_BUTTON26, &FileOption::OnCreateCamera)
+	ON_BN_CLICKED(IDC_BUTTON9, &FileOption::OnCreateGameObject)
 END_MESSAGE_MAP()
 
 
@@ -76,13 +78,12 @@ LRESULT FileOption::OnUserFunc(WPARAM wParam, LPARAM lParam)
 
 void FileOption::OnCreateTerrain()
 {
-	GameObject* Object = Demo::CreateTerrain("");
-	
+	GameObject* Object = Demo::Create_Terrain("");
 }
 
 void FileOption::OnCreateLight()
 {
-	GameObject* Object = Demo::CreateLight();
+	GameObject* Object = Demo::Create_Light();
 	HTREEITEM Top = mRightOption->HirearchyTree.InsertItem(ChangeToCString(Object->Name));
 	mRightOption->Create_Hirearchy_Item(Object, Top);
 }
@@ -94,7 +95,7 @@ void FileOption::OnCreateMaterial()
 
 void FileOption::OnCreateParticle()
 {
-	GameObject* Object = Demo::CreateParticle();
+	GameObject* Object = Demo::Create_Particle();
 	HTREEITEM Top = mRightOption->HirearchyTree.InsertItem(ChangeToCString(Object->Name));
 	mRightOption->Create_Hirearchy_Item(Object, Top);
 }
@@ -167,4 +168,19 @@ BOOL FileOption::PreTranslateMessage(MSG* pMsg)
 		}
 	}
 	return CDialogEx::PreTranslateMessage(pMsg);
+}
+
+
+void FileOption::OnCreateCamera()
+{
+	GameObject* Cam = Demo::Create_Camera();
+	HTREEITEM Top = mRightOption->HirearchyTree.InsertItem(ChangeToCString(Cam->Name));
+	mRightOption->Create_Hirearchy_Item(Cam, Top);
+}
+
+void FileOption::OnCreateGameObject()
+{
+	GameObject* Obj = Demo::Create_GameObject();
+	HTREEITEM Top = mRightOption->HirearchyTree.InsertItem(ChangeToCString(Obj->Name));
+	mRightOption->Create_Hirearchy_Item(Obj, Top);
 }
