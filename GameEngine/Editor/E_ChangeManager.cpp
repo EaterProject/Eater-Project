@@ -27,7 +27,7 @@ void E_ChangeManager::Change_Static(int index, GameObject* Object)
 
 	//오브젝트의 이름이 모델이름과 같다면 최상위로 묶어놓은 오브젝트
 	//파일에서 ParentName이 RootNode라고 되어있는 모두 변경해줘야한다
-	std::string ObjectOriginalName = GetOriginalName(Object->Name);
+	std::string ObjectOriginalName = GetOriginalName(Object->GetName());
 	if (ObjectOriginalName == ModelName && ParentName == "RootNode")
 	{
 		MeshFilter* MF	= Object->GetComponent<MeshFilter>();
@@ -37,7 +37,7 @@ void E_ChangeManager::Change_Static(int index, GameObject* Object)
 		//현재 월드를 기본 원본에 곱해서 로컬값으로 만들어준다
 		Change_LocalTM(index, TR);
 	}
-	else if(NodeName == Object->Name)
+	else if(NodeName == Object->GetName())
 	{
 		MeshFilter* MF = Object->GetComponent<MeshFilter>();
 		Transform* TR = Object->GetComponent<Transform>();
@@ -53,7 +53,7 @@ void E_ChangeManager::Change_Skin(int index, GameObject* Object)
 	std::string ParentName = EATER_GET_MAP(index, "ParentName");
 	std::string NodeName = EATER_GET_MAP(index, "NodeName");
 
-	if (NodeName == Object->Name) 
+	if (NodeName == Object->GetName())
 	{
 		MeshFilter* MF = Object->GetComponent<MeshFilter>();
 		Transform* TR = Object->GetComponent<Transform>();
@@ -69,7 +69,7 @@ void E_ChangeManager::Change_Bone(int index, GameObject* Object)
 	std::string ParentName = EATER_GET_MAP(index, "ParentName");
 	std::string NodeName = EATER_GET_MAP(index, "NodeName");
 
-	if (NodeName == Object->Name)
+	if (NodeName == Object->GetName())
 	{
 		MeshFilter* MF = Object->GetComponent<MeshFilter>();
 		Transform* TR = Object->GetComponent<Transform>();

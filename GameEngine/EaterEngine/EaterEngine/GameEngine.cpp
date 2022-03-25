@@ -195,8 +195,7 @@ GameObject* GameEngine::Instance(std::string ObjName)
 	DebugManager::Line("(Mesh)");
 	//오브젝트 생성
 	GameObject* temp = CreateInstance();
-	temp->Name = ObjName;
-	temp->SetTag("Mesh");
+	temp->SetName(ObjName);
 	DebugManager::Print(DebugManager::MSG_TYPE::MSG_CREATE, "GameObject", ObjName, false);
 
 	//Transform 은 기본으로 넣어준다
@@ -210,8 +209,7 @@ GameObject* GameEngine::InstanceTerrain(std::string ObjName)
 {
 	DebugManager::Line("(Terrain)");
 	GameObject* temp = CreateInstance();
-	temp->Name = ObjName;
-	temp->SetTag("Terrain");
+	temp->SetName(ObjName);
 	DebugManager::Print(DebugManager::MSG_TYPE::MSG_CREATE, "Terrain", ObjName, false);
 
 	//Transform
@@ -225,12 +223,11 @@ GameObject* GameEngine::InstanceTerrain(std::string ObjName)
 	return temp;
 }
 
-GameObject* GameEngine::InstanceParticle(std::string ObjName /*= "Particle"*/)
+GameObject* GameEngine::InstanceParticle(std::string ObjName)
 {
 	DebugManager::Line("(Particle)");
 	GameObject* temp = CreateInstance();
-	temp->Name = ObjName;
-	temp->SetTag("Particle");
+	temp->SetName(ObjName);
 	DebugManager::Print(DebugManager::MSG_TYPE::MSG_CREATE, "Particle", ObjName, false);
 	
 	//Transform
@@ -250,7 +247,7 @@ GameObject* GameEngine::InstanceCamera(std::string ObjName)
 	Obj->transform = Obj->AddComponent<Transform>();
 	Obj->AddComponent<Camera>();
 	Obj->OneMeshData;
-	Obj->Name = "Camera";
+	Obj->SetName(ObjName);
 	return Obj;
 }
 
@@ -258,7 +255,7 @@ GameObject* GameEngine::InstanceLight(std::string ObjName, LIGHT_TYPE type)
 {
 	DebugManager::Line("(Light)");
 	GameObject* temp = CreateInstance();
-	temp->Name = ObjName;
+	temp->SetName(ObjName);
 	
 	Transform* Tr = temp->AddComponent<Transform>();
 	temp->transform = Tr;

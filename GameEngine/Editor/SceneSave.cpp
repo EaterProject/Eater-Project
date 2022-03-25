@@ -72,7 +72,7 @@ void SceneSave::Load(std::string FileName)
 			{
 				CreateSkinObject(i, Object);
 			}
-			Demo::ObjectList.insert({Object->Name,Object});
+			Demo::ObjectList.insert({Object->GetName(),Object});
 		}
 		else if(NodeName == "SCENE")
 		{
@@ -179,7 +179,7 @@ void SceneSave::SaveAnimation(GameObject* Obj)
 void SceneSave::SaveObject(GameObject* Obj)
 {
 	//이름에 +가 있다면 스키닝 오브젝트
-	if (Obj->Name.rfind('+') == std::string::npos) 
+	if (Obj->GetName().rfind('+') == std::string::npos)
 	{
 		MeshData* OneMesh = Obj->OneMeshData;
 		switch (OneMesh->Object_Data->ObjType)
@@ -187,7 +187,7 @@ void SceneSave::SaveObject(GameObject* Obj)
 		case OBJECT_TYPE::BASE:
 		case OBJECT_TYPE::DEFALT:
 			EATER_SET_MAP("ModelType", "BASE");
-			EATER_SET_MAP("ModelName", Obj->Name);
+			EATER_SET_MAP("ModelName", Obj->GetName());
 			EATER_SET_MAP("TAG", std::to_string(Obj->GetTag()));
 			SaveMeshFilter(Obj);
 			SaveTransform(Obj);
@@ -205,7 +205,7 @@ void SceneSave::SaveObject(GameObject* Obj)
 	else
 	{
 		EATER_SET_MAP("ModelType", "SKIN");
-		EATER_SET_MAP("ModelName", Obj->Name);
+		EATER_SET_MAP("ModelName", Obj->GetName());
 		EATER_SET_MAP("TAG", std::to_string(Obj->GetTag()));
 		SaveMeshFilter(Obj);
 		SaveTransform(Obj);

@@ -151,14 +151,14 @@ void RightOption::Create_Hirearchy_Item(GameObject* Obj, HTREEITEM TOP)
 	for (int i = 0; i < BoneCount; i++) 
 	{
 		GameObject* Child = Obj->GetChildBone(i);
-		HTREEITEM ChildItem = HirearchyTree.InsertItem(ChangeToCString(Child->Name),TOP);
+		HTREEITEM ChildItem = HirearchyTree.InsertItem(ChangeToCString(Child->GetName()),TOP);
 		Create_Hirearchy_Item(Child, ChildItem);
 	}
 
 	for (int i = 0; i < MeshCount; i++)
 	{
 		GameObject* Child = Obj->GetChildMesh(i);
-		HTREEITEM ChildItem = HirearchyTree.InsertItem(ChangeToCString(Child->Name), TOP);
+		HTREEITEM ChildItem = HirearchyTree.InsertItem(ChangeToCString(Child->GetName()), TOP);
 		Create_Hirearchy_Item(Child, ChildItem);
 	}
 }
@@ -233,7 +233,7 @@ void RightOption::ChickHirearchyDarg(CPoint point)
 		{
 			Name = Name.substr(0, Name.rfind('.'));
 			GameObject* Object = Demo::Create_Object(Name);
-			HTREEITEM TopParent = HirearchyTree.InsertItem(ChangeToCString(Object->Name));
+			HTREEITEM TopParent = HirearchyTree.InsertItem(ChangeToCString(Object->GetName()));
 			break;
 		}
 		case SCENE:

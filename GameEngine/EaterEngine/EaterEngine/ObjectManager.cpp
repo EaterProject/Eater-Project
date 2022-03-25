@@ -22,8 +22,9 @@ Delegate_Map ObjectManager::Update;
 Delegate_Map ObjectManager::EndUpdate;
 
 //오브젝트 리스트
-std::vector<GameObject*>	ObjectManager::ObjectList;
-std::map<int, std::string>	ObjectManager::TagList;
+std::vector<GameObject*>			ObjectManager::ObjectList;
+std::map<Hash_Code, GameObject*>	ObjectManager::NameList;
+std::map<int, std::string>			ObjectManager::TagList;
 ObjectManager::ObjectManager()
 {
 
@@ -208,6 +209,54 @@ void ObjectManager::PushUpdate(Component* mComponent, int Order)
 	data.OrderCount = Order;
 
 	Update.Push(data);
+}
+
+std::string ObjectManager::ConvertName(std::string ObjName, GameObject* obj)
+{
+	std::map<Hash_Code, GameObject*>::iterator findName_itor;
+	std::map<Hash_Code, GameObject*>::iterator nowName_itor;
+	std::hash<std::string> hash_Code;
+
+	// 현재 이름이 등록되있는지 확인..
+	nowName_itor = NameList.find(hash_Code(obj->GetName()));
+
+	// 현재 이름 제거..
+	if (nowName_itor != NameList.end())
+	{
+		NameList.erase(nowName_itor);
+	}
+
+	// 중복되는 이름 찾기..
+	int AddNumber = 1;
+	std::string newName = ObjName;
+	while (true)
+	{
+		findName_itor = NameList.find(hash_Code(newName));
+
+		if (findName_itor != NameList.end())
+		{
+			newName = ObjName + "(" + std::to_string(AddNumber++) + ")";
+		}
+		else
+		{
+			break;
+		}
+	}
+
+	// 새로운 이름 등록..
+	NameList.insert({ hash_Code(newName), obj });
+
+	return newName;
+}
+
+void ObjectManager::DeleteName(std::string ObjName)
+{
+	std::map<Hash_Code, GameObject*>::iterator findName_itor = NameList.find(std::hash<std::string>()(ObjName));
+
+	if (findName_itor != NameList.end())
+	{
+		NameList.erase(findName_itor);
+	}
 }
 
 int ObjectManager::FindTag(std::string TagName)
@@ -399,14 +448,14 @@ GameObject* ObjectManager::FindGameObjectTag(std::string& TagName)
 GameObject* ObjectManager::FindGameObjectString(std::string& ObjectName)
 {
 	//모든 오브젝트에서 같은 이름의 오브젝트를 찾는다
-	std::vector<GameObject*>::iterator it = ObjectList.begin();
-	for (it; it != ObjectList.end(); it++)
+	std::map<Hash_Code, GameObject*>::iterator it = NameList.find(std::hash<std::string>()(ObjectName));
+
+	if (it != NameList.end())
 	{
-		if ((*it)->Name == ObjectName)
-		{
-			return (*it);
-		}
+		return it->second;
 	}
+
+	return nullptr;
 }
 
 ComponentFunctionData ObjectManager::PushComponentData(Component* mComponent)

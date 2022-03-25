@@ -84,7 +84,7 @@ void FileOption::OnCreateTerrain()
 void FileOption::OnCreateLight()
 {
 	GameObject* Object = Demo::Create_Light();
-	HTREEITEM Top = mRightOption->HirearchyTree.InsertItem(ChangeToCString(Object->Name));
+	HTREEITEM Top = mRightOption->HirearchyTree.InsertItem(ChangeToCString(Object->GetName()));
 	mRightOption->Create_Hirearchy_Item(Object, Top);
 }
 
@@ -96,7 +96,7 @@ void FileOption::OnCreateMaterial()
 void FileOption::OnCreateParticle()
 {
 	GameObject* Object = Demo::Create_Particle();
-	HTREEITEM Top = mRightOption->HirearchyTree.InsertItem(ChangeToCString(Object->Name));
+	HTREEITEM Top = mRightOption->HirearchyTree.InsertItem(ChangeToCString(Object->GetName()));
 	mRightOption->Create_Hirearchy_Item(Object, Top);
 }
 
@@ -174,13 +174,13 @@ BOOL FileOption::PreTranslateMessage(MSG* pMsg)
 void FileOption::OnCreateCamera()
 {
 	GameObject* Cam = Demo::Create_Camera();
-	HTREEITEM Top = mRightOption->HirearchyTree.InsertItem(ChangeToCString(Cam->Name));
+	HTREEITEM Top = mRightOption->HirearchyTree.InsertItem(ChangeToCString(Cam->GetName()));
 	mRightOption->Create_Hirearchy_Item(Cam, Top);
 }
 
 void FileOption::OnCreateGameObject()
 {
 	GameObject* Obj = Demo::Create_GameObject();
-	HTREEITEM Top = mRightOption->HirearchyTree.InsertItem(ChangeToCString(Obj->Name));
+	HTREEITEM Top = mRightOption->HirearchyTree.InsertItem(ChangeToCString(Obj->GetName()));
 	mRightOption->Create_Hirearchy_Item(Obj, Top);
 }

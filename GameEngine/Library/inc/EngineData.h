@@ -36,6 +36,7 @@ class ObjectData
 {
 public:
 	OBJECT_TYPE ObjType = OBJECT_TYPE::DEFALT;		//오브젝트 타입
+	std::string Name;								//오브젝트 이름
 
 	bool Pick = false;								//오브젝트 선택 상태
 
