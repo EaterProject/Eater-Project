@@ -38,7 +38,8 @@ public:
 public:
 	EATER_ENGINEDLL void SetActive(bool active);				//모든 컨퍼넌트 기능중지 여부
 	EATER_ENGINEDLL void SetDontDestroy(bool DontDestroy);		//씬이 넘어갈때 삭제여부
-	EATER_ENGINEDLL void SetTag(std::string TagName);			//태그를 지정한다
+	EATER_ENGINEDLL bool SetTag(std::string TagName);			//태그를 지정한다
+	EATER_ENGINEDLL bool SetTag(int TagNumber);					//태그를 지정한다
 
 	EATER_ENGINEDLL GameObject* GetChildBone(std::string Name);			//자식 본 객체를 가져옴_이름
 	EATER_ENGINEDLL GameObject* GetChildBone(int num);					//자식 본 객체를 가져옴_인덱스
@@ -80,12 +81,12 @@ private:
 	bool IsActive;				//기능 중지여부
 	bool DontDestroy;			//삭제 여부
 	unsigned int FunctionMask;	//어떤 함수포인터에 넣었는지 여부
-	size_t	Tag;				//오브젝트의 테그
+	int	 Tag;				//오브젝트의 테그
 private:
 	std::vector<Component*> ComponentList;
 	std::vector<GameObject*> ChildMeshList;
 	std::vector<GameObject*> ChildBoneList;
-	static std::vector<size_t> TagList;
+	static std::vector<int> TagList;
 	EATER_ENGINEDLL void PushComponentFunction(Component* con, unsigned int type);
 };
 

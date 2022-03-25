@@ -137,7 +137,7 @@ void CamAnimation::AddItem(int index, KeyNode& Node)
 
 void CamAnimation::OnAddKey()
 {
-	MainCam = Demo::GetCamera();
+	MainCam = Demo::FindMainCamera();
 	MainCamTR = MainCam->GetTransform();
 
 	KeyNode Node;

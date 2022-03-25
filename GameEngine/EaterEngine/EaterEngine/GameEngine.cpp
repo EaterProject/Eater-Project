@@ -115,6 +115,7 @@ void GameEngine::Start()
 	obj->AddComponent<CameraDebugKeyInput>();
 	obj->SetDontDestroy(true);
 	obj->SetTag("MainCamera");
+	obj->transform->Position = {0,10,-25};
 
 	//디렉션 라이트 생성
 	obj = InstanceLight("DirectionLight", LIGHT_TYPE::DIRECTION_LIGHT);
@@ -245,15 +246,12 @@ GameObject* GameEngine::InstanceParticle(std::string ObjName /*= "Particle"*/)
 GameObject* GameEngine::InstanceCamera(std::string ObjName)
 {
 	DebugManager::Line("(Camera)");
-	GameObject* temp = CreateInstance();
-	temp->Name = "Camera";
-	Transform* Tr = temp->AddComponent<Transform>();
-	temp->transform = Tr;
-	Tr->Position = { 0,5,-25 };
-
-	temp->AddComponent<Camera>();
-	
-	return temp;
+	GameObject* Obj	= CreateInstance();
+	Obj->transform = Obj->AddComponent<Transform>();
+	Obj->AddComponent<Camera>();
+	Obj->OneMeshData;
+	Obj->Name = "Camera";
+	return Obj;
 }
 
 GameObject* GameEngine::InstanceLight(std::string ObjName, LIGHT_TYPE type)

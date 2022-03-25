@@ -20,8 +20,19 @@ SceneSave::~SceneSave()
 void SceneSave::Save(std::string SaveFilePath, std::string SaveFileName, std::map<std::string, GameObject*>& Data)
 {
 	EATER_OPEN_WRITE_FILE(SaveFileName, SaveFilePath,".Scene");
-	std::map<std::string, GameObject*>::iterator Start_it = Data.begin();
-	std::map<std::string, GameObject*>::iterator End_it = Data.end();
+	std::map<std::string, GameObject*>::iterator Start_it	= Data.begin();
+	std::map<std::string, GameObject*>::iterator End_it		= Data.end();
+
+	EATER_SET_NODE("SCENE");
+	EATER_SET_LIST_START("TAG", 10, 2);
+	EATER_SET_LIST(0);
+	EATER_SET_LIST("Default",true);
+	EATER_SET_LIST(1);
+	EATER_SET_LIST("MainCam",true);
+	EATER_SET_LIST(2);
+	EATER_SET_LIST("Point",true);
+	EATER_SET_LIST(3);
+	EATER_SET_LIST("Player",true);
 
 
 	for (Start_it; Start_it != End_it; Start_it++)
@@ -49,9 +60,9 @@ void SceneSave::Load(std::string FileName)
 		std::string NodeName = EATER_GET_NODE_NAME(i);
 		if (NodeName == "GAMEOBJECT")
 		{
-			std::string Name = EATER_GET_MAP(i, "MeshName");
+			std::string Name = EATER_GET_MAP(i, "ModelName");
 			GameObject* Object = Instance(Name);
-			std::string Type = EATER_GET_MAP(i, "MeshType");
+			std::string Type = EATER_GET_MAP(i, "ModelType");
 
 			if (Type == "BASE")
 			{
@@ -62,6 +73,10 @@ void SceneSave::Load(std::string FileName)
 				CreateSkinObject(i, Object);
 			}
 			Demo::ObjectList.insert({Object->Name,Object});
+		}
+		else if(NodeName == "SCENE")
+		{
+
 		}
 	}
 
@@ -150,7 +165,7 @@ void SceneSave::SaveMeshFilter(GameObject* Obj)
 	//매쉬필터 데이터를 저장
 	MeshFilter* mMeshFilter = Obj->GetComponent<MeshFilter>();
 	EATER_SET_LIST_START("MeshFilter",1,1);
-	EATER_SET_LIST(mMeshFilter->GetBufferName(),true);
+	EATER_SET_LIST(mMeshFilter->GetModelName(), true);
 }
 
 void SceneSave::SaveAnimation(GameObject* Obj)
@@ -171,25 +186,27 @@ void SceneSave::SaveObject(GameObject* Obj)
 		{
 		case OBJECT_TYPE::BASE:
 		case OBJECT_TYPE::DEFALT:
-			EATER_SET_MAP("MeshType", "BASE");
-			EATER_SET_MAP("MeshName", Obj->Name);
+			EATER_SET_MAP("ModelType", "BASE");
+			EATER_SET_MAP("ModelName", Obj->Name);
+			EATER_SET_MAP("TAG", std::to_string(Obj->GetTag()));
 			SaveMeshFilter(Obj);
 			SaveTransform(Obj);
 			break;
 
 		case OBJECT_TYPE::PARTICLE_SYSTEM:
-			EATER_SET_MAP("MeshType", "PARTICLE");
+			EATER_SET_MAP("ModelType", "PARTICLE");
 			break;
 
 		case OBJECT_TYPE::LIGHT:
-			EATER_SET_MAP("MeshType", "LIGHT");
+			EATER_SET_MAP("ModelType", "LIGHT");
 			break;
 		}
 	}
 	else
 	{
-		EATER_SET_MAP("MeshType", "SKIN");
-		EATER_SET_MAP("MeshName", Obj->Name);
+		EATER_SET_MAP("ModelType", "SKIN");
+		EATER_SET_MAP("ModelName", Obj->Name);
+		EATER_SET_MAP("TAG", std::to_string(Obj->GetTag()));
 		SaveMeshFilter(Obj);
 		SaveTransform(Obj);
 		SaveAnimation(Obj);

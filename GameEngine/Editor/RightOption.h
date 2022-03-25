@@ -1,5 +1,7 @@
 ﻿#pragma once
 #include <string>
+#include <map>
+
 
 
 // RightOption 대화 상자
@@ -57,6 +59,11 @@ public:
 	CTAP_Particle*	 mPrticle;		//MeshFiltet를 보여줄 탭
 	CTAP_Light*		 mLight;		//Light 를 보여줄탭
 public:
+	//Tag 관련
+	CComboBox	Tag_Combo;
+	CEdit		AddTag_Edit;
+	std::map<int,std::string> TagList;
+public:
 	CString SaveSceneName;
 	bool isDrag = false;
 public:
@@ -86,4 +93,7 @@ public:
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	afx_msg void OnOpenOption();
 	afx_msg void OnOpenCamAnimation();
+	afx_msg void OnAddTag_Button();
+	afx_msg void OnChoiceTag();
+	afx_msg void OnDeleteTagButton();
 };

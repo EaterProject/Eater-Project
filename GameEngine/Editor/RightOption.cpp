@@ -60,6 +60,17 @@ BOOL RightOption::OnInitDialog()
 	mCam->Create(IDD_CAM_ANIMATION);
 	mCam->ShowWindow(SW_HIDE);
 
+	//Tag 기본 리스트
+	Tag_Combo.InsertString(0, L"Default");
+	Tag_Combo.InsertString(1, L"MainCam");
+	Tag_Combo.InsertString(2, L"Point");
+	Tag_Combo.InsertString(3, L"Player");
+	TagList.insert({0,"Default"});
+	TagList.insert({1,"MainCam"});
+	TagList.insert({2,"Point"});
+	TagList.insert({3,"Player"});
+	Tag_Combo.SetCurSel(0);
+
 	//텝정보들 생성
 	CRect rect;
 	Component_TapList.GetWindowRect(&rect);
@@ -102,6 +113,8 @@ void RightOption::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EDIT2, HirearchyEdit);
 	DDX_Control(pDX, IDC_TAB1, Component_TapList);
 	DDX_Control(pDX, IDC_EDIT9, FilePathEdit);
+	DDX_Control(pDX, IDC_COMBO1, Tag_Combo);
+	DDX_Control(pDX, IDC_EDIT1, AddTag_Edit);
 }
 
 BEGIN_MESSAGE_MAP(RightOption, CDialogEx)
@@ -120,6 +133,9 @@ BEGIN_MESSAGE_MAP(RightOption, CDialogEx)
 	ON_WM_SIZE()
 	ON_BN_CLICKED(IDC_BUTTON10, &RightOption::OnOpenOption)
 	ON_BN_CLICKED(IDC_BUTTON11, &RightOption::OnOpenCamAnimation)
+	ON_BN_CLICKED(IDC_BUTTON1, &RightOption::OnAddTag_Button)
+	ON_CBN_SELCHANGE(IDC_COMBO1, &RightOption::OnChoiceTag)
+	ON_BN_CLICKED(IDC_BUTTON2, &RightOption::OnDeleteTagButton)
 END_MESSAGE_MAP()
 
 RightOption* RightOption::GetThis()
@@ -216,7 +232,7 @@ void RightOption::ChickHirearchyDarg(CPoint point)
 		case EATER: 
 		{
 			Name = Name.substr(0, Name.rfind('.'));
-			GameObject* Object = Demo::CreateObject(Name);
+			GameObject* Object = Demo::Create_Object(Name);
 			HTREEITEM TopParent = HirearchyTree.InsertItem(ChangeToCString(Object->Name));
 			break;
 		}
@@ -444,6 +460,11 @@ void RightOption::OnClickTap(NMHDR* pNMHDR, LRESULT* pResult)
 		mPrticle->ShowWindow(SW_HIDE);
 		mLight->ShowWindow(SW_SHOW);
 	}
+	else if (ComponentName == L"Camera")
+	{
+
+
+	}
 }
 
 BOOL RightOption::PreTranslateMessage(MSG* pMsg)
@@ -473,4 +494,85 @@ void RightOption::OnOpenOption()
 void RightOption::OnOpenCamAnimation()
 {
 	mCam->ShowWindow(SW_SHOW);
+}
+
+void RightOption::OnAddTag_Button()
+{
+	CString AddTagName;
+	int MaxIndex = 0;
+	AddTag_Edit.GetWindowTextW(AddTagName);
+	std::string Str_TagName = ChangeToString(AddTagName);
+
+	if (AddTagName == "")
+	{
+		AfxMessageBox(L"Error : 생성할 태그의 이름을 입력해주세요");
+		return;
+	}
+
+	//태그 리스트를 한번 순환
+	std::map<int, std::string>::iterator Start_it = TagList.begin();
+	std::map<int, std::string>::iterator End_it = TagList.end();
+	for (Start_it; Start_it != End_it; Start_it++)
+	{
+		//이름이 겹치는게 있는지 체크한다
+		if (Start_it->second == Str_TagName)
+		{
+			AfxMessageBox(L"Error : 같은 이름의 태그가 있습니다");
+			return;
+		}
+
+		if (Start_it->first > MaxIndex)
+		{
+			MaxIndex = Start_it->first;
+		}
+	}
+
+	Tag_Combo.InsertString(MaxIndex+1, AddTagName);
+	TagList.insert({ MaxIndex+1,Str_TagName });
+	AddTag_Edit.SetWindowTextW(L"");
+	AfxMessageBox(L"성공 : New Tag 생성");
+}
+
+void RightOption::OnChoiceTag()
+{
+	GameObject* Object = Demo::FindMesh(ChoiceHirearchyName);
+	if (Object == nullptr) 
+	{
+		AfxMessageBox(L"Error : 선택한 오브젝트가 없습니다");
+		return;
+	}
+
+	int number = Tag_Combo.GetCurSel();
+	Object->SetTag(number);
+}
+
+void RightOption::OnDeleteTagButton()
+{
+	CString AddTagName;
+	int MaxIndex = 0;
+	AddTag_Edit.GetWindowTextW(AddTagName);
+	std::string Str_TagName = ChangeToString(AddTagName);
+
+	if (AddTagName == "")
+	{
+		AfxMessageBox(L"Error : 삭제할 태그의 이름을 입력해주세요");
+		return;
+	}
+
+	//태그 리스트를 한번 순환
+	std::map<int, std::string>::iterator Start_it	= TagList.begin();
+	std::map<int, std::string>::iterator End_it		= TagList.end();
+	for (Start_it; Start_it != End_it; Start_it++)
+	{
+		//이름이 겹치는게 있는지 체크한다
+		if (Start_it->second == Str_TagName)
+		{
+			AfxMessageBox(L"성공 : Delete Tag");
+			MaxIndex = Start_it->first;
+			Tag_Combo.DeleteString(MaxIndex);
+			TagList.erase(MaxIndex);
+			return;
+		}
+	}
+	AfxMessageBox(L"Error : 입력한 태그의 이름을 찾을수 없습니다");
 }

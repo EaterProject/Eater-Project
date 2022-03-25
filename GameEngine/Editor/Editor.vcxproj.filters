@@ -70,9 +70,6 @@
     <Filter Include="소스 파일\MFC\Dialog\TAP">
       <UniqueIdentifier>{c3de5814-3405-437c-86b4-2de0d3feb08c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\MFC\Dialog\TAP\TAP_Transform">
-      <UniqueIdentifier>{a95c39aa-a8b8-42cf-afd7-af4530b8c5e5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\MFC\Dialog\TAP\TAP_Animation">
       <UniqueIdentifier>{54a11f13-f90f-45f2-af9a-143804cf378f}</UniqueIdentifier>
     </Filter>
@@ -129,6 +126,12 @@
     </Filter>
     <Filter Include="소스 파일\MFC\Dialog\CamAnimation">
       <UniqueIdentifier>{a203aa94-bb5a-4e2e-bd09-aa41386b252a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\Dialog\TAP\TAP_Camera">
+      <UniqueIdentifier>{973e5e89-e78c-4641-9133-1421d63be25e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\Dialog\TAP\TAP_Particle\TAP_Transform">
+      <UniqueIdentifier>{a95c39aa-a8b8-42cf-afd7-af4530b8c5e5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -193,7 +196,7 @@
       <Filter>소스 파일\MFC\Dialog\TAP\TAP_MeshFileter</Filter>
     </ClInclude>
     <ClInclude Include="CTAP_Transform.h">
-      <Filter>소스 파일\MFC\Dialog\TAP\TAP_Transform</Filter>
+      <Filter>소스 파일\MFC\Dialog\TAP\TAP_Particle\TAP_Transform</Filter>
     </ClInclude>
     <ClInclude Include="CTAP_Animation.h">
       <Filter>소스 파일\MFC\Dialog\TAP\TAP_Animation</Filter>
@@ -288,7 +291,7 @@
       <Filter>소스 파일\MFC\Dialog\TAP\TAP_MeshFileter</Filter>
     </ClCompile>
     <ClCompile Include="CTAP_Transform.cpp">
-      <Filter>소스 파일\MFC\Dialog\TAP\TAP_Transform</Filter>
+      <Filter>소스 파일\MFC\Dialog\TAP\TAP_Particle\TAP_Transform</Filter>
     </ClCompile>
     <ClCompile Include="CTAP_Animation.cpp">
       <Filter>소스 파일\MFC\Dialog\TAP\TAP_Animation</Filter>
