@@ -134,7 +134,6 @@ void ShadowPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::v
 	Matrix viewproj = g_GlobalData->DirectionLights[0]->LightViewProj;
 
 	MeshRenderBuffer* mesh = instance->m_Mesh;
-	MaterialRenderBuffer* mat = instance->m_Material;
 
 	for (int i = 0; i < meshlist.size(); i++)
 	{
@@ -169,7 +168,7 @@ void ShadowPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::v
 	case OBJECT_TYPE::BASE:
 	case OBJECT_TYPE::TERRAIN:
 	{
-		CB_InstanceShadowStaticMesh shadowBuf;
+		CB_InstanceStaticMeshPos shadowBuf;
 		shadowBuf.gViewProj = viewproj;
 
 		m_MeshInstShadowVS->ConstantBufferCopy(&shadowBuf);
@@ -228,7 +227,6 @@ void ShadowPass::RenderUpdate(const InstanceRenderBuffer* instance, const Render
 {
 	ObjectData* obj = meshData->m_ObjectData;
 	MeshRenderBuffer* mesh = instance->m_Mesh;
-	MaterialRenderBuffer* mat = instance->m_Material;
 
 	Matrix world = *obj->World;
 	Matrix viewproj = g_GlobalData->DirectionLights[0]->LightViewProj;
@@ -240,9 +238,8 @@ void ShadowPass::RenderUpdate(const InstanceRenderBuffer* instance, const Render
 	case OBJECT_TYPE::BASE:
 	case OBJECT_TYPE::TERRAIN:
 	{
-		CB_ShadowStaticMesh shadowBuf;
-		shadowBuf.gWorld = world;
-		shadowBuf.gViewProj = viewproj;
+		CB_StaticMeshPos shadowBuf;
+		shadowBuf.gWorldViewProj = world * viewproj;
 
 		m_MeshShadowVS->ConstantBufferCopy(&shadowBuf);
 
@@ -251,9 +248,8 @@ void ShadowPass::RenderUpdate(const InstanceRenderBuffer* instance, const Render
 	break;
 	case OBJECT_TYPE::SKINNING:
 	{
-		CB_ShadowSkinMesh shadowBuf;
-		shadowBuf.gWorld = world;
-		shadowBuf.gViewProj = viewproj;
+		CB_SkinMeshPos shadowBuf;
+		shadowBuf.gWorldViewProj = world * viewproj;
 
 		for (int i = 0; i < obj->BoneOffsetTM.size(); i++)
 		{

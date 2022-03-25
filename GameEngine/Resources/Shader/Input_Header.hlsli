@@ -1,6 +1,6 @@
 
 // Shadow Vertex Shader Input & Output Data Struct
-struct ShadowVertexIn
+struct MeshPosVertexIn
 {
 #ifdef SKIN_MESH
     uint4 BoneIndices1  : BONEINDICES1;
@@ -46,6 +46,13 @@ struct MeshVertexOut
 #ifdef TERRAIN_MESH
     float3 MaskColor    : MASK_COLOR;
 #endif
+};
+
+// Mesh ID Vertex Shader Output Data Struct
+struct MeshIDVertexOut
+{
+    float4 PosH         : SV_POSITION;
+    float4 HashColor    : COLOR;
 };
 
 // Particle Vertex Shader Input & Output Data Struct

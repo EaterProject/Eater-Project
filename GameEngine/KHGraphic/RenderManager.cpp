@@ -31,6 +31,7 @@
 #include "BloomPass.h"
 #include "ToneMapPass.h"
 #include "FogPass.h"
+#include "PickingPass.h"
 #include "DebugPass.h"
 
 #include "RenderDataConverter.h"
@@ -48,18 +49,19 @@ RenderManager::RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, I
 	m_Converter = new RenderDataConverter();
 
 	// Render Pass 생성..
-	m_Deferred = new DeferredPass();
-	m_Light = new LightPass();
-	m_Environment = new EnvironmentPass();
-	m_Shadow = new ShadowPass();
-	m_SSAO = new SSAOPass();
-	m_Alpha = new AlphaPass();
-	m_OIT = new OITPass();
-	m_FXAA = new FXAAPass();
-	m_Bloom = new BloomPass();
-	m_ToneMap = new ToneMapPass();
-	m_Fog = new FogPass();
-	m_Debug = new DebugPass();
+	m_Deferred		= new DeferredPass();
+	m_Light			= new LightPass();
+	m_Environment	= new EnvironmentPass();
+	m_Shadow		= new ShadowPass();
+	m_SSAO			= new SSAOPass();
+	m_Alpha			= new AlphaPass();
+	m_OIT			= new OITPass();
+	m_FXAA			= new FXAAPass();
+	m_Bloom			= new BloomPass();
+	m_ToneMap		= new ToneMapPass();
+	m_Fog			= new FogPass();
+	m_Picking		= new PickingPass();
+	m_Debug			= new DebugPass();
 
 	// 설정을 위한 Render Pass List Up..
 	m_RenderPassList.push_back(m_Deferred);
@@ -73,6 +75,7 @@ RenderManager::RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, I
 	m_RenderPassList.push_back(m_Bloom);
 	m_RenderPassList.push_back(m_ToneMap);
 	m_RenderPassList.push_back(m_Fog);
+	m_RenderPassList.push_back(m_Picking);
 	m_RenderPassList.push_back(m_Debug);
 }
 
@@ -301,6 +304,20 @@ void RenderManager::Render()
 	GPU_BEGIN_EVENT_DEBUG_NAME("Present");
 	EndRender();
 	GPU_END_EVENT_DEBUG_NAME();
+}
+
+void RenderManager::PickingRender(int x, int y)
+{
+	m_Picking->BeginRender();
+	
+	for (int i = 0; i < m_RenderMeshList.size(); i++)
+	{
+		m_InstanceLayer = m_RenderMeshList[i];
+
+		m_Picking->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_MeshList);
+	}
+
+	Vector4 pickID = m_Picking->FindPick(x, y);
 }
 
 void RenderManager::ShadowRender()

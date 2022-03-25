@@ -1672,12 +1672,15 @@ void GraphicResourceFactory::CreateInstanceBuffers()
 {
 	// Defalt Instance Buffer »ý¼º..
 	UINT meshInstanceMax = 500;
+	UINT meshIDInstanceMax = 500;
 	UINT particleInstanceMax = 500;
 
 	std::vector<VertexInput::MeshInstance> meshInstance(meshInstanceMax);
+	std::vector<VertexInput::MeshIDInstance> meshIDInstance(meshIDInstanceMax);
 	std::vector<VertexInput::ParticleInstance> particleInstance(particleInstanceMax);
 
 	CreateInstanceBuffer(IB_Mesh::GetName(), IB_Mesh::GetHashCode(), sizeof(VertexInput::MeshInstance), meshInstanceMax, &meshInstance[0]);
+	CreateInstanceBuffer(IB_MeshID::GetName(), IB_MeshID::GetHashCode(), sizeof(VertexInput::MeshIDInstance), meshIDInstanceMax, &meshIDInstance[0]);
 	CreateInstanceBuffer(IB_Particle::GetName(), IB_Particle::GetHashCode(), sizeof(VertexInput::ParticleInstance), particleInstanceMax, &particleInstance[0]);
 }
 

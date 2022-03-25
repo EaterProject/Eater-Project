@@ -235,11 +235,17 @@
     <Filter Include="소스 파일\RenderPass\Shadow">
       <UniqueIdentifier>{23e71a1a-8109-40ca-8e35-61cbd7e179ba}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\RenderPass\Sub">
+    <Filter Include="소스 파일\RenderPass\SubPass">
       <UniqueIdentifier>{bc0dece6-c293-4f30-a4b0-6c36b8225e35}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\RenderPass\Sub\Picking">
+    <Filter Include="소스 파일\RenderPass\SubPass\Picking">
       <UniqueIdentifier>{d6f3936a-19e2-4002-9a55-d4007c86ccc0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Shader\HLSL\Sub">
+      <UniqueIdentifier>{1b62fa21-2d9b-47d8-91f4-e5844a00f129}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Shader\HLSL\Sub\MeshID">
+      <UniqueIdentifier>{9cf1e467-8a94-4a18-8e53-6e9edcb4eb8e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -466,7 +472,7 @@
       <Filter>소스 파일\Converter\RenderData</Filter>
     </ClInclude>
     <ClInclude Include="PickingPass.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>소스 파일\RenderPass\SubPass\Picking</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -588,7 +594,7 @@
       <Filter>소스 파일\Converter</Filter>
     </ClCompile>
     <ClCompile Include="PickingPass.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\RenderPass\SubPass\Picking</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -609,9 +615,6 @@
     </FxCompile>
     <FxCompile Include="..\Resources\Shader\OIT_Blend_PS.hlsl">
       <Filter>소스 파일\Shader\HLSL\Render\OIT</Filter>
-    </FxCompile>
-    <FxCompile Include="..\Resources\Shader\Particle_PS.hlsl">
-      <Filter>소스 파일\Shader\HLSL\Render\Particle</Filter>
     </FxCompile>
     <FxCompile Include="..\Resources\Shader\Particle_VS.hlsl">
       <Filter>소스 파일\Shader\HLSL\Render\Particle</Filter>
@@ -702,6 +705,21 @@
     </FxCompile>
     <FxCompile Include="..\Resources\Shader\OIT_Mesh_PS.hlsl">
       <Filter>소스 파일\Shader\HLSL\Render\OIT</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Resources\Shader\ID_Mesh_PS.hlsl">
+      <Filter>소스 파일\Shader\HLSL\Sub\MeshID</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Resources\Shader\ID_SkinMesh_VS.hlsl">
+      <Filter>소스 파일\Shader\HLSL\Sub\MeshID</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Resources\Shader\ID_StaticMesh_Instance_VS.hlsl">
+      <Filter>소스 파일\Shader\HLSL\Sub\MeshID</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Resources\Shader\ID_StaticMesh_VS.hlsl">
+      <Filter>소스 파일\Shader\HLSL\Sub\MeshID</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Resources\Shader\ID_SkinMesh_Instance_VS.hlsl">
+      <Filter>소스 파일\Shader\HLSL\Sub\MeshID</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>

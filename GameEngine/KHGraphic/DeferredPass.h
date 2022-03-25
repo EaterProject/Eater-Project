@@ -50,12 +50,6 @@ private:
 	UINT m_InstanceCount = 0;
 	size_t m_InstanceStride = 0;
 
-	ID3D11Buffer* m_IndexBuffer;
-	ID3D11Buffer* m_VertexBuffer;
-	UINT m_IndexCount;
-	UINT m_Stride;
-	UINT m_Offset;
-
 	D3D11_VIEWPORT* m_ScreenVP;
 };
 

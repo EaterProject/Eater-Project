@@ -315,6 +315,8 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const std:
 
 void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const RenderData* meshData)
 {
+	if (meshData == nullptr) return;
+
 	ObjectData* obj = meshData->m_ObjectData;
 	MeshRenderBuffer* mesh = instance->m_Mesh;
 	MaterialRenderBuffer* mat = instance->m_Material;
@@ -324,8 +326,6 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rend
 	Matrix invWorld = MathHelper::InverseTranspose(world);
 	Matrix view = g_GlobalData->CamView;
 	Matrix proj = g_GlobalData->CamProj;
-
-	if (meshData == nullptr) return;
 
 	switch (instance->m_Type)
 	{
@@ -478,6 +478,4 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rend
 	default:
 		break;
 	}
-
-
 }

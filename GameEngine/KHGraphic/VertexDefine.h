@@ -66,6 +66,12 @@ namespace VertexInput
 		DirectX::SimpleMath::Matrix InvWorld;
 	};
 
+	struct MeshIDInstance
+	{
+		DirectX::SimpleMath::Matrix World;
+		DirectX::SimpleMath::Vector4 HashColor;
+	};
+
 	struct ParticleInstance
 	{
 		DirectX::SimpleMath::Matrix World;

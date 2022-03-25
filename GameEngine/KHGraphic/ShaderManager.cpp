@@ -84,10 +84,12 @@ void ShaderManager::CreateShader()
 
 	// Instancing Shader
 	LoadShader(SHADER_TYPE::VERTEX_SHADER, "Shadow_StaticMesh_Instance_VS.hlsl", "Shadow_StaticMesh_Instance_VS", "Shadow_StaticMesh_Instance_VS");
-	LoadShader(SHADER_TYPE::VERTEX_SHADER, "StaticMesh_Instance_VS.hlsl", "StaticMesh_Instance_VS", "StaticMesh_Instance_VS");
 	//LoadShader(SHADER_TYPE::VERTEX_SHADER, "Shadow_SkinMesh_Instance_VS.hlsl", "Shadow_SkinMesh_Instance_VS", "Shadow_SkinMesh_Instance_VS");
+	LoadShader(SHADER_TYPE::VERTEX_SHADER, "StaticMesh_Instance_VS.hlsl", "StaticMesh_Instance_VS", "StaticMesh_Instance_VS");
 	//LoadShader(SHADER_TYPE::VERTEX_SHADER, "SkinMesh_VS.hlsl", "SkinMesh_Instance_VS", "SkinMesh_Instance_VS");
 	LoadShader(SHADER_TYPE::VERTEX_SHADER, "Particle_Instance_VS.hlsl", "Particle_Instance_VS", "Particle_Instance_VS");
+	LoadShader(SHADER_TYPE::VERTEX_SHADER, "ID_StaticMesh_Instance_VS.hlsl", "ID_StaticMesh_Instance_VS", "ID_StaticMesh_Instance_VS");
+	//LoadShader(SHADER_TYPE::VERTEX_SHADER, "ID_SkinMesh_Instance_VS.hlsl", "ID_SkinMesh_Instance_VS", "ID_SkinMesh_Instance_VS");
 
 	// OIT Shader
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "OIT_Particle_PS.hlsl", "OIT_Particle_PS", "OIT_Particle_PS");
@@ -104,7 +106,6 @@ void ShaderManager::CreateShader()
 
 	// Particle Shader
 	LoadShader(SHADER_TYPE::VERTEX_SHADER, "Particle_VS.hlsl", "Particle_VS", "Particle_VS");
-	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Particle_PS.hlsl", "Particle_PS", "Particle_PS");
 
 	// FXAA Shader
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "FXAA_PS.hlsl", "FXAA_PS", "FXAA_PS");
@@ -138,6 +139,12 @@ void ShaderManager::CreateShader()
 	 
 	// Fog Shader
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Fog_PS.hlsl", "Fog_PS", "Fog_PS");
+
+	// Picking ID Shader
+	LoadShader(SHADER_TYPE::VERTEX_SHADER, "ID_StaticMesh_VS.hlsl", "ID_StaticMesh_VS", "ID_StaticMesh_VS");
+	LoadShader(SHADER_TYPE::VERTEX_SHADER, "ID_SkinMesh_VS.hlsl", "ID_SkinMesh_VS", "ID_SkinMesh_VS");
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "ID_Mesh_PS.hlsl", "ID_Mesh_PS", "ID_Mesh_PS");
+
 
 	// Debug Shader Macro
 	D3D_SHADER_MACRO debug_macro1[] = { {"CUSTOM_COLOR"}, {NULL, NULL} };

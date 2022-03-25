@@ -66,23 +66,21 @@ struct CB_InstanceSkinMesh : public cbInstanceSkinMesh
 };
 
 SHADER_CONSTANT_BUFFER(cbShadowStaticMesh)
-struct CB_ShadowStaticMesh : public cbShadowStaticMesh
+struct CB_StaticMeshPos : public cbShadowStaticMesh
 {
-	DirectX::SimpleMath::Matrix gWorld;
-	DirectX::SimpleMath::Matrix gViewProj;
+	DirectX::SimpleMath::Matrix gWorldViewProj;
 };
 
 SHADER_CONSTANT_BUFFER(cbInstanceShadowStaticMesh)
-struct CB_InstanceShadowStaticMesh : public cbInstanceShadowStaticMesh
+struct CB_InstanceStaticMeshPos : public cbInstanceShadowStaticMesh
 {
 	DirectX::SimpleMath::Matrix gViewProj;
 };
 
 SHADER_CONSTANT_BUFFER(cbShadowSkinMesh)
-struct CB_ShadowSkinMesh : public cbShadowSkinMesh
+struct CB_SkinMeshPos : public cbShadowSkinMesh
 {
-	DirectX::SimpleMath::Matrix gWorld;
-	DirectX::SimpleMath::Matrix gViewProj;
+	DirectX::SimpleMath::Matrix gWorldViewProj;
 	DirectX::SimpleMath::Matrix gBoneTransforms[96];
 };
 
@@ -280,6 +278,37 @@ SHADER_CONSTANT_BUFFER(cbBloomDownSampling)
 struct CB_BloomDownSampling : public cbBloomDownSampling
 {
 	DirectX::SimpleMath::Vector2 gTexelSize;
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+//// Picking Constant Buffer
+/////////////////////////////////////////////////////////////////////////////////////////////
+SHADER_CONSTANT_BUFFER(cbStaticMeshID)
+struct CB_StaticMesh_ID : public cbStaticMeshID
+{
+	DirectX::SimpleMath::Vector4 gHashColor;
+	DirectX::SimpleMath::Matrix gWorldViewProj;
+};
+
+SHADER_CONSTANT_BUFFER(cbInstanceStaticMeshID)
+struct CB_Instance_StaticMesh_ID : public cbInstanceStaticMeshID
+{
+	DirectX::SimpleMath::Matrix gViewProj;
+};
+
+SHADER_CONSTANT_BUFFER(cbSkinMeshID)
+struct CB_SkinMesh_ID : public cbSkinMeshID
+{
+	DirectX::SimpleMath::Vector4 gHashColor;
+	DirectX::SimpleMath::Matrix gWorldViewProj;
+	DirectX::SimpleMath::Matrix gBoneTransforms[96];
+};
+
+SHADER_CONSTANT_BUFFER(cbInstanceSkinMeshID)
+struct CB_InstanceSkinMesh_ID : public cbInstanceSkinMeshID
+{
+	DirectX::SimpleMath::Matrix gViewProj;
+	DirectX::SimpleMath::Matrix gBoneTransforms[96];
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////

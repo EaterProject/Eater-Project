@@ -49,7 +49,9 @@ public:
 	virtual void DeleteMesh(MeshBuffer* mesh) abstract;
 	virtual void DeleteMaterial(MaterialBuffer* material) abstract;
 
+public:
 	// Render Update..
 	virtual void Render() abstract;
 
+	virtual void PickingRender(int x, int y) abstract;
 };
