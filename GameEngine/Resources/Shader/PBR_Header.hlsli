@@ -29,7 +29,7 @@ float D_GGX(float roughness, float NoH, const float3 NxH)
 float D_GGX(in float roughness2, in float NdotH)
 {
     const float alpha = roughness2 * roughness2;
-    const float NdotH2 = saturate(NdotH * NdotH); // NdotH2 = NdotH^2
+    const float NdotH2 = NdotH * NdotH; // NdotH2 = NdotH^2
 
     //const float lower = (NdotH2 * (alpha - 1.0f)) + 1.0f;
     const float lower = NdotH2 * alpha + (1.0f - NdotH2);
@@ -91,7 +91,7 @@ float3 BRDF(in float roughness2, in float metallic, in float3 diffuseColor, in f
     
     // Diffuse & Specular factors
     float denom = max(4.0f * NdotV * NdotL, 0.001f); // 0.001f just in case product is 0
-    float3 specular_factor = (D * F * G) / denom * 2.0f;
+    float3 specular_factor = saturate((D * F * G) / denom);
     float3 diffuse_factor = kD * diffuseColor / PI;
     
     return (diffuse_factor + specular_factor) * NdotL;
@@ -105,7 +105,7 @@ float3 PBR_DirectionalLight(
     float3 acc_color = float3(0.0f, 0.0f, 0.0f);
     
     // Burley roughness bias
-    const float roughness2 = max(roughness * roughness, 0.01f);
+    const float roughness2 = max(roughness * roughness, 0.1f);
     
     // Blend base colors
     const float3 c_diff = lerp(albedo, float3(0, 0, 0), metallic) * ambientOcclusion;
@@ -155,10 +155,10 @@ float3 PBR_PointLight(
         const float3 H = normalize(L + V);
         
         // products
-        const float NdotL = max(dot(N, L), 0.0f);
-        const float NdotH = max(dot(N, H), 0.0f);
-        const float HdotV = max(dot(H, V), 0.0f);
-        const float NdotV = max(dot(N, V), 0.0f);
+        const float NdotL = max(dot(N, L) * 0.5f + 0.5f, EPSILON);
+        const float NdotH = max(dot(N, H), EPSILON);
+        const float HdotV = max(dot(H, V), EPSILON);
+        const float NdotV = max(dot(N, V), EPSILON);
 
         // Attenuation
         float DistToLightNorm = 1.0 - saturate(distance * (1.0f / light.Range));
@@ -167,7 +167,7 @@ float3 PBR_PointLight(
         float3 radiance = Attn * light.Power;
     
         // Burley roughness bias
-        const float roughness2 = max(roughness * roughness, 0.01f);
+        const float roughness2 = max(roughness * roughness, 0.1f);
     
         // Blend base colors
         const float3 c_diff = lerp(albedo, float3(0, 0, 0), metallic) * ambientOcclusion;
@@ -207,10 +207,10 @@ float3 PBR_SpotLight(
         const float3 H = normalize(L + V);
 
         // products
-        const float NdotL = max(dot(N, L), 0.0f);
-        const float NdotH = max(dot(N, H), 0.0f);
-        const float HdotV = max(dot(H, V), 0.0f);
-        const float NdotV = max(dot(N, V), 0.0f);
+        const float NdotL = max(dot(N, L) * 0.5f + 0.5f, EPSILON);
+        const float NdotH = max(dot(N, H), EPSILON);
+        const float HdotV = max(dot(H, V), EPSILON);
+        const float NdotV = max(dot(N, V), EPSILON);
 
 	    // Cone attenuation
         float cosAng = dot(-light.Direction, L);
@@ -224,7 +224,7 @@ float3 PBR_SpotLight(
         float3 radiance = Attn * conAtt * light.Power;
 
         // Burley roughness bias
-        const float roughness2 = max(roughness * roughness, 0.01f);
+        const float roughness2 = max(roughness * roughness, 0.1f);
     
         // Blend base colors
         const float3 c_diff = lerp(albedo, float3(0, 0, 0), metallic) * ambientOcclusion;

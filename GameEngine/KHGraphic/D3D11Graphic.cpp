@@ -43,7 +43,7 @@ void D3D11Graphic::Initialize(HWND hwnd, int screenWidth, int screenHeight)
 	swapChainDesc.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
 
 	// 백 버퍼의 사용 설정..
-	swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT | DXGI_USAGE_SHADER_INPUT;
+	swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 	swapChainDesc.OutputWindow = (HWND)hwnd;
 
 	// 멀티 샘플링을 끕니다..
@@ -174,7 +174,7 @@ void D3D11Graphic::CreateBackBuffer(UINT width, UINT height, ID3D11Texture2D** t
 
 	// BackBuffer Resource Resize..
 	HR(m_Device->CreateRenderTargetView(*tex2D, nullptr, rtv));
-	HR(m_Device->CreateShaderResourceView(*tex2D, nullptr, srv));
+	//HR(m_Device->CreateShaderResourceView(*tex2D, nullptr, srv));
 }
 
 void D3D11Graphic::CreateDepthStencilView(ID3D11Resource* resource, D3D11_DEPTH_STENCIL_VIEW_DESC* dsvDesc, ID3D11DepthStencilView** dsv)

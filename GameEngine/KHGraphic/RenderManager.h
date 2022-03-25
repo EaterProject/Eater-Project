@@ -13,6 +13,7 @@ class FXAAPass;
 class BloomPass;
 class ToneMapPass;
 class FogPass;
+class PickingPass;
 class DebugPass;
 
 class RenderData;
@@ -49,6 +50,7 @@ public:
 	void DeleteMaterial(MaterialBuffer* material) override;
 
 	void Render() override;
+	void PickingRender(int x, int y) override;
 
 private:
 	void RenderSetting();
@@ -117,5 +119,6 @@ private:
 	BloomPass*			m_Bloom;
 	ToneMapPass*		m_ToneMap;
 	FogPass*			m_Fog;
+	PickingPass*		m_Picking;
 	DebugPass*			m_Debug;
 };

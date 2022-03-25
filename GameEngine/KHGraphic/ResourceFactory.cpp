@@ -923,7 +923,7 @@ void GraphicResourceFactory::CreateTextureRenderTarget(UINT width, UINT height)
 	texDesc.ArraySize = 1;
 	texDesc.SampleDesc.Count = 1;
 	texDesc.SampleDesc.Quality = 0;
-	texDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT; 
+	texDesc.Format = DXGI_FORMAT_R16G16B16A16_FLOAT;
 	texDesc.Usage = D3D11_USAGE_DEFAULT;
 	texDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
 	texDesc.CPUAccessFlags = 0;
@@ -1458,7 +1458,7 @@ void GraphicResourceFactory::CreateRasterizerStates()
 	rasterizerDesc.DepthClipEnable = true;
 	rasterizerDesc.DepthBias = 100000;
 	rasterizerDesc.DepthBiasClamp = 0.0f;
-	rasterizerDesc.SlopeScaledDepthBias = 0.005f;
+	rasterizerDesc.SlopeScaledDepthBias = 0.006f;
 
 	// Depth RasterizerState 持失..
 	CreateRasterizerState(RS_Depth::GetName(), RS_Depth::GetHashCode(), &rasterizerDesc);
@@ -1672,12 +1672,15 @@ void GraphicResourceFactory::CreateInstanceBuffers()
 {
 	// Defalt Instance Buffer 持失..
 	UINT meshInstanceMax = 500;
-	UINT particleInstanceMax = 100;
+	UINT meshIDInstanceMax = 500;
+	UINT particleInstanceMax = 500;
 
 	std::vector<VertexInput::MeshInstance> meshInstance(meshInstanceMax);
+	std::vector<VertexInput::MeshIDInstance> meshIDInstance(meshIDInstanceMax);
 	std::vector<VertexInput::ParticleInstance> particleInstance(particleInstanceMax);
 
 	CreateInstanceBuffer(IB_Mesh::GetName(), IB_Mesh::GetHashCode(), sizeof(VertexInput::MeshInstance), meshInstanceMax, &meshInstance[0]);
+	CreateInstanceBuffer(IB_MeshID::GetName(), IB_MeshID::GetHashCode(), sizeof(VertexInput::MeshIDInstance), meshIDInstanceMax, &meshIDInstance[0]);
 	CreateInstanceBuffer(IB_Particle::GetName(), IB_Particle::GetHashCode(), sizeof(VertexInput::ParticleInstance), particleInstanceMax, &particleInstance[0]);
 }
 

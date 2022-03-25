@@ -40,13 +40,13 @@ ShadowPass::~ShadowPass()
 void ShadowPass::Create(int width, int height)
 {
 	// ViewPort 설정..
-	g_Factory->CreateViewPort<VP_Shadow>(0.0f, 0.0f, 4.0f, 4.0f, (float)width, (float)height);
+	g_Factory->CreateViewPort<VP_Shadow>(0.0f, 0.0f, 1.0f, 1.0f, (float)width, (float)height);
 
 	// DepthStencilView 설정..
 	D3D11_TEXTURE2D_DESC texDesc;
 	ZeroMemory(&texDesc, sizeof(texDesc));
-	texDesc.Width = width * 4;
-	texDesc.Height = height * 4;
+	texDesc.Width = width;
+	texDesc.Height = height;
 	texDesc.MipLevels = 1;
 	texDesc.ArraySize = 1;
 	texDesc.Format = DXGI_FORMAT_R24G8_TYPELESS;
@@ -86,7 +86,7 @@ void ShadowPass::Start(int width, int height)
 	m_Mesh_IB = g_Resource->GetInstanceBuffer<IB_Mesh>();
 
 	m_ShadowDS = g_Resource->GetDepthStencil<DS_Shadow>();
-	m_ShadowDS->SetRatio(4.0f, 4.0f);
+	//m_ShadowDS->SetRatio(4.0f, 4.0f);
 
 	m_ShadowVP = g_Resource->GetViewPort<VP_Shadow>()->Get();
 	m_DepthRS = g_Resource->GetRasterizerState<RS_Depth>()->Get();
@@ -134,7 +134,6 @@ void ShadowPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::v
 	Matrix viewproj = g_GlobalData->DirectionLights[0]->LightViewProj;
 
 	MeshRenderBuffer* mesh = instance->m_Mesh;
-	MaterialRenderBuffer* mat = instance->m_Material;
 
 	for (int i = 0; i < meshlist.size(); i++)
 	{
@@ -169,7 +168,7 @@ void ShadowPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::v
 	case OBJECT_TYPE::BASE:
 	case OBJECT_TYPE::TERRAIN:
 	{
-		CB_InstanceShadowStaticMesh shadowBuf;
+		CB_InstanceStaticMeshPos shadowBuf;
 		shadowBuf.gViewProj = viewproj;
 
 		m_MeshInstShadowVS->ConstantBufferCopy(&shadowBuf);
@@ -228,7 +227,6 @@ void ShadowPass::RenderUpdate(const InstanceRenderBuffer* instance, const Render
 {
 	ObjectData* obj = meshData->m_ObjectData;
 	MeshRenderBuffer* mesh = instance->m_Mesh;
-	MaterialRenderBuffer* mat = instance->m_Material;
 
 	Matrix world = *obj->World;
 	Matrix viewproj = g_GlobalData->DirectionLights[0]->LightViewProj;
@@ -240,9 +238,8 @@ void ShadowPass::RenderUpdate(const InstanceRenderBuffer* instance, const Render
 	case OBJECT_TYPE::BASE:
 	case OBJECT_TYPE::TERRAIN:
 	{
-		CB_ShadowStaticMesh shadowBuf;
-		shadowBuf.gWorld = world;
-		shadowBuf.gViewProj = viewproj;
+		CB_StaticMeshPos shadowBuf;
+		shadowBuf.gWorldViewProj = world * viewproj;
 
 		m_MeshShadowVS->ConstantBufferCopy(&shadowBuf);
 
@@ -251,9 +248,8 @@ void ShadowPass::RenderUpdate(const InstanceRenderBuffer* instance, const Render
 	break;
 	case OBJECT_TYPE::SKINNING:
 	{
-		CB_ShadowSkinMesh shadowBuf;
-		shadowBuf.gWorld = world;
-		shadowBuf.gViewProj = viewproj;
+		CB_SkinMeshPos shadowBuf;
+		shadowBuf.gWorldViewProj = world * viewproj;
 
 		for (int i = 0; i < obj->BoneOffsetTM.size(); i++)
 		{

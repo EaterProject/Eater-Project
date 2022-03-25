@@ -11,7 +11,7 @@ cbuffer cbInstanceShadowSkinMesh : register(b0)
     float4x4 gBoneTransforms[96] : packoffset(c4);
 };
 
-float4 Shadow_SkinMesh_Instance_VS(ShadowVertexIn vin, MeshInstanceIn instance) : SV_POSITION
+float4 Shadow_SkinMesh_Instance_VS(MeshPosVertexIn vin, MeshInstanceIn instance) : SV_POSITION
 {
     float3 posL = float3(0.0f, 0.0f, 0.0f);
 
@@ -26,7 +26,6 @@ float4 Shadow_SkinMesh_Instance_VS(ShadowVertexIn vin, MeshInstanceIn instance) 
     }
     
     float3 posW = mul(instance.World, float4(posL, 1.0f)).xyz;
-    float4 posH = mul(gViewProj, float4(posW, 1.0f));
     
-    return posH;
+    return mul(gViewProj, float4(posW, 1.0f));
 };

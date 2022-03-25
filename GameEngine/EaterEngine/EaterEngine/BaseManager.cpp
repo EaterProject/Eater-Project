@@ -36,6 +36,7 @@ void BaseManager::UpdateGlobalData(float dTime)
 	
 	Global->CamView = camView;
 	Global->CamProj = camProj;
+	Global->CamViewProj = camView * camProj;
 	Global->CamInvView = camInvView.Invert();
 	Global->CamPos = Camera::g_MainCam->GetPos();
 

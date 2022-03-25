@@ -88,7 +88,7 @@ void TestScene::CreateMap()
 	//Object->GetTransform()->Scale = { 0.1f, 0.1f, 0.1f };
 	//filter = Object->AddComponent<MeshFilter>();
 	//filter->SetModelName("bossB");
-	//
+	
 	//Object = Instance();
 	//Object->GetTransform()->Position ={ -10.0f, 0.0f, 10.0f };
 	//Object->GetTransform()->Scale = { 0.1f, 0.1f, 0.1f };
@@ -161,55 +161,30 @@ void TestScene::CreateMap()
 	light->SetPower(10.0f);
 	light->SetColor(0.0f, 0.0f, 1.0f);
 
-	//Object = Instance();
-	//Object->GetTransform()->Scale = { 0.01f, 0.01f, 0.01f };
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("Outside_Rock");
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	filter->SetModelName("Dome2");
+
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	filter->SetModelName("Inside_village");
 	
-	//Object = Instance();
-	//Object->GetTransform()->Scale = { 0.01f, 0.01f, 0.01f };
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("Outside_Other");
-	//
-	//Object = Instance();
-	//Object->GetTransform()->Scale = { 0.01f, 0.01f, 0.01f };
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("Outside_bossOBJ");
-	//
-	//Object = Instance();
-	//Object->GetTransform()->Scale = { 0.01f, 0.01f, 0.01f };
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("bossB");
-
-
-	//for (int i = 0; i < 100; i++)
-	//{
-	//	Object = Instance();
-	//	Object->GetTransform()->Position = { 0.0f, i * 100.0f, 0.0f };
-	//	filter = Object->AddComponent<MeshFilter>();
-	//	filter->SetModelName("DayRock3");
-	//}
-
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("Inside_village");
-	//
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//Tr = Object->GetTransform();
-	//filter->SetModelName("Outside_Rock");
-	//
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("Outside_bossOBJ");
-	//
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("Outside_Other");
-	//
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("Outside_Pebble");
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	Tr = Object->GetTransform();
+	filter->SetModelName("Outside_Rock");
+	
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	filter->SetModelName("Outside_bossOBJ");
+	
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	filter->SetModelName("Outside_Other");
+	
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	filter->SetModelName("Outside_Pebble");
 
 	testobj = InstanceTerrain("Terrain");
 	Terrain* mTerrain = testobj->GetComponent<Terrain>();

@@ -95,7 +95,7 @@ float4 Light_IBL_PS(ScreenPixelIn pin) : SV_TARGET
     litColor += IBL_EnvironmentLight(ViewDirection, normal, irradiance, prefilteredColor, brdf, 
                                         albedo, ao, roughness, metallic);
 
-    litColor += emissive * 7.0f;
+    litColor += emissive;
     
     return float4(litColor, 1.0f);
 }

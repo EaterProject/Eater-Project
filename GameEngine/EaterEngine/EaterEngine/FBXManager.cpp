@@ -269,13 +269,14 @@ void FBXManager::SetMeshData(ParserData::CMesh* mMesh, LoadMeshData* SaveData)
 	if (meshBuffer == nullptr)
 	{
 		// Mesh 생성..
-		meshBuffer = new Mesh();
-		meshBuffer->Name = meshName;
-		meshBuffer->m_MeshData->Name = meshName;
-
 		EnterCriticalSection(m_CriticalSection);
+		meshBuffer = new Mesh();
+
 		m_Graphic->CreateMeshBuffer(mMesh, &meshBuffer->m_MeshData);
 		LeaveCriticalSection(m_CriticalSection);
+
+		meshBuffer->Name = meshName;
+		meshBuffer->m_MeshData->Name = meshName;
 
 		// 현재 Mesh 저장..
 		LoadManager::MeshBufferList.insert({meshName, meshBuffer });
