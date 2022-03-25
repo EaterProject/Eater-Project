@@ -146,21 +146,21 @@ void SSAOPass::Release()
 void SSAOPass::SetOption(RenderOption* renderOption)
 {
 	// SSAO RenderTargetView ÃÊ±âÈ­..
-	g_Context->ClearRenderTargetView(m_SsaoRTV, reinterpret_cast<const float*>(&DXColors::White));
-	g_Context->ClearRenderTargetView(m_SsaoBlurRTV, reinterpret_cast<const float*>(&DXColors::White));
+	g_Context->ClearRenderTargetView(m_SsaoRTV, reinterpret_cast<const float*>(&DXColors::Black));
+	g_Context->ClearRenderTargetView(m_SsaoBlurRTV, reinterpret_cast<const float*>(&DXColors::Black));
 }
 
 void SSAOPass::RenderUpdate()
 {
 	GPU_MARKER_DEBUG_NAME("SSAO Render");
-
 	g_Context->OMSetBlendState(0, 0, 0xffffffff);
 	g_Context->OMSetRenderTargets(1, &m_SsaoRTV, 0);
-	g_Context->ClearRenderTargetView(m_SsaoRTV, reinterpret_cast<const float*>(&DXColors::White));
+	g_Context->ClearRenderTargetView(m_SsaoRTV, reinterpret_cast<const float*>(&DXColors::Black));
 	g_Context->RSSetViewports(1, m_HalfScreenVP);
 
 	CB_SsaoObject objectBuf;
 	objectBuf.gViewToTexSpace = g_GlobalData->CamProj * g_GlobalData->TexSpace;
+	objectBuf.gProj = g_GlobalData->CamProj.Transpose();
 
 	m_SsaoPS->ConstantBufferCopy(&objectBuf);
 
@@ -199,7 +199,7 @@ void SSAOPass::BlurRender()
 	m_BlurPS->ConstantBufferCopy(&blurOrderBuf);
 
 	g_Context->OMSetRenderTargets(1, &m_SsaoBlurRTV, 0);
-	g_Context->ClearRenderTargetView(m_SsaoBlurRTV, reinterpret_cast<const float*>(&DXColors::White));
+	g_Context->ClearRenderTargetView(m_SsaoBlurRTV, reinterpret_cast<const float*>(&DXColors::Black));
 
 	m_BlurPS->SetShaderResourceView<gInputMap>(m_SsaoSRV);
 	
@@ -217,7 +217,7 @@ void SSAOPass::BlurRender()
 	m_BlurPS->ConstantBufferCopy(&blurOrderBuf);
 
 	g_Context->OMSetRenderTargets(1, &m_SsaoRTV, 0);
-	g_Context->ClearRenderTargetView(m_SsaoRTV, reinterpret_cast<const float*>(&DXColors::White));
+	g_Context->ClearRenderTargetView(m_SsaoRTV, reinterpret_cast<const float*>(&DXColors::Black));
 
 	m_BlurPS->SetShaderResourceView<gInputMap>(m_SsaoBlurSRV);
 

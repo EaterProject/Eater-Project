@@ -37,7 +37,11 @@ class ObjectData
 public:
 	OBJECT_TYPE ObjType = OBJECT_TYPE::DEFALT;		//오브젝트 타입
 
+	bool Pick = false;								//오브젝트 선택 상태
+
 	std::vector<Matrix> BoneOffsetTM;				//본 오프셋 TM
+
+	Vector4 HashColor;								//매쉬의 고유한 Hash Color
 
 	Matrix* World = nullptr;						//매쉬의 월드 행렬
 	Matrix* Local = nullptr;						//매쉬의 로컬 행렬
@@ -55,6 +59,8 @@ public:
 
 public:
 	UINT BufferIndex = 0;		// Mesh Buffer Index
+
+	DirectX::BoundingBox BoundingBox;
 
 	IndexBuffer* IndexBuf;		// Index Buffer
 	VertexBuffer* VertexBuf;	// Vertex Buffer
@@ -165,6 +171,7 @@ public:
 	Matrix CamInvView;	// Camera Inverse XY View Matrix
 	Matrix CamView;		// Camera View Matrix
 	Matrix CamProj;		// Camera Proj Matrix
+	Matrix CamViewProj;	// Camera View Proj Matrix
 	Vector3 CamPos;		// Camera Pos
 
 	Matrix CamVP;		// Camera Proj * Proj Matrix

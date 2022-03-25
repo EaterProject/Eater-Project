@@ -16,8 +16,13 @@ Light* Light::g_DirLight = nullptr;
 Light::Light()
 	:m_LightType(LIGHT_TYPE::NONE_LIGHT), m_Transform(nullptr)
 {
-	m_CenterPos = Vector3(0, 100, 0);
-	m_ShadowRadius = sqrtf(10.0f * 10.0f + 15.0f * 15.0f) * 15;
+	m_CenterPos = Vector3(0, 0, 0);
+	m_ShadowRadius = sqrtf(10.0f * 10.0f + 15.0f * 15.0f) * 10;
+}
+
+Light::~Light()
+{
+	LightManager::DeleteLight(this);
 }
 
 void Light::SetDirectionLight(Light* light)
@@ -116,7 +121,8 @@ void Light::SetAngle(float angle)
 		break;
 	}
 }
-
+
+
 void Light::SetAttenuate(float range)
 {
 	switch (m_LightType)

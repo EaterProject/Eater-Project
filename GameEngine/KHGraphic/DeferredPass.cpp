@@ -28,6 +28,7 @@
 #include "BlendStateDefine.h"
 #include "DrawBufferDefine.h"
 #include "InstanceBufferDefine.h"
+#include "MathHelper.h"
 
 #define ALBEDO_MAP		0x00000001
 #define NORMAL_MAP		0x00000010
@@ -206,17 +207,17 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const std:
 
 	Matrix view = g_GlobalData->CamView;
 	Matrix proj = g_GlobalData->CamProj;
-
 	MeshRenderBuffer* mesh = instance->m_Mesh;
 	MaterialRenderBuffer* mat = instance->m_Material;
 	MaterialSubData* matSub = mat->m_MaterialSubData;
-
+	
 	for (int i = 0; i < meshlist.size(); i++)
 	{
 		if (meshlist[i] == nullptr) continue;
 
 		// ÇØ´ç Instance Data »ðÀÔ..
 		m_MeshData.World = *meshlist[i]->m_ObjectData->World;
+		m_MeshData.InvWorld = MathHelper::InverseTranspose(m_MeshData.World);
 
 		m_MeshInstance.push_back(m_MeshData);
 		m_InstanceCount++;
@@ -314,16 +315,17 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const std:
 
 void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const RenderData* meshData)
 {
+	if (meshData == nullptr) return;
+
 	ObjectData* obj = meshData->m_ObjectData;
 	MeshRenderBuffer* mesh = instance->m_Mesh;
 	MaterialRenderBuffer* mat = instance->m_Material;
 	MaterialSubData* matSub = mat->m_MaterialSubData;
 
 	Matrix world = *obj->World;
+	Matrix invWorld = MathHelper::InverseTranspose(world);
 	Matrix view = g_GlobalData->CamView;
 	Matrix proj = g_GlobalData->CamProj;
-
-	if (meshData == nullptr) return;
 
 	switch (instance->m_Type)
 	{
@@ -332,6 +334,7 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rend
 		// Vertex Shader Update..
 		CB_StaticMesh objectBuf;
 		objectBuf.gWorld = world;
+		objectBuf.gInvWorld = invWorld;
 		objectBuf.gView = view;
 		objectBuf.gProj = proj;
 
@@ -386,6 +389,7 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rend
 		// Vertex Shader Update..
 		CB_StaticMesh objectBuf;
 		objectBuf.gWorld = world;
+		objectBuf.gInvWorld = invWorld;
 		objectBuf.gView = view;
 		objectBuf.gProj = proj;
 		objectBuf.gTexTransform = *terrain->m_Tex;
@@ -418,6 +422,7 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rend
 		// Vertex Shader Update..
 		CB_SkinMesh objectBuf;
 		objectBuf.gWorld = world;
+		objectBuf.gInvWorld = invWorld;
 		objectBuf.gView = view;
 		objectBuf.gProj = proj;
 
@@ -473,6 +478,4 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rend
 	default:
 		break;
 	}
-
-
 }

@@ -774,18 +774,22 @@ void FBXParser::OptimizeVertex(ParserData::CMesh* pMesh)
 		{
 			den = 1.0f / value;
 		}
-
+		
 		// 현재 픽셀 쉐이더에서 연산을 통해 T, B, N을 얻는데
 		// 픽셀 쉐이더 내의 연산은 버텍스 쉐이더의 연산에 비해 호출 횟수가 차원이 다르게 크므로 부하가 올 수 있다..
 		// 법선맵의 픽셀의 색은 픽셀 쉐이더 안이 아니면 얻을수 없기 때문에 픽셀 쉐이더에서 연산을 한다고 한다..
 		/// 현재 연산과정을 버텍스 쉐이더로 옮겨둠
 		DirectX::SimpleMath::Vector3 tangent = (ep1 * uv2.y - ep2 * uv1.y) * den;
-		tangent.Normalize();
 
 		// 유사 정점은 값을 누적하여 쉐이더에서 평균값을 사용하도록 하자..
 		vertex0->m_Tanget += tangent;
 		vertex1->m_Tanget += tangent;
 		vertex2->m_Tanget += tangent;
+	}
+
+	for (unsigned int i = 0; i < pMesh->m_VertexList.size(); i++)
+	{
+		pMesh->m_VertexList[i]->m_Tanget.Normalize();
 	}
 
 	// 인덱스는 그냥 복사
@@ -1217,61 +1221,6 @@ void FBXParser::SetTexture(fbxsdk::FbxSurfaceMaterial* material, const char* mat
 							m_MaterialData->m_DiffuseMap->m_MapName = mapName;
 							m_MaterialData->m_DiffuseMap->m_BitMap = fileRoute;
 							m_MaterialData->m_MapList.push_back(m_MaterialData->m_DiffuseMap);
-						}
-					}
-				}
-			}
-		}
-	}
-}
-
-void FBXParser::SetTextures(fbxsdk::FbxSurfaceMaterial* material)
-{
-	int Texture2DIndex = 0;
-	FbxProperty prop;
-
-	FBXSDK_FOR_EACH_TEXTURE(Texture2DIndex)
-	{
-		const char* diffuse;
-		const char* ambient;
-		const char* specular;
-		const char* normal;
-		prop = material->FindProperty(FbxLayerElement::sTextureChannelNames[Texture2DIndex]);
-		if (prop.IsValid()) {
-			const int Texture2DCount = prop.GetSrcObjectCount<FbxTexture>();
-			for (int i = 0; i < Texture2DCount; i++) {
-				FbxTexture* texture = prop.GetSrcObject<FbxTexture>(i);
-				if (texture) {
-					std::string textureType = prop.GetNameAsCStr();
-					FbxFileTexture* fileTexture = FbxCast<FbxFileTexture>(texture);
-					if (fileTexture) {
-						if (textureType == "DiffuseColor")
-							diffuse = fileTexture->GetRelativeFileName();
-						else if (textureType == "AmbientColor")
-							diffuse = fileTexture->GetRelativeFileName();
-						else if (textureType == "SpecularColor")
-							specular = fileTexture->GetRelativeFileName();
-						else if (textureType == "NormalMap") {
-							normal = fileTexture->GetRelativeFileName();
-						}
-					}
-				}
-			}
-
-			const int layeredTextureCount = prop.GetSrcObjectCount<FbxLayeredTexture>();
-			for (int i = 0; i < layeredTextureCount; i++) {
-				auto layeredTexture = prop.GetSrcObject<FbxLayeredTexture>(i);
-				const int fileCount = layeredTexture->GetSrcObjectCount<FbxFileTexture>();
-				for (int j = 0; j < fileCount; j++) {
-					auto fileTexture = layeredTexture->GetSrcObject<FbxFileTexture>(j);
-					std::string Texture2DType = prop.GetNameAsCStr();
-					if (fileTexture) {
-						if (Texture2DType == "DiffuseColor")
-							const char* diffuse = fileTexture->GetRelativeFileName();
-						else if (Texture2DType == "SpecularColor")
-							const char* specular = fileTexture->GetRelativeFileName();
-						else if (Texture2DType == "NormalMap") {
-							const char* normal = fileTexture->GetRelativeFileName();
 						}
 					}
 				}

@@ -47,7 +47,6 @@ public:
 	int GetMaterialIndex(fbxsdk::FbxSurfaceMaterial* material);
 	void SetMaterial(fbxsdk::FbxSurfaceMaterial* material);
 	void SetTexture(fbxsdk::FbxSurfaceMaterial* material, const char* materialName);
-	void SetTextures(fbxsdk::FbxSurfaceMaterial* material);
 	void CreateVertex(fbxsdk::FbxMesh* mesh, std::vector<BoneWeights>& boneWeights, int vertexCount);
 	void CreateMesh();
 

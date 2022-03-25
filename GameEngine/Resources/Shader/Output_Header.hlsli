@@ -15,6 +15,12 @@ struct MeshPixelIn
 #endif
 };
 
+struct MeshIDPixelIn
+{
+    float4 PosH         : SV_POSITION;
+    float4 HashColor    : COLOR;
+};
+
 struct MeshPixelOut
 {
     float4 Albedo       : SV_Target0;

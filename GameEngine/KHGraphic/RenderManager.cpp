@@ -31,6 +31,7 @@
 #include "BloomPass.h"
 #include "ToneMapPass.h"
 #include "FogPass.h"
+#include "PickingPass.h"
 #include "DebugPass.h"
 
 #include "RenderDataConverter.h"
@@ -48,18 +49,19 @@ RenderManager::RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, I
 	m_Converter = new RenderDataConverter();
 
 	// Render Pass 생성..
-	m_Deferred = new DeferredPass();
-	m_Light = new LightPass();
-	m_Environment = new EnvironmentPass();
-	m_Shadow = new ShadowPass();
-	m_SSAO = new SSAOPass();
-	m_Alpha = new AlphaPass();
-	m_OIT = new OITPass();
-	m_FXAA = new FXAAPass();
-	m_Bloom = new BloomPass();
-	m_ToneMap = new ToneMapPass();
-	m_Fog = new FogPass();
-	m_Debug = new DebugPass();
+	m_Deferred		= new DeferredPass();
+	m_Light			= new LightPass();
+	m_Environment	= new EnvironmentPass();
+	m_Shadow		= new ShadowPass();
+	m_SSAO			= new SSAOPass();
+	m_Alpha			= new AlphaPass();
+	m_OIT			= new OITPass();
+	m_FXAA			= new FXAAPass();
+	m_Bloom			= new BloomPass();
+	m_ToneMap		= new ToneMapPass();
+	m_Fog			= new FogPass();
+	m_Picking		= new PickingPass();
+	m_Debug			= new DebugPass();
 
 	// 설정을 위한 Render Pass List Up..
 	m_RenderPassList.push_back(m_Deferred);
@@ -73,6 +75,7 @@ RenderManager::RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, I
 	m_RenderPassList.push_back(m_Bloom);
 	m_RenderPassList.push_back(m_ToneMap);
 	m_RenderPassList.push_back(m_Fog);
+	m_RenderPassList.push_back(m_Picking);
 	m_RenderPassList.push_back(m_Debug);
 }
 
@@ -133,9 +136,9 @@ void RenderManager::RenderSetting(RenderOption* renderOption)
 	m_RenderOption = renderOption;
 
 	// 현재 Render Option 저장..
-	m_NowRenderOption.DebugOption		= m_RenderOption->DebugOption;
-	m_NowRenderOption.RenderingOption	= m_RenderOption->RenderingOption;
-	m_NowRenderOption.PostProcessOption	= m_RenderOption->PostProcessOption;
+	m_NowRenderOption.DebugOption = m_RenderOption->DebugOption;
+	m_NowRenderOption.RenderingOption = m_RenderOption->RenderingOption;
+	m_NowRenderOption.PostProcessOption = m_RenderOption->PostProcessOption;
 
 	// 최초 Render Setting..
 	for (RenderPassBase* renderPass : m_RenderPassList)
@@ -150,8 +153,8 @@ void RenderManager::RenderSetting()
 	if (*m_RenderOption == m_NowRenderOption) return;
 
 	// 현재 Render Option 저장..
-	m_NowRenderOption.DebugOption		= m_RenderOption->DebugOption;
-	m_NowRenderOption.RenderingOption	= m_RenderOption->RenderingOption;
+	m_NowRenderOption.DebugOption = m_RenderOption->DebugOption;
+	m_NowRenderOption.RenderingOption = m_RenderOption->RenderingOption;
 	m_NowRenderOption.PostProcessOption = m_RenderOption->PostProcessOption;
 
 	// 최초 Render Setting..
@@ -303,15 +306,32 @@ void RenderManager::Render()
 	GPU_END_EVENT_DEBUG_NAME();
 }
 
-void RenderManager::ShadowRender()
+void RenderManager::PickingRender(int x, int y)
 {
-	m_Shadow->BeginRender();
-
+	m_Picking->BeginRender();
+	
 	for (int i = 0; i < m_RenderMeshList.size(); i++)
 	{
 		m_InstanceLayer = m_RenderMeshList[i];
 
-		m_Shadow->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_MeshList);
+		m_Picking->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_MeshList);
+	}
+
+	Vector4 pickID = m_Picking->FindPick(x, y);
+}
+
+void RenderManager::ShadowRender()
+{
+	if (m_NowRenderOption.RenderingOption & RENDER_SHADOW)
+	{
+		m_Shadow->BeginRender();
+
+		for (int i = 0; i < m_RenderMeshList.size(); i++)
+		{
+			m_InstanceLayer = m_RenderMeshList[i];
+
+			m_Shadow->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_MeshList);
+		}
 	}
 }
 
@@ -322,15 +342,18 @@ void RenderManager::DeferredRender()
 	for (int i = 0; i < m_RenderMeshList.size(); i++)
 	{
 		m_InstanceLayer = m_RenderMeshList[i];
-		
+
 		m_Deferred->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_MeshList);
 	}
 }
 
 void RenderManager::SSAORender()
 {
-	m_SSAO->RenderUpdate();
-	m_SSAO->BlurRender(4);
+	if (m_NowRenderOption.RenderingOption & RENDER_SSAO)
+	{
+		m_SSAO->RenderUpdate();
+		m_SSAO->BlurRender(4);
+	}
 }
 
 void RenderManager::LightRender()
@@ -543,7 +566,7 @@ void RenderManager::ConvertChangeInstance()
 
 		// 해당 Render Data 추출..
 		RenderData* convertRenderData = (RenderData*)originMeshData->Render_Data;
-		
+
 		// 해당 Instance Buffer 추출..
 		InstanceRenderBuffer* instance = m_Converter->GetInstance(convertRenderData->m_InstanceIndex);
 
@@ -634,21 +657,25 @@ void RenderManager::ChangeMeshRenderData(MeshData* meshData)
 	// 현재 변경 전 Layer 검색..
 	InstanceLayer* layer = m_Converter->GetLayer(convertRenderData->m_InstanceLayerIndex);
 
-	int index = -1;
-
-	for (int i = 0; i < layer->m_MeshList.size(); i++)
+	// 해당 Layer가 존재한다면..
+	if (layer)
 	{
-		if (layer->m_MeshList[i] == convertRenderData)
+		int index = -1;
+
+		for (int i = 0; i < layer->m_MeshList.size(); i++)
 		{
-			index = i;
-			break;
+			if (layer->m_MeshList[i] == convertRenderData)
+			{
+				index = i;
+				break;
+			}
 		}
+
+		assert(index != -1);
+
+		// 해당 Render Data List에서 제거..
+		layer->DeleteRenderData(index);
 	}
-
-	assert(index != -1);
-
-	// 해당 Render Data List에서 제거..
-	layer->DeleteRenderData(index);
 
 	// Render Data 재설정..
 	m_Converter->ConvertRenderData(meshData, convertRenderData);
@@ -794,7 +821,7 @@ void RenderManager::CheckInstanceLayer(std::vector<InstanceLayer*>& layerList)
 	// Layer List 내에서의 Layer Index..
 	int index = -1;
 
-	for (int i = 0; i < layerList.size(); i ++)
+	for (int i = 0; i < layerList.size(); i++)
 	{
 		// 해당 Layer List Index 검색..
 		if (layerList[i]->m_MeshList.empty())

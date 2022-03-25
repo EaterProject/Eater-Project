@@ -2,10 +2,11 @@
 
 cbuffer cbStaticMesh
 {
-    float4x4 gWorld         : packoffset(c0);
-    float4x4 gView          : packoffset(c4);
-    float4x4 gProj          : packoffset(c8);
-    float4x4 gTexTransform  : packoffset(c12);
+    float4x4 gWorld              : packoffset(c0);
+    float4x4 gInvWorld           : packoffset(c4);
+    float4x4 gView               : packoffset(c8);
+    float4x4 gProj               : packoffset(c12);
+    float4x4 gTexTransform       : packoffset(c16);
 };
 
 MeshVertexOut StaticMesh_VS(MeshVertexIn vin)
@@ -16,7 +17,7 @@ MeshVertexOut StaticMesh_VS(MeshVertexIn vin)
     vout.PosV = mul(gView, float4(vout.PosW, 1.0f)).xyz;
     vout.PosH = mul(gProj, float4(vout.PosV, 1.0f));
 
-    vout.NormalW = mul((float3x3) gWorld, vin.NormalL);
+    vout.NormalW = mul((float3x3) gInvWorld, vin.NormalL);
     vout.NormalV = mul((float3x3) gView, vout.NormalW);
     
     vout.TangentW = mul((float3x3) gWorld, vin.TangentL);

@@ -52,7 +52,7 @@ void DebugPass::Create(int width, int height)
 	g_Factory->CreateViewPort<VP_MRT7>(debug_ratio * 5.0f, debug_ratio * 4.0f, debug_ratio, debug_ratio, (float)width, (float)height);
 	g_Factory->CreateViewPort<VP_MRT8>(debug_ratio * 5.0f, debug_ratio * 3.0f, debug_ratio, debug_ratio, (float)width, (float)height);
 
-	g_Factory->CreateImage<DirectionalLight_Icon>("Icon/Icon_Directionlight.png");
+	g_Factory->CreateImage<DirectionalLight_Icon>("Icon/Icon_Directionlight1.png");
 	g_Factory->CreateImage<PointLight_Icon>("Icon/Icon_Pointlight.png");
 	g_Factory->CreateImage<SpotLight_Icon>("Icon/Icon_Spotlight.png");
 	g_Factory->CreateImage<Camera_Icon>("Icon/Icon_Camera.png");
@@ -97,10 +97,16 @@ void DebugPass::Start(int width, int height)
 	m_DefaltDSV = g_Resource->GetDepthStencilView<DS_Defalt>()->Get();
 
 	// Debug Icon..
-	m_DirectionalLightIcon = g_Resource->GetShaderResourceView<DirectionalLight_Icon>()->Get();
-	m_PointLightIcon = g_Resource->GetShaderResourceView<PointLight_Icon>()->Get();
-	m_SpotLightIcon = g_Resource->GetShaderResourceView<SpotLight_Icon>()->Get();
-	m_CamerIcon = g_Resource->GetShaderResourceView<Camera_Icon>()->Get();
+	ShaderResourceView* iconSRV = nullptr;
+
+	iconSRV = g_Resource->GetShaderResourceView<DirectionalLight_Icon>();
+	if (iconSRV) m_DirectionalLightIcon = iconSRV->Get();
+	iconSRV = g_Resource->GetShaderResourceView<PointLight_Icon>();
+	if (iconSRV) m_PointLightIcon = iconSRV->Get();
+	iconSRV = g_Resource->GetShaderResourceView<SpotLight_Icon>();
+	if (iconSRV) m_SpotLightIcon = iconSRV->Get();
+	iconSRV = g_Resource->GetShaderResourceView<Camera_Icon>();
+	if (iconSRV) m_CamerIcon = iconSRV->Get();
 
 	// Debug RenderTarget 설정..
 	m_AlbedoRT = g_Resource->GetShaderResourceView<RT_Deffered_Albedo>()->Get();
@@ -579,7 +585,7 @@ void DebugPass::GlobalRender()
 
 		// Look Vector를 Up Vector 기준 Angle로 이동..
 		axis = XMQuaternionRotationAxis(up, light->Angle * 2.0f);
-
+		
 		ray.RayEnd = light->Position + (axis + light->Direction) * Vector3(light->Range);
 		
 		// Ray Buffer Update

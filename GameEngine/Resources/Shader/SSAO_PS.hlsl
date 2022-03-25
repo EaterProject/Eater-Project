@@ -1,6 +1,7 @@
 cbuffer cbSsaoObject : register(b0)
 {
 	float4x4 gViewToTexSpace;	// Proj * Texture
+    float4x4 gProj;
 };
 
 cbuffer cbSsaoOption : register(b1)
@@ -118,7 +119,7 @@ float4 SSAO_PS(VertexIn pin) : SV_Target
 		// occupy empty space).  To find the nearest depth we look it up in the depthmap.
 
         float rz = gNormalDepthMap.Sample(gSamBorderLinearPoint, projQ.xy).w;
-
+		
 		// Reconstruct full view space position r = (rx,ry,rz).  We know r
 		// lies on the ray of q, so there exists a t such that r = t*q.
 		// r.z = t*q.z ==> t = r.z / q.z
