@@ -91,9 +91,6 @@
     <Filter Include="소스 파일\MFC\Dialog\TAP\TAP_Light">
       <UniqueIdentifier>{1843782e-4928-46d6-9165-e1138867a28d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Scene\SceneSave">
-      <UniqueIdentifier>{981e2971-4e0f-482d-87e6-be53a21779b8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\MFC\Dialog\SceneSave">
       <UniqueIdentifier>{f173164e-58ee-4853-b86a-381d8d07c698}</UniqueIdentifier>
     </Filter>
@@ -132,6 +129,9 @@
     </Filter>
     <Filter Include="소스 파일\MFC\Dialog\TAP\TAP_Particle\TAP_Transform">
       <UniqueIdentifier>{a95c39aa-a8b8-42cf-afd7-af4530b8c5e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Scene\SceneSaveLoad">
+      <UniqueIdentifier>{981e2971-4e0f-482d-87e6-be53a21779b8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -208,7 +208,7 @@
       <Filter>소스 파일\MFC\Dialog\TAP\TAP_Light</Filter>
     </ClInclude>
     <ClInclude Include="SceneSave.h">
-      <Filter>소스 파일\Scene\SceneSave</Filter>
+      <Filter>소스 파일\Scene\SceneSaveLoad</Filter>
     </ClInclude>
     <ClInclude Include="SceneSaveDialog.h">
       <Filter>소스 파일\MFC\Dialog\SceneSave</Filter>
@@ -239,6 +239,9 @@
     </ClInclude>
     <ClInclude Include="CamAnimation.h">
       <Filter>소스 파일\MFC\Dialog\CamAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneLoad.h">
+      <Filter>소스 파일\Scene\SceneSaveLoad</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -303,7 +306,7 @@
       <Filter>소스 파일\MFC\Dialog\TAP\TAP_Light</Filter>
     </ClCompile>
     <ClCompile Include="SceneSave.cpp">
-      <Filter>소스 파일\Scene\SceneSave</Filter>
+      <Filter>소스 파일\Scene\SceneSaveLoad</Filter>
     </ClCompile>
     <ClCompile Include="SceneSaveDialog.cpp">
       <Filter>소스 파일\MFC\Dialog\SceneSave</Filter>
@@ -334,6 +337,9 @@
     </ClCompile>
     <ClCompile Include="CamAnimation.cpp">
       <Filter>소스 파일\MFC\Dialog\CamAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneLoad.cpp">
+      <Filter>소스 파일\Scene\SceneSaveLoad</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

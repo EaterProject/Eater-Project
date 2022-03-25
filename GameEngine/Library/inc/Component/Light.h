@@ -16,7 +16,7 @@ public:
 	Light();
 	virtual ~Light();
 
-public:
+private:
 	friend class LightManager;
 
 public:

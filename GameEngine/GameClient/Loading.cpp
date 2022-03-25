@@ -43,6 +43,12 @@ void Loading::Awake()
 	
 	LoadEnvironment("../Resources/Texture/Environment/Night.dds");
 	LoadTerrainMesh("../Assets/Model/TerrainModel/Terrain.fbx", "../Assets/Texture/Terrain/Terrain_RGB.png", SCALING);
+
+	Load("../Assets/Texture/ModelTexture");
+	Load("../Assets/Texture/Terrain");
+	Load("../Assets/Texture/Material");
+	Load("../Assets/Texture/Particle");
+
 }
 
 
@@ -62,14 +68,10 @@ void Loading::End()
 
 void Loading::ThreadFunction()
 {
-	Load("../Assets/Texture/ModelTexture");
-	Load("../Assets/Texture/Terrain");
-	Load("../Assets/Texture/Material");
-	Load("../Assets/Texture/Particle");
-
 	Load("../Assets/Model/Animation");
 	Load("../Assets/Model/MeshBuffer");
 	Load("../Assets/Model/ModelData");
+	
 	
 	LoadEnvironment("../Assets/Texture/Environment/Night.dds");
 	SetEnvironment(true);

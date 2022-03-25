@@ -129,11 +129,27 @@ void EaterParser::SetList(std::string& Data,bool Line)
 	std::string SetData;
 	if (Line == true)
 	{
-		SetData = Data + LINE_TYPE;
+		if (Data == "")
+		{
+			Data = "NO";
+			SetData = Data + LINE_TYPE;
+		}
+		else
+		{
+			SetData = Data + LINE_TYPE;
+		}
 	}
 	else
 	{
-		SetData = Data + SP_TYPE;
+		if (Data == "")
+		{
+			Data = "NO";
+			SetData = Data + SP_TYPE;
+		}
+		else
+		{
+			SetData = Data + SP_TYPE;
+		}
 	}
 	fputs(SetData.c_str(), WriteFile);
 }
@@ -259,6 +275,12 @@ std::string& EaterParser::GetMapData(int NodeCount, std::string& Key)
 
 int EaterParser::ChoiceListData(int NodeCount, std::string& ListName)
 {
+	if (mNodeList[NodeCount]->ListData.find(ListName) 
+		== mNodeList[NodeCount]->ListData.end())
+	{
+		return -1;
+	}
+
 	GetListData = &(mNodeList[NodeCount]->ListData[ListName]);
 	return (int)GetListData->F_Data.size();
 }

@@ -31,6 +31,8 @@ public:
 	EATER_ENGINEDLL void SetCenter(float x, float y, float z);							//중심점 설정
 	EATER_ENGINEDLL void SetTrigger(bool Trigger);										//트리거 설정
 	EATER_ENGINEDLL void SetMaterial(PhysMaterial* m);									//재질 설정
+	///Get
+	EATER_ENGINEDLL PhysCollider* GetCollider();
 private:
 	void DebugCollider();
 private:

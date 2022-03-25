@@ -19,9 +19,6 @@
     <Filter Include="소스 파일\Scene">
       <UniqueIdentifier>{f4fe76d3-6edb-4d2a-ad68-d5564f8f0dcc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Component\AI">
-      <UniqueIdentifier>{b6bf3055-15fd-4fdc-befd-c0a403936bdd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Component\Keyinput">
       <UniqueIdentifier>{e7082ad1-e513-4d75-a040-3b1a44d10385}</UniqueIdentifier>
     </Filter>
@@ -36,9 +33,6 @@
     </Filter>
     <Filter Include="소스 파일\Component\Player">
       <UniqueIdentifier>{a59a5f89-b961-40e7-8282-6208957b9634}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Component\ClientNetworkManager">
-      <UniqueIdentifier>{52069034-015d-4d9f-a2e9-94fb6c116818}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\Scene\Loading">
       <UniqueIdentifier>{f6aae002-8b2f-4f9e-9f7f-1cf3cad1c77d}</UniqueIdentifier>
@@ -78,9 +72,6 @@
     <ClInclude Include="GameManager.h">
       <Filter>소스 파일\GameManager</Filter>
     </ClInclude>
-    <ClInclude Include="AI.h">
-      <Filter>소스 파일\Component\AI</Filter>
-    </ClInclude>
     <ClInclude Include="KeyInput.h">
       <Filter>소스 파일\Component\Keyinput</Filter>
     </ClInclude>
@@ -89,12 +80,6 @@
     </ClInclude>
     <ClInclude Include="inGame.h">
       <Filter>소스 파일\Scene\inGame</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>소스 파일\Component\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="ClientNetworkManager.h">
-      <Filter>소스 파일\Component\ClientNetworkManager</Filter>
     </ClInclude>
     <ClInclude Include="Loading.h">
       <Filter>소스 파일\Scene\Loading</Filter>
@@ -105,9 +90,6 @@
     <ClInclude Include="PlayerCamera.h">
       <Filter>소스 파일\Component\PlayerCamera</Filter>
     </ClInclude>
-    <ClInclude Include="TestPlayer.h">
-      <Filter>소스 파일\Component\Player</Filter>
-    </ClInclude>
     <ClInclude Include="Monster.h">
       <Filter>소스 파일\Component\Monster</Filter>
     </ClInclude>
@@ -117,6 +99,9 @@
     <ClInclude Include="TestScene.h">
       <Filter>소스 파일\Scene\TestScene</Filter>
     </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>소스 파일\Component\Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameClient.cpp">
@@ -124,9 +109,6 @@
     </ClCompile>
     <ClCompile Include="GameManager.cpp">
       <Filter>소스 파일\GameManager</Filter>
-    </ClCompile>
-    <ClCompile Include="AI.cpp">
-      <Filter>소스 파일\Component\AI</Filter>
     </ClCompile>
     <ClCompile Include="KeyInput.cpp">
       <Filter>소스 파일\Component\Keyinput</Filter>
@@ -137,20 +119,11 @@
     <ClCompile Include="inGame.cpp">
       <Filter>소스 파일\Scene\inGame</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>소스 파일\Component\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="ClientNetworkManager.cpp">
-      <Filter>소스 파일\Component\ClientNetworkManager</Filter>
-    </ClCompile>
     <ClCompile Include="Loading.cpp">
       <Filter>소스 파일\Scene\Loading</Filter>
     </ClCompile>
     <ClCompile Include="PlayerCamera.cpp">
       <Filter>소스 파일\Component\PlayerCamera</Filter>
-    </ClCompile>
-    <ClCompile Include="TestPlayer.cpp">
-      <Filter>소스 파일\Component\Player</Filter>
     </ClCompile>
     <ClCompile Include="Monster.cpp">
       <Filter>소스 파일\Component\Monster</Filter>
@@ -160,6 +133,9 @@
     </ClCompile>
     <ClCompile Include="TestScene.cpp">
       <Filter>소스 파일\Scene\TestScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>소스 파일\Component\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

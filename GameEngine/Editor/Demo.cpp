@@ -3,7 +3,9 @@
 #include "MainHeader.h"
 #include "TypeOptionHeader.h"
 #include "EngineData.h"
+
 #include "SceneSave.h"
+#include "SceneLoad.h"
 
 #include "Transform.h"
 #include "MeshFilter.h"
@@ -15,7 +17,9 @@
 
 std::map<std::string, GameObject*> Demo::ObjectList;
 
-SceneSave*		Demo::SaveManager = nullptr;
+SceneSave*		Demo::mSaveManager = nullptr;
+SceneLoad*		Demo::mLoadManager = nullptr;
+
 GameObject*		Demo::CamObject		= nullptr;
 GameObject*		Demo::DebugCamObject = nullptr;
 Demo::Demo()
@@ -30,7 +34,11 @@ Demo::~Demo()
 
 void Demo::Awake()
 {
-	SaveManager = new SceneSave();
+	mSaveManager = new SceneSave();
+	mLoadManager = new SceneLoad();
+	mSaveManager->Initialize(&ObjectList);
+	mLoadManager->Initialize(&ObjectList);
+
 	//텍스쳐를 로드
 	Load("../Assets/Texture/ModelTexture");
 	Load("../Assets/Texture/Terrain");
@@ -103,7 +111,7 @@ GameObject* Demo::CreateBaseObject(std::string ObjectName, std::string MeshName)
 	Transform* mTransform = Object->GetTransform();
 
 	mMeshFilter->SetModelName(MeshName);
-	ObjectList.insert({ ObjectName, Object });
+	ObjectList.insert({ Object->Name, Object });
 	return Object;
 }
 
@@ -142,13 +150,13 @@ bool Demo::DeleteObject(std::string MeshName)
 
 void Demo::SaveScene(std::string SaveFilePath,std::string SaveFileName)
 {
-	SaveManager->Save(SaveFilePath, SaveFileName,ObjectList);
+	mSaveManager->Save(SaveFilePath, SaveFileName);
 }
 
 void Demo::LoadScene(std::string LoadScenePath)
 {
 	std::string Path = "../Assets/Scene/" + LoadScenePath;
-	SaveManager->Load(Path);
+	mLoadManager->Load(Path);
 }
 
 GameObject* Demo::FindMesh(std::string MeshName)
@@ -166,7 +174,7 @@ GameObject* Demo::FindMesh(std::string MeshName, std::string ParentName)
 std::string Demo::FindMeshName(std::string MeshName)
 {
 	std::string ObjectName = MeshName;
-	std::map<std::string, GameObject*>::iterator Start_it	= ObjectList.end();
+	std::map<std::string, GameObject*>::iterator Start_it		= ObjectList.end();
 	int Meshindex = 0;
 	while (true)
 	{

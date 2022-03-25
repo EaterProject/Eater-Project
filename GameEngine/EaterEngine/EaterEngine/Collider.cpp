@@ -121,6 +121,11 @@ void Collider::SetMaterial(PhysMaterial* m)
 	mMaterial = m;
 }
 
+PhysCollider* Collider::GetCollider()
+{
+	return mColliderData;
+}
+
 void Collider::DebugCollider()
 {
 	Vector3 Pos = mPhysData->WorldPosition;
