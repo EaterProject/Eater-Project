@@ -52,7 +52,6 @@ private:
 	PhysCollider*	mColliderData;
 	PhysMaterial*	mMaterial;
 	Rigidbody*		mRigidbody;
-	Transform*		mTransform;
 	ColliderData*	mDebugCollider;
 	bool isCreate	= false;
 

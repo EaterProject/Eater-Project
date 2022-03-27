@@ -17,6 +17,7 @@ Collider::Collider()
 	mMaterial->MT_DynamicFriction	= 0.5f;
 	mMaterial->MT_StaticFriction	= 0.5f;
 	mMaterial->MT_Restitution		= 0.6f;
+	
 }
 
 Collider::~Collider()
@@ -31,9 +32,9 @@ Collider::~Collider()
 
 void Collider::Awake()
 {
+	DebugCollider();
 	//실행되기전에 
-	//mRigidbody =  gameobject->GetComponent<Rigidbody>();
-	//mTransform =  gameobject->GetTransform();
+	
 }
 
 void Collider::Start()
@@ -157,10 +158,11 @@ bool Collider::CreatePhys()
 		mPhysData->WorldPosition	= gameobject->transform->Position;
 		Vector3 Rot					= gameobject->transform->Rotation;
 
-		bool isDinimic = gameobject->FindComponent<Rigidbody>();
-		if (isDinimic == true) 
+		Rigidbody* mRigidbody = gameobject->GetComponent<Rigidbody>();
+		if (mRigidbody != nullptr)
 		{
 			mPhysData->isDinamic = true;
+			mRigidbody->isCreate = true;
 		}
 		else
 		{
@@ -168,10 +170,12 @@ bool Collider::CreatePhys()
 		}
 		
 		Quaternion Q_Rot = SimpleMath::Quaternion::CreateFromRotationMatrix(CreateXMRot4x4());
+		Transform* mTransform = gameobject->GetTransform();
+		mPhysData->SetWorldPosition(mTransform->Position.x, mTransform->Position.y, mTransform->Position.z);
 		mPhysData->Rotation = Q_Rot;
 		mPhysData->Meterial = mMaterial;
-		gameobject->transform->isRigid = true;
-		gameobject->transform->Q_Rotation = Q_Rot;
+		mTransform->isRigid = true;
+		mTransform->Q_Rotation = Q_Rot;
 		PhysX_Create_Actor(mPhysData);
 		isCreate = true;
 		return true;

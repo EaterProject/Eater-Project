@@ -14,6 +14,7 @@
 #include "MeshFilter.h"
 #include "Transform.h"
 #include "AnimationController.h"
+#include "PhysData.h"
 
 SceneSave::SceneSave()
 {
@@ -158,8 +159,27 @@ void SceneSave::SaveParticle(ParticleSystem* mParticleSystem)
 
 void SceneSave::SaveCollider(Collider* mCollider)
 {
+	PhysCollider* mPhys = mCollider->GetCollider();
+	EATER_SET_LIST_START("Collider", 1, 11);
+	
+	EATER_SET_LIST((int)mPhys->GetType());	//0.타입
 
+	Vector3 Size = mPhys->GetSize();
+	EATER_SET_LIST(Size.x);					//1.사이즈X
+	EATER_SET_LIST(Size.y);					//2.사이즈Y
+	EATER_SET_LIST(Size.z);					//3.사이즈Z
 
+	EATER_SET_LIST((int)mPhys->GetTrigger()); // 4.트리거 여부
+	
+	Vector3 Center = mPhys->GetCenter();
+	EATER_SET_LIST(Center.x);					//5.센터X
+	EATER_SET_LIST(Center.y);					//6.센터Y
+	EATER_SET_LIST(Center.z);					//7.센터Z
+	
+
+	EATER_SET_LIST(mCollider->GetMaterial_Dynamic());			//8. 재질
+	EATER_SET_LIST(mCollider->GetMaterial_Restitution());		//9. 재질
+	EATER_SET_LIST(mCollider->GetMaterial_Static());			//10. 재질
 }
 
 void SceneSave::SaveRigidbody(Rigidbody* mRigidbody)

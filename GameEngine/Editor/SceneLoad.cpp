@@ -11,6 +11,8 @@
 #include "GameObject.h"
 #include "AnimationController.h"
 #include "Transform.h"
+#include "Collider.h"
+#include "PhysCollider.h"
 
 SceneLoad::SceneLoad()
 {
@@ -69,12 +71,14 @@ void SceneLoad::Load(std::string FilePath)
 				Load_Component_Collider(i, Obj);
 			}
 
+			//카메라
 			Find = EATER_GET_LIST_CHOICE(i, "Camera");
 			if (Find != -1)
 			{
 				Load_Component_Camera(i, Obj);
 			}
 
+			//파티클
 			Find = EATER_GET_LIST_CHOICE(i, "Particle");
 			if (Find != -1)
 			{
@@ -129,10 +133,37 @@ void SceneLoad::Load_Component_Light(int index, GameObject* Object)
 
 void SceneLoad::Load_Component_Particle(int index, GameObject* Object)
 {
+
 }
 
 void SceneLoad::Load_Component_Collider(int index, GameObject* Object)
 {
+	Collider* mCollider = Object->AddComponent<Collider>();
+	PhysCollider* mPhys = mCollider->GetCollider();
+	std::vector<std::string> Data;
+	EATER_GET_LIST(&Data, 0);
+	
+	int Type = 0;
+	switch (std::stoi(Data[0]))
+	{
+	case 0:
+		mCollider->SetBoxCollider(std::stof(Data[1]), std::stof(Data[2]), std::stof(Data[3]));
+		break;
+	case 1: 
+		mCollider->SetSphereCollider(std::stof(Data[1]));
+		break;
+	case 2:
+		mCollider->SetCapsuleCollider(std::stof(Data[1]), std::stof(Data[2]));
+		break;
+	}
+
+	mPhys->SetTrigger(std::stoi(Data[4]));
+	mPhys->SetCenter(std::stof(Data[5]), std::stof(Data[6]), std::stof(Data[7]));
+
+	mCollider->SetMaterial_Dynamic(std::stoi(Data[8]));
+	mCollider->SetMaterial_Restitution(std::stoi(Data[9]));
+	mCollider->SetMaterial_Static(std::stoi(Data[10]));
+	mCollider->CreatePhys();
 }
 
 void SceneLoad::Load_Component_Rigidbody(int index, GameObject* Object)
