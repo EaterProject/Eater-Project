@@ -75,7 +75,7 @@ void Demo::ThreadFunction()
 GameObject* Demo::Create_GameObject()
 {
 	GameObject* Object = Instance("None_GameObject");
-	Object->Name = FindMeshName("GameObject");
+	Object->Name = FindMeshName("None_GameObject");
 	ObjectList.insert({ Object->Name,Object });
 	return Object;
 }

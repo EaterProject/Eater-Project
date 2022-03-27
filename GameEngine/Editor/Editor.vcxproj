@@ -116,7 +116,7 @@
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)Library\inc\Component;$(SolutionDir)Library\inc;$(SolutionDir)Library\inc\EATER;$(SolutionDir)Library\inc\Parser;$(SolutionDir)Library\inc\Graphic;$(SolutionDir)Library\inc\YAML;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Library\inc\Component;$(SolutionDir)Library\inc;$(SolutionDir)Library\inc\EATER;$(SolutionDir)Library\inc\Parser;$(SolutionDir)Library\inc\Graphic;$(SolutionDir)Library\inc\YAML;$(SolutionDir)Library\inc\PhysX;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -204,8 +204,10 @@ copy /Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)" </Command>
     <ClInclude Include="AssetsDialog.h" />
     <ClInclude Include="AssetView.h" />
     <ClInclude Include="CamAnimation.h" />
+    <ClInclude Include="CTAP_Collider.h" />
     <ClInclude Include="CTAP_Light.h" />
     <ClInclude Include="CTAP_Particle.h" />
+    <ClInclude Include="CTAP_Rigidbody.h" />
     <ClInclude Include="CTAP_Transform.h" />
     <ClInclude Include="CTAP_Animation.h" />
     <ClInclude Include="CTAP_MeshFilter.h" />
@@ -248,8 +250,10 @@ copy /Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)" </Command>
     <ClCompile Include="AssetsDialog.cpp" />
     <ClCompile Include="AssetView.cpp" />
     <ClCompile Include="CamAnimation.cpp" />
+    <ClCompile Include="CTAP_Collider.cpp" />
     <ClCompile Include="CTAP_Light.cpp" />
     <ClCompile Include="CTAP_Particle.cpp" />
+    <ClCompile Include="CTAP_Rigidbody.cpp" />
     <ClCompile Include="CTAP_Transform.cpp" />
     <ClCompile Include="CTAP_Animation.cpp" />
     <ClCompile Include="CTAP_MeshFilter.cpp" />

@@ -123,7 +123,7 @@ void SceneSave::SaveAnimation(AnimationController* AC)
 
 void SceneSave::SaveLight(Light* mLight)
 {
-	EATER_SET_LIST_START("Light", 1, 1);
+	EATER_SET_LIST_START("Light", 1, 8);
 	LIGHT_TYPE mtype = mLight->GetType();
 	switch (mtype)
 	{
@@ -140,6 +140,7 @@ void SceneSave::SaveLight(Light* mLight)
 		EATER_SET_LIST("SPOT");
 		break;
 	}
+	float Angle = mLight->GetAngle();
 	EATER_SET_LIST(mLight->GetAngle());
 	EATER_SET_LIST(mLight->GetAttenuate());
 	EATER_SET_LIST(mLight->GetRange());

@@ -91,7 +91,7 @@ void EaterParser::OPEN_FILE(std::string& Path)
 void EaterParser::CREATE_FILE(std::string& FileName, std::string& OutPath, std::string& FileType)
 {
 	std::string Name = OutPath + FileName + FileType;
-	WriteFile = fopen(Name.c_str(), "w");
+	WriteFile = fopen(Name.c_str(), "w+");
 }
 
 void EaterParser::CLOSE_WRITE_FILE()

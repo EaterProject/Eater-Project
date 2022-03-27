@@ -29,21 +29,22 @@ void Eater_LoadScene::LoadData(std::string& Path)
 		}
 	}
 }
+
 void Eater_LoadScene::CreateStaticObject(int index, GameObject* Object)
 {
-	Load_Component_Transform(index, Object);
-	Load_Component_MeshFilter(index, Object);
+
 }
 
 void Eater_LoadScene::CreateSkinObject(int index, GameObject* Object)
 {
-	Load_Component_Transform(index, Object);
-	Load_Component_Skinning(index, Object);
+
 }
+
 void Eater_LoadScene::CreateParticleObject(int index, GameObject* Object)
 {
 
 }
+
 void Eater_LoadScene::Load_Component_MeshFilter(int index, GameObject* Object)
 {
 	MeshFilter* mMeshFilter = Object->AddComponent<MeshFilter>();

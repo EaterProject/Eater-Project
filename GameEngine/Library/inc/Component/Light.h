@@ -13,10 +13,10 @@ class Transform;
 class Light : public Component
 {
 public:
-	Light();
+	EATER_ENGINEDLL Light();
 	virtual ~Light();
 
-private:
+public:
 	friend class LightManager;
 
 public:
@@ -41,6 +41,7 @@ public:
 
 	EATER_ENGINEDLL LIGHT_TYPE GetType() { return m_LightType; }
 	EATER_ENGINEDLL float GetAngle();
+
 	EATER_ENGINEDLL float GetAttenuate();
 	EATER_ENGINEDLL float GetRange();
 	EATER_ENGINEDLL float GetPower();

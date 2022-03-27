@@ -5,6 +5,8 @@
 
 
 // RightOption 대화 상자
+class CTAP_Rigidbody;
+class CTAP_Collider;
 class CTAP_Transform;
 class CTAP_Animation;
 class CTAP_MeshFilter;
@@ -53,6 +55,8 @@ public:
 public:
 	//컨퍼넌트 텝 변수들
 	CTabCtrl Component_TapList;
+	CTAP_Rigidbody*	 mRigidbody;
+	CTAP_Collider*	 mCollider;
 	CTAP_Transform*  mTransform;	//Transform를 보여줄 탭
 	CTAP_Animation*	 mAnimation;	//Animation를 보여줄 탭
 	CTAP_MeshFilter* mMeshFilter;	//MeshFiltet를 보여줄 탭
@@ -83,7 +87,6 @@ public:
 	static RightOption* GetThis();
 	static RightOption* thisPointer;
 public:
-	
 	//버튼들
 	afx_msg void OnChoice_Hirearchy_Item(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDelteObject_Button();

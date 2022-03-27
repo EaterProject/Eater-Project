@@ -77,6 +77,10 @@ public:
 	///자식객체에서 찾고자하는 컨퍼넌트가있다면 그오브젝트에 컨퍼넌트를 가져옴
 	template<typename T>
 	T* GetChildComponent(typename std::enable_if<std::is_base_of<Component, T>::value, bool>::type t = std::is_base_of<Component, T>::value);
+
+	///오브젝트에 컨퍼넌트가 있는지 체크
+	template<typename T>
+	bool FindComponent(typename std::enable_if<std::is_base_of<Component, T>::value, bool>::type t = std::is_base_of<Component, T>::value);
 private:
 	bool IsActive;				//기능 중지여부
 	bool DontDestroy;			//삭제 여부
@@ -95,6 +99,11 @@ inline T* GameObject::AddComponent(typename std::enable_if<std::is_base_of<Compo
 {
 	//이함수는 무조건 Component를 상속받은 클래스만 들어올수있다
 	//그래서 Component 안에 함수만 사용함
+
+	//컨퍼넌트가 이미 있다면 추가하지않는다
+	bool isFind =  FindComponent<T>();
+	if (isFind == true){return nullptr;}
+
 
 	T* ComponentBox = new T();
 	//게임오브젝트 설정
@@ -198,4 +207,20 @@ inline T* GameObject::GetChildComponent(typename std::enable_if<std::is_base_of<
 		}
 	}
 	return nullptr;
+}
+
+template<typename T>
+inline bool GameObject::FindComponent(typename std::enable_if<std::is_base_of<Component, T>::value, bool>::type t)
+{
+	int ComponentCount = (int)ComponentList.size();
+	for (int i = 0; i < ComponentCount; i++)
+	{
+		//현재 컨퍼넌트와 찾고자하는 컨퍼넌트의 타입 비교
+		if (ComponentList[i]->ComponentType == typeid(T).hash_code())
+		{
+			return true;
+		}
+	}
+
+	return false;
 }

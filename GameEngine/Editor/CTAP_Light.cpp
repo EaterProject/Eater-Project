@@ -109,7 +109,8 @@ void CTAP_Light::SetGameObject(Light* TempLight)
 	Color_B_Slider.SetPos(mColor.z*255);
 	Attenuate_Slider.SetPos(mAttenuate*0.01);
 
-	Angle_Slider.SetPos(Angle);
+	float OriginalAngle = Angle * 180 / 3.141592f;
+	Angle_Slider.SetPos(OriginalAngle);
 	Range_Slider.SetPos(Range);
 	Power_Slider.SetPos(Power);
 
@@ -117,7 +118,7 @@ void CTAP_Light::SetGameObject(Light* TempLight)
 	Color_G.SetWindowTextW(ChangeToCString(mColor.y * 255));
 	Color_B.SetWindowTextW(ChangeToCString(mColor.z * 255));
 
-	Angle_Edit.SetWindowTextW(ChangeToCString(Angle));
+	Angle_Edit.SetWindowTextW(ChangeToCString(OriginalAngle));
 	Range_Edit.SetWindowTextW(ChangeToCString(Range));
 	Power_Edit.SetWindowTextW(ChangeToCString(Power));
 	Attenuate_Edit.SetWindowTextW(ChangeToCString(mAttenuate));
