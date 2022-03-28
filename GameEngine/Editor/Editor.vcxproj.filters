@@ -127,9 +127,6 @@
     <Filter Include="소스 파일\MFC\Dialog\TAP\TAP_Camera">
       <UniqueIdentifier>{973e5e89-e78c-4641-9133-1421d63be25e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Scene\SceneSaveLoad">
-      <UniqueIdentifier>{981e2971-4e0f-482d-87e6-be53a21779b8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\MFC\Dialog\TAP\TAP_Collider">
       <UniqueIdentifier>{6af54049-bd2c-42f2-b488-5497433fd4a5}</UniqueIdentifier>
     </Filter>
@@ -138,6 +135,9 @@
     </Filter>
     <Filter Include="소스 파일\MFC\Dialog\TAP\TAP_Transform">
       <UniqueIdentifier>{a95c39aa-a8b8-42cf-afd7-af4530b8c5e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\SceneSaveLoad">
+      <UniqueIdentifier>{981e2971-4e0f-482d-87e6-be53a21779b8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -214,7 +214,7 @@
       <Filter>소스 파일\MFC\Dialog\TAP\TAP_Light</Filter>
     </ClInclude>
     <ClInclude Include="SceneSave.h">
-      <Filter>소스 파일\Scene\SceneSaveLoad</Filter>
+      <Filter>소스 파일\MFC\SceneSaveLoad</Filter>
     </ClInclude>
     <ClInclude Include="SceneSaveDialog.h">
       <Filter>소스 파일\MFC\Dialog\SceneSave</Filter>
@@ -247,7 +247,7 @@
       <Filter>소스 파일\MFC\Dialog\CamAnimation</Filter>
     </ClInclude>
     <ClInclude Include="SceneLoad.h">
-      <Filter>소스 파일\Scene\SceneSaveLoad</Filter>
+      <Filter>소스 파일\MFC\SceneSaveLoad</Filter>
     </ClInclude>
     <ClInclude Include="CTAP_Collider.h">
       <Filter>소스 파일\MFC\Dialog\TAP\TAP_Collider</Filter>
@@ -318,7 +318,7 @@
       <Filter>소스 파일\MFC\Dialog\TAP\TAP_Light</Filter>
     </ClCompile>
     <ClCompile Include="SceneSave.cpp">
-      <Filter>소스 파일\Scene\SceneSaveLoad</Filter>
+      <Filter>소스 파일\MFC\SceneSaveLoad</Filter>
     </ClCompile>
     <ClCompile Include="SceneSaveDialog.cpp">
       <Filter>소스 파일\MFC\Dialog\SceneSave</Filter>
@@ -351,7 +351,7 @@
       <Filter>소스 파일\MFC\Dialog\CamAnimation</Filter>
     </ClCompile>
     <ClCompile Include="SceneLoad.cpp">
-      <Filter>소스 파일\Scene\SceneSaveLoad</Filter>
+      <Filter>소스 파일\MFC\SceneSaveLoad</Filter>
     </ClCompile>
     <ClCompile Include="CTAP_Collider.cpp">
       <Filter>소스 파일\MFC\Dialog\TAP\TAP_Collider</Filter>

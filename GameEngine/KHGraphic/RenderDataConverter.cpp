@@ -18,7 +18,7 @@ void RenderDataConverter::ConvertMeshData(MeshData* originData, RenderData* rend
 	// Mesh Data 설정..
 	renderData->m_ObjectData = originData->Object_Data;
 	renderData->m_ParticleData = originData->Particle_Data;
-	renderData->m_ColliderData = originData->Collider_Data;
+	renderData->m_ColliderData = &originData->Collider_Data;
 
 	// 변환된 Render Data 저장..
 	originData->Render_Data = (void*)renderData;

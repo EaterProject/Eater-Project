@@ -27,14 +27,14 @@ void intro::Awake()
 
 	GameObject* gameobject = GetMainCamera();
 	DebugCam = gameobject->GetComponent<Camera>();
-
+	//
 	////게임에 사용할 카메라를 만들어준다
 	GameObject* Cam = InstanceCamera();
 	MainCam = Cam->GetComponent<Camera>();
 	PlayerCamera* PC = Cam->AddComponent<PlayerCamera>();
 	MainCam->ChoiceMainCam();
 	Cam->SetDontDestroy(true);
-	//
+	////
 	GameObject* Obj = Instance();
 	Obj->AddComponent<MeshFilter>();
 	Obj->AddComponent<Player>();

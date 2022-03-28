@@ -157,7 +157,7 @@ void DebugPass::RenderUpdate(RenderData* mesh)
 	Matrix world = *mesh->m_ObjectData->World;
 	Matrix invView = g_GlobalData->CamInvView;
 	Matrix viewproj = g_GlobalData->CamVP;
-	ColliderData* col = mesh->m_ColliderData;
+	ColliderData* col = *mesh->m_ColliderData;
 
 	// Transform Debug..
 	object.gWorldViewProj = world * viewproj;

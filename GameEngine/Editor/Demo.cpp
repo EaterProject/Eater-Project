@@ -18,7 +18,7 @@
 std::map<std::string, GameObject*> Demo::ObjectList;
 
 SceneSave*		Demo::mSaveManager = nullptr;
-SceneLoad*		Demo::mLoadManager = nullptr;
+Eater_LoadScene*		Demo::mLoadManager = nullptr;
 
 GameObject*		Demo::CamObject		= nullptr;
 GameObject*		Demo::DebugCamObject = nullptr;
@@ -35,7 +35,7 @@ Demo::~Demo()
 void Demo::Awake()
 {
 	mSaveManager = new SceneSave();
-	mLoadManager = new SceneLoad();
+	mLoadManager = new Eater_LoadScene();
 	mSaveManager->Initialize(&ObjectList);
 	mLoadManager->Initialize(&ObjectList);
 

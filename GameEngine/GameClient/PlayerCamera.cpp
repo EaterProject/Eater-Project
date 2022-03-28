@@ -11,7 +11,6 @@ PlayerCamera::PlayerCamera()
 	mTransform		= nullptr;
 	mUserTransform	= nullptr;
 
-
 	PastX	= 0;
 	PastY	= 0;
 	NowX = 0;

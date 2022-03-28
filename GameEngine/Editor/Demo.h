@@ -7,7 +7,7 @@
 #include <stack>
 
 class SceneSave;
-class SceneLoad;
+class Eater_LoadScene;
 class GameObject;
 class AnimationController;
 class Demo : public Scene
@@ -53,6 +53,6 @@ private:
 private:
 	///Manager
 	static SceneSave* mSaveManager;
-	static SceneLoad* mLoadManager;
+	static Eater_LoadScene* mLoadManager;
 };
 

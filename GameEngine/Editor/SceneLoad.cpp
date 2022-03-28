@@ -14,20 +14,20 @@
 #include "Collider.h"
 #include "PhysCollider.h"
 
-SceneLoad::SceneLoad()
+Eater_LoadScene::Eater_LoadScene()
 {
 }
 
-SceneLoad::~SceneLoad()
+Eater_LoadScene::~Eater_LoadScene()
 {
 }
 
-void SceneLoad::Initialize(std::map<std::string, GameObject*>* ObjectList)
+void Eater_LoadScene::Initialize(std::map<std::string, GameObject*>* ObjectList)
 {
 	LoadObject = ObjectList;
 }
 
-void SceneLoad::Load(std::string FilePath)
+void Eater_LoadScene::Load(std::string FilePath)
 {
 	EATER_OPEN_READ_FILE(FilePath);
 	int Count = EATER_GET_NODE_COUNT();
@@ -96,7 +96,14 @@ void SceneLoad::Load(std::string FilePath)
 	EATER_CLOSE_READ_FILE();
 }
 
-void SceneLoad::Load_Component_Light(int index, GameObject* Object)
+void Eater_LoadScene::LoadData(std::string& Paht)
+{
+
+
+
+}
+
+void Eater_LoadScene::Load_Component_Light(int index, GameObject* Object)
 {
 	Light* mLight = Object->AddComponent<Light>();
 	std::vector<std::string> Data;
@@ -131,12 +138,12 @@ void SceneLoad::Load_Component_Light(int index, GameObject* Object)
 	mLight->SetColor(R, G, B);
 }
 
-void SceneLoad::Load_Component_Particle(int index, GameObject* Object)
+void Eater_LoadScene::Load_Component_Particle(int index, GameObject* Object)
 {
 
 }
 
-void SceneLoad::Load_Component_Collider(int index, GameObject* Object)
+void Eater_LoadScene::Load_Component_Collider(int index, GameObject* Object)
 {
 	Collider* mCollider = Object->AddComponent<Collider>();
 	PhysCollider* mPhys = mCollider->GetCollider();
@@ -166,16 +173,16 @@ void SceneLoad::Load_Component_Collider(int index, GameObject* Object)
 	mCollider->CreatePhys();
 }
 
-void SceneLoad::Load_Component_Rigidbody(int index, GameObject* Object)
+void Eater_LoadScene::Load_Component_Rigidbody(int index, GameObject* Object)
 {
 }
 
-void SceneLoad::Load_Component_Camera(int index, GameObject* Object)
+void Eater_LoadScene::Load_Component_Camera(int index, GameObject* Object)
 {
 	Object->AddComponent<Camera>();
 }
 
-void SceneLoad::Load_Component_Animation(int index, GameObject* Object)
+void Eater_LoadScene::Load_Component_Animation(int index, GameObject* Object)
 {
 	MeshFilter*			 MF	= Object->GetComponent<MeshFilter>();
 	AnimationController* AC = Object->AddComponent<AnimationController>();
@@ -186,7 +193,7 @@ void SceneLoad::Load_Component_Animation(int index, GameObject* Object)
 	AC->Play(1, true);
 }
 
-void SceneLoad::Load_Component_Transform(int index, GameObject* Object)
+void Eater_LoadScene::Load_Component_Transform(int index, GameObject* Object)
 {
 	Transform* mTransform = Object->GetTransform();
 	EATER_GET_LIST_CHOICE(index, "Transform");
@@ -197,7 +204,7 @@ void SceneLoad::Load_Component_Transform(int index, GameObject* Object)
 	mTransform->Scale		= { Data[6],Data[7] ,Data[8] };
 }
 
-void SceneLoad::Load_Component_MeshFilter(int index, GameObject* Object)
+void Eater_LoadScene::Load_Component_MeshFilter(int index, GameObject* Object)
 {
 	MeshFilter* mMeshFilter = Object->AddComponent<MeshFilter>();
 	std::vector<std::string> Data;

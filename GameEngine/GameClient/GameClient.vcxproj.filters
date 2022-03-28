@@ -37,12 +37,6 @@
     <Filter Include="소스 파일\Scene\Loading">
       <UniqueIdentifier>{f6aae002-8b2f-4f9e-9f7f-1cf3cad1c77d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\ClientData">
-      <UniqueIdentifier>{0ee1580a-e2a9-46d0-99b1-3b63c3359eb0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\ClientData\PlayerStruct">
-      <UniqueIdentifier>{e6b2d29f-8875-4703-a4ef-d5f3958b9542}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Component\PlayerCamera">
       <UniqueIdentifier>{925263ad-cb58-4a06-824c-b8133a6978b0}</UniqueIdentifier>
     </Filter>
@@ -83,9 +77,6 @@
     </ClInclude>
     <ClInclude Include="Loading.h">
       <Filter>소스 파일\Scene\Loading</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerData.h">
-      <Filter>소스 파일\ClientData\PlayerStruct</Filter>
     </ClInclude>
     <ClInclude Include="PlayerCamera.h">
       <Filter>소스 파일\Component\PlayerCamera</Filter>

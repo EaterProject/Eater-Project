@@ -23,6 +23,7 @@ SceneSave::SceneSave()
 
 SceneSave::~SceneSave()
 {
+
 }
 
 void SceneSave::Initialize(std::map<std::string, GameObject*>* ObjectList)
@@ -70,7 +71,7 @@ void SceneSave::Save(std::string SaveFilePath, std::string SaveFileName)
 		if (mCollider != nullptr) { SaveCollider(mCollider);}
 		if (mRigidbody != nullptr) { SaveRigidbody(mRigidbody);}
 		if (mAnimationController != nullptr) { SaveAnimation(mAnimationController);}
-		if (mParticleSystem != nullptr) { SaveParticle(mParticleSystem);}
+		if (mParticleSystem != nullptr) { SaveParticle(mParticleSystem);}	
 	}
 
 	//저장 종료

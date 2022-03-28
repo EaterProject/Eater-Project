@@ -2,13 +2,14 @@
 #include <string>
 #include <map>
 class GameObject;
-class SceneLoad
+class Eater_LoadScene
 {
 public:
-	SceneLoad();
-	~SceneLoad();
-	void Initialize(std::map<std::string, GameObject*>* ObjectList);
+	Eater_LoadScene();
+	~Eater_LoadScene();
 	void Load(std::string FilePath);
+	void Initialize(std::map<std::string, GameObject*>* ObjectList);
+	void LoadData(std::string& Paht);
 private:
 	void Load_Component_Transform(int index, GameObject* Object);
 	void Load_Component_MeshFilter(int index, GameObject* Object);
@@ -19,7 +20,6 @@ private:
 	void Load_Component_Camera(int index, GameObject* Object);
 	void Load_Component_Animation(int index, GameObject* Object);
 
-	
 	std::map<std::string, GameObject*>* LoadObject;
 };
 

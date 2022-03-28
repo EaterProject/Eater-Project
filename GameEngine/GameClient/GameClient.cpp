@@ -6,17 +6,6 @@
 #include "GameManager.h"
 #include "MainHeader.h"
 
-//#include "Dwmapi.h"
-//#pragma comment( lib, "Dwmapi.lib" )
-
-//#define _CRTDBG_MAP_ALLOC
-//#include <cstdlib>
-//#include <crtdbg.h>
-//
-//#ifdef _DEBUG
-//#define new new( _NORMAL_BLOCK , __FILE__ , __LINE__ )
-//#endif
-
 // 윈도 프로시저의 전방선언
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
@@ -52,7 +41,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 	int height = R.bottom - R.top;
 
 	// 애플리케이션 초기화를 수행합니다:
-	HWND hWnd = CreateWindowW(L"PROJECT1", L"EngineTestClient", WS_OVERLAPPEDWINDOW,
+	HWND hWnd = CreateWindowW(L"PROJECT1", L"Eater", WS_OVERLAPPEDWINDOW,
 		(screenWidth - width) / 2, (screenHeight - height) / 2, width, height, nullptr, nullptr, hInstance, nullptr);
 
 	if (!hWnd)
