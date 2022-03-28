@@ -84,6 +84,14 @@ void TestScene::CreateMap()
 	MeshFilter* filter = nullptr;
 	Light* light = nullptr;
 
+	Object = InstanceLight("Light", LIGHT_TYPE::POINT_LIGHT);
+	Object->GetTransform()->Position.x += 10.0f;
+	Object->GetTransform()->Position.y += 10.0f;
+
+	Object = InstanceLight("Light", LIGHT_TYPE::SPOT_LIGHT);
+	Object->GetTransform()->Position.x -= 10.0f;
+	Object->GetTransform()->Position.y += 10.0f;
+
 	Object = Instance();
 	filter = Object->AddComponent<MeshFilter>();
 	filter->SetModelName("bossb+");

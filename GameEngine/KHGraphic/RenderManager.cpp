@@ -319,9 +319,15 @@ void* RenderManager::PickingRender(int x, int y)
 	}
 
 	// Transparency Object Picking Draw..
+	for (int i = 0; i < m_ParticleMeshList.size(); i++)
+	{
+		m_InstanceLayer = m_ParticleMeshList[i];
+
+		m_Picking->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_MeshList);
+	}
 
 	// UnRender Object Picking Draw..
-
+	m_Picking->NoneMeshRenderUpdate(m_UnRenderMeshList);
 
 	int pickID = m_Picking->FindPick(x, y);
 

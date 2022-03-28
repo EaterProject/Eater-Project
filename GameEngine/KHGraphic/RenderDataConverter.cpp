@@ -500,6 +500,10 @@ void RenderDataConverter::RegisterInstance(RenderData* renderData, MeshRenderBuf
 	// Instance Index »ðÀÔ..
 	renderData->m_InstanceIndex = instance_Index;
 	renderData->m_InstanceLayerIndex = instance_Index;
+
+	// Render Data »ðÀÔ..
+	renderData->m_Mesh = mesh;
+	renderData->m_Material = material;
 }
 
 void RenderDataConverter::CheckEmptyInstance(MeshRenderBuffer* mesh)

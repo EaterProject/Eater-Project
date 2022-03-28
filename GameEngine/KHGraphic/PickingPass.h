@@ -15,6 +15,7 @@ public:
 	void BeginRender();
 	void RenderUpdate(const InstanceRenderBuffer* instance, const RenderData* mesh);
 	void RenderUpdate(const InstanceRenderBuffer* instance, const std::vector<RenderData*>& meshlist);
+	void NoneMeshRenderUpdate(const std::vector<RenderData*>& meshlist);
 	int FindPick(int x, int y);
 
 private:
@@ -29,6 +30,8 @@ private:
 
 	InstanceBuffer* m_MeshID_IB;
 
+	DrawBuffer* m_Box_DB;
+
 	RenderTexture* m_ID_RT;
 	RenderTexture* m_ID_Copy_RT;
 
@@ -36,8 +39,6 @@ private:
 	ID3D11Texture2D* m_ID_CopyTex2D;
 	ID3D11RenderTargetView* m_ID_RTV;
 
-	ID3D11BlendState* m_ID_BS;
-	ID3D11RasterizerState* m_ID_RS;
 	ID3D11DepthStencilState* m_Defalt_DSS;
 	ID3D11DepthStencilView* m_Defalt_DSV;
 

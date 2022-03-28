@@ -26,6 +26,7 @@
 #include "DepthStencilStateDefine.h"
 #include "RasterizerStateDefine.h"
 #include "BlendStateDefine.h"
+#include "DrawBufferDefine.h"
 #include "InstanceBufferDefine.h"
 
 PickingPass::PickingPass()
@@ -93,6 +94,7 @@ void PickingPass::Start(int width, int height)
 	m_Mesh_ID_PS = g_Shader->GetShader("ID_Mesh_PS");
 
 	m_MeshID_IB = g_Resource->GetInstanceBuffer<IB_Mesh>();
+	m_Box_DB = g_Resource->GetDrawBuffer<DB_Box>();
 
 	// Render Target 설정..
 	m_ID_RT = g_Resource->GetRenderTexture<RT_ID>();
@@ -105,7 +107,6 @@ void PickingPass::Start(int width, int height)
 	m_Defalt_DSV = g_Resource->GetDepthStencilView<DS_Defalt>()->Get();
 
 	// Grpahic State 설정..
-	m_ID_RS = g_Resource->GetRasterizerState<RS_Solid>()->Get();
 	m_Defalt_DSS = g_Resource->GetDepthStencilState<DSS_Defalt>()->Get();
 
 	// ViewPort 설정..
@@ -138,13 +139,13 @@ void PickingPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rende
 	if (meshData == nullptr) return;
 	
 	ObjectData* obj = meshData->m_ObjectData;
-	MeshRenderBuffer* mesh = instance->m_Mesh;
+	MeshRenderBuffer* mesh = meshData->m_Mesh;
 
 	Matrix world = *obj->World;
 	Matrix viewproj = g_GlobalData->CamViewProj;
 	Vector4 hashColor = obj->HashColor;
 
-	switch (instance->m_Type)
+	switch (obj->ObjType)
 	{
 	case OBJECT_TYPE::BASE:
 	case OBJECT_TYPE::TERRAIN:
@@ -280,6 +281,71 @@ void PickingPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::
 	default:
 		break;
 	}
+
+	// Mesh Instance Data Clear..
+	m_MeshInstance.clear();
+	m_InstanceCount = 0;
+}
+
+void PickingPass::NoneMeshRenderUpdate(const std::vector<RenderData*>& meshlist)
+{
+	Matrix view = g_GlobalData->CamView;
+	Matrix proj = g_GlobalData->CamProj;
+
+	ObjectData* obj = nullptr;
+
+	for (int i = 0; i < meshlist.size(); i++)
+	{
+		if (meshlist[i] == nullptr) continue;
+
+		// 해당 Instance Data 삽입..
+		obj = meshlist[i]->m_ObjectData;
+		m_MeshData.World = *obj->World;
+		m_MeshData.HashColor = obj->HashColor;
+
+		m_MeshInstance.push_back(m_MeshData);
+		m_InstanceCount++;
+	}
+
+	if (m_MeshInstance.empty()) return;
+
+	// Mapping SubResource Data..
+	D3D11_MAPPED_SUBRESOURCE mappedResource;
+	ZeroMemory(&mappedResource, sizeof(D3D11_MAPPED_SUBRESOURCE));
+
+	// GPU Access Lock Buffer Data..
+	g_Context->Map(m_MeshID_IB->InstanceBuf->Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
+
+	m_InstanceStride = (size_t)m_MeshID_IB->Stride * (size_t)m_InstanceCount;
+
+	// Copy Resource Data..
+	memcpy(mappedResource.pData, &m_MeshInstance[0], m_InstanceStride);
+
+	// GPU Access UnLock Buffer Data..
+	g_Context->Unmap(m_MeshID_IB->InstanceBuf->Get(), 0);
+
+	// Vertex Shader Update..
+	CB_InstanceStaticMesh objectBuf;
+	objectBuf.gView = view;
+	objectBuf.gProj = proj;
+
+	m_Mesh_Inst_VS->ConstantBufferCopy(&objectBuf);
+
+	m_Mesh_Inst_VS->Update();
+
+	// Pixel Shader Update..
+	m_Mesh_ID_PS->Update();
+
+	ID3D11Buffer* vertexBuffers[2] = { m_Box_DB->VertexBuf->Get(), m_MeshID_IB->InstanceBuf->Get() };
+	UINT strides[2] = { m_Box_DB->Stride, m_MeshID_IB->Stride };
+	UINT offsets[2] = { 0,0 };
+
+	// Draw..
+	g_Context->IASetVertexBuffers(0, 2, vertexBuffers, strides, offsets);
+	g_Context->IASetIndexBuffer(m_Box_DB->IndexBuf->Get(), DXGI_FORMAT_R32_UINT, 0);
+	g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	g_Context->DrawIndexedInstanced(m_Box_DB->IndexCount, m_InstanceCount, 0, 0, 0);
 
 	// Mesh Instance Data Clear..
 	m_MeshInstance.clear();
