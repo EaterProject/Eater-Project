@@ -10,10 +10,14 @@
 #include "RightOption.h"
 #include "GrobalFunction.h"
 #include "Demo.h"
-#include "GameObject.h"
 #include "CamAnimation.h"
 #include "SceneSaveDialog.h"
 
+#include "GameObject.h"
+#include "MeshFilter.h"
+#include "Light.h"
+#include "Collider.h"
+#include "Rigidbody.h"
 
 // FileOption 대화 상자
 
@@ -39,6 +43,7 @@ BOOL FileOption::OnInitDialog()
 void FileOption::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_EDIT2, AddComponent_ObjectName_Edit);
 }
 
 BEGIN_MESSAGE_MAP(FileOption, CDialogEx)
@@ -54,6 +59,9 @@ BEGIN_MESSAGE_MAP(FileOption, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON27, &FileOption::OnOpenExe)
 	ON_BN_CLICKED(IDC_BUTTON26, &FileOption::OnCreateCamera)
 	ON_BN_CLICKED(IDC_BUTTON9, &FileOption::OnCreateGameObject)
+	ON_BN_CLICKED(IDC_BUTTON6, &FileOption::OnAddCollider)
+	ON_BN_CLICKED(IDC_BUTTON8, &FileOption::OnAddRigidbody)
+	ON_BN_CLICKED(IDC_BUTTON16, &FileOption::OnAddLight)
 END_MESSAGE_MAP()
 
 
@@ -62,6 +70,12 @@ void FileOption::Initialize(RightOption* mOption)
 	mRightOption = mOption;
 	mScene = new SceneSaveDialog();
 	mScene->Initialize(mRightOption);
+}
+
+void FileOption::SetChoiceGameObjectName(std::string Name, GameObject* Obj)
+{
+	ChoiceObject = Obj;
+	AddComponent_ObjectName_Edit.SetWindowTextW(ChangeToCString(Name));
 }
 
 void FileOption::OnTimer(UINT_PTR nIDEvent)
@@ -183,4 +197,28 @@ void FileOption::OnCreateGameObject()
 	GameObject* Obj = Demo::Create_GameObject();
 	HTREEITEM Top = mRightOption->HirearchyTree.InsertItem(ChangeToCString(Obj->Name));
 	mRightOption->Create_Hirearchy_Item(Obj, Top);
+}
+
+void FileOption::OnAddCollider()
+{
+	if (ChoiceObject != nullptr)
+	{
+		ChoiceObject->AddComponent<Collider>();
+	}
+}
+
+void FileOption::OnAddRigidbody()
+{
+	if (ChoiceObject != nullptr)
+	{
+		ChoiceObject->AddComponent<Rigidbody>();
+	}
+}
+
+void FileOption::OnAddLight()
+{
+	if (ChoiceObject != nullptr)
+	{
+		ChoiceObject->AddComponent<Light>();
+	}
 }

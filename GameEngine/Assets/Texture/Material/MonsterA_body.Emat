@@ -1,0 +1,16 @@
+#EATERMAT
+@MaterialName monsterA_body
+@Alpha NO
+@Diffuse monsterA_BaseColor.png
+@Normal MonsterA_Normal.png
+@Emissive monsterA_Emissive.png
+@ORM monsterA_ORM.png
+@Roughness 0
+@Metallic 0
+@Tileing_X 1
+@Tileing_Y 1
+@AddColor_R 0
+@AddColor_G 0
+@AddColor_B 0
+@AddColor_A 0
+&

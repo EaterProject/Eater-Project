@@ -21,8 +21,8 @@ public:
 
 	//현재카메라를 메인카메라로 변경시킨다
 	EATER_ENGINEDLL void ChoiceMainCam();
-	EATER_ENGINEDLL void LookAt(GameObject* obj);
-	EATER_ENGINEDLL void LookAt(Vector3 Pos);
+	//EATER_ENGINEDLL void LookAt(GameObject* obj);
+	//EATER_ENGINEDLL void LookAt(Vector3 Pos);
 	// Camera Position
 	DirectX::SimpleMath::Vector3 GetPos();
 	//현재 카메라의 뷰행렬
@@ -34,8 +34,8 @@ public:
 	void SetSize(int Change_Width, int Change_Height);
 	void CreateProj(int winsizeX,int WinSizeY, bool ViewPoint = false);
 public:
-	Transform* tranform;
 private:
+	Transform* tranform;
 
 	//프로젝션 행렬 생성하기
 	void CreateView();

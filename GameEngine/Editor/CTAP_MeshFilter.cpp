@@ -271,19 +271,36 @@ LRESULT CTAP_MeshFilter::OnUserFun(WPARAM wParam, LPARAM lparam)
 	POINT point;
 	GetCursorPos(&point);
 
+
+	if (EditRect[ModelName_Index].left <= point.x &&
+		EditRect[ModelName_Index].right >= point.x &&
+		EditRect[ModelName_Index].top <= point.y &&
+		EditRect[ModelName_Index].bottom >= point.y)
+	{
+		if (Type == EATER)
+		{
+			ModelName_Edit.SetWindowTextW(strString);
+			mMeshFilter->SetModelName(FileName);
+		}
+		else
+		{
+			AfxMessageBox(L"Error : Eater 파일만 가능합니다");
+		}
+	}
+
 	if (EditRect[MeshName_Index].left	<= point.x &&
 		EditRect[MeshName_Index].right	>= point.x &&
 		EditRect[MeshName_Index].top	<= point.y &&
 		EditRect[MeshName_Index].bottom >= point.y)
 	{
-		if (Type == FBX || Type == EATER)
+		if (Type == EMESH)
 		{
 			MeshName_Edit.SetWindowTextW(strString);
-			mMeshFilter->SetModelName(FileName);
+			mMeshFilter->SetMeshName(FileName);
 		}
 		else
 		{
-			AfxMessageBox(L"Error : FBX , EATER 파일만 가능합니다");
+			AfxMessageBox(L"Error : Emesh 파일만 가능합니다");
 		}
 	}
 

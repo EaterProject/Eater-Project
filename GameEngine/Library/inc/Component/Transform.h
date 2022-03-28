@@ -18,6 +18,8 @@ public:
 	void TransformUpdate();
 
 
+	//물리충돌된 좌표로 움직일것인지
+	bool isRigid;
 public:
 	//위치
 	DirectX::SimpleMath::Vector3 Position;
@@ -109,8 +111,6 @@ private:
 	//게임 오브젝트의 위치 회전 크기값을 모두곱한 월드 행렬
 	DirectX::SimpleMath::Matrix World_M;
 
-	//물리충돌된 좌표로 움직일것인지
-	bool isRigid;
 
 	///계층 구조에서 부모 객체 자식객체
 	Transform* Parent;

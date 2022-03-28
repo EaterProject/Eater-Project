@@ -6,6 +6,8 @@
 #include "afxdialogex.h"
 #include "Demo.h"
 
+#include "CTAP_Collider.h"
+#include "CTAP_Rigidbody.h"
 #include "CTAP_Transform.h"
 #include "CTAP_Animation.h"
 #include "CTAP_MeshFilter.h"
@@ -24,6 +26,8 @@
 #include "MeshFilter.h"
 #include "ParticleSystem.h"
 #include "Light.h"
+#include "Collider.h"
+#include "Rigidbody.h"
 #include "CamAnimation.h"
 
 // RightOption 대화 상자
@@ -38,7 +42,13 @@ RightOption::RightOption(CWnd* pParent /*=nullptr*/)
 
 RightOption::~RightOption()
 {
-
+	delete mRigidbody;
+	delete mCollider;
+	delete mTransform;
+	delete mAnimation;
+	delete mMeshFilter;
+	delete mPrticle;
+	delete mLight;
 }
 
 BOOL RightOption::OnInitDialog()
@@ -100,6 +110,15 @@ BOOL RightOption::OnInitDialog()
 	mLight->MoveWindow(0, 25, rect.Width() - 5, rect.Height() - 25);
 	mLight->ShowWindow(SW_HIDE);
 
+	mRigidbody = new CTAP_Rigidbody();
+	mRigidbody->Create(IDD_TAP_RIGIDBODY, &Component_TapList);
+	mRigidbody->MoveWindow(0, 25, rect.Width() - 5, rect.Height() - 25);
+	mRigidbody->ShowWindow(SW_HIDE);
+
+	mCollider = new CTAP_Collider();
+	mCollider->Create(IDD_TAP_COLLIDER, &Component_TapList);
+	mCollider->MoveWindow(0, 25, rect.Width() - 5, rect.Height() - 25);
+	mCollider->ShowWindow(SW_HIDE);
 
 	thisPointer = this;
 	
@@ -291,6 +310,13 @@ GameObject* RightOption::FindGameObjectParent(HTREEITEM mItem)
 
 void RightOption::OnChoice_Hirearchy_Item(NMHDR* pNMHDR, LRESULT* pResult)
 {
+	mTransform->ShowWindow(SW_HIDE);
+	mMeshFilter->ShowWindow(SW_HIDE);
+	mLight->ShowWindow(SW_HIDE);
+	mPrticle->ShowWindow(SW_HIDE);
+	mCollider->ShowWindow(SW_HIDE);
+	mRigidbody->ShowWindow(SW_HIDE);
+
 	//선택한 아이템의 이름을 가져온다
 	HTREEITEM ChoiceItem = HirearchyTree.GetSelectedItem();
 
@@ -307,11 +333,15 @@ void RightOption::OnChoice_Hirearchy_Item(NMHDR* pNMHDR, LRESULT* pResult)
 	Delete_Hirearchy_Item(ChoiceItem);
 	Create_Hirearchy_Item(ChoiceObject, ChoiceItem);
 
+	mFileOption->SetChoiceGameObjectName(MeshName, ChoiceObject);
+
 	Transform*			 TR	= ChoiceObject->GetTransform();
-	AnimationController* AC = ChoiceObject->GetComponent<AnimationController>();
+	AnimationController* AC	= ChoiceObject->GetComponent<AnimationController>();
 	MeshFilter*			 MF = ChoiceObject->GetComponent<MeshFilter>();
 	ParticleSystem*		 PS = ChoiceObject->GetComponent<ParticleSystem>();
-	Light*				LT	= ChoiceObject->GetComponent<Light>();
+	Light*				 LT	= ChoiceObject->GetComponent<Light>();
+	Rigidbody*			 RI = ChoiceObject->GetComponent<Rigidbody>();
+	Collider*			 CL = ChoiceObject->GetComponent<Collider>();
 
 	int FrontCount = 0;
 	if (TR != nullptr)
@@ -352,6 +382,23 @@ void RightOption::OnChoice_Hirearchy_Item(NMHDR* pNMHDR, LRESULT* pResult)
 		mLight->SetGameObject(LT);
 		FrontCount++;
 	}
+
+	if (RI != nullptr)
+	{
+		Component_TapList.InsertItem(FrontCount, L"Rigidbody");
+		mRigidbody->ShowWindow(SW_HIDE);
+		//mRigidbody->SetGameObject(LT);
+		FrontCount++;
+	}
+
+	if (CL != nullptr)
+	{
+		Component_TapList.InsertItem(FrontCount, L"Collider");
+		mCollider->ShowWindow(SW_HIDE);
+		mCollider->SetGameObject(CL);
+		FrontCount++;
+	}
+
 	Component_TapList.SetCurSel(0);
 }
 
@@ -427,6 +474,8 @@ void RightOption::OnClickTap(NMHDR* pNMHDR, LRESULT* pResult)
 		mMeshFilter->ShowWindow(SW_HIDE);
 		mPrticle->ShowWindow(SW_HIDE);
 		mLight->ShowWindow(SW_HIDE);
+		mRigidbody->ShowWindow(SW_HIDE);
+		mCollider->ShowWindow(SW_HIDE);
 	}
 	else if (ComponentName == L"Animation")
 	{
@@ -435,6 +484,8 @@ void RightOption::OnClickTap(NMHDR* pNMHDR, LRESULT* pResult)
 		mMeshFilter->ShowWindow(SW_HIDE);
 		mPrticle->ShowWindow(SW_HIDE);
 		mLight->ShowWindow(SW_HIDE);
+		mRigidbody->ShowWindow(SW_HIDE);
+		mCollider->ShowWindow(SW_HIDE);
 	}
 	else if (ComponentName == L"MeshFilter")
 	{
@@ -443,6 +494,8 @@ void RightOption::OnClickTap(NMHDR* pNMHDR, LRESULT* pResult)
 		mMeshFilter->ShowWindow(SW_SHOW);
 		mPrticle->ShowWindow(SW_HIDE);
 		mLight->ShowWindow(SW_HIDE);
+		mRigidbody->ShowWindow(SW_HIDE);
+		mCollider->ShowWindow(SW_HIDE);
 	}
 	else if (ComponentName == L"Particle")
 	{
@@ -451,6 +504,8 @@ void RightOption::OnClickTap(NMHDR* pNMHDR, LRESULT* pResult)
 		mMeshFilter->ShowWindow(SW_HIDE);
 		mPrticle->ShowWindow(SW_SHOW);
 		mLight->ShowWindow(SW_HIDE);
+		mRigidbody->ShowWindow(SW_HIDE);
+		mCollider->ShowWindow(SW_HIDE);
 	}
 	else if (ComponentName == L"Light")
 	{
@@ -459,11 +514,38 @@ void RightOption::OnClickTap(NMHDR* pNMHDR, LRESULT* pResult)
 		mMeshFilter->ShowWindow(SW_HIDE);
 		mPrticle->ShowWindow(SW_HIDE);
 		mLight->ShowWindow(SW_SHOW);
+		mRigidbody->ShowWindow(SW_HIDE);
+		mCollider->ShowWindow(SW_HIDE);
 	}
 	else if (ComponentName == L"Camera")
 	{
-
-
+		//mTransform->ShowWindow(SW_HIDE);
+		//mAnimation->ShowWindow(SW_HIDE);
+		//mMeshFilter->ShowWindow(SW_HIDE);
+		//mPrticle->ShowWindow(SW_HIDE);
+		//mLight->ShowWindow(SW_HIDE);
+		//mRigidbody->ShowWindow(SW_HIDE);
+		//mCollider->ShowWindow(SW_HIDE);
+	}
+	else if (ComponentName == L"Collider")
+	{
+		mTransform->ShowWindow(SW_HIDE);
+		mAnimation->ShowWindow(SW_HIDE);
+		mMeshFilter->ShowWindow(SW_HIDE);
+		mPrticle->ShowWindow(SW_HIDE);
+		mLight->ShowWindow(SW_HIDE);
+		mRigidbody->ShowWindow(SW_HIDE);
+		mCollider->ShowWindow(SW_SHOW);
+	}
+	else if (ComponentName == L"Rigidbody")
+	{
+		mTransform->ShowWindow(SW_HIDE);
+		mAnimation->ShowWindow(SW_HIDE);
+		mMeshFilter->ShowWindow(SW_HIDE);
+		mPrticle->ShowWindow(SW_HIDE);
+		mLight->ShowWindow(SW_HIDE);
+		mRigidbody->ShowWindow(SW_SHOW);
+		mCollider->ShowWindow(SW_HIDE);
 	}
 }
 

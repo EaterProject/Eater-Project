@@ -207,9 +207,20 @@ BOOL CTAP_Transform::PreTranslateMessage(MSG* pMsg)
 		case VK_RETURN:
 			UpdateGameObject();
 			return TRUE;
+
+		case VK_RIGHT:
+			ObjectTransform->SetTranlate(1, 0, 0);
+			break;
+		case VK_LEFT:
+			ObjectTransform->SetTranlate(-1, 0, 0);
+			break;
 		default:
 			break;
 		}
+	}
+	else
+	{
+		ObjectTransform->SetTranlate(0, 0, 0);
 	}
 
 	return CDialogEx::PreTranslateMessage(pMsg);

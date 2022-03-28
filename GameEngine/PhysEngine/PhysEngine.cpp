@@ -77,12 +77,12 @@ bool PhysEngine::Initialize(int ThreadCount, PhysSceneData* SceneData, bool Debu
 
 void PhysEngine::Release()
 {
-
 	//생성의 역순으로 삭제
 	m_Dispatcher->release();
 	m_Physics->release();
 	m_Foundation->release();
 	m_CudaContextManager->release();
+
 	delete m_Allocator;
 	delete m_ErrorCallback;
 	delete m_TolerancesScale;
@@ -177,8 +177,11 @@ void  PhysEngine::Update_Actor(PhysData* data)
 void PhysEngine::Delete_Actor(PhysData* data)
 {
 	//한개의 엑터 삭제
-	PxRigidActor* rig = reinterpret_cast<PxRigidActor*>(data->ActorObj);
-	rig->release();
+	if (data->ActorObj != nullptr)
+	{
+		PxRigidActor* rig = reinterpret_cast<PxRigidActor*>(data->ActorObj);
+		rig->release();
+	}
 }
 
 bool PhysEngine::RayCast(PhysRayCast* ray)

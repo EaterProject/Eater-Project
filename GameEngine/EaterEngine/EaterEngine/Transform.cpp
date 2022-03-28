@@ -214,7 +214,7 @@ void Transform::Slow_Y_Rotation(Vector3 Dir, float RotationSpeed)
 	if (EndAngle <= 0) { EndAngle += 360; }
 
 	//현재 위치의 각도
-	float NowAngle = Rotation.z;
+	float NowAngle = Rotation.y;
 	//현재 각도에서 도착지점까지 이동하려고 할때 오른쪽회전,왼쪽회전여부를 판별하기위한 Angle
 	float DirAngle = NowAngle - (EndAngle + 90);
 
@@ -246,7 +246,7 @@ void Transform::Slow_Y_Rotation(Vector3 Dir, float RotationSpeed)
 	//범위는 현재 위치에서 프레임당 이동하는 각도량 +,- 해준값
 	float MaxAngle = (EndAngle - 90) + RotationAngleSpeed;	//멈춰야하는 각도의 최대값
 	float MinAngle = (EndAngle - 90) - RotationAngleSpeed;	//멈춰야하는 각도의 최소값
-	float MyAngle =  Rotation.z;				//현재 각도값
+	float MyAngle =  Rotation.y;				//현재 각도값
 
 	//회전 도착지점 을 설정한다
 	if (MyAngle <= MaxAngle && MyAngle >= MinAngle)
@@ -268,17 +268,17 @@ void Transform::Slow_Y_Rotation(Vector3 Dir, float RotationSpeed)
 	//이렇게 계산된 값으로 각도를 이동
 	if (Dir != Vector3(0, 0, 0))
 	{
-		SetRotate(0, 0, RotationDir * RotationAngleSpeed);
+		SetRotate(0, RotationDir * RotationAngleSpeed, 0);
 	}
 
 	//현재 각도는 0 ~ 360 범위 밖으로 나가지못하게 변경
-	if (Rotation.z > 360)
+	if (Rotation.y > 360)
 	{
-		Rotation.z = 0;
+		Rotation.y = 0;
 	}
-	else if (Rotation.z < 0)
+	else if (Rotation.y < 0)
 	{
-		Rotation.z = 360;
+		Rotation.y = 360;
 	}
 
 }
