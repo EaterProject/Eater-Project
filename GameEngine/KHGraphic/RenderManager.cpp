@@ -260,6 +260,8 @@ void RenderManager::Render()
 	// Rendering Resource 동기화 작업..
 	ConvertRenderData();
 
+	PickingRender(0, 0);
+
 	// Shadow Render..
 	GPU_BEGIN_EVENT_DEBUG_NAME("Shadow Pass");
 	ShadowRender();
@@ -329,14 +331,16 @@ void* RenderManager::PickingRender(int x, int y)
 	// UnRender Object Picking Draw..
 	m_Picking->NoneMeshRenderUpdate(m_UnRenderMeshList);
 
-	int pickID = m_Picking->FindPick(x, y);
+	// 현재 클릭한 Pixel ID 검출..
+	UINT pickID = m_Picking->FindPick(x, y);
 
-	// Pick ID가 음수라면 선택된 Object가 존재하지 않는 경우..
-	if (pickID < 0) return nullptr;
-
-	// 해당 Render Data의 원본 GameObject를 반환..
+	// 해당 Render Data 검색..
 	RenderData* renderData = m_Converter->GetRenderData(pickID);
 	
+	// 검색된 Render Data가 없는것은 선택된 Object가 없다는 것..
+	if (renderData == nullptr) return nullptr;
+
+	// 해당 Render Data의 원본 GameObject를 반환..
 	return renderData->m_ObjectData->Object;
 }
 
@@ -770,7 +774,7 @@ void RenderManager::DeleteMeshRenderData(MeshData* meshData)
 	UINT renderDataIndex = instanceLayer->m_MeshList[index]->m_ObjectData->ObjectIndex;
 
 	// 해당 Render Data 제거..
-	m_Converter->DeleteRenderData(renderDataIndex);
+	m_Converter->DeleteRenderData(renderDataIndex + 1);
 
 	// 해당 Instance List에서 제거...
 	instanceLayer->DeleteRenderData(index);
@@ -806,7 +810,7 @@ void RenderManager::DeleteParticleRenderData(MeshData* meshData)
 	UINT renderDataIndex = instanceLayer->m_MeshList[index]->m_ObjectData->ObjectIndex;
 
 	// 해당 Render Data 제거..
-	m_Converter->DeleteRenderData(renderDataIndex);
+	m_Converter->DeleteRenderData(renderDataIndex + 1);
 
 	// 해당 Instance List에서 제거...
 	instanceLayer->DeleteRenderData(index);
@@ -836,7 +840,7 @@ void RenderManager::DeleteUnRenderData(MeshData* meshData)
 	UINT renderDataIndex = m_UnRenderMeshList[index]->m_ObjectData->ObjectIndex;
 
 	// 해당 Render Data 제거..
-	m_Converter->DeleteRenderData(renderDataIndex);
+	m_Converter->DeleteRenderData(renderDataIndex + 1);
 
 	// 해당 Instance List에서 제거...
 	m_UnRenderMeshList.erase(std::next(m_UnRenderMeshList.begin(), index));

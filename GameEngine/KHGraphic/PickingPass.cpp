@@ -50,7 +50,7 @@ void PickingPass::Create(int width, int height)
 	texCopyDesc.Height = 1;
 	texCopyDesc.MipLevels = 1;
 	texCopyDesc.ArraySize = 1;
-	texCopyDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+	texCopyDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 	texCopyDesc.SampleDesc.Count = 1;
 	texCopyDesc.SampleDesc.Quality = 0;
 	texCopyDesc.Usage = D3D11_USAGE_STAGING;
@@ -64,7 +64,7 @@ void PickingPass::Create(int width, int height)
 	texDesc.Height = height;
 	texDesc.MipLevels = 1;
 	texDesc.ArraySize = 1;
-	texDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+	texDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 	texDesc.SampleDesc.Count = 1;
 	texDesc.SampleDesc.Quality = 0;
 	texDesc.Usage = D3D11_USAGE_DEFAULT;
@@ -93,7 +93,7 @@ void PickingPass::Start(int width, int height)
 	m_Skin_Inst_VS = g_Shader->GetShader("ID_SkinMesh_Instance_VS");
 	m_Mesh_ID_PS = g_Shader->GetShader("ID_Mesh_PS");
 
-	m_MeshID_IB = g_Resource->GetInstanceBuffer<IB_Mesh>();
+	m_MeshID_IB = g_Resource->GetInstanceBuffer<IB_MeshID>();
 	m_Box_DB = g_Resource->GetDrawBuffer<DB_Box>();
 
 	// Render Target ¼³Á¤..
@@ -209,8 +209,7 @@ void PickingPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::
 		return;
 	}
 
-	Matrix view = g_GlobalData->CamView;
-	Matrix proj = g_GlobalData->CamProj;
+	Matrix viewproj = g_GlobalData->CamViewProj;
 
 	ObjectData* obj = nullptr;
 	MeshRenderBuffer* mesh = instance->m_Mesh;
@@ -250,9 +249,8 @@ void PickingPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::
 	case OBJECT_TYPE::BASE:
 	{
 		// Vertex Shader Update..
-		CB_InstanceStaticMesh objectBuf;
-		objectBuf.gView = view;
-		objectBuf.gProj = proj;
+		CB_Instance_StaticMesh_ID objectBuf;
+		objectBuf.gViewProj = viewproj;
 
 		m_Mesh_Inst_VS->ConstantBufferCopy(&objectBuf);
 
@@ -289,8 +287,7 @@ void PickingPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::
 
 void PickingPass::NoneMeshRenderUpdate(const std::vector<RenderData*>& meshlist)
 {
-	Matrix view = g_GlobalData->CamView;
-	Matrix proj = g_GlobalData->CamProj;
+	Matrix viewproj = g_GlobalData->CamViewProj;
 
 	ObjectData* obj = nullptr;
 
@@ -325,9 +322,8 @@ void PickingPass::NoneMeshRenderUpdate(const std::vector<RenderData*>& meshlist)
 	g_Context->Unmap(m_MeshID_IB->InstanceBuf->Get(), 0);
 
 	// Vertex Shader Update..
-	CB_InstanceStaticMesh objectBuf;
-	objectBuf.gView = view;
-	objectBuf.gProj = proj;
+	CB_Instance_StaticMesh_ID objectBuf;
+	objectBuf.gViewProj = viewproj;
 
 	m_Mesh_Inst_VS->ConstantBufferCopy(&objectBuf);
 
@@ -352,7 +348,7 @@ void PickingPass::NoneMeshRenderUpdate(const std::vector<RenderData*>& meshlist)
 	m_InstanceCount = 0;
 }
 
-int PickingPass::FindPick(int x, int y)
+UINT PickingPass::FindPick(int x, int y)
 {
 	D3D11_BOX box;
 	box.left = x,
@@ -373,16 +369,10 @@ int PickingPass::FindPick(int x, int y)
 	// GPU Access Lock Texture Data..
 	g_Context->Map(m_ID_CopyTex2D, 0, D3D11_MAP_READ, 0, &mappedResource);
 
-	float* checkID = (float*)mappedResource.pData;
-	float r = round(checkID[0]);
-	float g = round(checkID[1]);
-	float b = round(checkID[2]);
-	float a = round(checkID[3]);
-
-	Vector4 pixelID = Vector4(r, g, b, a);
+	UINT* pickID = (UINT*)mappedResource.pData;
 
 	// GPU Access UnLock Texture Data..
 	g_Context->Unmap(m_ID_CopyTex2D, 0);
 
-	return ObjectData::ColorToHash(pixelID);
+	return *pickID;
 }

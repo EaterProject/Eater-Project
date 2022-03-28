@@ -16,10 +16,7 @@ public:
 	void RenderUpdate(const InstanceRenderBuffer* instance, const RenderData* mesh);
 	void RenderUpdate(const InstanceRenderBuffer* instance, const std::vector<RenderData*>& meshlist);
 	void NoneMeshRenderUpdate(const std::vector<RenderData*>& meshlist);
-	int FindPick(int x, int y);
-
-private:
-	int ColorToHash(Vector4 color);
+	UINT FindPick(int x, int y);
 
 private:
 	VertexShader* m_Mesh_VS;

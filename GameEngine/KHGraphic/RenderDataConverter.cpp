@@ -20,6 +20,10 @@ void RenderDataConverter::ConvertMeshData(MeshData* originData, RenderData* rend
 	renderData->m_ParticleData = originData->Particle_Data;
 	renderData->m_ColliderData = &originData->Collider_Data;
 
+	// ID 설정을 위한 Hash Color 생성..
+	// UINT 형식으로 찍을 것이기에 0번 인덱스는 비워둔다..
+	renderData->m_ObjectData->HashColor = ObjectData::HashToColor(renderData->m_ObjectData->ObjectIndex + 1);
+
 	// 변환된 Render Data 저장..
 	originData->Render_Data = (void*)renderData;
 
@@ -51,7 +55,7 @@ void RenderDataConverter::ConvertMeshData(MeshData* originData, RenderData* rend
 	ConvertRenderData(originData, renderData);
 
 	// Render Data List 삽입..
-	m_RenderList.insert(std::pair<UINT, RenderData*>(renderData->m_ObjectData->ObjectIndex, renderData));
+	m_RenderList.insert(std::pair<UINT, RenderData*>(renderData->m_ObjectData->ObjectIndex + 1, renderData));
 }
 
 void RenderDataConverter::ConvertRenderData(MeshData* originData, RenderData* renderData)

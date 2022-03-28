@@ -111,22 +111,22 @@ void TestScene::CreateMap()
 	//filter = Object->AddComponent<MeshFilter>();
 	//filter->SetModelName("Inside_village");
 	//
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//Tr = Object->GetTransform();
-	//filter->SetModelName("Outside_Rock");
-	//
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("Outside_bossOBJ");
-	//
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("Outside_Other");
-	//
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("Outside_Pebble");
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	Tr = Object->GetTransform();
+	filter->SetModelName("Outside_Rock");
+	
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	filter->SetModelName("Outside_bossOBJ");
+	
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	filter->SetModelName("Outside_Other");
+	
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	filter->SetModelName("Outside_Pebble");
 
 	testobj = InstanceTerrain("Terrain");
 	Terrain* mTerrain = testobj->GetComponent<Terrain>();
