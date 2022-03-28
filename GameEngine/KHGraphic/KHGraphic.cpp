@@ -128,6 +128,11 @@ void KHGraphic::Render()
 	m_RenderManager->Render();
 }
 
+void* KHGraphic::PickingRender(int x, int y)
+{
+	return m_RenderManager->PickingRender(x, y);
+}
+
 void KHGraphic::CreateTextureBuffer(std::string path, TextureBuffer** ppResource)
 {
 	m_FactoryManager->CreateTextureBuffer(path, ppResource);

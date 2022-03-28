@@ -67,54 +67,56 @@ void Demo::ThreadFunction()
 GameObject* Demo::Create_GameObject()
 {
 	GameObject* Object = Instance("None_GameObject");
-	Object->SetName("GameObject");
-	ObjectList.insert({ Object->GetName(), Object });
+	Object->Name = FindMeshName("GameObject");
+	ObjectList.insert({ Object->Name, Object });
 	return Object;
 }
 
 GameObject* Demo::Create_Object(std::string MeshName)
 {
+	std::string ObjectName = FindMeshName(MeshName);
+
 	if (MeshName.rfind('+') == std::string::npos)
 	{
 		//기본 메쉬 생성
-		return CreateBaseObject(MeshName);
+		return CreateBaseObject(ObjectName, MeshName);
 	}
 	else
 	{
 		//스키닝 매쉬 생성
-		return CreateSkinObject(MeshName);
+		return CreateSkinObject(ObjectName, MeshName);
 	}
 }
 
 GameObject* Demo::Create_Camera()
 {
 	GameObject* Cam = InstanceCamera("Camera");
-	ObjectList.insert({Cam->GetName(), Cam});
+	Cam->Name = FindMeshName("Camera");
+	ObjectList.insert({Cam->Name, Cam});
 	return Cam;
 }
 
-GameObject* Demo::CreateBaseObject(std::string MeshName)
+GameObject* Demo::CreateBaseObject(std::string ObjectName, std::string MeshName)
 {
-	GameObject* Object = Instance(MeshName);
+	GameObject* Object = Instance(ObjectName);
 	MeshFilter* mMeshFilter = Object->AddComponent<MeshFilter>();
 	Transform* mTransform = Object->GetTransform();
 
 	mMeshFilter->SetModelName(MeshName);
-	std::string test = Object->GetName();
-	ObjectList.insert({ test, Object });
+	ObjectList.insert({ ObjectName, Object });
 	return Object;
 }
 
-GameObject* Demo::CreateSkinObject(std::string MeshName)
+GameObject* Demo::CreateSkinObject(std::string ObjectName, std::string MeshName)
 {
-	GameObject* Skin = Instance(MeshName);
+	GameObject* Skin = Instance(ObjectName);
 	MeshFilter* MF = Skin->AddComponent<MeshFilter>();
 	Transform* TR = Skin->GetTransform();
 	AnimationController* AC = Skin->AddComponent<AnimationController>();
 
 	MF->SetModelName(MeshName);
 	MF->SetAnimationName(MeshName);
-	ObjectList.insert({ Skin->GetName(), Skin });
+	ObjectList.insert({ ObjectName, Skin });
 	return Skin;
 }
 
@@ -161,6 +163,26 @@ GameObject* Demo::FindMesh(std::string MeshName, std::string ParentName)
 	return Child;
 }
 
+std::string Demo::FindMeshName(std::string MeshName)
+{
+	std::string ObjectName = MeshName;
+	std::map<std::string, GameObject*>::iterator Start_it = ObjectList.end();
+	int Meshindex = 0;
+	while (true)
+	{
+		std::map<std::string, GameObject*>::iterator End_it = ObjectList.find(ObjectName);
+		if (Start_it == End_it)
+		{
+			return ObjectName;
+		}
+		else
+		{
+			Meshindex++;
+			ObjectName = MeshName + "(" + std::to_string(Meshindex) + ")";
+		}
+	}
+}
+
 GameObject* Demo::FindMainCamera()
 {
 	return GetMainCamera();
@@ -186,13 +208,16 @@ GameObject* Demo::Create_Terrain(std::string MeshName)
 GameObject* Demo::Create_Light()
 {
 	GameObject* LightObject = InstanceLight("Light", LIGHT_TYPE::SPOT_LIGHT);
-	ObjectList.insert({ LightObject->GetName(), LightObject });
+	LightObject->Name = FindMeshName(LightObject->Name);
+	ObjectList.insert({ LightObject->Name, LightObject });
 	return LightObject;
 }
 
 GameObject* Demo::Create_Particle()
 {
-	GameObject* obj = InstanceParticle("Particle");
+	std::string Name = FindMeshName("Particle");
+
+	GameObject* obj = InstanceParticle(Name);
 
 	ParticleSystem* particles = obj->GetComponent<ParticleSystem>();
 	particles->SetMeshName("Quad");
@@ -211,7 +236,7 @@ GameObject* Demo::Create_Particle()
 	particles->SetPlayTime(1, true);
 	particles->Play();
 
-	ObjectList.insert({ obj->GetName(), obj });
+	ObjectList.insert({ obj->Name, obj });
 	return obj;
 }
 

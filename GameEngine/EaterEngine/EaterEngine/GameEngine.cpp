@@ -195,7 +195,7 @@ GameObject* GameEngine::Instance(std::string ObjName)
 	DebugManager::Line("(Mesh)");
 	//오브젝트 생성
 	GameObject* temp = CreateInstance();
-	temp->SetName(ObjName);
+	temp->Name = ObjName;
 	DebugManager::Print(DebugManager::MSG_TYPE::MSG_CREATE, "GameObject", ObjName, false);
 
 	//Transform 은 기본으로 넣어준다
@@ -209,7 +209,7 @@ GameObject* GameEngine::InstanceTerrain(std::string ObjName)
 {
 	DebugManager::Line("(Terrain)");
 	GameObject* temp = CreateInstance();
-	temp->SetName(ObjName);
+	temp->Name = ObjName;
 	DebugManager::Print(DebugManager::MSG_TYPE::MSG_CREATE, "Terrain", ObjName, false);
 
 	//Transform
@@ -227,7 +227,7 @@ GameObject* GameEngine::InstanceParticle(std::string ObjName)
 {
 	DebugManager::Line("(Particle)");
 	GameObject* temp = CreateInstance();
-	temp->SetName(ObjName);
+	temp->Name = ObjName;
 	DebugManager::Print(DebugManager::MSG_TYPE::MSG_CREATE, "Particle", ObjName, false);
 	
 	//Transform
@@ -246,8 +246,7 @@ GameObject* GameEngine::InstanceCamera(std::string ObjName)
 	GameObject* Obj	= CreateInstance();
 	Obj->transform = Obj->AddComponent<Transform>();
 	Obj->AddComponent<Camera>();
-	Obj->OneMeshData;
-	Obj->SetName(ObjName);
+	Obj->Name = ObjName;
 	return Obj;
 }
 
@@ -255,7 +254,7 @@ GameObject* GameEngine::InstanceLight(std::string ObjName, LIGHT_TYPE type)
 {
 	DebugManager::Line("(Light)");
 	GameObject* temp = CreateInstance();
-	temp->SetName(ObjName);
+	temp->Name = ObjName;
 	
 	Transform* Tr = temp->AddComponent<Transform>();
 	temp->transform = Tr;
@@ -428,6 +427,11 @@ void GameEngine::SetFocus(bool focus)
 {
 	// 현재 Window Focus 상태에 따라 상태변화는 여기에서..
 	mKeyManager->SetFocus(focus);
+}
+
+void* GameEngine::Picking(int x, int y)
+{
+	return mGraphicManager->PickingRender(x, y);
 }
 
 GameObject* GameEngine::GetMainCamera()

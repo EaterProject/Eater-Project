@@ -33,12 +33,10 @@ public:
 public:
 	MeshData* OneMeshData;					//그래픽 엔진으로 넘겨줄 데이터
 	Transform* transform;					//기본적으로 생성해주는 Transform 컨퍼넌트
-	int ObjectIndex;
 	std::string Name;						//이름
 public:
 	EATER_ENGINEDLL void SetActive(bool active);				//모든 컨퍼넌트 기능중지 여부
 	EATER_ENGINEDLL void SetDontDestroy(bool DontDestroy);		//씬이 넘어갈때 삭제여부
-	EATER_ENGINEDLL void SetName(std::string ObjName);				//이름을 지정한다
 	EATER_ENGINEDLL bool SetTag(std::string TagName);			//태그를 지정한다
 	EATER_ENGINEDLL bool SetTag(int TagNumber);					//태그를 지정한다
 
@@ -48,7 +46,6 @@ public:
 	EATER_ENGINEDLL GameObject* GetChildMesh(int num);					//자식 매쉬 객체를 가져옴_인덱스
 	EATER_ENGINEDLL GameObject* GetChildObject(std::string Name);		//자식 매쉬 , 본을 모두 찾아서 오브젝트를 가져옴
 
-	EATER_ENGINEDLL std::string GetName();								//오브젝트 이름을 가져온다
 	EATER_ENGINEDLL bool		GetDontDestroy();						//삭제 되는 오브젝트인지 여부 반환
 	EATER_ENGINEDLL size_t		GetTag();								//태그를 가져온다
 	EATER_ENGINEDLL int			GetChildMeshCount();					//자식 매쉬 객체의 개수를 가져옴

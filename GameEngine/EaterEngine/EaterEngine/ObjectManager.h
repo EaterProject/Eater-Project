@@ -59,22 +59,17 @@ public:
 	//삭제하면 안되는 오브젝트들을 다시 세팅해준다
 	void DontDestroyObjectSetting();
 
+	GameObject* FindGameObjectString(std::string& TagName);
 	GameObject* FindGameObjectTag(std::string& TagName);
-	GameObject* FindGameObjectString(std::string& ObjectName);
 
 private:
 	//생성한 오브젝트를 넣어줌
 	static void PushCreateObject(GameObject* obj);
 
-	static std::string ConvertName(std::string ObjName, GameObject* obj);
-	static void DeleteName(std::string ObjName);
-
 private:
 	//컨퍼넌트 데이터를 텀겨준다
 	static ComponentFunctionData PushComponentData(Component*);
 	void DontDestroyComponentSetting(Component* Com);
-	///오브젝트 이름 리스트
-	static std::map<Hash_Code, GameObject*> NameList;
 	///오브젝트 태그 리스트
 	static std::map<int,std::string> TagList;
 	///오브젝트 리스트

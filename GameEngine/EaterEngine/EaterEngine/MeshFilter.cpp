@@ -376,7 +376,7 @@ void MeshFilter::CreateStaticMesh(LoadMeshData* mMesh, GameObject* Object)
 {
 	MeshData* Data = Object->OneMeshData;
 
-	Object->SetName(mMesh->Name);
+	Object->Name = mMesh->Name;
 	SetMatrixData(mMesh, Data, Object);
 	SetMaterialData(mMesh, Data, Object);
 	SetMeshData(mMesh, Data, Object);
@@ -402,7 +402,7 @@ void MeshFilter::CreateBoneMesh(LoadMeshData* mMesh, GameObject* Object)
 	int index = mMesh->BoneIndex;
 	BoneList[index] = Object;
 	Data->Object_Data->ObjType = OBJECT_TYPE::BONE;
-	Object->SetName(mMesh->Name);
+	Object->Name = mMesh->Name;
 	Object->GetComponent<MeshFilter>()->ModelName = mMesh->ModelName;
 
 	int ChildCount = (int)mMesh->Child.size();
@@ -426,7 +426,7 @@ void MeshFilter::CreateSkinMesh(LoadMeshData* mMesh, GameObject* Object)
 {
 	MeshData* Data = Object->OneMeshData;
 
-	Object->SetName(mMesh->Name);
+	Object->Name = mMesh->Name;
 	SetMatrixData(mMesh, Data, Object);
 	SetMaterialData(mMesh, Data, Object);
 	SetMeshData(mMesh, Data, Object);

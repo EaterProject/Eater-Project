@@ -16,6 +16,7 @@ GameObject::GameObject()
 
 	OneMeshData = new MeshData();
 	OneMeshData->Object_Data = new ObjectData();
+	OneMeshData->Object_Data->Object = this;
 
 	transform = nullptr;
 	DontDestroy = false;
@@ -26,8 +27,6 @@ GameObject::GameObject()
 
 GameObject::~GameObject()
 {
-	ObjectManager::DeleteName(Name);
-
 	delete OneMeshData->Object_Data;
 	delete OneMeshData;
 	OneMeshData = nullptr;
@@ -56,13 +55,6 @@ void GameObject::SetDontDestroy(bool mDontDestroy)
 	{
 		ChildMeshList[i]->SetDontDestroy(mDontDestroy);
 	}
-}
-
-void GameObject::SetName(std::string ObjName)
-{
-	if (ObjName.empty()) return;
-
-	Name = ObjectManager::ConvertName(ObjName, this);
 }
 
 bool GameObject::SetTag(std::string TagName)
@@ -178,11 +170,6 @@ GameObject* GameObject::GetChildObject(std::string Name)
 	{
 		return nullptr;
 	}
-}
-
-std::string GameObject::GetName()
-{
-	return Name;
 }
 
 bool GameObject::GetDontDestroy()

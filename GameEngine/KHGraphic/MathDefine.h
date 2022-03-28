@@ -10,6 +10,7 @@ namespace DXColors
 	XMGLOBALCONST DirectX::XMVECTORF32 White = { 1.0f, 1.0f, 1.0f, 1.0f };
 	XMGLOBALCONST DirectX::XMVECTORF32 Black = { 0.0f, 0.0f, 0.0f, 1.0f };
 	XMGLOBALCONST DirectX::XMVECTORF32 NonBlack = { 0.0f, 0.0f, 0.0f, 0.0f };
+	XMGLOBALCONST DirectX::XMVECTORF32 NonID = { -1.0f, -1.0f, -1.0f, -1.0f };
 	XMGLOBALCONST DirectX::XMVECTORF32 Red = { 1.0f, 0.0f, 0.0f, 1.0f };
 	XMGLOBALCONST DirectX::XMVECTORF32 Green = { 0.0f, 1.0f, 0.0f, 1.0f };
 	XMGLOBALCONST DirectX::XMVECTORF32 Blue = { 0.0f, 0.0f, 1.0f, 1.0f };

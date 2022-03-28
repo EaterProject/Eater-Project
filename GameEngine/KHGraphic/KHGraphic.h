@@ -34,6 +34,7 @@ public:
 	void DeleteMaterial(MaterialBuffer* material) override;
 
 	void Render() override;
+	void* PickingRender(int x, int y) override;
 
 public:
 	void CreateTextureBuffer(std::string path, TextureBuffer** ppResource) override;

@@ -15,10 +15,10 @@ public:
 	void BeginRender();
 	void RenderUpdate(const InstanceRenderBuffer* instance, const RenderData* mesh);
 	void RenderUpdate(const InstanceRenderBuffer* instance, const std::vector<RenderData*>& meshlist);
-	Vector4 FindPick(int x, int y);
+	int FindPick(int x, int y);
 
 private:
-	Vector4 HashToColor(int hash);
+	int ColorToHash(Vector4 color);
 
 private:
 	VertexShader* m_Mesh_VS;
@@ -36,6 +36,8 @@ private:
 	ID3D11Texture2D* m_ID_CopyTex2D;
 	ID3D11RenderTargetView* m_ID_RTV;
 
+	ID3D11BlendState* m_ID_BS;
+	ID3D11RasterizerState* m_ID_RS;
 	ID3D11DepthStencilState* m_Defalt_DSS;
 	ID3D11DepthStencilView* m_Defalt_DSV;
 

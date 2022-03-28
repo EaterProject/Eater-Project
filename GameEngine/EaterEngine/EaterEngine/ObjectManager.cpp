@@ -23,7 +23,6 @@ Delegate_Map ObjectManager::EndUpdate;
 
 //오브젝트 리스트
 std::vector<GameObject*>			ObjectManager::ObjectList;
-std::map<Hash_Code, GameObject*>	ObjectManager::NameList;
 std::map<int, std::string>			ObjectManager::TagList;
 ObjectManager::ObjectManager()
 {
@@ -37,6 +36,8 @@ ObjectManager::~ObjectManager()
 
 void ObjectManager::PushCreateObject(GameObject* obj)
 {
+	ObjectData* objData = obj->OneMeshData->Object_Data;
+
 	//오브젝트를 넣어줄때 빈곳이 있는지부터 확인
 	int ObjectListSize = (int)ObjectList.size();
 	for (int i = 0; i < ObjectListSize; i++)
@@ -44,14 +45,16 @@ void ObjectManager::PushCreateObject(GameObject* obj)
 		if (ObjectList[i] == nullptr)
 		{
 			ObjectList[i] = obj;
-			obj->ObjectIndex = i;
+			objData->ObjectIndex = i;
 			return;
 		}
 	}
 	//빈곳이없다면 그냥 넣어줌
 	ObjectList.push_back(obj);
-	obj->ObjectIndex = ObjectListSize;
 
+	//해당 오브젝트 고유의 Hash Color 설정
+	objData->ObjectIndex = ObjectListSize;
+	objData->HashColor = ObjectData::HashToColor(objData->ObjectIndex);
 }
 
 void ObjectManager::PushDeleteObject(GameObject* obj)
@@ -211,54 +214,6 @@ void ObjectManager::PushUpdate(Component* mComponent, int Order)
 	Update.Push(data);
 }
 
-std::string ObjectManager::ConvertName(std::string ObjName, GameObject* obj)
-{
-	std::map<Hash_Code, GameObject*>::iterator findName_itor;
-	std::map<Hash_Code, GameObject*>::iterator nowName_itor;
-	std::hash<std::string> hash_Code;
-
-	// 현재 이름이 등록되있는지 확인..
-	nowName_itor = NameList.find(hash_Code(obj->GetName()));
-
-	// 현재 이름 제거..
-	if (nowName_itor != NameList.end())
-	{
-		NameList.erase(nowName_itor);
-	}
-
-	// 중복되는 이름 찾기..
-	int AddNumber = 1;
-	std::string newName = ObjName;
-	while (true)
-	{
-		findName_itor = NameList.find(hash_Code(newName));
-
-		if (findName_itor != NameList.end())
-		{
-			newName = ObjName + "(" + std::to_string(AddNumber++) + ")";
-		}
-		else
-		{
-			break;
-		}
-	}
-
-	// 새로운 이름 등록..
-	NameList.insert({ hash_Code(newName), obj });
-
-	return newName;
-}
-
-void ObjectManager::DeleteName(std::string ObjName)
-{
-	std::map<Hash_Code, GameObject*>::iterator findName_itor = NameList.find(std::hash<std::string>()(ObjName));
-
-	if (findName_itor != NameList.end())
-	{
-		NameList.erase(findName_itor);
-	}
-}
-
 int ObjectManager::FindTag(std::string TagName)
 {
 	//들어온 이름에 따라 태그의 번호를찾고 해당하는 오브젝트를 가져온다
@@ -388,15 +343,17 @@ void ObjectManager::DeleteObject()
 		for (int i = 0; i < ChildMeshCount; i++) 
 		{
 			GameObject* obj = temp->GetChildMesh(i);
+			ObjectData* objData = obj->OneMeshData->Object_Data;
 			DeleteList.push(obj);
-			ObjectList[obj->ObjectIndex] = nullptr;
+			ObjectList[objData->ObjectIndex] = nullptr;
 		}
 
 		for (int i = 0; i < ChildBoneCount; i++)
 		{
 			GameObject* obj = temp->GetChildBone(i);
+			ObjectData* objData = obj->OneMeshData->Object_Data;
 			DeleteList.push(obj);
-			ObjectList[obj->ObjectIndex] = nullptr;
+			ObjectList[objData->ObjectIndex] = nullptr;
 		}
 
 		//현제 오브젝트의 컨퍼넌트를 삭제
@@ -414,6 +371,21 @@ void ObjectManager::DeleteObject()
 		//리스트에서도 빼준다
 		DeleteList.pop();
 	}
+}
+
+GameObject* ObjectManager::FindGameObjectString(std::string& ObjectName)
+{
+	//모든 오브젝트에서 같은 이름의 오브젝트를 찾는다
+	int ObjectSize = ObjectList.size();
+	for (int i = 0; i < ObjectSize; i++)
+	{
+		if (ObjectList[i]->Name == ObjectName)
+		{
+			return ObjectList[i];
+		}
+	}
+
+	return nullptr;
 }
 
 GameObject* ObjectManager::FindGameObjectTag(std::string& TagName)
@@ -440,19 +412,6 @@ GameObject* ObjectManager::FindGameObjectTag(std::string& TagName)
 		{
 			return ObjectList[i];
 		}
-	}
-
-	return nullptr;
-}
-
-GameObject* ObjectManager::FindGameObjectString(std::string& ObjectName)
-{
-	//모든 오브젝트에서 같은 이름의 오브젝트를 찾는다
-	std::map<Hash_Code, GameObject*>::iterator it = NameList.find(std::hash<std::string>()(ObjectName));
-
-	if (it != NameList.end())
-	{
-		return it->second;
 	}
 
 	return nullptr;

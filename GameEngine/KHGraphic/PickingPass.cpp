@@ -24,6 +24,8 @@
 #include "RenderTargetDefine.h"
 #include "DepthStencilViewDefine.h"
 #include "DepthStencilStateDefine.h"
+#include "RasterizerStateDefine.h"
+#include "BlendStateDefine.h"
 #include "InstanceBufferDefine.h"
 
 PickingPass::PickingPass()
@@ -47,12 +49,12 @@ void PickingPass::Create(int width, int height)
 	texCopyDesc.Height = 1;
 	texCopyDesc.MipLevels = 1;
 	texCopyDesc.ArraySize = 1;
-	texCopyDesc.Format = DXGI_FORMAT_R8G8B8A8_UINT;
+	texCopyDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
 	texCopyDesc.SampleDesc.Count = 1;
 	texCopyDesc.SampleDesc.Quality = 0;
 	texCopyDesc.Usage = D3D11_USAGE_STAGING;
 	texCopyDesc.BindFlags = 0;
-	texCopyDesc.CPUAccessFlags = D3D11_CPU_ACCESS_READ;
+	texCopyDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE | D3D11_CPU_ACCESS_READ;
 	texCopyDesc.MiscFlags = 0;
 
 	D3D11_TEXTURE2D_DESC texDesc;
@@ -61,7 +63,7 @@ void PickingPass::Create(int width, int height)
 	texDesc.Height = height;
 	texDesc.MipLevels = 1;
 	texDesc.ArraySize = 1;
-	texDesc.Format = DXGI_FORMAT_R8G8B8A8_UINT;
+	texDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
 	texDesc.SampleDesc.Count = 1;
 	texDesc.SampleDesc.Quality = 0;
 	texDesc.Usage = D3D11_USAGE_DEFAULT;
@@ -103,6 +105,7 @@ void PickingPass::Start(int width, int height)
 	m_Defalt_DSV = g_Resource->GetDepthStencilView<DS_Defalt>()->Get();
 
 	// Grpahic State 설정..
+	m_ID_RS = g_Resource->GetRasterizerState<RS_Solid>()->Get();
 	m_Defalt_DSS = g_Resource->GetDepthStencilState<DSS_Defalt>()->Get();
 
 	// ViewPort 설정..
@@ -124,8 +127,7 @@ void PickingPass::BeginRender()
 {
 	g_Context->OMSetRenderTargets(1, &m_ID_RTV, m_Defalt_DSV);
 
-	g_Context->ClearRenderTargetView(m_ID_RTV, reinterpret_cast<const float*>(&DXColors::NonBlack));
-
+	g_Context->ClearRenderTargetView(m_ID_RTV, reinterpret_cast<const float*>(&DXColors::NonID));
 	g_Context->ClearDepthStencilView(m_Defalt_DSV, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 	g_Context->OMSetDepthStencilState(m_Defalt_DSS, 0);
 	g_Context->RSSetViewports(1, m_Screen_VP);
@@ -284,17 +286,19 @@ void PickingPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::
 	m_InstanceCount = 0;
 }
 
-Vector4 PickingPass::FindPick(int x, int y)
+int PickingPass::FindPick(int x, int y)
 {
 	D3D11_BOX box;
 	box.left = x,
-	box.right = x;
-	box.top = y, 
-	box.bottom = y;
+	box.right = x + 1;
+	box.top = y,
+	box.bottom = y + 1;
+	box.front = 0;
+	box.back = 1;
+
+	g_Context->OMSetRenderTargets(0, nullptr, nullptr);
 
 	g_Context->CopySubresourceRegion(m_ID_CopyTex2D, 0, 0, 0, 0, m_ID_Tex2D, 0, &box);
-
-	Vector4 pixelID = Vector4(0.0f);
 
 	// Mapping SubResource Data..
 	D3D11_MAPPED_SUBRESOURCE mappedResource;
@@ -303,21 +307,16 @@ Vector4 PickingPass::FindPick(int x, int y)
 	// GPU Access Lock Texture Data..
 	g_Context->Map(m_ID_CopyTex2D, 0, D3D11_MAP_READ, 0, &mappedResource);
 
-	// Copy Texture Data..
-	memcpy(&pixelID, mappedResource.pData, sizeof(pixelID));
+	float* checkID = (float*)mappedResource.pData;
+	float r = round(checkID[0]);
+	float g = round(checkID[1]);
+	float b = round(checkID[2]);
+	float a = round(checkID[3]);
+
+	Vector4 pixelID = Vector4(r, g, b, a);
 
 	// GPU Access UnLock Texture Data..
 	g_Context->Unmap(m_ID_CopyTex2D, 0);
 
-	return pixelID;
-}
-
-Vector4 PickingPass::HashToColor(int hash)
-{
-	int a = (hash >> 24) & 0xff;
-	int b = (hash >> 16) & 0xff;
-	int g = (hash >> 8) & 0xff;
-	int r = hash & 0xff;
-
-	return Vector4(r, g, b, a);
+	return ObjectData::ColorToHash(pixelID);
 }

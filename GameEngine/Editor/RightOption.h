@@ -67,12 +67,13 @@ public:
 	CString SaveSceneName;
 	bool isDrag = false;
 public:
-	GameObject*			ChoiceObject;
+	static GameObject*			ChoiceObject;
 	FileOption*			mFileOption;		//자체포맷 변환 창
 	EditorManager*		m_EditorManager;	//자체포맷 변환 관리 매니저
 	Loading*			mLoading;			//로딩 바
 	CamAnimation*		mCam;
 public:
+	static void MouseDown();
 	void Create_Hirearchy_Item(GameObject* Obj, HTREEITEM TOP);
 	void Delete_Hirearchy_Item(HTREEITEM TOP);
 	void ChickTapDrag(CPoint point);

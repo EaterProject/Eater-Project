@@ -6,6 +6,7 @@
 #include "EngineData.h"
 
 GameEngine* gGameEngine = nullptr;
+GameObject* gPickObject = nullptr;
 
 ///엔진 관련
 void EngineInitialize(HWND _g_hWnd, bool ON_DEBUG)
@@ -196,6 +197,13 @@ void CreateSceneSub(Scene* mSceneTemp, std::string SceneName)
 	 if (gGameEngine == nullptr) return;
 
 	 gGameEngine->SetFocus(focus);
+ }
+
+ GameObject* Picking(int x, int y)
+ {
+	 if (gGameEngine == nullptr) return nullptr;
+
+	 return (GameObject*)gGameEngine->Picking(x, y);
  }
 
  GameObject* GetMainCamera()

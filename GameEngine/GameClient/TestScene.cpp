@@ -32,6 +32,7 @@ void TestScene::Awake()
 	Load("../Assets/Texture/Material");
 	Load("../Assets/Model/MeshBuffer");
 	Load("../Assets/Model/ModelData");
+	Load("../Assets/Model/Animation");
 
 	//CreateTestObject();
 	CreateMap();
@@ -83,108 +84,41 @@ void TestScene::CreateMap()
 	MeshFilter* filter = nullptr;
 	Light* light = nullptr;
 
-	//Object = Instance();
-	//Object->GetTransform()->Position ={ 10.0f, 0.0f, 10.0f };
-	//Object->GetTransform()->Scale = { 0.1f, 0.1f, 0.1f };
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("bossB");
-	
-	//Object = Instance();
-	//Object->GetTransform()->Position ={ -10.0f, 0.0f, 10.0f };
-	//Object->GetTransform()->Scale = { 0.1f, 0.1f, 0.1f };
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("bossB");
-	//
-	//Object = Instance();
-	//Object->GetTransform()->Position = { 10.0f, 0.0f, -10.0f };
-	//Object->GetTransform()->Scale = { 0.1f, 0.1f, 0.1f };
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("bossB");
-	//
-	//Object = Instance();
-	//Object->GetTransform()->Position = { -10.0f, 0.0f, -10.0f };
-	//Object->GetTransform()->Scale = { 0.1f, 0.1f, 0.1f };
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("bossB");
-
-	//Object = InstanceLight("Light4", SPOT_LIGHT);
-	//Object->GetTransform()->Position.y += 10;
-	//Object->GetTransform()->Position.z += 30;
-	//light = Object->GetComponent<Light>();
-	//light->SetRange(10.0f);
-	//light->SetPower(10.0f);
-	//light->SetColor(1.0f, 0.0f, 0.0f);
-	//light->SetInAngle(15.0f);
-	//light->SetOutAngle(25.0f);
-
-	//Object = InstanceLight("Light5", SPOT_LIGHT);
-	//Object->GetTransform()->Position.y += 10;
-	//Object->GetTransform()->Position.x += 10;
-	//Object->GetTransform()->Position.z += 30;
-	//light = Object->GetComponent<Light>();
-	//light->SetRange(10.0f);
-	//light->SetPower(10.0f);
-	//light->SetColor(1.0f, 1.0f, 0.0f);
-	//light->SetInAngle(15.0f);
-	//light->SetOutAngle(25.0f);
-	//
-	Object = InstanceLight("Light6", SPOT_LIGHT);
-	Object->GetTransform()->Position.y += 50;
-	//Object->GetTransform()->Position.x -= 10;
-	//Object->GetTransform()->Position.z += 30;
-	light = Object->GetComponent<Light>();
-	light->SetRange(100.0f);
-	light->SetPower(100.0f);
-	light->SetColor(1.0f, 0.0f, 1.0f);
-	light->SetAngle(15.0f);
-	
-	//Object1 = InstanceLight("Light", POINT_LIGHT);
-	//Object1->GetTransform()->Position.y += 10;
-	//light = Object1->GetComponent<Light>();
-	//light->SetRange(10.0f);
-	//light->SetPower(10.0f);
-	//light->SetColor(1.0f, 0.0f, 0.0f);
-	//
-	//Object1 = InstanceLight("Light1", POINT_LIGHT);
-	//Object1->GetTransform()->Position.y += 10;
-	//Object1->GetTransform()->Position.x += 10;
-	//light = Object1->GetComponent<Light>();
-	//light->SetRange(10.0f);
-	//light->SetPower(10.0f);
-	//light->SetColor(0.0f, 1.0f, 0.0f);
-	//
-	Object1 = InstanceLight("Light2", POINT_LIGHT);
-	Object1->GetTransform()->Position.y += 10;
-	Object1->GetTransform()->Position.x += 10;
-	light = Object1->GetComponent<Light>();
-	light->SetRange(10.0f);
-	light->SetPower(10.0f);
-	light->SetColor(0.0f, 0.0f, 1.0f);
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	filter->SetModelName("bossb+");
+	filter->SetAnimationName("bossb+");
+	AnimationController* AC = Object->AddComponent<AnimationController>();
+	AC->Choice("idle");
 
 	Object = Instance();
 	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("Dome2");
+	filter->SetModelName("box");
 
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("Inside_village");
-	
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	Tr = Object->GetTransform();
-	filter->SetModelName("Outside_Rock");
-	
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("Outside_bossOBJ");
-	
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("Outside_Other");
-	
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("Outside_Pebble");
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("Dome2");
+	//
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("Inside_village");
+	//
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//Tr = Object->GetTransform();
+	//filter->SetModelName("Outside_Rock");
+	//
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("Outside_bossOBJ");
+	//
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("Outside_Other");
+	//
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("Outside_Pebble");
 
 	testobj = InstanceTerrain("Terrain");
 	Terrain* mTerrain = testobj->GetComponent<Terrain>();
