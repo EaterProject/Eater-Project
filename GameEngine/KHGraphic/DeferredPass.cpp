@@ -301,7 +301,11 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const std:
 	break;
 	case OBJECT_TYPE::SKINNING:
 	{
-		
+		/// 임시 코드
+		for (int i = 0; i < meshlist.size(); i++)
+		{
+			RenderUpdate(instance, meshlist[i]);
+		}
 	}
 	break;
 	default:

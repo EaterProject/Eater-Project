@@ -16,6 +16,7 @@ GameObject::GameObject()
 
 	OneMeshData = new MeshData();
 	OneMeshData->Object_Data = new ObjectData();
+	OneMeshData->Object_Data->Object = this;
 
 	transform = nullptr;
 	DontDestroy = false;
@@ -170,7 +171,6 @@ GameObject* GameObject::GetChildObject(std::string Name)
 		return nullptr;
 	}
 }
-
 
 bool GameObject::GetDontDestroy()
 {

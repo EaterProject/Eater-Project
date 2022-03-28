@@ -46,7 +46,9 @@ public:
 	void PushMaterial(MaterialBuffer* materialData);
 	void PushChangeInstance(MeshData* mesh);
 	void DeleteInstance(MeshData* mesh);
+
 	void Render();
+	void* PickingRender(int x, int y);
 
 	void LoadEnvironment(std::string mPath);
 

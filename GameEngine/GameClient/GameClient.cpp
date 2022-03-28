@@ -6,6 +6,17 @@
 #include "GameManager.h"
 #include "MainHeader.h"
 
+//#include "Dwmapi.h"
+//#pragma comment( lib, "Dwmapi.lib" )
+
+//#define _CRTDBG_MAP_ALLOC
+//#include <cstdlib>
+//#include <crtdbg.h>
+//
+//#ifdef _DEBUG
+//#define new new( _NORMAL_BLOCK , __FILE__ , __LINE__ )
+//#endif
+
 // 윈도 프로시저의 전방선언
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
@@ -89,6 +100,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_KILLFOCUS:
 	{
 		WindowFocus(false);
+	}
+		break;
+	case WM_LBUTTONUP:
+	{
+		Picking(LOWORD(lParam), HIWORD(lParam));
 	}
 	break;
 	case WM_SIZE:

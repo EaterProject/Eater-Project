@@ -50,7 +50,7 @@ public:
 	void DeleteMaterial(MaterialBuffer* material) override;
 
 	void Render() override;
-	void PickingRender(int x, int y) override;
+	void* PickingRender(int x, int y) override;
 
 private:
 	void RenderSetting();

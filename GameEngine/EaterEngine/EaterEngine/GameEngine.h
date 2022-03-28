@@ -103,6 +103,7 @@ public:
 
 	///윈도우 관련
 	void SetFocus(bool focus);
+	void* Picking(int x, int y);
 public:
 	///카메라 관련
 	GameObject* GetMainCamera();
