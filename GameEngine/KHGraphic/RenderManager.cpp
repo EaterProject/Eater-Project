@@ -306,10 +306,11 @@ void RenderManager::Render()
 	GPU_END_EVENT_DEBUG_NAME();
 }
 
-void RenderManager::PickingRender(int x, int y)
+void* RenderManager::PickingRender(int x, int y)
 {
 	m_Picking->BeginRender();
 	
+	// Static Object Picking Draw..
 	for (int i = 0; i < m_RenderMeshList.size(); i++)
 	{
 		m_InstanceLayer = m_RenderMeshList[i];
@@ -317,7 +318,20 @@ void RenderManager::PickingRender(int x, int y)
 		m_Picking->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_MeshList);
 	}
 
-	Vector4 pickID = m_Picking->FindPick(x, y);
+	// Transparency Object Picking Draw..
+
+	// UnRender Object Picking Draw..
+
+
+	int pickID = m_Picking->FindPick(x, y);
+
+	// Pick ID가 음수라면 선택된 Object가 존재하지 않는 경우..
+	if (pickID < 0) return nullptr;
+
+	// 해당 Render Data의 원본 GameObject를 반환..
+	RenderData* renderData = m_Converter->GetRenderData(pickID);
+	
+	return renderData->m_ObjectData->Object;
 }
 
 void RenderManager::ShadowRender()
@@ -747,8 +761,10 @@ void RenderManager::DeleteMeshRenderData(MeshData* meshData)
 	// Index가 검색이 안되면 안된다..
 	assert(index != -1);
 
-	// 해당 Instance 제거..
-	SAFE_DELETE(instanceLayer->m_MeshList[index]);
+	UINT renderDataIndex = instanceLayer->m_MeshList[index]->m_ObjectData->ObjectIndex;
+
+	// 해당 Render Data 제거..
+	m_Converter->DeleteRenderData(renderDataIndex);
 
 	// 해당 Instance List에서 제거...
 	instanceLayer->DeleteRenderData(index);
@@ -781,8 +797,10 @@ void RenderManager::DeleteParticleRenderData(MeshData* meshData)
 	// Index가 검색이 안되면 안된다..
 	assert(index != -1);
 
-	// 해당 Instance 제거..
-	SAFE_DELETE(instanceLayer->m_MeshList[index]);
+	UINT renderDataIndex = instanceLayer->m_MeshList[index]->m_ObjectData->ObjectIndex;
+
+	// 해당 Render Data 제거..
+	m_Converter->DeleteRenderData(renderDataIndex);
 
 	// 해당 Instance List에서 제거...
 	instanceLayer->DeleteRenderData(index);
@@ -809,8 +827,10 @@ void RenderManager::DeleteUnRenderData(MeshData* meshData)
 		}
 	}
 
-	// 해당 Instance 제거..
-	SAFE_DELETE(m_UnRenderMeshList[index]);
+	UINT renderDataIndex = m_UnRenderMeshList[index]->m_ObjectData->ObjectIndex;
+
+	// 해당 Render Data 제거..
+	m_Converter->DeleteRenderData(renderDataIndex);
 
 	// 해당 Instance List에서 제거...
 	m_UnRenderMeshList.erase(std::next(m_UnRenderMeshList.begin(), index));

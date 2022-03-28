@@ -49,6 +49,9 @@ void RenderDataConverter::ConvertMeshData(MeshData* originData, RenderData* rend
 	
 	// Render Data 변환 및 등록..
 	ConvertRenderData(originData, renderData);
+
+	// Render Data List 삽입..
+	m_RenderList.insert(std::pair<UINT, RenderData*>(renderData->m_ObjectData->ObjectIndex, renderData));
 }
 
 void RenderDataConverter::ConvertRenderData(MeshData* originData, RenderData* renderData)
@@ -298,6 +301,22 @@ void RenderDataConverter::ConvertMaterial(MaterialBuffer* originMat, MaterialRen
 	}
 }
 
+void RenderDataConverter::DeleteRenderData(UINT index)
+{
+	// 해당 Index Render Data 체크..
+	std::unordered_map<UINT, RenderData*>::iterator renderData_itor = m_RenderList.find(index);
+
+	// 해당 Render Data가 없는데 지우려는 경우는 없어야한다..
+	assert(renderData_itor != m_RenderList.end());
+
+	// 해당 Render Data 검색..
+	RenderData* renderData = renderData_itor->second;
+
+	// 해당 Render Data 삭제..
+	SAFE_DELETE(renderData);
+	m_RenderList.erase(index);
+}
+
 void RenderDataConverter::DeleteInstance(UINT index)
 {
 	// 해당 Index Mesh 체크..
@@ -363,6 +382,15 @@ void RenderDataConverter::DeleteMaterial(UINT index)
 	// 해당 Instance Buffer 삭제..
 	SAFE_DELETE(material);
 	m_MaterialList.erase(index);
+}
+
+RenderData* RenderDataConverter::GetRenderData(UINT index)
+{
+	std::unordered_map<UINT, RenderData*>::iterator itor = m_RenderList.find(index);
+
+	if (itor == m_RenderList.end()) return nullptr;
+
+	return itor->second;
 }
 
 MeshRenderBuffer* RenderDataConverter::GetMesh(UINT index)

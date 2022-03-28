@@ -39,11 +39,13 @@ public:
 	void PushChangeMaterial(MaterialBuffer* material);  // 현재 프레임에 변경된 Material 임시 Queue에 삽입..
 
 public:
+	void DeleteRenderData(UINT index);		// 해당 Render Data 즉시 제거..
 	void DeleteInstance(UINT index);		// 해당 Instance Resource 즉시 제거..
 	void DeleteMesh(UINT index);			// 해당 Mesh Resource 즉시 제거..
 	void DeleteMaterial(UINT index);		// 해당 Material Resource 즉시 제거..
 
 public:
+	RenderData* GetRenderData(UINT index);			// Render Data 고유 Index로 검색..
 	MeshRenderBuffer* GetMesh(UINT index);			// Mesh Resource 고유 Index로 검색..
 	MaterialRenderBuffer* GetMaterial(UINT index);	// Material Resource 고유 Index로 검색..
 	InstanceRenderBuffer* GetInstance(UINT index);	// Instance Resource 고유 Index로 검색..
@@ -76,6 +78,8 @@ private:
 	std::unordered_map<UINT, MeshRenderBuffer*> m_MeshList;			// 현재 등록 되어있는 Mesh Resource..
 	std::unordered_map<UINT, MaterialRenderBuffer*> m_MaterialList;	// 현재 등록 되어있는 Material Resource..
 	std::unordered_map<UINT, TerrainRenderBuffer*> m_LayerList;		// 현재 등록 되어있는 Terrain Resource..
+
+	std::unordered_map<UINT, RenderData*> m_RenderList;	
 
 	std::vector<std::pair<UINT, bool>> m_InstanceIndexList;			// Instance Index 관리를 위한 List..
 	std::unordered_map<UINT, InstanceRenderBuffer*> m_InstanceList;	// 현재 등록 되어있는 Instance Resource..

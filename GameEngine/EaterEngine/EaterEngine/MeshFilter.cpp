@@ -426,9 +426,8 @@ void MeshFilter::CreateBoneMesh(LoadMeshData* mMesh, GameObject* Object)
 void MeshFilter::CreateSkinMesh(LoadMeshData* mMesh, GameObject* Object)
 {
 	MeshData* Data = Object->OneMeshData;
-	//MeshFilter* mMeshFilter = Object->AddComponent<MeshFilter>();
-	Object->Name = mMesh->Name;
 
+	Object->Name = mMesh->Name;
 	SetMatrixData(mMesh, Data, Object);
 	SetMaterialData(mMesh, Data, Object);
 	SetMeshData(mMesh, Data, Object);
@@ -494,8 +493,8 @@ void MeshFilter::SetMeshData(LoadMeshData* LoadMesh, MeshData* mMesh, GameObject
 	{
 		// 로드한 Mesh 설정..
 		meshFilter->m_Mesh = mesh;
-		meshFilter->BufferName  = LoadMesh->BufferName;
-		meshFilter->ModelName	= LoadMesh->ModelName;
+		meshFilter->BufferName = LoadMesh->BufferName;
+		meshFilter->ModelName = LoadMesh->ModelName;
 		// Render Mesh Data 설정..
 		mMesh->Mesh_Buffer = mesh->m_MeshData;
 	}

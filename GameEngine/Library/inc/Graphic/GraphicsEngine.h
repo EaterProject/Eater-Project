@@ -60,6 +60,7 @@ public:
 	virtual GRAPHIC_DLL void DeleteMaterial(MaterialBuffer* material) abstract;
 
 	virtual GRAPHIC_DLL void Render() abstract;
+	virtual GRAPHIC_DLL void* PickingRender(int x, int y) abstract;
 
 	/// Graphic Resource Create Function..
 	virtual GRAPHIC_DLL void CreateTextureBuffer(std::string path, TextureBuffer** ppResource) abstract;

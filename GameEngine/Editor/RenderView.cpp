@@ -23,10 +23,10 @@ RenderView::~RenderView()
 
 BEGIN_MESSAGE_MAP(RenderView, CView)
 	ON_WM_SIZE()
-//	ON_WM_GETMINMAXINFO()
-//	ON_WM_SIZING()
-//ON_WM_MOVE()
-ON_WM_WINDOWPOSCHANGED()
+	//	ON_WM_GETMINMAXINFO()
+	//	ON_WM_SIZING()
+	//ON_WM_MOVE()
+	ON_WM_WINDOWPOSCHANGED()
 END_MESSAGE_MAP()
 
 
@@ -73,8 +73,10 @@ void RenderView::OnInitialUpdate()
 {
 	//컨퍼넌트 엔진을 초기화 시키고 씬을 적용시킨다
 	hwnd = this->GetSafeHwnd();
+
 	EngineInitialize(hwnd,false);
 	EditorSetting();
+
 	CreateScene<Demo>("Demo");
 	ChoiceScene("Demo");
 }

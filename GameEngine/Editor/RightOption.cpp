@@ -32,6 +32,8 @@
 
 // RightOption 대화 상자
 
+GameObject* RightOption::ChoiceObject = nullptr;
+
 IMPLEMENT_DYNAMIC(RightOption, CDialogEx)
 RightOption*  RightOption::thisPointer = nullptr;
 RightOption::RightOption(CWnd* pParent /*=nullptr*/)
@@ -160,6 +162,20 @@ END_MESSAGE_MAP()
 RightOption* RightOption::GetThis()
 {
 	return thisPointer;
+}
+
+void RightOption::MouseDown()
+{
+	if (GetKeyDown(VK_LBUTTON))
+	{
+		float X, Y;
+		X = GetMousePosX();
+		Y = GetMousePosY();
+
+		ChoiceObject = Picking(X,Y);
+
+		//Demo::FindMesh(ChangeToString(MeshName), ChangeToString(ChoiceObject->Name));
+	}
 }
 
 void RightOption::Create_Hirearchy_Item(GameObject* Obj, HTREEITEM TOP)

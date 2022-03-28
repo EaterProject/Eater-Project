@@ -80,6 +80,11 @@ void GraphicEngineManager::Render()
 	GEngine->Render();
 }
 
+void* GraphicEngineManager::PickingRender(int x, int y)
+{
+	return GEngine->PickingRender(x, y);
+}
+
 void GraphicEngineManager::LoadEnvironment(std::string mPath)
 {
 	GEngine->CreateEnvironmentMap(mPath);

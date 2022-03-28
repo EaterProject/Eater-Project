@@ -48,7 +48,7 @@ public:
 private:
 	static GameObject* CamObject;
 	static GameObject* DebugCamObject;
-	static GameObject* CreateBaseObject(std::string ObjectName,std::string MeshName); 
+	static GameObject* CreateBaseObject(std::string ObjectName, std::string MeshName); 
 	static GameObject* CreateSkinObject(std::string ObjectName, std::string MeshName);
 private:
 	///Manager

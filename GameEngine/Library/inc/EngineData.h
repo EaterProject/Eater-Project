@@ -36,15 +36,32 @@ class ObjectData
 {
 public:
 	OBJECT_TYPE ObjType = OBJECT_TYPE::DEFALT;		//오브젝트 타입
+	std::string Name;								//오브젝트 이름
 
-	bool Pick = false;								//오브젝트 선택 상태
-
+	void* Object;									//원본 GameObject
+	UINT ObjectIndex;								//오브젝트의 고유한 인덱스
+	Vector4 HashColor;								//오브젝트의 고유한 Hash Color
+	
 	std::vector<Matrix> BoneOffsetTM;				//본 오프셋 TM
-
-	Vector4 HashColor;								//매쉬의 고유한 Hash Color
 
 	Matrix* World = nullptr;						//매쉬의 월드 행렬
 	Matrix* Local = nullptr;						//매쉬의 로컬 행렬
+
+public:
+	static Vector4 HashToColor(int hash)
+	{
+		return Vector4( (float)((hash) & 0xff), 
+						(float)((hash >> 8) & 0xff), 
+						(float)((hash >> 16) & 0xff), 
+						(float)((hash >> 24) & 0xff) );
+	}
+	static UINT ColorToHash(Vector4 color)
+	{
+		return UINT( ((UINT)color.x) +
+					 ((UINT)color.y << 8) + 
+					 ((UINT)color.z << 16) + 
+					 ((UINT)color.w << 24) );
+	}
 };
 
 // Mesh Buffer

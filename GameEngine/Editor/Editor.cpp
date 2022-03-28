@@ -14,6 +14,7 @@
 #include "EditorView.h"
 #include "RenderView.h"
 #include "OptionView.h"
+#include "RightOption.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -161,7 +162,8 @@ void CEditorApp::OnAppAbout()
 BOOL CEditorApp::OnIdle(LONG lCount)
 {
 	mRenderView->Update();
-	
+	RightOption::MouseDown();
+
 	return true;
 }
 

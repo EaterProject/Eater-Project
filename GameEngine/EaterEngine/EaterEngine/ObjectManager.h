@@ -9,6 +9,7 @@
 #include "Delegate.h"
 #include "EaterEngineDLL.h"
 
+typedef size_t Hash_Code;
 
 class Camera;
 class FBXModel;
@@ -21,9 +22,6 @@ class ObjectManager : public BaseManager
 public:
 	~ObjectManager();
 	ObjectManager();
-
-	//생성한 오브젝트를 넣어줌
-	static void PushCreateObject(GameObject* obj);
 
 	//삭제할 오브젝트를 넣어줌(이함수를 실행시킬단계에서 오브젝트를 삭제하지않음 삭제는 가장 마지막에)
 	void PushDeleteObject(GameObject* obj);
@@ -61,14 +59,17 @@ public:
 	//삭제하면 안되는 오브젝트들을 다시 세팅해준다
 	void DontDestroyObjectSetting();
 
+	GameObject* FindGameObjectString(std::string& TagName);
 	GameObject* FindGameObjectTag(std::string& TagName);
-	GameObject* FindGameObjectString(std::string& ObjectName);
+
+private:
+	//생성한 오브젝트를 넣어줌
+	static void PushCreateObject(GameObject* obj);
 
 private:
 	//컨퍼넌트 데이터를 텀겨준다
 	static ComponentFunctionData PushComponentData(Component*);
 	void DontDestroyComponentSetting(Component* Com);
-
 	///오브젝트 태그 리스트
 	static std::map<int,std::string> TagList;
 	///오브젝트 리스트
@@ -93,4 +94,7 @@ private:
 
 	//컨퍼넌트 를넣으면 해당 함수포인터에 넣었던 포인터를 삭제시켜줌
 	void DeleteComponent(Component* cpt);
+
+private:
+	friend class GameObject;
 };

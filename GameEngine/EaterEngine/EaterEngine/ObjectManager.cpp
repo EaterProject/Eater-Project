@@ -22,8 +22,8 @@ Delegate_Map ObjectManager::Update;
 Delegate_Map ObjectManager::EndUpdate;
 
 //오브젝트 리스트
-std::vector<GameObject*>	ObjectManager::ObjectList;
-std::map<int, std::string>	ObjectManager::TagList;
+std::vector<GameObject*>			ObjectManager::ObjectList;
+std::map<int, std::string>			ObjectManager::TagList;
 ObjectManager::ObjectManager()
 {
 
@@ -36,6 +36,8 @@ ObjectManager::~ObjectManager()
 
 void ObjectManager::PushCreateObject(GameObject* obj)
 {
+	ObjectData* objData = obj->OneMeshData->Object_Data;
+
 	//오브젝트를 넣어줄때 빈곳이 있는지부터 확인
 	int ObjectListSize = (int)ObjectList.size();
 	for (int i = 0; i < ObjectListSize; i++)
@@ -43,14 +45,16 @@ void ObjectManager::PushCreateObject(GameObject* obj)
 		if (ObjectList[i] == nullptr)
 		{
 			ObjectList[i] = obj;
-			obj->ObjectIndex = i;
+			objData->ObjectIndex = i;
 			return;
 		}
 	}
 	//빈곳이없다면 그냥 넣어줌
 	ObjectList.push_back(obj);
-	obj->ObjectIndex = ObjectListSize;
 
+	//해당 오브젝트 고유의 Hash Color 설정
+	objData->ObjectIndex = ObjectListSize;
+	objData->HashColor = ObjectData::HashToColor(objData->ObjectIndex);
 }
 
 void ObjectManager::PushDeleteObject(GameObject* obj)
@@ -339,15 +343,17 @@ void ObjectManager::DeleteObject()
 		for (int i = 0; i < ChildMeshCount; i++) 
 		{
 			GameObject* obj = temp->GetChildMesh(i);
+			ObjectData* objData = obj->OneMeshData->Object_Data;
 			DeleteList.push(obj);
-			ObjectList[obj->ObjectIndex] = nullptr;
+			ObjectList[objData->ObjectIndex] = nullptr;
 		}
 
 		for (int i = 0; i < ChildBoneCount; i++)
 		{
 			GameObject* obj = temp->GetChildBone(i);
+			ObjectData* objData = obj->OneMeshData->Object_Data;
 			DeleteList.push(obj);
-			ObjectList[obj->ObjectIndex] = nullptr;
+			ObjectList[objData->ObjectIndex] = nullptr;
 		}
 
 		//현제 오브젝트의 컨퍼넌트를 삭제
@@ -365,6 +371,21 @@ void ObjectManager::DeleteObject()
 		//리스트에서도 빼준다
 		DeleteList.pop();
 	}
+}
+
+GameObject* ObjectManager::FindGameObjectString(std::string& ObjectName)
+{
+	//모든 오브젝트에서 같은 이름의 오브젝트를 찾는다
+	int ObjectSize = ObjectList.size();
+	for (int i = 0; i < ObjectSize; i++)
+	{
+		if (ObjectList[i]->Name == ObjectName)
+		{
+			return ObjectList[i];
+		}
+	}
+
+	return nullptr;
 }
 
 GameObject* ObjectManager::FindGameObjectTag(std::string& TagName)
@@ -394,19 +415,6 @@ GameObject* ObjectManager::FindGameObjectTag(std::string& TagName)
 	}
 
 	return nullptr;
-}
-
-GameObject* ObjectManager::FindGameObjectString(std::string& ObjectName)
-{
-	//모든 오브젝트에서 같은 이름의 오브젝트를 찾는다
-	std::vector<GameObject*>::iterator it = ObjectList.begin();
-	for (it; it != ObjectList.end(); it++)
-	{
-		if ((*it)->Name == ObjectName)
-		{
-			return (*it);
-		}
-	}
 }
 
 ComponentFunctionData ObjectManager::PushComponentData(Component* mComponent)

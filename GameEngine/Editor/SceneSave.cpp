@@ -186,7 +186,6 @@ void SceneSave::SaveCollider(Collider* mCollider)
 void SceneSave::SaveRigidbody(Rigidbody* mRigidbody)
 {
 
-
 }
 
 void SceneSave::SaveCamera(Camera* mCamera)

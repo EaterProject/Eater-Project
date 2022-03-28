@@ -53,5 +53,5 @@ public:
 	// Render Update..
 	virtual void Render() abstract;
 
-	virtual void PickingRender(int x, int y) abstract;
+	virtual void* PickingRender(int x, int y) abstract;
 };
