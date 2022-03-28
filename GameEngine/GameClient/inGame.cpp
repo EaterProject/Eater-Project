@@ -6,7 +6,7 @@
 #include "AnimationController.h"
 #include "Transform.h"
 #include "AI.h"
-#include "TestPlayer.h"
+#include "Player.h"
 #include "KeyInput.h"
 #include "Camera.h"
 #include "Light.h"

@@ -71,6 +71,7 @@ void Loading::ThreadFunction()
 	Load("../Assets/Model/MeshBuffer");
 	Load("../Assets/Model/ModelData");
 	
+	
 	LoadEnvironment("../Assets/Texture/Environment/Night.dds");
 	SetEnvironment(true);
 }

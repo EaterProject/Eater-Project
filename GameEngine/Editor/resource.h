@@ -24,6 +24,8 @@
 #define IDD_SCENE_SAVE                  341
 #define IDD_ASSETS                      343
 #define IDD_CAM_ANIMATION               346
+#define IDD_TAP_COLLIDER                349
+#define IDD_TAP_RIGIDBODY               351
 #define IDC_TREE1                       1000
 #define IDC_TREE2                       1001
 #define IDC_TREE3                       1002
@@ -61,6 +63,7 @@
 #define IDC_EDIT62                      1014
 #define IDC_EDIT15                      1015
 #define IDC_BUTTON13                    1015
+#define IDC_EDIT63                      1015
 #define IDC_TAB1                        1016
 #define IDC_EDIT16                      1016
 #define IDC_BUTTON14                    1016
@@ -143,6 +146,7 @@
 #define IDC_RADIO5                      1058
 #define IDC_EDIT49                      1059
 #define IDC_EDIT52                      1060
+#define IDC_SPIN1                       1060
 #define IDC_EDIT53                      1061
 #define IDC_EDIT54                      1062
 #define IDC_EDIT55                      1063
@@ -155,9 +159,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        349
+#define _APS_NEXT_RESOURCE_VALUE        353
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1059
+#define _APS_NEXT_CONTROL_VALUE         1061
 #define _APS_NEXT_SYMED_VALUE           312
 #endif
 #endif

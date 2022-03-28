@@ -86,8 +86,6 @@ void Eater_LoadMesh::LoadData(std::string& Path)
 	LoadManager::ModelList.insert({ SaveName ,SaveData });
 }
 
-
-
 LoadMeshData* Eater_LoadMesh::LoadStaticMesh(int index)
 {
 	LoadMeshData* model = new LoadMeshData();

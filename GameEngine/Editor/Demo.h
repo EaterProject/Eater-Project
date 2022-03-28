@@ -7,6 +7,7 @@
 #include <stack>
 
 class SceneSave;
+class Eater_LoadScene;
 class GameObject;
 class AnimationController;
 class Demo : public Scene
@@ -51,6 +52,7 @@ private:
 	static GameObject* CreateSkinObject(std::string ObjectName, std::string MeshName);
 private:
 	///Manager
-	static SceneSave* SaveManager;
+	static SceneSave* mSaveManager;
+	static Eater_LoadScene* mLoadManager;
 };
 

@@ -73,8 +73,10 @@ void RenderView::OnInitialUpdate()
 {
 	//컨퍼넌트 엔진을 초기화 시키고 씬을 적용시킨다
 	hwnd = this->GetSafeHwnd();
-	EngineInitialize(hwnd, false);
-	//EditorSetting();
+
+	EngineInitialize(hwnd,false);
+	EditorSetting();
+
 	CreateScene<Demo>("Demo");
 	ChoiceScene("Demo");
 }

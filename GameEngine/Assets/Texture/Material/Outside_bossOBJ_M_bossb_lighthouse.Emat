@@ -1,0 +1,16 @@
+#EATERMAT
+@MaterialName Outside_bossOBJ_M_bossb_lighthouse
+@Alpha NO
+@Diffuse bossB_lighthouse_BaseColor.png
+@Normal bossB_lighthouse_Normal.png
+@Emissive NO
+@ORM bossB_lighthouse_ORM.png
+@Roughness 0
+@Metallic 0
+@Tileing_X 1
+@Tileing_Y 1
+@AddColor_R 0
+@AddColor_G 0
+@AddColor_B 0
+@AddColor_A 0
+&

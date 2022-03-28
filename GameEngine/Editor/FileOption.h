@@ -4,6 +4,7 @@
 // FileOption 대화 상자
 #include <string>
 #include "EditorData.h"
+#include "GameObject.h"
 class RightOption;
 class EditorManager;
 class SceneSaveDialog;
@@ -28,7 +29,11 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	void Initialize(RightOption* mOption);
+	void SetChoiceGameObjectName(std::string Name, GameObject* Obj);
 public:
+	CEdit AddComponent_ObjectName_Edit;
+	GameObject* ChoiceObject;
+
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg LRESULT OnUserFunc(WPARAM wParam, LPARAM lParam);
 	afx_msg void OnCreateTerrain();
@@ -41,4 +46,7 @@ public:
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	afx_msg void OnCreateCamera();
 	afx_msg void OnCreateGameObject();
+	afx_msg void OnAddCollider();
+	afx_msg void OnAddRigidbody();
+	afx_msg void OnAddLight();
 };

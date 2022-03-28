@@ -5,8 +5,7 @@
 #include "stdio.h"
 #include "GameManager.h"
 #include "MainHeader.h"
-#include "GameObject.h"
-#include "Transform.h"
+
 //#include "Dwmapi.h"
 //#pragma comment( lib, "Dwmapi.lib" )
 
@@ -53,7 +52,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 	int height = R.bottom - R.top;
 
 	// 애플리케이션 초기화를 수행합니다:
-	HWND hWnd = CreateWindowW(L"PROJECT1", L"EngineTestClient", WS_OVERLAPPEDWINDOW,
+	HWND hWnd = CreateWindowW(L"PROJECT1", L"Eater", WS_OVERLAPPEDWINDOW,
 		(screenWidth - width) / 2, (screenHeight - height) / 2, width, height, nullptr, nullptr, hInstance, nullptr);
 
 	if (!hWnd)

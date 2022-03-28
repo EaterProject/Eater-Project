@@ -67,6 +67,7 @@ void Rigidbody::SetUp()
 
 void Rigidbody::PhysicsUpdate()
 {
+	if (isCreate == false) { return; }
 	PhysX_Update_Actor(RigidbodyData);
 	
 	float CenterX = RigidbodyData->CenterPoint.x;

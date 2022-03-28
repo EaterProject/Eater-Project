@@ -34,6 +34,7 @@ void Eater_LoadCamera::LoadData(int index)
 
 		Vector3 Pos = { Data[0],Data[1],Data[2] };
 		Vector3 Rot = { Data[3],Data[4],Data[5] };
+
 		NodePosition.push_back(Pos);
 		NodeRotation.push_back(Rot);
 	}

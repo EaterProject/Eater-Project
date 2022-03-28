@@ -11,7 +11,6 @@ PlayerCamera::PlayerCamera()
 	mTransform		= nullptr;
 	mUserTransform	= nullptr;
 
-
 	PastX	= 0;
 	PastY	= 0;
 	NowX = 0;
@@ -19,7 +18,7 @@ PlayerCamera::PlayerCamera()
 	X_Radian = 0;
 	Y_Radian = 0;
 
-	CamOffet = { 0,2,0 };
+	CamOffet = { 0,2.5f,0 };
 	MouseCursor = true;
 }
 
@@ -36,7 +35,7 @@ void PlayerCamera::Awake()
 
 	PastX = GetMousePosX();
 	PastY = GetMousePosY();
-	mTransform->Position = {0, 0 ,-20};
+	mTransform->Position = {0, 0 ,-10};
 
 	MouseCursor = GetTogle(VK_F10);
 	//ShowMouseCursor(MouseCursor);

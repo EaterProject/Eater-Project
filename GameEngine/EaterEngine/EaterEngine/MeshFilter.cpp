@@ -375,6 +375,7 @@ void MeshFilter::DeleteChildObject()
 void MeshFilter::CreateStaticMesh(LoadMeshData* mMesh, GameObject* Object)
 {
 	MeshData* Data = Object->OneMeshData;
+	
 
 	Object->Name = mMesh->Name;
 	SetMatrixData(mMesh, Data, Object);
