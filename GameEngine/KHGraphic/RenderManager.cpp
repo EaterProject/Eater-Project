@@ -310,12 +310,18 @@ void* RenderManager::PickingRender(int x, int y)
 {
 	m_Picking->BeginRender();
 	
+	// Static Object Picking Draw..
 	for (int i = 0; i < m_RenderMeshList.size(); i++)
 	{
 		m_InstanceLayer = m_RenderMeshList[i];
 
 		m_Picking->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_MeshList);
 	}
+
+	// Transparency Object Picking Draw..
+
+	// UnRender Object Picking Draw..
+
 
 	int pickID = m_Picking->FindPick(x, y);
 
