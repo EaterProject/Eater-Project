@@ -45,6 +45,7 @@ void PhysCollider::SetBoxCollider(float Size_x, float Size_y, float Size_z)
 {
 	Size = { Size_x,Size_y,Size_z };
 	Shape_type = PhysCollider::TYPE::BOX;
+	
 }
 
 void PhysCollider::SetBoxCollider(float Radius)

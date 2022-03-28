@@ -141,13 +141,30 @@ PhysCollider* Collider::GetCollider()
 
 void Collider::DebugCollider()
 {
-	Vector3 Pos = mPhysData->WorldPosition;
+	Vector3 Pos = gameobject->transform->Position;
 	Vector4 Rot = mPhysData->Rotation;
 	Vector3 Scl = mColliderData->GetSize();
 
-	mDebugCollider->ColliderWorld = *(gameobject->transform->GetWorld());
-	mDebugCollider->ColliderColor = { 1,0,0,1 };
-	gameobject->OneMeshData->Collider_Data = mDebugCollider;
+	if (mPhysData->isDinamic == false) 
+	{
+		SimpleMath::Matrix PosXM = SimpleMath::Matrix::CreateTranslation(Pos + mPhysData->CenterPoint);
+		SimpleMath::Matrix RotXM = CreateXMRot4x4();
+		SimpleMath::Matrix SclXM = SimpleMath::Matrix::CreateScale(Scl);
+
+		mDebugCollider->ColliderWorld = SclXM * RotXM* PosXM;
+		mDebugCollider->ColliderColor = { 1,0,0,1 };
+		gameobject->OneMeshData->Collider_Data = mDebugCollider;
+	}
+	else
+	{
+		SimpleMath::Matrix PosXM = SimpleMath::Matrix::CreateTranslation(Pos);
+		SimpleMath::Matrix RotXM = XMMatrixRotationQuaternion(gameobject->transform->Q_Rotation);
+		SimpleMath::Matrix SclXM = SimpleMath::Matrix::CreateScale(Scl);
+
+		mDebugCollider->ColliderWorld = SclXM * RotXM * PosXM;
+		mDebugCollider->ColliderColor = { 1,0,0,1 };
+		gameobject->OneMeshData->Collider_Data = mDebugCollider;
+	}
 }
 
 bool Collider::CreatePhys()
@@ -155,7 +172,7 @@ bool Collider::CreatePhys()
 	if (isCreate == false)
 	{
 		mPhysData->Collider			= mColliderData;
-		mPhysData->WorldPosition	= gameobject->transform->Position;
+		mPhysData->WorldPosition	= gameobject->transform->Position + mPhysData->CenterPoint;
 		Vector3 Rot					= gameobject->transform->Rotation;
 
 		Rigidbody* mRigidbody = gameobject->GetComponent<Rigidbody>();
@@ -214,5 +231,7 @@ DirectX::SimpleMath::Matrix Collider::CreateXMRot4x4()
 	DirectX::XMMATRIX _P = DirectX::XMMatrixRotationX(radX);
 	DirectX::XMMATRIX _Y = DirectX::XMMatrixRotationY(radY);
 	DirectX::XMMATRIX _R = DirectX::XMMatrixRotationZ(radZ);
+
+
 	return _R * _Y * _P;
 }
