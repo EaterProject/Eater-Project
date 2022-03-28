@@ -30,6 +30,7 @@ PlayerCamera::~PlayerCamera()
 
 void PlayerCamera::Awake()
 {
+	Userobject	= gameobject;
 	MainCam		= gameobject->GetComponent<Camera>();
 	mTransform	= gameobject->GetTransform();	
 

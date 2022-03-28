@@ -39,14 +39,14 @@ void Player::Awake()
 void Player::SetUp()
 {
 	//매쉬, 애니메이션 정보 입력
-	mMeshFilter->SetModelName("bossb+");
-	mMeshFilter->SetAnimationName("bossb+");
+	//mMeshFilter->SetModelName("bossb+");
+	//mMeshFilter->SetAnimationName("bossb+");
 	//mAnimation->Choice("Idle");
 
 	GameObject* MainCam = GetMainCamera();
 	MainCam->GetComponent<PlayerCamera>()->Userobject = gameobject;
 	mCameraTR = MainCam->GetTransform();
-	mTransform->Rotation = { 0,0,0 };
+	//mTransform->Rotation = { 0,0,0 };
 	//mCollider->SetBoxCollider(0.25f);
 	//mRigidbody->SetPosition(5, 10, 0);
 	//mRigidbody->SetFreezeRotation(true, true, true);

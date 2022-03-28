@@ -114,7 +114,6 @@ void GameEngine::Start()
 	GameObject* obj = InstanceCamera();
 	obj->AddComponent<CameraDebugKeyInput>();
 	obj->SetDontDestroy(true);
-	obj->SetTag("MainCamera");
 	obj->transform->Position = {0,10,-25};
 
 	//디렉션 라이트 생성

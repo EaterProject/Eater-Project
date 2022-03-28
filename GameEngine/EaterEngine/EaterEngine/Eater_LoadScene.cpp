@@ -12,6 +12,7 @@
 #include "Transform.h"
 #include "Collider.h"
 #include "PhysCollider.h"
+#include "ObjectManager.h"
 
 Eater_LoadScene::Eater_LoadScene()
 {
@@ -33,7 +34,7 @@ void Eater_LoadScene::LoadData(std::string& FilePath)
 		if (NodeName == "GAMEOBJECT")
 		{
 			GameObject* Obj = Instance();
-			Obj->SetTag(EATER_GET_MAP(i, "TAG"));
+			Obj->SetTag(std::stoi(EATER_GET_MAP(i, "TAG")));
 			Obj->Name = EATER_GET_MAP(i, "NAME");
 
 			//트랜스폼은 기본
@@ -85,7 +86,14 @@ void Eater_LoadScene::LoadData(std::string& FilePath)
 		}
 		else if (NodeName == "SCENE")
 		{
-
+			int Find = EATER_GET_LIST_CHOICE(i, "TAG");
+			for (int i = 0; i < Find; i++)
+			{
+				std::vector<std::string> Data;
+				EATER_GET_LIST(&Data, i);
+				 ObjectManager::AddTag(std::stoi(Data[0]), Data[1]);
+			}
+			int num = 0;
 		}
 	}
 

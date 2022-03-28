@@ -214,11 +214,16 @@ void ObjectManager::PushUpdate(Component* mComponent, int Order)
 	Update.Push(data);
 }
 
+void ObjectManager::AddTag(int Key, std::string TagName)
+{
+	TagList.insert({Key,TagName});
+}
+
 int ObjectManager::FindTag(std::string TagName)
 {
 	//들어온 이름에 따라 태그의 번호를찾고 해당하는 오브젝트를 가져온다
-	std::map<int, std::string>::iterator Start_it = TagList.begin();
-	std::map<int, std::string>::iterator End_it = TagList.begin();
+	std::map<int, std::string>::iterator Start_it	= TagList.begin();
+	std::map<int, std::string>::iterator End_it		= TagList.end();
 	int FindIndex = -1;
 
 	//들어온 이름으로 태그의 인덱스 번호를 찾는다
@@ -392,7 +397,7 @@ GameObject* ObjectManager::FindGameObjectTag(std::string& TagName)
 {
 	//들어온 이름에 따라 태그의 번호를찾고 해당하는 오브젝트를 가져온다
 	std::map<int, std::string>::iterator Start_it	= TagList.begin();
-	std::map<int, std::string>::iterator End_it		= TagList.begin();
+	std::map<int, std::string>::iterator End_it		= TagList.end();
 	int FindIndex = -1;
 
 	//들어온 이름으로 태그의 인덱스 번호를 찾는다

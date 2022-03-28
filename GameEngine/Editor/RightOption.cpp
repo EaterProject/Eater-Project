@@ -599,36 +599,19 @@ void RightOption::OnAddTag_Button()
 	CString AddTagName;
 	int MaxIndex = 0;
 	AddTag_Edit.GetWindowTextW(AddTagName);
-	std::string Str_TagName = ChangeToString(AddTagName);
+	int Count  = Demo::AddTag(ChangeToString(AddTagName));
 
-	if (AddTagName == "")
+	if (Count != -1)
 	{
-		AfxMessageBox(L"Error : 생성할 태그의 이름을 입력해주세요");
-		return;
+		AfxMessageBox(L"Add Tag");
+	}
+	else
+	{
+		AfxMessageBox(L"Error : Delete Tag");
 	}
 
-	//태그 리스트를 한번 순환
-	std::map<int, std::string>::iterator Start_it = TagList.begin();
-	std::map<int, std::string>::iterator End_it = TagList.end();
-	for (Start_it; Start_it != End_it; Start_it++)
-	{
-		//이름이 겹치는게 있는지 체크한다
-		if (Start_it->second == Str_TagName)
-		{
-			AfxMessageBox(L"Error : 같은 이름의 태그가 있습니다");
-			return;
-		}
-
-		if (Start_it->first > MaxIndex)
-		{
-			MaxIndex = Start_it->first;
-		}
-	}
-
-	Tag_Combo.InsertString(MaxIndex+1, AddTagName);
-	TagList.insert({ MaxIndex+1,Str_TagName });
+	Tag_Combo.InsertString(Count, AddTagName);
 	AddTag_Edit.SetWindowTextW(L"");
-	AfxMessageBox(L"성공 : New Tag 생성");
 }
 
 void RightOption::OnChoiceTag()
@@ -642,35 +625,24 @@ void RightOption::OnChoiceTag()
 
 	int number = Tag_Combo.GetCurSel();
 	Object->SetTag(number);
+	AfxMessageBox(L"Object Tag 설정 완료");
 }
 
 void RightOption::OnDeleteTagButton()
 {
 	CString AddTagName;
-	int MaxIndex = 0;
 	AddTag_Edit.GetWindowTextW(AddTagName);
-	std::string Str_TagName = ChangeToString(AddTagName);
+	int Count = Demo::DeleteTag(ChangeToString(AddTagName));
 
-	if (AddTagName == "")
+	if (Count == -1)
 	{
 		AfxMessageBox(L"Error : 삭제할 태그의 이름을 입력해주세요");
 		return;
 	}
-
-	//태그 리스트를 한번 순환
-	std::map<int, std::string>::iterator Start_it	= TagList.begin();
-	std::map<int, std::string>::iterator End_it		= TagList.end();
-	for (Start_it; Start_it != End_it; Start_it++)
+	else
 	{
-		//이름이 겹치는게 있는지 체크한다
-		if (Start_it->second == Str_TagName)
-		{
-			AfxMessageBox(L"성공 : Delete Tag");
-			MaxIndex = Start_it->first;
-			Tag_Combo.DeleteString(MaxIndex);
-			TagList.erase(MaxIndex);
-			return;
-		}
+		Tag_Combo.DeleteString(Count);
+		AfxMessageBox(L"삭제 성공");
+		AddTag_Edit.SetWindowTextW(L"");
 	}
-	AfxMessageBox(L"Error : 입력한 태그의 이름을 찾을수 없습니다");
 }

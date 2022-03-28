@@ -16,12 +16,12 @@
 #include "Camera.h"
 
 std::map<std::string, GameObject*> Demo::ObjectList;
+SceneSave* Demo::mSaveManager = nullptr;
+Eater_LoadScene* Demo::mLoadManager = nullptr;
+GameObject* Demo::CamObject = nullptr;
+GameObject* Demo::DebugCamObject = nullptr;
+std::map<int, std::string> Demo::TagList;
 
-SceneSave*		Demo::mSaveManager = nullptr;
-Eater_LoadScene*		Demo::mLoadManager = nullptr;
-
-GameObject*		Demo::CamObject		= nullptr;
-GameObject*		Demo::DebugCamObject = nullptr;
 Demo::Demo()
 {
 
@@ -46,6 +46,10 @@ void Demo::Awake()
 	Load("../Assets/Texture/Particle");
 
 	DebugCamObject = GetMainCamera();
+	TagList.insert({ 0, "Default"});
+	TagList.insert({ 1, "MainCam"});
+	TagList.insert({ 2, "Point" });
+	TagList.insert({ 3, "Player"});
 }
 
 void Demo::Update()
@@ -198,6 +202,66 @@ std::string Demo::FindMeshName(std::string MeshName)
 GameObject* Demo::FindMainCamera()
 {
 	return GetMainCamera();
+}
+
+int Demo::AddTag(std::string TagName)
+{
+	int MaxIndex = 0;
+	if (TagName == "")
+	{
+		return false;
+	}
+
+	//태그 리스트를 한번 순환
+	std::map<int, std::string>::iterator Start_it	= TagList.begin();
+	std::map<int, std::string>::iterator End_it		= TagList.end();
+	for (Start_it; Start_it != End_it; Start_it++)
+	{
+		//이름이 겹치는게 있는지 체크한다
+		if (Start_it->second == TagName)
+		{
+			return -1;
+		}
+
+		if (Start_it->first >= MaxIndex)
+		{
+			MaxIndex = Start_it->first;
+		}
+	}
+
+	TagList.insert({ MaxIndex+1,TagName });
+	return MaxIndex + 1;
+}
+
+int Demo::DeleteTag(std::string TagName)
+{
+	int MaxIndex = 0;
+	if (TagName == "")
+	{
+		return false;
+	}
+
+	//태그 리스트를 한번 순환
+	std::map<int, std::string>::iterator Start_it	= TagList.begin();
+	std::map<int, std::string>::iterator End_it		= TagList.end();
+
+	for (Start_it; Start_it != End_it; Start_it++)
+	{
+		//이름이 겹치는게 있는지 체크한다
+		if (Start_it->second == TagName)
+		{
+			MaxIndex = Start_it->first;
+			TagList.erase(MaxIndex);
+			return MaxIndex;
+		}
+	}
+
+	return -1;
+}
+
+bool Demo::ChoiceTag(std::string TagName, GameObject* Obj)
+{
+	return false;
 }
 
 GameObject* Demo::Create_Terrain(std::string MeshName)

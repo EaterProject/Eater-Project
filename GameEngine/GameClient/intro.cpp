@@ -24,27 +24,18 @@
 void intro::Awake()
 {
 	LoadEnvironment("../Assets/Texture/Base/Night.dds");
-
-	GameObject* gameobject = GetMainCamera();
-	DebugCam = gameobject->GetComponent<Camera>();
-	//
-	////게임에 사용할 카메라를 만들어준다
-	GameObject* Cam = InstanceCamera();
-	MainCam = Cam->GetComponent<Camera>();
-	PlayerCamera* PC = Cam->AddComponent<PlayerCamera>();
-	MainCam->ChoiceMainCam();
-	Cam->SetDontDestroy(true);
-	////
-	GameObject* Obj = Instance();
-	Obj->AddComponent<MeshFilter>();
-	Obj->AddComponent<Player>();
-	Obj->AddComponent<AnimationController>();
-	//Obj->AddComponent<Rigidbody>();
-	//Obj->AddComponent<Collider>();
-	Obj->SetDontDestroy(true);
-	PC->Userobject = Obj;
-	
 	Load("../Assets/Scene/intro.Scene");
+
+	GameObject* MainCam			= FindGameObjectTag("MainCam");
+	GameObject* PlayerObject	= FindGameObjectTag("Player");
+	PlayerObject->AddComponent<Player>();
+
+
+	Camera*	Cam =  MainCam->GetComponent<Camera>();
+	MainCam->AddComponent<PlayerCamera>();
+	Cam->ChoiceMainCam();
+
+	
 	SetEnvironment(true);
 }
 

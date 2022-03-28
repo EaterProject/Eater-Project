@@ -83,15 +83,16 @@ void SceneSave::Save(std::string SaveFilePath, std::string SaveFileName)
 void SceneSave::SceneOption()
 {
 	EATER_SET_NODE("SCENE");
-	EATER_SET_LIST_START("TAG", 10, 2);
-	EATER_SET_LIST(0);
-	EATER_SET_LIST("Default", true);
-	EATER_SET_LIST(1);
-	EATER_SET_LIST("MainCam", true);
-	EATER_SET_LIST(2);
-	EATER_SET_LIST("Point", true);
-	EATER_SET_LIST(3);
-	EATER_SET_LIST("Player", true);
+	std::map<int, std::string>::iterator Start_it	= Demo::TagList.begin();
+	std::map<int, std::string>::iterator End_it		= Demo::TagList.end();
+
+	int Size = Demo::TagList.size();
+	EATER_SET_LIST_START("TAG", Size, 2);
+	for (Start_it; Start_it != End_it; Start_it++)
+	{
+		EATER_SET_LIST(Start_it->first);
+		EATER_SET_LIST(Start_it->second, true);
+	}
 }
 
 void SceneSave::SaveTransform(Transform* mTransform)

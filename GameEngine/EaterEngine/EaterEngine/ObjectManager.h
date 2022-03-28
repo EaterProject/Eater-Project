@@ -8,7 +8,7 @@
 #include <functional>
 #include "Delegate.h"
 #include "EaterEngineDLL.h"
-
+#include "BaseManager.h"
 typedef size_t Hash_Code;
 
 class Camera;
@@ -44,7 +44,7 @@ public:
 	static void PushEndUpdate(Component* obj, int Order);
 	static void PushUpdate(Component* obj, int Order);
 
-	//static int CreateTag(int TagNumber);
+	static void AddTag(int Key,std::string TagName);
 	static int FindTag(std::string TagName);
 	//static void DeleteTag(int TagNumber);
 
