@@ -64,6 +64,7 @@ GameObject* ObjectFactory::CreateMonster(float x, float y, float z)
 	Object_Monster->AddComponent<Collider>();
 	Object_Monster->AddComponent<Rigidbody>();
 	Object_Monster->AddComponent<Monster>();
+	Object_Monster->GetTransform()->Position = { x,y,z };
 	return Object_Monster;
 }
 

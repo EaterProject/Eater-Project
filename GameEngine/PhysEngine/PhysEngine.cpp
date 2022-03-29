@@ -132,8 +132,6 @@ void  PhysEngine::Update_Actor(PhysData* data)
 	PxRigidBody* body = reinterpret_cast<PxRigidBody*>(data->ActorObj);
 	PxTransform Tr = body->getGlobalPose();
 
-
-
 	//관성이 들어간 힘을 준다
 	if (data->isForce == true)
 	{
@@ -142,7 +140,7 @@ void  PhysEngine::Update_Actor(PhysData* data)
 		PxRigidBodyExt::addForceAtPos(*body, Force, Pos);
 		data->isForce = false;
 	}
-
+	
 	//속력값을 준다
 	if (data->isVelocity == true)
 	{
@@ -152,8 +150,8 @@ void  PhysEngine::Update_Actor(PhysData* data)
 		body->setLinearVelocity(Pox);
 		data->isVelocity = false;
 	}
-
-	//위치값이 변경되었을때
+	
+	////위치값이 변경되었을때
 	if (data->isPosition == true)
 	{
 		PxQuat Q = PxQuat(data->Rotation.x, data->Rotation.y, data->Rotation.z, data->Rotation.w);
@@ -161,7 +159,8 @@ void  PhysEngine::Update_Actor(PhysData* data)
 		body->setGlobalPose(PxTransform(P, Q));
 		data->isPosition = false;
 	}
-	//data->PhysX_Velocity = Vector3(Velocity.x, Velocity.y, Velocity.z);
+
+	////data->PhysX_Velocity = Vector3(Velocity.x, Velocity.y, Velocity.z);
 	data->WorldPosition.x = Tr.p.x;
 	data->WorldPosition.y = Tr.p.y;
 	data->WorldPosition.z = Tr.p.z;
@@ -198,11 +197,11 @@ PxFilterFlags SampleSubmarineFilterShader
 	PxFilterObjectAttributes attributes1, PxFilterData filterData1,
 	PxPairFlags& pairFlags, const void* constantBlock, PxU32 constantBlockSize)
 {
-	// if (PxFilterObjectIsTrigger(attributes1) == true || PxFilterObjectIsTrigger(attributes0) == true)
-	// {
-	// 	pairFlags = PxPairFlag::eTRIGGER_DEFAULT;
-	// 	return PxFilterFlag::eDEFAULT;
-	// }
+	if (PxFilterObjectIsTrigger(attributes1) == true || PxFilterObjectIsTrigger(attributes0) == true)
+	{
+		pairFlags = PxPairFlag::eTRIGGER_DEFAULT;
+		return PxFilterFlag::eDEFAULT;
+	}
 
 	pairFlags = PxPairFlag::eCONTACT_DEFAULT;
 
@@ -222,12 +221,12 @@ bool PhysEngine::CreateScene(PhysSceneData* SceneData)
 	PxSceneDesc sceneDesc				= PxSceneDesc(m_Physics->getTolerancesScale());
 	sceneDesc.gravity					= PxVec3(0.0f, -9.8f, 0.0f);
 	sceneDesc.cpuDispatcher				= m_Dispatcher;
-	//sceneDesc.simulationEventCallback	= m_BaseEvent;
+	sceneDesc.simulationEventCallback	= m_BaseEvent;
 	sceneDesc.filterShader				= SampleSubmarineFilterShader;
 	sceneDesc.cudaContextManager		= m_CudaContextManager;
-	//sceneDesc.broadPhaseType			= PxBroadPhaseType::eGPU;
+	sceneDesc.broadPhaseType			= PxBroadPhaseType::eGPU;
 	
-	//sceneDesc.flags |= PxSceneFlag::eENABLE_GPU_DYNAMICS;
+	sceneDesc.flags |= PxSceneFlag::eENABLE_GPU_DYNAMICS;
 	//sceneDesc.flags |= PxSceneFlag::eENABLE_CCD;
 	sceneDesc.flags |= PxSceneFlag::eENABLE_PCM; 
 	

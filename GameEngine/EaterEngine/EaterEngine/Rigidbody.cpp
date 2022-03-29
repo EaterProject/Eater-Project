@@ -74,9 +74,9 @@ void Rigidbody::PhysicsUpdate()
 	float CenterY = RigidbodyData->CenterPoint.y;
 	float CenterZ = RigidbodyData->CenterPoint.z;
 	
-	mTransform->Position.x = RigidbodyData->WorldPosition.x + CenterX;
-	mTransform->Position.y = RigidbodyData->WorldPosition.y + CenterY;
-	mTransform->Position.z = RigidbodyData->WorldPosition.z + CenterZ;
+	mTransform->Position.x = RigidbodyData->WorldPosition.x;
+	mTransform->Position.y = RigidbodyData->WorldPosition.y;
+	mTransform->Position.z = RigidbodyData->WorldPosition.z;
 	
 	mTransform->Q_Rotation.x = RigidbodyData->Rotation.x;
 	mTransform->Q_Rotation.y = RigidbodyData->Rotation.y;
@@ -98,7 +98,7 @@ void Rigidbody::SetRotation(float x, float y, float z)
 
 void Rigidbody::SetPosition(float x, float y, float z)
 {
-	//RigidbodyData->SetWorldPosition(x, y, z);
+	RigidbodyData->SetWorldPosition(x, y, z);
 }
 
  bool Rigidbody::GetTriggerEnter()

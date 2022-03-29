@@ -170,7 +170,7 @@ bool Collider::CreatePhys()
 	if (isCreate == false)
 	{
 		mPhysData->Collider			= mColliderData;
-		mPhysData->WorldPosition	= gameobject->transform->Position + mPhysData->CenterPoint;
+		mPhysData->WorldPosition	= gameobject->transform->Position;
 		Vector3 Rot					= gameobject->transform->Rotation;
 
 		Rigidbody* mRigidbody = gameobject->GetComponent<Rigidbody>();

@@ -37,7 +37,8 @@ void Monster::SetUp()
 {
 	//콜라이더 값 고정	
 	mColider->SetCenter(0, 0, 0);
-	//mRigidbody->SetFreezeRotation(true, true, true);
+	mColider->SetBoxCollider(0.25f);
+	mRigidbody->SetFreezeRotation(true, true, true);
 	mColider->CreatePhys();
 
 	//매쉬 생성

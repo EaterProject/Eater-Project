@@ -19,9 +19,6 @@
     <Filter Include="소스 파일\Scene">
       <UniqueIdentifier>{f4fe76d3-6edb-4d2a-ad68-d5564f8f0dcc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Component\Keyinput">
-      <UniqueIdentifier>{e7082ad1-e513-4d75-a040-3b1a44d10385}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Scene\intro">
       <UniqueIdentifier>{6c66b294-6e2d-45e5-af55-b696ee34abf8}</UniqueIdentifier>
     </Filter>
@@ -75,9 +72,6 @@
     <ClInclude Include="GameClient.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="KeyInput.h">
-      <Filter>소스 파일\Component\Keyinput</Filter>
-    </ClInclude>
     <ClInclude Include="intro.h">
       <Filter>소스 파일\Scene\intro</Filter>
     </ClInclude>
@@ -118,9 +112,6 @@
   <ItemGroup>
     <ClCompile Include="GameClient.cpp">
       <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="KeyInput.cpp">
-      <Filter>소스 파일\Component\Keyinput</Filter>
     </ClCompile>
     <ClCompile Include="intro.cpp">
       <Filter>소스 파일\Scene\intro</Filter>

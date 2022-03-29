@@ -21,6 +21,8 @@ void GameLogic::Initialize()
 	Factory->Initialize();
 
 	FindGameObjectTags("Potal", &PotalList);
+
+	Factory->CreateMonster(0, 0, 0);
 }
 
 void GameLogic::Release()
@@ -37,14 +39,17 @@ void GameLogic::Update()
 
 
 
-	if (Count > 1)
+	if (Count > 10)
 	{
 		float x, y, z;
-		//x = PotalList[i]->GetTransform()->Position.x;
-		//y = PotalList[i]->GetTransform()->Position.y;
-		//z = PotalList[i]->GetTransform()->Position.z;
+		for (int i = 0; i < PotalList.size(); i++)
+		{
+			x = PotalList[i]->GetTransform()->Position.x;
+			y = PotalList[i]->GetTransform()->Position.y;
+			z = PotalList[i]->GetTransform()->Position.z;
+			Factory->CreateMonster(x, y, z);
+		}
 
-		Factory->CreateMonster(0, 0, PosZ);
 		Count = 0;
 		PosZ += 2;
 	}

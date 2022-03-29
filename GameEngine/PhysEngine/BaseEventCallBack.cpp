@@ -32,36 +32,36 @@ void BaseEventCallBack::onContact(const PxContactPairHeader& pairHeader, const P
 
 void BaseEventCallBack::onTrigger(PxTriggerPair* pairs, PxU32 count)
 {
-	for (PxU32 i = 0; i < count; i++)
-	{
-		PhysData* Other = reinterpret_cast<PhysData*>(pairs[i].otherActor->userData);
-		PhysData* Target = reinterpret_cast<PhysData*>(pairs[i].triggerActor->userData);
-	
-		if (pairs[i].status & PxPairFlag::eNOTIFY_TOUCH_FOUND)
-		{
-			Other->OnTriggerEnter = true;
-			Other->OnTriggerStay = true;
-			Other->TriggerCount++;
-	
-			Other->TriggerList.push_back(Target);
-		}
-		else if (pairs[i].status & PxPairFlag::eNOTIFY_TOUCH_LOST)
-		{
-			Other->OnTriggerStay = false;
-			Other->OnTriggerExit = true;
-			Other->TriggerCount--;
-	
-			int count = (int)Other->TriggerList.size();
-			for (int i = 0; i < count; i++)
-			{
-				if (Other->TriggerList[i] == Target)
-				{
-					Other->TriggerList.erase(Other->TriggerList.begin() + i);
-					break;
-				}
-			}
-		}
-	}
+	//for (PxU32 i = 0; i < count; i++)
+	//{
+	//	PhysData* Other = reinterpret_cast<PhysData*>(pairs[i].otherActor->userData);
+	//	PhysData* Target = reinterpret_cast<PhysData*>(pairs[i].triggerActor->userData);
+	//
+	//	if (pairs[i].status & PxPairFlag::eNOTIFY_TOUCH_FOUND)
+	//	{
+	//		Other->OnTriggerEnter = true;
+	//		Other->OnTriggerStay = true;
+	//		Other->TriggerCount++;
+	//
+	//		Other->TriggerList.push_back(Target);
+	//	}
+	//	else if (pairs[i].status & PxPairFlag::eNOTIFY_TOUCH_LOST)
+	//	{
+	//		Other->OnTriggerStay = false;
+	//		Other->OnTriggerExit = true;
+	//		Other->TriggerCount--;
+	//
+	//		int count = (int)Other->TriggerList.size();
+	//		for (int i = 0; i < count; i++)
+	//		{
+	//			if (Other->TriggerList[i] == Target)
+	//			{
+	//				Other->TriggerList.erase(Other->TriggerList.begin() + i);
+	//				break;
+	//			}
+	//		}
+	//	}
+	//}
 }
 
 void BaseEventCallBack::onAdvance(const PxRigidBody* const* bodyBuffer, const PxTransform* poseBuffer, const PxU32 count)

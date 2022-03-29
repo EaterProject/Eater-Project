@@ -1,16 +1,16 @@
 #EATERMAT
-@MaterialName bossb+_bone
+@ORM bossb_body_ ORM
 @Alpha NO
-@Diffuse bossb_bone_BaseColor.png
-@Normal bossb_bone_Normal.png
-@Emissive bossb_bone_Emissive.png
-@ORM bossb_bone_ORM.png
-@Roughness 0
-@Metallic 0
+@MaterialName bossb+_bone
+@Roughness 0.000000
+@Diffuse bossb_body_BaseColor
+@Normal bossb_body_Normal
+@Emissive bossb_body_Emissive
+@Metallic 0.000000
 @Tileing_X 1
 @Tileing_Y 1
-@AddColor_R 0
-@AddColor_G 0
-@AddColor_B 0
-@AddColor_A 0
+@AddColor_R 0.000000
+@AddColor_G 0.000000
+@AddColor_B 0.000000
+@AddColor_A 1
 &

@@ -92,7 +92,7 @@ void Player::PlayerKeyinput()
 	if (DirPos != Vector3(0, 0, 0))
 	{
 		DirRot = DirPos;
-		mTransform->SetTranlate(DirPos * GetDeltaTime() * Speed);
+		mTransform->SetTranlate(DirPos * Speed * GetDeltaTime());
 		mTransform->Slow_Y_Rotation(DirRot, 400);
 	}
 	

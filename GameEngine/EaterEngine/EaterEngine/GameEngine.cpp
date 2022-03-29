@@ -128,10 +128,10 @@ void GameEngine::Update()
 	mNetworkManager->Update();
 	mTimeManager->Update();
 	mKeyManager->Update();
+	mPhysManager->Update(mTimeManager->DeltaTime());
 	mSceneManager->Update();
 	mDebugManager->Update();
 	mObjectManager->PlayUpdate();
-	mPhysManager->Update(mTimeManager->DeltaTime());
 
 	// 모든 업데이트가 일어난 후 데이터 세팅..
 	BaseManager::UpdateGlobalData(mTimeManager->DeltaTime());
