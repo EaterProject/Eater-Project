@@ -4,12 +4,16 @@
 #include "GameObject.h"
 #include "AnimationController.h"
 #include "MainHeader.h"
+#include "Collider.h"
+#include "Rigidbody.h"
 
 Monster::Monster()
 {
 	mMeshFilter = nullptr;
 	mTransform	= nullptr;
 	mAnimation	= nullptr;
+	mColider	= nullptr;
+	mRigidbody	= nullptr;
 }
 
 Monster::~Monster()
@@ -17,6 +21,8 @@ Monster::~Monster()
 	mMeshFilter = nullptr;
 	mTransform	= nullptr;
 	mAnimation	= nullptr;
+	mColider = nullptr;
+	mRigidbody = nullptr;
 }
 
 void Monster::Awake()
@@ -24,30 +30,28 @@ void Monster::Awake()
 	mMeshFilter = gameobject->GetComponent<MeshFilter>();
 	mTransform	= gameobject->GetComponent<Transform>();
 	mAnimation	= gameobject->GetComponent<AnimationController>();
+	mColider	= gameobject->GetComponent<Collider>();
+	mRigidbody	= gameobject->GetComponent<Rigidbody>();
 }
 void Monster::SetUp()
 {
-	mMeshFilter->SetModelName("MonsterA");
-	mMeshFilter->SetAnimationName("MonsterA");
+	//콜라이더 값 고정	
+	mColider->SetCenter(0, 0, 0);
+	//mRigidbody->SetFreezeRotation(true, true, true);
+	mColider->CreatePhys();
 
-	//mTransform->Rotation = { -90,0,0 };
-	//mTransform->Position = { -43,65,-6 };
-
-	//mTransform->Rotation = { 90,0,0 };
-	mTransform->Scale = {2,2,2};
-	mTransform->Position = { -5,0,0 };
-	mTransform->Rotation = { 90,180,0 };
-
-	mAnimation->Choice("idle");
+	//매쉬 생성
+	mMeshFilter->SetModelName("MonsterA+");
+	mMeshFilter->SetAnimationName("MonsterA+");
+	mAnimation->Choice("Move");
 }
 
 void Monster::Update()
 {
-	mAnimation->Play(1, true);
-	//디버깅용
+	
 }
 
 void Monster::MonsterUpdate(Vector3 Pos)
 {
-	mTransform->Position = Pos;
+	mTransform->Position = {0,1,0};
 }

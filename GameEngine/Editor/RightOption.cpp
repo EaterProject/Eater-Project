@@ -73,15 +73,15 @@ BOOL RightOption::OnInitDialog()
 	mCam->ShowWindow(SW_HIDE);
 
 	//Tag 기본 리스트
-	Tag_Combo.InsertString(0, L"Default");
-	Tag_Combo.InsertString(1, L"MainCam");
-	Tag_Combo.InsertString(2, L"Point");
-	Tag_Combo.InsertString(3, L"Player");
-	TagList.insert({0,"Default"});
-	TagList.insert({1,"MainCam"});
-	TagList.insert({2,"Point"});
-	TagList.insert({3,"Player"});
-	Tag_Combo.SetCurSel(0);
+	//Tag_Combo.InsertString(0, L"Default");
+	//Tag_Combo.InsertString(1, L"MainCam");
+	//Tag_Combo.InsertString(2, L"Point");
+	//Tag_Combo.InsertString(3, L"Player");
+	//TagList.insert({0,"Default"});
+	//TagList.insert({1,"MainCam"});
+	//TagList.insert({2,"Point"});
+	//TagList.insert({3,"Player"});
+	//Tag_Combo.SetCurSel(0);
 
 	//텝정보들 생성
 	CRect rect;
@@ -355,10 +355,12 @@ void RightOption::OnChoice_Hirearchy_Item(NMHDR* pNMHDR, LRESULT* pResult)
 	Name = ChoiceHirearchyName.c_str();
 	HirearchyEdit.SetWindowTextW(Name);
 
+
 	Component_TapList.DeleteAllItems();
 	ChoiceObject = FindGameObjectParent(ChoiceItem);
 	Delete_Hirearchy_Item(ChoiceItem);
 	Create_Hirearchy_Item(ChoiceObject, ChoiceItem);
+	Tag_Combo.SetCurSel(ChoiceObject->GetTag());
 
 	mFileOption->SetChoiceGameObjectName(MeshName, ChoiceObject);
 

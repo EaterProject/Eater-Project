@@ -70,6 +70,11 @@ void OnReSize(int X, int Y)
 	 return gGameEngine->FindGameObjectTag(TagName);
  }
 
+ void FindGameObjectTags(std::string TagName, std::vector<GameObject*>* ObjectList)
+ {
+	 gGameEngine->FindGameObjectTags(TagName, ObjectList);
+ }
+
  GameObject* FindGameObjectName(std::string ObjectName)
  {
 	 return gGameEngine->FindGameObjectName(ObjectName);

@@ -77,7 +77,7 @@ void Rigidbody::PhysicsUpdate()
 	mTransform->Position.x = RigidbodyData->WorldPosition.x + CenterX;
 	mTransform->Position.y = RigidbodyData->WorldPosition.y + CenterY;
 	mTransform->Position.z = RigidbodyData->WorldPosition.z + CenterZ;
-
+	
 	mTransform->Q_Rotation.x = RigidbodyData->Rotation.x;
 	mTransform->Q_Rotation.y = RigidbodyData->Rotation.y;
 	mTransform->Q_Rotation.z = RigidbodyData->Rotation.z;

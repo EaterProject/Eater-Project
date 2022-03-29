@@ -32,9 +32,7 @@ Collider::~Collider()
 
 void Collider::Awake()
 {
-	DebugCollider();
-	//실행되기전에 
-	
+
 }
 
 void Collider::Start()
@@ -220,7 +218,9 @@ float Collider::GetMaterial_Restitution()
 
 void Collider::SetCenter(float x, float y, float z)
 {
+	
 	mColliderData->SetCenter(x, y, z);
+	mPhysData->CenterPoint = { x,y,z };
 }
 
 DirectX::SimpleMath::Matrix Collider::CreateXMRot4x4()

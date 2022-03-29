@@ -421,6 +421,33 @@ GameObject* ObjectManager::FindGameObjectTag(std::string& TagName)
 	return nullptr;
 }
 
+void ObjectManager::FindGameObjectTags(std::string& TagName, std::vector<GameObject*>* mObjectList)
+{
+	//들어온 이름에 따라 태그의 번호를찾고 해당하는 오브젝트를 가져온다
+	std::map<int, std::string>::iterator Start_it = TagList.begin();
+	std::map<int, std::string>::iterator End_it = TagList.end();
+	int FindIndex = -1;
+
+	//들어온 이름으로 태그의 인덱스 번호를 찾는다
+	for (Start_it; Start_it != End_it; Start_it++)
+	{
+		if (TagName == Start_it->second)
+		{
+			FindIndex = Start_it->first;
+		}
+	}
+
+	//인덱스 번호로 모든 오브젝트를 순환후 같은 오브젝트를 가져온다
+	int ObjectMaxCount = (int)ObjectList.size();
+	for (int i = 0; i < ObjectMaxCount; i++)
+	{
+		if (ObjectList[i]->GetTag() == FindIndex)
+		{
+			mObjectList->push_back(ObjectList[i]);
+		}
+	}
+}
+
 ComponentFunctionData ObjectManager::PushComponentData(Component* mComponent)
 {
 	ComponentFunctionData data;

@@ -18,7 +18,7 @@ void InGame::Start()
 
 void InGame::Update()
 {
-
+	Logic->Update();
 }
 
 void InGame::End()

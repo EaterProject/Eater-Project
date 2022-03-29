@@ -37,8 +37,8 @@ void Eater_LoadScene::Load(std::string FilePath)
 		if (NodeName == "GAMEOBJECT")
 		{
 			GameObject* Obj = Instance();
-			Obj->SetTag(EATER_GET_MAP(i, "TAG"));
-			Obj->Name = EATER_GET_MAP(i, "NAME");
+			Obj->SetTag(std::stoi(EATER_GET_MAP(i, "TAG")));
+			Obj->Name = Demo::FindMeshName(EATER_GET_MAP(i, "NAME"));
 
 			//트랜스폼은 기본
 			Load_Component_Transform(i, Obj);

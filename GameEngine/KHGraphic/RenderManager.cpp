@@ -60,7 +60,7 @@ RenderManager::RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, I
 	m_Bloom			= new BloomPass();
 	m_ToneMap		= new ToneMapPass();
 	m_Fog			= new FogPass();
-	m_Picking		= new PickingPass();
+	//m_Picking		= new PickingPass();
 	m_Debug			= new DebugPass();
 
 	// 설정을 위한 Render Pass List Up..
@@ -75,7 +75,7 @@ RenderManager::RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, I
 	m_RenderPassList.push_back(m_Bloom);
 	m_RenderPassList.push_back(m_ToneMap);
 	m_RenderPassList.push_back(m_Fog);
-	m_RenderPassList.push_back(m_Picking);
+	//m_RenderPassList.push_back(m_Picking);
 	m_RenderPassList.push_back(m_Debug);
 }
 
@@ -310,6 +310,8 @@ void RenderManager::Render()
 
 void* RenderManager::PickingRender(int x, int y)
 {
+	return nullptr;
+
 	m_Picking->BeginRender();
 	
 	// Static Object Picking Draw..

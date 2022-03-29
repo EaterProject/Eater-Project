@@ -106,16 +106,15 @@ void PhysEngine::Update(float m_time)
 {
 	if (Start == false)
 	{
-		m_Scene->simulate(0);
 		m_Scene->fetchResults(true);
+		m_Scene->simulate(0);
 		Start = true;
 	}
 	else
 	{
-		m_Scene->simulate(m_time);
 		m_Scene->fetchResults(true);
+		m_Scene->simulate(m_time);
 	}
-
 }
 
 void PhysEngine::Create_Actor(PhysData* data)
@@ -131,15 +130,15 @@ void  PhysEngine::Update_Actor(PhysData* data)
 	//받아온 Data를 Actor와 동기화시켜준다
 	PxRigidActor* rig = reinterpret_cast<PxRigidActor*>(data->ActorObj);
 	PxRigidBody* body = reinterpret_cast<PxRigidBody*>(data->ActorObj);
-	PxTransform Tr = rig->getGlobalPose();
-	//PxVec3 Velocity = body->getLinearVelocity();
-	
-	
+	PxTransform Tr = body->getGlobalPose();
+
+
+
 	//관성이 들어간 힘을 준다
 	if (data->isForce == true)
 	{
-		PxVec3 Force	= PxVec3(data->Force.x, data->Force.y, data->Force.z);
-		PxVec3 Pos		= PxVec3(data->WorldPosition.x, data->WorldPosition.y, data->WorldPosition.z);
+		PxVec3 Force = PxVec3(data->Force.x, data->Force.y, data->Force.z);
+		PxVec3 Pos = PxVec3(data->WorldPosition.x, data->WorldPosition.y, data->WorldPosition.z);
 		PxRigidBodyExt::addForceAtPos(*body, Force, Pos);
 		data->isForce = false;
 	}
@@ -162,7 +161,6 @@ void  PhysEngine::Update_Actor(PhysData* data)
 		body->setGlobalPose(PxTransform(P, Q));
 		data->isPosition = false;
 	}
-
 	//data->PhysX_Velocity = Vector3(Velocity.x, Velocity.y, Velocity.z);
 	data->WorldPosition.x = Tr.p.x;
 	data->WorldPosition.y = Tr.p.y;
@@ -200,11 +198,11 @@ PxFilterFlags SampleSubmarineFilterShader
 	PxFilterObjectAttributes attributes1, PxFilterData filterData1,
 	PxPairFlags& pairFlags, const void* constantBlock, PxU32 constantBlockSize)
 {
-	if (PxFilterObjectIsTrigger(attributes1) == true || PxFilterObjectIsTrigger(attributes0) == true)
-	{
-		pairFlags = PxPairFlag::eTRIGGER_DEFAULT;
-		return PxFilterFlag::eDEFAULT;
-	}
+	// if (PxFilterObjectIsTrigger(attributes1) == true || PxFilterObjectIsTrigger(attributes0) == true)
+	// {
+	// 	pairFlags = PxPairFlag::eTRIGGER_DEFAULT;
+	// 	return PxFilterFlag::eDEFAULT;
+	// }
 
 	pairFlags = PxPairFlag::eCONTACT_DEFAULT;
 
@@ -224,14 +222,14 @@ bool PhysEngine::CreateScene(PhysSceneData* SceneData)
 	PxSceneDesc sceneDesc				= PxSceneDesc(m_Physics->getTolerancesScale());
 	sceneDesc.gravity					= PxVec3(0.0f, -9.8f, 0.0f);
 	sceneDesc.cpuDispatcher				= m_Dispatcher;
-	sceneDesc.simulationEventCallback	= m_BaseEvent;
+	//sceneDesc.simulationEventCallback	= m_BaseEvent;
 	sceneDesc.filterShader				= SampleSubmarineFilterShader;
 	sceneDesc.cudaContextManager		= m_CudaContextManager;
-	sceneDesc.broadPhaseType			= PxBroadPhaseType::eGPU;
+	//sceneDesc.broadPhaseType			= PxBroadPhaseType::eGPU;
 	
-	sceneDesc.flags |= PxSceneFlag::eENABLE_GPU_DYNAMICS;
-	sceneDesc.flags |= PxSceneFlag::eENABLE_CCD;
-	sceneDesc.flags |= PxSceneFlag::eENABLE_PCM;
+	//sceneDesc.flags |= PxSceneFlag::eENABLE_GPU_DYNAMICS;
+	//sceneDesc.flags |= PxSceneFlag::eENABLE_CCD;
+	sceneDesc.flags |= PxSceneFlag::eENABLE_PCM; 
 	
 
 	m_Scene = m_Physics->createScene(sceneDesc);

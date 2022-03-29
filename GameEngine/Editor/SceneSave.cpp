@@ -181,7 +181,7 @@ void SceneSave::SaveCollider(Collider* mCollider)
 
 	EATER_SET_LIST(mCollider->GetMaterial_Dynamic());			//8. 재질
 	EATER_SET_LIST(mCollider->GetMaterial_Restitution());		//9. 재질
-	EATER_SET_LIST(mCollider->GetMaterial_Static());			//10. 재질
+	EATER_SET_LIST(mCollider->GetMaterial_Static(),true);		//10. 재질
 }
 
 void SceneSave::SaveRigidbody(Rigidbody* mRigidbody)
@@ -191,5 +191,6 @@ void SceneSave::SaveRigidbody(Rigidbody* mRigidbody)
 
 void SceneSave::SaveCamera(Camera* mCamera)
 {
-	EATER_SET_LIST_START("Camera", 0, 0);
+	EATER_SET_LIST_START("Camera", 1, 1);
+	EATER_SET_LIST("Cam",true);
 }

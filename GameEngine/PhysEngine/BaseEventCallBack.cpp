@@ -36,13 +36,13 @@ void BaseEventCallBack::onTrigger(PxTriggerPair* pairs, PxU32 count)
 	{
 		PhysData* Other = reinterpret_cast<PhysData*>(pairs[i].otherActor->userData);
 		PhysData* Target = reinterpret_cast<PhysData*>(pairs[i].triggerActor->userData);
-
+	
 		if (pairs[i].status & PxPairFlag::eNOTIFY_TOUCH_FOUND)
 		{
 			Other->OnTriggerEnter = true;
 			Other->OnTriggerStay = true;
 			Other->TriggerCount++;
-
+	
 			Other->TriggerList.push_back(Target);
 		}
 		else if (pairs[i].status & PxPairFlag::eNOTIFY_TOUCH_LOST)
@@ -50,7 +50,7 @@ void BaseEventCallBack::onTrigger(PxTriggerPair* pairs, PxU32 count)
 			Other->OnTriggerStay = false;
 			Other->OnTriggerExit = true;
 			Other->TriggerCount--;
-
+	
 			int count = (int)Other->TriggerList.size();
 			for (int i = 0; i < count; i++)
 			{

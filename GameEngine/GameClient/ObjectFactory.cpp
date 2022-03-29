@@ -6,6 +6,12 @@
 #include "Player.h"
 #include "PlayerCamera.h"
 #include "Camera.h"
+#include "MeshFilter.h"
+#include "AnimationController.h"
+#include "Collider.h"
+#include "Rigidbody.h"
+#include "Transform.h"
+#include "Monster.h"
 
 
 ObjectFactory::ObjectFactory()
@@ -24,7 +30,6 @@ void ObjectFactory::Initialize()
 	//툴에서 만들어놓은 플레이어, 카메라를 가져옴
 	PlayerObject		= FindGameObjectTag("Player");
 	PlayerMainCamera	= FindGameObjectTag("MainCam");
-
 
 	//클라이언트쪽 컨퍼넌트 Add
 	PlayerObject->AddComponent<Player>();
@@ -51,9 +56,15 @@ GameObject* ObjectFactory::CreatePlayer()
 	return nullptr;
 }
 
-GameObject* ObjectFactory::CreateMonster()
+GameObject* ObjectFactory::CreateMonster(float x, float y, float z)
 {
-	return nullptr;
+	GameObject* Object_Monster = Instance();
+ 	Object_Monster->AddComponent<MeshFilter>();
+	Object_Monster->AddComponent<AnimationController>();
+	Object_Monster->AddComponent<Collider>();
+	Object_Monster->AddComponent<Rigidbody>();
+	Object_Monster->AddComponent<Monster>();
+	return Object_Monster;
 }
 
 GameObject* ObjectFactory::CreateMana()

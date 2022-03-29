@@ -5,6 +5,9 @@ class MeshFilter;
 class Transform;
 class GameObject;
 class AnimationController;
+class Collider;
+class Rigidbody;
+
 class Monster :public Component
 {
 public:
@@ -19,7 +22,7 @@ private:
 	MeshFilter* mMeshFilter;
 	Transform*	mTransform;
 	AnimationController* mAnimation;
-
-
+	Collider* mColider;
+	Rigidbody* mRigidbody;
 };
 

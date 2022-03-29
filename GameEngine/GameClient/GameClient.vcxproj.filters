@@ -58,6 +58,9 @@
     <Filter Include="소스 파일\Manager\ObjectFactory">
       <UniqueIdentifier>{149e5443-6586-42a9-ba32-44b86d569a72}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Component\Potal">
+      <UniqueIdentifier>{ab9e2d53-63ff-4400-b7b1-760e7edf6fea}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -108,6 +111,9 @@
     <ClInclude Include="ObjectFactory.h">
       <Filter>소스 파일\Manager\ObjectFactory</Filter>
     </ClInclude>
+    <ClInclude Include="Potal.h">
+      <Filter>소스 파일\Component\Potal</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameClient.cpp">
@@ -148,6 +154,9 @@
     </ClCompile>
     <ClCompile Include="ObjectFactory.cpp">
       <Filter>소스 파일\Manager\ObjectFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="Potal.cpp">
+      <Filter>소스 파일\Component\Potal</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

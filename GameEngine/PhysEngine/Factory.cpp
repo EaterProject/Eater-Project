@@ -33,7 +33,7 @@ physx::PxShapeFlags Factory::CreateShapeFlag(bool isTrigger)
 	}
 	else
 	{
-		shapeFlags = PxShapeFlag::eVISUALIZATION | PxShapeFlag::eSIMULATION_SHAPE | PxShapeFlag::eSCENE_QUERY_SHAPE;
+		shapeFlags = PxShapeFlag::eVISUALIZATION | PxShapeFlag::eSIMULATION_SHAPE;//| PxShapeFlag::eSCENE_QUERY_SHAPE;
 	}
 	
 	return shapeFlags;
@@ -140,8 +140,8 @@ void Factory::CreateStaticActor(PhysData* Data, physx::PxShape* shape, physx::Px
 	if (Data->isDinamic == true) { return; }
 	PxRigidStatic* body = m_Phys->createRigidStatic(*Tr);
 
-	//const PxFilterData triggerFilterData(0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff);
-	//shape->setSimulationFilterData(triggerFilterData);
+	const PxFilterData triggerFilterData(0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff);
+	shape->setSimulationFilterData(triggerFilterData);
 
 
 	body->attachShape(*shape);

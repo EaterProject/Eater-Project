@@ -61,6 +61,7 @@ public:
 
 	GameObject* FindGameObjectString(std::string& TagName);
 	GameObject* FindGameObjectTag(std::string& TagName);
+	void FindGameObjectTags(std::string& TagName, std::vector<GameObject*>* ObjectList);
 
 private:
 	//생성한 오브젝트를 넣어줌

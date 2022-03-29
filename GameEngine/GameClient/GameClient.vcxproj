@@ -188,6 +188,7 @@
     <ClInclude Include="Monster.h" />
     <ClInclude Include="ObjectFactory.h" />
     <ClInclude Include="PlayerCamera.h" />
+    <ClInclude Include="Potal.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Player.h" />
@@ -218,6 +219,7 @@
     <ClCompile Include="ObjectFactory.cpp" />
     <ClCompile Include="PlayerCamera.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Potal.cpp" />
     <ClCompile Include="TestScene.cpp" />
   </ItemGroup>
   <ItemGroup>

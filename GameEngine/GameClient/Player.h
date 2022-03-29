@@ -19,7 +19,6 @@ public:
 	virtual ~Player();
 	void Awake();
 	void SetUp();
-	void Start();
 	void Update();
 	void StartUpdate();
 

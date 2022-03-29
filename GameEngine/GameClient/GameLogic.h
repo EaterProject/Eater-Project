@@ -5,6 +5,7 @@
 /// </summary>
 #include <vector>
 
+class GameObject;
 class ObjectFactory;
 
 class GameLogic
@@ -14,8 +15,10 @@ public:
 	~GameLogic();
 	void Initialize();
 	void Release();
+	void Update();
 private:
 	ObjectFactory* Factory;
 
+	std::vector<GameObject*> PotalList;
 };
 
