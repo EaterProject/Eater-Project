@@ -6,9 +6,6 @@
 #include "GameManager.h"
 #include "MainHeader.h"
 
-#include "GameObject.h"
-#include "Transform.h"
-
 //#include "Dwmapi.h"
 //#pragma comment( lib, "Dwmapi.lib" )
 
@@ -22,7 +19,6 @@
 
 // 윈도 프로시저의 전방선언
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
-GameObject* gObject = nullptr;
 
 // 메인 함수
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR    lpCmdLine, _In_ int nCmdShow)
@@ -86,11 +82,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 		else
 		{
 			GM->Update();
-
-			if (gObject)
-			{
-				gObject->GetTransform()->Rotation.y += 1.0f;
-			}
 		}
 	}
 
@@ -113,7 +104,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 	case WM_LBUTTONUP:
 	{
-		gObject = Picking(LOWORD(lParam), HIWORD(lParam));
+		Picking(LOWORD(lParam), HIWORD(lParam));
 	}
 	break;
 	case WM_SIZE:
