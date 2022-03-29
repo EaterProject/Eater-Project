@@ -84,6 +84,14 @@ void TestScene::CreateMap()
 	MeshFilter* filter = nullptr;
 	Light* light = nullptr;
 
+	Object = InstanceLight("Light", LIGHT_TYPE::POINT_LIGHT);
+	Object->GetTransform()->Position.x += 10.0f;
+	Object->GetTransform()->Position.y += 10.0f;
+
+	Object = InstanceLight("Light", LIGHT_TYPE::SPOT_LIGHT);
+	Object->GetTransform()->Position.x -= 10.0f;
+	Object->GetTransform()->Position.y += 10.0f;
+
 	Object = Instance();
 	filter = Object->AddComponent<MeshFilter>();
 	filter->SetModelName("bossb+");
@@ -103,22 +111,22 @@ void TestScene::CreateMap()
 	//filter = Object->AddComponent<MeshFilter>();
 	//filter->SetModelName("Inside_village");
 	//
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//Tr = Object->GetTransform();
-	//filter->SetModelName("Outside_Rock");
-	//
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("Outside_bossOBJ");
-	//
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("Outside_Other");
-	//
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("Outside_Pebble");
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	Tr = Object->GetTransform();
+	filter->SetModelName("Outside_Rock");
+	
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	filter->SetModelName("Outside_bossOBJ");
+	
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	filter->SetModelName("Outside_Other");
+	
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	filter->SetModelName("Outside_Pebble");
 
 	testobj = InstanceTerrain("Terrain");
 	Terrain* mTerrain = testobj->GetComponent<Terrain>();

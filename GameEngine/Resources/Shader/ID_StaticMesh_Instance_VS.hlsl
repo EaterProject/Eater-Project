@@ -1,7 +1,7 @@
 #include "Input_Header.hlsli"
 #include "Instance_Header.hlsli"
 
-cbuffer cbInstanceSkinMeshID : register(b0)
+cbuffer cbInstanceStaticMeshID : register(b0)
 {
     float4x4 gViewProj     : packoffset(c0);
 };

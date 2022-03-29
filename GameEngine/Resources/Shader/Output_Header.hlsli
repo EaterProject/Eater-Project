@@ -18,7 +18,7 @@ struct MeshPixelIn
 struct MeshIDPixelIn
 {
     float4 PosH         : SV_POSITION;
-    float4 HashColor    : COLOR;
+    float4 HashColor     : HASHCOLOR;
 };
 
 struct MeshPixelOut

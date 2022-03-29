@@ -1,7 +1,7 @@
 #include "EaterManager.h"
 #include "EaterHeader.h"
 
-#include "ModelParser.h";
+#include "ModelParser.h"
 
 #include "GameObject.h"
 #include "MeshFilter.h"
