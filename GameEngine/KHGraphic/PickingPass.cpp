@@ -196,6 +196,27 @@ void PickingPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rende
 		g_Context->DrawIndexed(mesh->m_IndexCount, 0, 0);
 	}
 	break;
+	case OBJECT_TYPE::PARTICLE_SYSTEM:
+	{
+		// Vertex Shader Update..
+		CB_StaticMesh_ID objectBuf;
+		objectBuf.gWorldViewProj = world * viewproj;
+		objectBuf.gHashColor = hashColor;
+
+		m_Mesh_VS->ConstantBufferCopy(&objectBuf);
+		m_Mesh_VS->Update();
+
+		// Pixel Shader Update..
+		m_Mesh_ID_PS->Update();
+
+		// Draw..
+		g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		g_Context->IASetVertexBuffers(0, 1, m_Box_DB->VertexBuf->GetAddress(), &m_Box_DB->Stride, &m_Box_DB->Offset);
+		g_Context->IASetIndexBuffer(m_Box_DB->IndexBuf->Get(), DXGI_FORMAT_R32_UINT, 0);
+
+		g_Context->DrawIndexed(m_Box_DB->IndexCount, 0, 0);
+	}
+		break;
 	default:
 		break;
 	}
