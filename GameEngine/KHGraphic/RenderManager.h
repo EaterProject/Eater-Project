@@ -13,6 +13,7 @@ class FXAAPass;
 class BloomPass;
 class ToneMapPass;
 class FogPass;
+class CullingPass;
 class PickingPass;
 class DebugPass;
 
@@ -119,6 +120,7 @@ private:
 	BloomPass*			m_Bloom;
 	ToneMapPass*		m_ToneMap;
 	FogPass*			m_Fog;
+	CullingPass*		m_Culling;
 	PickingPass*		m_Picking;
 	DebugPass*			m_Debug;
 };

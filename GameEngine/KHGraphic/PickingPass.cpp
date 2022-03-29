@@ -373,17 +373,16 @@ void PickingPass::NoneMeshRenderUpdate(const std::vector<RenderData*>& meshlist)
 
 UINT PickingPass::FindPick(int x, int y)
 {
-	D3D11_BOX box;
-	box.left = x,
-	box.right = x + 1;
-	box.top = y,
-	box.bottom = y + 1;
-	box.front = 0;
-	box.back = 1;
+	m_PickPointBox.left		= x,
+	m_PickPointBox.right	= x + 1;
+	m_PickPointBox.top		= y,
+	m_PickPointBox.bottom	= y + 1;
+	m_PickPointBox.front	= 0;
+	m_PickPointBox.back		= 1;
 
 	g_Context->OMSetRenderTargets(0, nullptr, nullptr);
 
-	g_Context->CopySubresourceRegion(m_ID_CopyTex2D, 0, 0, 0, 0, m_ID_Tex2D, 0, &box);
+	g_Context->CopySubresourceRegion(m_ID_CopyTex2D, 0, 0, 0, 0, m_ID_Tex2D, 0, &m_PickPointBox);
 
 	// 현재 선택한 Object ID..
 	UINT pickID = 0;
@@ -395,7 +394,7 @@ UINT PickingPass::FindPick(int x, int y)
 	// GPU Access Lock Texture Data..
 	g_Context->Map(m_ID_CopyTex2D, 0, D3D11_MAP_READ, 0, &mappedResource);
 
-	pickID = *(UINT*)mappedResource.pData;
+	pickID = ((UINT*)mappedResource.pData)[0];
 
 	// GPU Access UnLock Texture Data..
 	g_Context->Unmap(m_ID_CopyTex2D, 0);

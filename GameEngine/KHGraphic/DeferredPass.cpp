@@ -125,6 +125,7 @@ void DeferredPass::Start(int width, int height)
 	m_DeferredPS = g_Shader->GetShader("Deferred_PBR_PS");
 	m_TerrainPS = g_Shader->GetShader("Terrain_PBR_PS");
 
+	// Insatance Buffer 설정..
 	m_Mesh_IB = g_Resource->GetInstanceBuffer<IB_Mesh>();
 
 	// DepthStencilView 설정..

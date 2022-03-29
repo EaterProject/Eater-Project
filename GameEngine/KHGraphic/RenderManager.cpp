@@ -32,6 +32,7 @@
 #include "ToneMapPass.h"
 #include "FogPass.h"
 #include "PickingPass.h"
+#include "CullingPass.h"
 #include "DebugPass.h"
 
 #include "RenderDataConverter.h"
@@ -60,6 +61,7 @@ RenderManager::RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, I
 	m_Bloom			= new BloomPass();
 	m_ToneMap		= new ToneMapPass();
 	m_Fog			= new FogPass();
+	m_Culling		= new CullingPass();
 	m_Picking		= new PickingPass();
 	m_Debug			= new DebugPass();
 
@@ -75,6 +77,7 @@ RenderManager::RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, I
 	m_RenderPassList.push_back(m_Bloom);
 	m_RenderPassList.push_back(m_ToneMap);
 	m_RenderPassList.push_back(m_Fog);
+	m_RenderPassList.push_back(m_Culling);
 	m_RenderPassList.push_back(m_Picking);
 	m_RenderPassList.push_back(m_Debug);
 }

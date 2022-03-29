@@ -14,6 +14,7 @@ public:
 
 	void SetOption(UINT renderOption);
 
+public:
 	void BeginRender();
 	void RenderUpdate(const InstanceRenderBuffer* instance, const RenderData* mesh);
 	void RenderUpdate(const InstanceRenderBuffer* instance, const std::vector<RenderData*>& meshlist);

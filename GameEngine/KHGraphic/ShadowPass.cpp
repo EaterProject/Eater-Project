@@ -40,13 +40,13 @@ ShadowPass::~ShadowPass()
 void ShadowPass::Create(int width, int height)
 {
 	// ViewPort 설정..
-	g_Factory->CreateViewPort<VP_Shadow>(0.0f, 0.0f, 1.0f, 1.0f, (float)width, (float)height);
+	g_Factory->CreateViewPort<VP_Shadow>(0.0f, 0.0f, 4.0f, 4.0f, (float)width, (float)height);
 
 	// DepthStencilView 설정..
 	D3D11_TEXTURE2D_DESC texDesc;
 	ZeroMemory(&texDesc, sizeof(texDesc));
-	texDesc.Width = width;
-	texDesc.Height = height;
+	texDesc.Width = width * 4.0f;
+	texDesc.Height = height * 4.0f;
 	texDesc.MipLevels = 1;
 	texDesc.ArraySize = 1;
 	texDesc.Format = DXGI_FORMAT_R24G8_TYPELESS;
@@ -83,10 +83,11 @@ void ShadowPass::Start(int width, int height)
 	m_SkinShadowVS = g_Shader->GetShader("Shadow_SkinMesh_VS");
 	m_SkinInstShadowVS = g_Shader->GetShader("Shadow_SkinMesh_Instance_VS");
 	
-	m_Mesh_IB = g_Resource->GetInstanceBuffer<IB_Mesh>();
+	// Insatance Buffer 설정..
+	m_Mesh_IB = g_Resource->GetInstanceBuffer<IB_MeshDepth>();
 
 	m_ShadowDS = g_Resource->GetDepthStencil<DS_Shadow>();
-	//m_ShadowDS->SetRatio(4.0f, 4.0f);
+	m_ShadowDS->SetRatio(4.0f, 4.0f);
 
 	m_ShadowVP = g_Resource->GetViewPort<VP_Shadow>()->Get();
 	m_DepthRS = g_Resource->GetRasterizerState<RS_Depth>()->Get();
@@ -168,7 +169,7 @@ void ShadowPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::v
 	case OBJECT_TYPE::BASE:
 	case OBJECT_TYPE::TERRAIN:
 	{
-		CB_InstanceStaticMeshPos shadowBuf;
+		CB_InstanceDepthStaticMesh shadowBuf;
 		shadowBuf.gViewProj = viewproj;
 
 		m_MeshInstShadowVS->ConstantBufferCopy(&shadowBuf);
@@ -195,7 +196,7 @@ void ShadowPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::v
 			RenderUpdate(instance, meshlist[i]);
 		}
 
-		//CB_InstanceShadowSkinMesh shadowBuf;
+		//CB_InstanceDepthSkinMesh shadowBuf;
 		//shadowBuf.gViewProj = viewproj;
 		//
 		//for (int i = 0; i < mesh->m_BoneOffsetTM->size(); i++)
@@ -244,7 +245,7 @@ void ShadowPass::RenderUpdate(const InstanceRenderBuffer* instance, const Render
 	case OBJECT_TYPE::BASE:
 	case OBJECT_TYPE::TERRAIN:
 	{
-		CB_StaticMeshPos shadowBuf;
+		CB_DepthStaticMesh shadowBuf;
 		shadowBuf.gWorldViewProj = world * viewproj;
 
 		m_MeshShadowVS->ConstantBufferCopy(&shadowBuf);
@@ -254,7 +255,7 @@ void ShadowPass::RenderUpdate(const InstanceRenderBuffer* instance, const Render
 	break;
 	case OBJECT_TYPE::SKINNING:
 	{
-		CB_SkinMeshPos shadowBuf;
+		CB_DepthSkinMesh shadowBuf;
 		shadowBuf.gWorldViewProj = world * viewproj;
 
 		for (int i = 0; i < obj->BoneOffsetTM.size(); i++)

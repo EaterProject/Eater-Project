@@ -52,7 +52,6 @@ void AlphaPass::Create(int width, int height)
 void AlphaPass::Start(int width, int height)
 {
 	// Shader ¼³Á¤..
-	m_ParticleVS = g_Shader->GetShader("Particle_VS");
 	m_ParticleInstVS = g_Shader->GetShader("Particle_Instance_VS");
 	m_ParticlePS = g_Shader->GetShader("OIT_Particle_PS");
 
