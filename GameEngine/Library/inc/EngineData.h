@@ -57,10 +57,13 @@ public:
 	}
 	static UINT ColorToHash(Vector4 color)
 	{
-		return UINT( ((UINT)color.x) +
-					 ((UINT)color.y << 8) + 
-					 ((UINT)color.z << 16) + 
-					 ((UINT)color.w << 24) );
+		if (color.x < 0.0f || color.y < 0.0f || color.z < 0.0f || color.w < 0.0f)
+			return -1;
+
+		return	((int)color.x) +
+				((int)color.y * 256) +
+				((int)color.z * 65536) +
+				((int)color.w * 16777216);
 	}
 };
 

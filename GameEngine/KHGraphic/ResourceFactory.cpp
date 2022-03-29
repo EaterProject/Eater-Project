@@ -1760,7 +1760,7 @@ void GraphicResourceFactory::CreateBoxBuffer()
 
 	GeometryGenerator geoGen;
 
-	geoGen.CreateBox(2.0f, 2.0f, 2.0f, box);
+	geoGen.CreateBox(1.0f, 1.0f, 1.0f, box);
 
 	UINT format = DXGI_FORMAT_R32_UINT;
 	UINT topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST;

@@ -8,6 +8,8 @@ public:
 	int m_InstanceLayerIndex = -1;				// Instance Layer Index
 	int m_InstanceIndex = -1;					// Instance Index
 
+	MeshRenderBuffer* m_Mesh;					// 변환된 Mesh Data..
+	MaterialRenderBuffer* m_Material;			// 변환된 Material Data..
 	TerrainRenderBuffer* m_TerrainBuffer;		// 변환된 Terrain Data..
 
 	ObjectData* m_ObjectData;

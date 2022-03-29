@@ -750,5 +750,8 @@
     <None Include="..\Resources\Shader\Instance_Header.hlsli">
       <Filter>소스 파일\Shader\HLSL\Header</Filter>
     </None>
+    <None Include="..\Resources\Shader\Conversion_Header.hlsli">
+      <Filter>소스 파일\Shader\HLSL\Header</Filter>
+    </None>
   </ItemGroup>
 </Project>

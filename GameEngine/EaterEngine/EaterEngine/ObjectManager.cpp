@@ -54,7 +54,6 @@ void ObjectManager::PushCreateObject(GameObject* obj)
 
 	//해당 오브젝트 고유의 Hash Color 설정
 	objData->ObjectIndex = ObjectListSize;
-	objData->HashColor = ObjectData::HashToColor(objData->ObjectIndex);
 }
 
 void ObjectManager::PushDeleteObject(GameObject* obj)
