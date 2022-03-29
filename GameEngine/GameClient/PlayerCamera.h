@@ -13,9 +13,10 @@ public:
 	PlayerCamera();
 	~PlayerCamera();
 
-	void Awake();
+	void SetUp();
 	void EndUpdate();
 
+private:
 	GameObject* Userobject;
 	Camera*		MainCam;
 

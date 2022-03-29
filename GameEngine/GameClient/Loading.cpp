@@ -50,7 +50,7 @@ void Loading::Update()
 {
 	if (ThreadRun == false)
 	{
-		ChoiceScene("intro");
+		ChoiceScene("inGame");
 	}
 }
 

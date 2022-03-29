@@ -164,6 +164,7 @@
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="GameLogic.h" />
     <ClInclude Include="Loading.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GameClient.h" />
@@ -185,6 +186,7 @@
     </ClInclude>
     <ClInclude Include="ManaStone.h" />
     <ClInclude Include="Monster.h" />
+    <ClInclude Include="ObjectFactory.h" />
     <ClInclude Include="PlayerCamera.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
@@ -192,6 +194,7 @@
     <ClInclude Include="TestScene.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GameLogic.cpp" />
     <ClCompile Include="Loading.cpp" />
     <ClCompile Include="GameClient.cpp" />
     <ClCompile Include="GameManager.cpp" />
@@ -212,6 +215,7 @@
     </ClCompile>
     <ClCompile Include="ManaStone.cpp" />
     <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="ObjectFactory.cpp" />
     <ClCompile Include="PlayerCamera.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="TestScene.cpp" />

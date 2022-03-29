@@ -1,5 +1,5 @@
 #EATERMAT
-@MaterialName monsterA_body
+@MaterialName MonsterA_body
 @Alpha NO
 @Diffuse monsterA_BaseColor.png
 @Normal MonsterA_Normal.png

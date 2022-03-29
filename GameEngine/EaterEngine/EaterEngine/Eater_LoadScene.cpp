@@ -93,7 +93,6 @@ void Eater_LoadScene::LoadData(std::string& FilePath)
 				EATER_GET_LIST(&Data, i);
 				 ObjectManager::AddTag(std::stoi(Data[0]), Data[1]);
 			}
-			int num = 0;
 		}
 	}
 

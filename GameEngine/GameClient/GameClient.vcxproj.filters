@@ -28,9 +28,6 @@
     <Filter Include="소스 파일\Scene\inGame">
       <UniqueIdentifier>{e93e28d7-0fc6-4289-b4a5-74957091c4b2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\GameManager">
-      <UniqueIdentifier>{f719478b-bad2-44d2-a53c-e5625be7e03e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Component\Player">
       <UniqueIdentifier>{a59a5f89-b961-40e7-8282-6208957b9634}</UniqueIdentifier>
     </Filter>
@@ -49,6 +46,18 @@
     <Filter Include="소스 파일\Scene\TestScene">
       <UniqueIdentifier>{e34409cd-ddb7-43b7-b06e-2610bfda158f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Manager">
+      <UniqueIdentifier>{f719478b-bad2-44d2-a53c-e5625be7e03e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\GameManager">
+      <UniqueIdentifier>{db4e3f4a-abcb-4e98-93d4-0e1bdd938816}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\LogicManager">
+      <UniqueIdentifier>{5635fc7e-f885-45da-8d51-8009646e3639}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\ObjectFactory">
+      <UniqueIdentifier>{149e5443-6586-42a9-ba32-44b86d569a72}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -62,9 +71,6 @@
     </ClInclude>
     <ClInclude Include="GameClient.h">
       <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="GameManager.h">
-      <Filter>소스 파일\GameManager</Filter>
     </ClInclude>
     <ClInclude Include="KeyInput.h">
       <Filter>소스 파일\Component\Keyinput</Filter>
@@ -93,13 +99,19 @@
     <ClInclude Include="Player.h">
       <Filter>소스 파일\Component\Player</Filter>
     </ClInclude>
+    <ClInclude Include="GameManager.h">
+      <Filter>소스 파일\Manager\GameManager</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLogic.h">
+      <Filter>소스 파일\Manager\LogicManager</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectFactory.h">
+      <Filter>소스 파일\Manager\ObjectFactory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameClient.cpp">
       <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="GameManager.cpp">
-      <Filter>소스 파일\GameManager</Filter>
     </ClCompile>
     <ClCompile Include="KeyInput.cpp">
       <Filter>소스 파일\Component\Keyinput</Filter>
@@ -127,6 +139,15 @@
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>소스 파일\Component\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="GameManager.cpp">
+      <Filter>소스 파일\Manager\GameManager</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLogic.cpp">
+      <Filter>소스 파일\Manager\LogicManager</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectFactory.cpp">
+      <Filter>소스 파일\Manager\ObjectFactory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

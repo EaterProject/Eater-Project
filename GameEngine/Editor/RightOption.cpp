@@ -281,6 +281,17 @@ void RightOption::ChickHirearchyDarg(CPoint point)
 			{
 				HirearchyTree.InsertItem(ChangeToCString(Start_it->first));
 			}
+
+			Tag_Combo.ResetContent();
+			std::map<int,std::string>::iterator Tag_Start_it	=  Demo::TagList.begin();
+			std::map<int,std::string>::iterator Tag_End_it		=  Demo::TagList.end();
+			for(Tag_Start_it; Tag_Start_it != Tag_End_it; Tag_Start_it++)
+			{
+				Tag_Combo.InsertString( Tag_Start_it->first, ChangeToCString(Tag_Start_it->second) );
+			}
+
+
+
 			break;
 		}
 		default:

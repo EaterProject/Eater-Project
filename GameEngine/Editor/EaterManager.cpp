@@ -93,7 +93,7 @@ void EaterManager::Load_FBX_File(std::string& Path, ParserData::CModel* FBXMesh)
 	{
 		std::size_t Start	= FileName.rfind('+')+1;
 		std::size_t End		= FileName.length() - Start;
-		FileName = FileName.substr(0, FileName.rfind('+'));
+		FileName = FileName.substr(0, FileName.rfind('+')+1);
 	}
 
 	///Model 정보를 저장한다

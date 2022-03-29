@@ -89,7 +89,13 @@ void Eater_LoadScene::Load(std::string FilePath)
 		}
 		else if (NodeName == "SCENE")
 		{
-
+			int Find = EATER_GET_LIST_CHOICE(i, "TAG");
+			for (int i = 0; i < Find; i++)
+			{
+				std::vector<std::string> Data;
+				EATER_GET_LIST(&Data, i);
+				Demo::TagList.insert({ std::stoi(Data[0]) ,Data[1] });
+			}
 		}
 	}
 

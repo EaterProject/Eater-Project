@@ -28,20 +28,21 @@ PlayerCamera::~PlayerCamera()
 
 }
 
-void PlayerCamera::Awake()
+void PlayerCamera::SetUp()
 {
-	Userobject	= gameobject;
-	MainCam		= gameobject->GetComponent<Camera>();
-	mTransform	= gameobject->GetTransform();	
+	Userobject = FindGameObjectTag("Player");
+	MainCam = gameobject->GetComponent<Camera>();
+	mTransform = gameobject->GetTransform();
 
 	PastX = GetMousePosX();
 	PastY = GetMousePosY();
-	mTransform->Position = {0, 0 ,-10};
+	mTransform->Position = { 0, 0 ,-10 };
 
 	MouseCursor = GetTogle(VK_F10);
 	//ShowMouseCursor(MouseCursor);
 	//MouseCursorClip(MouseCursor);
 	SetMousePosCenter();
+
 }
 
 void PlayerCamera::EndUpdate()

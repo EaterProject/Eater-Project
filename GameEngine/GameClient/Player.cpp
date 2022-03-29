@@ -29,28 +29,17 @@ Player::~Player()
 void Player::Awake()
 {
 	//컨퍼넌트 가져오기
-	mTransform = gameobject->GetTransform();
+	mTransform	= gameobject->GetTransform();
 	mMeshFilter = gameobject->GetComponent<MeshFilter>();
-	mAnimation = gameobject->GetComponent<AnimationController>();
+	mAnimation	= gameobject->GetComponent<AnimationController>();
+	
 	//mRigidbody = gameobject->GetComponent<Rigidbody>();
 	//mCollider  = gameobject->GetComponent<Collider>();
 }
 
 void Player::SetUp()
 {
-	//매쉬, 애니메이션 정보 입력
-	//mMeshFilter->SetModelName("bossb+");
-	//mMeshFilter->SetAnimationName("bossb+");
-	//mAnimation->Choice("Idle");
-
-	GameObject* MainCam = GetMainCamera();
-	MainCam->GetComponent<PlayerCamera>()->Userobject = gameobject;
-	mCameraTR = MainCam->GetTransform();
-	//mTransform->Rotation = { 0,0,0 };
-	//mCollider->SetBoxCollider(0.25f);
-	//mRigidbody->SetPosition(5, 10, 0);
-	//mRigidbody->SetFreezeRotation(true, true, true);
-	
+	mCameraTR = GetMainCamera()->GetTransform();
 }
 
 void Player::Start()
@@ -97,19 +86,19 @@ void Player::StartUpdate()
 void Player::PlayerKeyinput()
 {
 	if (mCameraTR == nullptr) { return; }
-	if (GetKey(VK_RIGHT))
+	if (GetKey('D'))
 	{
 		DirPos += mCameraTR->GetLocalPosition_Right();
 		//mAnimation->Choice("Run");
 	}
 
-	if (GetKey(VK_LEFT))
+	if (GetKey('A'))
 	{
 		DirPos += -mCameraTR->GetLocalPosition_Right();
 		//mAnimation->Choice("Run");
 	}
 
-	if (GetKey(VK_UP))
+	if (GetKey('W'))
 	{
 		Vector3 Pos = mCameraTR->GetLocalPosition_Look();
 		//mAnimation->Choice("Run");
@@ -117,7 +106,7 @@ void Player::PlayerKeyinput()
 		DirPos += Pos;
 	}
 
-	if (GetKey(VK_DOWN))
+	if (GetKey('S'))
 	{
 		Vector3 Pos = mCameraTR->GetLocalPosition_Look();
 		//mAnimation->Choice("Run");
