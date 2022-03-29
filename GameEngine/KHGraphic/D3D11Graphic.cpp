@@ -174,7 +174,6 @@ void D3D11Graphic::CreateBackBuffer(UINT width, UINT height, ID3D11Texture2D** t
 
 	// BackBuffer Resource Resize..
 	HR(m_Device->CreateRenderTargetView(*tex2D, nullptr, rtv));
-	//HR(m_Device->CreateShaderResourceView(*tex2D, nullptr, srv));
 }
 
 void D3D11Graphic::CreateDepthStencilView(ID3D11Resource* resource, D3D11_DEPTH_STENCIL_VIEW_DESC* dsvDesc, ID3D11DepthStencilView** dsv)

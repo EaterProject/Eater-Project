@@ -24,5 +24,8 @@ float4 Shadow_SkinMesh_VS(MeshPosVertexIn vin) : SV_POSITION
         posL += vin.BoneWeights2[j] * mul(gBoneTransforms[vin.BoneIndices2[j]], float4(vin.PosL, 1.0f)).xyz;
     }
     
-    return mul(gWorldViewProj, float4(posL, 1.0f));
+    float4 posH = mul(gWorldViewProj, float4(posL, 1.0f));
+    posH.z -= 0.001f * posH.w;
+    
+    return posH;
 };

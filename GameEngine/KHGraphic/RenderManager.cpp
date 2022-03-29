@@ -260,8 +260,6 @@ void RenderManager::Render()
 	// Rendering Resource 동기화 작업..
 	ConvertRenderData();
 
-	PickingRender(0, 0);
-
 	// Shadow Render..
 	GPU_BEGIN_EVENT_DEBUG_NAME("Shadow Pass");
 	ShadowRender();
@@ -310,6 +308,7 @@ void RenderManager::Render()
 
 void* RenderManager::PickingRender(int x, int y)
 {
+	GPU_BEGIN_EVENT_DEBUG_NAME("Picking Pass");
 	m_Picking->BeginRender();
 	
 	// Static Object Picking Draw..
@@ -330,9 +329,11 @@ void* RenderManager::PickingRender(int x, int y)
 
 	// UnRender Object Picking Draw..
 	m_Picking->NoneMeshRenderUpdate(m_UnRenderMeshList);
-
+	
 	// 현재 클릭한 Pixel ID 검출..
 	UINT pickID = m_Picking->FindPick(x, y);
+
+	GPU_END_EVENT_DEBUG_NAME();
 
 	// 해당 Render Data 검색..
 	RenderData* renderData = m_Converter->GetRenderData(pickID);

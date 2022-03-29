@@ -100,7 +100,9 @@ void PickingPass::Start(int width, int height)
 	m_ID_RT = g_Resource->GetRenderTexture<RT_ID>();
 	m_ID_RTV = m_ID_RT->GetRTV()->Get();
 	m_ID_Tex2D = m_ID_RT->GetTex2D()->Get();
+
 	m_ID_Copy_RT = g_Resource->GetRenderTexture<RT_ID_Copy>();
+	m_ID_Copy_RT->SetResize(false);
 	m_ID_CopyTex2D = m_ID_Copy_RT->GetTex2D()->Get();
 
 	// DepthStencilView 설정..
@@ -324,7 +326,7 @@ void PickingPass::NoneMeshRenderUpdate(const std::vector<RenderData*>& meshlist)
 		m_MeshInstance.push_back(m_MeshData);
 		m_InstanceCount++;
 	}
-
+	
 	if (m_MeshInstance.empty()) return;
 
 	// Mapping SubResource Data..
@@ -383,6 +385,9 @@ UINT PickingPass::FindPick(int x, int y)
 
 	g_Context->CopySubresourceRegion(m_ID_CopyTex2D, 0, 0, 0, 0, m_ID_Tex2D, 0, &box);
 
+	// 현재 선택한 Object ID..
+	UINT pickID = 0;
+
 	// Mapping SubResource Data..
 	D3D11_MAPPED_SUBRESOURCE mappedResource;
 	ZeroMemory(&mappedResource, sizeof(D3D11_MAPPED_SUBRESOURCE));
@@ -390,10 +395,10 @@ UINT PickingPass::FindPick(int x, int y)
 	// GPU Access Lock Texture Data..
 	g_Context->Map(m_ID_CopyTex2D, 0, D3D11_MAP_READ, 0, &mappedResource);
 
-	UINT* pickID = (UINT*)mappedResource.pData;
+	pickID = *(UINT*)mappedResource.pData;
 
 	// GPU Access UnLock Texture Data..
 	g_Context->Unmap(m_ID_CopyTex2D, 0);
 
-	return *pickID;
+	return pickID;
 }

@@ -26,6 +26,8 @@ float4 Shadow_SkinMesh_Instance_VS(MeshPosVertexIn vin, MeshInstanceIn instance)
     }
     
     float3 posW = mul(instance.World, float4(posL, 1.0f)).xyz;
+    float4 posH = mul(gViewProj, float4(posW, 1.0f));
+    posH.z -= 0.001f * posH.w;
     
-    return mul(gViewProj, float4(posW, 1.0f));
+    return posH;
 };
