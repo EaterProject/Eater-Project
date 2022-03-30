@@ -3,10 +3,12 @@
 #include "ObjectFactory.h"
 #include "GameObject.h"
 #include "Transform.h"
+#include "MonsterBase.h"
 
 GameLogic::GameLogic()
 {
 	Factory = nullptr;
+	CreateMonsterTime = 0.0f;
 }
 
 GameLogic::~GameLogic()
@@ -20,9 +22,11 @@ void GameLogic::Initialize()
 	Factory = new ObjectFactory();
 	Factory->Initialize();
 
+	//포탈 태그가 붙어있는 오브젝트를 모두 가져와 리스트에 담아놓는다
 	FindGameObjectTags("Potal", &PotalList);
 
-	Factory->CreateMonster(0, 0, 0);
+	//몬스터를 미리 할당
+	SetCreateMonsterMemorySize(10);
 }
 
 void GameLogic::Release()
@@ -33,24 +37,39 @@ void GameLogic::Release()
 
 void GameLogic::Update()
 {
-	static float Count = 0;
-	static float PosZ = 0;
-	Count += GetDeltaTime();
-
-
-
-	if (Count > 10)
+	CreateMonsterTime += GetDeltaTime();
+	if (CreateMonsterTime >= CreateMonsterMaxTime)
 	{
-		float x, y, z;
-		for (int i = 0; i < PotalList.size(); i++)
-		{
-			x = PotalList[i]->GetTransform()->Position.x;
-			y = PotalList[i]->GetTransform()->Position.y;
-			z = PotalList[i]->GetTransform()->Position.z;
-			Factory->CreateMonster(x, y, z);
-		}
+		LifeMonsterCheck();
 
-		Count = 0;
-		PosZ += 2;
+		CreateMonsterTime -= CreateMonsterMaxTime;
 	}
 }
+
+void GameLogic::SetCreateMonsterMemorySize(int CreateCount)
+{
+	float X = 10;
+	float Y = 0;
+	float Z = 10;
+	for (int i = 0; i < CreateCount; i++)
+	{
+		//생성한 몬스터를 리스트에 담는다
+		MonsterList.push_back(Factory->CreateMonster(X,Y,Z+i,MONSTER_TYPE::MONSTER_A));
+	}
+}
+
+void GameLogic::LifeMonsterCheck()
+{
+	int MonsterMaxCount = (int)MonsterList.size();
+	for (int i = 0; i < MonsterMaxCount; i++)
+	{
+		if (MonsterList[i]->isLife == false)
+		{
+			 GameObject* Object = MonsterList[i]->gameobject;
+			Object->GetTransform()->Position  = (PotalList[0]->GetTransform()->Position);
+			MonsterList[i]->isLife = true;
+			return;
+		}
+	}
+}
+

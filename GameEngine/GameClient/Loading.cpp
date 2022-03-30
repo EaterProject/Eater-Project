@@ -56,7 +56,7 @@ void Loading::Update()
 void Loading::End()
 {
 
-
+	 
 }
 
 void Loading::ThreadFunction()

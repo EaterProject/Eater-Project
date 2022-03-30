@@ -41,6 +41,7 @@ public:
 	void Update(float m_time);
 
 	//엑터 생성
+	PhysData* Create_PhysData();
 	void Create_Actor(PhysData* data);
 	//엑터 업데이트
 	void Update_Actor(PhysData* data);

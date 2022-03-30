@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="EaterSound">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="DHSound">
+      <UniqueIdentifier>{aa52199d-d1be-493d-a80a-91836b0853c2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="EaterSound.h">
+      <Filter>EaterSound</Filter>
+    </ClInclude>
+    <ClInclude Include="DHSound.h">
+      <Filter>DHSound</Filter>
+    </ClInclude>
+    <ClInclude Include="DHSoundDefine.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="EaterSound.cpp">
+      <Filter>EaterSound</Filter>
+    </ClCompile>
+    <ClCompile Include="DHSound.cpp">
+      <Filter>DHSound</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

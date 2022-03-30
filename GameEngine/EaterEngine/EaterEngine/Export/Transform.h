@@ -5,7 +5,7 @@
 #include <DirectXMath.h>
 #include <vector>
 #include "Component.h"
-
+class Rigidbody;
 class Transform :public Component
 {
 public:
@@ -92,8 +92,6 @@ private:
 	//자기 기준으로 앞방향으로 1만큼 움직인 좌표
 	DirectX::SimpleMath::Vector3 Local_Look;
 
-
-
 	//각각의 행렬들을 따로보관
 	DirectX::SimpleMath::Matrix PositionXM;
 	DirectX::SimpleMath::Matrix RotationXM;
@@ -115,4 +113,8 @@ private:
 	///계층 구조에서 부모 객체 자식객체
 	Transform* Parent;
 	std::vector<Transform*> ChildList;
+
+
+	//physX
+	Rigidbody* mRigidbody;
 };

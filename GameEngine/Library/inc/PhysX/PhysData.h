@@ -57,8 +57,8 @@ public:
 public:
 	//무게
 	float MT_Mass;
-	PhysMaterial* Meterial;
-	PhysCollider* Collider;
+	PhysMaterial* mMeterial;
+	PhysCollider* mCollider;
 public:
 	///객체 정보 데이터
 	//움직이는 객체인지 (Dinamic , Static)

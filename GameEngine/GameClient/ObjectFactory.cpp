@@ -11,7 +11,9 @@
 #include "Collider.h"
 #include "Rigidbody.h"
 #include "Transform.h"
-#include "Monster.h"
+#include "MonsterA.h"
+#include "MonsterB.h"
+#include "MonsterBase.h"
 
 
 ObjectFactory::ObjectFactory()
@@ -56,16 +58,25 @@ GameObject* ObjectFactory::CreatePlayer()
 	return nullptr;
 }
 
-GameObject* ObjectFactory::CreateMonster(float x, float y, float z)
+MonsterBase* ObjectFactory::CreateMonster(float x, float y, float z,MONSTER_TYPE Type)
 {
 	GameObject* Object_Monster = Instance();
  	Object_Monster->AddComponent<MeshFilter>();
 	Object_Monster->AddComponent<AnimationController>();
 	Object_Monster->AddComponent<Collider>();
 	Object_Monster->AddComponent<Rigidbody>();
-	Object_Monster->AddComponent<Monster>();
+	MonsterBase* Base = Object_Monster->AddComponent<MonsterBase>();
+	switch (Type)
+	{
+	case MONSTER_TYPE::MONSTER_A:
+		Object_Monster->AddComponent<MonsterA>();
+		break;
+	case MONSTER_TYPE::MONSTER_B:
+		Object_Monster->AddComponent<MonsterB>();
+		break;
+	}
 	Object_Monster->GetTransform()->Position = { x,y,z };
-	return Object_Monster;
+	return Base;
 }
 
 GameObject* ObjectFactory::CreateMana()

@@ -1,4 +1,6 @@
 #include "PhysData.h"
+#include "PhysMaterial.h"
+#include "PhysCollider.h"
 
 PhysData::PhysData()
 {
@@ -27,8 +29,8 @@ PhysData::PhysData()
 	OnTriggerExit = false;
 
 	ActorObj	= nullptr;
-	Meterial	= nullptr;
-	Collider	= nullptr;
+	mMeterial	= new PhysMaterial();
+	mCollider	= new PhysCollider();
 }
 
 PhysData::~PhysData()

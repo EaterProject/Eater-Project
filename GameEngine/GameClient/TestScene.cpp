@@ -16,7 +16,7 @@
 #include "PortIPDefine.h"
 #include "PlayerCamera.h"
 #include "Player.h"
-#include "Monster.h"
+#include "MonsterA.h"
 #include "ParticleSystem.h"
 #include "Collider.h"
 
@@ -38,10 +38,20 @@ void TestScene::Awake()
 	//CreateParticle(0,0,0);
 
 	SetEnvironment(true);
+	for (int i = 0; i < 1000; i++)
+	{
+		GameObject* Object = Instance();
+		Collider* Col = Object->AddComponent<Collider>();
+		Object->AddComponent<Rigidbody>();
+		Object->GetTransform()->Position = {0,(float)i,0};
+		Col->CreatePhys();
+	}
 }
 
 void TestScene::Update()
 {
+	
+
 	ChangeCubeMap();
 	//DebugDrawLine(Vector3(0.0f, 0.0f, 0.0f), Vector3(0.0f, 50.0f, 0.0f), Vector4(1.0f, 0.0f, 0.0f, 1.0f));
 }
@@ -110,22 +120,24 @@ void TestScene::CreateMap()
 	//filter = Object->AddComponent<MeshFilter>();
 	//filter->SetModelName("Inside_village");
 	//
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	Tr = Object->GetTransform();
-	filter->SetModelName("Outside_Rock");
-	
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("Outside_bossOBJ");
-	
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("Outside_Other");
-	
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("Outside_Pebble");
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//Tr = Object->GetTransform();
+	//filter->SetModelName("Outside_Rock");
+	//
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("Outside_bossOBJ");
+	//
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("Outside_Other");
+	//
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("Outside_Pebble");
+
+	Load("../Assets/Scene/Demo.Scene");
 
 	testobj = InstanceTerrain("Terrain");
 	Terrain* mTerrain = testobj->GetComponent<Terrain>();

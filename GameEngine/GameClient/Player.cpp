@@ -44,11 +44,7 @@ void Player::SetUp()
 
 void Player::Update()
 {
-	//플레이어가 키입력을 눌렀는지 체크 한다
-	if (GetKeyDown(VK_SPACE))
-	{
-		mRigidbody->SetPosition(5, 0, 0);
-	}
+	
 }
 
 void Player::StartUpdate()
@@ -107,4 +103,5 @@ void Player::PlayerKeyinput()
 	//DirPos*= Speed;
 	////mRigidbody->SetVelocity(DirPos.x, 0, DirPos.z);
 	DirPos = { 0,0,0 };
+	DirRot = { 0,0,0 };
 }

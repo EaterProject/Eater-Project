@@ -34,9 +34,6 @@
     <Filter Include="소스 파일\Component\PlayerCamera">
       <UniqueIdentifier>{925263ad-cb58-4a06-824c-b8133a6978b0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Component\Monster">
-      <UniqueIdentifier>{ffc9e84f-e196-4baa-a051-24a433d4873d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Component\ManaStone">
       <UniqueIdentifier>{b125c172-305a-4d80-a3cb-ba9fc70063ea}</UniqueIdentifier>
     </Filter>
@@ -57,6 +54,18 @@
     </Filter>
     <Filter Include="소스 파일\Component\Potal">
       <UniqueIdentifier>{ab9e2d53-63ff-4400-b7b1-760e7edf6fea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\Monster">
+      <UniqueIdentifier>{1eff42a5-4092-4861-964a-31ca9bdc475c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\Monster\MonsterA">
+      <UniqueIdentifier>{ffc9e84f-e196-4baa-a051-24a433d4873d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\Monster\MonsterB">
+      <UniqueIdentifier>{132923d9-8884-4f49-82e4-67753f479308}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\Monster\Base">
+      <UniqueIdentifier>{9bed9a65-bcf5-4188-afc6-0d17e43a6b97}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -84,8 +93,8 @@
     <ClInclude Include="PlayerCamera.h">
       <Filter>소스 파일\Component\PlayerCamera</Filter>
     </ClInclude>
-    <ClInclude Include="Monster.h">
-      <Filter>소스 파일\Component\Monster</Filter>
+    <ClInclude Include="MonsterA.h">
+      <Filter>소스 파일\Component\Monster\MonsterA</Filter>
     </ClInclude>
     <ClInclude Include="ManaStone.h">
       <Filter>소스 파일\Component\ManaStone</Filter>
@@ -108,6 +117,12 @@
     <ClInclude Include="Potal.h">
       <Filter>소스 파일\Component\Potal</Filter>
     </ClInclude>
+    <ClInclude Include="MonsterB.h">
+      <Filter>소스 파일\Component\Monster\MonsterB</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterBase.h">
+      <Filter>소스 파일\Component\Monster\Base</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameClient.cpp">
@@ -125,8 +140,8 @@
     <ClCompile Include="PlayerCamera.cpp">
       <Filter>소스 파일\Component\PlayerCamera</Filter>
     </ClCompile>
-    <ClCompile Include="Monster.cpp">
-      <Filter>소스 파일\Component\Monster</Filter>
+    <ClCompile Include="MonsterA.cpp">
+      <Filter>소스 파일\Component\Monster\MonsterA</Filter>
     </ClCompile>
     <ClCompile Include="ManaStone.cpp">
       <Filter>소스 파일\Component\ManaStone</Filter>
@@ -148,6 +163,12 @@
     </ClCompile>
     <ClCompile Include="Potal.cpp">
       <Filter>소스 파일\Component\Potal</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterB.cpp">
+      <Filter>소스 파일\Component\Monster\MonsterB</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterBase.cpp">
+      <Filter>소스 파일\Component\Monster\Base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

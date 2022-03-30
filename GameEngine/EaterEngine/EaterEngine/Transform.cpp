@@ -33,7 +33,8 @@ Transform::~Transform()
 void Transform::Start()
 {
 	//물리충돌된 좌표를 받는다
-	if (gameobject->GetComponent<Rigidbody>() != nullptr ) 
+	mRigidbody = gameobject->GetComponent<Rigidbody>();
+	if (mRigidbody != nullptr )
 	{
 		isRigid = true;
 	}
@@ -50,6 +51,8 @@ void Transform::TransformUpdate()
 	//업데이트가 끝난후 오브젝트 안에 매쉬데이터를 업데이트
 	gameobject->OneMeshData->Object_Data->World = GetWorld();
 }
+
+
 
 DirectX::SimpleMath::Vector3 Transform::GetLocalPosition_UP()
 {

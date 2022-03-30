@@ -49,12 +49,11 @@ private:
 	DirectX::SimpleMath::Matrix CreateXMRot4x4();
 private:
 	PhysData*		mPhysData;
-	PhysCollider*	mColliderData;
-	PhysMaterial*	mMaterial;
 	Rigidbody*		mRigidbody;
 	ColliderData*	mDebugCollider;
 	bool isCreate	= false;
 
 	friend Rigidbody;
+	friend Transform;
 };
 

@@ -27,7 +27,7 @@ namespace Eater
 class NetwrokPlayer;
 class NetworkComponent;
 class Player;
-class Monster;
+class MonsterA;
 class ManaStone;
 class ClientNetworkManager : public NetworkManagerComponent
 {
@@ -66,7 +66,7 @@ private:
 private:
 	///오브젝트 리스트들
 	std::map<int,Player*>		UserObjList;		//유저 오브젝트 리스트
-	std::map<int,Monster*>		MonsterList;		//몬스터 오브젝트 리스트
+	std::map<int,MonsterA*>		MonsterList;		//몬스터 오브젝트 리스트
 	std::map<int,ManaStone*>	ManaList;			//마나석 오브젝트 리스트
 private:
 	///데이터 변수들

@@ -33,7 +33,7 @@ physx::PxShapeFlags Factory::CreateShapeFlag(bool isTrigger)
 	}
 	else
 	{
-		shapeFlags = PxShapeFlag::eVISUALIZATION | PxShapeFlag::eSIMULATION_SHAPE;//| PxShapeFlag::eSCENE_QUERY_SHAPE;
+		shapeFlags = PxShapeFlag::eVISUALIZATION | PxShapeFlag::eSIMULATION_SHAPE | PxShapeFlag::eSCENE_QUERY_SHAPE;
 	}
 	
 	return shapeFlags;
@@ -114,8 +114,12 @@ void Factory::CreateDinamicActor(PhysData* Data, physx::PxShape* shape, physx::P
 	PxRigidDynamic* body = m_Phys->createRigidDynamic(*Tr);
 	SetAxisLock(body, Data);
 
-	const PxFilterData triggerFilterData(0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff);
-	shape->setSimulationFilterData(triggerFilterData);
+	//const PxFilterData triggerFilterData(0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff);
+	//shape->setSimulationFilterData(triggerFilterData);
+
+	shape->setFlag(PxShapeFlag::eSCENE_QUERY_SHAPE, true);
+	shape->setFlag(PxShapeFlag::eVISUALIZATION, true); //Ray, sweep등 할때 사용됨
+	shape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, false);
 
 	body->attachShape(*shape);
 
@@ -140,8 +144,8 @@ void Factory::CreateStaticActor(PhysData* Data, physx::PxShape* shape, physx::Px
 	if (Data->isDinamic == true) { return; }
 	PxRigidStatic* body = m_Phys->createRigidStatic(*Tr);
 
-	const PxFilterData triggerFilterData(0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff);
-	shape->setSimulationFilterData(triggerFilterData);
+	//const PxFilterData triggerFilterData(0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff);
+	//shape->setSimulationFilterData(triggerFilterData);
 
 
 	body->attachShape(*shape);
@@ -154,8 +158,8 @@ void Factory::CreateStaticActor(PhysData* Data, physx::PxShape* shape, physx::Px
 
 void Factory::CreateActoer(PhysData* data)
 {
-	PhysMaterial* mMaterial = data->Meterial;
-	PhysCollider* mCollider = data->Collider;
+	PhysMaterial* mMaterial = data->mMeterial;
+	PhysCollider* mCollider = data->mCollider;
 
 	///위치,회전을 지정해준다
 	PxVec3 Pos				= PxVec3(data->WorldPosition.x, data->WorldPosition.y, data->WorldPosition.z);

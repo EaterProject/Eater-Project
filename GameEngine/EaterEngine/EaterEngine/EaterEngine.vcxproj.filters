@@ -264,9 +264,6 @@
     <ClInclude Include="Export\ParticleSystem.h">
       <Filter>소스 파일\Component\ParticleSystem</Filter>
     </ClInclude>
-    <ClInclude Include="Export\RandomNumber.h">
-      <Filter>소스 파일\Component\ParticleSystem\Random</Filter>
-    </ClInclude>
     <ClInclude Include="NetworkManager.h">
       <Filter>소스 파일\Manager\NetworkManager</Filter>
     </ClInclude>
@@ -326,6 +323,12 @@
     </ClInclude>
     <ClInclude Include="Eater_LoadCamera.h">
       <Filter>소스 파일\Manager\LoadManager\EATER\EaterCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="RandomNumber.h">
+      <Filter>소스 파일\Component\ParticleSystem\Random</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>소스 파일\Component\ParticleSystem\Particle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

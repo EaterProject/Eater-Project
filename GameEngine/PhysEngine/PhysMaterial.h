@@ -22,8 +22,8 @@ public:
 	PhysMaterial();
 	~PhysMaterial();
 public:
-	float MT_StaticFriction;
-	float MT_DynamicFriction;
-	float MT_Restitution;
+	float MT_StaticFriction = 0.5f;
+	float MT_DynamicFriction = 0.5f;
+	float MT_Restitution = 0.6f;
 };
 

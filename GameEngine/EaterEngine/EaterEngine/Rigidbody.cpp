@@ -68,6 +68,12 @@ void Rigidbody::SetUp()
 void Rigidbody::PhysicsUpdate()
 {
 	if (isCreate == false) { return; }
+	
+	if (mTransform->Position != RigidbodyData->WorldPosition)
+	{
+		RigidbodyData->SetWorldPosition(mTransform->Position.x, mTransform->Position.y, mTransform->Position.z);
+		mTransform->Position = RigidbodyData->WorldPosition;
+	}
 	PhysX_Update_Actor(RigidbodyData);
 	
 	float CenterX = RigidbodyData->CenterPoint.x;

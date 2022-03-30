@@ -106,15 +106,20 @@ void PhysEngine::Update(float m_time)
 {
 	if (Start == false)
 	{
-		m_Scene->fetchResults(true);
 		m_Scene->simulate(0);
+		m_Scene->fetchResults(true);
 		Start = true;
 	}
 	else
 	{
-		m_Scene->fetchResults(true);
 		m_Scene->simulate(m_time);
+		m_Scene->fetchResults(true);
 	}
+}
+
+PhysData* PhysEngine::Create_PhysData()
+{
+	return new PhysData();
 }
 
 void PhysEngine::Create_Actor(PhysData* data)
@@ -125,11 +130,19 @@ void PhysEngine::Create_Actor(PhysData* data)
 void  PhysEngine::Update_Actor(PhysData* data)
 {
 	//스테틱 매쉬는 업데이트할 필요가없기떄문에 실행시키지않음
-	if (data->isDinamic == false){return;}
+	if (!data->isDinamic){return;}
+	PxRigidDynamic* body = reinterpret_cast<PxRigidDynamic*>(data->ActorObj);
+
+	////위치값이 변경되었을때
+	if (data->isPosition == true)
+	{
+		PxQuat Q = PxQuat(data->Rotation.x, data->Rotation.y, data->Rotation.z, data->Rotation.w);
+		PxVec3 P = PxVec3(data->WorldPosition.x, data->WorldPosition.y, data->WorldPosition.z);
+		body->setGlobalPose(PxTransform(P, Q));
+		data->isPosition = false;
+	}
 
 	//받아온 Data를 Actor와 동기화시켜준다
-	PxRigidActor* rig = reinterpret_cast<PxRigidActor*>(data->ActorObj);
-	PxRigidBody* body = reinterpret_cast<PxRigidBody*>(data->ActorObj);
 	PxTransform Tr = body->getGlobalPose();
 
 	//관성이 들어간 힘을 준다
@@ -151,14 +164,7 @@ void  PhysEngine::Update_Actor(PhysData* data)
 		data->isVelocity = false;
 	}
 	
-	////위치값이 변경되었을때
-	if (data->isPosition == true)
-	{
-		PxQuat Q = PxQuat(data->Rotation.x, data->Rotation.y, data->Rotation.z, data->Rotation.w);
-		PxVec3 P = PxVec3(data->WorldPosition.x, data->WorldPosition.y, data->WorldPosition.z);
-		body->setGlobalPose(PxTransform(P, Q));
-		data->isPosition = false;
-	}
+	
 
 	////data->PhysX_Velocity = Vector3(Velocity.x, Velocity.y, Velocity.z);
 	data->WorldPosition.x = Tr.p.x;
@@ -222,9 +228,11 @@ bool PhysEngine::CreateScene(PhysSceneData* SceneData)
 	sceneDesc.gravity					= PxVec3(0.0f, -9.8f, 0.0f);
 	sceneDesc.cpuDispatcher				= m_Dispatcher;
 	sceneDesc.simulationEventCallback	= m_BaseEvent;
-	sceneDesc.filterShader				= SampleSubmarineFilterShader;
+	//sceneDesc.filterShader				= SampleSubmarineFilterShader;
+	sceneDesc.filterShader				= PxDefaultSimulationFilterShader;
 	sceneDesc.cudaContextManager		= m_CudaContextManager;
 	sceneDesc.broadPhaseType			= PxBroadPhaseType::eGPU;
+	//sceneDesc.broadPhaseType			= PxBroadPhaseType::eMBP;
 	
 	sceneDesc.flags |= PxSceneFlag::eENABLE_GPU_DYNAMICS;
 	//sceneDesc.flags |= PxSceneFlag::eENABLE_CCD;

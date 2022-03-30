@@ -10,23 +10,15 @@
 Collider::Collider()
 {
 	Component::Start_Order = Component::FUNCTION_ORDER_LAST;
-	mPhysData		= new PhysData();
-	mColliderData	= new PhysCollider();
+	mPhysData		= PhysX_Create_Data();
 	mDebugCollider  = new ColliderData();
-	mMaterial		= new PhysMaterial();
-	mMaterial->MT_DynamicFriction	= 0.5f;
-	mMaterial->MT_StaticFriction	= 0.5f;
-	mMaterial->MT_Restitution		= 0.6f;
-	
 }
 
 Collider::~Collider()
 {
 	PhysX_Delete_Actor(mPhysData);
 
-	delete mMaterial;
-	delete mColliderData;
-	delete mPhysData;
+	//delete mPhysData;
 	delete mDebugCollider;
 }
 
@@ -58,28 +50,28 @@ void Collider::Start()
 
 void Collider::Update()
 {
-	
+	PhysX_Update_Actor(mPhysData);
 	DebugCollider();
 }
 
 void Collider::SetBoxCollider(float Size_x, float Size_y, float Size_z)
 {
-	mColliderData->SetBoxCollider(Size_x, Size_y, Size_z);
+	mPhysData->mCollider->SetBoxCollider(Size_x,Size_y,Size_z);
 }
 
 void Collider::SetBoxCollider(float Radius)
 {
-	mColliderData->SetBoxCollider(Radius);
+	mPhysData->mCollider->SetBoxCollider(Radius);
 }
 
 void Collider::SetSphereCollider(float Radius)
 {
-	mColliderData->SetSphereCollider(Radius);
+	mPhysData->mCollider->SetSphereCollider(Radius);
 }
 
 void Collider::SetCapsuleCollider(float Radius, float Height)
 {
-	mColliderData->SetCapsuleCollider(Radius,Height);
+	mPhysData->mCollider->SetCapsuleCollider(Radius,Height);
 }
 
 void Collider::SetMeshCollider(std::string MeshName)
@@ -114,34 +106,34 @@ void Collider::SetTerrainCollider(std::string MeshName)
 
 void Collider::SetTrigger(bool trigger)
 {
-	mColliderData->SetTrigger(trigger);
+	mPhysData->mCollider->SetTrigger(trigger);
 }
 
 void Collider::SetMaterial_Static(float Static)
 {
-	mMaterial->MT_StaticFriction = Static;
+	mPhysData->mMeterial->MT_StaticFriction = Static;
 }
 
 void Collider::SetMaterial_Dynamic(float Dynamic)
 {
-	mMaterial->MT_DynamicFriction = Dynamic;
+	mPhysData->mMeterial->MT_DynamicFriction = Dynamic;
 }
 
 void Collider::SetMaterial_Restitution(float Restitution)
 {
-	mMaterial->MT_Restitution = Restitution;
+	mPhysData->mMeterial->MT_Restitution = Restitution;
 }
 
 PhysCollider* Collider::GetCollider()
 {
-	return mColliderData;
+	return mPhysData->mCollider;
 }
 
 void Collider::DebugCollider()
 {
-	Vector3 Pos = gameobject->transform->Position;
+	Vector3 Pos = gameobject->transform->Position + mPhysData->CenterPoint;
 	Vector4 Rot = mPhysData->Rotation;
-	Vector3 Scl = mColliderData->GetSize();
+	Vector3 Scl = mPhysData->mCollider->GetSize();
 
 	if (mPhysData->isDinamic == false) 
 	{
@@ -169,7 +161,6 @@ bool Collider::CreatePhys()
 {
 	if (isCreate == false)
 	{
-		mPhysData->Collider			= mColliderData;
 		mPhysData->WorldPosition	= gameobject->transform->Position;
 		Vector3 Rot					= gameobject->transform->Rotation;
 
@@ -188,7 +179,6 @@ bool Collider::CreatePhys()
 		Transform* mTransform = gameobject->GetTransform();
 		mPhysData->SetWorldPosition(mTransform->Position.x, mTransform->Position.y, mTransform->Position.z);
 		mPhysData->Rotation = Q_Rot;
-		mPhysData->Meterial = mMaterial;
 		mTransform->isRigid = true;
 		mTransform->Q_Rotation = Q_Rot;
 		PhysX_Create_Actor(mPhysData);
@@ -203,23 +193,21 @@ bool Collider::CreatePhys()
 
 float Collider::GetMaterial_Static()
 {
-	return mMaterial->MT_StaticFriction;
+	return mPhysData->mMeterial->MT_StaticFriction;
 }
 
 float Collider::GetMaterial_Dynamic()
 {
-	return mMaterial->MT_DynamicFriction;
+	return mPhysData->mMeterial->MT_DynamicFriction;
 }
 
 float Collider::GetMaterial_Restitution()
 {
-	return mMaterial->MT_Restitution;
+	return mPhysData->mMeterial->MT_Restitution;
 }
 
 void Collider::SetCenter(float x, float y, float z)
 {
-	
-	mColliderData->SetCenter(x, y, z);
 	mPhysData->CenterPoint = { x,y,z };
 }
 
@@ -231,7 +219,5 @@ DirectX::SimpleMath::Matrix Collider::CreateXMRot4x4()
 	DirectX::XMMATRIX _P = DirectX::XMMatrixRotationX(radX);
 	DirectX::XMMATRIX _Y = DirectX::XMMatrixRotationY(radY);
 	DirectX::XMMATRIX _R = DirectX::XMMatrixRotationZ(radZ);
-
-
 	return _R * _Y * _P;
 }

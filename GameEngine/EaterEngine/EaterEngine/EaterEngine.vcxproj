@@ -263,7 +263,6 @@ copy /Y "$(ProjectDir)Network\lib\Release\*lib"  "$(TargetDir)"</Command>
     <ClInclude Include="Export\NetworkComponent.h" />
     <ClInclude Include="Export\NetworkManagerComponent.h" />
     <ClInclude Include="Export\ParticleSystem.h" />
-    <ClInclude Include="Export\RandomNumber.h" />
     <ClInclude Include="Export\ResourcesData.h" />
     <ClInclude Include="Export\Rigidbody.h" />
     <ClInclude Include="Export\Scene.h" />
@@ -281,7 +280,9 @@ copy /Y "$(ProjectDir)Network\lib\Release\*lib"  "$(TargetDir)"</Command>
     <ClInclude Include="NetworkManager.h" />
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="LoadManager.h" />
+    <ClInclude Include="Particle.h" />
     <ClInclude Include="PhysManager.h" />
+    <ClInclude Include="RandomNumber.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="TimeManager.h" />
