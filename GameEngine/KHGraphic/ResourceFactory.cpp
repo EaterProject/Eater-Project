@@ -32,6 +32,10 @@
 #include "ShaderResourceHashTable.h"
 #include "MathDefine.h"
 #include "GeometryGenerator.h"
+#include "MathHelper.h"
+
+#define MAX_VECTOR3(v3) max(max(abs(v3.x), abs(v3.y)), abs(v3.z))
+#define DISTANCE(vec1, vec2) sqrtf(powf(vec1.x - vec2.x, 2.0f) + powf(vec1.y - vec2.y, 2.0f) + powf(vec1.z - vec2.z, 2.0f))
 
 using namespace DirectX::SimpleMath;
 
@@ -1012,13 +1016,20 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::MeshVertex>(ParserDat
 
 	// 새로운 Mesh Buffer 생성..
 	if(*ppResource == nullptr) *ppResource = new MeshBuffer();
-	(*ppResource)->VertexBuf = newVertexBuf;
-	(*ppResource)->IndexBuf = newIndexBuf;
+
+	// 새로 생성한 Mesh Buffer 삽입..
+	MeshBuffer* newMeshBuf = *ppResource;
+
+	newMeshBuf->VertexBuf = newVertexBuf;
+	newMeshBuf->IndexBuf = newIndexBuf;
 
 	UINT vCount = (UINT)mesh->m_VertexList.size();
 	UINT iCount = (UINT)mesh->m_IndexList.size();
 	UINT vByteSize = sizeof(VertexInput::MeshVertex) * vCount;
 	UINT iByteSize = sizeof(UINT) * iCount * 3;
+
+	Vector3 vMin(+MathHelper::Infinity, +MathHelper::Infinity, +MathHelper::Infinity);
+	Vector3 vMax(-MathHelper::Infinity, -MathHelper::Infinity, -MathHelper::Infinity);
 
 	std::vector<VertexInput::MeshVertex> vertices(vCount);
 	for (UINT i = 0; i < vCount; i++)
@@ -1027,6 +1038,12 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::MeshVertex>(ParserDat
 		vertices[i].Tex = mesh->m_VertexList[i]->m_UV;
 		vertices[i].Normal = mesh->m_VertexList[i]->m_Normal;
 		vertices[i].Tangent = mesh->m_VertexList[i]->m_Tanget;
+
+		// Bounding Data..
+		Vector3 P = vertices[i].Pos;
+
+		vMin = XMVectorMin(vMin, P);
+		vMax = XMVectorMax(vMax, P);
 	}
 
 	std::vector<UINT> indices(iCount * 3);
@@ -1072,6 +1089,10 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::MeshVertex>(ParserDat
 	// Index Buffer 생성..
 	g_Graphic->CreateBuffer(&bufferDesc, &initData, &ib);
 
+	// 넘겨줘야할 Bounding Data..
+	newMeshBuf->Center = (vMin + vMax) * 0.5f;
+	newMeshBuf->Radius = DISTANCE(vMax, vMin) * 0.5f;
+
 	// 넘겨줘야할 VertexBufferData 삽입..
 	newVertexBuf->pVertexBuf = vb;
 	newVertexBuf->Stride = sizeof(VertexInput::MeshVertex);
@@ -1095,14 +1116,21 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::SkinVertex>(ParserDat
 	IndexBuffer* newIndexBuf = new IndexBuffer();
 
 	// 새로운 Mesh Buffer 생성..
-	if (*ppResource == nullptr)*ppResource = new MeshBuffer();
-	(*ppResource)->VertexBuf = newVertexBuf;
-	(*ppResource)->IndexBuf = newIndexBuf;
+	if (*ppResource == nullptr) *ppResource = new MeshBuffer();
+
+	// 새로 생성한 Mesh Buffer 삽입..
+	MeshBuffer* newMeshBuf = *ppResource;
+
+	newMeshBuf->VertexBuf = newVertexBuf;
+	newMeshBuf->IndexBuf = newIndexBuf;
 
 	UINT vCount = (UINT)mesh->m_VertexList.size();
 	UINT iCount = (UINT)mesh->m_IndexList.size();
 	UINT vByteSize = sizeof(VertexInput::SkinVertex) * vCount;
 	UINT iByteSize = sizeof(UINT) * iCount * 3;
+
+	Vector3 vMin(+MathHelper::Infinity, +MathHelper::Infinity, +MathHelper::Infinity);
+	Vector3 vMax(-MathHelper::Infinity, -MathHelper::Infinity, -MathHelper::Infinity);
 
 	std::vector<VertexInput::SkinVertex> vertices(vCount);
 	for (UINT i = 0; i < vCount; i++)
@@ -1131,6 +1159,12 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::SkinVertex>(ParserDat
 				continue;
 			}
 		}
+
+		// Bounding Data..
+		Vector3 P = vertices[i].Pos;
+
+		vMin = XMVectorMin(vMin, P);
+		vMax = XMVectorMax(vMax, P);
 	}
 
 	std::vector<UINT> indices(iCount * 3);
@@ -1175,6 +1209,10 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::SkinVertex>(ParserDat
 
 	// Index Buffer 생성..
 	g_Graphic->CreateBuffer(&bufferDesc, &initData, &ib);
+
+	// 넘겨줘야할 Bounding Data..
+	newMeshBuf->Center = (vMin + vMax) * 0.5f;
+	newMeshBuf->Radius = DISTANCE(vMax, vMin) * 0.5f;
 
 	// 넘겨줘야할 VertexBufferData 삽입..
 	newVertexBuf->pVertexBuf = vb;
@@ -1200,24 +1238,31 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(Parser
 
 	// 새로운 Mesh Buffer 생성..
 	if (*ppResource == nullptr) *ppResource = new MeshBuffer();
-	(*ppResource)->VertexBuf = newVertexBuf;
-	(*ppResource)->IndexBuf = newIndexBuf;
+
+	// 새로 생성한 Mesh Buffer 삽입..
+	MeshBuffer* newMeshBuf = *ppResource;
+
+	newMeshBuf->VertexBuf = newVertexBuf;
+	newMeshBuf->IndexBuf = newIndexBuf;
 
 	UINT vCount = (UINT)mesh->m_VertexList.size();
 	UINT iCount = (UINT)mesh->m_IndexList.size();
 	UINT vByteSize = sizeof(VertexInput::TerrainVertex) * vCount;
 	UINT iByteSize = sizeof(UINT) * iCount * 3;
 
+	Vector3 vMin(+MathHelper::Infinity, +MathHelper::Infinity, +MathHelper::Infinity);
+	Vector3 vMax(-MathHelper::Infinity, -MathHelper::Infinity, -MathHelper::Infinity);
+
 	// Mask Pixel Data Parsing..
 	ParserData::ImageData maskImage = m_Parser->LoadImagePixel(mesh->m_MaskName.c_str(), 4);
 
-	Vector3 vMin(+FLT_MAX, +FLT_MAX, +FLT_MAX);
+	Vector3 pMin(+FLT_MAX, +FLT_MAX, +FLT_MAX);
 
 	for (UINT i = 0; i < vCount; i++)
 	{
 		Vector3 P = mesh->m_VertexList[i]->m_Pos;
 
-		vMin = XMVectorMin(vMin, P);
+		pMin = XMVectorMin(vMin, P);
 	}
 
 	std::vector<VertexInput::TerrainVertex> vertices(vCount);
@@ -1232,11 +1277,17 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(Parser
 		vertices[i].Tangent = mesh->m_VertexList[i]->m_Tanget;
 
 		// 해당 Pixel Mask Color..
-		Vector4 maskColor = m_Parser->GetPixelColor(maskImage, abs(vertices[i].Pos.x - vMin.x), abs(vertices[i].Pos.z));
+		Vector4 maskColor = m_Parser->GetPixelColor(maskImage, abs(vertices[i].Pos.x - pMin.x), abs(vertices[i].Pos.z));
 		maskColor = maskColor / (maskColor.x + maskColor.y + maskColor.z);
 		vertices[i].Mask.x = maskColor.x;
 		vertices[i].Mask.y = maskColor.y;
 		vertices[i].Mask.z = maskColor.z;
+
+		// Bounding Data..
+		Vector3 P = vertices[i].Pos;
+
+		vMin = XMVectorMin(vMin, P);
+		vMax = XMVectorMax(vMax, P);
 	}
 
 	std::vector<UINT> indices(iCount * 3);
@@ -1281,6 +1332,10 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(Parser
 
 	// Index Buffer 생성..
 	g_Graphic->CreateBuffer(&bufferDesc, &initData, &ib);
+
+	// 넘겨줘야할 Bounding Data..
+	newMeshBuf->Center = (vMin + vMax) * 0.5f;
+	newMeshBuf->Radius = DISTANCE(vMax, vMin) * 0.5f;
 
 	// 넘겨줘야할 VertexBufferData 삽입..
 	newVertexBuf->pVertexBuf = vb;
@@ -1795,7 +1850,7 @@ void GraphicResourceFactory::CreateSphereBuffer()
 
 	GeometryGenerator geoGen;
 
-	geoGen.CreateGeosphere(50.0f, 2, sphere);
+	geoGen.CreateGeosphere(0.5f, 2, sphere);
 
 	UINT format = DXGI_FORMAT_R32_UINT;
 	UINT topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST;

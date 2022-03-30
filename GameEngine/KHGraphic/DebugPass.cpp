@@ -77,10 +77,14 @@ void DebugPass::Start(int width, int height)
 	m_CircleBuffer = g_Resource->GetDrawBuffer<DB_Line_Circle>();
 	m_CircleSphereBuffer = g_Resource->GetDrawBuffer<DB_Line_CircleSphere>();
 	m_GridBuffer = g_Resource->GetDrawBuffer<DB_Line_Grid>();
+	m_SphereBuffer = g_Resource->GetDrawBuffer<DB_Sphere>();
 	m_IconBuffer = g_Resource->GetDrawBuffer<DB_Quad>();
 
 	// Graphic State..
 	m_AlphaBlendBS = g_Resource->GetBlendState<BS_AlphaBlend>()->Get();
+
+	m_SolidRS = g_Resource->GetRasterizerState<RS_Solid>()->Get();
+	m_WireRS = g_Resource->GetRasterizerState<RS_WireFrame>()->Get();
 	m_NoCullRS = g_Resource->GetRasterizerState<RS_NoCull>()->Get();
 	
 	m_MRT1 = g_Resource->GetViewPort<VP_MRT1>()->Get();
@@ -150,14 +154,16 @@ void DebugPass::BeginRender()
 	g_Context->OMSetRenderTargets(1, &m_MainRTV, m_DefaltDSV);
 }
 
-void DebugPass::RenderUpdate(RenderData* mesh)
+void DebugPass::RenderUpdate(const RenderData* meshData)
 {
 	CB_DebugObject object;
 	CB_DebugOption option;
-	Matrix world = *mesh->m_ObjectData->World;
+	Matrix world = *meshData->m_ObjectData->World;
 	Matrix invView = g_GlobalData->CamInvView;
 	Matrix viewproj = g_GlobalData->CamVP;
-	ColliderData* col = *mesh->m_ColliderData;
+
+	MeshRenderBuffer* mesh = meshData->m_Mesh;
+	ColliderData* col = *meshData->m_ColliderData;
 
 	// Transform Debug..
 	object.gWorldViewProj = world * viewproj;
@@ -187,14 +193,79 @@ void DebugPass::RenderUpdate(RenderData* mesh)
 		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
 	}
 
-	switch (mesh->m_ObjectData->ObjType)
+	switch (meshData->m_ObjectData->ObjType)
 	{
+	case OBJECT_TYPE::BASE:
+	case OBJECT_TYPE::SKINNING:
+	{
+		if (mesh)
+		{
+			m_DrawCount++;
+		g_Context->RSSetState(m_WireRS);
+		Matrix sphereWorld = world;
+
+		BoundingSphere sphere;
+		mesh->m_BoundSphere.Transform(sphere, world);
+
+		object.gWorldViewProj = Matrix::CreateScale(sphere.Radius * 2.0f) * Matrix::CreateTranslation(sphere.Center) * viewproj;
+		
+		m_DebugVS->ConstantBufferCopy(&object);
+		m_DebugVS->Update();
+
+		option.gColor = Vector3(1.0f, 1.0f, 0.0f);
+
+		m_DebugColorPS->ConstantBufferCopy(&option);
+		m_DebugColorPS->Update();
+
+		BufferUpdate(DEBUG_TYPE::DEBUG_SPHERE);
+		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+
+		g_Context->RSSetState(m_SolidRS);
+
+		RayCastData ray;
+		ray.RayStart = sphere.Center;
+		ray.RayEnd = sphere.Center + Vector3(0.0f, sphere.Radius, 0.0f);
+
+		option.gColor = Vector3(0.0f, 1.0f, 0.0f);
+
+		object.gWorldViewProj = viewproj;
+
+		m_DebugVS->ConstantBufferCopy(&object);
+		m_DebugVS->Update();
+
+		m_DebugColorPS->ConstantBufferCopy(&option);
+		m_DebugColorPS->Update();
+
+		// Ray Buffer Update
+		SetRay(ray.RayStart, ray.RayEnd);
+
+		BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
+		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+
+		object.gWorldViewProj = Matrix::CreateScale(0.1f) * Matrix::CreateTranslation(sphere.Center) * viewproj;
+
+		m_DebugVS->ConstantBufferCopy(&object);
+		m_DebugVS->Update();
+
+		option.gColor = Vector3(5.0f, 0.0f, 0.0f);
+
+		m_DebugColorPS->ConstantBufferCopy(&option);
+		m_DebugColorPS->Update();
+
+		BufferUpdate(DEBUG_TYPE::DEBUG_SPHERE);
+		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+
+		}
+	}
+		break;
 	case OBJECT_TYPE::BONE:
 	{
 		object.gWorldViewProj = Matrix::CreateScale(0.05f) * world * viewproj;
 
 		m_DebugVS->ConstantBufferCopy(&object);
 		m_DebugVS->Update();
+
+		m_DebugPS->Update();
 
 		BufferUpdate(DEBUG_TYPE::DEBUG_CIRCLE);
 		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
@@ -204,7 +275,7 @@ void DebugPass::RenderUpdate(RenderData* mesh)
 		break;
 	case OBJECT_TYPE::PARTICLE_SYSTEM:
 	{
-		ParticleData* particles = mesh->m_ParticleData;
+		ParticleData* particles = meshData->m_ParticleData;
 
 		Vector3 radius = particles->Area_Radius;
 
@@ -774,6 +845,10 @@ void DebugPass::BufferUpdate(DEBUG_TYPE type)
 		m_DebugBuffer = m_RayBuffer;
 		g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
 		break;
+	case DEBUG_SPHERE:
+		m_DebugBuffer = m_SphereBuffer;
+		g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		break;
 	case DEBUG_TEXTURE:
 		m_DebugBuffer = m_IconBuffer;
 		g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -784,6 +859,11 @@ void DebugPass::BufferUpdate(DEBUG_TYPE type)
 
 	g_Context->IASetVertexBuffers(0, 1, m_DebugBuffer->VertexBuf->GetAddress(), &m_DebugBuffer->Stride, &m_DebugBuffer->Offset);
 	g_Context->IASetIndexBuffer(m_DebugBuffer->IndexBuf->Get(), DXGI_FORMAT_R32_UINT, 0);
+}
+
+void DebugPass::CountReset()
+{
+	m_DrawCount = 0;
 }
 
 void DebugPass::SetRay(Vector3 start, Vector3 end)

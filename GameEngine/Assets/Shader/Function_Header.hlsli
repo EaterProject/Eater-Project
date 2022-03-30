@@ -1,5 +1,11 @@
 #include "Define_Header.hlsli"
 
+//float2 ApplyParallax(in float2 uv, in float3 vDir, in float3x3 tbn)
+//{
+//
+//    
+//}
+
 float3 UnpackNormal(in float3 normalMapSample, in float3 normal, in float3 tangent)
 {
     normal = normalize(normal);

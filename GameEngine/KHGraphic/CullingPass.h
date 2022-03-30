@@ -20,5 +20,7 @@ private:
 	ID3D11RasterizerState* m_SolidRS;
 
 	D3D11_VIEWPORT* m_ScreenVP;
+
+	XNA::Frustum m_Frustum;
 };
 

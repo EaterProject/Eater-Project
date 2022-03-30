@@ -71,6 +71,10 @@ void RenderDataConverter::ConvertRenderData(MeshData* originData, RenderData* re
 	MeshRenderBuffer* convertMesh = GetMesh(originMesh->BufferIndex);
 	MaterialRenderBuffer* convertMaterial = GetMaterial(originMaterial->BufferIndex);
 
+	// Render Data »ðÀÔ..
+	renderData->m_Mesh = convertMesh;
+	renderData->m_Material = convertMaterial;
+
 	// Mesh & Material Buffer ±âÁØ Instance °Ë»ö ¹× Render Data »ðÀÔ..
 	RegisterInstance(renderData, convertMesh, convertMaterial);
 }
@@ -258,6 +262,10 @@ void RenderDataConverter::ConvertMesh(MeshBuffer* originBuf, MeshRenderBuffer* c
 	// Vertex Buffer Data Convert..
 	convertData->m_Stride = originBuf->VertexBuf->Stride;
 	convertData->m_VertexBuf = (ID3D11Buffer*)originBuf->VertexBuf->pVertexBuf;
+
+	// Mesh Sub Data Convert..
+	convertData->m_BoundSphere.Center = originBuf->Center;
+	convertData->m_BoundSphere.Radius = originBuf->Radius;
 }
 
 void RenderDataConverter::ConvertMaterial(MaterialBuffer* originMat, MaterialRenderBuffer* convertMat)
@@ -504,10 +512,6 @@ void RenderDataConverter::RegisterInstance(RenderData* renderData, MeshRenderBuf
 	// Instance Index »ðÀÔ..
 	renderData->m_InstanceIndex = instance_Index;
 	renderData->m_InstanceLayerIndex = instance_Index;
-
-	// Render Data »ðÀÔ..
-	renderData->m_Mesh = mesh;
-	renderData->m_Material = material;
 }
 
 void RenderDataConverter::CheckEmptyInstance(MeshRenderBuffer* mesh)

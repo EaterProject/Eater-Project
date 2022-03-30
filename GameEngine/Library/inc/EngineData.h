@@ -39,6 +39,7 @@ public:
 	std::string Name;								//오브젝트 이름
 
 	void* Object;									//원본 GameObject
+
 	UINT ObjectIndex;								//오브젝트의 고유한 인덱스
 	Vector4 HashColor;								//오브젝트의 고유한 Hash Color
 	
@@ -80,7 +81,8 @@ public:
 public:
 	UINT BufferIndex = 0;		// Mesh Buffer Index
 
-	DirectX::BoundingBox BoundingBox;
+	Vector3 Center;				// Culling Bounding Center
+	float Radius;				// Culling Bounding Radius
 
 	IndexBuffer* IndexBuf;		// Index Buffer
 	VertexBuffer* VertexBuf;	// Vertex Buffer

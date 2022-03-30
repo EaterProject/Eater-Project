@@ -14,6 +14,7 @@
 #include "RenderData.h"
 #include "CullingPass.h"
 
+#include "Patch_Chapters.h"
 #include "MathDefine.h"
 #include "FactoryManagerBase.h"
 #include "ResourceManagerBase.h"
@@ -38,13 +39,14 @@ CullingPass::~CullingPass()
 
 void CullingPass::Create(int width, int height)
 {
+	ComputeFrustumFromProjection(&m_Frustum, &(XMMATRIX)g_GlobalData->CamProj);
 
 }
 
 void CullingPass::Start(int width, int height)
 {
 	// Shader 설정..
-
+	
 	// DepthStencilView 설정..
 	m_DefaltDSV = g_Resource->GetDepthStencilView<DS_Defalt>()->Get();
 

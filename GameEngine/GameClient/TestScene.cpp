@@ -116,9 +116,9 @@ void TestScene::CreateMap()
 	Tr = Object->GetTransform();
 	filter->SetModelName("Outside_Rock");
 	
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("Outside_bossOBJ");
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("Outside_bossOBJ");
 	
 	Object = Instance();
 	filter = Object->AddComponent<MeshFilter>();

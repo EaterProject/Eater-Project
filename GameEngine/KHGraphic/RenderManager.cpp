@@ -537,6 +537,8 @@ void RenderManager::DebugRender()
 			GPU_MARKER_DEBUG_NAME("MRT Debug");
 			m_Debug->MRTRender();
 		}
+
+		m_Debug->CountReset();
 	}
 }
 

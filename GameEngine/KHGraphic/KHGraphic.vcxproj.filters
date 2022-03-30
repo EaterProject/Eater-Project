@@ -483,6 +483,9 @@
     <ClInclude Include="CullingPass.h">
       <Filter>소스 파일\RenderPass\SubPass\Culling</Filter>
     </ClInclude>
+    <ClInclude Include="Patch_Chapters.h">
+      <Filter>소스 파일\Helper</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="D3D11Graphic.cpp">
