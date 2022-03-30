@@ -160,7 +160,7 @@ void DebugPass::RenderUpdate(const RenderData* meshData)
 	CB_DebugOption option;
 	Matrix world = *meshData->m_ObjectData->World;
 	Matrix invView = g_GlobalData->CamInvView;
-	Matrix viewproj = g_GlobalData->CamVP;
+	Matrix viewproj = g_GlobalData->CamViewProj;
 
 	MeshRenderBuffer* mesh = meshData->m_Mesh;
 	ColliderData* col = *meshData->m_ColliderData;
@@ -348,7 +348,7 @@ void DebugPass::GlobalRender()
 	Vector3 axis, look, right, up, pos;
 
 	Matrix invView = g_GlobalData->CamInvView;
-	Matrix viewproj = g_GlobalData->CamVP;
+	Matrix viewproj = g_GlobalData->CamViewProj;
 
 	std::vector<DirectionalLightData*>* directionList = &g_GlobalData->DirectionLights;
 	std::vector<PointLightData*>* pointList = &g_GlobalData->PointLights;

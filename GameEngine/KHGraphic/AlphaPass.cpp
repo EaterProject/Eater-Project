@@ -91,7 +91,7 @@ void AlphaPass::RenderUpdate(const InstanceRenderBuffer* instance, const RenderD
 	Matrix view = g_GlobalData->CamView;
 	Matrix proj = g_GlobalData->CamProj;
 	Matrix invView = g_GlobalData->CamInvView;
-	Matrix viewproj = g_GlobalData->CamVP;
+	Matrix viewproj = g_GlobalData->CamViewProj;
 
 	switch (instance->m_Type)
 	{
@@ -163,7 +163,7 @@ void AlphaPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::ve
 	Matrix view = g_GlobalData->CamView;
 	Matrix proj = g_GlobalData->CamProj;
 	Matrix invView = g_GlobalData->CamInvView;
-	Matrix viewproj = g_GlobalData->CamVP;
+	Matrix viewproj = g_GlobalData->CamViewProj;
 
 	MeshRenderBuffer* mesh = instance->m_Mesh;
 	MaterialRenderBuffer* mat = instance->m_Material;

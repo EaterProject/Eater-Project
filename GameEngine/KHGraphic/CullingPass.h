@@ -13,6 +13,7 @@ public:
 	void Release() override;
 
 public:
+	void FrustumCulling(const RenderData* renderData);
 
 private:
 	ID3D11DepthStencilView* m_DefaltDSV;
@@ -20,7 +21,5 @@ private:
 	ID3D11RasterizerState* m_SolidRS;
 
 	D3D11_VIEWPORT* m_ScreenVP;
-
-	XNA::Frustum m_Frustum;
 };
 

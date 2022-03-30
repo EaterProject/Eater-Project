@@ -264,8 +264,7 @@ void RenderDataConverter::ConvertMesh(MeshBuffer* originBuf, MeshRenderBuffer* c
 	convertData->m_VertexBuf = (ID3D11Buffer*)originBuf->VertexBuf->pVertexBuf;
 
 	// Mesh Sub Data Convert..
-	convertData->m_BoundSphere.Center = originBuf->Center;
-	convertData->m_BoundSphere.Radius = originBuf->Radius;
+	convertData->m_MeshSubData = originBuf->Mesh_SubData;
 }
 
 void RenderDataConverter::ConvertMaterial(MaterialBuffer* originMat, MaterialRenderBuffer* convertMat)

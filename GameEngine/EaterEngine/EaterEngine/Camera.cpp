@@ -83,6 +83,11 @@ DirectX::SimpleMath::Matrix Camera::GetProj()
 	}
 }
 
+DirectX::BoundingFrustum& Camera::GetFrustum()
+{
+	return mFrustum;
+}
+
 DirectX::SimpleMath::Vector3 Camera::GetPos()
 {
 	if (g_MainCam == nullptr)
@@ -115,6 +120,9 @@ void Camera::ChoiceMainCam()
 	g_MainCam = this;
 	//바뀐 카메라의 태그를 메인카메라로 변경
 	g_MainCam->gameobject->SetTag("MainCamera");
+
+	//메인 카메라 프러스텀 설정
+	
 }
 
 DirectX::SimpleMath::Matrix Camera::GetView()
@@ -169,6 +177,9 @@ void Camera::CreateProj(int winsizeX, int WinSizeY, bool ViewPoint)
 		//직교 투영
 		mProj = DirectX::XMMatrixOrthographicLH(mFovY, mAspect, mNearZ, mFarZ);
 	}
+
+	// Frustum 재설정..
+	BoundingFrustum::CreateFromMatrix(mFrustum, mProj);
 }
 
 void Camera::CreateView()

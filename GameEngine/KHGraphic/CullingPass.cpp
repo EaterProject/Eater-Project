@@ -39,7 +39,6 @@ CullingPass::~CullingPass()
 
 void CullingPass::Create(int width, int height)
 {
-	ComputeFrustumFromProjection(&m_Frustum, &(XMMATRIX)g_GlobalData->CamProj);
 
 }
 

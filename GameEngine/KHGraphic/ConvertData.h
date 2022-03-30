@@ -32,7 +32,7 @@ public:
 	ID3D11Buffer* m_VertexBuf;
 	ID3D11Buffer* m_IndexBuf;
 
-	DirectX::BoundingSphere m_BoundSphere;	// Culling Bounding
+	MeshSubData* m_MeshSubData;
 };
 
 // Game Engine 측 TerrainBuffer와 대응하는 DirectX 11 전용 Terrain Data Class

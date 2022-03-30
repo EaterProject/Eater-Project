@@ -29,18 +29,14 @@ void BaseManager::UpdateGlobalData(float dTime)
 	//카메라 데이터
 	Matrix camView = Camera::g_MainCam->GetView();
 	Matrix camProj = Camera::g_MainCam->GetProj();
-	Matrix camInvView;
-	camInvView._11 = camView._11;	camInvView._12 = camView._12;	camInvView._13 = camView._13;
-	camInvView._21 = camView._21;	camInvView._22 = camView._22;	camInvView._23 = camView._23;
-	camInvView._31 = camView._31;	camInvView._32 = camView._32;	camInvView._33 = camView._33;
-	
-	Global->CamView = camView;
-	Global->CamProj = camProj;
-	Global->CamViewProj = camView * camProj;
-	Global->CamInvView = camInvView.Invert();
-	Global->CamPos = Camera::g_MainCam->GetPos();
 
-	Global->CamVP = camView * camProj;
+	Global->Camera_Data->CamView = camView;
+	Global->Camera_Data->CamProj = camProj;
+	Global->Camera_Data->CamViewProj = camView * camProj;
+	Global->Camera_Data->CamInvView = camView.Invert();
+	Global->Camera_Data->CamPos = Camera::g_MainCam->GetPos();
+
+	Global->Camera_Data->BoundFrustum = Camera::g_MainCam->GetFrustum();
 
 	// 시간
 	Global->Time = dTime;
