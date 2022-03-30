@@ -24,12 +24,27 @@ CTAP_Rigidbody::~CTAP_Rigidbody()
 
 void CTAP_Rigidbody::SetGameObject(Rigidbody* rigidbody)
 {
+	mRigidbody = rigidbody;
+	
+	bool PosX, PosY, PosZ;
+	PosX = rigidbody;
+
+	//Freeze_PosX_Click.SetCheck()
 
 }
 
 void CTAP_Rigidbody::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_EDIT1, Gravity_Edit);
+	DDX_Control(pDX, IDC_EDIT3, Mass_Edit);
+	DDX_Control(pDX, IDC_CHECK9, Kinematic_Click);
+	DDX_Control(pDX, IDC_CHECK1, Freeze_PosX_Click);
+	DDX_Control(pDX, IDC_CHECK2, Freeze_PosY_Click);
+	DDX_Control(pDX, IDC_CHECK3, Freeze_PosZ_Click);
+	DDX_Control(pDX, IDC_CHECK4, Freeze_RotX_Click);
+	DDX_Control(pDX, IDC_CHECK5, Freeze_RotY_Click);
+	DDX_Control(pDX, IDC_CHECK6, Freeze_RotZ_Click);
 }
 
 

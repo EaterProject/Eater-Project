@@ -139,9 +139,19 @@ void Rigidbody::SetGrvity(bool grvity)
 	RigidbodyData->isGrvity = grvity;
 }
 
+float Rigidbody::GetGrvity()
+{
+	
+}
+
 void Rigidbody::SetKinematic(bool kinematic)
 {
 	RigidbodyData->isKinematic = kinematic;
+}
+
+bool Rigidbody::GetKinematic()
+{
+	return RigidbodyData->isKinematic;
 }
 
 void Rigidbody::SetMass(float mass)
@@ -149,14 +159,29 @@ void Rigidbody::SetMass(float mass)
 	RigidbodyData->MT_Mass = mass;
 }
 
+float Rigidbody::GetMass()
+{
+	return RigidbodyData->MT_Mass;
+}
+
 void Rigidbody::SetFreezePosition(bool x, bool y, bool z)
 {
 	RigidbodyData->SetLockAxis_Position(x, y, z);
 }
 
+Vector3 Rigidbody::GetFreezePosition()
+{
+	return RigidbodyData->GetFreezePosition();
+}
+
 void Rigidbody::SetFreezeRotation(bool x, bool y, bool z)
 {
 	RigidbodyData->SetLockAxis_Rotation(x, y, z);
+}
+
+Vector3 Rigidbody::GetFreezeRotation()
+{
+	return RigidbodyData->GetFreezeRotation();
 }
 
 void Rigidbody::SetVelocity(float x, float y, float z)

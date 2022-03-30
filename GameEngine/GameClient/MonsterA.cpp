@@ -46,6 +46,7 @@ void MonsterA::SetUp()
 	mColider->SetBoxCollider(0.25f);
 	mColider->SetMaterial_Restitution(0);
 	mRigidbody->SetFreezeRotation(true, true, true);
+	mRigidbody->SetGrvity(false);
 	mColider->CreatePhys();
 
 	//매쉬 생성
@@ -60,12 +61,4 @@ void MonsterA::Update()
 	{
 		mRigidbody->SetVelocity(0, 0, -1);
 	}
-	//
-	//
-	////만약 위치값 Y가 -10보다 작으면 Reset시킨다 
-	//if (mTransform->Position.y < -10)
-	//{
-	//	mRigidbody->SetPosition(0, 0, 0);
-	//	State = STATE::DEAD;
-	//}
 }

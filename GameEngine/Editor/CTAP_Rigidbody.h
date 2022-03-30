@@ -13,6 +13,8 @@ public:
 
 // 대화 상자 데이터입니다.
 	void SetGameObject(Rigidbody* rigidbody);
+	Rigidbody* mRigidbody;
+
 #ifdef AFX_DESIGN_TIME
 	enum { IDD = IDD_TAP_RIGIDBODY };
 #endif
@@ -23,4 +25,15 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
+	CEdit Gravity_Edit;
+	CEdit Mass_Edit;
+	CButton Kinematic_Click;
+
+	CButton Freeze_PosX_Click;
+	CButton Freeze_PosY_Click;
+	CButton Freeze_PosZ_Click;
+
+	CButton Freeze_RotX_Click;
+	CButton Freeze_RotY_Click;
+	CButton Freeze_RotZ_Click;
 };

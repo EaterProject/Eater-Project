@@ -74,8 +74,10 @@ public:
 public:
 	//이동에 관한 축변환을 막는다
 	void SetLockAxis_Position(bool x, bool y, bool z);
+	Vector3 GetLockAxis_Position();
 	//회전에 관한 축변환을 막는다
 	void SetLockAxis_Rotation(bool x, bool y, bool z);
+	Vector3 GetLockAxis_Rotation();
 private:
 	///위치 데이터
 	//로컬 위치 (계층 구조일때)

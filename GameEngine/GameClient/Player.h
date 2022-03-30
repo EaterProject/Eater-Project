@@ -39,5 +39,10 @@ private:
 	Vector3 DirRot;			//회전
 	Vector3 PastDirRot;		//과거의 방향
 
+
+	GameObject* AttackColliderObject;
+	Collider* AttackCollider;
+	Rigidbody* AttackRigidbody;
+
 	float RotationDir;
 };

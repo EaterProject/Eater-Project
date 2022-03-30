@@ -33,13 +33,22 @@ void Player::Awake()
 	mMeshFilter = gameobject->GetComponent<MeshFilter>();
 	mAnimation	= gameobject->GetComponent<AnimationController>();
 	
-	//mRigidbody = gameobject->GetComponent<Rigidbody>();
-	//mCollider  = gameobject->GetComponent<Collider>();
+
+	AttackColliderObject = FindGameObjectTag("AttackCollider");
+	AttackRigidbody = AttackColliderObject->GetComponent<Rigidbody>();
+	AttackCollider = AttackColliderObject->GetComponent<Collider>();
+	
+	
+	
 }
 
 void Player::SetUp()
 {
 	mCameraTR = GetMainCamera()->GetTransform();
+
+	AttackCollider->SetTrigger(true);
+	AttackRigidbody->SetGrvity(false);
+	AttackCollider->CreatePhys();
 }
 
 void Player::Update()

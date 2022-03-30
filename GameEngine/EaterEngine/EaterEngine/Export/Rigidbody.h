@@ -35,15 +35,21 @@ public:
 	EATER_ENGINEDLL void SetType(bool Dinamic);
 	//중력 적용 여부
 	EATER_ENGINEDLL void SetGrvity(bool grvity);
+	EATER_ENGINEDLL float GetGrvity();
 	//
 	EATER_ENGINEDLL void SetKinematic(bool kinematic);
+	EATER_ENGINEDLL bool GetKinematic();
 	//무게를 지정한다
 	EATER_ENGINEDLL void SetMass(float mass);
+	EATER_ENGINEDLL float GetMass();
 
 	//원하는 축의 방향이동을 고정 시킨다
 	EATER_ENGINEDLL void SetFreezePosition(bool x,bool y,bool z);
+	EATER_ENGINEDLL Vector3 GetFreezePosition();
+
 	//원하는 축의 방향회전을 고정 시킨다 
 	EATER_ENGINEDLL void SetFreezeRotation(bool x,bool y,bool z);
+	EATER_ENGINEDLL Vector3 GetFreezeRotation();
 	//rigdbody를 이용해서 움직임
 	EATER_ENGINEDLL void SetVelocity(float x, float y, float z);
 	
