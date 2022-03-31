@@ -43,7 +43,7 @@ void MonsterB::SetUp()
 	mColider->SetBoxCollider(0.25f);
 	mColider->SetMaterial_Restitution(0);
 	mRigidbody->SetFreezeRotation(true, true, true);
-	mRigidbody->SetGrvity(false);
+	mRigidbody->SetGravity(false);
 	mColider->CreatePhys();
 
 	//매쉬 생성

@@ -6,6 +6,7 @@
 #include <vector>
 #include "Component.h"
 class Rigidbody;
+class Collider;
 class Transform :public Component
 {
 public:
@@ -116,5 +117,6 @@ private:
 
 
 	//physX
-	Rigidbody* mRigidbody;
+	Rigidbody*	mRigidbody;
+	Collider*	mCollider;
 };

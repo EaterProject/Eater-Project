@@ -9,9 +9,9 @@
 
 Collider::Collider()
 {
-	Component::Start_Order = Component::FUNCTION_ORDER_LAST;
 	mPhysData		= PhysX_Create_Data();
 	mDebugCollider  = new ColliderData();
+	
 }
 
 Collider::~Collider()
@@ -22,37 +22,39 @@ Collider::~Collider()
 	delete mDebugCollider;
 }
 
-void Collider::Awake()
-{
-
-}
-
 void Collider::Start()
 {
-	//콜라이더만 있다면 스테틱 Rigidbody도 있다면 다이나믹
-	//if (mRigidbody != nullptr)
-	//{
-	//	mPhysData->isDinamic = true;
-	//}
-	//
-	////메테리얼을 설정했다면 넣어준다
-	//if (mMaterial != nullptr)
-	//{
-	//	mPhysData->Meterial = mMaterial;
-	//}
-	//
-	//mPhysData->Collider = mColliderData;
-	//mPhysData->WorldPosition = mTransform->Position;
-	//Vector3 Rot = mTransform->Rotation;
-	//mPhysData->SetRotate(Rot.x, Rot.y, Rot.z);
-	//PhysX_Create_Actor(mPhysData);
+	mPhysData->EaterObj = gameobject;
+	mTransform = gameobject->GetTransform();
+	CreatePhys();
 }
 
-void Collider::Update()
+void Collider::PhysicsUpdate()
 {
+	if (mTransform->Position != mPhysData->WorldPosition)
+	{
+		mPhysData->SetWorldPosition(mTransform->Position.x, mTransform->Position.y, mTransform->Position.z);
+		mTransform->Position = mPhysData->WorldPosition;
+	}
 	PhysX_Update_Actor(mPhysData);
+
+	float CenterX = mPhysData->CenterPoint.x;
+	float CenterY = mPhysData->CenterPoint.y;
+	float CenterZ = mPhysData->CenterPoint.z;
+
+	mTransform->Position.x = mPhysData->WorldPosition.x;
+	mTransform->Position.y = mPhysData->WorldPosition.y;
+	mTransform->Position.z = mPhysData->WorldPosition.z;
+
+	mTransform->Q_Rotation.x = mPhysData->Rotation.x;
+	mTransform->Q_Rotation.y = mPhysData->Rotation.y;
+	mTransform->Q_Rotation.z = mPhysData->Rotation.z;
+	mTransform->Q_Rotation.w = mPhysData->Rotation.w;
+
 	DebugCollider();
 }
+
+
 
 void Collider::SetBoxCollider(float Size_x, float Size_y, float Size_z)
 {
@@ -204,6 +206,38 @@ float Collider::GetMaterial_Dynamic()
 float Collider::GetMaterial_Restitution()
 {
 	return mPhysData->mMeterial->MT_Restitution;
+}
+
+bool Collider::GetTriggerEnter()
+{
+	return mPhysData->GetTriggerEnter();
+}
+
+bool Collider::GetTriggerStay()
+{
+	return mPhysData->GetTriggerStay();
+}
+
+bool Collider::GetTriggerExit()
+{
+	return mPhysData->GetTriggerExit();
+}
+
+int Collider::GetTriggerCount()
+{
+	return (int)mPhysData->TriggerList.size();
+}
+
+GameObject* Collider::GetTriggerObject()
+{
+	if (mPhysData->TriggerList[0] != nullptr)
+	{
+		return reinterpret_cast<GameObject*>(mPhysData->EaterObj);
+	}
+	else 
+	{
+		return nullptr;
+	}
 }
 
 void Collider::SetCenter(float x, float y, float z)

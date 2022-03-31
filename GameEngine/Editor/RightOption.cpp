@@ -274,7 +274,6 @@ void RightOption::ChickHirearchyDarg(CPoint point)
 		case SCENE:
 		{
 			Demo::LoadScene(Name);
-			//HirearchyTree.DeleteAllItems();
 			std::map<std::string, GameObject*>::iterator Start_it	= Demo::ObjectList.begin();
 			std::map<std::string, GameObject*>::iterator End_it		= Demo::ObjectList.end();
 			for (Start_it; Start_it != End_it; Start_it++)
@@ -289,8 +288,6 @@ void RightOption::ChickHirearchyDarg(CPoint point)
 			{
 				Tag_Combo.InsertString( Tag_Start_it->first, ChangeToCString(Tag_Start_it->second) );
 			}
-
-
 
 			break;
 		}
@@ -416,7 +413,7 @@ void RightOption::OnChoice_Hirearchy_Item(NMHDR* pNMHDR, LRESULT* pResult)
 	{
 		Component_TapList.InsertItem(FrontCount, L"Rigidbody");
 		mRigidbody->ShowWindow(SW_HIDE);
-		//mRigidbody->SetGameObject(LT);
+		mRigidbody->SetGameObject(RI);
 		FrontCount++;
 	}
 

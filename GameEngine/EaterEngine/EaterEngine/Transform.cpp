@@ -4,6 +4,7 @@
 #include "EngineData.h"
 #include "DebugManager.h"
 #include "Rigidbody.h"
+#include "Collider.h"
 #include "TimeManager.h"
 
 Transform::Transform()
@@ -33,12 +34,16 @@ Transform::~Transform()
 void Transform::Start()
 {
 	//물리충돌된 좌표를 받는다
-	mRigidbody = gameobject->GetComponent<Rigidbody>();
-	if (mRigidbody != nullptr )
+	mRigidbody	= gameobject->GetComponent<Rigidbody>();
+	mCollider	= gameobject->GetComponent<Collider>();
+	if (mRigidbody != nullptr)
 	{
 		isRigid = true;
 	}
+	if (mCollider != nullptr)
+	{
 
+	}
 }
 
 void Transform::TransformUpdate()

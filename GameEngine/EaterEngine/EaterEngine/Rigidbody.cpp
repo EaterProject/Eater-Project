@@ -10,6 +10,7 @@
 Rigidbody::Rigidbody()
 {
 	//컨퍼넌트 실행 순서를 변경
+	Component::Awake_Order				= Component::FUNCTION_ORDER_LAST;
 	Component::TransformUpdate_Order	= Component::FUNCTION_ORDER_FIRST;
 	Component::SetUp_Order				= Component::FUNCTION_ORDER_LAST;
 }
@@ -26,6 +27,12 @@ void Rigidbody::Awake()
 	if (mCollider != nullptr)
 	{
 		RigidbodyData = mCollider->mPhysData;
+
+		RigidbodyData->isGravity	= isGravity;
+		RigidbodyData->isKinematic	= isKinematic;
+		RigidbodyData->MT_Mass = Mass;
+		RigidbodyData->SetLockAxis_Position(FreezePos[0], FreezePos[1], FreezePos[2]);
+		RigidbodyData->SetLockAxis_Rotation(FreezeRot[0], FreezeRot[1], FreezeRot[2]);
 	}
 }
 
@@ -67,44 +74,8 @@ void Rigidbody::SetUp()
 
 void Rigidbody::PhysicsUpdate()
 {
-	if (isCreate == false) { return; }
 	
-	if (mTransform->Position != RigidbodyData->WorldPosition)
-	{
-		RigidbodyData->SetWorldPosition(mTransform->Position.x, mTransform->Position.y, mTransform->Position.z);
-		mTransform->Position = RigidbodyData->WorldPosition;
-	}
-	PhysX_Update_Actor(RigidbodyData);
-	
-	float CenterX = RigidbodyData->CenterPoint.x;
-	float CenterY = RigidbodyData->CenterPoint.y;
-	float CenterZ = RigidbodyData->CenterPoint.z;
-	
-	mTransform->Position.x = RigidbodyData->WorldPosition.x;
-	mTransform->Position.y = RigidbodyData->WorldPosition.y;
-	mTransform->Position.z = RigidbodyData->WorldPosition.z;
-	
-	mTransform->Q_Rotation.x = RigidbodyData->Rotation.x;
-	mTransform->Q_Rotation.y = RigidbodyData->Rotation.y;
-	mTransform->Q_Rotation.z = RigidbodyData->Rotation.z;
-	mTransform->Q_Rotation.w = RigidbodyData->Rotation.w;
-}
 
-void Rigidbody::SetRotation(float x, float y, float z, float w)
-{
-	RigidbodyData->Rotation = Vector4(x, y, z, w);
-}
-
-void Rigidbody::SetRotation(float x, float y, float z)
-{
-	Quaternion Q = Quaternion::CreateFromYawPitchRoll(y, x, z);
-
-	RigidbodyData->Rotation = Vector4(Q.x, Q.y, Q.z, Q.w);
-}
-
-void Rigidbody::SetPosition(float x, float y, float z)
-{
-	RigidbodyData->SetWorldPosition(x, y, z);
 }
 
  bool Rigidbody::GetTriggerEnter()
@@ -127,26 +98,34 @@ int Rigidbody::GetTriggerCount()
 	return RigidbodyData->TriggerCount;
 }
 
- void Rigidbody::SetType(bool Dinamic)
+void Rigidbody::SetGravity(bool grvity)
 {
-	 //객체의 타입을 설정한다 (Dinamic = 움직이는거 , Static = 안움직임 )
-	 //자세한건 PhysData.h 에 주석으로 써넣옴
-	 RigidbodyData->isDinamic = Dinamic;
-}
-void Rigidbody::SetGrvity(bool grvity)
-{
-	//중력 작용 여부를 설정한다 
-	RigidbodyData->isGrvity = grvity;
+	if (RigidbodyData == nullptr)
+	{
+		isGravity = grvity;
+	}
+	else 
+	{
+		RigidbodyData->isGravity = grvity;
+	}
 }
 
-float Rigidbody::GetGrvity()
+bool Rigidbody::GetGravity()
 {
-	
+	return RigidbodyData->isGravity;
 }
+
 
 void Rigidbody::SetKinematic(bool kinematic)
 {
-	RigidbodyData->isKinematic = kinematic;
+	if (RigidbodyData == nullptr)
+	{
+		isKinematic = kinematic;
+	}
+	else
+	{
+		RigidbodyData->isKinematic = kinematic;
+	}
 }
 
 bool Rigidbody::GetKinematic()
@@ -156,7 +135,14 @@ bool Rigidbody::GetKinematic()
 
 void Rigidbody::SetMass(float mass)
 {
-	RigidbodyData->MT_Mass = mass;
+	if (RigidbodyData == nullptr)
+	{
+		Mass = mass;
+	}
+	else
+	{
+		RigidbodyData->MT_Mass = mass;
+	}
 }
 
 float Rigidbody::GetMass()
@@ -166,22 +152,40 @@ float Rigidbody::GetMass()
 
 void Rigidbody::SetFreezePosition(bool x, bool y, bool z)
 {
-	RigidbodyData->SetLockAxis_Position(x, y, z);
+	if (RigidbodyData == nullptr)
+	{
+		FreezePos[0] = x;
+		FreezePos[1] = y;
+		FreezePos[2] = z;
+	}
+	else
+	{
+		RigidbodyData->SetLockAxis_Position(x, y, z);
+	}
 }
 
 Vector3 Rigidbody::GetFreezePosition()
 {
-	return RigidbodyData->GetFreezePosition();
+	return RigidbodyData->GetLockAxis_Position();
 }
 
 void Rigidbody::SetFreezeRotation(bool x, bool y, bool z)
 {
-	RigidbodyData->SetLockAxis_Rotation(x, y, z);
+	if (RigidbodyData == nullptr)
+	{
+		FreezeRot[0] = x;
+		FreezeRot[1] = y;
+		FreezeRot[2] = z;
+	}
+	else
+	{
+		RigidbodyData->SetLockAxis_Rotation(x, y, z);
+	}
 }
 
 Vector3 Rigidbody::GetFreezeRotation()
 {
-	return RigidbodyData->GetFreezeRotation();
+	return RigidbodyData->GetLockAxis_Rotation();
 }
 
 void Rigidbody::SetVelocity(float x, float y, float z)

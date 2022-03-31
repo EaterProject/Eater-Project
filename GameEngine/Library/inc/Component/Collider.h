@@ -17,9 +17,8 @@ class Collider : public Component
 public:
 	EATER_ENGINEDLL Collider();
 	EATER_ENGINEDLL ~Collider();
-	void Awake();
+	void PhysicsUpdate();
 	void Start();
-	void Update();
 public:
 	///Set
 	EATER_ENGINEDLL void SetBoxCollider(float Size_x, float Size_y, float Size_z);		//네모 모양에 콜라이더 생성
@@ -35,8 +34,6 @@ public:
 	EATER_ENGINEDLL void SetMaterial_Dynamic(float Dynamic);				//재질 설정
 	EATER_ENGINEDLL void SetMaterial_Restitution(float Restitution);		//재질 설정
 
-
-
 	///Get
 	EATER_ENGINEDLL PhysCollider* GetCollider();
 	EATER_ENGINEDLL bool CreatePhys();
@@ -44,12 +41,19 @@ public:
 	EATER_ENGINEDLL float GetMaterial_Static();
 	EATER_ENGINEDLL float GetMaterial_Dynamic();
 	EATER_ENGINEDLL float GetMaterial_Restitution();
+
+	EATER_ENGINEDLL bool GetTriggerEnter();
+	EATER_ENGINEDLL bool GetTriggerStay();
+	EATER_ENGINEDLL bool GetTriggerExit();
+	EATER_ENGINEDLL int GetTriggerCount();
+	EATER_ENGINEDLL GameObject* GetTriggerObject();
 private:
 	void DebugCollider();
 	DirectX::SimpleMath::Matrix CreateXMRot4x4();
 private:
 	PhysData*		mPhysData;
 	Rigidbody*		mRigidbody;
+	Transform*		mTransform;
 	ColliderData*	mDebugCollider;
 	bool isCreate	= false;
 

@@ -186,7 +186,26 @@ void SceneSave::SaveCollider(Collider* mCollider)
 
 void SceneSave::SaveRigidbody(Rigidbody* mRigidbody)
 {
-	
+	EATER_SET_LIST_START("Rigidbody", 1, 9);
+
+	float Mass		= mRigidbody->GetMass();
+	bool Gravity	= mRigidbody->GetGravity();
+	bool Kinematic	= mRigidbody->GetKinematic();
+	Vector3 Pos = mRigidbody->GetFreezePosition();
+	Vector3 Rot = mRigidbody->GetFreezeRotation();
+
+	EATER_SET_LIST(Mass);
+	EATER_SET_LIST(Gravity);
+	EATER_SET_LIST(Kinematic);
+
+	EATER_SET_LIST(Pos.x);
+	EATER_SET_LIST(Pos.y);
+	EATER_SET_LIST(Pos.z);
+
+	EATER_SET_LIST(Rot.x);
+	EATER_SET_LIST(Rot.y);
+	EATER_SET_LIST(Rot.z,true);
+
 }
 
 void SceneSave::SaveCamera(Camera* mCamera)

@@ -17,7 +17,7 @@ PhysData::PhysData()
 	MT_Mass = 1.0f;
 
 	isDinamic	= false;
-	isGrvity	= true;
+	isGravity	= true;
 	isKinematic = false;
 	isVelocity	= false;
 	isForce		= false;

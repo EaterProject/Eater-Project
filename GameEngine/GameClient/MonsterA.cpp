@@ -46,13 +46,13 @@ void MonsterA::SetUp()
 	mColider->SetBoxCollider(0.25f);
 	mColider->SetMaterial_Restitution(0);
 	mRigidbody->SetFreezeRotation(true, true, true);
-	mRigidbody->SetGrvity(false);
+	mRigidbody->SetGravity(true);
 	mColider->CreatePhys();
 
 	//매쉬 생성
-	mMeshFilter->SetModelName("MonsterA+");
-	mMeshFilter->SetAnimationName("MonsterA+");
-	mAnimation->Choice("Move");
+	mMeshFilter->SetModelName("monsterA+");
+	mMeshFilter->SetAnimationName("monsterA+");
+	mAnimation->Choice("move");
 }
 
 void MonsterA::Update()

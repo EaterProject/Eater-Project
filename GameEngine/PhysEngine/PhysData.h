@@ -34,6 +34,8 @@ class  PHYS_ENGINEDLL PhysData
 public:
 	 PhysData();
 	 ~PhysData();
+	 void* EaterObj = nullptr;
+
 	//월드 위치
 	Vector3 WorldPosition;
 	//회전
@@ -64,7 +66,7 @@ public:
 	//움직이는 객체인지 (Dinamic , Static)
 	bool isDinamic = true;
 	//중력 작용 여부
-	bool isGrvity = true;
+	bool isGravity = true;
 	//움직이진 않는데 충돌 할것인지
 	bool isKinematic;
 
@@ -104,6 +106,7 @@ private:
 	bool OnTriggerExit;
 private:
 	void* ActorObj = nullptr;
+	
 
 	friend class Factory;
 	friend class PhysEngine;

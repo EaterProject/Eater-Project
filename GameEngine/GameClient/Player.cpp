@@ -33,12 +33,8 @@ void Player::Awake()
 	mMeshFilter = gameobject->GetComponent<MeshFilter>();
 	mAnimation	= gameobject->GetComponent<AnimationController>();
 	
-
 	AttackColliderObject = FindGameObjectTag("AttackCollider");
-	AttackRigidbody = AttackColliderObject->GetComponent<Rigidbody>();
 	AttackCollider = AttackColliderObject->GetComponent<Collider>();
-	
-	
 	
 }
 
@@ -46,14 +42,32 @@ void Player::SetUp()
 {
 	mCameraTR = GetMainCamera()->GetTransform();
 
-	AttackCollider->SetTrigger(true);
-	AttackRigidbody->SetGrvity(false);
-	AttackCollider->CreatePhys();
+	//AttackCollider->SetTrigger(true);
+	//AttackRigidbody->SetGrvity(false);
+	//AttackCollider->CreatePhys();
 }
 
 void Player::Update()
 {
-	
+	Vector3 Look = mTransform->GetLocalPosition_Look();
+	Look *= 2;
+	Look.y = 1;
+	Look.z *= -1;
+
+	if (AttackColliderObject != nullptr)
+	{
+		AttackColliderObject->GetTransform()->Position = mTransform->Position + Look;
+	}
+
+	bool TriggerStay  = AttackCollider->GetTriggerStay();
+	if (TriggerStay == true)
+	{
+		if (GetKeyDown(VK_SPACE))
+		{
+			GameObject* Obj = AttackCollider->GetTriggerObject();
+			if (Obj != nullptr) { Destroy(Obj); }
+		}
+	}
 }
 
 void Player::StartUpdate()

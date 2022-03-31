@@ -21,21 +21,14 @@ public:
 	virtual void SetUp();
 	virtual void PhysicsUpdate();
 
-	EATER_ENGINEDLL void SetRotation(float x, float y, float z, float w);
-	EATER_ENGINEDLL void SetRotation(float x, float y, float z);
-	EATER_ENGINEDLL void SetPosition(float x, float y, float z);
-
-
 	EATER_ENGINEDLL bool GetTriggerEnter();
 	EATER_ENGINEDLL bool GetTriggerStay();
 	EATER_ENGINEDLL bool GetTriggerExit();
 	EATER_ENGINEDLL int GetTriggerCount();
 
-	//타입을 정의 한다(static , Dinamic)
-	EATER_ENGINEDLL void SetType(bool Dinamic);
 	//중력 적용 여부
-	EATER_ENGINEDLL void SetGrvity(bool grvity);
-	EATER_ENGINEDLL float GetGrvity();
+	EATER_ENGINEDLL void SetGravity(bool grvity);
+	EATER_ENGINEDLL bool GetGravity();
 	//
 	EATER_ENGINEDLL void SetKinematic(bool kinematic);
 	EATER_ENGINEDLL bool GetKinematic();
@@ -62,6 +55,13 @@ public:
 
 	bool isCreate = false;
 private:
+	bool isGravity		= true;
+	bool isKinematic	= false;
+	float Mass			= 1;
+	bool FreezePos[3];
+	bool FreezeRot[3];
+private:
+
 	Transform*		mTransform;
 	PhysData*		RigidbodyData;
 	ColliderData*	Collider_Data;

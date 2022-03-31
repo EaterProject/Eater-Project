@@ -58,6 +58,13 @@ private:
 	bool Initialize_Release(int ThreadCount);
 	bool Initialize_Debug(int ThreadCount);
 	void CreateStart();
+private:
+	void UpdateDynamicPosition(PxRigidDynamic* Dynamic , PhysData* Data);
+	void UpdateDynamicForce(PxRigidDynamic* Dynamic, PhysData* Data);
+	void UpdateDynamicVelocity(PxRigidDynamic* Dynamic, PhysData* Data);
+
+	void UpdateStaticPosition(PxRigidStatic* Static, PhysData* Data);
+
 
 	bool Start = false;
 
