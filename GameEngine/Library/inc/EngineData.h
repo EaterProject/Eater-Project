@@ -199,6 +199,7 @@ public:
 	Vector3 CamPos;		// Camera Pos
 
 	BoundingFrustum BoundFrustum;	// Bounding Frustum
+	BoundingFrustum OriginFrustum;	// Bounding Frustum
 };
 
 /// <summary>

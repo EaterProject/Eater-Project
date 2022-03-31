@@ -180,7 +180,7 @@ void Camera::CreateProj(int winsizeX, int WinSizeY, bool ViewPoint)
 
 	// Camera Data Àç¼³Á¤..
 	mCameraData->CamProj = mProj;
-	BoundingFrustum::CreateFromMatrix(mCameraData->BoundFrustum, mProj);
+	BoundingFrustum::CreateFromMatrix(mCameraData->OriginFrustum, mProj);
 }
 
 void Camera::CreateView()
@@ -213,6 +213,7 @@ void Camera::CreateView()
 	mCameraData->CamInvView = mView.Invert();
 	mCameraData->CamViewProj = mView * mProj;
 	mCameraData->CamPos = tranform->Position;
+	mCameraData->OriginFrustum.Transform(mCameraData->BoundFrustum, mCameraData->CamInvView);
 }
 
 void Camera::PushCamList()

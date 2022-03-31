@@ -91,6 +91,8 @@ private:
 	void CheckMaxSizeLayer(std::vector<InstanceLayer*>& layerList);							// 현재 Instance Layer Size 재설정..
 	void FindInstanceLayer(std::vector<InstanceLayer*>& layerList, InstanceLayer* layer);	// 해당 Instance Layer 검색 및 추가..
 
+	bool SortDistance(RenderData* obj1, RenderData* obj2);
+
 private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain> m_SwapChain;
 

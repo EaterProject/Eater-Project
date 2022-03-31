@@ -219,6 +219,7 @@ copy/Y "$(ProjectDir)Export\*.h"   "$(SolutionDir)Library\inc\Graphic"</Command>
     <ClInclude Include="DepthStencil.h" />
     <ClInclude Include="InstanceBufferDefine.h" />
     <ClInclude Include="LightPass.h" />
+    <ClInclude Include="Debug.h" />
     <ClInclude Include="MathDefine.h" />
     <ClInclude Include="MathHelper.h" />
     <ClInclude Include="OITPass.h" />
@@ -288,6 +289,7 @@ copy/Y "$(ProjectDir)Export\*.h"   "$(SolutionDir)Library\inc\Graphic"</Command>
     <ClCompile Include="KHGraphic.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="LightPass.cpp" />
+    <ClCompile Include="Debug.cpp" />
     <ClCompile Include="MathHelper.cpp" />
     <ClCompile Include="OITPass.cpp" />
     <ClCompile Include="PickingPass.cpp" />

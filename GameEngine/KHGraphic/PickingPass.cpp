@@ -130,7 +130,7 @@ void PickingPass::BeginRender()
 {
 	g_Context->OMSetRenderTargets(1, &m_ID_RTV, m_Defalt_DSV);
 
-	g_Context->ClearRenderTargetView(m_ID_RTV, reinterpret_cast<const float*>(&DXColors::NonID));
+	g_Context->ClearRenderTargetView(m_ID_RTV, reinterpret_cast<const float*>(&DXColors::NonBlack));
 	g_Context->ClearDepthStencilView(m_Defalt_DSV, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 	g_Context->OMSetDepthStencilState(m_Defalt_DSS, 0);
 	g_Context->RSSetViewports(1, m_Screen_VP);

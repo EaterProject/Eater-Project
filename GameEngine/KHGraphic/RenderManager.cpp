@@ -38,6 +38,7 @@
 #include "RenderDataConverter.h"
 
 #include <algorithm>
+#include "Debug.h"
 
 RenderManager::RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, IGraphicResourceManager* resource, IShaderManager* shader)
 {
@@ -257,12 +258,15 @@ void RenderManager::ConvertRenderData()
 
 void RenderManager::SelectRenderData()
 {
-	// Camera 기준 Obejct Distance Sorting..
+	Debug::TimerStart(60);
 
 	// Camera View Frustum Culling..
 	int renderCount = 0;
 	for (InstanceLayer* layer : m_RenderMeshList)
 	{
+		// 해당 Layer Distance Sorting..
+		//std::sort(layer->m_MeshList.begin(), layer->m_MeshList.end(), [this](RenderData* rd1, RenderData* rd2) { return this->SortDistance(rd1, rd2); });
+
 		// 해당 Layer Render List 초기화..
 		memset(&layer->m_RenderList[0], 0, layer->m_RenderList.size());
 
@@ -278,6 +282,8 @@ void RenderManager::SelectRenderData()
 		layer->m_RenderCount = renderCount;
 		renderCount = 0;
 	}
+
+	Debug::TimerEnd();
 }
 
 void RenderManager::Render()
@@ -931,4 +937,16 @@ void RenderManager::FindInstanceLayer(std::vector<InstanceLayer*>& layerList, In
 
 	// 만약 Layer가 검색되지 않았다면 Layer List에 삽입..
 	layerList.push_back(layer);
+}
+
+bool RenderManager::SortDistance(RenderData* obj1, RenderData* obj2)
+{
+	const Vector3& camPos = RenderPassBase::g_GlobalData->Camera_Data->CamPos;
+	const Vector3& objPos1 = { (*obj1->m_ObjectData->World)._41 - camPos.x, (*obj1->m_ObjectData->World)._42 - camPos.y, (*obj1->m_ObjectData->World)._43 - camPos.z };
+	const Vector3& objPos2 = { (*obj2->m_ObjectData->World)._41 - camPos.x, (*obj2->m_ObjectData->World)._42 - camPos.y, (*obj2->m_ObjectData->World)._43 - camPos.z };
+
+	const float& distance1 = sqrtf(objPos1.x * objPos1.x + objPos1.y * objPos1.y + objPos1.z * objPos1.z);
+	const float& distance2 = sqrtf(objPos2.x * objPos2.x + objPos2.y * objPos2.y + objPos2.z * objPos2.z);
+
+	return (distance1 < distance2) ? true : false;
 }
