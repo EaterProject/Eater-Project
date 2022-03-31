@@ -2,6 +2,7 @@
 #include "BaseEventCallBack.h"
 #include <algorithm>
 #include "PhysData.h"
+
 BaseEventCallBack::BaseEventCallBack()
 {
 }
@@ -50,7 +51,8 @@ void BaseEventCallBack::onTrigger(PxTriggerPair* pairs, PxU32 count)
 			Other->TriggerList.push_back(Target);
 			Target->TriggerList.push_back(Other);
 		}
-		else if (pairs[i].status & PxPairFlag::eNOTIFY_TOUCH_LOST)
+
+		if (pairs[i].status & PxPairFlag::eNOTIFY_TOUCH_LOST)
 		{
 			Other->OnTriggerStay = false;
 			Other->OnTriggerExit = true;

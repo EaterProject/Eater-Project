@@ -208,6 +208,18 @@ Vector3 Rigidbody::GetVelocity()
 	 RigidbodyData->CenterPoint = {x,y,z}; 
  }
 
+ GameObject* Rigidbody::GetTriggerObject()
+ {
+	 if (RigidbodyData->TriggerList[0] != nullptr)
+	 {
+		 return reinterpret_cast<GameObject*>(RigidbodyData->EaterObj);
+	 }
+	 else
+	 {
+		 return nullptr;
+	 }
+ }
+
 
 
 

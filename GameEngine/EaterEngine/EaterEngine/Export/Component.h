@@ -53,7 +53,6 @@ protected:
 	virtual void Update() {};
 	//마지막 업데이트
 	virtual void EndUpdate() {};
-
 protected:
 	///어떤컨퍼넌트의 함수가 함수리스트에 몇번째로 실행될것인지 여부
 	//ex)MeshFilter의 StartUpdate가 Transform의 StartUpdate 보다 먼저 실행되어야 한다면

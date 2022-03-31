@@ -52,7 +52,7 @@ public:
 	EATER_ENGINEDLL void SetAddForce(float x, float y, float z);
 	//초기 위치값에서 센터좌표를 다시 지정한다 
 	EATER_ENGINEDLL void SetCenterPoint(float x, float y, float z);
-
+	EATER_ENGINEDLL GameObject* GetTriggerObject();
 	bool isCreate = false;
 private:
 	bool isGravity		= true;

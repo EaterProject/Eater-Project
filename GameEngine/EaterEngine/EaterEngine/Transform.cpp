@@ -269,7 +269,7 @@ void Transform::Slow_Y_Rotation(Vector3 Dir, float RotationSpeed)
 		float Min = 360 + MinAngle;
 		if (MyAngle <= Max && MyAngle >= Min)
 		{
-			RotationDir = 0;
+			RotationDir = 0.0f;
 		}
 	}
 
@@ -280,13 +280,13 @@ void Transform::Slow_Y_Rotation(Vector3 Dir, float RotationSpeed)
 	}
 
 	//현재 각도는 0 ~ 360 범위 밖으로 나가지못하게 변경
-	if (Rotation.y > 360)
+	if (Rotation.y >= 360.0f)
 	{
-		Rotation.y = 0;
+		Rotation.y = 0.0f;
 	}
-	else if (Rotation.y < 0)
+	else if (Rotation.y < 0.0f)
 	{
-		Rotation.y = 360;
+		Rotation.y = 360.0f;
 	}
 
 }

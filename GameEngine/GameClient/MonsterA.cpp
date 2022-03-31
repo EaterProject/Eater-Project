@@ -50,15 +50,22 @@ void MonsterA::SetUp()
 	mColider->CreatePhys();
 
 	//매쉬 생성
-	mMeshFilter->SetModelName("monsterA+");
-	mMeshFilter->SetAnimationName("monsterA+");
+	mMeshFilter->SetModelName("MonsterA+");
+	mMeshFilter->SetAnimationName("MonsterA+");
 	mAnimation->Choice("move");
 }
 
 void MonsterA::Update()
 {
+	//if (mRigidbody->GetTriggerEnter())
+	//{
+	//	GameObject* Obj = mRigidbody->GetTriggerObject();
+	//	int num = 0;
+	//}
+
 	if (mBase->isLife == true)
 	{
 		mRigidbody->SetVelocity(0, 0, -1);
 	}
 }
+

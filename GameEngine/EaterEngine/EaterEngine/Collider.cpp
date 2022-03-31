@@ -6,6 +6,7 @@
 #include "EngineData.h"
 #include "LoadManager.h"
 #include "GameObject.h"
+#include "Component.h"
 
 Collider::Collider()
 {
@@ -232,7 +233,7 @@ GameObject* Collider::GetTriggerObject()
 {
 	if (mPhysData->TriggerList[0] != nullptr)
 	{
-		return reinterpret_cast<GameObject*>(mPhysData->EaterObj);
+		return reinterpret_cast<GameObject*>(mPhysData->TriggerList[0]->EaterObj);
 	}
 	else 
 	{

@@ -54,20 +54,7 @@ void Player::Update()
 	Look.y = 1;
 	Look.z *= -1;
 
-	if (AttackColliderObject != nullptr)
-	{
-		AttackColliderObject->GetTransform()->Position = mTransform->Position + Look;
-	}
-
-	bool TriggerStay  = AttackCollider->GetTriggerStay();
-	if (TriggerStay == true)
-	{
-		if (GetKeyDown(VK_SPACE))
-		{
-			GameObject* Obj = AttackCollider->GetTriggerObject();
-			if (Obj != nullptr) { Destroy(Obj); }
-		}
-	}
+	AttackColliderObject->GetTransform()->Position = mTransform->Position + Look;
 }
 
 void Player::StartUpdate()
@@ -75,6 +62,7 @@ void Player::StartUpdate()
 	PlayerKeyinput();
 	//mAnimation->Play(1, true);
 }
+
 
 void Player::PlayerKeyinput()
 {
@@ -112,19 +100,8 @@ void Player::PlayerKeyinput()
 	{
 		DirRot = DirPos;
 		mTransform->SetTranlate(DirPos * Speed * GetDeltaTime());
-		mTransform->Slow_Y_Rotation(DirRot, 400);
+		mTransform->Slow_Y_Rotation(DirRot, 450);
 	}
 	
-
-	//받은 방향으로 캐릭터를 회전시켜준다
-	//Vector3 Dir;
-	//Dir.x = DirPos.x;
-	//Dir.y = DirPos.y;
-	//Dir.z = DirPos.z;
-	//MeshObject->GetTransform()->Slow_Y_Rotation(Dir, 300);
-	////MeshObject->GetTransform()->SetRotate(0, 0, 1);
-	//DirPos*= Speed;
-	////mRigidbody->SetVelocity(DirPos.x, 0, DirPos.z);
 	DirPos = { 0,0,0 };
-	DirRot = { 0,0,0 };
 }

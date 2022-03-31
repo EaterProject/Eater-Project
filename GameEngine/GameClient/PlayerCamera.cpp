@@ -91,7 +91,7 @@ void PlayerCamera::StartUpdate()
 	
 	//카메라의 회전값
 	mTransform->Rotation.x = -(Y_Radian / MosControl) * 180 / 3.141592f;
-	mTransform->Rotation.y = (X_Radian / MosControl) * 180 / 3.141592f - 180;
+	mTransform->Rotation.y = (X_Radian / MosControl) * 180 / 3.141592f - 180.0f;
 	
 	
 	//키를 눌렀을때

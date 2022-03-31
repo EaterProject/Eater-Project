@@ -21,6 +21,7 @@ public:
 	void SetUp();
 	void Update();
 	void StartUpdate();
+	void OnTriggerEnter(GameObject* other);
 
 	float Speed =0;
 private:
