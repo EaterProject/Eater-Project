@@ -9,7 +9,9 @@
 /// </summary>
  
 class Transform;
+class CameraData;
 class ColliderData;
+
 class Camera : public Component
 {
 public:
@@ -29,11 +31,14 @@ public:
 	DirectX::SimpleMath::Matrix GetView();
 	//프로젝션 행렬을 가져온다
 	DirectX::SimpleMath::Matrix GetProj();
+	//카메라의 데이터
+	CameraData* GetCameraData();
 
+public:
 	//OnResize 에서 실행될 함수
 	void SetSize(int Change_Width, int Change_Height);
 	void CreateProj(int winsizeX,int WinSizeY, bool ViewPoint = false);
-public:
+
 private:
 	Transform* tranform;
 
@@ -46,6 +51,9 @@ private:
 	//뷰
 	DirectX::SimpleMath::Matrix mView;
 
+	//프러스텀
+	DirectX::BoundingFrustum mFrustum;
+
 	//카메라 리스트에서 나의 인덱스
 	int MyIndex;
 	bool isMain;
@@ -54,6 +62,7 @@ private:
 	//카메라 리스트
 	static std::vector<Camera*> CamList;
 
+	CameraData* mCameraData;
 	ColliderData* Collider_Data;
 public:
 	//메인카메라

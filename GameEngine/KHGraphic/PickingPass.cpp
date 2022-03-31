@@ -140,12 +140,13 @@ void PickingPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rende
 {
 	if (meshData == nullptr) return;
 	
-	ObjectData* obj = meshData->m_ObjectData;
-	MeshRenderBuffer* mesh = meshData->m_Mesh;
+	const CameraData* cam = g_GlobalData->Camera_Data;
+	const ObjectData* obj = meshData->m_ObjectData;
+	const MeshRenderBuffer* mesh = meshData->m_Mesh;
 
-	Matrix world = *obj->World;
-	Matrix viewproj = g_GlobalData->CamViewProj;
-	Vector4 hashColor = obj->HashColor;
+	const Matrix& world = *obj->World;
+	const Matrix& viewproj = cam->CamViewProj;
+	const Vector4& hashColor = obj->HashColor;
 
 	switch (obj->ObjType)
 	{
@@ -231,11 +232,11 @@ void PickingPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::
 		RenderUpdate(instance, meshlist[0]);
 		return;
 	}
-
-	Matrix viewproj = g_GlobalData->CamViewProj;
-
+	
 	ObjectData* obj = nullptr;
-	MeshRenderBuffer* mesh = instance->m_Mesh;
+	const MeshRenderBuffer* mesh = instance->m_Mesh;
+
+	const Matrix& viewproj = g_GlobalData->Camera_Data->CamViewProj;
 
 	for (int i = 0; i < meshlist.size(); i++)
 	{
@@ -310,9 +311,9 @@ void PickingPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::
 
 void PickingPass::NoneMeshRenderUpdate(const std::vector<RenderData*>& meshlist)
 {
-	Matrix viewproj = g_GlobalData->CamViewProj;
-
 	ObjectData* obj = nullptr;
+
+	const Matrix& viewproj = g_GlobalData->Camera_Data->CamViewProj;
 
 	for (int i = 0; i < meshlist.size(); i++)
 	{

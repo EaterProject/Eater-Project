@@ -14,6 +14,7 @@ Camera* Camera::g_MainCam = nullptr;
 
 Camera::Camera()
 {
+	mCameraData = new CameraData();
 	PushCamList();
 	isMain = false;
 }
@@ -26,6 +27,8 @@ Camera::~Camera()
 	}
 
 	CamList[MyIndex] = nullptr;
+
+	delete mCameraData;
 }
 
 void Camera::Awake()
@@ -37,7 +40,6 @@ void Camera::Awake()
 
 	Collider_Data = new ColliderData();
 	Collider_Data->ColliderColor = {1,0,0};
-	
 }
 
 void Camera::Update()
@@ -83,9 +85,9 @@ DirectX::SimpleMath::Matrix Camera::GetProj()
 	}
 }
 
-DirectX::BoundingFrustum& Camera::GetFrustum()
+CameraData* Camera::GetCameraData()
 {
-	return mFrustum;
+	return mCameraData;
 }
 
 DirectX::SimpleMath::Vector3 Camera::GetPos()
@@ -118,11 +120,9 @@ void Camera::ChoiceMainCam()
 	g_MainCam->gameobject->SetTag("Camera");
 	g_MainCam = nullptr;
 	g_MainCam = this;
+
 	//바뀐 카메라의 태그를 메인카메라로 변경
 	g_MainCam->gameobject->SetTag("MainCamera");
-
-	//메인 카메라 프러스텀 설정
-	
 }
 
 DirectX::SimpleMath::Matrix Camera::GetView()
@@ -178,8 +178,9 @@ void Camera::CreateProj(int winsizeX, int WinSizeY, bool ViewPoint)
 		mProj = DirectX::XMMatrixOrthographicLH(mFovY, mAspect, mNearZ, mFarZ);
 	}
 
-	// Frustum 재설정..
-	BoundingFrustum::CreateFromMatrix(mFrustum, mProj);
+	// Camera Data 재설정..
+	mCameraData->CamProj = mProj;
+	BoundingFrustum::CreateFromMatrix(mCameraData->BoundFrustum, mProj);
 }
 
 void Camera::CreateView()
@@ -206,6 +207,12 @@ void Camera::CreateView()
 	mView._21 = r_.y;	mView._22 = u_.y;	mView._23 = l_.y; mView._24 = 0;
 	mView._31 = r_.z;	mView._32 = u_.z;	mView._33 = l_.z; mView._34 = 0;
 	mView._41 = -x;		mView._42 = -y;		mView._43 = -z;	  mView._44 = 1;
+
+	// Camera Data Update..
+	mCameraData->CamView = mView;
+	mCameraData->CamInvView = mView.Invert();
+	mCameraData->CamViewProj = mView * mProj;
+	mCameraData->CamPos = tranform->Position;
 }
 
 void Camera::PushCamList()

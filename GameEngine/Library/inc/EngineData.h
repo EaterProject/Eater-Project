@@ -68,6 +68,7 @@ public:
 	}
 };
 
+// Mesh Sub Data
 class MeshSubData
 {
 public:

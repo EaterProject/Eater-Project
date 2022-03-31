@@ -173,7 +173,9 @@ void LightPass::Reset()
 
 void LightPass::RenderUpdate()
 {
-	Matrix texSpace = g_GlobalData->TexSpace;
+	CameraData* cam = g_GlobalData->Camera_Data;
+
+	Matrix& texSpace = g_GlobalData->TexSpace;
 
 	g_Context->OMSetRenderTargets(1, &m_OutPut_RTV, nullptr);
 	g_Context->ClearRenderTargetView(m_OutPut_RTV, reinterpret_cast<const float*>(&DXColors::DeepDarkGray));
@@ -201,8 +203,8 @@ void LightPass::RenderUpdate()
 	}
 
 	CB_LightSub lightsubBuf;
-	lightsubBuf.gEyePosW = g_GlobalData->CamPos;
-	lightsubBuf.gViewProjTex = g_GlobalData->CamView * g_GlobalData->CamProj * g_GlobalData->TexSpace;
+	lightsubBuf.gEyePosW = cam->CamPos;
+	lightsubBuf.gViewProjTex = cam->CamView * cam->CamProj * texSpace;
 
 	// Vertex Shader Update..
 	m_Light_VS->Update();

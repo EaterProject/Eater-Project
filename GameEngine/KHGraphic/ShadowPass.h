@@ -15,7 +15,7 @@ public:
 
 public:
 	void BeginRender();
-	void RenderUpdate(const InstanceRenderBuffer* instance, const std::vector<RenderData*>& meshlist);
+	void RenderUpdate(const InstanceRenderBuffer* instance, const std::vector<RenderData*>& meshlist, const UINT& renderCount);
 	void RenderUpdate(const InstanceRenderBuffer* instance, const RenderData* meshData);
 
 private:

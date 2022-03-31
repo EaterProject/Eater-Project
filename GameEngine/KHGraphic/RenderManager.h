@@ -54,9 +54,11 @@ public:
 	void* PickingRender(int x, int y) override;
 
 private:
-	void RenderSetting();
+	void RenderSetting();				// 현재 프레임에 설정된 Render Option 적용..
 
-	void ConvertRenderData();
+	void ConvertRenderData();			// 현재 프레임에 추가 및 변경된 Render Data 변환..
+
+	void SelectRenderData();			// 현재 프레임에 Rendering 될 Mesh 선별 작업..
 
 	void ShadowRender();
 	void DeferredRender();
@@ -70,23 +72,24 @@ private:
 	void EndRender();
 
 private:
-	void ConvertPushInstance();
-	void ConvertChangeInstance();
+	void ConvertPushInstance();								// 현재 프레임 진행중 추가된 Instance 변환..
+	void ConvertChangeInstance();							// 현재 프레임 진행중 변경된 Instance 변환..
 
-	void PushMeshRenderData(RenderData* renderData);
-	void PushParticleRenderData(RenderData* renderData);
-	void PushUnRenderData(RenderData* renderData);
+	void PushMeshRenderData(RenderData* renderData);		// Static Mesh Render List 삽입..
+	void PushParticleRenderData(RenderData* renderData);	// Transparency Mesh Render List 삽입..
+	void PushUnRenderData(RenderData* renderData);			// Un Render List 삽입..
 
-	void ChangeMeshRenderData(MeshData* meshData);
-	void ChangeParticleRenderData(MeshData* meshData);
-	void ChangeUnRenderData(MeshData* meshData);
+	void ChangeMeshRenderData(MeshData* meshData);			// Static Mesh Render Data 변환..
+	void ChangeParticleRenderData(MeshData* meshData);		// Transparency Mesh Render Data 변환..
+	void ChangeUnRenderData(MeshData* meshData);			// Un Render Data 변환..
 
-	void DeleteMeshRenderData(MeshData* meshData);
-	void DeleteParticleRenderData(MeshData* meshData);
-	void DeleteUnRenderData(MeshData* meshData);
+	void DeleteMeshRenderData(MeshData* meshData);			// Static Mesh Render Data 제거..
+	void DeleteParticleRenderData(MeshData* meshData);		// Transparency Mesh Render Data 제거..
+	void DeleteUnRenderData(MeshData* meshData);			// Un Render Data 제거..
 
-	void CheckInstanceLayer(std::vector<InstanceLayer*>& layerList);
-	void FindInstanceLayer(std::vector<InstanceLayer*>& layerList, InstanceLayer* layer);
+	void CheckInstanceLayer(std::vector<InstanceLayer*>& layerList);						// 비어있는 Insatnce Layer 검사 및 제거..
+	void CheckMaxSizeLayer(std::vector<InstanceLayer*>& layerList);							// 현재 Instance Layer Size 재설정..
+	void FindInstanceLayer(std::vector<InstanceLayer*>& layerList, InstanceLayer* layer);	// 해당 Instance Layer 검색 및 추가..
 
 private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain> m_SwapChain;
@@ -94,6 +97,8 @@ private:
 private:
 	std::queue<MeshData*> m_PushInstanceList;
 	std::queue<MeshData*> m_ChangeInstanceList;
+
+	std::queue<RenderData*> m_RenderQueue;
 
 	std::vector<InstanceLayer*> m_RenderMeshList;
 	std::vector<InstanceLayer*> m_ParticleMeshList;

@@ -124,9 +124,9 @@ void ShadowPass::BeginRender()
 	g_Context->RSSetState(m_DepthRS);
 }
 
-void ShadowPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::vector<RenderData*>& meshlist)
+void ShadowPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::vector<RenderData*>& meshlist, const UINT& renderCount)
 {
-	if (meshlist.size() == 1)
+	if (renderCount == 1)
 	{
 		RenderUpdate(instance, meshlist[0]);
 		return;
@@ -136,7 +136,7 @@ void ShadowPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::v
 
 	MeshRenderBuffer* mesh = instance->m_Mesh;
 
-	for (int i = 0; i < meshlist.size(); i++)
+	for (int i = 0; i < renderCount; i++)
 	{
 		if (meshlist[i] == nullptr) continue;
 

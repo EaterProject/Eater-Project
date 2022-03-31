@@ -255,6 +255,31 @@ void RenderManager::ConvertRenderData()
 	ConvertChangeInstance();
 }
 
+void RenderManager::SelectRenderData()
+{
+	// Camera 기준 Obejct Distance Sorting..
+
+	// Camera View Frustum Culling..
+	int renderCount = 0;
+	for (InstanceLayer* layer : m_RenderMeshList)
+	{
+		// 해당 Layer Render List 초기화..
+		memset(&layer->m_RenderList[0], 0, layer->m_RenderList.size());
+
+		for (RenderData* renderData : layer->m_MeshList)
+		{
+			if (m_Culling->FrustumCulling(renderData))
+			{
+				layer->m_RenderList[renderCount++] = renderData;
+			}
+		}
+
+		// Layer 변경시 Index 초기화..
+		layer->m_RenderCount = renderCount;
+		renderCount = 0;
+	}
+}
+
 void RenderManager::Render()
 {
 	// Rendering Option Setting..
@@ -262,6 +287,9 @@ void RenderManager::Render()
 
 	// Rendering Resource 동기화 작업..
 	ConvertRenderData();
+
+	// Render Data 선별 작업..
+	SelectRenderData();
 
 	// Shadow Render..
 	GPU_BEGIN_EVENT_DEBUG_NAME("Shadow Pass");
@@ -358,7 +386,8 @@ void RenderManager::ShadowRender()
 		{
 			m_InstanceLayer = m_RenderMeshList[i];
 
-			m_Shadow->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_MeshList);
+			m_Shadow->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_RenderList, m_InstanceLayer->m_RenderCount);
+			//m_Shadow->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_MeshList, m_InstanceLayer->m_MeshList.size());
 		}
 	}
 }
@@ -371,7 +400,8 @@ void RenderManager::DeferredRender()
 	{
 		m_InstanceLayer = m_RenderMeshList[i];
 
-		m_Deferred->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_MeshList);
+		m_Deferred->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_RenderList, m_InstanceLayer->m_RenderCount);
+		//m_Deferred->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_MeshList, m_InstanceLayer->m_MeshList.size());
 	}
 }
 
@@ -584,6 +614,10 @@ void RenderManager::ConvertPushInstance()
 		// 변환한 Mesh Data Pop..
 		m_PushInstanceList.pop();
 	}
+
+	// 모든 변환이 끝난후 List 재설정..
+	CheckMaxSizeLayer(m_RenderMeshList);
+	CheckMaxSizeLayer(m_ParticleMeshList);
 }
 
 void RenderManager::ConvertChangeInstance()
@@ -873,6 +907,15 @@ void RenderManager::CheckInstanceLayer(std::vector<InstanceLayer*>& layerList)
 
 	// 해당 Layer 리스트에서 제거..
 	layerList.erase(std::next(layerList.begin(), index));
+}
+
+void RenderManager::CheckMaxSizeLayer(std::vector<InstanceLayer*>& layerList)
+{
+	for (InstanceLayer* instanceLayer : layerList)
+	{
+		// Mesh List Size 기준으로 Render List Size 설정..
+		instanceLayer->m_RenderList.resize(instanceLayer->m_MeshList.size());
+	}
 }
 
 void RenderManager::FindInstanceLayer(std::vector<InstanceLayer*>& layerList, InstanceLayer* layer)

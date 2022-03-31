@@ -9,7 +9,9 @@
 /// </summary>
  
 class Transform;
+class CameraData;
 class ColliderData;
+
 class Camera : public Component
 {
 public:
@@ -29,8 +31,8 @@ public:
 	DirectX::SimpleMath::Matrix GetView();
 	//프로젝션 행렬을 가져온다
 	DirectX::SimpleMath::Matrix GetProj();
-	//프러스텀을 가져온다
-	DirectX::BoundingFrustum& GetFrustum();
+	//카메라의 데이터
+	CameraData* GetCameraData();
 
 public:
 	//OnResize 에서 실행될 함수
@@ -60,6 +62,7 @@ private:
 	//카메라 리스트
 	static std::vector<Camera*> CamList;
 
+	CameraData* mCameraData;
 	ColliderData* Collider_Data;
 public:
 	//메인카메라

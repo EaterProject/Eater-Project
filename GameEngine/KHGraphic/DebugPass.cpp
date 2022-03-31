@@ -158,12 +158,14 @@ void DebugPass::RenderUpdate(const RenderData* meshData)
 {
 	CB_DebugObject object;
 	CB_DebugOption option;
-	Matrix world = *meshData->m_ObjectData->World;
-	Matrix invView = g_GlobalData->CamInvView;
-	Matrix viewproj = g_GlobalData->CamViewProj;
 
-	MeshRenderBuffer* mesh = meshData->m_Mesh;
-	ColliderData* col = *meshData->m_ColliderData;
+	const CameraData* cam = g_GlobalData->Camera_Data;
+	const MeshRenderBuffer* mesh = meshData->m_Mesh;
+	const ColliderData* col = *meshData->m_ColliderData;
+
+	Matrix world = *meshData->m_ObjectData->World;
+	const Matrix& invView = cam->CamInvView;
+	const Matrix& viewproj = cam->CamViewProj;
 
 	// Transform Debug..
 	object.gWorldViewProj = world * viewproj;
@@ -205,7 +207,7 @@ void DebugPass::RenderUpdate(const RenderData* meshData)
 		Matrix sphereWorld = world;
 
 		BoundingSphere sphere;
-		mesh->m_BoundSphere.Transform(sphere, world);
+		mesh->m_MeshSubData->BoundSphere.Transform(sphere, world);
 
 		object.gWorldViewProj = Matrix::CreateScale(sphere.Radius * 2.0f) * Matrix::CreateTranslation(sphere.Center) * viewproj;
 		
@@ -343,12 +345,14 @@ void DebugPass::GlobalRender()
 {
 	CB_DebugObject object;
 	CB_DebugOption option;
-	RayCastData ray;
 
 	Vector3 axis, look, right, up, pos;
+	RayCastData ray;
 
-	Matrix invView = g_GlobalData->CamInvView;
-	Matrix viewproj = g_GlobalData->CamViewProj;
+	const CameraData* cam = g_GlobalData->Camera_Data;
+
+	const Matrix& invView = cam->CamInvView;
+	const Matrix& viewproj = cam->CamViewProj;
 
 	std::vector<DirectionalLightData*>* directionList = &g_GlobalData->DirectionLights;
 	std::vector<PointLightData*>* pointList = &g_GlobalData->PointLights;
