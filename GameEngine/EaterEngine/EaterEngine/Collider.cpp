@@ -53,6 +53,26 @@ void Collider::PhysicsUpdate()
 	mTransform->Q_Rotation.w = mPhysData->Rotation.w;
 
 	DebugCollider();
+
+	//충돌 함수 호출
+	int Size = (int)mPhysData->TriggerList.size();
+	if (Size != 0)
+	{
+		if (mPhysData->GetTriggerEnter())
+		{
+			GameObject* Obj = reinterpret_cast<GameObject*>(mPhysData->TriggerList[0]->EaterObj);
+			gameobject->PlayPhysFunction(Obj, PHYS_TRIIGER_ENTER);
+		}
+		else if (mPhysData->GetTriggerStay())
+		{
+			gameobject->PlayPhysFunction((GameObject*)mPhysData->TriggerList[0], PHYS_TRIIGER_STAY);
+		}
+		else if (mPhysData->GetTriggerExit())
+		{
+			gameobject->PlayPhysFunction((GameObject*)mPhysData->TriggerList[0], PHYS_TRIIGER_EXIT);
+		}
+
+	}
 }
 
 

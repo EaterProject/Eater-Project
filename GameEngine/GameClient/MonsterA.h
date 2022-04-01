@@ -17,6 +17,7 @@ public:
 	void Awake();
 	void SetUp();
 	void Update();
+	void OnTriggerStay(GameObject* Obj);
 private:
 	MeshFilter*				mMeshFilter;
 	Transform*				mTransform;

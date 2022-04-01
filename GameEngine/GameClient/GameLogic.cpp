@@ -3,38 +3,49 @@
 #include "ObjectFactory.h"
 #include "GameObject.h"
 #include "Transform.h"
+#include "MonsterManager.h"
 #include "MonsterBase.h"
 
 GameLogic::GameLogic()
 {
-	Factory = nullptr;
+	FactoryGM	= nullptr;
+	MonsterGM	= nullptr;
 }
 
 GameLogic::~GameLogic()
 {
-	delete Factory;
+	delete FactoryGM;
+	delete MonsterGM;
 }
 
 void GameLogic::Initialize()
 {
 	//오브젝트 매니저 생성
-	Factory = new ObjectFactory();
-	Factory->Initialize();
+	FactoryGM = new ObjectFactory();
+	FactoryGM->Initialize();
+
+	//몬스터 매니저 생성
+	MonsterGM = new MonsterManager();
+	MonsterGM->Initialize();
+	MonsterGM->SetFactory(FactoryGM);
+
+
+
+
+
+
 
 	//포탈 태그가 붙어있는 오브젝트를 모두 가져와 리스트에 담아놓는다
 	FindGameObjectTags("Potal", &PotalList);
 
 	//플레이어 충돌용 오브젝트를 가져온다
 	FindGameObjectTag("AttackCollider");
-
-	//몬스터를 미리 할당
-	SetCreateMonsterMemorySize(10);
 }
 
 void GameLogic::Release()
 {
-	Factory->Release();
-	delete Factory;
+	FactoryGM->Release();
+	delete FactoryGM;
 }
 
 void GameLogic::Update()
@@ -50,7 +61,7 @@ void GameLogic::SetCreateMonsterMemorySize(int CreateCount)
 	for (int i = 0; i < CreateCount; i++)
 	{
 		//생성한 몬스터를 리스트에 담는다
-		MonsterList.push_back(Factory->CreateMonster(X,Y,Z+i,MONSTER_TYPE::MONSTER_A));
+		MonsterList.push_back(FactoryGM->CreateMonster(X,Y,Z+i,MONSTER_TYPE::MONSTER_A));
 	}
 }
 

@@ -7,6 +7,7 @@
 #include "Collider.h"
 #include "Rigidbody.h"
 #include "MonsterBase.h"
+#include "Player.h"
 
 MonsterA::MonsterA()
 {
@@ -43,15 +44,15 @@ void MonsterA::SetUp()
 {
 	//콜라이더 값 조정
 	mColider->SetCenter(0, 0.25, 0);
-	mColider->SetBoxCollider(0.25f);
+	mColider->SetSphereCollider(0.25f);
 	mColider->SetMaterial_Restitution(0);
 	mRigidbody->SetFreezeRotation(true, true, true);
 	mRigidbody->SetGravity(true);
 	mColider->CreatePhys();
 
 	//매쉬 생성
-	mMeshFilter->SetModelName("MonsterA+");
-	mMeshFilter->SetAnimationName("MonsterA+");
+	mMeshFilter->SetModelName("monsterA+");
+	mMeshFilter->SetAnimationName("monsterA+");
 	mAnimation->Choice("move");
 }
 
@@ -66,6 +67,15 @@ void MonsterA::Update()
 	if (mBase->isLife == true)
 	{
 		mRigidbody->SetVelocity(0, 0, -1);
+	}
+}
+
+void MonsterA::OnTriggerStay(GameObject* Obj)
+{
+	if (Player::GetState() == PLAYER_STATE::ATTACK)
+	{
+		Vector3 Look = Player::GetPlayerTransform()->GetLocalPosition_Look()  * 10;
+		mRigidbody->SetAddForce(Look.x, Look.y+10, Look.z *-1);
 	}
 }
 

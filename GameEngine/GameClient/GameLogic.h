@@ -8,6 +8,7 @@
 class GameObject;
 class ObjectFactory;
 class MonsterBase;
+class MonsterManager;
 
 class GameLogic
 {
@@ -28,8 +29,12 @@ private:
 	const float CreateMonsterMaxTime = 5.0f;	//몬스터 생성 시간 max
 private:
 	//오브젝트 생성 클래스
-	ObjectFactory* Factory; 
+	ObjectFactory*	FactoryGM; 
+	MonsterManager* MonsterGM;
 private:
+
+
+
 	std::vector<GameObject*>	PotalList;
 	std::vector<MonsterBase*>	MonsterList;
 };

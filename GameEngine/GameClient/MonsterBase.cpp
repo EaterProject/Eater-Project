@@ -28,6 +28,16 @@ void MonsterBase::Awake()
 
 }
 
+void MonsterBase::SetPlayer(GameObject* Obj)
+{
+	mPlayer = Obj;
+}
+
+GameObject* MonsterBase::GetPlayer()
+{
+	return mPlayer;
+}
+
 void MonsterBase::Reset()
 {
 	//몬스터의 상태를 처음상태로 되돌린다

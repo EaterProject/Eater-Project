@@ -1,5 +1,6 @@
 #pragma once
 #include "Component.h"
+class GameObject;
 class MonsterBase : public Component
 {
 public:
@@ -8,6 +9,8 @@ public:
 public:
 	bool isLife = false;
 	void Awake();
+	void SetPlayer(GameObject* Obj);
+	GameObject* GetPlayer();
 protected:
 	void Reset();//현재 몬스터의 상태를 초기화 시킨다
 	void Create(float HP, float AttackPower, float AttackTime);	//초기값 설정
@@ -22,6 +25,7 @@ protected:
 		CREATE,
 	};
 
+	GameObject* mPlayer;
 	float HP;				//체력
 	float AttackPower;		//공격력
 	float AttackDelayTime;	//공격 주기

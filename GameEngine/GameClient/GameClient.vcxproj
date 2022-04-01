@@ -164,6 +164,8 @@
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ClientBaseManager.h" />
+    <ClInclude Include="Drone.h" />
     <ClInclude Include="GameLogic.h" />
     <ClInclude Include="Loading.h" />
     <ClInclude Include="framework.h" />
@@ -182,6 +184,7 @@
     <ClInclude Include="MonsterA.h" />
     <ClInclude Include="MonsterB.h" />
     <ClInclude Include="MonsterBase.h" />
+    <ClInclude Include="MonsterManager.h" />
     <ClInclude Include="ObjectFactory.h" />
     <ClInclude Include="PlayerCamera.h" />
     <ClInclude Include="Potal.h" />
@@ -191,6 +194,8 @@
     <ClInclude Include="TestScene.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ClientBaseManager.cpp" />
+    <ClCompile Include="Drone.cpp" />
     <ClCompile Include="GameLogic.cpp" />
     <ClCompile Include="Loading.cpp" />
     <ClCompile Include="GameClient.cpp" />
@@ -208,6 +213,7 @@
     <ClCompile Include="MonsterA.cpp" />
     <ClCompile Include="MonsterB.cpp" />
     <ClCompile Include="MonsterBase.cpp" />
+    <ClCompile Include="MonsterManager.cpp" />
     <ClCompile Include="ObjectFactory.cpp" />
     <ClCompile Include="PlayerCamera.cpp" />
     <ClCompile Include="Player.cpp" />

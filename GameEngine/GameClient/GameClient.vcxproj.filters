@@ -67,6 +67,27 @@
     <Filter Include="소스 파일\Component\Monster\Base">
       <UniqueIdentifier>{9bed9a65-bcf5-4188-afc6-0d17e43a6b97}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Manager\BulletManager">
+      <UniqueIdentifier>{797d0432-a453-4c7b-82e2-0f525e17b3b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\Drone">
+      <UniqueIdentifier>{5d3595c4-893a-419c-8e60-e3f398ffc25a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\BaseManager">
+      <UniqueIdentifier>{2716d9ae-0b8f-410b-922f-e845bcd50a3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\ParticleManager">
+      <UniqueIdentifier>{fc613ed9-d838-4718-bc76-f238a984029e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\PotalManager">
+      <UniqueIdentifier>{c471336f-145f-4f92-addc-76925a2c6aef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\SoundManager">
+      <UniqueIdentifier>{1ea5c66b-997b-4b09-ab10-3740cae22e5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\MonsterManager">
+      <UniqueIdentifier>{e62a3675-adb9-4441-b8b8-c04df61aaf04}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -123,6 +144,15 @@
     <ClInclude Include="MonsterBase.h">
       <Filter>소스 파일\Component\Monster\Base</Filter>
     </ClInclude>
+    <ClInclude Include="Drone.h">
+      <Filter>소스 파일\Component\Drone</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientBaseManager.h">
+      <Filter>소스 파일\Manager\BaseManager</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterManager.h">
+      <Filter>소스 파일\Manager\MonsterManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameClient.cpp">
@@ -169,6 +199,15 @@
     </ClCompile>
     <ClCompile Include="MonsterBase.cpp">
       <Filter>소스 파일\Component\Monster\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Drone.cpp">
+      <Filter>소스 파일\Component\Drone</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientBaseManager.cpp">
+      <Filter>소스 파일\Manager\BaseManager</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterManager.cpp">
+      <Filter>소스 파일\Manager\MonsterManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

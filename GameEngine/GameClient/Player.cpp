@@ -14,6 +14,8 @@
 #include "WorldData_generated.h"
 #include "PlayerCamera.h"
 
+Transform* Player::mTransform = nullptr;
+PLAYER_STATE Player::mState;
 Player::Player()
 {
 	mAnimation	= nullptr;
@@ -49,20 +51,40 @@ void Player::SetUp()
 
 void Player::Update()
 {
+	//로직이 시작할때 플레이어 상태를 기본상태로 변환
+	mState = PLAYER_STATE::IDLE;
+
+	//플레이어 키입력
+	PlayerKeyinput();
+
+	//공력 충돌체의 위치를 설정
 	Vector3 Look = mTransform->GetLocalPosition_Look();
 	Look *= 2;
 	Look.y = 1;
 	Look.z *= -1;
-
 	AttackColliderObject->GetTransform()->Position = mTransform->Position + Look;
+
+	//공격키를 누르면 상태변환
+	if (GetKeyDown(VK_SPACE))
+	{
+		mState = PLAYER_STATE::ATTACK;
+	}
 }
 
 void Player::StartUpdate()
 {
-	PlayerKeyinput();
-	//mAnimation->Play(1, true);
+	//PlayerKeyinput();
 }
 
+Transform* Player::GetPlayerTransform()
+{
+	return mTransform;
+}
+
+PLAYER_STATE Player::GetState()
+{
+	return mState;
+}
 
 void Player::PlayerKeyinput()
 {

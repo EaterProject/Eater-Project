@@ -7,7 +7,6 @@
 #include "MeshFilter.h"
 #include "Material.h"
 
-std::vector<int> GameObject::TagList;
 GameObject::GameObject()
 {
 	Tag	= 0;			//ев╠в
@@ -261,48 +260,85 @@ Component* GameObject::GetComponent(int index)
 
 void GameObject::PushComponentFunction(Component* con, unsigned int type)
 {
-	std::string ComponentFunction = typeid(*con).name();
 	switch (type)
 	{
 	case AWAKE:
-		DebugManager::Print(DebugManager::MSG_TYPE::MSG_PUSH, ComponentFunction, "1.Awake",false);
 		ObjectManager::PushAwake(con,con->Awake_Order);
 		con->FUNCTION_MASK |= AWAKE;
 		break;
 	case START:
-		DebugManager::Print(DebugManager::MSG_TYPE::MSG_PUSH, ComponentFunction, "3.Start", false);
 		ObjectManager::PushStart(con, con->Start_Order);
 		con->FUNCTION_MASK |= START;
 		break;
 	case SETUP:
-		DebugManager::Print(DebugManager::MSG_TYPE::MSG_PUSH, ComponentFunction, "2.Setup", false);
 		ObjectManager::PushStartPlay(con, con->Start_Order);
 		con->FUNCTION_MASK |= SETUP;
 		break;
 	case START_UPDATE:
-		DebugManager::Print(DebugManager::MSG_TYPE::MSG_PUSH, ComponentFunction, "4.StartUpdate", false);
 		ObjectManager::PushStartUpdate(con, con->StartUpdate_Order);
 		con->FUNCTION_MASK |= START_UPDATE;
 		break;
 	case Transform_UPDATE:
-		DebugManager::Print(DebugManager::MSG_TYPE::MSG_PUSH, ComponentFunction,"5.TransformUpdate", false);
 		ObjectManager::PushTransformUpdate(con, con->TransformUpdate_Order);
 		con->FUNCTION_MASK |= Transform_UPDATE;
 		break;
 	case Physics_UPDATE:
-		DebugManager::Print(DebugManager::MSG_TYPE::MSG_PUSH, ComponentFunction, "6.PhysicsUpdate", false);
 		ObjectManager::PushPhysicsUpdate(con, con->PhysicsUpdate_Order);
 		con->FUNCTION_MASK |= Physics_UPDATE;
 		break;
 	case UPDATE:
-		DebugManager::Print(DebugManager::MSG_TYPE::MSG_PUSH, ComponentFunction, "7.Update", false);
 		ObjectManager::PushUpdate(con, con->DefaultUpdate_Order);
 		con->FUNCTION_MASK |= UPDATE;
 		break;
 	case END_UPDATE:
-		DebugManager::Print(DebugManager::MSG_TYPE::MSG_PUSH, ComponentFunction, "8.EndUpdate", false);
 		ObjectManager::PushEndUpdate(con, con->EndUpdate_Order);
 		con->FUNCTION_MASK |= END_UPDATE;
+		break;
+	}
+}
+
+void GameObject::PushPhysFunction(Component* con, unsigned int type)
+{
+	switch (type)
+	{
+	case PHYS_TRIIGER_ENTER:
+		OnTrigger_Enter_Function.push_back(std::bind(&Component::OnTriggerEnter, con, std::placeholders::_1));
+		break;
+	case PHYS_TRIIGER_STAY:
+		OnTrigger_Stay_Function.push_back(std::bind(&Component::OnTriggerStay, con, std::placeholders::_1));
+		break;
+	case PHYS_TRIIGER_EXIT:
+		OnTrigger_Exit_Function.push_back(std::bind(&Component::OnTriggerExit, con, std::placeholders::_1));
+		break;
+	}
+
+}
+
+void GameObject::PlayPhysFunction(GameObject* Obj, unsigned int type)
+{
+	int Size = 0;
+	switch (type)
+	{
+	case PHYS_TRIIGER_ENTER:
+		Size = (int)OnTrigger_Enter_Function.size();
+		for (int i = 0; i < Size; i++)
+		{
+			OnTrigger_Enter_Function[i](Obj);
+		}
+		break;
+	case PHYS_TRIIGER_STAY:
+		Size = (int)OnTrigger_Stay_Function.size();
+		for (int i = 0; i < Size; i++)
+		{
+			OnTrigger_Stay_Function[i](Obj);
+		}
+		break;
+	case PHYS_TRIIGER_EXIT:
+		Size = (int)OnTrigger_Exit_Function.size();
+		for (int i = 0; i < Size; i++)
+		{
+			OnTrigger_Exit_Function[i](Obj);
+		}
 		break;
 	}
 }

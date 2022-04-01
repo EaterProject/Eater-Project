@@ -11,7 +11,12 @@ class Rigidbody;
 class FrameData;
 class PlayerData;
 class Collider;
-
+enum class PLAYER_STATE
+{
+	IDLE,
+	ATTACK,
+	DEAD,
+};
 class Player :public Component
 {
 public:
@@ -21,15 +26,17 @@ public:
 	void SetUp();
 	void Update();
 	void StartUpdate();
-	void OnTriggerEnter(GameObject* other);
+	
+	
 
-	float Speed =0;
+	static Transform* GetPlayerTransform();
+	static PLAYER_STATE GetState();
 private:
 	//플레이어 키인풋
 	void PlayerKeyinput();
 private:
 	///컨퍼넌트
-	Transform* mTransform;
+	static Transform* mTransform;
 	AnimationController* mAnimation;
 	Collider*		mCollider;
 	MeshFilter*		mMeshFilter;
@@ -39,6 +46,7 @@ private:
 	Vector3 DirPos;			//방향
 	Vector3 DirRot;			//회전
 	Vector3 PastDirRot;		//과거의 방향
+	float Speed =0;
 
 
 	GameObject* AttackColliderObject;
@@ -46,4 +54,5 @@ private:
 	Rigidbody* AttackRigidbody;
 
 	float RotationDir;
+	static PLAYER_STATE mState;
 };
