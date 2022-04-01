@@ -32,7 +32,7 @@ SamplerState gSamWrapAnisotropic : register(s1);
 MeshPixelOut Deferred_PBR_PS(MeshPixelIn pin)
 {
     MeshPixelOut pout;
-
+    
     float4 albedo       = float4(0.0f, 0.0f, 0.0f, 1.0f);
     float4 emissive     = float4(0.0f, 0.0f, 0.0f, 1.0f);
     float3 orm          = float3(0.0f, 1.0f, 0.0f);

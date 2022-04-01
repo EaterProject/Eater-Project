@@ -38,7 +38,7 @@
 #include "RenderDataConverter.h"
 
 #include <algorithm>
-#include "Debug.h"
+#include "./Profiler/Profiler.h"
 
 RenderManager::RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, IGraphicResourceManager* resource, IShaderManager* shader)
 {
@@ -258,7 +258,7 @@ void RenderManager::ConvertRenderData()
 
 void RenderManager::SelectRenderData()
 {
-	Debug::TimerStart(60);
+	TIMER_START("Culling", 60, DEBUG_OUTPUT::CONSOLE);
 
 	// Camera View Frustum Culling..
 	int renderCount = 0;
@@ -282,8 +282,7 @@ void RenderManager::SelectRenderData()
 		layer->m_RenderCount = renderCount;
 		renderCount = 0;
 	}
-
-	Debug::TimerEnd();
+	TIMER_END();
 }
 
 void RenderManager::Render()

@@ -10,6 +10,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameClient", "GameClient\Ga
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EaterEngine", "EaterEngine\EaterEngine\EaterEngine.vcxproj", "{DA0653A1-8789-40BC-ADEE-D29B5D09A1A4}"
 	ProjectSection(ProjectDependencies) = postProject
+		{7D28A93E-A169-4B85-AF17-89DFA21EBC67} = {7D28A93E-A169-4B85-AF17-89DFA21EBC67}
 		{C30C0D52-7379-4659-A70C-6F9A15342031} = {C30C0D52-7379-4659-A70C-6F9A15342031}
 		{69987C7E-41E8-402A-B94C-E17572B93288} = {69987C7E-41E8-402A-B94C-E17572B93288}
 		{31B9DAA7-DAA1-48B4-B5B5-D895F4BB0675} = {31B9DAA7-DAA1-48B4-B5B5-D895F4BB0675}
@@ -21,6 +22,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KHParser", "KHParser\KHPars
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KHGraphic", "KHGraphic\KHGraphic.vcxproj", "{C30C0D52-7379-4659-A70C-6F9A15342031}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7D28A93E-A169-4B85-AF17-89DFA21EBC67} = {7D28A93E-A169-4B85-AF17-89DFA21EBC67}
+		{31B9DAA7-DAA1-48B4-B5B5-D895F4BB0675} = {31B9DAA7-DAA1-48B4-B5B5-D895F4BB0675}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PhysEngine", "PhysEngine\PhysEngine.vcxproj", "{69987C7E-41E8-402A-B94C-E17572B93288}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -38,6 +43,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Editor", "Editor\Editor.vcx
 	ProjectSection(ProjectDependencies) = postProject
 		{DA0653A1-8789-40BC-ADEE-D29B5D09A1A4} = {DA0653A1-8789-40BC-ADEE-D29B5D09A1A4}
 	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Profiler", "Profiler\Profiler.vcxproj", "{7D28A93E-A169-4B85-AF17-89DFA21EBC67}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -111,6 +118,14 @@ Global
 		{C562E7D3-B836-4EB7-96DC-17961B6ED672}.Release|x64.Build.0 = Release|x64
 		{C562E7D3-B836-4EB7-96DC-17961B6ED672}.Release|x86.ActiveCfg = Release|Win32
 		{C562E7D3-B836-4EB7-96DC-17961B6ED672}.Release|x86.Build.0 = Release|Win32
+		{7D28A93E-A169-4B85-AF17-89DFA21EBC67}.Debug|x64.ActiveCfg = Debug|x64
+		{7D28A93E-A169-4B85-AF17-89DFA21EBC67}.Debug|x64.Build.0 = Debug|x64
+		{7D28A93E-A169-4B85-AF17-89DFA21EBC67}.Debug|x86.ActiveCfg = Debug|Win32
+		{7D28A93E-A169-4B85-AF17-89DFA21EBC67}.Debug|x86.Build.0 = Debug|Win32
+		{7D28A93E-A169-4B85-AF17-89DFA21EBC67}.Release|x64.ActiveCfg = Release|x64
+		{7D28A93E-A169-4B85-AF17-89DFA21EBC67}.Release|x64.Build.0 = Release|x64
+		{7D28A93E-A169-4B85-AF17-89DFA21EBC67}.Release|x86.ActiveCfg = Release|Win32
+		{7D28A93E-A169-4B85-AF17-89DFA21EBC67}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

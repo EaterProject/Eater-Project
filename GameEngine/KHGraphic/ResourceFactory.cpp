@@ -44,7 +44,7 @@ GraphicResourceFactory::GraphicResourceFactory()
 	// Parser 생성 및 초기화..
 	m_Parser = ImageParser::Create(IMAGE_TYPE::FLOAT_IMAGE);
 	m_Parser->Initialize();
-
+	
 	// Icon Texture Route 설정..
 	m_TextureRoute = "../Assets/Texture/Graphic/";
 }
