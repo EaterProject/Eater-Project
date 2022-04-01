@@ -20,10 +20,8 @@
 	#endif
 #endif
 
-
 enum class DEBUG_OUTPUT
 {
 	CONSOLE,	// Console 출력
-	CLIENT,		// Client EXE 출력
 	VS_CODE		// Visual Studio Code 출력
 };

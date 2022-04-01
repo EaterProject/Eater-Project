@@ -4,6 +4,7 @@
 #include <string>
 #include <map>
 
+typedef size_t Hash;
 typedef std::chrono::system_clock::time_point Clock;
 
 template<typename T>
@@ -13,7 +14,7 @@ struct TIME_DESC
 {
 	DEBUG_OUTPUT m_OutputType;
 
-	const char* m_Location;
+	std::string m_Location;
 
 	UINT m_NowFrame;
 	UINT m_TotalFrame;
@@ -29,14 +30,15 @@ public:
 	Debugger();
 
 public:
-	void TimerStart(const char* func, int& line, const char* timeKey, int& totalFrame, DEBUG_OUTPUT outputType);
-	void TimerEnd();
+	void TimerStart(DEBUG_OUTPUT outputType, const char* func, int& line, const char* timeKey, int& totalFrame);
+	void TimerEnd(const char* key);
 
 	void Log(DEBUG_OUTPUT& outputType, const char* message, ...);
+	void Log(DEBUG_OUTPUT& outputType, char* message, int length);
 
 private:
-	std::map<const char*, TIME_DESC>::iterator m_NowKey;
-	std::map<const char*, TIME_DESC> m_Timer;
+	std::map<Hash, TIME_DESC>::iterator m_NowKey;
+	std::map<Hash, TIME_DESC> m_Timer;
 
 	HANDLE m_Console;
 

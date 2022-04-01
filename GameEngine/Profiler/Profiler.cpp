@@ -1,27 +1,41 @@
+#pragma warning(disable: 4996)
+
 #include "Profiler.h"
 #include "Debugger.h"
 
+#if defined(DEBUG) || defined(_DEBUG)
 Debugger g_Debugger = Debugger();
 
-PROFILER_DLL void TimerStart(const char* timeKey, int&& totalFrame, DEBUG_OUTPUT outputType)
+PROFILER_DLL void Log(DEBUG_OUTPUT outputType, const char* message, ...)
 {
+	int length;
+	va_list args;
 
+	va_start(args, message);
+
+	// 가변인자 문자열 길이 측정..
+	length = _vscprintf(message, args) + 1;
+
+	// 가변인자 문자열 변환..
+	char* cBuf = new char[length];
+	memset(cBuf, NULL, length);
+
+	vsprintf(cBuf, message, args);
+
+	va_end(args);
+
+	g_Debugger.Log(outputType, cBuf, length);
+
+	delete[] cBuf;
 }
 
-PROFILER_DLL void TimerStart(const char* func, int&& line, const char* timeKey, int&& totalFrame, DEBUG_OUTPUT outputType)
+PROFILER_DLL void TimerStart(DEBUG_OUTPUT outputType, const char* func, int&& line, const char* timeKey, int&& totalFrame)
 {
-#if defined(DEBUG) || defined(_DEBUG)
-	g_Debugger.TimerStart(func, line, timeKey, totalFrame, outputType);
-#else
-	return;
+	g_Debugger.TimerStart(outputType, func, line, timeKey, totalFrame);
+}
+
+PROFILER_DLL void TimerEnd(const char* key)
+{
+	g_Debugger.TimerEnd(key);
+}
 #endif
-}
-
-PROFILER_DLL void TimerEnd()
-{
-#if defined(DEBUG) || defined(_DEBUG)
-	g_Debugger.TimerEnd();
-#else
-	return;
-#endif
-}
