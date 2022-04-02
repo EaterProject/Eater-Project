@@ -2,11 +2,11 @@
 #include "GameObject.h"
 #include "EngineData.h"
 #include "Transform.h"
-#include "DebugManager.h"
 #include "GameEngine.h"
 #include "EngineData.h"
 #include "MainHeader.h"
 #include "MainHeader.h"
+#include "Profiler/Profiler.h"
 
 using namespace DirectX;
 std::vector<Camera*> Camera::CamList;
@@ -46,13 +46,7 @@ void Camera::Update()
 {
 	if (g_MainCam == nullptr)
 	{
-		DebugManager::Print
-		(
-			DebugManager::MSG_TYPE::MSG_SYSTEM,
-			"[Camera]",
-			"지정된 메인 카메라 없음",
-			true
-		);
+		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Camera ] 지정된 메인 카메라가 없습니다.");
 	}
 
 	CreateView();
@@ -70,13 +64,7 @@ DirectX::SimpleMath::Matrix Camera::GetProj()
 {
 	if (g_MainCam == nullptr)
 	{
-		DebugManager::Print
-		(
-			DebugManager::MSG_TYPE::MSG_SYSTEM,
-			"[Camera]",
-			"지정된 메인 카메라 없음",
-			true
-		);
+		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Camera ] 지정된 메인 카메라가 없습니다.");
 		return Matrix();
 	}
 	else
@@ -94,13 +82,7 @@ DirectX::SimpleMath::Vector3 Camera::GetPos()
 {
 	if (g_MainCam == nullptr)
 	{
-		DebugManager::Print
-		(
-			DebugManager::MSG_TYPE::MSG_SYSTEM,
-			"[Camera]",
-			"지정된 메인 카메라 없음",
-			true
-		);
+		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Camera ] 지정된 메인 카메라가 없습니다.");
 		return Vector3();
 	}
 	else
@@ -129,13 +111,7 @@ DirectX::SimpleMath::Matrix Camera::GetView()
 {
 	if (g_MainCam == nullptr)
 	{
-		DebugManager::Print
-		(
-			DebugManager::MSG_TYPE::MSG_SYSTEM,
-			"[Camera]",
-			"지정된 메인 카메라 없음",
-			true
-		);
+		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Camera ] 지정된 메인 카메라가 없습니다.");
 		return Matrix();
 	}
 	else

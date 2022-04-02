@@ -12,14 +12,22 @@
 ///  - CONSOLE : Console 창에 해당 Log 출력
 ///  - VS_CODE : Visual Studio 출력 창에 Log 출력
 
-
 #if defined(DEBUG) || defined(_DEBUG)
 // Log Profiling
 // # 해당 Log Message 출력.
 // #Prameters
 //  1. out		: PROFILE_OUTPUT Type
 //  2. message	: Log Message
-#define PROFILE_LOG(out, message, ...)				Log(out, __FILE__, __FUNCTION__, __LINE__, message, ##__VA_ARGS__)
+#define PROFILE_LOG(out, message, ...)				Log(out, 1, __FILE__, __FUNCTION__, __LINE__, message, ##__VA_ARGS__)
+
+// Result Profiling
+// # 해당 Result Message 출력.
+// # HR Macro + 추가 Message 출력.
+// #Prameters
+//  1. out		: PROFILE_OUTPUT Type
+//  2. x		: Function Result
+//  3. message	: Log Message
+#define PROFILE_RESULT(out, x, message, ...)		Log(out, x, __FILE__, __FUNCTION__, __LINE__, message, ##__VA_ARGS__)
 
 // Timer Start Profiling
 // # 해당 Key Timer 측정 시작.
@@ -38,12 +46,13 @@
 #define PROFILE_TIMER_END(key, ...)					TimerEnd(key, ##__VA_ARGS__);
 #else
 #define PROFILE_LOG(out, message, ...)
+#define PROFILE_RESULT(out, x, message, ...)
 #define PROFILE_TIMER_START(out, frame, key, ...)
 #define PROFILE_TIMER_END(key, ...)					
 #endif
 
 #if defined(DEBUG) || defined(_DEBUG)
-PROFILER_DLL void Log(PROFILE_OUTPUT outputType, const char* file, const char* func, int&& line, const char* message, ...);
+PROFILER_DLL void Log(PROFILE_OUTPUT outputType, long result, const char* file, const char* func, int&& line, const char* message, ...);
 PROFILER_DLL void TimerStart(PROFILE_OUTPUT outputType, const char* func, int&& line, int&& totalFrame, const char* timerKey, ...);
 PROFILER_DLL void TimerEnd(const char* timerKey, ...);
 #endif

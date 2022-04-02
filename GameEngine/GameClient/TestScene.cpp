@@ -28,13 +28,13 @@ void TestScene::Awake()
 	LoadTerrainMesh("../Assets/Model/TerrainModel/Terrain.fbx", "../Assets/Texture/Terrain/Terrain_RGB.png", SCALING);
 
 	PROFILE_TIMER_START(PROFILE_OUTPUT::CONSOLE, 1, "Load Folder");
-	Load("../Assets/Texture/ModelTexture");
+	//Load("../Assets/Texture/ModelTexture");
 	Load("../Assets/Texture/Terrain");
 	//Load("../Assets/Texture/Particle");
-	Load("../Assets/Texture/Material");
-	Load("../Assets/Model/MeshBuffer");
-	Load("../Assets/Model/ModelData");
-	Load("../Assets/Model/Animation");
+	//Load("../Assets/Texture/Material");
+	//Load("../Assets/Model/MeshBuffer");
+	//Load("../Assets/Model/ModelData");
+	//Load("../Assets/Model/Animation");
 	PROFILE_TIMER_END("Load Folder"); 
 
 	//CreateTestObject();
@@ -48,8 +48,9 @@ void TestScene::Update()
 {
 	//PROFILE_TIMER_START(PROFILE_OUTPUT::CONSOLE, "Update", 60);
 	
-	//static int renderCount = 0;
+	static int renderCount = 0;
 	//PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "Update Count %d", renderCount++);
+	//PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "Update Count %d", renderCount++);
 
 	ChangeCubeMap();
 	//DebugDrawLine(Vector3(0.0f, 0.0f, 0.0f), Vector3(0.0f, 50.0f, 0.0f), Vector4(1.0f, 0.0f, 0.0f, 1.0f));

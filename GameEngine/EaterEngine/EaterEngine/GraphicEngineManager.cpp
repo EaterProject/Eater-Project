@@ -1,7 +1,6 @@
 #include "SimpleMath.h"
 #include "BaseManager.h"
 #include "GraphicEngineManager.h"
-#include "DebugManager.h"
 #include "GraphicsEngine.h"
 #include "EngineData.h"
 #include "ParserData.h"

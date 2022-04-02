@@ -52,7 +52,7 @@ void DebugPass::Create(int width, int height)
 	g_Factory->CreateViewPort<VP_MRT7>(debug_ratio * 5.0f, debug_ratio * 4.0f, debug_ratio, debug_ratio, (float)width, (float)height);
 	g_Factory->CreateViewPort<VP_MRT8>(debug_ratio * 5.0f, debug_ratio * 3.0f, debug_ratio, debug_ratio, (float)width, (float)height);
 
-	g_Factory->CreateImage<DirectionalLight_Icon>("Icon/Icon_Directionlight1.png");
+	g_Factory->CreateImage<DirectionalLight_Icon>("Icon/Icon_Directionlight.png");
 	g_Factory->CreateImage<PointLight_Icon>("Icon/Icon_Pointlight.png");
 	g_Factory->CreateImage<SpotLight_Icon>("Icon/Icon_Spotlight.png");
 	g_Factory->CreateImage<Camera_Icon>("Icon/Icon_Camera.png");
@@ -385,14 +385,16 @@ void DebugPass::GlobalRender()
 	for (DirectionalLightData* light : *directionList)
 	{
 		float RayLength = 10.0f;
-		float RayOffset = 1.0f;
-		float LightPos = 100.0f;
+		Vector3 RayOffset = Vector3(1.0f);
+		Vector3 LightPos = Vector3(0.0f, 100.0f, 0.0f);
 
 		// Icon Draw
 		option.gColor = light->Diffuse;
 
 		Matrix lightWorld = invView;
-		lightWorld._42 = LightPos;
+		lightWorld._41 = LightPos.x;
+		lightWorld._42 = LightPos.y;
+		lightWorld._43 = LightPos.z;
 
 		object.gWorldViewProj = Matrix::CreateScale(2.0f) * lightWorld * viewproj;
 
@@ -407,7 +409,7 @@ void DebugPass::GlobalRender()
 		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
 
 		// Light Look 최대 Range가 곧 해당 Position..
-		pos = Vector3(0.0f, LightPos, 0.0f); + light->Direction * Vector3(RayLength);
+		pos = LightPos + light->Direction * Vector3(RayLength);
 		look = light->Direction * Vector3(RayLength);
 
 		Matrix world = LookAt_Matrix(pos, look);
@@ -434,7 +436,7 @@ void DebugPass::GlobalRender()
 		up.Normalize();
 
 		// Light Direction Ray Center..
-		ray.RayStart = Vector3(0.0f, LightPos, 0.0f);
+		ray.RayStart = LightPos;
 		ray.RayEnd = ray.RayStart + light->Direction * RayLength;
 
 		object.gWorldViewProj = viewproj;
@@ -453,7 +455,7 @@ void DebugPass::GlobalRender()
 		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
 
 		// Light Direction Ray Up..
-		ray.RayStart = Vector3(0.0f, LightPos, 0.0f) - up * Vector3(RayOffset);
+		ray.RayStart = LightPos - up * RayOffset;
 		ray.RayEnd = ray.RayStart + light->Direction * RayLength;
 		
 		option.gColor = Vector3(1.0f, 1.0f, 0.0f);
@@ -468,7 +470,7 @@ void DebugPass::GlobalRender()
 		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
 
 		// Light Direction Ray Down..
-		ray.RayStart = Vector3(0.0f, LightPos, 0.0f) + up * Vector3(RayOffset);
+		ray.RayStart = LightPos + up * RayOffset;
 		ray.RayEnd = ray.RayStart + light->Direction * RayLength;
 
 		// Ray Buffer Update
@@ -478,7 +480,7 @@ void DebugPass::GlobalRender()
 		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
 
 		// Light Direction Ray Left..
-		ray.RayStart = Vector3(0.0f, LightPos, 0.0f) - right * Vector3(RayOffset);
+		ray.RayStart = LightPos - right * RayOffset;
 		ray.RayEnd = ray.RayStart + light->Direction * RayLength;
 
 		// Ray Buffer Update
@@ -488,7 +490,7 @@ void DebugPass::GlobalRender()
 		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
 
 		// Light Direction Ray Right..
-		ray.RayStart = Vector3(0.0f, LightPos, 0.0f) + right * Vector3(RayOffset);
+		ray.RayStart = LightPos + right * RayOffset;
 		ray.RayEnd = ray.RayStart + light->Direction * RayLength;
 
 		// Ray Buffer Update

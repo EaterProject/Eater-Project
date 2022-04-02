@@ -1,9 +1,9 @@
 #include "TextureManager.h"
-#include "DebugManager.h"
 #include "EngineData.h"
 #include "GraphicEngineManager.h"
 #include "GraphicsEngine.h"
 #include "LoadManager.h"
+#include "Profiler/Profiler.h"
 
 #include <filesystem>
 #include <iostream>
@@ -31,7 +31,7 @@ void TextureManager::LoadTexture(std::string& Path)
 
 	if (buffer == nullptr)
 	{
-		DebugManager::Print(DebugManager::MSG_TYPE::MSG_LOAD, "TEXTURE", CutFilePath(Path),true);
+		PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "[ Engine ][ Create ][ Texture ] FAILED!!");
 	}
 	else
 	{

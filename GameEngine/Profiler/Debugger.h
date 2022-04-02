@@ -39,14 +39,28 @@ public:
 	void TimerStart(PROFILE_OUTPUT outputType, const char* func, int& line, int& totalFrame, std::string&& timerKey);
 	void TimerEnd(std::string&& timerKey);
 
-	void Log(PROFILE_OUTPUT& outputType, const char* message, ...);
-	void Log(PROFILE_OUTPUT& outputType, const char* fileInfo, char* message, int length);
+	void Log(PROFILE_OUTPUT& outputType, HRESULT result, const char* fileInfo, char* message, int length);
 
 public:
 	std::string GetFileInfo(const char* file, const char* func, int& line);
 
 private:
+	void Log(PROFILE_OUTPUT& outputType, const char* message, ...);
+
+private:
 	std::string GetTime();
+
+private:
+	struct TOKEN
+	{
+		static const std::string Error;
+		static const std::string File;
+		static const std::string Func;
+		static const std::string Line;
+		static const std::string Enter;
+		static const std::string Space;
+		static const std::string Tab;
+	};
 
 private:
 	std::map<Hash, TIME_DESC>::iterator m_NowKey;

@@ -6,7 +6,7 @@
 #if defined(DEBUG) || defined(_DEBUG)
 Debugger g_Debugger = Debugger();
 
-PROFILER_DLL void Log(PROFILE_OUTPUT outputType, const char* file, const char* func, int&& line, const char* message, ...)
+PROFILER_DLL void Log(PROFILE_OUTPUT outputType, long result, const char* file, const char* func, int&& line, const char* message, ...)
 {
 	std::string fileinfo = g_Debugger.GetFileInfo(file, func, line);
 
@@ -26,7 +26,7 @@ PROFILER_DLL void Log(PROFILE_OUTPUT outputType, const char* file, const char* f
 
 	va_end(args);
 
-	g_Debugger.Log(outputType, fileinfo.c_str(), cBuf, length);
+	g_Debugger.Log(outputType, result, fileinfo.c_str(), cBuf, length);
 
 	delete[] cBuf;
 }

@@ -1,11 +1,11 @@
 #include "GameObject.h"
 #include "EngineData.h"
 #include "BaseManager.h"
-#include "DebugManager.h"
 #include "ObjectManager.h"
 #include "Transform.h"
 #include "MeshFilter.h"
 #include "Material.h"
+#include "Profiler/Profiler.h"
 
 std::vector<int> GameObject::TagList;
 GameObject::GameObject()
@@ -262,45 +262,47 @@ Component* GameObject::GetComponent(int index)
 void GameObject::PushComponentFunction(Component* con, unsigned int type)
 {
 	std::string ComponentFunction = typeid(*con).name();
+	ComponentFunction = ComponentFunction.substr(ComponentFunction.find(" ") + 1, ComponentFunction.size());
+
 	switch (type)
 	{
 	case AWAKE:
-		DebugManager::Print(DebugManager::MSG_TYPE::MSG_PUSH, ComponentFunction, "1.Awake",false);
+		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Push ][ %s ] 1.Awake", ComponentFunction.c_str());
 		ObjectManager::PushAwake(con,con->Awake_Order);
 		con->FUNCTION_MASK |= AWAKE;
 		break;
 	case START:
-		DebugManager::Print(DebugManager::MSG_TYPE::MSG_PUSH, ComponentFunction, "3.Start", false);
+		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Push ][ %s ] 3.Start", ComponentFunction.c_str());
 		ObjectManager::PushStart(con, con->Start_Order);
 		con->FUNCTION_MASK |= START;
 		break;
 	case SETUP:
-		DebugManager::Print(DebugManager::MSG_TYPE::MSG_PUSH, ComponentFunction, "2.Setup", false);
+		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Push ][ %s ] 2.Setup", ComponentFunction.c_str());
 		ObjectManager::PushStartPlay(con, con->Start_Order);
 		con->FUNCTION_MASK |= SETUP;
 		break;
 	case START_UPDATE:
-		DebugManager::Print(DebugManager::MSG_TYPE::MSG_PUSH, ComponentFunction, "4.StartUpdate", false);
+		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Push ][ %s ] 4.StartUpdate", ComponentFunction.c_str());
 		ObjectManager::PushStartUpdate(con, con->StartUpdate_Order);
 		con->FUNCTION_MASK |= START_UPDATE;
 		break;
 	case Transform_UPDATE:
-		DebugManager::Print(DebugManager::MSG_TYPE::MSG_PUSH, ComponentFunction,"5.TransformUpdate", false);
+		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Push ][ %s ] 5.TransformUpdate", ComponentFunction.c_str());
 		ObjectManager::PushTransformUpdate(con, con->TransformUpdate_Order);
 		con->FUNCTION_MASK |= Transform_UPDATE;
 		break;
 	case Physics_UPDATE:
-		DebugManager::Print(DebugManager::MSG_TYPE::MSG_PUSH, ComponentFunction, "6.PhysicsUpdate", false);
+		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Push ][ %s ] 6.PhysicsUpdate", ComponentFunction.c_str());
 		ObjectManager::PushPhysicsUpdate(con, con->PhysicsUpdate_Order);
 		con->FUNCTION_MASK |= Physics_UPDATE;
 		break;
 	case UPDATE:
-		DebugManager::Print(DebugManager::MSG_TYPE::MSG_PUSH, ComponentFunction, "7.Update", false);
+		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Push ][ %s ] 7.Update", ComponentFunction.c_str());
 		ObjectManager::PushUpdate(con, con->DefaultUpdate_Order);
 		con->FUNCTION_MASK |= UPDATE;
 		break;
 	case END_UPDATE:
-		DebugManager::Print(DebugManager::MSG_TYPE::MSG_PUSH, ComponentFunction, "8.EndUpdate", false);
+		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Push ][ %s ] 8.EndUpdate", ComponentFunction.c_str());
 		ObjectManager::PushEndUpdate(con, con->EndUpdate_Order);
 		con->FUNCTION_MASK |= END_UPDATE;
 		break;

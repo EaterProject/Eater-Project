@@ -10,6 +10,15 @@
 #include <tchar.h>
 #include <iomanip>
 #include <sstream>
+#include <comdef.h>
+
+const std::string Debugger::TOKEN::Error = "[ERROR] ";
+const std::string Debugger::TOKEN::File  = "[FILE] ";
+const std::string Debugger::TOKEN::Func  = "[FUNC] ";
+const std::string Debugger::TOKEN::Line  = "[LINE] ";
+const std::string Debugger::TOKEN::Enter = "\n";
+const std::string Debugger::TOKEN::Tab	 = "\t";
+const std::string Debugger::TOKEN::Space = " ";
 
 Debugger::Debugger()
 {
@@ -117,42 +126,34 @@ void Debugger::Log(PROFILE_OUTPUT& outputType, const char* message, ...)
 
 	va_end(args);
 
-	// 출력 타입에 따른 처리..
-	switch (outputType)
-	{
-	case PROFILE_OUTPUT::CONSOLE:
-	{
-		WriteFile(m_Console, cBuf, (DWORD)(length), NULL, NULL);
-
-		m_LogCount++;
-		if (m_LogCount > m_Timer.size() * 10)
-		{
-			system("cls");
-			m_LogCount = 0;
-		}
-	}
-		break;
-	case PROFILE_OUTPUT::VS_CODE:
-	{
-		wchar_t* wBuf = new wchar_t[length];
-		memset(wBuf, NULL, length);
-		MultiByteToWideChar(CP_UTF8, 0, cBuf, -1, wBuf, length);
-
-		OutputDebugStringW(wBuf);
-		OutputDebugStringA("\n");
-
-		delete[] wBuf;
-	}
-		break;
-	default:
-		break;
-	}
+	// 해당 Log 출력..
+	Log(outputType, 1, nullptr, cBuf, length);
 
 	delete[] cBuf;
 }
 
-void Debugger::Log(PROFILE_OUTPUT& outputType, const char* fileInfo, char* message, int length)
+void Debugger::Log(PROFILE_OUTPUT& outputType, HRESULT result, const char* fileInfo, char* message, int length)
 {
+	std::string errMessage;
+
+	if (FAILED(result))
+	{
+		_com_error error(result);
+		std::wstring errMsg_w = error.ErrorMessage();
+
+		int errMsg_Size = WideCharToMultiByte(CP_ACP, 0, errMsg_w.c_str(), -1, NULL, 0, NULL, NULL);
+
+		char* errMsg_c = new char[errMsg_Size];
+		memset(errMsg_c, NULL, errMsg_Size);
+
+		WideCharToMultiByte(CP_ACP, 0, errMsg_w.c_str(), -1, errMsg_c, errMsg_Size, NULL, NULL);
+
+		errMessage += TOKEN::Enter + TOKEN::Error;
+		errMessage += errMsg_c;
+
+		delete[] errMsg_c;
+	}
+
 	// 출력 타입에 따른 처리..
 	switch (outputType)
 	{
@@ -161,6 +162,7 @@ void Debugger::Log(PROFILE_OUTPUT& outputType, const char* fileInfo, char* messa
 		std::string output = GetTime();
 		output += fileInfo;
 		output += message;
+		output += errMessage;
 		output += "\n\n";
 
 		fputs(output.c_str(), m_Log.LogFile);
@@ -169,7 +171,8 @@ void Debugger::Log(PROFILE_OUTPUT& outputType, const char* fileInfo, char* messa
 	case PROFILE_OUTPUT::CONSOLE:
 	{
 		std::string output = message;
-		output += "\n";
+		output += errMessage;
+		output += TOKEN::Enter;
 
 		WriteFile(m_Console, output.c_str(), (DWORD)(output.size()), NULL, NULL);
 
@@ -183,14 +186,13 @@ void Debugger::Log(PROFILE_OUTPUT& outputType, const char* fileInfo, char* messa
 	break;
 	case PROFILE_OUTPUT::VS_CODE:
 	{
-		wchar_t* wBuf = new wchar_t[length];
-		memset(wBuf, NULL, length);
-		MultiByteToWideChar(CP_UTF8, 0, message, -1, wBuf, length);
+		std::string output = GetTime();
+		output += fileInfo;
+		output += message;
+		output += errMessage;
+		output += "\n\n";
 
-		OutputDebugStringW(wBuf);
-		OutputDebugStringA("\n");
-
-		delete[] wBuf;
+		OutputDebugStringA(output.c_str());
 	}
 	break;
 	default:
@@ -207,13 +209,12 @@ std::string Debugger::GetFileInfo(const char* file, const char* func, int& line)
 	size_t fileEnd = fileinfo.size();
 	fileinfo = fileinfo.substr(fileStart, fileEnd);
 
-	outinfo += "[FILE] ";
-	outinfo += fileinfo;
-	outinfo += " [FUNC] ";
-	outinfo += func;
-	outinfo += " [LINE] ";
-	outinfo += std::to_string(line);
-	outinfo += "\n";
+	outinfo += TOKEN::File;
+	outinfo += fileinfo + TOKEN::Space;
+	outinfo += TOKEN::Func;
+	outinfo += func + TOKEN::Space;
+	outinfo += TOKEN::Line;
+	outinfo += std::to_string(line) + TOKEN::Enter;
 
 	return outinfo;
 }

@@ -59,14 +59,14 @@ void LoadManager::Load(std::string& Path, UINT MODE)
 	//파일,폴더 구분
 	if (CheckFolder(Path) == true)
 	{
-		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[Load Folder] %s", Path.c_str());
+		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Load ][ Folder ] %s", Path.c_str());
 
 		//폴더 경로가 들어왔다면 그파일부터 모든 파일들을 다읽음 (폴더안에 폴더까지)
 		LoadFolder(Path, MODE);
 	}
 	else
 	{
-		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[Load File] %s", Path.c_str());
+		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Load ][ File ] %s", Path.c_str());
 
 		//파일경로가 들어왔다면 파일을 읽음
 		LoadFile(Path, MODE);
@@ -298,7 +298,7 @@ void LoadManager::LoadFolder(std::string& Path, UINT MODE)
 			std::size_t Swap = Path.rfind('\\');
 			Path[Swap] = '/';
 
-			PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[Load Folder] %s", Path.c_str());
+			PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Load ][ Folder ] %s", Path.c_str());
 			LoadFolder(Path, MODE);
 		}
 		else
@@ -307,7 +307,7 @@ void LoadManager::LoadFolder(std::string& Path, UINT MODE)
 			std::size_t Swap = Path.rfind('\\');
 			Path[Swap] = '/';
 
-			PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[Load File] %s", Path.c_str());
+			PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Load ][ File ] %s", Path.c_str());
 			LoadFile(Path, MODE);
 		}
 		itr++;
