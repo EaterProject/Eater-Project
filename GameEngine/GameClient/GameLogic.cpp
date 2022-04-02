@@ -30,16 +30,11 @@ void GameLogic::Initialize()
 	MonsterGM->SetFactory(FactoryGM);
 
 
-
-
-
-
-
-	//포탈 태그가 붙어있는 오브젝트를 모두 가져와 리스트에 담아놓는다
+	//필요한 오브젝트를 가져온다
 	FindGameObjectTags("Potal", &PotalList);
-
-	//플레이어 충돌용 오브젝트를 가져온다
 	FindGameObjectTag("AttackCollider");
+
+	SetCreateMonsterMemorySize(20);
 }
 
 void GameLogic::Release()

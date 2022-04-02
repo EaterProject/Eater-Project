@@ -1,6 +1,4 @@
 #pragma once
-#include <vector>
-#include <stack>
 //클라이언트에서 사용하는 매니저들의 공통된 
 //함수들을 묶어놓는 클래스
 class ObjectFactory;

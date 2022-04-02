@@ -49,7 +49,7 @@ void Loading::Update()
 {
 	if (ThreadRun == false)
 	{
-		ChoiceScene("inGame");
+		ChoiceScene("intro");
 	}
 }
 

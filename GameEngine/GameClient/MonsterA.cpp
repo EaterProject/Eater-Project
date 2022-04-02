@@ -17,6 +17,8 @@ MonsterA::MonsterA()
 	mColider	= nullptr;
 	mRigidbody	= nullptr;
 	mBase		= nullptr;
+
+	BackAttackSlipPower = 10.0f;
 }
 
 MonsterA::~MonsterA()
@@ -72,10 +74,11 @@ void MonsterA::Update()
 
 void MonsterA::OnTriggerStay(GameObject* Obj)
 {
+	//충돌중일때 플레이어 상태가 Attack 상태면 공격을당한다
 	if (Player::GetState() == PLAYER_STATE::ATTACK)
 	{
-		Vector3 Look = Player::GetPlayerTransform()->GetLocalPosition_Look()  * 10;
-		mRigidbody->SetAddForce(Look.x, Look.y+10, Look.z *-1);
+		Vector3 Look = Player::GetPlayerTransform()->GetLocalPosition_Look()  * BackAttackSlipPower;
+		mRigidbody->SetAddForce(Look.x, Look.y+ BackAttackSlipPower, Look.z *-1);
 	}
 }
 

@@ -181,6 +181,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="ManaStone.h" />
+    <ClInclude Include="MemoryPool.h" />
     <ClInclude Include="MonsterA.h" />
     <ClInclude Include="MonsterB.h" />
     <ClInclude Include="MonsterBase.h" />
@@ -210,6 +211,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="ManaStone.cpp" />
+    <ClCompile Include="MemoryPool.cpp" />
     <ClCompile Include="MonsterA.cpp" />
     <ClCompile Include="MonsterB.cpp" />
     <ClCompile Include="MonsterBase.cpp" />

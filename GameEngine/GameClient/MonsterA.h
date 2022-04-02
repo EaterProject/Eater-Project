@@ -25,5 +25,8 @@ private:
 	Collider*				mColider;
 	Rigidbody*				mRigidbody;
 	MonsterBase*			mBase;
+private:
+	float BackAttackSlipPower; //공격당했을떄 뒤로 밀려나는 힘 
+
 };
 

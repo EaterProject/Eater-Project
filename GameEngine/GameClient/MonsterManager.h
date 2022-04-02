@@ -1,7 +1,9 @@
 #pragma once
 #include "ClientBaseManager.h"
 #include "MonsterBase.h"
-class MonsterManager : public ClientBaseManager
+#include "MemoryPool.h"
+
+class MonsterManager : public ClientBaseManager 
 {
 public:
 	MonsterManager() = default;
@@ -9,10 +11,6 @@ public:
 
 	virtual void Initialize() override;
 private:
-	
-
-
-
-
+	MemoryPool MonsterList;
 };
 

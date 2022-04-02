@@ -88,6 +88,12 @@
     <Filter Include="소스 파일\Manager\MonsterManager">
       <UniqueIdentifier>{e62a3675-adb9-4441-b8b8-c04df61aaf04}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Custom">
+      <UniqueIdentifier>{c3bd36b4-3d6a-4762-bde8-128f9587ad92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Custom\MemoryPool">
+      <UniqueIdentifier>{da5f85e3-2a75-4d03-9fe5-ce3914ed78cb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -153,6 +159,9 @@
     <ClInclude Include="MonsterManager.h">
       <Filter>소스 파일\Manager\MonsterManager</Filter>
     </ClInclude>
+    <ClInclude Include="MemoryPool.h">
+      <Filter>소스 파일\Custom\MemoryPool</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameClient.cpp">
@@ -208,6 +217,9 @@
     </ClCompile>
     <ClCompile Include="MonsterManager.cpp">
       <Filter>소스 파일\Manager\MonsterManager</Filter>
+    </ClCompile>
+    <ClCompile Include="MemoryPool.cpp">
+      <Filter>소스 파일\Custom\MemoryPool</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
