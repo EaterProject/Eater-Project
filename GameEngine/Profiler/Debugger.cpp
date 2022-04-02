@@ -39,10 +39,10 @@ Debugger::Debugger()
 	m_Log.LogFile = fopen(m_Log.LogName.c_str(), "a+");
 }
 
-void Debugger::TimerStart(PROFILE_OUTPUT outputType, const char* func, int& line, const char* key, int& totalFrame)
+void Debugger::TimerStart(PROFILE_OUTPUT outputType, const char* func, int& line, int& totalFrame, std::string&& timerKey)
 {
 	// 해당 문자열 Hash 추출..
-	Hash hashKey = std::hash<const char*>()(key);
+	Hash hashKey = std::hash<std::string>()(timerKey);
 
 	// Hash Key 검색..
 	m_NowKey = m_Timer.find(hashKey);
@@ -67,10 +67,12 @@ void Debugger::TimerStart(PROFILE_OUTPUT outputType, const char* func, int& line
 	m_NowKey->second.NowFrame--;
 }
 
-void Debugger::TimerEnd(const char* key)
+void Debugger::TimerEnd(std::string&& timerKey)
 {
 	// Hash Key 검색..
-	m_NowKey = m_Timer.find(std::hash<const char*>()(key));
+	Hash hashKey = std::hash<std::string>()(timerKey);
+
+	m_NowKey = m_Timer.find(hashKey);
 
 	// 등록된 Hash Key가 아니라면 처리하지 않음.. 사용자의 실수
 	if (m_NowKey == m_Timer.end()) return;
@@ -85,8 +87,8 @@ void Debugger::TimerEnd(const char* key)
 	{
 		// 해당 측정 결과 출력..
 		Log(nowTimer.OutputType, 
-			"-----------------------[Timer]-----------------------\n %s Timer\n [Locate] \t: %s\n [TotalFrame] \t: %d\n [TotalTime] \t: %.6f sec\n [AverageTime] \t: %.6f sec\n-----------------------------------------------------\n\n",
-			key,
+			"-----------------------[Timer]-----------------------\n %s\n [Locate] \t: %s\n [TotalFrame] \t: %d\n [TotalTime] \t: %.6f sec\n [AverageTime] \t: %.6f sec\n-----------------------------------------------------\n\n",
+			timerKey.c_str(),
 			nowTimer.Location.c_str(),
 			nowTimer.TotalFrame,
 			nowTimer.TotalTime.count(),
@@ -166,10 +168,13 @@ void Debugger::Log(PROFILE_OUTPUT& outputType, const char* fileInfo, char* messa
 		break;
 	case PROFILE_OUTPUT::CONSOLE:
 	{
-		WriteFile(m_Console, message, (DWORD)(length), NULL, NULL);
+		std::string output = message;
+		output += "\n";
+
+		WriteFile(m_Console, output.c_str(), (DWORD)(output.size()), NULL, NULL);
 
 		m_LogCount++;
-		if (m_LogCount > 25)
+		if (m_LogCount > 30)
 		{
 			system("cls");
 			m_LogCount = 0;

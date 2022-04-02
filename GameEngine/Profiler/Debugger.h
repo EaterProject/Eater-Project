@@ -36,8 +36,8 @@ public:
 	Debugger();
 
 public:
-	void TimerStart(PROFILE_OUTPUT outputType, const char* func, int& line, const char* timeKey, int& totalFrame);
-	void TimerEnd(const char* key);
+	void TimerStart(PROFILE_OUTPUT outputType, const char* func, int& line, int& totalFrame, std::string&& timerKey);
+	void TimerEnd(std::string&& timerKey);
 
 	void Log(PROFILE_OUTPUT& outputType, const char* message, ...);
 	void Log(PROFILE_OUTPUT& outputType, const char* fileInfo, char* message, int length);
