@@ -12,16 +12,22 @@ using Time = std::chrono::duration<T>;
 
 struct TIME_DESC
 {
-	DEBUG_OUTPUT m_OutputType;
+	PROFILE_OUTPUT OutputType;
 
-	std::string m_Location;
+	std::string Location;
 
-	UINT m_NowFrame;
-	UINT m_TotalFrame;
+	UINT NowFrame;
+	UINT TotalFrame;
 
-	Time<double> m_TotalTime;
+	Time<double> TotalTime;
 
-	Clock m_Start;
+	Clock Start;
+};
+
+struct LOG_DESC
+{
+	std::string LogName;
+	FILE* LogFile;
 };
 
 class Debugger
@@ -30,15 +36,23 @@ public:
 	Debugger();
 
 public:
-	void TimerStart(DEBUG_OUTPUT outputType, const char* func, int& line, const char* timeKey, int& totalFrame);
+	void TimerStart(PROFILE_OUTPUT outputType, const char* func, int& line, const char* timeKey, int& totalFrame);
 	void TimerEnd(const char* key);
 
-	void Log(DEBUG_OUTPUT& outputType, const char* message, ...);
-	void Log(DEBUG_OUTPUT& outputType, char* message, int length);
+	void Log(PROFILE_OUTPUT& outputType, const char* message, ...);
+	void Log(PROFILE_OUTPUT& outputType, const char* fileInfo, char* message, int length);
+
+public:
+	std::string GetFileInfo(const char* file, const char* func, int& line);
+
+private:
+	std::string GetTime();
 
 private:
 	std::map<Hash, TIME_DESC>::iterator m_NowKey;
 	std::map<Hash, TIME_DESC> m_Timer;
+
+	LOG_DESC m_Log;
 
 	HANDLE m_Console;
 

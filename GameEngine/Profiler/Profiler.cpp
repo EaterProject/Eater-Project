@@ -6,8 +6,10 @@
 #if defined(DEBUG) || defined(_DEBUG)
 Debugger g_Debugger = Debugger();
 
-PROFILER_DLL void Log(DEBUG_OUTPUT outputType, const char* message, ...)
+PROFILER_DLL void Log(PROFILE_OUTPUT outputType, const char* file, const char* func, int&& line, const char* message, ...)
 {
+	std::string fileinfo = g_Debugger.GetFileInfo(file, func, line);
+
 	int length;
 	va_list args;
 
@@ -24,12 +26,12 @@ PROFILER_DLL void Log(DEBUG_OUTPUT outputType, const char* message, ...)
 
 	va_end(args);
 
-	g_Debugger.Log(outputType, cBuf, length);
+	g_Debugger.Log(outputType, fileinfo.c_str(), cBuf, length);
 
 	delete[] cBuf;
 }
 
-PROFILER_DLL void TimerStart(DEBUG_OUTPUT outputType, const char* func, int&& line, const char* timeKey, int&& totalFrame)
+PROFILER_DLL void TimerStart(PROFILE_OUTPUT outputType, const char* func, int&& line, const char* timeKey, int&& totalFrame)
 {
 	g_Debugger.TimerStart(outputType, func, line, timeKey, totalFrame);
 }

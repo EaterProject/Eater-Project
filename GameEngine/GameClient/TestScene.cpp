@@ -20,6 +20,7 @@
 #include "Monster.h"
 #include "ParticleSystem.h"
 #include "Collider.h"
+#include "./Profiler/Profiler.h"
 
 void TestScene::Awake()
 {
@@ -43,8 +44,16 @@ void TestScene::Awake()
 
 void TestScene::Update()
 {
+	//PROFILE_TIMER_START(DEBUG_OUTPUT::CONSOLE, "Update", 60);
+	//
+	//static int renderCount = 0;
+	//PROFILE_LOG(DEBUG_OUTPUT::LOG_FILE, "Update Count %d", renderCount++);
+
+
 	ChangeCubeMap();
 	//DebugDrawLine(Vector3(0.0f, 0.0f, 0.0f), Vector3(0.0f, 50.0f, 0.0f), Vector4(1.0f, 0.0f, 0.0f, 1.0f));
+	
+	//PROFILE_TIMER_END("Update");
 }
 
 void TestScene::End()

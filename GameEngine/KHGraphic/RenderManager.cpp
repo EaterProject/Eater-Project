@@ -258,7 +258,7 @@ void RenderManager::ConvertRenderData()
 
 void RenderManager::SelectRenderData()
 {
-	PROFILE_TIMER_START(DEBUG_OUTPUT::CONSOLE, "Culling", 60);
+	PROFILE_TIMER_START(PROFILE_OUTPUT::CONSOLE, "Culling", 60);
 
 	// Camera View Frustum Culling..
 	int renderCount = 0;
@@ -282,11 +282,15 @@ void RenderManager::SelectRenderData()
 		layer->m_RenderCount = renderCount;
 		renderCount = 0;
 	}
+
 	PROFILE_TIMER_END("Culling");
 }
 
 void RenderManager::Render()
 {
+	static int renderCount = 0;
+	PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "Render Count %d", renderCount++);
+
 	// Rendering Option Setting..
 	RenderSetting();
 
