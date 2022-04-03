@@ -20,6 +20,8 @@
 #include "Monster.h"
 #include "ParticleSystem.h"
 #include "Collider.h"
+
+//#define RELEASE_PROFILE
 #include "./Profiler/Profiler.h"
 
 void TestScene::Awake()
@@ -28,13 +30,13 @@ void TestScene::Awake()
 	LoadTerrainMesh("../Assets/Model/TerrainModel/Terrain.fbx", "../Assets/Texture/Terrain/Terrain_RGB.png", SCALING);
 
 	PROFILE_TIMER_START(PROFILE_OUTPUT::CONSOLE, 1, "Load Folder");
-	//Load("../Assets/Texture/ModelTexture");
+	Load("../Assets/Texture/ModelTexture");
 	Load("../Assets/Texture/Terrain");
 	//Load("../Assets/Texture/Particle");
-	//Load("../Assets/Texture/Material");
-	//Load("../Assets/Model/MeshBuffer");
-	//Load("../Assets/Model/ModelData");
-	//Load("../Assets/Model/Animation");
+	Load("../Assets/Texture/Material");
+	Load("../Assets/Model/MeshBuffer");
+	Load("../Assets/Model/ModelData");
+	Load("../Assets/Model/Animation");
 	PROFILE_TIMER_END("Load Folder"); 
 
 	//CreateTestObject();
@@ -122,14 +124,14 @@ void TestScene::CreateMap()
 	//filter = Object->AddComponent<MeshFilter>();
 	//filter->SetModelName("Inside_village");
 	//
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//Tr = Object->GetTransform();
-	//filter->SetModelName("Outside_Rock");
-	
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("Outside_bossOBJ");
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	Tr = Object->GetTransform();
+	filter->SetModelName("Outside_Rock");
+
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	filter->SetModelName("Outside_bossOBJ");
 	
 	//Object = Instance();
 	//filter = Object->AddComponent<MeshFilter>();

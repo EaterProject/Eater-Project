@@ -20,6 +20,11 @@ const std::string Debugger::TOKEN::Space = " ";
 
 Debugger::Debugger()
 {
+
+}
+
+void Debugger::Create()
+{
 	AllocConsole();
 	system("cls");
 	m_Console = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -40,7 +45,7 @@ Debugger::Debugger()
 	int day = t->tm_mday;
 
 	oss << std::setfill('0') << std::setw(2) << year << "." << mon / 10 << mon % 10 << "." << day / 10 << day % 10 << ".log";
-	
+
 	m_Log.LogName += oss.str();
 
 	m_Log.LogFile = fopen(m_Log.LogName.c_str(), "a+");

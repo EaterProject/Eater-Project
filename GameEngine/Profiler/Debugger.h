@@ -37,12 +37,16 @@ public:
 	Debugger();
 
 public:
+	void Create();
+
+public:
 	void TimerStart(PROFILE_OUTPUT outputType, const char* file, const char* func, int& line, int& totalFrame, std::string&& timerKey);
 	void TimerEnd(std::string&& timerKey);
 
 	void Log(PROFILE_OUTPUT& outputType, HRESULT result, const char* fileInfo, char* message, int length);
 
 public:
+	bool GetCreate() { return m_Create; }
 	std::string GetFileInfo(const char* file, const char* func, int& line);
 
 private:

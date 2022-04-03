@@ -11,8 +11,9 @@
 ///  - LOG_FILE : 해당 날짜 Log File에 이어서 Log 출력
 ///  - CONSOLE : Console 창에 해당 Log 출력
 ///  - VS_CODE : Visual Studio 출력 창에 Log 출력
+/// 3. Debug 모드는 설정 없이 출력가능, Release 모드 출력시 RELEASE_PROFILE Define 하여 출력
 
-#if defined(DEBUG) || defined(_DEBUG)
+#if defined(DEBUG) || defined(_DEBUG) || defined(RELEASE_PROFILE)
 // Log Profiling
 // # 해당 Log Message 출력.
 // #Prameters
@@ -51,8 +52,13 @@
 #define PROFILE_TIMER_END(key, ...)					
 #endif
 
-#if defined(DEBUG) || defined(_DEBUG)
+#define PROFILE_CREATE static bool debug_create = Create();
+
+#if defined(DEBUG) || defined(_DEBUG) || defined(RELEASE_PROFILE)
+PROFILER_DLL bool Create();
 PROFILER_DLL void Log(PROFILE_OUTPUT outputType, long result, const char* file, const char* func, int&& line, const char* message, ...);
 PROFILER_DLL void TimerStart(PROFILE_OUTPUT outputType, const char* file, const char* func, int&& line, int&& totalFrame, const char* timerKey, ...);
 PROFILER_DLL void TimerEnd(const char* timerKey, ...);
+
+PROFILE_CREATE
 #endif

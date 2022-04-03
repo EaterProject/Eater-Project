@@ -38,6 +38,8 @@
 #include "RenderDataConverter.h"
 
 #include <algorithm>
+
+#define RELEASE_PROFILE
 #include "./Profiler/Profiler.h"
 
 RenderManager::RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, IGraphicResourceManager* resource, IShaderManager* shader)
