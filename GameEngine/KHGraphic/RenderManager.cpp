@@ -283,7 +283,7 @@ void RenderManager::SelectRenderData()
 		renderCount = 0;
 	}
 
-	//PROFILE_TIMER_END("Culling");
+	PROFILE_TIMER_END("Culling");
 }
 
 void RenderManager::Render()

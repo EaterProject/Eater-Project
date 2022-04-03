@@ -31,7 +31,7 @@ PROFILER_DLL void Log(PROFILE_OUTPUT outputType, long result, const char* file, 
 	delete[] cBuf;
 }
 
-PROFILER_DLL void TimerStart(PROFILE_OUTPUT outputType, const char* func, int&& line, int&& totalFrame, const char* timerKey, ...)
+PROFILER_DLL void TimerStart(PROFILE_OUTPUT outputType, const char* file, const char* func, int&& line, int&& totalFrame, const char* timerKey, ...)
 {
 	int length;
 	va_list args;
@@ -49,7 +49,7 @@ PROFILER_DLL void TimerStart(PROFILE_OUTPUT outputType, const char* func, int&& 
 
 	va_end(args);
 
-	g_Debugger.TimerStart(outputType, func, line, totalFrame, cBuf);
+	g_Debugger.TimerStart(outputType, file, func, line, totalFrame, cBuf);
 
 	delete[] cBuf;
 }

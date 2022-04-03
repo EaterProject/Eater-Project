@@ -48,7 +48,7 @@ void TestScene::Update()
 {
 	//PROFILE_TIMER_START(PROFILE_OUTPUT::CONSOLE, "Update", 60);
 	
-	static int renderCount = 0;
+	//static int renderCount = 0;
 	//PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "Update Count %d", renderCount++);
 	//PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "Update Count %d", renderCount++);
 

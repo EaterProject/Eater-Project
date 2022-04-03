@@ -89,6 +89,8 @@ private:
 	ImageParser* m_Parser;
 
 	std::string m_TextureRoute;
+
+	HRESULT m_Result;
 };
 
 class DepthStencilView;

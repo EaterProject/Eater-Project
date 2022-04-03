@@ -33,6 +33,7 @@
 #include "MathDefine.h"
 #include "GeometryGenerator.h"
 #include "MathHelper.h"
+#include "Profiler/Profiler.h"
 
 #define MAX_VECTOR3(v3) max(max(abs(v3.x), abs(v3.y)), abs(v3.z))
 #define DISTANCE(vec1, vec2) sqrtf(powf(vec1.x - vec2.x, 2.0f) + powf(vec1.y - vec2.y, 2.0f) + powf(vec1.z - vec2.z, 2.0f))
@@ -104,7 +105,7 @@ void GraphicResourceFactory::CreateTextureBuffer(std::string path, TextureBuffer
 	ID3D11ShaderResourceView* newTex = nullptr;
 
 	// Texture Buffer 持失..
-	g_Graphic->CreateTextureBuffer(path, &texResource, &newTex);
+	m_Result = g_Graphic->CreateTextureBuffer(path, &texResource, &newTex);
 
 	// Texture 持失 失因獣 Texture Buffer 諮脊..
 	if (newTex)
@@ -153,7 +154,7 @@ void GraphicResourceFactory::CreateEnvironmentMap(std::string path)
 	ID3D11ShaderResourceView* newTex = nullptr;
 
 	// Texture Buffer 持失..
-	g_Graphic->CreateTextureBuffer(path, &texResource, &newTex);
+	m_Result = g_Graphic->CreateTextureBuffer(path, &texResource, &newTex);
 
 	// Texture 持失 失因獣 Texture Buffer 諮脊..
 	if (newTex)
@@ -188,7 +189,7 @@ void GraphicResourceFactory::CreateImage(std::string name, Hash_Code hash_code, 
 	ID3D11ShaderResourceView* newTex = nullptr;
 
 	// Texture Buffer 持失..
-	g_Graphic->CreateTextureBuffer(m_TextureRoute + fileName, &texResource, &newTex);
+	m_Result = g_Graphic->CreateTextureBuffer(m_TextureRoute + fileName, &texResource, &newTex);
 
 	// Texture 持失 失因獣 Texture Buffer 諮脊..
 	if (newTex)
@@ -217,20 +218,38 @@ void GraphicResourceFactory::CreateDepthStencil(std::string name, Hash_Code hash
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> srv = nullptr;
 
 	// Texture2D Resource 持失..
-	g_Graphic->CreateTexture2D(texDesc, subData, tex2D.GetAddressOf());
+	m_Result = g_Graphic->CreateTexture2D(texDesc, subData, tex2D.GetAddressOf());
 	
+	if (FAILED(m_Result))
+	{
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][Texture2D] '%s' FAILED!!", name.c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][Texture2D] '%s' FAILED!!", name.c_str());
+	}
+
 	// Bind Resource 持失..
 	UINT bindFlag = texDesc->BindFlags;
 
 	if (bindFlag & D3D11_BIND_DEPTH_STENCIL)
 	{
 		// DepthStencilView Resource 持失..
-		g_Graphic->CreateDepthStencilView(tex2D.Get(), dsvDesc, dsv.GetAddressOf());
+		m_Result = g_Graphic->CreateDepthStencilView(tex2D.Get(), dsvDesc, dsv.GetAddressOf());
+
+		if (FAILED(m_Result))
+		{
+			PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][DepthStencilView] '%s' FAILED!!", name.c_str());
+			PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][DepthStencilView] '%s' FAILED!!", name.c_str());
+		}
 	}
 	if (bindFlag & D3D11_BIND_SHADER_RESOURCE)
 	{
 		// ShaderResourceView Resource 持失..
 		g_Graphic->CreateShaderResourceView(tex2D.Get(), srvDesc, srv.GetAddressOf());
+
+		if (FAILED(m_Result))
+		{
+			PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][ShaderResourceView] '%s' FAILED!!", name.c_str());
+			PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][ShaderResourceView] '%s' FAILED!!", name.c_str());
+		}
 	}
 
 	// Resource 持失 貢 去系..
@@ -268,7 +287,13 @@ void GraphicResourceFactory::CreateRenderTexture(std::string name, Hash_Code has
 	Microsoft::WRL::ComPtr<ID3D11UnorderedAccessView> uav = nullptr;
 
 	// Texture2D Resource 持失..
-	g_Graphic->CreateTexture2D(texDesc, subData, tex2D.GetAddressOf());
+	m_Result = g_Graphic->CreateTexture2D(texDesc, subData, tex2D.GetAddressOf());
+
+	if (FAILED(m_Result))
+	{
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][Texture2D] '%s' FAILED!!", name.c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][Texture2D] '%s' FAILED!!", name.c_str());
+	}
 
 	// Bind Resource 持失..
 	UINT bindFlag = texDesc->BindFlags;
@@ -276,17 +301,35 @@ void GraphicResourceFactory::CreateRenderTexture(std::string name, Hash_Code has
 	if (bindFlag & D3D11_BIND_RENDER_TARGET)
 	{
 		// RenderTargetView Resource 持失..
-		g_Graphic->CreateRenderTargetView(tex2D.Get(), rtvDesc, rtv.GetAddressOf());
+		m_Result = g_Graphic->CreateRenderTargetView(tex2D.Get(), rtvDesc, rtv.GetAddressOf());
+
+		if (FAILED(m_Result))
+		{
+			PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][RenderTargetView] '%s' FAILED!!", name.c_str());
+			PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][RenderTargetView] '%s' FAILED!!", name.c_str());
+		}
 	}
 	if (bindFlag & D3D11_BIND_SHADER_RESOURCE)
 	{
 		// ShaderResourceView Resource 持失..
-		g_Graphic->CreateShaderResourceView(tex2D.Get(), srvDesc, srv.GetAddressOf());
+		m_Result = g_Graphic->CreateShaderResourceView(tex2D.Get(), srvDesc, srv.GetAddressOf());
+
+		if (FAILED(m_Result))
+		{
+			PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][ShaderResourceView] '%s' FAILED!!", name.c_str());
+			PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][ShaderResourceView] '%s' FAILED!!", name.c_str());
+		}
 	}
 	if (bindFlag & D3D11_BIND_UNORDERED_ACCESS)
 	{
 		// UnorderedAccessView Resource 持失..
-		g_Graphic->CreateUnorderedAccessView(tex2D.Get(), uavDesc, uav.GetAddressOf());
+		m_Result = g_Graphic->CreateUnorderedAccessView(tex2D.Get(), uavDesc, uav.GetAddressOf());
+
+		if (FAILED(m_Result))
+		{
+			PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][UnorderedAccessView] '%s' FAILED!!", name.c_str());
+			PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][UnorderedAccessView] '%s' FAILED!!", name.c_str());
+		}
 	}
 
 	// Resource 持失 貢 去系..
@@ -328,7 +371,13 @@ void GraphicResourceFactory::CreateRenderBuffer(std::string name, Hash_Code hash
 	Microsoft::WRL::ComPtr<ID3D11UnorderedAccessView> uav = nullptr;
 
 	// Buffer Resource 持失..
-	g_Graphic->CreateBuffer(bufferDesc, subData, buffer.GetAddressOf());
+	m_Result = g_Graphic->CreateBuffer(bufferDesc, subData, buffer.GetAddressOf());
+
+	if (FAILED(m_Result))
+	{
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][Buffer] '%s' FAILED!!", name.c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][Buffer] '%s' FAILED!!", name.c_str());
+	}
 
 	// Bind Resource 持失..
 	UINT bindFlag = bufferDesc->BindFlags;
@@ -336,17 +385,35 @@ void GraphicResourceFactory::CreateRenderBuffer(std::string name, Hash_Code hash
 	if (bindFlag & D3D11_BIND_RENDER_TARGET)
 	{
 		// RenderTargetView Resource 持失..
-		g_Graphic->CreateRenderTargetView(buffer.Get(), rtvDesc, rtv.GetAddressOf());
+		m_Result = g_Graphic->CreateRenderTargetView(buffer.Get(), rtvDesc, rtv.GetAddressOf());
+
+		if (FAILED(m_Result))
+		{
+			PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][RenderTargetView] '%s' FAILED!!", name.c_str());
+			PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][RenderTargetView] '%s' FAILED!!", name.c_str());
+		}
 	}
 	if (bindFlag & D3D11_BIND_SHADER_RESOURCE)
 	{
 		// ShaderResourceView Resource 持失..
-		g_Graphic->CreateShaderResourceView(buffer.Get(), srvDesc, srv.GetAddressOf());
+		m_Result = g_Graphic->CreateShaderResourceView(buffer.Get(), srvDesc, srv.GetAddressOf());
+
+		if (FAILED(m_Result))
+		{
+			PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][ShaderResourceView] '%s' FAILED!!", name.c_str());
+			PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][ShaderResourceView] '%s' FAILED!!", name.c_str());
+		}
 	}
 	if (bindFlag & D3D11_BIND_UNORDERED_ACCESS)
 	{
 		// UnorderedAccessView Resource 持失..
-		g_Graphic->CreateUnorderedAccessView(buffer.Get(), uavDesc, uav.GetAddressOf());
+		m_Result = g_Graphic->CreateUnorderedAccessView(buffer.Get(), uavDesc, uav.GetAddressOf());
+
+		if (FAILED(m_Result))
+		{
+			PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][UnorderedAccessView] '%s' FAILED!!", name.c_str());
+			PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][UnorderedAccessView] '%s' FAILED!!", name.c_str());
+		}
 	}
 
 	// Resource 持失 貢 去系..
@@ -401,7 +468,13 @@ void GraphicResourceFactory::CreateDrawBuffer(std::string name, Hash_Code hash_c
 	initData.SysMemPitch = 0;
 	initData.SysMemSlicePitch = 0;
 
-	g_Graphic->CreateBuffer(&bufferDesc, &initData, vertexBuf.GetAddressOf());
+	m_Result = g_Graphic->CreateBuffer(&bufferDesc, &initData, vertexBuf.GetAddressOf());
+
+	if (FAILED(m_Result))
+	{
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][Buffer] '%s' FAILED!!", (name + "_VertexBuf").c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][Buffer] '%s' FAILED!!", (name + "_VertexBuf").c_str());
+	}
 
 	// Index Buffer 持失..
 	bufferDesc.Usage = D3D11_USAGE_IMMUTABLE;
@@ -415,7 +488,13 @@ void GraphicResourceFactory::CreateDrawBuffer(std::string name, Hash_Code hash_c
 	initData.SysMemPitch = 0;
 	initData.SysMemSlicePitch = 0;
 
-	g_Graphic->CreateBuffer(&bufferDesc, &initData, indexBuf.GetAddressOf());
+	m_Result = g_Graphic->CreateBuffer(&bufferDesc, &initData, indexBuf.GetAddressOf());
+
+	if (FAILED(m_Result))
+	{
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][Buffer] '%s' FAILED!!", (name + "_IndexBuf").c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][Buffer] '%s' FAILED!!", (name + "_IndexBuf").c_str());
+	}
 
 	// Resource Buffer 持失..
 	Buffer* newVertexBuf = new Buffer(hash_code, vertexBuf.Get());
@@ -464,7 +543,13 @@ void GraphicResourceFactory::CreateDrawBuffer(std::string name, Hash_Code hash_c
 	initData.SysMemPitch = 0;
 	initData.SysMemSlicePitch = 0;
 
-	g_Graphic->CreateBuffer(&bufferDesc, &initData, (D3D11_USAGE)vUsage, vertexBuf.GetAddressOf());
+	m_Result = g_Graphic->CreateBuffer(&bufferDesc, &initData, (D3D11_USAGE)vUsage, vertexBuf.GetAddressOf());
+	
+	if (FAILED(m_Result))
+	{
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][Buffer] '%s' FAILED!!", (name + "_VertexBuf").c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][Buffer] '%s' FAILED!!", (name + "_VertexBuf").c_str());
+	}
 
 	// Index Buffer 持失..
 	bufferDesc.ByteWidth = iByteSize;
@@ -477,7 +562,13 @@ void GraphicResourceFactory::CreateDrawBuffer(std::string name, Hash_Code hash_c
 	initData.SysMemPitch = 0;
 	initData.SysMemSlicePitch = 0;
 
-	g_Graphic->CreateBuffer(&bufferDesc, &initData, (D3D11_USAGE)iUsage, indexBuf.GetAddressOf());
+	m_Result = g_Graphic->CreateBuffer(&bufferDesc, &initData, (D3D11_USAGE)iUsage, indexBuf.GetAddressOf());
+	
+	if (FAILED(m_Result))
+	{
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][Buffer] '%s' FAILED!!", (name + "_IndexBuf").c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][Buffer] '%s' FAILED!!", (name + "_IndexBuf").c_str());
+	}
 
 	// Resource Buffer 持失..
 	Buffer* newVertexBuf = new Buffer(hash_code, vertexBuf.Get());
@@ -527,7 +618,13 @@ void GraphicResourceFactory::CreateInstanceBuffer(std::string name, Hash_Code ha
 	initData.SysMemSlicePitch = 0;
 
 	// Instance Buffer 持失..
-	g_Graphic->CreateBuffer(&bufferDesc, &initData, instanceBuf.GetAddressOf());
+	m_Result = g_Graphic->CreateBuffer(&bufferDesc, &initData, instanceBuf.GetAddressOf());
+
+	if (FAILED(m_Result))
+	{
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][Buffer] '%s' FAILED!!", (name + "_InstanceBuf").c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][Buffer] '%s' FAILED!!", (name + "_InstanceBuf").c_str());
+	}
 
 	// Resource Buffer 持失..
 	Buffer* newInstanceBuf = new Buffer(hash_code, instanceBuf.Get());
@@ -558,7 +655,13 @@ void GraphicResourceFactory::CreateRenderTargetView(std::string name, Hash_Code 
 	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> rtv = nullptr;
 
 	// Texture2D Resource 持失..
-	g_Graphic->CreateTexture2D(texDesc, subData, tex2D.GetAddressOf());
+	m_Result = g_Graphic->CreateTexture2D(texDesc, subData, tex2D.GetAddressOf());
+
+	if (FAILED(m_Result))
+	{
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][Texture2D] '%s' FAILED!!", name.c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][Texture2D] '%s' FAILED!!", name.c_str());
+	}
 
 	// Bind Resource 持失..
 	UINT bindFlag = texDesc->BindFlags;
@@ -566,7 +669,13 @@ void GraphicResourceFactory::CreateRenderTargetView(std::string name, Hash_Code 
 	if (bindFlag & D3D11_BIND_RENDER_TARGET)
 	{
 		// ShaderResourceView Resource 持失..
-		g_Graphic->CreateRenderTargetView(tex2D.Get(), rtvDesc, rtv.GetAddressOf());
+		m_Result = g_Graphic->CreateRenderTargetView(tex2D.Get(), rtvDesc, rtv.GetAddressOf());
+
+		if (FAILED(m_Result))
+		{
+			PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][RenderTargetView] '%s' FAILED!!", name.c_str());
+			PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][RenderTargetView] '%s' FAILED!!", name.c_str());
+		}
 	}
 
 	// ShaderResourceView 持失..
@@ -600,7 +709,13 @@ void GraphicResourceFactory::CreateRenderTargetView(std::string name, Hash_Code 
 	if (bindFlag & D3D11_BIND_RENDER_TARGET)
 	{
 		// ShaderResourceView Resource 持失..
-		g_Graphic->CreateRenderTargetView(tex2D, rtvDesc, rtv.GetAddressOf());
+		m_Result = g_Graphic->CreateRenderTargetView(tex2D, rtvDesc, rtv.GetAddressOf());
+
+		if (FAILED(m_Result))
+		{
+			PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][RenderTargetView] '%s' FAILED!!", name.c_str());
+			PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][RenderTargetView] '%s' FAILED!!", name.c_str());
+		}
 	}
 
 	// ShaderResourceView 持失..
@@ -625,7 +740,7 @@ void GraphicResourceFactory::CreateShaderResourceView(std::string name, Hash_Cod
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> srv = nullptr;
 
 	// Texture2D Resource 持失..
-	g_Graphic->CreateTexture2D(texDesc, subData, tex2D.GetAddressOf());
+	m_Result = g_Graphic->CreateTexture2D(texDesc, subData, tex2D.GetAddressOf());
 
 	// Bind Resource 持失..
 	UINT bindFlag = texDesc->BindFlags;
@@ -633,7 +748,13 @@ void GraphicResourceFactory::CreateShaderResourceView(std::string name, Hash_Cod
 	if (bindFlag & D3D11_BIND_SHADER_RESOURCE)
 	{
 		// ShaderResourceView Resource 持失..
-		g_Graphic->CreateShaderResourceView(tex2D.Get(), srvDesc, srv.GetAddressOf());
+		m_Result = g_Graphic->CreateShaderResourceView(tex2D.Get(), srvDesc, srv.GetAddressOf());
+
+		if (FAILED(m_Result))
+		{
+			PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][ShaderResourceView] '%s' FAILED!!", name.c_str());
+			PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][ShaderResourceView] '%s' FAILED!!", name.c_str());
+		}
 	}
 
 	// ShaderResourceView 持失..
@@ -667,7 +788,13 @@ void GraphicResourceFactory::CreateShaderResourceView(std::string name, Hash_Cod
 	if (bindFlag & D3D11_BIND_SHADER_RESOURCE)
 	{
 		// ShaderResourceView Resource 持失..
-		g_Graphic->CreateShaderResourceView(tex2D, srvDesc, srv.GetAddressOf());
+		m_Result = g_Graphic->CreateShaderResourceView(tex2D, srvDesc, srv.GetAddressOf());
+
+		if (FAILED(m_Result))
+		{
+			PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][ShaderResourceView] '%s' FAILED!!", name.c_str());
+			PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][ShaderResourceView] '%s' FAILED!!", name.c_str());
+		}
 	}
 
 	// ShaderResourceView 持失..
@@ -692,7 +819,13 @@ void GraphicResourceFactory::CreateUnorderedAccessView(std::string name, Hash_Co
 	Microsoft::WRL::ComPtr<ID3D11UnorderedAccessView> uav = nullptr;
 
 	// Texture2D Resource 持失..
-	g_Graphic->CreateTexture2D(texDesc, subData, tex2D.GetAddressOf());
+	m_Result = g_Graphic->CreateTexture2D(texDesc, subData, tex2D.GetAddressOf());
+
+	if (FAILED(m_Result))
+	{
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][Texture2D] '%s' FAILED!!", name.c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][Texture2D] '%s' FAILED!!", name.c_str());
+	}
 
 	// Bind Resource 持失..
 	UINT bindFlag = texDesc->BindFlags;
@@ -700,7 +833,13 @@ void GraphicResourceFactory::CreateUnorderedAccessView(std::string name, Hash_Co
 	if (bindFlag & D3D11_BIND_UNORDERED_ACCESS)
 	{
 		// UnorderedAccessView Resource 持失..
-		g_Graphic->CreateUnorderedAccessView(tex2D.Get(), uavDesc, uav.GetAddressOf());
+		m_Result = g_Graphic->CreateUnorderedAccessView(tex2D.Get(), uavDesc, uav.GetAddressOf());
+
+		if (FAILED(m_Result))
+		{
+			PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][UnorderedAccessView] '%s' FAILED!!", name.c_str());
+			PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][UnorderedAccessView] '%s' FAILED!!", name.c_str());
+		}
 	}
 
 	// UnorderedAccessView 持失..
@@ -734,7 +873,13 @@ void GraphicResourceFactory::CreateUnorderedAccessView(std::string name, Hash_Co
 	if (bindFlag & D3D11_BIND_UNORDERED_ACCESS)
 	{
 		// UnorderedAccessView Resource 持失..
-		g_Graphic->CreateUnorderedAccessView(tex2D, uavDesc, uav.GetAddressOf());
+		m_Result = g_Graphic->CreateUnorderedAccessView(tex2D, uavDesc, uav.GetAddressOf());
+
+		if (FAILED(m_Result))
+		{
+			PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][UnorderedAccessView] '%s' FAILED!!", name.c_str());
+			PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][UnorderedAccessView] '%s' FAILED!!", name.c_str());
+		}
 	}
 
 	// UnorderedAccessView 持失..
@@ -759,7 +904,13 @@ void GraphicResourceFactory::CreateDepthStencilState(std::string name, Hash_Code
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> dss = nullptr;
 
 	// DepthStencilState Resource 持失..
-	g_Graphic->CreateDepthStencilState(dssDesc, dss.GetAddressOf());
+	m_Result = g_Graphic->CreateDepthStencilState(dssDesc, dss.GetAddressOf());
+
+	if (FAILED(m_Result))
+	{
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][DepthStencilState] '%s' FAILED!!", name.c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][DepthStencilState] '%s' FAILED!!", name.c_str());
+	}
 
 	// DepthStencilState 持失..
 	DepthStencilState* newResource = new DepthStencilState(hash_code, dss.Get());
@@ -782,7 +933,13 @@ void GraphicResourceFactory::CreateRasterizerState(std::string name, Hash_Code h
 	Microsoft::WRL::ComPtr<ID3D11RasterizerState> rs = nullptr;
 
 	// RasterizerState Resource 持失..
-	g_Graphic->CreateRasterizerState(rsDesc, rs.GetAddressOf());
+	m_Result = g_Graphic->CreateRasterizerState(rsDesc, rs.GetAddressOf());
+
+	if (FAILED(m_Result))
+	{
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][RasterizerState] '%s' FAILED!!", name.c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][RasterizerState] '%s' FAILED!!", name.c_str());
+	}
 
 	// RasterizerState 持失..
 	RasterizerState* newResource = new RasterizerState(hash_code, rs.Get());
@@ -805,7 +962,13 @@ void GraphicResourceFactory::CreateBlendState(std::string name, Hash_Code hash_c
 	Microsoft::WRL::ComPtr<ID3D11BlendState> bs = nullptr;
 
 	// BlendState Resource 持失..
-	g_Graphic->CreateBlendState(bsDesc, bs.GetAddressOf());
+	m_Result = g_Graphic->CreateBlendState(bsDesc, bs.GetAddressOf());
+
+	if (FAILED(m_Result))
+	{
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][BlendState] '%s' FAILED!!", name.c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][BlendState] '%s' FAILED!!", name.c_str());
+	}
 
 	// BlendState 持失..
 	BlendState* newResource = new BlendState(hash_code, bs.Get());
@@ -828,7 +991,13 @@ void GraphicResourceFactory::CreateSamplerState(std::string name, Hash_Code hash
 	Microsoft::WRL::ComPtr<ID3D11SamplerState> ss = nullptr;
 
 	// SamplerState Resource 持失..
-	g_Graphic->CreateSamplerState(ssDesc, ss.GetAddressOf());
+	m_Result = g_Graphic->CreateSamplerState(ssDesc, ss.GetAddressOf());
+
+	if (FAILED(m_Result))
+	{
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][SamplerState] '%s' FAILED!!", name.c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][SamplerState] '%s' FAILED!!", name.c_str());
+	}
 
 	// SamplerState 持失..
 	SamplerState* newResource = new SamplerState(hash_code, ss.Get());
@@ -886,7 +1055,13 @@ void GraphicResourceFactory::CreateMainRenderTarget(Hash_Code hash_code, UINT wi
 	Microsoft::WRL::ComPtr<ID3D11UnorderedAccessView> uav = nullptr;
 
 	// Swap Chain, Render Target View Resize
-	g_Graphic->CreateBackBuffer(width, height, tex2D.GetAddressOf(), rtv.GetAddressOf(), srv.GetAddressOf());
+	m_Result = g_Graphic->CreateBackBuffer(width, height, tex2D.GetAddressOf(), rtv.GetAddressOf(), srv.GetAddressOf());
+	
+	if (FAILED(m_Result))
+	{
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][RenderTarget] 'BackBuffer' FAILED!!");
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][RenderTarget] 'BackBuffer' FAILED!!");
+	}
 
 	// Resource 持失 貢 去系..
 	Texture2D* newTex2D = new Texture2D(hash_code, tex2D.Get());
@@ -1073,7 +1248,13 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::MeshVertex>(ParserDat
 	initData.SysMemSlicePitch = 0;
 
 	// Vertex Buffer 持失..
-	g_Graphic->CreateBuffer(&bufferDesc, &initData, &vb);
+	m_Result = g_Graphic->CreateBuffer(&bufferDesc, &initData, &vb);
+
+	if (FAILED(m_Result))
+	{
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][Buffer] '%s' FAILED!!", (mesh->m_NodeName + "_VertexBuf").c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][Buffer] '%s' FAILED!!", (mesh->m_NodeName + "_VertexBuf").c_str());
+	}
 
 	bufferDesc.Usage = D3D11_USAGE_IMMUTABLE;
 	bufferDesc.ByteWidth = iByteSize;
@@ -1087,7 +1268,13 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::MeshVertex>(ParserDat
 	initData.SysMemSlicePitch = 0;
 
 	// Index Buffer 持失..
-	g_Graphic->CreateBuffer(&bufferDesc, &initData, &ib);
+	m_Result = g_Graphic->CreateBuffer(&bufferDesc, &initData, &ib);
+
+	if (FAILED(m_Result))
+	{
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][Buffer] '%s' FAILED!!", (mesh->m_NodeName + "_IndexBuf").c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][Buffer] '%s' FAILED!!", (mesh->m_NodeName + "_IndexBuf").c_str());
+	}
 
 	// 角移操醤拝 Bounding Data..
 	MeshSubData* subData = newMeshBuf->Mesh_SubData;
@@ -1107,8 +1294,8 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::MeshVertex>(ParserDat
 	newIndexBuf->pIndexBuf = ib;
 
 	// Debug Name..
-	GPU_RESOURCE_DEBUG_NAME(vb, (mesh->m_NodeName + "_VB").c_str());
-	GPU_RESOURCE_DEBUG_NAME(ib, (mesh->m_NodeName + "_IB").c_str());
+	GPU_RESOURCE_DEBUG_NAME(vb, (mesh->m_NodeName + "_VertexBuf").c_str());
+	GPU_RESOURCE_DEBUG_NAME(ib, (mesh->m_NodeName + "_IndexBuf").c_str());
 }
 
 template<>
@@ -1199,7 +1386,13 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::SkinVertex>(ParserDat
 	initData.SysMemSlicePitch = 0;
 
 	// Vertex Buffer 持失..
-	g_Graphic->CreateBuffer(&bufferDesc, &initData, &vb);
+	m_Result = g_Graphic->CreateBuffer(&bufferDesc, &initData, &vb);
+
+	if (FAILED(m_Result))
+	{
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][Buffer] '%s' FAILED!!", (mesh->m_NodeName + "_VertexBuf").c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][Buffer] '%s' FAILED!!", (mesh->m_NodeName + "_VertexBuf").c_str());
+	}
 
 	bufferDesc.Usage = D3D11_USAGE_IMMUTABLE;
 	bufferDesc.ByteWidth = iByteSize;
@@ -1213,7 +1406,13 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::SkinVertex>(ParserDat
 	initData.SysMemSlicePitch = 0;
 
 	// Index Buffer 持失..
-	g_Graphic->CreateBuffer(&bufferDesc, &initData, &ib);
+	m_Result = g_Graphic->CreateBuffer(&bufferDesc, &initData, &ib);
+
+	if (FAILED(m_Result))
+	{
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][Buffer] '%s' FAILED!!", (mesh->m_NodeName + "_IndexBuf").c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][Buffer] '%s' FAILED!!", (mesh->m_NodeName + "_IndexBuf").c_str());
+	}
 
 	// 角移操醤拝 Bounding Data..
 	MeshSubData* subData = newMeshBuf->Mesh_SubData;
@@ -1233,8 +1432,8 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::SkinVertex>(ParserDat
 	newIndexBuf->pIndexBuf = ib;
 
 	// Debug Name..
-	GPU_RESOURCE_DEBUG_NAME(vb, (mesh->m_NodeName + "_VB").c_str());
-	GPU_RESOURCE_DEBUG_NAME(ib, (mesh->m_NodeName + "_IB").c_str());
+	GPU_RESOURCE_DEBUG_NAME(vb, (mesh->m_NodeName + "_VertexBuf").c_str());
+	GPU_RESOURCE_DEBUG_NAME(ib, (mesh->m_NodeName + "_IndexBuf").c_str());
 }
 
 template<>
@@ -1327,7 +1526,13 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(Parser
 	initData.SysMemSlicePitch = 0;
 
 	// Vertex Buffer 持失..
-	g_Graphic->CreateBuffer(&bufferDesc, &initData, &vb);
+	m_Result = g_Graphic->CreateBuffer(&bufferDesc, &initData, &vb);
+
+	if (FAILED(m_Result))
+	{
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][Buffer] '%s' FAILED!!", (mesh->m_NodeName + "_VertexBuf").c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][Buffer] '%s' FAILED!!", (mesh->m_NodeName + "_VertexBuf").c_str());
+	}
 
 	bufferDesc.Usage = D3D11_USAGE_IMMUTABLE;
 	bufferDesc.ByteWidth = iByteSize;
@@ -1341,7 +1546,13 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(Parser
 	initData.SysMemSlicePitch = 0;
 
 	// Index Buffer 持失..
-	g_Graphic->CreateBuffer(&bufferDesc, &initData, &ib);
+	m_Result = g_Graphic->CreateBuffer(&bufferDesc, &initData, &ib);
+
+	if (FAILED(m_Result))
+	{
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][Buffer] '%s' FAILED!!", (mesh->m_NodeName + "_IndexBuf").c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][Buffer] '%s' FAILED!!", (mesh->m_NodeName + "_IndexBuf").c_str());
+	}
 
 	// 角移操醤拝 Bounding Data..
 	MeshSubData* subData = newMeshBuf->Mesh_SubData;
@@ -1361,8 +1572,8 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(Parser
 	newIndexBuf->pIndexBuf = ib;
 
 	// Debug Name..
-	GPU_RESOURCE_DEBUG_NAME(vb, (mesh->m_NodeName + "_VB").c_str());
-	GPU_RESOURCE_DEBUG_NAME(ib, (mesh->m_NodeName + "_IB").c_str());
+	GPU_RESOURCE_DEBUG_NAME(vb, (mesh->m_NodeName + "_VertexBuf").c_str());
+	GPU_RESOURCE_DEBUG_NAME(ib, (mesh->m_NodeName + "_IndexBuf").c_str());
 }
 
 template<>

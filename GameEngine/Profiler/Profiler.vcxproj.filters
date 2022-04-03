@@ -19,12 +19,6 @@
     <Filter Include="소스 파일\Profiler">
       <UniqueIdentifier>{03b2e5a5-387e-4f0b-ac45-a4d2ea11319b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Debuger\Timer">
-      <UniqueIdentifier>{52c7156f-e31a-4037-98e8-09bce4bde236}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Debuger\Logger">
-      <UniqueIdentifier>{a4ed114b-661e-452a-a0e4-364de111029f}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -39,12 +33,6 @@
     <ClInclude Include="Export\Profiler.h">
       <Filter>소스 파일\Profiler</Filter>
     </ClInclude>
-    <ClInclude Include="Timer.h">
-      <Filter>소스 파일\Debuger\Timer</Filter>
-    </ClInclude>
-    <ClInclude Include="Logger.h">
-      <Filter>소스 파일\Debuger\Logger</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -55,12 +43,6 @@
     </ClCompile>
     <ClCompile Include="Profiler.cpp">
       <Filter>소스 파일\Profiler</Filter>
-    </ClCompile>
-    <ClCompile Include="Timer.cpp">
-      <Filter>소스 파일\Debuger\Timer</Filter>
-    </ClCompile>
-    <ClCompile Include="Logger.cpp">
-      <Filter>소스 파일\Debuger\Logger</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

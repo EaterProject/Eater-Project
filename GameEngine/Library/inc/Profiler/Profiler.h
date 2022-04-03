@@ -20,9 +20,9 @@
 //  2. message	: Log Message
 #define PROFILE_LOG(out, message, ...)				Log(out, 1, __FILE__, __FUNCTION__, __LINE__, message, ##__VA_ARGS__)
 
-// Result Profiling
-// # 해당 Result Message 출력.
-// # HR Macro + 추가 Message 출력.
+// COM Result Profiling
+// # 해당 COM Result Message 출력.
+// # COM 전용 HRESULT Macro + 추가 Message 출력.
 // #Prameters
 //  1. out		: PROFILE_OUTPUT Type
 //  2. x		: Function Result
@@ -36,7 +36,7 @@
 //  1. out		: PROFILE_OUTPUT Type
 //  2. frame	: Output Timer Total Frame Rate
 //  3. key		: Timer Key Name
-#define PROFILE_TIMER_START(out, frame, key, ...)	TimerStart(out, __FUNCTION__, __LINE__, frame, key, ##__VA_ARGS__);
+#define PROFILE_TIMER_START(out, frame, key, ...)	TimerStart(out, __FILE__, __FUNCTION__, __LINE__, frame, key, ##__VA_ARGS__);
 
 // - Timer Start Profiling
 // # 해당 Key Timer 측정 종료.
@@ -53,6 +53,6 @@
 
 #if defined(DEBUG) || defined(_DEBUG)
 PROFILER_DLL void Log(PROFILE_OUTPUT outputType, long result, const char* file, const char* func, int&& line, const char* message, ...);
-PROFILER_DLL void TimerStart(PROFILE_OUTPUT outputType, const char* func, int&& line, int&& totalFrame, const char* timerKey, ...);
+PROFILER_DLL void TimerStart(PROFILE_OUTPUT outputType, const char* file, const char* func, int&& line, int&& totalFrame, const char* timerKey, ...);
 PROFILER_DLL void TimerEnd(const char* timerKey, ...);
 #endif

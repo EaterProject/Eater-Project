@@ -14,6 +14,7 @@ struct TIME_DESC
 {
 	PROFILE_OUTPUT OutputType;
 
+	std::string KeyName;
 	std::string Location;
 
 	UINT NowFrame;
@@ -36,7 +37,7 @@ public:
 	Debugger();
 
 public:
-	void TimerStart(PROFILE_OUTPUT outputType, const char* func, int& line, int& totalFrame, std::string&& timerKey);
+	void TimerStart(PROFILE_OUTPUT outputType, const char* file, const char* func, int& line, int& totalFrame, std::string&& timerKey);
 	void TimerEnd(std::string&& timerKey);
 
 	void Log(PROFILE_OUTPUT& outputType, HRESULT result, const char* fileInfo, char* message, int length);
@@ -49,6 +50,7 @@ private:
 
 private:
 	std::string GetTime();
+	std::string GetFileName(const char* file);
 
 private:
 	struct TOKEN

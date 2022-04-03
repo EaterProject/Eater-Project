@@ -2,8 +2,6 @@
 
 #include "ProfilerDLL.h"
 #include "Debugger.h"
-#include "Timer.h"
-#include "Logger.h"
 
 #include <iostream>
 #include <stdarg.h>
@@ -48,7 +46,7 @@ Debugger::Debugger()
 	m_Log.LogFile = fopen(m_Log.LogName.c_str(), "a+");
 }
 
-void Debugger::TimerStart(PROFILE_OUTPUT outputType, const char* func, int& line, int& totalFrame, std::string&& timerKey)
+void Debugger::TimerStart(PROFILE_OUTPUT outputType, const char* file, const char* func, int& line, int& totalFrame, std::string&& timerKey)
 {
 	// 해당 문자열 Hash 추출..
 	Hash hashKey = std::hash<std::string>()(timerKey);
@@ -60,7 +58,8 @@ void Debugger::TimerStart(PROFILE_OUTPUT outputType, const char* func, int& line
 	if (m_NowKey == m_Timer.end())
 	{
 		TIME_DESC timer;
-		timer.Location = std::string(func) + " - " + std::to_string(line);
+		timer.KeyName = timerKey;
+		timer.Location = GetFileName(file) + " " + std::string(func) + " - " + std::to_string(line);
 		timer.TotalTime = std::chrono::seconds::zero();
 		timer.OutputType = outputType;
 		timer.NowFrame = totalFrame;
@@ -69,11 +68,21 @@ void Debugger::TimerStart(PROFILE_OUTPUT outputType, const char* func, int& line
 		m_NowKey = m_Timer.insert(std::pair<Hash, TIME_DESC>(hashKey, timer)).first;
 	}
 
+	// 현재 Timer Desc..
+	TIME_DESC& nowTimer = m_NowKey->second;
+
+	// Timer End 설정이 안되있을 경우..
+	if (nowTimer.TotalTime == std::chrono::seconds::zero() && nowTimer.NowFrame < nowTimer.TotalFrame)
+	{
+		nowTimer.NowFrame = 500;
+		Log(nowTimer.OutputType, "[ ERROR ] %s\n '%s' Timer의 'PROFILE_TIMER_END' 함수가 없습니다.\n", nowTimer.Location.c_str(), nowTimer.KeyName.c_str());
+	}
+
 	// 현재 시작 시간 설정..
-	m_NowKey->second.Start = std::chrono::system_clock::now();
+	nowTimer.Start = std::chrono::system_clock::now();
 
 	// 측정 프레임 카운트 감소..
-	m_NowKey->second.NowFrame--;
+	nowTimer.NowFrame--;
 }
 
 void Debugger::TimerEnd(std::string&& timerKey)
@@ -96,7 +105,7 @@ void Debugger::TimerEnd(std::string&& timerKey)
 	{
 		// 해당 측정 결과 출력..
 		Log(nowTimer.OutputType, 
-			"-----------------------[Timer]-----------------------\n %s\n [Locate] \t: %s\n [TotalFrame] \t: %d\n [TotalTime] \t: %.6f sec\n [AverageTime] \t: %.6f sec\n-----------------------------------------------------\n\n",
+			"-----------------------[ Timer ]-----------------------\n %s\n [ Locate ] \t\t: %s\n [ TotalFrame ] \t: %d\n [ TotalTime ] \t\t: %.6f sec\n [ AverageTime ] \t: %.6f sec\n-------------------------------------------------------\n\n",
 			timerKey.c_str(),
 			nowTimer.Location.c_str(),
 			nowTimer.TotalFrame,
@@ -186,11 +195,10 @@ void Debugger::Log(PROFILE_OUTPUT& outputType, HRESULT result, const char* fileI
 	break;
 	case PROFILE_OUTPUT::VS_CODE:
 	{
-		std::string output = GetTime();
-		output += fileInfo;
+		std::string output;
 		output += message;
 		output += errMessage;
-		output += "\n\n";
+		output += "\n";
 
 		OutputDebugStringA(output.c_str());
 	}
@@ -203,14 +211,9 @@ void Debugger::Log(PROFILE_OUTPUT& outputType, HRESULT result, const char* fileI
 std::string Debugger::GetFileInfo(const char* file, const char* func, int& line)
 {
 	std::string outinfo;
-	std::string fileinfo = file;
-
-	size_t fileStart = fileinfo.rfind('\\') + 1;
-	size_t fileEnd = fileinfo.size();
-	fileinfo = fileinfo.substr(fileStart, fileEnd);
 
 	outinfo += TOKEN::File;
-	outinfo += fileinfo + TOKEN::Space;
+	outinfo += GetFileName(file) + TOKEN::Space;
 	outinfo += TOKEN::Func;
 	outinfo += func + TOKEN::Space;
 	outinfo += TOKEN::Line;
@@ -236,4 +239,15 @@ std::string Debugger::GetTime()
 	oss << ":" << sec / 10 << sec % 10 << " ";
 
 	return oss.str();
+}
+
+std::string Debugger::GetFileName(const char* file)
+{
+	std::string fileinfo = file;
+
+	size_t fileStart = fileinfo.rfind('\\') + 1;
+	size_t fileEnd = fileinfo.size();
+	fileinfo = fileinfo.substr(fileStart, fileEnd);
+
+	return fileinfo;
 }
