@@ -164,7 +164,6 @@
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="ClientBaseManager.h" />
     <ClInclude Include="Drone.h" />
     <ClInclude Include="GameLogic.h" />
     <ClInclude Include="Loading.h" />
@@ -181,11 +180,10 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="ManaStone.h" />
-    <ClInclude Include="MemoryPool.h" />
     <ClInclude Include="MonsterA.h" />
     <ClInclude Include="MonsterB.h" />
     <ClInclude Include="MonsterBase.h" />
-    <ClInclude Include="MonsterManager.h" />
+    <ClInclude Include="ClientObjectManager.h" />
     <ClInclude Include="ObjectFactory.h" />
     <ClInclude Include="PlayerCamera.h" />
     <ClInclude Include="Potal.h" />
@@ -195,7 +193,6 @@
     <ClInclude Include="TestScene.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ClientBaseManager.cpp" />
     <ClCompile Include="Drone.cpp" />
     <ClCompile Include="GameLogic.cpp" />
     <ClCompile Include="Loading.cpp" />
@@ -211,11 +208,10 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="ManaStone.cpp" />
-    <ClCompile Include="MemoryPool.cpp" />
     <ClCompile Include="MonsterA.cpp" />
     <ClCompile Include="MonsterB.cpp" />
     <ClCompile Include="MonsterBase.cpp" />
-    <ClCompile Include="MonsterManager.cpp" />
+    <ClCompile Include="ClientObjectManager.cpp" />
     <ClCompile Include="ObjectFactory.cpp" />
     <ClCompile Include="PlayerCamera.cpp" />
     <ClCompile Include="Player.cpp" />

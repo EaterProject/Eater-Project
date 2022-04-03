@@ -7,8 +7,6 @@
 #include "Collider.h"
 #include "TimeManager.h"
 
-#define PI 3.141592f
-#define RADIAN(angle) (angle * 3.141592f / 180)
 Transform::Transform()
 {
 	Position	= { 0,0,0 };
@@ -60,45 +58,6 @@ void Transform::TransformUpdate()
 }
 
 
-
-void Transform::SetRotation(float x, float y, float z)
-{
-	//오일러값 업데이트
-	Rotation.x = x;
-	Rotation.y = y;
-	Rotation.z = z;
-
-	//라디안 변경
-	float radX = RADIAN(Rotation.x);
-	float radY = RADIAN(Rotation.y);
-	float radZ = RADIAN(Rotation.z);
-
-	//쿼터니언 업데이트
-	Q_Rotation = DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(radY, radX, radZ);
-}
-
-void Transform::SetRotation(DirectX::SimpleMath::Vector3& Rot)
-{
-	//오일러값 업데이트
-	Rotation = Rot;
-
-	//쿼터니언 업데이트
-	Q_Rotation = DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(RADIAN(Rotation.y), RADIAN(Rotation.x), RADIAN(Rotation.z));
-}
-
-void Transform::SetRotation(float x, float y, float z, float w)
-{
-	//쿼터니언 업데이트
-	Q_Rotation = DirectX::SimpleMath::Quaternion(x, y, z, w);
-
-	//오일러값 업데이트
-	Rotation = QuaternionToEuler(Q_Rotation);
-}
-
-void Transform::SetRotation(DirectX::SimpleMath::Quaternion& Q)
-{
-
-}
 
 DirectX::SimpleMath::Vector3 Transform::GetLocalPosition_UP()
 {
@@ -332,50 +291,6 @@ void Transform::Slow_Y_Rotation(Vector3 Dir, float RotationSpeed)
 
 }
 
-XMFLOAT3 Transform::QuaternionToEuler(const SimpleMath::Vector4 Q)
-{
-	float sqw = Q.w * Q.w;
-	float sqx = Q.x * Q.x;
-	float sqy = Q.y * Q.y;
-	float sqz = Q.z * Q.z;
-	float unit = sqx + sqy + sqz + sqw; // if normalised is one, otherwise is correction factor
-	float test = Q.x * Q.w - Q.y * Q.z;
-
-	XMFLOAT3 v;
-	///각도가 360을 넘어갔을때 처리
-	if (test > 0.4995f * unit)
-	{
-
-		v.y = 2.0f * atan2(Q.y, Q.x);
-
-		v.x = PI / 2;
-
-		v.z = 0;
-
-		return NormalizeAngles(v * 360 / (PI * 2));
-
-	}
-
-	if (test < -0.4995f * unit)
-	{
-
-		v.y = -2.0f * atan2(Q.y, Q.x);
-
-		v.x = -PI / 2;
-
-		v.z = 0;
-
-		return NormalizeAngles(v * 360 / (PI * 2));
-
-	}
-	Quaternion q = Quaternion(Q.w, Q.z, Q.x, Q.y);
-	v.y = (float)atan2(2.0f * q.x * q.w + 2.0f * q.y * q.z, 1 - 2.0f * (q.z * q.z + q.w * q.w));// Yaw
-	v.x = (float)asin(2.0f * (q.x * q.z - q.w * q.y));// Pitch
-	v.z = (float)atan2(2.0f * q.x * q.y + 2.0f * q.z * q.w, 1 - 2.0f * (q.y * q.y + q.z * q.z));// Roll
-
-	return NormalizeAngles(v * 360 / (PI * 2));
-}
-
 DirectX::SimpleMath::Matrix Transform::CreateXMPos4x4()
 {
 	DirectX::SimpleMath::Matrix Position_4x4;
@@ -389,30 +304,21 @@ DirectX::SimpleMath::Matrix Transform::CreateXMPos4x4()
 
 DirectX::SimpleMath::Matrix Transform::CreateXMRot4x4()
 {
-	float radX = RADIAN(Rotation.x);
-	float radY = RADIAN(Rotation.y);
-	float radZ = RADIAN(Rotation.z);
+	float radX = Rotation.x * 3.141592f / 180;
+	float radY = Rotation.y * 3.141592f / 180;
+	float radZ = Rotation.z * 3.141592f / 180;
+	DirectX::XMMATRIX _P = DirectX::XMMatrixRotationX(radX);
+	DirectX::XMMATRIX _Y = DirectX::XMMatrixRotationY(radY);
+	DirectX::XMMATRIX _R = DirectX::XMMatrixRotationZ(radZ);
 
-	Quaternion Q = DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(radY, radX, radZ);
+	DirectX::XMMatrixRotationRollPitchYaw(radX, radY, radZ);
 
-	return XMMatrixRotationRollPitchYaw(radX, radY, radZ);
+	return _R * _Y * _P;
 }
 
 DirectX::SimpleMath::Matrix Transform::CreateXMRot4x4_Q()
 {
-	float radX = RADIAN(Rotation.x);
-	float radY = RADIAN(Rotation.y);
-	float radZ = RADIAN(Rotation.z);
-
-	Quaternion Q = DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(radY, radX, radZ);
-
-	Vector3 Rot = QuaternionToEuler(Q);
-	radX = RADIAN(Rot.x);
-	radY = RADIAN(Rot.y);
-	radZ = RADIAN(Rot.z);
-	Q = DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(radY, radX, radZ);
-	
-	return XMMatrixRotationQuaternion(Q);
+	return XMMatrixRotationQuaternion(Q_Rotation);
 }
 
 DirectX::SimpleMath::Matrix Transform::CreateXMScl4x4()
@@ -433,14 +339,7 @@ void Transform::UpdateWorldXM()
 
 	if (isRigid == false)
 	{
-		if (isTest == true)
-		{
-			RotationXM	= CreateXMRot4x4();
-		}
-		else
-		{
-			RotationXM = CreateXMRot4x4_Q();
-		}
+		RotationXM	= CreateXMRot4x4();
 	}
 	else
 	{
@@ -479,33 +378,7 @@ void Transform::UpdateLocalPosition()
 	Local_Look.z = A_Master4x4._33;
 }
 
-XMFLOAT3 Transform::NormalizeAngles(XMFLOAT3 angles)
-{
-	//angles.x = NormalizeAngle(angles.x);
-	//
-	//angles.y = NormalizeAngle(angles.y);
-	//
-	//angles.z = NormalizeAngle(angles.z);
 
-	return angles;
-}
-
-float Transform::NormalizeAngle(float angle)
-{
-	while (angle > 360)
-	{
-		angle -= 360;
-	}
-
-
-	while (angle < 0)
-	{
-		angle += 360;
-	}
-
-
-	return angle;
-}
 
 
 

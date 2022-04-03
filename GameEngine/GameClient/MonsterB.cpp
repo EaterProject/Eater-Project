@@ -28,12 +28,12 @@ MonsterB::~MonsterB()
 
 void MonsterB::Awake()
 {
-	mMeshFilter = gameobject->GetComponent<MeshFilter>();
-	mTransform = gameobject->GetComponent<Transform>();
-	mAnimation = gameobject->GetComponent<AnimationController>();
-	mColider = gameobject->GetComponent<Collider>();
-	mRigidbody = gameobject->GetComponent<Rigidbody>();
-
+	mMeshFilter	= gameobject->GetComponent<MeshFilter>();
+	mTransform	= gameobject->GetComponent<Transform>();
+	mAnimation	= gameobject->GetComponent<AnimationController>();
+	mColider	= gameobject->GetComponent<Collider>();
+	mRigidbody	= gameobject->GetComponent<Rigidbody>();
+	mBase		= gameobject->GetComponent<MonsterBase>();
 	//Create(100, 10, 5);
 }
 void MonsterB::SetUp()
@@ -47,8 +47,8 @@ void MonsterB::SetUp()
 	mColider->CreatePhys();
 
 	//매쉬 생성
-	mMeshFilter->SetModelName("MonsterB+");
-	mMeshFilter->SetAnimationName("MonsterB+");
+	mMeshFilter->SetModelName("monsterB+");
+	mMeshFilter->SetAnimationName("monsterB+");
 	mAnimation->Choice("move");
 }
 

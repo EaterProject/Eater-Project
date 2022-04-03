@@ -22,22 +22,42 @@
 
 void intro::Awake()
 {
+	LoadEnvironment("../Assets/Texture/Base/Night.dds");
 	Load("../Assets/Scene/intro.Scene");
+
+	GameObject* MainCam			= FindGameObjectTag("MainCam");
+	GameObject* PlayerObject	= FindGameObjectTag("Player");
+	PlayerObject->AddComponent<Player>();
+
+
+	Camera*	Cam =  MainCam->GetComponent<Camera>();
+	MainCam->AddComponent<PlayerCamera>();
+	Cam->ChoiceMainCam();
+
 	
-	Test01 = FindGameObjectTag("Test01");
-	Test02 = FindGameObjectTag("Test02");
+	SetEnvironment(true);
 }
 
 void intro::Update()
 {
-	Test02->GetTransform()->isTest = true;
-	Test01->GetTransform()->Rotation = { 45,45,45 };
-	Test02->GetTransform()->Rotation = {45,45,45};
+	
 }
 
 void intro::End()
 {
 
+}
+
+void intro::CreateTerrain()
+{
+	///ÅÍ·¹ÀÎ
+	testobj = InstanceTerrain("Terrain");
+	Terrain* mTerrain = testobj->GetComponent<Terrain>();
+	mTerrain->SetLayerName("terrain_ground_A_BaseColor", "terrain_ground_A_Normal", "terrain_ground_A_ORM");
+	mTerrain->SetLayerName("terrain_ground_B_BaseColor", "terrain_ground_B_Normal", "terrain_ground_B_ORM");
+	mTerrain->SetMeshName("Terrain");
+	//mTerrain->SetColliderName("TerrainDecimate");
+	mTerrain->SetTextureTiling(31.0f);
 }
 
 

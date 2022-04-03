@@ -31,11 +31,6 @@ public:
 
 	DirectX::SimpleMath::Quaternion Q_Rotation;
 	
-	EATER_ENGINEDLL void SetRotation(float x,float y,float z);
-	EATER_ENGINEDLL void SetRotation(DirectX::SimpleMath::Vector3& Rot);
-	EATER_ENGINEDLL void SetRotation(float x,float y,float z,float w);
-	EATER_ENGINEDLL void SetRotation(DirectX::SimpleMath::Quaternion& Q);
-
 
 	//로컬 윗방향 벡터를 가져온다
 	EATER_ENGINEDLL DirectX::SimpleMath::Vector3 GetLocalPosition_UP();
@@ -53,9 +48,7 @@ public:
 
 	//현재 회전값에 값을 더해줌
 	EATER_ENGINEDLL void SetRotate(float X, float Y, float Z);
-	//EATER_ENGINEDLL void SetRotate(float X, float Y, float Z, float W);
 	EATER_ENGINEDLL void SetRotate(DirectX::SimpleMath::Vector3 mRot);
-	//EATER_ENGINEDLL void SetRotate(DirectX::SimpleMath::Quaternion& Q);
 
 	//현재 크기값에 값을 더해줌
 	EATER_ENGINEDLL void SetScale(float X, float Y, float Z);
@@ -82,13 +75,8 @@ public:
 	//자식객체 로컬 업데이트
 	void Child_Local_Updata();
 
-	bool isTest = false;
 	//Y축 기준으로 보는방향으로 천천히 회전한다
 	EATER_ENGINEDLL void Slow_Y_Rotation(Vector3 Dir, float RotationSpeed);
-
-	EATER_ENGINEDLL XMFLOAT3 QuaternionToEuler(const SimpleMath::Vector4 Q);
-	EATER_ENGINEDLL XMFLOAT3 NormalizeAngles(XMFLOAT3 angles);
-	EATER_ENGINEDLL float NormalizeAngle(float angle);
 private:
 	//현재 위치 회전 크기값을 가져와 행렬을 구한다
 	DirectX::SimpleMath::Matrix CreateXMPos4x4();
