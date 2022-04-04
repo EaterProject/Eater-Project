@@ -3,6 +3,7 @@
 #include "PhysManager.h"
 #include "PhysData.h"
 #include "EngineData.h"
+#include "DebugManager.h"
 #include "Profiler/Profiler.h"
 
 GameEngine* gGameEngine = nullptr;
@@ -234,15 +235,25 @@ void CreateSceneSub(Scene* mSceneTemp, std::string SceneName)
 
  void DebugDrawLine(Vector3 start, Vector3 end, Vector3 color)
  {
-	 gGameEngine->DebugDrawLine(start, end, color);
+	 DebugManager::DebugDrawLine(start, end, color);
  }
 
  void DebugDrawLine(Vector3 start, Vector3 dir, float distance, Vector3 color)
  {
-	 gGameEngine->DebugDrawLine(start, dir, distance, color);
+	 DebugManager::DebugDrawLine(start, dir, distance, color);
  }
 
-  void DebugPrint(std::string str)
+ void DebugDrawBox(DirectX::SimpleMath::Vector3 scale, DirectX::SimpleMath::Vector3 rot, DirectX::SimpleMath::Vector3 pos, DirectX::SimpleMath::Vector3 color)
+ {
+	 DebugManager::DebugDrawBox(scale, rot, pos, color);
+ }
+
+ void DebugDrawSphere(float scale, DirectX::SimpleMath::Vector3 pos, DirectX::SimpleMath::Vector3 color)
+ {
+	 DebugManager::DebugDrawSphere(scale, pos, color);
+ }
+
+ void DebugPrint(std::string str)
  {
 	  PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Client ][ Debug ] %s", str.c_str());
  }

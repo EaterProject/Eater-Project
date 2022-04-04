@@ -6,21 +6,16 @@
 #include "EngineData.h"
 #include "LoadManager.h"
 #include "GameObject.h"
-#include "Component.h"
+#include "DebugManager.h"
 
 Collider::Collider()
 {
 	mPhysData		= PhysX_Create_Data();
-	mDebugCollider  = new ColliderData();
-	
 }
 
 Collider::~Collider()
 {
 	PhysX_Delete_Actor(mPhysData);
-
-	//delete mPhysData;
-	delete mDebugCollider;
 }
 
 void Collider::Start()
@@ -51,6 +46,7 @@ void Collider::PhysicsUpdate()
 	mTransform->Q_Rotation.y = mPhysData->Rotation.y;
 	mTransform->Q_Rotation.z = mPhysData->Rotation.z;
 	mTransform->Q_Rotation.w = mPhysData->Rotation.w;
+
 
 	DebugCollider();
 
@@ -158,25 +154,32 @@ void Collider::DebugCollider()
 	Vector4 Rot = mPhysData->Rotation;
 	Vector3 Scl = mPhysData->mCollider->GetSize();
 
-	if (mPhysData->isDinamic == false) 
+	switch (mPhysData->mCollider->GetType())
 	{
-		SimpleMath::Matrix PosXM = SimpleMath::Matrix::CreateTranslation(Pos + mPhysData->CenterPoint);
-		SimpleMath::Matrix RotXM = CreateXMRot4x4();
-		SimpleMath::Matrix SclXM = SimpleMath::Matrix::CreateScale(Scl);
-
-		mDebugCollider->ColliderWorld = SclXM * RotXM* PosXM;
-		mDebugCollider->ColliderColor = { 1,0,0,1 };
-		gameobject->OneMeshData->Collider_Data = mDebugCollider;
+	case PhysCollider::TYPE::BOX:
+	{
+		if (mPhysData->isDinamic == false)
+		{
+			DebugManager::DebugDrawBox(Scl, Rot, Pos + mPhysData->CenterPoint, Vector3(1, 0, 0));
+		}
+		else
+		{
+			DebugManager::DebugDrawBox(Scl, gameobject->transform->Q_Rotation, Pos + mPhysData->CenterPoint, Vector3(1, 0, 0));
+		}
 	}
-	else
+		break;
+	case PhysCollider::TYPE::SPHERE:
 	{
-		SimpleMath::Matrix PosXM = SimpleMath::Matrix::CreateTranslation(Pos);
-		SimpleMath::Matrix RotXM = XMMatrixRotationQuaternion(gameobject->transform->Q_Rotation);
-		SimpleMath::Matrix SclXM = SimpleMath::Matrix::CreateScale(Scl);
-
-		mDebugCollider->ColliderWorld = SclXM * RotXM * PosXM;
-		mDebugCollider->ColliderColor = { 1,0,0,1 };
-		gameobject->OneMeshData->Collider_Data = mDebugCollider;
+		if (mPhysData->isDinamic == false)
+		{
+			DebugManager::DebugDrawSphere(Scl.x, Pos + mPhysData->CenterPoint, Vector3(1, 0, 0));
+		}
+		else
+		{
+			DebugManager::DebugDrawSphere(Scl.x, Pos + mPhysData->CenterPoint, Vector3(1, 0, 0));
+		}
+	}
+		break;
 	}
 }
 

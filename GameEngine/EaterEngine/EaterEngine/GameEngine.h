@@ -16,7 +16,6 @@ namespace flatbuffers
 
 
 //각종 매니저들
-class DebugManager;
 class LoadManager;
 class ObjectManager;
 class SceneManager;
@@ -123,8 +122,6 @@ public:
 public:
 	///디버그 관련
 	void EditorSetting();
-	void DebugDrawLine(Vector3 start, Vector3 end, Vector3 color);
-	void DebugDrawLine(Vector3 start, Vector3 dir, float distance, Vector3 color);
 
 private:
 	GameObject* CreateInstance();
@@ -135,7 +132,6 @@ private:
 private:
 	///각종 매니저들
 	ObjectManager*			mObjectManager;		// 오브젝트 관리 매니저
-	DebugManager*			mDebugManager;		// 디버깅매니저
 	LoadManager*			mLoadManager;		// 로드 관련 매니저
 	SceneManager*			mSceneManager;		// 스크린 관리 매니저
 	KeyinputManager*		mKeyManager;		// 키인풋 관련 매니저

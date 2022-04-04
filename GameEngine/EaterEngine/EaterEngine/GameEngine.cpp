@@ -34,11 +34,11 @@
 
 int GameEngine::WinSizeWidth	= 0;
 int GameEngine::WinSizeHeight	= 0;
+
 GameEngine::GameEngine()
 {
 	InitializeCriticalSection(&g_CS);
 
-	mDebugManager = nullptr;
 	mLoadManager = nullptr;
 	mObjectManager = nullptr;
 	mSceneManager = nullptr;
@@ -469,16 +469,6 @@ void GameEngine::NETWORK_CONNECT(int ServerPort, std::string  Local_Connect_IP)
 void GameEngine::EditorSetting()
 {
 	mRenderOption->DebugOption = DEBUG_EDITOR;
-}
-
-void GameEngine::DebugDrawLine(Vector3 start, Vector3 end, Vector3 color)
-{
-	mGraphicManager->DebugDrawLine(start, end, color);
-}
-
-void GameEngine::DebugDrawLine(Vector3 start, Vector3 dir, float distance, Vector3 color)
-{
-	mGraphicManager->DebugDrawLine(start, dir, distance, color);
 }
 
 GameObject* GameEngine::CreateInstance()

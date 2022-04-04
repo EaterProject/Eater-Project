@@ -253,6 +253,9 @@
     <Filter Include="소스 파일\RenderPass\SubPass\Culling">
       <UniqueIdentifier>{cf0fd4bf-4731-4dbc-a970-16557e63f985}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Shader\HLSL\Render\Depth">
+      <UniqueIdentifier>{653f353f-dac2-4382-ad6b-0fb2764473e6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -732,6 +735,21 @@
     </FxCompile>
     <FxCompile Include="..\Assets\Shader\ID_StaticMesh_Instance_VS.hlsl">
       <Filter>소스 파일\Shader\HLSL\Sub\MeshID</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Assets\Shader\HizCull_CS.hlsl">
+      <Filter>소스 파일\Shader\HLSL\Sub\Culling</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Assets\Shader\HizMipmap_PS.hlsl">
+      <Filter>소스 파일\Shader\HLSL\Sub\Culling</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Assets\Shader\Depth_PS.hlsl">
+      <Filter>소스 파일\Shader\HLSL\Render\Depth</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Assets\Shader\Depth_StaticMesh_VS.hlsl">
+      <Filter>소스 파일\Shader\HLSL\Render\Depth</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Assets\Shader\Depth_SkinMesh_VS.hlsl">
+      <Filter>소스 파일\Shader\HLSL\Render\Depth</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>

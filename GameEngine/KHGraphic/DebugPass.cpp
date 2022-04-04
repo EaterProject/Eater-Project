@@ -161,7 +161,6 @@ void DebugPass::RenderUpdate(const RenderData* meshData)
 
 	const CameraData* cam = g_GlobalData->Camera_Data;
 	const MeshRenderBuffer* mesh = meshData->m_Mesh;
-	const ColliderData* col = *meshData->m_ColliderData;
 
 	Matrix world = *meshData->m_ObjectData->World;
 	const Matrix& invView = cam->CamInvView;
@@ -177,23 +176,6 @@ void DebugPass::RenderUpdate(const RenderData* meshData)
 
 	BufferUpdate(DEBUG_TYPE::DEBUG_AXIS);
 	g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
-
-	// Collider Debug..
-	if (col)
-	{
-		object.gWorldViewProj = col->ColliderWorld * viewproj;
-
-		option.gColor = col->ColliderColor;
-
-		m_DebugVS->ConstantBufferCopy(&object);
-		m_DebugVS->Update();
-
-		m_DebugColorPS->ConstantBufferCopy(&option);
-		m_DebugColorPS->Update();
-
-		BufferUpdate(DEBUG_TYPE::DEBUG_BOX);
-		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
-	}
 
 	switch (meshData->m_ObjectData->ObjType)
 	{
@@ -335,7 +317,7 @@ void DebugPass::GlobalRender()
 	CB_DebugOption option;
 
 	Vector3 axis, look, right, up, pos;
-	RayCastData ray;
+	DebugData ray;
 
 	const CameraData* cam = g_GlobalData->Camera_Data;
 
@@ -345,7 +327,6 @@ void DebugPass::GlobalRender()
 	std::vector<DirectionalLightData*>* directionList = &g_GlobalData->DirectionLights;
 	std::vector<PointLightData*>* pointList = &g_GlobalData->PointLights;
 	std::vector<SpotLightData*>* spotList = &g_GlobalData->SpotLights;
-	std::queue<RayCastData>* rayList = &g_GlobalData->RayCastDebugData;
 
 	// Global Axis..
 	object.gWorldViewProj = Matrix::CreateScale(1000.0f) * Matrix::CreateTranslation(0.0f, 0.1f, 0.0f) * viewproj;
@@ -527,9 +508,9 @@ void DebugPass::GlobalRender()
 		// Light Range X Ray..
 		ray.RayStart = light->Position + Vector3(light->Range, 0.0f, 0.0f);
 		ray.RayEnd = light->Position + Vector3(-light->Range, 0.0f, 0.0f);
-		ray.RayColor = Vector3(1.0f, 0.0f, 0.0f);
+		ray.Color = Vector3(1.0f, 0.0f, 0.0f);
 
-		option.gColor = ray.RayColor;
+		option.gColor = ray.Color;
 		object.gWorldViewProj = viewproj;
 
 		m_DebugVS->ConstantBufferCopy(&object);
@@ -590,12 +571,12 @@ void DebugPass::GlobalRender()
 		// Light Direction Ray..
 		ray.RayStart = light->Position;
 		ray.RayEnd = light->Position + (light->Direction * Vector3(light->Range));
-		ray.RayColor = Vector3(1.0f, 0.0f, 0.0f);
+		ray.Color = Vector3(1.0f, 0.0f, 0.0f);
 		
 		// Ray Buffer Update
 		SetRay(ray.RayStart, ray.RayEnd);
 		
-		option.gColor = ray.RayColor;
+		option.gColor = ray.Color;
 		object.gWorldViewProj = viewproj;
 		
 		m_DebugVS->ConstantBufferCopy(&object);
@@ -613,9 +594,9 @@ void DebugPass::GlobalRender()
 		up = right.Cross(look);
 
 		ray.RayStart = light->Position;
-		ray.RayColor = Vector3(1.0f, 1.0f, 0.0f);
+		ray.Color = Vector3(1.0f, 1.0f, 0.0f);
 
-		option.gColor = ray.RayColor;
+		option.gColor = ray.Color;
 		object.gWorldViewProj = viewproj;
 
 		m_DebugVS->ConstantBufferCopy(&object);
@@ -694,27 +675,60 @@ void DebugPass::GlobalRender()
 		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
 	}
 
-	while (rayList->size() != 0)
+	// Debug Data Draw..
+	std::queue<DebugData>* debugList = &g_GlobalData->Debug_Data;
+
+	DebugData debugData;
+	DEBUG_TYPE debugType;
+
+	// Debug Mesh Data..
+	while (!debugList->empty())
 	{
-		RayCastData ray = rayList->front();
+		debugData = debugList->front();
 
-		option.gColor = ray.RayColor;
+		option.gColor = debugData.Color;
 
-		// Ray Buffer Update
-		SetRay(ray.RayStart, ray.RayEnd);
 
-		object.gWorldViewProj = viewproj;
+		switch (debugData.DebugType)
+		{
+		case DEBUG_MESH_TYPE::DEBUG_MESH_BOX:
+		{
+			object.gWorldViewProj = debugData.World * viewproj;
 
+			debugType = DEBUG_TYPE::DEBUG_BOX;
+		}
+			break;
+		case DEBUG_MESH_TYPE::DEBUG_MESH_SPHERE:
+		{
+			object.gWorldViewProj = debugData.World * viewproj;
+
+			debugType = DEBUG_TYPE::DEBUG_CIRCLESPHERE;
+		}
+			break;
+		case DEBUG_MESH_TYPE::DEBUG_MESH_RAY:
+		{
+			object.gWorldViewProj = viewproj;
+
+			// Ray Buffer Update
+			SetRay(debugData.RayStart, debugData.RayEnd);
+
+			debugType = DEBUG_TYPE::DEBUG_RAY;
+		}
+			break;
+		default:
+			break;
+		}
+
+		m_DebugColorPS->ConstantBufferCopy(&option);
+		m_DebugColorPS->Update(); 
+		
 		m_DebugVS->ConstantBufferCopy(&object);
 		m_DebugVS->Update();
 
-		m_DebugColorPS->ConstantBufferCopy(&option);
-		m_DebugColorPS->Update();
-
-		BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
+		BufferUpdate(debugType);
 		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
 
-		rayList->pop();
+		debugList->pop();
 	}
 }
 
@@ -860,9 +874,9 @@ void DebugPass::CountReset()
 	m_DrawCount = 0;
 }
 
-void DebugPass::SetRay(Vector3 start, Vector3 end)
+void DebugPass::SetRay(const Vector3& start, const Vector3& end)
 {
-	VertexInput::PosColorVertex vertices[2];
+	static VertexInput::PosColorVertex vertices[2];
 	vertices[0].Pos = start;
 	vertices[1].Pos = end;
 

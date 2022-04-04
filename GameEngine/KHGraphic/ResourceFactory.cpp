@@ -2266,7 +2266,7 @@ void GraphicResourceFactory::CreateLineCircleBuffer()
 		float y = -sinf(angle * 3.14f / 180.0f);
 
 		vertices[i].Pos = Vector3(x, y, 0);
-		vertices[i].Color = Vector4(0, 1, 0, 1);
+		vertices[i].Color = Vector4(0.75f, 0.75f, 0.75f, 1);
 	}
 
 	std::vector<UINT> indices(iCount);
