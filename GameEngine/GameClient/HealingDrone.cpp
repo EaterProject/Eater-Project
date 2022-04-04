@@ -28,17 +28,21 @@ void HealingDrone::SetUp()
 
 void HealingDrone::Update()
 {	
-	//거리계산
+	//Vector3 Test = mPlayerTR->Position;
+	//Vector3 Right = mTransform->GetLocalPosition_Right();
+	//Test +=  Right;
+	////거리계산
+	//
+	//mTransform->Position = Vector3::Lerp(mTransform->Position, Test, 0.01f);
+	//mTransform->Position.y = OffsetY;
 	if (mTransform->GetDistance(mPlayerTR->Position) >= 4.0f) 
 	{
-		mTransform->Position = Vector3::Lerp(mTransform->Position, mPlayerTR->Position,GetDeltaTime()*0.75f);
+		mTransform->Position = Vector3::Lerp(mTransform->Position, mPlayerTR->Position,GetDeltaTime());
 		mTransform->Position.y = OffsetY;
 	}
 
 	//LookAt
-	Vector3 PlayerVec = mPlayerTR->Position;
-	//PlayerVec.z *= -1;
-	mTransform->Slow_Y_Rotation(PlayerVec,50);
+	mTransform->Slow_Y_Rotation(mPlayerTR->Position,100);
 
 	//체력 회복
 	HealingTime += GetDeltaTime();

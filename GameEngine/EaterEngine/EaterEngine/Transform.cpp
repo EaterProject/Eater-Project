@@ -194,6 +194,11 @@ DirectX::SimpleMath::Matrix* Transform::GetWorld()
 	return &World_M;
 }
 
+DirectX::SimpleMath::Matrix* Transform::GetLocal()
+{
+	return &Load_Local;
+}
+
 void Transform::SetLocalUpdate(bool isUpdate)
 {
 	LocalUpdate = isUpdate;

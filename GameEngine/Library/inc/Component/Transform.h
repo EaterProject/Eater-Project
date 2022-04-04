@@ -64,6 +64,7 @@ public:
 
 	//월드매트릭스를 가져옴
 	EATER_ENGINEDLL DirectX::SimpleMath::Matrix* GetWorld();
+	EATER_ENGINEDLL DirectX::SimpleMath::Matrix* GetLocal();
 
 	//로컬좌표들을 매프레임 업데이트 해줄것인가 여부
 	EATER_ENGINEDLL void SetLocalUpdate(bool isUpdate);

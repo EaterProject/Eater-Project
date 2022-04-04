@@ -256,7 +256,7 @@ void ShadowPass::RenderUpdate(const InstanceRenderBuffer* instance, const Render
 	case OBJECT_TYPE::SKINNING:
 	{
 		CB_DepthSkinMesh shadowBuf;
-		shadowBuf.gWorldViewProj = world * viewproj;
+		shadowBuf.gWorldViewProj = viewproj;
 
 		for (int i = 0; i < obj->BoneOffsetTM.size(); i++)
 		{

@@ -40,7 +40,7 @@ void Loading::Awake()
 	particles->Play();
 
 	
-	LoadEnvironment("../Resources/Texture/Environment/Night.dds");
+	LoadEnvironment("../Assets/Texture/Environment/Night.dds");
 	LoadTerrainMesh("../Assets/Model/TerrainModel/Terrain.fbx", "../Assets/Texture/Terrain/Terrain_RGB.png", SCALING);
 }
 

@@ -263,12 +263,6 @@ void GameObject::PushComponentFunction(Component* con, unsigned int type)
 	switch (type)
 	{
 	case AWAKE:
-	std::string ComponentFunction = typeid(*con).name();
-	ComponentFunction = ComponentFunction.substr(ComponentFunction.find(" ") + 1, ComponentFunction.size());
-
-	switch (type)
-	{
-	case AWAKE:
 		ObjectManager::PushAwake(con,con->Awake_Order);
 		con->FUNCTION_MASK |= AWAKE;
 		break;
