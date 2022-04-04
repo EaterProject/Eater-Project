@@ -1466,13 +1466,12 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(Parser
 	ParserData::ImageData maskImage1 = m_Parser->LoadImagePixel(mesh->m_MaskName1.c_str(), 4);
 	ParserData::ImageData maskImage2 = m_Parser->LoadImagePixel(mesh->m_MaskName2.c_str(), 4);
 
-	Vector3 pMin(+FLT_MAX, +FLT_MAX, +FLT_MAX);
-
 	for (UINT i = 0; i < vCount; i++)
 	{
 		Vector3 P = mesh->m_VertexList[i]->m_Pos;
 
-		pMin = XMVectorMin(vMin, P);
+		vMin = XMVectorMin(vMin, P);
+		vMax = XMVectorMax(vMax, P);
 	}
 
 	std::vector<VertexInput::TerrainVertex> vertices(vCount);
@@ -1487,16 +1486,159 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(Parser
 		vertices[i].Tangent = mesh->m_VertexList[i]->m_Tanget;
 
 		// ╟╪┤ч Pixel Mask Color..
-		Vector4 maskColor1 = m_Parser->GetPixelColor(maskImage1, abs(vertices[i].Pos.x), abs(vertices[i].Pos.z));
-		Vector4 maskColor2 = m_Parser->GetPixelColor(maskImage2, abs(vertices[i].Pos.x), abs(vertices[i].Pos.z));
-		maskColor1.z = maskColor2.x;
-		maskColor1.w = maskColor2.y;
-		maskColor1 = maskColor1 / (maskColor1.x + maskColor1.y + maskColor1.z + maskColor1.w);
+		float originWidth = abs(mesh->m_VertexList[i]->m_Pos.x + 1);
+		float originHeight = abs(mesh->m_VertexList[i]->m_Pos.z + 3);
 
-		vertices[i].Mask.x = maskColor1.x;
-		vertices[i].Mask.y = maskColor1.y;
-		vertices[i].Mask.z = maskColor1.z;
-		vertices[i].Mask.w = maskColor1.w;
+		// бр бр бр
+		// бр бс бр
+		// бр бр бр
+		float width = originWidth;
+		float height = originHeight;
+		Vector4 maskColor1_00 = m_Parser->GetPixelColor(maskImage1, width, height);
+		Vector4 maskColor2_00 = m_Parser->GetPixelColor(maskImage2, width, height);
+		maskColor1_00.z = maskColor2_00.x;
+		maskColor1_00.w = maskColor2_00.y;
+		maskColor1_00 = maskColor1_00 / (maskColor1_00.x + maskColor1_00.y + maskColor1_00.z + maskColor1_00.w) * 9.0f;
+
+		// бр бр бр
+		// бр бр бс
+		// бр бр бр
+		width = originWidth + 1;
+		if (width >= maskImage1.width)
+		{
+			width = maskImage1.width - 1;
+		}
+		height = originHeight;
+		Vector4 maskColor1_p0 = m_Parser->GetPixelColor(maskImage1, width, height);
+		Vector4 maskColor2_p0 = m_Parser->GetPixelColor(maskImage2, width, height);
+		maskColor1_p0.z = maskColor2_p0.x;
+		maskColor1_p0.w = maskColor2_p0.y;
+		maskColor1_p0 = maskColor1_p0 / (maskColor1_p0.x + maskColor1_p0.y + maskColor1_p0.z + maskColor1_p0.w) * 0.5f;
+		
+		// бр бр бр
+		// бр бр бр
+		// бр бс бр
+		width = originWidth;
+		height = originHeight + 1;
+		if (height >= maskImage1.height)
+		{
+			height = maskImage1.height - 1;
+		}
+		Vector4 maskColor1_0p = m_Parser->GetPixelColor(maskImage1, width, height);
+		Vector4 maskColor2_0p = m_Parser->GetPixelColor(maskImage2, width, height);
+		maskColor1_0p.z = maskColor2_0p.x;
+		maskColor1_0p.w = maskColor2_0p.y;
+		maskColor1_0p = maskColor1_0p / (maskColor1_0p.x + maskColor1_0p.y + maskColor1_0p.z + maskColor1_0p.w) * 0.5f;
+		
+		// бр бр бр
+		// бр бр бр
+		// бр бр бс
+		width = originWidth + 1;
+		if (width >= maskImage1.width)
+		{
+			width = maskImage1.width - 1;
+		}
+		height = originHeight + 1;
+		if (height >= maskImage1.height)
+		{
+			height = maskImage1.height - 1;
+		}
+		Vector4 maskColor1_pp = m_Parser->GetPixelColor(maskImage1, width, height);
+		Vector4 maskColor2_pp = m_Parser->GetPixelColor(maskImage2, width, height);
+		maskColor1_pp.z = maskColor2_pp.x;
+		maskColor1_pp.w = maskColor2_pp.y;
+		maskColor1_pp = maskColor1_pp / (maskColor1_pp.x + maskColor1_pp.y + maskColor1_pp.z + maskColor1_pp.w) * 0.5f;
+
+		// бр бр бр
+		// бс бр бр
+		// бр бр бр
+		width = originWidth - 1;
+		if (width < 0)
+		{
+			width = 0;
+		}
+		height = originHeight;
+		Vector4 maskColor1_m0 = m_Parser->GetPixelColor(maskImage1, width, height);
+		Vector4 maskColor2_m0 = m_Parser->GetPixelColor(maskImage2, width, height);
+		maskColor1_m0.z = maskColor2_m0.x;
+		maskColor1_m0.w = maskColor2_m0.y;
+		maskColor1_m0 = maskColor1_m0 / (maskColor1_m0.x + maskColor1_m0.y + maskColor1_m0.z + maskColor1_m0.w) * 0.5f;
+
+		// бр бс бр
+		// бр бр бр
+		// бр бр бр
+		width = originWidth;
+		height = originHeight - 1;
+		if (height < 0)
+		{
+			height = 0;
+		}
+		Vector4 maskColor1_0m = m_Parser->GetPixelColor(maskImage1, width, height);
+		Vector4 maskColor2_0m = m_Parser->GetPixelColor(maskImage2, width, height);
+		maskColor1_0m.z = maskColor2_0m.x;
+		maskColor1_0m.w = maskColor2_0m.y;
+		maskColor1_0m = maskColor1_0m / (maskColor1_0m.x + maskColor1_0m.y + maskColor1_0m.z + maskColor1_0m.w) * 0.5f;
+
+		// бс бр бр
+		// бр бр бр
+		// бр бр бр
+		width = originWidth - 1;
+		if (width < 0)
+		{
+			width = 0;
+		}
+		height = originHeight - 1;
+		if (height < 0)
+		{
+			height = 0;
+		}
+		Vector4 maskColor1_mm = m_Parser->GetPixelColor(maskImage1, width, height);
+		Vector4 maskColor2_mm = m_Parser->GetPixelColor(maskImage2, width, height);
+		maskColor1_mm.z = maskColor2_mm.x;
+		maskColor1_mm.w = maskColor2_mm.y;
+		maskColor1_mm = maskColor1_mm / (maskColor1_mm.x + maskColor1_mm.y + maskColor1_mm.z + maskColor1_mm.w) * 0.5f;
+
+		// бр бр бс 
+		// бр бр бр
+		// бр бр бр
+		width = originWidth + 1;
+		if (width >= maskImage1.width)
+		{
+			width = maskImage1.width - 1;
+		}
+		height = originHeight - 1;
+		if (height < 0)
+		{
+			height = 0;
+		}
+		Vector4 maskColor1_pm = m_Parser->GetPixelColor(maskImage1, width, height);
+		Vector4 maskColor2_pm = m_Parser->GetPixelColor(maskImage2, width, height);
+		maskColor1_pm.z = maskColor2_pm.x;
+		maskColor1_pm.w = maskColor2_pm.y;
+		maskColor1_pm = maskColor1_pm / (maskColor1_pm.x + maskColor1_pm.y + maskColor1_pm.z + maskColor1_pm.w) * 0.5f;
+
+		// бр бр бр
+		// бр бр бр
+		// бс бр бр 
+		width = originWidth - 1;
+		if (width < 0)
+		{
+			width = 0;
+		}
+		height = originHeight + 1;
+		if (height >= maskImage1.height)
+		{
+			height = maskImage1.height - 1;
+		}
+		Vector4 maskColor1_mp = m_Parser->GetPixelColor(maskImage1, width, height);
+		Vector4 maskColor2_mp = m_Parser->GetPixelColor(maskImage2, width, height);
+		maskColor1_mp.z = maskColor2_mp.x;
+		maskColor1_mp.w = maskColor2_mp.y;
+		maskColor1_mp = maskColor1_mp / (maskColor1_mp.x + maskColor1_mp.y + maskColor1_mp.z + maskColor1_mp.w) * 0.5f;
+
+		// Final Calculate..
+		Vector4 finalColor = maskColor1_p0 + maskColor1_0p + maskColor1_pp + maskColor1_m0 + maskColor1_0m+ maskColor1_mm+ maskColor2_pm + maskColor1_mp;
+		vertices[i].Mask = finalColor / (finalColor.x + finalColor.y + finalColor.z + finalColor.w);
 
 		// Bounding Data..
 		Vector3 P = vertices[i].Pos;

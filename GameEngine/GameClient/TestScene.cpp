@@ -30,11 +30,11 @@ void TestScene::Awake()
 	PROFILE_TIMER_START(PROFILE_OUTPUT::CONSOLE, 1, "Load Folder");
 	Load("../Assets/Texture/Terrain");
 	//Load("../Assets/Texture/Particle");
-	Load("../Assets/Texture/ModelTexture");
-	Load("../Assets/Texture/Material");
-	Load("../Assets/Model/MeshBuffer");
-	Load("../Assets/Model/ModelData");
-	Load("../Assets/Model/Animation");
+	//Load("../Assets/Texture/ModelTexture");
+	//Load("../Assets/Texture/Material");
+	//Load("../Assets/Model/MeshBuffer");
+	//Load("../Assets/Model/ModelData");
+	//Load("../Assets/Model/Animation");
 	PROFILE_TIMER_END("Load Folder"); 
 
 	CreateMap();
@@ -76,19 +76,19 @@ void TestScene::CreateMap()
 	Object->GetTransform()->Position.x -= 10.0f;
 	Object->GetTransform()->Position.y += 10.0f;
 
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("bossb+");
-	filter->SetAnimationName("bossb+");
-	AnimationController* AC = Object->AddComponent<AnimationController>();
-	AC->Choice("idle");
-
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("MonsterA+");
-	filter->SetAnimationName("MonsterA+");
-	AnimationController* AC = Object->AddComponent<AnimationController>();
-	AC->Choice("Move");
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("bossb+");
+	//filter->SetAnimationName("bossb+");
+	//AnimationController* AC = Object->AddComponent<AnimationController>();
+	//AC->Choice("idle");
+	//
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("MonsterA+");
+	//filter->SetAnimationName("MonsterA+");
+	//AC = Object->AddComponent<AnimationController>();
+	//AC->Choice("Move");
 
 	//Object = Instance();
 	//filter = Object->AddComponent<MeshFilter>();
@@ -102,11 +102,11 @@ void TestScene::CreateMap()
 	//filter = Object->AddComponent<MeshFilter>();
 	//filter->SetModelName("Inside_village");
 	//
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	Tr = Object->GetTransform();
-	Tr->Scale = { 0.01f, 0.01f, 0.01f };
-	filter->SetModelName("Outside_Rock");
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//Tr = Object->GetTransform();
+	//Tr->Scale = { 0.01f, 0.01f, 0.01f };
+	//filter->SetModelName("Outside_Rock");
 	
 	//Object = Instance();
 	//filter = Object->AddComponent<MeshFilter>();
