@@ -18,7 +18,6 @@ void RenderDataConverter::ConvertMeshData(MeshData* originData, RenderData* rend
 	// Mesh Data 설정..
 	renderData->m_ObjectData = originData->Object_Data;
 	renderData->m_ParticleData = originData->Particle_Data;
-	renderData->m_ColliderData = &originData->Collider_Data;
 
 	// ID 설정을 위한 Hash Color 생성..
 	// UINT 형식으로 찍을 것이기에 0번 인덱스는 비워둔다..

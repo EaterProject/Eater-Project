@@ -32,7 +32,7 @@ public:
 	void CountReset();
 
 private:
-	void SetRay(Vector3 start, Vector3 end);
+	void SetRay(const Vector3& start, const Vector3& end);
 	Matrix LookAt_Matrix(Vector3 pos, Vector3 look);
 
 private:

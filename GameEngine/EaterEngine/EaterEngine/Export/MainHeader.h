@@ -85,6 +85,8 @@ extern "C" EATER_ENGINEDLL bool RayCast(PhysRayCast* ray);
 EATER_ENGINEDLL void EditorSetting();
 EATER_ENGINEDLL void DebugDrawLine(Vector3 start, Vector3 end, Vector3 color);
 EATER_ENGINEDLL void DebugDrawLine(Vector3 start, Vector3 dir, float distance, Vector3 color);
+EATER_ENGINEDLL void DebugDrawBox(DirectX::SimpleMath::Vector3 scale, DirectX::SimpleMath::Vector3 rot, DirectX::SimpleMath::Vector3 pos, DirectX::SimpleMath::Vector3 color);
+EATER_ENGINEDLL void DebugDrawSphere(float scale, DirectX::SimpleMath::Vector3 pos, DirectX::SimpleMath::Vector3 color);
 EATER_ENGINEDLL void DebugPrint(std::string str);
 
 ///네트워크 관련
