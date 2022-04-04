@@ -54,6 +54,7 @@ float4 DownSampling_Bright_PS(ScreenPixelIn pin) : SV_TARGET
     outColor /= 16;
     
     float intensity = max(dot(outColor, float3(0.3f, 0.3f, 0.3f)), 0.000001f);
+    //float intensity = max(dot(outColor, float3(0.3f, 0.59f, 0.11f)), 0.000001f);
     
     float bloom_intensity = GetBloomCurve(intensity, gThreshold);
     float3 bloom_color = outColor * bloom_intensity / intensity;

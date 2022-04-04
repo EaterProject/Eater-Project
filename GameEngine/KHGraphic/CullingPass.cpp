@@ -70,29 +70,25 @@ void CullingPass::Release()
 
 bool CullingPass::FrustumCulling(const RenderData* meshData)
 {
-	m_CullingCount++;
-
 	const Matrix& world = *meshData->m_ObjectData->World;
 
 	BoundingFrustum frustum = g_GlobalData->Camera_Data->BoundFrustum;
 	BoundingSphere boundSphere = meshData->m_Mesh->m_MeshSubData->BoundSphere;
 
 	boundSphere.Transform(boundSphere, world);
-
-	if (boundSphere.Intersects(frustum) == false)
+	
+	if (frustum.Intersects(boundSphere) == false)
 	{
 		return false;
 	}
 	else
 	{
 		// Occlusion Culling..
-		m_RenderCount++;
 		return true;
 	}
 }
 
 void CullingPass::ResetCount()
 {
-	m_CullingCount = 0;
-	m_RenderCount = 0;
+
 }

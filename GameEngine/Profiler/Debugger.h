@@ -46,7 +46,6 @@ public:
 	void Log(PROFILE_OUTPUT& outputType, HRESULT result, const char* fileInfo, char* message, int length);
 
 public:
-	bool GetCreate() { return m_Create; }
 	std::string GetFileInfo(const char* file, const char* func, int& line);
 
 private:

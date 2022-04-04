@@ -11,7 +11,10 @@
 ///  - LOG_FILE : 해당 날짜 Log File에 이어서 Log 출력
 ///  - CONSOLE : Console 창에 해당 Log 출력
 ///  - VS_CODE : Visual Studio 출력 창에 Log 출력
-/// 3. Debug 모드는 설정 없이 출력가능, Release 모드 출력시 RELEASE_PROFILE Define 하여 출력
+/// 3. Debug 모드는 설정 없이 Profile 출력
+/// 4. Release 모드 출력이 필요한경우 Header Include 하기 전 RELEASE_PROFILE Define 하면 출력
+///	   #define RELEASE_PROFILE
+///    #include "Profile.h"
 
 #if defined(DEBUG) || defined(_DEBUG) || defined(RELEASE_PROFILE)
 // Log Profiling

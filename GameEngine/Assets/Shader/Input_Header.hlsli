@@ -48,6 +48,13 @@ struct MeshVertexOut
 #endif
 };
 
+// Mesh Depth Vertex Shader Output Data Struct
+struct MeshDepthVertexOut
+{
+    float4 PosH : SV_POSITION;
+    float Depth : ZDEPTH;
+};
+
 // Mesh ID Vertex Shader Output Data Struct
 struct MeshIDVertexOut
 {
