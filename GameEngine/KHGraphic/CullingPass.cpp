@@ -77,7 +77,7 @@ bool CullingPass::FrustumCulling(const RenderData* meshData)
 
 	boundSphere.Transform(boundSphere, world);
 	
-	if (frustum.Intersects(boundSphere) == false)
+	if (boundSphere.Intersects(frustum) == false)
 	{
 		return false;
 	}

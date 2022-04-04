@@ -19,17 +19,11 @@
     <Filter Include="소스 파일\Scene">
       <UniqueIdentifier>{f4fe76d3-6edb-4d2a-ad68-d5564f8f0dcc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Component\Keyinput">
-      <UniqueIdentifier>{e7082ad1-e513-4d75-a040-3b1a44d10385}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Scene\intro">
       <UniqueIdentifier>{6c66b294-6e2d-45e5-af55-b696ee34abf8}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\Scene\inGame">
       <UniqueIdentifier>{e93e28d7-0fc6-4289-b4a5-74957091c4b2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\GameManager">
-      <UniqueIdentifier>{f719478b-bad2-44d2-a53c-e5625be7e03e}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\Component\Player">
       <UniqueIdentifier>{a59a5f89-b961-40e7-8282-6208957b9634}</UniqueIdentifier>
@@ -40,14 +34,44 @@
     <Filter Include="소스 파일\Component\PlayerCamera">
       <UniqueIdentifier>{925263ad-cb58-4a06-824c-b8133a6978b0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Component\Monster">
-      <UniqueIdentifier>{ffc9e84f-e196-4baa-a051-24a433d4873d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Component\ManaStone">
       <UniqueIdentifier>{b125c172-305a-4d80-a3cb-ba9fc70063ea}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\Scene\TestScene">
       <UniqueIdentifier>{e34409cd-ddb7-43b7-b06e-2610bfda158f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager">
+      <UniqueIdentifier>{f719478b-bad2-44d2-a53c-e5625be7e03e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\GameManager">
+      <UniqueIdentifier>{db4e3f4a-abcb-4e98-93d4-0e1bdd938816}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\LogicManager">
+      <UniqueIdentifier>{5635fc7e-f885-45da-8d51-8009646e3639}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\ObjectFactory">
+      <UniqueIdentifier>{149e5443-6586-42a9-ba32-44b86d569a72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\Potal">
+      <UniqueIdentifier>{ab9e2d53-63ff-4400-b7b1-760e7edf6fea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\Monster">
+      <UniqueIdentifier>{1eff42a5-4092-4861-964a-31ca9bdc475c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\Monster\MonsterA">
+      <UniqueIdentifier>{ffc9e84f-e196-4baa-a051-24a433d4873d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\Monster\MonsterB">
+      <UniqueIdentifier>{132923d9-8884-4f49-82e4-67753f479308}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\Monster\Base">
+      <UniqueIdentifier>{9bed9a65-bcf5-4188-afc6-0d17e43a6b97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\Drone">
+      <UniqueIdentifier>{5d3595c4-893a-419c-8e60-e3f398ffc25a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\ObjectManager">
+      <UniqueIdentifier>{e62a3675-adb9-4441-b8b8-c04df61aaf04}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -63,12 +87,6 @@
     <ClInclude Include="GameClient.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="GameManager.h">
-      <Filter>소스 파일\GameManager</Filter>
-    </ClInclude>
-    <ClInclude Include="KeyInput.h">
-      <Filter>소스 파일\Component\Keyinput</Filter>
-    </ClInclude>
     <ClInclude Include="intro.h">
       <Filter>소스 파일\Scene\intro</Filter>
     </ClInclude>
@@ -81,8 +99,8 @@
     <ClInclude Include="PlayerCamera.h">
       <Filter>소스 파일\Component\PlayerCamera</Filter>
     </ClInclude>
-    <ClInclude Include="Monster.h">
-      <Filter>소스 파일\Component\Monster</Filter>
+    <ClInclude Include="MonsterA.h">
+      <Filter>소스 파일\Component\Monster\MonsterA</Filter>
     </ClInclude>
     <ClInclude Include="ManaStone.h">
       <Filter>소스 파일\Component\ManaStone</Filter>
@@ -93,16 +111,34 @@
     <ClInclude Include="Player.h">
       <Filter>소스 파일\Component\Player</Filter>
     </ClInclude>
+    <ClInclude Include="GameManager.h">
+      <Filter>소스 파일\Manager\GameManager</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLogic.h">
+      <Filter>소스 파일\Manager\LogicManager</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectFactory.h">
+      <Filter>소스 파일\Manager\ObjectFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="Potal.h">
+      <Filter>소스 파일\Component\Potal</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterB.h">
+      <Filter>소스 파일\Component\Monster\MonsterB</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterBase.h">
+      <Filter>소스 파일\Component\Monster\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="HealingDrone.h">
+      <Filter>소스 파일\Component\Drone</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientObjectManager.h">
+      <Filter>소스 파일\Manager\ObjectManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameClient.cpp">
       <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="GameManager.cpp">
-      <Filter>소스 파일\GameManager</Filter>
-    </ClCompile>
-    <ClCompile Include="KeyInput.cpp">
-      <Filter>소스 파일\Component\Keyinput</Filter>
     </ClCompile>
     <ClCompile Include="intro.cpp">
       <Filter>소스 파일\Scene\intro</Filter>
@@ -116,8 +152,8 @@
     <ClCompile Include="PlayerCamera.cpp">
       <Filter>소스 파일\Component\PlayerCamera</Filter>
     </ClCompile>
-    <ClCompile Include="Monster.cpp">
-      <Filter>소스 파일\Component\Monster</Filter>
+    <ClCompile Include="MonsterA.cpp">
+      <Filter>소스 파일\Component\Monster\MonsterA</Filter>
     </ClCompile>
     <ClCompile Include="ManaStone.cpp">
       <Filter>소스 파일\Component\ManaStone</Filter>
@@ -127,6 +163,30 @@
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>소스 파일\Component\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="GameManager.cpp">
+      <Filter>소스 파일\Manager\GameManager</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLogic.cpp">
+      <Filter>소스 파일\Manager\LogicManager</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectFactory.cpp">
+      <Filter>소스 파일\Manager\ObjectFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="Potal.cpp">
+      <Filter>소스 파일\Component\Potal</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterB.cpp">
+      <Filter>소스 파일\Component\Monster\MonsterB</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterBase.cpp">
+      <Filter>소스 파일\Component\Monster\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="HealingDrone.cpp">
+      <Filter>소스 파일\Component\Drone</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientObjectManager.cpp">
+      <Filter>소스 파일\Manager\ObjectManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

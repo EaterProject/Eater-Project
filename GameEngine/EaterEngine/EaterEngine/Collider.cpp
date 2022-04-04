@@ -6,17 +6,12 @@
 #include "EngineData.h"
 #include "LoadManager.h"
 #include "GameObject.h"
+#include "Component.h"
 
 Collider::Collider()
 {
-	Component::Start_Order = Component::FUNCTION_ORDER_LAST;
-	mPhysData		= new PhysData();
-	mColliderData	= new PhysCollider();
+	mPhysData		= PhysX_Create_Data();
 	mDebugCollider  = new ColliderData();
-	mMaterial		= new PhysMaterial();
-	mMaterial->MT_DynamicFriction	= 0.5f;
-	mMaterial->MT_StaticFriction	= 0.5f;
-	mMaterial->MT_Restitution		= 0.6f;
 	
 }
 
@@ -24,64 +19,82 @@ Collider::~Collider()
 {
 	PhysX_Delete_Actor(mPhysData);
 
-	delete mMaterial;
-	delete mColliderData;
-	delete mPhysData;
+	//delete mPhysData;
 	delete mDebugCollider;
-}
-
-void Collider::Awake()
-{
-	DebugCollider();
-	//실행되기전에 
-	
 }
 
 void Collider::Start()
 {
-	//콜라이더만 있다면 스테틱 Rigidbody도 있다면 다이나믹
-	//if (mRigidbody != nullptr)
-	//{
-	//	mPhysData->isDinamic = true;
-	//}
-	//
-	////메테리얼을 설정했다면 넣어준다
-	//if (mMaterial != nullptr)
-	//{
-	//	mPhysData->Meterial = mMaterial;
-	//}
-	//
-	//mPhysData->Collider = mColliderData;
-	//mPhysData->WorldPosition = mTransform->Position;
-	//Vector3 Rot = mTransform->Rotation;
-	//mPhysData->SetRotate(Rot.x, Rot.y, Rot.z);
-	//PhysX_Create_Actor(mPhysData);
+	mPhysData->EaterObj = gameobject;
+	mTransform = gameobject->GetTransform();
+	CreatePhys();
 }
 
-void Collider::Update()
+void Collider::PhysicsUpdate()
 {
-	
+	if (mTransform->Position != mPhysData->WorldPosition)
+	{
+		mPhysData->SetWorldPosition(mTransform->Position.x, mTransform->Position.y, mTransform->Position.z);
+		mTransform->Position = mPhysData->WorldPosition;
+	}
+	PhysX_Update_Actor(mPhysData);
+
+	float CenterX = mPhysData->CenterPoint.x;
+	float CenterY = mPhysData->CenterPoint.y;
+	float CenterZ = mPhysData->CenterPoint.z;
+
+	mTransform->Position.x = mPhysData->WorldPosition.x;
+	mTransform->Position.y = mPhysData->WorldPosition.y;
+	mTransform->Position.z = mPhysData->WorldPosition.z;
+
+	mTransform->Q_Rotation.x = mPhysData->Rotation.x;
+	mTransform->Q_Rotation.y = mPhysData->Rotation.y;
+	mTransform->Q_Rotation.z = mPhysData->Rotation.z;
+	mTransform->Q_Rotation.w = mPhysData->Rotation.w;
+
 	DebugCollider();
+
+	//충돌 함수 호출
+	int Size = (int)mPhysData->TriggerList.size();
+	if (Size != 0)
+	{
+		if (mPhysData->GetTriggerEnter())
+		{
+			GameObject* Obj = reinterpret_cast<GameObject*>(mPhysData->TriggerList[0]->EaterObj);
+			gameobject->PlayPhysFunction(Obj, PHYS_TRIIGER_ENTER);
+		}
+		else if (mPhysData->GetTriggerStay())
+		{
+			gameobject->PlayPhysFunction((GameObject*)mPhysData->TriggerList[0], PHYS_TRIIGER_STAY);
+		}
+		else if (mPhysData->GetTriggerExit())
+		{
+			gameobject->PlayPhysFunction((GameObject*)mPhysData->TriggerList[0], PHYS_TRIIGER_EXIT);
+		}
+
+	}
 }
+
+
 
 void Collider::SetBoxCollider(float Size_x, float Size_y, float Size_z)
 {
-	mColliderData->SetBoxCollider(Size_x, Size_y, Size_z);
+	mPhysData->mCollider->SetBoxCollider(Size_x,Size_y,Size_z);
 }
 
 void Collider::SetBoxCollider(float Radius)
 {
-	mColliderData->SetBoxCollider(Radius);
+	mPhysData->mCollider->SetBoxCollider(Radius);
 }
 
 void Collider::SetSphereCollider(float Radius)
 {
-	mColliderData->SetSphereCollider(Radius);
+	mPhysData->mCollider->SetSphereCollider(Radius);
 }
 
 void Collider::SetCapsuleCollider(float Radius, float Height)
 {
-	mColliderData->SetCapsuleCollider(Radius,Height);
+	mPhysData->mCollider->SetCapsuleCollider(Radius,Height);
 }
 
 void Collider::SetMeshCollider(std::string MeshName)
@@ -116,45 +129,61 @@ void Collider::SetTerrainCollider(std::string MeshName)
 
 void Collider::SetTrigger(bool trigger)
 {
-	mColliderData->SetTrigger(trigger);
+	mPhysData->mCollider->SetTrigger(trigger);
 }
 
 void Collider::SetMaterial_Static(float Static)
 {
-	mMaterial->MT_StaticFriction = Static;
+	mPhysData->mMeterial->MT_StaticFriction = Static;
 }
 
 void Collider::SetMaterial_Dynamic(float Dynamic)
 {
-	mMaterial->MT_DynamicFriction = Dynamic;
+	mPhysData->mMeterial->MT_DynamicFriction = Dynamic;
 }
 
 void Collider::SetMaterial_Restitution(float Restitution)
 {
-	mMaterial->MT_Restitution = Restitution;
+	mPhysData->mMeterial->MT_Restitution = Restitution;
 }
 
 PhysCollider* Collider::GetCollider()
 {
-	return mColliderData;
+	return mPhysData->mCollider;
 }
 
 void Collider::DebugCollider()
 {
-	Vector3 Pos = mPhysData->WorldPosition;
+	Vector3 Pos = gameobject->transform->Position + mPhysData->CenterPoint;
 	Vector4 Rot = mPhysData->Rotation;
-	Vector3 Scl = mColliderData->GetSize();
+	Vector3 Scl = mPhysData->mCollider->GetSize();
 
-	mDebugCollider->ColliderWorld = *(gameobject->transform->GetWorld());
-	mDebugCollider->ColliderColor = { 1,0,0,1 };
-	gameobject->OneMeshData->Collider_Data = mDebugCollider;
+	if (mPhysData->isDinamic == false) 
+	{
+		SimpleMath::Matrix PosXM = SimpleMath::Matrix::CreateTranslation(Pos + mPhysData->CenterPoint);
+		SimpleMath::Matrix RotXM = CreateXMRot4x4();
+		SimpleMath::Matrix SclXM = SimpleMath::Matrix::CreateScale(Scl);
+
+		mDebugCollider->ColliderWorld = SclXM * RotXM* PosXM;
+		mDebugCollider->ColliderColor = { 1,0,0,1 };
+		gameobject->OneMeshData->Collider_Data = mDebugCollider;
+	}
+	else
+	{
+		SimpleMath::Matrix PosXM = SimpleMath::Matrix::CreateTranslation(Pos);
+		SimpleMath::Matrix RotXM = XMMatrixRotationQuaternion(gameobject->transform->Q_Rotation);
+		SimpleMath::Matrix SclXM = SimpleMath::Matrix::CreateScale(Scl);
+
+		mDebugCollider->ColliderWorld = SclXM * RotXM * PosXM;
+		mDebugCollider->ColliderColor = { 1,0,0,1 };
+		gameobject->OneMeshData->Collider_Data = mDebugCollider;
+	}
 }
 
 bool Collider::CreatePhys()
 {
 	if (isCreate == false)
 	{
-		mPhysData->Collider			= mColliderData;
 		mPhysData->WorldPosition	= gameobject->transform->Position;
 		Vector3 Rot					= gameobject->transform->Rotation;
 
@@ -173,7 +202,6 @@ bool Collider::CreatePhys()
 		Transform* mTransform = gameobject->GetTransform();
 		mPhysData->SetWorldPosition(mTransform->Position.x, mTransform->Position.y, mTransform->Position.z);
 		mPhysData->Rotation = Q_Rot;
-		mPhysData->Meterial = mMaterial;
 		mTransform->isRigid = true;
 		mTransform->Q_Rotation = Q_Rot;
 		PhysX_Create_Actor(mPhysData);
@@ -188,22 +216,54 @@ bool Collider::CreatePhys()
 
 float Collider::GetMaterial_Static()
 {
-	return mMaterial->MT_StaticFriction;
+	return mPhysData->mMeterial->MT_StaticFriction;
 }
 
 float Collider::GetMaterial_Dynamic()
 {
-	return mMaterial->MT_DynamicFriction;
+	return mPhysData->mMeterial->MT_DynamicFriction;
 }
 
 float Collider::GetMaterial_Restitution()
 {
-	return mMaterial->MT_Restitution;
+	return mPhysData->mMeterial->MT_Restitution;
+}
+
+bool Collider::GetTriggerEnter()
+{
+	return mPhysData->GetTriggerEnter();
+}
+
+bool Collider::GetTriggerStay()
+{
+	return mPhysData->GetTriggerStay();
+}
+
+bool Collider::GetTriggerExit()
+{
+	return mPhysData->GetTriggerExit();
+}
+
+int Collider::GetTriggerCount()
+{
+	return (int)mPhysData->TriggerList.size();
+}
+
+GameObject* Collider::GetTriggerObject()
+{
+	if (mPhysData->TriggerList[0] != nullptr)
+	{
+		return reinterpret_cast<GameObject*>(mPhysData->TriggerList[0]->EaterObj);
+	}
+	else 
+	{
+		return nullptr;
+	}
 }
 
 void Collider::SetCenter(float x, float y, float z)
 {
-	mColliderData->SetCenter(x, y, z);
+	mPhysData->CenterPoint = { x,y,z };
 }
 
 DirectX::SimpleMath::Matrix Collider::CreateXMRot4x4()

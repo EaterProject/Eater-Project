@@ -41,6 +41,7 @@ public:
 	void Update(float m_time);
 
 	//엑터 생성
+	PhysData* Create_PhysData();
 	void Create_Actor(PhysData* data);
 	//엑터 업데이트
 	void Update_Actor(PhysData* data);
@@ -57,6 +58,13 @@ private:
 	bool Initialize_Release(int ThreadCount);
 	bool Initialize_Debug(int ThreadCount);
 	void CreateStart();
+private:
+	void UpdateDynamicPosition(PxRigidDynamic* Dynamic , PhysData* Data);
+	void UpdateDynamicForce(PxRigidDynamic* Dynamic, PhysData* Data);
+	void UpdateDynamicVelocity(PxRigidDynamic* Dynamic, PhysData* Data);
+
+	void UpdateStaticPosition(PxRigidStatic* Static, PhysData* Data);
+
 
 	bool Start = false;
 

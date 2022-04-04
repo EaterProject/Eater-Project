@@ -83,15 +83,16 @@ void SceneSave::Save(std::string SaveFilePath, std::string SaveFileName)
 void SceneSave::SceneOption()
 {
 	EATER_SET_NODE("SCENE");
-	EATER_SET_LIST_START("TAG", 10, 2);
-	EATER_SET_LIST(0);
-	EATER_SET_LIST("Default", true);
-	EATER_SET_LIST(1);
-	EATER_SET_LIST("MainCam", true);
-	EATER_SET_LIST(2);
-	EATER_SET_LIST("Point", true);
-	EATER_SET_LIST(3);
-	EATER_SET_LIST("Player", true);
+	std::map<int, std::string>::iterator Start_it	= Demo::TagList.begin();
+	std::map<int, std::string>::iterator End_it		= Demo::TagList.end();
+
+	int Size = Demo::TagList.size();
+	EATER_SET_LIST_START("TAG", Size, 2);
+	for (Start_it; Start_it != End_it; Start_it++)
+	{
+		EATER_SET_LIST(Start_it->first);
+		EATER_SET_LIST(Start_it->second, true);
+	}
 }
 
 void SceneSave::SaveTransform(Transform* mTransform)
@@ -180,15 +181,35 @@ void SceneSave::SaveCollider(Collider* mCollider)
 
 	EATER_SET_LIST(mCollider->GetMaterial_Dynamic());			//8. 재질
 	EATER_SET_LIST(mCollider->GetMaterial_Restitution());		//9. 재질
-	EATER_SET_LIST(mCollider->GetMaterial_Static());			//10. 재질
+	EATER_SET_LIST(mCollider->GetMaterial_Static(),true);		//10. 재질
 }
 
 void SceneSave::SaveRigidbody(Rigidbody* mRigidbody)
 {
+	EATER_SET_LIST_START("Rigidbody", 1, 9);
+
+	float Mass		= mRigidbody->GetMass();
+	bool Gravity	= mRigidbody->GetGravity();
+	bool Kinematic	= mRigidbody->GetKinematic();
+	Vector3 Pos = mRigidbody->GetFreezePosition();
+	Vector3 Rot = mRigidbody->GetFreezeRotation();
+
+	EATER_SET_LIST(Mass);
+	EATER_SET_LIST(Gravity);
+	EATER_SET_LIST(Kinematic);
+
+	EATER_SET_LIST(Pos.x);
+	EATER_SET_LIST(Pos.y);
+	EATER_SET_LIST(Pos.z);
+
+	EATER_SET_LIST(Rot.x);
+	EATER_SET_LIST(Rot.y);
+	EATER_SET_LIST(Rot.z,true);
 
 }
 
 void SceneSave::SaveCamera(Camera* mCamera)
 {
-	EATER_SET_LIST_START("Camera", 0, 0);
+	EATER_SET_LIST_START("Camera", 1, 1);
+	EATER_SET_LIST("Cam",true);
 }

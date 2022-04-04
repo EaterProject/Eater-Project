@@ -95,7 +95,7 @@ void MeshFilter::SetMeshName(std::string mMeshName)
 	else
 	{
 		BufferName = mMeshName;
-		SetMesh(mMeshName);
+		SetBuffer(mMeshName);
 	}
 }
 
@@ -239,7 +239,7 @@ void MeshFilter::CheckMesh()
 	if (BufferName.empty() == false)
 	{
 		// Mesh Setting..
-		SetMesh(BufferName);
+		SetBuffer(BufferName);
 	}
 }
 
@@ -287,7 +287,7 @@ void MeshFilter::CheckAnimation()
 	}
 }
 
-void MeshFilter::SetMesh(std::string meshName)
+void MeshFilter::SetBuffer(std::string meshName)
 {
 	Mesh* mesh = LoadManager::GetMesh(BufferName);
 
@@ -595,6 +595,8 @@ void MeshFilter::CreateModel()
 
 		SKFilter->PushBoneList(&BoneList);
 		SKFilter->PushBone_OffsetList(mMesh->BoneOffsetList);
+
+		LinkHierarchy(Object->GetTransform(), this->gameobject->GetTransform());
 
 		gameobject->PushChildMeshObject(Object);
 		CreateSkinMesh(mMesh->TopSkinList[i], Object);

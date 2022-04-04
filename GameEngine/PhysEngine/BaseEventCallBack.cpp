@@ -2,6 +2,7 @@
 #include "BaseEventCallBack.h"
 #include <algorithm>
 #include "PhysData.h"
+
 BaseEventCallBack::BaseEventCallBack()
 {
 }
@@ -43,9 +44,15 @@ void BaseEventCallBack::onTrigger(PxTriggerPair* pairs, PxU32 count)
 			Other->OnTriggerStay = true;
 			Other->TriggerCount++;
 
+			Target->OnTriggerEnter = true;
+			Target->OnTriggerStay = true;
+			Target->TriggerCount++;
+
 			Other->TriggerList.push_back(Target);
+			Target->TriggerList.push_back(Other);
 		}
-		else if (pairs[i].status & PxPairFlag::eNOTIFY_TOUCH_LOST)
+
+		if (pairs[i].status & PxPairFlag::eNOTIFY_TOUCH_LOST)
 		{
 			Other->OnTriggerStay = false;
 			Other->OnTriggerExit = true;
@@ -57,6 +64,20 @@ void BaseEventCallBack::onTrigger(PxTriggerPair* pairs, PxU32 count)
 				if (Other->TriggerList[i] == Target)
 				{
 					Other->TriggerList.erase(Other->TriggerList.begin() + i);
+					break;
+				}
+			}
+
+
+			Target->OnTriggerStay = false;
+			Target->OnTriggerExit = true;
+			Target->TriggerCount--;
+			count = (int)Target->TriggerList.size();
+			for (int i = 0; i < count; i++)
+			{
+				if (Target->TriggerList[i] == Other)
+				{
+					Target->TriggerList.erase(Target->TriggerList.begin() + i);
 					break;
 				}
 			}

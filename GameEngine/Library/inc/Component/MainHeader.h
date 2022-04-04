@@ -32,6 +32,7 @@ extern "C" EATER_ENGINEDLL GameObject*	InstanceLight(std::string ObjName= "Light
 
 ///게임 오브젝트 찾기
 extern "C" EATER_ENGINEDLL GameObject*	FindGameObjectTag(std::string TagName);
+extern "C" EATER_ENGINEDLL	void	FindGameObjectTags(std::string TagName,std::vector<GameObject*>*ObjectList);
 extern "C" EATER_ENGINEDLL GameObject*	FindGameObjectName(std::string ObjectName);
 extern "C" EATER_ENGINEDLL void			Destroy(GameObject* obj);//오브젝트 삭제
 extern "C" EATER_ENGINEDLL void			DestroyAll();//오브젝트 삭제
@@ -67,7 +68,7 @@ extern "C" EATER_ENGINEDLL void MouseCursorClip(bool Clip);		//마우스 커서 보이�
 
 ///윈도우 관련
 extern "C" EATER_ENGINEDLL void WindowFocus(bool focus);		//현재 윈도우 포커싱 상태
-extern "C" EATER_ENGINEDLL GameObject* Picking(int x, int y);			//현재 윈도우 클릭 지점
+extern "C" EATER_ENGINEDLL GameObject* Picking(int x, int y);	//현재 윈도우 클릭 지점
 
 ///카메라 관련
 extern "C" EATER_ENGINEDLL GameObject * GetMainCamera();	//현재 메인 카메라를 가져온다

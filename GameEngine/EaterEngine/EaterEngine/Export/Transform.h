@@ -5,7 +5,8 @@
 #include <DirectXMath.h>
 #include <vector>
 #include "Component.h"
-
+class Rigidbody;
+class Collider;
 class Transform :public Component
 {
 public:
@@ -39,6 +40,9 @@ public:
 	EATER_ENGINEDLL DirectX::SimpleMath::Vector3 GetLocalPosition_Look();
 
 	EATER_ENGINEDLL void LookAt(GameObject* Target);
+	EATER_ENGINEDLL void LookAt_X(GameObject* Target);
+	EATER_ENGINEDLL void LookAt_Y(Vector3 Pos);
+	EATER_ENGINEDLL void LookAt_Z(GameObject* Target);
 
 	//현재위치값에 값을 더해줌
 	EATER_ENGINEDLL void SetLocalPosition(float X, float Y, float Z);
@@ -60,6 +64,7 @@ public:
 
 	//월드매트릭스를 가져옴
 	EATER_ENGINEDLL DirectX::SimpleMath::Matrix* GetWorld();
+	EATER_ENGINEDLL DirectX::SimpleMath::Matrix* GetLocal();
 
 	//로컬좌표들을 매프레임 업데이트 해줄것인가 여부
 	EATER_ENGINEDLL void SetLocalUpdate(bool isUpdate);
@@ -76,6 +81,7 @@ public:
 
 	//Y축 기준으로 보는방향으로 천천히 회전한다
 	EATER_ENGINEDLL void Slow_Y_Rotation(Vector3 Dir, float RotationSpeed);
+	EATER_ENGINEDLL float GetDistance(Vector3 Pos);
 private:
 	//현재 위치 회전 크기값을 가져와 행렬을 구한다
 	DirectX::SimpleMath::Matrix CreateXMPos4x4();
@@ -91,8 +97,6 @@ private:
 	DirectX::SimpleMath::Vector3 Local_Right;
 	//자기 기준으로 앞방향으로 1만큼 움직인 좌표
 	DirectX::SimpleMath::Vector3 Local_Look;
-
-
 
 	//각각의 행렬들을 따로보관
 	DirectX::SimpleMath::Matrix PositionXM;
@@ -111,8 +115,16 @@ private:
 	//게임 오브젝트의 위치 회전 크기값을 모두곱한 월드 행렬
 	DirectX::SimpleMath::Matrix World_M;
 
-
+private:
+	
+	const float ConvertPI = 180 / 3.141592f;
+	
 	///계층 구조에서 부모 객체 자식객체
 	Transform* Parent;
 	std::vector<Transform*> ChildList;
+
+
+	//physX
+	Rigidbody*	mRigidbody;
+	Collider*	mCollider;
 };

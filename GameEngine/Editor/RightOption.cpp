@@ -73,15 +73,15 @@ BOOL RightOption::OnInitDialog()
 	mCam->ShowWindow(SW_HIDE);
 
 	//Tag 기본 리스트
-	Tag_Combo.InsertString(0, L"Default");
-	Tag_Combo.InsertString(1, L"MainCam");
-	Tag_Combo.InsertString(2, L"Point");
-	Tag_Combo.InsertString(3, L"Player");
-	TagList.insert({0,"Default"});
-	TagList.insert({1,"MainCam"});
-	TagList.insert({2,"Point"});
-	TagList.insert({3,"Player"});
-	Tag_Combo.SetCurSel(0);
+	//Tag_Combo.InsertString(0, L"Default");
+	//Tag_Combo.InsertString(1, L"MainCam");
+	//Tag_Combo.InsertString(2, L"Point");
+	//Tag_Combo.InsertString(3, L"Player");
+	//TagList.insert({0,"Default"});
+	//TagList.insert({1,"MainCam"});
+	//TagList.insert({2,"Point"});
+	//TagList.insert({3,"Player"});
+	//Tag_Combo.SetCurSel(0);
 
 	//텝정보들 생성
 	CRect rect;
@@ -274,13 +274,21 @@ void RightOption::ChickHirearchyDarg(CPoint point)
 		case SCENE:
 		{
 			Demo::LoadScene(Name);
-			//HirearchyTree.DeleteAllItems();
 			std::map<std::string, GameObject*>::iterator Start_it	= Demo::ObjectList.begin();
 			std::map<std::string, GameObject*>::iterator End_it		= Demo::ObjectList.end();
 			for (Start_it; Start_it != End_it; Start_it++)
 			{
 				HirearchyTree.InsertItem(ChangeToCString(Start_it->first));
 			}
+
+			Tag_Combo.ResetContent();
+			std::map<int,std::string>::iterator Tag_Start_it	=  Demo::TagList.begin();
+			std::map<int,std::string>::iterator Tag_End_it		=  Demo::TagList.end();
+			for(Tag_Start_it; Tag_Start_it != Tag_End_it; Tag_Start_it++)
+			{
+				Tag_Combo.InsertString( Tag_Start_it->first, ChangeToCString(Tag_Start_it->second) );
+			}
+
 			break;
 		}
 		default:
@@ -344,10 +352,12 @@ void RightOption::OnChoice_Hirearchy_Item(NMHDR* pNMHDR, LRESULT* pResult)
 	Name = ChoiceHirearchyName.c_str();
 	HirearchyEdit.SetWindowTextW(Name);
 
+
 	Component_TapList.DeleteAllItems();
 	ChoiceObject = FindGameObjectParent(ChoiceItem);
 	Delete_Hirearchy_Item(ChoiceItem);
 	Create_Hirearchy_Item(ChoiceObject, ChoiceItem);
+	Tag_Combo.SetCurSel(ChoiceObject->GetTag());
 
 	mFileOption->SetChoiceGameObjectName(MeshName, ChoiceObject);
 
@@ -403,7 +413,7 @@ void RightOption::OnChoice_Hirearchy_Item(NMHDR* pNMHDR, LRESULT* pResult)
 	{
 		Component_TapList.InsertItem(FrontCount, L"Rigidbody");
 		mRigidbody->ShowWindow(SW_HIDE);
-		//mRigidbody->SetGameObject(LT);
+		mRigidbody->SetGameObject(RI);
 		FrontCount++;
 	}
 
@@ -599,36 +609,19 @@ void RightOption::OnAddTag_Button()
 	CString AddTagName;
 	int MaxIndex = 0;
 	AddTag_Edit.GetWindowTextW(AddTagName);
-	std::string Str_TagName = ChangeToString(AddTagName);
+	int Count  = Demo::AddTag(ChangeToString(AddTagName));
 
-	if (AddTagName == "")
+	if (Count != -1)
 	{
-		AfxMessageBox(L"Error : 생성할 태그의 이름을 입력해주세요");
-		return;
+		AfxMessageBox(L"Add Tag");
+	}
+	else
+	{
+		AfxMessageBox(L"Error : Delete Tag");
 	}
 
-	//태그 리스트를 한번 순환
-	std::map<int, std::string>::iterator Start_it = TagList.begin();
-	std::map<int, std::string>::iterator End_it = TagList.end();
-	for (Start_it; Start_it != End_it; Start_it++)
-	{
-		//이름이 겹치는게 있는지 체크한다
-		if (Start_it->second == Str_TagName)
-		{
-			AfxMessageBox(L"Error : 같은 이름의 태그가 있습니다");
-			return;
-		}
-
-		if (Start_it->first > MaxIndex)
-		{
-			MaxIndex = Start_it->first;
-		}
-	}
-
-	Tag_Combo.InsertString(MaxIndex+1, AddTagName);
-	TagList.insert({ MaxIndex+1,Str_TagName });
+	Tag_Combo.InsertString(Count, AddTagName);
 	AddTag_Edit.SetWindowTextW(L"");
-	AfxMessageBox(L"성공 : New Tag 생성");
 }
 
 void RightOption::OnChoiceTag()
@@ -642,35 +635,24 @@ void RightOption::OnChoiceTag()
 
 	int number = Tag_Combo.GetCurSel();
 	Object->SetTag(number);
+	AfxMessageBox(L"Object Tag 설정 완료");
 }
 
 void RightOption::OnDeleteTagButton()
 {
 	CString AddTagName;
-	int MaxIndex = 0;
 	AddTag_Edit.GetWindowTextW(AddTagName);
-	std::string Str_TagName = ChangeToString(AddTagName);
+	int Count = Demo::DeleteTag(ChangeToString(AddTagName));
 
-	if (AddTagName == "")
+	if (Count == -1)
 	{
 		AfxMessageBox(L"Error : 삭제할 태그의 이름을 입력해주세요");
 		return;
 	}
-
-	//태그 리스트를 한번 순환
-	std::map<int, std::string>::iterator Start_it	= TagList.begin();
-	std::map<int, std::string>::iterator End_it		= TagList.end();
-	for (Start_it; Start_it != End_it; Start_it++)
+	else
 	{
-		//이름이 겹치는게 있는지 체크한다
-		if (Start_it->second == Str_TagName)
-		{
-			AfxMessageBox(L"성공 : Delete Tag");
-			MaxIndex = Start_it->first;
-			Tag_Combo.DeleteString(MaxIndex);
-			TagList.erase(MaxIndex);
-			return;
-		}
+		Tag_Combo.DeleteString(Count);
+		AfxMessageBox(L"삭제 성공");
+		AddTag_Edit.SetWindowTextW(L"");
 	}
-	AfxMessageBox(L"Error : 입력한 태그의 이름을 찾을수 없습니다");
 }

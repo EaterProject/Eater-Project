@@ -115,7 +115,11 @@ void PhysEngine::Update(float m_time)
 		m_Scene->simulate(m_time);
 		m_Scene->fetchResults(true);
 	}
+}
 
+PhysData* PhysEngine::Create_PhysData()
+{
+	return new PhysData();
 }
 
 void PhysEngine::Create_Actor(PhysData* data)
@@ -125,53 +129,39 @@ void PhysEngine::Create_Actor(PhysData* data)
 
 void  PhysEngine::Update_Actor(PhysData* data)
 {
-	//스테틱 매쉬는 업데이트할 필요가없기떄문에 실행시키지않음
-	if (data->isDinamic == false){return;}
-
-	//받아온 Data를 Actor와 동기화시켜준다
-	PxRigidActor* rig = reinterpret_cast<PxRigidActor*>(data->ActorObj);
-	PxRigidBody* body = reinterpret_cast<PxRigidBody*>(data->ActorObj);
-	PxTransform Tr = rig->getGlobalPose();
-	//PxVec3 Velocity = body->getLinearVelocity();
-	
-	
-	//관성이 들어간 힘을 준다
-	if (data->isForce == true)
+	if (data->isDinamic == true)
 	{
-		PxVec3 Force	= PxVec3(data->Force.x, data->Force.y, data->Force.z);
-		PxVec3 Pos		= PxVec3(data->WorldPosition.x, data->WorldPosition.y, data->WorldPosition.z);
-		PxRigidBodyExt::addForceAtPos(*body, Force, Pos);
-		data->isForce = false;
+		PxRigidDynamic* Dynamic = reinterpret_cast<PxRigidDynamic*>(data->ActorObj);
+
+		if (data->isPosition == true){UpdateDynamicPosition(Dynamic, data);}
+		if (data->isForce == true){UpdateDynamicForce(Dynamic, data);}
+		if (data->isVelocity == true){UpdateDynamicVelocity(Dynamic, data);}
+
+		//받아온 Data를 Actor와 동기화시켜준다
+		PxTransform Tr = Dynamic->getGlobalPose();
+		data->WorldPosition.x = Tr.p.x;
+		data->WorldPosition.y = Tr.p.y;
+		data->WorldPosition.z = Tr.p.z;
+		data->Rotation.x = Tr.q.x;
+		data->Rotation.y = Tr.q.y;
+		data->Rotation.z = Tr.q.z;
+		data->Rotation.w = Tr.q.w;
+	}
+	else
+	{
+		PxRigidStatic*	Static = reinterpret_cast<PxRigidStatic*>(data->ActorObj);
+		if (data->isPosition == true) { UpdateStaticPosition(Static, data); }
+
+		PxTransform Tr = Static->getGlobalPose();
+		data->WorldPosition.x = Tr.p.x;
+		data->WorldPosition.y = Tr.p.y;
+		data->WorldPosition.z = Tr.p.z;
+		data->Rotation.x = Tr.q.x;
+		data->Rotation.y = Tr.q.y;
+		data->Rotation.z = Tr.q.z;
+		data->Rotation.w = Tr.q.w;
 	}
 
-	//속력값을 준다
-	if (data->isVelocity == true)
-	{
-		PxVec3 Velocity = body->getLinearVelocity();
-		PxVec3 Pox = PxVec3(data->Velocity.x, Velocity.y, data->Velocity.z);
-		//PxVec3 Pox = PxVec3(data->Velocity.x, data->Velocity.y, data->Velocity.z);
-		body->setLinearVelocity(Pox);
-		data->isVelocity = false;
-	}
-
-	//위치값이 변경되었을때
-	if (data->isPosition == true)
-	{
-		PxQuat Q = PxQuat(data->Rotation.x, data->Rotation.y, data->Rotation.z, data->Rotation.w);
-		PxVec3 P = PxVec3(data->WorldPosition.x, data->WorldPosition.y, data->WorldPosition.z);
-		body->setGlobalPose(PxTransform(P, Q));
-		data->isPosition = false;
-	}
-
-	//data->PhysX_Velocity = Vector3(Velocity.x, Velocity.y, Velocity.z);
-	data->WorldPosition.x = Tr.p.x;
-	data->WorldPosition.y = Tr.p.y;
-	data->WorldPosition.z = Tr.p.z;
-
-	data->Rotation.x = Tr.q.x;
-	data->Rotation.y = Tr.q.y;
-	data->Rotation.z = Tr.q.z;
-	data->Rotation.w = Tr.q.w;
 }
 
 void PhysEngine::Delete_Actor(PhysData* data)
@@ -226,12 +216,14 @@ bool PhysEngine::CreateScene(PhysSceneData* SceneData)
 	sceneDesc.cpuDispatcher				= m_Dispatcher;
 	sceneDesc.simulationEventCallback	= m_BaseEvent;
 	sceneDesc.filterShader				= SampleSubmarineFilterShader;
+	//sceneDesc.filterShader				= PxDefaultSimulationFilterShader;
 	sceneDesc.cudaContextManager		= m_CudaContextManager;
 	sceneDesc.broadPhaseType			= PxBroadPhaseType::eGPU;
+	//sceneDesc.broadPhaseType			= PxBroadPhaseType::eMBP;
 	
 	sceneDesc.flags |= PxSceneFlag::eENABLE_GPU_DYNAMICS;
-	sceneDesc.flags |= PxSceneFlag::eENABLE_CCD;
-	sceneDesc.flags |= PxSceneFlag::eENABLE_PCM;
+	//sceneDesc.flags |= PxSceneFlag::eENABLE_CCD;
+	sceneDesc.flags |= PxSceneFlag::eENABLE_PCM; 
 	
 
 	m_Scene = m_Physics->createScene(sceneDesc);
@@ -314,3 +306,41 @@ void PhysEngine::CreateStart()
 	m_ErrorCallback		= new PxDefaultErrorCallback();
 	m_TolerancesScale	= new PxTolerancesScale();
 }
+
+void PhysEngine::UpdateDynamicPosition(PxRigidDynamic* Dynamic, PhysData* Data)
+{
+	//위치값이 변경되었다면 변경된 값으로 업데이트
+	PxQuat Q = PxQuat(Data->Rotation.x, Data->Rotation.y, Data->Rotation.z, Data->Rotation.w);
+	PxVec3 P = PxVec3(Data->WorldPosition.x, Data->WorldPosition.y, Data->WorldPosition.z);
+	Dynamic->setGlobalPose(PxTransform(P, Q));
+	Data->isPosition = false;
+}
+
+void PhysEngine::UpdateDynamicForce(PxRigidDynamic* Dynamic, PhysData* Data)
+{
+	//포스값이 변경되었다면 변경된 값으로 업데이트
+	PxVec3 Force = PxVec3(Data->Force.x, Data->Force.y, Data->Force.z);
+	PxVec3 Pos = PxVec3(Data->WorldPosition.x, Data->WorldPosition.y, Data->WorldPosition.z);
+	PxRigidBodyExt::addForceAtPos(*Dynamic, Force, Pos);
+	Data->isForce = false;
+}
+
+void PhysEngine::UpdateDynamicVelocity(PxRigidDynamic* Dynamic, PhysData* Data)
+{
+	//속력값이 변경되었다면 변경된 값으로 업데이트
+	PxVec3 Velocity = Dynamic->getLinearVelocity();
+	PxVec3 Pox = PxVec3(Data->Velocity.x, Velocity.y, Data->Velocity.z);
+	//PxVec3 Pox = PxVec3(data->Velocity.x, data->Velocity.y, data->Velocity.z);
+	Dynamic->setLinearVelocity(Pox);
+	Data->isVelocity = false;
+}
+
+void PhysEngine::UpdateStaticPosition(PxRigidStatic* Static, PhysData* Data)
+{
+	PxQuat Q = PxQuat(Data->Rotation.x, Data->Rotation.y, Data->Rotation.z, Data->Rotation.w);
+	PxVec3 P = PxVec3(Data->WorldPosition.x, Data->WorldPosition.y, Data->WorldPosition.z);
+	Static->setGlobalPose(PxTransform(P, Q));
+	Data->isPosition = false;
+}
+
+

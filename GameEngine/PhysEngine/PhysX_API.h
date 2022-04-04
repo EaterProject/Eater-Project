@@ -23,6 +23,7 @@ extern "C" PHYS_ENGINEDLL void PhysX_Update(float m_time);	//실행
 ///물리 객체 생성
 //1.생성할 데이터 정보를 담은 PhysData 구조체
 extern "C"  PHYS_ENGINEDLL void PhysX_Create_Actor(PhysData* data);
+extern "C"  PHYS_ENGINEDLL PhysData* PhysX_Create_Data();
 
 ///물리 객체 업데이트
 //담아올 PhysData를 포인터로 넣어줌

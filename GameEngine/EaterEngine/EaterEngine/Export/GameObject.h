@@ -17,6 +17,10 @@
 #define UPDATE				0x00100000
 #define END_UPDATE			0x01000000
 
+#define PHYS_TRIIGER_ENTER	0x00000001
+#define PHYS_TRIIGER_STAY	0x00000010
+#define PHYS_TRIIGER_EXIT	0x00000100
+
 
 /// <summary>
 /// 기본 게임 오브젝트
@@ -24,6 +28,7 @@
 class MeshData;
 class Material;
 class Transform;
+class Collider;
 class GameObject
 {
 public:
@@ -45,14 +50,12 @@ public:
 	EATER_ENGINEDLL GameObject* GetChildMesh(std::string Name);			//자식 매쉬 객체를 가져옴_이름
 	EATER_ENGINEDLL GameObject* GetChildMesh(int num);					//자식 매쉬 객체를 가져옴_인덱스
 	EATER_ENGINEDLL GameObject* GetChildObject(std::string Name);		//자식 매쉬 , 본을 모두 찾아서 오브젝트를 가져옴
-
 	EATER_ENGINEDLL bool		GetDontDestroy();						//삭제 되는 오브젝트인지 여부 반환
 	EATER_ENGINEDLL size_t		GetTag();								//태그를 가져온다
 	EATER_ENGINEDLL int			GetChildMeshCount();					//자식 매쉬 객체의 개수를 가져옴
 	EATER_ENGINEDLL int			GetChildBoneCount();					//자식 본 객체의 개수를 가져옴
 	EATER_ENGINEDLL	Transform*	GetTransform();							//기본 컨퍼넌트인 Transform을 가져옴
 	EATER_ENGINEDLL Material*	GetMaterial();							//
-
 	EATER_ENGINEDLL void ChoiceParent(GameObject* obj);					//나자신을 선택한 오브젝트의 자식으로 넣는다
 	EATER_ENGINEDLL void ChoiceChild(GameObject* obj);					//선택한 오브젝트를 나의 자식으로 넣는다
 public:
@@ -88,8 +91,17 @@ private:
 	std::vector<Component*> ComponentList;
 	std::vector<GameObject*> ChildMeshList;
 	std::vector<GameObject*> ChildBoneList;
-	static std::vector<int> TagList;
 	EATER_ENGINEDLL void PushComponentFunction(Component* con, unsigned int type);
+	EATER_ENGINEDLL void PushPhysFunction(Component* con, unsigned int type);
+	
+	void PlayPhysFunction(GameObject* Obj, unsigned int type);
+
+	std::vector<std::function<void(GameObject*)>> OnTrigger_Enter_Function;
+	std::vector<std::function<void(GameObject*)>> OnTrigger_Stay_Function;
+	std::vector<std::function<void(GameObject*)>> OnTrigger_Exit_Function;
+
+	//충돌 함수 호출 
+	friend Collider;
 };
 
 template<typename T>
@@ -160,6 +172,22 @@ inline T* GameObject::AddComponent(typename std::enable_if<std::is_base_of<Compo
 	if (typeid(&Component::EndUpdate).hash_code() != typeid(&T::EndUpdate).hash_code())
 	{
 		PushComponentFunction(ComponentBox, END_UPDATE);
+	}
+
+	///PhysX 충돌 체크
+	if (typeid(&Component::OnTriggerEnter).hash_code() != typeid(&T::OnTriggerEnter).hash_code())
+	{
+		PushPhysFunction(ComponentBox, PHYS_TRIIGER_ENTER);
+	}
+
+	if (typeid(&Component::OnTriggerStay).hash_code() != typeid(&T::OnTriggerStay).hash_code())
+	{
+		PushPhysFunction(ComponentBox, PHYS_TRIIGER_STAY);
+	}
+
+	if (typeid(&Component::OnTriggerExit).hash_code() != typeid(&T::OnTriggerExit).hash_code())
+	{
+		PushPhysFunction(ComponentBox, PHYS_TRIIGER_EXIT);
 	}
 
 	return ComponentBox;

@@ -12,6 +12,8 @@
 #include "Transform.h"
 #include "Collider.h"
 #include "PhysCollider.h"
+#include "ObjectManager.h"
+#include "Rigidbody.h"
 
 Eater_LoadScene::Eater_LoadScene()
 {
@@ -33,7 +35,7 @@ void Eater_LoadScene::LoadData(std::string& FilePath)
 		if (NodeName == "GAMEOBJECT")
 		{
 			GameObject* Obj = Instance();
-			Obj->SetTag(EATER_GET_MAP(i, "TAG"));
+			Obj->SetTag(std::stoi(EATER_GET_MAP(i, "TAG")));
 			Obj->Name = EATER_GET_MAP(i, "NAME");
 
 			//트랜스폼은 기본
@@ -61,11 +63,18 @@ void Eater_LoadScene::LoadData(std::string& FilePath)
 				Load_Component_Light(i, Obj);
 			}
 
+			Find = EATER_GET_LIST_CHOICE(i, "Rigidbody");
+			if (Find != -1)
+			{
+				Load_Component_Rigidbody(i, Obj);
+			}
+
 			Find = EATER_GET_LIST_CHOICE(i, "Collider");
 			if (Find != -1)
 			{
 				Load_Component_Collider(i, Obj);
 			}
+
 
 			//카메라
 			Find = EATER_GET_LIST_CHOICE(i, "Camera");
@@ -85,7 +94,13 @@ void Eater_LoadScene::LoadData(std::string& FilePath)
 		}
 		else if (NodeName == "SCENE")
 		{
-
+			int Find = EATER_GET_LIST_CHOICE(i, "TAG");
+			for (int i = 0; i < Find; i++)
+			{
+				std::vector<std::string> Data;
+				EATER_GET_LIST(&Data, i);
+				 ObjectManager::AddTag(std::stoi(Data[0]), Data[1]);
+			}
 		}
 	}
 
@@ -156,14 +171,32 @@ void Eater_LoadScene::Load_Component_Collider(int index, GameObject* Object)
 	mPhys->SetTrigger(std::stoi(Data[4]));
 	mPhys->SetCenter(std::stof(Data[5]), std::stof(Data[6]), std::stof(Data[7]));
 
-	mCollider->SetMaterial_Dynamic(std::stoi(Data[8]));
-	mCollider->SetMaterial_Restitution(std::stoi(Data[9]));
-	mCollider->SetMaterial_Static(std::stoi(Data[10]));
-	mCollider->CreatePhys();
+	mCollider->SetMaterial_Dynamic(std::stof(Data[8]));
+	mCollider->SetMaterial_Restitution(std::stof(Data[9]));
+	mCollider->SetMaterial_Static(std::stof(Data[10]));
+	//mCollider->CreatePhys();
 }
 
 void Eater_LoadScene::Load_Component_Rigidbody(int index, GameObject* Object)
 {
+	Rigidbody* mRigidbody = Object->AddComponent<Rigidbody>();
+	std::vector<std::string> Data;
+	EATER_GET_LIST(&Data, 0);
+
+	mRigidbody->SetMass(std::stof(Data[0]));
+	mRigidbody->SetGravity(std::stoi(Data[1]));
+	mRigidbody->SetKinematic(std::stoi(Data[2]));
+
+
+	bool PosX = std::stoi(Data[3]);
+	bool PosY = std::stoi(Data[4]);
+	bool PosZ = std::stoi(Data[5]);
+	mRigidbody->SetFreezePosition(PosX, PosY, PosZ);
+
+	bool RotX = std::stoi(Data[6]);
+	bool RotY = std::stoi(Data[7]);
+	bool RotZ = std::stoi(Data[8]);
+	mRigidbody->SetFreezeRotation(RotX, RotY, RotZ);
 }
 
 void Eater_LoadScene::Load_Component_Camera(int index, GameObject* Object)

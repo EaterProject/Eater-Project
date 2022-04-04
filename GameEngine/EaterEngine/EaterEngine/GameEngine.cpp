@@ -113,7 +113,6 @@ void GameEngine::Start()
 	GameObject* obj = InstanceCamera();
 	obj->AddComponent<CameraDebugKeyInput>();
 	obj->SetDontDestroy(true);
-	obj->SetTag("MainCamera");
 	obj->transform->Position = {0,10,-25};
 
 	//디렉션 라이트 생성
@@ -128,9 +127,9 @@ void GameEngine::Update()
 	mNetworkManager->Update();
 	mTimeManager->Update();
 	mKeyManager->Update();
+	mPhysManager->Update(mTimeManager->DeltaTime());
 	mSceneManager->Update();
 	mObjectManager->PlayUpdate();
-	mPhysManager->Update(mTimeManager->DeltaTime());
 
 	// 모든 업데이트가 일어난 후 데이터 세팅..
 	BaseManager::UpdateGlobalData(mTimeManager->DeltaTime());
@@ -296,6 +295,11 @@ Material* GameEngine::InstanceMaterial(std::string matName /*= "Material"*/)
 GameObject* GameEngine::FindGameObjectTag(std::string& TagName)
 {
 	return mObjectManager->FindGameObjectTag(TagName);
+}
+
+void GameEngine::FindGameObjectTags(std::string& TagName, std::vector<GameObject*>* ObjectList)
+{
+	mObjectManager->FindGameObjectTags(TagName, ObjectList);
 }
 
 GameObject* GameEngine::FindGameObjectName(std::string& ObjName)

@@ -78,7 +78,7 @@ private:
 	void CheckTexture();
 	void CheckAnimation();
 
-	void SetMesh(std::string meshName);
+	void SetBuffer(std::string meshName);
 	void SetMaterial(std::string matName);
 	void SetTexture(std::string texName, UINT texType);
 

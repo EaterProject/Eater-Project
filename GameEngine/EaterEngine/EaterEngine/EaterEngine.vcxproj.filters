@@ -163,7 +163,7 @@
     <Filter Include="소스 파일\Manager\PhysManager">
       <UniqueIdentifier>{1045462d-8dcb-4189-9e4f-6ffb8c70e6dc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Manager\PhysManager\SceneManager">
+    <Filter Include="소스 파일\Manager\SceneManager">
       <UniqueIdentifier>{a7114667-6fd9-4288-a84a-872390776b42}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -172,7 +172,7 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="SceneManager.h">
-      <Filter>소스 파일\Manager\PhysManager\SceneManager</Filter>
+      <Filter>소스 파일\Manager\SceneManager</Filter>
     </ClInclude>
     <ClInclude Include="DebugManager.h">
       <Filter>소스 파일\Manager\DebugManager</Filter>
@@ -202,7 +202,7 @@
       <Filter>소스 파일\Component\Transform</Filter>
     </ClInclude>
     <ClInclude Include="Export\Scene.h">
-      <Filter>소스 파일\Manager\PhysManager\SceneManager</Filter>
+      <Filter>소스 파일\Manager\SceneManager</Filter>
     </ClInclude>
     <ClInclude Include="Export\MainHeader.h">
       <Filter>소스 파일\MainHeader</Filter>
@@ -264,9 +264,6 @@
     <ClInclude Include="Export\ParticleSystem.h">
       <Filter>소스 파일\Component\ParticleSystem</Filter>
     </ClInclude>
-    <ClInclude Include="Export\RandomNumber.h">
-      <Filter>소스 파일\Component\ParticleSystem\Random</Filter>
-    </ClInclude>
     <ClInclude Include="NetworkManager.h">
       <Filter>소스 파일\Manager\NetworkManager</Filter>
     </ClInclude>
@@ -327,6 +324,12 @@
     <ClInclude Include="Eater_LoadCamera.h">
       <Filter>소스 파일\Manager\LoadManager\EATER\EaterCamera</Filter>
     </ClInclude>
+    <ClInclude Include="RandomNumber.h">
+      <Filter>소스 파일\Component\ParticleSystem\Random</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>소스 파일\Component\ParticleSystem\Particle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -342,10 +345,10 @@
       <Filter>소스 파일\MainHeader</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
-      <Filter>소스 파일\Manager\PhysManager\SceneManager</Filter>
+      <Filter>소스 파일\Manager\SceneManager</Filter>
     </ClCompile>
     <ClCompile Include="SceneManager.cpp">
-      <Filter>소스 파일\Manager\PhysManager\SceneManager</Filter>
+      <Filter>소스 파일\Manager\SceneManager</Filter>
     </ClCompile>
     <ClCompile Include="DebugManager.cpp">
       <Filter>소스 파일\Manager\DebugManager</Filter>

@@ -429,7 +429,7 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rend
 	{
 		// Vertex Shader Update..
 		CB_SkinMesh objectBuf;
-		objectBuf.gWorld = world;
+		objectBuf.gWorld = XMMatrixIdentity();
 		objectBuf.gInvWorld = invWorld;
 		objectBuf.gView = view;
 		objectBuf.gProj = proj;

@@ -5,7 +5,6 @@
 #include "Light.h"
 #include "Transform.h"
 #include "ParticleSystem.h"
-#include "KeyInput.h"
 #include "ClientNetworkManager.h"
 #include "PortIPDefine.h"
 #include "Camera.h"
@@ -41,7 +40,7 @@ void Loading::Awake()
 	particles->Play();
 
 	
-	LoadEnvironment("../Resources/Texture/Environment/Night.dds");
+	LoadEnvironment("../Assets/Texture/Environment/Night.dds");
 	LoadTerrainMesh("../Assets/Model/TerrainModel/Terrain.fbx", "../Assets/Texture/Terrain/Terrain_RGB.png", SCALING);
 }
 
@@ -50,14 +49,14 @@ void Loading::Update()
 {
 	if (ThreadRun == false)
 	{
-		ChoiceScene("intro");
+		ChoiceScene("inGame");
 	}
 }
 
 void Loading::End()
 {
 
-
+	 
 }
 
 void Loading::ThreadFunction()

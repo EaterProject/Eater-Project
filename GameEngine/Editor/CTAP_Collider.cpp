@@ -197,6 +197,13 @@ void CTAP_Collider::UpdateObject()
 	mCollider->SetTrigger(Check);
 
 	CString Number;
+	CString CenterX, CenterY, CenterZ;
+
+	Center_X_Edit.GetWindowTextW(CenterX);
+	Center_Y_Edit.GetWindowTextW(CenterY);
+	Center_Z_Edit.GetWindowTextW(CenterZ);
+
+	mCollider->SetCenter(ChangeToFloat(CenterX), ChangeToFloat(CenterY), ChangeToFloat(CenterZ));
 
 	Dynamic_Eidt.GetWindowTextW(Number);
 	mCollider->SetMaterial_Dynamic(ChangeToFloat(Number));

@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include "EngineData.h"
 #include "Rigidbody.h"
+#include "Collider.h"
 #include "TimeManager.h"
 
 Transform::Transform()
@@ -32,11 +33,16 @@ Transform::~Transform()
 void Transform::Start()
 {
 	//물리충돌된 좌표를 받는다
-	if (gameobject->GetComponent<Rigidbody>() != nullptr ) 
+	mRigidbody	= gameobject->GetComponent<Rigidbody>();
+	mCollider	= gameobject->GetComponent<Collider>();
+	if (mRigidbody != nullptr)
 	{
 		isRigid = true;
 	}
+	if (mCollider != nullptr)
+	{
 
+	}
 }
 
 void Transform::TransformUpdate()
@@ -49,6 +55,8 @@ void Transform::TransformUpdate()
 	//업데이트가 끝난후 오브젝트 안에 매쉬데이터를 업데이트
 	gameobject->OneMeshData->Object_Data->World = GetWorld();
 }
+
+
 
 DirectX::SimpleMath::Vector3 Transform::GetLocalPosition_UP()
 {
@@ -81,6 +89,22 @@ void Transform::LookAt(GameObject* Target)
 
 	//-(Yangle + 90)
 	Rotation = { Angle_X,-(Angle_Y + 90),Rotation.z };
+}
+
+void Transform::LookAt_Y(Vector3 Pos)
+{
+	//타겟의 위치
+	Vector3 N = Pos - Position;
+	N.Normalize();
+
+
+	//좌표계에 맞게 변환
+	float Angle_Y = -atan2(N.z, N.x) * ConvertPI;
+	float Angle_X = atan2(N.y, N.z) * ConvertPI;
+
+	//-(Yangle + 90)
+	Rotation = {Rotation.x, -(Angle_Y + 90),Rotation.z };
+
 }
 
 void Transform::SetLocalPosition(float X, float Y, float Z)
@@ -170,6 +194,11 @@ DirectX::SimpleMath::Matrix* Transform::GetWorld()
 	return &World_M;
 }
 
+DirectX::SimpleMath::Matrix* Transform::GetLocal()
+{
+	return &Load_Local;
+}
+
 void Transform::SetLocalUpdate(bool isUpdate)
 {
 	LocalUpdate = isUpdate;
@@ -207,7 +236,9 @@ void Transform::Slow_Y_Rotation(Vector3 Dir, float RotationSpeed)
 {
 	//Y축기준으로 현재 방향에서 보는 방향으로 천천히 회전 시킨다
 	//도착 지점의 각도를 구한다 이떄 범위는 -180 ~ 180 이다
-	float EndAngle = (-atan2(Dir.z, Dir.x) * 180 / 3.141592f);
+	Vector3 N = Dir - Position;
+	N.Normalize();
+	float EndAngle = (-atan2(N.z, N.x) * 180 / 3.141592f);
 
 	//도착지점 범위를 변경해준다 우리 엔진과 맞추기 위해서 0~ 360
 	if (EndAngle <= 0) { EndAngle += 360; }
@@ -260,7 +291,7 @@ void Transform::Slow_Y_Rotation(Vector3 Dir, float RotationSpeed)
 		float Min = 360 + MinAngle;
 		if (MyAngle <= Max && MyAngle >= Min)
 		{
-			RotationDir = 0;
+			RotationDir = 0.0f;
 		}
 	}
 
@@ -271,15 +302,20 @@ void Transform::Slow_Y_Rotation(Vector3 Dir, float RotationSpeed)
 	}
 
 	//현재 각도는 0 ~ 360 범위 밖으로 나가지못하게 변경
-	if (Rotation.y > 360)
+	if (Rotation.y >= 360.0f)
 	{
-		Rotation.y = 0;
+		Rotation.y = 0.0f;
 	}
-	else if (Rotation.y < 0)
+	else if (Rotation.y < 0.0f)
 	{
-		Rotation.y = 360;
+		Rotation.y = 360.0f;
 	}
 
+}
+
+float Transform::GetDistance(Vector3 Pos)
+{
+	return DirectX::SimpleMath::Vector3::Distance(Position, Pos);
 }
 
 DirectX::SimpleMath::Matrix Transform::CreateXMPos4x4()
