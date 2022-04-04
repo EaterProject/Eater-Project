@@ -10,13 +10,7 @@
 
 Collider::Collider()
 {
-	Component::Start_Order = Component::FUNCTION_ORDER_LAST;
-	mPhysData		= new PhysData();
-	mColliderData	= new PhysCollider();
-	mMaterial		= new PhysMaterial();
-	mMaterial->MT_DynamicFriction	= 0.5f;
-	mMaterial->MT_StaticFriction	= 0.5f;
-	mMaterial->MT_Restitution		= 0.6f;
+	mPhysData		= PhysX_Create_Data();
 }
 
 Collider::~Collider()
@@ -160,27 +154,32 @@ void Collider::DebugCollider()
 	Vector4 Rot = mPhysData->Rotation;
 	Vector3 Scl = mPhysData->mCollider->GetSize();
 
-	DebugManager::DebugDrawBox(Scl, Rot, Pos, Vector3(1, 0, 0));
-
-	if (mPhysData->isDinamic == false) 
+	switch (mPhysData->mCollider->GetType())
 	{
-		SimpleMath::Matrix PosXM = SimpleMath::Matrix::CreateTranslation(Pos + mPhysData->CenterPoint);
-		SimpleMath::Matrix RotXM = CreateXMRot4x4();
-		SimpleMath::Matrix SclXM = SimpleMath::Matrix::CreateScale(Scl);
-
-		mDebugCollider->ColliderWorld = SclXM * RotXM* PosXM;
-		mDebugCollider->ColliderColor = { 1,0,0,1 };
-		gameobject->OneMeshData->Collider_Data = mDebugCollider;
+	case PhysCollider::TYPE::BOX:
+	{
+		if (mPhysData->isDinamic == false)
+		{
+			DebugManager::DebugDrawBox(Scl, Rot, Pos + mPhysData->CenterPoint, Vector3(1, 0, 0));
+		}
+		else
+		{
+			DebugManager::DebugDrawBox(Scl, gameobject->transform->Q_Rotation, Pos + mPhysData->CenterPoint, Vector3(1, 0, 0));
+		}
 	}
-	else
+		break;
+	case PhysCollider::TYPE::SPHERE:
 	{
-		SimpleMath::Matrix PosXM = SimpleMath::Matrix::CreateTranslation(Pos);
-		SimpleMath::Matrix RotXM = XMMatrixRotationQuaternion(gameobject->transform->Q_Rotation);
-		SimpleMath::Matrix SclXM = SimpleMath::Matrix::CreateScale(Scl);
-
-		mDebugCollider->ColliderWorld = SclXM * RotXM * PosXM;
-		mDebugCollider->ColliderColor = { 1,0,0,1 };
-		gameobject->OneMeshData->Collider_Data = mDebugCollider;
+		if (mPhysData->isDinamic == false)
+		{
+			DebugManager::DebugDrawSphere(Scl.x, Pos + mPhysData->CenterPoint, Vector3(1, 0, 0));
+		}
+		else
+		{
+			DebugManager::DebugDrawSphere(Scl.x, Pos + mPhysData->CenterPoint, Vector3(1, 0, 0));
+		}
+	}
+		break;
 	}
 }
 

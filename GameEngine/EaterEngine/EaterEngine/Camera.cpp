@@ -53,7 +53,6 @@ void Camera::Update()
 	{
 		Transform* TR = gameobject->GetTransform();
 		DebugManager::DebugDrawBox(TR->Scale, TR->Rotation, TR->Position, Vector3(0, 1, 0));
-		DebugManager::DebugDrawSphere(TR->Scale.x, TR->Position, Vector3(0, 1, 0));
 		DebugManager::DebugDrawLine(TR->Position, TR->GetLocalPosition_Look(), Vector3(1,1,0));
 	}
 }
