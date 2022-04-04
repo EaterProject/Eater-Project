@@ -125,6 +125,7 @@ void DeferredPass::Start(int width, int height)
 	m_DeferredPS = g_Shader->GetShader("Deferred_PBR_PS");
 	m_TerrainPS = g_Shader->GetShader("Terrain_PBR_PS");
 
+	// Insatance Buffer 설정..
 	m_Mesh_IB = g_Resource->GetInstanceBuffer<IB_Mesh>();
 
 	// DepthStencilView 설정..
@@ -197,21 +198,23 @@ void DeferredPass::BeginRender()
 	g_Context->RSSetState(m_SolidRS);
 }
 
-void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::vector<RenderData*>& meshlist)
+void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::vector<RenderData*>& meshlist, const UINT& renderCount)
 {
-	if (meshlist.size() == 1)
+	if (renderCount == 1)
 	{
 		RenderUpdate(instance, meshlist[0]);
 		return;
 	}
 
-	Matrix view = g_GlobalData->CamView;
-	Matrix proj = g_GlobalData->CamProj;
+	CameraData* cam = g_GlobalData->Camera_Data;
 	MeshRenderBuffer* mesh = instance->m_Mesh;
 	MaterialRenderBuffer* mat = instance->m_Material;
 	MaterialSubData* matSub = mat->m_MaterialSubData;
+
+	Matrix& view = cam->CamView;
+	Matrix& proj = cam->CamProj;
 	
-	for (int i = 0; i < meshlist.size(); i++)
+	for (int i = 0; i < renderCount; i++)
 	{
 		if (meshlist[i] == nullptr) continue;
 
@@ -321,15 +324,16 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rend
 {
 	if (meshData == nullptr) return;
 
+	CameraData* cam = g_GlobalData->Camera_Data;
 	ObjectData* obj = meshData->m_ObjectData;
 	MeshRenderBuffer* mesh = instance->m_Mesh;
 	MaterialRenderBuffer* mat = instance->m_Material;
 	MaterialSubData* matSub = mat->m_MaterialSubData;
 
-	Matrix world = *obj->World;
-	Matrix invWorld = MathHelper::InverseTranspose(world);
-	Matrix view = g_GlobalData->CamView;
-	Matrix proj = g_GlobalData->CamProj;
+	Matrix& world = *obj->World;
+	Matrix&& invWorld = MathHelper::InverseTranspose(world);
+	Matrix& view = cam->CamView;
+	Matrix& proj = cam->CamProj;
 
 	switch (instance->m_Type)
 	{

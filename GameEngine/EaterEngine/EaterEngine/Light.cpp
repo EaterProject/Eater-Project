@@ -244,6 +244,8 @@ float Light::GetRange()
 	case POINT_LIGHT:
 		return m_PointLight->Range;
 	}
+
+	return 0.0f;
 }
 
 float Light::GetPower()
@@ -257,6 +259,8 @@ float Light::GetPower()
 	case DIRECTION_LIGHT:
 		return m_DirectionLight->Power;
 	}
+
+	return 0.0f;
 }
 
 Vector3 Light::GetColor()
@@ -270,6 +274,8 @@ Vector3 Light::GetColor()
 	case DIRECTION_LIGHT:
 		return m_DirectionLight->Diffuse;
 	}
+
+	return Vector3();
 }
 
 void Light::SetCenterPos(DirectX::SimpleMath::Vector3 pos)

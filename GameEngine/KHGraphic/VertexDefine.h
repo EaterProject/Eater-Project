@@ -60,6 +60,11 @@ namespace VertexInput
 #pragma endregion Defalt CVertex Data Struct
 
 #pragma region Instance CVertex Data Struct
+	struct MeshDepthInstance
+	{
+		DirectX::SimpleMath::Matrix World;
+	};
+
 	struct MeshInstance
 	{
 		DirectX::SimpleMath::Matrix World;

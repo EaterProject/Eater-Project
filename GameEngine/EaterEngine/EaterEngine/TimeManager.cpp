@@ -1,8 +1,7 @@
 #include <windows.h>
 #include <string>
 #include "TimeManager.h"
-#include "DebugManager.h"
-
+#include "Profiler/Profiler.h"
 
 TimeManager::TimeManager()
 {
@@ -47,8 +46,7 @@ void TimeManager::Update()
 
 	if (debugTime >= 5) 
 	{
-		std::string temp = "FPS :" + std::to_string(_FPS);
-		DebugManager::Print(DebugManager::MSG_TYPE::MSG_SYSTEM, "Time", temp, false);
+		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ FPS ] %.1f fps", _FPS);
 		debugTime = 0;
 	}
 }

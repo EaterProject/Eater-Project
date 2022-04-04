@@ -1,0 +1,8 @@
+[TIME] 03:33:52 [FILE] D3D11Graphic.cpp [FUNC] D3D11Graphic::CreateTextureBuffer [LINE] 195
+[Graphic][Create][ShaderResourceView] TEST.dds
+[ERROR] 매개 변수가 틀립니다.
+
+[TIME] 03:34:13 [FILE] D3D11Graphic.cpp [FUNC] D3D11Graphic::CreateTextureBuffer [LINE] 195
+[Graphic][Create][ShaderResourceView] TEST.dds
+[ERROR] 매개 변수가 틀립니다.
+

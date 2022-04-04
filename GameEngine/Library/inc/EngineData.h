@@ -39,6 +39,7 @@ public:
 	std::string Name;								//오브젝트 이름
 
 	void* Object;									//원본 GameObject
+
 	UINT ObjectIndex;								//오브젝트의 고유한 인덱스
 	Vector4 HashColor;								//오브젝트의 고유한 Hash Color
 	
@@ -67,12 +68,21 @@ public:
 	}
 };
 
+// Mesh Sub Data
+class MeshSubData
+{
+public:
+	BoundingBox		BoundBox;
+	BoundingSphere	BoundSphere;
+};
+
 // Mesh Buffer
 class MeshBuffer : public Resources
 {
 public:
 	virtual ~MeshBuffer()
 	{
+		delete Mesh_SubData;
 		delete IndexBuf;
 		delete VertexBuf;
 	}
@@ -80,17 +90,16 @@ public:
 public:
 	UINT BufferIndex = 0;		// Mesh Buffer Index
 
-	DirectX::BoundingBox BoundingBox;
+	MeshSubData* Mesh_SubData;	// Mesh Sub Data
 
 	IndexBuffer* IndexBuf;		// Index Buffer
 	VertexBuffer* VertexBuf;	// Vertex Buffer
 };
 
 // Material Sub Data
-struct MaterialSubData
+class MaterialSubData
 {
-	MaterialSubData() = default;
-
+public:
 	Vector4 AddColor = Vector4(0.0f, 0.0f, 0.0, 1.0f);	// Add Color
 
 	float EmissiveFactor = 1.0f;		// Emissive 강도
@@ -179,6 +188,20 @@ public:
 	Vector3 ColliderColor = { 1,1,1 };
 };
 
+// Camera Data
+class CameraData
+{
+public:
+	Matrix CamInvView;	// Camera Inverse XY View Matrix
+	Matrix CamView;		// Camera View Matrix
+	Matrix CamProj;		// Camera Proj Matrix
+	Matrix CamViewProj;	// Camera View Proj Matrix
+	Vector3 CamPos;		// Camera Pos
+
+	BoundingFrustum BoundFrustum;	// Bounding Frustum
+	BoundingFrustum OriginFrustum;	// Bounding Frustum
+};
+
 /// <summary>
 /// 게임엔진에서 그래픽엔진으로 던저줄 글로벌 데이터
 /// </summary>
@@ -187,16 +210,9 @@ class GlobalData
 public:
 	float Time;		// Delta Time
 
-	//카메라 정보들
-	Matrix CamInvView;	// Camera Inverse XY View Matrix
-	Matrix CamView;		// Camera View Matrix
-	Matrix CamProj;		// Camera Proj Matrix
-	Matrix CamViewProj;	// Camera View Proj Matrix
-	Vector3 CamPos;		// Camera Pos
-
-	Matrix CamVP;		// Camera Proj * Proj Matrix
-
 	Matrix TexSpace;	// Texture Space Matrix
+
+	CameraData* Camera_Data;
 
 	std::vector<DirectionalLightData*>	DirectionLights;
 	std::vector<PointLightData*>		PointLights;

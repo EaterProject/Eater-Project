@@ -8,6 +8,7 @@ typedef enum DEBUG_TYPE
 	DEBUG_GRID,
 	DEBUG_QUAD,
 	DEBUG_RAY,
+	DEBUG_SPHERE,
 	DEBUG_TEXTURE
 }DEBUG_TYPE;
 
@@ -24,10 +25,11 @@ public:
 	void Release() override;
 
 	void BeginRender();
-	void RenderUpdate(RenderData* mesh);
+	void RenderUpdate(const RenderData* meshData);
 	void GlobalRender();
 	void MRTRender();
 	void BufferUpdate(DEBUG_TYPE type);
+	void CountReset();
 
 private:
 	void SetRay(Vector3 start, Vector3 end);
@@ -49,10 +51,13 @@ private:
 	DrawBuffer* m_CircleBuffer;
 	DrawBuffer* m_CircleSphereBuffer;
 	DrawBuffer* m_GridBuffer;
+	DrawBuffer* m_SphereBuffer;
 	DrawBuffer* m_IconBuffer;
 
 	DrawBuffer* m_DebugBuffer;
 
+	ID3D11RasterizerState* m_SolidRS;
+	ID3D11RasterizerState* m_WireRS;
 	ID3D11RasterizerState* m_NoCullRS;
 	ID3D11BlendState* m_AlphaBlendBS;
 
@@ -81,5 +86,7 @@ private:
 	D3D11_VIEWPORT* m_MRT6;
 	D3D11_VIEWPORT* m_MRT7;
 	D3D11_VIEWPORT* m_MRT8;
+
+	int m_DrawCount = 0;
 };
 

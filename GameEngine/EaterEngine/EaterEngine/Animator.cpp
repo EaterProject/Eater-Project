@@ -4,7 +4,6 @@
 #include "Transform.h"
 #include "TimeManager.h"
 #include "KeyinputManager.h"
-#include "DebugManager.h"
 
 Animator::Animator()
 {

@@ -63,7 +63,7 @@ void RandomVector4::SetRange(DirectX::SimpleMath::Vector4 min, DirectX::SimpleMa
 {
 	Swap(min.x, max.x);
 	m_RandomGenerator_X = std::uniform_real_distribution<float>(min.x, max.x);
-
+	
 	Swap(min.y, max.y);
 	m_RandomGenerator_Y = std::uniform_real_distribution<float>(min.y, max.y);
 

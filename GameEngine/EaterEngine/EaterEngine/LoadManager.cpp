@@ -11,7 +11,7 @@
 #include "EATERManager.h"
 #include "MeshManager.h"
 #include "MaterialManager.h"
-
+#include "Profiler/Profiler.h"
 
 
 std::map<std::string, ModelData*>			LoadManager::ModelList;
@@ -55,18 +55,22 @@ void LoadManager::Start()
 
 void LoadManager::Load(std::string& Path, UINT MODE)
 {
+
 	//파일,폴더 구분
 	if (CheckFolder(Path) == true)
 	{
+		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Load ][ Folder ] %s", Path.c_str());
+
 		//폴더 경로가 들어왔다면 그파일부터 모든 파일들을 다읽음 (폴더안에 폴더까지)
 		LoadFolder(Path, MODE);
 	}
 	else
 	{
+		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Load ][ File ] %s", Path.c_str());
+
 		//파일경로가 들어왔다면 파일을 읽음
 		LoadFile(Path, MODE);
 	}
-	int num = 0;
 }
 
 void LoadManager::LoadTerrain(std::string mMeshName, std::string mMaskName, UINT parsingMode)
@@ -293,6 +297,8 @@ void LoadManager::LoadFolder(std::string& Path, UINT MODE)
 			std::string Path = entry.path().string();
 			std::size_t Swap = Path.rfind('\\');
 			Path[Swap] = '/';
+
+			PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Load ][ Folder ] %s", Path.c_str());
 			LoadFolder(Path, MODE);
 		}
 		else
@@ -300,6 +306,8 @@ void LoadManager::LoadFolder(std::string& Path, UINT MODE)
 			std::string Path = entry.path().string();
 			std::size_t Swap = Path.rfind('\\');
 			Path[Swap] = '/';
+
+			PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Load ][ File ] %s", Path.c_str());
 			LoadFile(Path, MODE);
 		}
 		itr++;

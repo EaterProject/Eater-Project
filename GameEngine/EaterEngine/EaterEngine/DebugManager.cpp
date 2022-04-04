@@ -21,8 +21,8 @@ void DebugManager::Initialize(KeyinputManager* mkeyManager, bool mDebugOn)
 #ifdef _DEBUG
 	if (DebugON == true)
 	{
-		AllocConsole();
-		hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+		//AllocConsole();
+		//hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	}
 #endif
 }
