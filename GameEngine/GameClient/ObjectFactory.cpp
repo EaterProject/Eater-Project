@@ -17,6 +17,7 @@
 #include "MonsterB.h"
 #include "MonsterBase.h"
 #include "HealingDrone.h"
+#include "AttackDrone.h"
 
 
 ObjectFactory::ObjectFactory()
@@ -72,6 +73,7 @@ MonsterBase* ObjectFactory::CreateMonster(float x, float y, float z,MONSTER_TYPE
 	Object_Monster->AddComponent<AnimationController>();
 	Object_Monster->AddComponent<Collider>();
 	Object_Monster->AddComponent<Rigidbody>();
+	Object_Monster->SetTag(6);
 	MonsterBase* Base = Object_Monster->AddComponent<MonsterBase>();
 	Base->SetPlayer(PlayerObject);
 	switch (Type)
@@ -100,6 +102,19 @@ GameObject* ObjectFactory::CreateHealingDrone()
 	MF->SetModelName("drone");
 	Drone->SetPlayer(PlayerObject);
 	return Healing;
+}
+
+AttackDrone* ObjectFactory::CreateAttackDrone(float x, float y, float z)
+{
+	GameObject* Drone = Instance();
+	MeshFilter*		MF		= Drone->AddComponent<MeshFilter>();
+	AttackDrone*	DR		= Drone->AddComponent<AttackDrone>();
+	Collider*		Col		= Drone->AddComponent<Collider>();
+	MF->SetModelName("drone");
+	Col->SetSphereCollider(10);
+	Col->SetTrigger(true);
+	Drone->GetTransform()->Position = {x,y,z};
+	return DR;
 }
 
 GameObject* ObjectFactory::CreatePortal()

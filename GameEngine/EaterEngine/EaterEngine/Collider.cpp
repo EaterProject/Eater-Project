@@ -12,7 +12,6 @@ Collider::Collider()
 {
 	mPhysData		= PhysX_Create_Data();
 	mDebugCollider  = new ColliderData();
-	
 }
 
 Collider::~Collider()
@@ -60,16 +59,18 @@ void Collider::PhysicsUpdate()
 	{
 		if (mPhysData->GetTriggerEnter())
 		{
-			GameObject* Obj = reinterpret_cast<GameObject*>(mPhysData->TriggerList[0]->EaterObj);
-			gameobject->PlayPhysFunction(Obj, PHYS_TRIIGER_ENTER);
+			GameObject* Object = reinterpret_cast<GameObject*>(mPhysData->TriggerList[0]->EaterObj);
+			gameobject->PlayPhysFunction(Object, PHYS_TRIIGER_ENTER);
 		}
 		else if (mPhysData->GetTriggerStay())
 		{
-			gameobject->PlayPhysFunction((GameObject*)mPhysData->TriggerList[0], PHYS_TRIIGER_STAY);
+			GameObject* Object = reinterpret_cast<GameObject*>(mPhysData->TriggerList[0]->EaterObj);
+			gameobject->PlayPhysFunction(Object, PHYS_TRIIGER_STAY);
 		}
 		else if (mPhysData->GetTriggerExit())
 		{
-			gameobject->PlayPhysFunction((GameObject*)mPhysData->TriggerList[0], PHYS_TRIIGER_EXIT);
+			GameObject* Object = reinterpret_cast<GameObject*>(mPhysData->TriggerList[0]->EaterObj);
+			gameobject->PlayPhysFunction(Object, PHYS_TRIIGER_EXIT);
 		}
 
 	}

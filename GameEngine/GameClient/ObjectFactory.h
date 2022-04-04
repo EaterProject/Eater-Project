@@ -12,6 +12,7 @@ enum class MONSTER_TYPE
 
 class GameObject;
 class MonsterBase;
+class AttackDrone;
 class ObjectFactory
 {
 public:
@@ -27,7 +28,8 @@ public:
 
 	MonsterBase* CreateMonster(float x, float y, float z , MONSTER_TYPE Type);		//몬스터 객체를 생성
 	GameObject* CreateMana();														//마나석 객체를 생성
-	GameObject* CreateHealingDrone();												//드론 객체를 생성
+	GameObject* CreateHealingDrone();												//힐러 드론 객체를 생성
+	AttackDrone* CreateAttackDrone(float x, float y, float z);						//공격 드론 객체를 생성
 	GameObject* CreatePortal();														//몬스터객체가 나오는 포탈 생성
 private:
 	//게임상에 한개만 존재하는 오브젝트를 따로 보관

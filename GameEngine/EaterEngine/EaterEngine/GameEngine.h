@@ -69,6 +69,7 @@ public:
 
 	GameObject* FindGameObjectTag(std::string& TagName);
 	void FindGameObjectTags(std::string& TagName,std::vector<GameObject*>* ObjectList);
+	int	 FindTagNumber(std::string& TagName);
 	GameObject* FindGameObjectName(std::string& ObjName);
 
 	void Destroy(GameObject* obj);		//obj ªË¡¶

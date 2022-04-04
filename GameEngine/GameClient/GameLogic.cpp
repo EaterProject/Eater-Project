@@ -37,6 +37,7 @@ void GameLogic::Release()
 
 void GameLogic::Update()
 {
+	ObjectGM->Update();
 	//CreateMonster(CreateMonsterMaxTime, PotalList[0]);
 }
 

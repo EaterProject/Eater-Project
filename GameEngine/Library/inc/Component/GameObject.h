@@ -51,7 +51,7 @@ public:
 	EATER_ENGINEDLL GameObject* GetChildMesh(int num);					//자식 매쉬 객체를 가져옴_인덱스
 	EATER_ENGINEDLL GameObject* GetChildObject(std::string Name);		//자식 매쉬 , 본을 모두 찾아서 오브젝트를 가져옴
 	EATER_ENGINEDLL bool		GetDontDestroy();						//삭제 되는 오브젝트인지 여부 반환
-	EATER_ENGINEDLL size_t		GetTag();								//태그를 가져온다
+	EATER_ENGINEDLL int			GetTag();								//태그를 가져온다
 	EATER_ENGINEDLL int			GetChildMeshCount();					//자식 매쉬 객체의 개수를 가져옴
 	EATER_ENGINEDLL int			GetChildBoneCount();					//자식 본 객체의 개수를 가져옴
 	EATER_ENGINEDLL	Transform*	GetTransform();							//기본 컨퍼넌트인 Transform을 가져옴

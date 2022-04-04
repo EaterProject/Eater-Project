@@ -73,6 +73,12 @@
     <Filter Include="소스 파일\Manager\ObjectManager">
       <UniqueIdentifier>{e62a3675-adb9-4441-b8b8-c04df61aaf04}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Component\Drone\Healing">
+      <UniqueIdentifier>{c85efbbf-e82c-40da-890c-4a20e0ad1096}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\Drone\Attack">
+      <UniqueIdentifier>{294bb296-337e-4b09-a646-3bcb8360c980}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -129,11 +135,14 @@
     <ClInclude Include="MonsterBase.h">
       <Filter>소스 파일\Component\Monster\Base</Filter>
     </ClInclude>
-    <ClInclude Include="HealingDrone.h">
-      <Filter>소스 파일\Component\Drone</Filter>
-    </ClInclude>
     <ClInclude Include="ClientObjectManager.h">
       <Filter>소스 파일\Manager\ObjectManager</Filter>
+    </ClInclude>
+    <ClInclude Include="HealingDrone.h">
+      <Filter>소스 파일\Component\Drone\Healing</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackDrone.h">
+      <Filter>소스 파일\Component\Drone\Attack</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -182,11 +191,14 @@
     <ClCompile Include="MonsterBase.cpp">
       <Filter>소스 파일\Component\Monster\Base</Filter>
     </ClCompile>
-    <ClCompile Include="HealingDrone.cpp">
-      <Filter>소스 파일\Component\Drone</Filter>
-    </ClCompile>
     <ClCompile Include="ClientObjectManager.cpp">
       <Filter>소스 파일\Manager\ObjectManager</Filter>
+    </ClCompile>
+    <ClCompile Include="HealingDrone.cpp">
+      <Filter>소스 파일\Component\Drone\Healing</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackDrone.cpp">
+      <Filter>소스 파일\Component\Drone\Attack</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

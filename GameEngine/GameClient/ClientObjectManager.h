@@ -5,6 +5,7 @@ class MonsterBase;
 class ObjectFactory;
 class GameObject;
 class HealingDrone;
+class AttackDrone;
 class Transform;
 
 class ClientObjectManager
@@ -15,6 +16,7 @@ public:
 
 	void Initialize(ObjectFactory* Factory);
 	void Release();
+	void Update();
 private:
 	void SetCreateMonsterMemorySize(int CreateCount);	//몬스터 미리 생성
 
@@ -26,6 +28,8 @@ private:
 private:
 	std::vector<MonsterBase*> MonsterA_List;
 	std::vector<MonsterBase*> MonsterB_List;
+	std::vector<AttackDrone*> AttackDrone_List;
+	std::vector<GameObject*> Potal_List;
 	HealingDrone* DroneList;
 private:
 	ObjectFactory* mFactory;

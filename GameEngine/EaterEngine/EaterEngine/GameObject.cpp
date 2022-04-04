@@ -77,7 +77,7 @@ bool GameObject::SetTag(int TagNumber)
 	return true;
 }
 
-size_t GameObject::GetTag()
+int GameObject::GetTag()
 {
 	return Tag;
 }

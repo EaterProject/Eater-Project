@@ -74,8 +74,8 @@ void MonsterA::OnTriggerStay(GameObject* Obj)
 {
 	if (Player::GetState() == PLAYER_STATE::ATTACK)
 	{
-		Vector3 Look = Player::GetPlayerTransform()->GetLocalPosition_Look()  * 10;
-		mRigidbody->SetAddForce(Look.x, Look.y+10, Look.z *-1);
+		Vector3 Look = Player::GetPlayerTransform()->GetLocalPosition_Look() * 10;
+		mRigidbody->SetAddForce(Look.x, Look.y + 10, Look.z * -1);
 	}
 }
 

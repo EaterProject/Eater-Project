@@ -32,7 +32,9 @@ extern "C" EATER_ENGINEDLL GameObject*	InstanceLight(std::string ObjName= "Light
 
 ///게임 오브젝트 찾기
 extern "C" EATER_ENGINEDLL GameObject*	FindGameObjectTag(std::string TagName);
-extern "C" EATER_ENGINEDLL	void	FindGameObjectTags(std::string TagName,std::vector<GameObject*>*ObjectList);
+extern "C" EATER_ENGINEDLL	void		FindGameObjectTags(std::string TagName,std::vector<GameObject*>*ObjectList);
+extern "C" EATER_ENGINEDLL	int			FindTagNumber(std::string TagName);
+
 extern "C" EATER_ENGINEDLL GameObject*	FindGameObjectName(std::string ObjectName);
 extern "C" EATER_ENGINEDLL void			Destroy(GameObject* obj);//오브젝트 삭제
 extern "C" EATER_ENGINEDLL void			DestroyAll();//오브젝트 삭제

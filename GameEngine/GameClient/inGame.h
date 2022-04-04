@@ -8,7 +8,6 @@ public:
 	~InGame()= default;
 
 	virtual void Awake();
-	virtual void Start();
 	virtual void Update();
 	virtual void End();
 public:
