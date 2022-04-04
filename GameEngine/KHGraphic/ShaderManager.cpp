@@ -142,6 +142,16 @@ void ShaderManager::CreateShader()
 	//LoadShader(SHADER_TYPE::VERTEX_SHADER, "ID_SkinMesh_Instance_VS.hlsl", "ID_SkinMesh_Instance_VS", "ID_SkinMesh_Instance_VS");
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "ID_Mesh_PS.hlsl", "ID_Mesh_PS", "ID_Mesh_PS");
 
+	// Depth Shader
+	LoadShader(SHADER_TYPE::VERTEX_SHADER, "Depth_StaticMesh_VS.hlsl", "Depth_StaticMesh_VS", "Depth_StaticMesh_VS");
+	LoadShader(SHADER_TYPE::VERTEX_SHADER, "Depth_SkinMesh_VS.hlsl", "Depth_SkinMesh_VS", "Depth_SkinMesh_VS");
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Depth_PS.hlsl", "Depth_PS", "Depth_PS");
+
+	// Hierarchical Z Map Shader
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "HizMipMap_PS.hlsl", "HizMipMap_PS", "HizMipMap_PS");
+	LoadShader(SHADER_TYPE::COMPUTE_SHADER, "HizCull_CS.hlsl", "HizCull_CS", "HizCull_CS");
+
+
 	// Debug Shader Macro
 	D3D_SHADER_MACRO debug_macro1[] = { {"CUSTOM_COLOR"}, {NULL, NULL} };
 	D3D_SHADER_MACRO debug_macro2[] = { {"RENDER_TARGET"}, {NULL, NULL} };

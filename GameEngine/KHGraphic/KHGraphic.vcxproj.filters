@@ -739,9 +739,6 @@
     <FxCompile Include="..\Assets\Shader\HizCull_CS.hlsl">
       <Filter>소스 파일\Shader\HLSL\Sub\Culling</Filter>
     </FxCompile>
-    <FxCompile Include="..\Assets\Shader\HizMipmap_PS.hlsl">
-      <Filter>소스 파일\Shader\HLSL\Sub\Culling</Filter>
-    </FxCompile>
     <FxCompile Include="..\Assets\Shader\Depth_PS.hlsl">
       <Filter>소스 파일\Shader\HLSL\Render\Depth</Filter>
     </FxCompile>
@@ -750,6 +747,9 @@
     </FxCompile>
     <FxCompile Include="..\Assets\Shader\Depth_SkinMesh_VS.hlsl">
       <Filter>소스 파일\Shader\HLSL\Render\Depth</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Assets\Shader\HizMipMap_PS.hlsl">
+      <Filter>소스 파일\Shader\HLSL\Sub\Culling</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
@@ -781,6 +781,9 @@
       <Filter>소스 파일\Shader\HLSL\Header</Filter>
     </None>
     <None Include="..\Assets\Shader\IBL_Header.hlsli">
+      <Filter>소스 파일\Shader\HLSL\Header</Filter>
+    </None>
+    <None Include="..\Assets\Shader\ConstantBuffer_Header.hlsli">
       <Filter>소스 파일\Shader\HLSL\Header</Filter>
     </None>
   </ItemGroup>

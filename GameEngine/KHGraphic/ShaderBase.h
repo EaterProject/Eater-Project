@@ -64,6 +64,9 @@ public:
 	// Shader SamplerState 설정..
 	void SetSamplerState(Hash_Code hash_code, ID3D11SamplerState* sampler);
 
+	// Shader ConstantBuffer 설정..
+	void SetConstantBuffer(Hash_Code hash_code, ID3D11Buffer* cBuffer);
+
 	// Shader ConstantBuffer Resource Update..
 	template<typename T>
 	void ConstantBufferCopy(T* cBuffer);
@@ -76,7 +79,6 @@ public:
 
 	template<typename T>
 	void ConstantBufferUpdate(T* cBuffer, ID3D11DeviceContext* context);
-
 
 	// Shader ShaderResourceView 설정..
 	template<typename T>

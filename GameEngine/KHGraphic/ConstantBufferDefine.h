@@ -11,6 +11,10 @@
 
 #define SHADER_CONSTANT_BUFFER(ClassName) CREATE_HASH_CLASS(ClassName, RESOURCE_TYPE::CB) RESOURCE_PUSH(ClassName, RESOURCE_TYPE::CB)
 
+#define SHADER_STRUCT_CBUFFER(Type, ClassName) struct ClassName : public Type##ClassName
+#define SHADER_DEFAULT_CBUFFER(ClassName) SHADER_CONSTANT_BUFFER(Default_##ClassName) SHADER_STRUCT_CBUFFER(Default_, ClassName)
+#define SHADER_DYNAMIC_CBUFFER(ClassName) SHADER_CONSTANT_BUFFER(Dynamic_##ClassName) SHADER_STRUCT_CBUFFER(Dynamic_, ClassName)
+
 /// <summary>
 /// ConstantBuffer Resource Struct
 /// </summary>
