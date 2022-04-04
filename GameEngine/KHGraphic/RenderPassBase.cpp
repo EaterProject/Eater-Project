@@ -5,14 +5,16 @@
 #include "ShaderManagerBase.h"
 #include "EngineData.h"
 
+Microsoft::WRL::ComPtr<ID3D11Device> RenderPassBase::g_Device = nullptr;
 Microsoft::WRL::ComPtr<ID3D11DeviceContext> RenderPassBase::g_Context = nullptr;
 IFactoryManager* RenderPassBase::g_Factory = nullptr;
 IGraphicResourceManager* RenderPassBase::g_Resource = nullptr;
 IShaderManager* RenderPassBase::g_Shader = nullptr;
 GlobalData* RenderPassBase::g_GlobalData = nullptr;
 
-void RenderPassBase::Initialize(Microsoft::WRL::ComPtr<ID3D11DeviceContext> context, IFactoryManager* factory, IGraphicResourceManager* resourceManager, IShaderManager* shaderManager)
+void RenderPassBase::Initialize(Microsoft::WRL::ComPtr<ID3D11Device> device, Microsoft::WRL::ComPtr<ID3D11DeviceContext> context, IFactoryManager* factory, IGraphicResourceManager* resourceManager, IShaderManager* shaderManager)
 {
+	g_Device = device;
 	g_Context = context;
 	g_Factory = factory;
 	g_Resource = resourceManager;

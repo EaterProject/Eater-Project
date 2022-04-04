@@ -266,15 +266,16 @@ bool Demo::ChoiceTag(std::string TagName, GameObject* Obj)
 
 GameObject* Demo::Create_Terrain(std::string MeshName)
 {
-	
 	//터레인 생성
-	LoadTerrainMesh("../Assets/Model/TerrainModel/Terrain.fbx", "../Assets/Texture/Terrain/Terrain_RGB.png", SCALING);
+	LoadTerrainMesh("../Assets/Model/TerrainModel/Terrain.fbx", "../Assets/Texture/Terrain/Terrain_RGB_1.png", "../Assets/Texture/Terrain/Terrain_RGB_2.png", SCALING);
 
 	GameObject* TerrainObect = InstanceTerrain("Terrain");
 
 	Terrain* mTerrain = TerrainObect->GetComponent<Terrain>();
 	mTerrain->SetLayerName("terrain_ground_A_BaseColor", "terrain_ground_A_Normal", "terrain_ground_A_ORM");
 	mTerrain->SetLayerName("terrain_ground_B_BaseColor", "terrain_ground_B_Normal", "terrain_ground_B_ORM");
+	mTerrain->SetLayerName("terrain_ground_C_BaseColor", "terrain_ground_C_Normal", "terrain_ground_C_ORM");
+	mTerrain->SetLayerName("terrain_ground_D_BaseColor", "terrain_ground_D_Normal", "terrain_ground_D_ORM");
 	mTerrain->SetMeshName("Terrain");
 	//mTerrain->SetColliderName("TerrainDecimate");
 	mTerrain->SetTextureTiling(31.0f);

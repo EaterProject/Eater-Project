@@ -37,6 +37,7 @@ public:
 	};
 
 	UINT Stride = 0;	//stride값 버텍스버퍼를 만든 자료형의 크기
+	UINT Offset = 0;
 
 	void* pVertexBuf = nullptr;
 };

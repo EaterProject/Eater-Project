@@ -25,19 +25,18 @@
 void TestScene::Awake()
 {
 	LoadEnvironment("../Assets/Texture/Environment/Day.dds");
-	LoadTerrainMesh("../Assets/Model/TerrainModel/Terrain.fbx", "../Assets/Texture/Terrain/Terrain_RGB.png", SCALING);
+	LoadTerrainMesh("../Assets/Model/TerrainModel/Terrain.fbx", "../Assets/Texture/Terrain/Terrain_RGB_1.png", "../Assets/Texture/Terrain/Terrain_RGB_2.png", SCALING);
 
 	PROFILE_TIMER_START(PROFILE_OUTPUT::CONSOLE, 1, "Load Folder");
-	Load("../Assets/Texture/ModelTexture");
 	Load("../Assets/Texture/Terrain");
 	//Load("../Assets/Texture/Particle");
+	Load("../Assets/Texture/ModelTexture");
 	Load("../Assets/Texture/Material");
 	Load("../Assets/Model/MeshBuffer");
 	Load("../Assets/Model/ModelData");
 	Load("../Assets/Model/Animation");
 	PROFILE_TIMER_END("Load Folder"); 
 
-	//CreateTestObject();
 	CreateMap();
 	//CreateParticle(0,0,0);
 
@@ -63,32 +62,6 @@ void TestScene::End()
 
 }
 
-void TestScene::CreateTestObject()
-{
-	MeshFilter* MF;
-	for (int i = 0; i < 10; i++)
-	{
-		std::string num = std::to_string(9 - i);
-	
-		testobj = Instance("box");
-		testobj->AddComponent<MeshFilter>()->SetModelName("TestSphere");
-		MF = testobj->GetComponent<MeshFilter>();
-		MF->SetDiffuseTextureName("Albedo_" + num);
-		MF->SetNormalTextureName("Normal_" + num);
-		MF->SetORMTextureName("ORM_" + num);
-		testobj->GetTransform()->Position = { -150.0f + 30.0f * i, 150.0f, 0.0f };
-		testobj->GetTransform()->Rotation = { 90.0f, 0.0f, 0.0f };
-		testobj->GetTransform()->Scale = { 5.0f, 5.0f, 5.0f };
-	}
-
-
-	//testobj = Instance("LampA");
-	//testobj->AddComponent<MeshFilter>()->SetModelName("LampA");
-	//testobj->GetTransform()->Position = { 0.0f, 85.0f, 0.0f };
-	//testobj->GetTransform()->Scale = { 10.0f, 10.0f, 10.0f };
-	//testobj->GetTransform()->Rotation = { 0.0f, 90.0f, 0.0f };
-}
-
 void TestScene::CreateMap()
 {
 	Transform* Tr = nullptr;
@@ -110,6 +83,13 @@ void TestScene::CreateMap()
 	AnimationController* AC = Object->AddComponent<AnimationController>();
 	AC->Choice("idle");
 
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	filter->SetModelName("MonsterA+");
+	filter->SetAnimationName("MonsterA+");
+	AnimationController* AC = Object->AddComponent<AnimationController>();
+	AC->Choice("Move");
+
 	//Object = Instance();
 	//filter = Object->AddComponent<MeshFilter>();
 	//filter->SetModelName("box");
@@ -125,12 +105,13 @@ void TestScene::CreateMap()
 	Object = Instance();
 	filter = Object->AddComponent<MeshFilter>();
 	Tr = Object->GetTransform();
+	Tr->Scale = { 0.01f, 0.01f, 0.01f };
 	filter->SetModelName("Outside_Rock");
-
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("Outside_bossOBJ");
 	
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("Outside_bossOBJ");
+	//
 	//Object = Instance();
 	//filter = Object->AddComponent<MeshFilter>();
 	//filter->SetModelName("Outside_Other");
@@ -143,6 +124,8 @@ void TestScene::CreateMap()
 	Terrain* mTerrain = testobj->GetComponent<Terrain>();
 	mTerrain->SetLayerName("terrain_ground_A_BaseColor", "terrain_ground_A_Normal", "terrain_ground_A_ORM");
 	mTerrain->SetLayerName("terrain_ground_B_BaseColor", "terrain_ground_B_Normal", "terrain_ground_B_ORM");
+	mTerrain->SetLayerName("terrain_ground_C_BaseColor", "terrain_ground_C_Normal", "terrain_ground_C_ORM");
+	mTerrain->SetLayerName("terrain_ground_D_BaseColor", "terrain_ground_D_Normal", "terrain_ground_D_ORM");
 	mTerrain->SetMeshName("Terrain");
 	mTerrain->SetTextureTiling(31.0f);
 }
@@ -236,45 +219,45 @@ void TestScene::CreateParticle(float x, float y, float z)
 
 void TestScene::ChangeCubeMap()
 {
-	if (GetKey(VK_UP))
-	{
-		Object->GetTransform()->Rotation.z += 1;
-		Object1->GetTransform()->Position.y += 0.1f;
-	}
-	if (GetKey(VK_DOWN))
-	{
-		Object->GetTransform()->Rotation.z -= 1;
-		Object1->GetTransform()->Position.y -= 0.1f;
-	}
-	if (GetKey(VK_LEFT))
-	{
-		Object->GetTransform()->Rotation.x -= 1;
-		Object1->GetTransform()->Position.x -= 0.1f;
-	}
-	if (GetKey(VK_RIGHT))
-	{
-		Object->GetTransform()->Rotation.x += 1;
-		Object1->GetTransform()->Position.x += 0.1f;
-	}
+	//if (GetKey(VK_UP))
+	//{
+	//	Object->GetTransform()->Rotation.z += 1;
+	//	Object1->GetTransform()->Position.y += 0.1f;
+	//}
+	//if (GetKey(VK_DOWN))
+	//{
+	//	Object->GetTransform()->Rotation.z -= 1;
+	//	Object1->GetTransform()->Position.y -= 0.1f;
+	//}
+	//if (GetKey(VK_LEFT))
+	//{
+	//	Object->GetTransform()->Rotation.x -= 1;
+	//	Object1->GetTransform()->Position.x -= 0.1f;
+	//}
+	//if (GetKey(VK_RIGHT))
+	//{
+	//	Object->GetTransform()->Rotation.x += 1;
+	//	Object1->GetTransform()->Position.x += 0.1f;
+	//}
 
 	if (GetKeyUp('1'))
 	{
-		LoadEnvironment("../Resources/Texture/Environment/Day.dds");
+		LoadEnvironment("../Assets/Texture/Environment/Day.dds");
 		SetEnvironment(true);
 	}
 	if (GetKeyUp('2'))
 	{
-		LoadEnvironment("../Resources/Texture/Environment/Night.dds");
+		LoadEnvironment("../Assets/Texture/Environment/Night.dds");
 		SetEnvironment(true);
 	}
 	if (GetKeyUp('3'))
 	{
-		LoadEnvironment("../Resources/Texture/Environment/skybox1.dds");
+		LoadEnvironment("../Assets/Texture/Environment/skybox1.dds");
 		SetEnvironment(true);
 	}
 	if (GetKeyUp('4'))
 	{
-		LoadEnvironment("../Resources/Texture/Environment/TestSky.dds");
+		LoadEnvironment("../Assets/Texture/Environment/TestSky.dds");
 		SetEnvironment(true);
 	}
 }

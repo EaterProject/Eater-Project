@@ -1463,7 +1463,8 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(Parser
 	Vector3 vMax(-MathHelper::Infinity, -MathHelper::Infinity, -MathHelper::Infinity);
 
 	// Mask Pixel Data Parsing..
-	ParserData::ImageData maskImage = m_Parser->LoadImagePixel(mesh->m_MaskName.c_str(), 4);
+	ParserData::ImageData maskImage1 = m_Parser->LoadImagePixel(mesh->m_MaskName1.c_str(), 4);
+	ParserData::ImageData maskImage2 = m_Parser->LoadImagePixel(mesh->m_MaskName2.c_str(), 4);
 
 	Vector3 pMin(+FLT_MAX, +FLT_MAX, +FLT_MAX);
 
@@ -1486,11 +1487,16 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(Parser
 		vertices[i].Tangent = mesh->m_VertexList[i]->m_Tanget;
 
 		// ÇØ´ç Pixel Mask Color..
-		Vector4 maskColor = m_Parser->GetPixelColor(maskImage, abs(vertices[i].Pos.x - pMin.x), abs(vertices[i].Pos.z));
-		maskColor = maskColor / (maskColor.x + maskColor.y + maskColor.z);
-		vertices[i].Mask.x = maskColor.x;
-		vertices[i].Mask.y = maskColor.y;
-		vertices[i].Mask.z = maskColor.z;
+		Vector4 maskColor1 = m_Parser->GetPixelColor(maskImage1, abs(vertices[i].Pos.x), abs(vertices[i].Pos.z));
+		Vector4 maskColor2 = m_Parser->GetPixelColor(maskImage2, abs(vertices[i].Pos.x), abs(vertices[i].Pos.z));
+		maskColor1.z = maskColor2.x;
+		maskColor1.w = maskColor2.y;
+		maskColor1 = maskColor1 / (maskColor1.x + maskColor1.y + maskColor1.z + maskColor1.w);
+
+		vertices[i].Mask.x = maskColor1.x;
+		vertices[i].Mask.y = maskColor1.y;
+		vertices[i].Mask.z = maskColor1.z;
+		vertices[i].Mask.w = maskColor1.w;
 
 		// Bounding Data..
 		Vector3 P = vertices[i].Pos;

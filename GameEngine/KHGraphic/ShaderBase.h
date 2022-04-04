@@ -57,6 +57,7 @@ public:
 public:
 	virtual void LoadShader(std::string fileName, const char* entry_point, const char* shader_model, const D3D_SHADER_MACRO* pDefines) abstract;
 	virtual void Update() abstract;
+	virtual void Update(ID3D11DeviceContext* context) abstract;
 	virtual void Release();
 
 public:
@@ -68,7 +69,14 @@ public:
 	void ConstantBufferCopy(T* cBuffer);
 
 	template<typename T>
+	void ConstantBufferCopy(T* cBuffer, ID3D11DeviceContext* context);
+
+	template<typename T>
 	void ConstantBufferUpdate(T* cBuffer);
+
+	template<typename T>
+	void ConstantBufferUpdate(T* cBuffer, ID3D11DeviceContext* context);
+
 
 	// Shader ShaderResourceView 설정..
 	template<typename T>
@@ -136,6 +144,33 @@ inline void ShaderBase::ConstantBufferCopy(T* cBuffer)
 }
 
 template<typename T>
+void ShaderBase::ConstantBufferCopy(T* cBuffer, ID3D11DeviceContext* context)
+{
+	// 해당 Value 찾기..
+	std::unordered_map<Hash_Code, ConstantBuffer*>::iterator it = m_ConstantBufferList.find(T::GetHashCode());
+
+	// 해당 Key에 대한 Value가 없다면..
+	if (it == m_ConstantBufferList.end()) return;
+
+	// Update Buffer Get..
+	size_t bufferSize = it->second->cSize;
+	ID3D11Buffer* buffer = it->second->cBuffer.Get();
+
+	// Mapping SubResource Data..
+	D3D11_MAPPED_SUBRESOURCE mappedResource;
+	ZeroMemory(&mappedResource, sizeof(D3D11_MAPPED_SUBRESOURCE));
+
+	// GPU Access Lock Buffer Data..
+	context->Map(buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
+
+	// Copy Resource Data..
+	memcpy(mappedResource.pData, cBuffer, bufferSize);
+
+	// GPU Access UnLock Buffer Data..
+	context->Unmap(buffer, 0);
+}
+
+template<typename T>
 inline void ShaderBase::ConstantBufferUpdate(T* cBuffer)
 {
 	// 해당 Value 찾기..
@@ -146,6 +181,19 @@ inline void ShaderBase::ConstantBufferUpdate(T* cBuffer)
 
 	// Resource 복제..
 	g_DeviceContext->UpdateSubresource(it->second->cBuffer.Get(), 0, nullptr, cBuffer, 0, 0);
+}
+
+template<typename T>
+void ShaderBase::ConstantBufferUpdate(T* cBuffer, ID3D11DeviceContext* context)
+{
+	// 해당 Value 찾기..
+	std::unordered_map<Hash_Code, ConstantBuffer*>::iterator it = m_ConstantBufferList.find(T::GetHashCode());
+
+	// 해당 Key에 대한 Value가 없다면..
+	if (it == m_ConstantBufferList.end()) return;
+
+	// Resource 복제..
+	context->UpdateSubresource(it->second->cBuffer.Get(), 0, nullptr, cBuffer, 0, 0);
 }
 
 template<typename T>

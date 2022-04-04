@@ -168,6 +168,28 @@ void ComputeShader::Update()
 		g_DeviceContext->CSSetUnorderedAccessViews(0, (UINT)m_UnorderedAccessViews.size(), m_UnorderedAccessViews[0].GetAddressOf(), 0);
 }
 
+void ComputeShader::Update(ID3D11DeviceContext* context)
+{
+	// Compute Shader 연결..
+	context->CSSetShader(m_CS.Get(), nullptr, 0);
+
+	// Compute Shader ShaderSampler 설정..
+	if (!m_SamplerStates.empty())
+		context->CSSetSamplers(0, (UINT)m_SamplerStates.size(), m_SamplerStates[0].GetAddressOf());
+
+	// Compute Shader ConstantBuffer 설정..
+	if (!m_ConstantBuffers.empty())
+		context->CSSetConstantBuffers(0, (UINT)m_ConstantBuffers.size(), m_ConstantBuffers[0].GetAddressOf());
+
+	// Compute Shader ShaderResourceView 설정..
+	if (!m_ShaderResourceViews.empty())
+		context->CSSetShaderResources(0, (UINT)m_ShaderResourceViews.size(), m_ShaderResourceViews[0].GetAddressOf());
+
+	// Compute Shader UnorderedAccessView 설정..
+	if (!m_UnorderedAccessViews.empty())
+		context->CSSetUnorderedAccessViews(0, (UINT)m_UnorderedAccessViews.size(), m_UnorderedAccessViews[0].GetAddressOf(), 0);
+}
+
 void ComputeShader::Release()
 {
 	ShaderBase::Release();

@@ -215,6 +215,9 @@ public:
 	std::vector<PointLightData*>		PointLights;
 	std::vector<SpotLightData*>			SpotLights;
 
+	// Culling Data
+	std::vector<MeshBuffer*> OccluderList;
+
 	// Debug Data
 	std::queue<DebugData>	 Debug_Data;
 };

@@ -17,6 +17,11 @@ public:
 	void ResetCount();
 
 private:
+	void MipMap_CommandList_Reserve(int width, int height);
+
+private:
+	ID3D11CommandList* m_MipMapCommandList;
+
 	ID3D11DepthStencilView* m_DefaltDSV;
 	ID3D11DepthStencilState* m_DefaltDSS;
 	ID3D11RasterizerState* m_SolidRS;

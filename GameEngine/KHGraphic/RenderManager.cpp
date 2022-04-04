@@ -45,7 +45,7 @@
 RenderManager::RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, IGraphicResourceManager* resource, IShaderManager* shader)
 {
 	// Rendering Initialize..
-	RenderPassBase::Initialize(graphic->GetContext(), factory, resource, shader);
+	RenderPassBase::Initialize(graphic->GetDevice(), graphic->GetContext(), factory, resource, shader);
 
 	m_SwapChain = graphic->GetSwapChain();
 

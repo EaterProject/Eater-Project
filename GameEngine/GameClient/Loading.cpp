@@ -41,7 +41,7 @@ void Loading::Awake()
 
 	
 	LoadEnvironment("../Assets/Texture/Environment/Night.dds");
-	LoadTerrainMesh("../Assets/Model/TerrainModel/Terrain.fbx", "../Assets/Texture/Terrain/Terrain_RGB.png", SCALING);
+	LoadTerrainMesh("../Assets/Model/TerrainModel/Terrain.fbx", "../Assets/Texture/Terrain/Terrain_RGB_1.png", "../Assets/Texture/Terrain/Terrain_RGB_2.png", SCALING);
 }
 
 

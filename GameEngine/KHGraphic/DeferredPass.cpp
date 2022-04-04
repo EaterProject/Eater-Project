@@ -408,12 +408,20 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rend
 		// Pixel Shader Update..
 		MaterialRenderBuffer* layer1 = terrain->m_MaterialList[0];
 		MaterialRenderBuffer* layer2 = terrain->m_MaterialList[1];
+		MaterialRenderBuffer* layer3 = terrain->m_MaterialList[2];
+		MaterialRenderBuffer* layer4 = terrain->m_MaterialList[3];
 		m_TerrainPS->SetShaderResourceView<gDiffuseLayer1>(layer1->m_Albedo);
 		m_TerrainPS->SetShaderResourceView<gNormalLayer1>(layer1->m_Normal);
 		m_TerrainPS->SetShaderResourceView<gORMLayer1>(layer1->m_ORM);
 		m_TerrainPS->SetShaderResourceView<gDiffuseLayer2>(layer2->m_Albedo);
 		m_TerrainPS->SetShaderResourceView<gNormalLayer2>(layer2->m_Normal);
 		m_TerrainPS->SetShaderResourceView<gORMLayer2>(layer2->m_ORM);
+		m_TerrainPS->SetShaderResourceView<gDiffuseLayer3>(layer3->m_Albedo);
+		m_TerrainPS->SetShaderResourceView<gNormalLayer3>(layer3->m_Normal);
+		m_TerrainPS->SetShaderResourceView<gORMLayer3>(layer3->m_ORM);
+		m_TerrainPS->SetShaderResourceView<gDiffuseLayer4>(layer4->m_Albedo);
+		m_TerrainPS->SetShaderResourceView<gNormalLayer4>(layer4->m_Normal);
+		m_TerrainPS->SetShaderResourceView<gORMLayer4>(layer4->m_ORM);
 
 		m_TerrainPS->Update();
 

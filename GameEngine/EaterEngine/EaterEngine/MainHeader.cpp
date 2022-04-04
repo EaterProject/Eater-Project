@@ -102,9 +102,9 @@ void CreateSceneSub(Scene* mSceneTemp, std::string SceneName)
 	gGameEngine->PushScene(mSceneTemp, SceneName);
 }
 
- void LoadTerrainMesh(std::string mMeshName, std::string maskName, UINT parsingMode)
+ void LoadTerrainMesh(std::string mMeshName, std::string maskName1, std::string maskName2, UINT parsingMode)
  {
-	 gGameEngine->LoadTerrain(mMeshName, maskName, parsingMode);
+	 gGameEngine->LoadTerrain(mMeshName, maskName1, maskName2, parsingMode);
  }
 
   void Load(std::string mPath, UINT Mode)

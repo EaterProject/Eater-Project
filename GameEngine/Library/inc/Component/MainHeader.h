@@ -44,7 +44,7 @@ extern "C" EATER_ENGINEDLL void ChoiceScene(std::string name);					//스크린 선택
 EATER_ENGINEDLL void CreateSceneSub(Scene* mSceneTemp,std::string SceneName);	//스크린 생성
 
 ///매쉬 불러오기
-extern "C" EATER_ENGINEDLL void LoadTerrainMesh(std::string mMeshPath, std::string MaskTexturePath, UINT parsingMode = 0);	//매쉬 로드
+extern "C" EATER_ENGINEDLL void LoadTerrainMesh(std::string mMeshPath, std::string maskName1, std::string maskName2, UINT parsingMode = 0);	//매쉬 로드
 extern "C" EATER_ENGINEDLL void Load(std::string mPath,UINT Mode = 0);
 extern "C" EATER_ENGINEDLL int	LoadAssetsCount();
 extern "C" EATER_ENGINEDLL void LoadEnvironment(std::string mPath);

@@ -197,6 +197,24 @@ void PixelShader::Update()
 		g_DeviceContext->PSSetShaderResources(0, (UINT)m_ShaderResourceViews.size(), m_ShaderResourceViews[0].GetAddressOf());
 }
 
+void PixelShader::Update(ID3D11DeviceContext* context)
+{
+	// Pixel Shader 연결..
+	context->PSSetShader(m_PS.Get(), nullptr, 0);
+
+	// Pixel Shader SamplerState 설정..
+	if (!m_SamplerStates.empty())
+		context->PSSetSamplers(0, (UINT)m_SamplerStates.size(), m_SamplerStates[0].GetAddressOf());
+
+	// Pixel Shader ConstantBuffer 설정..
+	if (!m_ConstantBuffers.empty())
+		context->PSSetConstantBuffers(0, (UINT)m_ConstantBuffers.size(), m_ConstantBuffers[0].GetAddressOf());
+
+	// Pixel Shader ShaderResourceView 설정..
+	if (!m_ShaderResourceViews.empty())
+		context->PSSetShaderResources(0, (UINT)m_ShaderResourceViews.size(), m_ShaderResourceViews[0].GetAddressOf());
+}
+
 void PixelShader::Release()
 {
 	ShaderBase::Release();

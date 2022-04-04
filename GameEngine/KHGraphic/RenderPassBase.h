@@ -33,7 +33,7 @@ public:
 	virtual void SetOption(RenderOption* renderOption) {}
 
 public:
-	static void Initialize(Microsoft::WRL::ComPtr<ID3D11DeviceContext> context, IFactoryManager* factory, IGraphicResourceManager* resource, IShaderManager* shader);
+	static void Initialize(Microsoft::WRL::ComPtr<ID3D11Device> device, Microsoft::WRL::ComPtr<ID3D11DeviceContext> context, IFactoryManager* factory, IGraphicResourceManager* resource, IShaderManager* shader);
 	static void GraphicReset();
 	static void Reset();
 
@@ -41,6 +41,7 @@ public:
 	friend class RenderManager;
 
 protected:
+	static Microsoft::WRL::ComPtr<ID3D11Device> g_Device;
 	static Microsoft::WRL::ComPtr<ID3D11DeviceContext> g_Context;
 
 	static IFactoryManager* g_Factory;

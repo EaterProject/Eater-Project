@@ -228,6 +228,27 @@ void VertexShader::Update()
 	g_DeviceContext->IASetInputLayout(m_InputLayout.Get());
 }
 
+void VertexShader::Update(ID3D11DeviceContext* context)
+{
+	// Vertex Shader 설정..
+	context->VSSetShader(m_VS.Get(), nullptr, 0);
+
+	// Vertex Shader SamplerState 설정..
+	if (!m_SamplerStates.empty())
+		context->VSSetSamplers(0, (UINT)m_SamplerStates.size(), m_SamplerStates[0].GetAddressOf());
+
+	// Vertex Shader ConstantBuffer 설정..
+	if (!m_ConstantBuffers.empty())
+		context->VSSetConstantBuffers(0, (UINT)m_ConstantBuffers.size(), m_ConstantBuffers[0].GetAddressOf());
+
+	// Vertex Shader ShaderResourceView 설정..
+	if (!m_ShaderResourceViews.empty())
+		context->VSSetShaderResources(0, (UINT)m_ShaderResourceViews.size(), m_ShaderResourceViews[0].GetAddressOf());
+
+	// Shader InputLayout 설정.. 
+	context->IASetInputLayout(m_InputLayout.Get());
+}
+
 void VertexShader::Release()
 {
 	ShaderBase::Release();
