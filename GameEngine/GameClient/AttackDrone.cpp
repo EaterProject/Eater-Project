@@ -21,19 +21,17 @@ void AttackDrone::SetUp()
 
 void AttackDrone::Update()
 {
-	mTransform->SetRotate(0, 1, 0);
-	//if (mMonsterTR != nullptr)
-	//{
-	//	mTransform->Slow_Y_Rotation(mMonsterTR->Position, 100);
-	//}
+	if (mMonsterTR != nullptr)
+	{
+		mTransform->Slow_Y_Rotation(mMonsterTR->Position, 100);
+	}
 }
 
 void AttackDrone::OnTriggerStay(GameObject* Obj)
 {
-	//int Tag = Obj->GetTag();
-	//if (Tag == MonsterTag)
-	//{
-	//	mMonsterTR = Obj->GetTransform();
-	//}
-
+	int Tag = Obj->GetTag();
+	if (Tag == MonsterTag)
+	{
+		mMonsterTR = Obj->GetTransform();
+	}
 }

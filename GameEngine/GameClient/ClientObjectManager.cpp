@@ -78,10 +78,11 @@ void ClientObjectManager::SetCreateMonsterMemorySize(int CreateCount)
 	//}
 
 	//mFactory->CreateMonster(0, 3, 0, MONSTER_TYPE::MONSTER_A);
-	for (int i = 0; i < 1; i++)
-	{
-		AttackDrone_List.push_back(mFactory->CreateAttackDrone(i, 1, 0));
-	}
+	//for (int i = 0; i < 1; i++)
+	//{
+	//	AttackDrone_List.push_back(mFactory->CreateAttackDrone(i, 1, 0));
+	//}
+	AttackDrone_List.push_back(mFactory->CreateAttackDrone(3, 1, 0));
 }
 
 void ClientObjectManager::CreateMonster(float CreateMaxTime, GameObject* CreatePointObject)

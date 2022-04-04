@@ -27,25 +27,37 @@ void Collider::Start()
 
 void Collider::PhysicsUpdate()
 {
+	
+
 	if (mTransform->Position != mPhysData->WorldPosition)
 	{
 		mPhysData->SetWorldPosition(mTransform->Position.x, mTransform->Position.y, mTransform->Position.z);
 		mTransform->Position = mPhysData->WorldPosition;
 	}
+
+	//if (mTransform->Q_Rotation != mPhysData->Rotation)
+	//{
+	//	mPhysData->SetRotation(mTransform->Position.x, mTransform->Position.y, mTransform->Position.z);
+	//}
+	
 	PhysX_Update_Actor(mPhysData);
+	if (mPhysData->isDinamic == true)
+	{
+		float CenterX = mPhysData->CenterPoint.x;
+		float CenterY = mPhysData->CenterPoint.y;
+		float CenterZ = mPhysData->CenterPoint.z;
 
-	float CenterX = mPhysData->CenterPoint.x;
-	float CenterY = mPhysData->CenterPoint.y;
-	float CenterZ = mPhysData->CenterPoint.z;
+		mTransform->Position.x = mPhysData->WorldPosition.x;
+		mTransform->Position.y = mPhysData->WorldPosition.y;
+		mTransform->Position.z = mPhysData->WorldPosition.z;
 
-	mTransform->Position.x = mPhysData->WorldPosition.x;
-	mTransform->Position.y = mPhysData->WorldPosition.y;
-	mTransform->Position.z = mPhysData->WorldPosition.z;
+		mTransform->Q_Rotation.x = mPhysData->Rotation.x;
+		mTransform->Q_Rotation.y = mPhysData->Rotation.y;
+		mTransform->Q_Rotation.z = mPhysData->Rotation.z;
+		mTransform->Q_Rotation.w = mPhysData->Rotation.w;
 
-	mTransform->Q_Rotation.x = mPhysData->Rotation.x;
-	mTransform->Q_Rotation.y = mPhysData->Rotation.y;
-	mTransform->Q_Rotation.z = mPhysData->Rotation.z;
-	mTransform->Q_Rotation.w = mPhysData->Rotation.w;
+	}
+
 
 
 	DebugCollider();
@@ -197,6 +209,7 @@ bool Collider::CreatePhys()
 		{
 			mPhysData->isDinamic = true;
 			mRigidbody->isCreate = true;
+			gameobject->GetTransform()->isRigid = true;
 		}
 		else
 		{
@@ -207,7 +220,6 @@ bool Collider::CreatePhys()
 		Transform* mTransform = gameobject->GetTransform();
 		mPhysData->SetWorldPosition(mTransform->Position.x, mTransform->Position.y, mTransform->Position.z);
 		mPhysData->Rotation = Q_Rot;
-		mTransform->isRigid = true;
 		mTransform->Q_Rotation = Q_Rot;
 		PhysX_Create_Actor(mPhysData);
 		isCreate = true;
