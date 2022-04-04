@@ -4,6 +4,8 @@
 class MonsterBase;
 class ObjectFactory;
 class GameObject;
+class HealingDrone;
+class Transform;
 
 class ClientObjectManager
 {
@@ -18,12 +20,14 @@ private:
 
 	void CreateMonster(float CreateMaxTime, GameObject* CreatePointObject);
 	MonsterBase* GetLifeMonter();
+
+private:
+	GameObject* PlayerObject;
 private:
 	std::vector<MonsterBase*> MonsterA_List;
 	std::vector<MonsterBase*> MonsterB_List;
-	
-
-
+	HealingDrone* DroneList;
+private:
 	ObjectFactory* mFactory;
 };
 

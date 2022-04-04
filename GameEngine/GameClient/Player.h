@@ -27,10 +27,10 @@ public:
 	void Update();
 	void StartUpdate();
 	
-	
-
 	static Transform* GetPlayerTransform();
 	static PLAYER_STATE GetState();
+
+	void Healing(float HealingPower);
 private:
 	//플레이어 키인풋
 	void PlayerKeyinput();
@@ -46,13 +46,13 @@ private:
 	Vector3 DirPos;			//방향
 	Vector3 DirRot;			//회전
 	Vector3 PastDirRot;		//과거의 방향
-	float Speed =0;
-
 
 	GameObject* AttackColliderObject;
-	Collider* AttackCollider;
-	Rigidbody* AttackRigidbody;
+	Collider*	AttackCollider;
+	Rigidbody*	AttackRigidbody;
 
+	float Speed = 0;
+	float HP	= 100;
 	float RotationDir;
 	static PLAYER_STATE mState;
 };

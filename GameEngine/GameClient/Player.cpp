@@ -16,6 +16,8 @@
 
 Transform* Player::mTransform = nullptr;
 PLAYER_STATE Player::mState;
+
+#define LERP(prev, next, time) ((prev * (1.0f - time)) + (next * time))
 Player::Player()
 {
 	mAnimation	= nullptr;
@@ -86,6 +88,15 @@ PLAYER_STATE Player::GetState()
 	return mState;
 }
 
+void Player::Healing(float HealingPower)
+{
+	float MaxHP = LERP(0, HP, 0.7f);
+	if (HP <= MaxHP)
+	{
+		HP += HealingPower;
+	}
+}
+
 void Player::PlayerKeyinput()
 {
 	if (mCameraTR == nullptr) { return; }
@@ -121,8 +132,9 @@ void Player::PlayerKeyinput()
 	if (DirPos != Vector3(0, 0, 0))
 	{
 		DirRot = DirPos;
+		Vector3 MyPos = DirPos + mTransform->Position;
 		mTransform->SetTranlate(DirPos * Speed * GetDeltaTime());
-		mTransform->Slow_Y_Rotation(DirRot, 450);
+		mTransform->Slow_Y_Rotation(MyPos, 450);
 	}
 	
 	DirPos = { 0,0,0 };

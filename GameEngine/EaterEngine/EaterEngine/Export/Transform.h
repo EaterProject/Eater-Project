@@ -40,6 +40,9 @@ public:
 	EATER_ENGINEDLL DirectX::SimpleMath::Vector3 GetLocalPosition_Look();
 
 	EATER_ENGINEDLL void LookAt(GameObject* Target);
+	EATER_ENGINEDLL void LookAt_X(GameObject* Target);
+	EATER_ENGINEDLL void LookAt_Y(Vector3 Pos);
+	EATER_ENGINEDLL void LookAt_Z(GameObject* Target);
 
 	//현재위치값에 값을 더해줌
 	EATER_ENGINEDLL void SetLocalPosition(float X, float Y, float Z);
@@ -77,6 +80,7 @@ public:
 
 	//Y축 기준으로 보는방향으로 천천히 회전한다
 	EATER_ENGINEDLL void Slow_Y_Rotation(Vector3 Dir, float RotationSpeed);
+	EATER_ENGINEDLL float GetDistance(Vector3 Pos);
 private:
 	//현재 위치 회전 크기값을 가져와 행렬을 구한다
 	DirectX::SimpleMath::Matrix CreateXMPos4x4();
@@ -110,7 +114,10 @@ private:
 	//게임 오브젝트의 위치 회전 크기값을 모두곱한 월드 행렬
 	DirectX::SimpleMath::Matrix World_M;
 
-
+private:
+	
+	const float ConvertPI = 180 / 3.141592f;
+	
 	///계층 구조에서 부모 객체 자식객체
 	Transform* Parent;
 	std::vector<Transform*> ChildList;

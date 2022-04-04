@@ -92,6 +92,22 @@ void Transform::LookAt(GameObject* Target)
 	Rotation = { Angle_X,-(Angle_Y + 90),Rotation.z };
 }
 
+void Transform::LookAt_Y(Vector3 Pos)
+{
+	//타겟의 위치
+	Vector3 N = Pos - Position;
+	N.Normalize();
+
+
+	//좌표계에 맞게 변환
+	float Angle_Y = -atan2(N.z, N.x) * ConvertPI;
+	float Angle_X = atan2(N.y, N.z) * ConvertPI;
+
+	//-(Yangle + 90)
+	Rotation = {Rotation.x, -(Angle_Y + 90),Rotation.z };
+
+}
+
 void Transform::SetLocalPosition(float X, float Y, float Z)
 {
 	Position =
@@ -216,7 +232,9 @@ void Transform::Slow_Y_Rotation(Vector3 Dir, float RotationSpeed)
 {
 	//Y축기준으로 현재 방향에서 보는 방향으로 천천히 회전 시킨다
 	//도착 지점의 각도를 구한다 이떄 범위는 -180 ~ 180 이다
-	float EndAngle = (-atan2(Dir.z, Dir.x) * 180 / 3.141592f);
+	Vector3 N = Dir - Position;
+	N.Normalize();
+	float EndAngle = (-atan2(N.z, N.x) * 180 / 3.141592f);
 
 	//도착지점 범위를 변경해준다 우리 엔진과 맞추기 위해서 0~ 360
 	if (EndAngle <= 0) { EndAngle += 360; }
@@ -289,6 +307,11 @@ void Transform::Slow_Y_Rotation(Vector3 Dir, float RotationSpeed)
 		Rotation.y = 360.0f;
 	}
 
+}
+
+float Transform::GetDistance(Vector3 Pos)
+{
+	return DirectX::SimpleMath::Vector3::Distance(Position, Pos);
 }
 
 DirectX::SimpleMath::Matrix Transform::CreateXMPos4x4()

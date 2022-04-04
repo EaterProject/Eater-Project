@@ -129,7 +129,7 @@
     <ClInclude Include="MonsterBase.h">
       <Filter>소스 파일\Component\Monster\Base</Filter>
     </ClInclude>
-    <ClInclude Include="Drone.h">
+    <ClInclude Include="HealingDrone.h">
       <Filter>소스 파일\Component\Drone</Filter>
     </ClInclude>
     <ClInclude Include="ClientObjectManager.h">
@@ -182,7 +182,7 @@
     <ClCompile Include="MonsterBase.cpp">
       <Filter>소스 파일\Component\Monster\Base</Filter>
     </ClCompile>
-    <ClCompile Include="Drone.cpp">
+    <ClCompile Include="HealingDrone.cpp">
       <Filter>소스 파일\Component\Drone</Filter>
     </ClCompile>
     <ClCompile Include="ClientObjectManager.cpp">

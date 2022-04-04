@@ -2,20 +2,30 @@
 #include "ObjectFactory.h"
 #include "MainHeader.h"
 #include "Transform.h"
+#include "Player.h"
+#include "Camera.h"
+#include "PlayerCamera.h"
+#include "GameObject.h"
 ClientObjectManager::ClientObjectManager()
 {
-	mFactory = nullptr;
+	mFactory		= nullptr;
+	PlayerObject	= nullptr;
 }
 
 ClientObjectManager::~ClientObjectManager()
 {
-	mFactory = nullptr;
+	mFactory		= nullptr;
+	PlayerObject	= nullptr;
 }
 
 void ClientObjectManager::Initialize(ObjectFactory* Factory)
 {
+	//생성 펙토리 받기
 	mFactory = Factory;
 
+	//기본 생성 오브젝트들
+	PlayerObject = mFactory->CreatePlayer();
+	mFactory->CreateHealingDrone();
 
 
 	//포탈 태그가 붙어있는 오브젝트를 모두 가져와 리스트에 담아놓는다
@@ -24,7 +34,7 @@ void ClientObjectManager::Initialize(ObjectFactory* Factory)
 	//플레이어 충돌용 오브젝트를 가져온다
 	//FindGameObjectTag("AttackCollider");
 
-	SetCreateMonsterMemorySize(5);
+	//SetCreateMonsterMemorySize(5);
 }
 
 void ClientObjectManager::Release()
