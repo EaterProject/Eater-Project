@@ -7,6 +7,7 @@ PhysCollider::PhysCollider()
 	Shape_type		= TYPE::BOX;
 	isTrigger		= false;
 	TriangleData	= nullptr;
+	TriangleData	= nullptr;
 }
 
 PhysCollider::~PhysCollider()

@@ -13,9 +13,10 @@ public:
 	PlayerCamera();
 	~PlayerCamera();
 
-	void Awake();
-	void EndUpdate();
+	void SetUp();
+	void StartUpdate();
 
+private:
 	GameObject* Userobject;
 	Camera*		MainCam;
 
@@ -24,7 +25,7 @@ public:
 	//유저캐릭터의 트랜스폼
 	Transform*	mUserTransform;
 
-	Vector3 CamOffet;
+	Vector3 CamOffSet;
 
 	float X_Radian;
 	float Y_Radian;

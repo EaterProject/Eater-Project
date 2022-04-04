@@ -23,11 +23,11 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	void SetGameObject(Collider* collider);
+	void UpdateObject();
 
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	virtual BOOL OnInitDialog();
 
-	void UpdateObject();
 	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 	afx_msg void OnTriggerCheck();
 
@@ -45,10 +45,10 @@ public:
 	CSliderCtrl StaticFriction_Slider;
 	CSliderCtrl DynamicFriction_Slider;
 	CSliderCtrl Restitution_Slider;
-	afx_msg void OnCreatePhyCollider();
-	afx_msg void OnCbnSelchangeCombo1();
 	CEdit Dynamic_Eidt;
 	CEdit Static_Eidt;
 	CEdit Restition_Edit;
 	CButton Trigger_Check;
+	afx_msg void OnCreatePhyCollider();
+	afx_msg void OnCbnSelchangeCombo1();
 };

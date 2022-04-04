@@ -14,6 +14,10 @@
 #include "WorldData_generated.h"
 #include "PlayerCamera.h"
 
+Transform* Player::mTransform = nullptr;
+PLAYER_STATE Player::mState;
+
+#define LERP(prev, next, time) ((prev * (1.0f - time)) + (next * time))
 Player::Player()
 {
 	mAnimation	= nullptr;
@@ -29,87 +33,86 @@ Player::~Player()
 void Player::Awake()
 {
 	//컨퍼넌트 가져오기
-	mTransform = gameobject->GetTransform();
+	mTransform	= gameobject->GetTransform();
 	mMeshFilter = gameobject->GetComponent<MeshFilter>();
-	mAnimation = gameobject->GetComponent<AnimationController>();
-	//mRigidbody = gameobject->GetComponent<Rigidbody>();
-	//mCollider  = gameobject->GetComponent<Collider>();
+	mAnimation	= gameobject->GetComponent<AnimationController>();
+	
+	AttackColliderObject = FindGameObjectTag("AttackCollider");
+	AttackCollider = AttackColliderObject->GetComponent<Collider>();
+	
 }
 
 void Player::SetUp()
 {
-	//매쉬, 애니메이션 정보 입력
-	mMeshFilter->SetModelName("bossb+");
-	mMeshFilter->SetAnimationName("bossb+");
-	//mAnimation->Choice("Idle");
+	mCameraTR = GetMainCamera()->GetTransform();
 
-	GameObject* MainCam = GetMainCamera();
-	MainCam->GetComponent<PlayerCamera>()->Userobject = gameobject;
-	mCameraTR = MainCam->GetTransform();
-	mTransform->Rotation = { 0,0,0 };
-	//mCollider->SetBoxCollider(0.25f);
-	//mRigidbody->SetPosition(5, 10, 0);
-	//mRigidbody->SetFreezeRotation(true, true, true);
-	
-}
-
-void Player::Start()
-{
-	mAnimation->Choice("idle");
-	//MeshObject		= gameobject->GetChildBone(0);
-	//GameObject* obj	=  gameobject->GetChildMesh(0);
-	//
-	////로컬 값 조정
-	//obj->GetTransform()->Position = { 0,-9.5f,0 };
-	//obj->GetTransform()->Rotation = { -90,0,90 };
+	//AttackCollider->SetTrigger(true);
+	//AttackRigidbody->SetGrvity(false);
+	//AttackCollider->CreatePhys();
 }
 
 void Player::Update()
 {
-	//플레이어가 키입력을 눌렀는지 체크 한다
+	//로직이 시작할때 플레이어 상태를 기본상태로 변환
+	mState = PLAYER_STATE::IDLE;
+
+	//플레이어 키입력
+	PlayerKeyinput();
+
+	//공력 충돌체의 위치를 설정
+	Vector3 Look = mTransform->GetLocalPosition_Look();
+	Look *= 2;
+	Look.y = 1;
+	Look.z *= -1;
+	AttackColliderObject->GetTransform()->Position = mTransform->Position + Look;
+
+	//공격키를 누르면 상태변환
 	if (GetKeyDown(VK_SPACE))
 	{
-		mRigidbody->SetPosition(5, 0, 0);
+		mState = PLAYER_STATE::ATTACK;
 	}
-
-	//if (mRigidbody->GetTriggerEnter() == true)
-	//{
-	//	DebugPrint("충돌시작");
-	//}
-	//
-	//if (mRigidbody->GetTriggerStay() == true)
-	//{
-	//	DebugPrint("충돌중");
-	//}
-	//
-	//if (mRigidbody->GetTriggerExit() == true)
-	//{
-	//	DebugPrint("충돌끝");
-	//}
 }
 
 void Player::StartUpdate()
 {
-	PlayerKeyinput();
-	//mAnimation->Play(1, true);
+	//PlayerKeyinput();
+}
+
+Transform* Player::GetPlayerTransform()
+{
+	return mTransform;
+}
+
+PLAYER_STATE Player::GetState()
+{
+	return mState;
+}
+
+void Player::Healing(float HealingPower)
+{
+	float MaxHP = LERP(0, HP, 0.7f);
+	if (HP <= MaxHP)
+	{
+		HP += HealingPower;
+	}
 }
 
 void Player::PlayerKeyinput()
 {
 	if (mCameraTR == nullptr) { return; }
-	if (GetKey(VK_RIGHT))
+	if (GetKey('D'))
 	{
 		DirPos += mCameraTR->GetLocalPosition_Right();
 		//mAnimation->Choice("Run");
 	}
 
-	if (GetKey(VK_LEFT))
+	if (GetKey('A'))
 	{
 		DirPos += -mCameraTR->GetLocalPosition_Right();
 		//mAnimation->Choice("Run");
 	}
 
-	if (GetKey(VK_UP))
+	if (GetKey('W'))
 	{
 		Vector3 Pos = mCameraTR->GetLocalPosition_Look();
 		//mAnimation->Choice("Run");
@@ -117,7 +120,7 @@ void Player::PlayerKeyinput()
 		DirPos += Pos;
 	}
 
-	if (GetKey(VK_DOWN))
+	if (GetKey('S'))
 	{
 		Vector3 Pos = mCameraTR->GetLocalPosition_Look();
 		//mAnimation->Choice("Run");
@@ -129,21 +132,10 @@ void Player::PlayerKeyinput()
 	if (DirPos != Vector3(0, 0, 0))
 	{
 		DirRot = DirPos;
+		Vector3 MyPos = DirPos + mTransform->Position;
+		mTransform->SetTranlate(DirPos * Speed * GetDeltaTime());
+		mTransform->Slow_Y_Rotation(MyPos, 450);
 	}
-
 	
-	mTransform->SetTranlate(DirPos*GetDeltaTime());
-	mTransform->Slow_Y_Rotation(DirRot, 300);
-
-	//받은 방향으로 캐릭터를 회전시켜준다
-	//Vector3 Dir;
-	//Dir.x = DirPos.x;
-	//Dir.y = DirPos.y;
-	//Dir.z = DirPos.z;
-	//MeshObject->GetTransform()->Slow_Y_Rotation(Dir, 300);
-	////MeshObject->GetTransform()->SetRotate(0, 0, 1);
-	//DirPos*= Speed;
-	////mRigidbody->SetVelocity(DirPos.x, 0, DirPos.z);
 	DirPos = { 0,0,0 };
-	DirRot = { 0,0,0 };
 }

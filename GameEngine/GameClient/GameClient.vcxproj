@@ -164,6 +164,8 @@
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="HealingDrone.h" />
+    <ClInclude Include="GameLogic.h" />
     <ClInclude Include="Loading.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GameClient.h" />
@@ -177,21 +179,22 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClInclude>
-    <ClInclude Include="KeyInput.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
-    </ClInclude>
     <ClInclude Include="ManaStone.h" />
-    <ClInclude Include="Monster.h" />
+    <ClInclude Include="MonsterA.h" />
+    <ClInclude Include="MonsterB.h" />
+    <ClInclude Include="MonsterBase.h" />
+    <ClInclude Include="ClientObjectManager.h" />
+    <ClInclude Include="ObjectFactory.h" />
     <ClInclude Include="PlayerCamera.h" />
+    <ClInclude Include="Potal.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="TestScene.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="HealingDrone.cpp" />
+    <ClCompile Include="GameLogic.cpp" />
     <ClCompile Include="Loading.cpp" />
     <ClCompile Include="GameClient.cpp" />
     <ClCompile Include="GameManager.cpp" />
@@ -204,16 +207,15 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="KeyInput.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="ManaStone.cpp" />
-    <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="MonsterA.cpp" />
+    <ClCompile Include="MonsterB.cpp" />
+    <ClCompile Include="MonsterBase.cpp" />
+    <ClCompile Include="ClientObjectManager.cpp" />
+    <ClCompile Include="ObjectFactory.cpp" />
     <ClCompile Include="PlayerCamera.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Potal.cpp" />
     <ClCompile Include="TestScene.cpp" />
   </ItemGroup>
   <ItemGroup>

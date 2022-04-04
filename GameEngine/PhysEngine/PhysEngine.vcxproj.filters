@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="소스 파일\Helper">
-      <UniqueIdentifier>{292d9480-d428-46bd-a2e3-f8b2f51073b2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\PhysEngine">
       <UniqueIdentifier>{e91549e7-96f0-4c22-9c19-5bded107d307}</UniqueIdentifier>
     </Filter>

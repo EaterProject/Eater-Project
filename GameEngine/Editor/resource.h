@@ -135,6 +135,7 @@
 #define IDC_SLIDER5                     1054
 #define IDC_CHECK8                      1055
 #define IDC_SLIDER6                     1055
+#define IDC_CHECK11                     1055
 #define IDC_COMBO3                      1056
 #define IDC_SLIDER7                     1056
 #define IDC_RADIO3                      1056

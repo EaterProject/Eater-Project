@@ -6,6 +6,8 @@
 TimeManager* Component::mTimeManager = nullptr;
 KeyinputManager* Component::mKeyInputManger = nullptr;
 
+
+
 //함수포인터의 해쉬코드들
 Component::Component()
 {

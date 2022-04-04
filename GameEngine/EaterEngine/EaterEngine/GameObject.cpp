@@ -7,7 +7,6 @@
 #include "Material.h"
 #include "Profiler/Profiler.h"
 
-std::vector<int> GameObject::TagList;
 GameObject::GameObject()
 {
 	Tag	= 0;			//ев╠в
@@ -261,50 +260,86 @@ Component* GameObject::GetComponent(int index)
 
 void GameObject::PushComponentFunction(Component* con, unsigned int type)
 {
-	std::string ComponentFunction = typeid(*con).name();
-	ComponentFunction = ComponentFunction.substr(ComponentFunction.find(" ") + 1, ComponentFunction.size());
-
 	switch (type)
 	{
 	case AWAKE:
-		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Push ][ %s ] 1.Awake", ComponentFunction.c_str());
 		ObjectManager::PushAwake(con,con->Awake_Order);
 		con->FUNCTION_MASK |= AWAKE;
 		break;
 	case START:
-		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Push ][ %s ] 3.Start", ComponentFunction.c_str());
 		ObjectManager::PushStart(con, con->Start_Order);
 		con->FUNCTION_MASK |= START;
 		break;
 	case SETUP:
-		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Push ][ %s ] 2.Setup", ComponentFunction.c_str());
 		ObjectManager::PushStartPlay(con, con->Start_Order);
 		con->FUNCTION_MASK |= SETUP;
 		break;
 	case START_UPDATE:
-		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Push ][ %s ] 4.StartUpdate", ComponentFunction.c_str());
+
 		ObjectManager::PushStartUpdate(con, con->StartUpdate_Order);
 		con->FUNCTION_MASK |= START_UPDATE;
 		break;
 	case Transform_UPDATE:
-		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Push ][ %s ] 5.TransformUpdate", ComponentFunction.c_str());
 		ObjectManager::PushTransformUpdate(con, con->TransformUpdate_Order);
 		con->FUNCTION_MASK |= Transform_UPDATE;
 		break;
 	case Physics_UPDATE:
-		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Push ][ %s ] 6.PhysicsUpdate", ComponentFunction.c_str());
 		ObjectManager::PushPhysicsUpdate(con, con->PhysicsUpdate_Order);
 		con->FUNCTION_MASK |= Physics_UPDATE;
 		break;
 	case UPDATE:
-		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Push ][ %s ] 7.Update", ComponentFunction.c_str());
 		ObjectManager::PushUpdate(con, con->DefaultUpdate_Order);
 		con->FUNCTION_MASK |= UPDATE;
 		break;
 	case END_UPDATE:
-		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Push ][ %s ] 8.EndUpdate", ComponentFunction.c_str());
 		ObjectManager::PushEndUpdate(con, con->EndUpdate_Order);
 		con->FUNCTION_MASK |= END_UPDATE;
+		break;
+	}
+}
+
+void GameObject::PushPhysFunction(Component* con, unsigned int type)
+{
+	switch (type)
+	{
+	case PHYS_TRIIGER_ENTER:
+		OnTrigger_Enter_Function.push_back(std::bind(&Component::OnTriggerEnter, con, std::placeholders::_1));
+		break;
+	case PHYS_TRIIGER_STAY:
+		OnTrigger_Stay_Function.push_back(std::bind(&Component::OnTriggerStay, con, std::placeholders::_1));
+		break;
+	case PHYS_TRIIGER_EXIT:
+		OnTrigger_Exit_Function.push_back(std::bind(&Component::OnTriggerExit, con, std::placeholders::_1));
+		break;
+	}
+
+}
+
+void GameObject::PlayPhysFunction(GameObject* Obj, unsigned int type)
+{
+	int Size = 0;
+	switch (type)
+	{
+	case PHYS_TRIIGER_ENTER:
+		Size = (int)OnTrigger_Enter_Function.size();
+		for (int i = 0; i < Size; i++)
+		{
+			OnTrigger_Enter_Function[i](Obj);
+		}
+		break;
+	case PHYS_TRIIGER_STAY:
+		Size = (int)OnTrigger_Stay_Function.size();
+		for (int i = 0; i < Size; i++)
+		{
+			OnTrigger_Stay_Function[i](Obj);
+		}
+		break;
+	case PHYS_TRIIGER_EXIT:
+		Size = (int)OnTrigger_Exit_Function.size();
+		for (int i = 0; i < Size; i++)
+		{
+			OnTrigger_Exit_Function[i](Obj);
+		}
 		break;
 	}
 }

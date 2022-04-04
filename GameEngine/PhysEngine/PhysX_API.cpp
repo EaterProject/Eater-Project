@@ -32,6 +32,11 @@ void PhysX_Create_Actor(PhysData* data)
 	}
 }
 
+PhysData* PhysX_Create_Data()
+{
+	return Engine->Create_PhysData();
+}
+
 void PhysX_Update_Actor(PhysData* data)
 {
 	if (Engine != nullptr)

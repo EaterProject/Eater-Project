@@ -18,7 +18,7 @@ PlayerCamera::PlayerCamera()
 	X_Radian = 0;
 	Y_Radian = 0;
 
-	CamOffet = { 0,2.5f,0 };
+	CamOffSet = { 0,2.5f,0 };
 	MouseCursor = true;
 }
 
@@ -28,22 +28,24 @@ PlayerCamera::~PlayerCamera()
 
 }
 
-void PlayerCamera::Awake()
+void PlayerCamera::SetUp()
 {
-	MainCam		= gameobject->GetComponent<Camera>();
-	mTransform	= gameobject->GetTransform();	
+	Userobject = FindGameObjectTag("Player");
+	MainCam = gameobject->GetComponent<Camera>();
+	mTransform = gameobject->GetTransform();
 
 	PastX = GetMousePosX();
 	PastY = GetMousePosY();
-	mTransform->Position = {0, 0 ,-10};
+	mTransform->Position = { 0, 0 ,-10 };
 
-	MouseCursor = GetTogle(VK_F10);
-	//ShowMouseCursor(MouseCursor);
-	//MouseCursorClip(MouseCursor);
-	SetMousePosCenter();
+	//MouseCursor = GetTogle(VK_F10);
+	ShowMouseCursor(MouseCursor);
+	MouseCursorClip(MouseCursor);
+	//SetMousePosCenter();
+
 }
 
-void PlayerCamera::EndUpdate()
+void PlayerCamera::StartUpdate()
 {
 	if (Userobject == nullptr) { return; }
 
@@ -83,13 +85,13 @@ void PlayerCamera::EndUpdate()
 	float Z = Horizontal_Z * X_Z_Ratio;
 	
 	//카메라의 위치값
-	mTransform->Position.x = X + TargetPos.x + CamOffet.x;
-	mTransform->Position.y = Y + TargetPos.y + CamOffet.y;
-	mTransform->Position.z = Z + TargetPos.z + CamOffet.z;
+	mTransform->Position.x = (X + TargetPos.x + CamOffSet.x);
+	mTransform->Position.y = (Y + TargetPos.y + CamOffSet.y);
+	mTransform->Position.z = (Z + TargetPos.z + CamOffSet.z);
 	
 	//카메라의 회전값
 	mTransform->Rotation.x = -(Y_Radian / MosControl) * 180 / 3.141592f;
-	mTransform->Rotation.y = (X_Radian / MosControl) * 180 / 3.141592f - 180;
+	mTransform->Rotation.y = (X_Radian / MosControl) * 180 / 3.141592f - 180.0f;
 	
 	
 	//키를 눌렀을때

@@ -34,6 +34,8 @@ class  PHYS_ENGINEDLL PhysData
 public:
 	 PhysData();
 	 ~PhysData();
+	 void* EaterObj = nullptr;
+
 	//월드 위치
 	Vector3 WorldPosition;
 	//회전
@@ -57,14 +59,14 @@ public:
 public:
 	//무게
 	float MT_Mass;
-	PhysMaterial* Meterial;
-	PhysCollider* Collider;
+	PhysMaterial* mMeterial;
+	PhysCollider* mCollider;
 public:
 	///객체 정보 데이터
 	//움직이는 객체인지 (Dinamic , Static)
 	bool isDinamic = true;
 	//중력 작용 여부
-	bool isGrvity = true;
+	bool isGravity = true;
 	//움직이진 않는데 충돌 할것인지
 	bool isKinematic;
 
@@ -74,8 +76,10 @@ public:
 public:
 	//이동에 관한 축변환을 막는다
 	void SetLockAxis_Position(bool x, bool y, bool z);
+	Vector3 GetLockAxis_Position();
 	//회전에 관한 축변환을 막는다
 	void SetLockAxis_Rotation(bool x, bool y, bool z);
+	Vector3 GetLockAxis_Rotation();
 private:
 	///위치 데이터
 	//로컬 위치 (계층 구조일때)
@@ -102,6 +106,7 @@ private:
 	bool OnTriggerExit;
 private:
 	void* ActorObj = nullptr;
+	
 
 	friend class Factory;
 	friend class PhysEngine;

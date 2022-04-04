@@ -5,7 +5,6 @@
 #include "Light.h"
 #include "Transform.h"
 #include "ParticleSystem.h"
-#include "KeyInput.h"
 #include "ClientNetworkManager.h"
 #include "PortIPDefine.h"
 #include "Camera.h"
@@ -50,14 +49,14 @@ void Loading::Update()
 {
 	if (ThreadRun == false)
 	{
-		ChoiceScene("intro");
+		ChoiceScene("inGame");
 	}
 }
 
 void Loading::End()
 {
 
-
+	 
 }
 
 void Loading::ThreadFunction()

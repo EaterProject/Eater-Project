@@ -1,4 +1,6 @@
 #include "PhysData.h"
+#include "PhysMaterial.h"
+#include "PhysCollider.h"
 
 PhysData::PhysData()
 {
@@ -15,7 +17,7 @@ PhysData::PhysData()
 	MT_Mass = 1.0f;
 
 	isDinamic	= false;
-	isGrvity	= true;
+	isGravity	= true;
 	isKinematic = false;
 	isVelocity	= false;
 	isForce		= false;
@@ -27,8 +29,8 @@ PhysData::PhysData()
 	OnTriggerExit = false;
 
 	ActorObj	= nullptr;
-	Meterial	= nullptr;
-	Collider	= nullptr;
+	mMeterial	= new PhysMaterial();
+	mCollider	= new PhysCollider();
 }
 
 PhysData::~PhysData()
@@ -122,11 +124,21 @@ void PhysData::SetLockAxis_Position(bool x, bool y, bool z)
 	FreezePositon.z = z;
 }
 
+Vector3 PhysData::GetLockAxis_Position()
+{
+	return Vector3(FreezePositon.x, FreezePositon.y, FreezePositon.z);
+}
+
 void PhysData::SetLockAxis_Rotation(bool x, bool y, bool z)
 {
 	FreezeRotaticon.x = x;
 	FreezeRotaticon.y = y;
 	FreezeRotaticon.z = z;
+}
+
+Vector3 PhysData::GetLockAxis_Rotation()
+{
+	return Vector3(FreezeRotaticon.x, FreezeRotaticon.y, FreezeRotaticon.z);
 }
 
 

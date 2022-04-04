@@ -35,6 +35,9 @@ protected:
 	unsigned int PhysicsUpdate_Order = FUNCTION_ORDER_CENTER;
 	unsigned int DefaultUpdate_Order = FUNCTION_ORDER_CENTER;
 	unsigned int EndUpdate_Order = FUNCTION_ORDER_CENTER;
+
+	const int ENGINE_COMPONENT = 0;
+	const int CLIENT_COMPONENT = 1;
 private:
 	//게임 오브젝트 안에 컨퍼넌트를 찾을때 이값으로 찾아옴
 	size_t ComponentType;

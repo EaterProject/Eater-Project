@@ -78,7 +78,7 @@ physx::PxShape* Factory::CreateShape(PhysMaterial* m, PhysCollider* c)
 PxShape* Factory::CreateBoxCollider(physx::PxMaterial* m, PhysCollider* c)
 {
 	PxBoxGeometry Geometry	= PxBoxGeometry(PxReal(c->GetSize().x), PxReal(c->GetSize().y), PxReal(c->GetSize().z));
-	PxShape* shape			= m_Phys->createShape(Geometry, *m, true , CreateShapeFlag(c->GetTrigger()));
+	PxShape* shape			= m_Phys->createShape(Geometry, *m, false , CreateShapeFlag(c->GetTrigger()));
 	return shape;
 }
 
@@ -114,8 +114,12 @@ void Factory::CreateDinamicActor(PhysData* Data, physx::PxShape* shape, physx::P
 	PxRigidDynamic* body = m_Phys->createRigidDynamic(*Tr);
 	SetAxisLock(body, Data);
 
-	const PxFilterData triggerFilterData(0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff);
-	shape->setSimulationFilterData(triggerFilterData);
+	//const PxFilterData triggerFilterData(0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff);
+	//shape->setSimulationFilterData(triggerFilterData);
+
+	shape->setFlag(PxShapeFlag::eSCENE_QUERY_SHAPE, true);
+	shape->setFlag(PxShapeFlag::eVISUALIZATION, true); //Ray, sweep등 할때 사용됨
+	shape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, Data->isTrigger);
 
 	body->attachShape(*shape);
 
@@ -124,7 +128,7 @@ void Factory::CreateDinamicActor(PhysData* Data, physx::PxShape* shape, physx::P
 	PxRigidBodyExt::updateMassAndInertia(*body, Data->MT_Mass,&temp);
 
 	body->setRigidBodyFlag(PxRigidBodyFlag::eKINEMATIC, Data->isKinematic);
-	body->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, !Data->isGrvity);
+	body->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, !Data->isGravity);
 	
 
 	//서로 연결
@@ -140,9 +144,8 @@ void Factory::CreateStaticActor(PhysData* Data, physx::PxShape* shape, physx::Px
 	if (Data->isDinamic == true) { return; }
 	PxRigidStatic* body = m_Phys->createRigidStatic(*Tr);
 
-	//const PxFilterData triggerFilterData(0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff);
-	//shape->setSimulationFilterData(triggerFilterData);
-
+	const PxFilterData triggerFilterData(0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff);
+	shape->setSimulationFilterData(triggerFilterData);
 
 	body->attachShape(*shape);
 	m_Scene->addActor(*body);
@@ -154,8 +157,8 @@ void Factory::CreateStaticActor(PhysData* Data, physx::PxShape* shape, physx::Px
 
 void Factory::CreateActoer(PhysData* data)
 {
-	PhysMaterial* mMaterial = data->Meterial;
-	PhysCollider* mCollider = data->Collider;
+	PhysMaterial* mMaterial = data->mMeterial;
+	PhysCollider* mCollider = data->mCollider;
 
 	///위치,회전을 지정해준다
 	PxVec3 Pos				= PxVec3(data->WorldPosition.x, data->WorldPosition.y, data->WorldPosition.z);
