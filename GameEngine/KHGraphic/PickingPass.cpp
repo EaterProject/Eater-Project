@@ -100,7 +100,9 @@ void PickingPass::Start(int width, int height)
 	m_ID_RT = g_Resource->GetRenderTexture<RT_ID>();
 	m_ID_RTV = m_ID_RT->GetRTV()->Get();
 	m_ID_Tex2D = m_ID_RT->GetTex2D()->Get();
+
 	m_ID_Copy_RT = g_Resource->GetRenderTexture<RT_ID_Copy>();
+	m_ID_Copy_RT->SetResize(false);
 	m_ID_CopyTex2D = m_ID_Copy_RT->GetTex2D()->Get();
 
 	// DepthStencilView 설정..
@@ -128,7 +130,7 @@ void PickingPass::BeginRender()
 {
 	g_Context->OMSetRenderTargets(1, &m_ID_RTV, m_Defalt_DSV);
 
-	g_Context->ClearRenderTargetView(m_ID_RTV, reinterpret_cast<const float*>(&DXColors::NonID));
+	g_Context->ClearRenderTargetView(m_ID_RTV, reinterpret_cast<const float*>(&DXColors::NonBlack));
 	g_Context->ClearDepthStencilView(m_Defalt_DSV, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 	g_Context->OMSetDepthStencilState(m_Defalt_DSS, 0);
 	g_Context->RSSetViewports(1, m_Screen_VP);
@@ -138,12 +140,13 @@ void PickingPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rende
 {
 	if (meshData == nullptr) return;
 	
-	ObjectData* obj = meshData->m_ObjectData;
-	MeshRenderBuffer* mesh = meshData->m_Mesh;
+	const CameraData* cam = g_GlobalData->Camera_Data;
+	const ObjectData* obj = meshData->m_ObjectData;
+	const MeshRenderBuffer* mesh = meshData->m_Mesh;
 
-	Matrix world = *obj->World;
-	Matrix viewproj = g_GlobalData->CamViewProj;
-	Vector4 hashColor = obj->HashColor;
+	const Matrix& world = *obj->World;
+	const Matrix& viewproj = cam->CamViewProj;
+	const Vector4& hashColor = obj->HashColor;
 
 	switch (obj->ObjType)
 	{
@@ -229,11 +232,11 @@ void PickingPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::
 		RenderUpdate(instance, meshlist[0]);
 		return;
 	}
-
-	Matrix viewproj = g_GlobalData->CamViewProj;
-
+	
 	ObjectData* obj = nullptr;
-	MeshRenderBuffer* mesh = instance->m_Mesh;
+	const MeshRenderBuffer* mesh = instance->m_Mesh;
+
+	const Matrix& viewproj = g_GlobalData->Camera_Data->CamViewProj;
 
 	for (int i = 0; i < meshlist.size(); i++)
 	{
@@ -308,9 +311,9 @@ void PickingPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::
 
 void PickingPass::NoneMeshRenderUpdate(const std::vector<RenderData*>& meshlist)
 {
-	Matrix viewproj = g_GlobalData->CamViewProj;
-
 	ObjectData* obj = nullptr;
+
+	const Matrix& viewproj = g_GlobalData->Camera_Data->CamViewProj;
 
 	for (int i = 0; i < meshlist.size(); i++)
 	{
@@ -324,7 +327,7 @@ void PickingPass::NoneMeshRenderUpdate(const std::vector<RenderData*>& meshlist)
 		m_MeshInstance.push_back(m_MeshData);
 		m_InstanceCount++;
 	}
-
+	
 	if (m_MeshInstance.empty()) return;
 
 	// Mapping SubResource Data..
@@ -371,17 +374,19 @@ void PickingPass::NoneMeshRenderUpdate(const std::vector<RenderData*>& meshlist)
 
 UINT PickingPass::FindPick(int x, int y)
 {
-	D3D11_BOX box;
-	box.left = x,
-	box.right = x + 1;
-	box.top = y,
-	box.bottom = y + 1;
-	box.front = 0;
-	box.back = 1;
+	m_PickPointBox.left		= x,
+	m_PickPointBox.right	= x + 1;
+	m_PickPointBox.top		= y,
+	m_PickPointBox.bottom	= y + 1;
+	m_PickPointBox.front	= 0;
+	m_PickPointBox.back		= 1;
 
 	g_Context->OMSetRenderTargets(0, nullptr, nullptr);
 
-	g_Context->CopySubresourceRegion(m_ID_CopyTex2D, 0, 0, 0, 0, m_ID_Tex2D, 0, &box);
+	g_Context->CopySubresourceRegion(m_ID_CopyTex2D, 0, 0, 0, 0, m_ID_Tex2D, 0, &m_PickPointBox);
+
+	// 현재 선택한 Object ID..
+	UINT pickID = 0;
 
 	// Mapping SubResource Data..
 	D3D11_MAPPED_SUBRESOURCE mappedResource;
@@ -390,10 +395,10 @@ UINT PickingPass::FindPick(int x, int y)
 	// GPU Access Lock Texture Data..
 	g_Context->Map(m_ID_CopyTex2D, 0, D3D11_MAP_READ, 0, &mappedResource);
 
-	UINT* pickID = (UINT*)mappedResource.pData;
+	pickID = ((UINT*)mappedResource.pData)[0];
 
 	// GPU Access UnLock Texture Data..
 	g_Context->Unmap(m_ID_CopyTex2D, 0);
 
-	return *pickID;
+	return pickID;
 }

@@ -1,6 +1,5 @@
 #include "Component.h"
 #include "GameObject.h"
-#include "DebugManager.h"
 #include "BaseManager.h"
 #include "ObjectManager.h"
 #include "LoadManager.h"

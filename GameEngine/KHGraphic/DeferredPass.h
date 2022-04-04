@@ -14,9 +14,10 @@ public:
 
 	void SetOption(UINT renderOption);
 
+public:
 	void BeginRender();
 	void RenderUpdate(const InstanceRenderBuffer* instance, const RenderData* mesh);
-	void RenderUpdate(const InstanceRenderBuffer* instance, const std::vector<RenderData*>& meshlist);
+	void RenderUpdate(const InstanceRenderBuffer* instance, const std::vector<RenderData*>& meshlist, const UINT& renderCount);
 
 private:
 	VertexShader* m_MeshVS;

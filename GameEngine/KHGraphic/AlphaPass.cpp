@@ -52,7 +52,6 @@ void AlphaPass::Create(int width, int height)
 void AlphaPass::Start(int width, int height)
 {
 	// Shader ¼³Á¤..
-	m_ParticleVS = g_Shader->GetShader("Particle_VS");
 	m_ParticleInstVS = g_Shader->GetShader("Particle_Instance_VS");
 	m_ParticlePS = g_Shader->GetShader("OIT_Particle_PS");
 
@@ -85,14 +84,12 @@ void AlphaPass::BeginRender()
 
 void AlphaPass::RenderUpdate(const InstanceRenderBuffer* instance, const RenderData* meshData)
 {
-	ObjectData* obj = meshData->m_ObjectData;
-	MeshRenderBuffer* mesh = instance->m_Mesh; 
-	MaterialRenderBuffer* mat = instance->m_Material;
+	const CameraData* cam = g_GlobalData->Camera_Data;
+	const ObjectData* obj = meshData->m_ObjectData;
+	const MeshRenderBuffer* mesh = instance->m_Mesh;
+	const MaterialRenderBuffer* mat = instance->m_Material;
 
-	Matrix view = g_GlobalData->CamView;
-	Matrix proj = g_GlobalData->CamProj;
-	Matrix invView = g_GlobalData->CamInvView;
-	Matrix viewproj = g_GlobalData->CamVP;
+	const Matrix& viewproj = cam->CamViewProj;
 
 	switch (instance->m_Type)
 	{
@@ -161,13 +158,11 @@ void AlphaPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::ve
 		RenderUpdate(instance, meshlist[0]);
 	}
 
-	Matrix view = g_GlobalData->CamView;
-	Matrix proj = g_GlobalData->CamProj;
-	Matrix invView = g_GlobalData->CamInvView;
-	Matrix viewproj = g_GlobalData->CamVP;
-
+	CameraData* cam = g_GlobalData->Camera_Data;
 	MeshRenderBuffer* mesh = instance->m_Mesh;
 	MaterialRenderBuffer* mat = instance->m_Material;
+
+	Matrix& viewproj = cam->CamViewProj;
 
 	switch (instance->m_Type)
 	{
@@ -235,8 +230,9 @@ void AlphaPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::ve
 void AlphaPass::ParticleUpdate(ParticleData* particleSystem)
 {
 	OneParticle* particle = nullptr;
+	CameraData* cam = g_GlobalData->Camera_Data;
 
-	Matrix invView = g_GlobalData->CamInvView;
+	Matrix invView = cam->CamInvView;
 	Matrix converseTM = Matrix::Identity;
 	Matrix particleWorld;
 

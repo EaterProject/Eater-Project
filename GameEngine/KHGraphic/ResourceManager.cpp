@@ -55,7 +55,6 @@ void GraphicResourceManager::OnResize(int width, int height)
 	// BackBuffer Resize..
 	tex2D = m_BackBuffer->GetTex2D();
 	rtv = m_BackBuffer->GetRTV();
-	srv = m_BackBuffer->GetSRV();
 
 	m_Graphic->CreateBackBuffer((UINT)width, (UINT)height, tex2D->ReleaseGetAddress(), rtv->ReleaseGetAddress(), nullptr);
 

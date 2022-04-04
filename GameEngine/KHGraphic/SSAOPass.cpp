@@ -158,9 +158,12 @@ void SSAOPass::RenderUpdate()
 	g_Context->ClearRenderTargetView(m_SsaoRTV, reinterpret_cast<const float*>(&DXColors::Black));
 	g_Context->RSSetViewports(1, m_HalfScreenVP);
 
+	CameraData* cam = g_GlobalData->Camera_Data;
+	Matrix& proj = cam->CamProj;
+
 	CB_SsaoObject objectBuf;
-	objectBuf.gViewToTexSpace = g_GlobalData->CamProj * g_GlobalData->TexSpace;
-	objectBuf.gProj = g_GlobalData->CamProj.Transpose();
+	objectBuf.gViewToTexSpace = proj * g_GlobalData->TexSpace;
+	objectBuf.gProj = proj.Transpose();
 
 	m_SsaoPS->ConstantBufferCopy(&objectBuf);
 

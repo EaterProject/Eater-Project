@@ -1,11 +1,11 @@
 #include "GameObject.h"
 #include "EngineData.h"
 #include "BaseManager.h"
-#include "DebugManager.h"
 #include "ObjectManager.h"
 #include "Transform.h"
 #include "MeshFilter.h"
 #include "Material.h"
+#include "Profiler/Profiler.h"
 
 GameObject::GameObject()
 {
@@ -263,6 +263,12 @@ void GameObject::PushComponentFunction(Component* con, unsigned int type)
 	switch (type)
 	{
 	case AWAKE:
+	std::string ComponentFunction = typeid(*con).name();
+	ComponentFunction = ComponentFunction.substr(ComponentFunction.find(" ") + 1, ComponentFunction.size());
+
+	switch (type)
+	{
+	case AWAKE:
 		ObjectManager::PushAwake(con,con->Awake_Order);
 		con->FUNCTION_MASK |= AWAKE;
 		break;
@@ -275,6 +281,7 @@ void GameObject::PushComponentFunction(Component* con, unsigned int type)
 		con->FUNCTION_MASK |= SETUP;
 		break;
 	case START_UPDATE:
+
 		ObjectManager::PushStartUpdate(con, con->StartUpdate_Order);
 		con->FUNCTION_MASK |= START_UPDATE;
 		break;

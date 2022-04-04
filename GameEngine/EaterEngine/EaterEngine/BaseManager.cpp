@@ -8,7 +8,6 @@ GlobalData* BaseManager::Global = nullptr;
 void BaseManager::Initialize()
 {
 	Global = new GlobalData();
-
 	Global->TexSpace = Matrix(	0.5f, 0.0f, 0.0f, 0.0f,
 								0.0f, -0.5f, 0.0f, 0.0f,
 								0.0f, 0.0f, 1.0f, 0.0f,
@@ -27,20 +26,13 @@ void BaseManager::Reset()
 void BaseManager::UpdateGlobalData(float dTime)
 {
 	//카메라 데이터
-	Matrix camView = Camera::g_MainCam->GetView();
-	Matrix camProj = Camera::g_MainCam->GetProj();
-	Matrix camInvView;
-	camInvView._11 = camView._11;	camInvView._12 = camView._12;	camInvView._13 = camView._13;
-	camInvView._21 = camView._21;	camInvView._22 = camView._22;	camInvView._23 = camView._23;
-	camInvView._31 = camView._31;	camInvView._32 = camView._32;	camInvView._33 = camView._33;
-	
-	Global->CamView = camView;
-	Global->CamProj = camProj;
-	Global->CamViewProj = camView * camProj;
-	Global->CamInvView = camInvView.Invert();
-	Global->CamPos = Camera::g_MainCam->GetPos();
+	CameraData* camData = Camera::g_MainCam->GetCameraData();
 
-	Global->CamVP = camView * camProj;
+	// 메인 카메라가 바뀌었을 경우 Data 변경
+	if (Global->Camera_Data != camData)
+	{
+		Global->Camera_Data = camData;
+	}
 
 	// 시간
 	Global->Time = dTime;

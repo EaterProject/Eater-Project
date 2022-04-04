@@ -7,6 +7,7 @@
 #include "Transform.h"
 #include "AI.h"
 #include "Player.h"
+#include "KeyInput.h"
 #include "Camera.h"
 #include "Light.h"
 #include "Terrain.h"
@@ -16,15 +17,19 @@
 #include "PortIPDefine.h"
 #include "PlayerCamera.h"
 #include "Player.h"
-#include "MonsterA.h"
+#include "Monster.h"
 #include "ParticleSystem.h"
 #include "Collider.h"
+
+//#define RELEASE_PROFILE
+#include "./Profiler/Profiler.h"
 
 void TestScene::Awake()
 {
 	LoadEnvironment("../Assets/Texture/Environment/Day.dds");
 	LoadTerrainMesh("../Assets/Model/TerrainModel/Terrain.fbx", "../Assets/Texture/Terrain/Terrain_RGB.png", SCALING);
 
+	PROFILE_TIMER_START(PROFILE_OUTPUT::CONSOLE, 1, "Load Folder");
 	Load("../Assets/Texture/ModelTexture");
 	Load("../Assets/Texture/Terrain");
 	//Load("../Assets/Texture/Particle");
@@ -32,28 +37,27 @@ void TestScene::Awake()
 	Load("../Assets/Model/MeshBuffer");
 	Load("../Assets/Model/ModelData");
 	Load("../Assets/Model/Animation");
+	PROFILE_TIMER_END("Load Folder"); 
 
 	//CreateTestObject();
 	CreateMap();
 	//CreateParticle(0,0,0);
 
 	SetEnvironment(true);
-	for (int i = 0; i < 1000; i++)
-	{
-		GameObject* Object = Instance();
-		Collider* Col = Object->AddComponent<Collider>();
-		Object->AddComponent<Rigidbody>();
-		Object->GetTransform()->Position = {0,(float)i,0};
-		Col->CreatePhys();
-	}
 }
 
 void TestScene::Update()
 {
+	//PROFILE_TIMER_START(PROFILE_OUTPUT::CONSOLE, "Update", 60);
 	
+	//static int renderCount = 0;
+	//PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "Update Count %d", renderCount++);
+	//PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "Update Count %d", renderCount++);
 
 	ChangeCubeMap();
 	//DebugDrawLine(Vector3(0.0f, 0.0f, 0.0f), Vector3(0.0f, 50.0f, 0.0f), Vector4(1.0f, 0.0f, 0.0f, 1.0f));
+	
+	//PROFILE_TIMER_END("Update");
 }
 
 void TestScene::End()
@@ -101,16 +105,16 @@ void TestScene::CreateMap()
 	Object->GetTransform()->Position.x -= 10.0f;
 	Object->GetTransform()->Position.y += 10.0f;
 
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("bossb+");
-	filter->SetAnimationName("bossb+");
-	AnimationController* AC = Object->AddComponent<AnimationController>();
-	AC->Choice("idle");
-
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("box");
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("bossb+");
+	//filter->SetAnimationName("bossb+");
+	//AnimationController* AC = Object->AddComponent<AnimationController>();
+	//AC->Choice("idle");
+	//
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("box");
 
 	//Object = Instance();
 	//filter = Object->AddComponent<MeshFilter>();
@@ -120,15 +124,15 @@ void TestScene::CreateMap()
 	//filter = Object->AddComponent<MeshFilter>();
 	//filter->SetModelName("Inside_village");
 	//
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//Tr = Object->GetTransform();
-	//filter->SetModelName("Outside_Rock");
-	//
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("Outside_bossOBJ");
-	//
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	Tr = Object->GetTransform();
+	filter->SetModelName("Outside_Rock");
+
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	filter->SetModelName("Outside_bossOBJ");
+	
 	//Object = Instance();
 	//filter = Object->AddComponent<MeshFilter>();
 	//filter->SetModelName("Outside_Other");
@@ -136,8 +140,6 @@ void TestScene::CreateMap()
 	//Object = Instance();
 	//filter = Object->AddComponent<MeshFilter>();
 	//filter->SetModelName("Outside_Pebble");
-
-	Load("../Assets/Scene/Demo.Scene");
 
 	testobj = InstanceTerrain("Terrain");
 	Terrain* mTerrain = testobj->GetComponent<Terrain>();

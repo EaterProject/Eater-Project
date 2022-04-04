@@ -6,7 +6,6 @@
 #include "LoadManager.h"
 #include "ObjectManager.h"
 #include "SceneManager.h"
-#include "DebugManager.h"
 #include "GraphicEngineManager.h"
 #include "TimeManager.h"
 #include "MaterialManager.h"
@@ -30,6 +29,8 @@
 #include "Terrain.h"
 #include "ParticleSystem.h"
 #include "CameraDebugKeyInput.h"
+
+#include "Profiler/Profiler.h"
 
 int GameEngine::WinSizeWidth	= 0;
 int GameEngine::WinSizeHeight	= 0;
@@ -80,7 +81,6 @@ void GameEngine::Initialize(HWND Hwnd, bool mConsoleDebug)
 	mLoadManager		= new LoadManager();
 	mObjectManager		= new ObjectManager();
 	mSceneManager		= new SceneManager();
-	mDebugManager		= new DebugManager();
 	mGraphicManager		= new GraphicEngineManager();
 	mTimeManager		= new TimeManager();
 	mLightManager		= new LightManager();
@@ -91,7 +91,6 @@ void GameEngine::Initialize(HWND Hwnd, bool mConsoleDebug)
 	BaseManager::Initialize();
 	mGraphicManager->Initialize(Hwnd, WinSizeWidth, WinSizeHeight);
 	mKeyManager->Initialize(mHwnd);
-	mDebugManager->Initialize(mKeyManager,mConsoleDebug);
 	mObjectManager->Initialize();
 	mSceneManager->Initialize(mObjectManager);
 	mLoadManager->Initialize(mGraphicManager, &g_CS);
@@ -130,7 +129,6 @@ void GameEngine::Update()
 	mKeyManager->Update();
 	mPhysManager->Update(mTimeManager->DeltaTime());
 	mSceneManager->Update();
-	mDebugManager->Update();
 	mObjectManager->PlayUpdate();
 
 	// 모든 업데이트가 일어난 후 데이터 세팅..
@@ -156,7 +154,6 @@ void GameEngine::Finish()
 	delete mKeyManager;
 	delete mLoadManager;
 
-	mDebugManager->Delete();
 	mSceneManager->Delete();
 
 	BaseManager::Reset();
@@ -172,8 +169,7 @@ void GameEngine::OnResize(int Change_Width, int Change_Height)
 	if (Change_Width == 0 || Change_Height == 0) return;
 	if (mGraphicManager == nullptr) return;
 
-	DebugManager::Print(std::to_string(WinSizeWidth).c_str());
-	DebugManager::Print(std::to_string(WinSizeHeight).c_str());
+	PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Resize ][ Screen ] %d / %d", WinSizeWidth, WinSizeHeight);
 
 	//카메라의 변화할 사이즈를 넣어준다
 	Camera::g_MainCam->SetSize(WinSizeWidth, WinSizeHeight);
@@ -191,11 +187,11 @@ void GameEngine::OnResize(int Change_Width, int Change_Height)
 ///오브젝트 생성 삭제
 GameObject* GameEngine::Instance(std::string ObjName)
 {
-	DebugManager::Line("(Mesh)");
+	PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Create ][ GameObject ] %s", ObjName.c_str());
+
 	//오브젝트 생성
 	GameObject* temp = CreateInstance();
 	temp->Name = ObjName;
-	DebugManager::Print(DebugManager::MSG_TYPE::MSG_CREATE, "GameObject", ObjName, false);
 
 	//Transform 은 기본으로 넣어준다
 	Transform* Tr = temp->AddComponent<Transform>();
@@ -206,10 +202,10 @@ GameObject* GameEngine::Instance(std::string ObjName)
 
 GameObject* GameEngine::InstanceTerrain(std::string ObjName)
 {
-	DebugManager::Line("(Terrain)");
+	PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Create ][ Terrain ] %s", ObjName.c_str());
+
 	GameObject* temp = CreateInstance();
 	temp->Name = ObjName;
-	DebugManager::Print(DebugManager::MSG_TYPE::MSG_CREATE, "Terrain", ObjName, false);
 
 	//Transform
 	Transform* Tr = temp->AddComponent<Transform>();
@@ -224,10 +220,10 @@ GameObject* GameEngine::InstanceTerrain(std::string ObjName)
 
 GameObject* GameEngine::InstanceParticle(std::string ObjName)
 {
-	DebugManager::Line("(Particle)");
+	PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Create ][ Particle ] %s", ObjName.c_str());
+	
 	GameObject* temp = CreateInstance();
 	temp->Name = ObjName;
-	DebugManager::Print(DebugManager::MSG_TYPE::MSG_CREATE, "Particle", ObjName, false);
 	
 	//Transform
 	Transform* Tr = temp->AddComponent<Transform>();
@@ -241,7 +237,8 @@ GameObject* GameEngine::InstanceParticle(std::string ObjName)
 
 GameObject* GameEngine::InstanceCamera(std::string ObjName)
 {
-	DebugManager::Line("(Camera)");
+	PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Create ][ Camera ] %s", ObjName.c_str());
+	
 	GameObject* Obj	= CreateInstance();
 	Obj->transform = Obj->AddComponent<Transform>();
 	Obj->AddComponent<Camera>();
@@ -251,7 +248,8 @@ GameObject* GameEngine::InstanceCamera(std::string ObjName)
 
 GameObject* GameEngine::InstanceLight(std::string ObjName, LIGHT_TYPE type)
 {
-	DebugManager::Line("(Light)");
+	PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Create ][ Light ] %s", ObjName.c_str());
+	
 	GameObject* temp = CreateInstance();
 	temp->Name = ObjName;
 	
@@ -287,7 +285,7 @@ GameObject* GameEngine::InstanceLight(std::string ObjName, LIGHT_TYPE type)
 
 Material* GameEngine::InstanceMaterial(std::string matName /*= "Material"*/)
 {
-	DebugManager::Line("(Material)");
+	PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Create ][ Material ] %s", matName.c_str());
 
 	Material* temp = CreateMaterial();
 
@@ -327,7 +325,7 @@ void GameEngine::PushScene(Scene* mScene, std::string name)
 
 void GameEngine::ChoiceScene(std::string name)
 {
-	DebugManager::Print(DebugManager::MSG_TYPE::MSG_SYSTEM, "현재 씬:", name, false);
+	PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Choice ][ Scene ] %s", name.c_str());
 
 	//씬 선택이 되면 씬자체의 Awack와 Start 함수 실행 그리고나서 컨퍼넌트의 Awack와 Start 도 실행 
 	mSceneManager->ChoiceScene(name);

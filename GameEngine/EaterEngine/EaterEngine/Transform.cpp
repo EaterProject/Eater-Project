@@ -2,7 +2,6 @@
 #include "Transform.h"
 #include "GameObject.h"
 #include "EngineData.h"
-#include "DebugManager.h"
 #include "Rigidbody.h"
 #include "Collider.h"
 #include "TimeManager.h"

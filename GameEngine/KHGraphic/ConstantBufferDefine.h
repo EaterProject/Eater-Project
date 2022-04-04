@@ -65,27 +65,27 @@ struct CB_InstanceSkinMesh : public cbInstanceSkinMesh
 	DirectX::SimpleMath::Matrix gBoneTransforms[96];
 };
 
-SHADER_CONSTANT_BUFFER(cbShadowStaticMesh)
-struct CB_StaticMeshPos : public cbShadowStaticMesh
+SHADER_CONSTANT_BUFFER(cbDepthStaticMesh)
+struct CB_DepthStaticMesh : public cbDepthStaticMesh
 {
 	DirectX::SimpleMath::Matrix gWorldViewProj;
 };
 
-SHADER_CONSTANT_BUFFER(cbInstanceShadowStaticMesh)
-struct CB_InstanceStaticMeshPos : public cbInstanceShadowStaticMesh
+SHADER_CONSTANT_BUFFER(cbInstanceDepthStaticMesh)
+struct CB_InstanceDepthStaticMesh : public cbInstanceDepthStaticMesh
 {
 	DirectX::SimpleMath::Matrix gViewProj;
 };
 
-SHADER_CONSTANT_BUFFER(cbShadowSkinMesh)
-struct CB_SkinMeshPos : public cbShadowSkinMesh
+SHADER_CONSTANT_BUFFER(cbDepthSkinMesh)
+struct CB_DepthSkinMesh : public cbDepthSkinMesh
 {
 	DirectX::SimpleMath::Matrix gWorldViewProj;
 	DirectX::SimpleMath::Matrix gBoneTransforms[96];
 };
 
-SHADER_CONSTANT_BUFFER(cbInstanceShadowSkinMesh)
-struct CB_InstanceShadowSkinMesh : public cbInstanceShadowSkinMesh
+SHADER_CONSTANT_BUFFER(cbInstanceDepthSkinMesh)
+struct CB_InstanceDepthSkinMesh : public cbInstanceDepthSkinMesh
 {
 	DirectX::SimpleMath::Matrix gViewProj;
 	DirectX::SimpleMath::Matrix gBoneTransforms[96];

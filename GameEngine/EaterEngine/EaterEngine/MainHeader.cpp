@@ -1,9 +1,9 @@
 #include "MainHeader.h"
 #include "GameEngine.h"
 #include "PhysManager.h"
-#include "DebugManager.h"
 #include "PhysData.h"
 #include "EngineData.h"
+#include "Profiler/Profiler.h"
 
 GameEngine* gGameEngine = nullptr;
 GameObject* gPickObject = nullptr;
@@ -244,7 +244,7 @@ void CreateSceneSub(Scene* mSceneTemp, std::string SceneName)
 
   void DebugPrint(std::string str)
  {
-	  DebugManager::Print(str);
+	  PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Client ][ Debug ] %s", str.c_str());
  }
 
  void Network_SetManager(NetworkManagerComponent* Manager)

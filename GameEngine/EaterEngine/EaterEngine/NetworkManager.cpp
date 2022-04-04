@@ -10,9 +10,8 @@
 //엔진쪽 헤더
 #include "GameObject.h"
 #include "NetworkComponent.h"
-#include "DebugManager.h"
 #include "NetworkManagerComponent.h"
-#include "DebugManager.h"
+#include "Profiler/Profiler.h"
 
 std::vector<Network_Message> Msg_Vec;
 NetworkManager::NetworkManager()
@@ -120,12 +119,13 @@ void NetworkManager::C2S_LOADING_COMPLETE(unsigned int Number)
 void NetworkManager::C2S_CONNECT(int ServerPort,std::string  Local_Connect_IP)
 {
 	/// 서버에 연결 요청을 한다
-	DebugManager::Line("(네트워크 연결)");
+	PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "(네트워크 연결)");
+
 	while (!mDHNetWork->Connect(ServerPort, Local_Connect_IP))
 	{
-		DebugManager::Print(DebugManager::MSG_TYPE::MSG_SYSTEM,"CONNECT 연결요청중...", Local_Connect_IP,false);
+		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "CONNECT 연결요청중...");
 	};
 
 	///연결완료
-	DebugManager::Print(DebugManager::MSG_TYPE::MSG_SYSTEM, "CONNECT","연결완료", false);
+	PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "CONNECT 연결완료...");
 }

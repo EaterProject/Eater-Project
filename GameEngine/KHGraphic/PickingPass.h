@@ -40,6 +40,7 @@ private:
 	ID3D11DepthStencilView* m_Defalt_DSV;
 
 	D3D11_VIEWPORT* m_Screen_VP;
+	D3D11_BOX m_PickPointBox;
 
 	VertexInput::MeshIDInstance m_MeshData;
 	std::vector<VertexInput::MeshIDInstance> m_MeshInstance;

@@ -1,8 +1,8 @@
 #include "BaseManager.h"
 #include "SceneManager.h"
 #include "ObjectManager.h"
-#include "DebugManager.h"
 #include "Scene.h"
+#include "Profiler/Profiler.h"
 
 SceneManager::SceneManager()
 {
@@ -69,9 +69,7 @@ Scene* SceneManager::FindScene(std::string& Name)
 	//씬을 찾지 못했을 경우
 	if (SceneList.find(Name) == SceneList.end())
 	{
-		std::string temp = "현재 씬을 찾지 못했습니다 ->";
-		temp += Name;
-		DebugManager::Print(temp);
+		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Scene ] '%s Scene'을 찾지 못했습니다", Name.c_str());
 		return nullptr;
 	}
 	else
@@ -91,9 +89,12 @@ void SceneManager::SceneStart()
 		if (SubThread.joinable() == false)
 		{
 			//활성화가 되어있지않다면 새로운 함수를넣어주고 쓰레드를 돌린다
-			DebugManager::Print(DebugManager::MSG_TYPE::MSG_SYSTEM, "Thread", "데이터 로드중...", false);
+			PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Thread ][ Load ] 데이터 로드 시작");
+			PROFILE_TIMER_START(PROFILE_OUTPUT::CONSOLE, 1, "Thread Load");
 			SubThread = std::thread(std::bind(&Scene::Run, NowScene));
-			DebugManager::Print(DebugManager::MSG_TYPE::MSG_SYSTEM, "Thread", "데이터 로드 완료", false);
+			PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Thread ][ Load ] 데이터 로드 완료");
+			PROFILE_TIMER_END("Thread Load");
+
 			break;
 		}
 		else

@@ -15,7 +15,7 @@ public:
 
 public:
 	void BeginRender();
-	void RenderUpdate(const InstanceRenderBuffer* instance, const std::vector<RenderData*>& meshlist);
+	void RenderUpdate(const InstanceRenderBuffer* instance, const std::vector<RenderData*>& meshlist, const UINT& renderCount);
 	void RenderUpdate(const InstanceRenderBuffer* instance, const RenderData* meshData);
 
 private:
@@ -28,8 +28,8 @@ private:
 
 	InstanceBuffer* m_Mesh_IB;
 	
-	VertexInput::MeshInstance m_MeshData;
-	std::vector<VertexInput::MeshInstance>	m_MeshInstance;
+	VertexInput::MeshDepthInstance m_MeshData;
+	std::vector<VertexInput::MeshDepthInstance>	m_MeshInstance;
 
 	UINT m_InstanceCount = 0;
 	size_t m_InstanceStride = 0;

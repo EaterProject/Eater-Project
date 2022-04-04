@@ -247,6 +247,12 @@
     <Filter Include="소스 파일\Shader\HLSL\Sub\MeshID">
       <UniqueIdentifier>{9cf1e467-8a94-4a18-8e53-6e9edcb4eb8e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Shader\HLSL\Sub\Culling">
+      <UniqueIdentifier>{098a5fb3-edf3-439d-8fb7-0fb54f8e50d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\RenderPass\SubPass\Culling">
+      <UniqueIdentifier>{cf0fd4bf-4731-4dbc-a970-16557e63f985}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -474,6 +480,12 @@
     <ClInclude Include="PickingPass.h">
       <Filter>소스 파일\RenderPass\SubPass\Picking</Filter>
     </ClInclude>
+    <ClInclude Include="CullingPass.h">
+      <Filter>소스 파일\RenderPass\SubPass\Culling</Filter>
+    </ClInclude>
+    <ClInclude Include="Patch_Chapters.h">
+      <Filter>소스 파일\Helper</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="D3D11Graphic.cpp">
@@ -596,161 +608,161 @@
     <ClCompile Include="PickingPass.cpp">
       <Filter>소스 파일\RenderPass\SubPass\Picking</Filter>
     </ClCompile>
+    <ClCompile Include="CullingPass.cpp">
+      <Filter>소스 파일\RenderPass\SubPass\Culling</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="..\Resources\Shader\Debug_PS.hlsl">
+    <FxCompile Include="..\Assets\Shader\Debug_PS.hlsl">
       <Filter>소스 파일\Shader\HLSL\Debug</Filter>
     </FxCompile>
-    <FxCompile Include="..\Resources\Shader\Debug_VS.hlsl">
+    <FxCompile Include="..\Assets\Shader\Debug_VS.hlsl">
       <Filter>소스 파일\Shader\HLSL\Debug</Filter>
     </FxCompile>
-    <FxCompile Include="..\Resources\Shader\IBL_IntegrateBRDF_PS.hlsl">
+    <FxCompile Include="..\Assets\Shader\IBL_IntegrateBRDF_PS.hlsl">
       <Filter>소스 파일\Shader\HLSL\IBL</Filter>
     </FxCompile>
-    <FxCompile Include="..\Resources\Shader\IBL_PrefilterMap_PS.hlsl">
+    <FxCompile Include="..\Assets\Shader\IBL_PrefilterMap_PS.hlsl">
       <Filter>소스 파일\Shader\HLSL\IBL</Filter>
     </FxCompile>
-    <FxCompile Include="..\Resources\Shader\IBL_Convolution_PS.hlsl">
+    <FxCompile Include="..\Assets\Shader\IBL_Convolution_PS.hlsl">
       <Filter>소스 파일\Shader\HLSL\IBL</Filter>
     </FxCompile>
-    <FxCompile Include="..\Resources\Shader\OIT_Blend_PS.hlsl">
-      <Filter>소스 파일\Shader\HLSL\Render\OIT</Filter>
-    </FxCompile>
-    <FxCompile Include="..\Resources\Shader\Particle_VS.hlsl">
-      <Filter>소스 파일\Shader\HLSL\Render\Particle</Filter>
-    </FxCompile>
-    <FxCompile Include="..\Resources\Shader\PostProcess_PS.hlsl">
-      <Filter>소스 파일\Shader\HLSL\PostProcess</Filter>
-    </FxCompile>
-    <FxCompile Include="..\Resources\Shader\Screen_VS.hlsl">
-      <Filter>소스 파일\Shader\HLSL\Render\Screen</Filter>
-    </FxCompile>
-    <FxCompile Include="..\Resources\Shader\SkyBox_PS.hlsl">
-      <Filter>소스 파일\Shader\HLSL\SkyBox</Filter>
-    </FxCompile>
-    <FxCompile Include="..\Resources\Shader\SkyBox_VS.hlsl">
-      <Filter>소스 파일\Shader\HLSL\SkyBox</Filter>
-    </FxCompile>
-    <FxCompile Include="..\Resources\Shader\SSAO_PS.hlsl">
-      <Filter>소스 파일\Shader\HLSL\SSAO</Filter>
-    </FxCompile>
-    <FxCompile Include="..\Resources\Shader\SSAO_Blur_PS.hlsl">
-      <Filter>소스 파일\Shader\HLSL\SSAO</Filter>
-    </FxCompile>
-    <FxCompile Include="..\Resources\Shader\BloomSampling_PS.hlsl">
+    <FxCompile Include="..\Assets\Shader\BloomBlur_CS.hlsl">
       <Filter>소스 파일\Shader\HLSL\PostProcess\Bloom</Filter>
     </FxCompile>
-    <FxCompile Include="..\Resources\Shader\BloomBlur_CS.hlsl">
+    <FxCompile Include="..\Assets\Shader\BloomDownSampling_CS.hlsl">
       <Filter>소스 파일\Shader\HLSL\PostProcess\Bloom</Filter>
     </FxCompile>
-    <FxCompile Include="..\Resources\Shader\BloomDownSampling_CS.hlsl">
+    <FxCompile Include="..\Assets\Shader\BloomSampling_PS.hlsl">
       <Filter>소스 파일\Shader\HLSL\PostProcess\Bloom</Filter>
     </FxCompile>
-    <FxCompile Include="..\Resources\Shader\FXAA_PS.hlsl">
-      <Filter>소스 파일\Shader\HLSL\PostProcess\FXAA</Filter>
-    </FxCompile>
-    <FxCompile Include="..\Resources\Shader\ToneMapping_PS.hlsl">
-      <Filter>소스 파일\Shader\HLSL\PostProcess\ToneMap</Filter>
-    </FxCompile>
-    <FxCompile Include="..\Resources\Shader\Fog_PS.hlsl">
+    <FxCompile Include="..\Assets\Shader\Fog_PS.hlsl">
       <Filter>소스 파일\Shader\HLSL\PostProcess\Fog</Filter>
     </FxCompile>
-    <FxCompile Include="..\Resources\Shader\TerrainMesh_VS.hlsl">
-      <Filter>소스 파일\Shader\HLSL\Render\Mesh</Filter>
+    <FxCompile Include="..\Assets\Shader\FXAA_PS.hlsl">
+      <Filter>소스 파일\Shader\HLSL\PostProcess\FXAA</Filter>
     </FxCompile>
-    <FxCompile Include="..\Resources\Shader\Light_IBL_PS.hlsl">
-      <Filter>소스 파일\Shader\HLSL\Render\Light</Filter>
+    <FxCompile Include="..\Assets\Shader\ToneMapping_PS.hlsl">
+      <Filter>소스 파일\Shader\HLSL\PostProcess\ToneMap</Filter>
     </FxCompile>
-    <FxCompile Include="..\Resources\Shader\Light_PBR_PS.hlsl">
-      <Filter>소스 파일\Shader\HLSL\Render\Light</Filter>
+    <FxCompile Include="..\Assets\Shader\PostProcess_PS.hlsl">
+      <Filter>소스 파일\Shader\HLSL\PostProcess</Filter>
     </FxCompile>
-    <FxCompile Include="..\Resources\Shader\Light_Legacy_PS.hlsl">
-      <Filter>소스 파일\Shader\HLSL\Render\Light</Filter>
-    </FxCompile>
-    <FxCompile Include="..\Resources\Shader\SkinMesh_VS.hlsl">
-      <Filter>소스 파일\Shader\HLSL\Render\Mesh</Filter>
-    </FxCompile>
-    <FxCompile Include="..\Resources\Shader\Deferred_Legacy_PS.hlsl">
+    <FxCompile Include="..\Assets\Shader\Deferred_PBR_PS.hlsl">
       <Filter>소스 파일\Shader\HLSL\Render\Deferred</Filter>
     </FxCompile>
-    <FxCompile Include="..\Resources\Shader\Deferred_PBR_PS.hlsl">
+    <FxCompile Include="..\Assets\Shader\Deferred_Legacy_PS.hlsl">
       <Filter>소스 파일\Shader\HLSL\Render\Deferred</Filter>
     </FxCompile>
-    <FxCompile Include="..\Resources\Shader\OIT_Particle_PS.hlsl">
+    <FxCompile Include="..\Assets\Shader\Light_IBL_PS.hlsl">
+      <Filter>소스 파일\Shader\HLSL\Render\Light</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Assets\Shader\Light_PBR_PS.hlsl">
+      <Filter>소스 파일\Shader\HLSL\Render\Light</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Assets\Shader\Light_Legacy_PS.hlsl">
+      <Filter>소스 파일\Shader\HLSL\Render\Light</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Assets\Shader\SkinMesh_VS.hlsl">
+      <Filter>소스 파일\Shader\HLSL\Render\Mesh</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Assets\Shader\SkinMesh_Instance_VS.hlsl">
+      <Filter>소스 파일\Shader\HLSL\Render\Mesh</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Assets\Shader\StaticMesh_VS.hlsl">
+      <Filter>소스 파일\Shader\HLSL\Render\Mesh</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Assets\Shader\StaticMesh_Instance_VS.hlsl">
+      <Filter>소스 파일\Shader\HLSL\Render\Mesh</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Assets\Shader\TerrainMesh_VS.hlsl">
+      <Filter>소스 파일\Shader\HLSL\Render\Mesh</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Assets\Shader\OIT_Particle_PS.hlsl">
       <Filter>소스 파일\Shader\HLSL\Render\OIT</Filter>
     </FxCompile>
-    <FxCompile Include="..\Resources\Shader\SkinMesh_Instance_VS.hlsl">
-      <Filter>소스 파일\Shader\HLSL\Render\Mesh</Filter>
+    <FxCompile Include="..\Assets\Shader\OIT_Blend_PS.hlsl">
+      <Filter>소스 파일\Shader\HLSL\Render\OIT</Filter>
     </FxCompile>
-    <FxCompile Include="..\Resources\Shader\StaticMesh_Instance_VS.hlsl">
-      <Filter>소스 파일\Shader\HLSL\Render\Mesh</Filter>
+    <FxCompile Include="..\Assets\Shader\OIT_Mesh_PS.hlsl">
+      <Filter>소스 파일\Shader\HLSL\Render\OIT</Filter>
     </FxCompile>
-    <FxCompile Include="..\Resources\Shader\StaticMesh_VS.hlsl">
-      <Filter>소스 파일\Shader\HLSL\Render\Mesh</Filter>
-    </FxCompile>
-    <FxCompile Include="..\Resources\Shader\Particle_Instance_VS.hlsl">
+    <FxCompile Include="..\Assets\Shader\Particle_Instance_VS.hlsl">
       <Filter>소스 파일\Shader\HLSL\Render\Particle</Filter>
     </FxCompile>
-    <FxCompile Include="..\Resources\Shader\Shadow_SkinMesh_VS.hlsl">
+    <FxCompile Include="..\Assets\Shader\Screen_VS.hlsl">
+      <Filter>소스 파일\Shader\HLSL\Render\Screen</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Assets\Shader\Shadow_StaticMesh_VS.hlsl">
       <Filter>소스 파일\Shader\HLSL\Render\Shadow</Filter>
     </FxCompile>
-    <FxCompile Include="..\Resources\Shader\Shadow_StaticMesh_VS.hlsl">
+    <FxCompile Include="..\Assets\Shader\Shadow_SkinMesh_Instance_VS.hlsl">
       <Filter>소스 파일\Shader\HLSL\Render\Shadow</Filter>
     </FxCompile>
-    <FxCompile Include="..\Resources\Shader\Shadow_SkinMesh_Instance_VS.hlsl">
+    <FxCompile Include="..\Assets\Shader\Shadow_SkinMesh_VS.hlsl">
       <Filter>소스 파일\Shader\HLSL\Render\Shadow</Filter>
     </FxCompile>
-    <FxCompile Include="..\Resources\Shader\Shadow_StaticMesh_Instance_VS.hlsl">
+    <FxCompile Include="..\Assets\Shader\Shadow_StaticMesh_Instance_VS.hlsl">
       <Filter>소스 파일\Shader\HLSL\Render\Shadow</Filter>
     </FxCompile>
-    <FxCompile Include="..\Resources\Shader\OIT_Mesh_PS.hlsl">
-      <Filter>소스 파일\Shader\HLSL\Render\OIT</Filter>
+    <FxCompile Include="..\Assets\Shader\SkyBox_PS.hlsl">
+      <Filter>소스 파일\Shader\HLSL\SkyBox</Filter>
     </FxCompile>
-    <FxCompile Include="..\Resources\Shader\ID_Mesh_PS.hlsl">
+    <FxCompile Include="..\Assets\Shader\SkyBox_VS.hlsl">
+      <Filter>소스 파일\Shader\HLSL\SkyBox</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Assets\Shader\SSAO_PS.hlsl">
+      <Filter>소스 파일\Shader\HLSL\SSAO</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Assets\Shader\SSAO_Blur_PS.hlsl">
+      <Filter>소스 파일\Shader\HLSL\SSAO</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Assets\Shader\ID_StaticMesh_VS.hlsl">
       <Filter>소스 파일\Shader\HLSL\Sub\MeshID</Filter>
     </FxCompile>
-    <FxCompile Include="..\Resources\Shader\ID_SkinMesh_VS.hlsl">
+    <FxCompile Include="..\Assets\Shader\ID_SkinMesh_Instance_VS.hlsl">
       <Filter>소스 파일\Shader\HLSL\Sub\MeshID</Filter>
     </FxCompile>
-    <FxCompile Include="..\Resources\Shader\ID_StaticMesh_Instance_VS.hlsl">
+    <FxCompile Include="..\Assets\Shader\ID_SkinMesh_VS.hlsl">
       <Filter>소스 파일\Shader\HLSL\Sub\MeshID</Filter>
     </FxCompile>
-    <FxCompile Include="..\Resources\Shader\ID_StaticMesh_VS.hlsl">
+    <FxCompile Include="..\Assets\Shader\ID_Mesh_PS.hlsl">
       <Filter>소스 파일\Shader\HLSL\Sub\MeshID</Filter>
     </FxCompile>
-    <FxCompile Include="..\Resources\Shader\ID_SkinMesh_Instance_VS.hlsl">
+    <FxCompile Include="..\Assets\Shader\ID_StaticMesh_Instance_VS.hlsl">
       <Filter>소스 파일\Shader\HLSL\Sub\MeshID</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Resources\Shader\IBL_Header.hlsli">
+    <None Include="..\Assets\Shader\Conversion_Header.hlsli">
       <Filter>소스 파일\Shader\HLSL\Header</Filter>
     </None>
-    <None Include="..\Resources\Shader\Define_Header.hlsli">
+    <None Include="..\Assets\Shader\Output_Header.hlsli">
       <Filter>소스 파일\Shader\HLSL\Header</Filter>
     </None>
-    <None Include="..\Resources\Shader\Light_Header.hlsli">
+    <None Include="..\Assets\Shader\Input_Header.hlsli">
       <Filter>소스 파일\Shader\HLSL\Header</Filter>
     </None>
-    <None Include="..\Resources\Shader\OIT_Header.hlsli">
+    <None Include="..\Assets\Shader\Instance_Header.hlsli">
       <Filter>소스 파일\Shader\HLSL\Header</Filter>
     </None>
-    <None Include="..\Resources\Shader\PBR_Header.hlsli">
+    <None Include="..\Assets\Shader\Function_Header.hlsli">
       <Filter>소스 파일\Shader\HLSL\Header</Filter>
     </None>
-    <None Include="..\Resources\Shader\Function_Header.hlsli">
+    <None Include="..\Assets\Shader\PBR_Header.hlsli">
       <Filter>소스 파일\Shader\HLSL\Header</Filter>
     </None>
-    <None Include="..\Resources\Shader\Input_Header.hlsli">
+    <None Include="..\Assets\Shader\Define_Header.hlsli">
       <Filter>소스 파일\Shader\HLSL\Header</Filter>
     </None>
-    <None Include="..\Resources\Shader\Output_Header.hlsli">
+    <None Include="..\Assets\Shader\Light_Header.hlsli">
       <Filter>소스 파일\Shader\HLSL\Header</Filter>
     </None>
-    <None Include="..\Resources\Shader\Instance_Header.hlsli">
+    <None Include="..\Assets\Shader\OIT_Header.hlsli">
       <Filter>소스 파일\Shader\HLSL\Header</Filter>
     </None>
-    <None Include="..\Resources\Shader\Conversion_Header.hlsli">
+    <None Include="..\Assets\Shader\IBL_Header.hlsli">
       <Filter>소스 파일\Shader\HLSL\Header</Filter>
     </None>
   </ItemGroup>

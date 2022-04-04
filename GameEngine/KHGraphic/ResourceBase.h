@@ -24,6 +24,7 @@ public:
 public:
 	void SetName(const char* name) { m_ResourceName = name; }
 
+	std::string GetName() { return m_ResourceName; }
 	RESOURCE_TYPE GetType() { return m_ResourceType; }
 	Hash_Code GetHashCode() { return m_HashCode; }
 

@@ -89,9 +89,9 @@ void FogPass::SetOption(RenderOption* renderOption)
 
 void FogPass::RenderUpdate()
 {
-	Vector3 FogColor = { 0.9f, 0.745f, 0.35f };
-	Vector3 FogHighlightColor = { 0.835f, 0.7f, 0.33f };
-	float FogStartDepth = 50.0f;
+	const Vector3 FogColor = { 0.9f, 0.745f, 0.35f };
+	const Vector3 FogHighlightColor = { 0.835f, 0.7f, 0.33f };
+	const float FogStartDepth = 50.0f;
 	static float Time = 0;
 	Time += g_GlobalData->Time * 0.05f;
 
@@ -104,7 +104,7 @@ void FogPass::RenderUpdate()
 	CB_Fog fogBuf;
 	fogBuf.gFogColor = FogColor;
 	fogBuf.gFogStartPos = FogStartDepth;
-	fogBuf.gEyePosW = g_GlobalData->CamPos;
+	fogBuf.gEyePosW = g_GlobalData->Camera_Data->CamPos;
 	fogBuf.gTime = Time;
 
 	m_Fog_PS->ConstantBufferCopy(&fogBuf);

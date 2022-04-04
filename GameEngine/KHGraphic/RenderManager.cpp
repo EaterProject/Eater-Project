@@ -32,11 +32,15 @@
 #include "ToneMapPass.h"
 #include "FogPass.h"
 #include "PickingPass.h"
+#include "CullingPass.h"
 #include "DebugPass.h"
 
 #include "RenderDataConverter.h"
 
 #include <algorithm>
+
+#define RELEASE_PROFILE
+#include "./Profiler/Profiler.h"
 
 RenderManager::RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, IGraphicResourceManager* resource, IShaderManager* shader)
 {
@@ -60,7 +64,8 @@ RenderManager::RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, I
 	m_Bloom			= new BloomPass();
 	m_ToneMap		= new ToneMapPass();
 	m_Fog			= new FogPass();
-	//m_Picking		= new PickingPass();
+	m_Culling		= new CullingPass();
+	m_Picking		= new PickingPass();
 	m_Debug			= new DebugPass();
 
 	// 설정을 위한 Render Pass List Up..
@@ -75,7 +80,8 @@ RenderManager::RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, I
 	m_RenderPassList.push_back(m_Bloom);
 	m_RenderPassList.push_back(m_ToneMap);
 	m_RenderPassList.push_back(m_Fog);
-	//m_RenderPassList.push_back(m_Picking);
+	m_RenderPassList.push_back(m_Culling);
+	m_RenderPassList.push_back(m_Picking);
 	m_RenderPassList.push_back(m_Debug);
 }
 
@@ -252,6 +258,36 @@ void RenderManager::ConvertRenderData()
 	ConvertChangeInstance();
 }
 
+void RenderManager::SelectRenderData()
+{
+	PROFILE_TIMER_START(PROFILE_OUTPUT::CONSOLE, 60, "Culling");
+
+	// Camera View Frustum Culling..
+	int renderCount = 0;
+	for (InstanceLayer* layer : m_RenderMeshList)
+	{
+		// 해당 Layer Distance Sorting..
+		//std::sort(layer->m_MeshList.begin(), layer->m_MeshList.end(), [this](RenderData* rd1, RenderData* rd2) { return this->SortDistance(rd1, rd2); });
+
+		// 해당 Layer Render List 초기화..
+		memset(&layer->m_RenderList[0], 0, layer->m_RenderList.size());
+
+		for (RenderData* renderData : layer->m_MeshList)
+		{
+			if (m_Culling->FrustumCulling(renderData))
+			{
+				layer->m_RenderList[renderCount++] = renderData;
+			}
+		}
+
+		// Layer 변경시 Index 초기화..
+		layer->m_RenderCount = renderCount;
+		renderCount = 0;
+	}
+
+	PROFILE_TIMER_END("Culling");
+}
+
 void RenderManager::Render()
 {
 	// Rendering Option Setting..
@@ -260,7 +296,8 @@ void RenderManager::Render()
 	// Rendering Resource 동기화 작업..
 	ConvertRenderData();
 
-	PickingRender(0, 0);
+	// Render Data 선별 작업..
+	SelectRenderData();
 
 	// Shadow Render..
 	GPU_BEGIN_EVENT_DEBUG_NAME("Shadow Pass");
@@ -310,8 +347,7 @@ void RenderManager::Render()
 
 void* RenderManager::PickingRender(int x, int y)
 {
-	return nullptr;
-
+	GPU_BEGIN_EVENT_DEBUG_NAME("Picking Pass");
 	m_Picking->BeginRender();
 	
 	// Static Object Picking Draw..
@@ -332,9 +368,11 @@ void* RenderManager::PickingRender(int x, int y)
 
 	// UnRender Object Picking Draw..
 	m_Picking->NoneMeshRenderUpdate(m_UnRenderMeshList);
-
+	
 	// 현재 클릭한 Pixel ID 검출..
 	UINT pickID = m_Picking->FindPick(x, y);
+
+	GPU_END_EVENT_DEBUG_NAME();
 
 	// 해당 Render Data 검색..
 	RenderData* renderData = m_Converter->GetRenderData(pickID);
@@ -356,7 +394,8 @@ void RenderManager::ShadowRender()
 		{
 			m_InstanceLayer = m_RenderMeshList[i];
 
-			m_Shadow->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_MeshList);
+			m_Shadow->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_RenderList, m_InstanceLayer->m_RenderCount);
+			//m_Shadow->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_MeshList, m_InstanceLayer->m_MeshList.size());
 		}
 	}
 }
@@ -369,7 +408,8 @@ void RenderManager::DeferredRender()
 	{
 		m_InstanceLayer = m_RenderMeshList[i];
 
-		m_Deferred->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_MeshList);
+		m_Deferred->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_RenderList, m_InstanceLayer->m_RenderCount);
+		//m_Deferred->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_MeshList, m_InstanceLayer->m_MeshList.size());
 	}
 }
 
@@ -535,6 +575,8 @@ void RenderManager::DebugRender()
 			GPU_MARKER_DEBUG_NAME("MRT Debug");
 			m_Debug->MRTRender();
 		}
+
+		m_Debug->CountReset();
 	}
 }
 
@@ -580,6 +622,10 @@ void RenderManager::ConvertPushInstance()
 		// 변환한 Mesh Data Pop..
 		m_PushInstanceList.pop();
 	}
+
+	// 모든 변환이 끝난후 List 재설정..
+	CheckMaxSizeLayer(m_RenderMeshList);
+	CheckMaxSizeLayer(m_ParticleMeshList);
 }
 
 void RenderManager::ConvertChangeInstance()
@@ -871,6 +917,15 @@ void RenderManager::CheckInstanceLayer(std::vector<InstanceLayer*>& layerList)
 	layerList.erase(std::next(layerList.begin(), index));
 }
 
+void RenderManager::CheckMaxSizeLayer(std::vector<InstanceLayer*>& layerList)
+{
+	for (InstanceLayer* instanceLayer : layerList)
+	{
+		// Mesh List Size 기준으로 Render List Size 설정..
+		instanceLayer->m_RenderList.resize(instanceLayer->m_MeshList.size());
+	}
+}
+
 void RenderManager::FindInstanceLayer(std::vector<InstanceLayer*>& layerList, InstanceLayer* layer)
 {
 	for (InstanceLayer* instanceLayer : layerList)
@@ -884,4 +939,16 @@ void RenderManager::FindInstanceLayer(std::vector<InstanceLayer*>& layerList, In
 
 	// 만약 Layer가 검색되지 않았다면 Layer List에 삽입..
 	layerList.push_back(layer);
+}
+
+bool RenderManager::SortDistance(RenderData* obj1, RenderData* obj2)
+{
+	const Vector3& camPos = RenderPassBase::g_GlobalData->Camera_Data->CamPos;
+	const Vector3& objPos1 = { (*obj1->m_ObjectData->World)._41 - camPos.x, (*obj1->m_ObjectData->World)._42 - camPos.y, (*obj1->m_ObjectData->World)._43 - camPos.z };
+	const Vector3& objPos2 = { (*obj2->m_ObjectData->World)._41 - camPos.x, (*obj2->m_ObjectData->World)._42 - camPos.y, (*obj2->m_ObjectData->World)._43 - camPos.z };
+
+	const float& distance1 = sqrtf(objPos1.x * objPos1.x + objPos1.y * objPos1.y + objPos1.z * objPos1.z);
+	const float& distance2 = sqrtf(objPos2.x * objPos2.x + objPos2.y * objPos2.y + objPos2.z * objPos2.z);
+
+	return (distance1 < distance2) ? true : false;
 }

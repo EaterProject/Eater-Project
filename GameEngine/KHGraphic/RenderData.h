@@ -5,8 +5,8 @@
 class RenderData
 {
 public:
-	int m_InstanceLayerIndex = -1;				// Instance Layer Index
-	int m_InstanceIndex = -1;					// Instance Index
+	int m_InstanceLayerIndex = -1;				// Instance Layer Index..
+	int m_InstanceIndex = -1;					// Instance Index..
 
 	MeshRenderBuffer* m_Mesh;					// 변환된 Mesh Data..
 	MaterialRenderBuffer* m_Material;			// 변환된 Material Data..
@@ -33,8 +33,10 @@ public:
 
 public:
 	UINT m_LayerIndex = 0;
+	UINT m_RenderCount = 0;
 
 	InstanceRenderBuffer* m_Instance;		// Instancing 기준이 되는 Mesh Data..
 
+	std::vector<RenderData*> m_RenderList;	// 현재 프레임 Instancing Layer Render List..
 	std::vector<RenderData*> m_MeshList;	// Instancing 기준에 해당하는 Render Data List..
 };

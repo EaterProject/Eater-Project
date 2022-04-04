@@ -1,5 +1,4 @@
 #include "MeshFilter.h"
-#include "DebugManager.h"
 #include "SkinningFilter.h"
 #include "AnimationController.h"
 #include "GameObject.h"

@@ -22,7 +22,6 @@ private:
 	void ParticleUpdate(ParticleData* particleSystem);
 
 private:
-	VertexShader* m_ParticleVS;
 	VertexShader* m_ParticleInstVS;
 	VertexShader* m_MeshInstVS;
 	PixelShader* m_ParticlePS;

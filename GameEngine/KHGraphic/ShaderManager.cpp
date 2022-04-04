@@ -24,7 +24,7 @@ ShaderManager::~ShaderManager()
 void ShaderManager::Create()
 {
 	// Shader File Route Setting..
-	IShader::SetShaderRoute("../Resources/Shader/");
+	IShader::SetShaderRoute("../Assets/Shader/");
 
 	// Global Shader Create..
 	CreateShader();
@@ -77,19 +77,12 @@ void ShaderManager::CreateShader()
 
 	// Deferred Shader
 	LoadShader(SHADER_TYPE::VERTEX_SHADER, "StaticMesh_VS.hlsl", "StaticMesh_VS", "StaticMesh_VS");
+	LoadShader(SHADER_TYPE::VERTEX_SHADER, "StaticMesh_Instance_VS.hlsl", "StaticMesh_Instance_VS", "StaticMesh_Instance_VS");
 	LoadShader(SHADER_TYPE::VERTEX_SHADER, "SkinMesh_VS.hlsl", "SkinMesh_VS", "SkinMesh_VS");
+	//LoadShader(SHADER_TYPE::VERTEX_SHADER, "SkinMesh_VS.hlsl", "SkinMesh_Instance_VS", "SkinMesh_Instance_VS");
 	LoadShader(SHADER_TYPE::VERTEX_SHADER, "TerrainMesh_VS.hlsl", "TerrainMesh_VS", "TerrainMesh_VS");
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Deferred_PBR_PS.hlsl", "Deferred_PBR_PS", "Deferred_PBR_PS");
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Deferred_PBR_PS.hlsl", "Deferred_PBR_PS", "Terrain_PBR_PS", deferred_macro1);
-
-	// Instancing Shader
-	LoadShader(SHADER_TYPE::VERTEX_SHADER, "Shadow_StaticMesh_Instance_VS.hlsl", "Shadow_StaticMesh_Instance_VS", "Shadow_StaticMesh_Instance_VS");
-	//LoadShader(SHADER_TYPE::VERTEX_SHADER, "Shadow_SkinMesh_Instance_VS.hlsl", "Shadow_SkinMesh_Instance_VS", "Shadow_SkinMesh_Instance_VS");
-	LoadShader(SHADER_TYPE::VERTEX_SHADER, "StaticMesh_Instance_VS.hlsl", "StaticMesh_Instance_VS", "StaticMesh_Instance_VS");
-	//LoadShader(SHADER_TYPE::VERTEX_SHADER, "SkinMesh_VS.hlsl", "SkinMesh_Instance_VS", "SkinMesh_Instance_VS");
-	LoadShader(SHADER_TYPE::VERTEX_SHADER, "Particle_Instance_VS.hlsl", "Particle_Instance_VS", "Particle_Instance_VS");
-	LoadShader(SHADER_TYPE::VERTEX_SHADER, "ID_StaticMesh_Instance_VS.hlsl", "ID_StaticMesh_Instance_VS", "ID_StaticMesh_Instance_VS");
-	//LoadShader(SHADER_TYPE::VERTEX_SHADER, "ID_SkinMesh_Instance_VS.hlsl", "ID_SkinMesh_Instance_VS", "ID_SkinMesh_Instance_VS");
 
 	// OIT Shader
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "OIT_Particle_PS.hlsl", "OIT_Particle_PS", "OIT_Particle_PS");
@@ -98,14 +91,16 @@ void ShaderManager::CreateShader()
 
 	// Shadow Shader
 	LoadShader(SHADER_TYPE::VERTEX_SHADER, "Shadow_StaticMesh_VS.hlsl", "Shadow_StaticMesh_VS", "Shadow_StaticMesh_VS");
+	LoadShader(SHADER_TYPE::VERTEX_SHADER, "Shadow_StaticMesh_Instance_VS.hlsl", "Shadow_StaticMesh_Instance_VS", "Shadow_StaticMesh_Instance_VS");
 	LoadShader(SHADER_TYPE::VERTEX_SHADER, "Shadow_SkinMesh_VS.hlsl", "Shadow_SkinMesh_VS", "Shadow_SkinMesh_VS");
+	//LoadShader(SHADER_TYPE::VERTEX_SHADER, "Shadow_SkinMesh_Instance_VS.hlsl", "Shadow_SkinMesh_Instance_VS", "Shadow_SkinMesh_Instance_VS");
 
 	// SSAO Shader
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "SSAO_PS.hlsl", "SSAO_PS", "SSAO_PS");
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "SSAO_Blur_PS.hlsl", "SSAOBlur_PS", "SSAOBlur_PS");
 
 	// Particle Shader
-	LoadShader(SHADER_TYPE::VERTEX_SHADER, "Particle_VS.hlsl", "Particle_VS", "Particle_VS");
+	LoadShader(SHADER_TYPE::VERTEX_SHADER, "Particle_Instance_VS.hlsl", "Particle_Instance_VS", "Particle_Instance_VS");
 
 	// FXAA Shader
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "FXAA_PS.hlsl", "FXAA_PS", "FXAA_PS");
@@ -142,9 +137,10 @@ void ShaderManager::CreateShader()
 
 	// Picking ID Shader
 	LoadShader(SHADER_TYPE::VERTEX_SHADER, "ID_StaticMesh_VS.hlsl", "ID_StaticMesh_VS", "ID_StaticMesh_VS");
+	LoadShader(SHADER_TYPE::VERTEX_SHADER, "ID_StaticMesh_Instance_VS.hlsl", "ID_StaticMesh_Instance_VS", "ID_StaticMesh_Instance_VS");
 	LoadShader(SHADER_TYPE::VERTEX_SHADER, "ID_SkinMesh_VS.hlsl", "ID_SkinMesh_VS", "ID_SkinMesh_VS");
+	//LoadShader(SHADER_TYPE::VERTEX_SHADER, "ID_SkinMesh_Instance_VS.hlsl", "ID_SkinMesh_Instance_VS", "ID_SkinMesh_Instance_VS");
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "ID_Mesh_PS.hlsl", "ID_Mesh_PS", "ID_Mesh_PS");
-
 
 	// Debug Shader Macro
 	D3D_SHADER_MACRO debug_macro1[] = { {"CUSTOM_COLOR"}, {NULL, NULL} };
