@@ -33,6 +33,7 @@ void Debugger::Create()
 	if ((_waccess(_T("./Log"), 0)) == -1) //여기에 LOG폴더가 없으면...
 		CreateDirectory(_T("./Log"), NULL);
 
+	m_Log = LOG_DESC();
 	m_Log.LogName = "./Log/";
 	time_t currentSec = time(NULL);
 	tm* t = localtime(&currentSec);
