@@ -10,7 +10,7 @@
  
 class Transform;
 class CameraData;
-class ColliderData;
+class DebugBoxData;
 
 class Camera : public Component
 {
@@ -63,7 +63,6 @@ private:
 	static std::vector<Camera*> CamList;
 
 	CameraData* mCameraData;
-	ColliderData* Collider_Data;
 public:
 	//메인카메라
 	static Camera* g_MainCam;

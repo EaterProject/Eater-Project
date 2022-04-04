@@ -6,7 +6,7 @@
 
 class Transform;
 class PhysData;
-class ColliderData;
+class DebugBoxData;
 class Collider;
 
 class Rigidbody : public Component
@@ -58,7 +58,7 @@ public:
 private:
 	Transform*		mTransform;
 	PhysData*		RigidbodyData;
-	ColliderData*	Collider_Data;
+	DebugBoxData*	Collider_Data;
 	std::string		ColliderName;
 };
 

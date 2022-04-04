@@ -9,9 +9,6 @@ class PhysMaterial;
 class TriangleMeshData;
 class Transform;
 
-//µð¹ö±ë¿ë
-class ColliderData;
-
 class Collider : public Component
 {
 public:
@@ -52,7 +49,6 @@ private:
 	PhysCollider*	mColliderData;
 	PhysMaterial*	mMaterial;
 	Rigidbody*		mRigidbody;
-	ColliderData*	mDebugCollider;
 	bool isCreate	= false;
 
 	friend Rigidbody;

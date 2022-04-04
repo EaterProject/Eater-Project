@@ -6,13 +6,13 @@
 #include "EngineData.h"
 #include "LoadManager.h"
 #include "GameObject.h"
+#include "DebugManager.h"
 
 Collider::Collider()
 {
 	Component::Start_Order = Component::FUNCTION_ORDER_LAST;
 	mPhysData		= new PhysData();
 	mColliderData	= new PhysCollider();
-	mDebugCollider  = new ColliderData();
 	mMaterial		= new PhysMaterial();
 	mMaterial->MT_DynamicFriction	= 0.5f;
 	mMaterial->MT_StaticFriction	= 0.5f;
@@ -27,14 +27,11 @@ Collider::~Collider()
 	delete mMaterial;
 	delete mColliderData;
 	delete mPhysData;
-	delete mDebugCollider;
 }
 
 void Collider::Awake()
 {
-	DebugCollider();
-	//실행되기전에 
-	
+
 }
 
 void Collider::Start()
@@ -60,7 +57,6 @@ void Collider::Start()
 
 void Collider::Update()
 {
-	
 	DebugCollider();
 }
 
@@ -145,9 +141,7 @@ void Collider::DebugCollider()
 	Vector4 Rot = mPhysData->Rotation;
 	Vector3 Scl = mColliderData->GetSize();
 
-	mDebugCollider->ColliderWorld = *(gameobject->transform->GetWorld());
-	mDebugCollider->ColliderColor = { 1,0,0,1 };
-	gameobject->OneMeshData->Collider_Data = mDebugCollider;
+	DebugManager::DebugDrawBox(Scl, Rot, Pos, Vector3(1, 0, 0));
 }
 
 bool Collider::CreatePhys()

@@ -105,13 +105,13 @@ void TestScene::CreateMap()
 	Object->GetTransform()->Position.x -= 10.0f;
 	Object->GetTransform()->Position.y += 10.0f;
 
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("bossb+");
-	//filter->SetAnimationName("bossb+");
-	//AnimationController* AC = Object->AddComponent<AnimationController>();
-	//AC->Choice("idle");
-	//
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	filter->SetModelName("bossb+");
+	filter->SetAnimationName("bossb+");
+	AnimationController* AC = Object->AddComponent<AnimationController>();
+	AC->Choice("idle");
+
 	//Object = Instance();
 	//filter = Object->AddComponent<MeshFilter>();
 	//filter->SetModelName("box");

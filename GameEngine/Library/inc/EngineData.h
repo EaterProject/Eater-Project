@@ -171,21 +171,18 @@ public:
 	std::vector<OneParticle*> m_Particles;
 };
 
-// RayCast Data
-class RayCastData
+// Debug Data
+class DebugData
 {
 public:
+	DEBUG_MESH_TYPE DebugType;
+
+	Matrix World;
+
 	Vector3 RayStart = { 0,0,0 };
 	Vector3 RayEnd = { 0,0,0 };
-	Vector3 RayColor = { 0,1,0 };
-};
 
-// Collider Data
-class ColliderData
-{
-public:
-	Matrix ColliderWorld = XMMatrixIdentity();
-	Vector3 ColliderColor = { 1,1,1 };
+	Vector3 Color = { 0,1,0 };
 };
 
 // Camera Data
@@ -219,7 +216,7 @@ public:
 	std::vector<SpotLightData*>			SpotLights;
 
 	// Debug Data
-	std::queue<RayCastData> RayCastDebugData;
+	std::queue<DebugData>	 Debug_Data;
 };
 
 /// <summary>
@@ -244,9 +241,6 @@ public:
 	// 추가 데이터
 	TerrainData*	Terrain_Data	= nullptr;		// Terrain Data
 	ParticleData*	Particle_Data	= nullptr;		// Particle Data
-
-	// 디버그 데이터
-	ColliderData* Collider_Data = nullptr;			// Collider Data
 };
 
 /// <summary>

@@ -1,33 +1,19 @@
 #pragma once
+#include "BaseManager.h"
 #include <windows.h>
 #include <string>
-#include "EnumClass.h"
-/// <summary>
-/// 테스트용 임시 디버깅 클래스
-/// </summary>
-class KeyinputManager;
-class DebugManager
+
+class DebugManager : public BaseManager
 {
 public:
-	~DebugManager();
 	DebugManager();
+	~DebugManager();
 
-	enum class MSG_TYPE
-	{
-		MSG_LOAD,
-		MSG_CREATE,
-		MSG_GET,
-		MSG_DELETE,
-		MSG_PUSH,
-		MSG_SYSTEM
-	};
-	void Initialize(KeyinputManager* mkeyManager,bool mDebugOn);
-	static void Print(MSG_TYPE type, std::string typeData,std::string msg,bool Error);
-	static void Print(std::string str);
-	static void Line(std::string ObjType = "");
-	void Update();
-	void Delete();
-private:
-	static HANDLE hConsole;
-	static bool DebugON;
+public:
+	static void DebugDrawLine(DirectX::SimpleMath::Vector3 start, DirectX::SimpleMath::Vector3 end, DirectX::SimpleMath::Vector3 color);
+	static void DebugDrawLine(DirectX::SimpleMath::Vector3 start, DirectX::SimpleMath::Vector3 dir, float distance, DirectX::SimpleMath::Vector3 color);
+
+	static void DebugDrawBox(DirectX::SimpleMath::Vector3 scale, DirectX::SimpleMath::Vector3 rot, DirectX::SimpleMath::Vector3 pos, DirectX::SimpleMath::Vector3 color);
+	static void DebugDrawBox(DirectX::SimpleMath::Vector3 scale, DirectX::SimpleMath::Quaternion rot, DirectX::SimpleMath::Vector3 pos, DirectX::SimpleMath::Vector3 color);
+	static void DebugDrawSphere(float scale, DirectX::SimpleMath::Vector3 pos, DirectX::SimpleMath::Vector3 color);
 };

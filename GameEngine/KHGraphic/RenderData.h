@@ -14,7 +14,6 @@ public:
 
 	ObjectData* m_ObjectData;
 	ParticleData* m_ParticleData;
-	ColliderData** m_ColliderData;
 };
 
 // 동일 Instance를 관리하기 위한 Instance Layer Class

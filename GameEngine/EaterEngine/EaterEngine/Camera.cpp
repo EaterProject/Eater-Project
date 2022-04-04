@@ -6,6 +6,7 @@
 #include "EngineData.h"
 #include "MainHeader.h"
 #include "MainHeader.h"
+#include "DebugManager.h"
 #include "Profiler/Profiler.h"
 
 using namespace DirectX;
@@ -37,9 +38,6 @@ void Camera::Awake()
 	tranform = gameobject->transform;
 	CreateProj(GameEngine::WinSizeWidth, GameEngine::WinSizeHeight);
 	gameobject->OneMeshData->Object_Data->ObjType = OBJECT_TYPE::CAMERA;
-
-	Collider_Data = new ColliderData();
-	Collider_Data->ColliderColor = {1,0,0};
 }
 
 void Camera::Update()
@@ -54,9 +52,9 @@ void Camera::Update()
 	if (this != g_MainCam)
 	{
 		Transform* TR = gameobject->GetTransform();
-		Collider_Data->ColliderWorld = *TR->GetWorld();
-		DebugDrawLine(TR->Position, TR->GetLocalPosition_Look(), Vector3(255,255,0));
-		gameobject->OneMeshData->Collider_Data = Collider_Data;
+		DebugManager::DebugDrawBox(TR->Scale, TR->Rotation, TR->Position, Vector3(0, 1, 0));
+		DebugManager::DebugDrawSphere(TR->Scale.x, TR->Position, Vector3(0, 1, 0));
+		DebugManager::DebugDrawLine(TR->Position, TR->GetLocalPosition_Look(), Vector3(1,1,0));
 	}
 }
 
