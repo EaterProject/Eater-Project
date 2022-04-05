@@ -210,8 +210,8 @@ void LightPass::RenderUpdate()
 	m_Light_VS->Update();
 
 	// Pixel Shader Update..
-	m_Light_PS->ConstantBufferCopy(&lightBuf);
-	m_Light_PS->ConstantBufferCopy(&lightsubBuf);
+	m_Light_PS->ConstantBufferUpdate(&lightBuf);
+	m_Light_PS->ConstantBufferUpdate(&lightsubBuf);
 	m_Light_PS->Update();
 
 	g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);

@@ -655,16 +655,10 @@
     <FxCompile Include="..\Assets\Shader\Deferred_PBR_PS.hlsl">
       <Filter>소스 파일\Shader\HLSL\Render\Deferred</Filter>
     </FxCompile>
-    <FxCompile Include="..\Assets\Shader\Deferred_Legacy_PS.hlsl">
-      <Filter>소스 파일\Shader\HLSL\Render\Deferred</Filter>
-    </FxCompile>
     <FxCompile Include="..\Assets\Shader\Light_IBL_PS.hlsl">
       <Filter>소스 파일\Shader\HLSL\Render\Light</Filter>
     </FxCompile>
     <FxCompile Include="..\Assets\Shader\Light_PBR_PS.hlsl">
-      <Filter>소스 파일\Shader\HLSL\Render\Light</Filter>
-    </FxCompile>
-    <FxCompile Include="..\Assets\Shader\Light_Legacy_PS.hlsl">
       <Filter>소스 파일\Shader\HLSL\Render\Light</Filter>
     </FxCompile>
     <FxCompile Include="..\Assets\Shader\SkinMesh_VS.hlsl">

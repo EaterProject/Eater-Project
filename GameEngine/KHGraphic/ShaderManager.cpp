@@ -7,6 +7,7 @@
 #include "ShaderManagerBase.h"
 #include "ShaderManager.h"
 #include "ShaderResourceHashTable.h"
+#include "ConstantBufferDefine.h"
 
 using namespace Microsoft::WRL;
 
@@ -164,6 +165,9 @@ void ShaderManager::CreateShader()
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Debug_PS.hlsl", "Debug_PS", "Debug_PS_Option1", debug_macro1);
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Debug_PS.hlsl", "Debug_Texture_PS", "Debug_Icon_PS");
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Debug_PS.hlsl", "Debug_Texture_PS", "Debug_MRT_PS", debug_macro2);
+
+	/// Shader 생성 후 모든 Constant Buffer Usage 설정..
+	AddConstantBufferUsage();
 }
 
 void ShaderManager::AddSampler(Hash_Code hash_code, ID3D11SamplerState* sampler)
@@ -172,6 +176,110 @@ void ShaderManager::AddSampler(Hash_Code hash_code, ID3D11SamplerState* sampler)
 	{
 		shader.second->SetSamplerState(hash_code, sampler);
 	}
+}
+
+void ShaderManager::AddConstantBuffer()
+{
+	std::unordered_map<Hash_Code, UINT>::iterator itor;
+	ShaderBase* nowShader = nullptr;
+
+	for (std::pair<std::string, ShaderBase*> shader : m_ShaderList)
+	{
+		// 현재 Shader 설정..
+		nowShader = shader.second;
+
+		// 현재 Shader에 Binding된 Constant Buffer 검색..
+		for (std::pair<Hash_Code, ConstantBuffer*> cBuffer : shader.second->m_ConstantBufferList)
+		{
+			// 해당 Constant Buffer Usage 검색..
+			itor = m_ConstantBufferUsageList.find(cBuffer.first);
+
+			// 해당 Constant Buffer가 있을경우 설정..
+			if (itor != m_ConstantBufferUsageList.end())
+			{
+				nowShader->SetConstantBuffer(itor->first, (CBUFFER_USAGE)itor->second);
+			}
+		}
+	}
+}
+
+void ShaderManager::AddConstantBufferUsage()
+{
+	/// Default Usage Constant Buffer Push..
+	// Light 관련 Constant Buffer
+	PushConstantBufferUsage<CB_Material>(CBUFFER_USAGE::DEFAULT);
+
+	// Fog..
+	PushConstantBufferUsage<CB_Fog>(CBUFFER_USAGE::DEFAULT);
+
+	// Blur..
+	PushConstantBufferUsage<CB_BlurTexel>(CBUFFER_USAGE::DEFAULT);
+
+	// SSAO..
+	PushConstantBufferUsage<CB_SsaoFrustum>(CBUFFER_USAGE::DEFAULT);
+	PushConstantBufferUsage<CB_SsaoOption>(CBUFFER_USAGE::DEFAULT);
+
+	// OIT..
+	PushConstantBufferUsage<CB_OitFrame>(CBUFFER_USAGE::DEFAULT);
+
+	// FXAA..
+	PushConstantBufferUsage<CB_FxaaFrame>(CBUFFER_USAGE::DEFAULT);
+
+	// Bloom..
+	PushConstantBufferUsage<CB_BloomBright>(CBUFFER_USAGE::DEFAULT);
+	PushConstantBufferUsage<CB_BloomFinal>(CBUFFER_USAGE::DEFAULT);
+
+
+	/// Dynamic Usage Constant Buffer Push..
+
+	// Mesh..
+	PushConstantBufferUsage<CB_StaticMesh>(CBUFFER_USAGE::DYNAMIC);
+	PushConstantBufferUsage<CB_InstanceStaticMesh>(CBUFFER_USAGE::DYNAMIC);
+	PushConstantBufferUsage<CB_SkinMesh>(CBUFFER_USAGE::DYNAMIC);
+	PushConstantBufferUsage<CB_InstanceSkinMesh>(CBUFFER_USAGE::DYNAMIC);
+	PushConstantBufferUsage<CB_DepthStaticMesh>(CBUFFER_USAGE::DYNAMIC);
+	PushConstantBufferUsage<CB_InstanceDepthStaticMesh>(CBUFFER_USAGE::DYNAMIC);
+	PushConstantBufferUsage<CB_DepthSkinMesh>(CBUFFER_USAGE::DYNAMIC);
+	PushConstantBufferUsage<CB_InstanceDepthSkinMesh>(CBUFFER_USAGE::DYNAMIC);
+	PushConstantBufferUsage<CB_InstanceSkinMesh>(CBUFFER_USAGE::DYNAMIC);
+
+	// Light..
+	PushConstantBufferUsage<CB_LightSub>(CBUFFER_USAGE::DYNAMIC);
+	PushConstantBufferUsage<CB_Light>(CBUFFER_USAGE::DYNAMIC);
+
+	// Fog..
+	PushConstantBufferUsage<CB_Fog>(CBUFFER_USAGE::DYNAMIC);
+
+	// Blur..
+	PushConstantBufferUsage<CB_BlurOrder>(CBUFFER_USAGE::DYNAMIC);
+
+	// SSAO..
+	PushConstantBufferUsage<CB_SsaoObject>(CBUFFER_USAGE::DYNAMIC);
+
+	// Particle..
+	PushConstantBufferUsage<CB_InstanceParticleMesh>(CBUFFER_USAGE::DYNAMIC);
+
+	// SkyCube..
+	PushConstantBufferUsage<CB_CubeObject>(CBUFFER_USAGE::DYNAMIC);
+
+	// IBL Baking..
+	PushConstantBufferUsage<CB_ExternalData>(CBUFFER_USAGE::DYNAMIC);
+
+	// Bloom..
+	PushConstantBufferUsage<CB_BloomBlurOrder>(CBUFFER_USAGE::DYNAMIC);
+
+	// Picking ID..
+	PushConstantBufferUsage<CB_StaticMesh_ID>(CBUFFER_USAGE::DYNAMIC);
+	PushConstantBufferUsage<CB_Instance_StaticMesh_ID>(CBUFFER_USAGE::DYNAMIC);
+	PushConstantBufferUsage<CB_SkinMesh_ID>(CBUFFER_USAGE::DYNAMIC);
+	PushConstantBufferUsage<CB_InstanceSkinMesh_ID>(CBUFFER_USAGE::DYNAMIC);
+
+	// Debug..
+	PushConstantBufferUsage<CB_DebugObject>(CBUFFER_USAGE::DYNAMIC);
+	PushConstantBufferUsage<CB_DebugOption>(CBUFFER_USAGE::DYNAMIC);
+
+	/// Constant Buffer Usage List 설정 후 모든 Shader 해당 Constant Buffer 생성 및 설정..
+	AddConstantBuffer();
 }
 
 ShaderBase* ShaderManager::LoadShader(SHADER_TYPE shaderType, const char* fileName, const char* entry_point, const char* shaderName, const D3D_SHADER_MACRO* pDefines)

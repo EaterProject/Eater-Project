@@ -123,8 +123,8 @@ void OITPass::Start(int width, int height)
 	// Shader Resource 설정..
 	CB_OitFrame oitBuf;
 	oitBuf.gFrameWidth = width;
-	m_OITRenderPS->ConstantBufferCopy<CB_OitFrame>(&oitBuf);
-	m_OITParticlePS->ConstantBufferCopy<CB_OitFrame>(&oitBuf);
+	m_OITRenderPS->ConstantBufferUpdate<CB_OitFrame>(&oitBuf);
+	m_OITParticlePS->ConstantBufferUpdate<CB_OitFrame>(&oitBuf);
 
 	ShaderResourceView* backGround = g_Resource->GetShaderResourceView<RT_OutPut1>();
 	
@@ -152,8 +152,8 @@ void OITPass::OnResize(int width, int height)
 	// Shader Resource 설정..
 	CB_OitFrame oitBuf;
 	oitBuf.gFrameWidth = width;
-	m_OITRenderPS->ConstantBufferCopy<CB_OitFrame>(&oitBuf);
-	m_OITParticlePS->ConstantBufferCopy<CB_OitFrame>(&oitBuf);
+	m_OITRenderPS->ConstantBufferUpdate<CB_OitFrame>(&oitBuf);
+	m_OITParticlePS->ConstantBufferUpdate<CB_OitFrame>(&oitBuf);
 
 	ShaderResourceView* backGround = g_Resource->GetShaderResourceView<RT_OutPut1>();
 

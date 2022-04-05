@@ -272,7 +272,7 @@ void BakingFactory::PreBakeIBLMap()
 		CB_CubeObject cubeBuf;
 		cubeBuf.gViewProj = view * proj;
 
-		cubmapVS->ConstantBufferCopy(&cubeBuf);
+		cubmapVS->ConstantBufferUpdate(&cubeBuf);
 		cubmapVS->Update();
 
 		irradiancePS->SetShaderResourceView<gSkyCube>(skycube);
@@ -313,13 +313,13 @@ void BakingFactory::PreBakeIBLMap()
 			CB_CubeObject cubeBuf;
 			cubeBuf.gViewProj = view * proj;
 
-			cubmapVS->ConstantBufferCopy(&cubeBuf);
+			cubmapVS->ConstantBufferUpdate(&cubeBuf);
 			cubmapVS->Update();
 
 			CB_ExternalData prefilterBuf;
 			prefilterBuf.gRoughness = roughness;
 
-			prefilterPS->ConstantBufferCopy(&prefilterBuf);
+			prefilterPS->ConstantBufferUpdate(&prefilterBuf);
 			prefilterPS->SetShaderResourceView<gSkyCube>(skycube);
 			prefilterPS->Update();
 

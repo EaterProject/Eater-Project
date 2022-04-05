@@ -1,5 +1,5 @@
 #include "FBXManager.h"
-#include "ModelParser.h";
+#include "ModelParser.h"
 #include "ParserData.h"
 #include "TypeOptionHeader.h"
 #include "EaterHeader.h"

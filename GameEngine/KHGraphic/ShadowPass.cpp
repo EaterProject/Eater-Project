@@ -172,7 +172,7 @@ void ShadowPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::v
 		CB_InstanceDepthStaticMesh shadowBuf;
 		shadowBuf.gViewProj = viewproj;
 
-		m_MeshInstShadowVS->ConstantBufferCopy(&shadowBuf);
+		m_MeshInstShadowVS->ConstantBufferUpdate(&shadowBuf);
 
 		m_MeshInstShadowVS->Update();
 
@@ -204,7 +204,7 @@ void ShadowPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::v
 		//	shadowBuf.gBoneTransforms[i] = (*mesh->m_BoneOffsetTM)[i];
 		//}
 		//
-		//m_SkinInstShadowVS->ConstantBufferCopy(&shadowBuf);
+		//m_SkinInstShadowVS->ConstantBufferUpdate(&shadowBuf);
 		//
 		//m_SkinInstShadowVS->Update();
 		//
@@ -248,7 +248,7 @@ void ShadowPass::RenderUpdate(const InstanceRenderBuffer* instance, const Render
 		CB_DepthStaticMesh shadowBuf;
 		shadowBuf.gWorldViewProj = world * viewproj;
 
-		m_MeshShadowVS->ConstantBufferCopy(&shadowBuf);
+		m_MeshShadowVS->ConstantBufferUpdate(&shadowBuf);
 
 		m_MeshShadowVS->Update();
 	}
@@ -263,7 +263,7 @@ void ShadowPass::RenderUpdate(const InstanceRenderBuffer* instance, const Render
 			shadowBuf.gBoneTransforms[i] = (obj->BoneOffsetTM)[i];
 		}
 
-		m_SkinShadowVS->ConstantBufferCopy(&shadowBuf);
+		m_SkinShadowVS->ConstantBufferUpdate(&shadowBuf);
 
 		m_SkinShadowVS->Update();
 	}

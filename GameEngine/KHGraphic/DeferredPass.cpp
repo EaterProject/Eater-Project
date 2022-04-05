@@ -254,7 +254,7 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const std:
 		objectBuf.gView = view;
 		objectBuf.gProj = proj;
 
-		m_MeshInstVS->ConstantBufferCopy(&objectBuf);
+		m_MeshInstVS->ConstantBufferUpdate(&objectBuf);
 
 		m_MeshInstVS->Update();
 
@@ -286,7 +286,7 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const std:
 			m_DeferredPS->SetShaderResourceView<gORMMap>(mat->m_ORM);
 		}
 
-		m_DeferredPS->ConstantBufferCopy(&materialBuf);
+		m_DeferredPS->ConstantBufferUpdate(&materialBuf);
 
 		m_DeferredPS->Update();
 
@@ -346,7 +346,7 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rend
 		objectBuf.gView = view;
 		objectBuf.gProj = proj;
 
-		m_MeshVS->ConstantBufferCopy(&objectBuf);
+		m_MeshVS->ConstantBufferUpdate(&objectBuf);
 
 		m_MeshVS->Update();
 
@@ -378,7 +378,7 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rend
 			m_DeferredPS->SetShaderResourceView<gORMMap>(mat->m_ORM);
 		}
 
-		m_DeferredPS->ConstantBufferCopy(&materialBuf);
+		m_DeferredPS->ConstantBufferUpdate(&materialBuf);
 
 		m_DeferredPS->Update();
 
@@ -401,7 +401,7 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rend
 		objectBuf.gView = view;
 		objectBuf.gProj = proj;
 		objectBuf.gTexTransform = *terrain->m_Tex;
-		m_TerrainVS->ConstantBufferCopy(&objectBuf);
+		m_TerrainVS->ConstantBufferUpdate(&objectBuf);
 
 		m_TerrainVS->Update();
 
@@ -447,7 +447,7 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rend
 			objectBuf.gBoneTransforms[i] = (obj->BoneOffsetTM)[i];
 		}
 
-		m_SkinVS->ConstantBufferCopy(&objectBuf);
+		m_SkinVS->ConstantBufferUpdate(&objectBuf);
 
 		m_SkinVS->Update();
 
@@ -479,7 +479,7 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rend
 			m_DeferredPS->SetShaderResourceView<gORMMap>(mat->m_ORM);
 		}
 
-		m_DeferredPS->ConstantBufferCopy(&materialBuf);
+		m_DeferredPS->ConstantBufferUpdate(&materialBuf);
 
 		m_DeferredPS->Update();
 

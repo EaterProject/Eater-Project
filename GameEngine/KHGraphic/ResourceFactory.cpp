@@ -1486,9 +1486,9 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(Parser
 		vertices[i].Tangent = mesh->m_VertexList[i]->m_Tanget;
 
 		// ╟╪┤ч Pixel Mask Color..
-		float originWidth = abs(mesh->m_VertexList[i]->m_Pos.x + 1);
-		float originHeight = abs(mesh->m_VertexList[i]->m_Pos.z + 3);
-		float width, height;
+		int originWidth = abs(mesh->m_VertexList[i]->m_Pos.x + 1);
+		int originHeight = abs(mesh->m_VertexList[i]->m_Pos.z + 3);
+		int width, height;
 		// бр бр бр
 		// бр бс бр
 		// бр бр бр
@@ -2406,11 +2406,6 @@ void GraphicResourceFactory::CreateLineBoxBuffer()
 	CreateDrawBuffer(DB_Line_Box::GetName(), DB_Line_Box::GetHashCode(), format, topology, vByteSize, iByteSize, sizeof(VertexInput::PosColorVertex), iCount, &vertices[0], &indices[0]);
 }
 
-void GraphicResourceFactory::CreateLineSphereBuffer()
-{
-
-}
-
 void GraphicResourceFactory::CreateLineCircleBuffer()
 {
 	UINT format = DXGI_FORMAT_R32_UINT;
@@ -2427,9 +2422,9 @@ void GraphicResourceFactory::CreateLineCircleBuffer()
 	{
 		float angle = (float)(i * 2);
 		float x = cosf(angle * 3.14f / 180.0f);
-		float y = -sinf(angle * 3.14f / 180.0f);
+		float z = -sinf(angle * 3.14f / 180.0f);
 
-		vertices[i].Pos = Vector3(x, y, 0);
+		vertices[i].Pos = Vector3(x, 0, z);
 		vertices[i].Color = Vector4(0.75f, 0.75f, 0.75f, 1);
 	}
 

@@ -108,7 +108,7 @@ void EnvironmentPass::RenderUpdate()
 
 	CB_CubeObject cubeBuf;
 	cubeBuf.gViewProj = Matrix::CreateScale(10.0f) * view * proj;
-	m_SkyBoxVS->ConstantBufferCopy(&cubeBuf);
+	m_SkyBoxVS->ConstantBufferUpdate(&cubeBuf);
 	m_SkyBoxVS->Update();
 
 	m_SkyBoxPS->Update();

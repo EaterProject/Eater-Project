@@ -158,7 +158,7 @@ void PickingPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rende
 		objectBuf.gWorldViewProj = world * viewproj;
 		objectBuf.gHashColor = hashColor;
 
-		m_Mesh_VS->ConstantBufferCopy(&objectBuf);
+		m_Mesh_VS->ConstantBufferUpdate(&objectBuf);
 		m_Mesh_VS->Update();
 
 		// Pixel Shader Update..
@@ -184,7 +184,7 @@ void PickingPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rende
 			objectBuf.gBoneTransforms[i] = (obj->BoneOffsetTM)[i];
 		}
 
-		m_Skin_VS->ConstantBufferCopy(&objectBuf);
+		m_Skin_VS->ConstantBufferUpdate(&objectBuf);
 
 		m_Skin_VS->Update();
 
@@ -206,7 +206,7 @@ void PickingPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rende
 		objectBuf.gWorldViewProj = world * viewproj;
 		objectBuf.gHashColor = hashColor;
 
-		m_Mesh_VS->ConstantBufferCopy(&objectBuf);
+		m_Mesh_VS->ConstantBufferUpdate(&objectBuf);
 		m_Mesh_VS->Update();
 
 		// Pixel Shader Update..
@@ -276,7 +276,7 @@ void PickingPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::
 		CB_Instance_StaticMesh_ID objectBuf;
 		objectBuf.gViewProj = viewproj;
 
-		m_Mesh_Inst_VS->ConstantBufferCopy(&objectBuf);
+		m_Mesh_Inst_VS->ConstantBufferUpdate(&objectBuf);
 
 		m_Mesh_Inst_VS->Update();
 
@@ -349,7 +349,7 @@ void PickingPass::NoneMeshRenderUpdate(const std::vector<RenderData*>& meshlist)
 	CB_Instance_StaticMesh_ID objectBuf;
 	objectBuf.gViewProj = viewproj;
 
-	m_Mesh_Inst_VS->ConstantBufferCopy(&objectBuf);
+	m_Mesh_Inst_VS->ConstantBufferUpdate(&objectBuf);
 
 	m_Mesh_Inst_VS->Update();
 

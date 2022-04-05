@@ -243,7 +243,22 @@ void CreateSceneSub(Scene* mSceneTemp, std::string SceneName)
 	 DebugManager::DebugDrawLine(start, dir, distance, color);
  }
 
+ void DebugDrawCircle(float scale, DirectX::SimpleMath::Vector3 pos, DirectX::SimpleMath::Vector3 rot, DirectX::SimpleMath::Vector3 color)
+ {
+	 DebugManager::DebugDrawCircle(scale, pos, rot, color);
+ }
+
+ void DebugDrawCircle(float scale, DirectX::SimpleMath::Vector3 pos, DirectX::SimpleMath::Quaternion rot, DirectX::SimpleMath::Vector3 color)
+ {
+	 DebugManager::DebugDrawCircle(scale, pos, rot, color);
+ }
+
  void DebugDrawBox(DirectX::SimpleMath::Vector3 scale, DirectX::SimpleMath::Vector3 rot, DirectX::SimpleMath::Vector3 pos, DirectX::SimpleMath::Vector3 color)
+ {
+	 DebugManager::DebugDrawBox(scale, rot, pos, color);
+ }
+
+ void DebugDrawBox(DirectX::SimpleMath::Vector3 scale, DirectX::SimpleMath::Quaternion rot, DirectX::SimpleMath::Vector3 pos, DirectX::SimpleMath::Vector3 color)
  {
 	 DebugManager::DebugDrawBox(scale, rot, pos, color);
  }
