@@ -54,10 +54,10 @@ void MonsterA::SetUp()
 
 void MonsterA::Update()
 {
-	if (GetType() == true)
+	if (isLife == true)
 	{
+		mRigidbody->SetVelocity(0, 0, 1);
 	}
-		mRigidbody->SetVelocity(0, 0, -1);
 }
 
 void MonsterA::OnTriggerStay(GameObject* Obj)
@@ -84,6 +84,8 @@ void MonsterA::OnTriggerEnter(GameObject* Obj)
 		if(HP <= 0)
 		{
 			isLife = false;
+			mAnimation->Choice("die");
+			mAnimation->Play(1, false);
 		}
 	}
 }

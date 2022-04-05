@@ -57,27 +57,25 @@ void Collider::PhysicsUpdate()
 	}
 
 
+	
 	DebugCollider();
 	//충돌 함수 호출
-	int Size = (int)mPhysData->TriggerList.size();
-	if (Size != 0)
+	if (mPhysData->TriggerCount != 0)
 	{
 		if (mPhysData->GetTriggerEnter())
 		{
-			GameObject* Object = reinterpret_cast<GameObject*>(mPhysData->TriggerList[0]->EaterObj);
-			gameobject->PlayPhysFunction(Object, PHYS_TRIIGER_ENTER);
-		}
-		else if (mPhysData->GetTriggerStay())
-		{
-			GameObject* Object = reinterpret_cast<GameObject*>(mPhysData->TriggerList[0]->EaterObj);
-			gameobject->PlayPhysFunction(Object, PHYS_TRIIGER_STAY);
-		}
-		else if (mPhysData->GetTriggerExit())
-		{
-			GameObject* Object = reinterpret_cast<GameObject*>(mPhysData->TriggerList[0]->EaterObj);
-			gameobject->PlayPhysFunction(Object, PHYS_TRIIGER_EXIT);
+			FindPhysFunction(mPhysData, PHYS_TRIIGER_ENTER);
 		}
 
+		if (mPhysData->GetTriggerStay())
+		{
+			FindPhysFunction(mPhysData, PHYS_TRIIGER_STAY);
+		}
+
+		if (mPhysData->GetTriggerExit())
+		{
+			FindPhysFunction(mPhysData, PHYS_TRIIGER_EXIT);
+		}
 	}
 }
 
@@ -193,6 +191,25 @@ void Collider::DebugCollider()
 	}
 }
 
+void Collider::FindPhysFunction(PhysData* Data, unsigned int Type)
+{
+	int MaxCount = mPhysData->TriggerCount;
+	int NowCount = MaxCount;
+
+	for (int i = 0; i < 10; i++)
+	{
+		if (mPhysData->TriggerList[i] == nullptr) { continue; }
+
+		GameObject* Object = reinterpret_cast<GameObject*>(mPhysData->TriggerList[i]->EaterObj);
+		gameobject->PlayPhysFunction(Object, Type);
+		NowCount--;
+		if (NowCount <= 0)
+		{
+			return;
+		}
+	}
+}
+
 bool Collider::CreatePhys()
 {
 	if (isCreate == false)
@@ -257,10 +274,7 @@ bool Collider::GetTriggerExit()
 	return mPhysData->GetTriggerExit();
 }
 
-int Collider::GetTriggerCount()
-{
-	return (int)mPhysData->TriggerList.size();
-}
+
 
 GameObject* Collider::GetTriggerObject()
 {

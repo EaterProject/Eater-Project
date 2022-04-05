@@ -89,7 +89,7 @@ void ClientObjectManager::SetCreateMonsterMemorySize(int CreateCount)
 	for (int i = 0; i < 1; i++)
 	{
 		//생성한 몬스터를 리스트에 담는다
-		MonsterA_List.push_back(mFactory->CreateMonsterA(0, 5, 10));
+		MonsterA_List.push_back(mFactory->CreateMonsterA(0, 5, -10));
 	}
 
 	///몬스터 B 미리 할당

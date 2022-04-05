@@ -87,6 +87,7 @@ MonsterA* ObjectFactory::CreateMonsterA(float x, float y, float z)
 	MonsterA* monster = Object_Monster->AddComponent<MonsterA>();
 	Object_Monster->SetTag(FindTagNumber("Monster"));
 	Object_Monster->GetTransform()->Position = { x,y,z };
+	monster->isLife = true;
 	return monster;
 }
 

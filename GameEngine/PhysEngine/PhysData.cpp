@@ -31,7 +31,6 @@ PhysData::PhysData()
 	ActorObj	= nullptr;
 	mMeterial	= new PhysMaterial();
 	mCollider	= new PhysCollider();
-	TriggerList.resize(0);
 }
 
 PhysData::~PhysData()

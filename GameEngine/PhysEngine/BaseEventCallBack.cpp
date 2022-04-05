@@ -35,6 +35,8 @@ void BaseEventCallBack::onTrigger(PxTriggerPair* pairs, PxU32 count)
 {
 	for (PxU32 i = 0; i < count; i++)
 	{
+		isTargetPush	= false;
+		isOtherPush		= false;
 		PhysData* Other = reinterpret_cast<PhysData*>(pairs[i].otherActor->userData);
 		PhysData* Target = reinterpret_cast<PhysData*>(pairs[i].triggerActor->userData);
 
@@ -48,8 +50,26 @@ void BaseEventCallBack::onTrigger(PxTriggerPair* pairs, PxU32 count)
 			Target->OnTriggerStay = true;
 			Target->TriggerCount++;
 
-			Other->TriggerList.push_back(Target);
-			Target->TriggerList.push_back(Other);
+
+			for (int i = 0; i < 10; i++)
+			{
+				if (Other->TriggerList[i] == nullptr)
+				{
+					Other->TriggerList[i] = Target;
+					isOtherPush = true;
+				}
+
+				if (Target->TriggerList[i] == nullptr)
+				{
+					Target->TriggerList[i] = Other;
+					isTargetPush = true;
+				}
+
+				if (isTargetPush == true && isOtherPush == true)
+				{
+					break;
+				}
+			}
 		}
 
 		if (pairs[i].status & PxPairFlag::eNOTIFY_TOUCH_LOST)
@@ -58,12 +78,11 @@ void BaseEventCallBack::onTrigger(PxTriggerPair* pairs, PxU32 count)
 			Other->OnTriggerExit = true;
 			Other->TriggerCount--;
 
-			int count = (int)Other->TriggerList.size();
-			for (int i = 0; i < count; i++)
+			for (int i = 0; i < 10; i++)
 			{
 				if (Other->TriggerList[i] == Target)
 				{
-					Other->TriggerList.erase(Other->TriggerList.begin() + i);
+					Other->TriggerList[i] = nullptr;
 					break;
 				}
 			}
@@ -72,12 +91,11 @@ void BaseEventCallBack::onTrigger(PxTriggerPair* pairs, PxU32 count)
 			Target->OnTriggerStay = false;
 			Target->OnTriggerExit = true;
 			Target->TriggerCount--;
-			count = (int)Target->TriggerList.size();
-			for (int i = 0; i < count; i++)
+			for (int i = 0; i < 10; i++)
 			{
 				if (Target->TriggerList[i] == Other)
 				{
-					Target->TriggerList.erase(Target->TriggerList.begin() + i);
+					Target->TriggerList[i] = nullptr;
 					break;
 				}
 			}
