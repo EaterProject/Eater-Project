@@ -406,7 +406,7 @@ void BloomPass::GaussianBlur(ID3D11RenderTargetView* rtv[2], ID3D11ShaderResourc
 
 	// Pixel Shader Update..
 	bloomBlurOptionBuf.gBlurOrder = { BLOOM_VERTICAL_BLUR , 0 };
-	m_BloomBlur_PS->ConstantBufferCopy(&bloomBlurOptionBuf);
+	m_BloomBlur_PS->ConstantBufferUpdate(&bloomBlurOptionBuf);
 	m_BloomBlur_PS->SetShaderResourceView<gOriginMap>(srv[0]);
 	m_BloomBlur_PS->Update();
 
@@ -424,7 +424,7 @@ void BloomPass::GaussianBlur(ID3D11RenderTargetView* rtv[2], ID3D11ShaderResourc
 
 	// Pixel Shader Update..
 	bloomBlurOptionBuf.gBlurOrder = { 0 , BLOOM_HORIZONTAL_BLUR };
-	m_BloomBlur_PS->ConstantBufferCopy(&bloomBlurOptionBuf);
+	m_BloomBlur_PS->ConstantBufferUpdate(&bloomBlurOptionBuf);
 	m_BloomBlur_PS->SetShaderResourceView<gOriginMap>(srv[1]);
 	m_BloomBlur_PS->Update();
 
@@ -439,7 +439,7 @@ void BloomPass::SetConstantBuffer()
 {
 	CB_BloomBright bloomdownsamplingBuf;
 	bloomdownsamplingBuf.gThreshold = 1.0f;
-	m_BloomBright_PS->ConstantBufferCopy(&bloomdownsamplingBuf);
+	m_BloomBright_PS->ConstantBufferUpdate(&bloomdownsamplingBuf);
 }
 
 void BloomPass::SetSamplingViewPort(const SamplingData& downScreen)

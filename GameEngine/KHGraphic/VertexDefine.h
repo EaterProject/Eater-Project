@@ -31,7 +31,7 @@ namespace VertexInput
 		DirectX::SimpleMath::Vector2 Tex;
 		DirectX::SimpleMath::Vector3 Normal;
 		DirectX::SimpleMath::Vector3 Tangent;
-		DirectX::SimpleMath::Vector3 Mask;
+		DirectX::SimpleMath::Vector4 Mask;
 	};
 
 	struct PosVertex

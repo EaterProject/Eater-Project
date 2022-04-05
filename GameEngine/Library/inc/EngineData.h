@@ -38,7 +38,9 @@ public:
 	OBJECT_TYPE ObjType = OBJECT_TYPE::DEFALT;		//오브젝트 타입
 	std::string Name;								//오브젝트 이름
 
-	void* Object;									//원본 GameObject
+	bool IsActive = true;							//오브젝트 활성화 여부
+
+	void* Object;									//Grahpic 전용 GameObject
 
 	UINT ObjectIndex;								//오브젝트의 고유한 인덱스
 	Vector4 HashColor;								//오브젝트의 고유한 Hash Color
@@ -214,6 +216,9 @@ public:
 	std::vector<DirectionalLightData*>	DirectionLights;
 	std::vector<PointLightData*>		PointLights;
 	std::vector<SpotLightData*>			SpotLights;
+
+	// Culling Data
+	std::vector<MeshBuffer*> OccluderList;
 
 	// Debug Data
 	std::queue<DebugData>	 Debug_Data;

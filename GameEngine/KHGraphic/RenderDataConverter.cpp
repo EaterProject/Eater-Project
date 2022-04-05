@@ -260,6 +260,7 @@ void RenderDataConverter::ConvertMesh(MeshBuffer* originBuf, MeshRenderBuffer* c
 
 	// Vertex Buffer Data Convert..
 	convertData->m_Stride = originBuf->VertexBuf->Stride;
+	convertData->m_Offset = originBuf->VertexBuf->Offset;
 	convertData->m_VertexBuf = (ID3D11Buffer*)originBuf->VertexBuf->pVertexBuf;
 
 	// Mesh Sub Data Convert..

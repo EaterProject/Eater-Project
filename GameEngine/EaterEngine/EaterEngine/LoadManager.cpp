@@ -73,9 +73,9 @@ void LoadManager::Load(std::string& Path, UINT MODE)
 	}
 }
 
-void LoadManager::LoadTerrain(std::string mMeshName, std::string mMaskName, UINT parsingMode)
+void LoadManager::LoadTerrain(std::string mMeshName, std::string mMaskName1, std::string mMaskName2, UINT parsingMode)
 {
-	mFBX->LoadTerrain(mMeshName, mMaskName, parsingMode);
+	mFBX->LoadTerrain(mMeshName, mMaskName1, mMaskName2, parsingMode);
 }
 
 int LoadManager::GetMeshCount()

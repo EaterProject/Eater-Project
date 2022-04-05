@@ -28,7 +28,7 @@ struct MeshVertexIn
     float3 TangentL     : TANGENT;
     
 #ifdef TERRAIN_MESH
-    float3 Mask         : MASK;
+    float4 Mask         : TEXCOORD1;
 #endif
 };
 
@@ -44,7 +44,7 @@ struct MeshVertexOut
     float3 TangentV     : TANGENT1;
     
 #ifdef TERRAIN_MESH
-    float3 MaskColor    : MASK_COLOR;
+    float4 MaskColor    : TEXCOORD1;
 #endif
 };
 

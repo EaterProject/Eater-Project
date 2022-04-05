@@ -55,7 +55,12 @@ SHADER_RESOURCE_VIEW(gORMLayer1)
 SHADER_RESOURCE_VIEW(gDiffuseLayer2)
 SHADER_RESOURCE_VIEW(gNormalLayer2)
 SHADER_RESOURCE_VIEW(gORMLayer2)
-
+SHADER_RESOURCE_VIEW(gDiffuseLayer3)
+SHADER_RESOURCE_VIEW(gNormalLayer3)
+SHADER_RESOURCE_VIEW(gORMLayer3)
+SHADER_RESOURCE_VIEW(gDiffuseLayer4)
+SHADER_RESOURCE_VIEW(gNormalLayer4)
+SHADER_RESOURCE_VIEW(gORMLayer4)
 ///////////////////////////////////////////////////////////////////////////////////////////
 // OIT ShaderResourceView Resource
 ///////////////////////////////////////////////////////////////////////////////////////////

@@ -118,7 +118,7 @@ void AlphaPass::RenderUpdate(const InstanceRenderBuffer* instance, const RenderD
 		CB_InstanceParticleMesh particleBuf;
 		particleBuf.gViewProj = viewproj;
 
-		m_ParticleInstVS->ConstantBufferCopy(&particleBuf);
+		m_ParticleInstVS->ConstantBufferUpdate(&particleBuf);
 
 		m_ParticleInstVS->Update();
 
@@ -194,7 +194,7 @@ void AlphaPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::ve
 		CB_InstanceParticleMesh particleBuf;
 		particleBuf.gViewProj = viewproj;
 
-		m_ParticleInstVS->ConstantBufferCopy(&particleBuf);
+		m_ParticleInstVS->ConstantBufferUpdate(&particleBuf);
 
 		m_ParticleInstVS->Update();
 

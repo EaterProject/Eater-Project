@@ -20,7 +20,6 @@ public:
 	void Update() override;
 	void End() override;
 
-	void CreateTestObject();
 	void CreateMap();
 	void CreateParticle(float x, float y, float z);
 	void ChangeCubeMap();

@@ -22,7 +22,7 @@ public:
 	~FBXManager();
 
 	void Initialize(GraphicEngineManager* Graphic, CRITICAL_SECTION* _cs);
-	void LoadTerrain(std::string Name, std::string MaskName, UINT parsingMode);
+	void LoadTerrain(std::string Name, std::string MaskName1, std::string MaskName2, UINT parsingMode);
 	void LoadQuad();
 	void Load(std::string& Path, UINT parsingMode);
 private:

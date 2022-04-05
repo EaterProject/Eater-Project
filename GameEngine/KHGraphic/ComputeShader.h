@@ -15,6 +15,7 @@ public:
 public:
 	void LoadShader(std::string fileName, const char* entry_point, const char* shader_model, const D3D_SHADER_MACRO* pDefines) override;
 	void Update() override;
+	void Update(ID3D11DeviceContext* context) override;
 	void Release() override;
 
 	// ComputeShader UnorderedAccessView ¼³Á¤..

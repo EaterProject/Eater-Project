@@ -52,7 +52,7 @@ void FXAAPass::Start(int width, int height)
 
 	CB_FxaaFrame fxaaBuf;
 	fxaaBuf.gFrame = Vector4(1.0f / width, 1.0f / height, 0.0f, 0.0f);
-	m_FXAA_PS->ConstantBufferCopy<CB_FxaaFrame>(&fxaaBuf);
+	m_FXAA_PS->ConstantBufferUpdate<CB_FxaaFrame>(&fxaaBuf);
 }
 
 void FXAAPass::OnResize(int width, int height)
@@ -65,7 +65,7 @@ void FXAAPass::OnResize(int width, int height)
 
 	CB_FxaaFrame fxaaBuf;
 	fxaaBuf.gFrame = Vector4(1.0f / width, 1.0f / height, 0.0f, 0.0f);
-	m_FXAA_PS->ConstantBufferCopy<CB_FxaaFrame>(&fxaaBuf);
+	m_FXAA_PS->ConstantBufferUpdate<CB_FxaaFrame>(&fxaaBuf);
 }
 
 void FXAAPass::Release()

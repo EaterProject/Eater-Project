@@ -88,6 +88,57 @@ void ShaderBase::SetSamplerState(Hash_Code hash_code, ID3D11SamplerState* sample
 	m_SamplerStates[it->second->register_number] = sampler;
 }
 
+void ShaderBase::SetConstantBuffer(Hash_Code hash_code, CBUFFER_USAGE usage)
+{
+	// 해당 Value 찾기..
+	std::unordered_map<Hash_Code, ConstantBuffer*>::iterator it = m_ConstantBufferList.find(hash_code);
+
+	// 해당 Key에 대한 Value가 없다면..
+	if (it == m_ConstantBufferList.end()) return;
+
+	// 해당 Constant Buffer Usage 설정..
+	ConstantBuffer* cBuffer = it->second;
+	cBuffer->cUsage = usage;
+
+	D3D11_USAGE cBufferUsage;
+	UINT cBufferFlag = 0;
+
+	// Usage에 따른 옵션 설정..
+	switch (usage)
+	{
+	case CBUFFER_USAGE::DEFAULT:
+		cBufferUsage = D3D11_USAGE_DEFAULT;
+		break;
+	case CBUFFER_USAGE::IMMUTABLE:
+		cBufferUsage = D3D11_USAGE_IMMUTABLE;
+		break;
+	case CBUFFER_USAGE::DYNAMIC:
+		cBufferUsage = D3D11_USAGE_DYNAMIC;
+		cBufferFlag = D3D11_CPU_ACCESS_WRITE;
+		break;
+	case CBUFFER_USAGE::STAGING:
+		cBufferUsage = D3D11_USAGE_STAGING;
+		cBufferFlag = D3D11_CPU_ACCESS_READ;
+		break;
+	default:
+		break;
+	}
+
+	// 새로 생성할 Constant Buffer..
+	ID3D11Buffer* cBuf = nullptr;
+
+	// 해당 Constant Buffer 생성..
+	CD3D11_BUFFER_DESC cBufferDesc(cBuffer->cSize, D3D11_BIND_CONSTANT_BUFFER, cBufferUsage, cBufferFlag);
+
+	HR(g_Device->CreateBuffer(&cBufferDesc, nullptr, &cBuf));
+
+	// Debug Name..
+	GPU_RESOURCE_DEBUG_NAME(cBuf, cBuffer->buffer_name.c_str());
+
+	// 해당 Constant Buffer 삽입..
+	m_ConstantBuffers[cBuffer->register_number] = cBuf;
+}
+
 SHADER_TYPE ShaderBase::GetType()
 {
 	return m_ShaderType;

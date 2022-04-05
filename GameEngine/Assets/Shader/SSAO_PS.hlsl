@@ -1,7 +1,6 @@
 cbuffer cbSsaoObject : register(b0)
 {
 	float4x4 gViewToTexSpace;	// Proj * Texture
-    float4x4 gProj;
 };
 
 cbuffer cbSsaoOption : register(b1)

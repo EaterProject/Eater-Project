@@ -254,7 +254,7 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const std:
 		objectBuf.gView = view;
 		objectBuf.gProj = proj;
 
-		m_MeshInstVS->ConstantBufferCopy(&objectBuf);
+		m_MeshInstVS->ConstantBufferUpdate(&objectBuf);
 
 		m_MeshInstVS->Update();
 
@@ -286,7 +286,7 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const std:
 			m_DeferredPS->SetShaderResourceView<gORMMap>(mat->m_ORM);
 		}
 
-		m_DeferredPS->ConstantBufferCopy(&materialBuf);
+		m_DeferredPS->ConstantBufferUpdate(&materialBuf);
 
 		m_DeferredPS->Update();
 
@@ -346,7 +346,7 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rend
 		objectBuf.gView = view;
 		objectBuf.gProj = proj;
 
-		m_MeshVS->ConstantBufferCopy(&objectBuf);
+		m_MeshVS->ConstantBufferUpdate(&objectBuf);
 
 		m_MeshVS->Update();
 
@@ -378,7 +378,7 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rend
 			m_DeferredPS->SetShaderResourceView<gORMMap>(mat->m_ORM);
 		}
 
-		m_DeferredPS->ConstantBufferCopy(&materialBuf);
+		m_DeferredPS->ConstantBufferUpdate(&materialBuf);
 
 		m_DeferredPS->Update();
 
@@ -401,19 +401,27 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rend
 		objectBuf.gView = view;
 		objectBuf.gProj = proj;
 		objectBuf.gTexTransform = *terrain->m_Tex;
-		m_TerrainVS->ConstantBufferCopy(&objectBuf);
+		m_TerrainVS->ConstantBufferUpdate(&objectBuf);
 
 		m_TerrainVS->Update();
 
 		// Pixel Shader Update..
 		MaterialRenderBuffer* layer1 = terrain->m_MaterialList[0];
 		MaterialRenderBuffer* layer2 = terrain->m_MaterialList[1];
+		MaterialRenderBuffer* layer3 = terrain->m_MaterialList[2];
+		MaterialRenderBuffer* layer4 = terrain->m_MaterialList[3];
 		m_TerrainPS->SetShaderResourceView<gDiffuseLayer1>(layer1->m_Albedo);
 		m_TerrainPS->SetShaderResourceView<gNormalLayer1>(layer1->m_Normal);
 		m_TerrainPS->SetShaderResourceView<gORMLayer1>(layer1->m_ORM);
 		m_TerrainPS->SetShaderResourceView<gDiffuseLayer2>(layer2->m_Albedo);
 		m_TerrainPS->SetShaderResourceView<gNormalLayer2>(layer2->m_Normal);
 		m_TerrainPS->SetShaderResourceView<gORMLayer2>(layer2->m_ORM);
+		m_TerrainPS->SetShaderResourceView<gDiffuseLayer3>(layer3->m_Albedo);
+		m_TerrainPS->SetShaderResourceView<gNormalLayer3>(layer3->m_Normal);
+		m_TerrainPS->SetShaderResourceView<gORMLayer3>(layer3->m_ORM);
+		m_TerrainPS->SetShaderResourceView<gDiffuseLayer4>(layer4->m_Albedo);
+		m_TerrainPS->SetShaderResourceView<gNormalLayer4>(layer4->m_Normal);
+		m_TerrainPS->SetShaderResourceView<gORMLayer4>(layer4->m_ORM);
 
 		m_TerrainPS->Update();
 
@@ -439,7 +447,7 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rend
 			objectBuf.gBoneTransforms[i] = (obj->BoneOffsetTM)[i];
 		}
 
-		m_SkinVS->ConstantBufferCopy(&objectBuf);
+		m_SkinVS->ConstantBufferUpdate(&objectBuf);
 
 		m_SkinVS->Update();
 
@@ -471,7 +479,7 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rend
 			m_DeferredPS->SetShaderResourceView<gORMMap>(mat->m_ORM);
 		}
 
-		m_DeferredPS->ConstantBufferCopy(&materialBuf);
+		m_DeferredPS->ConstantBufferUpdate(&materialBuf);
 
 		m_DeferredPS->Update();
 

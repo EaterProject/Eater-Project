@@ -338,9 +338,9 @@ void GameEngine::ChoiceScene(std::string name)
 }
 
 ///로드 관련 함수들
-void GameEngine::LoadTerrain(std::string mMeshName, std::string mMaskName, UINT parsingMode)
+void GameEngine::LoadTerrain(std::string mMeshName, std::string mMaskName1, std::string mMaskName2, UINT parsingMode)
 {
-	mLoadManager->LoadTerrain(mMeshName, mMaskName, parsingMode);
+	mLoadManager->LoadTerrain(mMeshName, mMaskName1, mMaskName2, parsingMode);
 }
 void GameEngine::Load(std::string& Path, UINT MODE)
 {

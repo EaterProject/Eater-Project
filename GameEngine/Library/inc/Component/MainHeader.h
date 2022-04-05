@@ -46,7 +46,7 @@ extern "C" EATER_ENGINEDLL void ChoiceScene(std::string name);					//스크린 선택
 EATER_ENGINEDLL void CreateSceneSub(Scene* mSceneTemp,std::string SceneName);	//스크린 생성
 
 ///매쉬 불러오기
-extern "C" EATER_ENGINEDLL void LoadTerrainMesh(std::string mMeshPath, std::string MaskTexturePath, UINT parsingMode = 0);	//매쉬 로드
+extern "C" EATER_ENGINEDLL void LoadTerrainMesh(std::string mMeshPath, std::string maskName1, std::string maskName2, UINT parsingMode = 0);	//매쉬 로드
 extern "C" EATER_ENGINEDLL void Load(std::string mPath,UINT Mode = 0);
 extern "C" EATER_ENGINEDLL int	LoadAssetsCount();
 extern "C" EATER_ENGINEDLL void LoadEnvironment(std::string mPath);
@@ -85,7 +85,10 @@ extern "C" EATER_ENGINEDLL bool RayCast(PhysRayCast* ray);
 EATER_ENGINEDLL void EditorSetting();
 EATER_ENGINEDLL void DebugDrawLine(Vector3 start, Vector3 end, Vector3 color);
 EATER_ENGINEDLL void DebugDrawLine(Vector3 start, Vector3 dir, float distance, Vector3 color);
+EATER_ENGINEDLL void DebugDrawCircle(float scale, DirectX::SimpleMath::Vector3 pos, DirectX::SimpleMath::Vector3 rot, DirectX::SimpleMath::Vector3 color);
+EATER_ENGINEDLL void DebugDrawCircle(float scale, DirectX::SimpleMath::Vector3 pos, DirectX::SimpleMath::Quaternion rot, DirectX::SimpleMath::Vector3 color);
 EATER_ENGINEDLL void DebugDrawBox(DirectX::SimpleMath::Vector3 scale, DirectX::SimpleMath::Vector3 rot, DirectX::SimpleMath::Vector3 pos, DirectX::SimpleMath::Vector3 color);
+EATER_ENGINEDLL void DebugDrawBox(DirectX::SimpleMath::Vector3 scale, DirectX::SimpleMath::Quaternion rot, DirectX::SimpleMath::Vector3 pos, DirectX::SimpleMath::Vector3 color);
 EATER_ENGINEDLL void DebugDrawSphere(float scale, DirectX::SimpleMath::Vector3 pos, DirectX::SimpleMath::Vector3 color);
 EATER_ENGINEDLL void DebugPrint(std::string str);
 
