@@ -316,6 +316,7 @@ void DebugPass::GlobalRender()
 	CB_DebugObject object;
 	CB_DebugOption option;
 
+	float offsetAngle = 90.0f * 3.141592f / 180.0f;
 	Vector3 axis, look, right, up, pos;
 	DebugData ray;
 
@@ -382,8 +383,7 @@ void DebugPass::GlobalRender()
 		look = light->Direction * Vector3(RayLength);
 
 		Matrix world = LookAt_Matrix(pos, look);
-
-		object.gWorldViewProj = world * viewproj;
+		object.gWorldViewProj = Matrix::CreateRotationX(offsetAngle) * world * viewproj;
 		option.gColor = Vector3(1.0f, 1.0f, 0.0f);
 
 		m_DebugVS->ConstantBufferUpdate(&object);
@@ -665,7 +665,7 @@ void DebugPass::GlobalRender()
 
 		Matrix scale = Matrix::CreateScale(length);
 
-		object.gWorldViewProj = scale * world * viewproj;
+		object.gWorldViewProj = scale * Matrix::CreateRotationX(offsetAngle) * world * viewproj;
 
 		m_DebugVS->ConstantBufferUpdate(&object);
 		m_DebugVS->Update();

@@ -20,12 +20,6 @@ public:
 
 public:
 	void AddSampler(Hash_Code hash_code, ID3D11SamplerState* sampler) override;
-	void AddConstantBuffer();
-	void AddConstantBufferUsage();
-
-public:
-	template<typename T> 
-	void PushConstantBufferUsage(UINT usage);
 
 public:
 	ShaderBase* LoadShader(SHADER_TYPE shaderType, const char* fileName, const char* entry_point, const char* shaderName, const D3D_SHADER_MACRO* pDefines = nullptr);
@@ -33,6 +27,12 @@ public:
 
 private:
 	void CreateShader();
+
+	void AddConstantBuffer();
+	void AddConstantBufferUsage();
+
+	template<typename T>
+	void PushConstantBufferUsage(UINT usage);
 
 	VertexShader* GetVertexShader(std::string shaderName);
 	PixelShader* GetPixelShader(std::string shaderName);
