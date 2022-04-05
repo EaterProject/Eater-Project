@@ -18,6 +18,9 @@ const std::string Debugger::TOKEN::Enter = "\n";
 const std::string Debugger::TOKEN::Tab	 = "\t";
 const std::string Debugger::TOKEN::Space = " ";
 
+LOG_DESC Debugger::g_Log;
+HANDLE Debugger::g_Console;
+
 Debugger::Debugger()
 {
 
@@ -27,14 +30,14 @@ void Debugger::Create()
 {
 	AllocConsole();
 	system("cls");
-	m_Console = GetStdHandle(STD_OUTPUT_HANDLE);
+	g_Console = GetStdHandle(STD_OUTPUT_HANDLE);
 	m_LogCount = 0;
 
 	if ((_waccess(_T("./Log"), 0)) == -1) //여기에 LOG폴더가 없으면...
 		CreateDirectory(_T("./Log"), NULL);
 
-	m_Log = LOG_DESC();
-	m_Log.LogName = "./Log/";
+	g_Log = LOG_DESC();
+	g_Log.LogName = "./Log/";
 	time_t currentSec = time(NULL);
 	tm* t = localtime(&currentSec);
 
@@ -47,9 +50,9 @@ void Debugger::Create()
 
 	oss << std::setfill('0') << std::setw(2) << year << "." << mon / 10 << mon % 10 << "." << day / 10 << day % 10 << ".log";
 
-	m_Log.LogName += oss.str();
+	g_Log.LogName += oss.str();
 
-	m_Log.LogFile = fopen(m_Log.LogName.c_str(), "a+");
+	g_Log.LogFile = fopen(g_Log.LogName.c_str(), "a+");
 }
 
 void Debugger::TimerStart(PROFILE_OUTPUT outputType, const char* file, const char* func, int& line, int& totalFrame, std::string&& timerKey)
@@ -180,7 +183,7 @@ void Debugger::Log(PROFILE_OUTPUT& outputType, HRESULT result, const char* fileI
 		output += errMessage;
 		output += "\n\n";
 
-		fputs(output.c_str(), m_Log.LogFile);
+		fputs(output.c_str(), g_Log.LogFile);
 	}
 		break;
 	case PROFILE_OUTPUT::CONSOLE:
@@ -189,7 +192,7 @@ void Debugger::Log(PROFILE_OUTPUT& outputType, HRESULT result, const char* fileI
 		output += errMessage;
 		output += TOKEN::Enter;
 
-		WriteFile(m_Console, output.c_str(), (DWORD)(output.size()), NULL, NULL);
+		WriteFile(g_Console, output.c_str(), (DWORD)(output.size()), NULL, NULL);
 
 		m_LogCount++;
 		if (m_LogCount > 30)
