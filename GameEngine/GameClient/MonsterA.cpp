@@ -6,7 +6,6 @@
 #include "MainHeader.h"
 #include "Collider.h"
 #include "Rigidbody.h"
-#include "MonsterBase.h"
 #include "Player.h"
 
 MonsterA::MonsterA()
@@ -16,7 +15,6 @@ MonsterA::MonsterA()
 	mAnimation	= nullptr;
 	mColider	= nullptr;
 	mRigidbody	= nullptr;
-	mBase		= nullptr;
 }
 
 MonsterA::~MonsterA()
@@ -26,7 +24,6 @@ MonsterA::~MonsterA()
 	mAnimation	= nullptr;
 	mColider	= nullptr;
 	mRigidbody	= nullptr;
-	mBase		= nullptr;
 }
 
 void MonsterA::Awake()
@@ -36,9 +33,6 @@ void MonsterA::Awake()
 	mAnimation	= gameobject->GetComponent<AnimationController>();
 	mColider	= gameobject->GetComponent<Collider>();
 	mRigidbody	= gameobject->GetComponent<Rigidbody>();
-	mBase		= gameobject->GetComponent<MonsterBase>();
-
-	//Create(100, 10, 5);
 }
 void MonsterA::SetUp()
 {
@@ -50,6 +44,8 @@ void MonsterA::SetUp()
 	mRigidbody->SetGravity(true);
 	mColider->CreatePhys();
 
+	BulletTag = FindTagNumber("Bullet");
+
 	//매쉬 생성
 	mMeshFilter->SetModelName("monsterA+");
 	mMeshFilter->SetAnimationName("monsterA+");
@@ -58,15 +54,9 @@ void MonsterA::SetUp()
 
 void MonsterA::Update()
 {
-	//if (mRigidbody->GetTriggerEnter())
-	//{
-	//	GameObject* Obj = mRigidbody->GetTriggerObject();
-	//	int num = 0;
-	//}
-
-	if (mBase->isLife == true)
+	if (isLife == true)
 	{
-		mRigidbody->SetVelocity(0, 0, -1);
+		mRigidbody->SetVelocity(0, 0, 1);
 	}
 }
 
@@ -74,8 +64,35 @@ void MonsterA::OnTriggerStay(GameObject* Obj)
 {
 	if (Player::GetState() == PLAYER_STATE::ATTACK)
 	{
-		Vector3 Look = Player::GetPlayerTransform()->GetLocalPosition_Look()  * 10;
-		mRigidbody->SetAddForce(Look.x, Look.y+10, Look.z *-1);
+		Vector3 Look = Player::GetPlayerTransform()->GetLocalPosition_Look() * 10;
+		mRigidbody->SetAddForce(Look.x, Look.y + 10, Look.z * -1);
 	}
+
+	//if (Player::GetState() == PLAYER_STATE::ATTACK)
+	//{
+	//	Vector3 Look = Player::GetPlayerTransform()->GetLocalPosition_Look() * 10;
+	//	mRigidbody->SetAddForce(Look.x, Look.y + 10, Look.z * -1);
+	//}
+}
+
+void MonsterA::OnTriggerEnter(GameObject* Obj)
+{
+	int num = Obj->GetTag();
+	if (Obj->GetTag() == BulletTag)
+	{
+		HP -= 20;
+		if(HP <= 0)
+		{
+			isLife = false;
+			mAnimation->Choice("die");
+			mAnimation->Play(1, false);
+		}
+	}
+}
+
+void MonsterA::ReSet()
+{
+
+
 }
 

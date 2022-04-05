@@ -24,6 +24,10 @@ void HealingDrone::SetUp()
 	mTransform  = gameobject->GetTransform();
 	mPlayerTR	= mPlayer->GetTransform();
 	mPlayerComponent = mPlayer->GetComponent<Player>();
+
+	Vector3 DronePos = Vector3::Lerp(mTransform->Position, mPlayerTR->Position, GetDeltaTime());
+	DronePos.y = OffsetY;
+	mTransform->Position = DronePos;
 }
 
 void HealingDrone::Update()
@@ -37,8 +41,9 @@ void HealingDrone::Update()
 	//mTransform->Position.y = OffsetY;
 	if (mTransform->GetDistance(mPlayerTR->Position) >= 4.0f) 
 	{
-		mTransform->Position = Vector3::Lerp(mTransform->Position, mPlayerTR->Position,GetDeltaTime());
-		mTransform->Position.y = OffsetY;
+		Vector3 DronePos = Vector3::Lerp(mTransform->Position, mPlayerTR->Position,GetDeltaTime());
+		DronePos.y = OffsetY;
+		mTransform->Position = DronePos;
 	}
 
 	//LookAt
@@ -51,6 +56,10 @@ void HealingDrone::Update()
 		mPlayerComponent->Healing(HealingPower);
 		HealingTime -= HealingMaxTime;
 	}
+}
+
+void HealingDrone::ReSet()
+{
 }
 
 void HealingDrone::SetPlayer(GameObject* PlayerObject)

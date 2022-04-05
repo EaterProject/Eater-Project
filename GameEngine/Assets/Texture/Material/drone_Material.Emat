@@ -1,9 +1,9 @@
 #EATERMAT
-@ORM NO
-@Alpha NO
 @MaterialName drone_Material
-@Roughness 0.000000
+@Alpha NO
+@ORM NO
 @Diffuse NO
+@Roughness 0.000000
 @Normal NO
 @Emissive NO
 @Metallic 0.000000

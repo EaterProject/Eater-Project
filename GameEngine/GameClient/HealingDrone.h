@@ -1,5 +1,5 @@
 #pragma once
-#include "Component.h"
+#include "ClientComponent.h"
 
 /// <summary>
 /// 플레이어를 따라다니는 힐링 드론
@@ -7,13 +7,14 @@
 class Transform;
 class GameObject;
 class Player;
-class HealingDrone : public Component
+class HealingDrone : public ClientComponent
 {
 public:
 	HealingDrone();
 	virtual ~HealingDrone();
 	void SetUp();
 	void Update();
+	void ReSet();
 	void SetPlayer(GameObject* PlayerObject);
 private:
 	Transform*	mTransform;

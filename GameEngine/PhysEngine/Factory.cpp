@@ -97,7 +97,7 @@ PxMaterial* Factory::CreateMaterial(PhysMaterial* m)
 physx::PxShape* Factory::CreateSphereCollider(physx::PxMaterial* m, PhysCollider* c)
 {
 	PxSphereGeometry temp = PxSphereGeometry(PxReal(c->GetSize().x));
-	PxShape* shape = m_Phys->createShape(temp, *m);
+	PxShape* shape = m_Phys->createShape(temp, *m, false, CreateShapeFlag(c->GetTrigger()));
 	return shape;
 }
 
@@ -144,8 +144,8 @@ void Factory::CreateStaticActor(PhysData* Data, physx::PxShape* shape, physx::Px
 	if (Data->isDinamic == true) { return; }
 	PxRigidStatic* body = m_Phys->createRigidStatic(*Tr);
 
-	const PxFilterData triggerFilterData(0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff);
-	shape->setSimulationFilterData(triggerFilterData);
+	//const PxFilterData triggerFilterData(0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff);
+	//shape->setSimulationFilterData(triggerFilterData);
 
 	body->attachShape(*shape);
 	m_Scene->addActor(*body);

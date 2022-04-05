@@ -42,10 +42,10 @@ public:
 	EATER_ENGINEDLL bool GetTriggerEnter();
 	EATER_ENGINEDLL bool GetTriggerStay();
 	EATER_ENGINEDLL bool GetTriggerExit();
-	EATER_ENGINEDLL int GetTriggerCount();
 	EATER_ENGINEDLL GameObject* GetTriggerObject();
 private:
 	void DebugCollider();
+	void FindPhysFunction(PhysData* Data, unsigned int Type);
 	DirectX::SimpleMath::Matrix CreateXMRot4x4();
 private:
 	PhysData*		mPhysData;

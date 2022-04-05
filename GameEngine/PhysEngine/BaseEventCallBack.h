@@ -20,5 +20,9 @@ public:
 	virtual void onTrigger(PxTriggerPair* pairs, PxU32 count) override;
 
 	virtual void onAdvance(const PxRigidBody* const* bodyBuffer, const PxTransform* poseBuffer, const PxU32 count) override;
+
+private:
+	bool isTargetPush = false;
+	bool isOtherPush = false;
 };
 

@@ -71,7 +71,7 @@ public:
 	bool isKinematic;
 
 	int TriggerCount = 0;
-	std::vector<PhysData*> TriggerList;
+	PhysData* TriggerList[10];
 	std::vector<PhysData*> CollisionList;
 public:
 	//이동에 관한 축변환을 막는다

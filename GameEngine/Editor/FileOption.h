@@ -38,7 +38,6 @@ public:
 	afx_msg LRESULT OnUserFunc(WPARAM wParam, LPARAM lParam);
 	afx_msg void OnCreateTerrain();
 	afx_msg void OnCreateLight();
-	afx_msg void OnCreateMaterial();
 	afx_msg void OnCreateParticle();
 	afx_msg void OnSceneSave();
 	afx_msg void OnOpenAssetsFolder();
@@ -49,4 +48,5 @@ public:
 	afx_msg void OnAddCollider();
 	afx_msg void OnAddRigidbody();
 	afx_msg void OnAddLight();
+	afx_msg void OnCreateMaterial();
 };

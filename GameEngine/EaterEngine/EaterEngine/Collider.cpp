@@ -32,42 +32,50 @@ void Collider::PhysicsUpdate()
 		mPhysData->SetWorldPosition(mTransform->Position.x, mTransform->Position.y, mTransform->Position.z);
 		mTransform->Position = mPhysData->WorldPosition;
 	}
+
+	//if (mTransform->Q_Rotation != mPhysData->Rotation)
+	//{
+	//	mPhysData->SetRotation(mTransform->Position.x, mTransform->Position.y, mTransform->Position.z);
+	//}
+	
 	PhysX_Update_Actor(mPhysData);
+	if (mPhysData->isDinamic == true)
+	{
+		float CenterX = mPhysData->CenterPoint.x;
+		float CenterY = mPhysData->CenterPoint.y;
+		float CenterZ = mPhysData->CenterPoint.z;
 
-	float CenterX = mPhysData->CenterPoint.x;
-	float CenterY = mPhysData->CenterPoint.y;
-	float CenterZ = mPhysData->CenterPoint.z;
+		mTransform->Position.x = mPhysData->WorldPosition.x;
+		mTransform->Position.y = mPhysData->WorldPosition.y;
+		mTransform->Position.z = mPhysData->WorldPosition.z;
 
-	mTransform->Position.x = mPhysData->WorldPosition.x;
-	mTransform->Position.y = mPhysData->WorldPosition.y;
-	mTransform->Position.z = mPhysData->WorldPosition.z;
+		mTransform->Q_Rotation.x = mPhysData->Rotation.x;
+		mTransform->Q_Rotation.y = mPhysData->Rotation.y;
+		mTransform->Q_Rotation.z = mPhysData->Rotation.z;
+		mTransform->Q_Rotation.w = mPhysData->Rotation.w;
 
-	mTransform->Q_Rotation.x = mPhysData->Rotation.x;
-	mTransform->Q_Rotation.y = mPhysData->Rotation.y;
-	mTransform->Q_Rotation.z = mPhysData->Rotation.z;
-	mTransform->Q_Rotation.w = mPhysData->Rotation.w;
+	}
 
 
+	
 	DebugCollider();
-
 	//충돌 함수 호출
-	int Size = (int)mPhysData->TriggerList.size();
-	if (Size != 0)
+	if (mPhysData->TriggerCount != 0)
 	{
 		if (mPhysData->GetTriggerEnter())
 		{
-			GameObject* Obj = reinterpret_cast<GameObject*>(mPhysData->TriggerList[0]->EaterObj);
-			gameobject->PlayPhysFunction(Obj, PHYS_TRIIGER_ENTER);
-		}
-		else if (mPhysData->GetTriggerStay())
-		{
-			gameobject->PlayPhysFunction((GameObject*)mPhysData->TriggerList[0], PHYS_TRIIGER_STAY);
-		}
-		else if (mPhysData->GetTriggerExit())
-		{
-			gameobject->PlayPhysFunction((GameObject*)mPhysData->TriggerList[0], PHYS_TRIIGER_EXIT);
+			FindPhysFunction(mPhysData, PHYS_TRIIGER_ENTER);
 		}
 
+		if (mPhysData->GetTriggerStay())
+		{
+			FindPhysFunction(mPhysData, PHYS_TRIIGER_STAY);
+		}
+
+		if (mPhysData->GetTriggerExit())
+		{
+			FindPhysFunction(mPhysData, PHYS_TRIIGER_EXIT);
+		}
 	}
 }
 
@@ -183,6 +191,25 @@ void Collider::DebugCollider()
 	}
 }
 
+void Collider::FindPhysFunction(PhysData* Data, unsigned int Type)
+{
+	int MaxCount = mPhysData->TriggerCount;
+	int NowCount = MaxCount;
+
+	for (int i = 0; i < 10; i++)
+	{
+		if (mPhysData->TriggerList[i] == nullptr) { continue; }
+
+		GameObject* Object = reinterpret_cast<GameObject*>(mPhysData->TriggerList[i]->EaterObj);
+		gameobject->PlayPhysFunction(Object, Type);
+		NowCount--;
+		if (NowCount <= 0)
+		{
+			return;
+		}
+	}
+}
+
 bool Collider::CreatePhys()
 {
 	if (isCreate == false)
@@ -195,6 +222,7 @@ bool Collider::CreatePhys()
 		{
 			mPhysData->isDinamic = true;
 			mRigidbody->isCreate = true;
+			gameobject->GetTransform()->isRigid = true;
 		}
 		else
 		{
@@ -205,7 +233,6 @@ bool Collider::CreatePhys()
 		Transform* mTransform = gameobject->GetTransform();
 		mPhysData->SetWorldPosition(mTransform->Position.x, mTransform->Position.y, mTransform->Position.z);
 		mPhysData->Rotation = Q_Rot;
-		mTransform->isRigid = true;
 		mTransform->Q_Rotation = Q_Rot;
 		PhysX_Create_Actor(mPhysData);
 		isCreate = true;
@@ -247,10 +274,7 @@ bool Collider::GetTriggerExit()
 	return mPhysData->GetTriggerExit();
 }
 
-int Collider::GetTriggerCount()
-{
-	return (int)mPhysData->TriggerList.size();
-}
+
 
 GameObject* Collider::GetTriggerObject()
 {

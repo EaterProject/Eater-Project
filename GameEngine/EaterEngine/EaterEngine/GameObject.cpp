@@ -77,7 +77,7 @@ bool GameObject::SetTag(int TagNumber)
 	return true;
 }
 
-size_t GameObject::GetTag()
+int GameObject::GetTag()
 {
 	return Tag;
 }
@@ -275,7 +275,6 @@ void GameObject::PushComponentFunction(Component* con, unsigned int type)
 		con->FUNCTION_MASK |= SETUP;
 		break;
 	case START_UPDATE:
-
 		ObjectManager::PushStartUpdate(con, con->StartUpdate_Order);
 		con->FUNCTION_MASK |= START_UPDATE;
 		break;
