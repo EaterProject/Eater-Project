@@ -19,7 +19,7 @@
 #include "ParticleSystem.h"
 #include "Collider.h"
 
-//#define RELEASE_PROFILE
+#define RELEASE_PROFILE
 #include "./Profiler/Profiler.h"
 
 void TestScene::Awake()
@@ -38,6 +38,7 @@ void TestScene::Awake()
 	PROFILE_TIMER_END("Load Folder"); 
 
 	CreateMap();
+
 	//CreateParticle(0,0,0);
 
 	SetEnvironment(true);

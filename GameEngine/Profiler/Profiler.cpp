@@ -3,7 +3,7 @@
 #include "Profiler.h"
 #include "Debugger.h"
 
-Debugger g_Debugger = Debugger();
+Debugger g_Debugger;
 
 PROFILER_DLL bool Create()
 {

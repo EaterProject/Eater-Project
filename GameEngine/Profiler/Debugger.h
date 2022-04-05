@@ -71,9 +71,8 @@ private:
 	std::map<Hash, TIME_DESC>::iterator m_NowKey;
 	std::map<Hash, TIME_DESC> m_Timer;
 
-	LOG_DESC m_Log;
-
-	HANDLE m_Console;
+	static LOG_DESC g_Log;
+	static HANDLE g_Console;
 
 	UINT m_LogCount;
 };
