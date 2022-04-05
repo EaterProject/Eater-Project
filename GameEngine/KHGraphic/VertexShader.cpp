@@ -6,6 +6,7 @@
 #include "CompilerDefine.h"
 #include <sstream>
 #include <fstream>
+#include "ConstantBufferDefine.h"
 
 VertexShader::VertexShader(const char* shaderName, const char* fileName, const char* entry_point, const char* shader_model, const D3D_SHADER_MACRO* pDefines)
 	:ShaderBase(SHADER_TYPE::VERTEX_SHADER, shaderName)
@@ -119,51 +120,34 @@ void VertexShader::LoadShader(std::string fileName, const char* entry_point, con
 	// Debug Name..
 	GPU_RESOURCE_DEBUG_NAME(m_InputLayout.Get(), (std::string(entry_point) + "_InputLayout").c_str());
 
-	/// ConstantBuffer Reflection
-	// Vertex Shader ConstantBuffer..
-	for (unsigned int cbindex = 0; cbindex < shaderDesc.ConstantBuffers; cbindex++)
-	{
-		ID3D11ShaderReflectionConstantBuffer* cBuffer = pReflector->GetConstantBufferByIndex(cbindex);
-		D3D11_SHADER_BUFFER_DESC bufferDesc;
-
-		if (SUCCEEDED(cBuffer->GetDesc(&bufferDesc)))
-		{
-			ID3D11Buffer* cBuffer = nullptr;
-			CD3D11_BUFFER_DESC cBufferDesc(bufferDesc.Size, D3D11_BIND_CONSTANT_BUFFER, D3D11_USAGE_DYNAMIC, D3D11_CPU_ACCESS_WRITE);
-			//CD3D11_BUFFER_DESC cBufferDesc(bufferDesc.Size, D3D11_BIND_CONSTANT_BUFFER);
-
-			// 현재 읽은 ConstantBuffer Register Slot Check..
-
-			D3D11_SHADER_INPUT_BIND_DESC bindDesc;
-			pReflector->GetResourceBindingDescByName(bufferDesc.Name, &bindDesc);
-
-			// 해당 Constant Buffer 생성..
-			HR(g_Device->CreateBuffer(&cBufferDesc, nullptr, &cBuffer));
-
-			// Debug Name..
-			GPU_RESOURCE_DEBUG_NAME(cBuffer, bindDesc.Name);
-
-			// Constant Buffer Hash Code..
-			hash_key = resource_table->FindHashCode(RESOURCE_TYPE::CB, bufferDesc.Name);
-
-			// Constant Buffer Register Slot Number..
-			cbuffer_register_slot = bindDesc.BindPoint;
-
-			// Key (Constant Buffer HashCode) && Value (Register Slot, Constant Buffer)
-			m_ConstantBufferList.insert(std::make_pair(hash_key, new ConstantBuffer(bindDesc.Name, cbuffer_register_slot, bufferDesc.Size, &cBuffer)));
-		}
-	}
-
 	/// Shader Resource Reflection
 	// Shader Resource..
 	for (unsigned int rsindex = 0; rsindex < shaderDesc.BoundResources; rsindex++)
 	{
 		D3D11_SHADER_INPUT_BIND_DESC bindDesc;
 		pReflector->GetResourceBindingDesc(rsindex, &bindDesc);
-
+		
 		// Resource Type에 맞는 해당 List에 삽입..
 		switch (bindDesc.Type)
 		{
+		case D3D_SIT_CBUFFER:
+		{
+			// Constant Buffer Reflection..
+			ID3D11ShaderReflectionConstantBuffer* cBuffer = pReflector->GetConstantBufferByName(bindDesc.Name);
+			D3D11_SHADER_BUFFER_DESC bufferDesc;
+
+			cBuffer->GetDesc(&bufferDesc);
+
+			// Constant Buffer Hash Code..
+			hash_key = resource_table->FindHashCode(RESOURCE_TYPE::CB, bindDesc.Name);
+
+			// Constant Buffer Register Slot Number..
+			cbuffer_register_slot = bindDesc.BindPoint;
+
+			// Key (Constant Buffer HashCode) && Value (Register Slot, Constant Buffer)
+			m_ConstantBufferList.insert(std::make_pair(hash_key, new ConstantBuffer(bindDesc.Name, cbuffer_register_slot, bufferDesc.Size)));
+		}
+			break;
 		case D3D_SIT_TEXTURE:
 		{
 			// SRV Hash Code..
@@ -198,12 +182,6 @@ void VertexShader::LoadShader(std::string fileName, const char* entry_point, con
 	m_SamplerStates.resize(++sampler_register_slot);
 	m_ShaderResourceViews.resize(++srv_register_slot);
 
-	// Constant Buffer List 최초 설정..
-	for (auto& cBuffer : m_ConstantBufferList)
-	{
-		m_ConstantBuffers[cBuffer.second->register_number] = cBuffer.second->cBuffer;
-	}
-
 	pReflector->Release();
 }
 
@@ -226,6 +204,27 @@ void VertexShader::Update()
 
 	// Shader InputLayout 설정.. 
 	g_DeviceContext->IASetInputLayout(m_InputLayout.Get());
+}
+
+void VertexShader::Update(ID3D11DeviceContext* context)
+{
+	// Vertex Shader 설정..
+	context->VSSetShader(m_VS.Get(), nullptr, 0);
+
+	// Vertex Shader SamplerState 설정..
+	if (!m_SamplerStates.empty())
+		context->VSSetSamplers(0, (UINT)m_SamplerStates.size(), m_SamplerStates[0].GetAddressOf());
+
+	// Vertex Shader ConstantBuffer 설정..
+	if (!m_ConstantBuffers.empty())
+		context->VSSetConstantBuffers(0, (UINT)m_ConstantBuffers.size(), m_ConstantBuffers[0].GetAddressOf());
+
+	// Vertex Shader ShaderResourceView 설정..
+	if (!m_ShaderResourceViews.empty())
+		context->VSSetShaderResources(0, (UINT)m_ShaderResourceViews.size(), m_ShaderResourceViews[0].GetAddressOf());
+
+	// Shader InputLayout 설정.. 
+	context->IASetInputLayout(m_InputLayout.Get());
 }
 
 void VertexShader::Release()

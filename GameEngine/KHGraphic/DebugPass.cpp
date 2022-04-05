@@ -169,7 +169,7 @@ void DebugPass::RenderUpdate(const RenderData* meshData)
 	// Transform Debug..
 	object.gWorldViewProj = world * viewproj;
 
-	m_DebugVS->ConstantBufferCopy(&object);
+	m_DebugVS->ConstantBufferUpdate(&object);
 	m_DebugVS->Update();
 
 	m_DebugPS->Update();
@@ -195,12 +195,12 @@ void DebugPass::RenderUpdate(const RenderData* meshData)
 		//object.gWorldViewProj = Matrix::CreateScale(sphere.Radius * 2.0f) * Matrix::CreateTranslation(sphere.Center) * viewproj;
 		object.gWorldViewProj = Matrix::CreateScale(box.Extents) * Matrix::CreateTranslation(box.Center) * viewproj;
 		
-		m_DebugVS->ConstantBufferCopy(&object);
+		m_DebugVS->ConstantBufferUpdate(&object);
 		m_DebugVS->Update();
 
 		option.gColor = Vector3(1.0f, 1.0f, 0.0f);
 
-		m_DebugColorPS->ConstantBufferCopy(&option);
+		m_DebugColorPS->ConstantBufferUpdate(&option);
 		m_DebugColorPS->Update();
 
 		//BufferUpdate(DEBUG_TYPE::DEBUG_SPHERE);
@@ -217,10 +217,10 @@ void DebugPass::RenderUpdate(const RenderData* meshData)
 		//
 		//object.gWorldViewProj = viewproj;
 		//
-		//m_DebugVS->ConstantBufferCopy(&object);
+		//m_DebugVS->ConstantBufferUpdate(&object);
 		//m_DebugVS->Update();
 		//
-		//m_DebugColorPS->ConstantBufferCopy(&option);
+		//m_DebugColorPS->ConstantBufferUpdate(&option);
 		//m_DebugColorPS->Update();
 		//
 		//// Ray Buffer Update
@@ -234,7 +234,7 @@ void DebugPass::RenderUpdate(const RenderData* meshData)
 	{
 		object.gWorldViewProj = Matrix::CreateScale(0.05f) * world * viewproj;
 
-		m_DebugVS->ConstantBufferCopy(&object);
+		m_DebugVS->ConstantBufferUpdate(&object);
 		m_DebugVS->Update();
 
 		m_DebugPS->Update();
@@ -255,7 +255,7 @@ void DebugPass::RenderUpdate(const RenderData* meshData)
 
 		object.gWorldViewProj = world * viewproj;
 
-		m_DebugVS->ConstantBufferCopy(&object);
+		m_DebugVS->ConstantBufferUpdate(&object);
 		m_DebugVS->Update();
 
 		m_DebugPS->Update();
@@ -295,7 +295,7 @@ void DebugPass::RenderUpdate(const RenderData* meshData)
 
 			object.gWorldViewProj = particleWorld * viewproj;
 
-			m_DebugVS->ConstantBufferCopy(&object);
+			m_DebugVS->ConstantBufferUpdate(&object);
 			m_DebugVS->Update();
 
 			BufferUpdate(DEBUG_TYPE::DEBUG_AXIS);
@@ -331,7 +331,7 @@ void DebugPass::GlobalRender()
 	// Global Axis..
 	object.gWorldViewProj = Matrix::CreateScale(1000.0f) * Matrix::CreateTranslation(0.0f, 0.1f, 0.0f) * viewproj;
 
-	m_DebugVS->ConstantBufferCopy(&object);
+	m_DebugVS->ConstantBufferUpdate(&object);
 	m_DebugVS->Update();
 
 	m_DebugPS->Update();
@@ -342,7 +342,7 @@ void DebugPass::GlobalRender()
 	// Global Grid..
 	object.gWorldViewProj = viewproj;
 
-	m_DebugVS->ConstantBufferCopy(&object);
+	m_DebugVS->ConstantBufferUpdate(&object);
 	m_DebugVS->Update();
 
 	BufferUpdate(DEBUG_TYPE::DEBUG_GRID);
@@ -367,10 +367,10 @@ void DebugPass::GlobalRender()
 
 		object.gWorldViewProj = Matrix::CreateScale(2.0f) * lightWorld * viewproj;
 
-		m_DebugIconVS->ConstantBufferCopy(&object);
+		m_DebugIconVS->ConstantBufferUpdate(&object);
 		m_DebugIconVS->Update();
 
-		m_DebugIconPS->ConstantBufferCopy(&option);
+		m_DebugIconPS->ConstantBufferUpdate(&option);
 		m_DebugIconPS->SetShaderResourceView<gDiffuseMap>(m_DirectionalLightIcon);
 		m_DebugIconPS->Update();
 
@@ -386,10 +386,10 @@ void DebugPass::GlobalRender()
 		object.gWorldViewProj = world * viewproj;
 		option.gColor = Vector3(1.0f, 1.0f, 0.0f);
 
-		m_DebugVS->ConstantBufferCopy(&object);
+		m_DebugVS->ConstantBufferUpdate(&object);
 		m_DebugVS->Update();
 
-		m_DebugColorPS->ConstantBufferCopy(&option);
+		m_DebugColorPS->ConstantBufferUpdate(&option);
 		m_DebugColorPS->Update();
 
 		// Draw Ray..
@@ -411,10 +411,10 @@ void DebugPass::GlobalRender()
 		object.gWorldViewProj = viewproj;
 		option.gColor = Vector3(1.0f, 0.0f, 0.0f);
 
-		m_DebugVS->ConstantBufferCopy(&object);
+		m_DebugVS->ConstantBufferUpdate(&object);
 		m_DebugVS->Update();
 
-		m_DebugColorPS->ConstantBufferCopy(&option);
+		m_DebugColorPS->ConstantBufferUpdate(&option);
 		m_DebugColorPS->Update();
 
 		// Ray Buffer Update
@@ -429,7 +429,7 @@ void DebugPass::GlobalRender()
 		
 		option.gColor = Vector3(1.0f, 1.0f, 0.0f);
 
-		m_DebugColorPS->ConstantBufferCopy(&option);
+		m_DebugColorPS->ConstantBufferUpdate(&option);
 		m_DebugColorPS->Update();
 
 		// Ray Buffer Update
@@ -480,10 +480,10 @@ void DebugPass::GlobalRender()
 
 		object.gWorldViewProj = lightWorld * viewproj;
 
-		m_DebugIconVS->ConstantBufferCopy(&object);
+		m_DebugIconVS->ConstantBufferUpdate(&object);
 		m_DebugIconVS->Update();
 
-		m_DebugIconPS->ConstantBufferCopy(&option);
+		m_DebugIconPS->ConstantBufferUpdate(&option);
 		m_DebugIconPS->SetShaderResourceView<gDiffuseMap>(m_PointLightIcon);
 		m_DebugIconPS->Update();
 
@@ -496,10 +496,10 @@ void DebugPass::GlobalRender()
 		object.gWorldViewProj = lightWorld * viewproj;
 		option.gColor = Vector3(1.0f, 1.0f, 0.0f);
 
-		m_DebugVS->ConstantBufferCopy(&object);
+		m_DebugVS->ConstantBufferUpdate(&object);
 		m_DebugVS->Update();
 
-		m_DebugColorPS->ConstantBufferCopy(&option);
+		m_DebugColorPS->ConstantBufferUpdate(&option);
 		m_DebugColorPS->Update();
 
 		BufferUpdate(DEBUG_TYPE::DEBUG_CIRCLESPHERE);
@@ -513,10 +513,10 @@ void DebugPass::GlobalRender()
 		option.gColor = ray.Color;
 		object.gWorldViewProj = viewproj;
 
-		m_DebugVS->ConstantBufferCopy(&object);
+		m_DebugVS->ConstantBufferUpdate(&object);
 		m_DebugVS->Update();
 
-		m_DebugColorPS->ConstantBufferCopy(&option);
+		m_DebugColorPS->ConstantBufferUpdate(&option);
 		m_DebugColorPS->Update();
 
 		// Ray Buffer Update
@@ -558,10 +558,10 @@ void DebugPass::GlobalRender()
 
 		object.gWorldViewProj = lightWorld * viewproj;
 
-		m_DebugIconVS->ConstantBufferCopy(&object);
+		m_DebugIconVS->ConstantBufferUpdate(&object);
 		m_DebugIconVS->Update();
 
-		m_DebugIconPS->ConstantBufferCopy(&option);
+		m_DebugIconPS->ConstantBufferUpdate(&option);
 		m_DebugIconPS->SetShaderResourceView<gDiffuseMap>(m_SpotLightIcon);
 		m_DebugIconPS->Update();
 
@@ -579,10 +579,10 @@ void DebugPass::GlobalRender()
 		option.gColor = ray.Color;
 		object.gWorldViewProj = viewproj;
 		
-		m_DebugVS->ConstantBufferCopy(&object);
+		m_DebugVS->ConstantBufferUpdate(&object);
 		m_DebugVS->Update();
 		
-		m_DebugColorPS->ConstantBufferCopy(&option);
+		m_DebugColorPS->ConstantBufferUpdate(&option);
 		m_DebugColorPS->Update();
 		
 		BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
@@ -599,10 +599,10 @@ void DebugPass::GlobalRender()
 		option.gColor = ray.Color;
 		object.gWorldViewProj = viewproj;
 
-		m_DebugVS->ConstantBufferCopy(&object);
+		m_DebugVS->ConstantBufferUpdate(&object);
 		m_DebugVS->Update();
 
-		m_DebugColorPS->ConstantBufferCopy(&option);
+		m_DebugColorPS->ConstantBufferUpdate(&option);
 		m_DebugColorPS->Update();
 
 		// Look Vector를 Right Vector 기준 Angle로 이동..
@@ -667,7 +667,7 @@ void DebugPass::GlobalRender()
 
 		object.gWorldViewProj = scale * world * viewproj;
 
-		m_DebugVS->ConstantBufferCopy(&object);
+		m_DebugVS->ConstantBufferUpdate(&object);
 		m_DebugVS->Update();
 
 		// Draw Ray..
@@ -691,6 +691,23 @@ void DebugPass::GlobalRender()
 
 		switch (debugData.DebugType)
 		{
+		case DEBUG_MESH_TYPE::DEBUG_MESH_RAY:
+		{
+			object.gWorldViewProj = viewproj;
+
+			// Ray Buffer Update
+			SetRay(debugData.RayStart, debugData.RayEnd);
+
+			debugType = DEBUG_TYPE::DEBUG_RAY;
+		}
+		break;
+		case DEBUG_MESH_TYPE::DEBUG_MESH_CIRCLE:
+		{
+			object.gWorldViewProj = debugData.World * viewproj;
+
+			debugType = DEBUG_TYPE::DEBUG_CIRCLE;
+		}
+		break;
 		case DEBUG_MESH_TYPE::DEBUG_MESH_BOX:
 		{
 			object.gWorldViewProj = debugData.World * viewproj;
@@ -705,24 +722,14 @@ void DebugPass::GlobalRender()
 			debugType = DEBUG_TYPE::DEBUG_CIRCLESPHERE;
 		}
 			break;
-		case DEBUG_MESH_TYPE::DEBUG_MESH_RAY:
-		{
-			object.gWorldViewProj = viewproj;
-
-			// Ray Buffer Update
-			SetRay(debugData.RayStart, debugData.RayEnd);
-
-			debugType = DEBUG_TYPE::DEBUG_RAY;
-		}
-			break;
 		default:
 			break;
 		}
 
-		m_DebugColorPS->ConstantBufferCopy(&option);
+		m_DebugColorPS->ConstantBufferUpdate(&option);
 		m_DebugColorPS->Update(); 
 		
-		m_DebugVS->ConstantBufferCopy(&object);
+		m_DebugVS->ConstantBufferUpdate(&object);
 		m_DebugVS->Update();
 
 		BufferUpdate(debugType);

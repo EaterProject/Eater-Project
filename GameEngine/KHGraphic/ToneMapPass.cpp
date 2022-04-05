@@ -141,5 +141,5 @@ void ToneMapPass::SetConstantBuffer()
 {
 	CB_BloomFinal bloomFinalBuf;
 	bloomFinalBuf.gCoefficient = 0.25f;
-	m_ToneMapping_PS->ConstantBufferCopy(&bloomFinalBuf);
+	m_ToneMapping_PS->ConstantBufferUpdate(&bloomFinalBuf);
 }

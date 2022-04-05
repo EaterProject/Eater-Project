@@ -78,7 +78,7 @@ public:
 	void ChoiceScene(std::string name);					//씬 선택
 public:
 	///로드 관련 
-	void LoadTerrain(std::string mMeshName, std::string mMaskName, UINT parsingMode);
+	void LoadTerrain(std::string mMeshName, std::string mMaskName1, std::string mMaskName2, UINT parsingMode);
 	void Load(std::string& Path, UINT MODE);
 	int  LoadMeshCount();
 	int  LoadTextureCount();

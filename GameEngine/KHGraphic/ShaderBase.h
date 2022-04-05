@@ -55,20 +55,27 @@ public:
 	ShaderBase(SHADER_TYPE shaderType, std::string shaderName) : m_ShaderType(shaderType), m_ShaderName(shaderName) {}
 
 public:
+	friend class ShaderManager;
+
+public:
 	virtual void LoadShader(std::string fileName, const char* entry_point, const char* shader_model, const D3D_SHADER_MACRO* pDefines) abstract;
 	virtual void Update() abstract;
+	virtual void Update(ID3D11DeviceContext* context) abstract;
 	virtual void Release();
 
 public:
 	// Shader SamplerState 설정..
 	void SetSamplerState(Hash_Code hash_code, ID3D11SamplerState* sampler);
 
+	// Shader ConstantBuffer 설정..
+	void SetConstantBuffer(Hash_Code hash_code, CBUFFER_USAGE usage);
+
 	// Shader ConstantBuffer Resource Update..
 	template<typename T>
-	void ConstantBufferCopy(T* cBuffer);
+	void ConstantBufferUpdate(T* cBuffer);
 
 	template<typename T>
-	void ConstantBufferUpdate(T* cBuffer);
+	void ConstantBufferUpdate(T* cBuffer, ID3D11DeviceContext* context);
 
 	// Shader ShaderResourceView 설정..
 	template<typename T>
@@ -109,33 +116,6 @@ private:
 };
 
 template<typename T>
-inline void ShaderBase::ConstantBufferCopy(T* cBuffer)
-{
-	// 해당 Value 찾기..
-	std::unordered_map<Hash_Code, ConstantBuffer*>::iterator it = m_ConstantBufferList.find(T::GetHashCode());
-
-	// 해당 Key에 대한 Value가 없다면..
-	if (it == m_ConstantBufferList.end()) return;
-
-	// Update Buffer Get..
-	size_t bufferSize = it->second->cSize;
-	ID3D11Buffer* buffer = it->second->cBuffer.Get();
-	
-	// Mapping SubResource Data..
-	D3D11_MAPPED_SUBRESOURCE mappedResource;
-	ZeroMemory(&mappedResource, sizeof(D3D11_MAPPED_SUBRESOURCE));
-
-	// GPU Access Lock Buffer Data..
-	g_DeviceContext->Map(buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
-
-	// Copy Resource Data..
-	memcpy(mappedResource.pData, cBuffer, bufferSize);
-
-	// GPU Access UnLock Buffer Data..
-	g_DeviceContext->Unmap(buffer, 0);
-}
-
-template<typename T>
 inline void ShaderBase::ConstantBufferUpdate(T* cBuffer)
 {
 	// 해당 Value 찾기..
@@ -144,8 +124,81 @@ inline void ShaderBase::ConstantBufferUpdate(T* cBuffer)
 	// 해당 Key에 대한 Value가 없다면..
 	if (it == m_ConstantBufferList.end()) return;
 
-	// Resource 복제..
-	g_DeviceContext->UpdateSubresource(it->second->cBuffer.Get(), 0, nullptr, cBuffer, 0, 0);
+	ConstantBuffer* cBuf = it->second;
+	ID3D11Buffer* buffer = m_ConstantBuffers[cBuf->register_number].Get();
+
+	switch (cBuf->cUsage)
+	{
+	case CBUFFER_USAGE::DEFAULT:
+	case CBUFFER_USAGE::IMMUTABLE:
+	{
+		g_DeviceContext->UpdateSubresource(buffer, 0, nullptr, cBuffer, 0, 0);
+	}
+		break;
+	case CBUFFER_USAGE::DYNAMIC:
+	{
+		// Mapping SubResource Data..
+		D3D11_MAPPED_SUBRESOURCE mappedResource;
+		ZeroMemory(&mappedResource, sizeof(D3D11_MAPPED_SUBRESOURCE));
+
+		// GPU Access Lock Buffer Data..
+		g_DeviceContext->Map(buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
+
+		// Copy Resource Data..
+		memcpy(mappedResource.pData, cBuffer, cBuf->cSize);
+
+		// GPU Access UnLock Buffer Data..
+		g_DeviceContext->Unmap(buffer, 0);
+	}
+		break;
+	case CBUFFER_USAGE::STAGING:
+		break;
+	default:
+		break;
+	}
+}
+
+template<typename T>
+void ShaderBase::ConstantBufferUpdate(T* cBuffer, ID3D11DeviceContext* context)
+{
+	// 해당 Value 찾기..
+	std::unordered_map<Hash_Code, ConstantBuffer*>::iterator it = m_ConstantBufferList.find(T::GetHashCode());
+
+	// 해당 Key에 대한 Value가 없다면..
+	if (it == m_ConstantBufferList.end()) return;
+
+	ConstantBuffer* cBuf = it->second;
+	ID3D11Buffer* buffer = m_ConstantBuffers[cBuf->register_number].Get();
+
+	switch (cBuf->cUsage)
+	{
+	case CBUFFER_USAGE::DEFAULT:
+	case CBUFFER_USAGE::IMMUTABLE:
+	{
+		context->UpdateSubresource(buffer, 0, nullptr, cBuffer, 0, 0);
+	}
+	break;
+	case CBUFFER_USAGE::DYNAMIC:
+	{
+		// Mapping SubResource Data..
+		D3D11_MAPPED_SUBRESOURCE mappedResource;
+		ZeroMemory(&mappedResource, sizeof(D3D11_MAPPED_SUBRESOURCE));
+
+		// GPU Access Lock Buffer Data..
+		context->Map(buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
+
+		// Copy Resource Data..
+		memcpy(mappedResource.pData, cBuffer, cBuf->cSize);
+
+		// GPU Access UnLock Buffer Data..
+		context->Unmap(buffer, 0);
+	}
+	break;
+	case CBUFFER_USAGE::STAGING:
+		break;
+	default:
+		break;
+	}
 }
 
 template<typename T>

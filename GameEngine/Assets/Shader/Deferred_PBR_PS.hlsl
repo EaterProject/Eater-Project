@@ -14,10 +14,16 @@ cbuffer cbMaterial : register(b0)
 #ifdef TERRAIN_MESH
 Texture2D gDiffuseLayer1    : register(t0);
 Texture2D gDiffuseLayer2    : register(t1);
-Texture2D gNormalLayer1     : register(t2);
-Texture2D gNormalLayer2     : register(t3);
-Texture2D gORMLayer1        : register(t4);
-Texture2D gORMLayer2        : register(t5);
+Texture2D gDiffuseLayer3    : register(t2);
+Texture2D gDiffuseLayer4    : register(t3);
+Texture2D gNormalLayer1     : register(t4);
+Texture2D gNormalLayer2     : register(t5);
+Texture2D gNormalLayer3     : register(t6);
+Texture2D gNormalLayer4     : register(t7);
+Texture2D gORMLayer1        : register(t8);
+Texture2D gORMLayer2        : register(t9);
+Texture2D gORMLayer3        : register(t10);
+Texture2D gORMLayer4        : register(t11);
 #else
 Texture2D gDiffuseMap       : register(t0);
 Texture2D gNormalMap        : register(t1);
@@ -41,7 +47,7 @@ MeshPixelOut Deferred_PBR_PS(MeshPixelIn pin)
     float3 normalV      = float3(0.0f, 0.0f, 0.0f);
     
 #ifdef TERRAIN_MESH
-    float3 mask = pin.MaskColor.rgb;
+    float4 mask = pin.MaskColor;
     orm = float3(0.0f,0.0f,0.0f);
     
     if (mask.r > 0.0f)
@@ -53,8 +59,20 @@ MeshPixelOut Deferred_PBR_PS(MeshPixelIn pin)
     if (mask.g > 0.0f)
     {
         albedo.rgb += gDiffuseLayer2.Sample(gSamWrapAnisotropic, pin.Tex).rgb * mask.g;
-        normalColor += gNormalLayer2.Sample(gSamWrapAnisotropic, pin.Tex).rgb* mask.g;
+        normalColor += gNormalLayer2.Sample(gSamWrapAnisotropic, pin.Tex).rgb * mask.g;
         orm += gORMLayer2.Sample(gSamWrapLinear, pin.Tex).rgb * mask.g;
+    }
+    if (mask.b > 0.0f)
+    {
+        albedo.rgb += gDiffuseLayer3.Sample(gSamWrapAnisotropic, pin.Tex).rgb * mask.b;
+        normalColor += gNormalLayer3.Sample(gSamWrapAnisotropic, pin.Tex).rgb * mask.b;
+        orm += gORMLayer3.Sample(gSamWrapLinear, pin.Tex).rgb * mask.b;
+    }
+    if (mask.a > 0.0f)
+    {
+        albedo.rgb += gDiffuseLayer4.Sample(gSamWrapAnisotropic, pin.Tex).rgb * mask.a;
+        normalColor += gNormalLayer4.Sample(gSamWrapAnisotropic, pin.Tex).rgb * mask.a;
+        orm += gORMLayer4.Sample(gSamWrapLinear, pin.Tex).rgb * mask.a;
     }
     
     normalW = UnpackNormal(normalColor, pin.NormalW, pin.TangentW);

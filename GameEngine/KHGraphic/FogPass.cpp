@@ -107,7 +107,7 @@ void FogPass::RenderUpdate()
 	fogBuf.gEyePosW = g_GlobalData->Camera_Data->CamPos;
 	fogBuf.gTime = Time;
 
-	m_Fog_PS->ConstantBufferCopy(&fogBuf);
+	m_Fog_PS->ConstantBufferUpdate(&fogBuf);
 
 	// Pixel Shader Update..
 	m_Fog_PS->Update();

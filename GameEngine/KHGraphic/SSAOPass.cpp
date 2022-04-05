@@ -109,7 +109,7 @@ void SSAOPass::Start(int width, int height)
 	CB_BlurTexel blurTexelBuf;
 	blurTexelBuf.gTexelSize = DirectX::SimpleMath::Vector2(1.0f / m_HalfScreenVP->Width, 1.0f / m_HalfScreenVP->Height);
 
-	m_BlurPS->ConstantBufferCopy(&blurTexelBuf);
+	m_BlurPS->ConstantBufferUpdate(&blurTexelBuf);
 }
 
 void SSAOPass::OnResize(int width, int height)
@@ -135,7 +135,7 @@ void SSAOPass::OnResize(int width, int height)
 	CB_BlurTexel blurTexelBuf;
 	blurTexelBuf.gTexelSize = DirectX::SimpleMath::Vector2(1.0f / m_HalfScreenVP->Width, 1.0f / m_HalfScreenVP->Height);
 
-	m_BlurPS->ConstantBufferCopy(&blurTexelBuf);
+	m_BlurPS->ConstantBufferUpdate(&blurTexelBuf);
 }
 
 void SSAOPass::Release()
@@ -165,7 +165,7 @@ void SSAOPass::RenderUpdate()
 	objectBuf.gViewToTexSpace = proj * g_GlobalData->TexSpace;
 	objectBuf.gProj = proj.Transpose();
 
-	m_SsaoPS->ConstantBufferCopy(&objectBuf);
+	m_SsaoPS->ConstantBufferUpdate(&objectBuf);
 
 	// Vertex Shader Update..
 	m_SsaoVS->Update();
@@ -199,7 +199,7 @@ void SSAOPass::BlurRender()
 
 	/// Horizontal Blur
 	blurOrderBuf.gBlurOrder = { SSAO_HORIZONTAL_BLUR, 0.0f };
-	m_BlurPS->ConstantBufferCopy(&blurOrderBuf);
+	m_BlurPS->ConstantBufferUpdate(&blurOrderBuf);
 
 	g_Context->OMSetRenderTargets(1, &m_SsaoBlurRTV, 0);
 	g_Context->ClearRenderTargetView(m_SsaoBlurRTV, reinterpret_cast<const float*>(&DXColors::Black));
@@ -217,7 +217,7 @@ void SSAOPass::BlurRender()
 
 	/// Vertical Blur
 	blurOrderBuf.gBlurOrder = { 0.0f, SSAO_VERTICAL_BLUR };
-	m_BlurPS->ConstantBufferCopy(&blurOrderBuf);
+	m_BlurPS->ConstantBufferUpdate(&blurOrderBuf);
 
 	g_Context->OMSetRenderTargets(1, &m_SsaoRTV, 0);
 	g_Context->ClearRenderTargetView(m_SsaoRTV, reinterpret_cast<const float*>(&DXColors::Black));
@@ -281,7 +281,7 @@ void SSAOPass::SetOffsetVectors()
 	}
 
 	// SSAO Option Constant Buffer Update..
-	m_SsaoPS->ConstantBufferCopy(&option);
+	m_SsaoPS->ConstantBufferUpdate(&option);
 }
 
 void SSAOPass::SetRandomVectorTexture()
@@ -334,5 +334,5 @@ void SSAOPass::SetFrustumFarCorners(int width, int height)
 	frustum.gFrustumCorners[3] = XMFLOAT4(+halfWidth, -halfHeight, farZ, 0.0f);
 
 	// FrustumCorner Constant Buffer Data »ðÀÔ..
-	m_SsaoVS->ConstantBufferCopy(&frustum);
+	m_SsaoVS->ConstantBufferUpdate(&frustum);
 }

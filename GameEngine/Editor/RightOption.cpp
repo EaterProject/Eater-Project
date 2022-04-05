@@ -172,7 +172,7 @@ void RightOption::MouseDown()
 		X = GetMousePosX();
 		Y = GetMousePosY();
 
-		ChoiceObject = Picking(X,Y);
+		//ChoiceObject = Picking(X,Y);
 
 		//Demo::FindMesh(ChangeToString(MeshName), ChangeToString(ChoiceObject->Name));
 	}

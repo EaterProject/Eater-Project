@@ -11,7 +11,7 @@ struct MeshPixelIn
     float3 TangentV     : TANGENT1;
     
 #ifdef TERRAIN_MESH
-    float3 MaskColor    : MASK_COLOR;
+    float4 MaskColor    : TEXCOORD1;
 #endif
 };
 

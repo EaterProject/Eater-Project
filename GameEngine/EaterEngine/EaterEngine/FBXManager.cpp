@@ -41,7 +41,7 @@ void FBXManager::Initialize(GraphicEngineManager* Graphic, CRITICAL_SECTION* _cs
 	LoadQuad();
 }
 
-void FBXManager::LoadTerrain(std::string Name, std::string MaskName, UINT parsingMode)
+void FBXManager::LoadTerrain(std::string Name, std::string MaskName1, std::string MaskName2, UINT parsingMode)
 {
 	ParserData::CModel* mMesh = FBXLoad->LoadModel(Name, parsingMode);
 	int size =  (int)mMesh->m_MaterialList.size();
@@ -49,7 +49,8 @@ void FBXManager::LoadTerrain(std::string Name, std::string MaskName, UINT parsin
 
 	// Terrain Mask Name »ðÀÔ..
 	TerrainMesh->m_MeshType = TERRAIN_MESH;
-	TerrainMesh->m_MaskName = MaskName;
+	TerrainMesh->m_MaskName1 = MaskName1;
+	TerrainMesh->m_MaskName2 = MaskName2;
 
 	LoadMeshData* Data = new LoadMeshData();
 	ModelData* model = new ModelData();

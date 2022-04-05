@@ -102,9 +102,9 @@ void CreateSceneSub(Scene* mSceneTemp, std::string SceneName)
 	gGameEngine->PushScene(mSceneTemp, SceneName);
 }
 
- void LoadTerrainMesh(std::string mMeshName, std::string maskName, UINT parsingMode)
+ void LoadTerrainMesh(std::string mMeshName, std::string maskName1, std::string maskName2, UINT parsingMode)
  {
-	 gGameEngine->LoadTerrain(mMeshName, maskName, parsingMode);
+	 gGameEngine->LoadTerrain(mMeshName, maskName1, maskName2, parsingMode);
  }
 
   void Load(std::string mPath, UINT Mode)
@@ -243,7 +243,22 @@ void CreateSceneSub(Scene* mSceneTemp, std::string SceneName)
 	 DebugManager::DebugDrawLine(start, dir, distance, color);
  }
 
+ void DebugDrawCircle(float scale, DirectX::SimpleMath::Vector3 pos, DirectX::SimpleMath::Vector3 rot, DirectX::SimpleMath::Vector3 color)
+ {
+	 DebugManager::DebugDrawCircle(scale, pos, rot, color);
+ }
+
+ void DebugDrawCircle(float scale, DirectX::SimpleMath::Vector3 pos, DirectX::SimpleMath::Quaternion rot, DirectX::SimpleMath::Vector3 color)
+ {
+	 DebugManager::DebugDrawCircle(scale, pos, rot, color);
+ }
+
  void DebugDrawBox(DirectX::SimpleMath::Vector3 scale, DirectX::SimpleMath::Vector3 rot, DirectX::SimpleMath::Vector3 pos, DirectX::SimpleMath::Vector3 color)
+ {
+	 DebugManager::DebugDrawBox(scale, rot, pos, color);
+ }
+
+ void DebugDrawBox(DirectX::SimpleMath::Vector3 scale, DirectX::SimpleMath::Quaternion rot, DirectX::SimpleMath::Vector3 pos, DirectX::SimpleMath::Vector3 color)
  {
 	 DebugManager::DebugDrawBox(scale, rot, pos, color);
  }

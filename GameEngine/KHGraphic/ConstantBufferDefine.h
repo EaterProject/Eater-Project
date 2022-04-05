@@ -140,12 +140,6 @@ struct CB_BlurTexel : public cbBlurTexel
 	DirectX::SimpleMath::Vector2 gTexelSize;
 };
 
-SHADER_CONSTANT_BUFFER(cbBlurOption)
-struct CB_BlurOption : public cbBlurOption
-{
-	float gWeights[GAUSSIAN_RADIUS * 2 + 1];
-};
-
 SHADER_CONSTANT_BUFFER(cbBlurOrder)
 struct CB_BlurOrder : public cbBlurOrder
 {
@@ -155,12 +149,6 @@ struct CB_BlurOrder : public cbBlurOrder
 /////////////////////////////////////////////////////////////////////////////////////////////
 //// SSAO Constant Buffer
 /////////////////////////////////////////////////////////////////////////////////////////////
-
-SHADER_CONSTANT_BUFFER(cbNormlaDepth)
-struct CB_NormlaDepth : public cbNormlaDepth
-{
-	DirectX::SimpleMath::Matrix gView;
-};
 
 SHADER_CONSTANT_BUFFER(cbSsaoObject)
 struct CB_SsaoObject : public cbSsaoObject
@@ -189,15 +177,6 @@ struct CB_SsaoOption : public cbSsaoOption
 /////////////////////////////////////////////////////////////////////////////////////////////
 //// Particle Constant Buffer
 /////////////////////////////////////////////////////////////////////////////////////////////
-
-SHADER_CONSTANT_BUFFER(cbParticleMesh)
-struct CB_ParticleMesh : public cbParticleMesh
-{
-	DirectX::SimpleMath::Matrix  gWorld;
-	DirectX::SimpleMath::Matrix  gViewProj;
-	DirectX::SimpleMath::Matrix  gTexTransform;
-	DirectX::SimpleMath::Vector4 gColor;
-};
 
 SHADER_CONSTANT_BUFFER(cbInstanceParticleMesh)
 struct CB_InstanceParticleMesh : public cbInstanceParticleMesh
@@ -229,6 +208,7 @@ struct CB_FxaaFrame : public cbFxaaFrame
 //// SkyBox Constant Buffer
 /////////////////////////////////////////////////////////////////////////////////////////////
 
+/// 필요 없을듯
 SHADER_CONSTANT_BUFFER(cbCubeObject)
 struct CB_CubeObject : public cbCubeObject
 {
@@ -255,12 +235,6 @@ struct CB_BloomBright : public cbBloomBright
 	float gThreshold;
 };
 
-SHADER_CONSTANT_BUFFER(cbBloomHalfTexel)
-struct CB_BloomHalfTexel : public cbBloomHalfTexel
-{
-	DirectX::SimpleMath::Vector2 gTexelHalfSize;
-};
-
 SHADER_CONSTANT_BUFFER(cbBloomBlurOrder)
 struct CB_BloomBlurOrder : public cbBloomBlurOrder
 {
@@ -272,12 +246,6 @@ SHADER_CONSTANT_BUFFER(cbBloomFinal)
 struct CB_BloomFinal : public cbBloomFinal
 {
 	float gCoefficient;
-};
-
-SHADER_CONSTANT_BUFFER(cbBloomDownSampling)
-struct CB_BloomDownSampling : public cbBloomDownSampling
-{
-	DirectX::SimpleMath::Vector2 gTexelSize;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////

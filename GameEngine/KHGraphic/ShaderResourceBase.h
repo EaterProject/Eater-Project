@@ -2,6 +2,15 @@
 typedef size_t	register_slot;
 typedef size_t	Hash_Code;
 
+// Constant Buffer Usage Type..
+typedef enum CBUFFER_USAGE : UINT
+{
+	DEFAULT,
+	IMMUTABLE,
+	DYNAMIC,
+	STAGING
+}CBUFFER_USAGE;
+
 // 모든 Shader Resource들의 Base Class..
 // 해당 Resource Buffer Name & Binding Register Index 보유..
 class ShaderResourceBase
@@ -21,11 +30,11 @@ public:
 class ConstantBuffer : public ShaderResourceBase
 {
 public:
-	ConstantBuffer(std::string name, register_slot rNum, size_t size, ID3D11Buffer** cbuf) : ShaderResourceBase(name, rNum), cSize(size), cBuffer(*cbuf) {}
+	ConstantBuffer(std::string name, register_slot rNum, size_t size) : ShaderResourceBase(name, rNum), cSize(size) {}
 
 public:
+	CBUFFER_USAGE cUsage;
 	size_t cSize;
-	Microsoft::WRL::ComPtr<ID3D11Buffer> cBuffer;
 };
 
 // SamplerState Resource Data Class
