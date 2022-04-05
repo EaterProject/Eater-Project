@@ -17,7 +17,10 @@ private:
 	int MonsterTag;
 	Transform* mTransform;
 	Transform* mMonsterTR;
+
+
 	float AttackTime = 0;
-	const float AttackMaxTime = 1.0f;
+	const float AttackMaxTime	= 3.0f;
+	const float AttackRange		= 10.0f;
 };
 

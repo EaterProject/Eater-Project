@@ -1,0 +1,16 @@
+#EATERMAT
+@MaterialName player+_14 - Default
+@Alpha NO
+@Diffuse NO
+@Normal NO
+@Emissive NO
+@ORM NO
+@Roughness 0
+@Metallic 0
+@Tileing_X 1
+@Tileing_Y 1
+@AddColor_R 0
+@AddColor_G 0
+@AddColor_B 0
+@AddColor_A 0
+&

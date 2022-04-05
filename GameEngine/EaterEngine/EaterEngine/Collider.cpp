@@ -27,8 +27,6 @@ void Collider::Start()
 
 void Collider::PhysicsUpdate()
 {
-	
-
 	if (mTransform->Position != mPhysData->WorldPosition)
 	{
 		mPhysData->SetWorldPosition(mTransform->Position.x, mTransform->Position.y, mTransform->Position.z);
@@ -59,9 +57,7 @@ void Collider::PhysicsUpdate()
 	}
 
 
-
 	DebugCollider();
-
 	//충돌 함수 호출
 	int Size = (int)mPhysData->TriggerList.size();
 	if (Size != 0)

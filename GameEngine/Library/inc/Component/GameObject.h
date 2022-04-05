@@ -124,9 +124,6 @@ inline T* GameObject::AddComponent(typename std::enable_if<std::is_base_of<Compo
 	7.Update
 	8.EndUpdate
 	*/
-
-
-
 	T* mComponent = new T();
 	//게임오브젝트 설정
 	mComponent->gameobject = this;

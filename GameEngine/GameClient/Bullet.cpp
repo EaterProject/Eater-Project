@@ -2,12 +2,15 @@
 #include "Transform.h"
 #include "GameObject.h"
 #include "MainHeader.h"
+#include "Collider.h"
+#include "MeshFilter.h"
 
 Bullet::Bullet()
 {
 	mTransform = nullptr;
 	isLife = false;
-	Direction = { 0,0,0 };
+	Direction	= { 0,0,0 };
+	MonsterTag	= 0;
 }
 
 Bullet::~Bullet()
@@ -20,22 +23,40 @@ Bullet::~Bullet()
 void Bullet::SetUp()
 {
 	mTransform = gameobject->GetTransform();
+	MonsterTag = FindTagNumber("Monster");
+
+	MeshFilter* mMeshFilter = gameobject->GetComponent<MeshFilter>();
+	Collider*	mCollider	= gameobject->GetComponent<Collider>();
+
+	mMeshFilter->SetModelName("Bullet");
+	mCollider->SetSphereCollider(0.25f);
+	mCollider->SetTrigger(true);
 }
 
 void Bullet::Shooting(Vector3 Dir)
 {
 	Direction = Dir;
+	isLife = true;
 }
 
 void Bullet::Update()
 {
 	if (isLife == true)
 	{
-		mTransform->SetTranlate(Direction * GetDeltaTime());
+		mTransform->SetTranlate(Direction * GetDeltaTime() * BulletSpeed);
 	}
 }
 
 void Bullet::ReSet()
 {
 	isLife = false;
+}
+
+void Bullet::OnTriggerEnter(GameObject* Obj)
+{
+	if (Obj->GetTag() == MonsterTag)
+	{
+		isLife = false;
+		mTransform->Position = { 0,0,0 };
+	}
 }

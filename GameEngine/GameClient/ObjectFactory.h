@@ -10,6 +10,7 @@ enum class MONSTER_TYPE
 	MONSTER_B, //자폭공격 몬스터
 };
 
+class ClientComponent;
 class GameObject;
 class MonsterA;
 class MonsterB;
@@ -20,7 +21,6 @@ class ManaStone;
 class ClientObjectManager;
 class Potal;
 
-
 class ObjectFactory
 {
 public:
@@ -30,20 +30,18 @@ public:
 	void Initialize(ClientObjectManager* mGM);
 	void Release();
 
-private:
 	GameObject*				CreatePlayer();									//플레이어 객체를 생성
 	Bullet*					CreateBullet(float x,float y,float z);			//총알 객체를 생성
 	MonsterA*				CreateMonsterA(float x, float y, float z);		//몬스터 객체를 생성
 	MonsterB*				CreateMonsterB(float x, float y, float z);		//몬스터 객체를 생성
-	ManaStone*				CreateManaStone();								//마나석 객체를 생성
-	HealingDrone*			CreateHealingDrone();							//힐러 드론 객체를 생성
+	ManaStone*				CreateManaStone(float x, float y,float z);		//마나석 객체를 생성
+	HealingDrone*			CreateHealingDrone(float x, float y, float z);	//힐러 드론 객체를 생성
 	AttackDrone*			CreateAttackDrone(float x, float y, float z);	//공격 드론 객체를 생성
-	Potal*					CreatePortal();									//몬스터객체가 나오는 포탈 생성
+	Potal*					CreatePortal(float x, float y, float z);		//몬스터객체가 나오는 포탈 생성
 private:
 	//게임상에 한개만 존재하는 오브젝트를 따로 보관
 	GameObject* PlayerObject;
 	GameObject* PlayerMainCamera;
-
 	ClientObjectManager* mOBJ_GM;
 };
 

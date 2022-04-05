@@ -5,6 +5,9 @@
 
 class GameObject;
 class ClientObjectManager;
+
+class ObjectFactory;
+class ObjectManager;
 class ClientComponent : public Component
 {
 public:
@@ -12,10 +15,17 @@ public:
 	virtual ~ClientComponent();
 public:
 	void SetOBjManager(ClientObjectManager* OBJ_GM){mObjectGM = OBJ_GM;}
-
-	bool isLife = false;
+	int		GetType();
+	bool	GetLife();
+public:
 	virtual void ReSet() = 0;
 protected:
 	ClientObjectManager* mObjectGM;
+	size_t ObjType;
+	bool isLife;
+
+private:
+	friend ObjectFactory;
+	friend ObjectManager;
 };
 

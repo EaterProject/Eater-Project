@@ -52,6 +52,8 @@ void TestScene::Update()
 	//PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "Update Count %d", renderCount++);
 	//PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "Update Count %d", renderCount++);
 
+	
+
 	ChangeCubeMap();
 	//DebugDrawLine(Vector3(0.0f, 0.0f, 0.0f), Vector3(0.0f, 50.0f, 0.0f), Vector4(1.0f, 0.0f, 0.0f, 1.0f));
 	

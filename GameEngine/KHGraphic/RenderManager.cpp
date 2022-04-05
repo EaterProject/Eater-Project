@@ -260,7 +260,7 @@ void RenderManager::ConvertRenderData()
 
 void RenderManager::SelectRenderData()
 {
-	PROFILE_TIMER_START(PROFILE_OUTPUT::CONSOLE, 60, "Culling");
+	PROFILE_TIMER_START(PROFILE_OUTPUT::VS_CODE, 60, "Culling");
 
 	// Camera View Frustum Culling..
 	int renderCount = 0;

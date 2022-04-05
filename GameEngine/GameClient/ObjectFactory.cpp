@@ -21,6 +21,7 @@
 #include "Bullet.h"
 #include "Potal.h"
 #include "ClientObjectManager.h"
+#include "ManaStone.h"
 
 
 ObjectFactory::ObjectFactory()
@@ -70,12 +71,9 @@ Bullet* ObjectFactory::CreateBullet(float x, float y, float z)
 	Collider*	mCollider	= DroneBullet->AddComponent<Collider>();
 	Bullet*		mBullet		= DroneBullet->AddComponent<Bullet>();
 
-	mMeshFilter->SetModelName("Bullet");
-	mCollider->SetSphereCollider(0.25f);
-	mCollider->SetTrigger(true);
 	mBullet->isLife = false;
 	DroneBullet->GetTransform()->Position = { x,y,z };
-
+	DroneBullet->SetTag(FindTagNumber("Bullet"));
 	return mBullet;
 }
 
@@ -87,7 +85,7 @@ MonsterA* ObjectFactory::CreateMonsterA(float x, float y, float z)
 	Object_Monster->AddComponent<Collider>();
 	Object_Monster->AddComponent<Rigidbody>();
 	MonsterA* monster = Object_Monster->AddComponent<MonsterA>();
-	Object_Monster->SetTag(6);
+	Object_Monster->SetTag(FindTagNumber("Monster"));
 	Object_Monster->GetTransform()->Position = { x,y,z };
 	return monster;
 }
@@ -105,12 +103,12 @@ MonsterB* ObjectFactory::CreateMonsterB(float x, float y, float z)
 	return monster;
 }
 
-ManaStone* ObjectFactory::CreateManaStone()
+ManaStone* ObjectFactory::CreateManaStone(float x, float y, float z)
 {
 	return nullptr;
 }
 
-HealingDrone* ObjectFactory::CreateHealingDrone()
+HealingDrone* ObjectFactory::CreateHealingDrone(float x, float y, float z)
 {
 	GameObject* Healing		= Instance();
 	MeshFilter*		MF		= Healing->AddComponent<MeshFilter>();
@@ -127,17 +125,14 @@ AttackDrone* ObjectFactory::CreateAttackDrone(float x, float y, float z)
 	AttackDrone*	mAttackDrone = Drone->AddComponent<AttackDrone>();
 	Collider*		mCollider	 = Drone->AddComponent<Collider>();
 
-	mMeshFileter->SetModelName("drone");
-	mCollider->SetSphereCollider(5);
-	mCollider->SetTrigger(true);
-	mAttackDrone->SetOBjManager(mOBJ_GM);
 
+	mAttackDrone->SetOBjManager(mOBJ_GM);
 	Drone->GetTransform()->Position = {x,y,z};
 
 	return mAttackDrone;
 }
 
-Potal* ObjectFactory::CreatePortal()
+Potal* ObjectFactory::CreatePortal(float x, float y, float z)
 {
 	return nullptr;
 }

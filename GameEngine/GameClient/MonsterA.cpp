@@ -15,7 +15,6 @@ MonsterA::MonsterA()
 	mAnimation	= nullptr;
 	mColider	= nullptr;
 	mRigidbody	= nullptr;
-	mBase		= nullptr;
 }
 
 MonsterA::~MonsterA()
@@ -25,7 +24,6 @@ MonsterA::~MonsterA()
 	mAnimation	= nullptr;
 	mColider	= nullptr;
 	mRigidbody	= nullptr;
-	mBase		= nullptr;
 }
 
 void MonsterA::Awake()
@@ -46,6 +44,8 @@ void MonsterA::SetUp()
 	mRigidbody->SetGravity(true);
 	mColider->CreatePhys();
 
+	BulletTag = FindTagNumber("Bullet");
+
 	//매쉬 생성
 	mMeshFilter->SetModelName("monsterA+");
 	mMeshFilter->SetAnimationName("monsterA+");
@@ -54,10 +54,10 @@ void MonsterA::SetUp()
 
 void MonsterA::Update()
 {
-	//if (mBase->isLife == true)
-	//{
-	//	mRigidbody->SetVelocity(0, 0, -1);
-	//}
+	if (GetType() == true)
+	{
+	}
+		mRigidbody->SetVelocity(0, 0, -1);
 }
 
 void MonsterA::OnTriggerStay(GameObject* Obj)
@@ -66,6 +66,25 @@ void MonsterA::OnTriggerStay(GameObject* Obj)
 	{
 		Vector3 Look = Player::GetPlayerTransform()->GetLocalPosition_Look() * 10;
 		mRigidbody->SetAddForce(Look.x, Look.y + 10, Look.z * -1);
+	}
+
+	//if (Player::GetState() == PLAYER_STATE::ATTACK)
+	//{
+	//	Vector3 Look = Player::GetPlayerTransform()->GetLocalPosition_Look() * 10;
+	//	mRigidbody->SetAddForce(Look.x, Look.y + 10, Look.z * -1);
+	//}
+}
+
+void MonsterA::OnTriggerEnter(GameObject* Obj)
+{
+	int num = Obj->GetTag();
+	if (Obj->GetTag() == BulletTag)
+	{
+		HP -= 20;
+		if(HP <= 0)
+		{
+			isLife = false;
+		}
 	}
 }
 

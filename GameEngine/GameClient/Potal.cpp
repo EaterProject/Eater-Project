@@ -9,3 +9,7 @@ Potal::~Potal()
 {
 
 }
+
+void Potal::ReSet()
+{
+}
