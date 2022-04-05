@@ -88,6 +88,9 @@ public:
 	///환경맵 관련
 	void LoadEnvironment(std::string mPath);
 	void SetEnvironment(bool enable);
+
+	///충돌체크 관련
+	void AddOccluder(std::string mMeshName);
 public:
 	///키관련 
 	bool  GetKeyDown(byte number);	//키다운

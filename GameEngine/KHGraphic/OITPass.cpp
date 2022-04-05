@@ -39,7 +39,6 @@ OITPass::~OITPass()
 
 void OITPass::Create(int width, int height)
 {
-
 	D3D11_BUFFER_DESC structbufferDesc;
 	structbufferDesc.Usage = D3D11_USAGE_DEFAULT;
 	structbufferDesc.ByteWidth = width * height * m_Multiple * 12;

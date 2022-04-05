@@ -30,12 +30,14 @@ void TestScene::Awake()
 	PROFILE_TIMER_START(PROFILE_OUTPUT::CONSOLE, 1, "Load Folder");
 	Load("../Assets/Texture/Terrain");
 	//Load("../Assets/Texture/Particle");
-	//Load("../Assets/Texture/ModelTexture");
-	//Load("../Assets/Texture/Material");
-	//Load("../Assets/Model/MeshBuffer");
-	//Load("../Assets/Model/ModelData");
-	//Load("../Assets/Model/Animation");
+	Load("../Assets/Texture/ModelTexture");
+	Load("../Assets/Texture/Material");
+	Load("../Assets/Model/MeshBuffer");
+	Load("../Assets/Model/ModelData");
+	Load("../Assets/Model/Animation");
 	PROFILE_TIMER_END("Load Folder"); 
+
+	AddOccluder("Dome_Occluder_0");
 
 	CreateMap();
 

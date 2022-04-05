@@ -107,45 +107,50 @@ void CreateSceneSub(Scene* mSceneTemp, std::string SceneName)
 	 gGameEngine->LoadTerrain(mMeshName, maskName1, maskName2, parsingMode);
  }
 
-  void Load(std::string mPath, UINT Mode)
-  {
-	  gGameEngine->Load(mPath, Mode);
-  }
+void Load(std::string mPath, UINT Mode)
+{
+  gGameEngine->Load(mPath, Mode);
+}
 
-  int LoadAssetsCount()
-  {
-	  return gGameEngine->LoadMeshCount();
-  }
+int LoadAssetsCount()
+{
+  return gGameEngine->LoadMeshCount();
+}
 
-  ModelData* GetLoadMeshData(std::string mPath)
-  {
-	  return gGameEngine->GetLoadMeshData(mPath);
-  }
+ModelData* GetLoadMeshData(std::string mPath)
+{
+  return gGameEngine->GetLoadMeshData(mPath);
+}
 
-  void LoadEnvironment(std::string mPath)
-  {
-	  gGameEngine->LoadEnvironment(mPath);
-  }
+void LoadEnvironment(std::string mPath)
+{
+  gGameEngine->LoadEnvironment(mPath);
+}
 
-  void SetEnvironment(bool enable)
-  {
-	  gGameEngine->SetEnvironment(enable);
-  }
+void SetEnvironment(bool enable)
+{
+  gGameEngine->SetEnvironment(enable);
+}
 
-  int GetLoadMeshCount()
-  {
-	  return  gGameEngine->LoadMeshCount();
-  }
+int GetLoadMeshCount()
+{
+  return gGameEngine->LoadMeshCount();
+}
 
-  int GetLoadTextureCount()
-  {
-	  return  gGameEngine->LoadTextureCount();
-  }
+int GetLoadTextureCount()
+{
+  return gGameEngine->LoadTextureCount();
+}
 
-  int GetLoadAnimationCount()
-  {
-	  return  gGameEngine->LoadAnimationCount();
-  }
+int GetLoadAnimationCount()
+{
+  return gGameEngine->LoadAnimationCount();
+}
+
+void AddOccluder(std::string mMeshName)
+{
+	gGameEngine->AddOccluder(mMeshName);
+}
 
 ///Å°°ü·Ã
  bool GetKeyDown(byte number)

@@ -368,6 +368,13 @@ void GameEngine::SetEnvironment(bool enable)
 {
 	mGraphicManager->SetEnvironment(enable);
 }
+void GameEngine::AddOccluder(std::string mMeshName)
+{
+	MeshBuffer* mesh = mLoadManager->GetMeshBuffer(mMeshName);
+
+	mGraphicManager->AddOccluder(mesh);
+}
+
 ///키인풋 함수들
 bool GameEngine::GetKeyDown(byte number)
 {

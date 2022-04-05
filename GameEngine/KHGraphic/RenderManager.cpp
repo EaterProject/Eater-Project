@@ -260,15 +260,12 @@ void RenderManager::ConvertRenderData()
 
 void RenderManager::SelectRenderData()
 {
-	PROFILE_TIMER_START(PROFILE_OUTPUT::CONSOLE, 60, "Culling");
+	PROFILE_TIMER_START(PROFILE_OUTPUT::VS_CODE, 60, "Culling");
 
 	// Camera View Frustum Culling..
 	int renderCount = 0;
 	for (InstanceLayer* layer : m_RenderMeshList)
 	{
-		// 해당 Layer Distance Sorting..
-		//std::sort(layer->m_MeshList.begin(), layer->m_MeshList.end(), [this](RenderData* rd1, RenderData* rd2) { return this->SortDistance(rd1, rd2); });
-
 		// 해당 Layer Render List 초기화..
 		memset(&layer->m_RenderList[0], 0, layer->m_RenderList.size());
 
