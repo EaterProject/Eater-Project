@@ -1,12 +1,26 @@
 #pragma once
 #include <vector>
 
-class MonsterBase;
+class ClientComponent;
 class ObjectFactory;
 class GameObject;
+class Transform;
+
 class HealingDrone;
 class AttackDrone;
-class Transform;
+class Bullet;
+class MonsterA;
+class MonsterB;
+class Potal;
+
+enum class  CLIENT_OBJECT_TYPE
+{
+	MONATER_A,
+	MONATER_B,
+	ATTACk_DRONE,
+	POTAL,
+	BULLET,
+};
 
 class ClientObjectManager
 {
@@ -16,22 +30,39 @@ public:
 
 	void Initialize(ObjectFactory* Factory);
 	void Release();
-	void Update();
+
+	auto GetObjectPool(float x,float y, float z, CLIENT_OBJECT_TYPE Type);
+	void SetObjectPool(ClientComponent* Com, CLIENT_OBJECT_TYPE Type);
 private:
-	void SetCreateMonsterMemorySize(int CreateCount);	//몬스터 미리 생성
-
+	void SetCreateMonsterMemorySize(int CreateCount);	//필요한 오브젝트들 미리 생성
 	void CreateMonster(float CreateMaxTime, GameObject* CreatePointObject);
-	MonsterBase* GetLifeMonter();
 
+	template <typename T>
+	T* GetLifeObject(std::vector<T>& List);
 private:
 	GameObject* PlayerObject;
 private:
-	std::vector<MonsterBase*> MonsterA_List;
-	std::vector<MonsterBase*> MonsterB_List;
-	std::vector<AttackDrone*> AttackDrone_List;
-	std::vector<GameObject*> Potal_List;
+	std::vector<MonsterA*>			MonsterA_List;
+	std::vector<MonsterB*>			MonsterB_List;
+	std::vector<AttackDrone*>		AttackDrone_List;
+	std::vector<Potal*>				Potal_List;
+	std::vector<Bullet*>			Bullet_List;
 	HealingDrone* DroneList;
 private:
 	ObjectFactory* mFactory;
 };
 
+template<typename T>
+inline T* ClientObjectManager::GetLifeObject(std::vector<T>& List)
+{
+	int Size = (int)List.size();
+	for (int i = 0; i < Size; i++)
+	{
+		if (List[i].isLife == true)
+		{
+			return List[i];
+		}
+	}
+
+	return nullptr;
+}

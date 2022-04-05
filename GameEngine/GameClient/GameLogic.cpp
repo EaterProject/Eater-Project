@@ -4,7 +4,7 @@
 #include "GameObject.h"
 #include "Transform.h"
 #include "ClientObjectManager.h"
-#include "MonsterBase.h"
+#include "ClientComponent.h"
 
 GameLogic::GameLogic()
 {
@@ -20,12 +20,12 @@ GameLogic::~GameLogic()
 
 void GameLogic::Initialize()
 {
-	//오브젝트 생성 매니저
-	FactoryGM = new ObjectFactory();
-	FactoryGM->Initialize();
+	//매니저 생성
+	FactoryGM	= new ObjectFactory();
+	ObjectGM	= new ClientObjectManager();
 
 	//오브젝트 관리 매니저
-	ObjectGM = new ClientObjectManager();
+	FactoryGM->Initialize(ObjectGM);
 	ObjectGM->Initialize(FactoryGM);
 }
 
@@ -37,7 +37,7 @@ void GameLogic::Release()
 
 void GameLogic::Update()
 {
-	ObjectGM->Update();
+	
 	//CreateMonster(CreateMonsterMaxTime, PotalList[0]);
 }
 

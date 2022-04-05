@@ -2,6 +2,8 @@
 #include "MainHeader.h"
 #include "GameObject.h"
 #include "Transform.h"
+#include "Bullet.h"
+
 AttackDrone::AttackDrone()
 {
 }
@@ -23,14 +25,27 @@ void AttackDrone::Update()
 {
 	if (mMonsterTR != nullptr)
 	{
+		AttackTime += GetDeltaTime();
+		if (AttackTime >= AttackMaxTime)
+		{
+			Vector3 AttackPos = mTransform->Position;
+			//mObjectGM->GetObjectPool<Bullet>();
+			
+
+			AttackTime -= AttackMaxTime;
+		}
+
 		mTransform->Slow_Y_Rotation(mMonsterTR->Position, 100);
 	}
 }
 
+void AttackDrone::ReSet()
+{
+}
+
 void AttackDrone::OnTriggerStay(GameObject* Obj)
 {
-	int Tag = Obj->GetTag();
-	if (Tag == MonsterTag)
+	if (Obj->GetTag() == MonsterTag)
 	{
 		mMonsterTR = Obj->GetTransform();
 	}

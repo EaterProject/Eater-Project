@@ -64,9 +64,6 @@
     <Filter Include="소스 파일\Component\Monster\MonsterB">
       <UniqueIdentifier>{132923d9-8884-4f49-82e4-67753f479308}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Component\Monster\Base">
-      <UniqueIdentifier>{9bed9a65-bcf5-4188-afc6-0d17e43a6b97}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Component\Drone">
       <UniqueIdentifier>{5d3595c4-893a-419c-8e60-e3f398ffc25a}</UniqueIdentifier>
     </Filter>
@@ -78,6 +75,12 @@
     </Filter>
     <Filter Include="소스 파일\Component\Drone\Attack">
       <UniqueIdentifier>{294bb296-337e-4b09-a646-3bcb8360c980}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\Bullet">
+      <UniqueIdentifier>{7a6ddbcc-d47a-48be-9937-5c89b4286dc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\Base">
+      <UniqueIdentifier>{89b60ef9-7572-4bbd-855d-364826a1bc4e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -132,9 +135,6 @@
     <ClInclude Include="MonsterB.h">
       <Filter>소스 파일\Component\Monster\MonsterB</Filter>
     </ClInclude>
-    <ClInclude Include="MonsterBase.h">
-      <Filter>소스 파일\Component\Monster\Base</Filter>
-    </ClInclude>
     <ClInclude Include="ClientObjectManager.h">
       <Filter>소스 파일\Manager\ObjectManager</Filter>
     </ClInclude>
@@ -143,6 +143,12 @@
     </ClInclude>
     <ClInclude Include="AttackDrone.h">
       <Filter>소스 파일\Component\Drone\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>소스 파일\Component\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientComponent.h">
+      <Filter>소스 파일\Component\Base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -188,9 +194,6 @@
     <ClCompile Include="MonsterB.cpp">
       <Filter>소스 파일\Component\Monster\MonsterB</Filter>
     </ClCompile>
-    <ClCompile Include="MonsterBase.cpp">
-      <Filter>소스 파일\Component\Monster\Base</Filter>
-    </ClCompile>
     <ClCompile Include="ClientObjectManager.cpp">
       <Filter>소스 파일\Manager\ObjectManager</Filter>
     </ClCompile>
@@ -199,6 +202,12 @@
     </ClCompile>
     <ClCompile Include="AttackDrone.cpp">
       <Filter>소스 파일\Component\Drone\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>소스 파일\Component\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientComponent.cpp">
+      <Filter>소스 파일\Component\Base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

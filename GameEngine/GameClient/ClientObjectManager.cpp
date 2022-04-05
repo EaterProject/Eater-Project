@@ -11,13 +11,14 @@
 #include "Transform.h"
 #include "Camera.h"
 #include "PlayerCamera.h"
-#include "MonsterBase.h"
+#include "ClientComponent.h"
 
 
 ClientObjectManager::ClientObjectManager()
 {
 	mFactory		= nullptr;
 	PlayerObject	= nullptr;
+	DroneList		= nullptr;
 }
 
 ClientObjectManager::~ClientObjectManager()
@@ -30,14 +31,15 @@ void ClientObjectManager::Initialize(ObjectFactory* Factory)
 {
 	//생성 펙토리 받기
 	mFactory = Factory;
+	mFactory;
 
 	//기본 생성 오브젝트들
-	PlayerObject = mFactory->CreatePlayer();
-	mFactory->CreateHealingDrone();
+	//PlayerObject = mFactory->CreatePlayer();
+	//mFactory->CreateHealingDrone();
 
 	
 	//포탈 태그가 붙어있는 오브젝트를 모두 가져와 리스트에 담아놓는다
-	FindGameObjectTags("Potal", &Potal_List);
+	//FindGameObjectTags("Potal", &Potal_List);
 
 	//플레이어 충돌용 오브젝트를 가져온다
 	//FindGameObjectTag("AttackCollider");
@@ -50,75 +52,86 @@ void ClientObjectManager::Release()
 	mFactory = nullptr;
 }
 
-void ClientObjectManager::Update()
+auto ClientObjectManager::GetObjectPool(float x, float y, float z, CLIENT_OBJECT_TYPE Type)
 {
-	CreateMonster(5, Potal_List[0]);
+	ClientComponent* Com = nullptr;
+	switch (Type)
+	{
+	case CLIENT_OBJECT_TYPE::MONATER_A:
+		//Com = GetLifeObject(MonsterA_List);
+		return Com;
+	case CLIENT_OBJECT_TYPE::MONATER_B:
+		//Com = GetLifeObject(MonsterB_List);
+		break;
+	case CLIENT_OBJECT_TYPE::ATTACk_DRONE:
+		//Com = GetLifeObject(AttackDrone_List);
+		break;
+	case CLIENT_OBJECT_TYPE::POTAL:
+		//Com = GetLifeObject(Potal_List);
+		break;
+	case CLIENT_OBJECT_TYPE::BULLET:
+		//Com = GetLifeObject(Bullet_List);
+		break;
+	}
 
+	return Com;
+}
 
-
+void ClientObjectManager::SetObjectPool(ClientComponent* Com, CLIENT_OBJECT_TYPE Type)
+{
+	Com->isLife = false;
+	Com->ReSet();
 }
 
 void ClientObjectManager::SetCreateMonsterMemorySize(int CreateCount)
 {
-	float X = 5;
-	float Y = 1;
-	float Z = 5;
-
-	for (int i = 0; i < CreateCount; i++)
+	///몬스터 A 미리 할당
+	for (int i = 0; i < 1; i++)
 	{
 		//생성한 몬스터를 리스트에 담는다
-		MonsterA_List.push_back(mFactory->CreateMonster(X+i+2, Y, Z + i+2, MONSTER_TYPE::MONSTER_A));
+		//MonsterA_List.push_back(mFactory->CreateMonsterA(0, 5, 0));
 	}
 
-	//Y = 5;
+	///몬스터 B 미리 할당
 	//for (int i = 0; i < CreateCount; i++)
 	//{
 	//	//생성한 몬스터를 리스트에 담는다
 	//	MonsterA_List.push_back(mFactory->CreateMonster(X, Y, Z + i, MONSTER_TYPE::MONSTER_B));
 	//}
 
-	//mFactory->CreateMonster(0, 3, 0, MONSTER_TYPE::MONSTER_A);
-	//for (int i = 0; i < 1; i++)
+	///공격드론 미리 할당
+	//AttackDrone_List.push_back(mFactory->CreateAttackDrone(3, 1, 0));
+	
+
+	///Bullet 미리 할당
+	//for (int i = 0; i < 10; i++)
 	//{
-	//	AttackDrone_List.push_back(mFactory->CreateAttackDrone(i, 1, 0));
+	//	Bullet_List.push_back(mFactory->CreateBullet(0, 4, 0));
 	//}
-	AttackDrone_List.push_back(mFactory->CreateAttackDrone(3, 1, 0));
 }
 
 void ClientObjectManager::CreateMonster(float CreateMaxTime, GameObject* CreatePointObject)
 {
 	//해당시간에 해당하는 오브젝트 위치로 몬스터를 생성시킴
-	static float CreateTime = 0;
-	CreateTime += GetDeltaTime();
-	
-	if (CreateTime >= CreateMaxTime)
-	{
-		MonsterBase* Monster = GetLifeMonter();
-		if (Monster == nullptr)
-		{
-			CreateTime -= CreateMaxTime;
-			return;
-		}
-	
-		//몬스터를 해당 포탈위치로 이동시킴
-		Transform* CreatePoint = CreatePointObject->GetTransform();
-		Transform* MonsterPoint = Monster->gameobject->GetTransform();
-		MonsterPoint->Position = CreatePoint->Position;
-		CreateTime -= CreateMaxTime;
-		Monster->isLife = true;
-	}
+	//static float CreateTime = 0;
+	//CreateTime += GetDeltaTime();
+	//
+	//if (CreateTime >= CreateMaxTime)
+	//{
+	//	MonsterBase* Monster = GetLifeMonter();
+	//	if (Monster == nullptr)
+	//	{
+	//		CreateTime -= CreateMaxTime;
+	//		return;
+	//	}
+	//
+	//	//몬스터를 해당 포탈위치로 이동시킴
+	//	Transform* CreatePoint = CreatePointObject->GetTransform();
+	//	Transform* MonsterPoint = Monster->gameobject->GetTransform();
+	//	MonsterPoint->Position = CreatePoint->Position;
+	//	CreateTime -= CreateMaxTime;
+	//	Monster->isLife = true;
+	//}
 }
 
-MonsterBase* ClientObjectManager::GetLifeMonter()
-{
-	//몬스터 오브젝트 리스트 중에서 행동하지 않는 몬스터를 가져옴
-	int MonsterMaxCount = (int)MonsterA_List.size();
-	for (int i = 0; i < MonsterMaxCount; i++)
-	{
-		if (MonsterA_List[i]->isLife == false)
-		{
-			return MonsterA_List[i];
-		}
-	}
-	return nullptr;
-}
+

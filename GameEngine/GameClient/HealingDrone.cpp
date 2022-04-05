@@ -58,6 +58,10 @@ void HealingDrone::Update()
 	}
 }
 
+void HealingDrone::ReSet()
+{
+}
+
 void HealingDrone::SetPlayer(GameObject* PlayerObject)
 {
 	mPlayer = PlayerObject;

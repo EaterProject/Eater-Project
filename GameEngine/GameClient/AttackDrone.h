@@ -1,9 +1,9 @@
 #pragma once
+#include "ClientComponent.h"
 
-#include "Component.h"
 class GameObject;
 class Transform;
-class AttackDrone : public Component
+class AttackDrone : public ClientComponent
 {
 public:
 	AttackDrone();
@@ -11,10 +11,13 @@ public:
 
 	void SetUp();
 	void Update();
+	void ReSet();
 	void OnTriggerStay(GameObject* Obj);
 private:
 	int MonsterTag;
 	Transform* mTransform;
 	Transform* mMonsterTR;
+	float AttackTime = 0;
+	const float AttackMaxTime = 1.0f;
 };
 

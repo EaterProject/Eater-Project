@@ -6,7 +6,6 @@
 #include "MainHeader.h"
 #include "Collider.h"
 #include "Rigidbody.h"
-#include "MonsterBase.h"
 
 MonsterB::MonsterB()
 {
@@ -33,7 +32,7 @@ void MonsterB::Awake()
 	mAnimation	= gameobject->GetComponent<AnimationController>();
 	mColider	= gameobject->GetComponent<Collider>();
 	mRigidbody	= gameobject->GetComponent<Rigidbody>();
-	mBase		= gameobject->GetComponent<MonsterBase>();
+	//mBase		= gameobject->GetComponent<MonsterBase>();
 	//Create(100, 10, 5);
 }
 void MonsterB::SetUp()
@@ -64,4 +63,8 @@ void MonsterB::Update()
 	//{
 	//	mRigidbody->SetPosition(0, 0, 0);
 	//}
+}
+
+void MonsterB::ReSet()
+{
 }

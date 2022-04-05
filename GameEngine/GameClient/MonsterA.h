@@ -1,5 +1,5 @@
 #pragma once
-#include "Component.h"
+#include "ClientComponent.h"
 class MeshFilter;
 class Transform;
 class GameObject;
@@ -8,7 +8,7 @@ class Collider;
 class Rigidbody;
 class MonsterBase;
 
-class MonsterA :public Component
+class MonsterA :public ClientComponent
 {
 public:
 	MonsterA();
@@ -18,6 +18,7 @@ public:
 	void SetUp();
 	void Update();
 	void OnTriggerStay(GameObject* Obj);
+	void ReSet();
 private:
 	MeshFilter*				mMeshFilter;
 	Transform*				mTransform;

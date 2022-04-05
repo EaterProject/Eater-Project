@@ -15,41 +15,38 @@
 #include "Collider.h"
 #include "MonsterA.h"
 #include "MonsterB.h"
-#include "MonsterBase.h"
+#include "ClientComponent.h"
 #include "HealingDrone.h"
 #include "AttackDrone.h"
+#include "Bullet.h"
+#include "Potal.h"
+#include "ClientObjectManager.h"
 
 
 ObjectFactory::ObjectFactory()
 {
-	PlayerObject	= nullptr;
-	PlayerMainCamera = nullptr;
+	PlayerObject		= nullptr;
+	PlayerMainCamera	= nullptr;
+	mOBJ_GM				= nullptr;
 }
 
 ObjectFactory::~ObjectFactory()
 {
-	
+	PlayerObject = nullptr;
+	PlayerMainCamera = nullptr;
+	mOBJ_GM = nullptr;
 }
 
-void ObjectFactory::Initialize()
+void ObjectFactory::Initialize(ClientObjectManager* mGM)
 {
-	
-
-
+	mOBJ_GM = mGM;
 }
 
 void ObjectFactory::Release()
 {
-
-
-
-
-
-}
-
-GameObject* ObjectFactory::CreateCameraPlayer()
-{
-	return nullptr;
+	PlayerObject		= nullptr;
+	PlayerMainCamera	= nullptr;
+	mOBJ_GM				= nullptr;
 }
 
 GameObject* ObjectFactory::CreatePlayer()
@@ -66,58 +63,83 @@ GameObject* ObjectFactory::CreatePlayer()
 	return PlayerObject;
 }
 
-MonsterBase* ObjectFactory::CreateMonster(float x, float y, float z,MONSTER_TYPE Type)
+Bullet* ObjectFactory::CreateBullet(float x, float y, float z)
+{
+	GameObject* DroneBullet = Instance();
+	MeshFilter* mMeshFilter = DroneBullet->AddComponent<MeshFilter>();
+	Collider*	mCollider	= DroneBullet->AddComponent<Collider>();
+	Bullet*		mBullet		= DroneBullet->AddComponent<Bullet>();
+
+	mMeshFilter->SetModelName("Bullet");
+	mCollider->SetSphereCollider(0.25f);
+	mCollider->SetTrigger(true);
+	mBullet->isLife = false;
+	DroneBullet->GetTransform()->Position = { x,y,z };
+
+	return mBullet;
+}
+
+MonsterA* ObjectFactory::CreateMonsterA(float x, float y, float z)
 {
 	GameObject* Object_Monster = Instance();
- 	Object_Monster->AddComponent<MeshFilter>();
+	Object_Monster->AddComponent<MeshFilter>();
 	Object_Monster->AddComponent<AnimationController>();
 	Object_Monster->AddComponent<Collider>();
 	Object_Monster->AddComponent<Rigidbody>();
+	MonsterA* monster = Object_Monster->AddComponent<MonsterA>();
 	Object_Monster->SetTag(6);
-	MonsterBase* Base = Object_Monster->AddComponent<MonsterBase>();
-	Base->SetPlayer(PlayerObject);
-	switch (Type)
-	{
-	case MONSTER_TYPE::MONSTER_A:
-		Object_Monster->AddComponent<MonsterA>();
-		break;
-	case MONSTER_TYPE::MONSTER_B:
-		Object_Monster->AddComponent<MonsterB>();
-		break;
-	}
 	Object_Monster->GetTransform()->Position = { x,y,z };
-	return Base;
+	return monster;
 }
 
-GameObject* ObjectFactory::CreateMana()
+MonsterB* ObjectFactory::CreateMonsterB(float x, float y, float z)
+{
+	GameObject* Object_Monster = Instance();
+	Object_Monster->AddComponent<MeshFilter>();
+	Object_Monster->AddComponent<AnimationController>();
+	Object_Monster->AddComponent<Collider>();
+	Object_Monster->AddComponent<Rigidbody>();
+	MonsterB* monster = Object_Monster->AddComponent<MonsterB>();
+	Object_Monster->SetTag(6);
+	Object_Monster->GetTransform()->Position = { x,y,z };
+	return monster;
+}
+
+ManaStone* ObjectFactory::CreateManaStone()
 {
 	return nullptr;
 }
 
-GameObject* ObjectFactory::CreateHealingDrone()
+HealingDrone* ObjectFactory::CreateHealingDrone()
 {
 	GameObject* Healing		= Instance();
 	MeshFilter*		MF		= Healing->AddComponent<MeshFilter>();
 	HealingDrone*   Drone	= Healing->AddComponent<HealingDrone>();
 	MF->SetModelName("drone");
 	Drone->SetPlayer(PlayerObject);
-	return Healing;
+	return Drone;
 }
 
 AttackDrone* ObjectFactory::CreateAttackDrone(float x, float y, float z)
 {
-	GameObject* Drone = Instance();
-	MeshFilter*		MF		= Drone->AddComponent<MeshFilter>();
-	AttackDrone*	DR		= Drone->AddComponent<AttackDrone>();
-	Collider*		Col		= Drone->AddComponent<Collider>();
-	MF->SetModelName("drone");
-	Col->SetSphereCollider(10);
-	Col->SetTrigger(true);
+	GameObject*		Drone		 = Instance();
+	MeshFilter*		mMeshFileter = Drone->AddComponent<MeshFilter>();
+	AttackDrone*	mAttackDrone = Drone->AddComponent<AttackDrone>();
+	Collider*		mCollider	 = Drone->AddComponent<Collider>();
+
+	mMeshFileter->SetModelName("drone");
+	mCollider->SetSphereCollider(5);
+	mCollider->SetTrigger(true);
+	mAttackDrone->SetOBjManager(mOBJ_GM);
+
 	Drone->GetTransform()->Position = {x,y,z};
-	return DR;
+
+	return mAttackDrone;
 }
 
-GameObject* ObjectFactory::CreatePortal()
+Potal* ObjectFactory::CreatePortal()
 {
 	return nullptr;
 }
+
+

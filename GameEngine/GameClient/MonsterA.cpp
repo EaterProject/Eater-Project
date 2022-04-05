@@ -6,7 +6,6 @@
 #include "MainHeader.h"
 #include "Collider.h"
 #include "Rigidbody.h"
-#include "MonsterBase.h"
 #include "Player.h"
 
 MonsterA::MonsterA()
@@ -36,9 +35,6 @@ void MonsterA::Awake()
 	mAnimation	= gameobject->GetComponent<AnimationController>();
 	mColider	= gameobject->GetComponent<Collider>();
 	mRigidbody	= gameobject->GetComponent<Rigidbody>();
-	mBase		= gameobject->GetComponent<MonsterBase>();
-
-	//Create(100, 10, 5);
 }
 void MonsterA::SetUp()
 {
@@ -58,16 +54,10 @@ void MonsterA::SetUp()
 
 void MonsterA::Update()
 {
-	//if (mRigidbody->GetTriggerEnter())
+	//if (mBase->isLife == true)
 	//{
-	//	GameObject* Obj = mRigidbody->GetTriggerObject();
-	//	int num = 0;
+	//	mRigidbody->SetVelocity(0, 0, -1);
 	//}
-
-	if (mBase->isLife == true)
-	{
-		mRigidbody->SetVelocity(0, 0, -1);
-	}
 }
 
 void MonsterA::OnTriggerStay(GameObject* Obj)
@@ -77,5 +67,11 @@ void MonsterA::OnTriggerStay(GameObject* Obj)
 		Vector3 Look = Player::GetPlayerTransform()->GetLocalPosition_Look() * 10;
 		mRigidbody->SetAddForce(Look.x, Look.y + 10, Look.z * -1);
 	}
+}
+
+void MonsterA::ReSet()
+{
+
+
 }
 
