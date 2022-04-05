@@ -163,7 +163,6 @@ void SSAOPass::RenderUpdate()
 
 	CB_SsaoObject objectBuf;
 	objectBuf.gViewToTexSpace = proj * g_GlobalData->TexSpace;
-	objectBuf.gProj = proj.Transpose();
 
 	m_SsaoPS->ConstantBufferUpdate(&objectBuf);
 
