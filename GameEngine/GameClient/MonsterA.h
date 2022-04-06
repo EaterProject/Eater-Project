@@ -30,11 +30,12 @@ private:
 	Vector3 MovePoint;	//이동해야하는 지점
 	Vector3 DirPoint;	//이동지점의 방향벡터
 
+	
 	int BulletTag;
 	float HP			= 100;	//현재 체력
 	float AttackTime	= 0;	//현재 공격 시간
-	int	  NowTag		= 0;
 
+	const float PushPower		= 100;
 	const float AttackMaxTime	= 10;	//공격주기
 	const float MaxHP			= 100;	//최대체력
 };

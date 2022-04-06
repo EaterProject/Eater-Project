@@ -83,7 +83,7 @@ void BaseEventCallBack::onTrigger(PxTriggerPair* pairs, PxU32 count)
 				if (Other->TriggerList[i] == Target)
 				{
 					Other->TriggerList[i] = nullptr;
-					Other->TriggerExitOBJ = Target;
+					PushExitObject(Other, Target);
 					break;
 				}
 			}
@@ -97,7 +97,7 @@ void BaseEventCallBack::onTrigger(PxTriggerPair* pairs, PxU32 count)
 				if (Target->TriggerList[i] == Other)
 				{
 					Target->TriggerList[i] = nullptr;
-					Target->TriggerExitOBJ = Other;
+					PushExitObject(Target,Other);
 					break;
 				}
 			}
@@ -108,4 +108,16 @@ void BaseEventCallBack::onTrigger(PxTriggerPair* pairs, PxU32 count)
 void BaseEventCallBack::onAdvance(const PxRigidBody* const* bodyBuffer, const PxTransform* poseBuffer, const PxU32 count)
 {
 	int num = 0;
+}
+
+void BaseEventCallBack::PushExitObject(PhysData* Other, PhysData* Target)
+{
+	for (int i = 0; i < 10; i++)
+	{
+		if (Other->TriggerExitOBJ[i] == nullptr)
+		{
+			Other->TriggerExitOBJ[i] = Target;
+			break;
+		}
+	}
 }

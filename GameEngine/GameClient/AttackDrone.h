@@ -15,6 +15,7 @@ public:
 	void SetUp();
 	void Update();
 	void ReSet();
+	void OnTriggerEnter(GameObject* Obj);
 	void OnTriggerStay(GameObject* Obj);
 	void OnTriggerExit(GameObject* Obj);
 private:

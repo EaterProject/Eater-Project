@@ -197,9 +197,9 @@ void Collider::FindPhysFunction(PhysData* Data, unsigned int Type)
 
 	for (int i = 0; i < 10; i++)
 	{
-		if (mPhysData->TriggerList[i] == nullptr) { continue; }
+		if (Data->TriggerList[i] == nullptr) { continue; }
 
-		GameObject* Object = reinterpret_cast<GameObject*>(mPhysData->TriggerList[i]->EaterObj);
+		GameObject* Object = reinterpret_cast<GameObject*>(Data->TriggerList[i]->EaterObj);
 		gameobject->PlayPhysFunction(Object, Type);
 		NowCount--;
 		if (NowCount <= 0)
@@ -211,9 +211,15 @@ void Collider::FindPhysFunction(PhysData* Data, unsigned int Type)
 
 void Collider::FindPhysFunctionExit(PhysData* Data, unsigned int Type)
 {
-	GameObject* Object = reinterpret_cast<GameObject*>(mPhysData->TriggerExitOBJ->EaterObj);
-	gameobject->PlayPhysFunction(Object, Type);
-	mPhysData->TriggerExitOBJ = nullptr;
+	for (int i = 0; i < 10; i++)
+	{
+		if (Data->TriggerExitOBJ[i] == nullptr) { continue; }
+
+		GameObject* Object = reinterpret_cast<GameObject*>(Data->TriggerExitOBJ[i]->EaterObj);
+		gameobject->PlayPhysFunction(Object, Type);
+		Data->TriggerExitOBJ[i] = nullptr;
+		break;
+	}
 }
 
 bool Collider::CreatePhys()

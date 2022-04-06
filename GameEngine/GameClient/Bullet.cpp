@@ -45,7 +45,7 @@ void Bullet::Update()
 		if (LifeTime >= ResetTime)
 		{
 			ReSet();
-			LifeTime -= ResetTime;
+			LifeTime = 0;
 			return;
 		}
 		mTransform->SetTranlate(Direction * GetDeltaTime() * BulletSpeed);
@@ -56,13 +56,15 @@ void Bullet::Update()
 void Bullet::ReSet()
 {
 	isLife = false;
+	LifeTime = 0;
 }
 
 void Bullet::OnTriggerEnter(GameObject* Obj)
 {
-	//if (Obj->GetTag() == MonsterTag)
-	//{
-	//	isLife = false;
-	//	mTransform->Position = { 0,0,0 };
-	//}
+	if (Obj->GetTag() == MonsterTag)
+	{
+		isLife = false;
+		LifeTime = 0;
+		mTransform->Position = { 0,0,0 };
+	}
 }

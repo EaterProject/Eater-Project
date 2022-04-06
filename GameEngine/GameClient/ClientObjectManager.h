@@ -49,7 +49,7 @@ private:
 	std::vector<GameObject*>		PotalPoint_List;
 	HealingDrone* DroneList;
 private:
-	const int CreateMonsterACount		= 2;		//몬스터A 생성할 카운터
+	const int CreateMonsterACount		= 5;		//몬스터A 생성할 카운터
 	const int CreateMonsterBCount		= 0;		//몬스터B 생성할 카운터
 	const int CreateAttackDroneCount	= 1;		//공격드론 생성할 카운터
 	const int CreateBulletCount			= 20;		//총알 생성할 카운터

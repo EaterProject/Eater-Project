@@ -56,9 +56,6 @@ void MonsterA::Update()
 {
 	if (isLife == true)
 	{	
-		//mTransform->SetRotate(0, 1, 0);
-		Vector3 Point = mObjectGM->GetPlayerTransform()->Position;
-
 		mTransform->Slow_Y_Rotation(MovePoint, 50, true);
 		mRigidbody->SetVelocity(DirPoint.x, DirPoint.y, DirPoint.z);
 	}
@@ -68,8 +65,8 @@ void MonsterA::OnTriggerStay(GameObject* Obj)
 {
 	if (Player::GetState() == PLAYER_STATE::ATTACK)
 	{
-		Vector3 Look = Player::GetPlayerTransform()->GetLocalPosition_Look() * 10;
-		mRigidbody->SetAddForce(Look.x, Look.y + 10, Look.z * -1);
+		Vector3 Look = Player::GetPlayerTransform()->GetLocalPosition_Look() * PushPower;
+		mRigidbody->SetAddForce(Look.x, Look.y + PushPower, Look.z * -1);
 	}
 
 	//if (Player::GetState() == PLAYER_STATE::ATTACK)
@@ -82,12 +79,13 @@ void MonsterA::OnTriggerStay(GameObject* Obj)
 void MonsterA::OnTriggerEnter(GameObject* Obj)
 {
 	DebugPrint("%d", Obj->GetTag());
+	
 	if (Obj->GetTag() == BulletTag)
 	{
 		HP -= 20;
-		DebugPrint("%s","¸ÂÀ½");
 		if(HP <= 0)
 		{
+			mTransform->Position = { 15, 0, -10 };
 			isLife = false;
 			mAnimation->Choice("die");
 		}
@@ -102,7 +100,7 @@ void MonsterA::ReSet()
 
 void MonsterA::SetMovePoint(float x, float y, float z)
 {
-	DirPoint = (mTransform->Position - Vector3(x, y, z)) * -1;
+	DirPoint = (gameobject->GetTransform()->Position - Vector3(x, y, z)) * -1;
 	DirPoint.Normalize();
 	MovePoint.x = x;
 	MovePoint.y = y;

@@ -17,6 +17,7 @@ Potal::~Potal()
 void Potal::SetUp()
 {
 	mTransform = gameobject->GetTransform();
+	CreateTime = 0;
 }
 
 void Potal::Update()
@@ -28,6 +29,7 @@ void Potal::Update()
 		{
 			CreateTime -= CreateMonsterMaxTime;
 			MonsterA* Monster = mObjectGM->GetMonsterA();
+
 			if (Monster == nullptr) { return; }
 			Monster->gameobject->GetTransform()->Position = mTransform->Position;
 			Monster->SetMovePoint(5, 0, -10);
