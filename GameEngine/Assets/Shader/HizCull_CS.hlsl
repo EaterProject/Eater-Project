@@ -5,7 +5,8 @@ cbuffer cbHizCull : register(b0)
     matrix gViewProj;
  	 
     float4 gFrustumPlanes[6]; // view-frustum planes in world space (normals face out)
- 	 
+    float4 gEyePos;
+    
     float2 gViewportSize; // Viewport Width and Height in pixels
  	 
     float2 gPad;
@@ -53,7 +54,8 @@ float CullSphere(float4 vPlanes[6], float3 vCenter, float fRadius)
  	 
     if (fVisible > 0)
     {
-        float3 viewEye = -gView._m03_m13_m23;
+        //float3 viewEye = -gView._m03_m13_m23;
+        float3 viewEye = gEyePos.xyz;
         float CameraSphereDistance = distance(viewEye, Bounds.xyz);
  	 
         float3 viewEyeSphereDirection = viewEye - Bounds.xyz;
@@ -64,7 +66,17 @@ float CullSphere(float4 vPlanes[6], float3 vCenter, float fRadius)
  	 
  	    // 원근 왜곡 처리를 돕습니다.
  	    // http://article.gmane.org/gmane.games.devel.algorithms/21697/
-        float fRadius = CameraSphereDistance * tan(asin(Bounds.w / CameraSphereDistance));
+        float value = Bounds.w / CameraSphereDistance;
+        
+        // 경계구 안에 있을경우..
+        if (value >= 1.0f)
+        {
+            gCullingBuffer[index] = 1;
+            return;
+        }
+        
+        float tanAsin = tan(asin(value));
+        float fRadius = CameraSphereDistance * tanAsin;
  	 
  	    // 구 주변의 점에 대한 오프셋을 계산합니다.
         float3 vUpRadius = viewUp * fRadius;

@@ -260,11 +260,11 @@ void RenderManager::ConvertRenderData()
 
 void RenderManager::SelectRenderData()
 {
-	PROFILE_TIMER_START(PROFILE_OUTPUT::VS_CODE, 60, "Culling");
 
 	// Hierachical Z-Map Occlusion Culling..
 	m_Culling->RenderOccluders();
 
+	PROFILE_TIMER_START(PROFILE_OUTPUT::VS_CODE, 60, "Culling");
 	m_Culling->OcclusionCullingQuery();
 
 	m_Culling->DrawStateUpdate();

@@ -101,7 +101,7 @@ void CullingPass::Start(int width, int height)
 	m_HizDepth_DSV = g_Resource->GetDepthStencilView<DS_HizDepth>()->Get();
 
 	// Graphic State 설정..
-	m_NoCull_RS = g_Resource->GetRasterizerState<RS_Solid>()->Get();
+	m_NoCull_RS = g_Resource->GetRasterizerState<RS_NoCull>()->Get();
 
 	// ViewPort 설정..
 	m_Screen_VP = g_Resource->GetViewPort<VP_FullScreen>()->Get();
@@ -191,6 +191,9 @@ void CullingPass::OcclusionCullingQuery()
 	Matrix& proj = cam->CamProj;
 	Matrix& viewproj = cam->CamViewProj;
 
+	XMVECTOR vPlanes[6];
+	cam->BoundFrustum.GetPlanes(&vPlanes[4], &vPlanes[5], &vPlanes[1], &vPlanes[0], &vPlanes[2], &vPlanes[3]);
+
 	// View Frustum 설정..
 	m_Frustum.FrustumTransform(viewproj);
 
@@ -222,7 +225,7 @@ void CullingPass::OcclusionCullingQuery()
 	g_Context->Map(m_Collider_Buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &pCullingBoundsBufferMapped);
 	
 	// 모든 Rendering Object Collider Data Map & UnMap
-	memcpy(pCullingBoundsBufferMapped.pData, &m_ColliderList[0], sizeof(Vector4) * m_RenderCount);
+	memcpy(pCullingBoundsBufferMapped.pData, &m_ColliderList[0], sizeof(Vector4) * CullingRenderMeshList.size());
 	
 	g_Context->Unmap(m_Collider_Buffer, 0);
 
@@ -237,6 +240,9 @@ void CullingPass::OcclusionCullingQuery()
 	cullBuf.gFrustumPlanes[3] = m_Frustum.Planes[3].point;
 	cullBuf.gFrustumPlanes[4] = m_Frustum.Planes[4].point;
 	cullBuf.gFrustumPlanes[5] = m_Frustum.Planes[5].point;
+	cullBuf.gEyePos.x = cam->CamPos.x;
+	cullBuf.gEyePos.y = cam->CamPos.y;
+	cullBuf.gEyePos.z = cam->CamPos.z;
 	cullBuf.gViewportSize = Vector2(m_Width, m_Height);
 
 	m_HizCull_CS->ConstantBufferUpdate(&cullBuf);
@@ -247,10 +253,7 @@ void CullingPass::OcclusionCullingQuery()
 
 	m_HizCull_CS->Update();
 
-	g_Context->Dispatch(m_RenderCount, 1, 1);
-
-	// Culling 결과에 따른 Draw State Update..
-	DrawStateUpdate();
+	g_Context->Dispatch(CullingRenderMeshList.size(), 1, 1);
 }
 
 void CullingPass::DrawStateUpdate()

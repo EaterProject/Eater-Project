@@ -1466,14 +1466,6 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(Parser
 	ParserData::ImageData maskImage1 = m_Parser->LoadImagePixel(mesh->m_MaskName1.c_str(), 4);
 	ParserData::ImageData maskImage2 = m_Parser->LoadImagePixel(mesh->m_MaskName2.c_str(), 4);
 
-	//for (UINT i = 0; i < vCount; i++)
-	//{
-	//	Vector3 P = mesh->m_VertexList[i]->m_Pos;
-	//
-	//	vMin = XMVectorMin(vMin, P);
-	//	vMax = XMVectorMax(vMax, P);
-	//}
-
 	std::vector<VertexInput::TerrainVertex> vertices(vCount);
 	for (UINT i = 0; i < vCount; i++)
 	{

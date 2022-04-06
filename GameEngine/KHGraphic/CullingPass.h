@@ -76,7 +76,7 @@ private:
 
 	ID3D11DepthStencilView* m_HizDepth_DSV;
 
-	UINT m_RenderCount = 500;
+	UINT m_RenderCount = 1160;
 
 	float m_Width;
 	float m_Height;

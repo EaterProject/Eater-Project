@@ -186,7 +186,7 @@ void Camera::CreateView()
 	mCameraData->CamInvView = mView.Invert();
 	mCameraData->CamViewProj = mView * mProj;
 	mCameraData->CamPos = tranform->Position;
-	mCameraData->OriginFrustum.Transform(mCameraData->BoundFrustum, mCameraData->CamInvView);
+	mCameraData->OriginFrustum.Transform(mCameraData->BoundFrustum, mView);
 }
 
 void Camera::PushCamList()
