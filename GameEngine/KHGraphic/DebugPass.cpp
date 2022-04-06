@@ -180,20 +180,21 @@ void DebugPass::RenderUpdate(const RenderData* meshData)
 	switch (meshData->m_ObjectData->ObjType)
 	{
 	case OBJECT_TYPE::BASE:
+	case OBJECT_TYPE::TERRAIN:
 	case OBJECT_TYPE::SKINNING:
 	{
 		m_DrawCount++;
 
-		//g_Context->RSSetState(m_WireRS);
+		g_Context->RSSetState(m_WireRS);
 		Matrix sphereWorld = world;
 
-		//BoundingSphere sphere;
-		//mesh->m_MeshSubData->BoundSphere.Transform(sphere, world);
-		BoundingBox box;
-		mesh->m_MeshSubData->BoundBox.Transform(box, world);
+		BoundingSphere sphere;
+		mesh->m_MeshSubData->BoundSphere.Transform(sphere, world);
+		//BoundingBox box;
+		//mesh->m_MeshSubData->BoundBox.Transform(box, world);
 
-		//object.gWorldViewProj = Matrix::CreateScale(sphere.Radius * 2.0f) * Matrix::CreateTranslation(sphere.Center) * viewproj;
-		object.gWorldViewProj = Matrix::CreateScale(box.Extents) * Matrix::CreateTranslation(box.Center) * viewproj;
+		object.gWorldViewProj = Matrix::CreateScale(sphere.Radius * 2.0f) * Matrix::CreateTranslation(sphere.Center) * viewproj;
+		//object.gWorldViewProj = Matrix::CreateScale(box.Extents) * Matrix::CreateTranslation(box.Center) * viewproj;
 		
 		m_DebugVS->ConstantBufferUpdate(&object);
 		m_DebugVS->Update();
@@ -203,31 +204,31 @@ void DebugPass::RenderUpdate(const RenderData* meshData)
 		m_DebugColorPS->ConstantBufferUpdate(&option);
 		m_DebugColorPS->Update();
 
-		//BufferUpdate(DEBUG_TYPE::DEBUG_SPHERE);
-		BufferUpdate(DEBUG_TYPE::DEBUG_BOX);
+		BufferUpdate(DEBUG_TYPE::DEBUG_SPHERE);
+		//BufferUpdate(DEBUG_TYPE::DEBUG_BOX);
 		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
 
-		//g_Context->RSSetState(m_SolidRS);
+		g_Context->RSSetState(m_SolidRS);
 
-		//RayCastData ray;
-		//ray.RayStart = sphere.Center;
-		//ray.RayEnd = sphere.Center + Vector3(0.0f, sphere.Radius, 0.0f);
-		//
-		//option.gColor = Vector3(0.0f, 1.0f, 0.0f);
-		//
-		//object.gWorldViewProj = viewproj;
-		//
-		//m_DebugVS->ConstantBufferUpdate(&object);
-		//m_DebugVS->Update();
-		//
-		//m_DebugColorPS->ConstantBufferUpdate(&option);
-		//m_DebugColorPS->Update();
-		//
-		//// Ray Buffer Update
-		//SetRay(ray.RayStart, ray.RayEnd);
-		//
-		//BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
-		//g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+		DebugData ray;
+		ray.RayStart = sphere.Center;
+		ray.RayEnd = sphere.Center + Vector3(0.0f, sphere.Radius, 0.0f);
+		
+		option.gColor = Vector3(0.0f, 1.0f, 0.0f);
+		
+		object.gWorldViewProj = viewproj;
+		
+		m_DebugVS->ConstantBufferUpdate(&object);
+		m_DebugVS->Update();
+		
+		m_DebugColorPS->ConstantBufferUpdate(&option);
+		m_DebugColorPS->Update();
+		
+		// Ray Buffer Update
+		SetRay(ray.RayStart, ray.RayEnd);
+		
+		BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
+		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
 	}
 		break;
 	case OBJECT_TYPE::BONE:

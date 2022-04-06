@@ -138,7 +138,7 @@ void ShadowPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::v
 
 	for (int i = 0; i < renderCount; i++)
 	{
-		if (meshlist[i] == nullptr) continue;
+		if (meshlist[i]->m_Draw == false) continue;
 
 		// ÇØ´ç Instance Data »ðÀÔ..
 		m_MeshData.World = *meshlist[i]->m_ObjectData->World;
@@ -232,13 +232,13 @@ void ShadowPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::v
 
 void ShadowPass::RenderUpdate(const InstanceRenderBuffer* instance, const RenderData* meshData)
 {
+	if (meshData->m_Draw == false) return;
+
 	ObjectData* obj = meshData->m_ObjectData;
 	MeshRenderBuffer* mesh = instance->m_Mesh;
 
 	Matrix& world = *obj->World;
 	Matrix& viewproj = g_GlobalData->DirectionLights[0]->LightViewProj;
-
-	if (mesh == nullptr) return;
 
 	switch (instance->m_Type)
 	{

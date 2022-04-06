@@ -97,7 +97,7 @@ void TestScene::CreateMap()
 
 	//Object = Instance();
 	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("box");
+	//filter->SetModelName("Dome_Occluder");
 
 	//Object = Instance();
 	//filter = Object->AddComponent<MeshFilter>();
@@ -107,11 +107,11 @@ void TestScene::CreateMap()
 	//filter = Object->AddComponent<MeshFilter>();
 	//filter->SetModelName("Inside_village");
 	//
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//Tr = Object->GetTransform();
-	//Tr->Scale = { 0.01f, 0.01f, 0.01f };
-	//filter->SetModelName("Outside_Rock");
+
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	Tr = Object->GetTransform();
+	filter->SetModelName("Outside_Rock");
 	
 	//Object = Instance();
 	//filter = Object->AddComponent<MeshFilter>();

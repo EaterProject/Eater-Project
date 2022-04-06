@@ -76,6 +76,7 @@ void ComputeShader::LoadShader(std::string fileName, const char* entry_point, co
 		}
 		break;
 		case D3D_SIT_TEXTURE:
+		case D3D_SIT_STRUCTURED:
 		{
 			// SRV Hash Code..
 			hash_key = resource_table->FindHashCode(RESOURCE_TYPE::SRV, bindDesc.Name);
@@ -100,6 +101,7 @@ void ComputeShader::LoadShader(std::string fileName, const char* entry_point, co
 		}
 		break;
 		case D3D_SIT_UAV_RWTYPED:
+		case D3D_SIT_UAV_RWSTRUCTURED:
 		{
 			// UAV Hash Code..
 			hash_key = resource_table->FindHashCode(RESOURCE_TYPE::UAV, bindDesc.Name);

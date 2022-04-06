@@ -274,6 +274,9 @@ void ShaderManager::AddConstantBufferUsage()
 	PushConstantBufferUsage<CB_SkinMesh_ID>(CBUFFER_USAGE::DYNAMIC);
 	PushConstantBufferUsage<CB_InstanceSkinMesh_ID>(CBUFFER_USAGE::DYNAMIC);
 
+	// Hierachical Z-Map Culling..
+	PushConstantBufferUsage<CB_HizCull>(CBUFFER_USAGE::DYNAMIC);
+
 	// Debug..
 	PushConstantBufferUsage<CB_DebugObject>(CBUFFER_USAGE::DYNAMIC);
 	PushConstantBufferUsage<CB_DebugOption>(CBUFFER_USAGE::DYNAMIC);

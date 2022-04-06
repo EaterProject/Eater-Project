@@ -262,25 +262,32 @@ void RenderManager::SelectRenderData()
 {
 	PROFILE_TIMER_START(PROFILE_OUTPUT::VS_CODE, 60, "Culling");
 
+	// Hierachical Z-Map Occlusion Culling..
+	m_Culling->RenderOccluders();
+
+	m_Culling->OcclusionCullingQuery();
+
+	m_Culling->DrawStateUpdate();
+
 	// Camera View Frustum Culling..
-	int renderCount = 0;
-	for (InstanceLayer* layer : m_RenderMeshList)
-	{
-		// 해당 Layer Render List 초기화..
-		memset(&layer->m_RenderList[0], 0, layer->m_RenderList.size());
-
-		for (RenderData* renderData : layer->m_MeshList)
-		{
-			if (m_Culling->FrustumCulling(renderData))
-			{
-				layer->m_RenderList[renderCount++] = renderData;
-			}
-		}
-
-		// Layer 변경시 Index 초기화..
-		layer->m_RenderCount = renderCount;
-		renderCount = 0;
-	}
+	//int renderCount = 0;
+	//for (InstanceLayer* layer : m_RenderMeshList)
+	//{
+	//	// 해당 Layer Render List 초기화..
+	//	memset(&layer->m_RenderList[0], 0, layer->m_RenderList.size());
+	//
+	//	for (RenderData* renderData : layer->m_MeshList)
+	//	{
+	//		if (m_Culling->FrustumCulling(renderData))
+	//		{
+	//			layer->m_RenderList[renderCount++] = renderData;
+	//		}
+	//	}
+	//
+	//	// Layer 변경시 Index 초기화..
+	//	layer->m_RenderCount = renderCount;
+	//	renderCount = 0;
+	//}
 
 	PROFILE_TIMER_END("Culling");
 }
@@ -391,8 +398,8 @@ void RenderManager::ShadowRender()
 		{
 			m_InstanceLayer = m_RenderMeshList[i];
 
-			m_Shadow->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_RenderList, m_InstanceLayer->m_RenderCount);
-			//m_Shadow->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_MeshList, m_InstanceLayer->m_MeshList.size());
+			//m_Shadow->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_RenderList, m_InstanceLayer->m_RenderCount);
+			m_Shadow->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_MeshList, m_InstanceLayer->m_MeshList.size());
 		}
 	}
 }
@@ -405,8 +412,8 @@ void RenderManager::DeferredRender()
 	{
 		m_InstanceLayer = m_RenderMeshList[i];
 
-		m_Deferred->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_RenderList, m_InstanceLayer->m_RenderCount);
-		//m_Deferred->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_MeshList, m_InstanceLayer->m_MeshList.size());
+		//m_Deferred->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_RenderList, m_InstanceLayer->m_RenderCount);
+		m_Deferred->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_MeshList, m_InstanceLayer->m_MeshList.size());
 	}
 }
 
@@ -510,6 +517,7 @@ void RenderManager::DebugRender()
 				{
 				case OBJECT_TYPE::DEFALT:
 				case OBJECT_TYPE::BASE:
+				case OBJECT_TYPE::TERRAIN:
 				case OBJECT_TYPE::SKINNING:
 				case OBJECT_TYPE::BONE:
 				case OBJECT_TYPE::LIGHT:
@@ -680,6 +688,12 @@ void RenderManager::PushMeshRenderData(RenderData* renderData)
 	// 해당 Layer 검색..
 	InstanceLayer* instanceLayer = m_Converter->GetLayer(renderData->m_InstanceLayerIndex);
 
+	// 해당 Layer에 Render Data 삽입..
+	instanceLayer->PushRenderData(renderData);
+
+	// Culling 전용 List 삽입..
+	m_Culling->PushCullingMesh(renderData);
+
 	// List 내의 Layer 유무 확인..
 	for (InstanceLayer* layer : m_RenderMeshList)
 	{
@@ -698,6 +712,9 @@ void RenderManager::PushParticleRenderData(RenderData* renderData)
 {
 	// 해당 Layer 검색..
 	InstanceLayer* instanceLayer = m_Converter->GetLayer(renderData->m_InstanceLayerIndex);
+
+	// 해당 Layer에 Render Data 삽입..
+	instanceLayer->PushRenderData(renderData);
 
 	// List 내의 Layer 유무 확인..
 	for (InstanceLayer* layer : m_ParticleMeshList)
@@ -820,6 +837,9 @@ void RenderManager::DeleteMeshRenderData(MeshData* meshData)
 
 	// 해당 Render Data 제거..
 	m_Converter->DeleteRenderData(renderDataIndex + 1);
+
+	// 해당 Culling Render Data 제거..
+	m_Culling->DeleteCullingMesh(renderData);
 
 	// 해당 Instance List에서 제거...
 	instanceLayer->DeleteRenderData(index);

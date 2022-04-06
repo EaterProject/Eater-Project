@@ -216,7 +216,7 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const std:
 	
 	for (int i = 0; i < renderCount; i++)
 	{
-		if (meshlist[i] == nullptr) continue;
+		if (meshlist[i]->m_Draw == false) continue;
 
 		// ÇØ´ç Instance Data »ðÀÔ..
 		m_MeshData.World = *meshlist[i]->m_ObjectData->World;
@@ -322,7 +322,7 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const std:
 
 void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const RenderData* meshData)
 {
-	if (meshData == nullptr) return;
+	if (meshData->m_Draw == false) return;
 
 	CameraData* cam = g_GlobalData->Camera_Data;
 	ObjectData* obj = meshData->m_ObjectData;

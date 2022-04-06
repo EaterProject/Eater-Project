@@ -5,6 +5,8 @@
 class RenderData
 {
 public:
+	bool m_Draw = true;							// Culling ¿©ºÎ..
+
 	int m_InstanceLayerIndex = -1;				// Instance Layer Index..
 	int m_InstanceIndex = -1;					// Instance Index..
 

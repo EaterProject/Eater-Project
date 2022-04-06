@@ -1,4 +1,6 @@
 #pragma once
+#include "CullingData.h"
+
 class CullingPass : public RenderPassBase
 {
 public:
@@ -14,9 +16,14 @@ public:
 
 public:
 	void RenderOccluders();
-	void OcclusionCullingQuery(const std::vector<RenderData*>& renderList);
+	void OcclusionCullingQuery();
+	void DrawStateUpdate();
 
 	bool FrustumCulling(const RenderData* meshData);
+
+public:
+	void PushCullingMesh(RenderData* meshData);
+	void DeleteCullingMesh(RenderData* meshData);
 
 private:
 	void MipMapResourceRelease();
@@ -25,6 +32,13 @@ private:
 	void CullingBufferCreate();
 
 private:
+	std::vector<RenderData*> CullingRenderMeshList;
+
+	Cull::Frustum m_Frustum;
+	RenderData* m_RenderData;
+	BoundingSphere m_Sphere;
+	Vector4 m_ColliderData;
+
 	VertexShader* m_Screen_VS;
 	PixelShader* m_HizMipMap_PS;
 
@@ -35,10 +49,9 @@ private:
 
 	DrawBuffer* m_Screen_DB;
 
-	ID3D11DepthStencilState* m_DefaltDSS;
-	ID3D11RasterizerState* m_SolidRS;
+	ID3D11RasterizerState* m_NoCull_RS;
 
-	D3D11_VIEWPORT* m_ScreenVP;
+	D3D11_VIEWPORT* m_Screen_VP;
 
 
 
