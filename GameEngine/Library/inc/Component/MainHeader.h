@@ -55,6 +55,7 @@ extern "C" EATER_ENGINEDLL int GetLoadMeshCount();		//로드된 메쉬 카운터
 extern "C" EATER_ENGINEDLL int GetLoadTextureCount();	//로드된 텍스쳐 카운터
 extern "C" EATER_ENGINEDLL int GetLoadAnimationCount();	//로드된 텍스쳐 카운터
 
+extern "C" EATER_ENGINEDLL void AddOccluder(std::string mMeshName);	//충돌 전용 매쉬 설정
 
 ///키입력
 extern "C" EATER_ENGINEDLL bool  GetKeyDown(byte number);		//키다운

@@ -80,7 +80,7 @@ MeshPixelOut Deferred_PBR_PS(MeshPixelIn pin)
 #else
     if (gTexID & ALBEDO_MAP)
     {
-        albedo = gDiffuseMap.Sample(gSamWrapLinear, pin.Tex);
+        albedo = gDiffuseMap.Sample(gSamWrapLinear, pin.Tex) + gAddColor;
         clip(albedo.a - 0.1f);
     }
     else

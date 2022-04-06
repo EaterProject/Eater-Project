@@ -266,9 +266,6 @@ void RenderManager::SelectRenderData()
 	int renderCount = 0;
 	for (InstanceLayer* layer : m_RenderMeshList)
 	{
-		// 해당 Layer Distance Sorting..
-		//std::sort(layer->m_MeshList.begin(), layer->m_MeshList.end(), [this](RenderData* rd1, RenderData* rd2) { return this->SortDistance(rd1, rd2); });
-
 		// 해당 Layer Render List 초기화..
 		memset(&layer->m_RenderList[0], 0, layer->m_RenderList.size());
 

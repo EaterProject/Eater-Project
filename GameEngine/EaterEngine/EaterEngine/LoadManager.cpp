@@ -112,6 +112,7 @@ TextureBuffer* LoadManager::GetTexture(std::string Path)
 
 	if (End_it == Find_it)
 	{
+		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ ERROR ][ Engine ][ GetTexture ] '%s'가 없습니다.", Path.c_str());
 		return nullptr;
 	}
 	else
@@ -127,6 +128,7 @@ Material* LoadManager::GetMaterial(std::string Path)
 
 	if (End_it == Find_it)
 	{
+		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ ERROR ][ Engine ][ GetMaterial ] '%s'가 없습니다.", Path.c_str());
 		return nullptr;
 	}
 	else
@@ -141,6 +143,7 @@ ModelData* LoadManager::GetModel(std::string Path)
 	std::map<std::string, ModelData*>::iterator Find_it = ModelList.find(Path);
 	if (End_it == Find_it)
 	{
+		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ ERROR ][ Engine ][ GetModel ] '%s'가 없습니다.", Path.c_str());
 		return nullptr;
 	}
 	else
@@ -156,11 +159,30 @@ Mesh* LoadManager::GetMesh(std::string Path)
 
 	if (End_it == Find_it)
 	{
+		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ ERROR ][ Engine ][ GetMesh ] '%s'가 없습니다.", Path.c_str());
 		return nullptr;
 	}
 	else
 	{
 		return Find_it->second;
+	}
+
+	return nullptr;
+}
+
+MeshBuffer* LoadManager::GetMeshBuffer(std::string Path)
+{
+	std::map<std::string, Mesh*>::iterator End_it = MeshBufferList.end();
+	std::map<std::string, Mesh*>::iterator Find_it = MeshBufferList.find(Path);
+
+	if (End_it == Find_it)
+	{
+		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ ERROR ][ Engine ][ GetMesh ] '%s'가 없습니다.", Path.c_str());
+		return nullptr;
+	}
+	else
+	{
+		return Find_it->second->m_MeshData;
 	}
 
 	return nullptr;
@@ -172,6 +194,7 @@ CameraAnimation* LoadManager::GetCamAnimation(std::string Path)
 	std::map<std::string, CameraAnimation*>::iterator Find_it = CamAnimationList.find(Path);
 	if (End_it == Find_it)
 	{
+		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ ERROR ][ Engine ][ GetCamAnimation ] '%s'가 없습니다.", Path.c_str());
 		return nullptr;
 	}
 	else
@@ -186,6 +209,7 @@ ModelAnimationData* LoadManager::GetAnimation(std::string Path)
 	std::map<std::string, ModelAnimationData*>::iterator Find_it = AnimationList.find(Path);
 	if (End_it == Find_it)
 	{
+		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ ERROR ][ Engine ][ GetAnimation ] '%s'가 없습니다.", Path.c_str());
 		return nullptr;
 	}
 	else
@@ -200,6 +224,7 @@ bool LoadManager::FindModel(std::string Name)
 	std::map<std::string, ModelData*>::iterator Find_it = ModelList.find(Name);
 	if (End_it == Find_it)
 	{
+		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ ERROR ][ Engine ][ FindModel ] '%s'가 없습니다.", Name.c_str());
 		return false;
 	}
 	else
@@ -214,6 +239,7 @@ bool LoadManager::FindTexture(std::string Name)
 	std::map<std::string, TextureBuffer*>::iterator Find_it = TextureList.find(Name);
 	if (End_it == Find_it)
 	{
+		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ ERROR ][ Engine ][ FindTexture ] '%s'가 없습니다.", Name.c_str());
 		return false;
 	}
 	else

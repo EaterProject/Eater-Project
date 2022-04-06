@@ -48,6 +48,8 @@ public:
 	void Render();
 	void* PickingRender(int x, int y);
 
+	void AddOccluder(MeshBuffer* occluder);
+
 	void LoadEnvironment(std::string mPath);
 
 	//선택한 그래픽엔진으로 인덱스버퍼를 생성함
