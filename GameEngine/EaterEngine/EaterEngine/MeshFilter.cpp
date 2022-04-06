@@ -439,7 +439,7 @@ void MeshFilter::CreateSkinMesh(LoadMeshData* mMesh, GameObject* Object)
 		GameObject* ChildObject = Instance();
 		MeshFilter* mMeshFilter = ChildObject->AddComponent<MeshFilter>();
 
-		//LinkHierarchy(ChildObject->GetTransform(), Object->GetTransform());
+		LinkHierarchy(ChildObject->GetTransform(), Object->GetTransform());
 
 		CreateSkinMesh(mMesh->Child[i], ChildObject);
 	}

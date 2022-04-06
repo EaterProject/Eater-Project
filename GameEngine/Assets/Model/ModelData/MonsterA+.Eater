@@ -1,6 +1,6 @@
 #BONE
-@ParentName Armature
 @NodeName spine.001
+@ParentName Armature
 @BoneIndex 0
 @TopNode YES
 $WorldTM 4 4
@@ -14,8 +14,8 @@ $LocalTM 4 4
 0.000000 0.148804 0.988866 0.000000
 0.000803 0.683146 -0.202686 1.000000
 #BONE
-@ParentName spine.001
 @NodeName spine
+@ParentName spine.001
 @BoneIndex 1
 @TopNode NO
 $WorldTM 4 4
@@ -29,8 +29,8 @@ $LocalTM 4 4
 0.000000 0.000000 1.000000 0.000000
 -0.000000 0.021747 -0.003272 1.000000
 #BONE
-@ParentName spine
 @NodeName poleIK.L
+@ParentName spine
 @BoneIndex 2
 @TopNode NO
 $WorldTM 4 4
@@ -44,8 +44,8 @@ $LocalTM 4 4
 -0.000000 0.148804 0.988867 0.000000
 0.250000 0.342915 0.364189 1.000000
 #BONE
-@ParentName spine
 @NodeName bone1
+@ParentName spine
 @BoneIndex 3
 @TopNode NO
 $WorldTM 4 4
@@ -59,8 +59,8 @@ $LocalTM 4 4
 -0.000000 -0.539736 -0.841835 0.000000
 0.000000 -0.254041 0.212857 1.000000
 #BONE
-@ParentName spine
 @NodeName bone3
+@ParentName spine
 @BoneIndex 4
 @TopNode NO
 $WorldTM 4 4
@@ -74,8 +74,8 @@ $LocalTM 4 4
 -0.000000 -0.255503 -0.966808 0.000000
 -0.000000 -0.112124 -0.013383 1.000000
 #BONE
-@ParentName spine
 @NodeName bone2
+@ParentName spine
 @BoneIndex 5
 @TopNode NO
 $WorldTM 4 4
@@ -89,8 +89,8 @@ $LocalTM 4 4
 0.000000 -0.488005 -0.872841 0.000000
 0.000000 -0.178444 0.095029 1.000000
 #BONE
-@ParentName spine
 @NodeName thigh.R
+@ParentName spine
 @BoneIndex 6
 @TopNode NO
 $WorldTM 4 4
@@ -104,8 +104,8 @@ $LocalTM 4 4
 -0.176977 0.872175 0.456057 0.000000
 -0.163717 -0.052469 0.077083 1.000000
 #BONE
-@ParentName thigh.R
 @NodeName shin.R
+@ParentName thigh.R
 @BoneIndex 7
 @TopNode NO
 $WorldTM 4 4
@@ -119,8 +119,8 @@ $LocalTM 4 4
 0.266531 0.944820 -0.190464 0.000000
 0.000000 0.000001 0.423723 1.000000
 #BONE
-@ParentName shin.R
 @NodeName shin2.R
+@ParentName shin.R
 @BoneIndex 8
 @TopNode NO
 $WorldTM 4 4
@@ -134,8 +134,8 @@ $LocalTM 4 4
 -0.176859 -0.984156 -0.012630 0.000000
 -0.000000 0.000000 0.325497 1.000000
 #BONE
-@ParentName spine
 @NodeName poleIK.R
+@ParentName spine
 @BoneIndex 9
 @TopNode NO
 $WorldTM 4 4
@@ -149,8 +149,8 @@ $LocalTM 4 4
 0.000000 0.148804 0.988867 0.000000
 -0.248394 0.342915 0.364189 1.000000
 #BONE
-@ParentName spine
 @NodeName neck
+@ParentName spine
 @BoneIndex 10
 @TopNode NO
 $WorldTM 4 4
@@ -164,8 +164,8 @@ $LocalTM 4 4
 -0.009032 0.441056 0.897434 0.000000
 0.002340 0.041105 0.409526 1.000000
 #BONE
-@ParentName neck
 @NodeName head
+@ParentName neck
 @BoneIndex 11
 @TopNode NO
 $WorldTM 4 4
@@ -179,8 +179,8 @@ $LocalTM 4 4
 -0.043977 -0.838035 0.543840 0.000000
 -0.000000 -0.000001 0.259047 1.000000
 #BONE
-@ParentName spine
 @NodeName tail.001
+@ParentName spine
 @BoneIndex 12
 @TopNode NO
 $WorldTM 4 4
@@ -194,8 +194,8 @@ $LocalTM 4 4
 -0.000000 0.508538 -0.861039 0.000000
 0.000000 0.083045 -0.108715 1.000000
 #BONE
-@ParentName tail.001
 @NodeName tail.002
+@ParentName tail.001
 @BoneIndex 13
 @TopNode NO
 $WorldTM 4 4
@@ -209,8 +209,8 @@ $LocalTM 4 4
 0.000000 0.590766 0.806843 0.000000
 0.000000 -0.000000 0.279792 1.000000
 #BONE
-@ParentName tail.002
 @NodeName tail.003
+@ParentName tail.002
 @BoneIndex 14
 @TopNode NO
 $WorldTM 4 4
@@ -224,8 +224,8 @@ $LocalTM 4 4
 -0.000000 0.250814 0.968036 0.000000
 0.000000 0.000000 0.301928 1.000000
 #BONE
-@ParentName spine
 @NodeName thigh.L
+@ParentName spine
 @BoneIndex 15
 @TopNode NO
 $WorldTM 4 4
@@ -239,8 +239,8 @@ $LocalTM 4 4
 0.176977 0.872175 0.456057 0.000000
 0.165323 -0.052469 0.077083 1.000000
 #BONE
-@ParentName thigh.L
 @NodeName shin.L
+@ParentName thigh.L
 @BoneIndex 16
 @TopNode NO
 $WorldTM 4 4
@@ -254,8 +254,8 @@ $LocalTM 4 4
 -0.266530 0.944820 -0.190465 0.000000
 -0.000000 0.000001 0.423723 1.000000
 #BONE
-@ParentName shin.L
 @NodeName shin2.L
+@ParentName shin.L
 @BoneIndex 17
 @TopNode NO
 $WorldTM 4 4
@@ -269,8 +269,8 @@ $LocalTM 4 4
 0.176860 -0.984156 -0.012630 0.000000
 0.000000 0.000000 0.325497 1.000000
 #BONE
-@ParentName spine.001
 @NodeName footIK.L
+@ParentName spine.001
 @BoneIndex 18
 @TopNode NO
 $WorldTM 4 4
@@ -284,8 +284,8 @@ $LocalTM 4 4
 -0.003036 -0.148803 -0.988862 0.000000
 0.209125 0.631812 0.019913 1.000000
 #BONE
-@ParentName footIK.L
 @NodeName foot.L
+@ParentName footIK.L
 @BoneIndex 19
 @TopNode NO
 $WorldTM 4 4
@@ -299,8 +299,8 @@ $LocalTM 4 4
 0.274244 -0.192599 -0.942176 0.000000
 -0.000559 -0.000000 -0.003672 1.000000
 #BONE
-@ParentName foot.L
 @NodeName toe2.L
+@ParentName foot.L
 @BoneIndex 20
 @TopNode NO
 $WorldTM 4 4
@@ -314,8 +314,8 @@ $LocalTM 4 4
 -0.015133 0.113742 0.993395 0.000000
 -0.011997 0.031044 0.132562 1.000000
 #BONE
-@ParentName foot.L
 @NodeName toe2.L.001
+@ParentName foot.L
 @BoneIndex 21
 @TopNode NO
 $WorldTM 4 4
@@ -329,8 +329,8 @@ $LocalTM 4 4
 -0.000576 0.036244 0.999343 0.000000
 0.019414 -0.023729 0.137446 1.000000
 #BONE
-@ParentName spine.001
 @NodeName footIK.R
+@ParentName spine.001
 @BoneIndex 22
 @TopNode NO
 $WorldTM 4 4
@@ -344,8 +344,8 @@ $LocalTM 4 4
 0.003036 -0.148803 -0.988862 0.000000
 -0.207521 0.631812 0.019913 1.000000
 #BONE
-@ParentName footIK.R
 @NodeName foot.R
+@ParentName footIK.R
 @BoneIndex 23
 @TopNode NO
 $WorldTM 4 4
@@ -359,8 +359,8 @@ $LocalTM 4 4
 -0.274248 -0.192598 -0.942175 0.000000
 0.000559 -0.000000 -0.003672 1.000000
 #BONE
-@ParentName foot.R
 @NodeName toe2.R
+@ParentName foot.R
 @BoneIndex 24
 @TopNode NO
 $WorldTM 4 4
@@ -374,8 +374,8 @@ $LocalTM 4 4
 0.015132 0.113742 0.993395 0.000000
 0.011997 0.031044 0.132562 1.000000
 #BONE
-@ParentName foot.R
 @NodeName toe2.R.001
+@ParentName foot.R
 @BoneIndex 25
 @TopNode NO
 $WorldTM 4 4
@@ -389,10 +389,10 @@ $LocalTM 4 4
 0.000575 0.036243 0.999343 0.000000
 -0.019414 -0.023729 0.137446 1.000000
 #SKIN
-@ParentName RootNode
 @NodeName monsterA_lp
-@MeshName monsterA+_0
-@MaterialName monsterA+_body.001
+@ParentName RootNode
+@MeshName MonsterA+_0
+@MaterialName MonsterA+_body.001
 @TopNode YES
 $WorldTM 4 4
 1.000000 0.000000 0.000000 0.000000

@@ -93,11 +93,11 @@ void ClientObjectManager::SetCreateMonsterMemorySize(int CreateCount)
 	}
 
 	///몬스터 B 미리 할당
-	//for (int i = 0; i < CreateCount; i++)
-	//{
-	//	//생성한 몬스터를 리스트에 담는다
-	//	MonsterA_List.push_back(mFactory->CreateMonster(X, Y, Z + i, MONSTER_TYPE::MONSTER_B));
-	//}
+	for (int i = 0; i < 1; i++)
+	{
+		//생성한 몬스터를 리스트에 담는다
+		//MonsterB_List.push_back(mFactory->CreateMonsterB(0,5,-10));
+	}
 
 	///공격드론 미리 할당
 	AttackDrone_List.push_back(mFactory->CreateAttackDrone(2, 1, 0));

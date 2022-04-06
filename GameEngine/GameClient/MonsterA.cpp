@@ -47,8 +47,8 @@ void MonsterA::SetUp()
 	BulletTag = FindTagNumber("Bullet");
 
 	//매쉬 생성
-	mMeshFilter->SetModelName("monsterA+");
-	mMeshFilter->SetAnimationName("monsterA+");
+	mMeshFilter->SetModelName("MonsterA+");
+	mMeshFilter->SetAnimationName("MonsterA+");
 	mAnimation->Choice("move");
 }
 
@@ -85,7 +85,6 @@ void MonsterA::OnTriggerEnter(GameObject* Obj)
 		{
 			isLife = false;
 			mAnimation->Choice("die");
-			mAnimation->Play(1, false);
 		}
 	}
 }
