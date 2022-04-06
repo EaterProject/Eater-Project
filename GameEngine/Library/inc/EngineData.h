@@ -202,29 +202,6 @@ public:
 };
 
 /// <summary>
-/// 게임엔진에서 그래픽엔진으로 던저줄 글로벌 데이터
-/// </summary>
-class GlobalData
-{
-public:
-	float Time;		// Delta Time
-
-	Matrix TexSpace;	// Texture Space Matrix
-
-	CameraData* Camera_Data;
-
-	std::vector<DirectionalLightData*>	DirectionLights;
-	std::vector<PointLightData*>		PointLights;
-	std::vector<SpotLightData*>			SpotLights;
-
-	// Culling Data
-	std::vector<MeshBuffer*> OccluderList;
-
-	// Debug Data
-	std::queue<DebugData>	 Debug_Data;
-};
-
-/// <summary>
 /// 게임엔진에서 그래픽엔진으로 던저줄 한개의 메쉬 데이터
 /// </summary>
 class MeshData
@@ -246,6 +223,29 @@ public:
 	// 추가 데이터
 	TerrainData*	Terrain_Data	= nullptr;		// Terrain Data
 	ParticleData*	Particle_Data	= nullptr;		// Particle Data
+};
+
+/// <summary>
+/// 게임엔진에서 그래픽엔진으로 던저줄 글로벌 데이터
+/// </summary>
+class GlobalData
+{
+public:
+	float Time;		// Delta Time
+
+	Matrix TexSpace;	// Texture Space Matrix
+
+	CameraData* Camera_Data;
+
+	std::vector<DirectionalLightData*>	DirectionLights;
+	std::vector<PointLightData*>		PointLights;
+	std::vector<SpotLightData*>			SpotLights;
+
+	// Culling Data
+	std::vector<MeshBuffer*> OccluderList;
+
+	// Debug Data
+	std::queue<DebugData>	 Debug_Data;
 };
 
 /// <summary>

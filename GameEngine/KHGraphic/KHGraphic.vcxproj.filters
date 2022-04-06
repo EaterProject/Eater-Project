@@ -745,6 +745,9 @@
     <FxCompile Include="..\Assets\Shader\HizMipMap_PS.hlsl">
       <Filter>소스 파일\Shader\HLSL\Sub\Culling</Filter>
     </FxCompile>
+    <FxCompile Include="..\Assets\Shader\HizMipmap_VS.hlsl">
+      <Filter>소스 파일\Shader\HLSL\Sub\Culling</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Assets\Shader\Conversion_Header.hlsli">

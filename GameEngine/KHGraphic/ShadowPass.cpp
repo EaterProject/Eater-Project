@@ -235,8 +235,8 @@ void ShadowPass::RenderUpdate(const InstanceRenderBuffer* instance, const Render
 	ObjectData* obj = meshData->m_ObjectData;
 	MeshRenderBuffer* mesh = instance->m_Mesh;
 
-	Matrix world = *obj->World;
-	Matrix viewproj = g_GlobalData->DirectionLights[0]->LightViewProj;
+	Matrix& world = *obj->World;
+	Matrix& viewproj = g_GlobalData->DirectionLights[0]->LightViewProj;
 
 	if (mesh == nullptr) return;
 

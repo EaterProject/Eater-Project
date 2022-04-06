@@ -1865,7 +1865,7 @@ void GraphicResourceFactory::CreateRasterizerStates()
 	rasterizerDesc.DepthBiasClamp = 0.0f;
 	rasterizerDesc.SlopeScaledDepthBias = 0.0f;
 	rasterizerDesc.AntialiasedLineEnable = false;
-	rasterizerDesc.MultisampleEnable = true;
+	rasterizerDesc.MultisampleEnable = false;
 	rasterizerDesc.ScissorEnable = false;
 
 	// Solid RasterizerState »ý¼º..
@@ -1880,7 +1880,7 @@ void GraphicResourceFactory::CreateRasterizerStates()
 	rasterizerDesc.DepthBias = 0;
 	rasterizerDesc.DepthBiasClamp = 0.0f;
 	rasterizerDesc.SlopeScaledDepthBias = 0.0f;
-	rasterizerDesc.AntialiasedLineEnable = true;
+	rasterizerDesc.AntialiasedLineEnable = false;
 	rasterizerDesc.MultisampleEnable = false;
 	rasterizerDesc.ScissorEnable = false;
 

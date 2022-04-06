@@ -79,7 +79,7 @@ private:
 	std::unordered_map<UINT, MaterialRenderBuffer*> m_MaterialList;	// 현재 등록 되어있는 Material Resource..
 	std::unordered_map<UINT, TerrainRenderBuffer*> m_LayerList;		// 현재 등록 되어있는 Terrain Resource..
 
-	std::unordered_map<UINT, RenderData*> m_RenderList;	
+	std::unordered_map<UINT, RenderData*> m_RenderList;				// 현재 등록 되어있는 모든 Render Data..
 
 	std::vector<std::pair<UINT, bool>> m_InstanceIndexList;			// Instance Index 관리를 위한 List..
 	std::unordered_map<UINT, InstanceRenderBuffer*> m_InstanceList;	// 현재 등록 되어있는 Instance Resource..

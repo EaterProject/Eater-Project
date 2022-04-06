@@ -395,6 +395,9 @@ UINT PickingPass::FindPick(int x, int y)
 	// GPU Access Lock Texture Data..
 	g_Context->Map(m_ID_CopyTex2D, 0, D3D11_MAP_READ, 0, &mappedResource);
 
+	// 해당 Pixel Copy가 잘못 되었을 경우..
+	if (mappedResource.pData == nullptr) return 0;
+
 	pickID = ((UINT*)mappedResource.pData)[0];
 
 	// GPU Access UnLock Texture Data..
