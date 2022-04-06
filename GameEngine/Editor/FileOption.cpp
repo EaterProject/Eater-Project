@@ -52,7 +52,6 @@ BEGIN_MESSAGE_MAP(FileOption, CDialogEx)
 	ON_WM_LBUTTONUP()
 	ON_BN_CLICKED(IDC_BUTTON1, &FileOption::OnCreateTerrain)
 	ON_BN_CLICKED(IDC_BUTTON2, &FileOption::OnCreateLight)
-	ON_BN_CLICKED(IDC_BUTTON3, &FileOption::OnCreateMaterial)
 	ON_BN_CLICKED(IDC_BUTTON4, &FileOption::OnCreateParticle)
 	ON_BN_CLICKED(IDC_BUTTON11, &FileOption::OnSceneSave)
 	ON_BN_CLICKED(IDC_BUTTON12, &FileOption::OnOpenAssetsFolder)
@@ -62,6 +61,7 @@ BEGIN_MESSAGE_MAP(FileOption, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON6, &FileOption::OnAddCollider)
 	ON_BN_CLICKED(IDC_BUTTON8, &FileOption::OnAddRigidbody)
 	ON_BN_CLICKED(IDC_BUTTON16, &FileOption::OnAddLight)
+	ON_BN_CLICKED(IDC_BUTTON7, &FileOption::OnCreateMaterial)
 END_MESSAGE_MAP()
 
 
@@ -102,10 +102,6 @@ void FileOption::OnCreateLight()
 	mRightOption->Create_Hirearchy_Item(Object, Top);
 }
 
-void FileOption::OnCreateMaterial()
-{
-
-}
 
 void FileOption::OnCreateParticle()
 {
@@ -118,10 +114,13 @@ void FileOption::OnCreateParticle()
 void FileOption::OnSceneSave()
 {
 	mScene->DoModal();
-	std::string SaveName = ChangeToString(mScene->Name);
-	std::string SavePath = "../Assets/Scene/";
-	Demo::SaveScene(SavePath, SaveName);
-	AfxMessageBox(L"저장 완료");
+	if(mScene->isOK == true)
+	{
+		std::string SaveName = ChangeToString(mScene->Name);
+		std::string SavePath = "../Assets/Scene/";
+		Demo::SaveScene(SavePath, SaveName);
+		AfxMessageBox(L"저장 완료");
+	}
 }
 
 
@@ -221,4 +220,12 @@ void FileOption::OnAddLight()
 	{
 		ChoiceObject->AddComponent<Light>();
 	}
+}
+
+
+void FileOption::OnCreateMaterial()
+{
+	mScene->DoModal();
+	std::string SaveName = ChangeToString(mScene->Name);
+	int num = 0;
 }

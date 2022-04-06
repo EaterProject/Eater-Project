@@ -119,6 +119,7 @@ void Delegate_Map::PlayOnce()
 				Index++;
 				continue;
 			}
+
 			//활성화조건이 아닌경우
 			if (*((*temp)[Index].Enabled) == false)
 			{

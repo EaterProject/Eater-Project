@@ -1,11 +1,13 @@
 #SCENE
-$TAG 6 2
+$TAG 8 2
 0 Default
 1 MainCam
 2 Point
 3 Player
 4 Potal
 5 AttackCollider
+6 Monster
+7 Bullet
 #GAMEOBJECT
 @NAME Camera
 @TAG 1

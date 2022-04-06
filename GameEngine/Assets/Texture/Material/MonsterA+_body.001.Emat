@@ -3,8 +3,8 @@
 @Alpha NO
 @Diffuse monsterA_BaseColor.png
 @Normal MonsterA_Normal.png
-@Emissive monsterA_Emissive.png
-@ORM monsterA_ORM.png
+@Emissive NO
+@ORM monsterA_Emissive.png
 @Roughness 0
 @Metallic 0
 @Tileing_X 1

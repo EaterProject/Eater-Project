@@ -164,6 +164,8 @@
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AttackDrone.h" />
+    <ClInclude Include="Bullet.h" />
     <ClInclude Include="HealingDrone.h" />
     <ClInclude Include="GameLogic.h" />
     <ClInclude Include="Loading.h" />
@@ -182,7 +184,7 @@
     <ClInclude Include="ManaStone.h" />
     <ClInclude Include="MonsterA.h" />
     <ClInclude Include="MonsterB.h" />
-    <ClInclude Include="MonsterBase.h" />
+    <ClInclude Include="ClientComponent.h" />
     <ClInclude Include="ClientObjectManager.h" />
     <ClInclude Include="ObjectFactory.h" />
     <ClInclude Include="PlayerCamera.h" />
@@ -193,6 +195,8 @@
     <ClInclude Include="TestScene.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AttackDrone.cpp" />
+    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="HealingDrone.cpp" />
     <ClCompile Include="GameLogic.cpp" />
     <ClCompile Include="Loading.cpp" />
@@ -210,7 +214,7 @@
     <ClCompile Include="ManaStone.cpp" />
     <ClCompile Include="MonsterA.cpp" />
     <ClCompile Include="MonsterB.cpp" />
-    <ClCompile Include="MonsterBase.cpp" />
+    <ClCompile Include="ClientComponent.cpp" />
     <ClCompile Include="ClientObjectManager.cpp" />
     <ClCompile Include="ObjectFactory.cpp" />
     <ClCompile Include="PlayerCamera.cpp" />

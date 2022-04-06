@@ -1,11 +1,26 @@
 #pragma once
 #include <vector>
 
-class MonsterBase;
+class ClientComponent;
 class ObjectFactory;
 class GameObject;
-class HealingDrone;
 class Transform;
+
+class HealingDrone;
+class AttackDrone;
+class Bullet;
+class MonsterA;
+class MonsterB;
+class Potal;
+
+enum class  CLIENT_OBJECT_TYPE
+{
+	MONATER_A,
+	MONATER_B,
+	ATTACk_DRONE,
+	POTAL,
+	BULLET,
+};
 
 class ClientObjectManager
 {
@@ -15,19 +30,25 @@ public:
 
 	void Initialize(ObjectFactory* Factory);
 	void Release();
+
+	Bullet* GetBullet();
+	MonsterA* GetMonsterA();
+	MonsterB* GetMonsterB();
 private:
-	void SetCreateMonsterMemorySize(int CreateCount);	//몬스터 미리 생성
-
+	void SetCreateMonsterMemorySize(int CreateCount);	//필요한 오브젝트들 미리 생성
 	void CreateMonster(float CreateMaxTime, GameObject* CreatePointObject);
-	MonsterBase* GetLifeMonter();
-
 private:
 	GameObject* PlayerObject;
 private:
-	std::vector<MonsterBase*> MonsterA_List;
-	std::vector<MonsterBase*> MonsterB_List;
+	std::vector<MonsterA*>			MonsterA_List;
+	std::vector<MonsterB*>			MonsterB_List;
+	std::vector<AttackDrone*>		AttackDrone_List;
+	std::vector<Potal*>				Potal_List;
+	std::vector<Bullet*>			Bullet_List;
 	HealingDrone* DroneList;
 private:
 	ObjectFactory* mFactory;
 };
+
+
 

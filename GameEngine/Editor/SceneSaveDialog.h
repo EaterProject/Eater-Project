@@ -25,6 +25,8 @@ public:
 	void Initialize(RightOption* mRight);
 	CEdit SceneName_Edit;
 	CString Name;
+	bool isOK = false;
 	RightOption* mRightOption;
 	afx_msg void OnBnClickedOk();
+	afx_msg void OnBnClickedCancel();
 };

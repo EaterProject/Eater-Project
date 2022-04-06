@@ -1,15 +1,29 @@
 #include "ClientObjectManager.h"
+
+//엔진 컨퍼넌트
+#include "Player.h"
 #include "ObjectFactory.h"
 #include "MainHeader.h"
-#include "Transform.h"
-#include "Player.h"
-#include "Camera.h"
-#include "PlayerCamera.h"
 #include "GameObject.h"
+#include "Camera.h"
+#include "Transform.h"
+
+//클라이언트 컨퍼넌트
+#include "PlayerCamera.h"
+#include "ClientComponent.h"
+#include "MonsterA.h"
+#include "MonsterB.h"
+#include "Potal.h"
+#include "HealingDrone.h"
+#include "AttackDrone.h"
+#include "Bullet.h"
+
+
 ClientObjectManager::ClientObjectManager()
 {
 	mFactory		= nullptr;
 	PlayerObject	= nullptr;
+	DroneList		= nullptr;
 }
 
 ClientObjectManager::~ClientObjectManager()
@@ -25,17 +39,16 @@ void ClientObjectManager::Initialize(ObjectFactory* Factory)
 
 	//기본 생성 오브젝트들
 	PlayerObject = mFactory->CreatePlayer();
-	mFactory->CreateHealingDrone();
+	mFactory->CreateHealingDrone(0,1.5f,0);
 
-	//mFactory->CreateMonster(0, 0, 1, MONSTER_TYPE::MONSTER_A);
-
+	
 	//포탈 태그가 붙어있는 오브젝트를 모두 가져와 리스트에 담아놓는다
-	//FindGameObjectTags("Potal", &PotalList);
+	//FindGameObjectTags("Potal", &Potal_List);
 
 	//플레이어 충돌용 오브젝트를 가져온다
 	//FindGameObjectTag("AttackCollider");
 
-	//SetCreateMonsterMemorySize(5);
+	SetCreateMonsterMemorySize(5);
 }
 
 void ClientObjectManager::Release()
@@ -43,23 +56,59 @@ void ClientObjectManager::Release()
 	mFactory = nullptr;
 }
 
-void ClientObjectManager::SetCreateMonsterMemorySize(int CreateCount)
+Bullet* ClientObjectManager::GetBullet()
 {
-	float X = 10;
-	float Y = 0;
-	float Z = 10;
-	for (int i = 0; i < CreateCount; i++)
+	int Size = (int)Bullet_List.size();
+	for (int i = 0; i < Size; i++)
 	{
-		//생성한 몬스터를 리스트에 담는다
-		MonsterA_List.push_back(mFactory->CreateMonster(X, Y, Z + i, MONSTER_TYPE::MONSTER_A));
+		if (Bullet_List[i]->GetLife() == false)
+		{
+			return Bullet_List[i];
+		}
 	}
 
-	//Y = 5;
+	//없으면 Null
+	return nullptr;
+}
+
+MonsterA* ClientObjectManager::GetMonsterA()
+{
+	return nullptr;
+}
+
+MonsterB* ClientObjectManager::GetMonsterB()
+{
+	return nullptr;
+}
+
+
+
+void ClientObjectManager::SetCreateMonsterMemorySize(int CreateCount)
+{
+	///몬스터 A 미리 할당
+	for (int i = 0; i < 1; i++)
+	{
+		//생성한 몬스터를 리스트에 담는다
+		MonsterA_List.push_back(mFactory->CreateMonsterA(0, 5, -10));
+	}
+
+	///몬스터 B 미리 할당
 	//for (int i = 0; i < CreateCount; i++)
 	//{
 	//	//생성한 몬스터를 리스트에 담는다
 	//	MonsterA_List.push_back(mFactory->CreateMonster(X, Y, Z + i, MONSTER_TYPE::MONSTER_B));
 	//}
+
+	///공격드론 미리 할당
+	AttackDrone_List.push_back(mFactory->CreateAttackDrone(2, 1, 0));
+	AttackDrone_List.push_back(mFactory->CreateAttackDrone(2, 1, -8));
+	
+
+	///Bullet 미리 할당
+	for (int i = 0; i < 10; i++)
+	{
+		Bullet_List.push_back(mFactory->CreateBullet(0, 4, 0));
+	}
 }
 
 void ClientObjectManager::CreateMonster(float CreateMaxTime, GameObject* CreatePointObject)
@@ -86,16 +135,4 @@ void ClientObjectManager::CreateMonster(float CreateMaxTime, GameObject* CreateP
 	//}
 }
 
-MonsterBase* ClientObjectManager::GetLifeMonter()
-{
-	//몬스터 오브젝트 리스트 중에서 행동하지 않는 몬스터를 가져옴
-	//int MonsterMaxCount = (int)MonsterA_List.size();
-	//for (int i = 0; i < MonsterMaxCount; i++)
-	//{
-	//	if (MonsterList[i]->isLife == false)
-	//	{
-	//		return MonsterList[i];
-	//	}
-	//}
-	return nullptr;
-}
+

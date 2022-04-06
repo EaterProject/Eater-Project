@@ -36,14 +36,14 @@ public:
 	~GameObject();
 
 public:
-	MeshData* OneMeshData;					//그래픽 엔진으로 넘겨줄 데이터
-	Transform* transform;					//기본적으로 생성해주는 Transform 컨퍼넌트
-	std::string Name;						//이름
+	MeshData* OneMeshData;												//그래픽 엔진으로 넘겨줄 데이터
+	Transform* transform;												//기본적으로 생성해주는 Transform 컨퍼넌트
+	std::string Name;													//이름
 public:
-	EATER_ENGINEDLL void SetActive(bool active);				//모든 컨퍼넌트 기능중지 여부
-	EATER_ENGINEDLL void SetDontDestroy(bool DontDestroy);		//씬이 넘어갈때 삭제여부
-	EATER_ENGINEDLL bool SetTag(std::string TagName);			//태그를 지정한다
-	EATER_ENGINEDLL bool SetTag(int TagNumber);					//태그를 지정한다
+	EATER_ENGINEDLL void SetActive(bool active);						//모든 컨퍼넌트 기능중지 여부
+	EATER_ENGINEDLL void SetDontDestroy(bool DontDestroy);				//씬이 넘어갈때 삭제여부
+	EATER_ENGINEDLL bool SetTag(std::string TagName);					//태그를 지정한다
+	EATER_ENGINEDLL bool SetTag(int TagNumber);							//태그를 지정한다
 
 	EATER_ENGINEDLL GameObject* GetChildBone(std::string Name);			//자식 본 객체를 가져옴_이름
 	EATER_ENGINEDLL GameObject* GetChildBone(int num);					//자식 본 객체를 가져옴_인덱스
@@ -51,7 +51,7 @@ public:
 	EATER_ENGINEDLL GameObject* GetChildMesh(int num);					//자식 매쉬 객체를 가져옴_인덱스
 	EATER_ENGINEDLL GameObject* GetChildObject(std::string Name);		//자식 매쉬 , 본을 모두 찾아서 오브젝트를 가져옴
 	EATER_ENGINEDLL bool		GetDontDestroy();						//삭제 되는 오브젝트인지 여부 반환
-	EATER_ENGINEDLL size_t		GetTag();								//태그를 가져온다
+	EATER_ENGINEDLL int			GetTag();								//태그를 가져온다
 	EATER_ENGINEDLL int			GetChildMeshCount();					//자식 매쉬 객체의 개수를 가져옴
 	EATER_ENGINEDLL int			GetChildBoneCount();					//자식 본 객체의 개수를 가져옴
 	EATER_ENGINEDLL	Transform*	GetTransform();							//기본 컨퍼넌트인 Transform을 가져옴
@@ -107,90 +107,98 @@ private:
 template<typename T>
 inline T* GameObject::AddComponent(typename std::enable_if<std::is_base_of<Component, T>::value, bool>::type t)
 {
-	//이함수는 무조건 Component를 상속받은 클래스만 들어올수있다
-	//그래서 Component 안에 함수만 사용함
-
 	//컨퍼넌트가 이미 있다면 추가하지않는다
 	bool isFind =  FindComponent<T>();
 	if (isFind == true){return nullptr;}
 
+	/* 함수 호출 순서
+	생성후 한번만 호출
+	1.Awake
+	2.SetUp
+	3.Start
 
-	T* ComponentBox = new T();
+	매 프레임 호출
+	4.StartUpdate
+	5.TransformUpdate
+	6.PhysicsUpdate
+	7.Update
+	8.EndUpdate
+	*/
+	T* mComponent = new T();
 	//게임오브젝트 설정
-	ComponentBox->gameobject = this;
-
+	mComponent->gameobject = this;
 	//생성한 컨퍼넌트를 리스트에 넣는다
-	ComponentList.push_back(ComponentBox);
+	ComponentList.push_back(mComponent);
 
 	//나중에 이타입으로 찾아서 가져올수있도록 타입 설정
-	ComponentBox->ComponentType = typeid(T).hash_code();
+	mComponent->ComponentType = typeid(T).hash_code();
 
 	///오버라이딩 확인 각각에맞는 함수포인터 리스트에 넣는다 
-	//Awake
+	//Awake --- 현재 컨퍼넌트에서 다른컨퍼넌트를 가져올때
 	if (typeid(&Component::Awake).hash_code() != typeid(&T::Awake).hash_code())
 	{
-		PushComponentFunction(ComponentBox, AWAKE);
+		PushComponentFunction(mComponent, AWAKE);
 	}
 
-	//Start
-	if (typeid(&Component::Start).hash_code() != typeid(&T::Start).hash_code())
-	{
-		PushComponentFunction(ComponentBox, START);
-	}
-
-	//StartUpdate
+	//SetUp  --- 가져온 컨퍼넌트들 기본값 초기화
 	if (typeid(&Component::SetUp).hash_code() != typeid(&T::SetUp).hash_code())
 	{
-		PushComponentFunction(ComponentBox, SETUP);
+		PushComponentFunction(mComponent, SETUP);
 	}
 
-	//StartUpdate
+	//Start  --- 초기화된 값으로 컨퍼넌트값 적용
+	if (typeid(&Component::Start).hash_code() != typeid(&T::Start).hash_code())
+	{
+		PushComponentFunction(mComponent, START);
+	}
+
+	//StartUpdate --- 가장 먼저 실행되는 업데이트 
 	if (typeid(&Component::StartUpdate).hash_code() != typeid(&T::StartUpdate).hash_code())
 	{
-		PushComponentFunction(ComponentBox, START_UPDATE);
+		PushComponentFunction(mComponent, START_UPDATE);
 	}
 
-	//이동 행렬
+	//이동 행렬 --- Transform 컨퍼넌트가 동작하는 업데이트
 	if (typeid(&Component::TransformUpdate).hash_code() != typeid(&T::TransformUpdate).hash_code())
 	{
-		PushComponentFunction(ComponentBox, Transform_UPDATE);
+		PushComponentFunction(mComponent, Transform_UPDATE);
 	}
 
-	//물리 
+	//물리 --- Phys 관련 업데이트
 	if (typeid(&Component::PhysicsUpdate).hash_code() != typeid(&T::PhysicsUpdate).hash_code())
 	{
-		PushComponentFunction(ComponentBox, Physics_UPDATE);
+		PushComponentFunction(mComponent, Physics_UPDATE);
 	}
 
-	//DefaultUpdate
+	//DefaultUpdate --- 기본 업데이트
 	if (typeid(&Component::Update).hash_code() != typeid(&T::Update).hash_code())
 	{
-		PushComponentFunction(ComponentBox, UPDATE);
+		PushComponentFunction(mComponent, UPDATE);
 	}
 
-	//EndUpdate
+	//EndUpdate --- 마지막 업데이터
 	if (typeid(&Component::EndUpdate).hash_code() != typeid(&T::EndUpdate).hash_code())
 	{
-		PushComponentFunction(ComponentBox, END_UPDATE);
+		PushComponentFunction(mComponent, END_UPDATE);
 	}
 
-	///PhysX 충돌 체크
+
+	///PhysX 충돌 체크 전용
 	if (typeid(&Component::OnTriggerEnter).hash_code() != typeid(&T::OnTriggerEnter).hash_code())
 	{
-		PushPhysFunction(ComponentBox, PHYS_TRIIGER_ENTER);
+		PushPhysFunction(mComponent, PHYS_TRIIGER_ENTER);
 	}
 
 	if (typeid(&Component::OnTriggerStay).hash_code() != typeid(&T::OnTriggerStay).hash_code())
 	{
-		PushPhysFunction(ComponentBox, PHYS_TRIIGER_STAY);
+		PushPhysFunction(mComponent, PHYS_TRIIGER_STAY);
 	}
 
 	if (typeid(&Component::OnTriggerExit).hash_code() != typeid(&T::OnTriggerExit).hash_code())
 	{
-		PushPhysFunction(ComponentBox, PHYS_TRIIGER_EXIT);
+		PushPhysFunction(mComponent, PHYS_TRIIGER_EXIT);
 	}
-
-	return ComponentBox;
+	return mComponent;
 }
 
 template<typename T>

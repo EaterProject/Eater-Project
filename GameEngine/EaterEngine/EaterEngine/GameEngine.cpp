@@ -302,6 +302,11 @@ void GameEngine::FindGameObjectTags(std::string& TagName, std::vector<GameObject
 	mObjectManager->FindGameObjectTags(TagName, ObjectList);
 }
 
+int GameEngine::FindTagNumber(std::string& TagName)
+{
+	return ObjectManager::FindTag(TagName);
+}
+
 GameObject* GameEngine::FindGameObjectName(std::string& ObjName)
 {
 	return mObjectManager->FindGameObjectString(ObjName);
