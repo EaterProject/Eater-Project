@@ -34,18 +34,25 @@ public:
 	Bullet* GetBullet();
 	MonsterA* GetMonsterA();
 	MonsterB* GetMonsterB();
+	Transform* GetPlayerTransform();
 private:
-	void SetCreateMonsterMemorySize(int CreateCount);	//필요한 오브젝트들 미리 생성
-	void CreateMonster(float CreateMaxTime, GameObject* CreatePointObject);
+	void CreateObjectMemorySize();	//필요한 오브젝트들 미리 생성
+	void OnActivePotal(bool isActive,int index = -1);
 private:
-	GameObject* PlayerObject;
+	GameObject* PlayerObject = nullptr;
 private:
 	std::vector<MonsterA*>			MonsterA_List;
 	std::vector<MonsterB*>			MonsterB_List;
 	std::vector<AttackDrone*>		AttackDrone_List;
-	std::vector<Potal*>				Potal_List;
 	std::vector<Bullet*>			Bullet_List;
+	std::vector<Potal*>				Potal_List;
+	std::vector<GameObject*>		PotalPoint_List;
 	HealingDrone* DroneList;
+private:
+	const int CreateMonsterACount		= 2;		//몬스터A 생성할 카운터
+	const int CreateMonsterBCount		= 0;		//몬스터B 생성할 카운터
+	const int CreateAttackDroneCount	= 1;		//공격드론 생성할 카운터
+	const int CreateBulletCount			= 20;		//총알 생성할 카운터
 private:
 	ObjectFactory* mFactory;
 };

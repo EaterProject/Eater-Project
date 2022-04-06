@@ -72,6 +72,7 @@ public:
 
 	int TriggerCount = 0;
 	PhysData* TriggerList[10];
+	PhysData* TriggerExitOBJ = nullptr;
 	std::vector<PhysData*> CollisionList;
 public:
 	//이동에 관한 축변환을 막는다

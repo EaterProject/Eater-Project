@@ -85,9 +85,10 @@ MonsterA* ObjectFactory::CreateMonsterA(float x, float y, float z)
 	Object_Monster->AddComponent<Collider>();
 	Object_Monster->AddComponent<Rigidbody>();
 	MonsterA* monster = Object_Monster->AddComponent<MonsterA>();
-	Object_Monster->SetTag(FindTagNumber("Monster"));
+	int num = FindTagNumber("Monster");
+	Object_Monster->SetTag(num);
 	Object_Monster->GetTransform()->Position = { x,y,z };
-	monster->isLife = true;
+	monster->SetOBjManager(mOBJ_GM);
 	return monster;
 }
 
@@ -99,7 +100,7 @@ MonsterB* ObjectFactory::CreateMonsterB(float x, float y, float z)
 	Object_Monster->AddComponent<Collider>();
 	Object_Monster->AddComponent<Rigidbody>();
 	MonsterB* monster = Object_Monster->AddComponent<MonsterB>();
-	Object_Monster->SetTag(6);
+	Object_Monster->SetTag(FindTagNumber("Monster"));
 	Object_Monster->GetTransform()->Position = { x,y,z };
 	return monster;
 }
@@ -114,7 +115,7 @@ HealingDrone* ObjectFactory::CreateHealingDrone(float x, float y, float z)
 	GameObject* Healing		= Instance();
 	MeshFilter*		MF		= Healing->AddComponent<MeshFilter>();
 	HealingDrone*   Drone	= Healing->AddComponent<HealingDrone>();
-	MF->SetModelName("drone");
+	
 	Drone->SetPlayer(PlayerObject);
 	return Drone;
 }
@@ -126,7 +127,6 @@ AttackDrone* ObjectFactory::CreateAttackDrone(float x, float y, float z)
 	AttackDrone*	mAttackDrone = Drone->AddComponent<AttackDrone>();
 	Collider*		mCollider	 = Drone->AddComponent<Collider>();
 
-
 	mAttackDrone->SetOBjManager(mOBJ_GM);
 	Drone->GetTransform()->Position = {x,y,z};
 
@@ -135,7 +135,13 @@ AttackDrone* ObjectFactory::CreateAttackDrone(float x, float y, float z)
 
 Potal* ObjectFactory::CreatePortal(float x, float y, float z)
 {
-	return nullptr;
+	GameObject* mPotalObj = Instance();
+	MeshFilter* mMeshFileter = mPotalObj->AddComponent<MeshFilter>();
+	Potal*		mPotal		 = mPotalObj->AddComponent<Potal>();
+
+	mPotal->SetOBjManager(mOBJ_GM);
+	mPotalObj->GetTransform()->Position = { x,y,z };
+	return mPotal;
 }
 
 

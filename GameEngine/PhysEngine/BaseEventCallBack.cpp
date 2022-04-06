@@ -83,6 +83,7 @@ void BaseEventCallBack::onTrigger(PxTriggerPair* pairs, PxU32 count)
 				if (Other->TriggerList[i] == Target)
 				{
 					Other->TriggerList[i] = nullptr;
+					Other->TriggerExitOBJ = Target;
 					break;
 				}
 			}
@@ -96,6 +97,7 @@ void BaseEventCallBack::onTrigger(PxTriggerPair* pairs, PxU32 count)
 				if (Target->TriggerList[i] == Other)
 				{
 					Target->TriggerList[i] = nullptr;
+					Target->TriggerExitOBJ = Other;
 					break;
 				}
 			}

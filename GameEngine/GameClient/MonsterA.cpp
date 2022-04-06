@@ -29,7 +29,7 @@ MonsterA::~MonsterA()
 void MonsterA::Awake()
 {
 	mMeshFilter = gameobject->GetComponent<MeshFilter>();
-	mTransform	= gameobject->GetComponent<Transform>();
+	mTransform	= gameobject->GetTransform();
 	mAnimation	= gameobject->GetComponent<AnimationController>();
 	mColider	= gameobject->GetComponent<Collider>();
 	mRigidbody	= gameobject->GetComponent<Rigidbody>();
@@ -55,8 +55,12 @@ void MonsterA::SetUp()
 void MonsterA::Update()
 {
 	if (isLife == true)
-	{
-		mRigidbody->SetVelocity(0, 0, 1);
+	{	
+		//mTransform->SetRotate(0, 1, 0);
+		Vector3 Point = mObjectGM->GetPlayerTransform()->Position;
+
+		mTransform->Slow_Y_Rotation(MovePoint, 50, true);
+		mRigidbody->SetVelocity(DirPoint.x, DirPoint.y, DirPoint.z);
 	}
 }
 
@@ -77,10 +81,11 @@ void MonsterA::OnTriggerStay(GameObject* Obj)
 
 void MonsterA::OnTriggerEnter(GameObject* Obj)
 {
-	int num = Obj->GetTag();
+	DebugPrint("%d", Obj->GetTag());
 	if (Obj->GetTag() == BulletTag)
 	{
 		HP -= 20;
+		DebugPrint("%s","¸ÂÀ½");
 		if(HP <= 0)
 		{
 			isLife = false;
@@ -91,7 +96,16 @@ void MonsterA::OnTriggerEnter(GameObject* Obj)
 
 void MonsterA::ReSet()
 {
+	mAnimation->Choice("move");
+	HP = MaxHP;
+}
 
-
+void MonsterA::SetMovePoint(float x, float y, float z)
+{
+	DirPoint = (mTransform->Position - Vector3(x, y, z)) * -1;
+	DirPoint.Normalize();
+	MovePoint.x = x;
+	MovePoint.y = y;
+	MovePoint.z = z;
 }
 

@@ -91,7 +91,7 @@ EATER_ENGINEDLL void DebugDrawCircle(float scale, DirectX::SimpleMath::Vector3 p
 EATER_ENGINEDLL void DebugDrawBox(DirectX::SimpleMath::Vector3 scale, DirectX::SimpleMath::Vector3 rot, DirectX::SimpleMath::Vector3 pos, DirectX::SimpleMath::Vector3 color);
 EATER_ENGINEDLL void DebugDrawBox(DirectX::SimpleMath::Vector3 scale, DirectX::SimpleMath::Quaternion rot, DirectX::SimpleMath::Vector3 pos, DirectX::SimpleMath::Vector3 color);
 EATER_ENGINEDLL void DebugDrawSphere(float scale, DirectX::SimpleMath::Vector3 pos, DirectX::SimpleMath::Vector3 color);
-EATER_ENGINEDLL void DebugPrint(std::string str);
+EATER_ENGINEDLL void DebugPrint(const char* message, ...);
 
 ///네트워크 관련
 //엔진쪽에서 통신한 모든데이터를 여기에서 받은 매니저로 클라와 통신한다

@@ -49,11 +49,10 @@ void Collider::PhysicsUpdate()
 		mTransform->Position.y = mPhysData->WorldPosition.y;
 		mTransform->Position.z = mPhysData->WorldPosition.z;
 
-		mTransform->Q_Rotation.x = mPhysData->Rotation.x;
-		mTransform->Q_Rotation.y = mPhysData->Rotation.y;
-		mTransform->Q_Rotation.z = mPhysData->Rotation.z;
-		mTransform->Q_Rotation.w = mPhysData->Rotation.w;
-
+		//mTransform->Q_Rotation.x = mPhysData->Rotation.x;
+		//mTransform->Q_Rotation.y = mPhysData->Rotation.y;
+		//mTransform->Q_Rotation.z = mPhysData->Rotation.z;
+		//mTransform->Q_Rotation.w = mPhysData->Rotation.w;
 	}
 
 
@@ -74,7 +73,7 @@ void Collider::PhysicsUpdate()
 
 		if (mPhysData->GetTriggerExit())
 		{
-			FindPhysFunction(mPhysData, PHYS_TRIIGER_EXIT);
+			FindPhysFunctionExit(mPhysData, PHYS_TRIIGER_EXIT);
 		}
 	}
 }
@@ -208,6 +207,13 @@ void Collider::FindPhysFunction(PhysData* Data, unsigned int Type)
 			return;
 		}
 	}
+}
+
+void Collider::FindPhysFunctionExit(PhysData* Data, unsigned int Type)
+{
+	GameObject* Object = reinterpret_cast<GameObject*>(mPhysData->TriggerExitOBJ->EaterObj);
+	gameobject->PlayPhysFunction(Object, Type);
+	mPhysData->TriggerExitOBJ = nullptr;
 }
 
 bool Collider::CreatePhys()

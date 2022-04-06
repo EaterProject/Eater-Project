@@ -36,36 +36,6 @@ void Rigidbody::Awake()
 	}
 }
 
-void Rigidbody::Start()
-{
-	//if (ColliderName != "")
-	//{
-	//	//이것은 트라이엥글 매쉬를 만들때 필요하다
-	//	ModelData* data = LoadManager::GetMesh(ColliderName);
-	//
-	//	TriangleMeshData* Triangle = new TriangleMeshData();
-	//	int IndexSize	= data->TopMeshList[0]->m_OriginIndexListCount;
-	//	int VertexSize	= data->TopMeshList[0]->m_OriginVertexListCount;
-	//
-	//	Triangle->VertexList		= data->TopMeshList[0]->m_OriginVertexList;
-	//	Triangle->VertexListSize	= VertexSize;
-	//
-	//	Triangle->IndexList		= data->TopMeshList[0]->m_OriginIndexList;
-	//	Triangle->IndexListSize = IndexSize;
-	//
-	//	RigidbodyData->CreateTriangleCollider(Triangle,VertexSize,IndexSize);
-	//} 
-	////RigidbodyData->Rotation = {0,0,0,1};
-	////RigidbodyData->SetWorldPosition(Tr->Position.x, Tr->Position.y, Tr->Position.z);
-	//PhysX_Create_Actor(RigidbodyData);
-	////Tr->Load_Local._41 += RigidbodyData->CenterPoint.x;
-	////Tr->Load_Local._42 += RigidbodyData->CenterPoint.y;
-	////Tr->Load_Local._43 += RigidbodyData->CenterPoint.z;
-	//
-	//// Collider Data 설정..
-	//gameobject->OneMeshData->Collider_Data = Collider_Data;
-}
-
 void Rigidbody::SetUp()
 {
 	/// 시작 값을 넣어준다

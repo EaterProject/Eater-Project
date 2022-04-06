@@ -36,14 +36,20 @@ void Bullet::SetUp()
 void Bullet::Shooting(Vector3 Dir)
 {
 	Direction = Dir;
-	isLife = true;
 }
 
 void Bullet::Update()
 {
 	if (isLife == true)
 	{
+		if (LifeTime >= ResetTime)
+		{
+			ReSet();
+			LifeTime -= ResetTime;
+			return;
+		}
 		mTransform->SetTranlate(Direction * GetDeltaTime() * BulletSpeed);
+		LifeTime += GetDeltaTime();
 	}
 }
 
@@ -54,9 +60,9 @@ void Bullet::ReSet()
 
 void Bullet::OnTriggerEnter(GameObject* Obj)
 {
-	if (Obj->GetTag() == MonsterTag)
-	{
-		isLife = false;
-		mTransform->Position = { 0,0,0 };
-	}
+	//if (Obj->GetTag() == MonsterTag)
+	//{
+	//	isLife = false;
+	//	mTransform->Position = { 0,0,0 };
+	//}
 }

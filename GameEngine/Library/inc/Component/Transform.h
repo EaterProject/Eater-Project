@@ -80,7 +80,7 @@ public:
 	void Child_Local_Updata();
 
 	//Y축 기준으로 보는방향으로 천천히 회전한다
-	EATER_ENGINEDLL void Slow_Y_Rotation(Vector3 Dir, float RotationSpeed);
+	EATER_ENGINEDLL void Slow_Y_Rotation(Vector3 Dir, float RotationSpeed ,bool Z_Front = false);
 	EATER_ENGINEDLL float GetDistance(Vector3 Pos);
 private:
 	//현재 위치 회전 크기값을 가져와 행렬을 구한다

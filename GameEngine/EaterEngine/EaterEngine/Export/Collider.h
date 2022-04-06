@@ -46,6 +46,7 @@ public:
 private:
 	void DebugCollider();
 	void FindPhysFunction(PhysData* Data, unsigned int Type);
+	void FindPhysFunctionExit(PhysData* Data, unsigned int Type);
 	DirectX::SimpleMath::Matrix CreateXMRot4x4();
 private:
 	PhysData*		mPhysData;
