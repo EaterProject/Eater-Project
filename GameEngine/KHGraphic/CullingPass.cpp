@@ -133,6 +133,8 @@ void CullingPass::Release()
 
 void CullingPass::RenderOccluders()
 {
+	if (CullingRenderMeshList.empty() || g_GlobalData->OccluderList.empty()) return;
+	
 	CameraData* cam = g_GlobalData->MainCamera_Data;
 
 	Matrix& viewproj = cam->CamViewProj;
@@ -182,7 +184,7 @@ void CullingPass::RenderOccluders()
 
 void CullingPass::OcclusionCullingQuery()
 {
-	if (CullingRenderMeshList.empty()) return;
+	if (CullingRenderMeshList.empty() || g_GlobalData->OccluderList.empty()) return;
 
 	CameraData* cam = g_GlobalData->MainCamera_Data;
 
@@ -201,7 +203,7 @@ void CullingPass::OcclusionCullingQuery()
 		m_RenderData->m_Draw = false;
 
 		// 활성화 되있는 Object만 Culling..
-		//if (m_RenderData->m_ObjectData->IsActive == false) continue;
+		if (m_RenderData->m_ObjectData->IsActive == false) continue;
 
 		// 해당 Collider Transform Update..
 		m_Sphere = m_RenderData->m_Mesh->m_MeshSubData->BoundSphere;
@@ -254,8 +256,8 @@ void CullingPass::OcclusionCullingQuery()
 
 void CullingPass::DrawStateUpdate()
 {
-	if (CullingRenderMeshList.empty()) return;
-	
+	if (CullingRenderMeshList.empty() || g_GlobalData->OccluderList.empty()) return;
+
 	// GPU -> CPU Culling Result Data Copy
 	g_Context->CopyResource(m_ResultCopy_Buffer, m_Culling_Buffer);
 
@@ -273,10 +275,10 @@ void CullingPass::DrawStateUpdate()
 		m_RenderData = CullingRenderMeshList[i];
 
 		// 활성화 되있는 Object만 Culling..
-		//if (m_RenderData->m_ObjectData->IsActive == false) continue;
+		if (m_RenderData->m_ObjectData->IsActive == false) continue;
 
 		// Culling 결과에 대한 Draw 상태 업데이트..
-		m_RenderData->m_Draw = (bool)m_ResultList[i];
+		m_RenderData->m_Draw = (bool)m_ResultList[resultIndex++];
 	}
 }
 
