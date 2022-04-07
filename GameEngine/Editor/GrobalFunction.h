@@ -57,8 +57,8 @@ CString ChangeToCString(std::string Data)
 std::string ChangeToString(CString Data)
 {
 	//Cstring -> string
-	CT2CA convertedString(Data);
-	return convertedString;
+	CT2CA convertedString = Data;
+	return (std::string)convertedString;
 }
 
 std::string ChangeToString(int Data)

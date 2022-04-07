@@ -22,7 +22,7 @@ void EngineInitialize(HWND _g_hWnd, bool ON_DEBUG)
 
 void EndEngine()
 {
-	//gDebugManger->Delete();
+	gGameEngine->Finish();
 }
 
 void UpdateEngine()

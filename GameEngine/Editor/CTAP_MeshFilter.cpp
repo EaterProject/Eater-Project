@@ -73,9 +73,9 @@ void CTAP_MeshFilter::SetGameObject(MeshFilter* ObjectMeshFilter)
 		Roughness_Edit.SetWindowTextW(ChangeToCString(RoughnessF));
 		Matallic_Edit.SetWindowTextW(ChangeToCString(MetallicF));
 
-		Emissive_Slider.SetPos(EmissiveF*10.0f);
-		Roughnees_Slider.SetPos(RoughnessF* 100.0f + 100.0f);
-		Matallic_Slider.SetPos(MetallicF*100.0f + 100.0f);
+		Emissive_Slider.SetPos((int)(EmissiveF*10.0f));
+		Roughnees_Slider.SetPos((int)(RoughnessF* 100.0f + 100.0f));
+		Matallic_Slider.SetPos((int)(MetallicF*100.0f + 100.0f));
 
 		Emissive_Slider.SetRange(0, 100);
 		Matallic_Slider.SetRange(0, 200);
@@ -410,7 +410,7 @@ void CTAP_MeshFilter::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
 	if (pScrollBar->GetDlgCtrlID() == Emissive_Slider.GetDlgCtrlID())
 	{
-		float Emissive = Emissive_Slider.GetPos();
+		float Emissive = (float)Emissive_Slider.GetPos();
 		Emissive *= 0.1f;
 
 		Emissive_Edit.SetWindowTextW(ChangeToCString(Emissive));
@@ -419,7 +419,7 @@ void CTAP_MeshFilter::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 
 	if (pScrollBar->GetDlgCtrlID() == Roughnees_Slider.GetDlgCtrlID())
 	{
-		float Roughnees = Roughnees_Slider.GetPos();
+		float Roughnees = (float)Roughnees_Slider.GetPos();
 		Roughnees -= 100;
 		Roughnees *= 0.01f;
 		Roughness_Edit.SetWindowTextW(ChangeToCString(Roughnees));
@@ -428,7 +428,7 @@ void CTAP_MeshFilter::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 
 	if (pScrollBar->GetDlgCtrlID() == Matallic_Slider.GetDlgCtrlID())
 	{
-		float Matallic = Matallic_Slider.GetPos();
+		float Matallic = (float)Matallic_Slider.GetPos();
 		Matallic -= 100;
 		Matallic *= 0.01f;
 		Matallic_Edit.SetWindowTextW(ChangeToCString(Matallic));

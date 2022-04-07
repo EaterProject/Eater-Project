@@ -265,7 +265,7 @@ std::string YAMLParser::PushNode(YAML::Node* _KeyNode,YAML::Node _ValueNode)
 		ChildNodeCount[KeyName]++;
 
 		Count += 1;
-		int End = KeyName.rfind("_");
+		int End =(int)KeyName.rfind("_");
 		int Start = 0;
 
 		std::string N = KeyName.substr(Start, End);
@@ -355,7 +355,7 @@ void YAMLParser::Load_Scalar(YAML::Node _Node)
 
 void YAMLParser::Load_Sequence(YAML::Node _Node)
 {
-	int Size = _Node.size();
+	int Size = (int)_Node.size();
 	for (int i = 0; i < Size; i++)
 	{
 		YAML::Node temp = _Node[i];
@@ -389,7 +389,7 @@ void YAMLParser::Load_Sequence(YAML::const_iterator& it)
 	std::string Value = it->first.as<std::string>();
 	YAML::Node mNode= it->second;
 	
-	int Size = mNode.size();
+	int Size = (int)mNode.size();
 	for (int i = 0; i < Size; i++)
 	{
 		YAML::Node temp = mNode[i];

@@ -258,8 +258,16 @@ class LoadMeshData
 public:
 	~LoadMeshData()
 	{
-		BoneTMList = nullptr;
+		if (Parent != nullptr)
+		{
+			delete Parent;
+		}
 
+		for (auto k : Child)
+		{
+			delete k;
+		}
+		BoneTMList = nullptr;
 		Parent = nullptr;
 	};
 
@@ -293,10 +301,30 @@ class ModelData
 public:
 	~ModelData()
 	{
-		//최상위의 오브젝트를 재귀로 돌면서 포인터로 생성된것들 모두삭제
-		//
-	}
+		for (auto k : TopMeshList)
+		{
+			if (k != nullptr)
+			{
+				delete k;
+			}
+		}
 
+		for (auto k : TopSkinList)
+		{
+			if (k != nullptr)
+			{
+				delete k;
+			}
+		}
+
+		for (auto k : TopBoneList)
+		{
+			if (k != nullptr)
+			{
+				delete k;
+			}
+		}
+	}
 	std::vector<LoadMeshData*> TopMeshList;
 	std::vector<LoadMeshData*> TopSkinList;
 	std::vector<LoadMeshData*> TopBoneList;
@@ -310,7 +338,14 @@ class ModelAnimationData
 public:
 	~ModelAnimationData()
 	{
-
+		for (auto Anim : AnimList)
+		{
+			int Size = (int)Anim.second->size();
+			for (auto CAnim : *(Anim.second))
+			{
+				delete CAnim;
+			}
+		}
 	}
 	std::map<std::string, std::vector<CAnimation*>* > AnimList;
 };

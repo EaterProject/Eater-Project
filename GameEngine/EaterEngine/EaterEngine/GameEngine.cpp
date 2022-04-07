@@ -155,6 +155,7 @@ void GameEngine::Finish()
 	delete mLoadManager;
 
 	mSceneManager->Delete();
+	mLoadManager->Release();
 
 	GlobalDataManager::Release();
 }

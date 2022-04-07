@@ -55,6 +55,8 @@ public:
 
 	//초기화 및 경로 설정
 	void Initialize(GraphicEngineManager* graphic, CRITICAL_SECTION* _cs);
+	void Release();
+
 	void Load(std::string& Path, UINT MODE);
 	void LoadTerrain(std::string mMeshName, std::string mMaskName1, std::string mMaskName2, UINT parsingMode);
 	void Start();

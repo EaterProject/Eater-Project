@@ -59,6 +59,7 @@ int AssetView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	mAssets.Create(IDD_ASSETS, this);
 	mAssets.ShowWindow(SW_SHOW);
+	return 0;
 }
 // AssetView 메시지 처리기
 
