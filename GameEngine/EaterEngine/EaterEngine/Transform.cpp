@@ -232,7 +232,7 @@ void Transform::Child_Local_Updata()
 	}
 }
 
-void Transform::Slow_Y_Rotation(Vector3 Dir, float RotationSpeed)
+void Transform::Slow_Y_Rotation(Vector3 Dir, float RotationSpeed, bool Z_Front)
 {
 	//Y축기준으로 현재 방향에서 보는 방향으로 천천히 회전 시킨다
 	//도착 지점의 각도를 구한다 이떄 범위는 -180 ~ 180 이다
@@ -244,7 +244,15 @@ void Transform::Slow_Y_Rotation(Vector3 Dir, float RotationSpeed)
 	if (EndAngle <= 0) { EndAngle += 360; }
 
 	//현재 위치의 각도
-	float NowAngle = Rotation.y;
+	float NowAngle;
+	if (Z_Front == false)
+	{
+		NowAngle = Rotation.y;
+	}
+	else
+	{
+		NowAngle = Rotation.y + 180;
+	}
 	//현재 각도에서 도착지점까지 이동하려고 할때 오른쪽회전,왼쪽회전여부를 판별하기위한 Angle
 	float DirAngle = NowAngle - (EndAngle + 90);
 
@@ -364,14 +372,15 @@ void Transform::UpdateWorldXM()
 	PositionXM	= CreateXMPos4x4();
 	ScaleXM		= CreateXMScl4x4();
 
-	if (isRigid == false)
-	{
-		RotationXM	= CreateXMRot4x4();
-	}
-	else
-	{
-		RotationXM = CreateXMRot4x4_Q();
-	}
+	RotationXM = CreateXMRot4x4();
+	//if (isRigid == false)
+	//{
+	//	RotationXM	= CreateXMRot4x4();
+	//}
+	//else
+	//{
+	//	RotationXM = CreateXMRot4x4_Q();
+	//}
 
 	DirectX::SimpleMath::Matrix Master = (ScaleXM * RotationXM * PositionXM);
 	if (Parent != nullptr)

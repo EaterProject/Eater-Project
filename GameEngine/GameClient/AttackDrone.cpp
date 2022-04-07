@@ -8,21 +8,30 @@
 
 AttackDrone::AttackDrone()
 {
+	mTransform = nullptr;
+	mTargetMonsterTR = nullptr;
+	mMeshFilter = nullptr;
+	mCollider = nullptr;
+
 }
 
 AttackDrone::~AttackDrone()
 {
-
-
+	mTransform = nullptr;
+	mTargetMonsterTR = nullptr;
+	mMeshFilter = nullptr;
+	mCollider = nullptr;
 }
 
 
+void AttackDrone::Awake()
+{
+	mMeshFilter = gameobject->GetComponent<MeshFilter>();
+	mCollider = gameobject->GetComponent<Collider>();
+}
+
 void AttackDrone::SetUp()
 {
-	MeshFilter* mMeshFilter = gameobject->GetComponent<MeshFilter>();
-	Collider* mCollider = gameobject->GetComponent<Collider>();
-
-
 	mTransform = gameobject->GetTransform();
 	MonsterTag = FindTagNumber("Monster");
 
@@ -33,7 +42,24 @@ void AttackDrone::SetUp()
 
 void AttackDrone::Update()
 {
-	
+	if (mTargetMonsterTR != nullptr)
+	{
+		AttackTime += GetDeltaTime();
+		if (AttackTime >= AttackMaxTime)
+		{
+			Bullet* mBullet = mObjectGM->GetBullet();
+			if (mBullet == nullptr) { return; }
+			Vector3 Dir = (mTransform->Position - mTargetMonsterTR->Position) * -1;
+			Dir.Normalize();
+			Dir.y = 0;
+
+			//처음 시작지점 설정
+			mBullet->gameobject->GetTransform()->Position = mTransform->Position;
+			mBullet->Shooting(Dir);
+			AttackTime -= AttackMaxTime;
+		}
+		mTransform->Slow_Y_Rotation(mTargetMonsterTR->Position, 150);
+	}
 }
 
 void AttackDrone::ReSet()
@@ -42,30 +68,30 @@ void AttackDrone::ReSet()
 
 }
 
+void AttackDrone::OnTriggerEnter(GameObject* Obj)
+{
+	DebugPrint("Attack Drone에서 %s 가 충돌시작", Obj->Name.c_str());
+	if (Obj->GetTag() == MonsterTag && mTargetMonsterTR == nullptr)
+	{
+		mTargetMonsterTR = Obj->GetTransform();
+	}
+}
+
 void AttackDrone::OnTriggerStay(GameObject* Obj)
 {
 	//접촉한 오브젝트가 몬스터일때
-	int num = Obj->GetTag();
-	if (num == MonsterTag)
+
+	if (Obj->GetTag() == MonsterTag && mTargetMonsterTR == nullptr)
 	{
-		mMonsterTR = Obj->GetTransform();
-		AttackTime += GetDeltaTime();
-		if (AttackTime >= AttackMaxTime)
-		{
-			AttackTime -= AttackMaxTime;
-			Vector3 AttackPos = mTransform->GetLocalPosition_Look();
-			Bullet* mBullet = mObjectGM->GetBullet();
-			if (mBullet == nullptr) { return; }
+		mTargetMonsterTR = Obj->GetTransform();
+	}
+}
 
-			Vector3 MY		= mTransform->Position;
-			Vector3 Monster = mMonsterTR->Position;
-
-			Vector3 Dir = (MY - Monster) * -1;
-			Dir.Normalize();
-			Dir.y = 0;
-			mBullet->gameobject->GetTransform()->Position = mTransform->Position;
-			mBullet->Shooting(Dir);
-		}
-		mTransform->Slow_Y_Rotation(mMonsterTR->Position, 100);
+void AttackDrone::OnTriggerExit(GameObject* Obj)
+{
+	DebugPrint("Attack Drone에서 %s 가 충돌끝", Obj->Name.c_str());
+	if (mTargetMonsterTR == Obj->GetTransform())
+	{
+		mTargetMonsterTR = nullptr;
 	}
 }

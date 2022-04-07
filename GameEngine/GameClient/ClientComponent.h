@@ -17,6 +17,7 @@ public:
 	void SetOBjManager(ClientObjectManager* OBJ_GM){mObjectGM = OBJ_GM;}
 	int		GetType();
 	bool	GetLife();
+	void	SetLife(bool isLife);
 public:
 	virtual void ReSet() = 0;
 protected:

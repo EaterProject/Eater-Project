@@ -7,11 +7,13 @@
 class Transform;
 class GameObject;
 class Player;
+class MeshFilter;
 class HealingDrone : public ClientComponent
 {
 public:
 	HealingDrone();
 	virtual ~HealingDrone();
+	void Awake();
 	void SetUp();
 	void Update();
 	void ReSet();
@@ -21,6 +23,7 @@ private:
 	Transform*	mPlayerTR;
 	GameObject* mPlayer;
 	Player*		mPlayerComponent;
+	MeshFilter* mMeshFilter;
 private:
 	float HealingTime = 0;
 private:

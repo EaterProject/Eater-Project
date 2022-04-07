@@ -16,7 +16,10 @@ public:
 private:
 	Transform*	mTransform;
 	Vector3		Direction;
+
+	float LifeTime = 0;
 	int MonsterTag;
-	const float BulletSpeed = 10;
+	const float ResetTime	= 5.0f;
+	const float BulletSpeed = 10.0f;
 };
 

@@ -209,8 +209,6 @@ bool PhysEngine::CreateScene(PhysSceneData* SceneData)
 	m_CudaContextManager = PxCreateCudaContextManager(*m_Foundation, cudaContextManagerDesc, PxGetProfilerCallback());
 	m_BaseEvent = new BaseEventCallBack();
 
-	
-	
 	PxSceneDesc sceneDesc				= PxSceneDesc(m_Physics->getTolerancesScale());
 	sceneDesc.gravity					= PxVec3(0.0f, -9.8f, 0.0f);
 	sceneDesc.cpuDispatcher				= m_Dispatcher;

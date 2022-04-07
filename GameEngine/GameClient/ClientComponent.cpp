@@ -24,3 +24,8 @@ bool ClientComponent::GetLife()
 {
 	return isLife;
 }
+
+void ClientComponent::SetLife(bool Life)
+{
+	isLife = Life;
+}

@@ -3,6 +3,7 @@
 #include "Transform.h"
 #include "MainHeader.h"
 #include "Player.h"
+#include "MeshFilter.h"
 HealingDrone::HealingDrone()
 {
 	mTransform			= nullptr;
@@ -19,12 +20,17 @@ HealingDrone::~HealingDrone()
 	mPlayerComponent	= nullptr;
 }
 
+void HealingDrone::Awake()
+{
+	mTransform			= gameobject->GetTransform();
+	mPlayerTR			= mPlayer->GetTransform();
+	mPlayerComponent	= mPlayer->GetComponent<Player>();
+	mMeshFilter			= gameobject->GetComponent<MeshFilter>();
+}
+
 void HealingDrone::SetUp()
 {
-	mTransform  = gameobject->GetTransform();
-	mPlayerTR	= mPlayer->GetTransform();
-	mPlayerComponent = mPlayer->GetComponent<Player>();
-
+	mMeshFilter->SetModelName("drone");
 	Vector3 DronePos = Vector3::Lerp(mTransform->Position, mPlayerTR->Position, GetDeltaTime());
 	DronePos.y = OffsetY;
 	mTransform->Position = DronePos;
@@ -60,6 +66,8 @@ void HealingDrone::Update()
 
 void HealingDrone::ReSet()
 {
+
+
 }
 
 void HealingDrone::SetPlayer(GameObject* PlayerObject)
