@@ -445,6 +445,8 @@ void CullingPass::CullingBufferCreate()
 	/// 일단 해보고 버퍼 재설정은 나중에 고민하자
 	m_RenderCount = (UINT)CullingRenderMeshList.size();
 
+	if (m_RenderCount == 0) return;
+
 	D3D11_BUFFER_DESC colliderBufferDesc;
 	ZeroMemory(&colliderBufferDesc, sizeof(colliderBufferDesc));
 	colliderBufferDesc.Usage = D3D11_USAGE_DYNAMIC;

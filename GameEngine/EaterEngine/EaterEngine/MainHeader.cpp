@@ -1,3 +1,5 @@
+#pragma warning(disable: 4996)
+
 #include "MainHeader.h"
 #include "GameEngine.h"
 #include "PhysManager.h"
@@ -278,9 +280,27 @@ void AddOccluder(std::string mMeshName)
 	 DebugManager::DebugDrawSphere(scale, pos, color);
  }
 
- void DebugPrint(std::string str)
+ void DebugPrint(const char* message, ...)
  {
-	  PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Client ][ Debug ] %s", str.c_str());
+	 int length;
+	 va_list args;
+
+	 va_start(args, message);
+
+	 // 가변인자 문자열 길이 측정..
+	 length = _vscprintf(message, args) + 1;
+
+	 // 가변인자 문자열 변환..
+	 char* cBuf = new char[length];
+	 memset(cBuf, NULL, length);
+
+	 vsprintf(cBuf, message, args);
+
+	 va_end(args);
+
+	 PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, cBuf);
+
+	 delete[] cBuf;
  }
 
  void Network_SetManager(NetworkManagerComponent* Manager)

@@ -71,8 +71,15 @@ public:
 	bool isKinematic;
 
 	int TriggerCount = 0;
-	PhysData* TriggerList[10];
-	std::vector<PhysData*> CollisionList;
+
+
+	int Enter_Count		= 0;
+	int Stay_Count		= 0;
+	int Exit_Count		= 0;
+	PhysData* TriggerEnter_List[10];
+	PhysData* TriggerStay_List[10];
+	PhysData* TriggerExit_List[10];
+	//PhysData* TriggerList[10];
 public:
 	//이동에 관한 축변환을 막는다
 	void SetLockAxis_Position(bool x, bool y, bool z);
@@ -80,6 +87,7 @@ public:
 	//회전에 관한 축변환을 막는다
 	void SetLockAxis_Rotation(bool x, bool y, bool z);
 	Vector3 GetLockAxis_Rotation();
+
 private:
 	///위치 데이터
 	//로컬 위치 (계층 구조일때)
@@ -99,7 +107,7 @@ private:
 	bool isForce;
 	bool isVelocity;
 	bool isPosition;
-	bool isTrigger;
+	bool isTrigger; 
 
 	bool OnTriggerEnter;
 	bool OnTriggerStay;
@@ -107,6 +115,8 @@ private:
 private:
 	void* ActorObj = nullptr;
 	
+	void PushTriggerEnter_Data(PhysData* Data);
+	void PushTriggerExit_Data(PhysData* Data);
 
 	friend class Factory;
 	friend class PhysEngine;

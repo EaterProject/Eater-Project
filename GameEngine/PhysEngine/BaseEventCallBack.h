@@ -1,6 +1,7 @@
 #pragma once
 using namespace physx;
 #include "PxSimulationEventCallback.h"
+class PhysData;
 class BaseEventCallBack : public PxSimulationEventCallback
 {
 public:
@@ -24,5 +25,6 @@ public:
 private:
 	bool isTargetPush = false;
 	bool isOtherPush = false;
+	void PushExitObject(PhysData* Other , PhysData* Target);
 };
 

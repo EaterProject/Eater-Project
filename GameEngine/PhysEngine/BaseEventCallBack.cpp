@@ -42,63 +42,14 @@ void BaseEventCallBack::onTrigger(PxTriggerPair* pairs, PxU32 count)
 
 		if (pairs[i].status & PxPairFlag::eNOTIFY_TOUCH_FOUND)
 		{
-			Other->OnTriggerEnter = true;
-			Other->OnTriggerStay = true;
-			Other->TriggerCount++;
-
-			Target->OnTriggerEnter = true;
-			Target->OnTriggerStay = true;
-			Target->TriggerCount++;
-
-
-			for (int i = 0; i < 10; i++)
-			{
-				if (Other->TriggerList[i] == nullptr)
-				{
-					Other->TriggerList[i] = Target;
-					isOtherPush = true;
-				}
-
-				if (Target->TriggerList[i] == nullptr)
-				{
-					Target->TriggerList[i] = Other;
-					isTargetPush = true;
-				}
-
-				if (isTargetPush == true && isOtherPush == true)
-				{
-					break;
-				}
-			}
+			Other->PushTriggerEnter_Data(Target);
+			Target->PushTriggerEnter_Data(Other);
 		}
 
 		if (pairs[i].status & PxPairFlag::eNOTIFY_TOUCH_LOST)
 		{
-			Other->OnTriggerStay = false;
-			Other->OnTriggerExit = true;
-			Other->TriggerCount--;
-
-			for (int i = 0; i < 10; i++)
-			{
-				if (Other->TriggerList[i] == Target)
-				{
-					Other->TriggerList[i] = nullptr;
-					break;
-				}
-			}
-
-
-			Target->OnTriggerStay = false;
-			Target->OnTriggerExit = true;
-			Target->TriggerCount--;
-			for (int i = 0; i < 10; i++)
-			{
-				if (Target->TriggerList[i] == Other)
-				{
-					Target->TriggerList[i] = nullptr;
-					break;
-				}
-			}
+			Other->PushTriggerExit_Data(Target);
+			Target->PushTriggerExit_Data(Other);
 		}
 	}
 }
@@ -106,4 +57,9 @@ void BaseEventCallBack::onTrigger(PxTriggerPair* pairs, PxU32 count)
 void BaseEventCallBack::onAdvance(const PxRigidBody* const* bodyBuffer, const PxTransform* poseBuffer, const PxU32 count)
 {
 	int num = 0;
+}
+
+void BaseEventCallBack::PushExitObject(PhysData* Other, PhysData* Target)
+{
+	
 }

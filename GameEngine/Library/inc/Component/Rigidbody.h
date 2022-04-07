@@ -17,7 +17,6 @@ public:
 
 	
 	void Awake();
-	virtual void Start();
 	virtual void SetUp();
 	virtual void PhysicsUpdate();
 

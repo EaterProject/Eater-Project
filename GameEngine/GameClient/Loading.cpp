@@ -55,7 +55,6 @@ void Loading::Update()
 
 void Loading::End()
 {
-
 	 
 }
 
@@ -69,9 +68,8 @@ void Loading::ThreadFunction()
 	Load("../Assets/Model/Animation");
 	Load("../Assets/Model/MeshBuffer");
 	Load("../Assets/Model/ModelData");
-	
-	
-	LoadEnvironment("../Assets/Texture/Environment/Night.dds");
+
+
 	SetEnvironment(true);
 }
 

@@ -32,6 +32,7 @@ Animator::~Animator()
 void Animator::SetAnimation(ParserData::CAnimation* data)
 {
 	NowAnimationData = data;
+	AnimeIndex = 0;
 }
 
 void Animator::Play(float time, bool Loop)

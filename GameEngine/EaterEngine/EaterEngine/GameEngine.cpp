@@ -110,7 +110,7 @@ void GameEngine::Start()
 	mLoadManager->Start();
 
 	//카메라처음 생성 키인풋을 받을수있도록 컨퍼넌트 붙임
-	GameObject* obj = InstanceCamera();
+	GameObject* obj = InstanceCamera("DebugCam");
 	obj->AddComponent<CameraDebugKeyInput>();
 	obj->SetDontDestroy(true);
 	obj->transform->Position = {0,10,-25};

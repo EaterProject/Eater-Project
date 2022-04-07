@@ -46,8 +46,8 @@ void MonsterB::SetUp()
 	mColider->CreatePhys();
 
 	//매쉬 생성
-	mMeshFilter->SetModelName("monsterB+");
-	mMeshFilter->SetAnimationName("monsterB+");
+	mMeshFilter->SetModelName("MonsterB+");
+	mMeshFilter->SetAnimationName("MonsterB+");
 	mAnimation->Choice("move");
 }
 
