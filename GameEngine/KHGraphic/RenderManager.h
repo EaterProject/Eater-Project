@@ -88,7 +88,6 @@ private:
 	void DeleteUnRenderData(MeshData* meshData);			// Un Render Data 제거..
 
 	void CheckInstanceLayer(std::vector<InstanceLayer*>& layerList);						// 비어있는 Insatnce Layer 검사 및 제거..
-	void CheckMaxSizeLayer(std::vector<InstanceLayer*>& layerList);							// 현재 Instance Layer Size 재설정..
 	void FindInstanceLayer(std::vector<InstanceLayer*>& layerList, InstanceLayer* layer);	// 해당 Instance Layer 검색 및 추가..
 
 	bool SortDistance(RenderData* obj1, RenderData* obj2);

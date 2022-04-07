@@ -1466,14 +1466,6 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(Parser
 	ParserData::ImageData maskImage1 = m_Parser->LoadImagePixel(mesh->m_MaskName1.c_str(), 4);
 	ParserData::ImageData maskImage2 = m_Parser->LoadImagePixel(mesh->m_MaskName2.c_str(), 4);
 
-	//for (UINT i = 0; i < vCount; i++)
-	//{
-	//	Vector3 P = mesh->m_VertexList[i]->m_Pos;
-	//
-	//	vMin = XMVectorMin(vMin, P);
-	//	vMax = XMVectorMax(vMax, P);
-	//}
-
 	std::vector<VertexInput::TerrainVertex> vertices(vCount);
 	for (UINT i = 0; i < vCount; i++)
 	{
@@ -1486,8 +1478,8 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(Parser
 		vertices[i].Tangent = mesh->m_VertexList[i]->m_Tanget;
 
 		// 해당 Pixel Mask Color..
-		int originWidth = abs(mesh->m_VertexList[i]->m_Pos.x + 1);
-		int originHeight = abs(mesh->m_VertexList[i]->m_Pos.z + 3);
+		int originWidth = (int)abs(mesh->m_VertexList[i]->m_Pos.x + 1);
+		int originHeight = (int)abs(mesh->m_VertexList[i]->m_Pos.z + 3);
 		int width, height;
 		// □ □ □
 		// □ ■ □
@@ -2404,6 +2396,7 @@ void GraphicResourceFactory::CreateLineBoxBuffer()
 
 	// Draw Buffer 생성..
 	CreateDrawBuffer(DB_Line_Box::GetName(), DB_Line_Box::GetHashCode(), format, topology, vByteSize, iByteSize, sizeof(VertexInput::PosColorVertex), iCount, &vertices[0], &indices[0]);
+	CreateDrawBuffer(DB_Line_Frustum::GetName(), DB_Line_Frustum::GetHashCode(), format, topology, vByteSize, iByteSize, sizeof(VertexInput::PosColorVertex), iCount, D3D11_USAGE_DYNAMIC, D3D11_USAGE_IMMUTABLE, &vertices[0], &indices[0]);
 }
 
 void GraphicResourceFactory::CreateLineCircleBuffer()
@@ -2508,8 +2501,8 @@ void GraphicResourceFactory::CreateLineGridBuffer()
 	float wSizeHalf = width * wSize / 2.0f;
 	float hSizeHalf = height * hSize / 2.0f;
 
-	UINT vCount = ((width + 1) + (height + 1)) * 2.0f;
-	UINT iCount = ((width + 1) + (height + 1)) * 2.0f;
+	UINT vCount = (UINT)(((width + 1) + (height + 1)) * 2.0f);
+	UINT iCount = (UINT)(((width + 1) + (height + 1)) * 2.0f);
 
 	std::vector<VertexInput::PosColorVertex> vertices(vCount);
 	std::vector<UINT> indices(iCount);

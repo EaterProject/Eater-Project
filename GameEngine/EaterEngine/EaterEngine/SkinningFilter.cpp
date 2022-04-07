@@ -3,7 +3,6 @@
 #include "LoadManager.h"
 #include "Transform.h"
 #include "EngineData.h"
-#include "BaseManager.h"
 #include "ObjectManager.h"
 
 SkinningFilter::SkinningFilter()

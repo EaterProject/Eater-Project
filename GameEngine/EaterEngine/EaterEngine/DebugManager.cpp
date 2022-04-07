@@ -1,6 +1,7 @@
 #include "SimpleMath.h"
 #include "EngineData.h"
 #include "DebugManager.h"
+#include "GlobalDataManager.h"
 
 DebugManager::DebugManager()
 {
@@ -20,7 +21,7 @@ void DebugManager::DebugDrawLine(DirectX::SimpleMath::Vector3 start, DirectX::Si
 	debugData.RayEnd = end;
 	debugData.Color = color;
 
-	Global->Debug_Data.push(debugData);
+	GlobalDataManager::g_GlobalData->Debug_Data.push(debugData);
 }
 
 void DebugManager::DebugDrawLine(DirectX::SimpleMath::Vector3 start, DirectX::SimpleMath::Vector3 dir, float distance, DirectX::SimpleMath::Vector3 color)
@@ -31,7 +32,7 @@ void DebugManager::DebugDrawLine(DirectX::SimpleMath::Vector3 start, DirectX::Si
 	debugData.RayEnd = start + (dir * distance);
 	debugData.Color = color;
 
-	Global->Debug_Data.push(debugData);
+	GlobalDataManager::g_GlobalData->Debug_Data.push(debugData);
 }
 
 void DebugManager::DebugDrawCircle(float scale, DirectX::SimpleMath::Vector3 pos, DirectX::SimpleMath::Vector3 rot, DirectX::SimpleMath::Vector3 color)
@@ -45,7 +46,7 @@ void DebugManager::DebugDrawCircle(float scale, DirectX::SimpleMath::Vector3 pos
 	debugData.World = Matrix::CreateScale(scale) * Matrix::CreateFromYawPitchRoll(yaw, pitch, roll) * Matrix::CreateTranslation(pos);
 	debugData.Color = color;
 
-	Global->Debug_Data.push(debugData);
+	GlobalDataManager::g_GlobalData->Debug_Data.push(debugData);
 }
 
 void DebugManager::DebugDrawCircle(float scale, DirectX::SimpleMath::Vector3 pos, DirectX::SimpleMath::Quaternion rot, DirectX::SimpleMath::Vector3 color)
@@ -55,7 +56,7 @@ void DebugManager::DebugDrawCircle(float scale, DirectX::SimpleMath::Vector3 pos
 	debugData.World = Matrix::CreateScale(scale) * Matrix::CreateFromQuaternion(rot) * Matrix::CreateTranslation(pos);
 	debugData.Color = color;
 
-	Global->Debug_Data.push(debugData);
+	GlobalDataManager::g_GlobalData->Debug_Data.push(debugData);
 }
 
 void DebugManager::DebugDrawBox(DirectX::SimpleMath::Vector3 scale, DirectX::SimpleMath::Vector3 rot, DirectX::SimpleMath::Vector3 pos, DirectX::SimpleMath::Vector3 color)
@@ -69,7 +70,7 @@ void DebugManager::DebugDrawBox(DirectX::SimpleMath::Vector3 scale, DirectX::Sim
 	debugData.World = Matrix::CreateScale(scale) * Matrix::CreateFromYawPitchRoll(yaw, pitch, roll) * Matrix::CreateTranslation(pos);
 	debugData.Color = color;
 
-	Global->Debug_Data.push(debugData);
+	GlobalDataManager::g_GlobalData->Debug_Data.push(debugData);
 }
 
 void DebugManager::DebugDrawBox(DirectX::SimpleMath::Vector3 scale, DirectX::SimpleMath::Quaternion rot, DirectX::SimpleMath::Vector3 pos, DirectX::SimpleMath::Vector3 color)
@@ -79,7 +80,7 @@ void DebugManager::DebugDrawBox(DirectX::SimpleMath::Vector3 scale, DirectX::Sim
 	debugData.World = Matrix::CreateScale(scale) * Matrix::CreateFromQuaternion(rot) * Matrix::CreateTranslation(pos);
 	debugData.Color = color;
 
-	Global->Debug_Data.push(debugData);
+	GlobalDataManager::g_GlobalData->Debug_Data.push(debugData);
 }
 
 void DebugManager::DebugDrawSphere(float scale, DirectX::SimpleMath::Vector3 pos, DirectX::SimpleMath::Vector3 color)
@@ -89,5 +90,5 @@ void DebugManager::DebugDrawSphere(float scale, DirectX::SimpleMath::Vector3 pos
 	debugData.World = Matrix::CreateScale(scale) * Matrix::CreateTranslation(pos);
 	debugData.Color = color;
 
-	Global->Debug_Data.push(debugData);
+	GlobalDataManager::g_GlobalData->Debug_Data.push(debugData);
 }

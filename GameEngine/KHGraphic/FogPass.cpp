@@ -104,7 +104,7 @@ void FogPass::RenderUpdate()
 	CB_Fog fogBuf;
 	fogBuf.gFogColor = FogColor;
 	fogBuf.gFogStartPos = FogStartDepth;
-	fogBuf.gEyePosW = g_GlobalData->Camera_Data->CamPos;
+	fogBuf.gEyePosW = g_GlobalData->MainCamera_Data->CamPos;
 	fogBuf.gTime = Time;
 
 	m_Fog_PS->ConstantBufferUpdate(&fogBuf);

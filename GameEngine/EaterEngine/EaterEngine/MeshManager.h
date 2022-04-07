@@ -2,10 +2,9 @@
 #include <windows.h>
 #include <vector>
 #include <unordered_map>
-#include "BaseManager.h"
 
 class Mesh;
-class MeshManager : public BaseManager
+class MeshManager
 {
 public:
 	MeshManager();

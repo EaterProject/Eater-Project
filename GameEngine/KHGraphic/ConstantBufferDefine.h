@@ -290,6 +290,7 @@ struct CB_HizCull : public cbHizCull
 	DirectX::SimpleMath::Matrix gViewProj;
 
 	DirectX::SimpleMath::Vector4 gFrustumPlanes[6];
+	DirectX::SimpleMath::Vector4 gEyePos;
 	DirectX::SimpleMath::Vector2 gViewportSize;
 
 	DirectX::SimpleMath::Vector2 gPad;

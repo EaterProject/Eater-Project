@@ -6,7 +6,6 @@
 #include "Transform.h"
 #include "EngineData.h"
 #include "Animator.h"
-#include "BaseManager.h"
 #include "ObjectManager.h"
 #include "Material.h"
 #include "Mesh.h"

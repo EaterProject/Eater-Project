@@ -192,6 +192,7 @@ copy/Y "$(ProjectDir)Export\*.h"   "$(SolutionDir)Library\inc\Graphic"</Command>
     <ClInclude Include="BlendStateDefine.h" />
     <ClInclude Include="BloomPass.h" />
     <ClInclude Include="ConvertData.h" />
+    <ClInclude Include="CullingData.h" />
     <ClInclude Include="CullingPass.h" />
     <ClInclude Include="DrawBuffer.h" />
     <ClInclude Include="DrawBufferDefine.h" />

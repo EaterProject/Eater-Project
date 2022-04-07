@@ -7,6 +7,7 @@
 #include "MainHeader.h"
 #include "MainHeader.h"
 #include "DebugManager.h"
+#include "GlobalDataManager.h"
 #include "Profiler/Profiler.h"
 
 using namespace DirectX;
@@ -17,7 +18,6 @@ Camera::Camera()
 {
 	mCameraData = new CameraData();
 	PushCamList();
-	isMain = false;
 }
 
 Camera::~Camera()
@@ -28,6 +28,18 @@ Camera::~Camera()
 	}
 
 	CamList[MyIndex] = nullptr;
+
+	// Global Camera Data 제거..
+	GlobalData* globalData = GlobalDataManager::g_GlobalData;
+
+	for (int i = 0; i < globalData->CameraList.size(); i++)
+	{
+		if (globalData->CameraList[i] == mCameraData)
+		{
+			globalData->CameraList.erase(std::next(globalData->CameraList.begin(), i));
+			break;
+		}
+	}
 
 	delete mCameraData;
 }
@@ -98,7 +110,12 @@ void Camera::ChoiceMainCam()
 	//이전 메인카메라의 태그를 그냥 카메라로 변경
 	g_MainCam->gameobject->SetTag("Camera");
 	g_MainCam = nullptr;
+
+	// Main Camera 지정..
 	g_MainCam = this;
+
+	// Main Camera Data 변경..
+	GlobalDataManager::g_GlobalData->MainCamera_Data = g_MainCam->mCameraData;
 
 	//바뀐 카메라의 태그를 메인카메라로 변경
 	g_MainCam->gameobject->SetTag("MainCamera");
@@ -195,6 +212,9 @@ void Camera::PushCamList()
 	if (g_MainCam == nullptr)
 	{
 		g_MainCam = this;
+
+		// Main Camera Data 변경..
+		GlobalDataManager::g_GlobalData->MainCamera_Data = g_MainCam->mCameraData;
 	}
 
 	//카메라 리스트로 넣느다
@@ -211,8 +231,12 @@ void Camera::PushCamList()
 
 	//여기로 왔다는것은 리스트가 꽉찼다는 것
 	CamList.push_back(this);
+
 	//자기의 인덱스 저장
 	MyIndex = count;
+
+	// Global Camera List 연동..
+	GlobalDataManager::g_GlobalData->CameraList.push_back(this->mCameraData);
 }
 
 

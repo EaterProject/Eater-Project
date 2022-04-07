@@ -1,4 +1,6 @@
 #pragma once
+#include "CullingData.h"
+
 class CullingPass : public RenderPassBase
 {
 public:
@@ -14,17 +16,29 @@ public:
 
 public:
 	void RenderOccluders();
-	void OcclusionCullingQuery(const std::vector<RenderData*>& renderList);
+	void OcclusionCullingQuery();
+	void DrawStateUpdate();
 
-	bool FrustumCulling(const RenderData* meshData);
+	void FrustumCulling();
+
+public:
+	void PushCullingMesh(RenderData* meshData);
+	void DeleteCullingMesh(RenderData* meshData);
+	void CullingBufferCreate();
 
 private:
 	void MipMapResourceRelease();
 	void MipMapResourceCreate(int width, int height);
 	void MipMapCommandListReserve(int width, int height, const D3D11_TEXTURE2D_DESC* hizDesc);
-	void CullingBufferCreate();
 
 private:
+	std::vector<RenderData*> CullingRenderMeshList;
+
+	Cull::Frustum m_Frustum;
+	RenderData* m_RenderData;
+	BoundingSphere m_Sphere;
+	Vector4 m_ColliderData;
+
 	VertexShader* m_Screen_VS;
 	PixelShader* m_HizMipMap_PS;
 
@@ -35,10 +49,9 @@ private:
 
 	DrawBuffer* m_Screen_DB;
 
-	ID3D11DepthStencilState* m_DefaltDSS;
-	ID3D11RasterizerState* m_SolidRS;
+	ID3D11RasterizerState* m_NoCull_RS;
 
-	D3D11_VIEWPORT* m_ScreenVP;
+	D3D11_VIEWPORT* m_Screen_VP;
 
 
 
@@ -63,7 +76,7 @@ private:
 
 	ID3D11DepthStencilView* m_HizDepth_DSV;
 
-	UINT m_RenderCount = 500;
+	UINT m_RenderCount = 1160;
 
 	float m_Width;
 	float m_Height;

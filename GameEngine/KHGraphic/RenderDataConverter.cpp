@@ -457,11 +457,6 @@ void RenderDataConverter::RegisterInstance(RenderData* renderData, MeshRenderBuf
 			// 해당 Instance Index 삽입..
 			renderData->m_InstanceIndex = instanceBuffer->m_BufferIndex;
 			renderData->m_InstanceLayerIndex = instanceBuffer->m_BufferIndex;
-
-			// 해당 Instance Layer에 Render Data 삽입..
-			instanceLayer = GetLayer(instanceBuffer->m_BufferIndex);
-			instanceLayer->PushRenderData(renderData);
-
 			return;
 		}
 	}
@@ -483,7 +478,7 @@ void RenderDataConverter::RegisterInstance(RenderData* renderData, MeshRenderBuf
 	// 만약 Index List에 빈곳이 없다면 다음 Index 추가..
 	if (instance_Index == 0)
 	{
-		instance_Index = m_InstanceIndexList.size();
+		instance_Index = (UINT)m_InstanceIndexList.size();
 		m_InstanceIndexList.push_back(std::pair<UINT, bool>(instance_Index, true));
 	}
 
@@ -503,7 +498,6 @@ void RenderDataConverter::RegisterInstance(RenderData* renderData, MeshRenderBuf
 	instanceLayer = new InstanceLayer();
 	instanceLayer->m_LayerIndex = instance_Index;
 	instanceLayer->m_Instance = instanceBuffer;
-	instanceLayer->PushRenderData(renderData);
 
 	// Instance Layer 추가..
 	m_InstanceLayerList.insert(std::make_pair(instance_Index, instanceLayer));

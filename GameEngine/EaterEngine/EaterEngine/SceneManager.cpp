@@ -1,4 +1,3 @@
-#include "BaseManager.h"
 #include "SceneManager.h"
 #include "ObjectManager.h"
 #include "Scene.h"

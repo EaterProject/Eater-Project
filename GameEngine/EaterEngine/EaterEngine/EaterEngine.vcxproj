@@ -235,7 +235,7 @@ copy /Y "$(ProjectDir)Network\lib\Release\*lib"  "$(TargetDir)"</Command>
     <ClInclude Include="..\..\Library\inc\EngineData.h" />
     <ClInclude Include="..\..\Library\inc\LightHelper.h" />
     <ClInclude Include="..\..\Library\inc\TypeOptionHeader.h" />
-    <ClInclude Include="BaseManager.h" />
+    <ClInclude Include="GlobalDataManager.h" />
     <ClInclude Include="ComponentHeader.h" />
     <ClInclude Include="DebugManager.h" />
     <ClInclude Include="Delegate.h" />
@@ -290,8 +290,8 @@ copy /Y "$(ProjectDir)Network\lib\Release\*lib"  "$(TargetDir)"</Command>
   <ItemGroup>
     <ClCompile Include="AnimationController.cpp" />
     <ClCompile Include="Animator.cpp" />
-    <ClCompile Include="BaseManager.cpp" />
     <ClCompile Include="CameraDebugKeyInput.cpp" />
+    <ClCompile Include="GlobalDataManager.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Component.cpp" />
