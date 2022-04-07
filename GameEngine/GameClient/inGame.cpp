@@ -9,7 +9,8 @@ void InGame::Awake()
 	//Tool에서 만들어놓은 씬을 로드
 	Load("../Assets/Scene/inGame.Scene");
 	//로직매니저 초기화
-	
+	AddOccluder("Dome_Occluder_0");
+
 	Logic->Initialize();
 }
 

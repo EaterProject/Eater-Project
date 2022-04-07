@@ -391,8 +391,8 @@ $LocalTM 4 4
 #SKIN
 @ParentName RootNode
 @NodeName monsterA_lp
-@MeshName monsterA+_0
-@MaterialName monsterA+_body.001
+@MeshName MonsterA+_0
+@MaterialName MonsterA+_body.001
 @TopNode YES
 $WorldTM 4 4
 1.000000 0.000000 0.000000 0.000000
