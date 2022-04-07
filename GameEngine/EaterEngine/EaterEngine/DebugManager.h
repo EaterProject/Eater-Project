@@ -1,9 +1,8 @@
 #pragma once
-#include "BaseManager.h"
 #include <windows.h>
 #include <string>
 
-class DebugManager : public BaseManager
+class DebugManager
 {
 public:
 	DebugManager();

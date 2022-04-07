@@ -194,12 +194,12 @@ void Debugger::Log(PROFILE_OUTPUT& outputType, HRESULT result, const char* fileI
 
 		WriteFile(g_Console, output.c_str(), (DWORD)(output.size()), NULL, NULL);
 
-		m_LogCount++;
-		if (m_LogCount > 30)
-		{
-			system("cls");
-			m_LogCount = 0;
-		}
+		//m_LogCount++;
+		//if (m_LogCount > 30)
+		//{
+		//	system("cls");
+		//	m_LogCount = 0;
+		//}
 	}
 	break;
 	case PROFILE_OUTPUT::VS_CODE:

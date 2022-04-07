@@ -1,7 +1,6 @@
 #include "GameEngine.h"
 
 //매니저들
-#include "BaseManager.h"
 #include "KeyinputManager.h"
 #include "LoadManager.h"
 #include "ObjectManager.h"
@@ -12,6 +11,7 @@
 #include "LightManager.h"
 #include "PhysManager.h"
 #include "NetworkManager.h"
+#include "GlobalDataManager.h"
 
 #include "ParserData.h"
 #include "EngineData.h"
@@ -88,7 +88,7 @@ void GameEngine::Initialize(HWND Hwnd, bool mConsoleDebug)
 	mNetworkManager		= new NetworkManager();
 
 	//매니저들 초기화
-	BaseManager::Initialize();
+	GlobalDataManager::Initialize();
 	mGraphicManager->Initialize(Hwnd, WinSizeWidth, WinSizeHeight);
 	mKeyManager->Initialize(mHwnd);
 	mObjectManager->Initialize();
@@ -132,7 +132,7 @@ void GameEngine::Update()
 	mObjectManager->PlayUpdate();
 
 	// 모든 업데이트가 일어난 후 데이터 세팅..
-	BaseManager::UpdateGlobalData(mTimeManager->DeltaTime());
+	GlobalDataManager::Update(mTimeManager->DeltaTime());
 
 	//컨퍼넌트 업데이트 끝
 
@@ -156,7 +156,7 @@ void GameEngine::Finish()
 
 	mSceneManager->Delete();
 
-	BaseManager::Reset();
+	GlobalDataManager::Release();
 }
 
 void GameEngine::OnResize(int Change_Width, int Change_Height)
@@ -243,6 +243,8 @@ GameObject* GameEngine::InstanceCamera(std::string ObjName)
 	Obj->transform = Obj->AddComponent<Transform>();
 	Obj->AddComponent<Camera>();
 	Obj->Name = ObjName;
+	Obj->transform->Position.z = -40.0f;
+	Obj->transform->Position.y = 5.0f;
 	return Obj;
 }
 

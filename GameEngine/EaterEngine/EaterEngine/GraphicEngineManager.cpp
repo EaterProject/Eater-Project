@@ -1,10 +1,10 @@
 #include "SimpleMath.h"
-#include "BaseManager.h"
 #include "GraphicEngineManager.h"
 #include "GraphicsEngine.h"
 #include "EngineData.h"
 #include "ParserData.h"
 #include "ObjectManager.h"
+#include "GlobalDataManager.h"
 
 GraphicEngineManager::GraphicEngineManager()
 {
@@ -25,7 +25,7 @@ void GraphicEngineManager::Initialize(HWND Hwnd, int WinSizeWidth, int WinSizeHe
 	GEngine->Initialize(Hwnd, WinSizeWidth, WinSizeHeight);
 
 	// Graphic Engine RenderSetting..
-	GEngine->SetGlobalData(Global);
+	GEngine->SetGlobalData(GlobalDataManager::g_GlobalData);
 }
 
 void GraphicEngineManager::OnReSize(int Change_Width, int Change_Height)
@@ -86,7 +86,7 @@ void* GraphicEngineManager::PickingRender(int x, int y)
 
 void GraphicEngineManager::AddOccluder(MeshBuffer* occluder)
 {
-	Global->OccluderList.push_back(occluder);
+	GlobalDataManager::g_GlobalData->OccluderList.push_back(occluder);
 }
 
 void GraphicEngineManager::LoadEnvironment(std::string mPath)

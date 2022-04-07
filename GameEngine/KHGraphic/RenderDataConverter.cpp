@@ -478,7 +478,7 @@ void RenderDataConverter::RegisterInstance(RenderData* renderData, MeshRenderBuf
 	// 만약 Index List에 빈곳이 없다면 다음 Index 추가..
 	if (instance_Index == 0)
 	{
-		instance_Index = m_InstanceIndexList.size();
+		instance_Index = (UINT)m_InstanceIndexList.size();
 		m_InstanceIndexList.push_back(std::pair<UINT, bool>(instance_Index, true));
 	}
 

@@ -198,15 +198,17 @@ void DeferredPass::BeginRender()
 	g_Context->RSSetState(m_SolidRS);
 }
 
-void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::vector<RenderData*>& meshlist, const UINT& renderCount)
+void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::vector<RenderData*>& meshlist)
 {
-	if (renderCount == 1)
+	int RenderCount = (int)meshlist.size();
+
+	if (RenderCount == 1)
 	{
 		RenderUpdate(instance, meshlist[0]);
 		return;
 	}
 
-	CameraData* cam = g_GlobalData->Camera_Data;
+	CameraData* cam = g_GlobalData->MainCamera_Data;
 	MeshRenderBuffer* mesh = instance->m_Mesh;
 	MaterialRenderBuffer* mat = instance->m_Material;
 	MaterialSubData* matSub = mat->m_MaterialSubData;
@@ -214,7 +216,7 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const std:
 	Matrix& view = cam->CamView;
 	Matrix& proj = cam->CamProj;
 	
-	for (int i = 0; i < renderCount; i++)
+	for (int i = 0; i < RenderCount; i++)
 	{
 		if (meshlist[i]->m_Draw == false) continue;
 
@@ -305,7 +307,7 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const std:
 	case OBJECT_TYPE::SKINNING:
 	{
 		/// 임시 코드
-		for (int i = 0; i < renderCount; i++)
+		for (int i = 0; i < RenderCount; i++)
 		{
 			RenderUpdate(instance, meshlist[i]);
 		}
@@ -324,7 +326,7 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rend
 {
 	if (meshData->m_Draw == false) return;
 
-	CameraData* cam = g_GlobalData->Camera_Data;
+	CameraData* cam = g_GlobalData->MainCamera_Data;
 	ObjectData* obj = meshData->m_ObjectData;
 	MeshRenderBuffer* mesh = instance->m_Mesh;
 	MaterialRenderBuffer* mat = instance->m_Material;

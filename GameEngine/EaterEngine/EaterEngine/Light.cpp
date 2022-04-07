@@ -1,6 +1,5 @@
 #include "GameObject.h"
 #include "Transform.h"
-#include "BaseManager.h"
 #include "LightManager.h"
 #include "Light.h"
 #include "EngineData.h"

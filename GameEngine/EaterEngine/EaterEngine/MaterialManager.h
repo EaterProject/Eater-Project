@@ -2,10 +2,9 @@
 #include <windows.h>
 #include <vector>
 #include <unordered_map>
-#include "BaseManager.h"
 
 class Material;
-class MaterialManager : public BaseManager
+class MaterialManager
 {
 public:
 	MaterialManager();

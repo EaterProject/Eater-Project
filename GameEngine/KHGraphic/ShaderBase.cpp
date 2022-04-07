@@ -128,7 +128,7 @@ void ShaderBase::SetConstantBuffer(Hash_Code hash_code, CBUFFER_USAGE usage)
 	ID3D11Buffer* cBuf = nullptr;
 
 	// 해당 Constant Buffer 생성..
-	CD3D11_BUFFER_DESC cBufferDesc(cBuffer->cSize, D3D11_BIND_CONSTANT_BUFFER, cBufferUsage, cBufferFlag);
+	CD3D11_BUFFER_DESC cBufferDesc((UINT)cBuffer->cSize, D3D11_BIND_CONSTANT_BUFFER, cBufferUsage, cBufferFlag);
 
 	HR(g_Device->CreateBuffer(&cBufferDesc, nullptr, &cBuf));
 

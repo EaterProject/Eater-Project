@@ -42,8 +42,8 @@ CullingPass::~CullingPass()
 
 void CullingPass::Create(int width, int height)
 {
-	m_Width = width;
-	m_Height = height;
+	m_Width = (float)width;
+	m_Height = (float)height;
 
 	// Hierachical Z-Map Depth Buffer
 	D3D11_TEXTURE2D_DESC hizDepthDesc;
@@ -111,15 +111,12 @@ void CullingPass::Start(int width, int height)
 
 	// Hierachical Z-Map MipMap Resource 생성..
 	MipMapResourceCreate(width, height);
-
-	/// 임시코드 버퍼 생성
-	CullingBufferCreate();
 }
 
 void CullingPass::OnResize(int width, int height)
 {
-	m_Width = width;
-	m_Height = height;
+	m_Width = (float)width;
+	m_Height = (float)height;
 
 	// DepthStencilView 재설정..
 	m_HizDepth_DSV = g_Resource->GetDepthStencilView<DS_HizDepth>()->Get();
@@ -136,7 +133,7 @@ void CullingPass::Release()
 
 void CullingPass::RenderOccluders()
 {
-	CameraData* cam = g_GlobalData->Camera_Data;
+	CameraData* cam = g_GlobalData->MainCamera_Data;
 
 	Matrix& viewproj = cam->CamViewProj;
 
@@ -185,14 +182,13 @@ void CullingPass::RenderOccluders()
 
 void CullingPass::OcclusionCullingQuery()
 {
-	CameraData* cam = g_GlobalData->Camera_Data;
+	if (CullingRenderMeshList.empty()) return;
+
+	CameraData* cam = g_GlobalData->MainCamera_Data;
 
 	Matrix& view = cam->CamView;
 	Matrix& proj = cam->CamProj;
 	Matrix& viewproj = cam->CamViewProj;
-
-	XMVECTOR vPlanes[6];
-	cam->BoundFrustum.GetPlanes(&vPlanes[4], &vPlanes[5], &vPlanes[1], &vPlanes[0], &vPlanes[2], &vPlanes[3]);
 
 	// View Frustum 설정..
 	m_Frustum.FrustumTransform(viewproj);
@@ -253,11 +249,13 @@ void CullingPass::OcclusionCullingQuery()
 
 	m_HizCull_CS->Update();
 
-	g_Context->Dispatch(CullingRenderMeshList.size(), 1, 1);
+	g_Context->Dispatch(m_RenderCount, 1, 1);
 }
 
 void CullingPass::DrawStateUpdate()
 {
+	if (CullingRenderMeshList.empty()) return;
+	
 	// GPU -> CPU Culling Result Data Copy
 	g_Context->CopyResource(m_ResultCopy_Buffer, m_Culling_Buffer);
 
@@ -282,23 +280,22 @@ void CullingPass::DrawStateUpdate()
 	}
 }
 
-bool CullingPass::FrustumCulling(const RenderData* meshData)
+void CullingPass::FrustumCulling()
 {
-	const Matrix& world = *meshData->m_ObjectData->World;
+	BoundingFrustum frustum = g_GlobalData->MainCamera_Data->BoundFrustum;
+	BoundingSphere boundSphere;
 
-	BoundingFrustum frustum = g_GlobalData->Camera_Data->BoundFrustum;
-	BoundingSphere boundSphere = meshData->m_Mesh->m_MeshSubData->BoundSphere;
+	for (int i = 0; i < CullingRenderMeshList.size(); i++)
+	{
+		m_RenderData = CullingRenderMeshList[i];
 
-	boundSphere.Transform(boundSphere, world);
-	
-	if (boundSphere.Intersects(frustum) == false)
-	{
-		return false;
-	}
-	else
-	{
-		// Occlusion Culling..
-		return true;
+		Matrix& world = *m_RenderData->m_ObjectData->World;
+
+		boundSphere = m_RenderData->m_Mesh->m_MeshSubData->BoundSphere;
+
+		boundSphere.Transform(boundSphere, world);
+
+		m_RenderData->m_Draw = boundSphere.Intersects(frustum);
 	}
 }
 
@@ -444,6 +441,7 @@ void CullingPass::MipMapCommandListReserve(int width, int height, const D3D11_TE
 void CullingPass::CullingBufferCreate()
 {
 	/// 일단 해보고 버퍼 재설정은 나중에 고민하자
+	m_RenderCount = (UINT)CullingRenderMeshList.size();
 
 	D3D11_BUFFER_DESC colliderBufferDesc;
 	ZeroMemory(&colliderBufferDesc, sizeof(colliderBufferDesc));

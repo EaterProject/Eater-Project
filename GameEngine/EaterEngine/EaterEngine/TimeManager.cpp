@@ -1,6 +1,8 @@
 #include <windows.h>
 #include <string>
 #include "TimeManager.h"
+
+#define RELEASE_PROFILE
 #include "Profiler/Profiler.h"
 
 TimeManager::TimeManager()

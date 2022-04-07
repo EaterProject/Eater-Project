@@ -19,17 +19,17 @@ public:
 	void OcclusionCullingQuery();
 	void DrawStateUpdate();
 
-	bool FrustumCulling(const RenderData* meshData);
+	void FrustumCulling();
 
 public:
 	void PushCullingMesh(RenderData* meshData);
 	void DeleteCullingMesh(RenderData* meshData);
+	void CullingBufferCreate();
 
 private:
 	void MipMapResourceRelease();
 	void MipMapResourceCreate(int width, int height);
 	void MipMapCommandListReserve(int width, int height, const D3D11_TEXTURE2D_DESC* hizDesc);
-	void CullingBufferCreate();
 
 private:
 	std::vector<RenderData*> CullingRenderMeshList;

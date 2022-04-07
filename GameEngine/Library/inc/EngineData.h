@@ -235,11 +235,12 @@ public:
 
 	Matrix TexSpace;	// Texture Space Matrix
 
-	CameraData* Camera_Data;
+	CameraData* MainCamera_Data;
+	std::vector<CameraData*> CameraList;
 
-	std::vector<DirectionalLightData*>	DirectionLights;
-	std::vector<PointLightData*>		PointLights;
-	std::vector<SpotLightData*>			SpotLights;
+	std::vector<DirectionalLightData*>	DirectionLightList;
+	std::vector<PointLightData*>		PointLightList;
+	std::vector<SpotLightData*>			SpotLightList;
 
 	// Culling Data
 	std::vector<MeshBuffer*> OccluderList;

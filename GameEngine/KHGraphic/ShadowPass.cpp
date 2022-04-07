@@ -45,8 +45,8 @@ void ShadowPass::Create(int width, int height)
 	// DepthStencilView 설정..
 	D3D11_TEXTURE2D_DESC texDesc;
 	ZeroMemory(&texDesc, sizeof(texDesc));
-	texDesc.Width = width * 4.0f;
-	texDesc.Height = height * 4.0f;
+	texDesc.Width = (UINT)width * 4;
+	texDesc.Height = (UINT)height * 4;
 	texDesc.MipLevels = 1;
 	texDesc.ArraySize = 1;
 	texDesc.Format = DXGI_FORMAT_R24G8_TYPELESS;
@@ -124,19 +124,21 @@ void ShadowPass::BeginRender()
 	g_Context->RSSetState(m_DepthRS);
 }
 
-void ShadowPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::vector<RenderData*>& meshlist, const UINT& renderCount)
+void ShadowPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::vector<RenderData*>& meshlist)
 {
-	if (renderCount == 1)
+	int RenderCount = (int)meshlist.size();
+
+	if (RenderCount == 1)
 	{
 		RenderUpdate(instance, meshlist[0]);
 		return;
 	}
 
-	Matrix viewproj = g_GlobalData->DirectionLights[0]->LightViewProj;
+	Matrix viewproj = g_GlobalData->DirectionLightList[0]->LightViewProj;
 
 	MeshRenderBuffer* mesh = instance->m_Mesh;
 
-	for (int i = 0; i < renderCount; i++)
+	for (int i = 0; i < RenderCount; i++)
 	{
 		if (meshlist[i]->m_Draw == false) continue;
 
@@ -191,7 +193,7 @@ void ShadowPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::v
 	case OBJECT_TYPE::SKINNING:
 	{
 		/// 임시 코드
-		for (int i = 0; i < renderCount; i++)
+		for (int i = 0; i < RenderCount; i++)
 		{
 			RenderUpdate(instance, meshlist[i]);
 		}
@@ -238,7 +240,7 @@ void ShadowPass::RenderUpdate(const InstanceRenderBuffer* instance, const Render
 	MeshRenderBuffer* mesh = instance->m_Mesh;
 
 	Matrix& world = *obj->World;
-	Matrix& viewproj = g_GlobalData->DirectionLights[0]->LightViewProj;
+	Matrix& viewproj = g_GlobalData->DirectionLightList[0]->LightViewProj;
 
 	switch (instance->m_Type)
 	{

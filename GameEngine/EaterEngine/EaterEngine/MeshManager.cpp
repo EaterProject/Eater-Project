@@ -53,7 +53,7 @@ void MeshManager::PushMesh(Mesh* mesh)
 	// 만약 Index List에 빈곳이 없다면 다음 Index 추가..
 	if (mesh_Index == 0)
 	{
-		mesh_Index = g_IndexList.size();
+		mesh_Index = (UINT)g_IndexList.size();
 		g_IndexList.push_back(std::pair<UINT, bool>(mesh_Index, true));
 	}
 

@@ -67,9 +67,6 @@
     <Filter Include="소스 파일\Component\SkinningFilter">
       <UniqueIdentifier>{0db28258-c4dd-46c9-b56d-fa34d7f861c0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Manager\BaseManager">
-      <UniqueIdentifier>{7515b128-a908-4f50-9f37-1bebd61f2db9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Manager\LightManager">
       <UniqueIdentifier>{660a8a07-22fd-441b-9e1d-b3385e883764}</UniqueIdentifier>
     </Filter>
@@ -166,6 +163,9 @@
     <Filter Include="소스 파일\Manager\SceneManager">
       <UniqueIdentifier>{a7114667-6fd9-4288-a84a-872390776b42}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Manager\GlobalDataManager">
+      <UniqueIdentifier>{b358fedd-14c8-407e-b4c1-d40ef4a00f9f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -221,9 +221,6 @@
     </ClInclude>
     <ClInclude Include="Export\ResourcesData.h">
       <Filter>소스 파일\Data</Filter>
-    </ClInclude>
-    <ClInclude Include="BaseManager.h">
-      <Filter>소스 파일\Manager\BaseManager</Filter>
     </ClInclude>
     <ClInclude Include="LightManager.h">
       <Filter>소스 파일\Manager\LightManager</Filter>
@@ -330,6 +327,9 @@
     <ClInclude Include="Particle.h">
       <Filter>소스 파일\Component\ParticleSystem\Particle</Filter>
     </ClInclude>
+    <ClInclude Include="GlobalDataManager.h">
+      <Filter>소스 파일\Manager\GlobalDataManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -382,9 +382,6 @@
     </ClCompile>
     <ClCompile Include="SkinningFilter.cpp">
       <Filter>소스 파일\Component\SkinningFilter</Filter>
-    </ClCompile>
-    <ClCompile Include="BaseManager.cpp">
-      <Filter>소스 파일\Manager\BaseManager</Filter>
     </ClCompile>
     <ClCompile Include="LightManager.cpp">
       <Filter>소스 파일\Manager\LightManager</Filter>
@@ -472,6 +469,9 @@
     </ClCompile>
     <ClCompile Include="Eater_LoadCamera.cpp">
       <Filter>소스 파일\Manager\LoadManager\EATER\EaterCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalDataManager.cpp">
+      <Filter>소스 파일\Manager\GlobalDataManager</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

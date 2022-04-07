@@ -38,6 +38,5 @@ public:
 
 	InstanceRenderBuffer* m_Instance;		// Instancing 기준이 되는 Mesh Data..
 
-	std::vector<RenderData*> m_RenderList;	// 현재 프레임 Instancing Layer Render List..
 	std::vector<RenderData*> m_MeshList;	// Instancing 기준에 해당하는 Render Data List..
 };

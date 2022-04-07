@@ -95,38 +95,34 @@ void TestScene::CreateMap()
 	//AC = Object->AddComponent<AnimationController>();
 	//AC->Choice("Move");
 
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("Dome_Occluder");
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("Dome_Occluder");
 
 	//Object = Instance();
 	//filter = Object->AddComponent<MeshFilter>();
 	//filter->SetModelName("Dome");
-
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("Inside_village");
-
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("organic_cactus");
-
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	Tr = Object->GetTransform();
-	filter->SetModelName("Outside_Rock");
-	
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("Outside_bossOBJ");
-	
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("Outside_Other");
-	
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("Outside_Pebble");
+	//
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("organic_cactus");
+	//
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//Tr = Object->GetTransform();
+	//filter->SetModelName("Outside_Rock");
+	//
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("Outside_bossOBJ");
+	//
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("Outside_Other");
+	//
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("Outside_Pebble");
 
 	testobj = InstanceTerrain("Terrain");
 	Terrain* mTerrain = testobj->GetComponent<Terrain>();
@@ -229,23 +225,27 @@ void TestScene::ChangeCubeMap()
 {
 	//if (GetKey(VK_UP))
 	//{
-	//	Object->GetTransform()->Rotation.z += 1;
-	//	Object1->GetTransform()->Position.y += 0.1f;
+	//	subCam->Position.y += 0.1f;
 	//}
 	//if (GetKey(VK_DOWN))
 	//{
-	//	Object->GetTransform()->Rotation.z -= 1;
-	//	Object1->GetTransform()->Position.y -= 0.1f;
+	//	subCam->Position.y -= 0.1f;
 	//}
 	//if (GetKey(VK_LEFT))
 	//{
-	//	Object->GetTransform()->Rotation.x -= 1;
-	//	Object1->GetTransform()->Position.x -= 0.1f;
+	//	subCam->Position.x -= 0.1f;
 	//}
 	//if (GetKey(VK_RIGHT))
 	//{
-	//	Object->GetTransform()->Rotation.x += 1;
-	//	Object1->GetTransform()->Position.x += 0.1f;
+	//	subCam->Position.x += 0.1f;
+	//}
+	//if (GetKey(VK_PRIOR))
+	//{
+	//	subCam->Position.z += 0.1f;
+	//}
+	//if (GetKey(VK_NEXT))
+	//{
+	//	subCam->Position.z -= 0.1f;
 	//}
 
 	if (GetKeyUp('1'))

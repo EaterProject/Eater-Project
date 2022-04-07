@@ -6,7 +6,6 @@
 
 #include "Material.h"
 #include "GameObject.h"
-#include "BaseManager.h"
 #include "TimeManager.h"
 #include "LoadManager.h"
 #include "MeshFilter.h"

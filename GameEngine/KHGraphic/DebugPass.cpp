@@ -71,6 +71,7 @@ void DebugPass::Start(int width, int height)
 
 	// Debug Buffer..
 	m_RayBuffer = g_Resource->GetDrawBuffer<DB_Line_Ray>();
+	m_FrustumBuffer = g_Resource->GetDrawBuffer<DB_Line_Frustum>();
 	m_QuadBuffer = g_Resource->GetDrawBuffer<DB_Line_Quad>();
 	m_AxisBuffer = g_Resource->GetDrawBuffer<DB_Line_Axis>();
 	m_BoxBuffer = g_Resource->GetDrawBuffer<DB_Line_Box>();
@@ -159,7 +160,7 @@ void DebugPass::RenderUpdate(const RenderData* meshData)
 	CB_DebugObject object;
 	CB_DebugOption option;
 
-	const CameraData* cam = g_GlobalData->Camera_Data;
+	const CameraData* cam = g_GlobalData->MainCamera_Data;
 	const MeshRenderBuffer* mesh = meshData->m_Mesh;
 
 	Matrix world = *meshData->m_ObjectData->World;
@@ -183,52 +184,50 @@ void DebugPass::RenderUpdate(const RenderData* meshData)
 	case OBJECT_TYPE::TERRAIN:
 	case OBJECT_TYPE::SKINNING:
 	{
-		m_DrawCount++;
+		//g_Context->RSSetState(m_WireRS);
+		//Matrix sphereWorld = world;
 
-		g_Context->RSSetState(m_WireRS);
-		Matrix sphereWorld = world;
-
-		BoundingSphere sphere;
-		mesh->m_MeshSubData->BoundSphere.Transform(sphere, world);
+		//BoundingSphere sphere;
+		//mesh->m_MeshSubData->BoundSphere.Transform(sphere, world);
 		//BoundingBox box;
 		//mesh->m_MeshSubData->BoundBox.Transform(box, world);
 
-		object.gWorldViewProj = Matrix::CreateScale(sphere.Radius * 2.0f) * Matrix::CreateTranslation(sphere.Center) * viewproj;
+		//object.gWorldViewProj = Matrix::CreateScale(sphere.Radius * 2.0f) * Matrix::CreateTranslation(sphere.Center) * viewproj;
 		//object.gWorldViewProj = Matrix::CreateScale(box.Extents) * Matrix::CreateTranslation(box.Center) * viewproj;
 		
-		m_DebugVS->ConstantBufferUpdate(&object);
-		m_DebugVS->Update();
+		//m_DebugVS->ConstantBufferUpdate(&object);
+		//m_DebugVS->Update();
 
-		option.gColor = Vector3(1.0f, 1.0f, 0.0f);
+		//option.gColor = Vector3(1.0f, 1.0f, 0.0f);
 
-		m_DebugColorPS->ConstantBufferUpdate(&option);
-		m_DebugColorPS->Update();
+		//m_DebugColorPS->ConstantBufferUpdate(&option);
+		//m_DebugColorPS->Update();
 
-		BufferUpdate(DEBUG_TYPE::DEBUG_SPHERE);
+		//BufferUpdate(DEBUG_TYPE::DEBUG_SPHERE);
 		//BufferUpdate(DEBUG_TYPE::DEBUG_BOX);
-		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+		//g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
 
-		g_Context->RSSetState(m_SolidRS);
+		//g_Context->RSSetState(m_SolidRS);
 
-		DebugData ray;
-		ray.RayStart = sphere.Center;
-		ray.RayEnd = sphere.Center + Vector3(0.0f, sphere.Radius, 0.0f);
-		
-		option.gColor = Vector3(0.0f, 1.0f, 0.0f);
-		
-		object.gWorldViewProj = viewproj;
-		
-		m_DebugVS->ConstantBufferUpdate(&object);
-		m_DebugVS->Update();
-		
-		m_DebugColorPS->ConstantBufferUpdate(&option);
-		m_DebugColorPS->Update();
-		
-		// Ray Buffer Update
-		SetRay(ray.RayStart, ray.RayEnd);
-		
-		BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
-		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+		//DebugData ray;
+		//ray.RayStart = sphere.Center;
+		//ray.RayEnd = sphere.Center + Vector3(0.0f, sphere.Radius, 0.0f);
+		//
+		//option.gColor = Vector3(0.0f, 1.0f, 0.0f);
+		//
+		//object.gWorldViewProj = viewproj;
+		//
+		//m_DebugVS->ConstantBufferUpdate(&object);
+		//m_DebugVS->Update();
+		//
+		//m_DebugColorPS->ConstantBufferUpdate(&option);
+		//m_DebugColorPS->Update();
+		//
+		//// Ray Buffer Update
+		//SetRay(ray.RayStart, ray.RayEnd);
+		//
+		//BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
+		//g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
 	}
 		break;
 	case OBJECT_TYPE::BONE:
@@ -321,14 +320,15 @@ void DebugPass::GlobalRender()
 	Vector3 axis, look, right, up, pos;
 	DebugData ray;
 
-	const CameraData* cam = g_GlobalData->Camera_Data;
+	const CameraData* cam = g_GlobalData->MainCamera_Data;
 
 	const Matrix& invView = cam->CamInvView;
 	const Matrix& viewproj = cam->CamViewProj;
 
-	std::vector<DirectionalLightData*>* directionList = &g_GlobalData->DirectionLights;
-	std::vector<PointLightData*>* pointList = &g_GlobalData->PointLights;
-	std::vector<SpotLightData*>* spotList = &g_GlobalData->SpotLights;
+	std::vector<CameraData*>* cameraList = &g_GlobalData->CameraList;
+	std::vector<DirectionalLightData*>* directionList = &g_GlobalData->DirectionLightList;
+	std::vector<PointLightData*>* pointList = &g_GlobalData->PointLightList;
+	std::vector<SpotLightData*>* spotList = &g_GlobalData->SpotLightList;
 
 	// Global Axis..
 	object.gWorldViewProj = Matrix::CreateScale(1000.0f) * Matrix::CreateTranslation(0.0f, 0.1f, 0.0f) * viewproj;
@@ -352,6 +352,75 @@ void DebugPass::GlobalRender()
 
 	// Global Data..
 	g_Context->RSSetState(m_NoCullRS);
+
+	for (CameraData* cam : *cameraList)
+	{
+		if (cam == g_GlobalData->MainCamera_Data) continue;
+
+		Vector3 CamPos = cam->CamPos;
+		Matrix CamView = cam->CamView;
+		float RayLength = 100.0f;
+
+		// Icon Draw
+		option.gColor = Vector3(1.0f, 1.0f, 1.0f);
+
+		Matrix cameraWorld = Matrix::CreateRotationY(PI) * invView;
+		cameraWorld._41 = CamPos.x;
+		cameraWorld._42 = CamPos.y;
+		cameraWorld._43 = CamPos.z;
+
+		object.gWorldViewProj = Matrix::CreateScale(2.0f) * cameraWorld * viewproj;
+
+		m_DebugIconVS->ConstantBufferUpdate(&object);
+		m_DebugIconVS->Update();
+
+		m_DebugIconPS->ConstantBufferUpdate(&option);
+
+		m_DebugIconPS->SetShaderResourceView<gDiffuseMap>(m_CamerIcon);
+		m_DebugIconPS->Update();
+
+		BufferUpdate(DEBUG_TYPE::DEBUG_TEXTURE);
+		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+
+		// Draw Look Vector Ray..
+		ray.RayStart = CamPos;
+		ray.RayEnd = ray.RayStart + Vector3(CamView._13, CamView._23, CamView._33) * RayLength;
+
+		object.gWorldViewProj = viewproj;
+		option.gColor = Vector3(1.0f, 0.0f, 0.0f);
+
+		m_DebugVS->ConstantBufferUpdate(&object);
+		m_DebugVS->Update();
+
+		m_DebugColorPS->ConstantBufferUpdate(&option);
+		m_DebugColorPS->Update();
+
+		// Ray Buffer Update
+		SetRay(ray.RayStart, ray.RayEnd);
+
+		BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
+		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+
+
+		/// View Frustum ¼³Á¤..
+		//Vector3 corner[8];
+		//BoundingFrustum frustum = cam->OriginFrustum;
+		//frustum.GetCorners(corner);
+		//
+		//SetFrustum(corner);
+		//
+		//object.gWorldViewProj = Matrix::CreateTranslation(CamPos) * viewproj;
+		//option.gColor = Vector3(0.0f, 1.0f, 0.0f);
+		//
+		//m_DebugVS->ConstantBufferUpdate(&object);
+		//m_DebugVS->Update();
+		//
+		//m_DebugColorPS->ConstantBufferUpdate(&option);
+		//m_DebugColorPS->Update();
+		//
+		//BufferUpdate(DEBUG_TYPE::DEBUG_FRUSTUM);
+		//g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+	}
 
 	for (DirectionalLightData* light : *directionList)
 	{
@@ -829,8 +898,6 @@ void DebugPass::MRTRender()
 
 void DebugPass::BufferUpdate(DEBUG_TYPE type)
 {
-	CB_DebugOption option;
-
 	switch (type)
 	{
 	case DEBUG_AXIS:
@@ -861,6 +928,10 @@ void DebugPass::BufferUpdate(DEBUG_TYPE type)
 		m_DebugBuffer = m_RayBuffer;
 		g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
 		break;
+	case DEBUG_FRUSTUM:
+		m_DebugBuffer = m_FrustumBuffer;
+		g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
+		break;
 	case DEBUG_SPHERE:
 		m_DebugBuffer = m_SphereBuffer;
 		g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -875,11 +946,6 @@ void DebugPass::BufferUpdate(DEBUG_TYPE type)
 
 	g_Context->IASetVertexBuffers(0, 1, m_DebugBuffer->VertexBuf->GetAddress(), &m_DebugBuffer->Stride, &m_DebugBuffer->Offset);
 	g_Context->IASetIndexBuffer(m_DebugBuffer->IndexBuf->Get(), DXGI_FORMAT_R32_UINT, 0);
-}
-
-void DebugPass::CountReset()
-{
-	m_DrawCount = 0;
 }
 
 void DebugPass::SetRay(const Vector3& start, const Vector3& end)
@@ -903,6 +969,34 @@ void DebugPass::SetRay(const Vector3& start, const Vector3& end)
 	// GPU Access UnLock Buffer Data..
 	g_Context->Unmap(buffer, 0);
 
+}
+
+void DebugPass::SetFrustum(const Vector3* corner)
+{
+	static VertexInput::PosColorVertex vertices[8];
+	vertices[0].Pos = corner[0];
+	vertices[1].Pos = corner[1];
+	vertices[2].Pos = corner[2];
+	vertices[3].Pos = corner[3];
+	vertices[4].Pos = corner[4];
+	vertices[5].Pos = corner[5];
+	vertices[6].Pos = corner[6];
+	vertices[7].Pos = corner[7];
+
+	ID3D11Buffer* buffer = m_FrustumBuffer->VertexBuf->Get();
+
+	// Mapping SubResource Data..
+	D3D11_MAPPED_SUBRESOURCE mappedResource;
+	ZeroMemory(&mappedResource, sizeof(D3D11_MAPPED_SUBRESOURCE));
+
+	// GPU Access Lock Buffer Data..
+	g_Context->Map(buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
+
+	// Copy Resource Data..
+	memcpy(mappedResource.pData, vertices, sizeof(vertices));
+
+	// GPU Access UnLock Buffer Data..
+	g_Context->Unmap(buffer, 0);
 }
 
 Matrix DebugPass::LookAt_Matrix(Vector3 pos, Vector3 look)

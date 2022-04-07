@@ -56,14 +56,14 @@ private:
 
 	//카메라 리스트에서 나의 인덱스
 	int MyIndex;
-	bool isMain;
+
 	//카메라리스트에 나자신을 밀어넣는다
 	void PushCamList();
 	//카메라 리스트
-	static std::vector<Camera*> CamList;
 
 	CameraData* mCameraData;
 public:
+	static std::vector<Camera*> CamList;
 	//메인카메라
 	static Camera* g_MainCam;
 };
