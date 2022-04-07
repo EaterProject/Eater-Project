@@ -128,11 +128,11 @@ void ClientObjectManager::CreateObjectMemorySize()
 	///공격드론 미리 할당
 	for (int i = 0; i < CreateAttackDroneCount; i++)
 	{
-		AttackDrone_List.push_back(mFactory->CreateAttackDrone(2, 1, 0));
+		AttackDrone_List.push_back(mFactory->CreateAttackDrone(0 + i, 1, 0));
 	}
 	
 	///Bullet 미리 할당
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < CreateBulletCount; i++)
 	{
 		Bullet_List.push_back(mFactory->CreateBullet(0, 4, 0));
 	}

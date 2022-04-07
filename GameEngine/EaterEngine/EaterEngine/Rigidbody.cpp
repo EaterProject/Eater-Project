@@ -180,14 +180,15 @@ Vector3 Rigidbody::GetVelocity()
 
  GameObject* Rigidbody::GetTriggerObject()
  {
-	 if (RigidbodyData->TriggerList[0] != nullptr)
-	 {
-		 return reinterpret_cast<GameObject*>(RigidbodyData->EaterObj);
-	 }
-	 else
-	 {
-		 return nullptr;
-	 }
+	 //if (RigidbodyData->TriggerList[0] != nullptr)
+	 //{
+	//	 return reinterpret_cast<GameObject*>(RigidbodyData->EaterObj);
+	 //}
+	 //else
+	 //{
+	//	 return nullptr;
+	 //}
+	 return nullptr;
  }
 
 

@@ -91,20 +91,23 @@ Vector3 PhysData::GetVelocity()
 bool PhysData::GetTriggerEnter()
 {
 	bool On = OnTriggerEnter;
-	if (OnTriggerEnter == true)
+	if (On == true)
 	{
-		OnTriggerEnter = false;
+		OnTriggerEnter	= false;
+		OnTriggerStay	= true;
 	}
 	return On;
 }
 
 bool PhysData::GetTriggerStay()
 {
-	if (TriggerCount != 0)
+	bool on = OnTriggerExit;
+	if (on == true)
 	{
-		return true;
+		OnTriggerExit = false;
+		OnTriggerStay = false;
 	}
-	return false;
+	return on;
 }
 
 bool PhysData::GetTriggerExit()
@@ -140,6 +143,43 @@ Vector3 PhysData::GetLockAxis_Rotation()
 {
 	return Vector3(FreezeRotaticon.x, FreezeRotaticon.y, FreezeRotaticon.z);
 }
+
+void PhysData::PushTriggerEnter_Data(PhysData* Data)
+{
+	//현재 충돌된 오브젝트가 들어온다
+	OnTriggerEnter = true;
+	Enter_Count++;
+	//충돌된 리스트에서 빈자리를 찾는다
+	for (int i = 0; i < 10; i++)
+	{
+		if (TriggerEnter_List[i] == nullptr)
+		{
+			TriggerEnter_List[i] = Data;
+			TriggerCount++;
+			break;
+		}
+	}
+
+	OnTriggerStay = true;
+}
+
+void PhysData::PushTriggerExit_Data(PhysData* Data)
+{
+	OnTriggerStay = false;
+	OnTriggerExit = true;
+	Exit_Count++;
+	for (int i = 0; i < 10; i++)
+	{
+		if (TriggerExit_List[i] == nullptr)
+		{
+			TriggerExit_List[i] = Data;
+			TriggerCount--;
+			break;
+		}
+	}
+}
+
+
 
 
 PhysRayCast::PhysRayCast()

@@ -26,7 +26,7 @@ private:
 private:
 	int MonsterTag;
 	float AttackTime = 0;
-	const float AttackMaxTime	= 1.0f;
+	const float AttackMaxTime	= 0.5f;
 	const float AttackRange		= 10.0f;
 };
 

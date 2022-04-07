@@ -59,23 +59,9 @@ void Collider::PhysicsUpdate()
 	
 	DebugCollider();
 	//충돌 함수 호출
-	if (mPhysData->TriggerCount != 0)
-	{
-		if (mPhysData->GetTriggerEnter())
-		{
-			FindPhysFunction(mPhysData, PHYS_TRIIGER_ENTER);
-		}
-
-		if (mPhysData->GetTriggerStay())
-		{
-			FindPhysFunction(mPhysData, PHYS_TRIIGER_STAY);
-		}
-
-		if (mPhysData->GetTriggerExit())
-		{
-			FindPhysFunctionExit(mPhysData, PHYS_TRIIGER_EXIT);
-		}
-	}
+	FindPhysFunctionEnter(mPhysData, PHYS_TRIIGER_ENTER);
+	FindPhysFunctionStay(mPhysData, PHYS_TRIIGER_STAY);
+	FindPhysFunctionExit(mPhysData, PHYS_TRIIGER_EXIT);
 }
 
 
@@ -190,35 +176,92 @@ void Collider::DebugCollider()
 	}
 }
 
-void Collider::FindPhysFunction(PhysData* Data, unsigned int Type)
+void Collider::FindPhysFunctionEnter(PhysData* Data, unsigned int Type)
 {
-	int MaxCount = mPhysData->TriggerCount;
+	int MaxCount = mPhysData->Enter_Count;
 	int NowCount = MaxCount;
+	if (MaxCount <= 0) { return; }
+
+	//충돌된 오브젝트에 대한 함수 실행
+	for (int i = 0; i < 10; i++)
+	{
+		if (Data->TriggerEnter_List[i] == nullptr) { continue; }
+
+		PhysData* TargetData = Data->TriggerEnter_List[i];
+		GameObject* Object = reinterpret_cast<GameObject*>(TargetData->EaterObj);
+		gameobject->PlayPhysFunction(Object, Type);
+		NowCount--;
+		Data->TriggerEnter_List[i] = nullptr;
+		mPhysData->Enter_Count--;
+
+		//Enter 함수를 호출후 Stay로 옮겨준다
+		for (int i = 0; i < 10; i++)
+		{
+			if (Data->TriggerStay_List[i] == nullptr)
+			{
+				Data->TriggerStay_List[i] = TargetData;
+				mPhysData->Stay_Count++;
+				break;
+			}
+		}
+
+		if (NowCount <= 0)
+		{
+			break;
+		}
+	}
+
+	
+}
+
+void Collider::FindPhysFunctionStay(PhysData* Data, unsigned int Type)
+{
+	int MaxCount = mPhysData->Stay_Count;
+	int NowCount = MaxCount;
+
+	if (MaxCount <= 0) { return; }
 
 	for (int i = 0; i < 10; i++)
 	{
-		if (Data->TriggerList[i] == nullptr) { continue; }
-
-		GameObject* Object = reinterpret_cast<GameObject*>(Data->TriggerList[i]->EaterObj);
+		if (Data->TriggerStay_List[i] == nullptr) { continue; }
+		GameObject* Object = reinterpret_cast<GameObject*>(Data->TriggerStay_List[i]->EaterObj);
 		gameobject->PlayPhysFunction(Object, Type);
-		NowCount--;
-		if (NowCount <= 0)
-		{
-			return;
-		}
 	}
 }
 
 void Collider::FindPhysFunctionExit(PhysData* Data, unsigned int Type)
 {
+	int MaxCount = mPhysData->Exit_Count;
+	int NowCount = MaxCount;
+
+	if (MaxCount <= 0) { return; }
+
 	for (int i = 0; i < 10; i++)
 	{
-		if (Data->TriggerExitOBJ[i] == nullptr) { continue; }
+		if (Data->TriggerExit_List[i] == nullptr) { continue; }
 
-		GameObject* Object = reinterpret_cast<GameObject*>(Data->TriggerExitOBJ[i]->EaterObj);
+		PhysData* TargetData = Data->TriggerExit_List[i];
+		GameObject* Object = reinterpret_cast<GameObject*>(TargetData->EaterObj);
 		gameobject->PlayPhysFunction(Object, Type);
-		Data->TriggerExitOBJ[i] = nullptr;
-		break;
+
+		NowCount--;
+		Data->TriggerExit_List[i] = nullptr;
+		mPhysData->Exit_Count--;
+
+		for (int i = 0; i < 10; i++)
+		{
+			if (Data->TriggerStay_List[i] == TargetData)
+			{
+				Data->TriggerStay_List[i] = nullptr;
+				mPhysData->Stay_Count--;
+				break;
+			}
+		}
+
+		if (NowCount <= 0)
+		{
+			break;
+		}
 	}
 }
 
@@ -290,14 +333,15 @@ bool Collider::GetTriggerExit()
 
 GameObject* Collider::GetTriggerObject()
 {
-	if (mPhysData->TriggerList[0] != nullptr)
-	{
-		return reinterpret_cast<GameObject*>(mPhysData->TriggerList[0]->EaterObj);
-	}
-	else 
-	{
-		return nullptr;
-	}
+	//if (mPhysData->TriggerList[0] != nullptr)
+	//{
+	//	return reinterpret_cast<GameObject*>(mPhysData->TriggerList[0]->EaterObj);
+	//}
+	//else 
+	//{
+	//	return nullptr;
+	//}
+	return nullptr;
 }
 
 void Collider::SetCenter(float x, float y, float z)

@@ -30,9 +30,10 @@ private:
 	Vector3 MovePoint;	//이동해야하는 지점
 	Vector3 DirPoint;	//이동지점의 방향벡터
 
-	
 	int BulletTag;
+
 	float HP			= 100;	//현재 체력
+	float Speed			= 2;	//이동 속도
 	float AttackTime	= 0;	//현재 공격 시간
 
 	const float PushPower		= 100;

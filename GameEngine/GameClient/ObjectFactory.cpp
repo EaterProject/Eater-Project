@@ -66,7 +66,7 @@ GameObject* ObjectFactory::CreatePlayer()
 
 Bullet* ObjectFactory::CreateBullet(float x, float y, float z)
 {
-	GameObject* DroneBullet = Instance();
+	GameObject* DroneBullet = Instance("Bullet");
 	MeshFilter* mMeshFilter = DroneBullet->AddComponent<MeshFilter>();
 	Collider*	mCollider	= DroneBullet->AddComponent<Collider>();
 	Bullet*		mBullet		= DroneBullet->AddComponent<Bullet>();
@@ -74,12 +74,13 @@ Bullet* ObjectFactory::CreateBullet(float x, float y, float z)
 	mBullet->isLife = false;
 	DroneBullet->GetTransform()->Position = { x,y,z };
 	DroneBullet->SetTag(FindTagNumber("Bullet"));
+	DroneBullet->Name = "Bullet";
 	return mBullet;
 }
 
 MonsterA* ObjectFactory::CreateMonsterA(float x, float y, float z)
 {
-	GameObject* Object_Monster = Instance();
+	GameObject* Object_Monster = Instance("MonsterA");
 	Object_Monster->AddComponent<MeshFilter>();
 	Object_Monster->AddComponent<AnimationController>();
 	Object_Monster->AddComponent<Collider>();
@@ -94,7 +95,7 @@ MonsterA* ObjectFactory::CreateMonsterA(float x, float y, float z)
 
 MonsterB* ObjectFactory::CreateMonsterB(float x, float y, float z)
 {
-	GameObject* Object_Monster = Instance();
+	GameObject* Object_Monster = Instance("MonsterB");
 	Object_Monster->AddComponent<MeshFilter>();
 	Object_Monster->AddComponent<AnimationController>();
 	Object_Monster->AddComponent<Collider>();
@@ -112,7 +113,7 @@ ManaStone* ObjectFactory::CreateManaStone(float x, float y, float z)
 
 HealingDrone* ObjectFactory::CreateHealingDrone(float x, float y, float z)
 {
-	GameObject* Healing		= Instance();
+	GameObject* Healing		= Instance("HealingDrone");
 	MeshFilter*		MF		= Healing->AddComponent<MeshFilter>();
 	HealingDrone*   Drone	= Healing->AddComponent<HealingDrone>();
 	
@@ -122,7 +123,7 @@ HealingDrone* ObjectFactory::CreateHealingDrone(float x, float y, float z)
 
 AttackDrone* ObjectFactory::CreateAttackDrone(float x, float y, float z)
 {
-	GameObject*		Drone		 = Instance();
+	GameObject*		Drone		 = Instance("AttackDrone");
 	MeshFilter*		mMeshFileter = Drone->AddComponent<MeshFilter>();
 	AttackDrone*	mAttackDrone = Drone->AddComponent<AttackDrone>();
 	Collider*		mCollider	 = Drone->AddComponent<Collider>();

@@ -78,8 +78,6 @@ void MonsterA::OnTriggerStay(GameObject* Obj)
 
 void MonsterA::OnTriggerEnter(GameObject* Obj)
 {
-	DebugPrint("%d", Obj->GetTag());
-	
 	if (Obj->GetTag() == BulletTag)
 	{
 		HP -= 20;
@@ -102,6 +100,7 @@ void MonsterA::SetMovePoint(float x, float y, float z)
 {
 	DirPoint = (gameobject->GetTransform()->Position - Vector3(x, y, z)) * -1;
 	DirPoint.Normalize();
+	DirPoint *= Speed;
 	MovePoint.x = x;
 	MovePoint.y = y;
 	MovePoint.z = z;
