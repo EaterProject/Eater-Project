@@ -140,7 +140,7 @@ void PickingPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rende
 {
 	if (meshData == nullptr) return;
 	
-	const CameraData* cam = g_GlobalData->Camera_Data;
+	const CameraData* cam = g_GlobalData->MainCamera_Data;
 	const ObjectData* obj = meshData->m_ObjectData;
 	const MeshRenderBuffer* mesh = meshData->m_Mesh;
 
@@ -236,7 +236,7 @@ void PickingPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::
 	ObjectData* obj = nullptr;
 	const MeshRenderBuffer* mesh = instance->m_Mesh;
 
-	const Matrix& viewproj = g_GlobalData->Camera_Data->CamViewProj;
+	const Matrix& viewproj = g_GlobalData->MainCamera_Data->CamViewProj;
 
 	for (int i = 0; i < meshlist.size(); i++)
 	{
@@ -313,7 +313,7 @@ void PickingPass::NoneMeshRenderUpdate(const std::vector<RenderData*>& meshlist)
 {
 	ObjectData* obj = nullptr;
 
-	const Matrix& viewproj = g_GlobalData->Camera_Data->CamViewProj;
+	const Matrix& viewproj = g_GlobalData->MainCamera_Data->CamViewProj;
 
 	for (int i = 0; i < meshlist.size(); i++)
 	{

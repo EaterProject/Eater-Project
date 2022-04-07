@@ -5,6 +5,8 @@
 class RenderData
 {
 public:
+	bool m_Draw = true;							// Culling 여부..
+
 	int m_InstanceLayerIndex = -1;				// Instance Layer Index..
 	int m_InstanceIndex = -1;					// Instance Index..
 
@@ -36,6 +38,5 @@ public:
 
 	InstanceRenderBuffer* m_Instance;		// Instancing 기준이 되는 Mesh Data..
 
-	std::vector<RenderData*> m_RenderList;	// 현재 프레임 Instancing Layer Render List..
 	std::vector<RenderData*> m_MeshList;	// Instancing 기준에 해당하는 Render Data List..
 };

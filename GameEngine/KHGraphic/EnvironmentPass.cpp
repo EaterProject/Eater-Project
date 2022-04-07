@@ -100,7 +100,7 @@ void EnvironmentPass::RenderUpdate()
 	g_Context->OMSetDepthStencilState(m_CubeMapDSS, 0);
 	g_Context->OMSetRenderTargets(1, &m_OutPut_RTV, m_DefaltDSV);
 
-	CameraData* cam = g_GlobalData->Camera_Data;
+	CameraData* cam = g_GlobalData->MainCamera_Data;
 
 	Matrix& proj = cam->CamProj;
 	Matrix& view = cam->CamView;

@@ -1,5 +1,4 @@
 #pragma once
-
 #include <map>
 #include <vector>
 #include <queue>
@@ -8,7 +7,7 @@
 #include <functional>
 #include "Delegate.h"
 #include "EaterEngineDLL.h"
-#include "BaseManager.h"
+
 typedef size_t Hash_Code;
 
 class Camera;
@@ -17,7 +16,7 @@ class GameObject;
 class Component;
 class MeshFilter;
 
-class ObjectManager : public BaseManager
+class ObjectManager
 {
 public:
 	~ObjectManager();

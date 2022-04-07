@@ -39,7 +39,7 @@
 
 #include <algorithm>
 
-//#define RELEASE_PROFILE
+#define RELEASE_PROFILE
 #include "./Profiler/Profiler.h"
 
 RenderManager::RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, IGraphicResourceManager* resource, IShaderManager* shader)
@@ -262,25 +262,17 @@ void RenderManager::SelectRenderData()
 {
 	PROFILE_TIMER_START(PROFILE_OUTPUT::VS_CODE, 60, "Culling");
 
-	// Camera View Frustum Culling..
-	int renderCount = 0;
-	for (InstanceLayer* layer : m_RenderMeshList)
-	{
-		// 해당 Layer Render List 초기화..
-		memset(&layer->m_RenderList[0], 0, layer->m_RenderList.size());
+	GPU_BEGIN_EVENT_DEBUG_NAME("Culling Pass");
+	/// GPGPU Hierachical Z-Map Occlusion Culling..
+	m_Culling->RenderOccluders();
 
-		for (RenderData* renderData : layer->m_MeshList)
-		{
-			if (m_Culling->FrustumCulling(renderData))
-			{
-				layer->m_RenderList[renderCount++] = renderData;
-			}
-		}
+	m_Culling->OcclusionCullingQuery();
 
-		// Layer 변경시 Index 초기화..
-		layer->m_RenderCount = renderCount;
-		renderCount = 0;
-	}
+	m_Culling->DrawStateUpdate();
+
+	/// CPU Camera View Frustum Culling..
+	//m_Culling->FrustumCulling();
+	GPU_END_EVENT_DEBUG_NAME();
 
 	PROFILE_TIMER_END("Culling");
 }
@@ -391,8 +383,7 @@ void RenderManager::ShadowRender()
 		{
 			m_InstanceLayer = m_RenderMeshList[i];
 
-			m_Shadow->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_RenderList, m_InstanceLayer->m_RenderCount);
-			//m_Shadow->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_MeshList, m_InstanceLayer->m_MeshList.size());
+			m_Shadow->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_MeshList);
 		}
 	}
 }
@@ -405,8 +396,7 @@ void RenderManager::DeferredRender()
 	{
 		m_InstanceLayer = m_RenderMeshList[i];
 
-		m_Deferred->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_RenderList, m_InstanceLayer->m_RenderCount);
-		//m_Deferred->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_MeshList, m_InstanceLayer->m_MeshList.size());
+		m_Deferred->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_MeshList);
 	}
 }
 
@@ -510,6 +500,7 @@ void RenderManager::DebugRender()
 				{
 				case OBJECT_TYPE::DEFALT:
 				case OBJECT_TYPE::BASE:
+				case OBJECT_TYPE::TERRAIN:
 				case OBJECT_TYPE::SKINNING:
 				case OBJECT_TYPE::BONE:
 				case OBJECT_TYPE::LIGHT:
@@ -572,8 +563,6 @@ void RenderManager::DebugRender()
 			GPU_MARKER_DEBUG_NAME("MRT Debug");
 			m_Debug->MRTRender();
 		}
-
-		m_Debug->CountReset();
 	}
 }
 
@@ -620,9 +609,8 @@ void RenderManager::ConvertPushInstance()
 		m_PushInstanceList.pop();
 	}
 
-	// 모든 변환이 끝난후 List 재설정..
-	CheckMaxSizeLayer(m_RenderMeshList);
-	CheckMaxSizeLayer(m_ParticleMeshList);
+	// Collider List 재설정..
+	m_Culling->CullingBufferCreate();
 }
 
 void RenderManager::ConvertChangeInstance()
@@ -680,6 +668,12 @@ void RenderManager::PushMeshRenderData(RenderData* renderData)
 	// 해당 Layer 검색..
 	InstanceLayer* instanceLayer = m_Converter->GetLayer(renderData->m_InstanceLayerIndex);
 
+	// 해당 Layer에 Render Data 삽입..
+	instanceLayer->PushRenderData(renderData);
+
+	// Culling 전용 List 삽입..
+	m_Culling->PushCullingMesh(renderData);
+
 	// List 내의 Layer 유무 확인..
 	for (InstanceLayer* layer : m_RenderMeshList)
 	{
@@ -698,6 +692,9 @@ void RenderManager::PushParticleRenderData(RenderData* renderData)
 {
 	// 해당 Layer 검색..
 	InstanceLayer* instanceLayer = m_Converter->GetLayer(renderData->m_InstanceLayerIndex);
+
+	// 해당 Layer에 Render Data 삽입..
+	instanceLayer->PushRenderData(renderData);
 
 	// List 내의 Layer 유무 확인..
 	for (InstanceLayer* layer : m_ParticleMeshList)
@@ -821,6 +818,9 @@ void RenderManager::DeleteMeshRenderData(MeshData* meshData)
 	// 해당 Render Data 제거..
 	m_Converter->DeleteRenderData(renderDataIndex + 1);
 
+	// 해당 Culling Render Data 제거..
+	m_Culling->DeleteCullingMesh(renderData);
+
 	// 해당 Instance List에서 제거...
 	instanceLayer->DeleteRenderData(index);
 
@@ -914,15 +914,6 @@ void RenderManager::CheckInstanceLayer(std::vector<InstanceLayer*>& layerList)
 	layerList.erase(std::next(layerList.begin(), index));
 }
 
-void RenderManager::CheckMaxSizeLayer(std::vector<InstanceLayer*>& layerList)
-{
-	for (InstanceLayer* instanceLayer : layerList)
-	{
-		// Mesh List Size 기준으로 Render List Size 설정..
-		instanceLayer->m_RenderList.resize(instanceLayer->m_MeshList.size());
-	}
-}
-
 void RenderManager::FindInstanceLayer(std::vector<InstanceLayer*>& layerList, InstanceLayer* layer)
 {
 	for (InstanceLayer* instanceLayer : layerList)
@@ -940,7 +931,7 @@ void RenderManager::FindInstanceLayer(std::vector<InstanceLayer*>& layerList, In
 
 bool RenderManager::SortDistance(RenderData* obj1, RenderData* obj2)
 {
-	const Vector3& camPos = RenderPassBase::g_GlobalData->Camera_Data->CamPos;
+	const Vector3& camPos = RenderPassBase::g_GlobalData->MainCamera_Data->CamPos;
 	const Vector3& objPos1 = { (*obj1->m_ObjectData->World)._41 - camPos.x, (*obj1->m_ObjectData->World)._42 - camPos.y, (*obj1->m_ObjectData->World)._43 - camPos.z };
 	const Vector3& objPos2 = { (*obj2->m_ObjectData->World)._41 - camPos.x, (*obj2->m_ObjectData->World)._42 - camPos.y, (*obj2->m_ObjectData->World)._43 - camPos.z };
 

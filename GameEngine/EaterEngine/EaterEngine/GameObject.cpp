@@ -1,6 +1,5 @@
 #include "GameObject.h"
 #include "EngineData.h"
-#include "BaseManager.h"
 #include "ObjectManager.h"
 #include "Transform.h"
 #include "MeshFilter.h"
@@ -33,6 +32,8 @@ GameObject::~GameObject()
 
 void GameObject::SetActive(bool active)
 {
+	OneMeshData->Object_Data->IsActive = active;
+
 	std::vector<Component*>::iterator it = ComponentList.begin();
 	for (it; it != ComponentList.end(); it++)
 	{

@@ -173,7 +173,7 @@ void LightPass::Reset()
 
 void LightPass::RenderUpdate()
 {
-	CameraData* cam = g_GlobalData->Camera_Data;
+	CameraData* cam = g_GlobalData->MainCamera_Data;
 
 	Matrix& texSpace = g_GlobalData->TexSpace;
 
@@ -182,23 +182,23 @@ void LightPass::RenderUpdate()
 	g_Context->RSSetViewports(1, m_Screen_VP);
 
 	CB_Light lightBuf;
-	lightBuf.gDirLightCount = (UINT)g_GlobalData->DirectionLights.size();
-	lightBuf.gPointLightCount = (UINT)g_GlobalData->PointLights.size();
-	lightBuf.gSpotLightCount = (UINT)g_GlobalData->SpotLights.size();
+	lightBuf.gDirLightCount = (UINT)g_GlobalData->DirectionLightList.size();
+	lightBuf.gPointLightCount = (UINT)g_GlobalData->PointLightList.size();
+	lightBuf.gSpotLightCount = (UINT)g_GlobalData->SpotLightList.size();
 
 	for (UINT d = 0; d < lightBuf.gDirLightCount; d++)
 	{
-		lightBuf.gDirLights[d] = *g_GlobalData->DirectionLights[d];
+		lightBuf.gDirLights[d] = *g_GlobalData->DirectionLightList[d];
 		lightBuf.gDirLights[d].LightViewProj *= texSpace;
 	}
 	for (UINT p = 0; p < lightBuf.gPointLightCount; p++)
 	{
-		lightBuf.gPointLights[p] = *g_GlobalData->PointLights[p];
+		lightBuf.gPointLights[p] = *g_GlobalData->PointLightList[p];
 		lightBuf.gPointLights[p].LightViewProj *= texSpace;
 	}
 	for (UINT s = 0; s < lightBuf.gSpotLightCount; s++)
 	{
-		lightBuf.gSpotLights[s] = *g_GlobalData->SpotLights[s];
+		lightBuf.gSpotLights[s] = *g_GlobalData->SpotLightList[s];
 		lightBuf.gSpotLights[s].LightViewProj *= texSpace;
 	}
 

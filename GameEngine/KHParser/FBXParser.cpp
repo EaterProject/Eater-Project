@@ -347,7 +347,7 @@ void FBXParser::ProcessMesh(fbxsdk::FbxNode* node)
 
 	if (instancing == false)
 	{
-		m_OneMesh->m_MeshIndex = fbxGeometries.size();
+		m_OneMesh->m_MeshIndex = (UINT)fbxGeometries.size();
 		fbxGeometries.push_back(pGeo);
 	}
 

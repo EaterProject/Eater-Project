@@ -158,7 +158,7 @@ void SSAOPass::RenderUpdate()
 	g_Context->ClearRenderTargetView(m_SsaoRTV, reinterpret_cast<const float*>(&DXColors::Black));
 	g_Context->RSSetViewports(1, m_HalfScreenVP);
 
-	CameraData* cam = g_GlobalData->Camera_Data;
+	CameraData* cam = g_GlobalData->MainCamera_Data;
 	Matrix& proj = cam->CamProj;
 
 	CB_SsaoObject objectBuf;

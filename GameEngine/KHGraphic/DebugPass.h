@@ -8,6 +8,7 @@ typedef enum DEBUG_TYPE
 	DEBUG_GRID,
 	DEBUG_QUAD,
 	DEBUG_RAY,
+	DEBUG_FRUSTUM,
 	DEBUG_SPHERE,
 	DEBUG_TEXTURE
 }DEBUG_TYPE;
@@ -29,10 +30,11 @@ public:
 	void GlobalRender();
 	void MRTRender();
 	void BufferUpdate(DEBUG_TYPE type);
-	void CountReset();
 
 private:
 	void SetRay(const Vector3& start, const Vector3& end);
+	void SetFrustum(const Vector3* corner);
+
 	Matrix LookAt_Matrix(Vector3 pos, Vector3 look);
 
 private:
@@ -45,6 +47,7 @@ private:
 	PixelShader* m_DebugMRTPS;
 
 	DrawBuffer* m_RayBuffer;
+	DrawBuffer* m_FrustumBuffer;
 	DrawBuffer* m_QuadBuffer;
 	DrawBuffer* m_AxisBuffer;
 	DrawBuffer* m_BoxBuffer;
@@ -86,7 +89,5 @@ private:
 	D3D11_VIEWPORT* m_MRT6;
 	D3D11_VIEWPORT* m_MRT7;
 	D3D11_VIEWPORT* m_MRT8;
-
-	int m_DrawCount = 0;
 };
 

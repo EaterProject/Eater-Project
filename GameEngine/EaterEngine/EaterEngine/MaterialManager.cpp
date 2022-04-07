@@ -53,7 +53,7 @@ void MaterialManager::PushMaterial(Material* material)
 	// 만약 Index List에 빈곳이 없다면 다음 Index 추가..
 	if (material_Index == 0)
 	{
-		material_Index = g_IndexList.size();
+		material_Index = (UINT)g_IndexList.size();
 		g_IndexList.push_back(std::make_pair(material_Index, true));
 	}
 

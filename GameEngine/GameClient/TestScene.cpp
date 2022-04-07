@@ -97,22 +97,21 @@ void TestScene::CreateMap()
 
 	//Object = Instance();
 	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("box");
+	//filter->SetModelName("Dome_Occluder");
 
 	//Object = Instance();
 	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("Dome2");
+	//filter->SetModelName("Dome");
 	//
 	//Object = Instance();
 	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("Inside_village");
+	//filter->SetModelName("organic_cactus");
 	//
 	//Object = Instance();
 	//filter = Object->AddComponent<MeshFilter>();
 	//Tr = Object->GetTransform();
-	//Tr->Scale = { 0.01f, 0.01f, 0.01f };
 	//filter->SetModelName("Outside_Rock");
-	
+	//
 	//Object = Instance();
 	//filter = Object->AddComponent<MeshFilter>();
 	//filter->SetModelName("Outside_bossOBJ");
@@ -226,23 +225,27 @@ void TestScene::ChangeCubeMap()
 {
 	//if (GetKey(VK_UP))
 	//{
-	//	Object->GetTransform()->Rotation.z += 1;
-	//	Object1->GetTransform()->Position.y += 0.1f;
+	//	subCam->Position.y += 0.1f;
 	//}
 	//if (GetKey(VK_DOWN))
 	//{
-	//	Object->GetTransform()->Rotation.z -= 1;
-	//	Object1->GetTransform()->Position.y -= 0.1f;
+	//	subCam->Position.y -= 0.1f;
 	//}
 	//if (GetKey(VK_LEFT))
 	//{
-	//	Object->GetTransform()->Rotation.x -= 1;
-	//	Object1->GetTransform()->Position.x -= 0.1f;
+	//	subCam->Position.x -= 0.1f;
 	//}
 	//if (GetKey(VK_RIGHT))
 	//{
-	//	Object->GetTransform()->Rotation.x += 1;
-	//	Object1->GetTransform()->Position.x += 0.1f;
+	//	subCam->Position.x += 0.1f;
+	//}
+	//if (GetKey(VK_PRIOR))
+	//{
+	//	subCam->Position.z += 0.1f;
+	//}
+	//if (GetKey(VK_NEXT))
+	//{
+	//	subCam->Position.z -= 0.1f;
 	//}
 
 	if (GetKeyUp('1'))

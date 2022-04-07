@@ -1,16 +1,13 @@
 #pragma once
 #include <windows.h>
 #include <string>
-#include "BaseManager.h"
 
 /// <summary>
 ///	여러개의 그래픽엔진을 쉽게 사용하기위해 만든 그래픽엔진 관리 매니저.
 /// </summary>
 
-class MeshData;
-class GlobalData;
 class GraphicEngine;
-class LoadMeshData;
+class MeshData;
 class MeshBuffer;
 class MaterialBuffer;
 class TextureBuffer;
@@ -21,7 +18,7 @@ namespace ParserData
 	class CMesh;
 }
 
-class GraphicEngineManager : public BaseManager
+class GraphicEngineManager
 {
 public:
 	GraphicEngineManager();

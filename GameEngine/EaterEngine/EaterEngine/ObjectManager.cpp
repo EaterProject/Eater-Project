@@ -1,6 +1,5 @@
 #include "Component.h"
 #include "GameObject.h"
-#include "BaseManager.h"
 #include "ObjectManager.h"
 #include "LoadManager.h"
 #include "Camera.h"
@@ -379,7 +378,7 @@ void ObjectManager::DeleteObject()
 GameObject* ObjectManager::FindGameObjectString(std::string& ObjectName)
 {
 	//모든 오브젝트에서 같은 이름의 오브젝트를 찾는다
-	int ObjectSize = ObjectList.size();
+	int ObjectSize = (int)ObjectList.size();
 	for (int i = 0; i < ObjectSize; i++)
 	{
 		if (ObjectList[i]->Name == ObjectName)

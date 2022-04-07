@@ -2,7 +2,7 @@
 #include <vector>
 #include "Light.h"
 
-class LightManager : public BaseManager
+class LightManager
 {
 public:
 	LightManager();

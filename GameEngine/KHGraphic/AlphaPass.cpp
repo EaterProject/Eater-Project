@@ -84,7 +84,7 @@ void AlphaPass::BeginRender()
 
 void AlphaPass::RenderUpdate(const InstanceRenderBuffer* instance, const RenderData* meshData)
 {
-	const CameraData* cam = g_GlobalData->Camera_Data;
+	const CameraData* cam = g_GlobalData->MainCamera_Data;
 	const ObjectData* obj = meshData->m_ObjectData;
 	const MeshRenderBuffer* mesh = instance->m_Mesh;
 	const MaterialRenderBuffer* mat = instance->m_Material;
@@ -158,7 +158,7 @@ void AlphaPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::ve
 		RenderUpdate(instance, meshlist[0]);
 	}
 
-	CameraData* cam = g_GlobalData->Camera_Data;
+	CameraData* cam = g_GlobalData->MainCamera_Data;
 	MeshRenderBuffer* mesh = instance->m_Mesh;
 	MaterialRenderBuffer* mat = instance->m_Material;
 
@@ -230,7 +230,7 @@ void AlphaPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::ve
 void AlphaPass::ParticleUpdate(ParticleData* particleSystem)
 {
 	OneParticle* particle = nullptr;
-	CameraData* cam = g_GlobalData->Camera_Data;
+	CameraData* cam = g_GlobalData->MainCamera_Data;
 
 	Matrix invView = cam->CamInvView;
 	Matrix converseTM = Matrix::Identity;
