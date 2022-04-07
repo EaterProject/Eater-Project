@@ -18,7 +18,7 @@ RenderView::RenderView()
 
 RenderView::~RenderView()
 {
-
+	EndEngine();
 }
 
 BEGIN_MESSAGE_MAP(RenderView, CView)

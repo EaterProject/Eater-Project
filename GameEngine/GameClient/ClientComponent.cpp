@@ -17,7 +17,7 @@ ClientComponent::~ClientComponent()
 
 int ClientComponent::GetType()
 {
-	return typeid(this).hash_code();
+	return (int)typeid(this).hash_code();
 }
 
 bool ClientComponent::GetLife()

@@ -104,15 +104,15 @@ void CTAP_Light::SetGameObject(Light* TempLight)
 	Vector3 mColor	= mLight->GetColor();
 	float mAttenuate = mLight->GetAttenuate();
 
-	Color_R_Slider.SetPos(mColor.x*255);
-	Color_G_Slider.SetPos(mColor.y*255);
-	Color_B_Slider.SetPos(mColor.z*255);
-	Attenuate_Slider.SetPos(mAttenuate*0.01);
+	Color_R_Slider.SetPos((int)(mColor.x*255));
+	Color_G_Slider.SetPos((int)(mColor.y*255));
+	Color_B_Slider.SetPos((int)(mColor.z*255));
+	Attenuate_Slider.SetPos((int)(mAttenuate*0.01));
 
 	float OriginalAngle = Angle * 180 / 3.141592f;
-	Angle_Slider.SetPos(OriginalAngle);
-	Range_Slider.SetPos(Range);
-	Power_Slider.SetPos(Power);
+	Angle_Slider.SetPos((int)OriginalAngle);
+	Range_Slider.SetPos((int)Range);
+	Power_Slider.SetPos((int)Power);
 
 	Color_R.SetWindowTextW(ChangeToCString(mColor.x * 255));
 	Color_G.SetWindowTextW(ChangeToCString(mColor.y * 255));
@@ -182,19 +182,19 @@ void CTAP_Light::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 	if (pScrollBar->GetDlgCtrlID() == Angle_Slider.GetDlgCtrlID())
 	{
 		int Pos = Angle_Slider.GetPos();
-		mLight->SetAngle(Pos);
+		mLight->SetAngle((float)Pos);
 		Angle_Edit.SetWindowTextW(ChangeToCString(Pos));
 	}
 	if (pScrollBar->GetDlgCtrlID() == Range_Slider.GetDlgCtrlID())
 	{
 		int Range = Range_Slider.GetPos();
-		mLight->SetRange(Range);
+		mLight->SetRange((float)Range);
 		Range_Edit.SetWindowTextW(ChangeToCString(Range));
 	}
 	if (pScrollBar->GetDlgCtrlID() == Power_Slider.GetDlgCtrlID())
 	{
 		int Power = Power_Slider.GetPos();
-		mLight->SetPower(Power);
+		mLight->SetPower((float)Power);
 		Power_Edit.SetWindowTextW(ChangeToCString(Power));
 	}
 	if (pScrollBar->GetDlgCtrlID() == Attenuate_Slider.GetDlgCtrlID())

@@ -86,7 +86,7 @@ void SceneSave::SceneOption()
 	std::map<int, std::string>::iterator Start_it	= Demo::TagList.begin();
 	std::map<int, std::string>::iterator End_it		= Demo::TagList.end();
 
-	int Size = Demo::TagList.size();
+	int Size = (int)Demo::TagList.size();
 	EATER_SET_LIST_START("TAG", Size, 2);
 	for (Start_it; Start_it != End_it; Start_it++)
 	{

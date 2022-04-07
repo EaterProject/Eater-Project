@@ -228,7 +228,7 @@ BOOL CTAP_Transform::PreTranslateMessage(MSG* pMsg)
 
 void CTAP_Transform::OnAllScaleDown_Button()
 {
-	ObjectTransform->Scale = {0.01,0.01 ,0.01 };
+	ObjectTransform->Scale = {0.01f,0.01f ,0.01f };
 	Scl_X.SetWindowTextW(ChangeToCString(ObjectTransform->Scale.x));
 	Scl_Y.SetWindowTextW(ChangeToCString(ObjectTransform->Scale.y));
 	Scl_Z.SetWindowTextW(ChangeToCString(ObjectTransform->Scale.z));
@@ -311,19 +311,19 @@ void CTAP_Transform::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 	CString SilderText;
 	if (pScrollBar->GetDlgCtrlID() == Rotation_X_Slider.GetDlgCtrlID()) 
 	{
-		ObjectTransform->Rotation.x = Rotation_X_Slider.GetPos();
+		ObjectTransform->Rotation.x = (float)Rotation_X_Slider.GetPos();
 		Rot_X.SetWindowTextW(ChangeToCString(ObjectTransform->Rotation.x));
 	}
 
 	if (pScrollBar->GetDlgCtrlID() == Rotation_Y_Slider.GetDlgCtrlID())
 	{
-		ObjectTransform->Rotation.y = Rotation_Y_Slider.GetPos();
+		ObjectTransform->Rotation.y = (float)Rotation_Y_Slider.GetPos();
 		Rot_Y.SetWindowTextW(ChangeToCString(ObjectTransform->Rotation.y));
 	}
 
 	if (pScrollBar->GetDlgCtrlID() == Rotation_Z_Slider.GetDlgCtrlID())
 	{
-		ObjectTransform->Rotation.z = Rotation_Z_Slider.GetPos();
+		ObjectTransform->Rotation.z = (float)Rotation_Z_Slider.GetPos();
 		Rot_Z.SetWindowTextW(ChangeToCString(ObjectTransform->Rotation.z));
 	}
 

@@ -60,7 +60,7 @@ BOOL CamAnimation::OnInitDialog()
 	PlayIndex		= 0;
 	isPlay			= false;
 	NowSliderPos	= 0;
-	OneFrameTime	= 0.01;
+	OneFrameTime	= 0.01f;
 	OriginalIndex	= 0;
 	PlayTime		= 1.0f;
 
@@ -69,7 +69,7 @@ BOOL CamAnimation::OnInitDialog()
 	Original_Edit.SetWindowTextW(L"0");
 	OriginalMax_Edit.SetWindowTextW(L"0");
 
-	SetTimer(0, (1000 * OneFrameTime),NULL);
+	SetTimer(0, (UINT)(1000 * OneFrameTime),NULL);
 
 	return 0;
 }
@@ -141,7 +141,7 @@ void CamAnimation::OnAddKey()
 	MainCamTR = MainCam->GetTransform();
 
 	KeyNode Node;
-	Node.Time = NowSliderPos;
+	Node.Time = (float)NowSliderPos;
 	Node.PosX = MainCamTR->Position.x;
 	Node.PosY = MainCamTR->Position.y;
 	Node.PosZ = MainCamTR->Position.z;
@@ -177,7 +177,7 @@ void CamAnimation::OnPlay()
 	isPlay = true;
 	AddKeyList.clear();
 
-	int StartKeySize = KeyList.size();
+	int StartKeySize = (int)KeyList.size();
 
 	float ADD = (1.0f / AddKeyCount);
 	for (int i = 0; i < StartKeySize-1; i++)
@@ -309,7 +309,7 @@ void CamAnimation::OnAddOption()
 	OneFrameTime = ChangeToFloat(Data);
 
 	KillTimer(0);
-	SetTimer(0, (1000* OneFrameTime), NULL);
+	SetTimer(0, (UINT)(1000* OneFrameTime), NULL);
 	AfxMessageBox(L"적용완료");
 }
 
@@ -324,7 +324,7 @@ void CamAnimation::OnSaveButton()
 		return;
 	}
 
-	int KeySize = KeyList.size();
+	int KeySize = (int)KeyList.size();
 	EATER_OPEN_WRITE_FILE(ChangeToString(Data),"../Assets/Model/Animation/",".Eater");
 	EATER_SET_NODE("CAM_ANIMATION");
 

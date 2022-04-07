@@ -77,9 +77,9 @@ void CTAP_Collider::SetGameObject(Collider* collider)
 	Static_Eidt.SetWindowTextW(ChangeToCString(mCollider->GetMaterial_Static()));
 	Restition_Edit.SetWindowTextW(ChangeToCString(mCollider->GetMaterial_Restitution()));
 
-	DynamicFriction_Slider.SetPos(mCollider->GetMaterial_Dynamic() * 100);
-	StaticFriction_Slider.SetPos(mCollider->GetMaterial_Static() * 100);
-	Restitution_Slider.SetPos(mCollider->GetMaterial_Restitution() * 100);
+	DynamicFriction_Slider.SetPos((int)(mCollider->GetMaterial_Dynamic() * 100));
+	StaticFriction_Slider.SetPos((int)(mCollider->GetMaterial_Static() * 100));
+	Restitution_Slider.SetPos((int)(mCollider->GetMaterial_Restitution() * 100));
 
 
 	

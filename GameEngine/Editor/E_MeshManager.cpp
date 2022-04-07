@@ -13,8 +13,7 @@ E_MeshManager::~E_MeshManager()
 
 void E_MeshManager::ChangeEaterFile(ParserData::CModel* FBXMesh)
 {
-	
-	int MeshSize = FBXMesh->m_MeshList.size();
+	int MeshSize = (int)FBXMesh->m_MeshList.size();
 	for (int i = 0; i < MeshSize; i++)
 	{
 		ParserData::CMesh* OneMesh = FBXMesh->m_MeshList[i];
