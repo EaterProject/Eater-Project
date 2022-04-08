@@ -2,9 +2,9 @@
 // Parsing Option
 typedef enum PARSING_OPTION : UINT
 {
-	SCALING			= 0x00000001,
-	ANIMATION_ONLY	= 0x00000010,
-	ROTATE_AXIS		= 0x00000100
+	SCALING			= 0x00000001,	// FBX Parser Parsing Scale 100 -> 1
+	ANIMATION_ONLY	= 0x00000010,	// FBX Parser Parsing Only Animaition
+	ORIGIN_ONLY		= 0x00000100	// FBX Parser Parsing Only Origin Vertex (Collision Àü¿ë)
 }PARSING_OPTION;
 
 // Lighting Option
