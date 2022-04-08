@@ -270,10 +270,10 @@ void CTAP_Particle::GetObjectData()
 	mParticleSystem->SetMaxParticles(ChangeToInt(Temp01));
 
 	DelayTime_Edit.GetWindowTextW(Temp01);
-	mParticleSystem->SetDelayTime(ChangeToInt(Temp01));
+	mParticleSystem->SetDelayTime(ChangeToFloat(Temp01));
 
 	Check = ShapeRadius_Check.GetCheck();
-	if (Check == true)
+	if (Check)
 	{
 		ShapeRadius_X_Edit.GetWindowTextW(Temp01);
 		ShapeRadius_Y_Edit.GetWindowTextW(Temp02);
@@ -283,7 +283,7 @@ void CTAP_Particle::GetObjectData()
 	else
 	{
 		ShapeRadius_Edit.GetWindowTextW(Temp01);
-		mParticleSystem->SetShapeRadius(ChangeToInt(Temp01));
+		mParticleSystem->SetShapeRadius(ChangeToFloat(Temp01));
 	}
 
 	TextureTiling_X_Edit.GetWindowTextW(Temp01);
@@ -292,7 +292,7 @@ void CTAP_Particle::GetObjectData()
 
 
 	Check = StartForce_Check.GetCheck();
-	if (Check == true)
+	if (Check)
 	{
 		StartForce_X.GetWindowTextW(Temp01);
 		StartForce_Y.GetWindowTextW(Temp02);
@@ -314,7 +314,7 @@ void CTAP_Particle::GetObjectData()
 	}
 
 	Check = StartColor_Check.GetCheck();
-	if (Check == true)
+	if (Check)
 	{
 		StartColor_min_R.GetWindowTextW(Temp01);
 		StartColor_min_G.GetWindowTextW(Temp02);
@@ -339,7 +339,7 @@ void CTAP_Particle::GetObjectData()
 	}
 
 	Check = StartLife_Check.GetCheck();
-	if (Check == true)
+	if (Check)
 	{
 		StartLifeTime_min.GetWindowTextW(Temp01);
 		StartLifeTime_max.GetWindowTextW(Temp02);
@@ -352,7 +352,7 @@ void CTAP_Particle::GetObjectData()
 	}
 
 	Check = StartScale_Check.GetCheck();
-	if (Check == true)
+	if (Check)
 	{
 		StartScale_min.GetWindowTextW(Temp01);
 		StartScale_max.GetWindowTextW(Temp02);
@@ -365,7 +365,7 @@ void CTAP_Particle::GetObjectData()
 	}
 
 	Check = StartRotation_Check.GetCheck();
-	if (Check == true)
+	if (Check)
 	{
 		StartRotation_max.GetWindowTextW(Temp01);
 		StartRotation_min.GetWindowTextW(Temp02);
@@ -379,7 +379,7 @@ void CTAP_Particle::GetObjectData()
 
 
 	Check = LifeForce_Check.GetCheck();
-	if (Check == true)
+	if (Check)
 	{
 		LifeForce_X.GetWindowTextW(Temp01);
 		LifeForce_Y.GetWindowTextW(Temp02);
@@ -401,7 +401,7 @@ void CTAP_Particle::GetObjectData()
 	}
 
 	Check = LifeRotation_Check.GetCheck();
-	if (Check == true)
+	if (Check)
 	{
 		LifeRotation_min.GetWindowTextW(Temp01);
 		LifeRotation_max.GetWindowTextW(Temp02);
@@ -583,7 +583,7 @@ void CTAP_Particle::OnStartScale_Button()
 void CTAP_Particle::OnStartRotationCheck()
 {
 	int Check = StartRotation_Check.GetCheck();
-	if (Check == true)
+	if (Check)
 	{
 		StartRotation_min.ShowWindow(SW_SHOW);
 		StartRotation_max.ShowWindow(SW_SHOW);
@@ -601,7 +601,7 @@ void CTAP_Particle::OnStartRotationCheck()
 void CTAP_Particle::OnLifeForceCheck()
 {
 	int Check = LifeForce_Check.GetCheck();
-	if (Check == true)
+	if (Check)
 	{
 		LifeForce_X_max.ShowWindow(SW_SHOW);
 		LifeForce_Y_max.ShowWindow(SW_SHOW);
@@ -620,7 +620,7 @@ void CTAP_Particle::OnLifeForceCheck()
 void CTAP_Particle::OnBnClickedCheck8()
 {
 	int Check = LifeRotation_Check.GetCheck();
-	if (Check == true)
+	if (Check)
 	{
 		LifeRotation_min.ShowWindow(SW_SHOW);
 		LifeRotation_max.ShowWindow(SW_SHOW);

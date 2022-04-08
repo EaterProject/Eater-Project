@@ -48,6 +48,34 @@ void LoadManager::Initialize(GraphicEngineManager* graphic, CRITICAL_SECTION* _c
 	mTexture->Initialize(graphic, _cs);
 }
 
+void LoadManager::Release()
+{
+	//모델 데이터 삭제
+	//for (auto mModel : ModelList)
+	//{
+	//	delete (mModel.second);
+	//	mModel.second = nullptr;
+	//}
+
+	//텍스쳐 데이터 삭제
+	//for (auto mTexture : TextureList)
+	//{
+	//	delete (mTexture.second);
+	//}
+
+	//메테리얼 삭제
+	for (auto mMaterial : MaterialList)
+	{
+		mMaterial.second->Release();
+	}
+
+	//애니메이션 삭제
+	for (auto mAnimation : AnimationList)
+	{
+		//delete mAnimation.second;
+	}
+}
+
 void LoadManager::Start()
 {
 	

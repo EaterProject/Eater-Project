@@ -15,7 +15,7 @@ E_MaterialManager::~E_MaterialManager()
 
 void E_MaterialManager::ChangeEaterFile(ParserData::CModel* FBXMesh)
 {
-	int MeshSize = FBXMesh->m_MeshList.size();
+	int MeshSize = (int)FBXMesh->m_MeshList.size();
 	for (int i = 0; i < MeshSize; i++)
 	{
 		ParserData::CMesh* OneMesh = FBXMesh->m_MeshList[i];

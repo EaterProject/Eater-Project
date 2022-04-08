@@ -30,8 +30,8 @@ void CTAP_Rigidbody::SetGameObject(Rigidbody* rigidbody)
 	Gravity_Check.SetCheck(rigidbody->GetGravity());
 	Kinematic_Click.SetCheck(rigidbody->GetKinematic());
 
-	bool PosX, PosY, PosZ;
-	bool RotX, RotY, RotZ;
+	//bool PosX, PosY, PosZ;
+	//bool RotX, RotY, RotZ;
 	Vector3 FreezePos = rigidbody->GetFreezePosition();
 	Vector3 FreezeRot = rigidbody->GetFreezeRotation();
 
@@ -41,22 +41,22 @@ void CTAP_Rigidbody::SetGameObject(Rigidbody* rigidbody)
 		switch (i)
 		{
 		case 0:
-			Freeze_PosX_Click.SetCheck(FreezePos.x);
+			Freeze_PosX_Click.SetCheck((int)FreezePos.x);
 			break;
 		case 1:
-			Freeze_PosY_Click.SetCheck(FreezePos.y);
+			Freeze_PosY_Click.SetCheck((int)FreezePos.y);
 			break;
 		case 2:
-			Freeze_PosZ_Click.SetCheck(FreezePos.z);
+			Freeze_PosZ_Click.SetCheck((int)FreezePos.z);
 			break;
 		case 3:
-			Freeze_RotX_Click.SetCheck(FreezeRot.x);
+			Freeze_RotX_Click.SetCheck((int)FreezeRot.x);
 			break;
 		case 4:
-			Freeze_RotY_Click.SetCheck(FreezeRot.y);
+			Freeze_RotY_Click.SetCheck((int)FreezeRot.y);
 			break;
 		case 5:
-			Freeze_RotZ_Click.SetCheck(FreezeRot.z);
+			Freeze_RotZ_Click.SetCheck((int)FreezeRot.z);
 			break;
 		}
 	}

@@ -16,7 +16,7 @@ void YamlManager::OpenFile(std::string& Path)
 	std::vector<std::string> KeyData;
 	YAML_OPEN_FILE(Path, &KeyData);
 
-	int size = KeyData.size();
+	int size = (int)KeyData.size();
 	for (int i = 0; i < size; i++)
 	{
 		std::string& Name = CutKeyString(KeyData[i]);
@@ -26,7 +26,7 @@ void YamlManager::OpenFile(std::string& Path)
 		
 		std::vector<std::string> key;
 		YAML_FIND_STRING_DATA(&key, 2, KeyData[i], "m_Component");
-		int Count = key.size();
+		int Count = (int)key.size();
 
 		for (int j = 1; j <= Count; j++)
 		{
