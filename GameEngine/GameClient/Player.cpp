@@ -5,13 +5,10 @@
 #include "GameObject.h"
 #include "MainHeader.h"
 #include "Camera.h"
-#include "Rigidbody.h"
 #include "Collider.h"
+#include "PhysData.h"
 
 
-#include "GameClientGameServerPacketDefine.h"
-#include "PlayerData.h"
-#include "WorldData_generated.h"
 #include "PlayerCamera.h"
 
 Transform* Player::mTransform = nullptr;
@@ -23,11 +20,23 @@ Player::Player()
 	mAnimation	= nullptr;
 	mTransform	= nullptr;
 	mMeshFilter = nullptr;
-	Speed = 5;
+	mCameraTR = nullptr;
+	AttackColliderObject= nullptr;
+	AttackCollider = nullptr;
+
+	RayCastHit = new PhysRayCast[5]();
 }
 
 Player::~Player()
 {
+	mAnimation = nullptr;
+	mTransform = nullptr;
+	mMeshFilter = nullptr;
+	mCameraTR = nullptr;
+	AttackColliderObject = nullptr;
+	AttackCollider = nullptr;
+
+	delete[] RayCastHit;
 }
 
 void Player::Awake()
@@ -39,16 +48,11 @@ void Player::Awake()
 	
 	AttackColliderObject = FindGameObjectTag("AttackCollider");
 	AttackCollider = AttackColliderObject->GetComponent<Collider>();
-	
 }
 
 void Player::SetUp()
 {
 	mCameraTR = GetMainCamera()->GetTransform();
-
-	//AttackCollider->SetTrigger(true);
-	//AttackRigidbody->SetGrvity(false);
-	//AttackCollider->CreatePhys();
 }
 
 void Player::Update()
@@ -56,26 +60,17 @@ void Player::Update()
 	//로직이 시작할때 플레이어 상태를 기본상태로 변환
 	mState = PLAYER_STATE::IDLE;
 
+	//플레이어 땅 체크
+	PlayerGroundCheck();
+
 	//플레이어 키입력
 	PlayerKeyinput();
 
-	//공력 충돌체의 위치를 설정
-	Vector3 Look = mTransform->GetLocalPosition_Look();
-	Look *= 2;
-	Look.y = 1;
-	Look.z *= -1;
-	AttackColliderObject->GetTransform()->Position = mTransform->Position + Look;
+	//공격 충돌체의 위치를 설정
+	PlayerAttackColliderUpdate();
 
-	//공격키를 누르면 상태변환
-	if (GetKeyDown(VK_SPACE))
-	{
-		mState = PLAYER_STATE::ATTACK;
-	}
-}
-
-void Player::StartUpdate()
-{
-	//PlayerKeyinput();
+	//플레이어 상태 업데이트
+	PlayerStateUpdate();
 }
 
 Transform* Player::GetPlayerTransform()
@@ -99,43 +94,136 @@ void Player::Healing(float HealingPower)
 
 void Player::PlayerKeyinput()
 {
-	if (mCameraTR == nullptr) { return; }
+	if (mCameraTR == nullptr) 
+	{
+		DebugPrint("카메라 연결 안되어있음");
+		return;
+	}
+
 	if (GetKey('D'))
 	{
-		DirPos += mCameraTR->GetLocalPosition_Right();
-		//mAnimation->Choice("Run");
+		if (IsRightRayCheck == true)
+		{
+			DirPos += mCameraTR->GetLocalPosition_Right();
+		}
+		DirRot += mCameraTR->GetLocalPosition_Right();
 	}
 
 	if (GetKey('A'))
 	{
-		DirPos += -mCameraTR->GetLocalPosition_Right();
-		//mAnimation->Choice("Run");
+		if (IsLeftRayCheck == true)
+		{
+			DirPos += -mCameraTR->GetLocalPosition_Right();
+		}
+		DirRot += -mCameraTR->GetLocalPosition_Right();
 	}
 
 	if (GetKey('W'))
 	{
-		Vector3 Pos = mCameraTR->GetLocalPosition_Look();
-		//mAnimation->Choice("Run");
-		Pos.y = 0;
-		DirPos += Pos;
+		if (IsFrontRayCheck == true)
+		{
+			Vector3 Pos = mCameraTR->GetLocalPosition_Look();
+			Pos.y = 0;
+			DirPos += Pos;
+		}
+		DirRot += mCameraTR->GetLocalPosition_Look();
 	}
 
 	if (GetKey('S'))
 	{
-		Vector3 Pos = mCameraTR->GetLocalPosition_Look();
-		//mAnimation->Choice("Run");
-		Pos.y = 0;
-		DirPos += -Pos;
+		if (IsBackRayCheck == true)
+		{
+			Vector3 Pos = mCameraTR->GetLocalPosition_Look();
+			Pos.y = 0;
+			DirPos += -Pos;
+		}
+		DirRot += mCameraTR->GetLocalPosition_Look()* -1;
 	}
 
+	//이번프레임에 이동해야하는 방향
 	DirPos.Normalize();
+
+	//방향값이 있다면 회전과 이동
 	if (DirPos != Vector3(0, 0, 0))
 	{
-		DirRot = DirPos;
 		Vector3 MyPos = DirPos + mTransform->Position;
 		mTransform->SetTranlate(DirPos * Speed * GetDeltaTime());
-		mTransform->Slow_Y_Rotation(MyPos, 450);
 	}
+
+	DirRot.Normalize();
+	mTransform->Slow_Y_Rotation(DirRot + mTransform->Position, 450);
 	
+	//이동을완료했으므로 방향값을 초기화
 	DirPos = { 0,0,0 };
+}
+
+void Player::PlayerStateUpdate()
+{
+	//공격키를 누르면 상태변환
+	if (GetKeyDown(VK_SPACE))
+	{
+		mState = PLAYER_STATE::ATTACK;
+	}
+}
+
+void Player::PlayerAttackColliderUpdate()
+{
+	Vector3 Look = mTransform->GetLocalPosition_Look();
+	Look *= 2;
+	Look.y = 1;
+	Look.z *= -1;
+	AttackColliderObject->GetTransform()->Position = mTransform->Position + Look;
+}
+
+void Player::PlayerGroundCheck()
+{
+	Vector3 RayStartPoint;
+	for (int i = 0; i < 5; i++)
+	{
+		switch (i)
+		{
+		case 0: //Front
+			RayStartPoint = mTransform->Position + mCameraTR->GetLocalPosition_Look();
+			break;
+		case 1: //Back
+			RayStartPoint = mTransform->Position + (mCameraTR->GetLocalPosition_Look() * -1);
+			break;
+		case 2: //Right
+			RayStartPoint = mTransform->Position + mCameraTR->GetLocalPosition_Right();
+			break; 
+		case 3: //Left
+			RayStartPoint = mTransform->Position + (mCameraTR->GetLocalPosition_Right() * -1);
+			break;
+		case 4: //Center
+			RayStartPoint = mTransform->Position;
+			break;
+		}
+		RayStartPoint.y = 2;
+
+		//Ray 값 조정
+		RayCastHit[i].Origin		= RayStartPoint;
+		RayCastHit[i].Direction		= {0,-1,0};
+		RayCastHit[i].MaxDistance	= 10;
+		bool isHit = RayCast(&RayCastHit[i]);
+	
+		switch (i)
+		{
+		case 0:
+			IsFrontRayCheck = isHit;
+			break;
+		case 1:
+			IsBackRayCheck = isHit;
+			break;
+		case 2:
+			IsRightRayCheck = isHit;
+			break;
+		case 3:
+			IsLeftRayCheck = isHit;
+			break;
+		case 4:
+			mTransform->Position.y = RayCastHit[i].Hit.HitPoint.y;
+			DebugPrint("%d", RayCastHit[i].Hit.FaceIndex);
+			break;
+		}
+	}
 }

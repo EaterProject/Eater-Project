@@ -139,6 +139,15 @@
     <Filter Include="소스 파일\Scene\SceneSaveLoad">
       <UniqueIdentifier>{981e2971-4e0f-482d-87e6-be53a21779b8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\MFC\Dialog\LoadTerrain">
+      <UniqueIdentifier>{99268209-724d-4c9c-8369-7aedfbb43bf2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\Dialog\LoadNavMesh">
+      <UniqueIdentifier>{ab3549dd-455c-42ae-87ac-0a376eca5aac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\Dialog\Material">
+      <UniqueIdentifier>{41162ea8-57b7-4b4f-888e-f4c9c5868e23}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -255,6 +264,15 @@
     <ClInclude Include="CTAP_Rigidbody.h">
       <Filter>소스 파일\MFC\Dialog\TAP\TAP_Rigidbody</Filter>
     </ClInclude>
+    <ClInclude Include="LoadTerrain.h">
+      <Filter>소스 파일\MFC\Dialog\LoadTerrain</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadNavMesh.h">
+      <Filter>소스 파일\MFC\Dialog\LoadNavMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="CreateMaterial.h">
+      <Filter>소스 파일\MFC\Dialog\Material</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainFrm.cpp">
@@ -358,6 +376,15 @@
     </ClCompile>
     <ClCompile Include="CTAP_Rigidbody.cpp">
       <Filter>소스 파일\MFC\Dialog\TAP\TAP_Rigidbody</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadTerrain.cpp">
+      <Filter>소스 파일\MFC\Dialog\LoadTerrain</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadNavMesh.cpp">
+      <Filter>소스 파일\MFC\Dialog\LoadNavMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="CreateMaterial.cpp">
+      <Filter>소스 파일\MFC\Dialog\Material</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -8,6 +8,7 @@ class YamlManager;
 class FBXManager;
 class EaterManager;
 struct ObjectOption;
+struct InstanceMaterial;
 class EditorManager
 {
 public:
@@ -18,6 +19,7 @@ public:
 	void SetPath(std::string Path);
 	void OpenEaterFile(std::string Path, int Type);
 	void OpenEaterGameObject(GameObject* Object, ObjectOption* Option);
+	void CreateMaterialData(InstanceMaterial* m);
 private:
 	void CreateAssetsFile();
 	void LoadAssets();

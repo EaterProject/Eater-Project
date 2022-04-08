@@ -75,6 +75,11 @@ void EditorManager::OpenEaterGameObject(GameObject* Object,ObjectOption* Option)
 	mEater->Load_GameObject_File(Object, Option);
 }
 
+void EditorManager::CreateMaterialData(InstanceMaterial* m)
+{
+	mEater->Create_Material(m);
+}
+
 void EditorManager::CreateAssetsFile()
 {
 	//에셋폴더 만들기

@@ -184,30 +184,30 @@ void DebugPass::RenderUpdate(const RenderData* meshData)
 	case OBJECT_TYPE::TERRAIN:
 	case OBJECT_TYPE::SKINNING:
 	{
-		g_Context->RSSetState(m_WireRS);
-		Matrix sphereWorld = world;
-
-		BoundingSphere sphere;
-		mesh->m_MeshSubData->BoundSphere.Transform(sphere, world);
+		//g_Context->RSSetState(m_WireRS);
+		//Matrix sphereWorld = world;
+		//
+		//BoundingSphere sphere;
+		//mesh->m_MeshSubData->BoundSphere.Transform(sphere, world);
 		//BoundingBox box;
 		//mesh->m_MeshSubData->BoundBox.Transform(box, world);
 
-		object.gWorldViewProj = Matrix::CreateScale(sphere.Radius * 2.0f) * Matrix::CreateTranslation(sphere.Center) * viewproj;
+		//object.gWorldViewProj = Matrix::CreateScale(sphere.Radius * 2.0f) * Matrix::CreateTranslation(sphere.Center) * viewproj;
 		//object.gWorldViewProj = Matrix::CreateScale(box.Extents) * Matrix::CreateTranslation(box.Center) * viewproj;
 		
-		m_DebugVS->ConstantBufferUpdate(&object);
-		m_DebugVS->Update();
+		//m_DebugVS->ConstantBufferUpdate(&object);
+		//m_DebugVS->Update();
+		//
+		//option.gColor = Vector3(1.0f, 1.0f, 0.0f);
+		//
+		//m_DebugColorPS->ConstantBufferUpdate(&option);
+		//m_DebugColorPS->Update();
 
-		option.gColor = Vector3(1.0f, 1.0f, 0.0f);
-
-		m_DebugColorPS->ConstantBufferUpdate(&option);
-		m_DebugColorPS->Update();
-
-		BufferUpdate(DEBUG_TYPE::DEBUG_SPHERE);
+		//BufferUpdate(DEBUG_TYPE::DEBUG_SPHERE);
 		//BufferUpdate(DEBUG_TYPE::DEBUG_BOX);
-		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
-
-		g_Context->RSSetState(m_SolidRS);
+		//g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+		//
+		//g_Context->RSSetState(m_SolidRS);
 
 		//DebugData ray;
 		//ray.RayStart = sphere.Center;

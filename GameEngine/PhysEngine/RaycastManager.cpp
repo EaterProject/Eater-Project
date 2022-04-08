@@ -25,10 +25,15 @@ bool RaycastManager::RayCast(PhysRayCast* ray)
 	
 	PxRaycastBuffer buffer;
 	bool Collision = m_Scene->raycast(O, D, ray->MaxDistance, buffer);
-	
+
 	//충돌한 카운터개수
 	ray->Hit.HitCount = buffer.getNbAnyHits();
-	buffer.getTouch(0);
+
+	ray->Hit.HitPoint.x = buffer.block.position.x;
+	ray->Hit.HitPoint.y = buffer.block.position.y;
+	ray->Hit.HitPoint.z = buffer.block.position.z;
+
+	ray->Hit.FaceIndex = buffer.block.faceIndex;
 	
 	return Collision;
 }

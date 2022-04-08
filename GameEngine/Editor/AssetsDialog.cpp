@@ -13,6 +13,8 @@
 #include "FileOption.h"
 #include "Loading.h"
 #include "FileOption.h"
+#include "LoadTerrain.h"
+#include "LoadNavMesh.h"
 #define MAXPATH 256
 // AssetsDialog 대화 상자
 
@@ -26,6 +28,7 @@ AssetsDialog::AssetsDialog(CWnd* pParent /*=nullptr*/)
 
 AssetsDialog::~AssetsDialog()
 {
+
 }
 
 BOOL AssetsDialog::OnInitDialog()
@@ -55,6 +58,14 @@ BOOL AssetsDialog::OnInitDialog()
 	DragAcceptFiles(TRUE);
 
 	
+	mLoadTerrain = new LoadTerrain();
+	mLoadTerrain->Create(IDD_LOAD_TERRAIN);
+	mLoadTerrain->ShowWindow(SW_HIDE);
+
+	mLoadNavMesh = new LoadNavMesh();
+	mLoadNavMesh->Create(IDD_LOAD_NAVMESH);
+	mLoadNavMesh->ShowWindow(SW_HIDE);
+
 	return 0;
 }
 
@@ -63,6 +74,8 @@ void AssetsDialog::DoDataExchange(CDataExchange* pDX)
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_TREE1, AssetsTree);
 	DDX_Control(pDX, IDC_LIST2, AssetsFile);
+	DDX_Control(pDX, IDC_BUTTON1, Terrain_Button);
+	DDX_Control(pDX, IDC_BUTTON2, Navigation_Button);
 }
 
 
@@ -75,7 +88,9 @@ BEGIN_MESSAGE_MAP(AssetsDialog, CDialogEx)
 	ON_NOTIFY(NM_CLICK, IDC_LIST2, &AssetsDialog::OnNMClickList2)
 	ON_WM_MOUSEMOVE()
 	ON_WM_LBUTTONUP()
-	END_MESSAGE_MAP()
+	ON_BN_CLICKED(IDC_BUTTON1, &AssetsDialog::OnBnClickedButton1)
+	ON_BN_CLICKED(IDC_BUTTON2, &AssetsDialog::OnBnClickedButton2)
+END_MESSAGE_MAP()
 
 
 // AssetsDialog 메시지 처리기
@@ -126,7 +141,17 @@ void AssetsDialog::OnSize(UINT nType, int cx, int cy)
 
 	if (AssetsFile)
 	{
-		AssetsFile.MoveWindow(250, 0, cx- 250, cy);
+		AssetsFile.MoveWindow(250, 0, cx- 350, cy);
+	}
+
+	if (Terrain_Button) 
+	{
+		Terrain_Button.MoveWindow((250 +cx) - 350, 0, 100, 50);
+	}
+
+	if (Navigation_Button)
+	{
+		Navigation_Button.MoveWindow((250 + cx) - 350, 50, 100, 50);
 	}
 
 	CDialogEx::OnSize(nType, cx, cy);
@@ -333,4 +358,71 @@ void AssetsDialog::OnLButtonUp(UINT nFlags, CPoint point)
 		 //}
 	}
 	CDialogEx::OnLButtonUp(nFlags, point);
+}
+
+
+void AssetsDialog::OnBnClickedButton1()
+{
+	mLoadTerrain->ShowWindow(SW_SHOW);
+	//네비매쉬창이 활성화되었을때 옆으로 옮겨줌
+	//if (mLoadNavMesh->IsWindowVisible() == true)
+	//{
+	//	mLoadTerrain->ShowWindow(SW_SHOW);
+	//	RECT NavMeshWindow;
+	//	RECT TerrainWindow;
+	//	mLoadNavMesh->GetWindowRect(&NavMeshWindow);
+	//
+	//	TerrainWindow = NavMeshWindow;
+	//	TerrainWindow.left = NavMeshWindow.right;
+	//	mLoadTerrain->SetWindowPos(NULL,TerrainWindow.left,TerrainWindow.top, TerrainWindow.right, TerrainWindow.bottom,SWP_NOSIZE);
+	//	//mLoadTerrain->MoveWindow(&TerrainWindow);
+	//}
+	//else
+	//{
+	//	//화면 해상도의 가운데값을 구해옴
+	//	int x = (int)GetSystemMetrics(SM_CXSCREEN) * 0.5f;
+	//	int y = (int)GetSystemMetrics(SM_CYSCREEN) * 0.5f;
+	//
+	//	//다이얼로그창 
+	//	RECT ClientRect;
+	//	mLoadTerrain->GetWindowRect(&ClientRect);
+	//
+	//	mLoadTerrain->ShowWindow(SW_SHOW);
+	//	mLoadTerrain->SetWindowPos(NULL, x, y, ClientRect.right, ClientRect.bottom, SWP_NOSIZE);
+	//	//mLoadTerrain->ShowWindow(SW_SHOW);
+	//}
+}
+
+
+void AssetsDialog::OnBnClickedButton2()
+{
+	mLoadNavMesh->ShowWindow(SW_SHOW);
+	//터레인 로드창이 켜져있을때 창을 옆으로 옮겨준다
+	//if (mLoadTerrain->IsWindowVisible() == true)
+	//{
+	//	mLoadNavMesh->ShowWindow(SW_SHOW);
+	//	RECT NavMeshWindow;
+	//	RECT TerrainWindow;
+	//	mLoadTerrain->GetWindowRect(&TerrainWindow);
+	//
+	//	NavMeshWindow = TerrainWindow;
+	//	NavMeshWindow.left = TerrainWindow.right;
+	//	mLoadNavMesh->SetWindowPos(NULL, NavMeshWindow.left, NavMeshWindow.top, NavMeshWindow.right, NavMeshWindow.bottom, SWP_NOSIZE);
+	//	//mLoadNavMesh->MoveWindow(&NavMeshWindow);
+	//}
+	//else
+	//{
+	//	//화면 해상도의 가운데값을 구해옴
+	//	int x = (int)GetSystemMetrics(SM_CXSCREEN)* 0.5f;
+	//	int y = (int)GetSystemMetrics(SM_CYSCREEN)*0.5f;
+	//
+	//	//다이얼로그창 
+	//	RECT ClientRect;
+	//	mLoadNavMesh->GetWindowRect(&ClientRect);
+	//
+	//
+	//	mLoadNavMesh->ShowWindow(SW_SHOW);
+	//	mLoadNavMesh->SetWindowPos(NULL, x, y, ClientRect.right, ClientRect.bottom, SWP_NOSIZE);
+	//}
+	
 }

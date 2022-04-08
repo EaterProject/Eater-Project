@@ -264,8 +264,10 @@ bool Demo::ChoiceTag(std::string TagName, GameObject* Obj)
 	return false;
 }
 
-GameObject* Demo::Create_Terrain(std::string MeshName)
+GameObject* Demo::Create_Terrain(std::string MeshPath,std::string mask01,std::string mask02)
 {
+
+
 	//터레인 생성
 	LoadTerrainMesh("../Assets/Model/TerrainModel/Terrain.fbx", "../Assets/Texture/Terrain/Terrain_RGB_1.png", "../Assets/Texture/Terrain/Terrain_RGB_2.png", SCALING);
 

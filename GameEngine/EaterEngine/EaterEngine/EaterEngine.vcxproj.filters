@@ -19,26 +19,14 @@
     <Filter Include="소스 파일\GameObject">
       <UniqueIdentifier>{388b9a85-dddf-4e4f-9f40-2892677c6441}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Manager">
-      <UniqueIdentifier>{8c514d5c-7e4f-4c5e-bb8a-6438dbccd094}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Component\ComponentBase">
       <UniqueIdentifier>{de7214b3-5118-4f0b-92cb-81c38251b2b1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Manager\DebugManager">
-      <UniqueIdentifier>{2ccf28fb-8aa7-4439-b9db-ddcf340c9e62}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Manager\ObjectManager">
-      <UniqueIdentifier>{1a5ca334-8b08-4aa7-b87b-eb69d8964169}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\Component\MeshFilter">
       <UniqueIdentifier>{e1a8f83a-9fbe-41b2-bcaf-4aaa827116a1}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\Component\Collider">
       <UniqueIdentifier>{d34d8a60-5880-4358-a416-fe8f2edab2e9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Manager\LoadManager">
-      <UniqueIdentifier>{931b4d5c-1b99-4484-b48b-b556ea25b14b}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\Component\Camera">
       <UniqueIdentifier>{2dd6ee96-a450-48a0-b4e7-8f934ff7a1be}</UniqueIdentifier>
@@ -52,26 +40,11 @@
     <Filter Include="소스 파일\Engine\GameEngine">
       <UniqueIdentifier>{04116a65-6bb9-4e93-895d-39a70b9a06f6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Manager\KeyinputManager">
-      <UniqueIdentifier>{a08a0ee9-85c4-4e41-a474-0c2f36fbe5a6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Manager\TimeManager">
-      <UniqueIdentifier>{7e157c44-e3ef-43c6-b564-1bd159e7e8d5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Manager\GraphicManager">
-      <UniqueIdentifier>{b223fce5-c4e2-428b-b257-6e662f5be63b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Component\Transform">
       <UniqueIdentifier>{85e0042f-5eda-4ce6-9cac-7a212ad26da6}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\Component\SkinningFilter">
       <UniqueIdentifier>{0db28258-c4dd-46c9-b56d-fa34d7f861c0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Manager\LightManager">
-      <UniqueIdentifier>{660a8a07-22fd-441b-9e1d-b3385e883764}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Manager\MaterialManager">
-      <UniqueIdentifier>{97384cd9-9b0f-408f-bb40-d7e5ba516608}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\Component\Light">
       <UniqueIdentifier>{94a42d33-37f6-4e8c-bc61-b51a98b6214a}</UniqueIdentifier>
@@ -97,9 +70,6 @@
     <Filter Include="소스 파일\Component\Network">
       <UniqueIdentifier>{b699a835-7ee8-464d-af9d-d2733848e2c5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Manager\NetworkManager">
-      <UniqueIdentifier>{c9484c65-e1c6-4a64-8e2a-68660a7ad5c0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Component\ParticleSystem">
       <UniqueIdentifier>{34f5274e-dca7-4388-a277-54196b70c414}</UniqueIdentifier>
     </Filter>
@@ -112,6 +82,27 @@
     <Filter Include="소스 파일\Component\Network\NetworkComponent">
       <UniqueIdentifier>{c847a445-5725-492d-8c8f-b6fc2fdcf4fb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Resource">
+      <UniqueIdentifier>{dc083899-344c-4b21-be3d-8715b4306d34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Resource\Material">
+      <UniqueIdentifier>{f9010fdf-b65c-4b72-ae7a-ada064a4240d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Resource\Mesh">
+      <UniqueIdentifier>{843815ed-f69c-4027-91ed-7b1c7453a5d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager">
+      <UniqueIdentifier>{8c514d5c-7e4f-4c5e-bb8a-6438dbccd094}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\DebugManager">
+      <UniqueIdentifier>{2ccf28fb-8aa7-4439-b9db-ddcf340c9e62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\ObjectManager">
+      <UniqueIdentifier>{1a5ca334-8b08-4aa7-b87b-eb69d8964169}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\LoadManager">
+      <UniqueIdentifier>{931b4d5c-1b99-4484-b48b-b556ea25b14b}</UniqueIdentifier>
+    </Filter>
     <Filter Include="소스 파일\Manager\LoadManager\Texture">
       <UniqueIdentifier>{4fcf5d0c-b7eb-4c5e-969a-14eab25ca58a}</UniqueIdentifier>
     </Filter>
@@ -123,18 +114,6 @@
     </Filter>
     <Filter Include="소스 파일\Manager\LoadManager\EATER">
       <UniqueIdentifier>{3042ceed-9197-40f4-b480-b36b166ad20d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Manager\MeshManager">
-      <UniqueIdentifier>{24fc8def-cfa8-4a9c-9522-595351fae0cf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Resource">
-      <UniqueIdentifier>{dc083899-344c-4b21-be3d-8715b4306d34}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Resource\Material">
-      <UniqueIdentifier>{f9010fdf-b65c-4b72-ae7a-ada064a4240d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Resource\Mesh">
-      <UniqueIdentifier>{843815ed-f69c-4027-91ed-7b1c7453a5d5}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\Manager\LoadManager\EATER\EaterScene">
       <UniqueIdentifier>{0bd7df29-391a-4107-b3da-c816c707cbb0}</UniqueIdentifier>
@@ -156,6 +135,27 @@
     </Filter>
     <Filter Include="소스 파일\Manager\LoadManager\EATER\EaterCamera">
       <UniqueIdentifier>{8525a853-a4dd-4374-9df0-373ac77606d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\KeyinputManager">
+      <UniqueIdentifier>{a08a0ee9-85c4-4e41-a474-0c2f36fbe5a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\TimeManager">
+      <UniqueIdentifier>{7e157c44-e3ef-43c6-b564-1bd159e7e8d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\GraphicManager">
+      <UniqueIdentifier>{b223fce5-c4e2-428b-b257-6e662f5be63b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\LightManager">
+      <UniqueIdentifier>{660a8a07-22fd-441b-9e1d-b3385e883764}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\MaterialManager">
+      <UniqueIdentifier>{97384cd9-9b0f-408f-bb40-d7e5ba516608}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\NetworkManager">
+      <UniqueIdentifier>{c9484c65-e1c6-4a64-8e2a-68660a7ad5c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\MeshManager">
+      <UniqueIdentifier>{24fc8def-cfa8-4a9c-9522-595351fae0cf}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\Manager\PhysManager">
       <UniqueIdentifier>{1045462d-8dcb-4189-9e4f-6ffb8c70e6dc}</UniqueIdentifier>

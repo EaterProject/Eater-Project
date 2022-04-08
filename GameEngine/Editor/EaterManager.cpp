@@ -175,3 +175,8 @@ void EaterManager::Load_GameObject_File(GameObject* Object ,ObjectOption* mOptio
 	}
 }
 
+void EaterManager::Create_Material(InstanceMaterial* m)
+{
+	mMaterialManager->Create(m);
+}
+

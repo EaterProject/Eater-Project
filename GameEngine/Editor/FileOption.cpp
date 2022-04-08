@@ -12,6 +12,7 @@
 #include "Demo.h"
 #include "CamAnimation.h"
 #include "SceneSaveDialog.h"
+#include "CreateMaterial.h"
 
 #include "GameObject.h"
 #include "MeshFilter.h"
@@ -70,6 +71,10 @@ void FileOption::Initialize(RightOption* mOption)
 	mRightOption = mOption;
 	mScene = new SceneSaveDialog();
 	mScene->Initialize(mRightOption);
+
+	mMaterial = new CreateMaterial();
+	mMaterial->Create(IDD_CREATE_MATERIAL);
+	mMaterial->ShowWindow(SW_HIDE);
 }
 
 void FileOption::SetChoiceGameObjectName(std::string Name, GameObject* Obj)
@@ -92,7 +97,7 @@ LRESULT FileOption::OnUserFunc(WPARAM wParam, LPARAM lParam)
 
 void FileOption::OnCreateTerrain()
 {
-	GameObject* Object = Demo::Create_Terrain("");
+	//GameObject* Object = Demo::Create_Terrain("");
 }
 
 void FileOption::OnCreateLight()
@@ -225,7 +230,14 @@ void FileOption::OnAddLight()
 
 void FileOption::OnCreateMaterial()
 {
-	mScene->DoModal();
-	std::string SaveName = ChangeToString(mScene->Name);
-	int num = 0;
+	mMaterial->ShowWindow(SW_SHOW);
+
+	RECT MyDig;
+	RECT Temp;
+	this->GetWindowRect(&MyDig);
+
+	Temp= MyDig;
+	Temp.left = MyDig.right;
+	mMaterial->SetWindowPos(NULL, Temp.left, Temp.top, Temp.right, Temp.bottom, SWP_NOSIZE);
+	//mLoadNavMesh->MoveWindow(&NavMeshWindow);
 }

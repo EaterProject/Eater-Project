@@ -53,11 +53,11 @@ void CTAP_MeshFilter::SetGameObject(MeshFilter* ObjectMeshFilter)
 		std::string Emissive	= mMaterial->GetEmissiveName();
 		std::string ORM			= mMaterial->GetORMName();
 
+		MaterialName_Edit.SetWindowTextW(ChangeToCString(mMaterial->Name));
 		Diffuse_Edit.SetWindowTextW(ChangeToCString(Diffuse));
 		Nomal_Eidt.SetWindowTextW(ChangeToCString(Nomal));
 		ORM_Edit.SetWindowTextW(ChangeToCString(ORM));
 		EmissiveName_Edit.SetWindowTextW(ChangeToCString(Emissive));
-		//MaterialName_Edit.SetWindowTextW(ChangeToCString(mMaterial->Name));
 
 		float EmissiveF		= mMaterial->m_MaterialData->Material_SubData->EmissiveFactor;
 		float RoughnessF	= mMaterial->m_MaterialData->Material_SubData->RoughnessFactor;

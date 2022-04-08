@@ -8,6 +8,7 @@
 class RightOption;
 class EditorManager;
 class SceneSaveDialog;
+class CreateMaterial;
 class FileOption : public CDialogEx
 {
 	DECLARE_DYNAMIC(FileOption)
@@ -26,6 +27,7 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 지원입니다.
 	RightOption*		mRightOption;
 	SceneSaveDialog*	mScene;
+	CreateMaterial*		mMaterial;
 	DECLARE_MESSAGE_MAP()
 public:
 	void Initialize(RightOption* mOption);
