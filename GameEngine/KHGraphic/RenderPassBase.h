@@ -29,6 +29,8 @@ public:
 	virtual void OnResize(int width, int height) abstract;
 	virtual void Release() abstract;
 
+	virtual void InstanceResize(size_t& renderMaxCount, size_t& unRenderMaxCount) {}
+
 	virtual void SetResize(int width, int height) {}
 	virtual void SetOption(RenderOption* renderOption) {}
 

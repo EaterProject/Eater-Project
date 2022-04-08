@@ -66,20 +66,6 @@ void CullingPass::Create(int width, int height)
 	hizDSVDesc.Texture2D.MipSlice = 0;
 	hizDSVDesc.Flags = 0;
 
-	// Hierachical Z-Map MipMap Buffer
-	D3D11_TEXTURE2D_DESC hizDesc;
-	hizDesc.Width = width;
-	hizDesc.Height = height;
-	hizDesc.MipLevels = 0;
-	hizDesc.ArraySize = 1;
-	hizDesc.Format = DXGI_FORMAT_R32_FLOAT;
-	hizDesc.SampleDesc.Count = 1;
-	hizDesc.SampleDesc.Quality = 0;
-	hizDesc.Usage = D3D11_USAGE_DEFAULT;
-	hizDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
-	hizDesc.CPUAccessFlags = 0;
-	hizDesc.MiscFlags = 0;
-
 	// Hierachical Z-Map Depth DepthStencilView 생성..
 	g_Factory->CreateDepthStencil<DS_HizDepth>(&hizDepthDesc, nullptr, &hizDSVDesc, nullptr);
 }
@@ -106,9 +92,6 @@ void CullingPass::Start(int width, int height)
 	// ViewPort 설정..
 	m_Screen_VP = g_Resource->GetViewPort<VP_FullScreen>()->Get();
 
-	m_ColliderList.resize(m_RenderCount);
-	m_ResultList.resize(m_RenderCount);
-
 	// Hierachical Z-Map MipMap Resource 생성..
 	MipMapResourceCreate(width, height);
 }
@@ -126,6 +109,11 @@ void CullingPass::OnResize(int width, int height)
 	MipMapResourceCreate(width, height);
 }
 
+void CullingPass::InstanceResize(size_t& renderMaxCount, size_t& unRenderMaxCount)
+{
+	CullingBufferCreate();
+}
+
 void CullingPass::Release()
 {
 
@@ -141,9 +129,8 @@ void CullingPass::RenderOccluders()
 
 	// Occluder Depth 그리기..
 	g_Context->RSSetViewports(1, m_Screen_VP);
-	g_Context->RSSetState(m_NoCull_RS);
+	//g_Context->RSSetState(m_NoCull_RS);
 	g_Context->OMSetRenderTargets(1, &m_MipMap_RTV[0], m_HizDepth_DSV);
-
 	g_Context->ClearRenderTargetView(m_MipMap_RTV[0], reinterpret_cast<const float*>(&DXColors::White));
 	g_Context->ClearDepthStencilView(m_HizDepth_DSV, D3D11_CLEAR_DEPTH, 1.0, 0);
 
@@ -195,6 +182,9 @@ void CullingPass::OcclusionCullingQuery()
 	// View Frustum 설정..
 	m_Frustum.FrustumTransform(viewproj);
 
+	// 실질적인 Render Count 초기화..
+	m_RenderCount = 0;
+
 	for (int i = 0; i < CullingRenderMeshList.size(); i++)
 	{
 		m_RenderData = CullingRenderMeshList[i];
@@ -215,7 +205,7 @@ void CullingPass::OcclusionCullingQuery()
 		m_ColliderData.z = m_Sphere.Center.z;
 		m_ColliderData.w = m_Sphere.Radius;
 
-		m_ColliderList[i] = m_ColliderData;
+		m_ColliderList[m_RenderCount++] = m_ColliderData;
 	}
 
 	// Hiz Cull
@@ -223,7 +213,7 @@ void CullingPass::OcclusionCullingQuery()
 	g_Context->Map(m_Collider_Buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &pCullingBoundsBufferMapped);
 	
 	// 모든 Rendering Object Collider Data Map & UnMap
-	memcpy(pCullingBoundsBufferMapped.pData, &m_ColliderList[0], sizeof(Vector4) * CullingRenderMeshList.size());
+	memcpy(pCullingBoundsBufferMapped.pData, &m_ColliderList[0], sizeof(Vector4) * m_RenderCount);
 	
 	g_Context->Unmap(m_Collider_Buffer, 0);
 
@@ -252,6 +242,12 @@ void CullingPass::OcclusionCullingQuery()
 	m_HizCull_CS->Update();
 
 	g_Context->Dispatch(m_RenderCount, 1, 1);
+
+	ID3D11ShaderResourceView* srv[2] = { nullptr, nullptr };
+	ID3D11UnorderedAccessView* uav = nullptr;
+	UINT nullOffset = -1;
+	g_Context->CSSetShaderResources(0, 2, srv);
+	g_Context->CSSetUnorderedAccessViews(0, 1, &uav, &nullOffset);
 }
 
 void CullingPass::DrawStateUpdate()
@@ -269,7 +265,9 @@ void CullingPass::DrawStateUpdate()
 
 	g_Context->Unmap(m_ResultCopy_Buffer, 0);
 
-	int resultIndex = 0;
+	// 실질적인 Render Count 초기화..
+	m_RenderCount = 0;
+
 	for (int i = 0; i < CullingRenderMeshList.size(); i++)
 	{
 		m_RenderData = CullingRenderMeshList[i];
@@ -278,7 +276,7 @@ void CullingPass::DrawStateUpdate()
 		if (m_RenderData->m_ObjectData->IsActive == false) continue;
 
 		// Culling 결과에 대한 Draw 상태 업데이트..
-		m_RenderData->m_Draw = (bool)m_ResultList[resultIndex++];
+		m_RenderData->m_Draw = (bool)m_ResultList[m_RenderCount++];
 	}
 }
 
@@ -443,14 +441,17 @@ void CullingPass::MipMapCommandListReserve(int width, int height, const D3D11_TE
 void CullingPass::CullingBufferCreate()
 {
 	/// 일단 해보고 버퍼 재설정은 나중에 고민하자
-	m_RenderCount = (UINT)CullingRenderMeshList.size();
+	m_RenderMaxCount = (UINT)CullingRenderMeshList.size();
 
-	if (m_RenderCount == 0) return;
+	if (m_RenderMaxCount == 0) return;
+
+	m_ColliderList.resize(m_RenderMaxCount);
+	m_ResultList.resize(m_RenderMaxCount);
 
 	D3D11_BUFFER_DESC colliderBufferDesc;
 	ZeroMemory(&colliderBufferDesc, sizeof(colliderBufferDesc));
 	colliderBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
-	colliderBufferDesc.ByteWidth = sizeof(Vector4) * m_RenderCount;
+	colliderBufferDesc.ByteWidth = sizeof(Vector4) * m_RenderMaxCount;
 	colliderBufferDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
 	colliderBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 	colliderBufferDesc.StructureByteStride = sizeof(Vector4);
@@ -472,7 +473,7 @@ void CullingPass::CullingBufferCreate()
 	D3D11_BUFFER_DESC cullingBufferDesc;
 	ZeroMemory(&cullingBufferDesc, sizeof(cullingBufferDesc));
 	cullingBufferDesc.Usage = D3D11_USAGE_DEFAULT;
-	cullingBufferDesc.ByteWidth = sizeof(float) * m_RenderCount;
+	cullingBufferDesc.ByteWidth = sizeof(float) * m_RenderMaxCount;
 	cullingBufferDesc.BindFlags = D3D11_BIND_UNORDERED_ACCESS | D3D11_BIND_SHADER_RESOURCE;
 	cullingBufferDesc.CPUAccessFlags = 0;
 	cullingBufferDesc.StructureByteStride = sizeof(float);
@@ -493,7 +494,7 @@ void CullingPass::CullingBufferCreate()
 
 	D3D11_BUFFER_DESC resultCopyBufferDesc;
 	ZeroMemory(&resultCopyBufferDesc, sizeof(resultCopyBufferDesc));
-	resultCopyBufferDesc.ByteWidth = m_RenderCount * sizeof(float);
+	resultCopyBufferDesc.ByteWidth = m_RenderMaxCount * sizeof(float);
 	resultCopyBufferDesc.Usage = D3D11_USAGE_STAGING;
 	resultCopyBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_READ;
 	resultCopyBufferDesc.StructureByteStride = sizeof(float);

@@ -54,6 +54,8 @@ public:
 	void* PickingRender(int x, int y) override;
 
 private:
+	void InstanceResize();
+
 	void RenderSetting();				// 현재 프레임에 설정된 Render Option 적용..
 
 	void ConvertRenderData();			// 현재 프레임에 추가 및 변경된 Render Data 변환..

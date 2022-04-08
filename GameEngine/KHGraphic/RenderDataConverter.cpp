@@ -395,6 +395,25 @@ void RenderDataConverter::DeleteMaterial(UINT index)
 	m_MaterialList.erase(index);
 }
 
+size_t RenderDataConverter::FindMaxInstanceCount()
+{
+	size_t maxCount = 1;
+	size_t layerCount = 0;
+
+	for (auto& layer : m_InstanceLayerList)
+	{
+		layerCount = layer.second->m_MeshList.size();
+
+		// 제일 큰 Layer Count 저장..
+		if (layerCount > maxCount)
+		{
+			maxCount = layerCount;
+		}
+	}
+
+	return maxCount;
+}
+
 RenderData* RenderDataConverter::GetRenderData(UINT index)
 {
 	std::unordered_map<UINT, RenderData*>::iterator itor = m_RenderList.find(index);

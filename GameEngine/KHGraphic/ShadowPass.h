@@ -8,7 +8,10 @@ public:
 public:
 	void Create(int width, int height) override;
 	void Start(int width, int height) override;
+
 	void OnResize(int width, int height) override;
+	void InstanceResize(size_t& renderMaxCount, size_t& unRenderMaxCount) override;
+
 	void Release() override;
 
 	void SetOption(RenderOption* renderOption) override;

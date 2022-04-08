@@ -12,6 +12,8 @@ public:
 	void Start(int width, int height) override;
 
 	void OnResize(int width, int height) override;
+	void InstanceResize(size_t& renderMaxCount, size_t& unRenderMaxCount) override;
+		
 	void Release() override;
 
 public:
@@ -76,7 +78,8 @@ private:
 
 	ID3D11DepthStencilView* m_HizDepth_DSV;
 
-	UINT m_RenderCount = 1160;
+	UINT m_RenderCount = 0;
+	UINT m_RenderMaxCount = 0;
 
 	float m_Width;
 	float m_Height;

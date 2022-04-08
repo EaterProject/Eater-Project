@@ -27,7 +27,7 @@ void TestScene::Awake()
 	LoadEnvironment("../Assets/Texture/Environment/Day.dds");
 	LoadTerrainMesh("../Assets/Model/TerrainModel/Terrain.fbx", "../Assets/Texture/Terrain/Terrain_RGB_1.png", "../Assets/Texture/Terrain/Terrain_RGB_2.png", SCALING);
 	
-	Load("../Assets/Texture/Particle/particle_hotCloud.png");
+	//Load("../Assets/Texture/Particle/particle_hotCloud.png");
 
 	PROFILE_TIMER_START(PROFILE_OUTPUT::CONSOLE, 1, "Load Folder");
 	Load("../Assets/Texture/Terrain");
@@ -75,28 +75,28 @@ void TestScene::CreateMap()
 	MeshFilter* filter = nullptr;
 	Light* light = nullptr;
 
-	InstanceCamera("sub");
-
-	ParticleObj = Instance();
-	ParticleObj->GetTransform()->Position.y += 50;
-	Object = InstanceParticle("Particle12");
-	ParticleObj->ChoiceChild(Object);
-	ParticleSystem* particles = Object->GetComponent<ParticleSystem>();
-	particles->SetMeshName("Quad");
-	particles->SetRenderType(PARTICLE_RENDER_OPTION::VERTICAL_BILLBOARD);
-	particles->SetDiffuseName("particle_hotCloud");
-	particles->SetStartLifeTime(1.5f, 1.8f);
-	particles->SetStartScale(4.0f, 7.0f);
-	particles->SetStartRotation(-360, 360);
-	particles->SetStartColor(Vector4(255, 174, 73, 28), Vector4(255, 111, 53, 255));
-	particles->SetMaxParticles(60);
-	particles->SetRateOverTime(25.0f);
-	particles->SetShapeRadius(0.1875f);
-	particles->SetStartForce(Vector3(0, 5, 0));
-	particles->SetLifeTimeRotation(-15.0f, 15.0f);
-	particles->SetTextureTiling(8, 8);
-	particles->SetPlayTime(1, false);
-	particles->Play();
+	//InstanceCamera("sub");
+	//
+	//ParticleObj = Instance();
+	//ParticleObj->GetTransform()->Position.y += 50;
+	//Object = InstanceParticle("Particle12");
+	//ParticleObj->ChoiceChild(Object);
+	//ParticleSystem* particles = Object->GetComponent<ParticleSystem>();
+	//particles->SetMeshName("Quad");
+	//particles->SetRenderType(PARTICLE_RENDER_OPTION::VERTICAL_BILLBOARD);
+	//particles->SetDiffuseName("particle_hotCloud");
+	//particles->SetStartLifeTime(1.5f, 1.8f);
+	//particles->SetStartScale(4.0f, 7.0f);
+	//particles->SetStartRotation(-360, 360);
+	//particles->SetStartColor(Vector4(255, 174, 73, 28), Vector4(255, 111, 53, 255));
+	//particles->SetMaxParticles(60);
+	//particles->SetRateOverTime(25.0f);
+	//particles->SetShapeRadius(0.1875f);
+	//particles->SetStartForce(Vector3(0, 5, 0));
+	//particles->SetLifeTimeRotation(-15.0f, 15.0f);
+	//particles->SetTextureTiling(8, 8);
+	//particles->SetPlayTime(1, false);
+	//particles->Play();
 
 	Object = InstanceLight("Light", LIGHT_TYPE::POINT_LIGHT);
 	Object->GetTransform()->Position.x += 10.0f;
@@ -108,20 +108,36 @@ void TestScene::CreateMap()
 
 	Object = Instance();
 	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("bossb+");
-	filter->SetAnimationName("bossb+");
-	Object->GetTransform()->Position.z += 20;
-	AnimationController* AC = Object->AddComponent<AnimationController>();
-	AC->Choice("idle");
-	
+	filter->SetModelName("box1");
+
 	Object = Instance();
 	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("MonsterA+");
-	filter->SetAnimationName("MonsterA+");
-	Object->GetTransform()->Position.z -= 20;
-	AC = Object->AddComponent<AnimationController>();
-	AC->Choice("move");
+	filter->SetModelName("box2");
 
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("box3");
+	//
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("box4");
+
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("bossb+");
+	//filter->SetAnimationName("bossb+");
+	//Object->GetTransform()->Position.z += 20;
+	//AnimationController* AC = Object->AddComponent<AnimationController>();
+	//AC->Choice("idle");
+	//
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("MonsterA+");
+	//filter->SetAnimationName("MonsterA+");
+	//Object->GetTransform()->Position.z -= 20;
+	//AC = Object->AddComponent<AnimationController>();
+	//AC->Choice("move");
+	//
 	Object = Instance();
 	filter = Object->AddComponent<MeshFilter>();
 	filter->SetModelName("Dome_Occluder");
@@ -129,27 +145,27 @@ void TestScene::CreateMap()
 	//Object = Instance();
 	//filter = Object->AddComponent<MeshFilter>();
 	//filter->SetModelName("Dome");
-	//
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("organic_cactus");
-	//
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//Tr = Object->GetTransform();
-	//filter->SetModelName("Outside_Rock");
-	//
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("Outside_bossOBJ");
-	//
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("Outside_Other");
-	//
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("Outside_Pebble");
+	
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	filter->SetModelName("organic_cactus");
+	
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	Tr = Object->GetTransform();
+	filter->SetModelName("Outside_Rock");
+	
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	filter->SetModelName("Outside_bossOBJ");
+	
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	filter->SetModelName("Outside_Other");
+	
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	filter->SetModelName("Outside_Pebble");
 
 	testobj = InstanceTerrain("Terrain");
 	Terrain* mTerrain = testobj->GetComponent<Terrain>();

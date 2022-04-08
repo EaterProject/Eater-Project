@@ -205,25 +205,25 @@ void DebugPass::RenderUpdate(const RenderData* meshData)
 		//g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
 
 		/// Bounding Sphere Draw..
-		//g_Context->RSSetState(m_WireRS);
-		//
-		//BoundingSphere sphere;
-		//mesh->m_MeshSubData->BoundSphere.Transform(sphere, world);
-		//
-		//object.gWorldViewProj = Matrix::CreateScale(sphere.Radius * 2.0f) * Matrix::CreateTranslation(sphere.Center) * viewproj;
-		//
-		//m_DebugVS->ConstantBufferUpdate(&object);
-		//m_DebugVS->Update();
-		//
-		//option.gColor = Vector3(1.0f, 1.0f, 0.0f);
-		//
-		//m_DebugColorPS->ConstantBufferUpdate(&option);
-		//m_DebugColorPS->Update();
-		//
-		//BufferUpdate(DEBUG_TYPE::DEBUG_SPHERE);
-		//g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
-		//
-		//g_Context->RSSetState(m_SolidRS);
+		g_Context->RSSetState(m_WireRS);
+		
+		BoundingSphere sphere;
+		mesh->m_MeshSubData->BoundSphere.Transform(sphere, world);
+		
+		object.gWorldViewProj = Matrix::CreateScale(sphere.Radius * 2.0f) * Matrix::CreateTranslation(sphere.Center) * viewproj;
+		
+		m_DebugVS->ConstantBufferUpdate(&object);
+		m_DebugVS->Update();
+		
+		option.gColor = Vector3(1.0f, 1.0f, 0.0f);
+		
+		m_DebugColorPS->ConstantBufferUpdate(&option);
+		m_DebugColorPS->Update();
+		
+		BufferUpdate(DEBUG_TYPE::DEBUG_SPHERE);
+		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+		
+		g_Context->RSSetState(m_SolidRS);
 		
 		/// Bounding Sphere Ray Draw..
 		//DebugData ray;
@@ -700,8 +700,8 @@ void DebugPass::GlobalRender()
 		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
 
 		// Look Vector 기준 Right, Up Vector 추출..
-		look = light->Direction;
 		right = light->Direction.Cross(Vector3(0.0f, 1.0f, 0.0f));
+		look = light->Direction;
 		up = right.Cross(look);
 
 		/// Spot Light Range Ray Draw..
