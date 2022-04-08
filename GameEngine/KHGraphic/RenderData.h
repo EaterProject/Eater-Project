@@ -40,3 +40,11 @@ public:
 
 	std::vector<RenderData*> m_MeshList;	// Instancing 기준에 해당하는 Render Data List..
 };
+
+// Mesh 전용 Instance Layer Class
+
+class MeshInstanceLayer : public InstanceLayer
+{
+public:
+	
+};

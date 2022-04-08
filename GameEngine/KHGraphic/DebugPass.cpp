@@ -55,6 +55,7 @@ void DebugPass::Create(int width, int height)
 	g_Factory->CreateImage<DirectionalLight_Icon>("Icon/Icon_Directionlight.png");
 	g_Factory->CreateImage<PointLight_Icon>("Icon/Icon_Pointlight.png");
 	g_Factory->CreateImage<SpotLight_Icon>("Icon/Icon_Spotlight.png");
+	g_Factory->CreateImage<Particle_Icon>("Icon/Icon_Particle.png");
 	g_Factory->CreateImage<Camera_Icon>("Icon/Icon_Camera.png");
 }
 
@@ -110,6 +111,8 @@ void DebugPass::Start(int width, int height)
 	if (iconSRV) m_PointLightIcon = iconSRV->Get();
 	iconSRV = g_Resource->GetShaderResourceView<SpotLight_Icon>();
 	if (iconSRV) m_SpotLightIcon = iconSRV->Get();
+	iconSRV = g_Resource->GetShaderResourceView<Particle_Icon>();
+	if (iconSRV) m_ParticleIcon = iconSRV->Get();
 	iconSRV = g_Resource->GetShaderResourceView<Camera_Icon>();
 	if (iconSRV) m_CamerIcon = iconSRV->Get();
 
@@ -262,6 +265,27 @@ void DebugPass::RenderUpdate(const RenderData* meshData)
 		break;
 	case OBJECT_TYPE::PARTICLE_SYSTEM:
 	{
+		/// Particle Icon Draw
+		option.gColor = Vector3(1.0f, 1.0f, 1.0f);
+
+		Matrix iconWorld = invView;
+		iconWorld._41 = world._41;
+		iconWorld._42 = world._42;
+		iconWorld._43 = world._43;
+
+		object.gWorldViewProj = iconWorld * viewproj;
+
+		m_DebugIconVS->ConstantBufferUpdate(&object);
+		m_DebugIconVS->Update();
+
+		m_DebugIconPS->ConstantBufferUpdate(&option);
+
+		m_DebugIconPS->SetShaderResourceView<gDiffuseMap>(m_ParticleIcon);
+		m_DebugIconPS->Update();
+
+		BufferUpdate(DEBUG_TYPE::DEBUG_TEXTURE);
+		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+
 		/// Particle Quad Draw..
 		ParticleData* particles = meshData->m_ParticleData;
 
@@ -380,12 +404,12 @@ void DebugPass::GlobalRender()
 		/// Camera Icon Draw
 		option.gColor = Vector3(1.0f, 1.0f, 1.0f);
 
-		Matrix cameraWorld = Matrix::CreateRotationY(PI) * invView;
-		cameraWorld._41 = CamPos.x;
-		cameraWorld._42 = CamPos.y;
-		cameraWorld._43 = CamPos.z;
+		Matrix iconWorld = invView;
+		iconWorld._41 = CamPos.x;
+		iconWorld._42 = CamPos.y;
+		iconWorld._43 = CamPos.z;
 
-		object.gWorldViewProj = Matrix::CreateScale(2.0f) * cameraWorld * viewproj;
+		object.gWorldViewProj = iconWorld * viewproj;
 
 		m_DebugIconVS->ConstantBufferUpdate(&object);
 		m_DebugIconVS->Update();
@@ -440,19 +464,19 @@ void DebugPass::GlobalRender()
 
 	for (DirectionalLightData* light : *directionList)
 	{
-		float RayLength = 10.0f;
-		Vector3 RayOffset = Vector3(1.0f);
+		float RayLength = 25.0f;
+		Vector3 RayOffset = Vector3(2.5f);
 		Vector3 LightPos = Vector3(0.0f, 100.0f, 0.0f);
 
 		/// Directional Light Icon Draw
 		option.gColor = light->Diffuse;
 
-		Matrix lightWorld = invView;
-		lightWorld._41 = LightPos.x;
-		lightWorld._42 = LightPos.y;
-		lightWorld._43 = LightPos.z;
+		Matrix iconWorld = invView;
+		iconWorld._41 = LightPos.x;
+		iconWorld._42 = LightPos.y;
+		iconWorld._43 = LightPos.z;
 
-		object.gWorldViewProj = Matrix::CreateScale(2.0f) * lightWorld * viewproj;
+		object.gWorldViewProj = Matrix::CreateScale(5.0f) * iconWorld * viewproj;
 
 		m_DebugIconVS->ConstantBufferUpdate(&object);
 		m_DebugIconVS->Update();
@@ -470,7 +494,7 @@ void DebugPass::GlobalRender()
 		look = light->Direction * Vector3(RayLength);
 
 		Matrix world = LookAt_Matrix(pos, look);
-		object.gWorldViewProj = Matrix::CreateRotationX(offsetAngle) * world * viewproj;
+		object.gWorldViewProj = Matrix::CreateScale(RayOffset) * Matrix::CreateRotationX(offsetAngle) * world * viewproj;
 		option.gColor = Vector3(1.0f, 1.0f, 0.0f);
 
 		m_DebugVS->ConstantBufferUpdate(&object);
@@ -560,12 +584,12 @@ void DebugPass::GlobalRender()
 		/// Point Light Icon Draw..
 		option.gColor = light->Diffuse;
 
-		Matrix lightWorld = invView;
-		lightWorld._41 = light->Position.x;
-		lightWorld._42 = light->Position.y;
-		lightWorld._43 = light->Position.z;
+		Matrix iconWorld = invView;
+		iconWorld._41 = light->Position.x;
+		iconWorld._42 = light->Position.y;
+		iconWorld._43 = light->Position.z;
 
-		object.gWorldViewProj = lightWorld * viewproj;
+		object.gWorldViewProj = iconWorld * viewproj;
 
 		m_DebugIconVS->ConstantBufferUpdate(&object);
 		m_DebugIconVS->Update();
@@ -578,7 +602,7 @@ void DebugPass::GlobalRender()
 		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
 
 		// Light Range Sphere..
-		lightWorld = Matrix::CreateScale(light->Range) * Matrix::CreateTranslation(light->Position);
+		Matrix lightWorld = Matrix::CreateScale(light->Range) * Matrix::CreateTranslation(light->Position);
 		
 		object.gWorldViewProj = lightWorld * viewproj;
 		option.gColor = Vector3(1.0f, 1.0f, 0.0f);
@@ -638,12 +662,12 @@ void DebugPass::GlobalRender()
 		/// Spot Light Icon Draw
 		option.gColor = light->Diffuse;
 
-		Matrix lightWorld = invView;
-		lightWorld._41 = light->Position.x;
-		lightWorld._42 = light->Position.y;
-		lightWorld._43 = light->Position.z;
+		Matrix iconWorld = invView;
+		iconWorld._41 = light->Position.x;
+		iconWorld._42 = light->Position.y;
+		iconWorld._43 = light->Position.z;
 
-		object.gWorldViewProj = lightWorld * viewproj;
+		object.gWorldViewProj = iconWorld * viewproj;
 
 		m_DebugIconVS->ConstantBufferUpdate(&object);
 		m_DebugIconVS->Update();
