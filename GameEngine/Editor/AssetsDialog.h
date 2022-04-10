@@ -42,6 +42,7 @@ public:
 public:
 	void Initialize(RightOption* mRight);
 	int FindChildFile(HTREEITEM hParentItem, CString str);
+	void CheckTexture(POINT point);
 	RightOption*	mRightOption;
 	FileOption*		mFileOption;
 	LoadTerrain*	mLoadTerrain;

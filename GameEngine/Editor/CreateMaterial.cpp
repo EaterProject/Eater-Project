@@ -100,6 +100,11 @@ void CreateMaterial::Reset()
 	AddColor_B.SetWindowTextW(L"0");
 }
 
+void CreateMaterial::CheckTexture(POINT point)
+{
+
+}
+
 
 BEGIN_MESSAGE_MAP(CreateMaterial, CDialogEx)
 	ON_WM_HSCROLL()
@@ -171,6 +176,39 @@ void CreateMaterial::OnBnClickedOk()
 		return;
 	}
 	InstanceMaterial m;
+	CString temp;
+	m.Name = ChangeToString(Name);
+	m.Alpha = false;
+	Diffuse_Edit.GetWindowTextW(temp);
+	m.DiffuseMap = ChangeToString(temp);
+
+	Nomal_Eidt.GetWindowTextW(temp);
+	m.NormalMap = ChangeToString(temp);
+
+	Emissive_Edit.GetWindowTextW(temp);
+	m.EmissiveMap = ChangeToString(temp);
+
+	ORM_Edit.GetWindowTextW(temp);
+	m.ORMMap = ChangeToString(temp);
+
+
+	int E = Emissive_Slider.GetPos();
+	int R = Roughnees_Slider.GetPos();
+	int M = Matallic_Slider.GetPos();
+
+	float ColorR = (float)Add_R_Slider.GetPos()/ 255.0f;
+	float ColorG = (float)Add_G_Slider.GetPos()/ 255.0f;
+	float ColorB = (float)Add_B_Slider.GetPos()/ 255.0f;
+	m.Emissive = (E - 100) *0.01f;
+	m.Roughness = (R - 100) * 0.01f;
+	m.Metallic = (M - 100) * 0.01f;
+
+	m.AddColorR = ColorR;
+	m.AddColorG = ColorG;
+	m.AddColorB = ColorB;
+
+
+
 	RightOption::GetThis()->m_EditorManager->CreateMaterialData(&m);
 
 	CDialogEx::OnOK();

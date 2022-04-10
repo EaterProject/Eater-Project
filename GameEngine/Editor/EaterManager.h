@@ -13,7 +13,7 @@ class E_AnimationManager;
 class E_BufferManager;
 class E_ChangeManager;
 class GameObject;
-class InstanceMaterial;
+struct InstanceMaterial;
 struct ObjectOption;
 
 namespace ParserData

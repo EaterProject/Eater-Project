@@ -15,6 +15,7 @@
 #include "FileOption.h"
 #include "LoadTerrain.h"
 #include "LoadNavMesh.h"
+#include "CreateMaterial.h"
 #define MAXPATH 256
 // AssetsDialog 대화 상자
 
@@ -130,6 +131,13 @@ int AssetsDialog::FindChildFile(HTREEITEM hParentItem, CString str)
 	}
 	
 	return Count + ChildCount;
+}
+
+void AssetsDialog::CheckTexture(POINT point)
+{
+
+
+
 }
 
 void AssetsDialog::OnSize(UINT nType, int cx, int cy)
@@ -350,6 +358,11 @@ void AssetsDialog::OnLButtonUp(UINT nFlags, CPoint point)
 		 mRightOption->DragItemName = DragItemName;
 		 mRightOption->ChickHirearchyDarg(point);
 		 mRightOption->ChickTapDrag(point);
+
+		 if (mRightOption->mMaterial->IsWindowVisible() == true)
+		 {
+			mRightOption->mMaterial->CheckTexture(point);
+		 }
 
 		 //mFileOption = mRightOption->GetThis()->mFileOption;
 		 //if (mFileOption->IsWindowVisible() == true)

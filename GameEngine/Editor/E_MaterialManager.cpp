@@ -127,7 +127,7 @@ void E_MaterialManager::Create(InstanceMaterial* m)
 	EATER_SET_MAP("AddColor_G", std::to_string(m->AddColorG));
 	EATER_SET_MAP("AddColor_B", std::to_string(m->AddColorB));
 	EATER_SET_MAP("AddColor_A", std::to_string(1));
-
+	EATER_CLOSE_WRITE_FILE();
 }
 
 

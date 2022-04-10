@@ -17,6 +17,7 @@
 #include "FileOption.h"
 #include "EditorManager.h"
 #include "Loading.h"
+#include "CreateMaterial.h"
 
 #include <stack>
 #include "MainHeader.h"
@@ -71,6 +72,10 @@ BOOL RightOption::OnInitDialog()
 	mCam = new CamAnimation();
 	mCam->Create(IDD_CAM_ANIMATION);
 	mCam->ShowWindow(SW_HIDE);
+
+	mMaterial = new CreateMaterial();
+	mMaterial->Create(IDD_CREATE_MATERIAL);
+	mMaterial->ShowWindow(SW_HIDE);
 
 	//Tag 기본 리스트
 	//Tag_Combo.InsertString(0, L"Default");
@@ -157,6 +162,7 @@ BEGIN_MESSAGE_MAP(RightOption, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON1, &RightOption::OnAddTag_Button)
 	ON_CBN_SELCHANGE(IDC_COMBO1, &RightOption::OnChoiceTag)
 	ON_BN_CLICKED(IDC_BUTTON2, &RightOption::OnDeleteTagButton)
+	ON_BN_CLICKED(IDC_BUTTON12, &RightOption::OnCreateBasicMaterial)
 END_MESSAGE_MAP()
 
 RightOption* RightOption::GetThis()
@@ -655,4 +661,10 @@ void RightOption::OnDeleteTagButton()
 		AfxMessageBox(L"삭제 성공");
 		AddTag_Edit.SetWindowTextW(L"");
 	}
+}
+
+
+void RightOption::OnCreateBasicMaterial()
+{
+	mMaterial->ShowWindow(SW_SHOW);
 }

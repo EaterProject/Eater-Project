@@ -23,6 +23,7 @@ protected:
 	Material* mMaterial;
 	DECLARE_MESSAGE_MAP()
 public:
+	void CheckTexture(POINT point);
 	CEdit Diffuse_Edit;
 	CEdit Nomal_Eidt;
 	CEdit EmissiveName_Edit;

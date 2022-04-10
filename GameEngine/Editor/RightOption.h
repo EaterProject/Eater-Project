@@ -17,6 +17,7 @@ class FileOption;
 class Loading;
 class EditorManager;
 class CamAnimation;
+class CreateMaterial;
 class RightOption : public CDialogEx
 {
 	DECLARE_DYNAMIC(RightOption)
@@ -76,12 +77,14 @@ public:
 	EditorManager*		m_EditorManager;	//자체포맷 변환 관리 매니저
 	Loading*			mLoading;			//로딩 바
 	CamAnimation*		mCam;
+	CreateMaterial*		mMaterial;
 public:
 	static void MouseDown();
 	void Create_Hirearchy_Item(GameObject* Obj, HTREEITEM TOP);
 	void Delete_Hirearchy_Item(HTREEITEM TOP);
 	void ChickTapDrag(CPoint point);
 	void ChickHirearchyDarg(CPoint point);
+	//void ChickMaterial(CPoint point);
 	GameObject* FindGameObjectParent(HTREEITEM mItem);
 	CEdit FilePathEdit;
 
@@ -100,4 +103,5 @@ public:
 	afx_msg void OnAddTag_Button();
 	afx_msg void OnChoiceTag();
 	afx_msg void OnDeleteTagButton();
+	afx_msg void OnCreateBasicMaterial();
 };
