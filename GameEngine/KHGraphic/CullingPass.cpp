@@ -42,13 +42,13 @@ CullingPass::~CullingPass()
 
 void CullingPass::Create(int width, int height)
 {
-	m_Width = (float)width;
-	m_Height = (float)height;
+	m_Width = 512.0f;
+	m_Height = 256.0f;
 
 	// Hierachical Z-Map Depth Buffer
 	D3D11_TEXTURE2D_DESC hizDepthDesc;
-	hizDepthDesc.Width = width;
-	hizDepthDesc.Height = height;
+	hizDepthDesc.Width = m_Width;
+	hizDepthDesc.Height = m_Height;
 	hizDepthDesc.MipLevels = 1;
 	hizDepthDesc.ArraySize = 1;
 	hizDepthDesc.Format = DXGI_FORMAT_D32_FLOAT;
@@ -68,6 +68,9 @@ void CullingPass::Create(int width, int height)
 
 	// Hierachical Z-Map Depth DepthStencilView 생성..
 	g_Factory->CreateDepthStencil<DS_HizDepth>(&hizDepthDesc, nullptr, &hizDSVDesc, nullptr);
+
+	// Hierachical Z-Map ViewPort 생성..
+	g_Factory->CreateViewPort<VP_Hiz>(0.0f, 0.0f, (float)m_Width, (float)m_Height);
 }
 
 void CullingPass::Start(int width, int height)
@@ -90,23 +93,20 @@ void CullingPass::Start(int width, int height)
 	m_NoCull_RS = g_Resource->GetRasterizerState<RS_NoCull>()->Get();
 
 	// ViewPort 설정..
-	m_Screen_VP = g_Resource->GetViewPort<VP_FullScreen>()->Get();
+	m_Hiz_VP = g_Resource->GetViewPort<VP_Hiz>()->Get();
 
 	// Hierachical Z-Map MipMap Resource 생성..
-	MipMapResourceCreate(width, height);
+	MipMapResourceCreate();
 }
 
 void CullingPass::OnResize(int width, int height)
 {
-	m_Width = (float)width;
-	m_Height = (float)height;
-
 	// DepthStencilView 재설정..
 	m_HizDepth_DSV = g_Resource->GetDepthStencilView<DS_HizDepth>()->Get();
 
 	// MipMap Create & Deferred Context Reserve..
 	MipMapResourceRelease();
-	MipMapResourceCreate(width, height);
+	MipMapResourceCreate();
 }
 
 void CullingPass::InstanceResize(size_t& renderMaxCount, size_t& unRenderMaxCount)
@@ -128,8 +128,8 @@ void CullingPass::RenderOccluders()
 	Matrix& viewproj = cam->CamViewProj;
 
 	// Occluder Depth 그리기..
-	g_Context->RSSetViewports(1, m_Screen_VP);
-	//g_Context->RSSetState(m_NoCull_RS);
+	g_Context->RSSetViewports(1, m_Hiz_VP);
+	g_Context->RSSetState(m_NoCull_RS);
 	g_Context->OMSetRenderTargets(1, &m_MipMap_RTV[0], m_HizDepth_DSV);
 	g_Context->ClearRenderTargetView(m_MipMap_RTV[0], reinterpret_cast<const float*>(&DXColors::White));
 	g_Context->ClearDepthStencilView(m_HizDepth_DSV, D3D11_CLEAR_DEPTH, 1.0, 0);
@@ -242,12 +242,6 @@ void CullingPass::OcclusionCullingQuery()
 	m_HizCull_CS->Update();
 
 	g_Context->Dispatch(m_RenderCount, 1, 1);
-
-	ID3D11ShaderResourceView* srv[2] = { nullptr, nullptr };
-	ID3D11UnorderedAccessView* uav = nullptr;
-	UINT nullOffset = -1;
-	g_Context->CSSetShaderResources(0, 2, srv);
-	g_Context->CSSetUnorderedAccessViews(0, 1, &uav, &nullOffset);
 }
 
 void CullingPass::DrawStateUpdate()
@@ -333,11 +327,11 @@ void CullingPass::MipMapResourceRelease()
 	}
 }
 
-void CullingPass::MipMapResourceCreate(int width, int height)
+void CullingPass::MipMapResourceCreate()
 {
 	D3D11_TEXTURE2D_DESC hizDesc;
-	hizDesc.Width = width;
-	hizDesc.Height = height;
+	hizDesc.Width = m_Width;
+	hizDesc.Height = m_Height;
 	hizDesc.MipLevels = 0;
 	hizDesc.ArraySize = 1;
 	hizDesc.Format = DXGI_FORMAT_R32_FLOAT;
@@ -395,23 +389,15 @@ void CullingPass::MipMapResourceCreate(int width, int height)
 	g_Device->CreateShaderResourceView(m_Hiz_Buffer, &hizSRVD, &m_Hiz_SRV);
 
 	// 해당 MipMap Sampling CommandList Reserve..
-	MipMapCommandListReserve(width, height, &hizDesc);
+	MipMapCommandListReserve(&hizDesc);
 }
 
-void CullingPass::MipMapCommandListReserve(int width, int height, const D3D11_TEXTURE2D_DESC* hizDesc)
+void CullingPass::MipMapCommandListReserve(const D3D11_TEXTURE2D_DESC* hizDesc)
 {
 	ID3D11DeviceContext* context;
 	g_Device->CreateDeferredContext(0, &context);
 
-	D3D11_VIEWPORT vp;
-	vp.Width = (FLOAT)width;
-	vp.Height = (FLOAT)height;
-	vp.MinDepth = 0;
-	vp.MaxDepth = 1;
-	vp.TopLeftX = 0;
-	vp.TopLeftY = 0;
-	context->RSSetViewports(1, &vp);
-
+	context->RSSetViewports(1, m_Hiz_VP);
 	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 	context->IASetVertexBuffers(0, 1, m_Screen_DB->VertexBuf->GetAddress(), &m_Screen_DB->Stride, &m_Screen_DB->Offset);
 	context->IASetIndexBuffer(m_Screen_DB->IndexBuf->Get(), DXGI_FORMAT_R32_UINT, 0);

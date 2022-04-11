@@ -186,6 +186,11 @@ void RenderManager::SetGlobalData(GlobalData* globalData)
 	RenderPassBase::g_GlobalData = globalData;
 }
 
+void RenderManager::SetShadowMap(std::string path)
+{
+	
+}
+
 void RenderManager::SetEnvironmentMap(bool enable)
 {
 	m_Light->SetIBLEnvironmentMapResource(enable);

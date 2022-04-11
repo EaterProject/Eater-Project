@@ -13,6 +13,7 @@ public:
 	void Release() override;
 
 public:
+	void PreBakeShadowMap(std::string path) override;
 	void PreBakeIBLMap() override;
 
 private:

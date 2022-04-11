@@ -30,6 +30,10 @@ public:
 	// Global Data Setting..
 	virtual void SetGlobalData(GlobalData* globalData) abstract;
 
+public:
+	// Shadow Map Setting..
+	virtual void SetShadowMap(std::string path) abstract;
+
 	// Environment Map Setting..
 	virtual void SetEnvironmentMap(bool enable) abstract;
 

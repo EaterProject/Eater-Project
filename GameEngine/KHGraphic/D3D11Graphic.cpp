@@ -102,34 +102,22 @@ HRESULT D3D11Graphic::SaveTextureDDS(ID3D11Resource* resource, const char* fileN
 	return result;
 }
 
-HRESULT D3D11Graphic::SaveTextureDDS(ID3D11ShaderResourceView* resource, const char* fileName)
+HRESULT D3D11Graphic::SaveTextureDDS(ID3D11DepthStencilView* resource, const char* fileName)
 {
-	HRESULT result;
-	std::string name = fileName;
-	name = "../KHGraphic/Bake/" + name + ".dds";
-
 	ID3D11Texture2D* textureInterface = nullptr;
 	ID3D11Resource* textureResource;
 	resource->GetResource(&textureResource);
-	textureResource->QueryInterface<ID3D11Texture2D>(&textureInterface);
 
-	DirectX::ScratchImage image;
-	result = DirectX::CaptureTexture(m_Device.Get(), m_DeviceContext.Get(), textureInterface, image);
+	return SaveTextureDDS(textureResource, fileName);
+}
 
-	if (SUCCEEDED(result))
-	{
-		result = DirectX::SaveToDDSFile(image.GetImages(), image.GetImageCount(), image.GetMetadata(), DirectX::DDS_FLAGS_NONE, std::wstring(name.begin(), name.end()).c_str());
-	}
+HRESULT D3D11Graphic::SaveTextureDDS(ID3D11ShaderResourceView* resource, const char* fileName)
+{
+	ID3D11Texture2D* textureInterface = nullptr;
+	ID3D11Resource* textureResource;
+	resource->GetResource(&textureResource);
 
-	if (FAILED(result))
-	{
-		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, result, "[Graphic][Save][Texture] '%s' FAILED!!", fileName);
-		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, result, "[Graphic][Save][Texture] '%s' FAILED!!", fileName);
-	}
-
-	//DirectX::SaveDDSTextureToFile(m_DeviceContext.Get(), textureInterface, std::wstring(name.begin(), name.end()).c_str());
-	
-	return result;
+	return SaveTextureDDS(textureResource, fileName);
 }
 
 HRESULT D3D11Graphic::CreateBuffer(D3D11_BUFFER_DESC* bufferDesc, D3D11_SUBRESOURCE_DATA* subData, ID3D11Buffer** buffer)

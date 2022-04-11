@@ -1733,6 +1733,12 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(Parser
 }
 
 template<>
+void GraphicResourceFactory::CreateLoadBuffer<VertexInput::PosVertex>(ParserData::CMesh* mesh, MeshBuffer** ppResource)
+{
+
+}
+
+template<>
 void GraphicResourceFactory::CreateLoadBuffer<VertexInput::PosTexVertex>(ParserData::CMesh* mesh, MeshBuffer** ppResource)
 {
 	// 货肺款 Buffer 积己..

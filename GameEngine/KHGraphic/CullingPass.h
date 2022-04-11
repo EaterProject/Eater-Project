@@ -30,8 +30,8 @@ public:
 
 private:
 	void MipMapResourceRelease();
-	void MipMapResourceCreate(int width, int height);
-	void MipMapCommandListReserve(int width, int height, const D3D11_TEXTURE2D_DESC* hizDesc);
+	void MipMapResourceCreate();
+	void MipMapCommandListReserve(const D3D11_TEXTURE2D_DESC* hizDesc);
 
 private:
 	std::vector<RenderData*> CullingRenderMeshList;
@@ -53,7 +53,7 @@ private:
 
 	ID3D11RasterizerState* m_NoCull_RS;
 
-	D3D11_VIEWPORT* m_Screen_VP;
+	D3D11_VIEWPORT* m_Hiz_VP;
 
 
 

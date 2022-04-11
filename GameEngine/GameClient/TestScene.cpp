@@ -110,14 +110,14 @@ void TestScene::CreateMap()
 	filter = Object->AddComponent<MeshFilter>();
 	filter->SetModelName("box1");
 
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("box2");
-
 	//Object = Instance();
 	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("box3");
-	//
+	//filter->SetModelName("box2");
+
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	filter->SetModelName("box3");
+
 	//Object = Instance();
 	//filter = Object->AddComponent<MeshFilter>();
 	//filter->SetModelName("box4");
@@ -142,27 +142,27 @@ void TestScene::CreateMap()
 	filter = Object->AddComponent<MeshFilter>();
 	filter->SetModelName("Dome_Occluder");
 
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("Dome");
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	filter->SetModelName("Dome");
 	
 	Object = Instance();
 	filter = Object->AddComponent<MeshFilter>();
 	filter->SetModelName("organic_cactus");
-	
+
 	Object = Instance();
 	filter = Object->AddComponent<MeshFilter>();
 	Tr = Object->GetTransform();
 	filter->SetModelName("Outside_Rock");
-	
+
 	Object = Instance();
 	filter = Object->AddComponent<MeshFilter>();
 	filter->SetModelName("Outside_bossOBJ");
-	
+
 	Object = Instance();
 	filter = Object->AddComponent<MeshFilter>();
 	filter->SetModelName("Outside_Other");
-	
+
 	Object = Instance();
 	filter = Object->AddComponent<MeshFilter>();
 	filter->SetModelName("Outside_Pebble");

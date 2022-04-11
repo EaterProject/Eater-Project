@@ -13,6 +13,7 @@ public:
 
 public:
 	HRESULT SaveTextureDDS(ID3D11Resource* resource, const char* fileName) override;
+	HRESULT SaveTextureDDS(ID3D11DepthStencilView* resource, const char* fileName) override;
 	HRESULT SaveTextureDDS(ID3D11ShaderResourceView* resource, const char* fileName) override;
 
 public:

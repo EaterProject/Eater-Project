@@ -10,6 +10,7 @@ public:
 
 public:
 	virtual HRESULT SaveTextureDDS(ID3D11Resource* resource, const char* fileName) abstract;
+	virtual HRESULT SaveTextureDDS(ID3D11DepthStencilView* resource, const char* fileName) abstract;
 	virtual HRESULT SaveTextureDDS(ID3D11ShaderResourceView* resource, const char* fileName) abstract;
 
 public:

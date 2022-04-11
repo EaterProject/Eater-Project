@@ -23,6 +23,10 @@ public:
 	virtual void CreateEnvironmentMap(std::string path) abstract;
 
 public:
+	// Baking Graphic Resource..
+	virtual void BakingShadowMap(std::string path) abstract;
+
+public:
 	template<typename T, Enable_Check<T> = NULL> void CreateImage(std::string path);
 
 public:

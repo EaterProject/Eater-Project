@@ -35,6 +35,9 @@ public:
 
 	void RenderSetting(RenderOption* renderOption) override;
 	void SetGlobalData(GlobalData* globalData) override;
+
+public:
+	void SetShadowMap(std::string path) override;
 	void SetEnvironmentMap(bool enable) override;
 
 public:

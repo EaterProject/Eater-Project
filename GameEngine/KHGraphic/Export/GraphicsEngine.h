@@ -44,8 +44,12 @@ public:
 	/// Graphic Data Setting Function..
 	virtual GRAPHIC_DLL void RenderSetting(RenderOption* renderOption) abstract;
 	virtual GRAPHIC_DLL void SetGlobalData(GlobalData* globalData) abstract;
+
+public:
+	virtual GRAPHIC_DLL void SetShadowMap(std::string path) abstract;
 	virtual GRAPHIC_DLL void SetEnvironmentMap(bool enable) abstract;
 
+public:
 	/// Render Mesh Data & Rendering Function..
 	virtual GRAPHIC_DLL void PushInstance(MeshData* instance) abstract;
 	virtual GRAPHIC_DLL void PushMaterial(MaterialBuffer* material) abstract;
@@ -62,11 +66,16 @@ public:
 	virtual GRAPHIC_DLL void Render() abstract;
 	virtual GRAPHIC_DLL void* PickingRender(int x, int y) abstract;
 
+public:
 	/// Graphic Resource Create Function..
 	virtual GRAPHIC_DLL void CreateTextureBuffer(std::string path, TextureBuffer** ppResource) abstract;
 	virtual GRAPHIC_DLL void CreateMeshBuffer(ParserData::CMesh* mesh, MeshBuffer** ppResource) abstract;
 
 	virtual GRAPHIC_DLL void CreateEnvironmentMap(std::string path) abstract;
+
+public:
+	/// Graphic Resource Baking Function..
+	virtual GRAPHIC_DLL void BakingShadowMap(std::string path) abstract;
 
 private:
 	static GraphicEngine* Graphic;
