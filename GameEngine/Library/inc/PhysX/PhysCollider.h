@@ -2,6 +2,7 @@
 
 #include "PhysEngineDLL.h"
 #include "SimpleMath.h"
+#include <string>
 
 using namespace DirectX;
 using namespace SimpleMath;
@@ -30,6 +31,7 @@ public:
 		TriangleMeshData();
 		~TriangleMeshData();
 	public:
+		std::string Name;
 		Vector3* VertexList = nullptr;
 		UINT* CIndexList		= nullptr;
 		int VertexListSize	= 0;
@@ -58,6 +60,7 @@ public:
 	PHYS_ENGINEDLL TYPE GetType();
 	PHYS_ENGINEDLL bool GetTrigger();
 	PHYS_ENGINEDLL TriangleMeshData* GetTriangleMesh();
+	PHYS_ENGINEDLL std::string GetTriangleMeshName();
 private:
 	//콜라이더 데이터 셋팅
 	Vector3 Size;						//사이즈

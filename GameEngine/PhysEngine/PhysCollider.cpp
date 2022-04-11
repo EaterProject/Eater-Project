@@ -23,6 +23,7 @@ PhysCollider::~PhysCollider()
 
 PhysCollider::TriangleMeshData::TriangleMeshData()
 {
+	Name			= "";
 	VertexList		= nullptr;
 	CIndexList		= nullptr;
 	VertexListSize	= 0;
@@ -125,5 +126,10 @@ bool PhysCollider::GetTrigger()
 PhysCollider::TriangleMeshData* PhysCollider::GetTriangleMesh()
 {
 	return TriangleData;
+}
+
+ std::string PhysCollider::GetTriangleMeshName()
+{
+	 return TriangleData->Name;
 }
 

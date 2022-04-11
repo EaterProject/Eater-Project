@@ -162,8 +162,9 @@ void SceneSave::SaveParticle(ParticleSystem* mParticleSystem)
 void SceneSave::SaveCollider(Collider* mCollider)
 {
 	PhysCollider* mPhys = mCollider->GetCollider();
-	EATER_SET_LIST_START("Collider", 1, 11);
+	EATER_SET_LIST_START("Collider", 1, 12);
 	
+	int num = (int)mPhys->GetType();
 	EATER_SET_LIST((int)mPhys->GetType());	//0.타입
 
 	Vector3 Size = mPhys->GetSize();
@@ -181,7 +182,11 @@ void SceneSave::SaveCollider(Collider* mCollider)
 
 	EATER_SET_LIST(mCollider->GetMaterial_Dynamic());			//8. 재질
 	EATER_SET_LIST(mCollider->GetMaterial_Restitution());		//9. 재질
-	EATER_SET_LIST(mCollider->GetMaterial_Static(),true);		//10. 재질
+	EATER_SET_LIST(mCollider->GetMaterial_Static());			//10. 재질
+	//PhysCollider::TriangleMeshData* Data = mPhys->GetTriangleMesh();
+	EATER_SET_LIST("",true);
+	
+
 }
 
 void SceneSave::SaveRigidbody(Rigidbody* mRigidbody)

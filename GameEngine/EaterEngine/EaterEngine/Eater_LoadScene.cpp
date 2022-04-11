@@ -154,8 +154,8 @@ void Eater_LoadScene::Load_Component_Collider(int index, GameObject* Object)
 	std::vector<std::string> Data;
 	EATER_GET_LIST(&Data, 0);
 
-	int Type = 0;
-	switch (std::stoi(Data[0]))
+	int Type = std::stoi(Data[0]);
+	switch (Type)
 	{
 	case 0:
 		mCollider->SetBoxCollider(std::stof(Data[1]), std::stof(Data[2]), std::stof(Data[3]));
@@ -174,6 +174,10 @@ void Eater_LoadScene::Load_Component_Collider(int index, GameObject* Object)
 	mCollider->SetMaterial_Dynamic(std::stof(Data[8]));
 	mCollider->SetMaterial_Restitution(std::stof(Data[9]));
 	mCollider->SetMaterial_Static(std::stof(Data[10]));
+	if (Type == 3)
+	{
+		mCollider->SetTriangleCollider(Data[11]);
+	}
 	//mCollider->CreatePhys();
 }
 

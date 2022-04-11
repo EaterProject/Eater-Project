@@ -7,6 +7,7 @@
 #include "GameObject.h"
 #include "Camera.h"
 #include "Transform.h"
+#include "Collider.h"
 
 //클라이언트 컨퍼넌트
 #include "PlayerCamera.h"
@@ -43,6 +44,10 @@ void ClientObjectManager::Initialize(ObjectFactory* Factory)
 
 	//포탈 태그가 붙어있는 오브젝트를 모두 가져와 리스트에 담아놓는다
 	FindGameObjectTags("Potal", &PotalPoint_List);
+
+	GameObject* Obj = Instance();
+	Collider* Col = Obj->AddComponent<Collider>();
+	Col->SetTriangleCollider("Terrain2_Decimate_0");
 
 	CreateObjectMemorySize();
 	OnActivePotal(true);
