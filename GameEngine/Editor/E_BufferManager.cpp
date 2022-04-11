@@ -11,9 +11,27 @@ E_BufferManager::~E_BufferManager()
 {
 }
 
-void E_BufferManager::ChangeEaterFile(ParserData::CModel* FBXMesh)
+void E_BufferManager::ChangeEaterFile(ParserData::CModel* FBXMesh, unsigned int Option)
 {
 	MeshIndexList.clear();
+	if (Option & ORIGIN_ONLY)
+	{
+		int Size = (int)FBXMesh->m_MeshList.size();
+		for (int i = 0; i < Size;i++)
+		{
+			ParserData::CMesh* mMesh = FBXMesh->m_MeshList[i];
+
+			std::string FileName = SaveFileName + "_" + std::to_string(mMesh->m_MeshIndex);
+			EATER_OPEN_WRITE_FILE(FileName, "../Assets/Model/MeshBuffer/", ".Emesh");
+			EATER_SET_NODE("POSITION_BUFFER");
+			SetPosVertexBuffer(mMesh);
+			SetIndexBuffer(mMesh);
+
+			Demo::MeshLoad(FileName);
+		}
+		EATER_CLOSE_WRITE_FILE();
+		return;
+	}
 
 	int Size = (int)FBXMesh->m_MeshList.size();
 	for (int i = 0; i < Size; i++)
@@ -29,17 +47,17 @@ void E_BufferManager::ChangeEaterFile(ParserData::CModel* FBXMesh)
 		{
 		case MESH_TYPE::SKIN_MESH:
 			EATER_OPEN_WRITE_FILE(FileName, "../Assets/Model/MeshBuffer/", ".Emesh");	//파일 생성
-			EATER_SET_NODE("SKIN_BUFFER");											//노드 생성
-			SetSkinVertexBuffer(mMesh);												//버텍스값 쓰기
-			SetIndexBuffer(mMesh);													//인덱스값 쓰기
-			EATER_CLOSE_WRITE_FILE();														//파일 닫기
+			EATER_SET_NODE("SKIN_BUFFER");												//노드 생성
+			SetSkinVertexBuffer(mMesh);													//버텍스값 쓰기
+			SetIndexBuffer(mMesh);														//인덱스값 쓰기
+			EATER_CLOSE_WRITE_FILE();													//파일 닫기
 			break;
 		case MESH_TYPE::STATIC_MESH:
 			EATER_OPEN_WRITE_FILE(FileName, "../Assets/Model/MeshBuffer/", ".Emesh");	//파일 생성
-			EATER_SET_NODE("STATIC_BUFFER");												//노드 생성
-			SetVertexBuffer(mMesh);													//버텍스값 쓰기
-			SetIndexBuffer(mMesh);													//인덱스값 쓰기
-			EATER_CLOSE_WRITE_FILE();														//파일 닫기
+			EATER_SET_NODE("STATIC_BUFFER");											//노드 생성
+			SetVertexBuffer(mMesh);														//버텍스값 쓰기
+			SetIndexBuffer(mMesh);														//인덱스값 쓰기
+			EATER_CLOSE_WRITE_FILE();													//파일 닫기
 			break;
 		}
 		
@@ -78,6 +96,22 @@ void E_BufferManager::SetVertexBuffer(ParserData::CMesh* mMesh)
 		base.TANGENT_Z = V->m_Tanget.z;
 
 		EATER_SET_VERTEX(base);
+	}
+}
+
+void E_BufferManager::SetPosVertexBuffer(ParserData::CMesh* mMesh)
+{
+	int VertexCount = (int)mMesh->m_VertexList.size();
+	EATER_SET_VERTEX_START(VertexCount, VERTEX_TYPE::POS);
+
+	for (int i = 0; i < VertexCount; i++)
+	{
+		ParserData::CVertex* V = mMesh->m_VertexList[i];
+		EATER_VERTEX_POS Pos;
+		Pos.POS_X = V->m_Pos.x;
+		Pos.POS_Y = V->m_Pos.y;
+		Pos.POS_Z = V->m_Pos.z;
+		EATER_SET_VERTEX(Pos);
 	}
 }
 

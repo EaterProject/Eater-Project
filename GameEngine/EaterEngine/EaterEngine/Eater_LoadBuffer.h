@@ -7,6 +7,7 @@ namespace ParserData
 }
 class Mesh;
 class GraphicEngineManager;
+class ColliderBuffer;
 
 
 class Eater_LoadBuffer : Eater_Interface
@@ -22,7 +23,9 @@ public:
 private:
 	void LoadStaticBuffer(int index, ParserData::CMesh* mesh);
 	void LoadSkinBuffer(int index, ParserData::CMesh* mesh);
+	void LoadPositionBuffer(int index, ColliderBuffer* mesh);
 	void LoadIndex(int index, ParserData::CMesh* mMesh);
+	void LoadIndex(int index, ColliderBuffer* mMesh);
 	Mesh* CreateBuffer(ParserData::CMesh* mesh);
 
 	GraphicEngineManager* m_Graphic;

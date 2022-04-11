@@ -14,12 +14,14 @@
 #include "Profiler/Profiler.h"
 
 
+
 std::map<std::string, ModelData*>			LoadManager::ModelList;
 std::map<std::string, TextureBuffer*>		LoadManager::TextureList;
 std::map<std::string, Material*>			LoadManager::MaterialList;
 std::map<std::string, ModelAnimationData*>	LoadManager::AnimationList;
 std::map<std::string, Mesh*>				LoadManager::MeshBufferList;
 std::map<std::string, CameraAnimation*>		LoadManager::CamAnimationList;
+std::map<std::string, ColliderBuffer*>		LoadManager::ColliderBufferList;		
 
 LoadManager::LoadManager()
 {
@@ -83,20 +85,15 @@ void LoadManager::Start()
 
 void LoadManager::Load(std::string& Path, UINT MODE)
 {
-
 	//파일,폴더 구분
 	if (CheckFolder(Path) == true)
 	{
 		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Load ][ Folder ] %s", Path.c_str());
-
-		//폴더 경로가 들어왔다면 그파일부터 모든 파일들을 다읽음 (폴더안에 폴더까지)
 		LoadFolder(Path, MODE);
 	}
 	else
 	{
 		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Load ][ File ] %s", Path.c_str());
-
-		//파일경로가 들어왔다면 파일을 읽음
 		LoadFile(Path, MODE);
 	}
 }
@@ -223,6 +220,22 @@ CameraAnimation* LoadManager::GetCamAnimation(std::string Path)
 	if (End_it == Find_it)
 	{
 		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ ERROR ][ Engine ][ GetCamAnimation ] '%s'가 없습니다.", Path.c_str());
+		return nullptr;
+	}
+	else
+	{
+		return Find_it->second;
+	}
+}
+
+ColliderBuffer* LoadManager::GetColliderBuffer(std::string Path)
+{
+	std::map<std::string, ColliderBuffer*>::iterator End_it		= ColliderBufferList.end();
+	std::map<std::string, ColliderBuffer*>::iterator Find_it	= ColliderBufferList.find(Path);
+
+	if (End_it == Find_it)
+	{
+		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ ERROR ][ Engine ][ GetCollider ] '%s'가 없습니다.", Path.c_str());
 		return nullptr;
 	}
 	else

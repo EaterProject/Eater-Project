@@ -17,6 +17,13 @@ struct EATER_VERTEX_BASE
 	float TANGENT_Z;
 };
 
+struct EATER_VERTEX_POS
+{
+	float POS_X;
+	float POS_Y;
+	float POS_Z;
+};
+
 struct EATER_VERTEX_SKIN
 {
 	float POS_X;

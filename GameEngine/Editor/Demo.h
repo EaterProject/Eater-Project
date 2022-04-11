@@ -32,7 +32,7 @@ public:
 	static GameObject* Create_Camera();							//카메라 생성
 public:
 	///Load,Save,Delete
-	static void MeshLoad(std::string Path);						//Object 로드
+	static void MeshLoad(std::string Path, UINT Option = 0);	//Object 로드
 	static bool DeleteObject(std::string MeshName);				//Object 삭제
 public:
 	///Scene

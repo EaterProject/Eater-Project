@@ -134,6 +134,18 @@ public:
 	TextureBuffer* ORM = nullptr;			// AO(R) + Roughness(G) + Metallic(B) Texture
 };
 
+class ColliderBuffer : public MeshBuffer
+{
+public:
+	ColliderBuffer() = default;
+	~ColliderBuffer() = default;
+
+	int VertexArrayCount	= 0;
+	int IndexArrayCount		= 0;
+	Vector3* VertexArray = nullptr;
+	UINT*	 FaceArray = nullptr;
+};
+
 // Terrain Data
 class TerrainData
 {

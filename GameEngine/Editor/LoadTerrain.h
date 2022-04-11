@@ -30,7 +30,6 @@ protected:
 	std::string Mask01Name;
 	std::string Mask02Name;
 
-
 	DECLARE_MESSAGE_MAP()
 public:
 	CEdit FBXName_Edit;

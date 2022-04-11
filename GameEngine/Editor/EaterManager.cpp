@@ -82,11 +82,19 @@ void EaterManager::Load_Eater_File(std::string& Path)
 
 }
 
-void EaterManager::Load_FBX_File(std::string& Path, ParserData::CModel* FBXMesh)
+void EaterManager::Load_FBX_File(std::string& Path, ParserData::CModel* FBXMesh, unsigned int Option)
 {
 	std::string FileName = CutFileName(Path);
 	std::string AnimationName = FileName;
 	int ModelType = CheckModelType(FBXMesh);
+
+	if (Option & ORIGIN_ONLY)
+	{
+		mBufferManager->SetFileName(FileName);
+		mBufferManager->ChangeEaterFile(FBXMesh, Option);
+		Demo::MeshLoad(FileName);
+		return;
+	}
 
 	//스킨 오브젝트라면 이름을 짤라줘야한다
 	if (ModelType == E_SKIN_MESH)
@@ -106,7 +114,7 @@ void EaterManager::Load_FBX_File(std::string& Path, ParserData::CModel* FBXMesh)
 
 	///MeshBuffer 정보를 저장한다
 	mBufferManager->SetFileName(FileName);
-	mBufferManager->ChangeEaterFile(FBXMesh);
+	mBufferManager->ChangeEaterFile(FBXMesh, Option);
 
 	///Animation 정보를 저장한다
 	mAnimationManager->SetFileName(AnimationName);

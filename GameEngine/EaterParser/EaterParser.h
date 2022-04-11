@@ -6,6 +6,7 @@
 
 struct EATER_VERTEX_BASE;
 struct EATER_VERTEX_SKIN;
+struct EATER_VERTEX_POS;
 class EaterNode;
 class EaterList;
 class EaterParser
@@ -29,6 +30,7 @@ public:
 	void SetVertexStart(int VertexCount,int Type);
 	void SetVertex(EATER_VERTEX_BASE& Base);
 	void SetVertex(EATER_VERTEX_SKIN& Base);
+	void SetVertex(EATER_VERTEX_POS& Base);
 	void SetIndexStart(int IndexCount);
 	void SetIndex(int& x,int& y,int& z);
 public:

@@ -6,6 +6,7 @@
 #include "Mesh.h"
 #include "LoadManager.h"
 #include "GraphicEngineManager.h"
+#include "MainHeader.h"
 Eater_LoadBuffer::Eater_LoadBuffer()
 {
 
@@ -56,6 +57,18 @@ void Eater_LoadBuffer::LoadData(std::string& Path)
 			Buffer->Name = SaveName;
 			Buffer->m_MeshData->Name = SaveName; 
 			LoadManager::MeshBufferList.insert({ SaveName,Buffer });
+			delete mMesh;
+		}
+		else if (NodeName == "POSITION_BUFFER")
+		{
+			ColliderBuffer* Buffer = new ColliderBuffer();
+			LoadPositionBuffer(i, Buffer);
+			LoadIndex(i, Buffer);
+			////Mesh* Buffer = CreateBuffer(mMesh);
+			////Buffer->Name = SaveName;
+			////Buffer->m_MeshData->Name = SaveName;
+			//// 
+			LoadManager::ColliderBufferList.insert({ SaveName,Buffer });
 			delete mMesh;
 		}
 	}
@@ -141,6 +154,23 @@ void Eater_LoadBuffer::LoadSkinBuffer(int index, ParserData::CMesh* mesh)
 	}
 }
 
+void Eater_LoadBuffer::LoadPositionBuffer(int index, ColliderBuffer* mesh)
+{
+	//mesh->m_MeshType = MESH_TYPE::STATIC_MESH;
+	
+	const int VertexCount	= EATER_GET_LIST_CHOICE(index, "Vertex");
+	mesh->VertexArrayCount	= VertexCount;
+	mesh->VertexArray		= new Vector3[VertexCount];
+	for (int i = 0; i < VertexCount; i++)
+	{
+		std::vector<float> Data;
+		EATER_GET_LIST(&Data, i);
+		mesh->VertexArray[i].x = Data[0];
+		mesh->VertexArray[i].y = Data[1];
+		mesh->VertexArray[i].z = Data[2];
+	}
+}
+
 void Eater_LoadBuffer::LoadIndex(int index, ParserData::CMesh* mMesh)
 {
 	int IndexCount = EATER_GET_LIST_CHOICE(index, "Index");
@@ -160,8 +190,26 @@ void Eater_LoadBuffer::LoadIndex(int index, ParserData::CMesh* mMesh)
 	}
 }
 
+void Eater_LoadBuffer::LoadIndex(int index, ColliderBuffer* mMesh)
+{
+	const int IndexCount = EATER_GET_LIST_CHOICE(index, "Index") *3;
+	mMesh->IndexArrayCount = IndexCount;
+	mMesh->FaceArray = new UINT[IndexCount];
+	int Count = 0;
+	for (int i = 0; i < IndexCount; i += 3)
+	{
+		std::vector<float> Data;
+		EATER_GET_LIST(&Data, Count);
+		mMesh->FaceArray[i]			= (UINT)Data[0];
+		mMesh->FaceArray[i+1]		= (UINT)Data[1];
+		mMesh->FaceArray[i+2]		= (UINT)Data[2];
+		Count++;
+	}
+}
+
 Mesh* Eater_LoadBuffer::CreateBuffer(ParserData::CMesh* mesh)
 {
+	//버퍼를 만든다
 	EnterCriticalSection(m_CriticalSection);
 	Mesh* meshBuffer = new Mesh();
 	m_Graphic->CreateMeshBuffer(mesh, &meshBuffer->m_MeshData);

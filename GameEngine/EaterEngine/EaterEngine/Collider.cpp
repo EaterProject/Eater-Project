@@ -101,18 +101,22 @@ void Collider::SetMeshCollider(std::string MeshName)
 	//Triangle->IndexListSize = IndexSize;
 }
 
-void Collider::SetTerrainCollider(std::string MeshName)
+void Collider::SetTriangleCollider(std::string MeshName)
 {
-	//PhysCollider::TriangleMeshData* Triangle = mColliderData->CreateTriangle();
-	//ModelData* data = LoadManager::GetMesh(MeshName);
+	PhysX_Delete_Actor(mPhysData);
+	//delete mPhysData;
+	//mPhysData = PhysX_Create_Data();
 	//
-	//int IndexSize = data->TopMeshList[0]->m_OriginIndexListCount;
-	//int VertexSize = data->TopMeshList[0]->m_OriginVertexListCount;
+	//PhysCollider::TriangleMeshData* Triangle = mPhysData->mCollider->CreateTriangle();
+	//ColliderBuffer* data = LoadManager::GetColliderBuffer(MeshName);
 	//
-	//Triangle->VertexList = data->TopMeshList[0]->m_OriginVertexList;
+	//int IndexSize = data->IndexArrayCount;
+	//int VertexSize = data->VertexArrayCount;
+	//
+	//Triangle->VertexList = data->VertexArray;
 	//Triangle->VertexListSize = VertexSize;
 	//
-	//Triangle->IndexList = data->TopMeshList[0]->m_OriginIndexList;
+	//Triangle->CIndexList = data->FaceArray;
 	//Triangle->IndexListSize = IndexSize;
 }
 

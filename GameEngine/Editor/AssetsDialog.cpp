@@ -359,10 +359,16 @@ void AssetsDialog::OnLButtonUp(UINT nFlags, CPoint point)
 		 mRightOption->ChickHirearchyDarg(point);
 		 mRightOption->ChickTapDrag(point);
 
-		 if (mRightOption->mMaterial->IsWindowVisible() == true)
+		 if (mRightOption->mMaterial->IsWindowVisible() == TRUE)
 		 {
 			mRightOption->mMaterial->CheckTexture(point);
 		 }
+
+		 //if (mLoadNavMesh->IsWindowVisible() == true)
+		 //{
+		//	 mLoadNavMesh->SetPoint(point);
+		//	 mLoadNavMesh->SetLoadPath("");
+		 //}
 
 		 //mFileOption = mRightOption->GetThis()->mFileOption;
 		 //if (mFileOption->IsWindowVisible() == true)

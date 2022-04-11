@@ -32,7 +32,7 @@ void EditorManager::Initialize()
 	CreateAssetsFile();
 }
 
-void EditorManager::SetPath(std::string Path)
+void EditorManager::SetPath(std::string Path, unsigned int Option)
 {
 	size_t start = Path.rfind(".")+1;
 	size_t end = Path.length()- start;
@@ -48,8 +48,8 @@ void EditorManager::SetPath(std::string Path)
 	}
 	else if (FileType == "fbx")
 	{
-		ParserData::CModel* Model = mFbx->OpenFile(Path);
-		mEater->Load_FBX_File(Path, Model);
+		ParserData::CModel* Model = mFbx->OpenFile(Path, Option);
+		mEater->Load_FBX_File(Path, Model, Option);
 	}
 	else if (FileType == "unity")
 	{

@@ -21,6 +21,7 @@ namespace ParserData
 }
 
 class CameraAnimation;
+class ColliderBuffer;
 class ModelAnimationData;
 class LoadMeshData;
 class ModelData;
@@ -72,6 +73,7 @@ public:
 	static Mesh*			GetMesh(std::string Path);				//메쉬 데이터를 가져옴
 	static MeshBuffer*		GetMeshBuffer(std::string Path);		//메쉬 버퍼 데이터를 가져옴
 	static CameraAnimation* GetCamAnimation(std::string Path);		//카메라 애니메이션 데이터를가져옴
+	static ColliderBuffer*	GetColliderBuffer(std::string Path);	//카메라 애니메이션 데이터를가져옴
 	static bool				FindModel(std::string Name);			
 	static bool				FindTexture(std::string Name);
 private:
@@ -89,6 +91,7 @@ private:
 	static std::map<std::string, ModelAnimationData*>	AnimationList;
 	static std::map<std::string, Mesh*>					MeshBufferList;
 	static std::map<std::string, CameraAnimation*>		CamAnimationList;
+	static std::map<std::string, ColliderBuffer*>		ColliderBufferList;
 private:
 	FBXManager*				mFBX;
 	TextureManager*			mTexture;

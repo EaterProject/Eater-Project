@@ -23,7 +23,7 @@ public:
 	EATER_ENGINEDLL void SetSphereCollider(float Radius);								//원 콜라이더 생성
 	EATER_ENGINEDLL void SetCapsuleCollider(float Radius, float Height);				//캡슐 콜라이더 생성
 	EATER_ENGINEDLL void SetMeshCollider(std::string MeshName);							//페이스 정보에 따라 콜라이더 생성
-	EATER_ENGINEDLL void SetTerrainCollider(std::string MeshName);						//터레인 정보에 따라 콜라이더 생성
+	EATER_ENGINEDLL void SetTriangleCollider(std::string MeshName);						//터레인 정보에 따라 콜라이더 생성
 	EATER_ENGINEDLL void SetCenter(float x, float y, float z);							//중심점 설정
 	EATER_ENGINEDLL void SetTrigger(bool Trigger);			
 	//트리거 설정

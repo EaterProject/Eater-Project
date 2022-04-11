@@ -248,6 +248,11 @@ void RightOption::ChickTapDrag(CPoint point)
 			mMeshFilter->SendMessage(M_MSG_MeshFilter, 0, (LPARAM)pstr);
 			delete pstr;
 		}
+
+		if (ComponentName == "Collider")
+		{
+			mCollider->SetPoint(DragItemName);
+		}
 	}
 }
 

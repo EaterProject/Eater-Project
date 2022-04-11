@@ -646,7 +646,15 @@ void FBXParser::OptimizeData()
 	if (m_ParsingMode & ANIMATION_ONLY) return;
 
 	// 원본 데이터만 뽑을경우..
-	if (m_ParsingMode & ORIGIN_ONLY) return;
+	if (m_ParsingMode & ORIGIN_ONLY)
+	{
+		for (unsigned int i = 0; i < m_Model->m_MeshList.size(); i++)
+		{
+			SetIndex(m_Model->m_MeshList[i]);
+		}
+
+		return;
+	}
 
 	// Optimize Data
 	for (unsigned int i = 0; i < m_Model->m_MeshList.size(); i++)
@@ -795,6 +803,11 @@ void FBXParser::OptimizeVertex(ParserData::CMesh* pMesh)
 		pMesh->m_VertexList[i]->m_Tanget.Normalize();
 	}
 
+	SetIndex(pMesh);
+}
+
+void FBXParser::SetIndex(ParserData::CMesh* pMesh)
+{
 	// 인덱스는 그냥 복사
 	for (unsigned int i = 0; i < pMesh->m_MeshFace.size(); i++)
 	{

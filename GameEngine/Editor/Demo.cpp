@@ -134,9 +134,9 @@ GameObject* Demo::CreateSkinObject(std::string ObjectName, std::string MeshName)
 	return Skin;
 }
 
-void Demo::MeshLoad(std::string Path)
+void Demo::MeshLoad(std::string Path,UINT Option)
 {
-	Load(Path);
+	Load(Path, Option);
 }
 
 bool Demo::DeleteObject(std::string MeshName)
