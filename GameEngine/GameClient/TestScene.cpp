@@ -81,23 +81,25 @@ void TestScene::CreateMap()
 	Object->GetTransform()->Position.x -= 10.0f;
 	Object->GetTransform()->Position.y += 10.0f;
 
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("bossb+");
-	//filter->SetAnimationName("bossb+");
-	//AnimationController* AC = Object->AddComponent<AnimationController>();
-	//AC->Choice("idle");
-	//
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("MonsterA+");
-	//filter->SetAnimationName("MonsterA+");
-	//AC = Object->AddComponent<AnimationController>();
-	//AC->Choice("Move");
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	filter->SetModelName("bossb+");
+	filter->SetAnimationName("bossb+");
+	Object->GetTransform()->Position.z += 20;
+	AnimationController* AC = Object->AddComponent<AnimationController>();
+	AC->Choice("idle");
+	
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	filter->SetModelName("MonsterA+");
+	filter->SetAnimationName("MonsterA+");
+	Object->GetTransform()->Position.z -= 20;
+	AC = Object->AddComponent<AnimationController>();
+	AC->Choice("move");
 
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("Dome_Occluder");
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	filter->SetModelName("Dome_Occluder");
 
 	//Object = Instance();
 	//filter = Object->AddComponent<MeshFilter>();

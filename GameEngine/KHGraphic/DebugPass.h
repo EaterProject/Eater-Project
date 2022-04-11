@@ -29,9 +29,9 @@ public:
 	void RenderUpdate(const RenderData* meshData);
 	void GlobalRender();
 	void MRTRender();
-	void BufferUpdate(DEBUG_TYPE type);
 
 private:
+	void BufferUpdate(DEBUG_TYPE type);
 	void SetRay(const Vector3& start, const Vector3& end);
 	void SetFrustum(const Vector3* corner);
 

@@ -645,6 +645,9 @@ void FBXParser::OptimizeData()
 	// 애니메이션만 뽑을경우..
 	if (m_ParsingMode & ANIMATION_ONLY) return;
 
+	// 원본 데이터만 뽑을경우..
+	if (m_ParsingMode & ORIGIN_ONLY) return;
+
 	// Optimize Data
 	for (unsigned int i = 0; i < m_Model->m_MeshList.size(); i++)
 	{

@@ -184,17 +184,12 @@ void DebugPass::RenderUpdate(const RenderData* meshData)
 	case OBJECT_TYPE::TERRAIN:
 	case OBJECT_TYPE::SKINNING:
 	{
-		//g_Context->RSSetState(m_WireRS);
-		//Matrix sphereWorld = world;
-		//
-		//BoundingSphere sphere;
-		//mesh->m_MeshSubData->BoundSphere.Transform(sphere, world);
+		/// Bounding Box Draw..
 		//BoundingBox box;
 		//mesh->m_MeshSubData->BoundBox.Transform(box, world);
-
-		//object.gWorldViewProj = Matrix::CreateScale(sphere.Radius * 2.0f) * Matrix::CreateTranslation(sphere.Center) * viewproj;
+		//
 		//object.gWorldViewProj = Matrix::CreateScale(box.Extents) * Matrix::CreateTranslation(box.Center) * viewproj;
-		
+		//
 		//m_DebugVS->ConstantBufferUpdate(&object);
 		//m_DebugVS->Update();
 		//
@@ -202,13 +197,32 @@ void DebugPass::RenderUpdate(const RenderData* meshData)
 		//
 		//m_DebugColorPS->ConstantBufferUpdate(&option);
 		//m_DebugColorPS->Update();
-
-		//BufferUpdate(DEBUG_TYPE::DEBUG_SPHERE);
+		//
 		//BufferUpdate(DEBUG_TYPE::DEBUG_BOX);
+		//g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+
+		/// Bounding Sphere Draw..
+		//g_Context->RSSetState(m_WireRS);
+		//
+		//BoundingSphere sphere;
+		//mesh->m_MeshSubData->BoundSphere.Transform(sphere, world);
+		//
+		//object.gWorldViewProj = Matrix::CreateScale(sphere.Radius * 2.0f) * Matrix::CreateTranslation(sphere.Center) * viewproj;
+		//
+		//m_DebugVS->ConstantBufferUpdate(&object);
+		//m_DebugVS->Update();
+		//
+		//option.gColor = Vector3(1.0f, 1.0f, 0.0f);
+		//
+		//m_DebugColorPS->ConstantBufferUpdate(&option);
+		//m_DebugColorPS->Update();
+		//
+		//BufferUpdate(DEBUG_TYPE::DEBUG_SPHERE);
 		//g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
 		//
 		//g_Context->RSSetState(m_SolidRS);
-
+		
+		/// Bounding Sphere Ray Draw..
 		//DebugData ray;
 		//ray.RayStart = sphere.Center;
 		//ray.RayEnd = sphere.Center + Vector3(0.0f, sphere.Radius, 0.0f);
@@ -232,6 +246,7 @@ void DebugPass::RenderUpdate(const RenderData* meshData)
 		break;
 	case OBJECT_TYPE::BONE:
 	{
+		/// Bone Circle Sphere Draw..
 		object.gWorldViewProj = Matrix::CreateScale(0.05f) * world * viewproj;
 
 		m_DebugVS->ConstantBufferUpdate(&object);
@@ -247,6 +262,7 @@ void DebugPass::RenderUpdate(const RenderData* meshData)
 		break;
 	case OBJECT_TYPE::PARTICLE_SYSTEM:
 	{
+		/// Particle Quad Draw..
 		ParticleData* particles = meshData->m_ParticleData;
 
 		Vector3 radius = particles->Area_Radius;
@@ -361,7 +377,7 @@ void DebugPass::GlobalRender()
 		Matrix CamView = cam->CamView;
 		float RayLength = 100.0f;
 
-		// Icon Draw
+		/// Camera Icon Draw
 		option.gColor = Vector3(1.0f, 1.0f, 1.0f);
 
 		Matrix cameraWorld = Matrix::CreateRotationY(PI) * invView;
@@ -382,7 +398,7 @@ void DebugPass::GlobalRender()
 		BufferUpdate(DEBUG_TYPE::DEBUG_TEXTURE);
 		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
 
-		// Draw Look Vector Ray..
+		/// Draw Look Vector Ray..
 		ray.RayStart = CamPos;
 		ray.RayEnd = ray.RayStart + Vector3(CamView._13, CamView._23, CamView._33) * RayLength;
 
@@ -428,7 +444,7 @@ void DebugPass::GlobalRender()
 		Vector3 RayOffset = Vector3(1.0f);
 		Vector3 LightPos = Vector3(0.0f, 100.0f, 0.0f);
 
-		// Icon Draw
+		/// Directional Light Icon Draw
 		option.gColor = light->Diffuse;
 
 		Matrix lightWorld = invView;
@@ -448,6 +464,7 @@ void DebugPass::GlobalRender()
 		BufferUpdate(DEBUG_TYPE::DEBUG_TEXTURE);
 		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
 
+		/// Directional Light Circle Draw..
 		// Light Look 최대 Range가 곧 해당 Position..
 		pos = LightPos + light->Direction * Vector3(RayLength);
 		look = light->Direction * Vector3(RayLength);
@@ -474,7 +491,7 @@ void DebugPass::GlobalRender()
 		right.Normalize();
 		up.Normalize();
 
-		// Light Direction Ray Center..
+		/// Directional Light Direction Ray Center Draw..
 		ray.RayStart = LightPos;
 		ray.RayEnd = ray.RayStart + light->Direction * RayLength;
 
@@ -493,7 +510,7 @@ void DebugPass::GlobalRender()
 		BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
 		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
 
-		// Light Direction Ray Up..
+		/// Directional Light Direction Ray Up Draw..
 		ray.RayStart = LightPos - up * RayOffset;
 		ray.RayEnd = ray.RayStart + light->Direction * RayLength;
 		
@@ -518,7 +535,7 @@ void DebugPass::GlobalRender()
 		BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
 		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
 
-		// Light Direction Ray Left..
+		/// Directional Light Direction Ray Left Draw..
 		ray.RayStart = LightPos - right * RayOffset;
 		ray.RayEnd = ray.RayStart + light->Direction * RayLength;
 
@@ -528,7 +545,7 @@ void DebugPass::GlobalRender()
 		BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
 		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
 
-		// Light Direction Ray Right..
+		/// Directional Light Direction Ray Right Draw..
 		ray.RayStart = LightPos + right * RayOffset;
 		ray.RayEnd = ray.RayStart + light->Direction * RayLength;
 
@@ -540,7 +557,7 @@ void DebugPass::GlobalRender()
 	}
 	for (PointLightData* light : *pointList)
 	{
-		// Icon Draw
+		/// Point Light Icon Draw..
 		option.gColor = light->Diffuse;
 
 		Matrix lightWorld = invView;
@@ -575,7 +592,7 @@ void DebugPass::GlobalRender()
 		BufferUpdate(DEBUG_TYPE::DEBUG_CIRCLESPHERE);
 		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
 
-		// Light Range X Ray..
+		/// Light Range X Ray..
 		ray.RayStart = light->Position + Vector3(light->Range, 0.0f, 0.0f);
 		ray.RayEnd = light->Position + Vector3(-light->Range, 0.0f, 0.0f);
 		ray.Color = Vector3(1.0f, 0.0f, 0.0f);
@@ -595,7 +612,7 @@ void DebugPass::GlobalRender()
 		BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
 		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
 
-		// Light Range Y Ray..
+		/// Light Range Y Ray..
 		ray.RayStart = light->Position + Vector3(0.0f, light->Range, 0.0f);
 		ray.RayEnd = light->Position + Vector3(0.0f, -light->Range, 0.0f);
 
@@ -605,7 +622,7 @@ void DebugPass::GlobalRender()
 		BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
 		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
 
-		// Light Range Z Ray..
+		/// Light Range Z Ray..
 		ray.RayStart = light->Position + Vector3(0.0f, 0.0f, light->Range);
 		ray.RayEnd = light->Position + Vector3(0.0f, 0.0f, -light->Range);
 
@@ -618,7 +635,7 @@ void DebugPass::GlobalRender()
 	}
 	for (SpotLightData* light : *spotList)
 	{
-		// Icon Draw
+		/// Spot Light Icon Draw
 		option.gColor = light->Diffuse;
 
 		Matrix lightWorld = invView;
@@ -663,6 +680,7 @@ void DebugPass::GlobalRender()
 		right = light->Direction.Cross(Vector3(0.0f, 1.0f, 0.0f));
 		up = right.Cross(look);
 
+		/// Spot Light Range Ray Draw..
 		ray.RayStart = light->Position;
 		ray.Color = Vector3(1.0f, 1.0f, 0.0f);
 
@@ -690,6 +708,7 @@ void DebugPass::GlobalRender()
 		// Look Vector를 Right Vector 기준 -Angle로 이동..
 		axis = XMQuaternionRotationAxis(right, -light->Angle * 2.0f);
 
+		/// Spot Light Range Ray Draw..
 		ray.RayEnd = light->Position + (axis + light->Direction) * Vector3(light->Range);
 
 		// Ray Buffer Update
@@ -702,6 +721,7 @@ void DebugPass::GlobalRender()
 		// Look Vector를 Up Vector 기준 Angle로 이동..
 		axis = XMQuaternionRotationAxis(up, light->Angle * 2.0f);
 		
+		/// Spot Light Range Ray Draw..
 		ray.RayEnd = light->Position + (axis + light->Direction) * Vector3(light->Range);
 		
 		// Ray Buffer Update
@@ -714,6 +734,7 @@ void DebugPass::GlobalRender()
 		// Look Vector를 Up Vector 기준 -Angle로 이동..
 		axis = XMQuaternionRotationAxis(up, -light->Angle * 2.0f);
 
+		/// Spot Light Range Ray Draw..
 		ray.RayEnd = light->Position + (axis + light->Direction) * Vector3(light->Range);
 		
 		// Ray Buffer Update
@@ -723,6 +744,7 @@ void DebugPass::GlobalRender()
 		BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
 		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
 
+		/// Spot Light Range Circle Draw..
 		// Light Look 최대 Range가 곧 해당 Position..
 		pos = light->Position + light->Direction * Vector3(light->Range);
 		look = -light->Direction * Vector3(light->Range);
@@ -815,7 +837,7 @@ void DebugPass::MRTRender()
 
 	BufferUpdate(DEBUG_TYPE::DEBUG_TEXTURE);
 
-	// MRT 1 (Albedo RT)
+	/// MRT 1 (Albedo RT)
 	g_Context->RSSetViewports(1, m_MRT1);
 
 	m_DebugMRTVS->Update();
@@ -825,7 +847,7 @@ void DebugPass::MRTRender()
 
 	g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
 
-	// MRT 2 (Emissive RT)
+	/// MRT 2 (Emissive RT)
 	g_Context->RSSetViewports(1, m_MRT2);
 
 	m_DebugMRTVS->Update();
@@ -835,7 +857,7 @@ void DebugPass::MRTRender()
 
 	g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
 
-	// MRT 3 (Normal RT)
+	/// MRT 3 (Normal RT)
 	g_Context->RSSetViewports(1, m_MRT3);
 
 	m_DebugMRTVS->Update();
@@ -845,7 +867,7 @@ void DebugPass::MRTRender()
 
 	g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
 
-	// MRT 4 (Position RT)
+	/// MRT 4 (Position RT)
 	g_Context->RSSetViewports(1, m_MRT4);
 
 	m_DebugMRTVS->Update();
@@ -855,7 +877,7 @@ void DebugPass::MRTRender()
 
 	g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
 
-	// MRT 5 (NormalDepth Map)
+	/// MRT 5 (NormalDepth Map)
 	g_Context->RSSetViewports(1, m_MRT5);
 
 	m_DebugMRTVS->Update();
@@ -865,7 +887,7 @@ void DebugPass::MRTRender()
 
 	g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
 
-	// MRT 6 (Bloom Map)
+	/// MRT 6 (Bloom Map)
 	g_Context->RSSetViewports(1, m_MRT6);
 	
 	m_DebugMRTVS->Update();
@@ -875,7 +897,7 @@ void DebugPass::MRTRender()
 	
 	g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
 
-	// MRT 7 (SSAO Map)
+	/// MRT 7 (SSAO Map)
 	g_Context->RSSetViewports(1, m_MRT7);
 
 	m_DebugMRTVS->Update();
@@ -885,7 +907,7 @@ void DebugPass::MRTRender()
 
 	g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
 
-	// MRT 8 (Shadow Map)
+	/// MRT 8 (Shadow Map)
 	g_Context->RSSetViewports(1, m_MRT8);
 	
 	m_DebugMRTVS->Update();
