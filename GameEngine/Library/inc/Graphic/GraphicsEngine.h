@@ -68,6 +68,9 @@ public:
 
 	virtual GRAPHIC_DLL void CreateEnvironmentMap(std::string path) abstract;
 
+	/// Graphic Resource Baking Function..
+	virtual GRAPHIC_DLL void BakingShadowMap(std::string path) abstract;
+
 private:
 	static GraphicEngine* Graphic;
 };

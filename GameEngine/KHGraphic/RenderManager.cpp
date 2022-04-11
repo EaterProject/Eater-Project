@@ -136,6 +136,17 @@ void RenderManager::Release()
 	m_RenderPassList.clear();
 }
 
+void RenderManager::InstanceResize()
+{
+	size_t&& renderMaxCount = m_Converter->FindMaxInstanceCount();
+	size_t&& unRenderMaxCount = m_UnRenderMeshList.size();
+
+	for (RenderPassBase* renderPass : m_RenderPassList)
+	{
+		renderPass->InstanceResize(renderMaxCount, unRenderMaxCount);
+	}
+}
+
 void RenderManager::RenderSetting(RenderOption* renderOption)
 {
 	// RenderOption 저장..
@@ -173,6 +184,11 @@ void RenderManager::RenderSetting()
 void RenderManager::SetGlobalData(GlobalData* globalData)
 {
 	RenderPassBase::g_GlobalData = globalData;
+}
+
+void RenderManager::SetShadowMap(std::string path)
+{
+	
 }
 
 void RenderManager::SetEnvironmentMap(bool enable)
@@ -577,6 +593,9 @@ void RenderManager::EndRender()
 
 void RenderManager::ConvertPushInstance()
 {
+	// Queue가 비어있다면 처리하지 않는다..
+	if (m_PushInstanceList.empty()) return;
+
 	// 현재 프레임 진행중 쌓아둔 추가된 Render Data List 삽입 작업..
 	while (!m_PushInstanceList.empty())
 	{
@@ -609,12 +628,15 @@ void RenderManager::ConvertPushInstance()
 		m_PushInstanceList.pop();
 	}
 
-	// Collider List 재설정..
-	m_Culling->CullingBufferCreate();
+	// Instance Resize..
+	InstanceResize();
 }
 
 void RenderManager::ConvertChangeInstance()
 {
+	// Queue가 비어있다면 처리하지 않는다..
+	if (m_ChangeInstanceList.empty()) return;
+
 	// 현재 프레임 진행중 쌓아둔 변경된 Render Data List 삽입 작업..
 	while (!m_ChangeInstanceList.empty())
 	{

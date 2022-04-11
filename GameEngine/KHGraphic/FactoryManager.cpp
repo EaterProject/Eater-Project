@@ -2,6 +2,7 @@
 #include "ResourceFactory.h"
 #include "BakingFactory.h"
 #include "FactoryManager.h"
+#include "DepthStencilViewDefine.h"
 
 FactoryManager::FactoryManager(ID3D11Graphic* graphic, IShaderManager* shader, IGraphicResourceManager* resource)
 {
@@ -49,6 +50,11 @@ void FactoryManager::CreateEnvironmentMap(std::string path)
 	m_ResourceFactory->CreateEnvironmentMap(path);
 
 	m_BakingFactory->PreBakeIBLMap();
+}
+
+void FactoryManager::BakingShadowMap(std::string path)
+{
+	m_BakingFactory->PreBakeShadowMap(path);
 }
 
 void FactoryManager::CreateImg(std::string name, Hash_Code hash_code, std::string fileName)

@@ -168,6 +168,11 @@ void DeferredPass::OnResize(int width, int height)
 	m_RTVList[4] = m_NormalDepthRT->GetRTV()->Get();
 }
 
+void DeferredPass::InstanceResize(size_t& renderMaxCount, size_t& unRenderMaxCount)
+{
+	m_MeshInstance.resize(renderMaxCount);
+}
+
 void DeferredPass::Release()
 {
 
@@ -224,11 +229,10 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const std:
 		m_MeshData.World = *meshlist[i]->m_ObjectData->World;
 		m_MeshData.InvWorld = MathHelper::InverseTranspose(m_MeshData.World);
 
-		m_MeshInstance.push_back(m_MeshData);
-		m_InstanceCount++;
+		m_MeshInstance[m_InstanceCount++] = m_MeshData;
 	}
 
-	if (m_MeshInstance.empty()) return;
+	if (m_InstanceCount == 0) return;
 
 	// Mapping SubResource Data..
 	D3D11_MAPPED_SUBRESOURCE mappedResource;
@@ -318,7 +322,6 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const std:
 	}
 
 	// Mesh Instance Data Clear..
-	m_MeshInstance.clear();
 	m_InstanceCount = 0;
 }
 

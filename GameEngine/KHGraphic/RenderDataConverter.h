@@ -45,6 +45,9 @@ public:
 	void DeleteMaterial(UINT index);		// 해당 Material Resource 즉시 제거..
 
 public:
+	size_t FindMaxInstanceCount();			// 모든 Layer 내부의 Instance 개수 중 제일 큰 개수 반환..
+
+public:
 	RenderData* GetRenderData(UINT index);			// Render Data 고유 Index로 검색..
 	MeshRenderBuffer* GetMesh(UINT index);			// Mesh Resource 고유 Index로 검색..
 	MaterialRenderBuffer* GetMaterial(UINT index);	// Material Resource 고유 Index로 검색..

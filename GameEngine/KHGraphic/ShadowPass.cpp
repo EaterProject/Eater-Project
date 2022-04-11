@@ -102,6 +102,11 @@ void ShadowPass::OnResize(int width, int height)
 	m_ShadowDSV = m_ShadowDS->GetDSV()->Get();
 }
 
+void ShadowPass::InstanceResize(size_t& renderMaxCount, size_t& unRenderMaxCount)
+{
+	m_MeshInstance.resize(renderMaxCount);
+}
+
 void ShadowPass::Release()
 {
 
@@ -145,11 +150,10 @@ void ShadowPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::v
 		// ÇØ´ç Instance Data »ðÀÔ..
 		m_MeshData.World = *meshlist[i]->m_ObjectData->World;
 
-		m_MeshInstance.push_back(m_MeshData);
-		m_InstanceCount++;
+		m_MeshInstance[m_InstanceCount++] = m_MeshData;
 	}
 
-	if (m_MeshInstance.empty()) return;
+	if (m_InstanceCount == 0) return;
 
 	// Mapping SubResource Data..
 	D3D11_MAPPED_SUBRESOURCE mappedResource;
@@ -228,7 +232,6 @@ void ShadowPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::v
 
 
 	// Mesh Instance Data Clear..
-	m_MeshInstance.clear();
 	m_InstanceCount = 0;
 }
 

@@ -10,6 +10,8 @@ public:
 	void Start(int width, int height) override;
 
 	void OnResize(int width, int height) override;
+	void InstanceResize(size_t& renderMaxCount, size_t& unRenderMaxCount) override;
+
 	void Release() override;
 
 	void BeginRender();

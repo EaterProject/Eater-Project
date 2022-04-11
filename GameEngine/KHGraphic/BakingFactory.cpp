@@ -1,4 +1,3 @@
-#include "BakingFactory.h"
 #include "DirectDefine.h"
 #include "D3D11GraphicBase.h"
 #include "ResourceManagerBase.h"
@@ -10,6 +9,7 @@
 #include "ShaderBase.h"
 #include "VertexShader.h"
 #include "PixelShader.h"
+#include "BakingFactory.h"
 
 #include "MathDefine.h"
 #include "RasterizerStateDefine.h"
@@ -17,6 +17,7 @@
 #include "ShaderResourceViewDefine.h"
 #include "ConstantBufferDefine.h"
 #include "DrawBufferDefine.h"
+#include "DepthStencilViewDefine.h"
 
 using namespace DirectX;
 
@@ -44,6 +45,13 @@ void BakingFactory::Start()
 void BakingFactory::Release()
 {
 
+}
+
+void BakingFactory::PreBakeShadowMap(std::string path)
+{
+	ID3D11DepthStencilView* shadowMap = g_ResourceManager->GetDepthStencilView<DS_Shadow>()->Get();
+
+	g_Graphic->SaveTextureDDS(shadowMap, path.c_str());
 }
 
 void BakingFactory::PreBakeBRDFMap()

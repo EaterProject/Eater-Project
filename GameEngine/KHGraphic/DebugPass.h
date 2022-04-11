@@ -70,6 +70,7 @@ private:
 	ID3D11ShaderResourceView* m_DirectionalLightIcon;
 	ID3D11ShaderResourceView* m_PointLightIcon;
 	ID3D11ShaderResourceView* m_SpotLightIcon;
+	ID3D11ShaderResourceView* m_ParticleIcon;
 	ID3D11ShaderResourceView* m_CamerIcon;
 
 	ID3D11ShaderResourceView* m_AlbedoRT;

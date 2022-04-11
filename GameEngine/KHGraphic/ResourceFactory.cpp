@@ -1733,6 +1733,12 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(Parser
 }
 
 template<>
+void GraphicResourceFactory::CreateLoadBuffer<VertexInput::PosVertex>(ParserData::CMesh* mesh, MeshBuffer** ppResource)
+{
+
+}
+
+template<>
 void GraphicResourceFactory::CreateLoadBuffer<VertexInput::PosTexVertex>(ParserData::CMesh* mesh, MeshBuffer** ppResource)
 {
 	// 货肺款 Buffer 积己..
@@ -1994,8 +2000,7 @@ void GraphicResourceFactory::CreateSamplerStates()
 	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_BORDER;
 	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_BORDER;
 	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_BORDER;
-	samplerDesc.BorderColor[0] = samplerDesc.BorderColor[1] = samplerDesc.BorderColor[2] = 0.0f;
-	samplerDesc.BorderColor[3] = 1e5f;
+	samplerDesc.BorderColor[0] = samplerDesc.BorderColor[1] = samplerDesc.BorderColor[2] = samplerDesc.BorderColor[3] = 0.0f;
 	samplerDesc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
 	samplerDesc.MaxLOD = 0.0f;
 	samplerDesc.MinLOD = 0.0f;

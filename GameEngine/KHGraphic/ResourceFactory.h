@@ -119,6 +119,7 @@ namespace VertexInput
 	struct MeshVertex;
 	struct SkinVertex;
 	struct TerrainVertex;
+	struct PosVertex;
 	struct PosTexVertex;
 }
 
@@ -134,6 +135,9 @@ inline void GraphicResourceFactory::CreateLoadBuffer<VertexInput::SkinVertex>(Pa
 
 template<>
 inline void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(ParserData::CMesh* mesh, MeshBuffer** ppResource);
+
+template<>
+inline void GraphicResourceFactory::CreateLoadBuffer<VertexInput::PosVertex>(ParserData::CMesh* mesh, MeshBuffer** ppResource);
 
 template<>
 inline void GraphicResourceFactory::CreateLoadBuffer<VertexInput::PosTexVertex>(ParserData::CMesh* mesh, MeshBuffer** ppResource);
