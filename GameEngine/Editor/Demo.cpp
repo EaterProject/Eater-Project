@@ -271,17 +271,17 @@ GameObject* Demo::Create_Terrain(std::string MeshPath,std::string mask01,std::st
 	//터레인 생성
 	LoadTerrainMesh("../Assets/Model/TerrainModel/Terrain.fbx", "../Assets/Texture/Terrain/Terrain_RGB_1.png", "../Assets/Texture/Terrain/Terrain_RGB_2.png", SCALING);
 
-	GameObject* TerrainObect = InstanceTerrain("Terrain");
-
-	Terrain* mTerrain = TerrainObect->GetComponent<Terrain>();
-	mTerrain->SetLayerName("terrain_ground_A_BaseColor", "terrain_ground_A_Normal", "terrain_ground_A_ORM");
-	mTerrain->SetLayerName("terrain_ground_B_BaseColor", "terrain_ground_B_Normal", "terrain_ground_B_ORM");
-	mTerrain->SetLayerName("terrain_ground_C_BaseColor", "terrain_ground_C_Normal", "terrain_ground_C_ORM");
-	mTerrain->SetLayerName("terrain_ground_D_BaseColor", "terrain_ground_D_Normal", "terrain_ground_D_ORM");
-	mTerrain->SetMeshName("Terrain");
-	//mTerrain->SetColliderName("TerrainDecimate");
-	mTerrain->SetTextureTiling(31.0f);
-	return TerrainObect;
+	//GameObject* TerrainObect = InstanceTerrain("Terrain");
+	//
+	//Terrain* mTerrain = TerrainObect->GetComponent<Terrain>();
+	//mTerrain->SetLayerName("terrain_ground_A_BaseColor", "terrain_ground_A_Normal", "terrain_ground_A_ORM");
+	//mTerrain->SetLayerName("terrain_ground_B_BaseColor", "terrain_ground_B_Normal", "terrain_ground_B_ORM");
+	//mTerrain->SetLayerName("terrain_ground_C_BaseColor", "terrain_ground_C_Normal", "terrain_ground_C_ORM");
+	//mTerrain->SetLayerName("terrain_ground_D_BaseColor", "terrain_ground_D_Normal", "terrain_ground_D_ORM");
+	//mTerrain->SetMeshName("Terrain");
+	////mTerrain->SetColliderName("TerrainDecimate");
+	//mTerrain->SetTextureTiling(31.0f);
+	return nullptr;
 }
 
 GameObject* Demo::Create_Light()

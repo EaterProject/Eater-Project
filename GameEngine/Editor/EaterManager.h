@@ -21,6 +21,8 @@ namespace ParserData
 	class CModel;
 }
 
+
+
 class EaterManager
 {
 public:
@@ -28,7 +30,10 @@ public:
 	~EaterManager();
 
 	void Load_Eater_File(std::string& Path);
-	void Load_FBX_File(std::string& Path,ParserData::CModel* FBXMesh,unsigned int Option);
+	void Load_FBX_File(std::string& Path,ParserData::CModel* FBXMesh);
+	void Load_FBX_File_MeshBuffer(std::string& Path, ParserData::CModel* FBXMesh,std::string ChangeFileName);
+	void Load_FBX_File_NavMeshBuffer(std::string& Path, ParserData::CModel* FBXMesh,std::string ChangeFileName);
+
 	void Load_GameObject_File(GameObject* Object, ObjectOption* mOption);
 	void Create_Material(InstanceMaterial* m);
 	void Initialize();

@@ -97,7 +97,7 @@ LRESULT FileOption::OnUserFunc(WPARAM wParam, LPARAM lParam)
 
 void FileOption::OnCreateTerrain()
 {
-	//GameObject* Object = Demo::Create_Terrain("");
+	Demo::Create_Terrain("","","");
 }
 
 void FileOption::OnCreateLight()

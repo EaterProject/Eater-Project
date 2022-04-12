@@ -32,6 +32,7 @@ class TextureBuffer;
 class Material;
 class Mesh;
 class MeshBuffer;
+class OneTriangle;
 
 class GraphicEngineManager;
 class MeshManager;
@@ -92,6 +93,7 @@ private:
 	static std::map<std::string, Mesh*>					MeshBufferList;
 	static std::map<std::string, CameraAnimation*>		CamAnimationList;
 	static std::map<std::string, ColliderBuffer*>		ColliderBufferList;
+	static std::vector<OneTriangle*>					NavMeshData;
 private:
 	FBXManager*				mFBX;
 	TextureManager*			mTexture;

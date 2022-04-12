@@ -222,7 +222,7 @@ GameObject* GameEngine::InstanceTerrain(std::string ObjName)
 	temp->transform = Tr;
 
 	temp->AddComponent<MeshFilter>();
-	temp->AddComponent<Collider>();
+	//temp->AddComponent<Collider>();
 	temp->AddComponent<Terrain>();
 
 	return temp;

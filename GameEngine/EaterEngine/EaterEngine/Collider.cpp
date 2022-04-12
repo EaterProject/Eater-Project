@@ -112,6 +112,7 @@ void Collider::SetTriangleCollider(std::string MeshName)
 	mPhysData = PhysX_Create_Data();
 	PhysCollider::TriangleMeshData* Triangle = mPhysData->mCollider->CreateTriangle();
 	ColliderBuffer* data = LoadManager::GetColliderBuffer(MeshName);
+	if (data == nullptr) { return; }
 	
 	int IndexSize = data->IndexArrayCount;
 	int VertexSize = data->VertexArrayCount;
@@ -120,7 +121,7 @@ void Collider::SetTriangleCollider(std::string MeshName)
 	Triangle->Name				= MeshName;
 	Triangle->VertexList		= data->VertexArray;
 	Triangle->VertexListSize	= VertexSize;
-	Triangle->CIndexList		= data->FaceArray;
+	Triangle->CIndexList		= data->IndexArray;
 	Triangle->IndexListSize		= IndexSize;
 
 	isCreate = false;

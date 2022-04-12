@@ -166,6 +166,12 @@
     <Filter Include="소스 파일\Manager\GlobalDataManager">
       <UniqueIdentifier>{b358fedd-14c8-407e-b4c1-d40ef4a00f9f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Component\NavMesh">
+      <UniqueIdentifier>{66b353ad-5b45-4e71-ac95-b1bb40e5e240}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\NavigationManager">
+      <UniqueIdentifier>{228d6585-bbdf-447d-8890-c9a498538e62}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -330,6 +336,12 @@
     <ClInclude Include="..\..\Library\inc\ResourcesData.h">
       <Filter>소스 파일\Data</Filter>
     </ClInclude>
+    <ClInclude Include="NavMesh.h">
+      <Filter>소스 파일\Component\NavMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="NavigationManager.h">
+      <Filter>소스 파일\Manager\NavigationManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -472,6 +484,12 @@
     </ClCompile>
     <ClCompile Include="GlobalDataManager.cpp">
       <Filter>소스 파일\Manager\GlobalDataManager</Filter>
+    </ClCompile>
+    <ClCompile Include="NavMesh.cpp">
+      <Filter>소스 파일\Component\NavMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="NavigationManager.cpp">
+      <Filter>소스 파일\Manager\NavigationManager</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -15,6 +15,7 @@
 
 
 
+
 std::map<std::string, ModelData*>			LoadManager::ModelList;
 std::map<std::string, TextureBuffer*>		LoadManager::TextureList;
 std::map<std::string, Material*>			LoadManager::MaterialList;
@@ -22,6 +23,7 @@ std::map<std::string, ModelAnimationData*>	LoadManager::AnimationList;
 std::map<std::string, Mesh*>				LoadManager::MeshBufferList;
 std::map<std::string, CameraAnimation*>		LoadManager::CamAnimationList;
 std::map<std::string, ColliderBuffer*>		LoadManager::ColliderBufferList;		
+std::vector<OneTriangle*>					LoadManager::NavMeshData;		
 
 LoadManager::LoadManager()
 {
@@ -338,6 +340,10 @@ void LoadManager::LoadFile(std::string& Path, UINT MODE)
 		mEATER->LoadMaterial(Path);
 	}
 	else if (Type == "Emesh")
+	{
+		mEATER->LoadMesh(Path);
+	}
+	else if (Type == "Nav")
 	{
 		mEATER->LoadMesh(Path);
 	}

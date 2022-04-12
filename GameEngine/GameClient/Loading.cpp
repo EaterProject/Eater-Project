@@ -16,9 +16,8 @@
 
 void Loading::Awake()
 {
-	//Load("../Resources/Texture/Particle");
 	Load("../Assets/Texture/Particle/particle_hotCloud.png");
-	//
+
 	ParticleObj = Instance();
 	obj = InstanceParticle("Particle12");
 	ParticleObj->ChoiceChild(obj);

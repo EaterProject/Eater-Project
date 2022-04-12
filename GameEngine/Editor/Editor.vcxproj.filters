@@ -139,14 +139,20 @@
     <Filter Include="소스 파일\Scene\SceneSaveLoad">
       <UniqueIdentifier>{981e2971-4e0f-482d-87e6-be53a21779b8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\MFC\Dialog\LoadTerrain">
-      <UniqueIdentifier>{99268209-724d-4c9c-8369-7aedfbb43bf2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\MFC\Dialog\LoadNavMesh">
-      <UniqueIdentifier>{ab3549dd-455c-42ae-87ac-0a376eca5aac}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\MFC\Dialog\Material">
       <UniqueIdentifier>{41162ea8-57b7-4b4f-888e-f4c9c5868e23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\Dialog\Assets\ChangeDataType">
+      <UniqueIdentifier>{acdedabf-7806-4e8e-9b87-797e3b9003d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\Dialog\Assets\AssetsDialog">
+      <UniqueIdentifier>{8fe75041-9028-451d-869c-c8ece16bf5eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\Dialog\Assets\ChangeDataType\LoadNavMesh">
+      <UniqueIdentifier>{ab3549dd-455c-42ae-87ac-0a376eca5aac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\Dialog\Assets\ChangeDataType\LoadTerrain">
+      <UniqueIdentifier>{99268209-724d-4c9c-8369-7aedfbb43bf2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -231,9 +237,6 @@
     <ClInclude Include="AssetView.h">
       <Filter>소스 파일\MFC\View\AssetView</Filter>
     </ClInclude>
-    <ClInclude Include="AssetsDialog.h">
-      <Filter>소스 파일\MFC\Dialog\Assets</Filter>
-    </ClInclude>
     <ClInclude Include="E_MeshManager.h">
       <Filter>소스 파일\Manager\Eater\EaterMesh</Filter>
     </ClInclude>
@@ -265,13 +268,16 @@
       <Filter>소스 파일\MFC\Dialog\TAP\TAP_Rigidbody</Filter>
     </ClInclude>
     <ClInclude Include="LoadTerrain.h">
-      <Filter>소스 파일\MFC\Dialog\LoadTerrain</Filter>
+      <Filter>소스 파일\MFC\Dialog\Assets\ChangeDataType\LoadTerrain</Filter>
     </ClInclude>
     <ClInclude Include="LoadNavMesh.h">
-      <Filter>소스 파일\MFC\Dialog\LoadNavMesh</Filter>
+      <Filter>소스 파일\MFC\Dialog\Assets\ChangeDataType\LoadNavMesh</Filter>
     </ClInclude>
     <ClInclude Include="CreateMaterial.h">
       <Filter>소스 파일\MFC\Dialog\Material</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetsDialog.h">
+      <Filter>소스 파일\MFC\Dialog\Assets\AssetsDialog</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -344,9 +350,6 @@
     <ClCompile Include="AssetView.cpp">
       <Filter>소스 파일\MFC\View\AssetView</Filter>
     </ClCompile>
-    <ClCompile Include="AssetsDialog.cpp">
-      <Filter>소스 파일\MFC\Dialog\Assets</Filter>
-    </ClCompile>
     <ClCompile Include="E_MeshManager.cpp">
       <Filter>소스 파일\Manager\Eater\EaterMesh</Filter>
     </ClCompile>
@@ -378,13 +381,16 @@
       <Filter>소스 파일\MFC\Dialog\TAP\TAP_Rigidbody</Filter>
     </ClCompile>
     <ClCompile Include="LoadTerrain.cpp">
-      <Filter>소스 파일\MFC\Dialog\LoadTerrain</Filter>
+      <Filter>소스 파일\MFC\Dialog\Assets\ChangeDataType\LoadTerrain</Filter>
     </ClCompile>
     <ClCompile Include="LoadNavMesh.cpp">
-      <Filter>소스 파일\MFC\Dialog\LoadNavMesh</Filter>
+      <Filter>소스 파일\MFC\Dialog\Assets\ChangeDataType\LoadNavMesh</Filter>
     </ClCompile>
     <ClCompile Include="CreateMaterial.cpp">
       <Filter>소스 파일\MFC\Dialog\Material</Filter>
+    </ClCompile>
+    <ClCompile Include="AssetsDialog.cpp">
+      <Filter>소스 파일\MFC\Dialog\Assets\AssetsDialog</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

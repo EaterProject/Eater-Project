@@ -31,11 +31,24 @@ protected:
 	std::string Mask02Name;
 
 	DECLARE_MESSAGE_MAP()
+
+	void OnTerrain(bool On);
+	void OnNavMesh(bool On);
+
+	bool TerrainErrorChack();
+	std::string FileDropName(HDROP hDropInfo);
+	std::string GetFileName(std::string filePath);
+	std::string GetFileType(std::string filePath);
+	
+	bool GetDragRect(int EditIndex);
 public:
 	CEdit FBXName_Edit;
 	CEdit Mask01Name_Edit;
 	CEdit Mask02Name_Edit;
+	CEdit NewFileName_Edit;
+	CComboBox Type_Combo;
 	afx_msg void OnBnClickedOk();
 	afx_msg void OnBnClickedCancel();
 	afx_msg void OnDropFiles(HDROP hDropInfo);
+	afx_msg void OnCbnSelchangeCombo1();
 };

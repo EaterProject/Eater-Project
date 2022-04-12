@@ -183,9 +183,15 @@ void SceneSave::SaveCollider(Collider* mCollider)
 	EATER_SET_LIST(mCollider->GetMaterial_Dynamic());			//8. 재질
 	EATER_SET_LIST(mCollider->GetMaterial_Restitution());		//9. 재질
 	EATER_SET_LIST(mCollider->GetMaterial_Static());			//10. 재질
-	//PhysCollider::TriangleMeshData* Data = mPhys->GetTriangleMesh();
-	EATER_SET_LIST("",true);
-	
+	PhysCollider::TriangleMeshData* Data = mPhys->GetTriangleMesh();
+	if (Data == nullptr)
+	{
+		EATER_SET_LIST("NO", true);
+	}
+	else
+	{
+		EATER_SET_LIST(Data->Name,true);
+	}
 
 }
 

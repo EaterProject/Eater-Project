@@ -39,6 +39,7 @@ void LoadNavMesh::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_EDIT1, FIleName_Eidt);
+	DDX_Control(pDX, IDC_EDIT3, NewFileName_Edit);
 }
 
 
@@ -87,7 +88,6 @@ void LoadNavMesh::OnDropFiles(HDROP hDropInfo)
 	CDialogEx::OnDropFiles(hDropInfo);
 }
 
-
 void LoadNavMesh::OnBnClickedOk()
 {
 	if (FilePath == "")
@@ -95,7 +95,10 @@ void LoadNavMesh::OnBnClickedOk()
 		MessageBox(L"로드할 파일이름이 없습니다");
 	}
 
-	RightOption::GetThis()->m_EditorManager->SetPath(FilePath,ORIGIN_ONLY);
+	CString NewFileName;
+	NewFileName_Edit.GetWindowTextW(NewFileName);
+
+	//RightOption::GetThis()->m_EditorManager->ConvertData(FilePath,ORIGIN_ONLY);
 	
 	FilePath = "";
 	FIleName_Eidt.SetWindowTextW(L"");

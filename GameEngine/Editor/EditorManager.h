@@ -9,6 +9,16 @@ class FBXManager;
 class EaterManager;
 struct ObjectOption;
 struct InstanceMaterial;
+
+enum class CHANGE_TYPE
+{
+	TERRAIN,
+	COLLIDER,
+	NAVMESH
+};
+
+
+
 class EditorManager
 {
 public:
@@ -16,16 +26,15 @@ public:
 	~EditorManager();
 	
 	void Initialize();
-	void SetPath(std::string Path,unsigned int Option = 0);
+	void ConvertData(std::string Path);
+	void ConvertData(std::string Path,std::string ChangeName, CHANGE_TYPE Option);
+	
+
 	void OpenEaterFile(std::string Path, int Type);
 	void OpenEaterGameObject(GameObject* Object, ObjectOption* Option);
 	void CreateMaterialData(InstanceMaterial* m);
 private:
 	void CreateAssetsFile();
-	void LoadAssets();
-
-	void LoadFolder(std::string& Path);
-	void LoadFile(std::string& Path);
 
 	YamlManager*	mYaml;
 	FBXManager*		mFbx;

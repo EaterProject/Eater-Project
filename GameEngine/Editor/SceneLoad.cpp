@@ -101,7 +101,7 @@ void Eater_LoadScene::Load(std::string FilePath)
 			{
 				std::vector<std::string> Data;
 				EATER_GET_LIST(&Data, i);
-				Demo::TagList.insert({ std::stoi(Data[0]) ,Data[1] });
+				Demo::TagList.insert({ std::stoi(Data[0]) ,Data[1]});
 			}
 		}
 	}

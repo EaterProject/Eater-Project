@@ -198,7 +198,7 @@ void Player::PlayerGroundCheck()
 			RayStartPoint = mTransform->Position;
 			break;
 		}
-		RayStartPoint.y = 2;
+		RayStartPoint.y = mTransform->Position.y + 2;
 
 		//Ray °ª Á¶Á¤
 		RayCastHit[i].Origin		= RayStartPoint;

@@ -256,7 +256,7 @@ void AssetsDialog::OnDropFiles(HDROP hDropInfo)
 		CString ChangeCopyFile;
 		ChangeCopyFile = CopyFilePath.c_str();
 
-		RightOption::GetThis()->m_EditorManager->SetPath(Name);
+		RightOption::GetThis()->m_EditorManager->ConvertData(Name);
 
 		//메쉬 로드
 		//std::string MeshPath = "../Assets/Model/ModelData/" + ChangeName + ".Eater";

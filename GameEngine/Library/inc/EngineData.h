@@ -142,8 +142,8 @@ public:
 
 	int VertexArrayCount	= 0;
 	int IndexArrayCount		= 0;
-	Vector3* VertexArray = nullptr;
-	UINT*	 FaceArray = nullptr;
+	Vector3* VertexArray	= nullptr;
+	UINT*	 IndexArray		= nullptr;
 };
 
 // Terrain Data
@@ -377,4 +377,26 @@ public:
 
 	//컨퍼넌트 순서
 	int OrderCount = 0;
+};
+
+//네비게이션 매쉬의 구조체
+struct OneTriangle
+{
+	//나와 인접해있는 Face
+	int FriendFace[3] = { -1,-1,-1 };
+	float Distance[3] = { -1,-1,-1 };
+
+	//버텍스 위치
+	Vector3 VertexPos[3];
+	Vector3 CenterPoint;
+	UINT Index;
+
+	void CreateCenterPoint() //현재 나의 삼각형에서 중심점을 구한다
+	{
+		float Addition_x = VertexPos[0].x + VertexPos[1].x + VertexPos[2].x;
+		float Addition_Y = VertexPos[0].y + VertexPos[1].y + VertexPos[2].y;
+		float Addition_Z = VertexPos[0].z + VertexPos[1].z + VertexPos[2].z;
+
+		CenterPoint = { Addition_x /3 ,Addition_Y / 3 ,Addition_Z / 3 };
+	}
 };
