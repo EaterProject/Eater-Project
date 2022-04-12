@@ -15,6 +15,7 @@ public:
 	HRESULT SaveTextureDDS(ID3D11Resource* resource, const char* fileName) override;
 	HRESULT SaveTextureDDS(ID3D11DepthStencilView* resource, const char* fileName) override;
 	HRESULT SaveTextureDDS(ID3D11ShaderResourceView* resource, const char* fileName) override;
+	HRESULT CaptureTextureDDS(const char* fileName) override;
 
 public:
 	HRESULT CreateBuffer(D3D11_BUFFER_DESC* bufferDesc, D3D11_SUBRESOURCE_DATA* subData, ID3D11Buffer** buffer) override;

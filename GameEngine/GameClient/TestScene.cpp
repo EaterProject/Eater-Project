@@ -24,13 +24,14 @@
 
 void TestScene::Awake()
 {
-	LoadEnvironment("../Assets/Texture/Environment/Day.dds");
 	LoadTerrainMesh("../Assets/Model/TerrainModel/Terrain.fbx", "../Assets/Texture/Terrain/Terrain_RGB_1.png", "../Assets/Texture/Terrain/Terrain_RGB_2.png", SCALING);
 	
 	//Load("../Assets/Texture/Particle/particle_hotCloud.png");
 
 	PROFILE_TIMER_START(PROFILE_OUTPUT::CONSOLE, 1, "Load Folder");
 	Load("../Assets/Texture/Terrain");
+	Load("../Assets/Texture/Environment");
+	//Load("../Assets/Texture/Bake");
 	//Load("../Assets/Texture/Particle");
 	Load("../Assets/Texture/ModelTexture");
 	Load("../Assets/Texture/Material");
@@ -39,13 +40,18 @@ void TestScene::Awake()
 	Load("../Assets/Model/Animation");
 	PROFILE_TIMER_END("Load Folder"); 
 
-	AddOccluder("Dome_Occluder_0");
+	BakeEnvironmentMap("Day");
+	BakeEnvironmentMap("Night");
+	BakeEnvironmentMap("skybox1");
+	BakeEnvironmentMap("TestSky");
+
+	//AddOccluder("Dome_Occluder_0");
 
 	CreateMap();
 
-	//CreateParticle(0,0,0);
 
-	SetEnvironment(true);
+	//CreateParticle(0,0,0);
+	SetEnvironmentMap("Night");
 }
 
 void TestScene::Update()
@@ -122,50 +128,50 @@ void TestScene::CreateMap()
 	//filter = Object->AddComponent<MeshFilter>();
 	//filter->SetModelName("box4");
 
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("bossb+");
-	//filter->SetAnimationName("bossb+");
-	//Object->GetTransform()->Position.z += 20;
-	//AnimationController* AC = Object->AddComponent<AnimationController>();
-	//AC->Choice("idle");
-	//
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("MonsterA+");
-	//filter->SetAnimationName("MonsterA+");
-	//Object->GetTransform()->Position.z -= 20;
-	//AC = Object->AddComponent<AnimationController>();
-	//AC->Choice("move");
-	//
 	Object = Instance();
 	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("Dome_Occluder");
-
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("Dome");
+	filter->SetModelName("bossb+");
+	filter->SetAnimationName("bossb+");
+	Object->GetTransform()->Position.z += 20;
+	AnimationController* AC = Object->AddComponent<AnimationController>();
+	AC->Choice("idle");
 	
 	Object = Instance();
 	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("organic_cactus");
-
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	Tr = Object->GetTransform();
-	filter->SetModelName("Outside_Rock");
-
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("Outside_bossOBJ");
-
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("Outside_Other");
-
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("Outside_Pebble");
+	filter->SetModelName("MonsterA+");
+	filter->SetAnimationName("MonsterA+");
+	Object->GetTransform()->Position.z -= 20;
+	AC = Object->AddComponent<AnimationController>();
+	AC->Choice("move");
+	
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("Dome_Occluder");
+	//
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("Dome");
+	//
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("organic_cactus");
+	//
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//Tr = Object->GetTransform();
+	//filter->SetModelName("Outside_Rock");
+	//
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("Outside_bossOBJ");
+	//
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("Outside_Other");
+	//
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("Outside_Pebble");
 
 	testobj = InstanceTerrain("Terrain");
 	Terrain* mTerrain = testobj->GetComponent<Terrain>();
@@ -293,22 +299,18 @@ void TestScene::ChangeCubeMap()
 
 	if (GetKeyUp('1'))
 	{
-		LoadEnvironment("../Assets/Texture/Environment/Day.dds");
-		SetEnvironment(true);
+		SetEnvironmentMap("Day");
 	}
 	if (GetKeyUp('2'))
 	{
-		LoadEnvironment("../Assets/Texture/Environment/Night.dds");
-		SetEnvironment(true);
+		SetEnvironmentMap("Night");
 	}
 	if (GetKeyUp('3'))
 	{
-		LoadEnvironment("../Assets/Texture/Environment/skybox1.dds");
-		SetEnvironment(true);
+		SetEnvironmentMap("skybox1");
 	}
 	if (GetKeyUp('4'))
 	{
-		LoadEnvironment("../Assets/Texture/Environment/TestSky.dds");
-		SetEnvironment(true);
+		SetEnvironmentMap("TestSky");
 	}
 }

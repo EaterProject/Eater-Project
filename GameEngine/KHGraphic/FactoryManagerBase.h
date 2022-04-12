@@ -7,6 +7,7 @@
 
 class LoadMeshData;
 class TextureBuffer;
+class EnvironmentBuffer;
 class MeshBuffer;
 
 interface IFactoryManager
@@ -20,11 +21,11 @@ public:
 	// Create Output Graphic Resource..
 	virtual void CreateTextureBuffer(std::string path, TextureBuffer** ppResource) abstract;
 	virtual void CreateMeshBuffer(ParserData::CMesh* mesh, MeshBuffer** ppResource) abstract;
-	virtual void CreateEnvironmentMap(std::string path) abstract;
 
 public:
 	// Baking Graphic Resource..
-	virtual void BakingShadowMap(std::string path) abstract;
+	virtual void BakeShadowMap(std::string fileName) abstract;
+	virtual void BakeEnvironmentMap(TextureBuffer* environment, EnvironmentBuffer** ppResource) abstract;
 
 public:
 	template<typename T, Enable_Check<T> = NULL> void CreateImage(std::string path);

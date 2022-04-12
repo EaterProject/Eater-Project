@@ -20,8 +20,8 @@ public:
 	void SetGlobalData(GlobalData* globalData) override;
 
 public:
-	void SetShadowMap(std::string path) override;
-	void SetEnvironmentMap(bool enable) override;
+	void SetShadowMap(TextureBuffer* resource) override;
+	void SetEnvironmentMap(EnvironmentBuffer* resource) override;
 
 public:
 	void PushInstance(MeshData* instance) override;
@@ -42,10 +42,10 @@ public:
 public:
 	void CreateTextureBuffer(std::string path, TextureBuffer** ppResource) override;
 	void CreateMeshBuffer(ParserData::CMesh* mesh, MeshBuffer** ppResource) override;
-	void CreateEnvironmentMap(std::string path) override;
 
 public:
-	void BakingShadowMap(std::string path) override;
+	void BakeShadowMap(std::string path) override;
+	void BakeEnvironmentMap(TextureBuffer* environment, EnvironmentBuffer** ppResource) override;
 
 private:
 	IFactoryManager* m_FactoryManager;

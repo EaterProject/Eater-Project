@@ -11,12 +11,12 @@
 
 class MeshData;
 class MeshBuffer;
-class TextureBuffer;
 class MaterialBuffer;
 class GlobalData;
 class IndexBuffer;
 class VertexBuffer;
 class TextureBuffer;
+class EnvironmentBuffer;
 class LoadMeshData;
 class RenderOption;
 
@@ -46,8 +46,8 @@ public:
 	virtual GRAPHIC_DLL void SetGlobalData(GlobalData* globalData) abstract;
 
 public:
-	virtual GRAPHIC_DLL void SetShadowMap(std::string path) abstract;
-	virtual GRAPHIC_DLL void SetEnvironmentMap(bool enable) abstract;
+	virtual GRAPHIC_DLL void SetShadowMap(TextureBuffer* resource) abstract;
+	virtual GRAPHIC_DLL void SetEnvironmentMap(EnvironmentBuffer* resource) abstract;
 
 public:
 	/// Render Mesh Data & Rendering Function..
@@ -71,11 +71,10 @@ public:
 	virtual GRAPHIC_DLL void CreateTextureBuffer(std::string path, TextureBuffer** ppResource) abstract;
 	virtual GRAPHIC_DLL void CreateMeshBuffer(ParserData::CMesh* mesh, MeshBuffer** ppResource) abstract;
 
-	virtual GRAPHIC_DLL void CreateEnvironmentMap(std::string path) abstract;
-
 public:
 	/// Graphic Resource Baking Function..
-	virtual GRAPHIC_DLL void BakingShadowMap(std::string path) abstract;
+	virtual GRAPHIC_DLL void BakeShadowMap(std::string path) abstract;
+	virtual GRAPHIC_DLL void BakeEnvironmentMap(TextureBuffer* environment, EnvironmentBuffer** ppResource) abstract;
 
 private:
 	static GraphicEngine* Graphic;

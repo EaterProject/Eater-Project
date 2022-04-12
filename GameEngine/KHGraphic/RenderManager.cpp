@@ -186,15 +186,15 @@ void RenderManager::SetGlobalData(GlobalData* globalData)
 	RenderPassBase::g_GlobalData = globalData;
 }
 
-void RenderManager::SetShadowMap(std::string path)
+void RenderManager::SetShadowMap(TextureBuffer* resource)
 {
-	
+	m_Shadow->SetShadowMap((ID3D11ShaderResourceView*)resource->pTextureBuf);
 }
 
-void RenderManager::SetEnvironmentMap(bool enable)
+void RenderManager::SetEnvironmentMap(EnvironmentBuffer* resource)
 {
-	m_Light->SetIBLEnvironmentMapResource(enable);
-	m_Environment->SetEnvironmentMapResource(enable);
+	m_Light->SetIBLEnvironmentMapResource(resource);
+	m_Environment->SetEnvironmentMapResource(resource);
 }
 
 void RenderManager::PushInstance(MeshData* instance)
@@ -387,6 +387,18 @@ void* RenderManager::PickingRender(int x, int y)
 
 	// 해당 Render Data의 원본 GameObject를 반환..
 	return renderData->m_ObjectData->Object;
+}
+
+void RenderManager::BakeShadowMap()
+{
+	m_Shadow->BakeShadowMap();
+
+	for (int i = 0; i < m_RenderMeshList.size(); i++)
+	{
+		m_InstanceLayer = m_RenderMeshList[i];
+
+		m_Shadow->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_MeshList);
+	}
 }
 
 void RenderManager::ShadowRender()

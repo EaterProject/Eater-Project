@@ -37,8 +37,8 @@ public:
 	void SetGlobalData(GlobalData* globalData) override;
 
 public:
-	void SetShadowMap(std::string path) override;
-	void SetEnvironmentMap(bool enable) override;
+	void SetShadowMap(TextureBuffer* resource) override;
+	void SetEnvironmentMap(EnvironmentBuffer* resource) override;
 
 public:
 	void PushInstance(MeshData* instance) override;
@@ -55,6 +55,9 @@ public:
 
 	void Render() override;
 	void* PickingRender(int x, int y) override;
+
+public:
+	void BakeShadowMap() override;
 
 private:
 	void InstanceResize();

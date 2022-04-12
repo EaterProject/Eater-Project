@@ -1,0 +1,7 @@
+[TIME] 16:25:33 [FILE] D3D11Graphic.cpp [FUNC] D3D11Graphic::CreateTextureBuffer [LINE] 181
+[Graphic][Create][ShaderResourceView] '../Assets/Texture/Bake/ShadowMap.dds' FAILED!!
+[ERROR] 매개 변수가 틀립니다.
+
+[TIME] 16:25:33 [FILE] TextureManager.cpp [FUNC] TextureManager::LoadTexture [LINE] 34
+[ Engine ][ Create ][ Texture ] FAILED!!
+

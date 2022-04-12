@@ -109,14 +109,14 @@ void CreateSceneSub(Scene* mSceneTemp, std::string SceneName)
 	gGameEngine->PushScene(mSceneTemp, SceneName);
 }
 
- void LoadTerrainMesh(std::string mMeshName, std::string maskName1, std::string maskName2, UINT parsingMode)
- {
-	 gGameEngine->LoadTerrain(mMeshName, maskName1, maskName2, parsingMode);
- }
+void LoadTerrainMesh(std::string mMeshName, std::string maskName1, std::string maskName2, UINT parsingMode)
+{	 
+	gGameEngine->LoadTerrain(mMeshName, maskName1, maskName2, parsingMode);
+}
 
 void Load(std::string mPath, UINT Mode)
 {
-  gGameEngine->Load(mPath, Mode);
+	gGameEngine->Load(mPath, Mode);
 }
 
 int LoadAssetsCount()
@@ -124,19 +124,29 @@ int LoadAssetsCount()
   return gGameEngine->LoadMeshCount();
 }
 
+void BakeShadowMap(std::string mPath)
+{
+	gGameEngine->BakeShadowMap(mPath);
+}
+
+void BakeEnvironmentMap(std::string mPath)
+{
+	gGameEngine->BakeEnvironmentMap(mPath);
+}
+
+void SetShadowMap(std::string mPath)
+{
+	gGameEngine->SetShadowMap(mPath);
+}
+
+void SetEnvironmentMap(std::string mPath)
+{
+	gGameEngine->SetEnvironmentMap(mPath);
+}
+
 ModelData* GetLoadMeshData(std::string mPath)
 {
   return gGameEngine->GetLoadMeshData(mPath);
-}
-
-void LoadEnvironment(std::string mPath)
-{
-  gGameEngine->LoadEnvironment(mPath);
-}
-
-void SetEnvironment(bool enable)
-{
-  gGameEngine->SetEnvironment(enable);
 }
 
 int GetLoadMeshCount()

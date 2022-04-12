@@ -16,6 +16,7 @@
 
 std::map<std::string, ModelData*>			LoadManager::ModelList;
 std::map<std::string, TextureBuffer*>		LoadManager::TextureList;
+std::map<std::string, EnvironmentBuffer*>	LoadManager::EnvironmentList;
 std::map<std::string, Material*>			LoadManager::MaterialList;
 std::map<std::string, ModelAnimationData*>	LoadManager::AnimationList;
 std::map<std::string, Mesh*>				LoadManager::MeshBufferList;
@@ -106,6 +107,12 @@ void LoadManager::LoadTerrain(std::string mMeshName, std::string mMaskName1, std
 	mFBX->LoadTerrain(mMeshName, mMaskName1, mMaskName2, parsingMode);
 }
 
+void LoadManager::BakeEnvironmentMap(std::string Path)
+{
+	//텍스쳐 로드
+	mTexture->BakeEnvironmentMap(Path);
+}
+
 int LoadManager::GetMeshCount()
 {
 	return (int)ModelList.size();
@@ -141,6 +148,22 @@ TextureBuffer* LoadManager::GetTexture(std::string Path)
 	if (End_it == Find_it)
 	{
 		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ ERROR ][ Engine ][ GetTexture ] '%s'가 없습니다.", Path.c_str());
+		return nullptr;
+	}
+	else
+	{
+		return Find_it->second;
+	}
+}
+
+EnvironmentBuffer* LoadManager::GetEnvironment(std::string Path)
+{
+	std::map<std::string, EnvironmentBuffer*>::iterator End_it = EnvironmentList.end();
+	std::map<std::string, EnvironmentBuffer*>::iterator Find_it = EnvironmentList.find(Path);
+
+	if (End_it == Find_it)
+	{
+		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ ERROR ][ Engine ][ GetEnvironment ] '%s'가 없습니다.", Path.c_str());
 		return nullptr;
 	}
 	else

@@ -349,6 +349,7 @@ void GameEngine::Load(std::string& Path, UINT MODE)
 {
 	mLoadManager->Load(Path, MODE);
 }
+
 int GameEngine::LoadMeshCount()
 {
 	return mLoadManager->GetMeshCount();
@@ -365,17 +366,31 @@ ModelData* GameEngine::GetLoadMeshData(std::string& Path)
 {
 	return mLoadManager->GetModel(Path);
 }
-void GameEngine::LoadEnvironment(std::string mPath)
+
+void GameEngine::BakeShadowMap(std::string& Path)
 {
-	EnterCriticalSection(&g_CS);
-	mGraphicManager->LoadEnvironment(mPath);
-	LeaveCriticalSection(&g_CS);
+	mGraphicManager->BakeShadowMap(Path);
 }
 
-void GameEngine::SetEnvironment(bool enable)
+void GameEngine::BakeEnvironmentMap(std::string& Path)
 {
-	mGraphicManager->SetEnvironment(enable);
+	mLoadManager->BakeEnvironmentMap(Path);
 }
+
+void GameEngine::SetShadowMap(std::string& Path)
+{
+	TextureBuffer* resource = mLoadManager->GetTexture(Path);
+
+	mGraphicManager->SetShadowMap(resource);
+}
+
+void GameEngine::SetEnvironmentMap(std::string& Path)
+{
+	EnvironmentBuffer* environment = mLoadManager->GetEnvironment(Path);
+
+	mGraphicManager->SetEnvironmentMap(environment);
+}
+
 void GameEngine::AddOccluder(std::string mMeshName)
 {
 	MeshBuffer* mesh = mLoadManager->GetMeshBuffer(mMeshName);

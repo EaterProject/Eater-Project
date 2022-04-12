@@ -73,14 +73,14 @@ void KHGraphic::SetGlobalData(GlobalData* globalData)
 	m_RenderManager->SetGlobalData(globalData);
 }
 
-void KHGraphic::SetShadowMap(std::string path)
+void KHGraphic::SetShadowMap(TextureBuffer* resource)
 {
-	m_RenderManager->SetShadowMap(path);
+	m_RenderManager->SetShadowMap(resource);
 }
 
-void KHGraphic::SetEnvironmentMap(bool enable)
+void KHGraphic::SetEnvironmentMap(EnvironmentBuffer* resource)
 {
-	m_RenderManager->SetEnvironmentMap(enable);
+	m_RenderManager->SetEnvironmentMap(resource);
 }
 
 void KHGraphic::PushInstance(MeshData* instance)
@@ -131,11 +131,6 @@ void KHGraphic::DeleteMaterial(MaterialBuffer* material)
 void KHGraphic::Render()
 {
 	m_RenderManager->Render();
-
-	if (GetAsyncKeyState('1'))
-	{
-		BakingShadowMap("ShadowMap");
-	}
 }
 
 void* KHGraphic::PickingRender(int x, int y)
@@ -153,12 +148,13 @@ void KHGraphic::CreateMeshBuffer(ParserData::CMesh* mesh, MeshBuffer** ppResourc
 	m_FactoryManager->CreateMeshBuffer(mesh, ppResource);
 }
 
-void KHGraphic::CreateEnvironmentMap(std::string path)
+void KHGraphic::BakeShadowMap(std::string path)
 {
-	m_FactoryManager->CreateEnvironmentMap(path);
+	m_RenderManager->BakeShadowMap();
+	m_FactoryManager->BakeShadowMap(path);
 }
 
-void KHGraphic::BakingShadowMap(std::string path)
+void KHGraphic::BakeEnvironmentMap(TextureBuffer* environment, EnvironmentBuffer** ppResource)
 {
-	m_FactoryManager->BakingShadowMap(path);
+	m_FactoryManager->BakeEnvironmentMap(environment, ppResource);
 }

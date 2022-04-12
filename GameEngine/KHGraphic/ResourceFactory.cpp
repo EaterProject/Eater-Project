@@ -148,40 +148,6 @@ void GraphicResourceFactory::CreateMeshBuffer(ParserData::CMesh* mesh, MeshBuffe
 	}
 }
 
-void GraphicResourceFactory::CreateEnvironmentMap(std::string path)
-{
-	ID3D11Resource* texResource = nullptr;
-	ID3D11ShaderResourceView* newTex = nullptr;
-
-	// Texture Buffer 积己..
-	m_Result = g_Graphic->CreateTextureBuffer(path, &texResource, &newTex);
-
-	// Texture 积己 己傍矫 Texture Buffer 火涝..
-	if (newTex)
-	{
-		ShaderResourceView* newResource = g_ResourceManager->GetShaderResourceView<gSkyCube>();
-
-		if (newResource)
-		{
-			g_ResourceManager->DeleteResource<gSkyCube>();
-		}
-
-		// ShaderResourceView 积己..
-		newResource = new ShaderResourceView(gSkyCube::GetHashCode(), newTex);
-
-		// Resource 殿废..
-		g_ResourceManager->AddResource(gSkyCube::GetHashCode(), newResource);
-
-		// Debug Name..
-		CPU_RESOURCE_DEBUG_NAME(newResource, path.c_str());
-
-		GPU_RESOURCE_DEBUG_NAME(newTex, path.c_str());
-
-		// Reset Resource..
-		texResource->Release();
-	}
-}
-
 void GraphicResourceFactory::CreateImage(std::string name, Hash_Code hash_code, std::string fileName)
 {
 	// 货肺款 Resource Pointer 积己..

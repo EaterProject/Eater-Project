@@ -39,8 +39,6 @@ void Loading::Awake()
 	particles->SetPlayTime(1, true);
 	particles->Play();
 
-	
-	LoadEnvironment("../Assets/Texture/Environment/Night.dds");
 	LoadTerrainMesh("../Assets/Model/TerrainModel/Terrain.fbx", "../Assets/Texture/Terrain/Terrain_RGB_1.png", "../Assets/Texture/Terrain/Terrain_RGB_2.png", SCALING);
 }
 
@@ -69,8 +67,8 @@ void Loading::ThreadFunction()
 	Load("../Assets/Model/MeshBuffer");
 	Load("../Assets/Model/ModelData");
 
-
-	SetEnvironment(true);
+	BakeEnvironmentMap("Night");
+	SetEnvironmentMap("Night");
 }
 
 

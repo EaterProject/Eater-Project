@@ -234,6 +234,7 @@ copy /Y "$(ProjectDir)Network\lib\Release\*lib"  "$(TargetDir)"</Command>
   <ItemGroup>
     <ClInclude Include="..\..\Library\inc\EngineData.h" />
     <ClInclude Include="..\..\Library\inc\LightHelper.h" />
+    <ClInclude Include="..\..\Library\inc\ResourcesData.h" />
     <ClInclude Include="..\..\Library\inc\TypeOptionHeader.h" />
     <ClInclude Include="GlobalDataManager.h" />
     <ClInclude Include="ComponentHeader.h" />
@@ -263,7 +264,6 @@ copy /Y "$(ProjectDir)Network\lib\Release\*lib"  "$(TargetDir)"</Command>
     <ClInclude Include="Export\NetworkComponent.h" />
     <ClInclude Include="Export\NetworkManagerComponent.h" />
     <ClInclude Include="Export\ParticleSystem.h" />
-    <ClInclude Include="Export\ResourcesData.h" />
     <ClInclude Include="Export\Rigidbody.h" />
     <ClInclude Include="Export\Scene.h" />
     <ClInclude Include="Export\SkinningFilter.h" />

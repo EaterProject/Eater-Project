@@ -41,6 +41,36 @@ void TextureManager::LoadTexture(std::string& Path)
 	}
 }
 
+void TextureManager::BakeEnvironmentMap(std::string& Path)
+{
+	EnvironmentBuffer* buffer = LoadManager::GetEnvironment(Path);
+	TextureBuffer* environment = LoadManager::GetTexture(Path);
+
+	// 이미 만들어진 EnvironmentMap이 있다면 처리하지 않는다..
+	if (buffer != nullptr)	return;
+
+	// 해당 Texture가 없을 경우..
+	if (environment == nullptr)
+	{
+		PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "[ Engine ][ Create ][ Environment ] '%s' Texture가 로드되지 않았습니다!!", Path.c_str());
+	}
+
+	EnterCriticalSection(m_CriticalSection);
+	m_Graphic->BakeEnvironmentMap(environment, &buffer);
+	LeaveCriticalSection(m_CriticalSection);
+
+	if (buffer == nullptr)
+	{
+		PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "[ Engine ][ Create ][ Environment ] FAILED!!");
+	}
+	else
+	{
+		std::string Name = CutFilePath(Path);
+		buffer->Name = Name;
+		LoadManager::EnvironmentList.insert({ Name,buffer });
+	}
+}
+
 void TextureManager::Initialize(GraphicEngineManager* Graphic, CRITICAL_SECTION* _cs)
 {
 	m_Graphic			= Graphic;

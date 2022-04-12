@@ -53,3 +53,19 @@ public:
 
 	void* pTextureBuf = nullptr;
 };
+
+//환경맵을 받을 클래스
+class EnvironmentBuffer : public Resources
+{
+public:
+	virtual ~EnvironmentBuffer()
+	{
+		delete Environment;
+		delete Irradiance;
+		delete Prefilter;
+	};
+
+	TextureBuffer* Environment = nullptr;
+	TextureBuffer* Irradiance = nullptr;
+	TextureBuffer* Prefilter = nullptr;
+};

@@ -47,8 +47,8 @@ void CullingPass::Create(int width, int height)
 
 	// Hierachical Z-Map Depth Buffer
 	D3D11_TEXTURE2D_DESC hizDepthDesc;
-	hizDepthDesc.Width = m_Width;
-	hizDepthDesc.Height = m_Height;
+	hizDepthDesc.Width = (UINT)m_Width;
+	hizDepthDesc.Height = (UINT)m_Height;
 	hizDepthDesc.MipLevels = 1;
 	hizDepthDesc.ArraySize = 1;
 	hizDepthDesc.Format = DXGI_FORMAT_D32_FLOAT;
@@ -70,7 +70,7 @@ void CullingPass::Create(int width, int height)
 	g_Factory->CreateDepthStencil<DS_HizDepth>(&hizDepthDesc, nullptr, &hizDSVDesc, nullptr);
 
 	// Hierachical Z-Map ViewPort »ý¼º..
-	g_Factory->CreateViewPort<VP_Hiz>(0.0f, 0.0f, (float)m_Width, (float)m_Height);
+	g_Factory->CreateViewPort<VP_Hiz>(0.0f, 0.0f, m_Width, m_Height);
 }
 
 void CullingPass::Start(int width, int height)
@@ -330,8 +330,8 @@ void CullingPass::MipMapResourceRelease()
 void CullingPass::MipMapResourceCreate()
 {
 	D3D11_TEXTURE2D_DESC hizDesc;
-	hizDesc.Width = m_Width;
-	hizDesc.Height = m_Height;
+	hizDesc.Width = (UINT)m_Width;
+	hizDesc.Height = (UINT)m_Height;
 	hizDesc.MipLevels = 0;
 	hizDesc.ArraySize = 1;
 	hizDesc.Format = DXGI_FORMAT_R32_FLOAT;

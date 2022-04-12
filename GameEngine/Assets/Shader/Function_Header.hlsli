@@ -140,3 +140,13 @@ float3 ACESFilm(float3 x)
     float e = 0.14f;
     return saturate((x * (a * x + b)) / (x * (c * x + d) + e));
 }
+
+float3 ScreenPosToWorldPos(float2 ScreenSpaceUV, float Depth, float4x4 ViewProjInv)
+{
+    float4 PosClipSpace;
+    PosClipSpace.xy = ScreenSpaceUV * float2(2.0, -2.0) + float2(-1.0, 1.0);
+    PosClipSpace.z = Depth;
+    PosClipSpace.w = 1.0;
+    float4 WorldPos = mul(PosClipSpace, ViewProjInv);
+    return WorldPos.xyz / WorldPos.w;
+}

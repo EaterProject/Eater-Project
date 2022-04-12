@@ -28,6 +28,7 @@ class ModelParser;
 class FBXParser;
 class FBXModel;
 class TextureBuffer;
+class EnvironmentBuffer;
 class Material;
 class Mesh;
 class MeshBuffer;
@@ -55,25 +56,32 @@ public:
 
 	//초기화 및 경로 설정
 	void Initialize(GraphicEngineManager* graphic, CRITICAL_SECTION* _cs);
+	void Start();
 	void Release();
 
+public:
 	void Load(std::string& Path, UINT MODE);
 	void LoadTerrain(std::string mMeshName, std::string mMaskName1, std::string mMaskName2, UINT parsingMode);
-	void Start();
+
+public:
+	void BakeEnvironmentMap(std::string Path);
+
+public:
 	int	GetMeshCount();
 	int	GetTextureCount();
 	int	GetMaterialCount();
 	int	GetAnimationCount();
 
-	static TextureBuffer*	GetTexture(std::string Path);			//텍스쳐 버퍼를 가져옴
-	static ModelData*		GetModel(std::string Path);				//모델 데이터를 가져옴
-	static ModelAnimationData* GetAnimation(std::string Path);		//애니메이션 데이터를 가져옴
-	static Material*		GetMaterial(std::string Path);			//메테리얼 데이터를 가져옴
-	static Mesh*			GetMesh(std::string Path);				//메쉬 데이터를 가져옴
-	static MeshBuffer*		GetMeshBuffer(std::string Path);		//메쉬 버퍼 데이터를 가져옴
-	static CameraAnimation* GetCamAnimation(std::string Path);		//카메라 애니메이션 데이터를가져옴
-	static bool				FindModel(std::string Name);			
-	static bool				FindTexture(std::string Name);
+	static TextureBuffer*		GetTexture(std::string Path);			//텍스쳐 버퍼를 가져옴
+	static EnvironmentBuffer*	GetEnvironment(std::string Path);		//환경맵 버퍼를 가져옴
+	static ModelData*			GetModel(std::string Path);				//모델 데이터를 가져옴
+	static ModelAnimationData*	GetAnimation(std::string Path);			//애니메이션 데이터를 가져옴
+	static Material*			GetMaterial(std::string Path);			//메테리얼 데이터를 가져옴
+	static Mesh*				GetMesh(std::string Path);				//메쉬 데이터를 가져옴
+	static MeshBuffer*			GetMeshBuffer(std::string Path);		//메쉬 버퍼 데이터를 가져옴
+	static CameraAnimation*		GetCamAnimation(std::string Path);		//카메라 애니메이션 데이터를가져옴
+	static bool					FindModel(std::string Name);			
+	static bool					FindTexture(std::string Name);
 private:
 	bool	CheckFolder(std::string& Path);
 	void	LoadFile(std::string& Path, UINT MODE);
@@ -85,6 +93,7 @@ private:
 private:
 	static std::map<std::string, ModelData*>			ModelList;
 	static std::map<std::string, TextureBuffer*>		TextureList;
+	static std::map<std::string, EnvironmentBuffer*>	EnvironmentList;
 	static std::map<std::string, Material*>				MaterialList;
 	static std::map<std::string, ModelAnimationData*>	AnimationList;
 	static std::map<std::string, Mesh*>					MeshBufferList;

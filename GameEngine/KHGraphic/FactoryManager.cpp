@@ -45,16 +45,18 @@ void FactoryManager::CreateMeshBuffer(ParserData::CMesh* mesh, MeshBuffer** ppRe
 	m_ResourceFactory->CreateMeshBuffer(mesh, ppResource);
 }
 
-void FactoryManager::CreateEnvironmentMap(std::string path)
+void FactoryManager::BakeShadowMap(std::string fileName)
 {
-	m_ResourceFactory->CreateEnvironmentMap(path);
-
-	m_BakingFactory->PreBakeIBLMap();
+	m_BakingFactory->PreBakeShadowMap(fileName);
 }
 
-void FactoryManager::BakingShadowMap(std::string path)
+void FactoryManager::BakeEnvironmentMap(TextureBuffer* environment, EnvironmentBuffer** ppResource)
 {
-	m_BakingFactory->PreBakeShadowMap(path);
+	// 货肺款 Environment Buffer 积己..
+	(*ppResource) = new EnvironmentBuffer();
+	(*ppResource)->Environment = environment;
+
+	m_BakingFactory->PreBakeEnvironmentMap(*ppResource);
 }
 
 void FactoryManager::CreateImg(std::string name, Hash_Code hash_code, std::string fileName)

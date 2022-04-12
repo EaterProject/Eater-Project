@@ -79,19 +79,12 @@ void EnvironmentPass::SetOption(RenderOption* renderOption)
 
 }
 
-void EnvironmentPass::SetEnvironmentMapResource(bool enable)
+void EnvironmentPass::SetEnvironmentMapResource(EnvironmentBuffer* resource)
 {
-	if (enable)
-	{
-		// SkyCube Resource 설정..
-		ID3D11ShaderResourceView* skycube = g_Resource->GetShaderResourceView<gSkyCube>()->Get();
+	// SkyCube Resource 설정..
+	ID3D11ShaderResourceView* skycube = (ID3D11ShaderResourceView*)resource->Environment->pTextureBuf;
 
-		m_SkyBoxPS->SetShaderResourceView<gSkyCube>(skycube);
-	}
-	else
-	{
-		m_SkyBoxPS->SetShaderResourceView<gSkyCube>(nullptr);
-	}
+	m_SkyBoxPS->SetShaderResourceView<gSkyCube>(skycube);
 }
 
 void EnvironmentPass::RenderUpdate()

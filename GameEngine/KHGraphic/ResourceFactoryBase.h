@@ -5,6 +5,7 @@
 
 class LoadMeshData;
 class TextureBuffer;
+class EnvironmentBuffer;
 class MeshBuffer;
 
 ///
@@ -25,7 +26,6 @@ public:
 	// Create Output Graphic Resource..
 	virtual void CreateTextureBuffer(std::string path, TextureBuffer** ppResource) abstract;
 	virtual void CreateMeshBuffer(ParserData::CMesh* mesh, MeshBuffer** ppResource) abstract;
-	virtual void CreateEnvironmentMap(std::string path) abstract;
 
 private:
 	// Create Graphic Engine Resource..

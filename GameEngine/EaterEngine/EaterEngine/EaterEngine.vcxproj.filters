@@ -219,9 +219,6 @@
     <ClInclude Include="Export\SkinningFilter.h">
       <Filter>소스 파일\Component\SkinningFilter</Filter>
     </ClInclude>
-    <ClInclude Include="Export\ResourcesData.h">
-      <Filter>소스 파일\Data</Filter>
-    </ClInclude>
     <ClInclude Include="LightManager.h">
       <Filter>소스 파일\Manager\LightManager</Filter>
     </ClInclude>
@@ -329,6 +326,9 @@
     </ClInclude>
     <ClInclude Include="GlobalDataManager.h">
       <Filter>소스 파일\Manager\GlobalDataManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Library\inc\ResourcesData.h">
+      <Filter>소스 파일\Data</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

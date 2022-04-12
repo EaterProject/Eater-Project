@@ -434,7 +434,7 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rend
 		g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 		g_Context->IASetVertexBuffers(0, 1, &mesh->m_VertexBuf, &mesh->m_Stride, &mesh->m_Offset);
 		g_Context->IASetIndexBuffer(mesh->m_IndexBuf, DXGI_FORMAT_R32_UINT, 0);
-
+		
 		g_Context->DrawIndexed(mesh->m_IndexCount, 0, 0);
 	}
 	break;

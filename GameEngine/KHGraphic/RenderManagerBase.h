@@ -32,10 +32,10 @@ public:
 
 public:
 	// Shadow Map Setting..
-	virtual void SetShadowMap(std::string path) abstract;
+	virtual void SetShadowMap(TextureBuffer* resource) abstract;
 
 	// Environment Map Setting..
-	virtual void SetEnvironmentMap(bool enable) abstract;
+	virtual void SetEnvironmentMap(EnvironmentBuffer* resource) abstract;
 
 public:
 	// Render Data Push..
@@ -58,4 +58,7 @@ public:
 	virtual void Render() abstract;
 
 	virtual void* PickingRender(int x, int y) abstract;
+
+public:
+	virtual void BakeShadowMap() abstract;
 };
