@@ -142,7 +142,7 @@ void TestScene::CreateMap()
 	filter->SetAnimationName("MonsterA+");
 	Object->GetTransform()->Position.z -= 20;
 	AC = Object->AddComponent<AnimationController>();
-	AC->Choice("move");
+	AC->Choice("Move");
 	
 	//Object = Instance();
 	//filter = Object->AddComponent<MeshFilter>();

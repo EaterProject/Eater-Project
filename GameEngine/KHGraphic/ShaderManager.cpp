@@ -91,7 +91,6 @@ void ShaderManager::CreateShader()
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "OIT_Blend_PS.hlsl", "OIT_PS", "OIT_PS");
 
 	// Shadow Shader
-	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Shadow_Baking_PS.hlsl", "Shadow_Baking_PS", "Shadow_Baking_PS");
 	LoadShader(SHADER_TYPE::VERTEX_SHADER, "Shadow_StaticMesh_VS.hlsl", "Shadow_StaticMesh_VS", "Shadow_StaticMesh_VS");
 	LoadShader(SHADER_TYPE::VERTEX_SHADER, "Shadow_StaticMesh_Instance_VS.hlsl", "Shadow_StaticMesh_Instance_VS", "Shadow_StaticMesh_Instance_VS");
 	LoadShader(SHADER_TYPE::VERTEX_SHADER, "Shadow_SkinMesh_VS.hlsl", "Shadow_SkinMesh_VS", "Shadow_SkinMesh_VS");

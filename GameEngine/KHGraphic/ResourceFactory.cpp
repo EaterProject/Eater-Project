@@ -1867,7 +1867,7 @@ void GraphicResourceFactory::CreateRasterizerStates()
 	rasterizerDesc.DepthClipEnable = true;
 	rasterizerDesc.DepthBias = 100000;
 	rasterizerDesc.DepthBiasClamp = 0.0f;
-	rasterizerDesc.SlopeScaledDepthBias = 0.006f;
+	rasterizerDesc.SlopeScaledDepthBias = 0.005f;
 
 	// Depth RasterizerState »ý¼º..
 	CreateRasterizerState(RS_Depth::GetName(), RS_Depth::GetHashCode(), &rasterizerDesc);

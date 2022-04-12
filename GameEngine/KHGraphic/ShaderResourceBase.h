@@ -19,10 +19,10 @@ public:
 	ShaderResourceBase(std::string name, register_slot rNum) : buffer_name(name), register_number(rNum) {}
 
 public:
-	// Buffer Name
+	// Buffer Name..
 	std::string buffer_name;
 
-	// Register Slot Number
+	// Register Slot Number..
 	register_slot register_number;
 };
 
@@ -33,7 +33,10 @@ public:
 	ConstantBuffer(std::string name, register_slot rNum, size_t size) : ShaderResourceBase(name, rNum), cSize(size) {}
 
 public:
+	// Constant Buffer Usage..
 	CBUFFER_USAGE cUsage;
+
+	// Constant Buffer Size..
 	size_t cSize;
 };
 
