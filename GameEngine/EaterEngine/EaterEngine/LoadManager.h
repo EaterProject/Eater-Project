@@ -75,6 +75,7 @@ public:
 	static MeshBuffer*		GetMeshBuffer(std::string Path);		//메쉬 버퍼 데이터를 가져옴
 	static CameraAnimation* GetCamAnimation(std::string Path);		//카메라 애니메이션 데이터를가져옴
 	static ColliderBuffer*	GetColliderBuffer(std::string Path);	//카메라 애니메이션 데이터를가져옴
+	static std::vector<OneTriangle*>* GetNavMeshData();				//카메라 애니메이션 데이터를가져옴
 	static bool				FindModel(std::string Name);			
 	static bool				FindTexture(std::string Name);
 private:

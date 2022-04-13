@@ -147,7 +147,7 @@ void E_BufferManager::SetNavigationBuffer(ParserData::CMesh* mMesh)
 	int VertexCount = (int)mMesh->m_VertexList.size();
 	int IndexCount	= (int)mMesh->m_IndexList.size();
 	Data.clear();
-
+	Data.resize(IndexCount);
 	for (int i = 0; i < IndexCount; i++)
 	{
 		OneTriangle* OneData = new OneTriangle();
@@ -209,7 +209,7 @@ void E_BufferManager::SetNavigationBuffer(ParserData::CMesh* mMesh)
 				}
 			}
 		}
-		Data.push_back(OneData);
+		Data[OneData->Index] = OneData;
 	}
 	
 	//모두 구했으니 값을 저장한다

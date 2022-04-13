@@ -246,6 +246,11 @@ ColliderBuffer* LoadManager::GetColliderBuffer(std::string Path)
 	}
 }
 
+std::vector<OneTriangle*>* LoadManager::GetNavMeshData()
+{
+	return &NavMeshData;
+}
+
 ModelAnimationData* LoadManager::GetAnimation(std::string Path)
 {
 	std::map<std::string, ModelAnimationData*>::iterator End_it = AnimationList.end();
