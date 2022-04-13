@@ -71,6 +71,7 @@ void Demo::ThreadFunction()
 	Load("../Assets/Model/Animation");
 	Load("../Assets/Model/MeshBuffer");
 	Load("../Assets/Model/ModelData");
+	Load("../Assets/Texture/Environment");
 	
 	BakeEnvironmentMap("Night");
 	SetEnvironmentMap("Night");

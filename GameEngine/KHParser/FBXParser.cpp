@@ -612,22 +612,32 @@ void FBXParser::ProcessAnimation(fbxsdk::FbxNode* node)
 			takeTime.SetFrame(m_OneAnimation->m_StartFrame + index, timeMode);
 
 			// Local Transform = 부모 Bone의 Global Transform의 Inverse Transform * 자신 Bone의 Global Transform
-			FbxAMatrix nodeTransform = node->EvaluateLocalTransform(takeTime);
+			FbxAMatrix localTransform = node->EvaluateLocalTransform(takeTime);
+			FbxAMatrix worldTransform = node->EvaluateGlobalTransform(takeTime);
 
-			DirectX::SimpleMath::Matrix nodeTRS = ConvertMatrix(nodeTransform);
+			DirectX::SimpleMath::Matrix localTRS = ConvertMatrix(localTransform);
+			DirectX::SimpleMath::Matrix worldTRS = ConvertMatrix(worldTransform);
 
-			XMVECTOR scale;
-			XMVECTOR rot;
-			XMVECTOR pos;
+			XMVECTOR localScale;
+			XMVECTOR localRot;
+			XMVECTOR localPos;
 
-			XMMatrixDecompose(&scale, &rot, &pos, nodeTRS);
+			XMVECTOR worldScale;
+			XMVECTOR worldRot;
+			XMVECTOR worldPos;
+
+			XMMatrixDecompose(&localScale, &localRot, &localPos, localTRS);
+			XMMatrixDecompose(&worldScale, &worldRot, &worldPos, worldTRS);
 
 			CFrame* newAni = new CFrame;
 
 			newAni->m_Time = (float)index;
-			newAni->m_Pos = DirectX::SimpleMath::Vector3(pos);
-			newAni->m_RotQt = Quaternion(rot);
-			newAni->m_Scale = DirectX::SimpleMath::Vector3(scale);
+			newAni->m_LocalPos = DirectX::SimpleMath::Vector3(localPos);
+			newAni->m_LocalRotQt = Quaternion(localRot);
+			newAni->m_LocalScale = DirectX::SimpleMath::Vector3(localScale);
+			newAni->m_WorldPos = DirectX::SimpleMath::Vector3(worldPos);
+			newAni->m_WorldRotQt = Quaternion(worldRot);
+			newAni->m_WorldScale = DirectX::SimpleMath::Vector3(worldScale);
 
 			m_OneAnimation->m_AniData.push_back(newAni);
 		}

@@ -48,9 +48,9 @@ void Animator::Play(float time, bool Loop)
 		AnimeFrameIndex();
 
 
-		DirectX::SimpleMath::Vector3	pos = NowAnimationData->m_AniData[AnimeIndex]->m_Pos;
-		DirectX::SimpleMath::Quaternion rot = NowAnimationData->m_AniData[AnimeIndex]->m_RotQt;
-		DirectX::SimpleMath::Vector3	scl = NowAnimationData->m_AniData[AnimeIndex]->m_Scale;
+		DirectX::SimpleMath::Vector3	pos = NowAnimationData->m_AniData[AnimeIndex]->m_LocalPos;
+		DirectX::SimpleMath::Quaternion rot = NowAnimationData->m_AniData[AnimeIndex]->m_LocalRotQt;
+		DirectX::SimpleMath::Vector3	scl = NowAnimationData->m_AniData[AnimeIndex]->m_LocalScale;
 
 		XM_ROT = DirectX::XMMatrixRotationQuaternion(rot);
 		XM_POS = DirectX::XMMatrixTranslation(pos.x, pos.y, pos.z);

@@ -48,9 +48,14 @@ namespace ParserData
 	{
 	public:
 		float							m_Time;
-		DirectX::SimpleMath::Vector3	m_Pos;
-		DirectX::SimpleMath::Quaternion m_RotQt;
-		DirectX::SimpleMath::Vector3	m_Scale;
+
+		DirectX::SimpleMath::Vector3	m_LocalPos;
+		DirectX::SimpleMath::Quaternion m_LocalRotQt;
+		DirectX::SimpleMath::Vector3	m_LocalScale;
+
+		DirectX::SimpleMath::Vector3	m_WorldPos;
+		DirectX::SimpleMath::Quaternion m_WorldRotQt;
+		DirectX::SimpleMath::Vector3	m_WorldScale;
 	};
 	
 	class CAnimation

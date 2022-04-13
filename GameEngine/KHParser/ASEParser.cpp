@@ -895,7 +895,7 @@ void ASEParser::DataParsing()
 		case TOKENR_CONTROL_POS_SAMPLE:
 		{
 			m_Animation->m_AniData.back()->m_Time = (Parsing_NumberFloat() / m_scenedata.m_TicksPerFrame) - m_scenedata.m_FirstFrame;
-			m_Animation->m_AniData.back()->m_Pos = Parsing_ChangeNumberVector3();
+			m_Animation->m_AniData.back()->m_LocalPos = Parsing_ChangeNumberVector3();
 			break;
 		}
 		case TOKENR_CONTROL_ROT_TRACK:
@@ -916,11 +916,11 @@ void ASEParser::DataParsing()
 			// quaternion 값은 누적시켜주자..
 			if (m_Animation->m_AniData.size() > 1)
 			{
-				m_Animation->m_AniData.back()->m_RotQt = XMQuaternionMultiply(m_Animation->m_AniData[m_Animation->m_AniData.size() - 2]->m_RotQt, nowQT);
+				m_Animation->m_AniData.back()->m_LocalRotQt = XMQuaternionMultiply(m_Animation->m_AniData[m_Animation->m_AniData.size() - 2]->m_LocalRotQt, nowQT);
 			}
 			else
 			{
-				m_Animation->m_AniData.back()->m_RotQt = nowQT;
+				m_Animation->m_AniData.back()->m_LocalRotQt = nowQT;
 			}
 			break;
 		}
@@ -928,7 +928,7 @@ void ASEParser::DataParsing()
 			break;
 		case TOKENR_CONTROL_SCALE_SAMPLE:
 		{
-			m_Animation->m_AniData.back()->m_Scale = Parsing_ChangeNumberVector3();
+			m_Animation->m_AniData.back()->m_LocalScale = Parsing_ChangeNumberVector3();
 			//m_animation->m_scale.push_back(new CAnimation_scl);
 			//m_animation->m_scale.back()->m_time = (Parsing_NumberFloat() / m_OneMesh->m_scenedata.m_ticksperframe) - m_OneMesh->m_scenedata.m_firstframe;
 			//m_animation->m_scale.back()->m_scale = Parsing_ChangeNumberVector3();

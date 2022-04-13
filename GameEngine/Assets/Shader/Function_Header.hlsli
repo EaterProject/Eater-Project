@@ -150,3 +150,14 @@ float3 ScreenPosToWorldPos(float2 ScreenSpaceUV, float Depth, float4x4 ViewProjI
     float4 WorldPos = mul(PosClipSpace, ViewProjInv);
     return WorldPos.xyz / WorldPos.w;
 }
+
+float3 QuatRot(in float4 q, in float3 v)
+{
+    float3 uv, uuv;
+    uv = cross(q.xyz, v.xyz);
+    uuv = cross(q.xyz, uv.xyz);
+    uv *= (2.0f * q.w);
+    uuv *= 2.0f;
+
+    return v + uv + uuv;
+}

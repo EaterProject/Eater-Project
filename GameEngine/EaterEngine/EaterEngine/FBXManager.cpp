@@ -109,16 +109,16 @@ void FBXManager::CreateKeyFrame(std::vector<ParserData::CAnimation*>* Anime, int
 		for (int i = 0; i < Size - 1; i++)
 		{
 			//보간할 처음값
-			DirectX::SimpleMath::Vector3 Start_Pos = data[i]->m_Pos;
-			DirectX::SimpleMath::Quaternion Start_Rot = data[i]->m_RotQt;
-			DirectX::SimpleMath::Vector3 Start_Scl = data[i]->m_Scale;
+			DirectX::SimpleMath::Vector3 Start_Pos = data[i]->m_LocalPos;
+			DirectX::SimpleMath::Quaternion Start_Rot = data[i]->m_LocalRotQt;
+			DirectX::SimpleMath::Vector3 Start_Scl = data[i]->m_LocalScale;
 			float Start_Time = data[i]->m_Time;
 
 			//보간할 다음값
 			int NextIndex = i + 1;
-			DirectX::SimpleMath::Vector3 End_Pos = data[NextIndex]->m_Pos;
-			DirectX::SimpleMath::Quaternion End_Rot = data[NextIndex]->m_RotQt;
-			DirectX::SimpleMath::Vector3 End_Scl = data[NextIndex]->m_Scale;
+			DirectX::SimpleMath::Vector3 End_Pos = data[NextIndex]->m_LocalPos;
+			DirectX::SimpleMath::Quaternion End_Rot = data[NextIndex]->m_LocalRotQt;
+			DirectX::SimpleMath::Vector3 End_Scl = data[NextIndex]->m_LocalScale;
 			float End_Time = data[NextIndex]->m_Time;
 
 			///처음값 넣어주기
@@ -130,9 +130,9 @@ void FBXManager::CreateKeyFrame(std::vector<ParserData::CAnimation*>* Anime, int
 			{
 				//새로운 키 프레임 생성
 				ParserData::CFrame* temp = new CFrame();
-				temp->m_Pos = Vector3::Lerp(Start_Pos, End_Pos, CountLerp);
-				temp->m_RotQt = Quaternion::Lerp(Start_Rot, End_Rot, CountLerp);
-				temp->m_Scale = Vector3::Lerp(Start_Scl, End_Scl, CountLerp);
+				temp->m_LocalPos = Vector3::Lerp(Start_Pos, End_Pos, CountLerp);
+				temp->m_LocalRotQt = Quaternion::Lerp(Start_Rot, End_Rot, CountLerp);
+				temp->m_LocalScale = Vector3::Lerp(Start_Scl, End_Scl, CountLerp);
 				temp->m_Time = LERP(Start_Time, End_Time, CountLerp);
 
 				CreateData.push_back(temp);

@@ -40,18 +40,18 @@ void E_AnimationManager::ChangeEaterFile(ParserData::CModel* FBXMesh)
 		{
 			ParserData::CFrame* Frame = FBXMesh->m_AnimationList[i]->m_AniData[j];
 
-			EATER_SET_LIST(Frame->m_Pos.x);
-			EATER_SET_LIST(Frame->m_Pos.y);
-			EATER_SET_LIST(Frame->m_Pos.z);
+			EATER_SET_LIST(Frame->m_LocalPos.x);
+			EATER_SET_LIST(Frame->m_LocalPos.y);
+			EATER_SET_LIST(Frame->m_LocalPos.z);
 
-			EATER_SET_LIST(Frame->m_RotQt.x);
-			EATER_SET_LIST(Frame->m_RotQt.y);
-			EATER_SET_LIST(Frame->m_RotQt.z);
-			EATER_SET_LIST(Frame->m_RotQt.w);
+			EATER_SET_LIST(Frame->m_LocalRotQt.x);
+			EATER_SET_LIST(Frame->m_LocalRotQt.y);
+			EATER_SET_LIST(Frame->m_LocalRotQt.z);
+			EATER_SET_LIST(Frame->m_LocalRotQt.w);
 
-			EATER_SET_LIST(Frame->m_Scale.x);
-			EATER_SET_LIST(Frame->m_Scale.y);
-			EATER_SET_LIST(Frame->m_Scale.z);
+			EATER_SET_LIST(Frame->m_LocalScale.x);
+			EATER_SET_LIST(Frame->m_LocalScale.y);
+			EATER_SET_LIST(Frame->m_LocalScale.z);
 
 			EATER_SET_LIST(Frame->m_Time, true);
 		}
