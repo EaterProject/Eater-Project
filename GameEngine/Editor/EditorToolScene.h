@@ -10,11 +10,11 @@ class SceneSave;
 class Eater_LoadScene;
 class GameObject;
 class AnimationController;
-class Demo : public Scene
+class EditorToolScene : public Scene
 {
 public:
-	Demo();
-	~Demo();
+	EditorToolScene();
+	~EditorToolScene();
 public:
 	// Scene을(를) 통해 상속됨
 	virtual void Awake() override;

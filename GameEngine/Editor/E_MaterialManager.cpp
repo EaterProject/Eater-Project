@@ -1,7 +1,7 @@
 #include "E_MaterialManager.h"
 #include "ParserData.h"
 #include "EaterHeader.h"
-#include "Demo.h"
+#include "EditorToolScene.h"
 
 E_MaterialManager::E_MaterialManager()
 {
@@ -87,7 +87,7 @@ void E_MaterialManager::ChangeEaterFile(ParserData::CModel* FBXMesh)
 		EATER_CLOSE_WRITE_FILE();
 
 		std::string LoadName = "../Assets/Texture/Material/" + ModelName + ".Emat";
-		Demo::MeshLoad(LoadName);
+		EditorToolScene::MeshLoad(LoadName);
 	}
 }
 

@@ -55,9 +55,6 @@
     <Filter Include="소스 파일\Scene">
       <UniqueIdentifier>{b7fc991c-1431-4ecb-bca7-0b4f1f0160e6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Scene\Demo">
-      <UniqueIdentifier>{56c58bac-1bb5-4516-ab70-e7a8b8ef8668}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\MFC\View\RenderView">
       <UniqueIdentifier>{d3cd7575-3572-45c0-a804-3ede483cb2a5}</UniqueIdentifier>
     </Filter>
@@ -154,6 +151,9 @@
     <Filter Include="소스 파일\MFC\Dialog\Assets\ChangeDataType\LoadTerrain">
       <UniqueIdentifier>{99268209-724d-4c9c-8369-7aedfbb43bf2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Scene\EditorToolScene">
+      <UniqueIdentifier>{56c58bac-1bb5-4516-ab70-e7a8b8ef8668}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -195,8 +195,8 @@
     <ClInclude Include="EditorData.h">
       <Filter>소스 파일\Manager\Struct</Filter>
     </ClInclude>
-    <ClInclude Include="Demo.h">
-      <Filter>소스 파일\Scene\Demo</Filter>
+    <ClInclude Include="EditorToolScene.h">
+      <Filter>소스 파일\Scene\EditorToolScene</Filter>
     </ClInclude>
     <ClInclude Include="FileOption.h">
       <Filter>소스 파일\MFC\Dialog\FileOption</Filter>
@@ -308,8 +308,8 @@
     <ClCompile Include="FBXManager.cpp">
       <Filter>소스 파일\Manager\FBX</Filter>
     </ClCompile>
-    <ClCompile Include="Demo.cpp">
-      <Filter>소스 파일\Scene\Demo</Filter>
+    <ClCompile Include="EditorToolScene.cpp">
+      <Filter>소스 파일\Scene\EditorToolScene</Filter>
     </ClCompile>
     <ClCompile Include="EditorData.cpp">
       <Filter>소스 파일\Manager\Struct</Filter>

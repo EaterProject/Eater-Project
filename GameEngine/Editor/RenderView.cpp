@@ -5,7 +5,7 @@
 #include "Editor.h"
 #include "RenderView.h"
 #include "MainHeader.h"
-#include "Demo.h"
+#include "EditorToolScene.h"
 
 // CRightView
 
@@ -27,6 +27,9 @@ BEGIN_MESSAGE_MAP(RenderView, CView)
 	//	ON_WM_SIZING()
 	//ON_WM_MOVE()
 	ON_WM_WINDOWPOSCHANGED()
+	ON_WM_SYSCOMMAND()
+	ON_WM_CLOSE()
+	ON_WM_NCDESTROY()
 END_MESSAGE_MAP()
 
 
@@ -77,7 +80,7 @@ void RenderView::OnInitialUpdate()
 	EngineInitialize(hwnd,false);
 	EditorSetting();
 
-	CreateScene<Demo>("Demo");
+	CreateScene<EditorToolScene>("Demo");
 	ChoiceScene("Demo");
 }
 
@@ -85,4 +88,18 @@ void RenderView::OnSize(UINT nType, int cx, int cy)
 {
 	OnReSize(cx, cy);
 	CView::OnSize(nType, cx, cy);
+}
+
+void RenderView::OnClose()
+{
+	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+
+	CView::OnClose();
+}
+
+
+void RenderView::OnNcDestroy()
+{
+	CView::OnNcDestroy();
+	EndEngine();
 }

@@ -2,7 +2,7 @@
 #include "ParserData.h"
 #include "EaterHeader.h"
 #include "EngineData.h"
-#include "Demo.h"
+#include "EditorToolScene.h"
 
 E_BufferManager::E_BufferManager()
 {
@@ -46,7 +46,7 @@ void E_BufferManager::ChangeEaterFile(ParserData::CModel* FBXMesh)
 		}
 		
 		std::string LoadName = "../Assets/Model/MeshBuffer/" + FileName + ".Emesh";
-		Demo::MeshLoad(LoadName);
+		EditorToolScene::MeshLoad(LoadName);
 	}
 }
 
@@ -62,7 +62,7 @@ void E_BufferManager::ChangeEaterFile_Pos(ParserData::CModel* FBXMesh, std::stri
 		SetPosVertexBuffer(mMesh);
 		SetIndexBuffer(mMesh);
 
-		Demo::MeshLoad(FileName);
+		EditorToolScene::MeshLoad(FileName);
 	}
 	EATER_CLOSE_WRITE_FILE();
 }

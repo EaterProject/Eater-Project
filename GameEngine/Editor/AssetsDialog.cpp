@@ -7,7 +7,7 @@
 #include "afxdialogex.h"
 #include "GrobalFunction.h"
 #include <stack>
-#include "Demo.h"
+#include "EditorToolScene.h"
 #include "RightOption.h"
 #include "EditorManager.h"
 #include "FileOption.h"

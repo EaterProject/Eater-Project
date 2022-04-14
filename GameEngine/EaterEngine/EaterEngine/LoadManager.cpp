@@ -54,30 +54,60 @@ void LoadManager::Initialize(GraphicEngineManager* graphic, CRITICAL_SECTION* _c
 
 void LoadManager::Release()
 {
-	//모델 데이터 삭제
-	//for (auto mModel : ModelList)
-	//{
-	//	delete (mModel.second);
-	//	mModel.second = nullptr;
-	//}
-
-	//텍스쳐 데이터 삭제
-	//for (auto mTexture : TextureList)
-	//{
-	//	delete (mTexture.second);
-	//}
-
-	//메테리얼 삭제
-	for (auto mMaterial : MaterialList)
+	///모델 데이터 삭제
+	auto ModelStart	= ModelList.begin();
+	auto ModelEnd	= ModelList.end();
+	for (ModelStart; ModelStart != ModelEnd; ModelStart++)
 	{
-		mMaterial.second->Release();
+		ModelData* Data = ModelStart->second;
+		ModelStart->second = nullptr;
+		delete Data;
 	}
+	ModelList.clear();
 
-	//애니메이션 삭제
-	for (auto mAnimation : AnimationList)
+	///텍스쳐 버퍼 삭제
+	auto TextureListStart	= TextureList.begin();
+	auto TextureListEnd		= TextureList.end();
+	for (TextureListStart; TextureListStart != TextureListEnd; TextureListStart++)
 	{
-		//delete mAnimation.second;
+		TextureBuffer* Data = TextureListStart->second;
+		TextureListStart->second = nullptr;
+		delete Data;
 	}
+	TextureList.clear();
+
+	///메테리얼 삭제
+	auto MaterialListStart	= MaterialList.begin();
+	auto MaterialListEnd	= MaterialList.end();
+	for (MaterialListStart; MaterialListStart != MaterialListEnd; MaterialListStart++)
+	{
+		Material* Data = MaterialListStart->second;
+		MaterialListStart->second = nullptr;
+		Data->Release();
+	}
+	MaterialList.clear();
+
+	///애니메이션 데이터 삭제
+	auto AnimationListStart = AnimationList.begin();
+	auto AnimationListEnd	= AnimationList.end();
+	for (AnimationListStart; AnimationListStart != AnimationListEnd; AnimationListStart++)
+	{
+		ModelAnimationData* Data = AnimationListStart->second;
+		AnimationListStart->second = nullptr;
+		delete Data;
+	}
+	AnimationList.clear();
+
+	///매쉬 데이터 삭제
+	auto MeshBufferStart	= MeshBufferList.begin();
+	auto MeshBufferEnd		= MeshBufferList.end();
+	for (MeshBufferStart; MeshBufferStart != MeshBufferEnd; MeshBufferStart++)
+	{
+		Mesh* Data = MeshBufferStart->second;
+		MeshBufferStart->second = nullptr;
+		Data->Release();
+	}
+	MeshBufferList.clear();
 }
 
 void LoadManager::Start()

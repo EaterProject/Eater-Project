@@ -224,7 +224,7 @@ copy /Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)" </Command>
     <ClInclude Include="OptionView.h" />
     <ClInclude Include="RightOption.h" />
     <ClInclude Include="RenderView.h" />
-    <ClInclude Include="Demo.h" />
+    <ClInclude Include="EditorToolScene.h" />
     <ClInclude Include="EaterManager.h" />
     <ClInclude Include="Editor.h" />
     <ClInclude Include="EditorData.h" />
@@ -273,7 +273,7 @@ copy /Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)" </Command>
     <ClCompile Include="OptionView.cpp" />
     <ClCompile Include="RightOption.cpp" />
     <ClCompile Include="RenderView.cpp" />
-    <ClCompile Include="Demo.cpp" />
+    <ClCompile Include="EditorToolScene.cpp" />
     <ClCompile Include="EaterManager.cpp" />
     <ClCompile Include="Editor.cpp" />
     <ClCompile Include="EditorDoc.cpp" />

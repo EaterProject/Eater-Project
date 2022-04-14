@@ -121,6 +121,10 @@ public:
 	virtual ~MaterialBuffer()
 	{
 		delete Material_SubData;
+		Albedo		= nullptr;
+		Normal		= nullptr;
+		Emissive	= nullptr;
+		ORM			= nullptr;
 	}
 
 public:
@@ -270,15 +274,17 @@ class LoadMeshData
 public:
 	~LoadMeshData()
 	{
-		if (Parent != nullptr)
+		int ChildCount = (int)Child.size();
+		for (int i = 0; i < ChildCount; i++)
 		{
-			delete Parent;
+			LoadMeshData* Data = Child[i];
+			Child[i] = nullptr;
+			delete Data;
+			Data = nullptr;
 		}
+		Child.clear();
+		
 
-		for (auto k : Child)
-		{
-			delete k;
-		}
 		BoneTMList = nullptr;
 		Parent = nullptr;
 	};
@@ -380,8 +386,9 @@ public:
 };
 
 //네비게이션 매쉬의 구조체
-struct OneTriangle
+class OneTriangle
 {
+public:
 	//나와 인접해있는 Face
 	int FriendFace[3] = { -1,-1,-1 };
 	float Distance[3] = { -1,-1,-1 };

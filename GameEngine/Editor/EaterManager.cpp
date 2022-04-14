@@ -13,7 +13,7 @@
 #include "E_BufferManager.h"
 #include "E_ChangeManager.h"
 
-#include "Demo.h"
+#include "EditorToolScene.h"
 #include "EditorData.h"
 
 
@@ -102,7 +102,7 @@ void EaterManager::Load_FBX_File(std::string& Path,ParserData::CModel* FBXMesh)
 	mMeshManager->ChangeEaterFile(FBXMesh);
 	EATER_CLOSE_WRITE_FILE();
 	std::string LoadPath = "../Assets/Model/ModelData/" + FileName + ".Eater";
-	Demo::MeshLoad(LoadPath);
+	EditorToolScene::MeshLoad(LoadPath);
 
 	///MeshBuffer 정보를 저장한다
 	mBufferManager->SetFileName(FileName);
@@ -165,7 +165,7 @@ void EaterManager::Load_GameObject_File(GameObject* Object ,ObjectOption* mOptio
 	}
 	EATER_CLOSE_CHANGE_FILE(ModelName, "../Assets/Model/ModelData/",".Eater");
 	//변환한 파일로 다시로드한다
-	Demo::MeshLoad(ModelPath);
+	EditorToolScene::MeshLoad(ModelPath);
 
 	//메테리얼 정보를 수정한다
 	EATER_OPEN_READ_FILE(MaterialPath);

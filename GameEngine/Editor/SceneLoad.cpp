@@ -1,7 +1,7 @@
 #include "SceneLoad.h"
 #include "Camera.h"
 #include "Light.h"
-#include "Demo.h"
+#include "EditorToolScene.h"
 #include "MainHeader.h"
 #include "EaterHeader.h"
 
@@ -39,7 +39,7 @@ void Eater_LoadScene::Load(std::string FilePath)
 		{
 			GameObject* Obj = Instance();
 			Obj->SetTag(std::stoi(EATER_GET_MAP(i, "TAG")));
-			Obj->Name = Demo::FindMeshName(EATER_GET_MAP(i, "NAME"));
+			Obj->Name = EditorToolScene::FindMeshName(EATER_GET_MAP(i, "NAME"));
 
 			//트랜스폼은 기본
 			Load_Component_Transform(i, Obj);
@@ -101,7 +101,7 @@ void Eater_LoadScene::Load(std::string FilePath)
 			{
 				std::vector<std::string> Data;
 				EATER_GET_LIST(&Data, i);
-				Demo::TagList.insert({ std::stoi(Data[0]) ,Data[1]});
+				EditorToolScene::TagList.insert({ std::stoi(Data[0]) ,Data[1]});
 			}
 		}
 	}

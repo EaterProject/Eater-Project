@@ -4,7 +4,7 @@
 #include "EaterHeader.h"
 #include "GameObject.h"
 #include "EngineData.h"
-#include "Demo.h"
+#include "EditorToolScene.h"
 
 #include "Light.h"
 #include "Camera.h"
@@ -78,15 +78,13 @@ void SceneSave::Save(std::string SaveFilePath, std::string SaveFileName)
 	EATER_CLOSE_WRITE_FILE();
 }
 
-
-
 void SceneSave::SceneOption()
 {
 	EATER_SET_NODE("SCENE");
-	std::map<int, std::string>::iterator Start_it	= Demo::TagList.begin();
-	std::map<int, std::string>::iterator End_it		= Demo::TagList.end();
+	std::map<int, std::string>::iterator Start_it	= EditorToolScene::TagList.begin();
+	std::map<int, std::string>::iterator End_it		= EditorToolScene::TagList.end();
 
-	int Size = (int)Demo::TagList.size();
+	int Size = (int)EditorToolScene::TagList.size();
 	EATER_SET_LIST_START("TAG", Size, 2);
 	for (Start_it; Start_it != End_it; Start_it++)
 	{

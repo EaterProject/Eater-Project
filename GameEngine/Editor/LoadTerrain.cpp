@@ -8,7 +8,7 @@
 #include "GrobalFunction.h"
 #include "RightOption.h"
 #include "EditorManager.h"
-#include "Demo.h"
+#include "EditorToolScene.h"
 
 
 
@@ -169,7 +169,7 @@ void LoadTerrain::OnBnClickedOk()
 	{
 	case 0: //Terrain
 		if (TerrainErrorChack() == false) { return; }
-		Demo::Create_Terrain(ModelPath,Mask01Name,Mask02Name);
+		EditorToolScene::Create_Terrain(ModelPath,Mask01Name,Mask02Name);
 		break;
 	case 1: //Collider
 		{
