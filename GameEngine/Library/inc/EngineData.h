@@ -134,21 +134,49 @@ public:
 	TextureBuffer* ORM = nullptr;			// AO(R) + Roughness(G) + Metallic(B) Texture
 };
 
-// Terrain Data
-class TerrainData
+// Environment Buffer
+class EnvironmentBuffer : public Resources
 {
 public:
-	Matrix Tex;										// Terrain Mesh 의 텍스쳐 행렬
-	std::vector<MaterialBuffer*> Material_List;		// Material List
+	virtual ~EnvironmentBuffer()
+	{
+		delete Environment;
+		delete Irradiance;
+		delete Prefilter;
+	};
+
+	TextureBuffer* Environment = nullptr;
+	TextureBuffer* Irradiance = nullptr;
+	TextureBuffer* Prefilter = nullptr;
 };
 
-class CameraAnimation 
+// Animation Data
+namespace EngineData
+{
+class AnimationData
+{
+public:
+	UINT AnimationIndex = 0;
+	UINT FrameIndex = 0;
+};
+}
+
+// Camera Animation
+class CameraAnimation
 {
 public:
 	float OneFrame;
 	int AddKeyCount;
 	std::vector<Vector3> Position;
 	std::vector<Vector3> Rotation;
+};
+
+// Terrain Data
+class TerrainData
+{
+public:
+	Matrix Tex;										// Terrain Mesh 의 텍스쳐 행렬
+	std::vector<MaterialBuffer*> Material_List;		// Material List
 };
 
 // Particle Data
@@ -221,6 +249,7 @@ public:
 	MaterialBuffer*	Material_Buffer	= nullptr;		// Material Buffer
 
 	// 추가 데이터
+	EngineData::AnimationData*	Animation_Data = nullptr;		// Animation Data
 	TerrainData*	Terrain_Data	= nullptr;		// Terrain Data
 	ParticleData*	Particle_Data	= nullptr;		// Particle Data
 };
@@ -267,7 +296,6 @@ public:
 		{
 			delete k;
 		}
-		BoneTMList = nullptr;
 		Parent = nullptr;
 	};
 
@@ -286,7 +314,7 @@ public:
 	Matrix LocalTM;					//로컬 매트릭스
 
 	int BoneIndex = -1;				//본일경우 자신의 인덱스
-	std::vector<Matrix>* BoneTMList = nullptr;	//본 매트릭스
+	std::vector<Matrix> BoneTMList;			//본 매트릭스
 
 	LoadMeshData* Parent = nullptr;			//부모 매쉬
 	std::vector<LoadMeshData*> Child;		//자식 매쉬 리스트
@@ -329,7 +357,7 @@ public:
 	std::vector<LoadMeshData*> TopSkinList;
 	std::vector<LoadMeshData*> TopBoneList;
 
-	std::vector<Matrix>* BoneOffsetList = nullptr;	//본 매트릭스
+	std::vector<Matrix> BoneOffsetList;				//본 매트릭스
 	std::vector<LoadMeshData*> BoneList;			//본 매쉬
 };
 
@@ -340,14 +368,15 @@ public:
 	{
 		for (auto Anim : AnimList)
 		{
-			int Size = (int)Anim.second->size();
-			for (auto CAnim : *(Anim.second))
+			int Size = (int)Anim.second.size();
+			for (auto CAnim : Anim.second)
 			{
 				delete CAnim;
 			}
 		}
 	}
-	std::map<std::string, std::vector<CAnimation*>* > AnimList;
+
+	std::map<std::string, std::vector<CAnimation*>> AnimList;
 };
 
 //컨퍼넌트들의 함수포인터를 저장할 구조체

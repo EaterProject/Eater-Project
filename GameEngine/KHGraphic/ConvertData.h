@@ -43,6 +43,13 @@ public:
 	std::vector<MaterialRenderBuffer*> m_MaterialList;
 };
 
+// Game Engine 측 AnimationBuffer와 대응하는 DirectX 11 전용 Animation Data Class
+class AnimationRenderBuffer : public RenderResource
+{
+public:
+	ID3D11Buffer* m_AnimationBuf;
+};
+
 // Instance Layer를 관리하기 위한 Render Buffer Class
 class InstanceRenderBuffer : public RenderResource
 {

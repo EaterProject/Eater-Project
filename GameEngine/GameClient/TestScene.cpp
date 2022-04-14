@@ -120,11 +120,29 @@ void TestScene::CreateMap()
 	Object->GetTransform()->Position.z += 20;
 	AnimationController* AC = Object->AddComponent<AnimationController>();
 	AC->Choice("idle");
+
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	filter->SetModelName("bossb");
+	filter->SetAnimationName("bossb");
+	Object->GetTransform()->Position.x += 20;
+	Object->GetTransform()->Position.z += 20;
+	AC = Object->AddComponent<AnimationController>();
+	AC->Choice("idle");
 	
 	Object = Instance();
 	filter = Object->AddComponent<MeshFilter>();
 	filter->SetModelName("MonsterA");
 	filter->SetAnimationName("MonsterA");
+	Object->GetTransform()->Position.z -= 20;
+	AC = Object->AddComponent<AnimationController>();
+	AC->Choice("idle");
+
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	filter->SetModelName("MonsterA");
+	filter->SetAnimationName("MonsterA");
+	Object->GetTransform()->Position.x += 20;
 	Object->GetTransform()->Position.z -= 20;
 	AC = Object->AddComponent<AnimationController>();
 	AC->Choice("idle");

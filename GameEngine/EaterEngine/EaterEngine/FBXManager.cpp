@@ -383,7 +383,7 @@ void FBXManager::CreateSaveMesh(ParserData::CModel* mMesh, ModelData* SaveMesh, 
 		case MESH_TYPE::SKIN_MESH:
 			SaveOneMesh = CreateSkinMesh(OneMesh);
 			SkinMeshList.push_back(SaveOneMesh);
-			SaveMesh->BoneOffsetList = &(OneMesh->m_BoneTMList);
+			SaveMesh->BoneOffsetList = std::move(OneMesh->m_BoneTMList);
 			break;
 		case MESH_TYPE::STATIC_MESH:
 			SaveOneMesh = CreateBaseMesh(OneMesh);
@@ -490,7 +490,7 @@ void FBXManager::LoadAnimation(ModelData* SaveMesh, ParserData::CModel* MeshData
 
 	//데이터 저장
 	ModelAnimationData* temp = LoadManager::AnimationList[SaveName];
-	temp->AnimList.insert({ key, &(MeshData->m_AnimationList) });
+	temp->AnimList.insert({ key, std::move(MeshData->m_AnimationList) });
 }
 
 

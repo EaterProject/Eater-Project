@@ -402,10 +402,13 @@ void FBXParser::ProcessMesh(fbxsdk::FbxNode* node)
 	CreateVertex(pMesh, boneWeights, vertexTotalCount);
 
 	int vertexCount = 0; // 정점의 개수
+
+	// Polygon 개수만큼 Face 생성..
+	m_OneMesh->m_MeshFace.resize(polygonTotalCount);
+
 	for (int pi = 0; pi < polygonTotalCount; pi++)
 	{
-		// Polygon 개수만큼 Face 생성..
-		m_OneMesh->m_MeshFace.push_back(new CFace);
+		m_OneMesh->m_MeshFace[pi] = new CFace();
 
 		CFace* nowFace = m_OneMesh->m_MeshFace[pi];
 
@@ -760,7 +763,7 @@ void FBXParser::OptimizeVertex(ParserData::CMesh* pMesh)
 				newVertex->m_UV = nowUV;
 				newVertex->m_IsTextureSet = true;
 
-				pMesh->m_VertexList.push_back(newVertex);
+				pMesh->m_VertexList.push_back(std::move(newVertex));
 				nowFace->m_VertexIndex[j] = (int)resize_VertexIndex;
 				resize_VertexIndex++;
 				new_VertexSet = false;
@@ -818,10 +821,15 @@ void FBXParser::OptimizeVertex(ParserData::CMesh* pMesh)
 
 void FBXParser::SetIndex(ParserData::CMesh* pMesh)
 {
+	// Face Count..
+	UINT faceCount = (UINT)pMesh->m_MeshFace.size();
+
 	// 인덱스는 그냥 복사
-	for (unsigned int i = 0; i < pMesh->m_MeshFace.size(); i++)
+	pMesh->m_IndexList.resize(faceCount);
+
+	for (unsigned int i = 0; i < faceCount; i++)
 	{
-		pMesh->m_IndexList.push_back(new CIndexList);
+		pMesh->m_IndexList[i] = new CIndexList();
 
 		CIndexList* nowIndexList = pMesh->m_IndexList[i];
 		CFace* nowFace = pMesh->m_MeshFace[i];
@@ -1259,11 +1267,14 @@ void FBXParser::CreateVertex(fbxsdk::FbxMesh* mesh, std::vector<BoneWeights>& bo
 {
 	FbxVector4 fbxPos;
 
+	// 새로운 Vertex 생성..
+	m_OneMesh->m_VertexList.resize(vertexCount);
+
 	// Vertex 개수만큼 Vertex 생성..
 	for (int vertexIndex = 0; vertexIndex < vertexCount; vertexIndex++)
 	{
 		// 새로운 Vertex 생성..
-		m_OneMesh->m_VertexList.push_back(new CVertex);
+		m_OneMesh->m_VertexList[vertexIndex] = new CVertex();
 
 		// 현재 Vertex..
 		CVertex* nowVertex = m_OneMesh->m_VertexList[vertexIndex];

@@ -55,7 +55,7 @@ void AnimationController::ChangeAnime()
 {
 	if (ChangeAnimation == true)
 	{
-		std::vector<CAnimation*>* data = AnimationList->AnimList[NowAnimationName];
+		std::vector<CAnimation*> data = AnimationList->AnimList[NowAnimationName];
 
 		//본의 애니메이션을 넣어준다
 		int Count = (int)AnimatorList.size();
@@ -63,7 +63,7 @@ void AnimationController::ChangeAnime()
 		{
 			if (AnimatorList[i] == nullptr) { continue; }
 
-			AnimatorList[i]->SetAnimation((*data)[i]);
+			AnimatorList[i]->SetAnimation(data[i]);
 		}
 		ChangeAnimation = false;
 	}
@@ -135,7 +135,7 @@ int AnimationController::GetAnimationCount()
 void AnimationController::GetAnimationList(std::vector<std::string>* NameList)
 {
 	if (AnimationList == nullptr) { return; }
-	std::map<std::string, std::vector<CAnimation*>*>::iterator it_Start = AnimationList->AnimList.begin();
+	std::map<std::string, std::vector<CAnimation*>>::iterator it_Start = AnimationList->AnimList.begin();
 	for (it_Start; it_Start != AnimationList->AnimList.end(); it_Start++) 
 	{
 		NameList->push_back(it_Start->first);

@@ -54,18 +54,16 @@ public:
 	void* pTextureBuf = nullptr;
 };
 
-//환경맵을 받을 클래스
-class EnvironmentBuffer : public Resources
+// Animation Buffer
+class AnimationBuffer : public Resources
 {
 public:
-	virtual ~EnvironmentBuffer()
+	virtual ~AnimationBuffer()
 	{
-		delete Environment;
-		delete Irradiance;
-		delete Prefilter;
-	};
 
-	TextureBuffer* Environment = nullptr;
-	TextureBuffer* Irradiance = nullptr;
-	TextureBuffer* Prefilter = nullptr;
+	}
+
+	UINT TotalFrame = 0;
+
+	void* pAnimationBuf = nullptr;
 };

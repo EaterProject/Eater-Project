@@ -53,7 +53,7 @@ void Eater_LoadMesh::LoadData(std::string& Path)
 			LoadMeshData* Data = LoadSkinMesh(i);
 			SaveData->TopSkinList.push_back(Data);
 			Data->ModelName = SaveName;
-			SaveData->BoneOffsetList = Data->BoneTMList;
+			SaveData->BoneOffsetList = std::move(Data->BoneTMList);
 		}
 		else if (NodeName == "TERRAIN")
 		{
@@ -208,8 +208,9 @@ void Eater_LoadMesh::LoadTM(int Index, LoadMeshData* model)
 void Eater_LoadMesh::LoadBoneOffset(int index, LoadMeshData* model)
 {
 	int BoneOffsetCount = EATER_GET_LIST_CHOICE(index, "BoneOffset");
-	model->BoneTMList = new std::vector<Matrix>();
-	model->BoneTMList->reserve(BoneOffsetCount);
+
+	model->BoneTMList.resize(BoneOffsetCount);
+
 	for (int i = 0; i < BoneOffsetCount; i++)
 	{
 		std::vector<float> Data;
@@ -235,7 +236,7 @@ void Eater_LoadMesh::LoadBoneOffset(int index, LoadMeshData* model)
 		TM._43 = Data[14];
 		TM._44 = Data[15];
 
-		model->BoneTMList->push_back(TM);
+		model->BoneTMList[i] = std::move(TM);
 	}
 }
 
@@ -319,12 +320,12 @@ void Eater_LoadMesh::LinkBone(ModelData* Data)
 	}
 }
 
-void Eater_LoadMesh::CreateKeyFrame(std::vector<ParserData::CAnimation*>* Anime, int InputKeyCount)
+void Eater_LoadMesh::CreateKeyFrame(std::vector<ParserData::CAnimation*>& Anime, int InputKeyCount)
 {
 	//기존 애니메이션
-	std::vector<ParserData::CAnimation*>::iterator it = Anime->begin();
+	std::vector<ParserData::CAnimation*>::iterator it = Anime.begin();
 
-	for (it; it != Anime->end(); it++)
+	for (it; it != Anime.end(); it++)
 	{
 		std::vector<ParserData::CFrame*> data = (*it)->m_AniData;
 		//새롭게 넣을 데이터 리스트
@@ -387,7 +388,7 @@ void Eater_LoadMesh::LoadAnimation(int index, std::string& Name)
 
 
 	ModelAnimationData* Data = nullptr;
-	std::vector<ParserData::CAnimation*>* AnimeData = nullptr;
+	std::vector<ParserData::CAnimation*> AniData;
 
 	//다른 애니메이션이 없다면 새롭게 생성
 	if (LoadManager::AnimationList.find(MeshName) == LoadManager::AnimationList.end())
@@ -399,8 +400,6 @@ void Eater_LoadMesh::LoadAnimation(int index, std::string& Name)
 	{
 		Data = LoadManager::AnimationList[MeshName];
 	}
-	Data->AnimList[AnimationName] = new std::vector<ParserData::CAnimation*>();
-
 
 	float m_TicksPerFrame = std::stof(EATER_GET_MAP(index, "TickFrame"));
 	float m_TotalFrame = std::stof(EATER_GET_MAP(index, "TotalFrame"));
@@ -438,10 +437,15 @@ void Eater_LoadMesh::LoadAnimation(int index, std::string& Name)
 			Frame->m_LocalScale.y = Data[8];
 			Frame->m_LocalScale.z = Data[9];
 			Frame->m_Time = Data[10];
-			OneAnime->m_AniData.push_back(Frame);
+
+			OneAnime->m_AniData.push_back(std::move(Frame));
 		}
-		Data->AnimList[AnimationName]->push_back(OneAnime);
+
+		AniData.push_back(std::move(OneAnime));
+
 	}
 
-	CreateKeyFrame(Data->AnimList[AnimationName], 10);
+	CreateKeyFrame(AniData, 10);
+
+	Data->AnimList.insert({ AnimationName, std::move(AniData) });
 }

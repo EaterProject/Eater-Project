@@ -565,9 +565,9 @@ void MeshFilter::CreateModel()
 	}
 
 	//본 메쉬 생성
-	if (mMesh->BoneOffsetList != nullptr)
+	if (!mMesh->BoneOffsetList.empty())
 	{
-		BoneList.resize(mMesh->BoneOffsetList->size());
+		BoneList.resize(mMesh->BoneOffsetList.size());
 	}
 	for (int i = 0; i < BoneCount; i++)
 	{

@@ -1,9 +1,12 @@
 #pragma once
 #include <windows.h>
 #include <assert.h>
-#include "ResourcesData.h"
-#include "ParserData.h"
 #include "HashBase.h"
+
+namespace ParserData 
+{ 
+	class CMesh; 
+}
 
 class LoadMeshData;
 class TextureBuffer;

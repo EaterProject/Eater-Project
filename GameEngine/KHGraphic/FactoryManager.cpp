@@ -2,6 +2,8 @@
 #include "ResourceFactory.h"
 #include "BakingFactory.h"
 #include "FactoryManager.h"
+#include "EngineData.h"
+#include "ParserData.h"
 #include "DepthStencilViewDefine.h"
 
 FactoryManager::FactoryManager(ID3D11Graphic* graphic, IShaderManager* shader, IGraphicResourceManager* resource)
