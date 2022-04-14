@@ -1,10 +1,10 @@
 #EATERMAT
 @MaterialName bossb+_bone
 @Alpha NO
-@Diffuse bossb_bone_BaseColor.png
-@Normal bossb_bone_Normal.png
-@Emissive bossb_bone_Emissive.png
-@ORM bossb_bone_ORM.png
+@Diffuse NO
+@Normal NO
+@Emissive NO
+@ORM NO
 @Roughness 0
 @Metallic 0
 @Tileing_X 1

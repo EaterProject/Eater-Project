@@ -370,6 +370,10 @@ void RenderDataConverter::DeleteMesh(UINT index)
 	// 해당 Mesh 관련 Instance 삭제..
 	CheckEmptyInstance(mesh);
 
+	// 해당 Resource 제거..
+	RELEASE_COM(mesh->m_IndexBuf);
+	RELEASE_COM(mesh->m_VertexBuf);
+
 	// 해당 Instance Buffer 삭제..
 	SAFE_DELETE(mesh);
 	m_MeshList.erase(index);
@@ -390,6 +394,12 @@ void RenderDataConverter::DeleteMaterial(UINT index)
 	// 해당 Material 관련 Instance 삭제..
 	CheckEmptyInstance(material);
 
+	// 해당 Resource 제거..
+	RELEASE_COM(material->m_Albedo);
+	RELEASE_COM(material->m_Normal);
+	RELEASE_COM(material->m_Emissive);
+	RELEASE_COM(material->m_ORM);
+	
 	// 해당 Instance Buffer 삭제..
 	SAFE_DELETE(material);
 	m_MaterialList.erase(index);

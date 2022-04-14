@@ -468,7 +468,7 @@ void FBXManager::LoadAnimation(ModelData* SaveMesh, ParserData::CModel* MeshData
 	if (Path.rfind('+') == std::string::npos) { return; }
 
 	//키프레임 생성
-	//CreateKeyFrame(&(MeshData->m_AnimationList), 10);
+	CreateKeyFrame(&(MeshData->m_AnimationList), 10);
 
 	//첫번째키 생성
 	std::string::size_type start	= Path.rfind("/") + 1;

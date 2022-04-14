@@ -45,8 +45,8 @@ void Animator::Play(float time, bool Loop)
 	if (NowAnimationData != nullptr && mPlay == true)
 	{
 		transfrom = gameobject->transform;
-		AnimeFrameIndex();
 
+		AnimeFrameIndex();
 
 		DirectX::SimpleMath::Vector3	pos = NowAnimationData->m_AniData[AnimeIndex]->m_LocalPos;
 		DirectX::SimpleMath::Quaternion rot = NowAnimationData->m_AniData[AnimeIndex]->m_LocalRotQt;

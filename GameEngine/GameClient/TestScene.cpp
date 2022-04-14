@@ -33,11 +33,12 @@ void TestScene::Awake()
 	Load("../Assets/Texture/Environment");
 	//Load("../Assets/Texture/Bake");
 	//Load("../Assets/Texture/Particle");
-	Load("../Assets/Texture/ModelTexture");
-	Load("../Assets/Texture/Material");
-	Load("../Assets/Model/MeshBuffer");
-	Load("../Assets/Model/ModelData");
-	Load("../Assets/Model/Animation");
+	//Load("../Assets/Texture/ModelTexture");
+	//Load("../Assets/Texture/Material");
+	Load("../Assets/Model/Test");
+	//Load("../Assets/Model/MeshBuffer");
+	//Load("../Assets/Model/ModelData");
+	//Load("../Assets/Model/Animation");
 	PROFILE_TIMER_END("Load Folder"); 
 
 	BakeEnvironmentMap("Day");
@@ -114,35 +115,19 @@ void TestScene::CreateMap()
 
 	Object = Instance();
 	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("box1");
-
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("box2");
-
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("box3");
-
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("box4");
-
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("bossb+");
-	filter->SetAnimationName("bossb+");
+	filter->SetModelName("bossb");
+	filter->SetAnimationName("bossb");
 	Object->GetTransform()->Position.z += 20;
 	AnimationController* AC = Object->AddComponent<AnimationController>();
 	AC->Choice("idle");
 	
 	Object = Instance();
 	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("MonsterA+");
-	filter->SetAnimationName("MonsterA+");
+	filter->SetModelName("MonsterA");
+	filter->SetAnimationName("MonsterA");
 	Object->GetTransform()->Position.z -= 20;
 	AC = Object->AddComponent<AnimationController>();
-	AC->Choice("Move");
+	AC->Choice("idle");
 	
 	//Object = Instance();
 	//filter = Object->AddComponent<MeshFilter>();

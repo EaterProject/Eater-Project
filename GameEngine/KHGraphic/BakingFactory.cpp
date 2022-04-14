@@ -326,21 +326,19 @@ void BakingFactory::PreBakeEnvironmentMap(EnvironmentBuffer* tex)
 		}
 	}
 
-	// Resource »ðÀÔ..
-	tex->Irradiance = new TextureBuffer();
-	tex->Irradiance->pTextureBuf = irradianceSRV.Get();
-	irradianceSRV->AddRef();
-
-	tex->Prefilter = new TextureBuffer();
-	tex->Prefilter->pTextureBuf = prefilterSRV.Get();
-	prefilterSRV->AddRef();
-
 	g_Graphic->SaveTextureDDS(irradianceSRV.Get(), std::string(tex->Environment->Name + "_Irradiance").c_str());
 	g_Graphic->SaveTextureDDS(prefilterSRV.Get(), std::string(tex->Environment->Name + "_Prefilter").c_str());
 
 	// Debug Name..
 	GPU_RESOURCE_DEBUG_NAME(irradianceSRV.Get(), "gIBLIrradiance");
 	GPU_RESOURCE_DEBUG_NAME(prefilterSRV.Get(), "gIBLPrefilter");
+
+	// Resource »ðÀÔ..
+	tex->Irradiance = new TextureBuffer();
+	tex->Irradiance->pTextureBuf = irradianceSRV.Detach();
+
+	tex->Prefilter = new TextureBuffer();
+	tex->Prefilter->pTextureBuf = prefilterSRV.Detach();
 
 	RESET_COM(context);
 	RESET_COM(irradianceSRV);
