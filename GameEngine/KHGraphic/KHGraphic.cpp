@@ -98,6 +98,11 @@ void KHGraphic::PushMaterial(MaterialBuffer* material)
 	m_RenderManager->PushMaterial(material);
 }
 
+void KHGraphic::PushAnimation(AnimationBuffer* animation)
+{
+
+}
+
 void KHGraphic::PushChangeInstance(MeshData* instance)
 {
 	m_RenderManager->PushChangeInstance(instance);
@@ -113,6 +118,11 @@ void KHGraphic::PushChangeMaterial(MaterialBuffer* material)
 	m_RenderManager->PushChangeMaterial(material);
 }
 
+void KHGraphic::PushChangeAnimation(AnimationBuffer* animation)
+{
+
+}
+
 void KHGraphic::DeleteInstance(MeshData* meshData)
 {
 	m_RenderManager->DeleteInstance(meshData);
@@ -126,6 +136,11 @@ void KHGraphic::DeleteMesh(MeshBuffer* mesh)
 void KHGraphic::DeleteMaterial(MaterialBuffer* material)
 {
 	m_RenderManager->DeleteMaterial(material);
+}
+
+void KHGraphic::DeleteAnimation(AnimationBuffer* animation)
+{
+
 }
 
 void KHGraphic::Render()
@@ -146,6 +161,11 @@ void KHGraphic::CreateTextureBuffer(std::string path, TextureBuffer** ppResource
 void KHGraphic::CreateMeshBuffer(ParserData::CMesh* mesh, MeshBuffer** ppResource)
 {
 	m_FactoryManager->CreateMeshBuffer(mesh, ppResource);
+}
+
+void KHGraphic::CreateAnimationBuffer(ModelData* model, ModelAnimationData* animation, AnimationBuffer** ppResource)
+{
+
 }
 
 void KHGraphic::BakeShadowMap(std::string path)

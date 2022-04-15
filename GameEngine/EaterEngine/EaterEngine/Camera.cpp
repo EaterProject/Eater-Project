@@ -56,7 +56,7 @@ void Camera::Update()
 {
 	if (g_MainCam == nullptr)
 	{
-		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Camera ] 지정된 메인 카메라가 없습니다.");
+		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Camera ][ Update ] 지정된 메인 카메라가 없습니다.");
 	}
 
 	CreateView();
@@ -73,7 +73,7 @@ DirectX::SimpleMath::Matrix Camera::GetProj()
 {
 	if (g_MainCam == nullptr)
 	{
-		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Camera ] 지정된 메인 카메라가 없습니다.");
+		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Camera ][ GetProj ] 지정된 메인 카메라가 없습니다.");
 		return Matrix();
 	}
 	else
@@ -91,7 +91,7 @@ DirectX::SimpleMath::Vector3 Camera::GetPos()
 {
 	if (g_MainCam == nullptr)
 	{
-		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Camera ] 지정된 메인 카메라가 없습니다.");
+		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Camera ][ GetPos ] 지정된 메인 카메라가 없습니다.");
 		return Vector3();
 	}
 	else
@@ -125,7 +125,7 @@ DirectX::SimpleMath::Matrix Camera::GetView()
 {
 	if (g_MainCam == nullptr)
 	{
-		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Camera ] 지정된 메인 카메라가 없습니다.");
+		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Camera ][ GetView ] 지정된 메인 카메라가 없습니다.");
 		return Matrix();
 	}
 	else

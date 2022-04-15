@@ -9,15 +9,17 @@
 /// 해당 클래스를 통해 Graphic Engine을 받을 수 있다..
 /// </summary>
 
+class GlobalData;
 class MeshData;
+
+class ModelData;
+class ModelAnimationData;
+
 class MeshBuffer;
 class MaterialBuffer;
-class GlobalData;
-class IndexBuffer;
-class VertexBuffer;
 class TextureBuffer;
+class AnimationBuffer;
 class EnvironmentBuffer;
-class LoadMeshData;
 class RenderOption;
 
 namespace ParserData 
@@ -54,14 +56,17 @@ public:
 	virtual GRAPHIC_DLL void PushInstance(MeshData* instance) abstract;
 	virtual GRAPHIC_DLL void PushMaterial(MaterialBuffer* material) abstract;
 	virtual GRAPHIC_DLL void PushMesh(MeshBuffer* mesh) abstract;
+	virtual GRAPHIC_DLL void PushAnimation(AnimationBuffer* animation) abstract;
 
 	virtual GRAPHIC_DLL void PushChangeInstance(MeshData* instance) abstract;
 	virtual GRAPHIC_DLL void PushChangeMesh(MeshBuffer* mesh) abstract;
 	virtual GRAPHIC_DLL void PushChangeMaterial(MaterialBuffer* material) abstract;
+	virtual GRAPHIC_DLL void PushChangeAnimation(AnimationBuffer* animation) abstract;
 
 	virtual GRAPHIC_DLL void DeleteInstance(MeshData* meshData) abstract;
 	virtual GRAPHIC_DLL void DeleteMesh(MeshBuffer* mesh) abstract;
 	virtual GRAPHIC_DLL void DeleteMaterial(MaterialBuffer* material) abstract;
+	virtual GRAPHIC_DLL void DeleteAnimation(AnimationBuffer* animation) abstract;
 
 	virtual GRAPHIC_DLL void Render() abstract;
 	virtual GRAPHIC_DLL void* PickingRender(int x, int y) abstract;
@@ -70,6 +75,7 @@ public:
 	/// Graphic Resource Create Function..
 	virtual GRAPHIC_DLL void CreateTextureBuffer(std::string path, TextureBuffer** ppResource) abstract;
 	virtual GRAPHIC_DLL void CreateMeshBuffer(ParserData::CMesh* mesh, MeshBuffer** ppResource) abstract;
+	virtual GRAPHIC_DLL void CreateAnimationBuffer(ModelData* model, ModelAnimationData* animation, AnimationBuffer** ppResource) abstract;
 
 public:
 	/// Graphic Resource Baking Function..

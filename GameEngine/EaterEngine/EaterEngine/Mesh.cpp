@@ -22,14 +22,12 @@ Mesh::Mesh()
 
 Mesh::~Mesh()
 {
-	Release();
+	// Manager 내부에 있는 해당 Mesh Data 삭제..
+	MeshManager::DeleteMesh(m_MeshData->BufferIndex);
 }
 
 void Mesh::Release()
 {
-	// Manager 내부에 있는 해당 Mesh Data 삭제..
-	MeshManager::DeleteMesh(m_MeshData->BufferIndex);
-
 	// Graphic 내부에 있는 해당 Mesh Buffer 삭제..
 	GraphicEngine::Get()->DeleteMesh(m_MeshData);
 

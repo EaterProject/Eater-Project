@@ -170,7 +170,7 @@ void GameEngine::OnResize(int Change_Width, int Change_Height)
 	if (Change_Width == 0 || Change_Height == 0) return;
 	if (mGraphicManager == nullptr) return;
 
-	PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Resize ][ Screen ] %d / %d", WinSizeWidth, WinSizeHeight);
+	PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Resize ][ OnResize ] %d / %d", WinSizeWidth, WinSizeHeight);
 
 	//카메라의 변화할 사이즈를 넣어준다
 	Camera::g_MainCam->SetSize(WinSizeWidth, WinSizeHeight);
@@ -364,7 +364,7 @@ int GameEngine::LoadAnimationCount()
 }
 ModelData* GameEngine::GetLoadMeshData(std::string& Path)
 {
-	return mLoadManager->GetModel(Path);
+	return mLoadManager->GetModelData(Path);
 }
 
 void GameEngine::BakeShadowMap(std::string& Path)
@@ -375,6 +375,11 @@ void GameEngine::BakeShadowMap(std::string& Path)
 void GameEngine::BakeEnvironmentMap(std::string& Path)
 {
 	mLoadManager->BakeEnvironmentMap(Path);
+}
+
+void GameEngine::BakeAnimation()
+{
+	mLoadManager->BakeAnimation();
 }
 
 void GameEngine::SetShadowMap(std::string& Path)

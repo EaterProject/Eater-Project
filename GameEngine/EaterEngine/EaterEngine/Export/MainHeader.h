@@ -53,6 +53,7 @@ extern "C" EATER_ENGINEDLL int	LoadAssetsCount();
 ///베이킹 관련
 extern "C" EATER_ENGINEDLL void BakeShadowMap(std::string mPath);
 extern "C" EATER_ENGINEDLL void BakeEnvironmentMap(std::string mPath);
+extern "C" EATER_ENGINEDLL void BakeAnimation();
 
 ///맵 설정
 extern "C" EATER_ENGINEDLL void SetShadowMap(std::string mPath);

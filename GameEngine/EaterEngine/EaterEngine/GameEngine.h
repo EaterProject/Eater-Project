@@ -90,6 +90,7 @@ public:
 	///베이크 관련
 	void BakeShadowMap(std::string& Path);
 	void BakeEnvironmentMap(std::string& Path);
+	void BakeAnimation();
 
 public:
 	///텍스쳐 설정 관련

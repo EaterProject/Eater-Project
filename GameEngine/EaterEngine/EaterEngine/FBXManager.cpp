@@ -65,7 +65,7 @@ void FBXManager::LoadTerrain(std::string Name, std::string MaskName1, std::strin
 	Name = Name.substr(Start, End);
 
 	model->TopMeshList.push_back(Data);
-	LoadManager::ModelList.insert({ Name, model });
+	LoadManager::ModelDataList.insert({ Name, model });
 }
 
 void FBXManager::CheckSkinning(std::string& Path)
@@ -94,12 +94,15 @@ void FBXManager::CheckAnimation(std::string& Path)
 	isAnimation = LoadManager::FindModel(MeshName);
 }
 
-void FBXManager::CreateKeyFrame(std::vector<ParserData::CAnimation*>* Anime, int InputKeyCount)
+void FBXManager::CreateKeyFrame(ParserData::CModelAnimation* Anime, int InputKeyCount)
 {
 	//기존 애니메이션
-	std::vector<ParserData::CAnimation*>::iterator it = Anime->begin();
+	std::vector<ParserData::CAnimation*>::iterator it = Anime->m_AnimationList.begin();
 
-	for (it; it != Anime->end(); it++)
+	Anime->m_TicksPerFrame /= (InputKeyCount + 3);
+	Anime->m_EndFrame = (Anime->m_TotalFrame * (InputKeyCount + 3)) - (InputKeyCount + 3);
+
+	for (it; it != Anime->m_AnimationList.end(); it++)
 	{
 		std::vector<ParserData::CFrame*> data = (*it)->m_AniData;
 		//새롭게 넣을 데이터 리스트
@@ -144,8 +147,8 @@ void FBXManager::CreateKeyFrame(std::vector<ParserData::CAnimation*>* Anime, int
 		}
 
 		(*it)->m_AniData = CreateData;
-		(*it)->m_TicksPerFrame /= (InputKeyCount + 3);
-		(*it)->m_EndFrame = (Size * (InputKeyCount + 3)) - (InputKeyCount + 3);
+		//(*it)->m_TicksPerFrame /= (InputKeyCount + 3);
+		//(*it)->m_EndFrame = (Size * (InputKeyCount + 3)) - (InputKeyCount + 3);
 	}
 }
 
@@ -400,9 +403,8 @@ void FBXManager::CreateSaveMesh(ParserData::CModel* mMesh, ModelData* SaveMesh, 
 	LinkMesh(BaseMeshList, SaveMesh);
 	LinkMesh(SkinMeshList, SaveMesh);
 	LinkMesh(BoneMeshList, SaveMesh);
-
 	
-	LoadManager::ModelList.insert({ nowFileName, SaveMesh });
+	LoadManager::ModelDataList.insert({ nowFileName, SaveMesh });
 }
 
 void FBXManager::LoadQuad()
@@ -428,7 +430,7 @@ void FBXManager::LoadQuad()
 
 	SaveMesh->TopMeshList.push_back(quad);
 
-	LoadManager::ModelList.insert({ "Quad" , SaveMesh });
+	LoadManager::ModelDataList.insert({ "Quad" , SaveMesh });
 	LoadManager::MeshBufferList.insert({ "Quad", quadMesh });
 
 	delete mesh;
@@ -468,7 +470,7 @@ void FBXManager::LoadAnimation(ModelData* SaveMesh, ParserData::CModel* MeshData
 	if (Path.rfind('+') == std::string::npos) { return; }
 
 	//키프레임 생성
-	CreateKeyFrame(&(MeshData->m_AnimationList), 10);
+	CreateKeyFrame(MeshData->m_ModelAnimation, 10);
 
 	//첫번째키 생성
 	std::string::size_type start	= Path.rfind("/") + 1;
@@ -476,10 +478,11 @@ void FBXManager::LoadAnimation(ModelData* SaveMesh, ParserData::CModel* MeshData
 	std::string SaveName			= Path.substr(start, End);
 
 	//애니메이션이 없는경우 생성
-	if (LoadManager::AnimationList.find(SaveName) == LoadManager::AnimationList.end())
+	if (LoadManager::AnimationDataList.find(SaveName) == LoadManager::AnimationDataList.end())
 	{
 		ModelAnimationData* data = new ModelAnimationData();
-		LoadManager::AnimationList.insert({ SaveName,data });
+
+		LoadManager::AnimationDataList.insert({ SaveName, data });
 	}
 
 	//두번째 키 생성
@@ -489,8 +492,8 @@ void FBXManager::LoadAnimation(ModelData* SaveMesh, ParserData::CModel* MeshData
 	std::string key		= Path.substr(start, End);
 
 	//데이터 저장
-	ModelAnimationData* temp = LoadManager::AnimationList[SaveName];
-	temp->AnimList.insert({ key, std::move(MeshData->m_AnimationList) });
+	ModelAnimationData* temp = LoadManager::AnimationDataList[SaveName];
+	temp->AnimList.insert({ key, std::move(MeshData->m_ModelAnimation) });
 }
 
 

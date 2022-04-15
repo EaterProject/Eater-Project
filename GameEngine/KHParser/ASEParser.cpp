@@ -293,13 +293,6 @@ void ASEParser::RecombinationTM(ParserData::ASEMesh* pMesh)
 	{
 		pMesh->m_VertexList[i]->m_Pos = XMVector3Transform(pMesh->m_VertexList[i]->m_Pos, iMatrix);
 	}
-
-	// 애니메이션이 있을경우 사이즈를 구해두자..
-	if (pMesh->m_Animation)
-	{
-		pMesh->m_Animation->m_TicksPerFrame = 1.0f / m_scenedata.m_FrameSpeed;
-		pMesh->m_Animation->m_TotalFrame = m_scenedata.m_LastFrame - m_scenedata.m_FirstFrame;
-	}
 }
 
 void ASEParser::OptimizeData()
@@ -1090,9 +1083,6 @@ void ASEParser::Create_AnimationData_to_mesh(CMesh* nowMesh)
 {
 	CAnimation* temp = new CAnimation;
 	m_Animation = temp;
-	m_Animation->m_TicksPerFrame = m_scenedata.m_TicksPerFrame;
-	m_Animation->m_StartFrame = m_scenedata.m_FirstFrame;
-	m_Animation->m_EndFrame = m_scenedata.m_LastFrame;
 	nowMesh->m_Animation = m_Animation;
 	m_IsAnimation = true;
 }

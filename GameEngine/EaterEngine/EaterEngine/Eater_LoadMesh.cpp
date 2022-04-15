@@ -76,14 +76,14 @@ void Eater_LoadMesh::LoadData(std::string& Path)
 	LinkBone(SaveData);
 
 
-	std::map<std::string, ModelData*>::iterator Fine_it = LoadManager::ModelList.find(SaveName);
-	std::map<std::string, ModelData*>::iterator End_it	= LoadManager::ModelList.end();
+	std::map<std::string, ModelData*>::iterator Fine_it = LoadManager::ModelDataList.find(SaveName);
+	std::map<std::string, ModelData*>::iterator End_it	= LoadManager::ModelDataList.end();
 	if (Fine_it != End_it)
 	{
-		LoadManager::ModelList.erase(SaveName);
+		LoadManager::ModelDataList.erase(SaveName);
 	}
 
-	LoadManager::ModelList.insert({ SaveName ,SaveData });
+	LoadManager::ModelDataList.insert({ SaveName ,SaveData });
 }
 
 LoadMeshData* Eater_LoadMesh::LoadStaticMesh(int index)
@@ -320,12 +320,15 @@ void Eater_LoadMesh::LinkBone(ModelData* Data)
 	}
 }
 
-void Eater_LoadMesh::CreateKeyFrame(std::vector<ParserData::CAnimation*>& Anime, int InputKeyCount)
+void Eater_LoadMesh::CreateKeyFrame(ParserData::CModelAnimation* Anime, int InputKeyCount)
 {
 	//기존 애니메이션
-	std::vector<ParserData::CAnimation*>::iterator it = Anime.begin();
+	std::vector<ParserData::CAnimation*>::iterator it = Anime->m_AnimationList.begin();
 
-	for (it; it != Anime.end(); it++)
+	Anime->m_TicksPerFrame /= (InputKeyCount + 3);
+	Anime->m_EndFrame = (Anime->m_TotalFrame * (InputKeyCount + 3)) - (InputKeyCount + 3);
+
+	for (it; it != Anime->m_AnimationList.end(); it++)
 	{
 		std::vector<ParserData::CFrame*> data = (*it)->m_AniData;
 		//새롭게 넣을 데이터 리스트
@@ -370,8 +373,6 @@ void Eater_LoadMesh::CreateKeyFrame(std::vector<ParserData::CAnimation*>& Anime,
 		}
 
 		(*it)->m_AniData = CreateData;
-		(*it)->m_TicksPerFrame /= (InputKeyCount + 3);
-		(*it)->m_EndFrame = (Size * (InputKeyCount + 3)) - (InputKeyCount + 3);
 	}
 }
 
@@ -386,35 +387,29 @@ void Eater_LoadMesh::LoadAnimation(int index, std::string& Name)
 	std::size_t End_Anime = Name.rfind('.') - Start_Anime;
 	std::string AnimationName = Name.substr(Start_Anime, End_Anime);
 
-
 	ModelAnimationData* Data = nullptr;
-	std::vector<ParserData::CAnimation*> AniData;
+	CModelAnimation* AniData = new CModelAnimation();
 
 	//다른 애니메이션이 없다면 새롭게 생성
-	if (LoadManager::AnimationList.find(MeshName) == LoadManager::AnimationList.end())
+	if (LoadManager::AnimationDataList.find(MeshName) == LoadManager::AnimationDataList.end())
 	{
 		Data = new ModelAnimationData();
-		LoadManager::AnimationList.insert({ MeshName,Data });
+		LoadManager::AnimationDataList.insert({ MeshName,Data });
 	}
 	else
 	{
-		Data = LoadManager::AnimationList[MeshName];
+		Data = LoadManager::AnimationDataList[MeshName];
 	}
 
-	float m_TicksPerFrame = std::stof(EATER_GET_MAP(index, "TickFrame"));
-	float m_TotalFrame = std::stof(EATER_GET_MAP(index, "TotalFrame"));
-	float m_StartFrame = std::stof(EATER_GET_MAP(index, "StartFrame"));
-	float m_EndFrame = std::stof(EATER_GET_MAP(index, "EndFrame"));
+	AniData->m_TicksPerFrame	= std::stof(EATER_GET_MAP(index, "TickFrame"));
+	AniData->m_TotalFrame		= (int)std::stof(EATER_GET_MAP(index, "TotalFrame"));
+	AniData->m_StartFrame		= (int)std::stof(EATER_GET_MAP(index, "StartFrame"));
+	AniData->m_EndFrame			= (int)std::stof(EATER_GET_MAP(index, "EndFrame"));
 
 	int BoneCount = std::stoi(EATER_GET_MAP(index, "BoneCount"));
 	for (int k = 0; k < BoneCount; k++)
 	{
 		ParserData::CAnimation* OneAnime = new CAnimation();
-		OneAnime->m_EndFrame = (int)m_EndFrame;
-		OneAnime->m_StartFrame = (int)m_StartFrame;
-		OneAnime->m_TotalFrame = (int)m_TotalFrame;
-		OneAnime->m_TicksPerFrame = m_TicksPerFrame;
-
 
 		//두번째 키 생성
 		int AnimationCount = EATER_GET_LIST_CHOICE(index, std::to_string(k));
@@ -441,8 +436,7 @@ void Eater_LoadMesh::LoadAnimation(int index, std::string& Name)
 			OneAnime->m_AniData.push_back(std::move(Frame));
 		}
 
-		AniData.push_back(std::move(OneAnime));
-
+		AniData->m_AnimationList.push_back(std::move(OneAnime));
 	}
 
 	CreateKeyFrame(AniData, 10);

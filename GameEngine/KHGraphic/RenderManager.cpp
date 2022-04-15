@@ -699,6 +699,9 @@ void RenderManager::ConvertChangeInstance()
 
 void RenderManager::PushMeshRenderData(RenderData* renderData)
 {
+	// 그릴수 없는 상태인 경우 Layer에 삽입하지 않는다..
+	if (renderData->m_InstanceLayerIndex == -1) return;
+
 	// 해당 Layer 검색..
 	InstanceLayer* instanceLayer = m_Converter->GetLayer(renderData->m_InstanceLayerIndex);
 

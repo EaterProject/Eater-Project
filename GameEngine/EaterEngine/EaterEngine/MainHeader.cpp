@@ -134,6 +134,11 @@ void BakeEnvironmentMap(std::string mPath)
 	gGameEngine->BakeEnvironmentMap(mPath);
 }
 
+void BakeAnimation()
+{
+	gGameEngine->BakeAnimation();
+}
+
 void SetShadowMap(std::string mPath)
 {
 	gGameEngine->SetShadowMap(mPath);

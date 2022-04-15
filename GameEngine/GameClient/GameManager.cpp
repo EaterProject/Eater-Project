@@ -29,8 +29,8 @@ void GameManager::Start(HWND _g_hWnd)
 
 	//EditorSetting();
 
-	ChoiceScene("TestScene");
-	//ChoiceScene("Loading");
+	//ChoiceScene("TestScene");
+	ChoiceScene("Loading");
 	//ChoiceScene("intro");
 	//ChoiceScene("inGame");
 }

@@ -59,6 +59,7 @@ void Loading::End()
 void Loading::ThreadFunction()
 {
 	Load("../Assets/Texture/ModelTexture");
+	Load("../Assets/Texture/Environment");
 	Load("../Assets/Texture/Terrain");
 	Load("../Assets/Texture/Material");
 	Load("../Assets/Texture/Particle");

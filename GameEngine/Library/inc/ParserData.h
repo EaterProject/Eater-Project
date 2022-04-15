@@ -57,7 +57,7 @@ namespace ParserData
 		DirectX::SimpleMath::Quaternion m_WorldRotQt;
 		DirectX::SimpleMath::Vector3	m_WorldScale;
 	};
-	
+
 	class CAnimation
 	{
 	public:
@@ -67,18 +67,24 @@ namespace ParserData
 
 	public:
 		std::vector<CFrame*>	m_AniData;
+	};
 
+	class CModelAnimation
+	{
+	public:
+		CModelAnimation();
+		CModelAnimation(const CModelAnimation& ani) = default;
+		~CModelAnimation();
+
+	public:
+		std::vector<ParserData::CAnimation*> m_AnimationList;		// Animation List
+		
 		float	m_TicksPerFrame;
 		int		m_TotalFrame;
 		int		m_StartFrame;
 		int		m_EndFrame;
-		int		m_NowIndex;
-		int		m_NextIndex;
 	};
-}
 
-namespace ParserData
-{
 	class CIndexList
 	{
 	public:
@@ -195,7 +201,7 @@ namespace ParserData
 		std::vector<CFace*>			m_MeshFace;			// Face List
 
 		/// Animation Data
-		CAnimation*				m_Animation;		// Animation Data
+		CAnimation*					m_Animation;		// Animation Data
 
 		/// Skinning Data
 		std::vector<DirectX::SimpleMath::Matrix> m_BoneTMList;		// Bone Offset TM List
@@ -273,10 +279,12 @@ namespace ParserData
 		int m_SkinCount		= 0;
 		int m_StaticCount	= 0;
 		int m_BoneCount		= 0;
+
 		std::vector<bool> m_TopNodeList;							// TopNode List
-		std::vector<ParserData::CAnimation*> m_AnimationList;		// Animation List
 		std::vector<ParserData::CMaterial*> m_MaterialList;			// Material List
 		std::vector<ParserData::CMesh*> m_MeshList;	 				// Mesh List
+
+		ParserData::CModelAnimation* m_ModelAnimation;				// Animation List
 	};
 
 	class ImageData

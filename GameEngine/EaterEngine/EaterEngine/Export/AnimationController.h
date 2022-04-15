@@ -9,6 +9,11 @@
 /// 최상위 오브젝트에만 생성될것
 /// </summary>
 
+namespace ParserData
+{
+	class CModelAnimation;
+}
+
 class ModelAnimationData;
 class Animator;
 class AnimationController : public Component
@@ -34,8 +39,10 @@ public:
 
 	void SetBoneList(std::vector<GameObject*>* mobjList);
 	void SetAnimeList(ModelAnimationData* data);
+
 private:
 	void ChangeAnime();
+	void AnimationFrameIndex();
 
 	//본들의 애니메이터 리스트
 	std::vector<Animator*> AnimatorList;
@@ -43,10 +50,20 @@ private:
 	//한개의 모델에 들어있는 애니메이션 리스트
 	ModelAnimationData* AnimationList;
 
+	ParserData::CModelAnimation* NowAnimation;
+
 	//현재 애니메이션 이름
 	std::string NowAnimationName;
 
 	bool ChangeAnimation;
 
+	bool	mStop;
+	bool	mLoop;
+
+	int		mNowFrame;
+	int		mNextFrame;
+
+	float	mPlayTime;		//애니메이션을 한바퀴 도는 시간 
+	float 	mTime;			//현재 재생타임
 };
 

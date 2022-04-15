@@ -47,48 +47,48 @@ struct ObjectOption
 	Vector3 AddColor;
 };
 
-struct FBXMeshData
-{
-	std::string Name;
-	
-	std::string Diffuse;
-	std::string Normal;
-	std::string Emissive;
-	std::string ORM;
-};
+//struct FBXMeshData
+//{
+//	std::string Name;
+//	
+//	std::string Diffuse;
+//	std::string Normal;
+//	std::string Emissive;
+//	std::string ORM;
+//};
 
-struct TransformData
-{
-	std::string Pos[3];
-	std::string Rot[3];
-	std::string Scl[3];
-};
+//struct TransformData
+//{
+//	std::string Pos[3];
+//	std::string Rot[3];
+//	std::string Scl[3];
+//};
 
-struct AnimationData
-{
-	bool Use = false;
-	int Count = 0;
-	float Speed = 5.0f;
-	std::string AnimationList[5];
-	std::string NowAnimation;
-};
+//struct AnimationData
+//{
+//	bool Use = false;
+//	int Count = 0;
+//	float Speed = 5.0f;
+//	std::string AnimationList[5];
+//	std::string NowAnimation;
+//};
 
-struct RenderMeshData
-{
-	enum class TYPE
-	{
-		BASE = 0,
-		SKIN = 1,
-		TERRAIN =2,
-		ANIMATION =3,
-	};
-
-	std::string MeshName = "";
-	bool Error = false;
-
-	bool isTransform;
-	bool isAnimation;
-
-	TransformData mTransform;
-	AnimationData mAnimation;
-};
+//struct RenderMeshData
+//{
+//	enum class TYPE
+//	{
+//		BASE = 0,
+//		SKIN = 1,
+//		TERRAIN =2,
+//		ANIMATION =3,
+//	};
+//
+//	std::string MeshName = "";
+//	bool Error = false;
+//
+//	bool isTransform;
+//	bool isAnimation;
+//
+//	TransformData mTransform;
+//	AnimationData mAnimation;
+//};

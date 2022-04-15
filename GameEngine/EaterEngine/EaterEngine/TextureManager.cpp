@@ -31,7 +31,7 @@ void TextureManager::LoadTexture(std::string& Path)
 
 	if (buffer == nullptr)
 	{
-		PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "[ Engine ][ Create ][ Texture ] FAILED!!");
+		PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "[ Engine ][ Create ][ Texture Buffer ] '%s' FAILED!!", Path.c_str());
 	}
 	else
 	{
@@ -52,7 +52,7 @@ void TextureManager::BakeEnvironmentMap(std::string& Path)
 	// 해당 Texture가 없을 경우..
 	if (environment == nullptr)
 	{
-		PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "[ Engine ][ Create ][ Environment ] '%s' Texture가 로드되지 않았습니다!!", Path.c_str());
+		PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "[ Engine ][ Bake ][ Environment Buffer ] '%s' Texture가 로드되지 않았습니다!!", Path.c_str());
 	}
 
 	EnterCriticalSection(m_CriticalSection);
@@ -61,7 +61,7 @@ void TextureManager::BakeEnvironmentMap(std::string& Path)
 
 	if (buffer == nullptr)
 	{
-		PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "[ Engine ][ Create ][ Environment ] FAILED!!");
+		PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "[ Engine ][ Bake ][ Environment Buffer ] '%s' FAILED!!", Path.c_str());
 	}
 	else
 	{

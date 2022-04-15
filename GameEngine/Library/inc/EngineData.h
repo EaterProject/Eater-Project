@@ -70,6 +70,22 @@ public:
 	}
 };
 
+// Animation Data
+class AnimationData
+{
+public:
+	virtual ~AnimationData()
+	{
+
+	}
+
+public:
+	UINT AnimationIndex = 0;							// Animation Index
+	UINT FrameIndex = 0;								// Animation Frame Index
+
+	AnimationBuffer* AnimationBuf = nullptr;		// Animation Texture Data Buffer
+};
+
 // Mesh Sub Data
 class MeshSubData
 {
@@ -124,14 +140,14 @@ public:
 	}
 
 public:
-	UINT BufferIndex = 0;					// Material Buffer Index
+	UINT BufferIndex = 0;							// Material Buffer Index
 
 	MaterialSubData* Material_SubData = nullptr;	// Material SubData
 
-	TextureBuffer* Albedo = nullptr;		// DiffuseMap Texture
-	TextureBuffer* Normal = nullptr;		// NormalMap Texture
-	TextureBuffer* Emissive = nullptr;		// Emissive Texture
-	TextureBuffer* ORM = nullptr;			// AO(R) + Roughness(G) + Metallic(B) Texture
+	TextureBuffer* Albedo = nullptr;				// DiffuseMap Texture
+	TextureBuffer* Normal = nullptr;				// NormalMap Texture
+	TextureBuffer* Emissive = nullptr;				// Emissive Texture
+	TextureBuffer* ORM = nullptr;					// AO(R) + Roughness(G) + Metallic(B) Texture
 };
 
 // Environment Buffer
@@ -145,21 +161,10 @@ public:
 		delete Prefilter;
 	};
 
-	TextureBuffer* Environment = nullptr;
-	TextureBuffer* Irradiance = nullptr;
-	TextureBuffer* Prefilter = nullptr;
+	TextureBuffer* Environment = nullptr;				// Environment Buffer
+	TextureBuffer* Irradiance = nullptr;				// Environment Irradiance Buffer
+	TextureBuffer* Prefilter = nullptr;					// Environment Prefilter Buffer
 };
-
-// Animation Data
-namespace EngineData
-{
-class AnimationData
-{
-public:
-	UINT AnimationIndex = 0;
-	UINT FrameIndex = 0;
-};
-}
 
 // Camera Animation
 class CameraAnimation
@@ -249,7 +254,7 @@ public:
 	MaterialBuffer*	Material_Buffer	= nullptr;		// Material Buffer
 
 	// 추가 데이터
-	EngineData::AnimationData*	Animation_Data = nullptr;		// Animation Data
+	AnimationData*	Animation_Data = nullptr;		// Animation Data
 	TerrainData*	Terrain_Data	= nullptr;		// Terrain Data
 	ParticleData*	Particle_Data	= nullptr;		// Particle Data
 };
@@ -366,17 +371,10 @@ class ModelAnimationData
 public:
 	~ModelAnimationData()
 	{
-		for (auto Anim : AnimList)
-		{
-			int Size = (int)Anim.second.size();
-			for (auto CAnim : Anim.second)
-			{
-				delete CAnim;
-			}
-		}
+
 	}
 
-	std::map<std::string, std::vector<CAnimation*>> AnimList;
+	std::map<std::string, CModelAnimation*> AnimList;
 };
 
 //컨퍼넌트들의 함수포인터를 저장할 구조체

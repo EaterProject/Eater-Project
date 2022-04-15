@@ -128,7 +128,7 @@ void Material::Release()
 	GraphicEngine::Get()->DeleteMaterial(m_MaterialData);
 
 	// 해당 Material Data 해제..
-	delete m_MaterialData;
+	SAFE_DELETE(m_MaterialData);
 }
 
 std::string Material::GetDiffuseName()

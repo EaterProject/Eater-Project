@@ -13,7 +13,7 @@
 #include "MainHeader.h"
 #include "TextureManager.h"
 #include "GraphicsEngine.h"
-
+#include "Profiler/Profiler.h"
 
 MeshFilter::MeshFilter()
 {
@@ -275,7 +275,7 @@ void MeshFilter::CheckAnimation()
 {
 	if (isLoad_Animation == false) { return; }
 
-	ModelAnimationData* data = LoadManager::GetAnimation(AnimationName);
+	ModelAnimationData* data = LoadManager::GetAnimationData(AnimationName);
 	AnimationController* Controller = gameobject->GetComponent<AnimationController>();
 
 	//가져온 컨퍼넌트에 본 정보를 넘겨준다
@@ -307,18 +307,27 @@ void MeshFilter::SetMaterial(std::string matName)
 	// 해당 Material이 없다면..
 	if (material == nullptr)
 	{
-		// 새로운 Material 생성..
-		material = new Material();
-		material->Name = "Defalt";
-		material->Defalt = true;
-		material->m_MaterialData->Name = "Defalt";
+		if (m_Material == nullptr)
+		{
+			// 새로운 Material 생성..
+			m_Material = new Material();
+			m_Material->Name = "Defalt";
+			m_Material->m_MaterialData->Name = "Defalt";
+			m_Material->Defalt = true;
+
+			// 변경된 Material 그래픽 동기화..
+			GraphicEngine::Get()->PushChangeInstance(gameobject->OneMeshData);
+		}
+
+		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ MeshFilter ][ SetMaterial ] '%s' FAILED!!", matName.c_str());
+		return;
 	}
 
 	// 변경된 Material 그래픽 동기화..
 	GraphicEngine::Get()->PushChangeInstance(gameobject->OneMeshData);
 
 	// 기본 Material이였다면 삭제..
-	if (m_Material && m_Material->Defalt)
+	if (material->Defalt == false && m_Material && m_Material->Defalt)
 	{
 		delete m_Material;
 	}
@@ -529,7 +538,7 @@ void MeshFilter::LinkHierarchy(Transform* my, Transform* parent)
 void MeshFilter::CreateModel()
 {
 	///이름으로 로드할 데이터를 찾아서 가져옴
-	ModelData* mMesh = LoadManager::GetModel(ModelName);
+	ModelData* mMesh = LoadManager::GetModelData(ModelName);
 	Transform* Tr = gameobject->GetTransform();
 
 	if (mMesh == nullptr) { return; }

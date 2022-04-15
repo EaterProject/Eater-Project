@@ -6,12 +6,7 @@ namespace ParserData
 {
 	inline CAnimation::CAnimation()
 	{
-		m_TicksPerFrame = 0.0f;
-		m_TotalFrame = 0;
-		m_StartFrame = 0;
-		m_EndFrame = 0;
-		m_NowIndex = 0;
-		m_NextIndex = 1;
+
 	}
 	inline CAnimation::~CAnimation()
 	{
@@ -21,6 +16,22 @@ namespace ParserData
 		}
 
 		m_AniData.clear();
+	}
+
+	inline CModelAnimation::CModelAnimation()
+	{
+		m_TicksPerFrame = 0.0f;
+		m_TotalFrame = 0;
+		m_StartFrame = 0;
+		m_EndFrame = 0;
+	}
+
+	inline CModelAnimation::~CModelAnimation()
+	{
+		for (auto Anim : m_AnimationList)
+		{
+			delete Anim;
+		}
 	}
 
 	inline CVertex::CVertex()

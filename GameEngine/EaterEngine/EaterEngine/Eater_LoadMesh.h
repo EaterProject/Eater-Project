@@ -3,7 +3,7 @@
 
 namespace ParserData
 {
-	class CAnimation;
+	class CModelAnimation;
 }
 
 class Eater_LoadCamera;
@@ -30,7 +30,7 @@ private:
 	void LoadName(int index, LoadMeshData* model);
 
 	void LinkBone(ModelData* Data);
-	void CreateKeyFrame(std::vector<ParserData::CAnimation*>& Anime, int InputKeyCount);
+	void CreateKeyFrame(ParserData::CModelAnimation* Anime, int InputKeyCount);
 	void LoadAnimation(int index, std::string& Name);
 	std::vector<LoadMeshData*> BoneList;
 	std::vector<LoadMeshData*> SkinList;

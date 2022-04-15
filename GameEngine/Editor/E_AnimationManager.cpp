@@ -15,16 +15,16 @@ E_AnimationManager::~E_AnimationManager()
 
 void E_AnimationManager::ChangeEaterFile(ParserData::CModel* FBXMesh)
 {
-	int Size = (int)FBXMesh->m_AnimationList.size();
+	int Size = (int)FBXMesh->m_ModelAnimation->m_AnimationList.size();
 	if (Size == 0) { return;}
 
 	EATER_OPEN_WRITE_FILE(SaveFileName, "../Assets/Model/Animation/", ".Eater");
 	EATER_SET_NODE("ANIMATION");
-	float m_TicksPerFrame	= (float)FBXMesh->m_AnimationList[0]->m_TicksPerFrame;
-	float m_TotalFrame		= (float)FBXMesh->m_AnimationList[0]->m_TotalFrame;
-	float m_StartFrame		= (float)FBXMesh->m_AnimationList[0]->m_StartFrame;
-	float m_EndFrame		= (float)FBXMesh->m_AnimationList[0]->m_EndFrame;
-	int AnimationCount		= (int)FBXMesh->m_AnimationList.size();
+	float m_TicksPerFrame	= (float)FBXMesh->m_ModelAnimation->m_TicksPerFrame;
+	float m_TotalFrame		= (float)FBXMesh->m_ModelAnimation->m_TotalFrame;
+	float m_StartFrame		= (float)FBXMesh->m_ModelAnimation->m_StartFrame;
+	float m_EndFrame		= (float)FBXMesh->m_ModelAnimation->m_EndFrame;
+	int AnimationCount		= (int)FBXMesh->m_ModelAnimation->m_AnimationList.size();
 
 	EATER_SET_MAP("TickFrame", std::to_string(m_TicksPerFrame));
 	EATER_SET_MAP("TotalFrame", std::to_string(m_TotalFrame));
@@ -34,11 +34,11 @@ void E_AnimationManager::ChangeEaterFile(ParserData::CModel* FBXMesh)
 
 	for (int i = 0; i < AnimationCount; i++)
 	{
-		int FrameCount = (int)FBXMesh->m_AnimationList[i]->m_AniData.size();
+		int FrameCount = (int)FBXMesh->m_ModelAnimation->m_AnimationList[i]->m_AniData.size();
 		EATER_SET_LIST_START(std::to_string(i), FrameCount, 11);
 		for (int j = 0; j < FrameCount; j++)
 		{
-			ParserData::CFrame* Frame = FBXMesh->m_AnimationList[i]->m_AniData[j];
+			ParserData::CFrame* Frame = FBXMesh->m_ModelAnimation->m_AnimationList[i]->m_AniData[j];
 
 			EATER_SET_LIST(Frame->m_LocalPos.x);
 			EATER_SET_LIST(Frame->m_LocalPos.y);

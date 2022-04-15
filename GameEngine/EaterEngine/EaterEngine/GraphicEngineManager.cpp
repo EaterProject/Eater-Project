@@ -96,6 +96,11 @@ void GraphicEngineManager::CreateTextureBuffer(std::string Name, TextureBuffer**
 	GEngine->CreateTextureBuffer(Name, ppResource);
 }
 
+void GraphicEngineManager::CreateAnimationBuffer(ModelData* model, ModelAnimationData* animation, AnimationBuffer** ppResource)
+{
+	GEngine->CreateAnimationBuffer(model, animation, ppResource);
+}
+
 void GraphicEngineManager::BakeShadowMap(std::string Path)
 {
 	GEngine->BakeShadowMap(Path);

@@ -3,10 +3,20 @@
 #include "GameObject.h"
 #include "KeyinputManager.h"
 #include "MeshFilter.h"
+#include "TimeManager.h"
 
 AnimationController::AnimationController()
 {
 	ChangeAnimation = false;
+
+	mStop = false;
+	mLoop = true;
+
+	mNowFrame = 0;
+	mNextFrame = 1;
+
+	mPlayTime = 1.0f;
+	mTime = 0.0f;
 }
 
 AnimationController::~AnimationController()
@@ -55,7 +65,7 @@ void AnimationController::ChangeAnime()
 {
 	if (ChangeAnimation == true)
 	{
-		std::vector<CAnimation*> data = AnimationList->AnimList[NowAnimationName];
+		NowAnimation = AnimationList->AnimList[NowAnimationName];
 
 		//본의 애니메이션을 넣어준다
 		int Count = (int)AnimatorList.size();
@@ -63,9 +73,40 @@ void AnimationController::ChangeAnime()
 		{
 			if (AnimatorList[i] == nullptr) { continue; }
 
-			AnimatorList[i]->SetAnimation(data[i]);
+			AnimatorList[i]->SetAnimation(NowAnimation->m_AnimationList[i]);
 		}
 		ChangeAnimation = false;
+	}
+}
+
+void AnimationController::AnimationFrameIndex()
+{
+	if (NowAnimation == nullptr) return;
+
+	if (mStop == false)
+	{
+		mTime += (mTimeManager->DeltaTime() * mPlayTime);
+
+		mNowFrame = (int)(mTime / NowAnimation->m_TicksPerFrame);
+
+		if (mNowFrame != mNowFrame)
+		{
+			mNowFrame = mNowFrame;
+		}
+	}
+
+	if (mNowFrame >= NowAnimation->m_EndFrame)
+	{
+		if (mLoop == false)
+		{
+			mNowFrame = NowAnimation->m_EndFrame;
+			mTime = 0.0f;
+		}
+		else
+		{
+			mNowFrame = 0;
+			mTime = 0.0f;
+		}
 	}
 }
 
@@ -81,43 +122,45 @@ void AnimationController::Choice(std::string Name)
 
 void AnimationController::Play(float Speed, bool Loop)
 {
+	// 현재 재생중일 경우에만 Play..
+	if (mStop) return;
+
+	// 현재 Animation Frame 재설정..
+	AnimationFrameIndex();
+
 	//Animator 컨퍼넌트들의 Play함수를 실행시킨다
 	std::vector<Animator*>::iterator it = AnimatorList.begin();
 	for (it; it != AnimatorList.end(); it++)
 	{
 		if ((*it) == nullptr) { continue; }
 
-		(*it)->Play(Speed, Loop);
+		(*it)->Play(mNowFrame, Speed, Loop);
 	}
 }
 
 void AnimationController::Stop()
 {
-	//Animator 컨퍼넌트들의 Play함수를 실행시킨다
-	std::vector<Animator*>::iterator it = AnimatorList.begin();
-	for (it; it != AnimatorList.end(); it++)
-	{
-		if ((*it) == nullptr) { continue; }
-		(*it)->Stop();
-	}
+	mStop = true;
 }
 
 int AnimationController::GetNowFrame()
 {
-	if (AnimatorList[0] == nullptr)
+	if (NowAnimation == nullptr)
 	{
 		return 0;
 	}
-	return AnimatorList[0]->GetNowFrame();
+
+	return mNowFrame;
 }
 
 int AnimationController::GetEndFrame()
 {
-	if (AnimatorList[0] == nullptr)
+	if (NowAnimation == nullptr)
 	{
 		return 0;
 	}
-	return AnimatorList[0]->GetEndFrame()-1;
+
+	return NowAnimation->m_EndFrame - 1;
 }
 
 int AnimationController::GetAnimationCount()
@@ -135,7 +178,7 @@ int AnimationController::GetAnimationCount()
 void AnimationController::GetAnimationList(std::vector<std::string>* NameList)
 {
 	if (AnimationList == nullptr) { return; }
-	std::map<std::string, std::vector<CAnimation*>>::iterator it_Start = AnimationList->AnimList.begin();
+	std::map<std::string, CModelAnimation*>::iterator it_Start = AnimationList->AnimList.begin();
 	for (it_Start; it_Start != AnimationList->AnimList.end(); it_Start++) 
 	{
 		NameList->push_back(it_Start->first);
