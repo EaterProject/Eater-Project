@@ -15,8 +15,9 @@ E_AnimationManager::~E_AnimationManager()
 
 void E_AnimationManager::ChangeEaterFile(ParserData::CModel* FBXMesh)
 {
+	if (FBXMesh->m_ModelAnimation == nullptr) { return;}
+
 	int Size = (int)FBXMesh->m_ModelAnimation->m_AnimationList.size();
-	if (Size == 0) { return;}
 
 	EATER_OPEN_WRITE_FILE(SaveFileName, "../Assets/Model/Animation/", ".Eater");
 	EATER_SET_NODE("ANIMATION");

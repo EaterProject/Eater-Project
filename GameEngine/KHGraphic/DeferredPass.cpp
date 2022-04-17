@@ -85,7 +85,7 @@ void DeferredPass::Create(int width, int height)
 	rtvDescDiffuse.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
 	rtvDescDiffuse.Texture2D.MipSlice = 0;
 
-	D3D11_RENDER_TARGET_VIEW_DESC rtvDescPosNormal;
+	D3D11_RENDER_TARGET_VIEW_DESC rtvDescPosNormal; 
 	ZeroMemory(&rtvDescPosNormal, sizeof(rtvDescPosNormal));
 	rtvDescPosNormal.Format = texDescPosNormal.Format;
 	rtvDescPosNormal.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
@@ -120,6 +120,7 @@ void DeferredPass::Start(int width, int height)
 	m_MeshVS = g_Shader->GetShader("StaticMesh_VS");
 	m_MeshInstVS = g_Shader->GetShader("StaticMesh_Instance_VS");
 	m_SkinVS = g_Shader->GetShader("SkinMesh_VS");
+	m_SkinInstVS = g_Shader->GetShader("SkinMesh_Instance_VS");
 	m_TerrainVS = g_Shader->GetShader("TerrainMesh_VS");
 
 	m_DeferredPS = g_Shader->GetShader("Deferred_PBR_PS");
@@ -127,6 +128,7 @@ void DeferredPass::Start(int width, int height)
 
 	// Insatance Buffer 설정..
 	m_Mesh_IB = g_Resource->GetInstanceBuffer<IB_Mesh>();
+	m_SkinMesh_IB = g_Resource->GetInstanceBuffer<IB_SkinMesh>();
 
 	// DepthStencilView 설정..
 	m_DefaltDSV = g_Resource->GetDepthStencilView<DS_Defalt>()->Get();
@@ -205,9 +207,9 @@ void DeferredPass::BeginRender()
 
 void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::vector<RenderData*>& meshlist)
 {
-	int RenderCount = (int)meshlist.size();
+	m_RenderCount = (int)meshlist.size();
 
-	if (RenderCount == 1)
+	if (m_RenderCount == 1)
 	{
 		RenderUpdate(instance, meshlist[0]);
 		return;
@@ -220,40 +222,12 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const std:
 
 	Matrix& view = cam->CamView;
 	Matrix& proj = cam->CamProj;
-	
-	for (int i = 0; i < RenderCount; i++)
-	{
-		if (meshlist[i]->m_Draw == false) continue;
-
-		// 해당 Instance Data 삽입..
-		m_MeshData.World = *meshlist[i]->m_ObjectData->World;
-		m_MeshData.InvWorld = MathHelper::InverseTranspose(m_MeshData.World);
-
-		m_MeshInstance[m_InstanceCount++] = m_MeshData;
-	}
-
-	if (m_InstanceCount == 0) return;
-
-	// Mapping SubResource Data..
-	D3D11_MAPPED_SUBRESOURCE mappedResource;
-	ZeroMemory(&mappedResource, sizeof(D3D11_MAPPED_SUBRESOURCE));
-
-	// GPU Access Lock Buffer Data..
-	g_Context->Map(m_Mesh_IB->InstanceBuf->Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
-
-	m_InstanceStride = (size_t)m_Mesh_IB->Stride * (size_t)m_InstanceCount;
-
-	// Copy Resource Data..
-	memcpy(mappedResource.pData, &m_MeshInstance[0], m_InstanceStride);
-
-	// GPU Access UnLock Buffer Data..
-	g_Context->Unmap(m_Mesh_IB->InstanceBuf->Get(), 0);
 
 	switch (instance->m_Type)
 	{
 	case OBJECT_TYPE::BASE:
 	{
-		//if (mesh->m_Alpha) break;
+		MeshInstanceUpdate(meshlist);
 
 		// Vertex Shader Update..
 		CB_InstanceStaticMesh objectBuf;
@@ -311,10 +285,62 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const std:
 	case OBJECT_TYPE::SKINNING:
 	{
 		/// 임시 코드
-		for (int i = 0; i < RenderCount; i++)
+		for (int i = 0; i < m_RenderCount; i++)
 		{
 			RenderUpdate(instance, meshlist[i]);
 		}
+
+		break;
+		CB_InstanceSkinMesh objectBuf;
+		objectBuf.gView = view;
+		objectBuf.gProj = proj;
+
+		m_SkinInstVS->ConstantBufferUpdate(&objectBuf);
+
+		m_SkinInstVS->Update();
+
+		// Pixel Shader Update..
+		CB_Material materialBuf;
+		materialBuf.gAddColor = matSub->AddColor;
+		materialBuf.gEmissiveFactor = matSub->EmissiveFactor;
+		materialBuf.gRoughnessFactor = matSub->RoughnessFactor;
+		materialBuf.gMetallicFactor = matSub->MetallicFactor;
+
+		if (mat->m_Albedo)
+		{
+			materialBuf.gTexID |= ALBEDO_MAP;
+			m_DeferredPS->SetShaderResourceView<gDiffuseMap>(mat->m_Albedo);
+		}
+		if (mat->m_Normal)
+		{
+			materialBuf.gTexID |= NORMAL_MAP;
+			m_DeferredPS->SetShaderResourceView<gNormalMap>(mat->m_Normal);
+		}
+		if (mat->m_Emissive)
+		{
+			materialBuf.gTexID |= EMISSIVE_MAP;
+			m_DeferredPS->SetShaderResourceView<gEmissiveMap>(mat->m_Emissive);
+		}
+		if (mat->m_ORM)
+		{
+			materialBuf.gTexID |= ORM_MAP;
+			m_DeferredPS->SetShaderResourceView<gORMMap>(mat->m_ORM);
+		}
+
+		m_DeferredPS->ConstantBufferUpdate(&materialBuf);
+
+		m_DeferredPS->Update();
+
+		ID3D11Buffer* vertexBuffers[2] = { mesh->m_VertexBuf, m_SkinMesh_IB->InstanceBuf->Get() };
+		UINT strides[2] = { mesh->m_Stride, m_SkinMesh_IB->Stride };
+		UINT offsets[2] = { 0,0 };
+
+		// Draw..
+		g_Context->IASetVertexBuffers(0, 2, vertexBuffers, strides, offsets);
+		g_Context->IASetIndexBuffer(mesh->m_IndexBuf, DXGI_FORMAT_R32_UINT, 0);
+		g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+		g_Context->DrawIndexedInstanced(mesh->m_IndexCount, m_InstanceCount, 0, 0, 0);
 	}
 	break;
 	default:
@@ -335,10 +361,10 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rend
 	MaterialRenderBuffer* mat = instance->m_Material;
 	MaterialSubData* matSub = mat->m_MaterialSubData;
 
-	Matrix& world = *obj->World;
-	Matrix&& invWorld = MathHelper::InverseTranspose(world);
-	Matrix& view = cam->CamView;
-	Matrix& proj = cam->CamProj;
+	const Matrix& world = obj->World;
+	const Matrix& invWorld = obj->InvWorld;
+	const Matrix& view = cam->CamView;
+	const Matrix& proj = cam->CamProj;
 
 	switch (instance->m_Type)
 	{
@@ -499,4 +525,77 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rend
 	default:
 		break;
 	}
+}
+
+void DeferredPass::MeshInstanceUpdate(const std::vector<RenderData*>& meshlist)
+{
+	for (int i = 0; i < m_RenderCount; i++)
+	{
+		m_RenderData = meshlist[i];
+
+		if (m_RenderData->m_Draw == false) continue;
+
+		// 해당 Instance Data 삽입..
+		m_MeshData.World	= m_RenderData->m_ObjectData->World;
+		m_MeshData.InvWorld = m_RenderData->m_ObjectData->InvWorld;
+
+		m_MeshInstance[m_InstanceCount++] = m_MeshData;
+	}
+
+	if (m_InstanceCount == 0) return;
+
+	// Mapping SubResource Data..
+	D3D11_MAPPED_SUBRESOURCE mappedResource;
+	ZeroMemory(&mappedResource, sizeof(D3D11_MAPPED_SUBRESOURCE));
+
+	// GPU Access Lock Buffer Data..
+	g_Context->Map(m_Mesh_IB->InstanceBuf->Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
+
+	m_InstanceStride = (size_t)m_Mesh_IB->Stride * (size_t)m_InstanceCount;
+
+	// Copy Resource Data..
+	memcpy(mappedResource.pData, &m_MeshInstance[0], m_InstanceStride);
+
+	// GPU Access UnLock Buffer Data..
+	g_Context->Unmap(m_Mesh_IB->InstanceBuf->Get(), 0);
+}
+
+void DeferredPass::SkinMeshInstanceUpdate(const std::vector<RenderData*>& meshlist)
+{
+	for (int i = 0; i < m_RenderCount; i++)
+	{
+		m_RenderData = meshlist[i];
+
+		if (m_RenderData->m_Draw == false) continue;
+
+		// 해당 Instance Data 삽입..
+		m_SkinMeshData.World	= m_RenderData->m_ObjectData->World;
+		m_SkinMeshData.InvWorld = m_RenderData->m_ObjectData->InvWorld;
+
+		if (m_RenderData->m_AnimationData)
+		{
+			m_SkinMeshData.PrevAnimationIndex = m_RenderData->m_AnimationData->PrevAnimationIndex;
+			m_SkinMeshData.NextAnimationIndex = m_RenderData->m_AnimationData->NextAnimationIndex;
+			m_SkinMeshData.FrameTime		= m_RenderData->m_AnimationData->FrameTime;
+		}
+
+		m_SkinMeshInstance[m_InstanceCount++] = m_SkinMeshData;
+	}
+
+	if (m_InstanceCount == 0) return;
+
+	// Mapping SubResource Data..
+	D3D11_MAPPED_SUBRESOURCE mappedResource;
+	ZeroMemory(&mappedResource, sizeof(D3D11_MAPPED_SUBRESOURCE));
+
+	// GPU Access Lock Buffer Data..
+	g_Context->Map(m_SkinMesh_IB->InstanceBuf->Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
+
+	m_InstanceStride = (size_t)m_SkinMesh_IB->Stride * (size_t)m_InstanceCount;
+
+	// Copy Resource Data..
+	memcpy(mappedResource.pData, &m_SkinMeshInstance[0], m_InstanceStride);
+
+	// GPU Access UnLock Buffer Data..
+	g_Context->Unmap(m_SkinMesh_IB->InstanceBuf->Get(), 0);
 }

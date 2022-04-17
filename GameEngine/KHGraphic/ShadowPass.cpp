@@ -160,7 +160,7 @@ void ShadowPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::v
 		if (meshlist[i]->m_Draw == false) continue;
 
 		// ÇØ´ç Instance Data »ðÀÔ..
-		m_MeshData.World = *meshlist[i]->m_ObjectData->World;
+		m_MeshData.World = meshlist[i]->m_ObjectData->World;
 
 		m_MeshInstance[m_InstanceCount++] = m_MeshData;
 	}
@@ -254,8 +254,8 @@ void ShadowPass::RenderUpdate(const InstanceRenderBuffer* instance, const Render
 	ObjectData* obj = meshData->m_ObjectData;
 	MeshRenderBuffer* mesh = instance->m_Mesh;
 
-	Matrix& world = *obj->World;
-	Matrix& viewproj = g_GlobalData->DirectionLightList[0]->LightViewProj;
+	const Matrix& world = obj->World;
+	const Matrix& viewproj = g_GlobalData->DirectionLightList[0]->LightViewProj;
 
 	switch (instance->m_Type)
 	{

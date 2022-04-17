@@ -39,7 +39,6 @@
 
 #include <algorithm>
 
-#define RELEASE_PROFILE
 #include "./Profiler/Profiler.h"
 
 RenderManager::RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, IGraphicResourceManager* resource, IShaderManager* shader)
@@ -205,12 +204,20 @@ void RenderManager::PushInstance(MeshData* instance)
 
 void RenderManager::PushMesh(MeshBuffer* mesh)
 {
+	// 현재 추가된 Mesh Buffer 동기화를 위해 삽입..
 	m_Converter->PushMesh(mesh);
 }
 
 void RenderManager::PushMaterial(MaterialBuffer* material)
 {
+	// 현재 추가된 Material Buffer 동기화를 위해 삽입..
 	m_Converter->PushMaterial(material);
+}
+
+void RenderManager::PushAnimation(AnimationBuffer* animation)
+{
+	// 현재 추가된 Animation Buffer 동기화를 위해 삽입..
+	m_Converter->PushAnimation(animation);
 }
 
 void RenderManager::PushChangeInstance(MeshData* instance)
@@ -229,6 +236,12 @@ void RenderManager::PushChangeMaterial(MaterialBuffer* material)
 {
 	// 현재 바뀐 Material Buffer 동기화를 위해 삽입..
 	m_Converter->PushChangeMaterial(material);
+}
+
+void RenderManager::PushChangeAnimation(AnimationBuffer* animation)
+{
+	// 현재 바뀐 Animation Buffer 동기화를 위해 삽입..
+	m_Converter->PushChangeAnimation(animation);
 }
 
 void RenderManager::DeleteInstance(MeshData* instance)
@@ -260,6 +273,11 @@ void RenderManager::DeleteMesh(MeshBuffer* mesh)
 void RenderManager::DeleteMaterial(MaterialBuffer* material)
 {
 	m_Converter->DeleteMaterial(material->BufferIndex);
+}
+
+void RenderManager::DeleteAnimation(AnimationBuffer* animation)
+{
+	m_Converter->DeleteAnimation(animation->BufferIndex);
 }
 
 void RenderManager::ConvertRenderData()
@@ -375,7 +393,7 @@ void* RenderManager::PickingRender(int x, int y)
 	m_Picking->NoneMeshRenderUpdate(m_UnRenderMeshList);
 	
 	// 현재 클릭한 Pixel ID 검출..
-	UINT pickID = m_Picking->FindPick(x, y);
+	int pickID = (int)m_Picking->FindPick(x, y);
 
 	GPU_END_EVENT_DEBUG_NAME();
 
@@ -969,8 +987,8 @@ void RenderManager::FindInstanceLayer(std::vector<InstanceLayer*>& layerList, In
 bool RenderManager::SortDistance(RenderData* obj1, RenderData* obj2)
 {
 	const Vector3& camPos = RenderPassBase::g_GlobalData->MainCamera_Data->CamPos;
-	const Vector3& objPos1 = { (*obj1->m_ObjectData->World)._41 - camPos.x, (*obj1->m_ObjectData->World)._42 - camPos.y, (*obj1->m_ObjectData->World)._43 - camPos.z };
-	const Vector3& objPos2 = { (*obj2->m_ObjectData->World)._41 - camPos.x, (*obj2->m_ObjectData->World)._42 - camPos.y, (*obj2->m_ObjectData->World)._43 - camPos.z };
+	const Vector3& objPos1 = { (obj1->m_ObjectData->World)._41 - camPos.x, (obj1->m_ObjectData->World)._42 - camPos.y, (obj1->m_ObjectData->World)._43 - camPos.z };
+	const Vector3& objPos2 = { (obj2->m_ObjectData->World)._41 - camPos.x, (obj2->m_ObjectData->World)._42 - camPos.y, (obj2->m_ObjectData->World)._43 - camPos.z };
 
 	const float& distance1 = sqrtf(objPos1.x * objPos1.x + objPos1.y * objPos1.y + objPos1.z * objPos1.z);
 	const float& distance2 = sqrtf(objPos2.x * objPos2.x + objPos2.y * objPos2.y + objPos2.z * objPos2.z);

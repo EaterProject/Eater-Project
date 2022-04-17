@@ -148,6 +148,98 @@ void GraphicResourceFactory::CreateMeshBuffer(ParserData::CMesh* mesh, MeshBuffe
 	}
 }
 
+void GraphicResourceFactory::CreateAnimationBuffer(ModelData* model, ModelAnimationData* animation, AnimationBuffer** ppResource)
+{
+	std::vector<Matrix>& offsetList = model->BoneOffsetList;
+
+	UINT struct_size = sizeof(XMFLOAT3X4);
+	UINT row_offset = offsetList.size();
+	UINT column_offset = 0;
+	UINT total_offset = 0;
+	UINT max_offset = 0;
+
+	Matrix nowOffsetTM;
+	Matrix nowFrameTM;
+
+	ParserData::CModelAnimation* nowModelAni = nullptr;
+	ParserData::CAnimation* nowAni = nullptr;
+	ParserData::CFrame* nowFrame = nullptr;
+
+	AnimationBuffer* animationBuf = new AnimationBuffer();
+	animationBuf->Name = model->Name;
+	animationBuf->FrameOffset = row_offset;
+	animationBuf->AnimationOffset.push_back(total_offset);
+
+	(*ppResource) = animationBuf;
+
+	std::vector<XMFLOAT3X4> animationList;
+	for (auto& aniList : animation->AnimList)
+	{
+		nowModelAni = aniList.second;
+
+		for (int ani = 0; ani < nowModelAni->m_AnimationList.size(); ani++)
+		{
+			nowAni = nowModelAni->m_AnimationList[ani];
+			nowOffsetTM = offsetList[ani];
+
+			for (int frame = 0; frame < nowAni->m_AniData.size(); frame++)
+			{
+				nowFrame = nowAni->m_AniData[frame];
+
+				nowFrameTM = Matrix::CreateScale(nowFrame->m_WorldScale) * Matrix::CreateFromQuaternion(nowFrame->m_WorldRotQt) * Matrix::CreateTranslation(nowFrame->m_WorldPos);
+				nowFrameTM = nowOffsetTM * nowFrameTM;
+
+				XMFLOAT3X4 aniMatrix;
+				aniMatrix._11 = nowFrameTM._11; aniMatrix._12 = nowFrameTM._12; aniMatrix._13 = nowFrameTM._13; aniMatrix._14 = nowFrameTM._41;
+				aniMatrix._21 = nowFrameTM._21; aniMatrix._22 = nowFrameTM._22; aniMatrix._23 = nowFrameTM._23; aniMatrix._24 = nowFrameTM._42;
+				aniMatrix._31 = nowFrameTM._31; aniMatrix._32 = nowFrameTM._32; aniMatrix._33 = nowFrameTM._33; aniMatrix._34 = nowFrameTM._43;
+
+				animationList.emplace_back(std::move(aniMatrix));
+			}
+		}
+
+		column_offset = nowModelAni->m_TotalFrame;
+		total_offset += row_offset * column_offset;
+
+		if (animationBuf->AnimationOffset.size() < animation->AnimList.size())
+		{
+			animationBuf->AnimationOffset.push_back(total_offset);
+		}
+	}
+
+	D3D11_BUFFER_DESC bufferDesc;
+	bufferDesc.Usage = D3D11_USAGE_IMMUTABLE;
+	bufferDesc.ByteWidth = total_offset * struct_size;
+	bufferDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+	bufferDesc.CPUAccessFlags = 0;
+	bufferDesc.MiscFlags = D3D11_RESOURCE_MISC_BUFFER_STRUCTURED;
+	bufferDesc.StructureByteStride = struct_size;
+
+	D3D11_SUBRESOURCE_DATA initData;
+	initData.pSysMem = &animationList[0];
+	initData.SysMemPitch = 0;
+	initData.SysMemSlicePitch = 0;
+
+	D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc;
+	srvDesc.Format = DXGI_FORMAT_UNKNOWN;
+	srvDesc.ViewDimension = D3D11_SRV_DIMENSION_BUFFER;
+	srvDesc.Buffer.FirstElement = 0;
+	srvDesc.Buffer.NumElements = total_offset;
+
+	/// Buffer 积己..
+	ID3D11Buffer* buffer = nullptr;
+	ID3D11ShaderResourceView* srv = nullptr;
+
+	m_Result = g_Graphic->CreateBuffer(&bufferDesc, &initData, &buffer);
+
+	m_Result = g_Graphic->CreateShaderResourceView(buffer, &srvDesc, &srv);
+
+	// Animation Buffer 历厘..
+	animationBuf->pAnimationBuf = srv;
+
+	GPU_RESOURCE_DEBUG_NAME(srv, std::string(model->Name + "_AnimationBuffer").c_str());
+}
+
 void GraphicResourceFactory::CreateImage(std::string name, Hash_Code hash_code, std::string fileName)
 {
 	// 货肺款 Resource Pointer 积己..
@@ -1169,8 +1261,8 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::MeshVertex>(ParserDat
 	UINT vByteSize = sizeof(VertexInput::MeshVertex) * vCount;
 	UINT iByteSize = sizeof(UINT) * iCount * 3;
 
-	Vector3 vMin(+MathHelper::Infinity, +MathHelper::Infinity, +MathHelper::Infinity);
-	Vector3 vMax(-MathHelper::Infinity, -MathHelper::Infinity, -MathHelper::Infinity);
+	Vector3 vMin(+FLT_MAX, +FLT_MAX, +FLT_MAX);
+	Vector3 vMax(-FLT_MAX, -FLT_MAX, -FLT_MAX);
 
 	std::vector<VertexInput::MeshVertex> vertices(vCount);
 	for (UINT i = 0; i < vCount; i++)
@@ -1260,8 +1352,8 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::MeshVertex>(ParserDat
 	newIndexBuf->pIndexBuf = ib;
 
 	// Debug Name..
-	GPU_RESOURCE_DEBUG_NAME(vb, (mesh->m_NodeName + "_VertexBuf").c_str());
-	GPU_RESOURCE_DEBUG_NAME(ib, (mesh->m_NodeName + "_IndexBuf").c_str());
+	GPU_RESOURCE_DEBUG_NAME(vb, (mesh->m_NodeName + "_VertexBuffer").c_str());
+	GPU_RESOURCE_DEBUG_NAME(ib, (mesh->m_NodeName + "_IndexBuffer").c_str());
 }
 
 template<>
@@ -1287,8 +1379,8 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::SkinVertex>(ParserDat
 	UINT vByteSize = sizeof(VertexInput::SkinVertex) * vCount;
 	UINT iByteSize = sizeof(UINT) * iCount * 3;
 
-	Vector3 vMin(+MathHelper::Infinity, +MathHelper::Infinity, +MathHelper::Infinity);
-	Vector3 vMax(-MathHelper::Infinity, -MathHelper::Infinity, -MathHelper::Infinity);
+	Vector3 vMin(+FLT_MAX, +FLT_MAX, +FLT_MAX);
+	Vector3 vMax(-FLT_MAX, -FLT_MAX, -FLT_MAX);
 
 	std::vector<VertexInput::SkinVertex> vertices(vCount);
 	for (UINT i = 0; i < vCount; i++)
@@ -1398,8 +1490,8 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::SkinVertex>(ParserDat
 	newIndexBuf->pIndexBuf = ib;
 
 	// Debug Name..
-	GPU_RESOURCE_DEBUG_NAME(vb, (mesh->m_NodeName + "_VertexBuf").c_str());
-	GPU_RESOURCE_DEBUG_NAME(ib, (mesh->m_NodeName + "_IndexBuf").c_str());
+	GPU_RESOURCE_DEBUG_NAME(vb, (mesh->m_NodeName + "_VertexBuffer").c_str());
+	GPU_RESOURCE_DEBUG_NAME(ib, (mesh->m_NodeName + "_IndexBuffer").c_str());
 }
 
 template<>
@@ -1425,8 +1517,8 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(Parser
 	UINT vByteSize = sizeof(VertexInput::TerrainVertex) * vCount;
 	UINT iByteSize = sizeof(UINT) * iCount * 3;
 
-	Vector3 vMin(+MathHelper::Infinity, +MathHelper::Infinity, +MathHelper::Infinity);
-	Vector3 vMax(-MathHelper::Infinity, -MathHelper::Infinity, -MathHelper::Infinity);
+	Vector3 vMin(+FLT_MAX, +FLT_MAX, +FLT_MAX);
+	Vector3 vMax(-FLT_MAX, -FLT_MAX, -FLT_MAX);
 
 	// Mask Pixel Data Parsing..
 	ParserData::ImageData maskImage1 = m_Parser->LoadImagePixel(mesh->m_MaskName1.c_str(), 4);
@@ -1694,8 +1786,8 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(Parser
 	newIndexBuf->pIndexBuf = ib;
 
 	// Debug Name..
-	GPU_RESOURCE_DEBUG_NAME(vb, (mesh->m_NodeName + "_VertexBuf").c_str());
-	GPU_RESOURCE_DEBUG_NAME(ib, (mesh->m_NodeName + "_IndexBuf").c_str());
+	GPU_RESOURCE_DEBUG_NAME(vb, (mesh->m_NodeName + "_VertexBuffer").c_str());
+	GPU_RESOURCE_DEBUG_NAME(ib, (mesh->m_NodeName + "_IndexBuffer").c_str());
 }
 
 template<>
@@ -2090,16 +2182,19 @@ void GraphicResourceFactory::CreateInstanceBuffers()
 	// Defalt Instance Buffer 积己..
 	UINT meshDepthInstanceMax = 500;
 	UINT meshInstanceMax = 500;
+	UINT skinMeshInstanceMax = 500;
 	UINT meshIDInstanceMax = 500;
 	UINT particleInstanceMax = 500;
 
 	std::vector<VertexInput::MeshDepthInstance> meshDepthInstance(meshDepthInstanceMax);
 	std::vector<VertexInput::MeshInstance> meshInstance(meshInstanceMax);
+	std::vector<VertexInput::SkinMeshInstance> skinMeshInstance(skinMeshInstanceMax);
 	std::vector<VertexInput::MeshIDInstance> meshIDInstance(meshIDInstanceMax);
 	std::vector<VertexInput::ParticleInstance> particleInstance(particleInstanceMax);
 
 	CreateInstanceBuffer(IB_MeshDepth::GetName(), IB_MeshDepth::GetHashCode(), sizeof(VertexInput::MeshDepthInstance), meshDepthInstanceMax, &meshDepthInstance[0]);
 	CreateInstanceBuffer(IB_Mesh::GetName(), IB_Mesh::GetHashCode(), sizeof(VertexInput::MeshInstance), meshInstanceMax, &meshInstance[0]);
+	CreateInstanceBuffer(IB_SkinMesh::GetName(), IB_SkinMesh::GetHashCode(), sizeof(VertexInput::SkinMeshInstance), skinMeshInstanceMax, &skinMeshInstance[0]);
 	CreateInstanceBuffer(IB_MeshID::GetName(), IB_MeshID::GetHashCode(), sizeof(VertexInput::MeshIDInstance), meshIDInstanceMax, &meshIDInstance[0]);
 	CreateInstanceBuffer(IB_Particle::GetName(), IB_Particle::GetHashCode(), sizeof(VertexInput::ParticleInstance), particleInstanceMax, &particleInstance[0]);
 }

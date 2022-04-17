@@ -197,7 +197,7 @@ void CullingPass::OcclusionCullingQuery()
 
 		// 해당 Collider Transform Update..
 		m_Sphere = m_RenderData->m_Mesh->m_MeshSubData->BoundSphere;
-		m_Sphere.Transform(m_Sphere, *m_RenderData->m_ObjectData->World);
+		m_Sphere.Transform(m_Sphere, m_RenderData->m_ObjectData->World);
 
 		// Collider XYZ (Center) W (Radius) 형태로 Buffer 삽입..
 		m_ColliderData.x = m_Sphere.Center.x;
@@ -283,7 +283,7 @@ void CullingPass::FrustumCulling()
 	{
 		m_RenderData = CullingRenderMeshList[i];
 
-		Matrix& world = *m_RenderData->m_ObjectData->World;
+		Matrix& world = m_RenderData->m_ObjectData->World;
 
 		boundSphere = m_RenderData->m_Mesh->m_MeshSubData->BoundSphere;
 

@@ -33,8 +33,8 @@ void TestScene::Awake()
 	Load("../Assets/Texture/Environment");
 	//Load("../Assets/Texture/Bake");
 	//Load("../Assets/Texture/Particle");
-	//Load("../Assets/Texture/ModelTexture");
-	//Load("../Assets/Texture/Material");
+	Load("../Assets/Texture/ModelTexture");
+	Load("../Assets/Texture/Material");
 	Load("../Assets/Model/Test");
 	//Load("../Assets/Model/MeshBuffer");
 	//Load("../Assets/Model/ModelData");
@@ -47,6 +47,8 @@ void TestScene::Awake()
 	BakeEnvironmentMap("TestSky");
 
 	//AddOccluder("Dome_Occluder_0");
+
+	BakeAnimation();
 
 	CreateMap();
 

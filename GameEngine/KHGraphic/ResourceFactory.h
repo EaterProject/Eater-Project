@@ -21,6 +21,7 @@ public:
 public:
 	void CreateTextureBuffer(std::string path, TextureBuffer** ppResource) override;
 	void CreateMeshBuffer(ParserData::CMesh* mesh, MeshBuffer** ppResource) override;
+	void CreateAnimationBuffer(ModelData* model, ModelAnimationData* animation, AnimationBuffer** ppResource) override;
 
 private:
 	void CreateImage(std::string name, Hash_Code hash_code, std::string fileName) override;

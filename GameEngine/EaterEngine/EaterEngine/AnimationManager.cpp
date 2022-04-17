@@ -56,7 +56,7 @@ void AnimationManager::PushAnimation(Animation* animation)
 	}
 
 	// 현재 Animation Index 설정..
-	animation->m_AnimationData->BufferIndex = animation_Index;
+	animation->m_AnimationBuffer->BufferIndex = animation_Index;
 
 	// Animation List 추가..
 	g_AnimationList.insert(std::make_pair(animation_Index, animation));
@@ -90,6 +90,9 @@ void AnimationManager::BakeAnimation()
 		aniData = modelAnimation.second;
 		modelData = LoadManager::GetModelData(modelName);
 
+		// 새로운 Animation 생성..
+		Animation* Buffer = new Animation();
+
 		EnterCriticalSection(m_CriticalSection);
 		m_Graphic->CreateAnimationBuffer(modelData, aniData, &animation);
 		LeaveCriticalSection(m_CriticalSection);
@@ -98,14 +101,12 @@ void AnimationManager::BakeAnimation()
 		{
 			PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "[ Engine ][ Bake ][ Animation Buffer ] '%s' FAILED!!", modelName.c_str());
 		}
-		else
-		{
-			animation->Name = modelName;
 
-			Animation* Buffer = new Animation();
-			Buffer->Name = modelName;
+		// Animation Data 설정..
+		Buffer->Name = modelName;
+		Buffer->m_AnimationBuffer = animation;
+		Buffer->m_AnimationData = aniData;
 
-			LoadManager::AnimationList.insert({ modelName, Buffer });
-		}
+		LoadManager::AnimationList.insert({ modelName, Buffer });
 	}
 }

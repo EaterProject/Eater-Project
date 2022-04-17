@@ -62,7 +62,6 @@ struct CB_InstanceSkinMesh : public cbInstanceSkinMesh
 	DirectX::SimpleMath::Matrix gView;
 	DirectX::SimpleMath::Matrix gProj;
 	DirectX::SimpleMath::Matrix gTexTransform;
-	DirectX::SimpleMath::Matrix gBoneTransforms[96];
 };
 
 SHADER_CONSTANT_BUFFER(cbDepthStaticMesh)

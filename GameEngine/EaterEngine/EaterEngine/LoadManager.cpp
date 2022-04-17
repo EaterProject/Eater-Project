@@ -284,7 +284,7 @@ AnimationBuffer* LoadManager::GetAnimationBuffer(std::string Path)
 	}
 	else
 	{
-		return Find_it->second->m_AnimationData;
+		return Find_it->second->m_AnimationBuffer;
 	}
 
 	return nullptr;

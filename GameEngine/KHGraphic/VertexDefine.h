@@ -71,6 +71,17 @@ namespace VertexInput
 		DirectX::SimpleMath::Matrix InvWorld;
 	};
 
+	struct SkinMeshInstance
+	{
+		DirectX::SimpleMath::Matrix World;
+		DirectX::SimpleMath::Matrix InvWorld;
+
+		UINT PrevAnimationIndex = 0;
+		UINT NextAnimationIndex = 0;
+		float FrameTime = 0.0f;
+		float Pad = 0.0f;
+	};
+
 	struct MeshIDInstance
 	{
 		DirectX::SimpleMath::Matrix World;

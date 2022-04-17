@@ -40,18 +40,21 @@ public:
 public:
 	// Render Data Push..
 	virtual void PushInstance(MeshData* instance) abstract;
-	virtual void PushMaterial(MaterialBuffer* material) abstract;
 	virtual void PushMesh(MeshBuffer* mesh) abstract;
+	virtual void PushMaterial(MaterialBuffer* material) abstract;
+	virtual void PushAnimation(AnimationBuffer* animation) abstract;
 
 	// Render Data Change..
 	virtual void PushChangeInstance(MeshData* instance) abstract;
 	virtual void PushChangeMesh(MeshBuffer* mesh) abstract;
 	virtual void PushChangeMaterial(MaterialBuffer* material) abstract;
+	virtual void PushChangeAnimation(AnimationBuffer* animation) abstract;
 
 	// Render Data Delete..
 	virtual void DeleteInstance(MeshData* instance) abstract;
 	virtual void DeleteMesh(MeshBuffer* mesh) abstract;
 	virtual void DeleteMaterial(MaterialBuffer* material) abstract;
+	virtual void DeleteAnimation(AnimationBuffer* animation) abstract;
 
 public:
 	// Render Update..

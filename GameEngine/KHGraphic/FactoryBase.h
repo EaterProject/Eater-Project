@@ -1,7 +1,6 @@
 #pragma once
 #include <windows.h>
 
-
 typedef size_t Hash_Code;
 
 interface ID3D11Graphic;

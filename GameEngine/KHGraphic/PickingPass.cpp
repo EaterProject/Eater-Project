@@ -149,7 +149,7 @@ void PickingPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rende
 	const ObjectData* obj = meshData->m_ObjectData;
 	const MeshRenderBuffer* mesh = meshData->m_Mesh;
 
-	const Matrix& world = *obj->World;
+	const Matrix& world = obj->World;
 	const Matrix& viewproj = cam->CamViewProj;
 	const Vector4& hashColor = obj->HashColor;
 
@@ -249,7 +249,7 @@ void PickingPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::
 
 		// ÇØ´ç Instance Data »ðÀÔ..
 		obj = meshlist[i]->m_ObjectData;
-		m_MeshData.World = *obj->World;
+		m_MeshData.World = obj->World;
 		m_MeshData.HashColor = obj->HashColor;
 
 		m_MeshInstance[i] = m_MeshData;
@@ -326,7 +326,7 @@ void PickingPass::NoneMeshRenderUpdate(const std::vector<RenderData*>& meshlist)
 
 		// ÇØ´ç Instance Data »ðÀÔ..
 		obj = meshlist[i]->m_ObjectData;
-		m_MeshData.World = *obj->World;
+		m_MeshData.World = obj->World;
 		m_MeshData.HashColor = obj->HashColor;
 
 		m_MeshInstance[i] = m_MeshData;

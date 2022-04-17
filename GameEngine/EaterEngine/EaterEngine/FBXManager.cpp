@@ -54,6 +54,7 @@ void FBXManager::LoadTerrain(std::string Name, std::string MaskName1, std::strin
 
 	LoadMeshData* Data = new LoadMeshData();
 	ModelData* model = new ModelData();
+	model->Name = Name;
 	Data->MeshType = TERRAIN_MESH;
 
 	SetMatrixData(TerrainMesh, Data);
@@ -414,6 +415,8 @@ void FBXManager::LoadQuad()
 	Mesh* quadMesh = new Mesh();
 
 	// Quad Mesh 설정..
+	SaveMesh->Name = "Quad";
+
 	quadMesh->Name = "Quad";
 	quadMesh->m_MeshData->Name = "Quad";
 
@@ -470,19 +473,28 @@ void FBXManager::LoadAnimation(ModelData* SaveMesh, ParserData::CModel* MeshData
 	if (Path.rfind('+') == std::string::npos) { return; }
 
 	//키프레임 생성
-	CreateKeyFrame(MeshData->m_ModelAnimation, 10);
+	//CreateKeyFrame(MeshData->m_ModelAnimation, 10);
 
 	//첫번째키 생성
 	std::string::size_type start	= Path.rfind("/") + 1;
 	std::string::size_type End		= Path.rfind('+') - start;
 	std::string SaveName			= Path.substr(start, End);
 
+	// Mesh Name 저장..
+	SaveMesh->Name = SaveName;
+
+	ModelAnimationData* Data = nullptr;
+
 	//애니메이션이 없는경우 생성
 	if (LoadManager::AnimationDataList.find(SaveName) == LoadManager::AnimationDataList.end())
 	{
-		ModelAnimationData* data = new ModelAnimationData();
+		Data = new ModelAnimationData();
 
-		LoadManager::AnimationDataList.insert({ SaveName, data });
+		LoadManager::AnimationDataList.insert({ SaveName, Data });
+	}
+	else
+	{
+		Data = LoadManager::AnimationDataList[SaveName];
 	}
 
 	//두번째 키 생성
@@ -492,8 +504,9 @@ void FBXManager::LoadAnimation(ModelData* SaveMesh, ParserData::CModel* MeshData
 	std::string key		= Path.substr(start, End);
 
 	//데이터 저장
-	ModelAnimationData* temp = LoadManager::AnimationDataList[SaveName];
-	temp->AnimList.insert({ key, std::move(MeshData->m_ModelAnimation) });
+	MeshData->m_ModelAnimation->m_Index = (int)Data->AnimList.size();
+
+	Data->AnimList.insert({ key, std::move(MeshData->m_ModelAnimation) });
 }
 
 

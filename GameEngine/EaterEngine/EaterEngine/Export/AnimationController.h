@@ -14,7 +14,9 @@ namespace ParserData
 	class CModelAnimation;
 }
 
-class ModelAnimationData;
+class AnimationBuffer;
+class AnimationData;
+class Animation;
 class Animator;
 class AnimationController : public Component
 {
@@ -36,9 +38,9 @@ public:
 	EATER_ENGINEDLL void GetAnimationList(std::vector<std::string>* NameList);
 	EATER_ENGINEDLL std::string GetNowAnimationName();
 
-
+	void SetSkin(GameObject* obj);
 	void SetBoneList(std::vector<GameObject*>* mobjList);
-	void SetAnimeList(ModelAnimationData* data);
+	void SetAnimation(Animation* animation);
 
 private:
 	void ChangeAnime();
@@ -47,8 +49,14 @@ private:
 	//본들의 애니메이터 리스트
 	std::vector<Animator*> AnimatorList;
 
+	//스킨 게임 오브젝트
+	GameObject* SkinObject;
+
 	//한개의 모델에 들어있는 애니메이션 리스트
-	ModelAnimationData* AnimationList;
+	Animation* mAnimation;
+
+	AnimationBuffer* NowAnimationBuffer;
+	AnimationData* mAnimationData;
 
 	ParserData::CModelAnimation* NowAnimation;
 
@@ -60,10 +68,12 @@ private:
 	bool	mStop;
 	bool	mLoop;
 
+	int		mPrevFrame;
 	int		mNowFrame;
 	int		mNextFrame;
 
 	float	mPlayTime;		//애니메이션을 한바퀴 도는 시간 
 	float 	mTime;			//현재 재생타임
+	float 	mFrameTime;		//현재 프레임 재생타임
 };
 

@@ -17,6 +17,7 @@ void RenderDataConverter::ConvertMeshData(MeshData* originData, RenderData* rend
 {
 	// Mesh Data 설정..
 	renderData->m_ObjectData = originData->Object_Data;
+	renderData->m_AnimationData = originData->Animation_Data;
 	renderData->m_ParticleData = originData->Particle_Data;
 
 	// ID 설정을 위한 Hash Color 생성..
@@ -60,22 +61,24 @@ void RenderDataConverter::ConvertMeshData(MeshData* originData, RenderData* rend
 void RenderDataConverter::ConvertRenderData(MeshData* originData, RenderData* renderData)
 {
 	// 해당 Instance Data 추출..
-	MeshBuffer* originMesh = originData->Mesh_Buffer;
-	MaterialBuffer* originMaterial = originData->Material_Buffer;
+	int meshIndex		= (originData->Mesh_Buffer == nullptr)		? -1 : originData->Mesh_Buffer->BufferIndex;
+	int materialIndex	= (originData->Material_Buffer == nullptr)	? -1 : originData->Material_Buffer->BufferIndex;
+	int animationIndex	= (originData->Animation_Buffer == nullptr) ? -1 : originData->Animation_Buffer->BufferIndex;
 
 	// Mesh 혹은 Material 둘중 하나라도 없으면 Buffer 생성하지 않는다..
-	if (originMesh == nullptr || originMaterial == nullptr) return;
+	if (meshIndex == -1 || materialIndex == -1) return;
 
 	// 해당 Mesh & Material Buffer 설정..
-	MeshRenderBuffer* convertMesh = GetMesh(originMesh->BufferIndex);
-	MaterialRenderBuffer* convertMaterial = GetMaterial(originMaterial->BufferIndex);
+	MeshRenderBuffer* convertMesh = GetMesh(meshIndex);
+	MaterialRenderBuffer* convertMaterial = GetMaterial(materialIndex);
+	AnimationRenderBuffer* convertAnimation = GetAnimation(animationIndex);
 
 	// Render Data 삽입..
 	renderData->m_Mesh = convertMesh;
 	renderData->m_Material = convertMaterial;
 
-	// Mesh & Material Buffer 기준 Instance 검색 및 Render Data 삽입..
-	RegisterInstance(renderData, convertMesh, convertMaterial);
+	// Mesh & Material & Animation Buffer 기준 Instance 검색 및 Render Data 삽입..
+	RegisterInstance(renderData, convertMesh, convertMaterial, convertAnimation);
 }
 
 void RenderDataConverter::ResourceUpdate()
@@ -102,6 +105,11 @@ void RenderDataConverter::PushMaterial(MaterialBuffer* material)
 	m_PushMaterialList.push(material);
 }
 
+void RenderDataConverter::PushAnimation(AnimationBuffer* animation)
+{
+	m_PushAnimationList.push(animation);
+}
+
 void RenderDataConverter::PushChangeMesh(MeshBuffer* mesh)
 {
 	m_ChangeMeshList.push(mesh);
@@ -110,6 +118,11 @@ void RenderDataConverter::PushChangeMesh(MeshBuffer* mesh)
 void RenderDataConverter::PushChangeMaterial(MaterialBuffer* material)
 {
 	m_ChangeMaterialList.push(material);
+}
+
+void RenderDataConverter::PushChangeAnimation(AnimationBuffer* animation)
+{
+	m_ChangeAnimationList.push(animation);
 }
 
 void RenderDataConverter::ConvertPushResource()
@@ -121,7 +134,7 @@ void RenderDataConverter::ConvertPushResource()
 		MeshBuffer* mesh = m_PushMeshList.front();
 
 		// 추가된 Resource 변환..
-		ConvertPushMesh(mesh);
+		ConvertPushResource<MeshBuffer, MeshRenderBuffer>(mesh, m_MeshList);
 
 		// 변환된 Mesh Buffer Pop..
 		m_PushMeshList.pop();
@@ -134,10 +147,23 @@ void RenderDataConverter::ConvertPushResource()
 		MaterialBuffer* material = m_PushMaterialList.front();
 
 		// 추가된 Resource 변환..
-		ConvertPushMaterial(material);
+		ConvertPushResource<MaterialBuffer, MaterialRenderBuffer>(material, m_MaterialList);
 
 		// 변환된 Material Buffer Pop..
 		m_PushMaterialList.pop();
+	}
+
+	// 현재 프레임 동안 쌓아둔 Push Animation Queue 처리..
+	while (!m_PushAnimationList.empty())
+	{
+		// 현재 추가된 Animation Buffer..
+		AnimationBuffer* animation = m_PushAnimationList.front();
+
+		// 추가된 Resource 변환..
+		ConvertPushResource<AnimationBuffer, AnimationRenderBuffer>(animation, m_AnimationList);
+
+		// 변환된 Animation Buffer Pop..
+		m_PushAnimationList.pop();
 	}
 }
 
@@ -150,7 +176,7 @@ void RenderDataConverter::ConvertChangeResource()
 		MeshBuffer* mesh = m_ChangeMeshList.front();
 
 		// 변동된 Resource 변환..
-		ConvertChangeMesh(mesh);
+		ConvertChangeResource<MeshBuffer, MeshRenderBuffer>(mesh, m_MeshList);
 
 		// 변환된 Mesh Buffer Pop..
 		m_ChangeMeshList.pop();
@@ -163,153 +189,85 @@ void RenderDataConverter::ConvertChangeResource()
 		MaterialBuffer* material = m_ChangeMaterialList.front();
 
 		// 변동된 Resource 변환..
-		ConvertChangeMaterial(material);
+		ConvertChangeResource<MaterialBuffer, MaterialRenderBuffer>(material, m_MaterialList);
 
 		// 변환된 Material Buffer Pop..
 		m_ChangeMaterialList.pop();
 	}
+
+	// 현재 프레임 동안 쌓아둔 Change Animation Queue 처리..
+	while (!m_ChangeAnimationList.empty())
+	{
+		// 현재 추가된 Animation Buffer..
+		AnimationBuffer* animation = m_ChangeAnimationList.front();
+
+		// 추가된 Resource 변환..
+		ConvertPushResource<AnimationBuffer, AnimationRenderBuffer>(animation, m_AnimationList);
+
+		// 변환된 Animation Buffer Pop..
+		m_ChangeAnimationList.pop();
+	}
 }
 
-void RenderDataConverter::ConvertPushMesh(MeshBuffer* mesh)
+template<>
+void RenderDataConverter::ConvertResource(MeshBuffer* origin, MeshRenderBuffer* convert)
 {
-	// Mesh Index..
-	UINT meshIndex = mesh->BufferIndex;
+	if (origin == nullptr) return;
 
-	// 해당 Index Mesh 체크..
-	std::unordered_map<UINT, MeshRenderBuffer*>::iterator itor = m_MeshList.find(meshIndex);
-
-	// 해당 Mesh가 재등록 되는 경우는 없어야한다..
-	assert(itor == m_MeshList.end());
-
-	// 새로운 Mesh Render Buffer 생성..
-	MeshRenderBuffer* newMesh = new MeshRenderBuffer();
-	newMesh->m_BufferIndex = meshIndex;
-
-	// Mesh Render Buffer 변환..
-	ConvertMesh(mesh, newMesh);
-
-	// Mesh Render Buffer 삽입..
-	m_MeshList.insert(std::pair<UINT, MeshRenderBuffer*>(meshIndex, newMesh));
-}
-
-void RenderDataConverter::ConvertPushMaterial(MaterialBuffer* material)
-{
-	// Material Index..
-	UINT materialIndex = material->BufferIndex;
-
-	// 해당 Index Material 체크..
-	std::unordered_map<UINT, MaterialRenderBuffer*>::iterator itor = m_MaterialList.find(materialIndex);
-
-	// 해당 Material이 재등록 되는 경우는 없어야한다..
-	assert(itor == m_MaterialList.end());
-
-	// 새로운 Material Render Buffer 생성..
-	MaterialRenderBuffer* newMaterial = new MaterialRenderBuffer();
-	newMaterial->m_BufferIndex = materialIndex;
-
-	// Material 기본 Data 설정..
-	newMaterial->m_MaterialSubData = material->Material_SubData;
-
-	// Material Render Buffer 변환..
-	ConvertMaterial(material, newMaterial);
-
-	// Material Render Buffer 삽입..
-	m_MaterialList.insert(std::pair<UINT, MaterialRenderBuffer*>(materialIndex, newMaterial));
-}
-
-void RenderDataConverter::ConvertChangeMesh(MeshBuffer* mesh)
-{
-	// Mesh Index..
-	UINT meshIndex = mesh->BufferIndex;
-
-	// 해당 Index Mesh 체크..
-	std::unordered_map<UINT, MeshRenderBuffer*>::iterator itor = m_MeshList.find(meshIndex);
-
-	// 해당 Mesh가 없을 경우는 없어야한다..
-	assert(itor != m_MeshList.end());
-
-	// Mesh Render Buffer 재설정..
-	ConvertMesh(mesh, itor->second);
-}
-
-void RenderDataConverter::ConvertChangeMaterial(MaterialBuffer* material)
-{
-	// Material Index..
-	UINT materialIndex = material->BufferIndex;
-
-	// 해당 Index Material 체크..
-	std::unordered_map<UINT, MaterialRenderBuffer*>::iterator itor = m_MaterialList.find(materialIndex);
-
-	// 해당 Material이 없을 경우는 없어야한다..
-	assert(itor != m_MaterialList.end());
-
-	// Material Render Buffer 재설정..
-	ConvertMaterial(material, itor->second);
-}
-
-void RenderDataConverter::ConvertMesh(MeshBuffer* originBuf, MeshRenderBuffer* convertData)
-{
-	if (originBuf == nullptr) return;
+	// Mesh Buffer Index..
+	convert->m_BufferIndex = origin->BufferIndex;
 
 	// Mesh Buffer Name..
-	convertData->m_Name = originBuf->Name;
-
-	// Index Buffer Data Convert..
-	convertData->m_IndexCount = originBuf->IndexBuf->Count;
-	convertData->m_IndexBuf = (ID3D11Buffer*)originBuf->IndexBuf->pIndexBuf;
-
-	// Vertex Buffer Data Convert..
-	convertData->m_Stride = originBuf->VertexBuf->Stride;
-	convertData->m_Offset = originBuf->VertexBuf->Offset;
-	convertData->m_VertexBuf = (ID3D11Buffer*)originBuf->VertexBuf->pVertexBuf;
+	convert->m_Name = origin->Name;
 
 	// Mesh Sub Data Convert..
-	convertData->m_MeshSubData = originBuf->Mesh_SubData;
+	convert->m_MeshSubData = origin->Mesh_SubData;
+
+	// Index Buffer Data Convert..
+	convert->m_IndexCount = origin->IndexBuf->Count;
+	convert->m_IndexBuf = (ID3D11Buffer*)origin->IndexBuf->pIndexBuf;
+
+	// Vertex Buffer Data Convert..
+	convert->m_Stride = origin->VertexBuf->Stride;
+	convert->m_Offset = origin->VertexBuf->Offset;
+	convert->m_VertexBuf = (ID3D11Buffer*)origin->VertexBuf->pVertexBuf;
 }
 
-void RenderDataConverter::ConvertMaterial(MaterialBuffer* originMat, MaterialRenderBuffer* convertMat)
+template<>
+void RenderDataConverter::ConvertResource(MaterialBuffer* origin, MaterialRenderBuffer* convert)
 {
-	if (originMat == nullptr) return;
+	if (origin == nullptr) return;
+
+	// Material Index..
+	convert->m_BufferIndex = origin->BufferIndex;
 
 	// Material Buffer Name..
-	convertMat->m_Name = originMat->Name;
+	convert->m_Name = origin->Name;
 
-	// 해당 Material Data 변환..
-	if (originMat->Albedo)
-	{
-		convertMat->m_Albedo = (ID3D11ShaderResourceView*)originMat->Albedo->pTextureBuf;
-	}
-	else
-	{
-		convertMat->m_Albedo = nullptr;
-	}
+	// Material Sub Data Convert..
+	convert->m_MaterialSubData = origin->Material_SubData;
 
-	if (originMat->Normal)
-	{
-		convertMat->m_Normal = (ID3D11ShaderResourceView*)originMat->Normal->pTextureBuf;
-	}
-	else
-	{
-		convertMat->m_Normal = nullptr;
-	}
+	// Material Data Convert..
+	convert->m_Albedo	= (origin->Albedo == nullptr)	? nullptr : (ID3D11ShaderResourceView*)origin->Albedo->pTextureBuf;
+	convert->m_Normal	= (origin->Normal == nullptr)	? nullptr : (ID3D11ShaderResourceView*)origin->Normal->pTextureBuf;
+	convert->m_Emissive = (origin->Emissive == nullptr) ? nullptr : (ID3D11ShaderResourceView*)origin->Emissive->pTextureBuf;
+	convert->m_ORM		= (origin->ORM == nullptr)		? nullptr : (ID3D11ShaderResourceView*)origin->ORM->pTextureBuf;
+}
 
-	if (originMat->Emissive)
-	{
-		convertMat->m_Emissive = (ID3D11ShaderResourceView*)originMat->Emissive->pTextureBuf;
-	}
-	else
-	{
-		convertMat->m_Emissive = nullptr;
-	}
+template<>
+void RenderDataConverter::ConvertResource(AnimationBuffer* origin, AnimationRenderBuffer* convert)
+{
+	if (origin == nullptr) return;
 
-	if (originMat->ORM)
-	{
-		convertMat->m_ORM = (ID3D11ShaderResourceView*)originMat->ORM->pTextureBuf;
-	}
-	else
-	{
-		convertMat->m_ORM = nullptr;
-	}
+	// Animation Index..
+	convert->m_BufferIndex = origin->BufferIndex;
+
+	// Animation Sub Data Convert..
+	convert->m_FrameOffset = origin->FrameOffset;
+	convert->m_AnimationOffset = origin->AnimationOffset;
+
+	// Animation Data Convert..
+	convert->m_AnimationBuf = (ID3D11ShaderResourceView*)origin->pAnimationBuf;
 }
 
 void RenderDataConverter::DeleteRenderData(UINT index)
@@ -405,6 +363,28 @@ void RenderDataConverter::DeleteMaterial(UINT index)
 	m_MaterialList.erase(index);
 }
 
+void RenderDataConverter::DeleteAnimation(UINT index)
+{
+	// 해당 Index Mesh 체크..
+	std::unordered_map<UINT, AnimationRenderBuffer*>::iterator itor = m_AnimationList.find(index);
+
+	// 해당 Material이 없는데 지우려는 경우는 없어야한다..
+	assert(itor != m_AnimationList.end());
+
+	// 해당 Material 검색..
+	AnimationRenderBuffer* animation = itor->second;
+
+	// 해당 Material 관련 Instance 삭제..
+	CheckEmptyInstance(animation);
+
+	// 해당 Resource 제거..
+	RELEASE_COM(animation->m_AnimationBuf);
+
+	// 해당 Instance Buffer 삭제..
+	SAFE_DELETE(animation);
+	m_AnimationList.erase(index);
+}
+
 size_t RenderDataConverter::FindMaxInstanceCount()
 {
 	size_t maxCount = 1;
@@ -424,52 +404,71 @@ size_t RenderDataConverter::FindMaxInstanceCount()
 	return maxCount;
 }
 
-RenderData* RenderDataConverter::GetRenderData(UINT index)
+RenderData* RenderDataConverter::GetRenderData(int index)
 {
-	std::unordered_map<UINT, RenderData*>::iterator itor = m_RenderList.find(index);
+	if (index < 0) return nullptr;
+
+	std::unordered_map<UINT, RenderData*>::iterator itor = m_RenderList.find((UINT)index);
 
 	if (itor == m_RenderList.end()) return nullptr;
 
 	return itor->second;
 }
 
-MeshRenderBuffer* RenderDataConverter::GetMesh(UINT index)
+MeshRenderBuffer* RenderDataConverter::GetMesh(int index)
 {
-	std::unordered_map<UINT, MeshRenderBuffer*>::iterator itor = m_MeshList.find(index);
+	std::unordered_map<UINT, MeshRenderBuffer*>::iterator itor = m_MeshList.find((UINT)index);
 
 	if (itor == m_MeshList.end()) return nullptr;
 
 	return itor->second;
 }
 
-MaterialRenderBuffer* RenderDataConverter::GetMaterial(UINT index)
+MaterialRenderBuffer* RenderDataConverter::GetMaterial(int index)
 {
-	std::unordered_map<UINT, MaterialRenderBuffer*>::iterator itor = m_MaterialList.find(index);
+	if (index < 0) return nullptr;
+	
+	std::unordered_map<UINT, MaterialRenderBuffer*>::iterator itor = m_MaterialList.find((UINT)index);
 
 	if (itor == m_MaterialList.end()) return nullptr;
 
 	return itor->second;
 }
 
-InstanceRenderBuffer* RenderDataConverter::GetInstance(UINT index)
+AnimationRenderBuffer* RenderDataConverter::GetAnimation(int index)
 {
-	std::unordered_map<UINT, InstanceRenderBuffer*>::iterator itor = m_InstanceList.find(index);
+	if (index < 0) return nullptr;
+	
+	std::unordered_map<UINT, AnimationRenderBuffer*>::iterator itor = m_AnimationList.find((UINT)index);
+
+	if (itor == m_AnimationList.end()) return nullptr;
+
+	return itor->second;
+}
+
+InstanceRenderBuffer* RenderDataConverter::GetInstance(int index)
+{
+	if (index < 0) return nullptr;
+	
+	std::unordered_map<UINT, InstanceRenderBuffer*>::iterator itor = m_InstanceList.find((UINT)index);
 
 	if (itor == m_InstanceList.end()) return nullptr;
 
 	return itor->second;
 }
 
-InstanceLayer* RenderDataConverter::GetLayer(UINT index)
+InstanceLayer* RenderDataConverter::GetLayer(int index)
 {
-	std::unordered_map<UINT, InstanceLayer*>::iterator itor = m_InstanceLayerList.find(index);
+	if (index < 0) return nullptr;
+	
+	std::unordered_map<UINT, InstanceLayer*>::iterator itor = m_InstanceLayerList.find((UINT)index);
 
 	if (itor == m_InstanceLayerList.end()) return nullptr;
 
 	return itor->second;
 }
 
-void RenderDataConverter::RegisterInstance(RenderData* renderData, MeshRenderBuffer* mesh, MaterialRenderBuffer* material)
+void RenderDataConverter::RegisterInstance(RenderData* renderData, MeshRenderBuffer* mesh, MaterialRenderBuffer* material, AnimationRenderBuffer* animation)
 {
 	InstanceLayer* instanceLayer = nullptr;
 	InstanceRenderBuffer* instanceBuffer = nullptr;
@@ -481,7 +480,9 @@ void RenderDataConverter::RegisterInstance(RenderData* renderData, MeshRenderBuf
 		instanceBuffer = instance.second;
 
 		// Mesh Buffer와 Material Buffer가 같을 경우 같은 Instance 취급..
-		if (instanceBuffer->m_Mesh == mesh && instanceBuffer->m_Material == material)
+		if (instanceBuffer->m_Mesh == mesh && 
+			instanceBuffer->m_Material == material && 
+			instanceBuffer->m_Animation == animation)
 		{
 			// 해당 Instance Index 삽입..
 			renderData->m_InstanceIndex = instanceBuffer->m_BufferIndex;
@@ -519,6 +520,7 @@ void RenderDataConverter::RegisterInstance(RenderData* renderData, MeshRenderBuf
 	instanceBuffer->m_Type = (UINT)renderData->m_ObjectData->ObjType;
 	instanceBuffer->m_Mesh = mesh;
 	instanceBuffer->m_Material = material;
+	instanceBuffer->m_Animation = animation;
 
 	// Instance List 추가..
 	m_InstanceList.insert(std::make_pair(instance_Index, instanceBuffer));
@@ -631,6 +633,65 @@ void RenderDataConverter::CheckEmptyInstance(MaterialRenderBuffer* material)
 	{
 		// Instance에 해당 Resource가 있다면 제거 목록 추가..
 		if (instance.second->m_Material == material)
+		{
+			deleteIndex.push(instance.second->m_BufferIndex);
+		}
+	}
+
+	// 해당 Instance 제거..
+	while (!deleteIndex.empty())
+	{
+		UINT index = deleteIndex.front();
+
+		// 제거될 Instance Buffer 검색..
+		std::unordered_map<UINT, InstanceRenderBuffer*>::iterator instance = m_InstanceList.find(index);
+
+		// 해당 Instance Buffer 제거..
+		SAFE_DELETE(instance->second);
+
+		// Instance List에서도 제거..
+		m_InstanceList.erase(index);
+
+		deleteIndex.pop();
+	}
+}
+
+void RenderDataConverter::CheckEmptyInstance(AnimationRenderBuffer* animation)
+{
+	std::queue<UINT> deleteIndex;
+
+	// Instance Layer 제거 목록 검색..
+	for (auto& instance : m_InstanceLayerList)
+	{
+		// Instance에 해당 Resource가 있다면 제거 목록 추가..
+		if (instance.second->m_Instance->m_Animation == animation)
+		{
+			deleteIndex.push(instance.second->m_LayerIndex);
+		}
+	}
+
+	// 해당 Instance Layer 제거..
+	while (!deleteIndex.empty())
+	{
+		UINT index = deleteIndex.front();
+
+		// 제거될 Instance Layer 검색..
+		std::unordered_map<UINT, InstanceLayer*>::iterator instance = m_InstanceLayerList.find(index);
+
+		// 해당 InstanceLayer 제거..
+		SAFE_DELETE(instance->second);
+
+		// Instance Layer List에서도 제거..
+		m_InstanceLayerList.erase(index);
+
+		deleteIndex.pop();
+	}
+
+	// Instance 제거 목록 검색..
+	for (auto& instance : m_InstanceList)
+	{
+		// Instance에 해당 Resource가 있다면 제거 목록 추가..
+		if (instance.second->m_Animation == animation)
 		{
 			deleteIndex.push(instance.second->m_BufferIndex);
 		}

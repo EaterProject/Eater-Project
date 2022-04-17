@@ -22,15 +22,12 @@ public:
 	void SetAnimation(ParserData::CAnimation*);
 
 	//매개변수로 받은 시간만큼 애니메이션한개를 재생시킴
-	void Play(int animeIndex, float Speed = 1, bool Loop = true);
+	void Play(int prevIndex, int nextIndex, float time, bool Loop = true);
 	void ChoiceAnime(ParserData::CAnimation* Anime);
 
 private:
 	//1초에 애니메이션 한개가 돌아가야할떄 프레임시간
 	float GetOnePlayTime(float mPlayTime,int EndFrameCount);
-
-	//애니메이션 재생 리스트
-	std::vector<ParserData::CAnimation*> AnimeData;
 
 	//현재 애니메이션 
 	ParserData::CAnimation* NowAnimationData;

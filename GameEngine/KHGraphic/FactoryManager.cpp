@@ -47,6 +47,11 @@ void FactoryManager::CreateMeshBuffer(ParserData::CMesh* mesh, MeshBuffer** ppRe
 	m_ResourceFactory->CreateMeshBuffer(mesh, ppResource);
 }
 
+void FactoryManager::CreateAnimationBuffer(ModelData* model, ModelAnimationData* animation, AnimationBuffer** ppResource)
+{
+	m_ResourceFactory->CreateAnimationBuffer(model, animation, ppResource);
+}
+
 void FactoryManager::BakeShadowMap(std::string fileName)
 {
 	m_BakingFactory->PreBakeShadowMap(fileName);

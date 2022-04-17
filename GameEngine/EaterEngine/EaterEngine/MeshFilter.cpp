@@ -275,14 +275,14 @@ void MeshFilter::CheckAnimation()
 {
 	if (isLoad_Animation == false) { return; }
 
-	ModelAnimationData* data = LoadManager::GetAnimationData(AnimationName);
+	Animation* animation = LoadManager::GetAnimation(AnimationName);
 	AnimationController* Controller = gameobject->GetComponent<AnimationController>();
 
 	//가져온 컨퍼넌트에 본 정보를 넘겨준다
 	if (Controller != nullptr)
 	{
 		Controller->SetBoneList(&BoneList);
-		Controller->SetAnimeList(data);
+		Controller->SetAnimation(animation);
 	}
 }
 
@@ -484,9 +484,6 @@ void MeshFilter::SetMatrixData(LoadMeshData* LoadMesh, MeshData* mMesh, GameObje
 
 	mTransform->Load_Local = LoadMesh->LocalTM;
 	mTransform->Load_World = LoadMesh->WorldTM;
-
-	mMesh->Object_Data->World = &mTransform->Load_Local;
-	mMesh->Object_Data->Local = &mTransform->Load_World;
 }
 
 void MeshFilter::SetMeshData(LoadMeshData* LoadMesh, MeshData* mMesh, GameObject* obj)
@@ -540,6 +537,7 @@ void MeshFilter::CreateModel()
 	///이름으로 로드할 데이터를 찾아서 가져옴
 	ModelData* mMesh = LoadManager::GetModelData(ModelName);
 	Transform* Tr = gameobject->GetTransform();
+	AnimationController* Controller = gameobject->GetComponent<AnimationController>();
 
 	if (mMesh == nullptr) { return; }
 
@@ -603,6 +601,11 @@ void MeshFilter::CreateModel()
 
 		SKFilter->PushBoneList(&BoneList);
 		SKFilter->PushBone_OffsetList(mMesh->BoneOffsetList);
+
+		if (Controller != nullptr)
+		{
+			Controller->SetSkin(Object);
+		}
 
 		LinkHierarchy(Object->GetTransform(), this->gameobject->GetTransform());
 

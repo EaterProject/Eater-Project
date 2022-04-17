@@ -2,6 +2,7 @@
 #include <string>
 #include "EaterEngineDLL.h"
 
+class ModelAnimationData;
 class AnimationBuffer;
 class AnimationManager;
 
@@ -18,7 +19,12 @@ public:
 	void Release();
 
 public:
+	void SetAnimation(ModelAnimationData* animation);
+
+public:
 	std::string Name;
-	AnimationBuffer* m_AnimationData;
+
+	ModelAnimationData* m_AnimationData;
+	AnimationBuffer* m_AnimationBuffer;
 };
 

@@ -8,8 +8,11 @@ namespace ParserData
 	class CMesh; 
 }
 
-class LoadMeshData;
+class ModelData;
+class ModelAnimationData;
+
 class TextureBuffer;
+class AnimationBuffer;
 class EnvironmentBuffer;
 class MeshBuffer;
 
@@ -24,6 +27,7 @@ public:
 	// Create Output Graphic Resource..
 	virtual void CreateTextureBuffer(std::string path, TextureBuffer** ppResource) abstract;
 	virtual void CreateMeshBuffer(ParserData::CMesh* mesh, MeshBuffer** ppResource) abstract;
+	virtual void CreateAnimationBuffer(ModelData* model, ModelAnimationData* animation, AnimationBuffer** ppResource) abstract;
 
 public:
 	// Baking Graphic Resource..

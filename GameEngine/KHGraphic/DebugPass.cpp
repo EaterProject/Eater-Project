@@ -166,7 +166,7 @@ void DebugPass::RenderUpdate(const RenderData* meshData)
 	const CameraData* cam = g_GlobalData->MainCamera_Data;
 	const MeshRenderBuffer* mesh = meshData->m_Mesh;
 
-	Matrix world = *meshData->m_ObjectData->World;
+	Matrix world = meshData->m_ObjectData->World;
 	const Matrix& invView = cam->CamInvView;
 	const Matrix& viewproj = cam->CamViewProj;
 

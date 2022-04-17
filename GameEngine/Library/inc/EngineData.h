@@ -47,8 +47,8 @@ public:
 	
 	std::vector<Matrix> BoneOffsetTM;				//본 오프셋 TM
 
-	Matrix* World = nullptr;						//매쉬의 월드 행렬
-	Matrix* Local = nullptr;						//매쉬의 로컬 행렬
+	Matrix World;									//매쉬의 월드 행렬
+	Matrix InvWorld;								//매쉬의 월드 역행렬
 
 public:
 	static Vector4 HashToColor(int hash)
@@ -80,10 +80,11 @@ public:
 	}
 
 public:
-	UINT AnimationIndex = 0;							// Animation Index
-	UINT FrameIndex = 0;								// Animation Frame Index
-
-	AnimationBuffer* AnimationBuf = nullptr;		// Animation Texture Data Buffer
+	UINT PrevAnimationIndex = 0;					// Prev Animation Index
+	UINT NextAnimationIndex = 0;					// Next Animation Index
+	UINT PrevFrameIndex = 0;						// Prev Frame Index
+	UINT NextFrameIndex = 0;						// Next Frame Index
+	float FrameTime = 0.0f;							// Animation Frame Time
 };
 
 // Mesh Sub Data
@@ -252,6 +253,7 @@ public:
 
 	MeshBuffer*		Mesh_Buffer = nullptr;			// Mesh Buffer
 	MaterialBuffer*	Material_Buffer	= nullptr;		// Material Buffer
+	AnimationBuffer* Animation_Buffer = nullptr;	// Animation Buffer
 
 	// 추가 데이터
 	AnimationData*	Animation_Data = nullptr;		// Animation Data
@@ -358,6 +360,10 @@ public:
 			}
 		}
 	}
+
+public:
+	std::string Name;
+
 	std::vector<LoadMeshData*> TopMeshList;
 	std::vector<LoadMeshData*> TopSkinList;
 	std::vector<LoadMeshData*> TopBoneList;
@@ -374,7 +380,7 @@ public:
 
 	}
 
-	std::map<std::string, CModelAnimation*> AnimList;
+	std::unordered_map<std::string, CModelAnimation*> AnimList;
 };
 
 //컨퍼넌트들의 함수포인터를 저장할 구조체

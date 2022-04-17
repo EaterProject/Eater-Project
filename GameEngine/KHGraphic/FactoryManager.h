@@ -22,6 +22,7 @@ public:
 public:
 	void CreateTextureBuffer(std::string path, TextureBuffer** ppResource) override;
 	void CreateMeshBuffer(ParserData::CMesh* mesh, MeshBuffer** ppResource) override;
+	void CreateAnimationBuffer(ModelData* model, ModelAnimationData* animation, AnimationBuffer** ppResource) override;
 
 public:
 	void BakeShadowMap(std::string fileName) override;

@@ -83,6 +83,7 @@ namespace ParserData
 		int		m_TotalFrame;
 		int		m_StartFrame;
 		int		m_EndFrame;
+		int		m_Index;
 	};
 
 	class CIndexList

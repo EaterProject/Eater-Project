@@ -22,6 +22,10 @@ public:
 	void RenderUpdate(const InstanceRenderBuffer* instance, const RenderData* mesh);
 
 private:
+	void MeshInstanceUpdate(const std::vector<RenderData*>& meshlist);
+	void SkinMeshInstanceUpdate(const std::vector<RenderData*>& meshlist);
+
+private:
 	VertexShader* m_MeshVS;
 	VertexShader* m_MeshInstVS;
 	VertexShader* m_SkinVS;
@@ -32,6 +36,7 @@ private:
 	PixelShader* m_TerrainPS;
 
 	InstanceBuffer* m_Mesh_IB;
+	InstanceBuffer* m_SkinMesh_IB;
 
 	ID3D11DepthStencilView* m_DefaltDSV;
 	
@@ -47,9 +52,15 @@ private:
 
 	std::vector<ID3D11RenderTargetView*> m_RTVList;
 
+	RenderData* m_RenderData;
+
 	VertexInput::MeshInstance m_MeshData;
 	std::vector<VertexInput::MeshInstance>	m_MeshInstance;
 
+	VertexInput::SkinMeshInstance m_SkinMeshData;
+	std::vector<VertexInput::SkinMeshInstance>	m_SkinMeshInstance;
+
+	UINT m_RenderCount = 0;
 	UINT m_InstanceCount = 0;
 	size_t m_InstanceStride = 0;
 

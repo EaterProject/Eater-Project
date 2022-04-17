@@ -31,6 +31,9 @@ void Eater_LoadMesh::LoadData(std::string& Path)
 	std::size_t End = Path.rfind('.') - start;
 	std::string SaveName = Path.substr(start, End);
 
+	// Mesh Name ÀúÀå..
+	SaveData->Name = SaveName;
+
 	int Count = EATER_GET_NODE_COUNT();
 	for (int i = 0; i < Count; i++)
 	{
@@ -440,6 +443,8 @@ void Eater_LoadMesh::LoadAnimation(int index, std::string& Name)
 	}
 
 	CreateKeyFrame(AniData, 10);
+
+	AniData->m_Index = (int)Data->AnimList.size();
 
 	Data->AnimList.insert({ AnimationName, std::move(AniData) });
 }

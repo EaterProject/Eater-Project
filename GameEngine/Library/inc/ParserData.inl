@@ -24,6 +24,7 @@ namespace ParserData
 		m_TotalFrame = 0;
 		m_StartFrame = 0;
 		m_EndFrame = 0;
+		m_Index = -1;
 	}
 
 	inline CModelAnimation::~CModelAnimation()
