@@ -165,8 +165,11 @@ void GraphicResourceFactory::CreateAnimationBuffer(ModelData* model, ModelAnimat
 	ParserData::CAnimation* nowAni = nullptr;
 	ParserData::CFrame* nowFrame = nullptr;
 
-	AnimationBuffer* animationBuf = new AnimationBuffer();
-	animationBuf->Name = model->Name;
+	// 货肺款 Animation Buffer 积己..
+	if (*ppResource == nullptr) *ppResource = new AnimationBuffer();
+
+	// 货肺 积己茄 Animation Buffer 火涝..
+	AnimationBuffer* animationBuf = *ppResource;
 	animationBuf->FrameOffset = row_offset;
 	animationBuf->AnimationOffset.push_back(total_offset);
 
@@ -176,25 +179,24 @@ void GraphicResourceFactory::CreateAnimationBuffer(ModelData* model, ModelAnimat
 	for (auto& aniList : animation->AnimList)
 	{
 		nowModelAni = aniList.second;
-
-		for (int ani = 0; ani < nowModelAni->m_AnimationList.size(); ani++)
+		for (int frame = 0; frame < nowModelAni->m_TotalFrame; frame++)
 		{
-			nowAni = nowModelAni->m_AnimationList[ani];
-			nowOffsetTM = offsetList[ani];
-
-			for (int frame = 0; frame < nowAni->m_AniData.size(); frame++)
+			for (int ani = 0; ani < nowModelAni->m_AnimationList.size(); ani++)
 			{
+				nowAni = nowModelAni->m_AnimationList[ani];
+				nowOffsetTM = offsetList[ani];
+
 				nowFrame = nowAni->m_AniData[frame];
 
 				nowFrameTM = Matrix::CreateScale(nowFrame->m_WorldScale) * Matrix::CreateFromQuaternion(nowFrame->m_WorldRotQt) * Matrix::CreateTranslation(nowFrame->m_WorldPos);
 				nowFrameTM = nowOffsetTM * nowFrameTM;
 
-				XMFLOAT3X4 aniMatrix;
-				aniMatrix._11 = nowFrameTM._11; aniMatrix._12 = nowFrameTM._12; aniMatrix._13 = nowFrameTM._13; aniMatrix._14 = nowFrameTM._41;
-				aniMatrix._21 = nowFrameTM._21; aniMatrix._22 = nowFrameTM._22; aniMatrix._23 = nowFrameTM._23; aniMatrix._24 = nowFrameTM._42;
-				aniMatrix._31 = nowFrameTM._31; aniMatrix._32 = nowFrameTM._32; aniMatrix._33 = nowFrameTM._33; aniMatrix._34 = nowFrameTM._43;
+				XMFLOAT3X4 matrix;
+				matrix._11 = nowFrameTM._11, matrix._12 = nowFrameTM._12; matrix._13 = nowFrameTM._13; matrix._14 = nowFrameTM._41;
+				matrix._21 = nowFrameTM._21, matrix._22 = nowFrameTM._22; matrix._23 = nowFrameTM._23; matrix._24 = nowFrameTM._42;
+				matrix._31 = nowFrameTM._31, matrix._32 = nowFrameTM._32; matrix._33 = nowFrameTM._33; matrix._34 = nowFrameTM._43;
 
-				animationList.emplace_back(std::move(aniMatrix));
+				animationList.emplace_back(std::move(matrix));
 			}
 		}
 
@@ -238,6 +240,9 @@ void GraphicResourceFactory::CreateAnimationBuffer(ModelData* model, ModelAnimat
 	animationBuf->pAnimationBuf = srv;
 
 	GPU_RESOURCE_DEBUG_NAME(srv, std::string(model->Name + "_AnimationBuffer").c_str());
+
+	// Reset Resource..
+	buffer->Release();
 }
 
 void GraphicResourceFactory::CreateImage(std::string name, Hash_Code hash_code, std::string fileName)

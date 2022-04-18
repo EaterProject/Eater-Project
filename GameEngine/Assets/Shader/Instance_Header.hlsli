@@ -1,10 +1,11 @@
 #define INSTANCE_SEMANTIC(SemanticName) INSTANCE_##SemanticName
 
-struct Bone
+// Bone Animation Matrix3X4 Struct
+struct BoneAnimation
 {
-    float4 Row1;
-    float4 Row2;
-    float4 Row3;
+    float4 Row1;    // Matrix Row1(x,y,z), Row4(x)
+    float4 Row2;    // Matrix Row2(x,y,z), Row4(y)
+    float4 Row3;    // Matrix Row3(x,y,z), Row4(z)
 };
 
 // Instance Vertex Shader Input & Output Data Struct
@@ -15,13 +16,13 @@ struct MeshDepthInstanceIn
 
 struct MeshInstanceIn
 {
-    float4x4 World          : INSTANCE_SEMANTIC(WOLRD);
-    float4x4 InvWorld       : INSTANCE_SEMANTIC(INVWOLRD);
-
+    float4x4 World              : INSTANCE_SEMANTIC(WOLRD);
+    float4x4 InvWorld           : INSTANCE_SEMANTIC(INVWOLRD);
+    
 #ifdef SKIN_MESH
-    uint PrevAnimationIndex     : INSTANCE_SEMANTIC(PREV_ANIMATION_INDEX);
-    uint NextAnimationIndex     : INSTANCE_SEMANTIC(NEXT_ANIMATION_INDEX);
-    float FrameTime             : INSTANCE_SEMANTIC(FRAME_TIME);
+    uint PrevAnimationIndex     : INSTANCE_SEMANTIC(PREV);
+    uint NextAnimationIndex     : INSTANCE_SEMANTIC(NEXT);
+    float FrameTime             : INSTANCE_SEMANTIC(TIME);
     float Pad                   : INSTANCE_SEMANTIC(PAD);
 #endif
 };

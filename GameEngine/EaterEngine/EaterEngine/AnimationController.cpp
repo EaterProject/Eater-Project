@@ -84,8 +84,11 @@ void AnimationController::ChangeAnime()
 	{
 		NowAnimation = mAnimation->m_AnimationData->AnimList[NowAnimationName];
 
-		mAnimationData->PrevAnimationIndex = NowAnimation->m_Index * NowAnimationBuffer->AnimationOffset[NowAnimation->m_Index];
-		mAnimationData->NextAnimationIndex = NowAnimation->m_Index * NowAnimationBuffer->AnimationOffset[NowAnimation->m_Index];
+		mAnimationData->PrevAnimationIndex = NowAnimationBuffer->AnimationOffset[NowAnimation->m_Index];
+		mAnimationData->NextAnimationIndex = NowAnimationBuffer->AnimationOffset[NowAnimation->m_Index];
+
+		// Animation Data 초기화..
+		Reset();
 
 		//본의 애니메이션을 넣어준다
 		int Count = (int)AnimatorList.size();
@@ -152,6 +155,18 @@ void AnimationController::AnimationFrameIndex()
 		// 해당 Animation Frame Time 설정..
 		mAnimationData->FrameTime = mFrameTime;
 	}
+}
+
+void AnimationController::Reset()
+{
+	mPrevFrame = 0;
+	mNextFrame = 1;
+
+	mTime = 0.0f;
+	mFrameTime = 0.0f;
+
+	mAnimationData->PrevFrameIndex = mPrevFrame * NowAnimationBuffer->FrameOffset;
+	mAnimationData->NextFrameIndex = mNextFrame * NowAnimationBuffer->FrameOffset;
 }
 
 void AnimationController::Choice(std::string Name)

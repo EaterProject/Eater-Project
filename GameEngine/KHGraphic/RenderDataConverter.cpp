@@ -20,6 +20,11 @@ void RenderDataConverter::ConvertMeshData(MeshData* originData, RenderData* rend
 	renderData->m_AnimationData = originData->Animation_Data;
 	renderData->m_ParticleData = originData->Particle_Data;
 
+	if (originData->Animation_Data)
+	{
+		int a = 0;
+	}
+
 	// ID 설정을 위한 Hash Color 생성..
 	// UINT 형식으로 찍을 것이기에 0번 인덱스는 비워둔다..
 	renderData->m_ObjectData->HashColor = ObjectData::HashToColor(renderData->m_ObjectData->ObjectIndex + 1);
@@ -32,8 +37,8 @@ void RenderDataConverter::ConvertMeshData(MeshData* originData, RenderData* rend
 	{
 	case OBJECT_TYPE::TERRAIN:
 	{
-		renderData->m_TerrainBuffer = new TerrainRenderBuffer();
-		renderData->m_TerrainBuffer->m_Tex = &originData->Terrain_Data->Tex;
+		renderData->m_Terrain = new TerrainRenderBuffer();
+		renderData->m_Terrain->m_Tex = &originData->Terrain_Data->Tex;
 
 		for (MaterialBuffer* layer : originData->Terrain_Data->Material_List)
 		{
@@ -41,10 +46,10 @@ void RenderDataConverter::ConvertMeshData(MeshData* originData, RenderData* rend
 			MaterialRenderBuffer* layerMaterial = GetMaterial(layer->BufferIndex);
 
 			// Material List 추가..
-			renderData->m_TerrainBuffer->m_MaterialList.push_back(layerMaterial);
+			renderData->m_Terrain->m_MaterialList.push_back(layerMaterial);
 		}
 
-		m_LayerList.insert(std::make_pair((UINT)m_LayerList.size(), renderData->m_TerrainBuffer));
+		m_LayerList.insert(std::make_pair((UINT)m_LayerList.size(), renderData->m_Terrain));
 	}
 	break;
 	default:
@@ -76,6 +81,7 @@ void RenderDataConverter::ConvertRenderData(MeshData* originData, RenderData* re
 	// Render Data 삽입..
 	renderData->m_Mesh = convertMesh;
 	renderData->m_Material = convertMaterial;
+	renderData->m_Animation = convertAnimation;
 
 	// Mesh & Material & Animation Buffer 기준 Instance 검색 및 Render Data 삽입..
 	RegisterInstance(renderData, convertMesh, convertMaterial, convertAnimation);

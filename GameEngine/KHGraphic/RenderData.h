@@ -12,8 +12,8 @@ public:
 
 	MeshRenderBuffer*		m_Mesh;				// 변환된 Mesh Data..
 	MaterialRenderBuffer*	m_Material;			// 변환된 Material Data..
-	TerrainRenderBuffer*	m_TerrainBuffer;	// 변환된 Terrain Data..
-	AnimationRenderBuffer*	m_AnimationBuffer;	// 변환된 Animation Data..
+	TerrainRenderBuffer*	m_Terrain;			// 변환된 Terrain Data..
+	AnimationRenderBuffer*	m_Animation;		// 변환된 Animation Data..
 
 	ObjectData*		m_ObjectData;
 	AnimationData*	m_AnimationData;

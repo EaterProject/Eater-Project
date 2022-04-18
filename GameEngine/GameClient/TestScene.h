@@ -30,5 +30,7 @@ private:
 	GameObject* testobj;
 	GameObject* ParticleObj;
 
+	AnimationController* AC;
+	std::vector<AnimationController*> ACList;
 };
 

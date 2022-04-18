@@ -294,7 +294,7 @@ void RenderManager::ConvertRenderData()
 
 void RenderManager::SelectRenderData()
 {
-	PROFILE_TIMER_START(PROFILE_OUTPUT::VS_CODE, 60, "Culling");
+	//PROFILE_TIMER_START(PROFILE_OUTPUT::VS_CODE, 60, "Culling");
 
 	GPU_BEGIN_EVENT_DEBUG_NAME("Culling Pass");
 	/// GPGPU Hierachical Z-Map Occlusion Culling..
@@ -308,7 +308,7 @@ void RenderManager::SelectRenderData()
 	//m_Culling->FrustumCulling();
 	GPU_END_EVENT_DEBUG_NAME();
 
-	PROFILE_TIMER_END("Culling");
+	//PROFILE_TIMER_END("Culling");
 }
 
 void RenderManager::Render()

@@ -173,6 +173,7 @@ void DeferredPass::OnResize(int width, int height)
 void DeferredPass::InstanceResize(size_t& renderMaxCount, size_t& unRenderMaxCount)
 {
 	m_MeshInstance.resize(renderMaxCount);
+	m_SkinMeshInstance.resize(renderMaxCount);
 }
 
 void DeferredPass::Release()
@@ -285,17 +286,21 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const std:
 	case OBJECT_TYPE::SKINNING:
 	{
 		/// 임시 코드
-		for (int i = 0; i < m_RenderCount; i++)
-		{
-			RenderUpdate(instance, meshlist[i]);
-		}
+		//for (int i = 0; i < m_RenderCount; i++)
+		//{
+		//	RenderUpdate(instance, meshlist[i]);
+		//}
+		//
+		//break;
 
-		break;
+		SkinMeshInstanceUpdate(meshlist);
+
 		CB_InstanceSkinMesh objectBuf;
 		objectBuf.gView = view;
 		objectBuf.gProj = proj;
 
 		m_SkinInstVS->ConstantBufferUpdate(&objectBuf);
+		m_SkinInstVS->SetShaderResourceView<gAnimationBuffer>(instance->m_Animation->m_AnimationBuf);
 
 		m_SkinInstVS->Update();
 
@@ -423,7 +428,7 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rend
 	break;
 	case OBJECT_TYPE::TERRAIN:
 	{
-		TerrainRenderBuffer* terrain = meshData->m_TerrainBuffer;
+		TerrainRenderBuffer* terrain = meshData->m_Terrain;
 
 		// Vertex Shader Update..
 		CB_StaticMesh objectBuf;
@@ -562,21 +567,27 @@ void DeferredPass::MeshInstanceUpdate(const std::vector<RenderData*>& meshlist)
 
 void DeferredPass::SkinMeshInstanceUpdate(const std::vector<RenderData*>& meshlist)
 {
+	ObjectData* object = nullptr;
+	AnimationData* animation = nullptr;
+
 	for (int i = 0; i < m_RenderCount; i++)
 	{
 		m_RenderData = meshlist[i];
 
 		if (m_RenderData->m_Draw == false) continue;
 
-		// 해당 Instance Data 삽입..
-		m_SkinMeshData.World	= m_RenderData->m_ObjectData->World;
-		m_SkinMeshData.InvWorld = m_RenderData->m_ObjectData->InvWorld;
+		object = m_RenderData->m_ObjectData;
+		animation = m_RenderData->m_AnimationData;
 
-		if (m_RenderData->m_AnimationData)
+		// 해당 Instance Data 삽입..
+		m_SkinMeshData.World	= object->World;
+		m_SkinMeshData.InvWorld = object->InvWorld;
+
+		if (animation)
 		{
-			m_SkinMeshData.PrevAnimationIndex = m_RenderData->m_AnimationData->PrevAnimationIndex;
-			m_SkinMeshData.NextAnimationIndex = m_RenderData->m_AnimationData->NextAnimationIndex;
-			m_SkinMeshData.FrameTime		= m_RenderData->m_AnimationData->FrameTime;
+			m_SkinMeshData.PrevAnimationIndex	= animation->PrevAnimationIndex + animation->PrevFrameIndex;
+			m_SkinMeshData.NextAnimationIndex	= animation->NextAnimationIndex + animation->NextFrameIndex;
+			m_SkinMeshData.FrameTime			= animation->FrameTime;
 		}
 
 		m_SkinMeshInstance[m_InstanceCount++] = m_SkinMeshData;

@@ -77,8 +77,6 @@ void AnimationManager::DeleteAnimation(UINT index)
 
 void AnimationManager::BakeAnimation()
 {
-	AnimationBuffer* animation = nullptr;
-
 	ModelData* modelData = nullptr;
 	ModelAnimationData* aniData = nullptr;
 
@@ -94,17 +92,16 @@ void AnimationManager::BakeAnimation()
 		Animation* Buffer = new Animation();
 
 		EnterCriticalSection(m_CriticalSection);
-		m_Graphic->CreateAnimationBuffer(modelData, aniData, &animation);
+		m_Graphic->CreateAnimationBuffer(modelData, aniData, &Buffer->m_AnimationBuffer);
 		LeaveCriticalSection(m_CriticalSection);
 
-		if (animation == nullptr)
+		if (Buffer->m_AnimationBuffer == nullptr)
 		{
 			PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "[ Engine ][ Bake ][ Animation Buffer ] '%s' FAILED!!", modelName.c_str());
 		}
 
 		// Animation Data ¼³Á¤..
 		Buffer->Name = modelName;
-		Buffer->m_AnimationBuffer = animation;
 		Buffer->m_AnimationData = aniData;
 
 		LoadManager::AnimationList.insert({ modelName, Buffer });

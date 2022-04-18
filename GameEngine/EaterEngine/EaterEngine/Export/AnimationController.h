@@ -45,6 +45,7 @@ public:
 private:
 	void ChangeAnime();
 	void AnimationFrameIndex();
+	void Reset();
 
 	//본들의 애니메이터 리스트
 	std::vector<Animator*> AnimatorList;
