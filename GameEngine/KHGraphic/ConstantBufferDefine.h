@@ -34,7 +34,9 @@ struct CB_StaticMesh : public cbStaticMesh
 	DirectX::SimpleMath::Matrix gInvWorld;
 	DirectX::SimpleMath::Matrix gView;
 	DirectX::SimpleMath::Matrix gProj;
-	DirectX::SimpleMath::Matrix gTexTransform;
+
+	DirectX::SimpleMath::Vector2 gTexScale;
+	DirectX::SimpleMath::Vector2 gTexPos;
 };
 
 SHADER_CONSTANT_BUFFER(cbInstanceStaticMesh)
@@ -42,7 +44,6 @@ struct CB_InstanceStaticMesh : public cbInstanceStaticMesh
 {
 	DirectX::SimpleMath::Matrix gView;
 	DirectX::SimpleMath::Matrix gProj;
-	DirectX::SimpleMath::Matrix gTexTransform;
 };
 
 SHADER_CONSTANT_BUFFER(cbSkinMesh)
@@ -52,7 +53,6 @@ struct CB_SkinMesh : public cbSkinMesh
 	DirectX::SimpleMath::Matrix gInvWorld;
 	DirectX::SimpleMath::Matrix gView;
 	DirectX::SimpleMath::Matrix gProj;
-	DirectX::SimpleMath::Matrix gTexTransform;
 	DirectX::SimpleMath::Matrix gBoneTransforms[96];
 };
 
@@ -61,7 +61,6 @@ struct CB_InstanceSkinMesh : public cbInstanceSkinMesh
 {
 	DirectX::SimpleMath::Matrix gView;
 	DirectX::SimpleMath::Matrix gProj;
-	DirectX::SimpleMath::Matrix gTexTransform;
 };
 
 SHADER_CONSTANT_BUFFER(cbDepthStaticMesh)

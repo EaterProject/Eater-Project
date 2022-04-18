@@ -36,6 +36,7 @@ struct MeshIDInstanceIn
 struct ParticleInstanceIn
 {
     float4x4 World          : INSTANCE_SEMANTIC(WOLRD);
-    float4x4 TexTransform   : INSTANCE_SEMANTIC(TEX);
+    float2 TexScale         : INSTANCE_SEMANTIC(SCALE);
+    float2 TexPos           : INSTANCE_SEMANTIC(POS);
     float4 Color            : INSTANCE_SEMANTIC(COLOR);
 };

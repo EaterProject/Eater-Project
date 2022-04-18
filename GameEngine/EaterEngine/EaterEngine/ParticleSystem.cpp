@@ -54,9 +54,6 @@ void ParticleSystem::Start()
 	// Particle System Data 설정..
 	gameobject->OneMeshData->Object_Data->ObjType = OBJECT_TYPE::PARTICLE_SYSTEM;
 	gameobject->OneMeshData->Particle_Data = m_ParticleData;
-	
-	// Particle 생성..
-	AddParticle();
 
 	mTimeManager->ResetTime();
 }
@@ -141,6 +138,9 @@ void ParticleSystem::SetMaxParticles(int maxCount)
 {
 	m_MaxParticle = maxCount;
 	m_ParticleData->Particle_Count = maxCount;
+
+	// Particle 생성..
+	AddParticle();
 }
 
 void ParticleSystem::SetDelayTime(float delay)
@@ -320,8 +320,13 @@ void ParticleSystem::AddParticle()
 	// ParticleSystem Transform..
 	Transform* systemTransform = gameobject->GetTransform();
 
+	// 추가할 Particle 개수..
+	int addParticle = m_MaxParticle - (int)m_Particles.size();
+
+	if (addParticle < 1) return;
+
 	// 최대 Particle 개수만큼 만들어 둔다..
-	for (int index = 0; index < m_MaxParticle; index++)
+	for (int index = 0; index < addParticle; index++)
 	{
 		// 새로운 Particle..
 		GameObject* newObject = new GameObject();

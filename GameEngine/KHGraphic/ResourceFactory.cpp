@@ -45,7 +45,7 @@ GraphicResourceFactory::GraphicResourceFactory()
 	// Parser 积己 棺 檬扁拳..
 	m_Parser = ImageParser::Create(IMAGE_TYPE::FLOAT_IMAGE);
 	m_Parser->Initialize();
-	
+
 	// Icon Texture Route 汲沥..
 	m_TextureRoute = "../Assets/Texture/Graphic/";
 }
@@ -69,7 +69,7 @@ void GraphicResourceFactory::Create(int width, int height)
 
 	CreateDepthStencilViews(width, height);
 	CreateViewPorts(width, height);
-	
+
 	// Global Instance Buffer..
 	CreateInstanceBuffers();
 
@@ -282,11 +282,11 @@ void GraphicResourceFactory::CreateDepthStencil(std::string name, Hash_Code hash
 
 	// Texture2D Resource 积己..
 	m_Result = g_Graphic->CreateTexture2D(texDesc, subData, tex2D.GetAddressOf());
-	
+
 	if (FAILED(m_Result))
 	{
-		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][Texture2D] '%s' FAILED!!", name.c_str());
-		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][Texture2D] '%s' FAILED!!", name.c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[ Graphic ][ Create ][ Texture2D ] '%s' FAILED!!", name.c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[ Graphic ][ Create ][ Texture2D ] '%s' FAILED!!", name.c_str());
 	}
 
 	// Bind Resource 积己..
@@ -299,8 +299,8 @@ void GraphicResourceFactory::CreateDepthStencil(std::string name, Hash_Code hash
 
 		if (FAILED(m_Result))
 		{
-			PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][DepthStencilView] '%s' FAILED!!", name.c_str());
-			PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][DepthStencilView] '%s' FAILED!!", name.c_str());
+			PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[ Graphic ][ Create ][ DepthStencilView ] '%s' FAILED!!", name.c_str());
+			PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[ Graphic ][ Create ][ DepthStencilView ] '%s' FAILED!!", name.c_str());
 		}
 	}
 	if (bindFlag & D3D11_BIND_SHADER_RESOURCE)
@@ -310,8 +310,8 @@ void GraphicResourceFactory::CreateDepthStencil(std::string name, Hash_Code hash
 
 		if (FAILED(m_Result))
 		{
-			PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][ShaderResourceView] '%s' FAILED!!", name.c_str());
-			PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][ShaderResourceView] '%s' FAILED!!", name.c_str());
+			PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[ Graphic ][ Create ][ ShaderResourceView ] '%s' FAILED!!", name.c_str());
+			PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[ Graphic ][ Create ][ ShaderResourceView ] '%s' FAILED!!", name.c_str());
 		}
 	}
 
@@ -354,8 +354,8 @@ void GraphicResourceFactory::CreateRenderTexture(std::string name, Hash_Code has
 
 	if (FAILED(m_Result))
 	{
-		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][Texture2D] '%s' FAILED!!", name.c_str());
-		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][Texture2D] '%s' FAILED!!", name.c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[ Graphic ][ Create ][ Texture2D ] '%s' FAILED!!", name.c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[ Graphic ][ Create ][ Texture2D ] '%s' FAILED!!", name.c_str());
 	}
 
 	// Bind Resource 积己..
@@ -368,8 +368,8 @@ void GraphicResourceFactory::CreateRenderTexture(std::string name, Hash_Code has
 
 		if (FAILED(m_Result))
 		{
-			PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][RenderTargetView] '%s' FAILED!!", name.c_str());
-			PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][RenderTargetView] '%s' FAILED!!", name.c_str());
+			PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[ Graphic ][ Create ][ RenderTargetView ] '%s' FAILED!!", name.c_str());
+			PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[ Graphic ][ Create ][ RenderTargetView ] '%s' FAILED!!", name.c_str());
 		}
 	}
 	if (bindFlag & D3D11_BIND_SHADER_RESOURCE)
@@ -379,8 +379,8 @@ void GraphicResourceFactory::CreateRenderTexture(std::string name, Hash_Code has
 
 		if (FAILED(m_Result))
 		{
-			PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][ShaderResourceView] '%s' FAILED!!", name.c_str());
-			PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][ShaderResourceView] '%s' FAILED!!", name.c_str());
+			PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[ Graphic ][ Create ][ ShaderResourceView ] '%s' FAILED!!", name.c_str());
+			PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[ Graphic ][ Create ][ ShaderResourceView ] '%s' FAILED!!", name.c_str());
 		}
 	}
 	if (bindFlag & D3D11_BIND_UNORDERED_ACCESS)
@@ -390,8 +390,8 @@ void GraphicResourceFactory::CreateRenderTexture(std::string name, Hash_Code has
 
 		if (FAILED(m_Result))
 		{
-			PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][UnorderedAccessView] '%s' FAILED!!", name.c_str());
-			PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][UnorderedAccessView] '%s' FAILED!!", name.c_str());
+			PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[ Graphic ][ Create ][ UnorderedAccessView ] '%s' FAILED!!", name.c_str());
+			PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[ Graphic ][ Create ][ UnorderedAccessView ] '%s' FAILED!!", name.c_str());
 		}
 	}
 
@@ -438,8 +438,8 @@ void GraphicResourceFactory::CreateRenderBuffer(std::string name, Hash_Code hash
 
 	if (FAILED(m_Result))
 	{
-		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][Buffer] '%s' FAILED!!", name.c_str());
-		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][Buffer] '%s' FAILED!!", name.c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[ Graphic ][ Create ][ Buffer ] '%s' FAILED!!", name.c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[ Graphic ][ Create ][ Buffer ] '%s' FAILED!!", name.c_str());
 	}
 
 	// Bind Resource 积己..
@@ -452,8 +452,8 @@ void GraphicResourceFactory::CreateRenderBuffer(std::string name, Hash_Code hash
 
 		if (FAILED(m_Result))
 		{
-			PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][RenderTargetView] '%s' FAILED!!", name.c_str());
-			PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][RenderTargetView] '%s' FAILED!!", name.c_str());
+			PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[ Graphic ][ Create ][ RenderTargetView ] '%s' FAILED!!", name.c_str());
+			PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[ Graphic ][ Create ][ RenderTargetView ] '%s' FAILED!!", name.c_str());
 		}
 	}
 	if (bindFlag & D3D11_BIND_SHADER_RESOURCE)
@@ -463,8 +463,8 @@ void GraphicResourceFactory::CreateRenderBuffer(std::string name, Hash_Code hash
 
 		if (FAILED(m_Result))
 		{
-			PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][ShaderResourceView] '%s' FAILED!!", name.c_str());
-			PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][ShaderResourceView] '%s' FAILED!!", name.c_str());
+			PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[ Graphic ][ Create ][ ShaderResourceView ] '%s' FAILED!!", name.c_str());
+			PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[ Graphic ][ Create ][ ShaderResourceView ] '%s' FAILED!!", name.c_str());
 		}
 	}
 	if (bindFlag & D3D11_BIND_UNORDERED_ACCESS)
@@ -474,8 +474,8 @@ void GraphicResourceFactory::CreateRenderBuffer(std::string name, Hash_Code hash
 
 		if (FAILED(m_Result))
 		{
-			PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][UnorderedAccessView] '%s' FAILED!!", name.c_str());
-			PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][UnorderedAccessView] '%s' FAILED!!", name.c_str());
+			PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[ Graphic ][ Create ][ UnorderedAccessView ] '%s' FAILED!!", name.c_str());
+			PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[ Graphic ][ Create ][ UnorderedAccessView ] '%s' FAILED!!", name.c_str());
 		}
 	}
 
@@ -497,7 +497,7 @@ void GraphicResourceFactory::CreateRenderBuffer(std::string name, Hash_Code hash
 	CPU_RESOURCE_DEBUG_NAME(newSRV, (name + "_SRV").c_str());
 	CPU_RESOURCE_DEBUG_NAME(newUAV, (name + "_UAV").c_str());
 	CPU_RESOURCE_DEBUG_NAME(newResource, name.c_str());
-	
+
 	GPU_RESOURCE_DEBUG_NAME(buffer.Get(), (name + "_Buffer").c_str());
 	GPU_RESOURCE_DEBUG_NAME(rtv.Get(), (name + "_RTV").c_str());
 	GPU_RESOURCE_DEBUG_NAME(srv.Get(), (name + "_SRV").c_str());
@@ -535,8 +535,8 @@ void GraphicResourceFactory::CreateDrawBuffer(std::string name, Hash_Code hash_c
 
 	if (FAILED(m_Result))
 	{
-		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][Buffer] '%s' FAILED!!", (name + "_VertexBuf").c_str());
-		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][Buffer] '%s' FAILED!!", (name + "_VertexBuf").c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[ Graphic ][ Create ][ Buffer ] '%s' FAILED!!", (name + "_VertexBuf").c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[ Graphic ][ Create ][ Buffer ] '%s' FAILED!!", (name + "_VertexBuf").c_str());
 	}
 
 	// Index Buffer 积己..
@@ -555,8 +555,8 @@ void GraphicResourceFactory::CreateDrawBuffer(std::string name, Hash_Code hash_c
 
 	if (FAILED(m_Result))
 	{
-		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][Buffer] '%s' FAILED!!", (name + "_IndexBuf").c_str());
-		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][Buffer] '%s' FAILED!!", (name + "_IndexBuf").c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[ Graphic ][ Create ][ Buffer ] '%s' FAILED!!", (name + "_IndexBuf").c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[ Graphic ][ Create ][ Buffer ] '%s' FAILED!!", (name + "_IndexBuf").c_str());
 	}
 
 	// Resource Buffer 积己..
@@ -607,11 +607,11 @@ void GraphicResourceFactory::CreateDrawBuffer(std::string name, Hash_Code hash_c
 	initData.SysMemSlicePitch = 0;
 
 	m_Result = g_Graphic->CreateBuffer(&bufferDesc, &initData, (D3D11_USAGE)vUsage, vertexBuf.GetAddressOf());
-	
+
 	if (FAILED(m_Result))
 	{
-		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][Buffer] '%s' FAILED!!", (name + "_VertexBuf").c_str());
-		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][Buffer] '%s' FAILED!!", (name + "_VertexBuf").c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[ Graphic ][ Create ][ Buffer ] '%s' FAILED!!", (name + "_VertexBuf").c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[ Graphic ][ Create ][ Buffer ] '%s' FAILED!!", (name + "_VertexBuf").c_str());
 	}
 
 	// Index Buffer 积己..
@@ -626,11 +626,11 @@ void GraphicResourceFactory::CreateDrawBuffer(std::string name, Hash_Code hash_c
 	initData.SysMemSlicePitch = 0;
 
 	m_Result = g_Graphic->CreateBuffer(&bufferDesc, &initData, (D3D11_USAGE)iUsage, indexBuf.GetAddressOf());
-	
+
 	if (FAILED(m_Result))
 	{
-		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][Buffer] '%s' FAILED!!", (name + "_IndexBuf").c_str());
-		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][Buffer] '%s' FAILED!!", (name + "_IndexBuf").c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[ Graphic ][ Create ][ Buffer ] '%s' FAILED!!", (name + "_IndexBuf").c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[ Graphic ][ Create ][ Buffer ] '%s' FAILED!!", (name + "_IndexBuf").c_str());
 	}
 
 	// Resource Buffer 积己..
@@ -685,8 +685,8 @@ void GraphicResourceFactory::CreateInstanceBuffer(std::string name, Hash_Code ha
 
 	if (FAILED(m_Result))
 	{
-		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][Buffer] '%s' FAILED!!", (name + "_InstanceBuf").c_str());
-		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][Buffer] '%s' FAILED!!", (name + "_InstanceBuf").c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[ Graphic ][ Create ][ Instance Buffer ] '%s' FAILED!!", (name + "_InstanceBuf").c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[ Graphic ][ Create ][ Instance Buffer ] '%s' FAILED!!", (name + "_InstanceBuf").c_str());
 	}
 
 	// Resource Buffer 积己..
@@ -722,8 +722,8 @@ void GraphicResourceFactory::CreateRenderTargetView(std::string name, Hash_Code 
 
 	if (FAILED(m_Result))
 	{
-		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][Texture2D] '%s' FAILED!!", name.c_str());
-		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][Texture2D] '%s' FAILED!!", name.c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[ Graphic ][ Create ][ Texture2D ] '%s' FAILED!!", name.c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[ Graphic ][ Create ][ Texture2D ] '%s' FAILED!!", name.c_str());
 	}
 
 	// Bind Resource 积己..
@@ -736,8 +736,8 @@ void GraphicResourceFactory::CreateRenderTargetView(std::string name, Hash_Code 
 
 		if (FAILED(m_Result))
 		{
-			PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][RenderTargetView] '%s' FAILED!!", name.c_str());
-			PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][RenderTargetView] '%s' FAILED!!", name.c_str());
+			PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[ Graphic ][ Create ][ RenderTargetView ] '%s' FAILED!!", name.c_str());
+			PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[ Graphic ][ Create ][ RenderTargetView ] '%s' FAILED!!", name.c_str());
 		}
 	}
 
@@ -749,7 +749,7 @@ void GraphicResourceFactory::CreateRenderTargetView(std::string name, Hash_Code 
 
 	// Debug Name..
 	CPU_RESOURCE_DEBUG_NAME(newResource, name.c_str());
-	
+
 	GPU_RESOURCE_DEBUG_NAME(rtv.Get(), name.c_str());
 
 	// Reset Resource..
@@ -776,8 +776,8 @@ void GraphicResourceFactory::CreateRenderTargetView(std::string name, Hash_Code 
 
 		if (FAILED(m_Result))
 		{
-			PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][RenderTargetView] '%s' FAILED!!", name.c_str());
-			PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][RenderTargetView] '%s' FAILED!!", name.c_str());
+			PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[ Graphic ][ Create ][ RenderTargetView ] '%s' FAILED!!", name.c_str());
+			PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[ Graphic ][ Create ][ RenderTargetView ] '%s' FAILED!!", name.c_str());
 		}
 	}
 
@@ -789,7 +789,7 @@ void GraphicResourceFactory::CreateRenderTargetView(std::string name, Hash_Code 
 
 	// Debug Name..
 	CPU_RESOURCE_DEBUG_NAME(newResource, name.c_str());
-	
+
 	GPU_RESOURCE_DEBUG_NAME(rtv.Get(), name.c_str());
 
 	// Reset Resource..
@@ -815,8 +815,8 @@ void GraphicResourceFactory::CreateShaderResourceView(std::string name, Hash_Cod
 
 		if (FAILED(m_Result))
 		{
-			PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][ShaderResourceView] '%s' FAILED!!", name.c_str());
-			PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][ShaderResourceView] '%s' FAILED!!", name.c_str());
+			PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[ Graphic ][ Create ][ ShaderResourceView ] '%s' FAILED!!", name.c_str());
+			PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[ Graphic ][ Create ][ ShaderResourceView ] '%s' FAILED!!", name.c_str());
 		}
 	}
 
@@ -828,7 +828,7 @@ void GraphicResourceFactory::CreateShaderResourceView(std::string name, Hash_Cod
 
 	// Debug Name..
 	CPU_RESOURCE_DEBUG_NAME(newResource, name.c_str());
-	
+
 	GPU_RESOURCE_DEBUG_NAME(srv.Get(), name.c_str());
 
 	// Reset Resource..
@@ -855,8 +855,8 @@ void GraphicResourceFactory::CreateShaderResourceView(std::string name, Hash_Cod
 
 		if (FAILED(m_Result))
 		{
-			PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][ShaderResourceView] '%s' FAILED!!", name.c_str());
-			PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][ShaderResourceView] '%s' FAILED!!", name.c_str());
+			PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[ Graphic ][ Create ][ ShaderResourceView ] '%s' FAILED!!", name.c_str());
+			PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[ Graphic ][ Create ][ ShaderResourceView ] '%s' FAILED!!", name.c_str());
 		}
 	}
 
@@ -868,7 +868,7 @@ void GraphicResourceFactory::CreateShaderResourceView(std::string name, Hash_Cod
 
 	// Debug Name..
 	CPU_RESOURCE_DEBUG_NAME(newResource, name.c_str());
-	
+
 	GPU_RESOURCE_DEBUG_NAME(srv.Get(), name.c_str());
 
 	// Reset Resource..
@@ -886,8 +886,8 @@ void GraphicResourceFactory::CreateUnorderedAccessView(std::string name, Hash_Co
 
 	if (FAILED(m_Result))
 	{
-		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][Texture2D] '%s' FAILED!!", name.c_str());
-		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][Texture2D] '%s' FAILED!!", name.c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[ Graphic ][ Create ][ Texture2D ] '%s' FAILED!!", name.c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[ Graphic ][ Create ][ Texture2D ] '%s' FAILED!!", name.c_str());
 	}
 
 	// Bind Resource 积己..
@@ -900,8 +900,8 @@ void GraphicResourceFactory::CreateUnorderedAccessView(std::string name, Hash_Co
 
 		if (FAILED(m_Result))
 		{
-			PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][UnorderedAccessView] '%s' FAILED!!", name.c_str());
-			PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][UnorderedAccessView] '%s' FAILED!!", name.c_str());
+			PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[ Graphic ][ Create ][ UnorderedAccessView ] '%s' FAILED!!", name.c_str());
+			PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[ Graphic ][ Create ][ UnorderedAccessView ] '%s' FAILED!!", name.c_str());
 		}
 	}
 
@@ -913,7 +913,7 @@ void GraphicResourceFactory::CreateUnorderedAccessView(std::string name, Hash_Co
 
 	// Debug Name..
 	CPU_RESOURCE_DEBUG_NAME(newResource, name.c_str());
-	
+
 	GPU_RESOURCE_DEBUG_NAME(uav.Get(), name.c_str());
 
 	// Reset Resource..
@@ -940,8 +940,8 @@ void GraphicResourceFactory::CreateUnorderedAccessView(std::string name, Hash_Co
 
 		if (FAILED(m_Result))
 		{
-			PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][UnorderedAccessView] '%s' FAILED!!", name.c_str());
-			PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][UnorderedAccessView] '%s' FAILED!!", name.c_str());
+			PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[ Graphic ][ Create ][ UnorderedAccessView ] '%s' FAILED!!", name.c_str());
+			PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[ Graphic ][ Create ][ UnorderedAccessView ] '%s' FAILED!!", name.c_str());
 		}
 	}
 
@@ -971,8 +971,8 @@ void GraphicResourceFactory::CreateDepthStencilState(std::string name, Hash_Code
 
 	if (FAILED(m_Result))
 	{
-		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][DepthStencilState] '%s' FAILED!!", name.c_str());
-		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][DepthStencilState] '%s' FAILED!!", name.c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[ Graphic ][ Create ][ DepthStencilState ] '%s' FAILED!!", name.c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[ Graphic ][ Create ][ DepthStencilState ] '%s' FAILED!!", name.c_str());
 	}
 
 	// DepthStencilState 积己..
@@ -1000,8 +1000,8 @@ void GraphicResourceFactory::CreateRasterizerState(std::string name, Hash_Code h
 
 	if (FAILED(m_Result))
 	{
-		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][RasterizerState] '%s' FAILED!!", name.c_str());
-		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][RasterizerState] '%s' FAILED!!", name.c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[ Graphic ][ Create ][ RasterizerState ] '%s' FAILED!!", name.c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[ Graphic ][ Create ][ RasterizerState ] '%s' FAILED!!", name.c_str());
 	}
 
 	// RasterizerState 积己..
@@ -1029,8 +1029,8 @@ void GraphicResourceFactory::CreateBlendState(std::string name, Hash_Code hash_c
 
 	if (FAILED(m_Result))
 	{
-		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][BlendState] '%s' FAILED!!", name.c_str());
-		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][BlendState] '%s' FAILED!!", name.c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[ Graphic ][ Create ][ BlendState ] '%s' FAILED!!", name.c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[ Graphic ][ Create ][ BlendState ] '%s' FAILED!!", name.c_str());
 	}
 
 	// BlendState 积己..
@@ -1058,8 +1058,8 @@ void GraphicResourceFactory::CreateSamplerState(std::string name, Hash_Code hash
 
 	if (FAILED(m_Result))
 	{
-		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][SamplerState] '%s' FAILED!!", name.c_str());
-		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][SamplerState] '%s' FAILED!!", name.c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[ Graphic ][ Create ][ SamplerState ] '%s' FAILED!!", name.c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[ Graphic ][ Create ][ SamplerState ] '%s' FAILED!!", name.c_str());
 	}
 
 	// SamplerState 积己..
@@ -1119,11 +1119,11 @@ void GraphicResourceFactory::CreateMainRenderTarget(Hash_Code hash_code, UINT wi
 
 	// Swap Chain, Render Target View Resize
 	m_Result = g_Graphic->CreateBackBuffer(width, height, tex2D.GetAddressOf(), rtv.GetAddressOf(), srv.GetAddressOf());
-	
+
 	if (FAILED(m_Result))
 	{
-		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][RenderTarget] 'BackBuffer' FAILED!!");
-		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][RenderTarget] 'BackBuffer' FAILED!!");
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[ Graphic ][ Create ][ RenderTarget ] 'BackBuffer' FAILED!!");
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[ Graphic ][ Create ][ RenderTarget ] 'BackBuffer' FAILED!!");
 	}
 
 	// Resource 积己 棺 殿废..
@@ -1185,7 +1185,7 @@ void GraphicResourceFactory::CreateTextureRenderTarget(UINT width, UINT height)
 	CreateRenderTexture(RT_OutPut1::GetName(), RT_OutPut1::GetHashCode(), &texDesc, nullptr, &rtvDesc, &srvDesc, nullptr);
 	CreateRenderTexture(RT_OutPut2::GetName(), RT_OutPut2::GetHashCode(), &texDesc, nullptr, &rtvDesc, &srvDesc, nullptr);
 	CreateRenderTexture(RT_OutPut3::GetName(), RT_OutPut3::GetHashCode(), &texDesc, nullptr, &rtvDesc, &srvDesc, nullptr);
-} 
+}
 
 template<>
 DepthStencilView* GraphicResourceFactory::RegisterResource(Hash_Code hash_code, ID3D11DepthStencilView* resource)
@@ -1247,13 +1247,13 @@ template<>
 void GraphicResourceFactory::CreateLoadBuffer<VertexInput::MeshVertex>(ParserData::CMesh* mesh, MeshBuffer** ppResource)
 {
 	if (mesh->m_VertexList.empty()) return;
-	
+
 	// 货肺款 Buffer 积己..
-	VertexBuffer* newVertexBuf	= new VertexBuffer();
-	IndexBuffer* newIndexBuf	= new IndexBuffer();
+	VertexBuffer* newVertexBuf = new VertexBuffer();
+	IndexBuffer* newIndexBuf = new IndexBuffer();
 
 	// 货肺款 Mesh Buffer 积己..
-	if(*ppResource == nullptr) *ppResource = new MeshBuffer();
+	if (*ppResource == nullptr) *ppResource = new MeshBuffer();
 
 	// 货肺 积己茄 Mesh Buffer 火涝..
 	MeshBuffer* newMeshBuf = *ppResource;
@@ -1315,8 +1315,8 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::MeshVertex>(ParserDat
 
 	if (FAILED(m_Result))
 	{
-		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][Buffer] '%s' FAILED!!", (mesh->m_NodeName + "_VertexBuf").c_str());
-		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][Buffer] '%s' FAILED!!", (mesh->m_NodeName + "_VertexBuf").c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[ Graphic ][ Create ][ Buffer ] '%s' FAILED!!", (mesh->m_NodeName + "_VertexBuf").c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[ Graphic ][ Create ][ Buffer ] '%s' FAILED!!", (mesh->m_NodeName + "_VertexBuf").c_str());
 	}
 
 	bufferDesc.Usage = D3D11_USAGE_IMMUTABLE;
@@ -1335,8 +1335,8 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::MeshVertex>(ParserDat
 
 	if (FAILED(m_Result))
 	{
-		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][Buffer] '%s' FAILED!!", (mesh->m_NodeName + "_IndexBuf").c_str());
-		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][Buffer] '%s' FAILED!!", (mesh->m_NodeName + "_IndexBuf").c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[ Graphic ][ Create ][ Buffer ] '%s' FAILED!!", (mesh->m_NodeName + "_IndexBuf").c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[ Graphic ][ Create ][ Buffer ] '%s' FAILED!!", (mesh->m_NodeName + "_IndexBuf").c_str());
 	}
 
 	// 逞败拎具且 Bounding Data..
@@ -1365,7 +1365,7 @@ template<>
 void GraphicResourceFactory::CreateLoadBuffer<VertexInput::SkinVertex>(ParserData::CMesh* mesh, MeshBuffer** ppResource)
 {
 	if (mesh->m_VertexList.empty()) return;
-	
+
 	// 货肺款 Buffer 积己..
 	VertexBuffer* newVertexBuf = new VertexBuffer();
 	IndexBuffer* newIndexBuf = new IndexBuffer();
@@ -1453,8 +1453,8 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::SkinVertex>(ParserDat
 
 	if (FAILED(m_Result))
 	{
-		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][Buffer] '%s' FAILED!!", (mesh->m_NodeName + "_VertexBuf").c_str());
-		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][Buffer] '%s' FAILED!!", (mesh->m_NodeName + "_VertexBuf").c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[ Graphic ][ Create ][ Buffer ] '%s' FAILED!!", (mesh->m_NodeName + "_VertexBuf").c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[ Graphic ][ Create ][ Buffer ] '%s' FAILED!!", (mesh->m_NodeName + "_VertexBuf").c_str());
 	}
 
 	bufferDesc.Usage = D3D11_USAGE_IMMUTABLE;
@@ -1473,8 +1473,8 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::SkinVertex>(ParserDat
 
 	if (FAILED(m_Result))
 	{
-		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][Buffer] '%s' FAILED!!", (mesh->m_NodeName + "_IndexBuf").c_str());
-		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][Buffer] '%s' FAILED!!", (mesh->m_NodeName + "_IndexBuf").c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[ Graphic ][ Create ][ Buffer ] '%s' FAILED!!", (mesh->m_NodeName + "_IndexBuf").c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[ Graphic ][ Create ][ Buffer ] '%s' FAILED!!", (mesh->m_NodeName + "_IndexBuf").c_str());
 	}
 
 	// 逞败拎具且 Bounding Data..
@@ -1503,7 +1503,7 @@ template<>
 void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(ParserData::CMesh* mesh, MeshBuffer** ppResource)
 {
 	if (mesh->m_VertexList.empty()) return;
-	
+
 	// 货肺款 Buffer 积己..
 	VertexBuffer* newVertexBuf = new VertexBuffer();
 	IndexBuffer* newIndexBuf = new IndexBuffer();
@@ -1579,7 +1579,7 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(Parser
 		maskColor1_p0.z = maskColor2_p0.x;
 		maskColor1_p0.w = maskColor2_p0.y;
 		maskColor1_p0 = maskColor1_p0 / (maskColor1_p0.x + maskColor1_p0.y + maskColor1_p0.z + maskColor1_p0.w) * 0.5f;
-		
+
 		// ∴ ∴ ∴
 		// ∴ ∴ ∴
 		// ∴ ♂ ∴
@@ -1595,7 +1595,7 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(Parser
 		maskColor1_0p.z = maskColor2_0p.x;
 		maskColor1_0p.w = maskColor2_0p.y;
 		maskColor1_0p = maskColor1_0p / (maskColor1_0p.x + maskColor1_0p.y + maskColor1_0p.z + maskColor1_0p.w) * 0.5f;
-		
+
 		// ∴ ∴ ∴
 		// ∴ ∴ ∴
 		// ∴ ∴ ♂
@@ -1708,7 +1708,7 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(Parser
 		maskColor1_mp = maskColor1_mp / (maskColor1_mp.x + maskColor1_mp.y + maskColor1_mp.z + maskColor1_mp.w) * 0.5f;
 
 		// Final Calculate..
-		Vector4 finalColor = maskColor1_p0 + maskColor1_0p + maskColor1_pp + maskColor1_m0 + maskColor1_0m+ maskColor1_mm+ maskColor2_pm + maskColor1_mp;
+		Vector4 finalColor = maskColor1_p0 + maskColor1_0p + maskColor1_pp + maskColor1_m0 + maskColor1_0m + maskColor1_mm + maskColor2_pm + maskColor1_mp;
 		vertices[i].Mask = finalColor / (finalColor.x + finalColor.y + finalColor.z + finalColor.w);
 
 		// Bounding Data..
@@ -1749,8 +1749,8 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(Parser
 
 	if (FAILED(m_Result))
 	{
-		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][Buffer] '%s' FAILED!!", (mesh->m_NodeName + "_VertexBuf").c_str());
-		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][Buffer] '%s' FAILED!!", (mesh->m_NodeName + "_VertexBuf").c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[ Graphic ][ Create ][ Buffer ] '%s' FAILED!!", (mesh->m_NodeName + "_VertexBuf").c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[ Graphic ][ Create ][ Buffer ] '%s' FAILED!!", (mesh->m_NodeName + "_VertexBuf").c_str());
 	}
 
 	bufferDesc.Usage = D3D11_USAGE_IMMUTABLE;
@@ -1769,8 +1769,8 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(Parser
 
 	if (FAILED(m_Result))
 	{
-		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[Graphic][Create][Buffer] '%s' FAILED!!", (mesh->m_NodeName + "_IndexBuf").c_str());
-		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[Graphic][Create][Buffer] '%s' FAILED!!", (mesh->m_NodeName + "_IndexBuf").c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, m_Result, "[ Graphic ][ Create ][ Buffer ] '%s' FAILED!!", (mesh->m_NodeName + "_IndexBuf").c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, m_Result, "[ Graphic ][ Create ][ Buffer ] '%s' FAILED!!", (mesh->m_NodeName + "_IndexBuf").c_str());
 	}
 
 	// 逞败拎具且 Bounding Data..
@@ -1984,7 +1984,7 @@ void GraphicResourceFactory::CreateSamplerStates()
 
 	ZeroMemory(&samplerDesc, sizeof(samplerDesc));
 	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
-	samplerDesc.MaxAnisotropy = 0; 
+	samplerDesc.MaxAnisotropy = 0;
 	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
 	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
 	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
@@ -2126,7 +2126,7 @@ void GraphicResourceFactory::CreateBlendStates()
 	blendDesc.RenderTarget[1].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 	blendDesc.RenderTarget[2].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 	blendDesc.RenderTarget[3].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
-	
+
 	// Blending First RenderTarget BlendState 积己..
 	CreateBlendState(BS_AlphaBlend::GetName(), BS_AlphaBlend::GetHashCode(), &blendDesc);
 
@@ -2154,8 +2154,8 @@ void GraphicResourceFactory::CreateDepthStencilViews(int width, int height)
 	texDesc.Height = height;
 	texDesc.MipLevels = 1;
 	texDesc.ArraySize = 1;
-	//texDesc.Format = DXGI_FORMAT_R24G8_TYPELESS;
-	texDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+	texDesc.Format = DXGI_FORMAT_R24G8_TYPELESS;
+	//texDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
 	texDesc.SampleDesc.Count = 1;
 	texDesc.SampleDesc.Quality = 0;
 	texDesc.Usage = D3D11_USAGE_DEFAULT;
@@ -2185,23 +2185,19 @@ void GraphicResourceFactory::CreateViewPorts(int width, int height)
 void GraphicResourceFactory::CreateInstanceBuffers()
 {
 	// Defalt Instance Buffer 积己..
-	UINT meshDepthInstanceMax = 500;
-	UINT meshInstanceMax = 500;
-	UINT skinMeshInstanceMax = 500;
-	UINT meshIDInstanceMax = 500;
-	UINT particleInstanceMax = 500;
+	UINT instancMax = 500;
 
-	std::vector<VertexInput::MeshDepthInstance> meshDepthInstance(meshDepthInstanceMax);
-	std::vector<VertexInput::MeshInstance> meshInstance(meshInstanceMax);
-	std::vector<VertexInput::SkinMeshInstance> skinMeshInstance(skinMeshInstanceMax);
-	std::vector<VertexInput::MeshIDInstance> meshIDInstance(meshIDInstanceMax);
-	std::vector<VertexInput::ParticleInstance> particleInstance(particleInstanceMax);
+	std::vector<VertexInput::MeshDepthInstance> meshDepthInstance(instancMax);
+	std::vector<VertexInput::MeshInstance> meshInstance(instancMax);
+	std::vector<VertexInput::SkinMeshInstance> skinMeshInstance(instancMax);
+	std::vector<VertexInput::MeshIDInstance> meshIDInstance(instancMax);
+	std::vector<VertexInput::ParticleInstance> particleInstance(instancMax);
 
-	CreateInstanceBuffer(IB_MeshDepth::GetName(), IB_MeshDepth::GetHashCode(), sizeof(VertexInput::MeshDepthInstance), meshDepthInstanceMax, &meshDepthInstance[0]);
-	CreateInstanceBuffer(IB_Mesh::GetName(), IB_Mesh::GetHashCode(), sizeof(VertexInput::MeshInstance), meshInstanceMax, &meshInstance[0]);
-	CreateInstanceBuffer(IB_SkinMesh::GetName(), IB_SkinMesh::GetHashCode(), sizeof(VertexInput::SkinMeshInstance), skinMeshInstanceMax, &skinMeshInstance[0]);
-	CreateInstanceBuffer(IB_MeshID::GetName(), IB_MeshID::GetHashCode(), sizeof(VertexInput::MeshIDInstance), meshIDInstanceMax, &meshIDInstance[0]);
-	CreateInstanceBuffer(IB_Particle::GetName(), IB_Particle::GetHashCode(), sizeof(VertexInput::ParticleInstance), particleInstanceMax, &particleInstance[0]);
+	CreateInstanceBuffer(IB_MeshDepth::GetName(), IB_MeshDepth::GetHashCode(), sizeof(VertexInput::MeshDepthInstance), instancMax, &meshDepthInstance[0]);
+	CreateInstanceBuffer(IB_Mesh::GetName(), IB_Mesh::GetHashCode(), sizeof(VertexInput::MeshInstance), instancMax, &meshInstance[0]);
+	CreateInstanceBuffer(IB_SkinMesh::GetName(), IB_SkinMesh::GetHashCode(), sizeof(VertexInput::SkinMeshInstance), instancMax, &skinMeshInstance[0]);
+	CreateInstanceBuffer(IB_MeshID::GetName(), IB_MeshID::GetHashCode(), sizeof(VertexInput::MeshIDInstance), instancMax, &meshIDInstance[0]);
+	CreateInstanceBuffer(IB_Particle::GetName(), IB_Particle::GetHashCode(), sizeof(VertexInput::ParticleInstance), instancMax, &particleInstance[0]);
 }
 
 void GraphicResourceFactory::CreateQuadBuffer()
@@ -2456,11 +2452,11 @@ void GraphicResourceFactory::CreateLineBoxBuffer()
 	vertices[5].Color = DirectX::SimpleMath::Vector4(0, 1, 0, 1);
 	vertices[6].Color = DirectX::SimpleMath::Vector4(0, 1, 0, 1);
 	vertices[7].Color = DirectX::SimpleMath::Vector4(0, 1, 0, 1);
-	
+
 	std::vector<UINT> indices(iCount);
-	indices[0]  = 0; indices[1]  = 1; indices[2]  = 1; indices[3]  = 2;
-	indices[4]  = 2; indices[5]  = 3; indices[6]  = 3; indices[7]  = 0;
-	indices[8]  = 4; indices[9]  = 5; indices[10] = 5; indices[11] = 6;
+	indices[0] = 0; indices[1] = 1; indices[2] = 1; indices[3] = 2;
+	indices[4] = 2; indices[5] = 3; indices[6] = 3; indices[7] = 0;
+	indices[8] = 4; indices[9] = 5; indices[10] = 5; indices[11] = 6;
 	indices[12] = 6; indices[13] = 7; indices[14] = 7; indices[15] = 4;
 	indices[16] = 4; indices[17] = 0; indices[18] = 5; indices[19] = 1;
 	indices[20] = 6; indices[21] = 2; indices[22] = 7; indices[23] = 3;
@@ -2552,7 +2548,7 @@ void GraphicResourceFactory::CreateLineCircleSphereBuffer()
 	for (int i = 0; i < 540; i++)
 	{
 		indices[index] = i;
-		indices[index + 1] = i+1;
+		indices[index + 1] = i + 1;
 		index += 2;
 	}
 	indices[359] = 0;

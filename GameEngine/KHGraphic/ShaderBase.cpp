@@ -68,8 +68,8 @@ void ShaderBase::CreateShader(const wchar_t* wPath, const D3D_SHADER_MACRO* pDef
 	//플래그 설정
 	DWORD dwShaderFlags = D3DCOMPILE_ENABLE_STRICTNESS;
 //#if defined(DEBUG) || defined(_DEBUG)
-	//dwShaderFlags |= D3DCOMPILE_DEBUG;
-	//dwShaderFlags |= D3DCOMPILE_SKIP_OPTIMIZATION;
+	dwShaderFlags |= D3DCOMPILE_DEBUG;
+	dwShaderFlags |= D3DCOMPILE_SKIP_OPTIMIZATION;
 //#endif 
 	dwShaderFlags |= D3DCOMPILE_OPTIMIZATION_LEVEL3;
 

@@ -256,6 +256,9 @@
     <Filter Include="소스 파일\Shader\HLSL\Render\Depth">
       <UniqueIdentifier>{653f353f-dac2-4382-ad6b-0fb2764473e6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Manager\Instance">
+      <UniqueIdentifier>{af0efde7-cb71-4136-afcb-46619234caf6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -489,6 +492,9 @@
     <ClInclude Include="CullingData.h">
       <Filter>소스 파일\RenderPass\SubPass\Culling</Filter>
     </ClInclude>
+    <ClInclude Include="InstanceManager.h">
+      <Filter>소스 파일\Manager\Instance</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="D3D11Graphic.cpp">
@@ -610,6 +616,9 @@
     </ClCompile>
     <ClCompile Include="CullingPass.cpp">
       <Filter>소스 파일\RenderPass\SubPass\Culling</Filter>
+    </ClCompile>
+    <ClCompile Include="InstanceManager.cpp">
+      <Filter>소스 파일\Manager\Instance</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

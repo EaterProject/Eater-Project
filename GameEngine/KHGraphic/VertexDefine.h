@@ -91,7 +91,8 @@ namespace VertexInput
 	struct ParticleInstance
 	{
 		DirectX::SimpleMath::Matrix World;
-		DirectX::SimpleMath::Matrix TexTransform;
+		DirectX::SimpleMath::Vector2 TexScale;
+		DirectX::SimpleMath::Vector2 TexPos;
 		DirectX::SimpleMath::Vector4 Color;
 	};
 #pragma endregion Instance CVertex Data Struct

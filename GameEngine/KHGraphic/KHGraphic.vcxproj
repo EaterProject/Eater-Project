@@ -219,6 +219,7 @@ copy/Y "$(ProjectDir)Export\*.h"   "$(SolutionDir)Library\inc\Graphic"</Command>
     <ClInclude Include="DeferredPass.h" />
     <ClInclude Include="DepthStencil.h" />
     <ClInclude Include="InstanceBufferDefine.h" />
+    <ClInclude Include="InstanceManager.h" />
     <ClInclude Include="LightPass.h" />
     <ClInclude Include="MathDefine.h" />
     <ClInclude Include="OITPass.h" />
@@ -285,6 +286,7 @@ copy/Y "$(ProjectDir)Export\*.h"   "$(SolutionDir)Library\inc\Graphic"</Command>
     <ClCompile Include="GraphicResource.cpp" />
     <ClCompile Include="GraphicState.cpp" />
     <ClCompile Include="GraphicView.cpp" />
+    <ClCompile Include="InstanceManager.cpp" />
     <ClCompile Include="KHGraphic.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="LightPass.cpp" />

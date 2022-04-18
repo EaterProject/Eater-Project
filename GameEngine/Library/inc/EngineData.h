@@ -192,7 +192,9 @@ public:
 	bool Playing;
 	Vector4 Color;
 
-	Matrix* Tex;
+	Vector2 TexScale;
+	Vector2 TexPos;
+
 	Matrix* World;
 };
 

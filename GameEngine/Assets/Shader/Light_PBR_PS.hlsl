@@ -83,7 +83,7 @@ float4 Light_PBR_PS(ScreenPixelIn pin) : SV_TARGET
     litColor += PBR_SpotLight(ViewDirection, normal, gSpotLights, gSpotLightCount, positionRT.xyz,
                                 albedo, ao, roughness, metallic, shadows);
     
-    litColor += emissive * 7.0f;
+    litColor += emissive;
 
     return float4(litColor, 1.0f);
 }

@@ -62,7 +62,7 @@ float4 Light_IBL_PS(ScreenPixelIn pin) : SV_TARGET
     float shadows = 1.0f;
 	
 #ifdef SHADOW
-    //shadowRT.xyz /= shadowRT.w;
+    shadowRT.xyz /= shadowRT.w;
     shadows = CalcShadowFactor(gSamBorderComparisonLinearPoint, gShadowMap, float3(shadowRT.xyz));
 #endif	
 	

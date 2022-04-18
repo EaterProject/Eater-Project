@@ -121,15 +121,6 @@ void LightPass::SetOption(RenderOption* renderOption)
 		break;
 	}
 
-	//if (renderOption->RenderingOption & RENDER_IBL)
-	//{
-	//	SetIBLEnvironmentMapResource(true);
-	//}
-	//else
-	//{
-	//	SetIBLEnvironmentMapResource(false);
-	//}
-
 	Reset();
 }
 

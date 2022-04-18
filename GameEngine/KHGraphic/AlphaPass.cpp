@@ -269,7 +269,8 @@ void AlphaPass::ParticleUpdate(ParticleData* particleSystem)
 
 		// Vertex Input Data »ðÀÔ..
 		m_ParticleData.World = particleWorld;
-		m_ParticleData.TexTransform = *particle->Tex;
+		m_ParticleData.TexScale = particle->TexScale;
+		m_ParticleData.TexPos = particle->TexPos;
 		m_ParticleData.Color = particle->Color;
 
 		m_ParticleInstance.push_back(m_ParticleData);

@@ -430,13 +430,18 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rend
 	{
 		TerrainRenderBuffer* terrain = meshData->m_Terrain;
 
+		const Matrix& TexTM = *terrain->m_Tex;
+
 		// Vertex Shader Update..
 		CB_StaticMesh objectBuf;
 		objectBuf.gWorld = world;
 		objectBuf.gInvWorld = invWorld;
 		objectBuf.gView = view;
 		objectBuf.gProj = proj;
-		objectBuf.gTexTransform = *terrain->m_Tex;
+		objectBuf.gTexScale.x = TexTM._11;
+		objectBuf.gTexScale.y = TexTM._22;
+		objectBuf.gTexPos.x = TexTM._41;
+		objectBuf.gTexPos.y = TexTM._42;
 		m_TerrainVS->ConstantBufferUpdate(&objectBuf);
 
 		m_TerrainVS->Update();
