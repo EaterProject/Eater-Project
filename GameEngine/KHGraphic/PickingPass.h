@@ -34,6 +34,7 @@ private:
 	RenderTexture* m_ID_RT;
 	RenderTexture* m_ID_Copy_RT;
 
+private:
 	ID3D11Texture2D* m_ID_Tex2D;
 	ID3D11Texture2D* m_ID_CopyTex2D;
 	ID3D11RenderTargetView* m_ID_RTV;
@@ -44,6 +45,7 @@ private:
 	D3D11_VIEWPORT* m_Screen_VP;
 	D3D11_BOX m_PickPointBox;
 
+private:
 	VertexInput::MeshIDInstance m_MeshData;
 	std::vector<VertexInput::MeshIDInstance> m_MeshInstance;
 

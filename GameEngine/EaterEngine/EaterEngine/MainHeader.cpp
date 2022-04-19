@@ -124,11 +124,6 @@ int LoadAssetsCount()
   return gGameEngine->LoadMeshCount();
 }
 
-void BakeShadowMap(std::string mPath)
-{
-	gGameEngine->BakeShadowMap(mPath);
-}
-
 void BakeEnvironmentMap(std::string mPath)
 {
 	gGameEngine->BakeEnvironmentMap(mPath);
@@ -137,11 +132,6 @@ void BakeEnvironmentMap(std::string mPath)
 void BakeAnimation()
 {
 	gGameEngine->BakeAnimation();
-}
-
-void SetShadowMap(std::string mPath)
-{
-	gGameEngine->SetShadowMap(mPath);
 }
 
 void SetEnvironmentMap(std::string mPath)

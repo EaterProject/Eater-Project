@@ -208,13 +208,17 @@ void CullingPass::OcclusionCullingQuery()
 		m_ColliderList[m_RenderCount++] = m_ColliderData;
 	}
 
-	// Hiz Cull
-	D3D11_MAPPED_SUBRESOURCE pCullingBoundsBufferMapped;
-	g_Context->Map(m_Collider_Buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &pCullingBoundsBufferMapped);
+	// Mapping SubResource Data..
+	D3D11_MAPPED_SUBRESOURCE mappedResource;
+	ZeroMemory(&mappedResource, sizeof(D3D11_MAPPED_SUBRESOURCE));
+
+	// GPU Access Lock Buffer Data..
+	g_Context->Map(m_Collider_Buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
 	
-	// 모든 Rendering Object Collider Data Map & UnMap
-	memcpy(pCullingBoundsBufferMapped.pData, &m_ColliderList[0], sizeof(Vector4) * m_RenderCount);
+	// Copy Resource Data..
+	memcpy(mappedResource.pData, &m_ColliderList[0], sizeof(Vector4) * m_RenderCount);
 	
+	// GPU Access UnLock Buffer Data..
 	g_Context->Unmap(m_Collider_Buffer, 0);
 
 	// Culling Constant Buffer Update..
@@ -251,12 +255,17 @@ void CullingPass::DrawStateUpdate()
 	// GPU -> CPU Culling Result Data Copy
 	g_Context->CopyResource(m_ResultCopy_Buffer, m_Culling_Buffer);
 
-	D3D11_MAPPED_SUBRESOURCE MappedResults;
-	g_Context->Map(m_ResultCopy_Buffer, 0, D3D11_MAP_READ, 0, &MappedResults);
+	// Mapping SubResource Data..
+	D3D11_MAPPED_SUBRESOURCE mappedResource;
+	ZeroMemory(&mappedResource, sizeof(D3D11_MAPPED_SUBRESOURCE));
+	
+	// GPU Access Lock Buffer Data..
+	g_Context->Map(m_ResultCopy_Buffer, 0, D3D11_MAP_READ, 0, &mappedResource);
 
-	// 해당 Result Data를 통해 Culling 여부 판단..
-	memcpy(&m_ResultList[0], (float*)MappedResults.pData, sizeof(float) * m_RenderCount);
+	// Copy Resource Data..
+	memcpy(&m_ResultList[0], (float*)mappedResource.pData, sizeof(float) * m_RenderCount);
 
+	// GPU Access UnLock Buffer Data..
 	g_Context->Unmap(m_ResultCopy_Buffer, 0);
 
 	// 실질적인 Render Count 초기화..

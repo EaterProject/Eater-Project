@@ -22,36 +22,35 @@ public:
 	void RenderUpdate(const InstanceRenderBuffer* instance, const RenderData* mesh);
 
 private:
-	void MeshInstanceUpdate(const std::vector<RenderData*>& meshlist);
-	void SkinMeshInstanceUpdate(const std::vector<RenderData*>& meshlist);
+	VertexShader* m_Mesh_VS;
+	VertexShader* m_MeshInst_VS;
+	VertexShader* m_Skin_VS;
+	VertexShader* m_SkinInst_VS;
+	VertexShader* m_Terrain_VS;
 
-private:
-	VertexShader* m_MeshVS;
-	VertexShader* m_MeshInstVS;
-	VertexShader* m_SkinVS;
-	VertexShader* m_SkinInstVS;
-	VertexShader* m_TerrainVS;
-
-	PixelShader* m_DeferredPS;
-	PixelShader* m_TerrainPS;
+	PixelShader* m_Deferred_PS;
+	PixelShader* m_Terrain_PS;
 
 	InstanceBuffer* m_Mesh_IB;
 	InstanceBuffer* m_SkinMesh_IB;
 
-	ID3D11DepthStencilView* m_DefaltDSV;
-	
-	ID3D11DepthStencilState* m_DefaltDSS;
-	ID3D11RasterizerState* m_SolidRS;
-	ID3D11BlendState* m_AlphaBlendBS;
+	RenderTexture* m_Albedo_RT;
+	RenderTexture* m_Emissive_RT;
+	RenderTexture* m_Normal_RT;
+	RenderTexture* m_Position_RT;
+	RenderTexture* m_NormalDepth_RT;
 
-	RenderTexture* m_AlbedoRT;
-	RenderTexture* m_EmissiveRT;
-	RenderTexture* m_NormalRT;
-	RenderTexture* m_PositionRT;
-	RenderTexture* m_NormalDepthRT;
+private:
+	std::vector<ID3D11RenderTargetView*> m_RTV_List;
+	ID3D11DepthStencilView* m_Defalt_DSV;
 
-	std::vector<ID3D11RenderTargetView*> m_RTVList;
+	ID3D11DepthStencilState* m_Defalt_DSS;
+	ID3D11RasterizerState* m_Solid_RS;
+	ID3D11BlendState* m_AlphaBlend_BS;
 
+	D3D11_VIEWPORT* m_Screen_VP;
+
+private:
 	RenderData* m_RenderData;
 
 	VertexInput::MeshInstance m_MeshData;
@@ -62,8 +61,5 @@ private:
 
 	UINT m_RenderCount = 0;
 	UINT m_InstanceCount = 0;
-	size_t m_InstanceStride = 0;
-
-	D3D11_VIEWPORT* m_ScreenVP;
 };
 

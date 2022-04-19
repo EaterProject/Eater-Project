@@ -24,6 +24,7 @@ private:
 
 	RenderTexture* m_OutPut_RT;
 
+private:
 	ID3D11RenderTargetView* m_OutPut_RTV;
 
 	D3D11_VIEWPORT* m_Screen_VP;

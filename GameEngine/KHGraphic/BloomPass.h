@@ -61,6 +61,7 @@ private:
 	RenderTexture* m_Downx144_RT1;
 	RenderTexture* m_Downx144_RT2;
 
+private:
 	ID3D11ShaderResourceView* m_Brightx4_SRV1;
 	ID3D11ShaderResourceView* m_Brightx4_SRV2;
 	ID3D11ShaderResourceView* m_Downx24_SRV1;
@@ -84,6 +85,7 @@ private:
 
 	D3D11_VIEWPORT* m_DownSample_VP;
 
+private:
 	SamplingData m_DownSampleData[3];
 
 	float m_Down4x4;

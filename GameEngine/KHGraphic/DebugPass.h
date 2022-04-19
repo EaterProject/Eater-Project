@@ -38,34 +38,35 @@ private:
 	Matrix LookAt_Matrix(Vector3 pos, Vector3 look);
 
 private:
-	VertexShader* m_DebugVS;
-	VertexShader* m_DebugIconVS;
-	VertexShader* m_DebugMRTVS;
-	PixelShader* m_DebugPS;
-	PixelShader* m_DebugColorPS;
-	PixelShader* m_DebugIconPS;
-	PixelShader* m_DebugMRTPS;
+	VertexShader* m_Debug_VS;
+	VertexShader* m_DebugIcon_VS;
+	VertexShader* m_DebugMRT_VS;
+	PixelShader* m_Debug_PS;
+	PixelShader* m_DebugColor_PS;
+	PixelShader* m_DebugIcon_PS;
+	PixelShader* m_DebugMRT_PS;
 
-	DrawBuffer* m_RayBuffer;
-	DrawBuffer* m_FrustumBuffer;
-	DrawBuffer* m_QuadBuffer;
-	DrawBuffer* m_AxisBuffer;
-	DrawBuffer* m_BoxBuffer;
-	DrawBuffer* m_CircleBuffer;
-	DrawBuffer* m_CircleSphereBuffer;
-	DrawBuffer* m_GridBuffer;
-	DrawBuffer* m_SphereBuffer;
-	DrawBuffer* m_IconBuffer;
+	DrawBuffer* m_Ray_DB;
+	DrawBuffer* m_Frustum_DB;
+	DrawBuffer* m_Quad_DB;
+	DrawBuffer* m_Axis_DB;
+	DrawBuffer* m_Box_DB;
+	DrawBuffer* m_Circle_DB;
+	DrawBuffer* m_CircleSphere_DB;
+	DrawBuffer* m_Grid_DB;
+	DrawBuffer* m_Sphere_DB;
+	DrawBuffer* m_Icon_DB;
 
-	DrawBuffer* m_DebugBuffer;
+	DrawBuffer* m_Debug_DB;
 
-	ID3D11RasterizerState* m_SolidRS;
-	ID3D11RasterizerState* m_WireRS;
-	ID3D11RasterizerState* m_NoCullRS;
-	ID3D11BlendState* m_AlphaBlendBS;
+private:
+	ID3D11RasterizerState* m_Solid_RS;
+	ID3D11RasterizerState* m_Wire_RS;
+	ID3D11RasterizerState* m_NoCull_RS;
+	ID3D11BlendState* m_AlphaBlend_BS;
 
-	ID3D11DepthStencilView* m_DefaltDSV;
-	ID3D11RenderTargetView* m_MainRTV;
+	ID3D11DepthStencilView* m_Defalt_DSV;
+	ID3D11RenderTargetView* m_Main_RTV;
 
 	ID3D11ShaderResourceView* m_DirectionalLightIcon;
 	ID3D11ShaderResourceView* m_PointLightIcon;
@@ -73,12 +74,12 @@ private:
 	ID3D11ShaderResourceView* m_ParticleIcon;
 	ID3D11ShaderResourceView* m_CamerIcon;
 
-	ID3D11ShaderResourceView* m_AlbedoRT;
-	ID3D11ShaderResourceView* m_EmissiveRT;
-	ID3D11ShaderResourceView* m_NormalRT;
-	ID3D11ShaderResourceView* m_PositionRT;
-	ID3D11ShaderResourceView* m_NormalDepthRT;
-	ID3D11ShaderResourceView* m_BloomRT;
+	ID3D11ShaderResourceView* m_Albedo_RT;
+	ID3D11ShaderResourceView* m_Emissive_RT;
+	ID3D11ShaderResourceView* m_Normal_RT;
+	ID3D11ShaderResourceView* m_Position_RT;
+	ID3D11ShaderResourceView* m_NormalDepth_RT;
+	ID3D11ShaderResourceView* m_Bloom_RT;
 	ID3D11ShaderResourceView* m_ShadowMap;
 	ID3D11ShaderResourceView* m_SSAOMap;
 

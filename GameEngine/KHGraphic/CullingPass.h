@@ -34,17 +34,10 @@ private:
 	void MipMapCommandListReserve(const D3D11_TEXTURE2D_DESC* hizDesc);
 
 private:
-	std::vector<RenderData*> CullingRenderMeshList;
-
-	Cull::Frustum m_Frustum;
-	RenderData* m_RenderData;
-	BoundingSphere m_Sphere;
-	Vector4 m_ColliderData;
-
 	VertexShader* m_Screen_VS;
-	PixelShader* m_HizMipMap_PS;
-
 	VertexShader* m_Depth_VS;
+
+	PixelShader* m_HizMipMap_PS;
 	PixelShader* m_Depth_PS;
 
 	ComputeShader* m_HizCull_CS;
@@ -55,19 +48,13 @@ private:
 
 	D3D11_VIEWPORT* m_Hiz_VP;
 
-
-
-
+private:
 	ID3D11CommandList* m_MipMap_CommandList;
-
-	UINT m_MaxMipLevel;
 
 	ID3D11Texture2D* m_Hiz_Buffer;
 	ID3D11ShaderResourceView* m_Hiz_SRV;
 	std::vector<ID3D11RenderTargetView*> m_MipMap_RTV;
 	std::vector<ID3D11ShaderResourceView*> m_MipMap_SRV;
-	std::vector<Vector4> m_ColliderList;
-	std::vector<float> m_ResultList;
 
 	ID3D11Buffer* m_Collider_Buffer;
 	ID3D11Buffer* m_Culling_Buffer;
@@ -78,6 +65,18 @@ private:
 
 	ID3D11DepthStencilView* m_HizDepth_DSV;
 
+private:
+	std::vector<RenderData*> CullingRenderMeshList;
+
+	RenderData* m_RenderData;
+	Cull::Frustum m_Frustum;
+	BoundingSphere m_Sphere;
+	Vector4 m_ColliderData;
+
+	std::vector<Vector4> m_ColliderList;
+	std::vector<float> m_ResultList;
+
+	UINT m_MaxMipLevel = 0;
 	UINT m_RenderCount = 0;
 	UINT m_RenderMaxCount = 0;
 

@@ -25,21 +25,22 @@ private:
 	void SetFrustumFarCorners(int width, int height);
 
 private:
-	DrawBuffer* m_SsaoDB;
+	VertexShader* m_Ssao_VS;
+	PixelShader* m_Ssao_PS;
+	VertexShader* m_Blur_VS;
+	PixelShader* m_Blur_PS;
 
-	VertexShader* m_SsaoVS;
-	PixelShader* m_SsaoPS;
-	VertexShader* m_BlurVS;
-	PixelShader* m_BlurPS;
+	DrawBuffer* m_Ssao_DB;
 
-	RenderTexture* m_SsaoRT;
-	RenderTexture* m_SsaoBlurRT;
+	RenderTexture* m_Ssao_RT;
+	RenderTexture* m_SsaoBlur_RT;
 
-	ID3D11RenderTargetView* m_SsaoRTV;
-	ID3D11RenderTargetView* m_SsaoBlurRTV;
+private:
+	ID3D11RenderTargetView* m_Ssao_RTV;
+	ID3D11RenderTargetView* m_SsaoBlur_RTV;
 
-	ID3D11ShaderResourceView* m_SsaoSRV;
-	ID3D11ShaderResourceView* m_SsaoBlurSRV;
+	ID3D11ShaderResourceView* m_Ssao_SRV;
+	ID3D11ShaderResourceView* m_SsaoBlur_SRV;
 
-	D3D11_VIEWPORT* m_HalfScreenVP;
+	D3D11_VIEWPORT* m_HalfScreen_VP;
 };

@@ -55,7 +55,7 @@ void AlphaPass::Start(int width, int height)
 	m_ParticleInstVS = g_Shader->GetShader("Particle_Instance_VS");
 	m_ParticlePS = g_Shader->GetShader("OIT_Particle_PS");
 
-	m_MeshInstVS = g_Shader->GetShader("StaticMesh_Instance_VS");
+	m_MeshInst_VS = g_Shader->GetShader("StaticMesh_Instance_VS");
 	m_MeshPS = g_Shader->GetShader("Deferred_PBR_PS");
 
 	m_Mesh_IB = g_Resource->GetInstanceBuffer<IB_Mesh>();

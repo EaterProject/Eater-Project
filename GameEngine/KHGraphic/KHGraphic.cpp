@@ -73,11 +73,6 @@ void KHGraphic::SetGlobalData(GlobalData* globalData)
 	m_RenderManager->SetGlobalData(globalData);
 }
 
-void KHGraphic::SetShadowMap(TextureBuffer* resource)
-{
-	m_RenderManager->SetShadowMap(resource);
-}
-
 void KHGraphic::SetEnvironmentMap(EnvironmentBuffer* resource)
 {
 	m_RenderManager->SetEnvironmentMap(resource);
@@ -166,12 +161,6 @@ void KHGraphic::CreateMeshBuffer(ParserData::CMesh* mesh, MeshBuffer** ppResourc
 void KHGraphic::CreateAnimationBuffer(ModelData* model, ModelAnimationData* animation, AnimationBuffer** ppResource)
 {
 	m_FactoryManager->CreateAnimationBuffer(model, animation, ppResource);
-}
-
-void KHGraphic::BakeShadowMap(std::string path)
-{
-	m_RenderManager->BakeShadowMap();
-	m_FactoryManager->BakeShadowMap(path);
 }
 
 void KHGraphic::BakeEnvironmentMap(TextureBuffer* environment, EnvironmentBuffer** ppResource)
