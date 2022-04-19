@@ -4,6 +4,7 @@
 #include <unordered_map>
 
 class GraphicEngineManager;
+class ModelAnimationData;
 class Animation;
 
 class AnimationManager

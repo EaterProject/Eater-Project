@@ -20,7 +20,6 @@
 
 
 std::map<std::string, ModelData*>			LoadManager::ModelDataList;
-std::map<std::string, ModelAnimationData*>	LoadManager::AnimationDataList;
 
 std::map<std::string, TextureBuffer*>		LoadManager::TextureList;
 std::map<std::string, EnvironmentBuffer*>	LoadManager::EnvironmentList;
@@ -31,7 +30,7 @@ std::map<std::string, Animation*>			LoadManager::AnimationList;
 
 std::map<std::string, CameraAnimation*>		LoadManager::CamAnimationList;
 std::map<std::string, ColliderBuffer*>		LoadManager::ColliderBufferList;		
-std::vector<OneTriangle*>					LoadManager::NavMeshData;		
+//std::vector<OneTriangle*>					LoadManager::NavMeshData;		
 
 LoadManager::LoadManager()
 {
@@ -67,15 +66,15 @@ void LoadManager::Initialize(GraphicEngineManager* graphic, CRITICAL_SECTION* _c
 void LoadManager::Release()
 {
 	///모델 데이터 삭제
-	auto ModelStart	= ModelList.begin();
-	auto ModelEnd	= ModelList.end();
+	auto ModelStart	= ModelDataList.begin();
+	auto ModelEnd	= ModelDataList.end();
 	for (ModelStart; ModelStart != ModelEnd; ModelStart++)
 	{
 		ModelData* Data = ModelStart->second;
 		ModelStart->second = nullptr;
 		delete Data;
 	}
-	ModelList.clear();
+	ModelDataList.clear();
 
 	///텍스쳐 버퍼 삭제
 	auto TextureListStart	= TextureList.begin();
@@ -104,9 +103,9 @@ void LoadManager::Release()
 	auto AnimationListEnd	= AnimationList.end();
 	for (AnimationListStart; AnimationListStart != AnimationListEnd; AnimationListStart++)
 	{
-		ModelAnimationData* Data = AnimationListStart->second;
+		Animation* Data = AnimationListStart->second;
 		AnimationListStart->second = nullptr;
-		delete Data;
+		Data->Release();
 	}
 	AnimationList.clear();
 
@@ -176,11 +175,11 @@ int LoadManager::GetMaterialCount()
 int LoadManager::GetAnimationCount()
 {
 	int Count = 0;
-	std::map<std::string, ModelAnimationData*>::iterator Begin_it = AnimationDataList.begin();
-	for (Begin_it; Begin_it != AnimationDataList.end(); Begin_it++)
+	std::map<std::string, Animation*>::iterator Begin_it = AnimationList.begin();
+	for (Begin_it; Begin_it != AnimationList.end(); Begin_it++)
 	{
-		ModelAnimationData* Data = Begin_it->second;
-		Count += (int)Data->AnimList.size();
+		Animation* Data = Begin_it->second;
+		Count += Data->GetAnimationCount();
 	}
 	return Count;
 }
@@ -349,15 +348,15 @@ ColliderBuffer* LoadManager::GetColliderBuffer(std::string Path)
 	}
 }
 
-std::vector<OneTriangle*>* LoadManager::GetNavMeshData()
-{
-	return &NavMeshData;
-}
+//std::vector<OneTriangle*>* LoadManager::GetNavMeshData()
+//{
+//	return &NavMeshData;
+//}
 
 ModelAnimationData* LoadManager::GetAnimationData(std::string Path)
 {
-	std::map<std::string, ModelAnimationData*>::iterator End_it = AnimationDataList.end();
-	std::map<std::string, ModelAnimationData*>::iterator Find_it = AnimationDataList.find(Path);
+	std::map<std::string, Animation*>::iterator End_it = AnimationList.end();
+	std::map<std::string, Animation*>::iterator Find_it = AnimationList.find(Path);
 	if (End_it == Find_it)
 	{
 		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ ERROR ][ Engine ][ GetAnimation ] '%s'가 없습니다.", Path.c_str());
@@ -365,7 +364,7 @@ ModelAnimationData* LoadManager::GetAnimationData(std::string Path)
 	}
 	else
 	{
-		return Find_it->second;
+		return Find_it->second->m_AnimationData;
 	}
 }
 

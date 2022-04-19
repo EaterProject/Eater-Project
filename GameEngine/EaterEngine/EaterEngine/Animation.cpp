@@ -11,6 +11,9 @@ Animation::Animation()
 	m_AnimationBuffer = new AnimationBuffer();
 	m_AnimationBuffer->Name = "None";
 
+	m_AnimationData = new ModelAnimationData();
+	m_AnimationData->ModelName = "None";
+
 	// Animation 등록..
 	AnimationManager::PushAnimation(this);
 
@@ -24,6 +27,11 @@ Animation::~Animation()
 	AnimationManager::DeleteAnimation(m_AnimationBuffer->BufferIndex);
 }
 
+void Animation::BakeAnimation()
+{
+
+}
+
 void Animation::Release()
 {
 	// Graphic 내부에 있는 해당 Animation Buffer 삭제..
@@ -33,7 +41,7 @@ void Animation::Release()
 	SAFE_DELETE(m_AnimationBuffer);
 }
 
-void Animation::SetAnimation(ModelAnimationData* animation)
+int Animation::GetAnimationCount()
 {
-	m_AnimationData = animation;
+	return (int)m_AnimationData->AnimList.size();
 }

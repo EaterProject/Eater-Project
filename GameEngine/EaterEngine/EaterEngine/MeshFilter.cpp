@@ -171,9 +171,17 @@ void MeshFilter::SetORMTextureName(std::string mTextureName)
 
 void MeshFilter::SetAnimationName(std::string mAnimeName)
 {
-	isLoad_Animation = true;
-	AnimationName = mAnimeName;
-	CheckAnimation();
+	if (isLoad_Animation == false)
+	{
+		isLoad_Animation = true;
+		AnimationName = mAnimeName;
+
+	}
+	else
+	{
+		AnimationName = mAnimeName;
+		CheckAnimation();
+	}
 }
 
 void MeshFilter::SetEmissiveFactor(float emissiveFactor)
@@ -273,16 +281,17 @@ void MeshFilter::CheckTexture()
 
 void MeshFilter::CheckAnimation()
 {
-	if (isLoad_Animation == false) { return; }
-
-	Animation* animation = LoadManager::GetAnimation(AnimationName);
-	AnimationController* Controller = gameobject->GetComponent<AnimationController>();
-
-	//가져온 컨퍼넌트에 본 정보를 넘겨준다
-	if (Controller != nullptr)
+	if (AnimationName.empty() == false)
 	{
-		Controller->SetBoneList(&BoneList);
-		Controller->SetAnimation(animation);
+		Animation* animation = LoadManager::GetAnimation(AnimationName);
+		AnimationController* Controller = gameobject->GetComponent<AnimationController>();
+
+		//가져온 컨퍼넌트에 본 정보를 넘겨준다
+		if (Controller != nullptr)
+		{
+			Controller->SetBoneList(&BoneList);
+			Controller->SetAnimation(animation);
+		}
 	}
 }
 

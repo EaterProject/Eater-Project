@@ -8,6 +8,8 @@
 #include "GraphicEngineManager.h"
 #include "Material.h"
 #include "Mesh.h"
+#include "Animation.h"
+
 #include <filesystem>
 #include <iostream>
 
@@ -360,7 +362,7 @@ std::string FBXManager::GetSaveName(std::string& Path)
 	}
 }
 
-void FBXManager::CreateSaveMesh(ParserData::CModel* mMesh, ModelData* SaveMesh, std::string& Path)
+void FBXManager::CreateSaveMesh(ParserData::CModel* mMesh, std::string& Path)
 {
 	std::vector<LoadMeshData*> BaseMeshList;
 	std::vector<LoadMeshData*> SkinMeshList;
@@ -368,6 +370,12 @@ void FBXManager::CreateSaveMesh(ParserData::CModel* mMesh, ModelData* SaveMesh, 
 
 	// 현재 파일 이름 설정..
 	nowFileName = GetSaveName(Path);
+
+	// 새로운 매쉬 생성..
+	ModelData* SaveMesh = new ModelData();
+
+	// Mesh Name 저장..
+	SaveMesh->Name = nowFileName;
 
 	//모든 매쉬 조사
 	int MeshSize = (int)mMesh->m_MeshList.size();
@@ -456,17 +464,16 @@ void FBXManager::Load(std::string& Path, UINT parsingMode)
 void FBXManager::LoadFile(std::string& Path, UINT parsingMode)
 {
 	ParserData::CModel* mMesh = FBXLoad->LoadModel(Path, parsingMode);
-	ModelData* SaveMesh = new ModelData();
-	LoadAnimation(SaveMesh, mMesh, Path);
+	LoadAnimation(mMesh, Path);
 
 	//애니메이션만 읽는다면 여기서 종료
 	if (isAnimation == true) { return; }
 
 	//로드한 매쉬를 연결시킨다
-	CreateSaveMesh(mMesh, SaveMesh,Path);
+	CreateSaveMesh(mMesh, Path);
 }
 
-void FBXManager::LoadAnimation(ModelData* SaveMesh, ParserData::CModel* MeshData, std::string& Path)
+void FBXManager::LoadAnimation(ParserData::CModel* MeshData, std::string& Path)
 {
 	//if (isAnimation == false) { return; }
 
@@ -478,23 +485,24 @@ void FBXManager::LoadAnimation(ModelData* SaveMesh, ParserData::CModel* MeshData
 	//첫번째키 생성
 	std::string::size_type start	= Path.rfind("/") + 1;
 	std::string::size_type End		= Path.rfind('+') - start;
-	std::string SaveName			= Path.substr(start, End);
-
-	// Mesh Name 저장..
-	SaveMesh->Name = SaveName;
+	std::string MeshName			= Path.substr(start, End);
 
 	ModelAnimationData* Data = nullptr;
 
 	//애니메이션이 없는경우 생성
-	if (LoadManager::AnimationDataList.find(SaveName) == LoadManager::AnimationDataList.end())
+	if (LoadManager::AnimationList.find(MeshName) == LoadManager::AnimationList.end())
 	{
-		Data = new ModelAnimationData();
+		Animation* animation = new Animation();
+		animation->Name = MeshName;
 
-		LoadManager::AnimationDataList.insert({ SaveName, Data });
+		Data = animation->m_AnimationData;
+		Data->ModelName = MeshName;
+
+		LoadManager::AnimationList.insert({ MeshName, animation });
 	}
 	else
 	{
-		Data = LoadManager::AnimationDataList[SaveName];
+		Data = LoadManager::GetAnimationData(MeshName);
 	}
 
 	//두번째 키 생성
@@ -508,5 +516,3 @@ void FBXManager::LoadAnimation(ModelData* SaveMesh, ParserData::CModel* MeshData
 
 	Data->AnimList.insert({ key, std::move(MeshData->m_ModelAnimation) });
 }
-
-

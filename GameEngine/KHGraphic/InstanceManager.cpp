@@ -1,5 +1,6 @@
 #include "DirectDefine.h"
 #include "VertexDefine.h"
+#include "GraphicResource.h"
 #include "DrawBuffer.h"
 #include "InstanceManager.h"
 

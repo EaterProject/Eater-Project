@@ -45,7 +45,7 @@ void EATERManager::Initialize(GraphicEngineManager* Graphic, CRITICAL_SECTION* _
 	mEaterScene		= new Eater_LoadScene();
 
 	mEaterMaterial->Initialize();
-	mEaterMesh->Initialize();
+	mEaterMesh->Initialize(Graphic, _cs);
 	mEaterScene;
 	mEaterBuffer->Initialize(Graphic, _cs);
 }

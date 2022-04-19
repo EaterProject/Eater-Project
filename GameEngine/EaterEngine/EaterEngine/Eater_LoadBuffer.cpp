@@ -175,23 +175,23 @@ void Eater_LoadBuffer::LoadPositionBuffer(int index, ColliderBuffer* mesh)
 
 void Eater_LoadBuffer::LoadNavigationBuffer(int index)
 {
-	int Count = EATER_GET_LIST_CHOICE(index, "TRIANGLE");
-	LoadManager::NavMeshData.resize(Count);
-	for (int i = 0; i < Count; i++)
-	{
-		OneTriangle* OneData = new OneTriangle();
-		std::vector<float> Data;
-		EATER_GET_LIST(&Data, i);
-		OneData->Index = Data[0];
-		OneData->VertexPos[0] = { Data[1],Data[2] ,Data[3] };
-		OneData->VertexPos[1] = { Data[4],Data[5] ,Data[6] };
-		OneData->VertexPos[2] = { Data[7],Data[8] ,Data[9] };
-		OneData->CenterPoint = { Data[10],Data[11] ,Data[12] };
-		OneData->FriendFace[0] = Data[13];
-		OneData->FriendFace[1] = Data[14];
-		OneData->FriendFace[2] = Data[15];
-		LoadManager::NavMeshData[i] = OneData;
-	}
+	//int Count = EATER_GET_LIST_CHOICE(index, "TRIANGLE");
+	//LoadManager::NavMeshData.resize(Count);
+	//for (int i = 0; i < Count; i++)
+	//{
+	//	OneTriangle* OneData = new OneTriangle();
+	//	std::vector<float> Data;
+	//	EATER_GET_LIST(&Data, i);
+	//	OneData->Index = Data[0];
+	//	OneData->VertexPos[0] = { Data[1],Data[2] ,Data[3] };
+	//	OneData->VertexPos[1] = { Data[4],Data[5] ,Data[6] };
+	//	OneData->VertexPos[2] = { Data[7],Data[8] ,Data[9] };
+	//	OneData->CenterPoint = { Data[10],Data[11] ,Data[12] };
+	//	OneData->FriendFace[0] = Data[13];
+	//	OneData->FriendFace[1] = Data[14];
+	//	OneData->FriendFace[2] = Data[15];
+	//	LoadManager::NavMeshData[i] = OneData;
+	//}
 }
 
 void Eater_LoadBuffer::LoadIndex(int index, ParserData::CMesh* mMesh)

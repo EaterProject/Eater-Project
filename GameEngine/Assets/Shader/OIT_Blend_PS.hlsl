@@ -5,7 +5,7 @@ StructuredBuffer<FLStaticNode> gPieceLinkBuffer : register(t0);
 ByteAddressBuffer gFirstOffsetBuffer : register(t1);
 Texture2D gBackGround : register(t2);
 
-#define MAX_SORTED_PIXELS 10
+#define MAX_SORTED_PIXELS 50
 
 static FragmentData gSortedPixels[MAX_SORTED_PIXELS];
 
