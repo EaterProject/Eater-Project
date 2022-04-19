@@ -19,7 +19,6 @@
 
 
 std::map<std::string, ModelData*>			LoadManager::ModelDataList;
-std::map<std::string, ModelAnimationData*>	LoadManager::AnimationDataList;
 
 std::map<std::string, TextureBuffer*>		LoadManager::TextureList;
 std::map<std::string, EnvironmentBuffer*>	LoadManager::EnvironmentList;
@@ -148,11 +147,11 @@ int LoadManager::GetMaterialCount()
 int LoadManager::GetAnimationCount()
 {
 	int Count = 0;
-	std::map<std::string, ModelAnimationData*>::iterator Begin_it = AnimationDataList.begin();
-	for (Begin_it; Begin_it != AnimationDataList.end(); Begin_it++)
+	std::map<std::string, Animation*>::iterator Begin_it = AnimationList.begin();
+	for (Begin_it; Begin_it != AnimationList.end(); Begin_it++)
 	{
-		ModelAnimationData* Data = Begin_it->second;
-		Count += (int)Data->AnimList.size();
+		Animation* Data = Begin_it->second;
+		Count += Data->GetAnimationCount();
 	}
 	return Count;
 }
@@ -307,8 +306,8 @@ CameraAnimation* LoadManager::GetCamAnimation(std::string Path)
 
 ModelAnimationData* LoadManager::GetAnimationData(std::string Path)
 {
-	std::map<std::string, ModelAnimationData*>::iterator End_it = AnimationDataList.end();
-	std::map<std::string, ModelAnimationData*>::iterator Find_it = AnimationDataList.find(Path);
+	std::map<std::string, Animation*>::iterator End_it = AnimationList.end();
+	std::map<std::string, Animation*>::iterator Find_it = AnimationList.find(Path);
 	if (End_it == Find_it)
 	{
 		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ ERROR ][ Engine ][ GetAnimation ] '%s'가 없습니다.", Path.c_str());
@@ -316,7 +315,7 @@ ModelAnimationData* LoadManager::GetAnimationData(std::string Path)
 	}
 	else
 	{
-		return Find_it->second;
+		return Find_it->second->m_AnimationData;
 	}
 }
 

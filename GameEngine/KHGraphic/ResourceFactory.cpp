@@ -171,6 +171,7 @@ void GraphicResourceFactory::CreateAnimationBuffer(ModelData* model, ModelAnimat
 	// 새로 생성한 Animation Buffer 삽입..
 	AnimationBuffer* animationBuf = *ppResource;
 	animationBuf->FrameOffset = row_offset;
+	animationBuf->AnimationOffset.clear();
 	animationBuf->AnimationOffset.push_back(total_offset);
 
 	(*ppResource) = animationBuf;
@@ -230,7 +231,10 @@ void GraphicResourceFactory::CreateAnimationBuffer(ModelData* model, ModelAnimat
 
 	/// Buffer 생성..
 	ID3D11Buffer* buffer = nullptr;
-	ID3D11ShaderResourceView* srv = nullptr;
+	ID3D11ShaderResourceView* srv = (ID3D11ShaderResourceView*)animationBuf->pAnimationBuf;
+
+	// 이전 Animation Buffer 제거..
+	RELEASE_COM(srv);
 
 	m_Result = g_Graphic->CreateBuffer(&bufferDesc, &initData, &buffer);
 

@@ -103,7 +103,6 @@ private:
 
 private:
 	static std::map<std::string, ModelData*>			ModelDataList;
-	static std::map<std::string, ModelAnimationData*>	AnimationDataList;
 
 	static std::map<std::string, TextureBuffer*>		TextureList;
 	static std::map<std::string, EnvironmentBuffer*>	EnvironmentList;

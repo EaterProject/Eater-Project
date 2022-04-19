@@ -29,14 +29,14 @@ public:
 
 private:
 	void LoadFile(std::string& Path, UINT parsingMode);
-	void LoadAnimation(ModelData* SaveMesh, ParserData::CModel* MeshData,std::string& Path);
+	void LoadAnimation(ParserData::CModel* MeshData,std::string& Path);
 
 private:
 	void CheckSkinning(std::string& Path);
 	void CheckAnimation(std::string& Path);
 
 private:
-	void CreateSaveMesh(ParserData::CModel* mMesh , ModelData* SaveMesh,std::string& Path);
+	void CreateSaveMesh(ParserData::CModel* mMesh, std::string& Path);
 	void CreateKeyFrame(ParserData::CModelAnimation* Anime, int InputKeyCount);	//애니메이션 키생성
 	LoadMeshData* CreateBaseMesh(ParserData::CMesh* mMesh);	//기본 메쉬 생성
 	LoadMeshData* CreateSkinMesh(ParserData::CMesh* mMesh);	//스킨 매쉬 생성

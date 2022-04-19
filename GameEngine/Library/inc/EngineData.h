@@ -381,7 +381,7 @@ public:
 	{
 
 	}
-
+	std::string ModelName;
 	std::unordered_map<std::string, CModelAnimation*> AnimList;
 };
 
