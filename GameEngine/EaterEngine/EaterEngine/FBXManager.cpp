@@ -496,7 +496,7 @@ void FBXManager::LoadAnimation(ParserData::CModel* MeshData, std::string& Path)
 		animation->Name = MeshName;
 
 		Data = animation->m_AnimationData;
-		Data->ModelName = MeshName;
+		Data->Name = MeshName;
 
 		LoadManager::AnimationList.insert({ MeshName, animation });
 	}
@@ -513,6 +513,8 @@ void FBXManager::LoadAnimation(ParserData::CModel* MeshData, std::string& Path)
 
 	//데이터 저장
 	MeshData->m_ModelAnimation->m_Index = (int)Data->AnimList.size();
+
+	Data->AnimationCount++;
 
 	Data->AnimList.insert({ key, std::move(MeshData->m_ModelAnimation) });
 }

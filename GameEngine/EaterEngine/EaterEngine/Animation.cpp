@@ -12,7 +12,7 @@ Animation::Animation()
 	m_AnimationBuffer->Name = "None";
 
 	m_AnimationData = new ModelAnimationData();
-	m_AnimationData->ModelName = "None";
+	m_AnimationData->Name = "None";
 
 	// Animation µî·Ï..
 	AnimationManager::PushAnimation(this);

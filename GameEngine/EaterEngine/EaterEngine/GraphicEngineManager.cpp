@@ -44,29 +44,64 @@ void GraphicEngineManager::RenderSetting(RenderOption* renderOption)
 	GEngine->RenderSetting(renderOption);
 }
 
-void GraphicEngineManager::PushInstance(MeshData* mesh)
+void GraphicEngineManager::PushInstance(MeshData* meshData)
 {
-	GEngine->PushInstance(mesh);
+	GEngine->PushInstance(meshData);
 }
 
-void GraphicEngineManager::PushMesh(MeshBuffer* meshData)
+void GraphicEngineManager::PushMesh(MeshBuffer* mesh)
 {
-	GEngine->PushMesh(meshData);
+	GEngine->PushMesh(mesh);
 }
 
-void GraphicEngineManager::PushMaterial(MaterialBuffer* materialData)
+void GraphicEngineManager::PushMaterial(MaterialBuffer* material)
 {
-	GEngine->PushMaterial(materialData);
+	GEngine->PushMaterial(material);
 }
 
-void GraphicEngineManager::PushChangeInstance(MeshData* mesh)
+void GraphicEngineManager::PushAnimation(AnimationBuffer* animation)
 {
-	GEngine->PushChangeInstance(mesh);
+	GEngine->PushAnimation(animation);
 }
 
-void GraphicEngineManager::DeleteInstance(MeshData* mesh)
+void GraphicEngineManager::PushChangeInstance(MeshData* meshData)
 {
-	GEngine->DeleteInstance(mesh);
+	GEngine->PushChangeInstance(meshData);
+}
+
+void GraphicEngineManager::PushChangeMesh(MeshBuffer* mesh)
+{
+	GEngine->PushChangeMesh(mesh);
+}
+
+void GraphicEngineManager::PushChangeMaterial(MaterialBuffer* material)
+{
+	GEngine->PushChangeMaterial(material);
+}
+
+void GraphicEngineManager::PushChangeAnimation(AnimationBuffer* animation)
+{
+	GEngine->PushChangeAnimation(animation);
+}
+
+void GraphicEngineManager::DeleteInstance(MeshData* meshData)
+{
+	GEngine->DeleteInstance(meshData);
+}
+
+void GraphicEngineManager::DeleteMesh(MeshBuffer* mesh)
+{
+	GEngine->DeleteMesh(mesh);
+}
+
+void GraphicEngineManager::DeleteMaterial(MaterialBuffer* material)
+{
+	GEngine->DeleteMaterial(material);
+}
+
+void GraphicEngineManager::DeleteAnimation(AnimationBuffer* animation)
+{
+	GEngine->DeleteAnimation(animation);
 }
 
 void GraphicEngineManager::Render()

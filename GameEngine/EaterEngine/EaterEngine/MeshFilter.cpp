@@ -175,7 +175,6 @@ void MeshFilter::SetAnimationName(std::string mAnimeName)
 	{
 		isLoad_Animation = true;
 		AnimationName = mAnimeName;
-
 	}
 	else
 	{

@@ -10,7 +10,7 @@ cbuffer cbSkinMesh
     float4x4 gInvWorld           : packoffset(c4);
     float4x4 gView               : packoffset(c8);
     float4x4 gProj               : packoffset(c12);
-    float4x4 gBoneTransforms[96] : packoffset(c20);
+    float4x4 gBoneTransforms[96] : packoffset(c16);
 };
 
 MeshVertexOut SkinMesh_VS(MeshVertexIn vin)
