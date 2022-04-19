@@ -30,7 +30,7 @@ std::map<std::string, Animation*>			LoadManager::AnimationList;
 
 std::map<std::string, CameraAnimation*>		LoadManager::CamAnimationList;
 std::map<std::string, ColliderBuffer*>		LoadManager::ColliderBufferList;		
-std::vector<OneTriangle*>					LoadManager::NavMeshData;		
+//std::vector<OneTriangle*>					LoadManager::NavMeshData;		
 
 LoadManager::LoadManager()
 {
@@ -66,15 +66,15 @@ void LoadManager::Initialize(GraphicEngineManager* graphic, CRITICAL_SECTION* _c
 void LoadManager::Release()
 {
 	///모델 데이터 삭제
-	auto ModelStart	= ModelList.begin();
-	auto ModelEnd	= ModelList.end();
+	auto ModelStart	= ModelDataList.begin();
+	auto ModelEnd	= ModelDataList.end();
 	for (ModelStart; ModelStart != ModelEnd; ModelStart++)
 	{
 		ModelData* Data = ModelStart->second;
 		ModelStart->second = nullptr;
 		delete Data;
 	}
-	ModelList.clear();
+	ModelDataList.clear();
 
 	///텍스쳐 버퍼 삭제
 	auto TextureListStart	= TextureList.begin();
@@ -103,9 +103,9 @@ void LoadManager::Release()
 	auto AnimationListEnd	= AnimationList.end();
 	for (AnimationListStart; AnimationListStart != AnimationListEnd; AnimationListStart++)
 	{
-		ModelAnimationData* Data = AnimationListStart->second;
+		Animation* Data = AnimationListStart->second;
 		AnimationListStart->second = nullptr;
-		delete Data;
+		Data->Release();
 	}
 	AnimationList.clear();
 
@@ -348,10 +348,10 @@ ColliderBuffer* LoadManager::GetColliderBuffer(std::string Path)
 	}
 }
 
-std::vector<OneTriangle*>* LoadManager::GetNavMeshData()
-{
-	return &NavMeshData;
-}
+//std::vector<OneTriangle*>* LoadManager::GetNavMeshData()
+//{
+//	return &NavMeshData;
+//}
 
 ModelAnimationData* LoadManager::GetAnimationData(std::string Path)
 {
