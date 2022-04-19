@@ -32,30 +32,36 @@ public:
 
 public:
 	// Shadow Map Setting..
-	virtual void SetShadowMap(std::string path) abstract;
+	virtual void SetShadowMap(TextureBuffer* resource) abstract;
 
 	// Environment Map Setting..
-	virtual void SetEnvironmentMap(bool enable) abstract;
+	virtual void SetEnvironmentMap(EnvironmentBuffer* resource) abstract;
 
 public:
 	// Render Data Push..
 	virtual void PushInstance(MeshData* instance) abstract;
-	virtual void PushMaterial(MaterialBuffer* material) abstract;
 	virtual void PushMesh(MeshBuffer* mesh) abstract;
+	virtual void PushMaterial(MaterialBuffer* material) abstract;
+	virtual void PushAnimation(AnimationBuffer* animation) abstract;
 
 	// Render Data Change..
 	virtual void PushChangeInstance(MeshData* instance) abstract;
 	virtual void PushChangeMesh(MeshBuffer* mesh) abstract;
 	virtual void PushChangeMaterial(MaterialBuffer* material) abstract;
+	virtual void PushChangeAnimation(AnimationBuffer* animation) abstract;
 
 	// Render Data Delete..
 	virtual void DeleteInstance(MeshData* instance) abstract;
 	virtual void DeleteMesh(MeshBuffer* mesh) abstract;
 	virtual void DeleteMaterial(MaterialBuffer* material) abstract;
+	virtual void DeleteAnimation(AnimationBuffer* animation) abstract;
 
 public:
 	// Render Update..
 	virtual void Render() abstract;
 
 	virtual void* PickingRender(int x, int y) abstract;
+
+public:
+	virtual void BakeShadowMap() abstract;
 };

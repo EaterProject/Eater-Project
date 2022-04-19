@@ -166,7 +166,7 @@ void DebugPass::RenderUpdate(const RenderData* meshData)
 	const CameraData* cam = g_GlobalData->MainCamera_Data;
 	const MeshRenderBuffer* mesh = meshData->m_Mesh;
 
-	Matrix world = *meshData->m_ObjectData->World;
+	Matrix world = meshData->m_ObjectData->World;
 	const Matrix& invView = cam->CamInvView;
 	const Matrix& viewproj = cam->CamViewProj;
 
@@ -205,25 +205,25 @@ void DebugPass::RenderUpdate(const RenderData* meshData)
 		//g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
 
 		/// Bounding Sphere Draw..
-		g_Context->RSSetState(m_WireRS);
-		
-		BoundingSphere sphere;
-		mesh->m_MeshSubData->BoundSphere.Transform(sphere, world);
-		
-		object.gWorldViewProj = Matrix::CreateScale(sphere.Radius * 2.0f) * Matrix::CreateTranslation(sphere.Center) * viewproj;
-		
-		m_DebugVS->ConstantBufferUpdate(&object);
-		m_DebugVS->Update();
-		
-		option.gColor = Vector3(1.0f, 1.0f, 0.0f);
-		
-		m_DebugColorPS->ConstantBufferUpdate(&option);
-		m_DebugColorPS->Update();
-		
-		BufferUpdate(DEBUG_TYPE::DEBUG_SPHERE);
-		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
-		
-		g_Context->RSSetState(m_SolidRS);
+		//g_Context->RSSetState(m_WireRS);
+		//
+		//BoundingSphere sphere;
+		//mesh->m_MeshSubData->BoundSphere.Transform(sphere, world);
+		//
+		//object.gWorldViewProj = Matrix::CreateScale(sphere.Radius * 2.0f) * Matrix::CreateTranslation(sphere.Center) * viewproj;
+		//
+		//m_DebugVS->ConstantBufferUpdate(&object);
+		//m_DebugVS->Update();
+		//
+		//option.gColor = Vector3(1.0f, 1.0f, 0.0f);
+		//
+		//m_DebugColorPS->ConstantBufferUpdate(&option);
+		//m_DebugColorPS->Update();
+		//
+		//BufferUpdate(DEBUG_TYPE::DEBUG_SPHERE);
+		//g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+		//
+		//g_Context->RSSetState(m_SolidRS);
 		
 		/// Bounding Sphere Ray Draw..
 		//DebugData ray;

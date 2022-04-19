@@ -12,6 +12,7 @@ public:
 	virtual HRESULT SaveTextureDDS(ID3D11Resource* resource, const char* fileName) abstract;
 	virtual HRESULT SaveTextureDDS(ID3D11DepthStencilView* resource, const char* fileName) abstract;
 	virtual HRESULT SaveTextureDDS(ID3D11ShaderResourceView* resource, const char* fileName) abstract;
+	virtual HRESULT CaptureTextureDDS(const char* fileName) abstract;
 
 public:
 	virtual HRESULT CreateBuffer(D3D11_BUFFER_DESC* bufferDesc, D3D11_SUBRESOURCE_DATA* subData, ID3D11Buffer** buffer) abstract;

@@ -256,6 +256,9 @@
     <Filter Include="소스 파일\Shader\HLSL\Render\Depth">
       <UniqueIdentifier>{653f353f-dac2-4382-ad6b-0fb2764473e6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Manager\Instance">
+      <UniqueIdentifier>{af0efde7-cb71-4136-afcb-46619234caf6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -429,9 +432,6 @@
     <ClInclude Include="GeometryGenerator.h">
       <Filter>소스 파일\Helper</Filter>
     </ClInclude>
-    <ClInclude Include="MathHelper.h">
-      <Filter>소스 파일\Helper</Filter>
-    </ClInclude>
     <ClInclude Include="BakingFactoryBase.h">
       <Filter>소스 파일\Factory\Baking</Filter>
     </ClInclude>
@@ -491,6 +491,9 @@
     </ClInclude>
     <ClInclude Include="CullingData.h">
       <Filter>소스 파일\RenderPass\SubPass\Culling</Filter>
+    </ClInclude>
+    <ClInclude Include="InstanceManager.h">
+      <Filter>소스 파일\Manager\Instance</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -578,9 +581,6 @@
     <ClCompile Include="GeometryGenerator.cpp">
       <Filter>소스 파일\Helper</Filter>
     </ClCompile>
-    <ClCompile Include="MathHelper.cpp">
-      <Filter>소스 파일\Helper</Filter>
-    </ClCompile>
     <ClCompile Include="BakingFactory.cpp">
       <Filter>소스 파일\Factory\Baking</Filter>
     </ClCompile>
@@ -616,6 +616,9 @@
     </ClCompile>
     <ClCompile Include="CullingPass.cpp">
       <Filter>소스 파일\RenderPass\SubPass\Culling</Filter>
+    </ClCompile>
+    <ClCompile Include="InstanceManager.cpp">
+      <Filter>소스 파일\Manager\Instance</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -781,9 +784,6 @@
       <Filter>소스 파일\Shader\HLSL\Header</Filter>
     </None>
     <None Include="..\Assets\Shader\IBL_Header.hlsli">
-      <Filter>소스 파일\Shader\HLSL\Header</Filter>
-    </None>
-    <None Include="..\Assets\Shader\ConstantBuffer_Header.hlsli">
       <Filter>소스 파일\Shader\HLSL\Header</Filter>
     </None>
   </ItemGroup>

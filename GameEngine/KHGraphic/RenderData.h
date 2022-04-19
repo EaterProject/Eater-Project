@@ -10,12 +10,14 @@ public:
 	int m_InstanceLayerIndex = -1;				// Instance Layer Index..
 	int m_InstanceIndex = -1;					// Instance Index..
 
-	MeshRenderBuffer* m_Mesh;					// 변환된 Mesh Data..
-	MaterialRenderBuffer* m_Material;			// 변환된 Material Data..
-	TerrainRenderBuffer* m_TerrainBuffer;		// 변환된 Terrain Data..
+	MeshRenderBuffer*		m_Mesh;				// 변환된 Mesh Data..
+	MaterialRenderBuffer*	m_Material;			// 변환된 Material Data..
+	TerrainRenderBuffer*	m_Terrain;			// 변환된 Terrain Data..
+	AnimationRenderBuffer*	m_Animation;		// 변환된 Animation Data..
 
-	ObjectData* m_ObjectData;
-	ParticleData* m_ParticleData;
+	ObjectData*		m_ObjectData;
+	AnimationData*	m_AnimationData;
+	ParticleData*	m_ParticleData;
 };
 
 // 동일 Instance를 관리하기 위한 Instance Layer Class
@@ -39,12 +41,4 @@ public:
 	InstanceRenderBuffer* m_Instance;		// Instancing 기준이 되는 Mesh Data..
 
 	std::vector<RenderData*> m_MeshList;	// Instancing 기준에 해당하는 Render Data List..
-};
-
-// Mesh 전용 Instance Layer Class
-
-class MeshInstanceLayer : public InstanceLayer
-{
-public:
-	
 };

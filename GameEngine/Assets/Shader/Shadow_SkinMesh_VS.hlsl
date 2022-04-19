@@ -25,7 +25,6 @@ float4 Shadow_SkinMesh_VS(MeshPosVertexIn vin) : SV_POSITION
     }
     
     float4 posH = mul(gWorldViewProj, float4(posL, 1.0f));
-    posH.z -= 0.001f * posH.w;
     
     return posH;
 };

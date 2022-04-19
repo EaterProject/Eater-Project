@@ -22,7 +22,6 @@
 
 void intro::Awake()
 {
-	LoadEnvironment("../Assets/Texture/Base/Night.dds");
 	Load("../Assets/Scene/intro.Scene");
 
 	GameObject* MainCam			= FindGameObjectTag("MainCam");
@@ -34,8 +33,8 @@ void intro::Awake()
 	MainCam->AddComponent<PlayerCamera>();
 	Cam->ChoiceMainCam();
 
-	
-	SetEnvironment(true);
+	BakeEnvironmentMap("Night");
+	SetEnvironmentMap("Night");
 }
 
 void intro::Update()

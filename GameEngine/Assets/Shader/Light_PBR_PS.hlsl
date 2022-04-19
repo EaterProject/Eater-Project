@@ -57,6 +57,7 @@ float4 Light_PBR_PS(ScreenPixelIn pin) : SV_TARGET
     float shadows = 1.0f;
 	
 #ifdef SHADOW
+    shadowRT.xyz /= shadowRT.w;
     shadows = CalcShadowFactor(gSamBorderComparisonLinearPoint, gShadowMap, float3(shadowRT.xyz));
 #endif	
 	
@@ -64,7 +65,7 @@ float4 Light_PBR_PS(ScreenPixelIn pin) : SV_TARGET
     float ao = 1.0f;
 	
 #ifdef SSAO
-    ssaoRT /= ssaoRT.w;
+    ssaoRT.xy /= ssaoRT.w;
     ao = gSsaoMap.SampleLevel(gSamClampLinear, ssaoRT.xy, 0.0f).r;
 #endif	
         
@@ -82,7 +83,7 @@ float4 Light_PBR_PS(ScreenPixelIn pin) : SV_TARGET
     litColor += PBR_SpotLight(ViewDirection, normal, gSpotLights, gSpotLightCount, positionRT.xyz,
                                 albedo, ao, roughness, metallic, shadows);
     
-    litColor += emissive * 7.0f;
+    litColor += emissive;
 
     return float4(litColor, 1.0f);
 }

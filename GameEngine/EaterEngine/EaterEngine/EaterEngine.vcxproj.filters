@@ -166,6 +166,12 @@
     <Filter Include="소스 파일\Manager\GlobalDataManager">
       <UniqueIdentifier>{b358fedd-14c8-407e-b4c1-d40ef4a00f9f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Manager\AnimationManager">
+      <UniqueIdentifier>{bad2644f-e865-4dd4-aba4-8dedcdd3d6f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Resource\Animation">
+      <UniqueIdentifier>{ee08f069-586a-42b9-8129-476290d8a123}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -218,9 +224,6 @@
     </ClInclude>
     <ClInclude Include="Export\SkinningFilter.h">
       <Filter>소스 파일\Component\SkinningFilter</Filter>
-    </ClInclude>
-    <ClInclude Include="Export\ResourcesData.h">
-      <Filter>소스 파일\Data</Filter>
     </ClInclude>
     <ClInclude Include="LightManager.h">
       <Filter>소스 파일\Manager\LightManager</Filter>
@@ -329,6 +332,15 @@
     </ClInclude>
     <ClInclude Include="GlobalDataManager.h">
       <Filter>소스 파일\Manager\GlobalDataManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Library\inc\ResourcesData.h">
+      <Filter>소스 파일\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>소스 파일\Resource\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationManager.h">
+      <Filter>소스 파일\Manager\AnimationManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -472,6 +484,12 @@
     </ClCompile>
     <ClCompile Include="GlobalDataManager.cpp">
       <Filter>소스 파일\Manager\GlobalDataManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>소스 파일\Resource\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationManager.cpp">
+      <Filter>소스 파일\Manager\AnimationManager</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

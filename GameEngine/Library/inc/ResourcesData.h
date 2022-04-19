@@ -19,7 +19,7 @@ class IndexBuffer : public Resources
 public:
 	virtual ~IndexBuffer()
 	{
-		delete pIndexBuf;
+
 	};
 	
 	UINT Count	= 0;	//인덱스 개수
@@ -33,7 +33,7 @@ class VertexBuffer : public Resources
 public:
 	virtual ~VertexBuffer()
 	{
-		delete pVertexBuf;
+
 	};
 
 	UINT Stride = 0;	//stride값 버텍스버퍼를 만든 자료형의 크기
@@ -48,8 +48,25 @@ class TextureBuffer : public Resources
 public:
 	virtual ~TextureBuffer()
 	{
-		delete pTextureBuf;
+
 	};
 
 	void* pTextureBuf = nullptr;
+};
+
+// Animation Array Texture Data Buffer
+class AnimationBuffer : public Resources
+{
+public:
+	virtual ~AnimationBuffer()
+	{
+
+	}
+
+	UINT BufferIndex = 0;						// Animation Buffer Index
+
+	UINT FrameOffset = 0;
+	std::vector<UINT> AnimationOffset;
+
+	void* pAnimationBuf = nullptr;
 };

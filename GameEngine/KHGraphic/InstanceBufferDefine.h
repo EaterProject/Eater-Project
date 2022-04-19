@@ -8,6 +8,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////
 
 INSTANCE_BUFFER(IB_Mesh)
+INSTANCE_BUFFER(IB_SkinMesh)
 INSTANCE_BUFFER(IB_MeshDepth)
 INSTANCE_BUFFER(IB_MeshID)
 INSTANCE_BUFFER(IB_Particle)

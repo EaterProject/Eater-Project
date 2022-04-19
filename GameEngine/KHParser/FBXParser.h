@@ -17,7 +17,6 @@ public:
 
 	void LoadMaterial();
 	void LoadNode(fbxsdk::FbxNode* node, fbxsdk::FbxNodeAttribute::EType attribute);
-	void LoadAnimation(fbxsdk::FbxNode* node);
 
 	void ProcessSkeleton(fbxsdk::FbxNode* node);
 	void ProcessMesh(fbxsdk::FbxNode* node);
@@ -26,6 +25,7 @@ public:
 
 	void ProcessAnimation(fbxsdk::FbxNode* node);
 
+	void SceneAnimationSetting();
 	void OptimizeData();
 	void OptimizeVertex(ParserData::CMesh* pMesh);
 	void SetIndex(ParserData::CMesh* pMesh);
@@ -76,6 +76,7 @@ private:
 
 	std::vector<ParserData::CMesh*> m_AllBoneList;			// Skinning Object Bone List
 
+	ParserData::CModelAnimation* m_ModelAnimation;		// Object Model Animation Data
 	ParserData::CAnimation* m_OneAnimation;		// Object One Animation Data
 
 	int m_KeyFrames;		// Animation Total Frame

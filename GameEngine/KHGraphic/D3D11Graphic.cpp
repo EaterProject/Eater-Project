@@ -17,7 +17,7 @@ void D3D11Graphic::Initialize(HWND hwnd, int screenWidth, int screenHeight)
 {
 	HRESULT result;
 	UINT createDeviceFlags = 0;
-
+	
 #ifdef _DEBUG
 	createDeviceFlags |= D3D11_CREATE_DEVICE_DEBUG;
 #endif
@@ -67,8 +67,8 @@ void D3D11Graphic::Initialize(HWND hwnd, int screenWidth, int screenHeight)
 
 	if (FAILED(result))
 	{
-		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, result, "[Graphic][Create][Device] FAILED!!");
-		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, result, "[Graphic][Create][Device] FAILED!!");
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, result, "[ Graphic ][ Create ][ Device ] FAILED!!");
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, result, "[ Graphic ][ Create ][ Device ] FAILED!!");
 	}
 }
 
@@ -81,7 +81,7 @@ HRESULT D3D11Graphic::SaveTextureDDS(ID3D11Resource* resource, const char* fileN
 {
 	HRESULT result;
 	std::string name = fileName;
-	name = "../KHGraphic/Bake/" + name + ".dds";
+	name = "../Assets/Texture/Bake/" + name + ".dds";
 
 	DirectX::ScratchImage image;
 	result = DirectX::CaptureTexture(m_Device.Get(), m_DeviceContext.Get(), resource, image);
@@ -93,12 +93,10 @@ HRESULT D3D11Graphic::SaveTextureDDS(ID3D11Resource* resource, const char* fileN
 
 	if (FAILED(result))
 	{
-		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, result, "[Graphic][Save][Texture] '%s' FAILED!!", fileName);
-		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, result, "[Graphic][Save][Texture] '%s' FAILED!!", fileName);
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, result, "[ Graphic ][ Save ][ Texture ] '%s' FAILED!!", fileName);
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, result, "[ Graphic ][ Save ][ Texture ] '%s' FAILED!!", fileName);
 	}
 
-	//DirectX::SaveDDSTextureToFile(m_DeviceContext.Get(), resource, std::wstring(name.begin(), name.end()).c_str());
-	
 	return result;
 }
 
@@ -116,8 +114,19 @@ HRESULT D3D11Graphic::SaveTextureDDS(ID3D11ShaderResourceView* resource, const c
 	ID3D11Texture2D* textureInterface = nullptr;
 	ID3D11Resource* textureResource;
 	resource->GetResource(&textureResource);
-
+	
 	return SaveTextureDDS(textureResource, fileName);
+}
+
+HRESULT D3D11Graphic::CaptureTextureDDS(const char* fileName)
+{
+	ID3D11RenderTargetView* rtv = nullptr;
+	ID3D11Resource* resource = nullptr;
+
+	m_DeviceContext->OMGetRenderTargets(1, &rtv, nullptr);
+	rtv->GetResource(&resource);
+
+	return SaveTextureDDS(resource, fileName);
 }
 
 HRESULT D3D11Graphic::CreateBuffer(D3D11_BUFFER_DESC* bufferDesc, D3D11_SUBRESOURCE_DATA* subData, ID3D11Buffer** buffer)
@@ -180,8 +189,8 @@ HRESULT D3D11Graphic::CreateTextureBuffer(std::string filePath, ID3D11Resource**
 
 	if (FAILED(result))
 	{
-		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, result, "[Graphic][Create][ShaderResourceView] '%s' FAILED!!", filePath.c_str());
-		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, result, "[Graphic][Create][ShaderResourceView] '%s' FAILED!!", filePath.c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, result, "[ Graphic ][ Create ][ ShaderResourceView ] '%s' FAILED!!", filePath.c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, result, "[ Graphic ][ Create ][ ShaderResourceView ] '%s' FAILED!!", filePath.c_str());
 	}
 
 	return result;
@@ -196,8 +205,8 @@ HRESULT D3D11Graphic::CreateBackBuffer(UINT width, UINT height, ID3D11Texture2D*
 
 	if (FAILED(result))
 	{
-		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, result, "[Graphic][Create][Buffer] 'BackBuffer' FAILED!!");
-		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, result, "[Graphic][Create][Buffer] 'BackBuffer' FAILED!!");
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, result, "[ Graphic ][ Create ][ Buffer ] 'BackBuffer' FAILED!!");
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, result, "[ Graphic ][ Create ][ Buffer ] 'BackBuffer' FAILED!!");
 	}
 
 	// Get Swap Chain Back Buffer Pointer..
@@ -205,8 +214,8 @@ HRESULT D3D11Graphic::CreateBackBuffer(UINT width, UINT height, ID3D11Texture2D*
 
 	if (FAILED(result))
 	{
-		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, result, "[Graphic][Get][Buffer] 'BackBuffer' FAILED!!");
-		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, result, "[Graphic][Get][Buffer] 'BackBuffer' FAILED!!");
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, result, "[ Graphic ][ Get ][ Buffer ] 'BackBuffer' FAILED!!");
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, result, "[ Graphic ][ Get ][ Buffer ] 'BackBuffer' FAILED!!");
 	}
 
 	// BackBuffer Resource Resize..
@@ -214,8 +223,8 @@ HRESULT D3D11Graphic::CreateBackBuffer(UINT width, UINT height, ID3D11Texture2D*
 
 	if (FAILED(result))
 	{
-		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, result, "[Graphic][Create][RenderTargetView] 'BackBuffer' FAILED!!");
-		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, result, "[Graphic][Create][RenderTargetView] 'BackBuffer' FAILED!!");
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, result, "[ Graphic ][ Create ][ RenderTargetView ] 'BackBuffer' FAILED!!");
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, result, "[ Graphic ][ Create ][ RenderTargetView ] 'BackBuffer' FAILED!!");
 	}
 
 	return result;

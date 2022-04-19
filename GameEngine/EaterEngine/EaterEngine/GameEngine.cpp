@@ -170,7 +170,7 @@ void GameEngine::OnResize(int Change_Width, int Change_Height)
 	if (Change_Width == 0 || Change_Height == 0) return;
 	if (mGraphicManager == nullptr) return;
 
-	PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Resize ][ Screen ] %d / %d", WinSizeWidth, WinSizeHeight);
+	PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Resize ][ OnResize ] %d / %d", WinSizeWidth, WinSizeHeight);
 
 	//카메라의 변화할 사이즈를 넣어준다
 	Camera::g_MainCam->SetSize(WinSizeWidth, WinSizeHeight);
@@ -349,6 +349,7 @@ void GameEngine::Load(std::string& Path, UINT MODE)
 {
 	mLoadManager->Load(Path, MODE);
 }
+
 int GameEngine::LoadMeshCount()
 {
 	return mLoadManager->GetMeshCount();
@@ -363,19 +364,38 @@ int GameEngine::LoadAnimationCount()
 }
 ModelData* GameEngine::GetLoadMeshData(std::string& Path)
 {
-	return mLoadManager->GetModel(Path);
-}
-void GameEngine::LoadEnvironment(std::string mPath)
-{
-	EnterCriticalSection(&g_CS);
-	mGraphicManager->LoadEnvironment(mPath);
-	LeaveCriticalSection(&g_CS);
+	return mLoadManager->GetModelData(Path);
 }
 
-void GameEngine::SetEnvironment(bool enable)
+void GameEngine::BakeShadowMap(std::string& Path)
 {
-	mGraphicManager->SetEnvironment(enable);
+	mGraphicManager->BakeShadowMap(Path);
 }
+
+void GameEngine::BakeEnvironmentMap(std::string& Path)
+{
+	mLoadManager->BakeEnvironmentMap(Path);
+}
+
+void GameEngine::BakeAnimation()
+{
+	mLoadManager->BakeAnimation();
+}
+
+void GameEngine::SetShadowMap(std::string& Path)
+{
+	TextureBuffer* resource = mLoadManager->GetTexture(Path);
+
+	mGraphicManager->SetShadowMap(resource);
+}
+
+void GameEngine::SetEnvironmentMap(std::string& Path)
+{
+	EnvironmentBuffer* environment = mLoadManager->GetEnvironment(Path);
+
+	mGraphicManager->SetEnvironmentMap(environment);
+}
+
 void GameEngine::AddOccluder(std::string mMeshName)
 {
 	MeshBuffer* mesh = mLoadManager->GetMeshBuffer(mMeshName);

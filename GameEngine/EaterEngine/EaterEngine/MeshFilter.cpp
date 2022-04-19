@@ -13,7 +13,7 @@
 #include "MainHeader.h"
 #include "TextureManager.h"
 #include "GraphicsEngine.h"
-
+#include "Profiler/Profiler.h"
 
 MeshFilter::MeshFilter()
 {
@@ -275,14 +275,14 @@ void MeshFilter::CheckAnimation()
 {
 	if (isLoad_Animation == false) { return; }
 
-	ModelAnimationData* data = LoadManager::GetAnimation(AnimationName);
+	Animation* animation = LoadManager::GetAnimation(AnimationName);
 	AnimationController* Controller = gameobject->GetComponent<AnimationController>();
 
 	//가져온 컨퍼넌트에 본 정보를 넘겨준다
 	if (Controller != nullptr)
 	{
 		Controller->SetBoneList(&BoneList);
-		Controller->SetAnimeList(data);
+		Controller->SetAnimation(animation);
 	}
 }
 
@@ -307,18 +307,27 @@ void MeshFilter::SetMaterial(std::string matName)
 	// 해당 Material이 없다면..
 	if (material == nullptr)
 	{
-		// 새로운 Material 생성..
-		material = new Material();
-		material->Name = "Defalt";
-		material->Defalt = true;
-		material->m_MaterialData->Name = "Defalt";
+		if (m_Material == nullptr)
+		{
+			// 새로운 Material 생성..
+			m_Material = new Material();
+			m_Material->Name = "Defalt";
+			m_Material->m_MaterialData->Name = "Defalt";
+			m_Material->Defalt = true;
+
+			// 변경된 Material 그래픽 동기화..
+			GraphicEngine::Get()->PushChangeInstance(gameobject->OneMeshData);
+		}
+
+		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ MeshFilter ][ SetMaterial ] '%s' FAILED!!", matName.c_str());
+		return;
 	}
 
 	// 변경된 Material 그래픽 동기화..
 	GraphicEngine::Get()->PushChangeInstance(gameobject->OneMeshData);
 
 	// 기본 Material이였다면 삭제..
-	if (m_Material && m_Material->Defalt)
+	if (material->Defalt == false && m_Material && m_Material->Defalt)
 	{
 		delete m_Material;
 	}
@@ -475,9 +484,6 @@ void MeshFilter::SetMatrixData(LoadMeshData* LoadMesh, MeshData* mMesh, GameObje
 
 	mTransform->Load_Local = LoadMesh->LocalTM;
 	mTransform->Load_World = LoadMesh->WorldTM;
-
-	mMesh->Object_Data->World = &mTransform->Load_Local;
-	mMesh->Object_Data->Local = &mTransform->Load_World;
 }
 
 void MeshFilter::SetMeshData(LoadMeshData* LoadMesh, MeshData* mMesh, GameObject* obj)
@@ -529,8 +535,9 @@ void MeshFilter::LinkHierarchy(Transform* my, Transform* parent)
 void MeshFilter::CreateModel()
 {
 	///이름으로 로드할 데이터를 찾아서 가져옴
-	ModelData* mMesh = LoadManager::GetModel(ModelName);
+	ModelData* mMesh = LoadManager::GetModelData(ModelName);
 	Transform* Tr = gameobject->GetTransform();
+	AnimationController* Controller = gameobject->GetComponent<AnimationController>();
 
 	if (mMesh == nullptr) { return; }
 
@@ -565,9 +572,9 @@ void MeshFilter::CreateModel()
 	}
 
 	//본 메쉬 생성
-	if (mMesh->BoneOffsetList != nullptr)
+	if (!mMesh->BoneOffsetList.empty())
 	{
-		BoneList.resize(mMesh->BoneOffsetList->size());
+		BoneList.resize(mMesh->BoneOffsetList.size());
 	}
 	for (int i = 0; i < BoneCount; i++)
 	{
@@ -594,6 +601,11 @@ void MeshFilter::CreateModel()
 
 		SKFilter->PushBoneList(&BoneList);
 		SKFilter->PushBone_OffsetList(mMesh->BoneOffsetList);
+
+		if (Controller != nullptr)
+		{
+			Controller->SetSkin(Object);
+		}
 
 		LinkHierarchy(Object->GetTransform(), this->gameobject->GetTransform());
 

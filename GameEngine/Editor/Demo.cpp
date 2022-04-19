@@ -71,9 +71,10 @@ void Demo::ThreadFunction()
 	Load("../Assets/Model/Animation");
 	Load("../Assets/Model/MeshBuffer");
 	Load("../Assets/Model/ModelData");
+	Load("../Assets/Texture/Environment");
 	
-	LoadEnvironment("../Assets/Texture/Environment/Night.dds");
-	SetEnvironment(true);
+	BakeEnvironmentMap("Night");
+	SetEnvironmentMap("Night");
 }
 
 GameObject* Demo::Create_GameObject()

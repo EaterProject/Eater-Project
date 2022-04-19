@@ -4,21 +4,30 @@
 #include <iostream>
 
 #include "EngineData.h"
-#include "Material.h"
 #include "Mesh.h"
+#include "Material.h"
+#include "Animation.h"
 #include "FBXManager.h"
 #include "TextureManager.h"
 #include "EATERManager.h"
 #include "MeshManager.h"
 #include "MaterialManager.h"
+#include "AnimationManager.h"
+#include "GraphicEngineManager.h"
+
 #include "Profiler/Profiler.h"
 
 
-std::map<std::string, ModelData*>			LoadManager::ModelList;
+std::map<std::string, ModelData*>			LoadManager::ModelDataList;
+std::map<std::string, ModelAnimationData*>	LoadManager::AnimationDataList;
+
 std::map<std::string, TextureBuffer*>		LoadManager::TextureList;
-std::map<std::string, Material*>			LoadManager::MaterialList;
-std::map<std::string, ModelAnimationData*>	LoadManager::AnimationList;
+std::map<std::string, EnvironmentBuffer*>	LoadManager::EnvironmentList;
+
 std::map<std::string, Mesh*>				LoadManager::MeshBufferList;
+std::map<std::string, Material*>			LoadManager::MaterialList;
+std::map<std::string, Animation*>			LoadManager::AnimationList;
+
 std::map<std::string, CameraAnimation*>		LoadManager::CamAnimationList;
 
 LoadManager::LoadManager()
@@ -34,9 +43,13 @@ LoadManager::~LoadManager()
 void LoadManager::Initialize(GraphicEngineManager* graphic, CRITICAL_SECTION* _cs)
 {
 	g_CS = _cs;
+	mGraphicManager = graphic;
 
 	mMeshManager = new MeshManager();
 	mMaterialManager = new MaterialManager();
+
+	mAnimationManger = new AnimationManager();
+	mAnimationManger->Initialize(graphic, _cs);
 
 	mFBX = new FBXManager();
 	mFBX->Initialize(graphic, _cs);
@@ -106,9 +119,20 @@ void LoadManager::LoadTerrain(std::string mMeshName, std::string mMaskName1, std
 	mFBX->LoadTerrain(mMeshName, mMaskName1, mMaskName2, parsingMode);
 }
 
+void LoadManager::BakeEnvironmentMap(std::string Path)
+{
+	//텍스쳐 로드
+	mTexture->BakeEnvironmentMap(Path);
+}
+
+void LoadManager::BakeAnimation()
+{
+	mAnimationManger->BakeAnimation();
+}
+
 int LoadManager::GetMeshCount()
 {
-	return (int)ModelList.size();
+	return (int)ModelDataList.size();
 }
 
 int LoadManager::GetTextureCount()
@@ -124,8 +148,8 @@ int LoadManager::GetMaterialCount()
 int LoadManager::GetAnimationCount()
 {
 	int Count = 0;
-	std::map<std::string, ModelAnimationData*>::iterator Begin_it = AnimationList.begin();
-	for (Begin_it; Begin_it != AnimationList.end(); Begin_it++)
+	std::map<std::string, ModelAnimationData*>::iterator Begin_it = AnimationDataList.begin();
+	for (Begin_it; Begin_it != AnimationDataList.end(); Begin_it++)
 	{
 		ModelAnimationData* Data = Begin_it->second;
 		Count += (int)Data->AnimList.size();
@@ -141,6 +165,22 @@ TextureBuffer* LoadManager::GetTexture(std::string Path)
 	if (End_it == Find_it)
 	{
 		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ ERROR ][ Engine ][ GetTexture ] '%s'가 없습니다.", Path.c_str());
+		return nullptr;
+	}
+	else
+	{
+		return Find_it->second;
+	}
+}
+
+EnvironmentBuffer* LoadManager::GetEnvironment(std::string Path)
+{
+	std::map<std::string, EnvironmentBuffer*>::iterator End_it = EnvironmentList.end();
+	std::map<std::string, EnvironmentBuffer*>::iterator Find_it = EnvironmentList.find(Path);
+
+	if (End_it == Find_it)
+	{
+		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ ERROR ][ Engine ][ GetEnvironment ] '%s'가 없습니다.", Path.c_str());
 		return nullptr;
 	}
 	else
@@ -165,10 +205,26 @@ Material* LoadManager::GetMaterial(std::string Path)
 	}
 }
 
-ModelData* LoadManager::GetModel(std::string Path)
+Animation* LoadManager::GetAnimation(std::string Path)
 {
-	std::map<std::string, ModelData*>::iterator End_it	= ModelList.end();
-	std::map<std::string, ModelData*>::iterator Find_it = ModelList.find(Path);
+	std::map<std::string, Animation*>::iterator End_it = AnimationList.end();
+	std::map<std::string, Animation*>::iterator Find_it = AnimationList.find(Path);
+
+	if (End_it == Find_it)
+	{
+		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ ERROR ][ Engine ][ GetMaterial ] '%s'가 없습니다.", Path.c_str());
+		return nullptr;
+	}
+	else
+	{
+		return Find_it->second;
+	}
+}
+
+ModelData* LoadManager::GetModelData(std::string Path)
+{
+	std::map<std::string, ModelData*>::iterator End_it	= ModelDataList.end();
+	std::map<std::string, ModelData*>::iterator Find_it = ModelDataList.find(Path);
 	if (End_it == Find_it)
 	{
 		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ ERROR ][ Engine ][ GetModel ] '%s'가 없습니다.", Path.c_str());
@@ -216,6 +272,24 @@ MeshBuffer* LoadManager::GetMeshBuffer(std::string Path)
 	return nullptr;
 }
 
+AnimationBuffer* LoadManager::GetAnimationBuffer(std::string Path)
+{
+	std::map<std::string, Animation*>::iterator End_it = AnimationList.end();
+	std::map<std::string, Animation*>::iterator Find_it = AnimationList.find(Path);
+
+	if (End_it == Find_it)
+	{
+		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ ERROR ][ Engine ][ GetMesh ] '%s'가 없습니다.", Path.c_str());
+		return nullptr;
+	}
+	else
+	{
+		return Find_it->second->m_AnimationBuffer;
+	}
+
+	return nullptr;
+}
+
 CameraAnimation* LoadManager::GetCamAnimation(std::string Path)
 {
 	std::map<std::string, CameraAnimation*>::iterator End_it = CamAnimationList.end();
@@ -231,10 +305,10 @@ CameraAnimation* LoadManager::GetCamAnimation(std::string Path)
 	}
 }
 
-ModelAnimationData* LoadManager::GetAnimation(std::string Path)
+ModelAnimationData* LoadManager::GetAnimationData(std::string Path)
 {
-	std::map<std::string, ModelAnimationData*>::iterator End_it = AnimationList.end();
-	std::map<std::string, ModelAnimationData*>::iterator Find_it = AnimationList.find(Path);
+	std::map<std::string, ModelAnimationData*>::iterator End_it = AnimationDataList.end();
+	std::map<std::string, ModelAnimationData*>::iterator Find_it = AnimationDataList.find(Path);
 	if (End_it == Find_it)
 	{
 		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ ERROR ][ Engine ][ GetAnimation ] '%s'가 없습니다.", Path.c_str());
@@ -248,8 +322,8 @@ ModelAnimationData* LoadManager::GetAnimation(std::string Path)
 
 bool LoadManager::FindModel(std::string Name)
 {
-	std::map<std::string, ModelData*>::iterator End_it	= ModelList.end();
-	std::map<std::string, ModelData*>::iterator Find_it = ModelList.find(Name);
+	std::map<std::string, ModelData*>::iterator End_it	= ModelDataList.end();
+	std::map<std::string, ModelData*>::iterator Find_it = ModelDataList.find(Name);
 	if (End_it == Find_it)
 	{
 		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ ERROR ][ Engine ][ FindModel ] '%s'가 없습니다.", Name.c_str());

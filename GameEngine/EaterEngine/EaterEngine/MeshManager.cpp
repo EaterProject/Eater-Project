@@ -70,7 +70,7 @@ void MeshManager::DeleteMesh(UINT index)
 	Mesh* mesh = g_MeshList.find(index)->second;
 
 	// 해당 Mesh Data 삭제..
-	SAFE_RELEASE(mesh);
+	mesh->Release();
 	g_MeshList.erase(index);
 
 	// 해당 Mesh Index 빈곳으로 설정..

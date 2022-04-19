@@ -16,6 +16,10 @@ public:
 public:
 	void Initialize(GraphicEngineManager* Graphic, CRITICAL_SECTION* _cs);
 	void LoadTexture(std::string& Path);
+
+public:
+	void BakeEnvironmentMap(std::string& Path);
+
 private:
 	bool CheckFolder(std::string& Path);
 	void LoadFolder(std::string& Path);

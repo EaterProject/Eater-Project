@@ -26,6 +26,7 @@ SHADER_RESOURCE_VIEW(gORMMap)
 SHADER_RESOURCE_VIEW(gShadowMap)
 SHADER_RESOURCE_VIEW(gSsaoMap)
 SHADER_RESOURCE_VIEW(gSkyCube)
+SHADER_RESOURCE_VIEW(gAnimationBuffer)
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 // SSAO ShaderResourceView Resource

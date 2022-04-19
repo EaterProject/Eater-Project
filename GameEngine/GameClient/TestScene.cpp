@@ -24,28 +24,37 @@
 
 void TestScene::Awake()
 {
-	LoadEnvironment("../Assets/Texture/Environment/Day.dds");
 	LoadTerrainMesh("../Assets/Model/TerrainModel/Terrain.fbx", "../Assets/Texture/Terrain/Terrain_RGB_1.png", "../Assets/Texture/Terrain/Terrain_RGB_2.png", SCALING);
 	
 	//Load("../Assets/Texture/Particle/particle_hotCloud.png");
 
 	PROFILE_TIMER_START(PROFILE_OUTPUT::CONSOLE, 1, "Load Folder");
 	Load("../Assets/Texture/Terrain");
-	//Load("../Assets/Texture/Particle");
+	Load("../Assets/Texture/Environment");
+	//Load("../Assets/Texture/Bake");
+	Load("../Assets/Texture/Particle");
 	Load("../Assets/Texture/ModelTexture");
 	Load("../Assets/Texture/Material");
+	Load("../Assets/Model/Test");
 	Load("../Assets/Model/MeshBuffer");
 	Load("../Assets/Model/ModelData");
-	Load("../Assets/Model/Animation");
+	//Load("../Assets/Model/Animation");
 	PROFILE_TIMER_END("Load Folder"); 
 
-	AddOccluder("Dome_Occluder_0");
+	BakeEnvironmentMap("Day");
+	BakeEnvironmentMap("Night");
+	BakeEnvironmentMap("skybox1");
+	BakeEnvironmentMap("TestSky");
+
+	//AddOccluder("Dome_Occluder_0");
+
+	BakeAnimation();
 
 	CreateMap();
 
-	//CreateParticle(0,0,0);
 
-	SetEnvironment(true);
+	CreateParticle(0,0,0);
+	SetEnvironmentMap("Night");
 }
 
 void TestScene::Update()
@@ -108,64 +117,86 @@ void TestScene::CreateMap()
 
 	Object = Instance();
 	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("box1");
+	filter->SetModelName("bossb");
+	filter->SetAnimationName("bossb");
+	Object->GetTransform()->Position.z += 20;
+	AC = Object->AddComponent<AnimationController>();
+	AC->Choice("idle");
 
+	
+	for (int i = 0; i < 5; i++)
+	{
+		for (int j = 0; j < 5; j++)
+		{
+			Object = Instance();
+			filter = Object->AddComponent<MeshFilter>();
+			filter->SetModelName("bossb");
+			filter->SetAnimationName("bossb");
+			Object->GetTransform()->Position.z += 20;
+			Object->GetTransform()->Position.x = i * 5;
+			Object->GetTransform()->Position.y = j * 5;
+			AC = Object->AddComponent<AnimationController>();
+			AC->Choice("idle");
+
+			Object = Instance();
+			filter = Object->AddComponent<MeshFilter>();
+			filter->SetModelName("MonsterA");
+			filter->SetAnimationName("MonsterA");
+			Object->GetTransform()->Position.z -= 20;
+			Object->GetTransform()->Position.x = i * 5;
+			Object->GetTransform()->Position.y = j * 5;
+			AC = Object->AddComponent<AnimationController>();
+			AC->Choice("die");
+
+			ACList.push_back(AC);
+		}
+	}
+	
 	//Object = Instance();
 	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("box2");
-
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("box3");
-
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("box4");
-
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("bossb+");
-	//filter->SetAnimationName("bossb+");
-	//Object->GetTransform()->Position.z += 20;
-	//AnimationController* AC = Object->AddComponent<AnimationController>();
+	//filter->SetModelName("MonsterA");
+	//filter->SetAnimationName("MonsterA");
+	//Object->GetTransform()->Position.z -= 20;
+	//AC = Object->AddComponent<AnimationController>();
 	//AC->Choice("idle");
 	//
 	//Object = Instance();
 	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("MonsterA+");
-	//filter->SetAnimationName("MonsterA+");
+	//filter->SetModelName("MonsterA");
+	//filter->SetAnimationName("MonsterA");
+	//Object->GetTransform()->Position.x += 20;
 	//Object->GetTransform()->Position.z -= 20;
 	//AC = Object->AddComponent<AnimationController>();
-	//AC->Choice("move");
+	//AC->Choice("idle");
+	
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("Dome_Occluder");
+	//
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("Dome");
+	//
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("organic_cactus");
 	//
 	Object = Instance();
 	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("Dome_Occluder");
-
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("Dome");
-	
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("organic_cactus");
-
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	Tr = Object->GetTransform();
+	Object->GetTransform()->Scale = {0.01f, 0.01f, 0.01f};
 	filter->SetModelName("Outside_Rock");
-
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("Outside_bossOBJ");
-
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("Outside_Other");
-
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("Outside_Pebble");
+	//
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("Outside_bossOBJ");
+	//
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("Outside_Other");
+	//
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("Outside_Pebble");
 
 	testobj = InstanceTerrain("Terrain");
 	Terrain* mTerrain = testobj->GetComponent<Terrain>();
@@ -293,22 +324,28 @@ void TestScene::ChangeCubeMap()
 
 	if (GetKeyUp('1'))
 	{
-		LoadEnvironment("../Assets/Texture/Environment/Day.dds");
-		SetEnvironment(true);
+		for (auto k : ACList)
+		{
+			k->Choice("idle");
+		}
+
+		SetEnvironmentMap("Day");
 	}
 	if (GetKeyUp('2'))
 	{
-		LoadEnvironment("../Assets/Texture/Environment/Night.dds");
-		SetEnvironment(true);
+		for (auto k : ACList)
+		{
+			k->Choice("die");
+		}
+
+		SetEnvironmentMap("Night");
 	}
 	if (GetKeyUp('3'))
 	{
-		LoadEnvironment("../Assets/Texture/Environment/skybox1.dds");
-		SetEnvironment(true);
+		SetEnvironmentMap("skybox1");
 	}
 	if (GetKeyUp('4'))
 	{
-		LoadEnvironment("../Assets/Texture/Environment/TestSky.dds");
-		SetEnvironment(true);
+		SetEnvironmentMap("TestSky");
 	}
 }

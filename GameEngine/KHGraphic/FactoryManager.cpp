@@ -2,6 +2,8 @@
 #include "ResourceFactory.h"
 #include "BakingFactory.h"
 #include "FactoryManager.h"
+#include "EngineData.h"
+#include "ParserData.h"
 #include "DepthStencilViewDefine.h"
 
 FactoryManager::FactoryManager(ID3D11Graphic* graphic, IShaderManager* shader, IGraphicResourceManager* resource)
@@ -45,16 +47,23 @@ void FactoryManager::CreateMeshBuffer(ParserData::CMesh* mesh, MeshBuffer** ppRe
 	m_ResourceFactory->CreateMeshBuffer(mesh, ppResource);
 }
 
-void FactoryManager::CreateEnvironmentMap(std::string path)
+void FactoryManager::CreateAnimationBuffer(ModelData* model, ModelAnimationData* animation, AnimationBuffer** ppResource)
 {
-	m_ResourceFactory->CreateEnvironmentMap(path);
-
-	m_BakingFactory->PreBakeIBLMap();
+	m_ResourceFactory->CreateAnimationBuffer(model, animation, ppResource);
 }
 
-void FactoryManager::BakingShadowMap(std::string path)
+void FactoryManager::BakeShadowMap(std::string fileName)
 {
-	m_BakingFactory->PreBakeShadowMap(path);
+	m_BakingFactory->PreBakeShadowMap(fileName);
+}
+
+void FactoryManager::BakeEnvironmentMap(TextureBuffer* environment, EnvironmentBuffer** ppResource)
+{
+	// 货肺款 Environment Buffer 积己..
+	(*ppResource) = new EnvironmentBuffer();
+	(*ppResource)->Environment = environment;
+
+	m_BakingFactory->PreBakeEnvironmentMap(*ppResource);
 }
 
 void FactoryManager::CreateImg(std::string name, Hash_Code hash_code, std::string fileName)

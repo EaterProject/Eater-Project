@@ -71,7 +71,7 @@ void ShaderBase::CreateShader(const wchar_t* wPath, const D3D_SHADER_MACRO* pDef
 	dwShaderFlags |= D3DCOMPILE_DEBUG;
 	dwShaderFlags |= D3DCOMPILE_SKIP_OPTIMIZATION;
 //#endif 
-	//dwShaderFlags |= D3DCOMPILE_OPTIMIZATION_LEVEL3;
+	dwShaderFlags |= D3DCOMPILE_OPTIMIZATION_LEVEL3;
 
 	HR(D3DCompileFromFile(wPath, pDefines, D3D_COMPILE_STANDARD_FILE_INCLUDE, entry_point, shader_model, dwShaderFlags, NULL, ppShader, NULL));
 }

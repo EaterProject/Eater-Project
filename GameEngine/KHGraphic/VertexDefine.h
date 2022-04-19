@@ -71,6 +71,17 @@ namespace VertexInput
 		DirectX::SimpleMath::Matrix InvWorld;
 	};
 
+	struct SkinMeshInstance
+	{
+		DirectX::SimpleMath::Matrix World;
+		DirectX::SimpleMath::Matrix InvWorld;
+
+		UINT PrevAnimationIndex = 0;
+		UINT NextAnimationIndex = 0;
+		float FrameTime = 0.0f;
+		float Pad = 0.0f;
+	};
+
 	struct MeshIDInstance
 	{
 		DirectX::SimpleMath::Matrix World;
@@ -80,7 +91,8 @@ namespace VertexInput
 	struct ParticleInstance
 	{
 		DirectX::SimpleMath::Matrix World;
-		DirectX::SimpleMath::Matrix TexTransform;
+		DirectX::SimpleMath::Vector2 TexScale;
+		DirectX::SimpleMath::Vector2 TexPos;
 		DirectX::SimpleMath::Vector4 Color;
 	};
 #pragma endregion Instance CVertex Data Struct

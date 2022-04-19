@@ -79,16 +79,23 @@ public:
 	void ChoiceScene(std::string name);					//씬 선택
 public:
 	///로드 관련 
-	void LoadTerrain(std::string mMeshName, std::string mMaskName1, std::string mMaskName2, UINT parsingMode);
 	void Load(std::string& Path, UINT MODE);
+	void LoadTerrain(std::string mMeshName, std::string mMaskName1, std::string mMaskName2, UINT parsingMode);
 	int  LoadMeshCount();
 	int  LoadTextureCount();
 	int  LoadAnimationCount();
 	ModelData* GetLoadMeshData(std::string& Path);
+
 public:
-	///환경맵 관련
-	void LoadEnvironment(std::string mPath);
-	void SetEnvironment(bool enable);
+	///베이크 관련
+	void BakeShadowMap(std::string& Path);
+	void BakeEnvironmentMap(std::string& Path);
+	void BakeAnimation();
+
+public:
+	///텍스쳐 설정 관련
+	void SetShadowMap(std::string& Path);
+	void SetEnvironmentMap(std::string& Path);
 
 	///충돌체크 관련
 	void AddOccluder(std::string mMeshName);

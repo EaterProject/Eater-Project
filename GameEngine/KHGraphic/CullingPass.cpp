@@ -47,8 +47,8 @@ void CullingPass::Create(int width, int height)
 
 	// Hierachical Z-Map Depth Buffer
 	D3D11_TEXTURE2D_DESC hizDepthDesc;
-	hizDepthDesc.Width = m_Width;
-	hizDepthDesc.Height = m_Height;
+	hizDepthDesc.Width = (UINT)m_Width;
+	hizDepthDesc.Height = (UINT)m_Height;
 	hizDepthDesc.MipLevels = 1;
 	hizDepthDesc.ArraySize = 1;
 	hizDepthDesc.Format = DXGI_FORMAT_D32_FLOAT;
@@ -70,7 +70,7 @@ void CullingPass::Create(int width, int height)
 	g_Factory->CreateDepthStencil<DS_HizDepth>(&hizDepthDesc, nullptr, &hizDSVDesc, nullptr);
 
 	// Hierachical Z-Map ViewPort 생성..
-	g_Factory->CreateViewPort<VP_Hiz>(0.0f, 0.0f, (float)m_Width, (float)m_Height);
+	g_Factory->CreateViewPort<VP_Hiz>(0.0f, 0.0f, m_Width, m_Height);
 }
 
 void CullingPass::Start(int width, int height)
@@ -197,7 +197,7 @@ void CullingPass::OcclusionCullingQuery()
 
 		// 해당 Collider Transform Update..
 		m_Sphere = m_RenderData->m_Mesh->m_MeshSubData->BoundSphere;
-		m_Sphere.Transform(m_Sphere, *m_RenderData->m_ObjectData->World);
+		m_Sphere.Transform(m_Sphere, m_RenderData->m_ObjectData->World);
 
 		// Collider XYZ (Center) W (Radius) 형태로 Buffer 삽입..
 		m_ColliderData.x = m_Sphere.Center.x;
@@ -283,7 +283,7 @@ void CullingPass::FrustumCulling()
 	{
 		m_RenderData = CullingRenderMeshList[i];
 
-		Matrix& world = *m_RenderData->m_ObjectData->World;
+		Matrix& world = m_RenderData->m_ObjectData->World;
 
 		boundSphere = m_RenderData->m_Mesh->m_MeshSubData->BoundSphere;
 
@@ -330,8 +330,8 @@ void CullingPass::MipMapResourceRelease()
 void CullingPass::MipMapResourceCreate()
 {
 	D3D11_TEXTURE2D_DESC hizDesc;
-	hizDesc.Width = m_Width;
-	hizDesc.Height = m_Height;
+	hizDesc.Width = (UINT)m_Width;
+	hizDesc.Height = (UINT)m_Height;
 	hizDesc.MipLevels = 0;
 	hizDesc.ArraySize = 1;
 	hizDesc.Format = DXGI_FORMAT_R32_FLOAT;
