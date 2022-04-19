@@ -27,6 +27,8 @@ void Collider::Start()
 
 void Collider::PhysicsUpdate()
 {
+	if (mPhysData == nullptr) { return; }
+
 	if (mTransform->Position != mPhysData->WorldPosition)
 	{
 		mPhysData->SetWorldPosition(mTransform->Position.x, mTransform->Position.y, mTransform->Position.z);
@@ -101,19 +103,29 @@ void Collider::SetMeshCollider(std::string MeshName)
 	//Triangle->IndexListSize = IndexSize;
 }
 
-void Collider::SetTerrainCollider(std::string MeshName)
+void Collider::SetTriangleCollider(std::string MeshName)
 {
-	//PhysCollider::TriangleMeshData* Triangle = mColliderData->CreateTriangle();
-	//ModelData* data = LoadManager::GetMesh(MeshName);
-	//
-	//int IndexSize = data->TopMeshList[0]->m_OriginIndexListCount;
-	//int VertexSize = data->TopMeshList[0]->m_OriginVertexListCount;
-	//
-	//Triangle->VertexList = data->TopMeshList[0]->m_OriginVertexList;
-	//Triangle->VertexListSize = VertexSize;
-	//
-	//Triangle->IndexList = data->TopMeshList[0]->m_OriginIndexList;
-	//Triangle->IndexListSize = IndexSize;
+	PhysX_Delete_Actor(mPhysData);
+	delete mPhysData;
+	mPhysData = nullptr;
+
+	mPhysData = PhysX_Create_Data();
+	PhysCollider::TriangleMeshData* Triangle = mPhysData->mCollider->CreateTriangle();
+	ColliderBuffer* data = LoadManager::GetColliderBuffer(MeshName);
+	if (data == nullptr) { return; }
+	
+	int IndexSize = data->IndexArrayCount;
+	int VertexSize = data->VertexArrayCount;
+	
+	//트라이앵글 셋팅
+	Triangle->Name				= MeshName;
+	Triangle->VertexList		= data->VertexArray;
+	Triangle->VertexListSize	= VertexSize;
+	Triangle->CIndexList		= data->IndexArray;
+	Triangle->IndexListSize		= IndexSize;
+
+	isCreate = false;
+	CreatePhys();
 }
 
 void Collider::SetTrigger(bool trigger)

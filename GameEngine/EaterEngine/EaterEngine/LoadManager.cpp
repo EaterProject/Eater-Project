@@ -18,6 +18,7 @@
 #include "Profiler/Profiler.h"
 
 
+
 std::map<std::string, ModelData*>			LoadManager::ModelDataList;
 
 std::map<std::string, TextureBuffer*>		LoadManager::TextureList;
@@ -28,6 +29,8 @@ std::map<std::string, Material*>			LoadManager::MaterialList;
 std::map<std::string, Animation*>			LoadManager::AnimationList;
 
 std::map<std::string, CameraAnimation*>		LoadManager::CamAnimationList;
+std::map<std::string, ColliderBuffer*>		LoadManager::ColliderBufferList;		
+std::vector<OneTriangle*>					LoadManager::NavMeshData;		
 
 LoadManager::LoadManager()
 {
@@ -62,30 +65,60 @@ void LoadManager::Initialize(GraphicEngineManager* graphic, CRITICAL_SECTION* _c
 
 void LoadManager::Release()
 {
-	//모델 데이터 삭제
-	//for (auto mModel : ModelList)
-	//{
-	//	delete (mModel.second);
-	//	mModel.second = nullptr;
-	//}
-
-	//텍스쳐 데이터 삭제
-	//for (auto mTexture : TextureList)
-	//{
-	//	delete (mTexture.second);
-	//}
-
-	//메테리얼 삭제
-	for (auto mMaterial : MaterialList)
+	///모델 데이터 삭제
+	auto ModelStart	= ModelList.begin();
+	auto ModelEnd	= ModelList.end();
+	for (ModelStart; ModelStart != ModelEnd; ModelStart++)
 	{
-		mMaterial.second->Release();
+		ModelData* Data = ModelStart->second;
+		ModelStart->second = nullptr;
+		delete Data;
 	}
+	ModelList.clear();
 
-	//애니메이션 삭제
-	for (auto mAnimation : AnimationList)
+	///텍스쳐 버퍼 삭제
+	auto TextureListStart	= TextureList.begin();
+	auto TextureListEnd		= TextureList.end();
+	for (TextureListStart; TextureListStart != TextureListEnd; TextureListStart++)
 	{
-		//delete mAnimation.second;
+		TextureBuffer* Data = TextureListStart->second;
+		TextureListStart->second = nullptr;
+		delete Data;
 	}
+	TextureList.clear();
+
+	///메테리얼 삭제
+	auto MaterialListStart	= MaterialList.begin();
+	auto MaterialListEnd	= MaterialList.end();
+	for (MaterialListStart; MaterialListStart != MaterialListEnd; MaterialListStart++)
+	{
+		Material* Data = MaterialListStart->second;
+		MaterialListStart->second = nullptr;
+		Data->Release();
+	}
+	MaterialList.clear();
+
+	///애니메이션 데이터 삭제
+	auto AnimationListStart = AnimationList.begin();
+	auto AnimationListEnd	= AnimationList.end();
+	for (AnimationListStart; AnimationListStart != AnimationListEnd; AnimationListStart++)
+	{
+		ModelAnimationData* Data = AnimationListStart->second;
+		AnimationListStart->second = nullptr;
+		delete Data;
+	}
+	AnimationList.clear();
+
+	///매쉬 데이터 삭제
+	auto MeshBufferStart	= MeshBufferList.begin();
+	auto MeshBufferEnd		= MeshBufferList.end();
+	for (MeshBufferStart; MeshBufferStart != MeshBufferEnd; MeshBufferStart++)
+	{
+		Mesh* Data = MeshBufferStart->second;
+		MeshBufferStart->second = nullptr;
+		Data->Release();
+	}
+	MeshBufferList.clear();
 }
 
 void LoadManager::Start()
@@ -95,20 +128,15 @@ void LoadManager::Start()
 
 void LoadManager::Load(std::string& Path, UINT MODE)
 {
-
 	//파일,폴더 구분
 	if (CheckFolder(Path) == true)
 	{
 		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Load ][ Folder ] %s", Path.c_str());
-
-		//폴더 경로가 들어왔다면 그파일부터 모든 파일들을 다읽음 (폴더안에 폴더까지)
 		LoadFolder(Path, MODE);
 	}
 	else
 	{
 		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Load ][ File ] %s", Path.c_str());
-
-		//파일경로가 들어왔다면 파일을 읽음
 		LoadFile(Path, MODE);
 	}
 }
@@ -304,6 +332,27 @@ CameraAnimation* LoadManager::GetCamAnimation(std::string Path)
 	}
 }
 
+ColliderBuffer* LoadManager::GetColliderBuffer(std::string Path)
+{
+	std::map<std::string, ColliderBuffer*>::iterator End_it		= ColliderBufferList.end();
+	std::map<std::string, ColliderBuffer*>::iterator Find_it	= ColliderBufferList.find(Path);
+
+	if (End_it == Find_it)
+	{
+		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ ERROR ][ Engine ][ GetCollider ] '%s'가 없습니다.", Path.c_str());
+		return nullptr;
+	}
+	else
+	{
+		return Find_it->second;
+	}
+}
+
+std::vector<OneTriangle*>* LoadManager::GetNavMeshData()
+{
+	return &NavMeshData;
+}
+
 ModelAnimationData* LoadManager::GetAnimationData(std::string Path)
 {
 	std::map<std::string, Animation*>::iterator End_it = AnimationList.end();
@@ -398,6 +447,10 @@ void LoadManager::LoadFile(std::string& Path, UINT MODE)
 		mEATER->LoadMaterial(Path);
 	}
 	else if (Type == "Emesh")
+	{
+		mEATER->LoadMesh(Path);
+	}
+	else if (Type == "Nav")
 	{
 		mEATER->LoadMesh(Path);
 	}

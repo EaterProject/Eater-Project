@@ -1,16 +1,17 @@
 #EATERMAT
-@MaterialName drone_Material
+@ORMMap NO
 @Alpha NO
-@ORM NO
-@Diffuse NO
+@MaterialName Terrain2_Decimate_ground_2.001
+@DiffuseMap NO
+@NormalMap NO
+@EmissiveMap NO
+@Emissive 0.000000
 @Roughness 0.000000
-@Normal NO
-@Emissive NO
 @Metallic 0.000000
 @Tileing_X 1
 @Tileing_Y 1
 @AddColor_R 1.000000
-@AddColor_G 1.000000
+@AddColor_G 0.000000
 @AddColor_B 0.000000
 @AddColor_A 1
 &

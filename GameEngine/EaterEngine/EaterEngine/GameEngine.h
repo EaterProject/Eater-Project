@@ -28,7 +28,7 @@ class PhysManager;
 class NetworkManager;
 class Scene;
 class NetworkManagerComponent;
-class ThreadManager;
+class NavigationManager;
 //게임 오브젝트
 class GameObject;
 class ModelData;
@@ -151,7 +151,7 @@ private:
 	LightManager*			mLightManager;		// 라이트 관리 매니저
 	PhysManager*			mPhysManager;		// 물리 관리 매니저
 	NetworkManager*			mNetworkManager;	// 네트워크 매니저
-	ThreadManager*			mThreadManager;		// 쓰레드 매니저
+	NavigationManager*		mNavigationManager;	// 네비게이션 매니저
 private:
 	///클라쪽에서 받아야 하는 데이터
 	HWND mHwnd; //핸들

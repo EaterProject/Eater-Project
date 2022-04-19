@@ -2,12 +2,13 @@
 
 #include <string>
 #include <vector>
+#include "EditorData.h"
 namespace ParserData
 {
 	class CMesh;
 	class CModel;
 }
-
+struct InstanceMaterial;
 class E_MaterialManager
 {
 public:
@@ -16,6 +17,8 @@ public:
 
 	void ChangeEaterFile(ParserData::CModel* FBXMesh);
 	void SetFileName(std::string& FileName);
+
+	void Create(InstanceMaterial* mInstanceMaterial);
 private:
 	std::string SaveFileName;
 	std::string CutStr(std::string& Path);

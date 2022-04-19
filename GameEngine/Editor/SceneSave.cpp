@@ -4,7 +4,7 @@
 #include "EaterHeader.h"
 #include "GameObject.h"
 #include "EngineData.h"
-#include "Demo.h"
+#include "EditorToolScene.h"
 
 #include "Light.h"
 #include "Camera.h"
@@ -78,15 +78,13 @@ void SceneSave::Save(std::string SaveFilePath, std::string SaveFileName)
 	EATER_CLOSE_WRITE_FILE();
 }
 
-
-
 void SceneSave::SceneOption()
 {
 	EATER_SET_NODE("SCENE");
-	std::map<int, std::string>::iterator Start_it	= Demo::TagList.begin();
-	std::map<int, std::string>::iterator End_it		= Demo::TagList.end();
+	std::map<int, std::string>::iterator Start_it	= EditorToolScene::TagList.begin();
+	std::map<int, std::string>::iterator End_it		= EditorToolScene::TagList.end();
 
-	int Size = (int)Demo::TagList.size();
+	int Size = (int)EditorToolScene::TagList.size();
 	EATER_SET_LIST_START("TAG", Size, 2);
 	for (Start_it; Start_it != End_it; Start_it++)
 	{
@@ -162,8 +160,9 @@ void SceneSave::SaveParticle(ParticleSystem* mParticleSystem)
 void SceneSave::SaveCollider(Collider* mCollider)
 {
 	PhysCollider* mPhys = mCollider->GetCollider();
-	EATER_SET_LIST_START("Collider", 1, 11);
+	EATER_SET_LIST_START("Collider", 1, 12);
 	
+	int num = (int)mPhys->GetType();
 	EATER_SET_LIST((int)mPhys->GetType());	//0.타입
 
 	Vector3 Size = mPhys->GetSize();
@@ -181,7 +180,17 @@ void SceneSave::SaveCollider(Collider* mCollider)
 
 	EATER_SET_LIST(mCollider->GetMaterial_Dynamic());			//8. 재질
 	EATER_SET_LIST(mCollider->GetMaterial_Restitution());		//9. 재질
-	EATER_SET_LIST(mCollider->GetMaterial_Static(),true);		//10. 재질
+	EATER_SET_LIST(mCollider->GetMaterial_Static());			//10. 재질
+	PhysCollider::TriangleMeshData* Data = mPhys->GetTriangleMesh();
+	if (Data == nullptr)
+	{
+		EATER_SET_LIST("NO", true);
+	}
+	else
+	{
+		EATER_SET_LIST(Data->Name,true);
+	}
+
 }
 
 void SceneSave::SaveRigidbody(Rigidbody* mRigidbody)

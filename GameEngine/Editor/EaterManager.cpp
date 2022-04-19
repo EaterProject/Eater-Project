@@ -13,7 +13,7 @@
 #include "E_BufferManager.h"
 #include "E_ChangeManager.h"
 
-#include "Demo.h"
+#include "EditorToolScene.h"
 #include "EditorData.h"
 
 
@@ -82,7 +82,7 @@ void EaterManager::Load_Eater_File(std::string& Path)
 
 }
 
-void EaterManager::Load_FBX_File(std::string& Path, ParserData::CModel* FBXMesh)
+void EaterManager::Load_FBX_File(std::string& Path,ParserData::CModel* FBXMesh)
 {
 	std::string FileName = CutFileName(Path);
 	std::string AnimationName = FileName;
@@ -102,7 +102,7 @@ void EaterManager::Load_FBX_File(std::string& Path, ParserData::CModel* FBXMesh)
 	mMeshManager->ChangeEaterFile(FBXMesh);
 	EATER_CLOSE_WRITE_FILE();
 	std::string LoadPath = "../Assets/Model/ModelData/" + FileName + ".Eater";
-	Demo::MeshLoad(LoadPath);
+	EditorToolScene::MeshLoad(LoadPath);
 
 	///MeshBuffer 정보를 저장한다
 	mBufferManager->SetFileName(FileName);
@@ -115,6 +115,19 @@ void EaterManager::Load_FBX_File(std::string& Path, ParserData::CModel* FBXMesh)
 	///Material 정보를 저장한다
 	mMaterialManager->SetFileName(FileName);
 	mMaterialManager->ChangeEaterFile(FBXMesh);
+}
+
+void EaterManager::Load_FBX_File_MeshBuffer(std::string& Path, ParserData::CModel* FBXMesh, std::string ChangeFileName)
+{
+	mBufferManager->SetFileName(Path);
+	mBufferManager->ChangeEaterFile_Pos(FBXMesh, ChangeFileName);
+	//Demo::MeshLoad(FileName);
+}
+
+void EaterManager::Load_FBX_File_NavMeshBuffer(std::string& Path, ParserData::CModel* FBXMesh, std::string ChangeFileName)
+{
+	mBufferManager->SetFileName(Path);
+	mBufferManager->ChangeEaterFile_NavMEsh(FBXMesh, ChangeFileName);
 }
 
 void EaterManager::Load_GameObject_File(GameObject* Object ,ObjectOption* mOption)
@@ -152,7 +165,7 @@ void EaterManager::Load_GameObject_File(GameObject* Object ,ObjectOption* mOptio
 	}
 	EATER_CLOSE_CHANGE_FILE(ModelName, "../Assets/Model/ModelData/",".Eater");
 	//변환한 파일로 다시로드한다
-	Demo::MeshLoad(ModelPath);
+	EditorToolScene::MeshLoad(ModelPath);
 
 	//메테리얼 정보를 수정한다
 	EATER_OPEN_READ_FILE(MaterialPath);
@@ -173,5 +186,10 @@ void EaterManager::Load_GameObject_File(GameObject* Object ,ObjectOption* mOptio
 
 		EATER_CLOSE_READ_FILE();
 	}
+}
+
+void EaterManager::Create_Material(InstanceMaterial* m)
+{
+	mMaterialManager->Create(m);
 }
 

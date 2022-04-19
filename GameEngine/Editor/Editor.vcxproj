@@ -204,6 +204,7 @@ copy /Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)" </Command>
     <ClInclude Include="AssetsDialog.h" />
     <ClInclude Include="AssetView.h" />
     <ClInclude Include="CamAnimation.h" />
+    <ClInclude Include="CreateMaterial.h" />
     <ClInclude Include="CTAP_Collider.h" />
     <ClInclude Include="CTAP_Light.h" />
     <ClInclude Include="CTAP_Particle.h" />
@@ -218,10 +219,12 @@ copy /Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)" </Command>
     <ClInclude Include="E_MeshManager.h" />
     <ClInclude Include="GrobalFunction.h" />
     <ClInclude Include="Loading.h" />
+    <ClInclude Include="LoadNavMesh.h" />
+    <ClInclude Include="LoadTerrain.h" />
     <ClInclude Include="OptionView.h" />
     <ClInclude Include="RightOption.h" />
     <ClInclude Include="RenderView.h" />
-    <ClInclude Include="Demo.h" />
+    <ClInclude Include="EditorToolScene.h" />
     <ClInclude Include="EaterManager.h" />
     <ClInclude Include="Editor.h" />
     <ClInclude Include="EditorData.h" />
@@ -250,6 +253,7 @@ copy /Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)" </Command>
     <ClCompile Include="AssetsDialog.cpp" />
     <ClCompile Include="AssetView.cpp" />
     <ClCompile Include="CamAnimation.cpp" />
+    <ClCompile Include="CreateMaterial.cpp" />
     <ClCompile Include="CTAP_Collider.cpp" />
     <ClCompile Include="CTAP_Light.cpp" />
     <ClCompile Include="CTAP_Particle.cpp" />
@@ -264,10 +268,12 @@ copy /Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)" </Command>
     <ClCompile Include="E_MaterialManager.cpp" />
     <ClCompile Include="E_MeshManager.cpp" />
     <ClCompile Include="Loading.cpp" />
+    <ClCompile Include="LoadNavMesh.cpp" />
+    <ClCompile Include="LoadTerrain.cpp" />
     <ClCompile Include="OptionView.cpp" />
     <ClCompile Include="RightOption.cpp" />
     <ClCompile Include="RenderView.cpp" />
-    <ClCompile Include="Demo.cpp" />
+    <ClCompile Include="EditorToolScene.cpp" />
     <ClCompile Include="EaterManager.cpp" />
     <ClCompile Include="Editor.cpp" />
     <ClCompile Include="EditorDoc.cpp" />

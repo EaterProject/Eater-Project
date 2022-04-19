@@ -132,7 +132,7 @@ void  PhysEngine::Update_Actor(PhysData* data)
 	if (data->isDinamic == true)
 	{
 		PxRigidDynamic* Dynamic = reinterpret_cast<PxRigidDynamic*>(data->ActorObj);
-
+		if (Dynamic == nullptr) { return; }
 		if (data->isPosition == true){UpdateDynamicPosition(Dynamic, data);}
 		if (data->isForce == true){UpdateDynamicForce(Dynamic, data);}
 		if (data->isVelocity == true){UpdateDynamicVelocity(Dynamic, data);}
@@ -151,6 +151,7 @@ void  PhysEngine::Update_Actor(PhysData* data)
 	{
 		PxRigidStatic*	Static = reinterpret_cast<PxRigidStatic*>(data->ActorObj);
 		if (data->isPosition == true) { UpdateStaticPosition(Static, data); }
+		if (Static == nullptr) { return; }
 
 		PxTransform Tr = Static->getGlobalPose();
 		data->WorldPosition.x = Tr.p.x;

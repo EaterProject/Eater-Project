@@ -10,11 +10,11 @@ class SceneSave;
 class Eater_LoadScene;
 class GameObject;
 class AnimationController;
-class Demo : public Scene
+class EditorToolScene : public Scene
 {
 public:
-	Demo();
-	~Demo();
+	EditorToolScene();
+	~EditorToolScene();
 public:
 	// Scene을(를) 통해 상속됨
 	virtual void Awake() override;
@@ -26,13 +26,13 @@ public:
 	///Create
 	static GameObject* Create_GameObject();						//빈 게임 오브젝트 생성
 	static GameObject* Create_Object(std::string MeshName);		//오브젝트 생성
-	static GameObject* Create_Terrain(std::string MeshName);	//터레인 생성
+	static GameObject* Create_Terrain(std::string MeshPath, std::string mask01, std::string mask02);	//터레인 생성
 	static GameObject* Create_Light();							//라이트 생성
 	static GameObject* Create_Particle();						//파티클 생성
 	static GameObject* Create_Camera();							//카메라 생성
 public:
 	///Load,Save,Delete
-	static void MeshLoad(std::string Path);						//Object 로드
+	static void MeshLoad(std::string Path, UINT Option = 0);	//Object 로드
 	static bool DeleteObject(std::string MeshName);				//Object 삭제
 public:
 	///Scene

@@ -29,6 +29,8 @@ public:
 	int SizeX;
 	int SizeY;
 	HWND hwnd;
+	afx_msg void OnClose();
+	afx_msg void OnNcDestroy();
 };
 
 

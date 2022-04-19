@@ -73,22 +73,39 @@ struct ObjectOption
 //	std::string NowAnimation;
 //};
 
-//struct RenderMeshData
-//{
-//	enum class TYPE
-//	{
-//		BASE = 0,
-//		SKIN = 1,
-//		TERRAIN =2,
-//		ANIMATION =3,
-//	};
-//
-//	std::string MeshName = "";
-//	bool Error = false;
-//
-//	bool isTransform;
-//	bool isAnimation;
-//
-//	TransformData mTransform;
-//	AnimationData mAnimation;
-//};
+struct RenderMeshData
+{
+	enum class TYPE
+	{
+		BASE = 0,
+		SKIN = 1,
+		TERRAIN =2,
+		ANIMATION =3,
+	};
+
+	std::string MeshName = "";
+	bool Error = false;
+
+	bool isTransform;
+	bool isAnimation;
+
+	//TransformData mTransform;
+	//AnimationData mAnimation;
+};
+
+struct InstanceMaterial
+{
+	std::string Name;
+	bool Alpha;
+	std::string DiffuseMap;
+	std::string NormalMap;
+	std::string EmissiveMap;
+	std::string ORMMap;
+	float Emissive;
+	float Roughness;
+	float Metallic;
+	float AddColorR;
+	float AddColorG;
+	float AddColorB;
+};
+

@@ -24,7 +24,7 @@ Terrain::~Terrain()
 void Terrain::Awake()
 {
 	//Awake 에서는 무조건 GetComponent 만
-	mCollider	= gameobject->GetComponent<Collider>();
+	//mCollider	= gameobject->GetComponent<Collider>();
 	mMeshFilter = gameobject->GetComponent<MeshFilter>();
 
 	// 새로운 Material Layer 삽입..
@@ -131,6 +131,7 @@ void Terrain::SetLayerName(std::string diffuseName, std::string normalName, std:
 
 void Terrain::SetColliderName(std::string _TerrainColliderName)
 {
+	gameobject->AddComponent<Collider>();
 	TerrainColliderName = _TerrainColliderName;
 }
 

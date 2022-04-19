@@ -188,13 +188,13 @@ void AnimationController::Play(float Speed, bool Loop)
 	AnimationFrameIndex();
 
 	//Animator 컨퍼넌트들의 Play함수를 실행시킨다
-	std::vector<Animator*>::iterator it = AnimatorList.begin();
-	for (it; it != AnimatorList.end(); it++)
+	int Size = AnimatorList.size();
+	for (int i = 0; i <Size; i++)
 	{
-		if ((*it) == nullptr) { continue; }
-
-		(*it)->Play(mPrevFrame, mNextFrame, mFrameTime, Loop);
-	}
+		if (AnimatorList[i] == nullptr) { continue;}
+		
+		AnimatorList[i]->Play(mPrevFrame, mNextFrame, mFrameTime, Loop);
+	} 
 }
 
 void AnimationController::Stop()
@@ -237,12 +237,11 @@ int AnimationController::GetAnimationCount()
 void AnimationController::GetAnimationList(std::vector<std::string>* NameList)
 {
 	if (mAnimation == nullptr) { return; }
-	std::unordered_map<std::string, CModelAnimation*>::iterator it_Start = mAnimation->m_AnimationData->AnimList.begin();
+	auto it_Start = mAnimation->m_AnimationData->AnimList.begin();
 	for (it_Start; it_Start != mAnimation->m_AnimationData->AnimList.end(); it_Start++)
 	{
 		NameList->push_back(it_Start->first);
 	}
-
 }
 
 std::string AnimationController::GetNowAnimationName()

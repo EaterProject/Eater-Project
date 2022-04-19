@@ -12,6 +12,7 @@
 #include "PhysManager.h"
 #include "NetworkManager.h"
 #include "GlobalDataManager.h"
+#include "NavigationManager.h"
 
 #include "ParserData.h"
 #include "EngineData.h"
@@ -48,6 +49,7 @@ GameEngine::GameEngine()
 	mTimeManager = nullptr;
 	mGraphicManager = nullptr;
 	mNetworkManager = nullptr;
+	
 
 	//기본 윈도우 사이즈 설정
 	//WinSizeWidth	= 1920;
@@ -60,14 +62,22 @@ GameEngine::GameEngine()
 
 	mRenderOption = new RenderOption();
 
-	mRenderOption->DebugOption = DEBUG_ENGINE;
-	mRenderOption->RenderingOption = RENDER_DEBUG | RENDER_SHADOW | RENDER_SSAO | RENDER_IBL;
-	mRenderOption->PostProcessOption = RENDER_BLOOM | RENDER_HDR | RENDER_FXAA;
+	mRenderOption->DebugOption			= DEBUG_ENGINE;
+	mRenderOption->RenderingOption		= RENDER_DEBUG | RENDER_SHADOW | RENDER_SSAO | RENDER_IBL;
+	mRenderOption->PostProcessOption	= RENDER_BLOOM | RENDER_HDR | RENDER_FXAA;
 }
 
 GameEngine::~GameEngine()
 {
-
+	mLoadManager = nullptr;
+	mObjectManager = nullptr;
+	mSceneManager = nullptr;
+	mKeyManager = nullptr;
+	mPhysManager = nullptr;
+	mLightManager = nullptr;
+	mTimeManager = nullptr;
+	mGraphicManager = nullptr;
+	mNetworkManager = nullptr;
 }
 
 ///게임 엔진 관련
@@ -85,7 +95,8 @@ void GameEngine::Initialize(HWND Hwnd, bool mConsoleDebug)
 	mTimeManager		= new TimeManager();
 	mLightManager		= new LightManager();
 	mPhysManager		= new PhysManager();
-	mNetworkManager		= new NetworkManager();
+	mNavigationManager	= new NavigationManager();
+	//mNetworkManager		= new NetworkManager();
 
 	//매니저들 초기화
 	GlobalDataManager::Initialize();
@@ -96,7 +107,8 @@ void GameEngine::Initialize(HWND Hwnd, bool mConsoleDebug)
 	mLoadManager->Initialize(mGraphicManager, &g_CS);
 	mTimeManager->Initialize();
 	mPhysManager->Initialize();
-	mNetworkManager->Initialize();
+	mNavigationManager->Initialize();
+	//mNetworkManager->Initialize();
 
 	Component::SetManager(mTimeManager, mKeyManager);
 
@@ -124,12 +136,13 @@ void GameEngine::Update()
 {
 	//매니저들 업데이트 (컨퍼넌트 업데이트후 변경된 사항을 각각의 게임오브젝트 OneMeshData에 전달)
 	//타임매니저는 먼저실행되어야함
-	mNetworkManager->Update();
+	//mNetworkManager->Update();
 	mTimeManager->Update();
 	mKeyManager->Update();
 	mPhysManager->Update(mTimeManager->DeltaTime());
 	mSceneManager->Update();
 	mObjectManager->PlayUpdate();
+	mNavigationManager->Update();
 
 	// 모든 업데이트가 일어난 후 데이터 세팅..
 	GlobalDataManager::Update(mTimeManager->DeltaTime());
@@ -154,6 +167,7 @@ void GameEngine::Finish()
 	delete mKeyManager;
 	delete mLoadManager;
 
+	
 	mSceneManager->Delete();
 	mLoadManager->Release();
 
@@ -213,7 +227,7 @@ GameObject* GameEngine::InstanceTerrain(std::string ObjName)
 	temp->transform = Tr;
 
 	temp->AddComponent<MeshFilter>();
-	temp->AddComponent<Collider>();
+	//temp->AddComponent<Collider>();
 	temp->AddComponent<Terrain>();
 
 	return temp;

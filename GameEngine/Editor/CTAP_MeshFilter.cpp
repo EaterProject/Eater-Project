@@ -30,10 +30,8 @@ void CTAP_MeshFilter::SetGameObject(MeshFilter* ObjectMeshFilter)
 	mMeshFilter = ObjectMeshFilter;
 	mMaterial = ObjectMeshFilter->GetMaterial();
 	
-
 	std::string MeshName = ObjectMeshFilter->GetBufferName();
 	std::string ModelName = ObjectMeshFilter->GetModelName();
-	
 	
 	MeshName_Edit.SetWindowTextW(ChangeToCString(MeshName));
 	ModelName_Edit.SetWindowTextW(ChangeToCString(ModelName));
@@ -53,11 +51,11 @@ void CTAP_MeshFilter::SetGameObject(MeshFilter* ObjectMeshFilter)
 		std::string Emissive	= mMaterial->GetEmissiveName();
 		std::string ORM			= mMaterial->GetORMName();
 
+		MaterialName_Edit.SetWindowTextW(ChangeToCString(mMaterial->Name));
 		Diffuse_Edit.SetWindowTextW(ChangeToCString(Diffuse));
 		Nomal_Eidt.SetWindowTextW(ChangeToCString(Nomal));
 		ORM_Edit.SetWindowTextW(ChangeToCString(ORM));
 		EmissiveName_Edit.SetWindowTextW(ChangeToCString(Emissive));
-		//MaterialName_Edit.SetWindowTextW(ChangeToCString(mMaterial->Name));
 
 		float EmissiveF		= mMaterial->m_MaterialData->Material_SubData->EmissiveFactor;
 		float RoughnessF	= mMaterial->m_MaterialData->Material_SubData->RoughnessFactor;
@@ -125,12 +123,10 @@ void CTAP_MeshFilter::GetData(ObjectOption& Option)
 	EmissiveName_Edit.GetWindowTextW(Emissive);
 	ORM_Edit.GetWindowTextW(ORM);
 
-
 	Option.Diffuse	= ChangeToString(Diffuse);
 	Option.Normal	= ChangeToString(Normal);
 	Option.Emissive = ChangeToString(Emissive);
 	Option.ORM		= ChangeToString(ORM);
-
 
 	CString Roughness;
 	Roughness_Edit.GetWindowTextW(Roughness);
@@ -139,7 +135,6 @@ void CTAP_MeshFilter::GetData(ObjectOption& Option)
 	CString Metallic;
 	Matallic_Edit.GetWindowTextW(Metallic);
 	Option.Metallic = ChangeToFloat(Metallic);
-
 
 	CString Add_R;
 	CString Add_G;
@@ -271,11 +266,7 @@ LRESULT CTAP_MeshFilter::OnUserFun(WPARAM wParam, LPARAM lparam)
 	POINT point;
 	GetCursorPos(&point);
 
-
-	if (EditRect[ModelName_Index].left <= point.x &&
-		EditRect[ModelName_Index].right >= point.x &&
-		EditRect[ModelName_Index].top <= point.y &&
-		EditRect[ModelName_Index].bottom >= point.y)
+	if (DropRect(EditRect[ModelName_Index]))
 	{
 		if (Type == EATER)
 		{
@@ -287,11 +278,8 @@ LRESULT CTAP_MeshFilter::OnUserFun(WPARAM wParam, LPARAM lparam)
 			AfxMessageBox(L"Error : Eater 파일만 가능합니다");
 		}
 	}
-
-	if (EditRect[MeshName_Index].left	<= point.x &&
-		EditRect[MeshName_Index].right	>= point.x &&
-		EditRect[MeshName_Index].top	<= point.y &&
-		EditRect[MeshName_Index].bottom >= point.y)
+	
+	if (DropRect(EditRect[MeshName_Index]))
 	{
 		if (Type == EMESH)
 		{
@@ -303,11 +291,8 @@ LRESULT CTAP_MeshFilter::OnUserFun(WPARAM wParam, LPARAM lparam)
 			AfxMessageBox(L"Error : Emesh 파일만 가능합니다");
 		}
 	}
-
-	if (EditRect[Material_Index].left	<= point.x &&
-		EditRect[Material_Index].right	>= point.x &&
-		EditRect[Material_Index].top	<= point.y &&
-		EditRect[Material_Index].bottom >= point.y)
+	
+	if (DropRect(EditRect[Material_Index]))
 	{
 		if (Type == EMAT)
 		{
@@ -319,14 +304,11 @@ LRESULT CTAP_MeshFilter::OnUserFun(WPARAM wParam, LPARAM lparam)
 			AfxMessageBox(L"Error : Emat 파일만 가능합니다");
 		}
 	}
-
-
+	
+	
 	for (int i = 0; i <= 3; i++)
 	{
-		if (EditRect[i].left	<= point.x &&
-			EditRect[i].right	>= point.x &&
-			EditRect[i].top		<= point.y &&
-			EditRect[i].bottom	>= point.y)
+		if (DropRect(EditRect[i]))
 		{
 			if (Type == PNG || Type == DDS)
 			{

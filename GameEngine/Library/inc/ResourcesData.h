@@ -19,7 +19,7 @@ class IndexBuffer : public Resources
 public:
 	virtual ~IndexBuffer()
 	{
-
+		pIndexBuf = nullptr;
 	};
 	
 	UINT Count	= 0;	//인덱스 개수
@@ -33,7 +33,7 @@ class VertexBuffer : public Resources
 public:
 	virtual ~VertexBuffer()
 	{
-
+		pVertexBuf = nullptr;
 	};
 
 	UINT Stride = 0;	//stride값 버텍스버퍼를 만든 자료형의 크기
@@ -48,7 +48,7 @@ class TextureBuffer : public Resources
 public:
 	virtual ~TextureBuffer()
 	{
-
+		pTextureBuf = nullptr;
 	};
 
 	void* pTextureBuf = nullptr;

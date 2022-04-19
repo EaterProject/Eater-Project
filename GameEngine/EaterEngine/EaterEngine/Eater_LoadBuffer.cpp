@@ -1,11 +1,12 @@
 #include "Eater_LoadBuffer.h"
-#include "EaterHeader.h"
+#include "LoadManager.h"
 #include "EngineData.h"
+#include "EaterHeader.h"
 #include "ParserData.h"
 #include "EaterHeader.h"
 #include "Mesh.h"
-#include "LoadManager.h"
 #include "GraphicEngineManager.h"
+#include "MainHeader.h"
 Eater_LoadBuffer::Eater_LoadBuffer()
 {
 
@@ -58,6 +59,20 @@ void Eater_LoadBuffer::LoadData(std::string& Path)
 			LoadManager::MeshBufferList.insert({ SaveName,Buffer });
 			delete mMesh;
 		}
+		else if (NodeName == "POSITION_BUFFER")
+		{
+			ColliderBuffer* Buffer = new ColliderBuffer();
+			LoadPositionBuffer(i, Buffer);
+			LoadIndex(i, Buffer);
+			LoadManager::ColliderBufferList.insert({ SaveName,Buffer });
+			delete mMesh;
+		}
+		else if (NodeName == "NAVIGATION")
+		{
+			LoadNavigationBuffer(i);
+			delete mMesh;
+		}
+
 	}
 	EATER_CLOSE_READ_FILE();
 }
@@ -141,6 +156,44 @@ void Eater_LoadBuffer::LoadSkinBuffer(int index, ParserData::CMesh* mesh)
 	}
 }
 
+void Eater_LoadBuffer::LoadPositionBuffer(int index, ColliderBuffer* mesh)
+{
+	//mesh->m_MeshType = MESH_TYPE::STATIC_MESH;
+	
+	const int VertexCount	= EATER_GET_LIST_CHOICE(index, "Vertex");
+	mesh->VertexArrayCount	= VertexCount;
+	mesh->VertexArray		= new Vector3[VertexCount];
+	for (int i = 0; i < VertexCount; i++)
+	{
+		std::vector<float> Data;
+		EATER_GET_LIST(&Data, i);
+		mesh->VertexArray[i].x = Data[0];
+		mesh->VertexArray[i].y = Data[1];
+		mesh->VertexArray[i].z = Data[2];
+	}
+}
+
+void Eater_LoadBuffer::LoadNavigationBuffer(int index)
+{
+	int Count = EATER_GET_LIST_CHOICE(index, "TRIANGLE");
+	LoadManager::NavMeshData.resize(Count);
+	for (int i = 0; i < Count; i++)
+	{
+		OneTriangle* OneData = new OneTriangle();
+		std::vector<float> Data;
+		EATER_GET_LIST(&Data, i);
+		OneData->Index = Data[0];
+		OneData->VertexPos[0] = { Data[1],Data[2] ,Data[3] };
+		OneData->VertexPos[1] = { Data[4],Data[5] ,Data[6] };
+		OneData->VertexPos[2] = { Data[7],Data[8] ,Data[9] };
+		OneData->CenterPoint = { Data[10],Data[11] ,Data[12] };
+		OneData->FriendFace[0] = Data[13];
+		OneData->FriendFace[1] = Data[14];
+		OneData->FriendFace[2] = Data[15];
+		LoadManager::NavMeshData[i] = OneData;
+	}
+}
+
 void Eater_LoadBuffer::LoadIndex(int index, ParserData::CMesh* mMesh)
 {
 	int IndexCount = EATER_GET_LIST_CHOICE(index, "Index");
@@ -160,8 +213,26 @@ void Eater_LoadBuffer::LoadIndex(int index, ParserData::CMesh* mMesh)
 	}
 }
 
+void Eater_LoadBuffer::LoadIndex(int index, ColliderBuffer* mMesh)
+{
+	const int IndexCount = EATER_GET_LIST_CHOICE(index, "Index") *3;
+	mMesh->IndexArrayCount = IndexCount;
+	mMesh->IndexArray = new UINT[IndexCount];
+	int Count = 0;
+	for (int i = 0; i < IndexCount; i += 3)
+	{
+		std::vector<float> Data;
+		EATER_GET_LIST(&Data, Count);
+		mMesh->IndexArray[i]			= (UINT)Data[0];
+		mMesh->IndexArray[i+1]		= (UINT)Data[1];
+		mMesh->IndexArray[i+2]		= (UINT)Data[2];
+		Count++;
+	}
+}
+
 Mesh* Eater_LoadBuffer::CreateBuffer(ParserData::CMesh* mesh)
 {
+	//버퍼를 만든다
 	EnterCriticalSection(m_CriticalSection);
 	Mesh* meshBuffer = new Mesh();
 	m_Graphic->CreateMeshBuffer(mesh, &meshBuffer->m_MeshData);

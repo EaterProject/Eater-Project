@@ -25,9 +25,9 @@ void FBXManager::Initialize(EaterManager* mManager)
 	FbxFactory->Initialize();
 }
 
-ParserData::CModel* FBXManager::OpenFile(std::string& Path)
+ParserData::CModel* FBXManager::OpenFile(std::string& Path,UINT Option)
 {
-	ParserData::CModel* mMesh = FbxFactory->LoadModel(Path, 0);
+	ParserData::CModel* mMesh = FbxFactory->LoadModel(Path, Option);
 	return mMesh;
 }
 

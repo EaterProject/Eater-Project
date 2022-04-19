@@ -80,9 +80,21 @@ void CTAP_Collider::SetGameObject(Collider* collider)
 	DynamicFriction_Slider.SetPos((int)(mCollider->GetMaterial_Dynamic() * 100));
 	StaticFriction_Slider.SetPos((int)(mCollider->GetMaterial_Static() * 100));
 	Restitution_Slider.SetPos((int)(mCollider->GetMaterial_Restitution() * 100));
+}
 
-
-	
+void CTAP_Collider::SetPoint(CString Name)
+{
+	int num  = ColliderType_Combo.GetCurSel();
+	if (num == 3)
+	{
+		std::string FileName = ChangeToString(Name);
+		mCollider->SetTriangleCollider(FileName.substr(0,FileName.rfind('.')));
+		TriangleType_Edit.SetWindowTextW(Name);
+	}
+	else
+	{
+		MessageBox(L"Collider 타입을 Triangle 로 변경해야 합니다");
+	}
 }
 
 void CTAP_Collider::DoDataExchange(CDataExchange* pDX)
@@ -105,6 +117,7 @@ void CTAP_Collider::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EDIT60, Static_Eidt);
 	DDX_Control(pDX, IDC_EDIT63, Restition_Edit);
 	DDX_Control(pDX, IDC_CHECK1, Trigger_Check);
+	DDX_Control(pDX, IDC_EDIT16, TriangleType_Edit);
 }
 
 
@@ -152,7 +165,7 @@ BOOL CTAP_Collider::OnInitDialog()
 	ColliderType_Combo.InsertString(0, L"BOX");
 	ColliderType_Combo.InsertString(1, L"SPHERE");
 	ColliderType_Combo.InsertString(2, L"CAPSULE");
-	ColliderType_Combo.InsertString(3, L"TERRAIN");
+	ColliderType_Combo.InsertString(3, L"TRIANGLE");
 	ColliderType_Combo.SetCurSel(0);
 
 	BoxType_X_Eidt.SetWindowTextW(L"0.5");

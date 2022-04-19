@@ -13,12 +13,15 @@ class E_AnimationManager;
 class E_BufferManager;
 class E_ChangeManager;
 class GameObject;
+struct InstanceMaterial;
 struct ObjectOption;
 
 namespace ParserData
 {
 	class CModel;
 }
+
+
 
 class EaterManager
 {
@@ -28,7 +31,11 @@ public:
 
 	void Load_Eater_File(std::string& Path);
 	void Load_FBX_File(std::string& Path,ParserData::CModel* FBXMesh);
+	void Load_FBX_File_MeshBuffer(std::string& Path, ParserData::CModel* FBXMesh,std::string ChangeFileName);
+	void Load_FBX_File_NavMeshBuffer(std::string& Path, ParserData::CModel* FBXMesh,std::string ChangeFileName);
+
 	void Load_GameObject_File(GameObject* Object, ObjectOption* mOption);
+	void Create_Material(InstanceMaterial* m);
 	void Initialize();
 private:
 	static const int E_STATIC_MESH	= 0;

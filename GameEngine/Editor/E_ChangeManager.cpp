@@ -98,6 +98,7 @@ void E_ChangeManager::Change_Material(int index, GameObject* Object)
 
 
 		float mMetallicF = mMaterialData->m_MaterialData->Material_SubData->MetallicFactor;
+		float mEmissiveF = mMaterialData->m_MaterialData->Material_SubData->EmissiveFactor;
 		float mRoughnessF = mMaterialData->m_MaterialData->Material_SubData->RoughnessFactor;
 
 		float AddColor_R = mMaterialData->m_MaterialData->Material_SubData->AddColor.x;
@@ -107,13 +108,14 @@ void E_ChangeManager::Change_Material(int index, GameObject* Object)
 
 		EATER_CHANGE_MAP(index, "MaterialName", mMaterial);
 		EATER_CHANGE_MAP(index, "Alpha", "NO");
-		EATER_CHANGE_MAP(index, "Diffuse", mDiffuse);
-		EATER_CHANGE_MAP(index, "Normal", mNormal);
-		EATER_CHANGE_MAP(index, "Emissive", mEmissive);
-		EATER_CHANGE_MAP(index, "ORM", mORM);
+		EATER_CHANGE_MAP(index, "DiffuseMap", mDiffuse);
+		EATER_CHANGE_MAP(index, "NormalMap", mNormal);
+		EATER_CHANGE_MAP(index, "EmissiveMap", mEmissive);
+		EATER_CHANGE_MAP(index, "ORMMap", mORM);
 
-		EATER_CHANGE_MAP(index, "Roughness", std::to_string(mMetallicF));
-		EATER_CHANGE_MAP(index, "Metallic", std::to_string(mRoughnessF));
+		EATER_CHANGE_MAP(index, "Emissive", std::to_string(mEmissiveF));
+		EATER_CHANGE_MAP(index, "Roughness", std::to_string(mRoughnessF));
+		EATER_CHANGE_MAP(index, "Metallic", std::to_string(mMetallicF));
 
 		EATER_CHANGE_MAP(index, "Tileing_X", "1");
 		EATER_CHANGE_MAP(index, "Tileing_Y", "1");

@@ -1,4 +1,4 @@
-#include "Demo.h"
+#include "EditorToolScene.h"
 #include "GameObject.h"
 #include "MainHeader.h"
 #include "TypeOptionHeader.h"
@@ -15,24 +15,24 @@
 #include "Light.h"
 #include "Camera.h"
 
-std::map<std::string, GameObject*> Demo::ObjectList;
-SceneSave* Demo::mSaveManager = nullptr;
-Eater_LoadScene* Demo::mLoadManager = nullptr;
-GameObject* Demo::CamObject = nullptr;
-GameObject* Demo::DebugCamObject = nullptr;
-std::map<int, std::string> Demo::TagList;
+std::map<std::string, GameObject*> EditorToolScene::ObjectList;
+SceneSave* EditorToolScene::mSaveManager = nullptr;
+Eater_LoadScene* EditorToolScene::mLoadManager = nullptr;
+GameObject* EditorToolScene::CamObject = nullptr;
+GameObject* EditorToolScene::DebugCamObject = nullptr;
+std::map<int, std::string> EditorToolScene::TagList;
 
-Demo::Demo()
+EditorToolScene::EditorToolScene()
 {
 
 }
                                           
-Demo::~Demo()
+EditorToolScene::~EditorToolScene()
 {
 
 }
 
-void Demo::Awake()
+void EditorToolScene::Awake()
 {
 	mSaveManager = new SceneSave();
 	mLoadManager = new Eater_LoadScene();
@@ -52,7 +52,7 @@ void Demo::Awake()
 	TagList.insert({ 3, "Player"});
 }
 
-void Demo::Update()
+void EditorToolScene::Update()
 {
 	if (ThreadRun == true) 
 	{
@@ -60,13 +60,13 @@ void Demo::Update()
 	}
 }
 
-void Demo::End()
+void EditorToolScene::End()
 {
 
 
 }
 
-void Demo::ThreadFunction()
+void EditorToolScene::ThreadFunction()
 {
 	Load("../Assets/Model/Animation");
 	Load("../Assets/Model/MeshBuffer");
@@ -77,7 +77,7 @@ void Demo::ThreadFunction()
 	SetEnvironmentMap("Night");
 }
 
-GameObject* Demo::Create_GameObject()
+GameObject* EditorToolScene::Create_GameObject()
 {
 	GameObject* Object = Instance("None_GameObject");
 
@@ -87,7 +87,7 @@ GameObject* Demo::Create_GameObject()
 	return Object;
 }
 
-GameObject* Demo::Create_Object(std::string MeshName)
+GameObject* EditorToolScene::Create_Object(std::string MeshName)
 {
 	std::string ObjectName = FindMeshName(MeshName);
 
@@ -103,7 +103,7 @@ GameObject* Demo::Create_Object(std::string MeshName)
 	}
 }
 
-GameObject* Demo::Create_Camera()
+GameObject* EditorToolScene::Create_Camera()
 {
 	GameObject* Cam = InstanceCamera("Camera");
 	Cam->Name = FindMeshName("Camera");
@@ -111,7 +111,7 @@ GameObject* Demo::Create_Camera()
 	return Cam;
 }
 
-GameObject* Demo::CreateBaseObject(std::string ObjectName, std::string MeshName)
+GameObject* EditorToolScene::CreateBaseObject(std::string ObjectName, std::string MeshName)
 {
 	GameObject* Object = Instance(ObjectName);
 	MeshFilter* mMeshFilter = Object->AddComponent<MeshFilter>();
@@ -122,7 +122,7 @@ GameObject* Demo::CreateBaseObject(std::string ObjectName, std::string MeshName)
 	return Object;
 }
 
-GameObject* Demo::CreateSkinObject(std::string ObjectName, std::string MeshName)
+GameObject* EditorToolScene::CreateSkinObject(std::string ObjectName, std::string MeshName)
 {
 	GameObject* Skin = Instance(ObjectName);
 	MeshFilter* MF = Skin->AddComponent<MeshFilter>();
@@ -135,12 +135,12 @@ GameObject* Demo::CreateSkinObject(std::string ObjectName, std::string MeshName)
 	return Skin;
 }
 
-void Demo::MeshLoad(std::string Path)
+void EditorToolScene::MeshLoad(std::string Path,UINT Option)
 {
-	Load(Path);
+	Load(Path, Option);
 }
 
-bool Demo::DeleteObject(std::string MeshName)
+bool EditorToolScene::DeleteObject(std::string MeshName)
 {
 	GameObject* obj = ObjectList[MeshName];
 	if (obj != nullptr)
@@ -155,30 +155,30 @@ bool Demo::DeleteObject(std::string MeshName)
 	}
 }
 
-void Demo::SaveScene(std::string SaveFilePath,std::string SaveFileName)
+void EditorToolScene::SaveScene(std::string SaveFilePath,std::string SaveFileName)
 {
 	mSaveManager->Save(SaveFilePath, SaveFileName);
 }
 
-void Demo::LoadScene(std::string LoadScenePath)
+void EditorToolScene::LoadScene(std::string LoadScenePath)
 {
 	std::string Path = "../Assets/Scene/" + LoadScenePath;
 	mLoadManager->Load(Path);
 }
 
-GameObject* Demo::FindMesh(std::string MeshName)
+GameObject* EditorToolScene::FindMesh(std::string MeshName)
 {
 	return ObjectList[MeshName];
 }
 
-GameObject* Demo::FindMesh(std::string MeshName, std::string ParentName)
+GameObject* EditorToolScene::FindMesh(std::string MeshName, std::string ParentName)
 {
 	GameObject* Parent =  FindMesh(ParentName);
 	GameObject* Child	= Parent->GetChildObject(MeshName);
 	return Child;
 }
 
-std::string Demo::FindMeshName(std::string MeshName)
+std::string EditorToolScene::FindMeshName(std::string MeshName)
 {
 	std::string ObjectName = MeshName;
 
@@ -200,12 +200,12 @@ std::string Demo::FindMeshName(std::string MeshName)
 	}
 }
 
-GameObject* Demo::FindMainCamera()
+GameObject* EditorToolScene::FindMainCamera()
 {
 	return GetMainCamera();
 }
 
-int Demo::AddTag(std::string TagName)
+int EditorToolScene::AddTag(std::string TagName)
 {
 	int MaxIndex = 0;
 	if (TagName == "")
@@ -234,7 +234,7 @@ int Demo::AddTag(std::string TagName)
 	return MaxIndex + 1;
 }
 
-int Demo::DeleteTag(std::string TagName)
+int EditorToolScene::DeleteTag(std::string TagName)
 {
 	int MaxIndex = 0;
 	if (TagName == "")
@@ -260,30 +260,32 @@ int Demo::DeleteTag(std::string TagName)
 	return -1;
 }
 
-bool Demo::ChoiceTag(std::string TagName, GameObject* Obj)
+bool EditorToolScene::ChoiceTag(std::string TagName, GameObject* Obj)
 {
 	return false;
 }
 
-GameObject* Demo::Create_Terrain(std::string MeshName)
+GameObject* EditorToolScene::Create_Terrain(std::string MeshPath,std::string mask01,std::string mask02)
 {
+
+
 	//터레인 생성
 	LoadTerrainMesh("../Assets/Model/TerrainModel/Terrain.fbx", "../Assets/Texture/Terrain/Terrain_RGB_1.png", "../Assets/Texture/Terrain/Terrain_RGB_2.png", SCALING);
 
-	GameObject* TerrainObect = InstanceTerrain("Terrain");
-
-	Terrain* mTerrain = TerrainObect->GetComponent<Terrain>();
-	mTerrain->SetLayerName("terrain_ground_A_BaseColor", "terrain_ground_A_Normal", "terrain_ground_A_ORM");
-	mTerrain->SetLayerName("terrain_ground_B_BaseColor", "terrain_ground_B_Normal", "terrain_ground_B_ORM");
-	mTerrain->SetLayerName("terrain_ground_C_BaseColor", "terrain_ground_C_Normal", "terrain_ground_C_ORM");
-	mTerrain->SetLayerName("terrain_ground_D_BaseColor", "terrain_ground_D_Normal", "terrain_ground_D_ORM");
-	mTerrain->SetMeshName("Terrain");
-	//mTerrain->SetColliderName("TerrainDecimate");
-	mTerrain->SetTextureTiling(31.0f);
-	return TerrainObect;
+	//GameObject* TerrainObect = InstanceTerrain("Terrain");
+	//
+	//Terrain* mTerrain = TerrainObect->GetComponent<Terrain>();
+	//mTerrain->SetLayerName("terrain_ground_A_BaseColor", "terrain_ground_A_Normal", "terrain_ground_A_ORM");
+	//mTerrain->SetLayerName("terrain_ground_B_BaseColor", "terrain_ground_B_Normal", "terrain_ground_B_ORM");
+	//mTerrain->SetLayerName("terrain_ground_C_BaseColor", "terrain_ground_C_Normal", "terrain_ground_C_ORM");
+	//mTerrain->SetLayerName("terrain_ground_D_BaseColor", "terrain_ground_D_Normal", "terrain_ground_D_ORM");
+	//mTerrain->SetMeshName("Terrain");
+	////mTerrain->SetColliderName("TerrainDecimate");
+	//mTerrain->SetTextureTiling(31.0f);
+	return nullptr;
 }
 
-GameObject* Demo::Create_Light()
+GameObject* EditorToolScene::Create_Light()
 {
 	GameObject* LightObject = InstanceLight("Light", LIGHT_TYPE::SPOT_LIGHT);
 	LightObject->Name = FindMeshName(LightObject->Name);
@@ -291,7 +293,7 @@ GameObject* Demo::Create_Light()
 	return LightObject;
 }
 
-GameObject* Demo::Create_Particle()
+GameObject* EditorToolScene::Create_Particle()
 {
 	std::string Name = FindMeshName("Particle");
 

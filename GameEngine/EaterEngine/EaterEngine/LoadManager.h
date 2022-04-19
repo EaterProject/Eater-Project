@@ -20,6 +20,8 @@ namespace ParserData
 	class CAnimation;
 }
 
+class CameraAnimation;
+class ColliderBuffer;
 class ModelAnimationData;
 class ModelData;
 
@@ -87,6 +89,7 @@ public:
 	static Material*			GetMaterial(std::string Path);			//메테리얼을 가져옴
 	static Animation*			GetAnimation(std::string Path);			//애니메이션을 가져옴
 
+	static ColliderBuffer*		GetColliderBuffer(std::string Path);	//카메라 애니메이션 데이터를가져옴
 	static CameraAnimation*		GetCamAnimation(std::string Path);		//카메라 애니메이션 데이터를가져옴
 	
 	static bool					FindModel(std::string Name);			
@@ -112,7 +115,7 @@ private:
 	static std::map<std::string, Animation*>			AnimationList;
 
 	static std::map<std::string, CameraAnimation*>		CamAnimationList;
-
+	static std::map<std::string, ColliderBuffer*>		ColliderBufferList;
 private:
 	FBXManager*				mFBX;
 	TextureManager*			mTexture;
