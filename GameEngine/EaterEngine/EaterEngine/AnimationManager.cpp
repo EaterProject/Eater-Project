@@ -77,14 +77,16 @@ void AnimationManager::DeleteAnimation(UINT index)
 
 void AnimationManager::BakeAnimation()
 {
-	ModelData* modelData = nullptr;
-	Animation* animation = nullptr;
-
 	// 로드된 모든 Model Animation Data를 Baking 한다..
 	for (auto& modelAnimation : LoadManager::AnimationList)
 	{
-		animation = modelAnimation.second;
-		modelData = LoadManager::GetModelData(modelAnimation.first);
+		Animation* animation = modelAnimation.second;
+
+		if (animation->m_AnimationBuffer->AnimationCount == animation->m_AnimationData->AnimationCount) continue;
+
+		ModelData* modelData = LoadManager::GetModelData(modelAnimation.first);
+
+		if (modelData == nullptr) continue;
 
 		// 새로운 Animation 생성..
 		EnterCriticalSection(m_CriticalSection);
@@ -94,6 +96,10 @@ void AnimationManager::BakeAnimation()
 		if (animation->m_AnimationBuffer == nullptr)
 		{
 			PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "[ Engine ][ Bake ][ Animation Buffer ] '%s' FAILED!!", modelAnimation.first.c_str());
+		}
+		else
+		{
+			m_Graphic->PushChangeAnimation(animation->m_AnimationBuffer);
 		}
 	}
 }

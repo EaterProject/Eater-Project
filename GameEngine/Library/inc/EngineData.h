@@ -310,11 +310,6 @@ class LoadMeshData
 public:
 	~LoadMeshData()
 	{
-		if (Parent != nullptr)
-		{
-			delete Parent;
-		}
-
 		for (auto k : Child)
 		{
 			delete k;
@@ -395,7 +390,11 @@ public:
 	{
 
 	}
-	std::string ModelName;
+
+	std::string Name;
+
+	UINT AnimationCount = 0;
+
 	std::unordered_map<std::string, CModelAnimation*> AnimList;
 };
 

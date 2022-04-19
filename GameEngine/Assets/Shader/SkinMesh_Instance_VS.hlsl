@@ -36,7 +36,6 @@ MeshVertexOut SkinMesh_Instance_VS(MeshVertexIn vin, MeshInstanceIn instance)
     float3 normalL = float3(0.0f, 0.0f, 0.0f);
     float3 tangentL = float3(0.0f, 0.0f, 0.0f);
     
-    [unroll]
     for (int i = 0; i < 4; ++i)
     {
         nowIndex = instance.PrevAnimationIndex + vin.BoneIndices1[i];
@@ -52,20 +51,20 @@ MeshVertexOut SkinMesh_Instance_VS(MeshVertexIn vin, MeshInstanceIn instance)
         tangentL += vin.BoneWeights1[i] * mul(vin.TangentL, (float3x3) nowBoneTM);
     }
     
-    //for (int j = 0; j < 4; ++j)
-    //{
-    //    nowIndex = instance.PrevAnimationIndex + vin.BoneIndices2[j];
-    //    nextIndex = instance.NextAnimationIndex + vin.BoneIndices2[j];
-    //    
-    //    prevBoneTM = LoadBoneMatrix(gAnimationBuffer.Load(nowIndex));
-    //    nextBoneTM = LoadBoneMatrix(gAnimationBuffer.Load(nextIndex));
-    //    
-    //    nowBoneTM = lerp(prevBoneTM, nextBoneTM, instance.FrameTime);
-    //    
-    //    posL += vin.BoneWeights2[j] * mul(float4(vin.PosL, 1.0f), prevBoneTM).xyz;
-    //    normalL += vin.BoneWeights2[j] * mul(vin.NormalL, (float3x3) prevBoneTM);
-    //    tangentL += vin.BoneWeights2[j] * mul(vin.TangentL, (float3x3) prevBoneTM);
-    //}
+    for (int j = 0; j < 4; ++j)
+    {
+        nowIndex = instance.PrevAnimationIndex + vin.BoneIndices2[j];
+        nextIndex = instance.NextAnimationIndex + vin.BoneIndices2[j];
+        
+        prevBoneTM = LoadBoneMatrix(gAnimationBuffer.Load(nowIndex));
+        nextBoneTM = LoadBoneMatrix(gAnimationBuffer.Load(nextIndex));
+        
+        nowBoneTM = lerp(prevBoneTM, nextBoneTM, instance.FrameTime);
+        
+        posL += vin.BoneWeights2[j] * mul(float4(vin.PosL, 1.0f), prevBoneTM).xyz;
+        normalL += vin.BoneWeights2[j] * mul(vin.NormalL, (float3x3) prevBoneTM);
+        tangentL += vin.BoneWeights2[j] * mul(vin.TangentL, (float3x3) prevBoneTM);
+    }
     
     vout.PosW = mul(instance.World, float4(posL, 1.0f)).xyz;
     vout.PosV = mul(gView, float4(vout.PosW, 1.0f)).xyz;

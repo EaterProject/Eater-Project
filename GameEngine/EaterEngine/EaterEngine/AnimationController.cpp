@@ -6,6 +6,8 @@
 #include "Animation.h"
 #include "TimeManager.h"
 
+#include "Profiler/Profiler.h"
+
 AnimationController::AnimationController()
 {
 	ChangeAnimation = false;
@@ -65,6 +67,8 @@ void AnimationController::SetBoneList(std::vector<GameObject*>* m_ObjList)
 
 void AnimationController::SetAnimation(Animation* animation)
 {
+	if (animation == nullptr) return;
+
 	// 해당 Animation 설정..
 	mAnimation = animation;
 
@@ -187,6 +191,8 @@ void AnimationController::Play(float Speed, bool Loop)
 	// 현재 Animation Frame 재설정..
 	AnimationFrameIndex();
 
+	//PROFILE_TIMER_START(PROFILE_OUTPUT::VS_CODE, 60, "%d Animation Lerp", SkinObject->OneMeshData->Object_Data->ObjectIndex);
+	
 	//Animator 컨퍼넌트들의 Play함수를 실행시킨다
 	int Size = AnimatorList.size();
 	for (int i = 0; i <Size; i++)
@@ -195,6 +201,8 @@ void AnimationController::Play(float Speed, bool Loop)
 		
 		AnimatorList[i]->Play(mPrevFrame, mNextFrame, mFrameTime, Loop);
 	} 
+
+	//PROFILE_TIMER_END("%d Animation Lerp", SkinObject->OneMeshData->Object_Data->ObjectIndex);
 }
 
 void AnimationController::Stop()
