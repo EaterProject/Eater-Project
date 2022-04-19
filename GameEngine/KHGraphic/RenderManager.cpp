@@ -39,7 +39,6 @@
 
 #include <algorithm>
 
-#define RELEASE_PROFILE
 #include "./Profiler/Profiler.h"
 
 RenderManager::RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, IGraphicResourceManager* resource, IShaderManager* shader)
@@ -136,6 +135,17 @@ void RenderManager::Release()
 	m_RenderPassList.clear();
 }
 
+void RenderManager::InstanceResize()
+{
+	size_t&& renderMaxCount = m_Converter->FindMaxInstanceCount();
+	size_t&& unRenderMaxCount = m_UnRenderMeshList.size();
+
+	for (RenderPassBase* renderPass : m_RenderPassList)
+	{
+		renderPass->InstanceResize(renderMaxCount, unRenderMaxCount);
+	}
+}
+
 void RenderManager::RenderSetting(RenderOption* renderOption)
 {
 	// RenderOption 저장..
@@ -175,10 +185,15 @@ void RenderManager::SetGlobalData(GlobalData* globalData)
 	RenderPassBase::g_GlobalData = globalData;
 }
 
-void RenderManager::SetEnvironmentMap(bool enable)
+void RenderManager::SetShadowMap(TextureBuffer* resource)
 {
-	m_Light->SetIBLEnvironmentMapResource(enable);
-	m_Environment->SetEnvironmentMapResource(enable);
+	m_Shadow->SetShadowMap((ID3D11ShaderResourceView*)resource->pTextureBuf);
+}
+
+void RenderManager::SetEnvironmentMap(EnvironmentBuffer* resource)
+{
+	m_Light->SetIBLEnvironmentMapResource(resource);
+	m_Environment->SetEnvironmentMapResource(resource);
 }
 
 void RenderManager::PushInstance(MeshData* instance)
@@ -189,12 +204,20 @@ void RenderManager::PushInstance(MeshData* instance)
 
 void RenderManager::PushMesh(MeshBuffer* mesh)
 {
+	// 현재 추가된 Mesh Buffer 동기화를 위해 삽입..
 	m_Converter->PushMesh(mesh);
 }
 
 void RenderManager::PushMaterial(MaterialBuffer* material)
 {
+	// 현재 추가된 Material Buffer 동기화를 위해 삽입..
 	m_Converter->PushMaterial(material);
+}
+
+void RenderManager::PushAnimation(AnimationBuffer* animation)
+{
+	// 현재 추가된 Animation Buffer 동기화를 위해 삽입..
+	m_Converter->PushAnimation(animation);
 }
 
 void RenderManager::PushChangeInstance(MeshData* instance)
@@ -213,6 +236,12 @@ void RenderManager::PushChangeMaterial(MaterialBuffer* material)
 {
 	// 현재 바뀐 Material Buffer 동기화를 위해 삽입..
 	m_Converter->PushChangeMaterial(material);
+}
+
+void RenderManager::PushChangeAnimation(AnimationBuffer* animation)
+{
+	// 현재 바뀐 Animation Buffer 동기화를 위해 삽입..
+	m_Converter->PushChangeAnimation(animation);
 }
 
 void RenderManager::DeleteInstance(MeshData* instance)
@@ -246,6 +275,11 @@ void RenderManager::DeleteMaterial(MaterialBuffer* material)
 	m_Converter->DeleteMaterial(material->BufferIndex);
 }
 
+void RenderManager::DeleteAnimation(AnimationBuffer* animation)
+{
+	m_Converter->DeleteAnimation(animation->BufferIndex);
+}
+
 void RenderManager::ConvertRenderData()
 {
 	// Render Resource 동기화 작업..
@@ -260,7 +294,7 @@ void RenderManager::ConvertRenderData()
 
 void RenderManager::SelectRenderData()
 {
-	PROFILE_TIMER_START(PROFILE_OUTPUT::VS_CODE, 60, "Culling");
+	//PROFILE_TIMER_START(PROFILE_OUTPUT::VS_CODE, 60, "Culling");
 
 	GPU_BEGIN_EVENT_DEBUG_NAME("Culling Pass");
 	/// GPGPU Hierachical Z-Map Occlusion Culling..
@@ -274,7 +308,7 @@ void RenderManager::SelectRenderData()
 	//m_Culling->FrustumCulling();
 	GPU_END_EVENT_DEBUG_NAME();
 
-	PROFILE_TIMER_END("Culling");
+	//PROFILE_TIMER_END("Culling");
 }
 
 void RenderManager::Render()
@@ -359,7 +393,7 @@ void* RenderManager::PickingRender(int x, int y)
 	m_Picking->NoneMeshRenderUpdate(m_UnRenderMeshList);
 	
 	// 현재 클릭한 Pixel ID 검출..
-	UINT pickID = m_Picking->FindPick(x, y);
+	int pickID = (int)m_Picking->FindPick(x, y);
 
 	GPU_END_EVENT_DEBUG_NAME();
 
@@ -371,6 +405,18 @@ void* RenderManager::PickingRender(int x, int y)
 
 	// 해당 Render Data의 원본 GameObject를 반환..
 	return renderData->m_ObjectData->Object;
+}
+
+void RenderManager::BakeShadowMap()
+{
+	m_Shadow->BakeShadowMap();
+
+	for (int i = 0; i < m_RenderMeshList.size(); i++)
+	{
+		m_InstanceLayer = m_RenderMeshList[i];
+
+		m_Shadow->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_MeshList);
+	}
 }
 
 void RenderManager::ShadowRender()
@@ -577,6 +623,9 @@ void RenderManager::EndRender()
 
 void RenderManager::ConvertPushInstance()
 {
+	// Queue가 비어있다면 처리하지 않는다..
+	if (m_PushInstanceList.empty()) return;
+
 	// 현재 프레임 진행중 쌓아둔 추가된 Render Data List 삽입 작업..
 	while (!m_PushInstanceList.empty())
 	{
@@ -609,12 +658,15 @@ void RenderManager::ConvertPushInstance()
 		m_PushInstanceList.pop();
 	}
 
-	// Collider List 재설정..
-	m_Culling->CullingBufferCreate();
+	// Instance Resize..
+	InstanceResize();
 }
 
 void RenderManager::ConvertChangeInstance()
 {
+	// Queue가 비어있다면 처리하지 않는다..
+	if (m_ChangeInstanceList.empty()) return;
+
 	// 현재 프레임 진행중 쌓아둔 변경된 Render Data List 삽입 작업..
 	while (!m_ChangeInstanceList.empty())
 	{
@@ -665,6 +717,9 @@ void RenderManager::ConvertChangeInstance()
 
 void RenderManager::PushMeshRenderData(RenderData* renderData)
 {
+	// 그릴수 없는 상태인 경우 Layer에 삽입하지 않는다..
+	if (renderData->m_InstanceLayerIndex == -1) return;
+
 	// 해당 Layer 검색..
 	InstanceLayer* instanceLayer = m_Converter->GetLayer(renderData->m_InstanceLayerIndex);
 
@@ -932,8 +987,8 @@ void RenderManager::FindInstanceLayer(std::vector<InstanceLayer*>& layerList, In
 bool RenderManager::SortDistance(RenderData* obj1, RenderData* obj2)
 {
 	const Vector3& camPos = RenderPassBase::g_GlobalData->MainCamera_Data->CamPos;
-	const Vector3& objPos1 = { (*obj1->m_ObjectData->World)._41 - camPos.x, (*obj1->m_ObjectData->World)._42 - camPos.y, (*obj1->m_ObjectData->World)._43 - camPos.z };
-	const Vector3& objPos2 = { (*obj2->m_ObjectData->World)._41 - camPos.x, (*obj2->m_ObjectData->World)._42 - camPos.y, (*obj2->m_ObjectData->World)._43 - camPos.z };
+	const Vector3& objPos1 = { (obj1->m_ObjectData->World)._41 - camPos.x, (obj1->m_ObjectData->World)._42 - camPos.y, (obj1->m_ObjectData->World)._43 - camPos.z };
+	const Vector3& objPos2 = { (obj2->m_ObjectData->World)._41 - camPos.x, (obj2->m_ObjectData->World)._42 - camPos.y, (obj2->m_ObjectData->World)._43 - camPos.z };
 
 	const float& distance1 = sqrtf(objPos1.x * objPos1.x + objPos1.y * objPos1.y + objPos1.z * objPos1.z);
 	const float& distance2 = sqrtf(objPos2.x * objPos2.x + objPos2.y * objPos2.y + objPos2.z * objPos2.z);

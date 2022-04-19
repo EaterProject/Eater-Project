@@ -54,6 +54,7 @@ void FBXManager::LoadTerrain(std::string Name, std::string MaskName1, std::strin
 
 	LoadMeshData* Data = new LoadMeshData();
 	ModelData* model = new ModelData();
+	model->Name = Name;
 	Data->MeshType = TERRAIN_MESH;
 
 	SetMatrixData(TerrainMesh, Data);
@@ -65,7 +66,7 @@ void FBXManager::LoadTerrain(std::string Name, std::string MaskName1, std::strin
 	Name = Name.substr(Start, End);
 
 	model->TopMeshList.push_back(Data);
-	LoadManager::ModelList.insert({ Name, model });
+	LoadManager::ModelDataList.insert({ Name, model });
 }
 
 void FBXManager::CheckSkinning(std::string& Path)
@@ -94,12 +95,15 @@ void FBXManager::CheckAnimation(std::string& Path)
 	isAnimation = LoadManager::FindModel(MeshName);
 }
 
-void FBXManager::CreateKeyFrame(std::vector<ParserData::CAnimation*>* Anime, int InputKeyCount)
+void FBXManager::CreateKeyFrame(ParserData::CModelAnimation* Anime, int InputKeyCount)
 {
 	//기존 애니메이션
-	std::vector<ParserData::CAnimation*>::iterator it = Anime->begin();
+	std::vector<ParserData::CAnimation*>::iterator it = Anime->m_AnimationList.begin();
 
-	for (it; it != Anime->end(); it++)
+	Anime->m_TicksPerFrame /= (InputKeyCount + 3);
+	Anime->m_EndFrame = (Anime->m_TotalFrame * (InputKeyCount + 3)) - (InputKeyCount + 3);
+
+	for (it; it != Anime->m_AnimationList.end(); it++)
 	{
 		std::vector<ParserData::CFrame*> data = (*it)->m_AniData;
 		//새롭게 넣을 데이터 리스트
@@ -109,16 +113,16 @@ void FBXManager::CreateKeyFrame(std::vector<ParserData::CAnimation*>* Anime, int
 		for (int i = 0; i < Size - 1; i++)
 		{
 			//보간할 처음값
-			DirectX::SimpleMath::Vector3 Start_Pos = data[i]->m_Pos;
-			DirectX::SimpleMath::Quaternion Start_Rot = data[i]->m_RotQt;
-			DirectX::SimpleMath::Vector3 Start_Scl = data[i]->m_Scale;
+			DirectX::SimpleMath::Vector3 Start_Pos = data[i]->m_LocalPos;
+			DirectX::SimpleMath::Quaternion Start_Rot = data[i]->m_LocalRotQt;
+			DirectX::SimpleMath::Vector3 Start_Scl = data[i]->m_LocalScale;
 			float Start_Time = data[i]->m_Time;
 
 			//보간할 다음값
 			int NextIndex = i + 1;
-			DirectX::SimpleMath::Vector3 End_Pos = data[NextIndex]->m_Pos;
-			DirectX::SimpleMath::Quaternion End_Rot = data[NextIndex]->m_RotQt;
-			DirectX::SimpleMath::Vector3 End_Scl = data[NextIndex]->m_Scale;
+			DirectX::SimpleMath::Vector3 End_Pos = data[NextIndex]->m_LocalPos;
+			DirectX::SimpleMath::Quaternion End_Rot = data[NextIndex]->m_LocalRotQt;
+			DirectX::SimpleMath::Vector3 End_Scl = data[NextIndex]->m_LocalScale;
 			float End_Time = data[NextIndex]->m_Time;
 
 			///처음값 넣어주기
@@ -130,9 +134,9 @@ void FBXManager::CreateKeyFrame(std::vector<ParserData::CAnimation*>* Anime, int
 			{
 				//새로운 키 프레임 생성
 				ParserData::CFrame* temp = new CFrame();
-				temp->m_Pos = Vector3::Lerp(Start_Pos, End_Pos, CountLerp);
-				temp->m_RotQt = Quaternion::Lerp(Start_Rot, End_Rot, CountLerp);
-				temp->m_Scale = Vector3::Lerp(Start_Scl, End_Scl, CountLerp);
+				temp->m_LocalPos = Vector3::Lerp(Start_Pos, End_Pos, CountLerp);
+				temp->m_LocalRotQt = Quaternion::Lerp(Start_Rot, End_Rot, CountLerp);
+				temp->m_LocalScale = Vector3::Lerp(Start_Scl, End_Scl, CountLerp);
 				temp->m_Time = LERP(Start_Time, End_Time, CountLerp);
 
 				CreateData.push_back(temp);
@@ -144,8 +148,8 @@ void FBXManager::CreateKeyFrame(std::vector<ParserData::CAnimation*>* Anime, int
 		}
 
 		(*it)->m_AniData = CreateData;
-		(*it)->m_TicksPerFrame /= (InputKeyCount + 3);
-		(*it)->m_EndFrame = (Size * (InputKeyCount + 3)) - (InputKeyCount + 3);
+		//(*it)->m_TicksPerFrame /= (InputKeyCount + 3);
+		//(*it)->m_EndFrame = (Size * (InputKeyCount + 3)) - (InputKeyCount + 3);
 	}
 }
 
@@ -383,7 +387,7 @@ void FBXManager::CreateSaveMesh(ParserData::CModel* mMesh, ModelData* SaveMesh, 
 		case MESH_TYPE::SKIN_MESH:
 			SaveOneMesh = CreateSkinMesh(OneMesh);
 			SkinMeshList.push_back(SaveOneMesh);
-			SaveMesh->BoneOffsetList = &(OneMesh->m_BoneTMList);
+			SaveMesh->BoneOffsetList = std::move(OneMesh->m_BoneTMList);
 			break;
 		case MESH_TYPE::STATIC_MESH:
 			SaveOneMesh = CreateBaseMesh(OneMesh);
@@ -400,9 +404,8 @@ void FBXManager::CreateSaveMesh(ParserData::CModel* mMesh, ModelData* SaveMesh, 
 	LinkMesh(BaseMeshList, SaveMesh);
 	LinkMesh(SkinMeshList, SaveMesh);
 	LinkMesh(BoneMeshList, SaveMesh);
-
 	
-	LoadManager::ModelList.insert({ nowFileName, SaveMesh });
+	LoadManager::ModelDataList.insert({ nowFileName, SaveMesh });
 }
 
 void FBXManager::LoadQuad()
@@ -412,6 +415,8 @@ void FBXManager::LoadQuad()
 	Mesh* quadMesh = new Mesh();
 
 	// Quad Mesh 설정..
+	SaveMesh->Name = "Quad";
+
 	quadMesh->Name = "Quad";
 	quadMesh->m_MeshData->Name = "Quad";
 
@@ -428,7 +433,7 @@ void FBXManager::LoadQuad()
 
 	SaveMesh->TopMeshList.push_back(quad);
 
-	LoadManager::ModelList.insert({ "Quad" , SaveMesh });
+	LoadManager::ModelDataList.insert({ "Quad" , SaveMesh });
 	LoadManager::MeshBufferList.insert({ "Quad", quadMesh });
 
 	delete mesh;
@@ -468,18 +473,28 @@ void FBXManager::LoadAnimation(ModelData* SaveMesh, ParserData::CModel* MeshData
 	if (Path.rfind('+') == std::string::npos) { return; }
 
 	//키프레임 생성
-	//CreateKeyFrame(&(MeshData->m_AnimationList), 10);
+	//CreateKeyFrame(MeshData->m_ModelAnimation, 10);
 
 	//첫번째키 생성
 	std::string::size_type start	= Path.rfind("/") + 1;
 	std::string::size_type End		= Path.rfind('+') - start;
 	std::string SaveName			= Path.substr(start, End);
 
+	// Mesh Name 저장..
+	SaveMesh->Name = SaveName;
+
+	ModelAnimationData* Data = nullptr;
+
 	//애니메이션이 없는경우 생성
-	if (LoadManager::AnimationList.find(SaveName) == LoadManager::AnimationList.end())
+	if (LoadManager::AnimationDataList.find(SaveName) == LoadManager::AnimationDataList.end())
 	{
-		ModelAnimationData* data = new ModelAnimationData();
-		LoadManager::AnimationList.insert({ SaveName,data });
+		Data = new ModelAnimationData();
+
+		LoadManager::AnimationDataList.insert({ SaveName, Data });
+	}
+	else
+	{
+		Data = LoadManager::AnimationDataList[SaveName];
 	}
 
 	//두번째 키 생성
@@ -489,8 +504,9 @@ void FBXManager::LoadAnimation(ModelData* SaveMesh, ParserData::CModel* MeshData
 	std::string key		= Path.substr(start, End);
 
 	//데이터 저장
-	ModelAnimationData* temp = LoadManager::AnimationList[SaveName];
-	temp->AnimList.insert({ key, &(MeshData->m_AnimationList) });
+	MeshData->m_ModelAnimation->m_Index = (int)Data->AnimList.size();
+
+	Data->AnimList.insert({ key, std::move(MeshData->m_ModelAnimation) });
 }
 
 

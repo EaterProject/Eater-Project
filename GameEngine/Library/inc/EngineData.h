@@ -47,8 +47,8 @@ public:
 	
 	std::vector<Matrix> BoneOffsetTM;				//본 오프셋 TM
 
-	Matrix* World = nullptr;						//매쉬의 월드 행렬
-	Matrix* Local = nullptr;						//매쉬의 로컬 행렬
+	Matrix World;									//매쉬의 월드 행렬
+	Matrix InvWorld;								//매쉬의 월드 역행렬
 
 public:
 	static Vector4 HashToColor(int hash)
@@ -68,6 +68,23 @@ public:
 				((int)color.z * 65536) +
 				((int)color.w * 16777216);
 	}
+};
+
+// Animation Data
+class AnimationData
+{
+public:
+	virtual ~AnimationData()
+	{
+
+	}
+
+public:
+	UINT PrevAnimationIndex = 0;					// Prev Animation Index
+	UINT NextAnimationIndex = 0;					// Next Animation Index
+	UINT PrevFrameIndex = 0;						// Prev Frame Index
+	UINT NextFrameIndex = 0;						// Next Frame Index
+	float FrameTime = 0.0f;							// Animation Frame Time
 };
 
 // Mesh Sub Data
@@ -121,33 +138,43 @@ public:
 	virtual ~MaterialBuffer()
 	{
 		delete Material_SubData;
-		Albedo		= nullptr;
-		Normal		= nullptr;
-		Emissive	= nullptr;
-		ORM			= nullptr;
 	}
 
 public:
-	UINT BufferIndex = 0;					// Material Buffer Index
+	UINT BufferIndex = 0;							// Material Buffer Index
 
 	MaterialSubData* Material_SubData = nullptr;	// Material SubData
 
-	TextureBuffer* Albedo = nullptr;		// DiffuseMap Texture
-	TextureBuffer* Normal = nullptr;		// NormalMap Texture
-	TextureBuffer* Emissive = nullptr;		// Emissive Texture
-	TextureBuffer* ORM = nullptr;			// AO(R) + Roughness(G) + Metallic(B) Texture
+	TextureBuffer* Albedo = nullptr;				// DiffuseMap Texture
+	TextureBuffer* Normal = nullptr;				// NormalMap Texture
+	TextureBuffer* Emissive = nullptr;				// Emissive Texture
+	TextureBuffer* ORM = nullptr;					// AO(R) + Roughness(G) + Metallic(B) Texture
 };
 
-class ColliderBuffer : public MeshBuffer
+// Environment Buffer
+class EnvironmentBuffer : public Resources
 {
 public:
-	ColliderBuffer() = default;
-	~ColliderBuffer() = default;
+	virtual ~EnvironmentBuffer()
+	{
+		delete Environment;
+		delete Irradiance;
+		delete Prefilter;
+	};
 
-	int VertexArrayCount	= 0;
-	int IndexArrayCount		= 0;
-	Vector3* VertexArray	= nullptr;
-	UINT*	 IndexArray		= nullptr;
+	TextureBuffer* Environment = nullptr;				// Environment Buffer
+	TextureBuffer* Irradiance = nullptr;				// Environment Irradiance Buffer
+	TextureBuffer* Prefilter = nullptr;					// Environment Prefilter Buffer
+};
+
+// Camera Animation
+class CameraAnimation
+{
+public:
+	float OneFrame;
+	int AddKeyCount;
+	std::vector<Vector3> Position;
+	std::vector<Vector3> Rotation;
 };
 
 // Terrain Data
@@ -158,15 +185,6 @@ public:
 	std::vector<MaterialBuffer*> Material_List;		// Material List
 };
 
-class CameraAnimation 
-{
-public:
-	float OneFrame;
-	int AddKeyCount;
-	std::vector<Vector3> Position;
-	std::vector<Vector3> Rotation;
-};
-
 // Particle Data
 class OneParticle
 {
@@ -174,7 +192,9 @@ public:
 	bool Playing;
 	Vector4 Color;
 
-	Matrix* Tex;
+	Vector2 TexScale;
+	Vector2 TexPos;
+
 	Matrix* World;
 };
 
@@ -235,8 +255,10 @@ public:
 
 	MeshBuffer*		Mesh_Buffer = nullptr;			// Mesh Buffer
 	MaterialBuffer*	Material_Buffer	= nullptr;		// Material Buffer
+	AnimationBuffer* Animation_Buffer = nullptr;	// Animation Buffer
 
 	// 추가 데이터
+	AnimationData*	Animation_Data = nullptr;		// Animation Data
 	TerrainData*	Terrain_Data	= nullptr;		// Terrain Data
 	ParticleData*	Particle_Data	= nullptr;		// Particle Data
 };
@@ -274,18 +296,15 @@ class LoadMeshData
 public:
 	~LoadMeshData()
 	{
-		int ChildCount = (int)Child.size();
-		for (int i = 0; i < ChildCount; i++)
+		if (Parent != nullptr)
 		{
-			LoadMeshData* Data = Child[i];
-			Child[i] = nullptr;
-			delete Data;
-			Data = nullptr;
+			delete Parent;
 		}
-		Child.clear();
-		
 
-		BoneTMList = nullptr;
+		for (auto k : Child)
+		{
+			delete k;
+		}
 		Parent = nullptr;
 	};
 
@@ -304,7 +323,7 @@ public:
 	Matrix LocalTM;					//로컬 매트릭스
 
 	int BoneIndex = -1;				//본일경우 자신의 인덱스
-	std::vector<Matrix>* BoneTMList = nullptr;	//본 매트릭스
+	std::vector<Matrix> BoneTMList;			//본 매트릭스
 
 	LoadMeshData* Parent = nullptr;			//부모 매쉬
 	std::vector<LoadMeshData*> Child;		//자식 매쉬 리스트
@@ -343,11 +362,15 @@ public:
 			}
 		}
 	}
+
+public:
+	std::string Name;
+
 	std::vector<LoadMeshData*> TopMeshList;
 	std::vector<LoadMeshData*> TopSkinList;
 	std::vector<LoadMeshData*> TopBoneList;
 
-	std::vector<Matrix>* BoneOffsetList = nullptr;	//본 매트릭스
+	std::vector<Matrix> BoneOffsetList;				//본 매트릭스
 	std::vector<LoadMeshData*> BoneList;			//본 매쉬
 };
 
@@ -356,16 +379,10 @@ class ModelAnimationData
 public:
 	~ModelAnimationData()
 	{
-		for (auto Anim : AnimList)
-		{
-			int Size = (int)Anim.second->size();
-			for (auto CAnim : *(Anim.second))
-			{
-				delete CAnim;
-			}
-		}
+
 	}
-	std::map<std::string, std::vector<CAnimation*>* > AnimList;
+
+	std::unordered_map<std::string, CModelAnimation*> AnimList;
 };
 
 //컨퍼넌트들의 함수포인터를 저장할 구조체
@@ -383,27 +400,4 @@ public:
 
 	//컨퍼넌트 순서
 	int OrderCount = 0;
-};
-
-//네비게이션 매쉬의 구조체
-class OneTriangle
-{
-public:
-	//나와 인접해있는 Face
-	int FriendFace[3] = { -1,-1,-1 };
-	float Distance[3] = { -1,-1,-1 };
-
-	//버텍스 위치
-	Vector3 VertexPos[3];
-	Vector3 CenterPoint;
-	UINT Index;
-
-	void CreateCenterPoint() //현재 나의 삼각형에서 중심점을 구한다
-	{
-		float Addition_x = VertexPos[0].x + VertexPos[1].x + VertexPos[2].x;
-		float Addition_Y = VertexPos[0].y + VertexPos[1].y + VertexPos[2].y;
-		float Addition_Z = VertexPos[0].z + VertexPos[1].z + VertexPos[2].z;
-
-		CenterPoint = { Addition_x /3 ,Addition_Y / 3 ,Addition_Z / 3 };
-	}
 };

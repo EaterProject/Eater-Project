@@ -6,7 +6,7 @@ cbuffer cbDebugOption : register(b0)
 }
 
 Texture2D gDiffuseMap : register(t0);
-SamplerState gSamWrapLinear : register(s0);
+SamplerState gSamBorderLinear : register(s0);
 
 float4 Debug_PS(DebugLinePixelIn pin) : SV_TARGET
 {
@@ -19,7 +19,7 @@ float4 Debug_PS(DebugLinePixelIn pin) : SV_TARGET
 
 float4 Debug_Texture_PS(DebugTexturePixelIn pin) : SV_TARGET
 {
-    float4 texColor = gDiffuseMap.Sample(gSamWrapLinear, pin.Tex);
+    float4 texColor = gDiffuseMap.Sample(gSamBorderLinear, pin.Tex);
 #ifdef RENDER_TARGET
     return float4(texColor.rgb, 1.0f);
 #else

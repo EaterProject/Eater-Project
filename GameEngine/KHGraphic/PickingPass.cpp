@@ -121,6 +121,11 @@ void PickingPass::OnResize(int width, int height)
 	m_ID_Tex2D = m_ID_RT->GetTex2D()->Get();
 }
 
+void PickingPass::InstanceResize(size_t& renderMaxCount, size_t& unRenderMaxCount)
+{
+	(renderMaxCount > unRenderMaxCount) ? m_MeshInstance.resize(renderMaxCount) : m_MeshInstance.resize(unRenderMaxCount);
+}
+
 void PickingPass::Release()
 {
 
@@ -138,13 +143,13 @@ void PickingPass::BeginRender()
 
 void PickingPass::RenderUpdate(const InstanceRenderBuffer* instance, const RenderData* meshData)
 {
-	if (meshData == nullptr) return;
+	if (meshData->m_Draw == false) return;
 	
 	const CameraData* cam = g_GlobalData->MainCamera_Data;
 	const ObjectData* obj = meshData->m_ObjectData;
 	const MeshRenderBuffer* mesh = meshData->m_Mesh;
 
-	const Matrix& world = *obj->World;
+	const Matrix& world = obj->World;
 	const Matrix& viewproj = cam->CamViewProj;
 	const Vector4& hashColor = obj->HashColor;
 
@@ -240,18 +245,19 @@ void PickingPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::
 
 	for (int i = 0; i < meshlist.size(); i++)
 	{
-		if (meshlist[i] == nullptr) continue;
+		if (meshlist[i]->m_Draw == false) continue;
 
 		// 해당 Instance Data 삽입..
 		obj = meshlist[i]->m_ObjectData;
-		m_MeshData.World = *obj->World;
+		m_MeshData.World = obj->World;
 		m_MeshData.HashColor = obj->HashColor;
 
-		m_MeshInstance.push_back(m_MeshData);
+		m_MeshInstance[i] = m_MeshData;
 		m_InstanceCount++;
 	}
 
-	if (m_MeshInstance.empty()) return;
+	// Instance가 없는경우 처리하지 않는다..
+	if (m_InstanceCount == 0) return;
 
 	// Mapping SubResource Data..
 	D3D11_MAPPED_SUBRESOURCE mappedResource;
@@ -305,7 +311,6 @@ void PickingPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::
 	}
 
 	// Mesh Instance Data Clear..
-	m_MeshInstance.clear();
 	m_InstanceCount = 0;
 }
 
@@ -321,14 +326,14 @@ void PickingPass::NoneMeshRenderUpdate(const std::vector<RenderData*>& meshlist)
 
 		// 해당 Instance Data 삽입..
 		obj = meshlist[i]->m_ObjectData;
-		m_MeshData.World = *obj->World;
+		m_MeshData.World = obj->World;
 		m_MeshData.HashColor = obj->HashColor;
 
-		m_MeshInstance.push_back(m_MeshData);
+		m_MeshInstance[i] = m_MeshData;
 		m_InstanceCount++;
 	}
 	
-	if (m_MeshInstance.empty()) return;
+	if (m_InstanceCount == 0) return;
 
 	// Mapping SubResource Data..
 	D3D11_MAPPED_SUBRESOURCE mappedResource;
@@ -368,7 +373,6 @@ void PickingPass::NoneMeshRenderUpdate(const std::vector<RenderData*>& meshlist)
 	g_Context->DrawIndexedInstanced(m_Box_DB->IndexCount, m_InstanceCount, 0, 0, 0);
 
 	// Mesh Instance Data Clear..
-	m_MeshInstance.clear();
 	m_InstanceCount = 0;
 }
 

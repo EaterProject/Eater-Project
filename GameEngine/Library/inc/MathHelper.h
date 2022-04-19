@@ -4,8 +4,12 @@
 // Helper math class.
 //***************************************************************************************
 
-#ifndef MATHHELPER_H
-#define MATHHELPER_H
+#pragma once
+
+#include <Windows.h>
+#include <DirectXMath.h>
+#include <float.h>
+#include <cmath>
 
 using namespace DirectX;
 
@@ -65,9 +69,6 @@ public:
 
 	static XMVECTOR RandUnitVec3();
 	static XMVECTOR RandHemisphereUnitVec3(XMVECTOR n);
-
-	static const float Infinity;
-	static const float Pi;
 };
 
-#endif // MATHHELPER_H
+#include "MathHelper.inl"

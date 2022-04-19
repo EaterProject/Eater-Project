@@ -45,12 +45,20 @@ void CreateScene(std::string Name);
 extern "C" EATER_ENGINEDLL void ChoiceScene(std::string name);					//스크린 선택
 EATER_ENGINEDLL void CreateSceneSub(Scene* mSceneTemp,std::string SceneName);	//스크린 생성
 
-///매쉬 불러오기
+///로드 관련
 extern "C" EATER_ENGINEDLL void LoadTerrainMesh(std::string mMeshPath, std::string maskName1, std::string maskName2, UINT parsingMode = 0);	//매쉬 로드
 extern "C" EATER_ENGINEDLL void Load(std::string mPath,UINT Mode = 0);
 extern "C" EATER_ENGINEDLL int	LoadAssetsCount();
-extern "C" EATER_ENGINEDLL void LoadEnvironment(std::string mPath);
-extern "C" EATER_ENGINEDLL void SetEnvironment(bool enable);
+
+///베이킹 관련
+extern "C" EATER_ENGINEDLL void BakeShadowMap(std::string mPath);
+extern "C" EATER_ENGINEDLL void BakeEnvironmentMap(std::string mPath);
+extern "C" EATER_ENGINEDLL void BakeAnimation();
+
+///맵 설정
+extern "C" EATER_ENGINEDLL void SetShadowMap(std::string mPath);
+extern "C" EATER_ENGINEDLL void SetEnvironmentMap(std::string mPath);
+
 extern "C" EATER_ENGINEDLL int GetLoadMeshCount();		//로드된 메쉬 카운터
 extern "C" EATER_ENGINEDLL int GetLoadTextureCount();	//로드된 텍스쳐 카운터
 extern "C" EATER_ENGINEDLL int GetLoadAnimationCount();	//로드된 텍스쳐 카운터

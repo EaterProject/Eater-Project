@@ -7,10 +7,17 @@
 /// </summary>
 
 class GraphicEngine;
+
 class MeshData;
+
+class ModelData;
+class ModelAnimationData;
+
 class MeshBuffer;
 class MaterialBuffer;
 class TextureBuffer;
+class AnimationBuffer;
+class EnvironmentBuffer;
 class RenderOption;
 
 namespace ParserData
@@ -23,6 +30,7 @@ class GraphicEngineManager
 public:
 	GraphicEngineManager();
 	~GraphicEngineManager();
+
 public:
 	//선택한 그래픽엔진을 초기화
 	void Initialize(HWND Hwnd, int WinSizeWidth, int WinSizeHeight);
@@ -33,7 +41,7 @@ public:
 
 	//선택한 그래픽엔진 셋팅
 	void RenderSetting(RenderOption* renderOption);
-	void SetEnvironment(bool enable);
+
 
 	//선택한 그래픽엔진 랜더링
 	void PushInstance(MeshData* mesh);
@@ -47,13 +55,23 @@ public:
 
 	void AddOccluder(MeshBuffer* occluder);
 
-	void LoadEnvironment(std::string mPath);
-
-	//선택한 그래픽엔진으로 인덱스버퍼를 생성함
+	//선택한 그래픽엔진으로 매쉬 버퍼 생성
 	void CreateMeshBuffer(ParserData::CMesh* model, MeshBuffer** ppResource);
 
 	//선택한 그래픽엔진으로 텍스쳐 생성
 	void CreateTextureBuffer(std::string Name, TextureBuffer** ppResource);
+
+	//선택한 그래픽엔진으로 애니메이션 버퍼 생성
+	void CreateAnimationBuffer(ModelData* model, ModelAnimationData* animation, AnimationBuffer** ppResource);
+
+public:
+	//선택한 그래픽엔진으로 텍스쳐 생성
+	void BakeShadowMap(std::string Path);
+	void BakeEnvironmentMap(TextureBuffer* environment, EnvironmentBuffer** ppResource);
+
+public:
+	void SetShadowMap(TextureBuffer* resource);
+	void SetEnvironmentMap(EnvironmentBuffer* resource);
 
 private:
 	GraphicEngine* GEngine;

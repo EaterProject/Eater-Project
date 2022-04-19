@@ -33,51 +33,64 @@ public:
 	void Release();
 
 public:
-	void PushMesh(MeshBuffer* mesh);					// 현재 프레임에 생성된 Mesh 임시 Queue에 삽입..
-	void PushMaterial(MaterialBuffer* material);		// 현재 프레임에 생성된 Material 임시 Queue에 삽입..
-	void PushChangeMesh(MeshBuffer* mesh);				// 현재 프레임에 변경된 Mesh 임시 Queue에 삽입..
-	void PushChangeMaterial(MaterialBuffer* material);  // 현재 프레임에 변경된 Material 임시 Queue에 삽입..
+	void PushMesh(MeshBuffer* mesh);						// 현재 프레임에 생성된 Mesh 임시 Queue에 삽입..
+	void PushMaterial(MaterialBuffer* material);			// 현재 프레임에 생성된 Material 임시 Queue에 삽입..
+	void PushAnimation(AnimationBuffer* animation);			// 현재 프레임에 생성된 Animation 임시 Queue에 삽입..
 
 public:
-	void DeleteRenderData(UINT index);		// 해당 Render Data 즉시 제거..
-	void DeleteInstance(UINT index);		// 해당 Instance Resource 즉시 제거..
-	void DeleteMesh(UINT index);			// 해당 Mesh Resource 즉시 제거..
-	void DeleteMaterial(UINT index);		// 해당 Material Resource 즉시 제거..
+	void PushChangeMesh(MeshBuffer* mesh);					// 현재 프레임에 변경된 Mesh 임시 Queue에 삽입..
+	void PushChangeMaterial(MaterialBuffer* material);		// 현재 프레임에 변경된 Material 임시 Queue에 삽입..
+	void PushChangeAnimation(AnimationBuffer* animation);	// 현재 프레임에 생성된 Animation 임시 Queue에 삽입..
 
 public:
-	RenderData* GetRenderData(UINT index);			// Render Data 고유 Index로 검색..
-	MeshRenderBuffer* GetMesh(UINT index);			// Mesh Resource 고유 Index로 검색..
-	MaterialRenderBuffer* GetMaterial(UINT index);	// Material Resource 고유 Index로 검색..
-	InstanceRenderBuffer* GetInstance(UINT index);	// Instance Resource 고유 Index로 검색..
-	InstanceLayer* GetLayer(UINT index);			// Layer Resource 고유 Index로 검색..
+	void DeleteRenderData(UINT index);						// 해당 Render Data 즉시 제거..
+	void DeleteInstance(UINT index);						// 해당 Instance Resource 즉시 제거..
+	void DeleteMesh(UINT index);							// 해당 Mesh Resource 즉시 제거..
+	void DeleteMaterial(UINT index);						// 해당 Material Resource 즉시 제거..
+	void DeleteAnimation(UINT index);						// 해당 Animation Resource 즉시 제거..
+
+public:
+	size_t FindMaxInstanceCount();							// 모든 Layer 내부의 Instance 개수 중 제일 큰 개수 반환..
+
+public:
+	RenderData* GetRenderData(int index);					// Render Data 고유 Index로 검색..
+	MeshRenderBuffer* GetMesh(int index);					// Mesh Resource 고유 Index로 검색..
+	MaterialRenderBuffer* GetMaterial(int index);			// Material Resource 고유 Index로 검색..
+	AnimationRenderBuffer* GetAnimation(int index);			// Animation Resource 고유 Index로 검색..
+	InstanceRenderBuffer* GetInstance(int index);			// Instance Resource 고유 Index로 검색..
+	InstanceLayer* GetLayer(int index);						// Layer Resource 고유 Index로 검색..
 
 private:
 	void ConvertPushResource();			// 현재 프레임에 생성된 Resource Update..
 	void ConvertChangeResource();		// 현재 프레임에 변경된 Resource Update..
 
-	void ConvertPushMesh(MeshBuffer* mesh);					// 생성된 Mesh Resource 변환 후 등록..
-	void ConvertPushMaterial(MaterialBuffer* material);		// 생성된 Material Resource 변환 후 등록..
+	template<typename Origin, typename Convert>
+	void ConvertPushResource(Origin* origin, std::unordered_map<UINT, Convert*>& convertList);
 
-	void ConvertChangeMesh(MeshBuffer* mesh);				// 변경된 Mesh Resource 변환..
-	void ConvertChangeMaterial(MaterialBuffer* material);	// 변경된 Material Resource 변환..
+	template<typename Origin, typename Convert>
+	void ConvertChangeResource(Origin* origin, std::unordered_map<UINT, Convert*>& convertList);
 
-	void ConvertMesh(MeshBuffer* originBuf, MeshRenderBuffer* convertData);				// 생성된 Mesh Resource 변환..
-	void ConvertMaterial(MaterialBuffer* originMat, MaterialRenderBuffer* convertMat);	// 생성된 Material Resource 변환..
+	template<typename Origin, typename Convert>
+	void ConvertResource(Origin* origin, Convert* convert);
 
-	void RegisterInstance(RenderData* renderData, MeshRenderBuffer* mesh, MaterialRenderBuffer* material);		// Mesh & Material Resource 기준 Instance 검색 및 등록..
+	void RegisterInstance(RenderData* renderData, MeshRenderBuffer* mesh, MaterialRenderBuffer* material, AnimationRenderBuffer* animation);		// Mesh & Material Resource 기준 Instance 검색 및 등록..
 	
 	void CheckEmptyInstance(MeshRenderBuffer* mesh);			// Mesh Resource 삭제시 관련된 Instance 삭제..
 	void CheckEmptyInstance(MaterialRenderBuffer* material);	// Material Resource 삭제시 관련된 Instance 삭제..
+	void CheckEmptyInstance(AnimationRenderBuffer* animation);	// Animation Resource 삭제시 관련된 Instance 삭제..
 
 private:
-	std::queue<MeshBuffer*> m_PushMeshList;				// Game Engine 측에서 현재 프레임에 생성한 Mesh Resource Queue..
-	std::queue<MeshBuffer*> m_ChangeMeshList;			// Game Engine 측에서 현재 프레임에 변경한 Mesh Resource Queue..
-	std::queue<MaterialBuffer*> m_PushMaterialList;		// Game Engine 측에서 현재 프레임에 생성한 Material Resource Queue..
-	std::queue<MaterialBuffer*> m_ChangeMaterialList;	// Game Engine 측에서 현재 프레임에 변경한 Material Resource Queue..
+	std::queue<MeshBuffer*>			m_PushMeshList;							// Game Engine 측에서 현재 프레임에 생성한 Mesh Resource Queue..
+	std::queue<MeshBuffer*>			m_ChangeMeshList;						// Game Engine 측에서 현재 프레임에 변경한 Mesh Resource Queue..
+	std::queue<MaterialBuffer*>		m_PushMaterialList;						// Game Engine 측에서 현재 프레임에 생성한 Material Resource Queue..
+	std::queue<MaterialBuffer*>		m_ChangeMaterialList;					// Game Engine 측에서 현재 프레임에 변경한 Material Resource Queue..
+	std::queue<AnimationBuffer*>	m_PushAnimationList;					// Game Engine 측에서 현재 프레임에 생성한 Animation Resource Queue..
+	std::queue<AnimationBuffer*>	m_ChangeAnimationList;					// Game Engine 측에서 현재 프레임에 변경한 Animation Resource Queue..
 
-	std::unordered_map<UINT, MeshRenderBuffer*> m_MeshList;			// 현재 등록 되어있는 Mesh Resource..
-	std::unordered_map<UINT, MaterialRenderBuffer*> m_MaterialList;	// 현재 등록 되어있는 Material Resource..
-	std::unordered_map<UINT, TerrainRenderBuffer*> m_LayerList;		// 현재 등록 되어있는 Terrain Resource..
+	std::unordered_map<UINT, MeshRenderBuffer*>			m_MeshList;			// 현재 등록 되어있는 Mesh Resource..
+	std::unordered_map<UINT, MaterialRenderBuffer*>		m_MaterialList;		// 현재 등록 되어있는 Material Resource..
+	std::unordered_map<UINT, AnimationRenderBuffer*>	m_AnimationList;	// 현재 등록 되어있는 Animation Resource..
+	std::unordered_map<UINT, TerrainRenderBuffer*>		m_LayerList;		// 현재 등록 되어있는 Terrain Resource..
 
 	std::unordered_map<UINT, RenderData*> m_RenderList;				// 현재 등록 되어있는 모든 Render Data..
 
@@ -86,3 +99,48 @@ private:
 	std::unordered_map<UINT, InstanceLayer*> m_InstanceLayerList;	// Instance Resource를 공유하는 Mesh List Layer..
 };
 
+template<typename Origin, typename Convert>
+inline void RenderDataConverter::ConvertPushResource(Origin* origin, std::unordered_map<UINT, Convert*>& convertList)
+{
+	// Material Index..
+	UINT resourceIndex = origin->BufferIndex;
+
+	// 해당 Index Resource 체크..
+	auto itor = convertList.find(resourceIndex);
+	assert(itor == convertList.end());
+
+	// 새로운 Resource Render Buffer 생성..
+	Convert* newResource = new Convert();
+
+	// Resource Render Buffer 변환..
+	ConvertResource<Origin, Convert>(origin, newResource);
+
+	// Resource Render Buffer 삽입..
+	convertList.insert(std::pair<UINT, Convert*>(resourceIndex, newResource));
+}
+
+template<typename Origin, typename Convert>
+inline void RenderDataConverter::ConvertChangeResource(Origin* origin, std::unordered_map<UINT, Convert*>& convertList)
+{
+	// Resource Index..
+	UINT resourceIndex = origin->BufferIndex;
+
+	// 해당 Index Resource 체크..
+	auto itor = convertList.find(resourceIndex);
+	assert(itor != convertList.end());
+
+	// Resource Render Buffer 재설정..
+	ConvertResource<Origin, Convert>(origin, itor->second);
+}
+
+template<typename Origin, typename Convert>
+inline void RenderDataConverter::ConvertResource(Origin* origin, Convert* convert) {}
+
+template<>
+inline void RenderDataConverter::ConvertResource(MeshBuffer* origin, MeshRenderBuffer* convert);
+
+template<>
+inline void RenderDataConverter::ConvertResource(MaterialBuffer* origin, MaterialRenderBuffer* convert);
+
+template<>
+inline void RenderDataConverter::ConvertResource(AnimationBuffer* origin, AnimationRenderBuffer* convert);

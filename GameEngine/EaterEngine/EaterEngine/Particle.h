@@ -114,6 +114,4 @@ private:
 	DirectX::SimpleMath::Vector4 m_PrevColor;
 	DirectX::SimpleMath::Vector4 m_NowColor;
 	DirectX::SimpleMath::Vector4 m_NextColor;
-
-	DirectX::SimpleMath::Matrix m_Tex;
 };

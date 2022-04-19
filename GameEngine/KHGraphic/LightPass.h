@@ -13,7 +13,7 @@ public:
 	void Release() override;
 
 	void SetOption(RenderOption* renderOption) override;
-	void SetIBLEnvironmentMapResource(bool enable);
+	void SetIBLEnvironmentMapResource(EnvironmentBuffer* resource);
 
 	void Reset();
 

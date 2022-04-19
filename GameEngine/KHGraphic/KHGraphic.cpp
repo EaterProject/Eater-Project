@@ -73,9 +73,14 @@ void KHGraphic::SetGlobalData(GlobalData* globalData)
 	m_RenderManager->SetGlobalData(globalData);
 }
 
-void KHGraphic::SetEnvironmentMap(bool enable)
+void KHGraphic::SetShadowMap(TextureBuffer* resource)
 {
-	m_RenderManager->SetEnvironmentMap(enable);
+	m_RenderManager->SetShadowMap(resource);
+}
+
+void KHGraphic::SetEnvironmentMap(EnvironmentBuffer* resource)
+{
+	m_RenderManager->SetEnvironmentMap(resource);
 }
 
 void KHGraphic::PushInstance(MeshData* instance)
@@ -93,6 +98,11 @@ void KHGraphic::PushMaterial(MaterialBuffer* material)
 	m_RenderManager->PushMaterial(material);
 }
 
+void KHGraphic::PushAnimation(AnimationBuffer* animation)
+{
+	m_RenderManager->PushAnimation(animation);
+}
+
 void KHGraphic::PushChangeInstance(MeshData* instance)
 {
 	m_RenderManager->PushChangeInstance(instance);
@@ -108,6 +118,11 @@ void KHGraphic::PushChangeMaterial(MaterialBuffer* material)
 	m_RenderManager->PushChangeMaterial(material);
 }
 
+void KHGraphic::PushChangeAnimation(AnimationBuffer* animation)
+{
+	m_RenderManager->PushChangeAnimation(animation);
+}
+
 void KHGraphic::DeleteInstance(MeshData* meshData)
 {
 	m_RenderManager->DeleteInstance(meshData);
@@ -121,6 +136,11 @@ void KHGraphic::DeleteMesh(MeshBuffer* mesh)
 void KHGraphic::DeleteMaterial(MaterialBuffer* material)
 {
 	m_RenderManager->DeleteMaterial(material);
+}
+
+void KHGraphic::DeleteAnimation(AnimationBuffer* animation)
+{
+	m_RenderManager->DeleteAnimation(animation);
 }
 
 void KHGraphic::Render()
@@ -143,7 +163,18 @@ void KHGraphic::CreateMeshBuffer(ParserData::CMesh* mesh, MeshBuffer** ppResourc
 	m_FactoryManager->CreateMeshBuffer(mesh, ppResource);
 }
 
-void KHGraphic::CreateEnvironmentMap(std::string path)
+void KHGraphic::CreateAnimationBuffer(ModelData* model, ModelAnimationData* animation, AnimationBuffer** ppResource)
 {
-	m_FactoryManager->CreateEnvironmentMap(path);
+	m_FactoryManager->CreateAnimationBuffer(model, animation, ppResource);
+}
+
+void KHGraphic::BakeShadowMap(std::string path)
+{
+	m_RenderManager->BakeShadowMap();
+	m_FactoryManager->BakeShadowMap(path);
+}
+
+void KHGraphic::BakeEnvironmentMap(TextureBuffer* environment, EnvironmentBuffer** ppResource)
+{
+	m_FactoryManager->BakeEnvironmentMap(environment, ppResource);
 }

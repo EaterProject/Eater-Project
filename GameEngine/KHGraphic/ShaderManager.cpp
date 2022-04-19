@@ -80,7 +80,7 @@ void ShaderManager::CreateShader()
 	LoadShader(SHADER_TYPE::VERTEX_SHADER, "StaticMesh_VS.hlsl", "StaticMesh_VS", "StaticMesh_VS");
 	LoadShader(SHADER_TYPE::VERTEX_SHADER, "StaticMesh_Instance_VS.hlsl", "StaticMesh_Instance_VS", "StaticMesh_Instance_VS");
 	LoadShader(SHADER_TYPE::VERTEX_SHADER, "SkinMesh_VS.hlsl", "SkinMesh_VS", "SkinMesh_VS");
-	//LoadShader(SHADER_TYPE::VERTEX_SHADER, "SkinMesh_VS.hlsl", "SkinMesh_Instance_VS", "SkinMesh_Instance_VS");
+	LoadShader(SHADER_TYPE::VERTEX_SHADER, "SkinMesh_Instance_VS.hlsl", "SkinMesh_Instance_VS", "SkinMesh_Instance_VS");
 	LoadShader(SHADER_TYPE::VERTEX_SHADER, "TerrainMesh_VS.hlsl", "TerrainMesh_VS", "TerrainMesh_VS");
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Deferred_PBR_PS.hlsl", "Deferred_PBR_PS", "Deferred_PBR_PS");
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Deferred_PBR_PS.hlsl", "Deferred_PBR_PS", "Terrain_PBR_PS", deferred_macro1);

@@ -44,11 +44,6 @@ void GraphicEngineManager::RenderSetting(RenderOption* renderOption)
 	GEngine->RenderSetting(renderOption);
 }
 
-void GraphicEngineManager::SetEnvironment(bool enable)
-{
-	GEngine->SetEnvironmentMap(enable);
-}
-
 void GraphicEngineManager::PushInstance(MeshData* mesh)
 {
 	GEngine->PushInstance(mesh);
@@ -89,11 +84,6 @@ void GraphicEngineManager::AddOccluder(MeshBuffer* occluder)
 	GlobalDataManager::g_GlobalData->OccluderList.push_back(occluder);
 }
 
-void GraphicEngineManager::LoadEnvironment(std::string mPath)
-{
-	GEngine->CreateEnvironmentMap(mPath);
-}
-
 void GraphicEngineManager::CreateMeshBuffer(ParserData::CMesh* model, MeshBuffer** ppResource)
 {
 	// Mesh 持失..
@@ -104,4 +94,30 @@ void GraphicEngineManager::CreateTextureBuffer(std::string Name, TextureBuffer**
 {
 	// Texture 持失..
 	GEngine->CreateTextureBuffer(Name, ppResource);
+}
+
+void GraphicEngineManager::CreateAnimationBuffer(ModelData* model, ModelAnimationData* animation, AnimationBuffer** ppResource)
+{
+	GEngine->CreateAnimationBuffer(model, animation, ppResource);
+}
+
+void GraphicEngineManager::BakeShadowMap(std::string Path)
+{
+	GEngine->BakeShadowMap(Path);
+}
+
+void GraphicEngineManager::BakeEnvironmentMap(TextureBuffer* environment, EnvironmentBuffer** ppResource)
+{
+	// Texture 持失..
+	GEngine->BakeEnvironmentMap(environment, ppResource);
+}
+
+void GraphicEngineManager::SetShadowMap(TextureBuffer* resource)
+{
+	GEngine->SetShadowMap(resource);
+}
+
+void GraphicEngineManager::SetEnvironmentMap(EnvironmentBuffer* resource)
+{
+	GEngine->SetEnvironmentMap(resource);
 }

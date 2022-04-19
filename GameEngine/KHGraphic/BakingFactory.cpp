@@ -1,4 +1,3 @@
-#include "BakingFactory.h"
 #include "DirectDefine.h"
 #include "D3D11GraphicBase.h"
 #include "ResourceManagerBase.h"
@@ -10,6 +9,7 @@
 #include "ShaderBase.h"
 #include "VertexShader.h"
 #include "PixelShader.h"
+#include "BakingFactory.h"
 
 #include "MathDefine.h"
 #include "RasterizerStateDefine.h"
@@ -17,6 +17,9 @@
 #include "ShaderResourceViewDefine.h"
 #include "ConstantBufferDefine.h"
 #include "DrawBufferDefine.h"
+#include "DepthStencilViewDefine.h"
+#include "ResourceManager.h"
+#include "RenderTargetDefine.h"
 
 using namespace DirectX;
 
@@ -44,6 +47,11 @@ void BakingFactory::Start()
 void BakingFactory::Release()
 {
 
+}
+
+void BakingFactory::PreBakeShadowMap(std::string fileName)
+{
+	g_Graphic->CaptureTextureDDS(fileName.c_str());
 }
 
 void BakingFactory::PreBakeBRDFMap()
@@ -118,7 +126,7 @@ void BakingFactory::PreBakeBRDFMap()
 	context->DrawIndexed(quadDB->IndexCount, 0, 0);
 
 	// Save Texture..
-	//g_Graphic->SaveTextureDDS(brdflutSRV.Get(), "BRDF_LUT");
+	g_Graphic->SaveTextureDDS(brdflutSRV.Get(), "BRDF_LUT");
 
 	// Debug Name..
 	CPU_RESOURCE_DEBUG_NAME(newResource, "gBRDFlut");
@@ -131,8 +139,10 @@ void BakingFactory::PreBakeBRDFMap()
 	RELEASE_COM(brdflutTex2D);
 }
 
-void BakingFactory::PreBakeIBLMap()
+void BakingFactory::PreBakeEnvironmentMap(EnvironmentBuffer* tex)
 {
+	if (tex == nullptr) return;
+
 	// 货肺款 Resource Pointer 积己..
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext> context = g_Graphic->GetContext();
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> irradianceTex2D = nullptr;
@@ -220,29 +230,12 @@ void BakingFactory::PreBakeIBLMap()
 	g_Graphic->CreateShaderResourceView(irradianceTex2D.Get(), &irradianceSRVDesc, irradianceSRV.GetAddressOf());
 	g_Graphic->CreateShaderResourceView(prefilterTex2D.Get(), &prefilterSRVDesc, prefilterSRV.GetAddressOf());
 
-	// ShaderResourceView 眉农..
-	ShaderResourceView* irradianceResource = g_ResourceManager->GetShaderResourceView<gIBLIrradiance>();
-	ShaderResourceView* prefilterResource = g_ResourceManager->GetShaderResourceView<gIBLPrefilter>();
-
-	// Resource 力芭..
-	if (irradianceResource) g_ResourceManager->DeleteResource<gIBLIrradiance>();
-	if (prefilterResource) g_ResourceManager->DeleteResource<gIBLPrefilter>();
-
-	// ShaderResourceView 积己..
-	irradianceResource = new ShaderResourceView(gIBLIrradiance::GetHashCode(), irradianceSRV.Get());
-	prefilterResource = new ShaderResourceView(gIBLPrefilter::GetHashCode(), prefilterSRV.Get());
-
-	// Resource 殿废..
-	g_ResourceManager->AddResource<gIBLIrradiance>(irradianceResource);
-	g_ResourceManager->AddResource<gIBLPrefilter>(prefilterResource);
-
 	XMVECTOR tar[] = { XMVectorSet(1, 0, 0, 0), XMVectorSet(-1, 0, 0, 0), XMVectorSet(0, 1, 0, 0), XMVectorSet(0, -1, 0, 0), XMVectorSet(0, 0, 1, 0), XMVectorSet(0, 0, -1, 0) };
 	XMVECTOR up[] = { XMVectorSet(0, 1, 0, 0), XMVectorSet(0, 1, 0, 0), XMVectorSet(0, 0, -1, 0), XMVectorSet(0, 0, 1, 0), XMVectorSet(0, 1, 0, 0), XMVectorSet(0, 1, 0, 0) };
 
+	ID3D11ShaderResourceView* skycube		= (ID3D11ShaderResourceView*)tex->Environment->pTextureBuf;
 	ID3D11RasterizerState* cubemapRS		= g_ResourceManager->GetRasterizerState<RS_CubeMap>()->Get();
 	ID3D11DepthStencilState* cubemapDSS		= g_ResourceManager->GetDepthStencilState<DSS_CubeMap>()->Get();
-	ID3D11ShaderResourceView* skycube		= g_ResourceManager->GetShaderResourceView<gSkyCube>()->Get();
-	ID3D11ShaderResourceView* prefilterMap = g_ResourceManager->GetShaderResourceView<gIBLPrefilter>()->Get();
 
 	DrawBuffer* boxDB = g_ResourceManager->GetDrawBuffer<DB_Box>();
 
@@ -252,7 +245,7 @@ void BakingFactory::PreBakeIBLMap()
 
 	context->OMSetDepthStencilState(cubemapDSS, 0);
 	context->RSSetState(cubemapRS);
-	context->GenerateMips(prefilterMap);
+	context->GenerateMips(prefilterSRV.Get());
 
 	// Irradiance IBL EnvMap Create..
 	for (unsigned int i = 0; i < 6; i++)
@@ -333,17 +326,20 @@ void BakingFactory::PreBakeIBLMap()
 		}
 	}
 
-	// Save Texture..
-	//g_Graphic->SaveTextureDDS(irradianceSRV.Get(), "IBL_Irradiance");
-	//g_Graphic->SaveTextureDDS(prefilterSRV.Get(), "IBL_Prefilter");
+	g_Graphic->SaveTextureDDS(irradianceSRV.Get(), std::string(tex->Environment->Name + "_Irradiance").c_str());
+	g_Graphic->SaveTextureDDS(prefilterSRV.Get(), std::string(tex->Environment->Name + "_Prefilter").c_str());
 
 	// Debug Name..
-	CPU_RESOURCE_DEBUG_NAME(irradianceResource, "gIBLIrradiance");
-	CPU_RESOURCE_DEBUG_NAME(prefilterResource, "gIBLPrefilter");
-
 	GPU_RESOURCE_DEBUG_NAME(irradianceSRV.Get(), "gIBLIrradiance");
 	GPU_RESOURCE_DEBUG_NAME(prefilterSRV.Get(), "gIBLPrefilter");
-	
+
+	// Resource 火涝..
+	tex->Irradiance = new TextureBuffer();
+	tex->Irradiance->pTextureBuf = irradianceSRV.Detach();
+
+	tex->Prefilter = new TextureBuffer();
+	tex->Prefilter->pTextureBuf = prefilterSRV.Detach();
+
 	RESET_COM(context);
 	RESET_COM(irradianceSRV);
 	RESET_COM(prefilterSRV);

@@ -13,7 +13,8 @@ public:
 	void Release() override;
 
 public:
-	void PreBakeIBLMap() override;
+	void PreBakeShadowMap(std::string fileName) override;
+	void PreBakeEnvironmentMap(EnvironmentBuffer* tex) override;
 
 private:
 	void PreBakeBRDFMap();

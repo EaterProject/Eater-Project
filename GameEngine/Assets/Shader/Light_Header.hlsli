@@ -143,7 +143,5 @@ float CalcShadowFactor(SamplerComparisonState samShadow,
 			shadowPosH.xy, depth, offset[i]).r;
     }
 
-    percentLit /= 9.0f;
-    
-    return percentLit;
+    return percentLit /= 9.0f;
 }

@@ -5,7 +5,7 @@ StructuredBuffer<FLStaticNode> gPieceLinkBuffer : register(t0);
 ByteAddressBuffer gFirstOffsetBuffer : register(t1);
 Texture2D gBackGround : register(t2);
 
-#define MAX_SORTED_PIXELS 25
+#define MAX_SORTED_PIXELS 10
 
 static FragmentData gSortedPixels[MAX_SORTED_PIXELS];
 
@@ -59,3 +59,4 @@ float4 OIT_PS(ScreenPixelIn pin) : SV_Target
     
     return currColor;
 }
+

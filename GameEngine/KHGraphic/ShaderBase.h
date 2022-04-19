@@ -124,9 +124,11 @@ inline void ShaderBase::ConstantBufferUpdate(T* cBuffer)
 	// 해당 Key에 대한 Value가 없다면..
 	if (it == m_ConstantBufferList.end()) return;
 
+	// 해당 Constant Buffer Register Bind Index의 Resource 검색..
 	ConstantBuffer* cBuf = it->second;
 	ID3D11Buffer* buffer = m_ConstantBuffers[cBuf->register_number].Get();
 
+	// Constant Buffer Usage에 따른 Resource Update..
 	switch (cBuf->cUsage)
 	{
 	case CBUFFER_USAGE::DEFAULT:

@@ -62,6 +62,7 @@ float4 Light_IBL_PS(ScreenPixelIn pin) : SV_TARGET
     float shadows = 1.0f;
 	
 #ifdef SHADOW
+    shadowRT.xyz /= shadowRT.w;
     shadows = CalcShadowFactor(gSamBorderComparisonLinearPoint, gShadowMap, float3(shadowRT.xyz));
 #endif	
 	
@@ -69,7 +70,7 @@ float4 Light_IBL_PS(ScreenPixelIn pin) : SV_TARGET
     float ao = 1.0f;
 	
 #ifdef SSAO
-    ssaoRT /= ssaoRT.w;
+    ssaoRT.xy /= ssaoRT.w;
     ao = gSsaoMap.SampleLevel(gSamClampLinear, ssaoRT.xy, 0.0f).r;
 #endif	
         

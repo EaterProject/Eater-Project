@@ -27,6 +27,7 @@
 
 #include "RenderTargetViewDefine.h"
 #include "RasterizerStateDefine.h"
+#include "ResourceManager.h"
 
 LightPass::LightPass()
 {
@@ -120,39 +121,18 @@ void LightPass::SetOption(RenderOption* renderOption)
 		break;
 	}
 
-	if (renderOption->RenderingOption & RENDER_IBL)
-	{
-		SetIBLEnvironmentMapResource(true);
-	}
-	else
-	{
-		SetIBLEnvironmentMapResource(false);
-	}
-
 	Reset();
 }
 
-void LightPass::SetIBLEnvironmentMapResource(bool enable)
+void LightPass::SetIBLEnvironmentMapResource(EnvironmentBuffer* resource)
 {
-	if (enable)
-	{
-		ShaderResourceView* irradiance = g_Resource->GetShaderResourceView<gIBLIrradiance>();
-		ShaderResourceView* prefilter = g_Resource->GetShaderResourceView<gIBLPrefilter>();
-		ShaderResourceView* brdflut = g_Resource->GetShaderResourceView<gBRDFlut>();
+	ID3D11ShaderResourceView* brdflut = g_Resource->GetShaderResourceView<gBRDFlut>()->Get();
+	ID3D11ShaderResourceView* prefilter = (ID3D11ShaderResourceView*)resource->Prefilter->pTextureBuf;
+	ID3D11ShaderResourceView* irradiance = (ID3D11ShaderResourceView*)resource->Irradiance->pTextureBuf;
 
-		if (irradiance && prefilter && brdflut)
-		{
-			m_Light_PS->SetShaderResourceView<gIBLIrradiance>(irradiance->Get());
-			m_Light_PS->SetShaderResourceView<gIBLPrefilter>(prefilter->Get());
-			m_Light_PS->SetShaderResourceView<gBRDFlut>(brdflut->Get());
-		}
-	}
-	else
-	{
-		m_Light_PS->SetShaderResourceView<gIBLIrradiance>(nullptr);
-		m_Light_PS->SetShaderResourceView<gIBLPrefilter>(nullptr);
-		m_Light_PS->SetShaderResourceView<gBRDFlut>(nullptr);
-	}
+	m_Light_PS->SetShaderResourceView<gBRDFlut>(brdflut);
+	m_Light_PS->SetShaderResourceView<gIBLPrefilter>(prefilter);
+	m_Light_PS->SetShaderResourceView<gIBLIrradiance>(irradiance);
 }
 
 void LightPass::Reset()

@@ -1,11 +1,10 @@
 #EATERMAT
 @MaterialName Outside_Rock_M_rock_C
 @Alpha NO
-@DiffuseMap organic_rock_C_BaseColor.png
-@NormalMap organic_rock_C_Normal.png
-@EmissiveMap NO
-@ORMMap organic_rock_C_ORM.png
-@Emissive 0
+@Diffuse organic_rock_C_BaseColor.png
+@Normal organic_rock_C_Normal.png
+@Emissive NO
+@ORM organic_rock_C_ORM.png
 @Roughness 0
 @Metallic 0
 @Tileing_X 1

@@ -6,7 +6,6 @@ cbuffer cbStaticMesh
     float4x4 gInvWorld           : packoffset(c4);
     float4x4 gView               : packoffset(c8);
     float4x4 gProj               : packoffset(c12);
-    float4x4 gTexTransform       : packoffset(c16);
 };
 
 MeshVertexOut StaticMesh_VS(MeshVertexIn vin)
@@ -24,7 +23,7 @@ MeshVertexOut StaticMesh_VS(MeshVertexIn vin)
     vout.TangentV = mul((float3x3) gView, vout.TangentW);
     
 	// Output vertex attributes for interpolation across triangle.
-    vout.Tex = mul(gTexTransform, float4(vin.Tex, 0.0f, 1.0f)).xy;
+    vout.Tex = vin.Tex;
 
     return vout;
 }

@@ -31,6 +31,9 @@ void Eater_LoadMesh::LoadData(std::string& Path)
 	std::size_t End = Path.rfind('.') - start;
 	std::string SaveName = Path.substr(start, End);
 
+	// Mesh Name 저장..
+	SaveData->Name = SaveName;
+
 	int Count = EATER_GET_NODE_COUNT();
 	for (int i = 0; i < Count; i++)
 	{
@@ -53,7 +56,7 @@ void Eater_LoadMesh::LoadData(std::string& Path)
 			LoadMeshData* Data = LoadSkinMesh(i);
 			SaveData->TopSkinList.push_back(Data);
 			Data->ModelName = SaveName;
-			SaveData->BoneOffsetList = Data->BoneTMList;
+			SaveData->BoneOffsetList = std::move(Data->BoneTMList);
 		}
 		else if (NodeName == "TERRAIN")
 		{
@@ -76,14 +79,14 @@ void Eater_LoadMesh::LoadData(std::string& Path)
 	LinkBone(SaveData);
 
 
-	std::map<std::string, ModelData*>::iterator Fine_it = LoadManager::ModelList.find(SaveName);
-	std::map<std::string, ModelData*>::iterator End_it	= LoadManager::ModelList.end();
+	std::map<std::string, ModelData*>::iterator Fine_it = LoadManager::ModelDataList.find(SaveName);
+	std::map<std::string, ModelData*>::iterator End_it	= LoadManager::ModelDataList.end();
 	if (Fine_it != End_it)
 	{
-		LoadManager::ModelList.erase(SaveName);
+		LoadManager::ModelDataList.erase(SaveName);
 	}
 
-	LoadManager::ModelList.insert({ SaveName ,SaveData });
+	LoadManager::ModelDataList.insert({ SaveName ,SaveData });
 }
 
 LoadMeshData* Eater_LoadMesh::LoadStaticMesh(int index)
@@ -208,8 +211,9 @@ void Eater_LoadMesh::LoadTM(int Index, LoadMeshData* model)
 void Eater_LoadMesh::LoadBoneOffset(int index, LoadMeshData* model)
 {
 	int BoneOffsetCount = EATER_GET_LIST_CHOICE(index, "BoneOffset");
-	model->BoneTMList = new std::vector<Matrix>();
-	model->BoneTMList->reserve(BoneOffsetCount);
+
+	model->BoneTMList.resize(BoneOffsetCount);
+
 	for (int i = 0; i < BoneOffsetCount; i++)
 	{
 		std::vector<float> Data;
@@ -235,7 +239,7 @@ void Eater_LoadMesh::LoadBoneOffset(int index, LoadMeshData* model)
 		TM._43 = Data[14];
 		TM._44 = Data[15];
 
-		model->BoneTMList->push_back(TM);
+		model->BoneTMList[i] = std::move(TM);
 	}
 }
 
@@ -319,12 +323,15 @@ void Eater_LoadMesh::LinkBone(ModelData* Data)
 	}
 }
 
-void Eater_LoadMesh::CreateKeyFrame(std::vector<ParserData::CAnimation*>* Anime, int InputKeyCount)
+void Eater_LoadMesh::CreateKeyFrame(ParserData::CModelAnimation* Anime, int InputKeyCount)
 {
 	//기존 애니메이션
-	std::vector<ParserData::CAnimation*>::iterator it = Anime->begin();
+	std::vector<ParserData::CAnimation*>::iterator it = Anime->m_AnimationList.begin();
 
-	for (it; it != Anime->end(); it++)
+	Anime->m_TicksPerFrame /= (InputKeyCount + 3);
+	Anime->m_EndFrame = (Anime->m_TotalFrame * (InputKeyCount + 3)) - (InputKeyCount + 3);
+
+	for (it; it != Anime->m_AnimationList.end(); it++)
 	{
 		std::vector<ParserData::CFrame*> data = (*it)->m_AniData;
 		//새롭게 넣을 데이터 리스트
@@ -334,16 +341,16 @@ void Eater_LoadMesh::CreateKeyFrame(std::vector<ParserData::CAnimation*>* Anime,
 		for (int i = 0; i < Size - 1; i++)
 		{
 			//보간할 처음값
-			DirectX::SimpleMath::Vector3 Start_Pos = data[i]->m_Pos;
-			DirectX::SimpleMath::Quaternion Start_Rot = data[i]->m_RotQt;
-			DirectX::SimpleMath::Vector3 Start_Scl = data[i]->m_Scale;
+			DirectX::SimpleMath::Vector3 Start_Pos = data[i]->m_LocalPos;
+			DirectX::SimpleMath::Quaternion Start_Rot = data[i]->m_LocalRotQt;
+			DirectX::SimpleMath::Vector3 Start_Scl = data[i]->m_LocalScale;
 			float Start_Time = data[i]->m_Time;
 
 			//보간할 다음값
 			int NextIndex = i + 1;
-			DirectX::SimpleMath::Vector3 End_Pos = data[NextIndex]->m_Pos;
-			DirectX::SimpleMath::Quaternion End_Rot = data[NextIndex]->m_RotQt;
-			DirectX::SimpleMath::Vector3 End_Scl = data[NextIndex]->m_Scale;
+			DirectX::SimpleMath::Vector3 End_Pos = data[NextIndex]->m_LocalPos;
+			DirectX::SimpleMath::Quaternion End_Rot = data[NextIndex]->m_LocalRotQt;
+			DirectX::SimpleMath::Vector3 End_Scl = data[NextIndex]->m_LocalScale;
 			float End_Time = data[NextIndex]->m_Time;
 
 			///처음값 넣어주기
@@ -355,9 +362,9 @@ void Eater_LoadMesh::CreateKeyFrame(std::vector<ParserData::CAnimation*>* Anime,
 			{
 				//새로운 키 프레임 생성
 				ParserData::CFrame* temp = new CFrame();
-				temp->m_Pos = Vector3::Lerp(Start_Pos, End_Pos, CountLerp);
-				temp->m_RotQt = Quaternion::Lerp(Start_Rot, End_Rot, CountLerp);
-				temp->m_Scale = Vector3::Lerp(Start_Scl, End_Scl, CountLerp);
+				temp->m_LocalPos = Vector3::Lerp(Start_Pos, End_Pos, CountLerp);
+				temp->m_LocalRotQt = Quaternion::Lerp(Start_Rot, End_Rot, CountLerp);
+				temp->m_LocalScale = Vector3::Lerp(Start_Scl, End_Scl, CountLerp);
 				temp->m_Time = LERP(Start_Time, End_Time, CountLerp);
 
 				CreateData.push_back(temp);
@@ -369,8 +376,6 @@ void Eater_LoadMesh::CreateKeyFrame(std::vector<ParserData::CAnimation*>* Anime,
 		}
 
 		(*it)->m_AniData = CreateData;
-		(*it)->m_TicksPerFrame /= (InputKeyCount + 3);
-		(*it)->m_EndFrame = (Size * (InputKeyCount + 3)) - (InputKeyCount + 3);
 	}
 }
 
@@ -385,37 +390,29 @@ void Eater_LoadMesh::LoadAnimation(int index, std::string& Name)
 	std::size_t End_Anime = Name.rfind('.') - Start_Anime;
 	std::string AnimationName = Name.substr(Start_Anime, End_Anime);
 
-
 	ModelAnimationData* Data = nullptr;
-	std::vector<ParserData::CAnimation*>* AnimeData = nullptr;
+	CModelAnimation* AniData = new CModelAnimation();
 
 	//다른 애니메이션이 없다면 새롭게 생성
-	if (LoadManager::AnimationList.find(MeshName) == LoadManager::AnimationList.end())
+	if (LoadManager::AnimationDataList.find(MeshName) == LoadManager::AnimationDataList.end())
 	{
 		Data = new ModelAnimationData();
-		LoadManager::AnimationList.insert({ MeshName,Data });
+		LoadManager::AnimationDataList.insert({ MeshName,Data });
 	}
 	else
 	{
-		Data = LoadManager::AnimationList[MeshName];
+		Data = LoadManager::AnimationDataList[MeshName];
 	}
-	Data->AnimList[AnimationName] = new std::vector<ParserData::CAnimation*>();
 
-
-	float m_TicksPerFrame = std::stof(EATER_GET_MAP(index, "TickFrame"));
-	float m_TotalFrame = std::stof(EATER_GET_MAP(index, "TotalFrame"));
-	float m_StartFrame = std::stof(EATER_GET_MAP(index, "StartFrame"));
-	float m_EndFrame = std::stof(EATER_GET_MAP(index, "EndFrame"));
+	AniData->m_TicksPerFrame	= std::stof(EATER_GET_MAP(index, "TickFrame"));
+	AniData->m_TotalFrame		= (int)std::stof(EATER_GET_MAP(index, "TotalFrame"));
+	AniData->m_StartFrame		= (int)std::stof(EATER_GET_MAP(index, "StartFrame"));
+	AniData->m_EndFrame			= (int)std::stof(EATER_GET_MAP(index, "EndFrame"));
 
 	int BoneCount = std::stoi(EATER_GET_MAP(index, "BoneCount"));
 	for (int k = 0; k < BoneCount; k++)
 	{
 		ParserData::CAnimation* OneAnime = new CAnimation();
-		OneAnime->m_EndFrame = (int)m_EndFrame;
-		OneAnime->m_StartFrame = (int)m_StartFrame;
-		OneAnime->m_TotalFrame = (int)m_TotalFrame;
-		OneAnime->m_TicksPerFrame = m_TicksPerFrame;
-
 
 		//두번째 키 생성
 		int AnimationCount = EATER_GET_LIST_CHOICE(index, std::to_string(k));
@@ -425,22 +422,29 @@ void Eater_LoadMesh::LoadAnimation(int index, std::string& Name)
 			std::vector<float> Data;
 			EATER_GET_LIST(&Data, i);
 			int Size = (int)Data.size();
-			Frame->m_Pos.x = Data[0];
-			Frame->m_Pos.y = Data[1];
-			Frame->m_Pos.z = Data[2];
+			Frame->m_LocalPos.x = Data[0];
+			Frame->m_LocalPos.y = Data[1];
+			Frame->m_LocalPos.z = Data[2];
 
-			Frame->m_RotQt.x = Data[3];
-			Frame->m_RotQt.y = Data[4];
-			Frame->m_RotQt.z = Data[5];
-			Frame->m_RotQt.w = Data[6];
+			Frame->m_LocalRotQt.x = Data[3];
+			Frame->m_LocalRotQt.y = Data[4];
+			Frame->m_LocalRotQt.z = Data[5];
+			Frame->m_LocalRotQt.w = Data[6];
 
-			Frame->m_Scale.x = Data[7];
-			Frame->m_Scale.y = Data[8];
-			Frame->m_Scale.z = Data[9];
+			Frame->m_LocalScale.x = Data[7];
+			Frame->m_LocalScale.y = Data[8];
+			Frame->m_LocalScale.z = Data[9];
 			Frame->m_Time = Data[10];
-			OneAnime->m_AniData.push_back(Frame);
+
+			OneAnime->m_AniData.push_back(std::move(Frame));
 		}
-		Data->AnimList[AnimationName]->push_back(OneAnime);
+
+		AniData->m_AnimationList.push_back(std::move(OneAnime));
 	}
-	CreateKeyFrame(Data->AnimList[AnimationName], 10);
+
+	CreateKeyFrame(AniData, 10);
+
+	AniData->m_Index = (int)Data->AnimList.size();
+
+	Data->AnimList.insert({ AnimationName, std::move(AniData) });
 }

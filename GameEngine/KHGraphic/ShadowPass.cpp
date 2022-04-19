@@ -26,6 +26,7 @@
 #include "RenderTargetDefine.h"
 #include "RasterizerStateDefine.h"
 #include "InstanceBufferDefine.h"
+#include "DrawBufferDefine.h"
 
 ShadowPass::ShadowPass()
 	:m_ShadowDSV(nullptr)
@@ -82,7 +83,16 @@ void ShadowPass::Start(int width, int height)
 	m_MeshInstShadowVS = g_Shader->GetShader("Shadow_StaticMesh_Instance_VS");
 	m_SkinShadowVS = g_Shader->GetShader("Shadow_SkinMesh_VS");
 	m_SkinInstShadowVS = g_Shader->GetShader("Shadow_SkinMesh_Instance_VS");
+
+	/// Baking Test..
+	m_ShadowBaking_PS = g_Shader->GetShader("Shadow_Baking_PS");
 	
+	m_Screen_VS = g_Shader->GetShader("Screen_VS");
+	m_Copy_PS = g_Shader->GetShader("DrawScreen_PS");
+
+	m_Screen_DB = g_Resource->GetDrawBuffer<DB_Quad>();
+	///
+
 	// Insatance Buffer 설정..
 	m_Mesh_IB = g_Resource->GetInstanceBuffer<IB_MeshDepth>();
 
@@ -100,6 +110,11 @@ void ShadowPass::OnResize(int width, int height)
 {
 	// Shadow DepthStencilView 재설정..
 	m_ShadowDSV = m_ShadowDS->GetDSV()->Get();
+}
+
+void ShadowPass::InstanceResize(size_t& renderMaxCount, size_t& unRenderMaxCount)
+{
+	m_MeshInstance.resize(renderMaxCount);
 }
 
 void ShadowPass::Release()
@@ -122,6 +137,8 @@ void ShadowPass::BeginRender()
 	g_Context->OMSetRenderTargets(0, nullptr, m_ShadowDSV);
 	g_Context->ClearDepthStencilView(m_ShadowDSV, D3D11_CLEAR_DEPTH, 1.0f, 0);
 	g_Context->RSSetState(m_DepthRS);
+
+	//CopyShadowMap();
 }
 
 void ShadowPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::vector<RenderData*>& meshlist)
@@ -143,13 +160,12 @@ void ShadowPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::v
 		if (meshlist[i]->m_Draw == false) continue;
 
 		// 해당 Instance Data 삽입..
-		m_MeshData.World = *meshlist[i]->m_ObjectData->World;
+		m_MeshData.World = meshlist[i]->m_ObjectData->World;
 
-		m_MeshInstance.push_back(m_MeshData);
-		m_InstanceCount++;
+		m_MeshInstance[m_InstanceCount++] = m_MeshData;
 	}
 
-	if (m_MeshInstance.empty()) return;
+	if (m_InstanceCount == 0) return;
 
 	// Mapping SubResource Data..
 	D3D11_MAPPED_SUBRESOURCE mappedResource;
@@ -228,7 +244,6 @@ void ShadowPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::v
 
 
 	// Mesh Instance Data Clear..
-	m_MeshInstance.clear();
 	m_InstanceCount = 0;
 }
 
@@ -239,8 +254,8 @@ void ShadowPass::RenderUpdate(const InstanceRenderBuffer* instance, const Render
 	ObjectData* obj = meshData->m_ObjectData;
 	MeshRenderBuffer* mesh = instance->m_Mesh;
 
-	Matrix& world = *obj->World;
-	Matrix& viewproj = g_GlobalData->DirectionLightList[0]->LightViewProj;
+	const Matrix& world = obj->World;
+	const Matrix& viewproj = g_GlobalData->DirectionLightList[0]->LightViewProj;
 
 	switch (instance->m_Type)
 	{
@@ -280,4 +295,74 @@ void ShadowPass::RenderUpdate(const InstanceRenderBuffer* instance, const Render
 	g_Context->IASetIndexBuffer(mesh->m_IndexBuf, DXGI_FORMAT_R32_UINT, 0);
 
 	g_Context->DrawIndexed(mesh->m_IndexCount, 0, 0);
+}
+
+void ShadowPass::BakeShadowMap()
+{
+	ID3D11Texture2D* shadow_Tex2D;
+	ID3D11RenderTargetView* shadow_RTV;
+	ID3D11ShaderResourceView* shadow_SRV;
+
+	D3D11_TEXTURE2D_DESC texDesc;
+	ZeroMemory(&texDesc, sizeof(texDesc));
+	texDesc.Width = (UINT)m_ShadowVP->Width;
+	texDesc.Height = (UINT)m_ShadowVP->Height;
+	texDesc.MipLevels = 1;
+	texDesc.ArraySize = 1;
+	texDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+	texDesc.SampleDesc.Count = 1;
+	texDesc.SampleDesc.Quality = 0;
+	texDesc.Usage = D3D11_USAGE_DEFAULT;
+	texDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
+	texDesc.CPUAccessFlags = 0;
+	texDesc.MiscFlags = 0;
+
+	D3D11_RENDER_TARGET_VIEW_DESC rtvDesc;
+	ZeroMemory(&rtvDesc, sizeof(rtvDesc));
+	rtvDesc.Format = texDesc.Format;
+	rtvDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
+	rtvDesc.Texture2D.MipSlice = 0;
+
+	D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc;
+	ZeroMemory(&srvDesc, sizeof(srvDesc));
+	srvDesc.Format = texDesc.Format;
+	srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+	srvDesc.Texture2D.MipLevels = texDesc.MipLevels;
+	srvDesc.Texture2D.MostDetailedMip = 0;
+
+	g_Device->CreateTexture2D(&texDesc, nullptr, &shadow_Tex2D);
+	g_Device->CreateRenderTargetView(shadow_Tex2D, &rtvDesc, &shadow_RTV);
+	g_Device->CreateShaderResourceView(shadow_Tex2D, &srvDesc, &shadow_SRV);
+
+	// Shadow Map Capture..
+	g_Context->OMSetBlendState(0, 0, 0xffffffff);
+	g_Context->RSSetViewports(1, m_ShadowVP);
+
+	g_Context->OMSetRenderTargets(1, &shadow_RTV, m_ShadowDSV);
+	g_Context->ClearDepthStencilView(m_ShadowDSV, D3D11_CLEAR_DEPTH, 1.0f, 0);
+	g_Context->RSSetState(m_DepthRS);
+
+	m_ShadowBaking_PS->Update();
+}
+
+void ShadowPass::CopyShadowMap()
+{
+	if (m_ShadowMap == nullptr) return;
+
+	m_Screen_VS->Update();
+
+	m_Copy_PS->SetShaderResourceView<gOriginMap>(m_ShadowMap);
+	m_Copy_PS->Update();
+
+	// Draw..
+	g_Context->IASetVertexBuffers(0, 1, m_Screen_DB->VertexBuf->GetAddress(), &m_Screen_DB->Stride, &m_Screen_DB->Offset);
+	g_Context->IASetIndexBuffer(m_Screen_DB->IndexBuf->Get(), DXGI_FORMAT_R32_UINT, 0);
+	g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	g_Context->DrawIndexed(m_Screen_DB->IndexCount, 0, 0);
+}
+
+void ShadowPass::SetShadowMap(ID3D11ShaderResourceView* shadowMap)
+{
+	m_ShadowMap = shadowMap;
 }

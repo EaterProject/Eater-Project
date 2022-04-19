@@ -107,9 +107,6 @@ ParserData::CModel* FBXParser::LoadModel(std::string fileName, UINT state)
 
 void FBXParser::SceneSetting(std::string fileName)
 {
-	// Model 생성..
-	CreateModel();
-
 	// 파일 이름과 옵션 설정..
 	fbxFileName = fileName;
 
@@ -142,6 +139,12 @@ void FBXParser::SceneSetting(std::string fileName)
 	// Scene 내에서 삼각형화 할 수 있는 모든 노드를 삼각형화 시킨다..
 	// 3D Max 안에서 Editable poly 상태라면 이 작업을 안해야 한다..
 	pConverter->Triangulate(pScene, true, true);
+
+	// Model 생성..
+	CreateModel();
+
+	// Animation Data Setting..
+	SceneAnimationSetting();
 }
 
 void FBXParser::CreateModel()
@@ -206,11 +209,11 @@ void FBXParser::LoadNode(fbxsdk::FbxNode* node, fbxsdk::FbxNodeAttribute::EType 
 			{
 			case FbxNodeAttribute::eSkeleton:
 				ProcessSkeleton(node);
-				LoadAnimation(node);
+				ProcessAnimation(node);
 				break;
 			case FbxNodeAttribute::eMesh:
 				ProcessMesh(node);
-				LoadAnimation(node);
+				ProcessAnimation(node);
 				break;
 			case FbxNodeAttribute::eMarker:
 			case FbxNodeAttribute::eNurbs:
@@ -231,33 +234,6 @@ void FBXParser::LoadNode(fbxsdk::FbxNode* node, fbxsdk::FbxNodeAttribute::EType 
 	for (int i = 0; i < node->GetChildCount(); ++i)
 	{
 		LoadNode(node->GetChild(i), attribute);
-	}
-}
-
-void FBXParser::LoadAnimation(fbxsdk::FbxNode* node)
-{
-	float frameRate = (float)FbxTime::GetFrameRate(pScene->GetGlobalSettings().GetTimeMode());
-
-	FbxTakeInfo* takeInfo = pImporter->GetTakeInfo(0);
-
-	if (takeInfo == nullptr) return;
-
-	FbxTime start = FbxTime(FbxLongLong(0x7fffffffffffffff));
-	FbxTime stop = FbxTime(FbxLongLong(-0x7fffffffffffffff));
-
-	FbxTimeSpan span = takeInfo->mLocalTimeSpan;
-
-	double tempStart = span.GetStart().GetSecondDouble();
-	double tempStop = span.GetStop().GetSecondDouble();
-
-	if (tempStart < tempStop)
-	{
-		// 구동시간 동안 총 몇 프레임이 수행될지를 keyFrames에 담아줌
-		m_KeyFrames = (int)((tempStop - tempStart) * (double)frameRate);
-		m_TickFrame = (float)(tempStop - tempStart) / (float)m_KeyFrames;
-		m_StartTime = (int)(tempStart)*m_KeyFrames;
-
-		ProcessAnimation(node);
 	}
 }
 
@@ -402,10 +378,13 @@ void FBXParser::ProcessMesh(fbxsdk::FbxNode* node)
 	CreateVertex(pMesh, boneWeights, vertexTotalCount);
 
 	int vertexCount = 0; // 정점의 개수
+
+	// Polygon 개수만큼 Face 생성..
+	m_OneMesh->m_MeshFace.resize(polygonTotalCount);
+
 	for (int pi = 0; pi < polygonTotalCount; pi++)
 	{
-		// Polygon 개수만큼 Face 생성..
-		m_OneMesh->m_MeshFace.push_back(new CFace);
+		m_OneMesh->m_MeshFace[pi] = new CFace();
 
 		CFace* nowFace = m_OneMesh->m_MeshFace[pi];
 
@@ -465,8 +444,8 @@ bool FBXParser::ProcessBoneWeights(fbxsdk::FbxNode* node, std::vector<BoneWeight
 			CMesh* skinMesh = FindMesh(node->GetName());
 
 			// Bone 개수만큼 List Size 설정..
-			skinMesh->m_BoneTMList.resize(m_AllBoneList.size());
 			skinMesh->m_BoneMeshList.resize(m_AllBoneList.size());
+			skinMesh->m_BoneTMList.resize(m_AllBoneList.size());
 
 			for (int clusterIndex = 0; clusterIndex < clusterCount; clusterIndex++)
 			{
@@ -510,8 +489,8 @@ bool FBXParser::ProcessBoneWeights(fbxsdk::FbxNode* node, std::vector<BoneWeight
 				Matrix offsetMatrix = clusterMatrix * clusterlinkMatrix.Invert() * geometryMatrix;
 
 				// 해당 Bone Index에 Bone Offset & Mesh Data 삽입..
-				skinMesh->m_BoneTMList[boneIndex] = offsetMatrix;
 				skinMesh->m_BoneMeshList[boneIndex] = boneMesh;
+				skinMesh->m_BoneTMList[boneIndex] = offsetMatrix;
 
 				int c = cluster->GetControlPointIndicesCount();
 				for (int j = 0; j < cluster->GetControlPointIndicesCount(); ++j)
@@ -549,6 +528,9 @@ bool FBXParser::ProcessBoneWeights(fbxsdk::FbxNode* node, std::vector<BoneWeight
 
 void FBXParser::ProcessAnimation(fbxsdk::FbxNode* node)
 {
+	// 애니메이션 데이터가 없을 경우..
+	if (m_Model->m_isAnimation == false) return;
+
 	// 애니메이션만 뽑을경우..
 	if (m_ParsingMode & ANIMATION_ONLY)
 	{
@@ -589,45 +571,42 @@ void FBXParser::ProcessAnimation(fbxsdk::FbxNode* node)
 		m_OneAnimation = new CAnimation();
 
 		// Animation 삽입(본 인덱스와 애니메이션 인덱스 일치)..
-		m_Model->m_AnimationList.push_back(m_OneAnimation);
-
-		// Animation 정보가 있을경우..
-		m_Model->m_isAnimation = true;
-
-		// 한 프레임 재생 시간..
-		m_OneAnimation->m_TicksPerFrame = m_TickFrame;
-
-		// Animation 시작 프레임..
-		m_OneAnimation->m_StartFrame = m_StartTime;
-		m_OneAnimation->m_EndFrame = m_KeyFrames - 1;
-
-		// Animation 총 프레임..
-		m_OneAnimation->m_TotalFrame = m_KeyFrames;
+		m_ModelAnimation->m_AnimationList.push_back(m_OneAnimation);
 
 		// Animation Data 삽입..
 		FbxTime::EMode timeMode = pScene->GetGlobalSettings().GetTimeMode();
-		for (FbxLongLong index = 0; index < m_OneAnimation->m_TotalFrame; index++)
+		for (FbxLongLong index = 0; index < m_ModelAnimation->m_TotalFrame; index++)
 		{
 			FbxTime takeTime;
-			takeTime.SetFrame(m_OneAnimation->m_StartFrame + index, timeMode);
+			takeTime.SetFrame(m_ModelAnimation->m_StartFrame + index, timeMode);
 
 			// Local Transform = 부모 Bone의 Global Transform의 Inverse Transform * 자신 Bone의 Global Transform
-			FbxAMatrix nodeTransform = node->EvaluateLocalTransform(takeTime);
+			FbxAMatrix localTransform = node->EvaluateLocalTransform(takeTime);
+			FbxAMatrix worldTransform = node->EvaluateGlobalTransform(takeTime);
 
-			DirectX::SimpleMath::Matrix nodeTRS = ConvertMatrix(nodeTransform);
+			DirectX::SimpleMath::Matrix localTRS = ConvertMatrix(localTransform);
+			DirectX::SimpleMath::Matrix worldTRS = ConvertMatrix(worldTransform);
 
-			XMVECTOR scale;
-			XMVECTOR rot;
-			XMVECTOR pos;
+			XMVECTOR localScale;
+			XMVECTOR localRot;
+			XMVECTOR localPos;
 
-			XMMatrixDecompose(&scale, &rot, &pos, nodeTRS);
+			XMVECTOR worldScale;
+			XMVECTOR worldRot;
+			XMVECTOR worldPos;
+
+			XMMatrixDecompose(&localScale, &localRot, &localPos, localTRS);
+			XMMatrixDecompose(&worldScale, &worldRot, &worldPos, worldTRS);
 
 			CFrame* newAni = new CFrame;
 
 			newAni->m_Time = (float)index;
-			newAni->m_Pos = DirectX::SimpleMath::Vector3(pos);
-			newAni->m_RotQt = Quaternion(rot);
-			newAni->m_Scale = DirectX::SimpleMath::Vector3(scale);
+			newAni->m_LocalPos = DirectX::SimpleMath::Vector3(localPos);
+			newAni->m_LocalRotQt = Quaternion(localRot);
+			newAni->m_LocalScale = DirectX::SimpleMath::Vector3(localScale);
+			newAni->m_WorldPos = DirectX::SimpleMath::Vector3(worldPos);
+			newAni->m_WorldRotQt = Quaternion(worldRot);
+			newAni->m_WorldScale = DirectX::SimpleMath::Vector3(worldScale);
 
 			m_OneAnimation->m_AniData.push_back(newAni);
 		}
@@ -637,6 +616,55 @@ void FBXParser::ProcessAnimation(fbxsdk::FbxNode* node)
 		{
 			m_OneMesh->m_Animation = m_OneAnimation;
 		}
+	}
+}
+
+void FBXParser::SceneAnimationSetting()
+{
+	float frameRate = (float)FbxTime::GetFrameRate(pScene->GetGlobalSettings().GetTimeMode());
+
+	FbxTakeInfo* takeInfo = pImporter->GetTakeInfo(0);
+
+	if (takeInfo == nullptr)
+	{
+		m_Model->m_isAnimation = false;
+		return;
+	}
+
+	FbxTime start = FbxTime(FbxLongLong(0x7fffffffffffffff));
+	FbxTime stop = FbxTime(FbxLongLong(-0x7fffffffffffffff));
+
+	FbxTimeSpan span = takeInfo->mLocalTimeSpan;
+
+	double tempStart = span.GetStart().GetSecondDouble();
+	double tempStop = span.GetStop().GetSecondDouble();
+
+	if (tempStart < tempStop)
+	{
+		// 구동시간 동안 총 몇 프레임이 수행될지를 keyFrames에 담아줌
+		m_KeyFrames = (int)((tempStop - tempStart) * (double)frameRate);
+		m_TickFrame = (float)(tempStop - tempStart) / (float)m_KeyFrames;
+		m_StartTime = (int)(tempStart) * m_KeyFrames;
+
+		// 새로운 Model Animation 생성..
+		m_ModelAnimation = new CModelAnimation();
+		m_Model->m_ModelAnimation = m_ModelAnimation;
+
+		// 한 프레임 재생 시간..
+		m_ModelAnimation->m_TicksPerFrame = m_TickFrame;
+
+		// Animation 시작 프레임..
+		m_ModelAnimation->m_StartFrame = m_StartTime;
+		m_ModelAnimation->m_EndFrame = m_KeyFrames - 1;
+
+		// Animation 총 프레임..
+		m_ModelAnimation->m_TotalFrame = m_KeyFrames;
+
+		m_Model->m_isAnimation = true;
+	}
+	else
+	{
+		m_Model->m_isAnimation = false;
 	}
 }
 
@@ -652,7 +680,6 @@ void FBXParser::OptimizeData()
 		{
 			SetIndex(m_Model->m_MeshList[i]);
 		}
-
 		return;
 	}
 
@@ -751,7 +778,7 @@ void FBXParser::OptimizeVertex(ParserData::CMesh* pMesh)
 				newVertex->m_UV = nowUV;
 				newVertex->m_IsTextureSet = true;
 
-				pMesh->m_VertexList.push_back(newVertex);
+				pMesh->m_VertexList.push_back(std::move(newVertex));
 				nowFace->m_VertexIndex[j] = (int)resize_VertexIndex;
 				resize_VertexIndex++;
 				new_VertexSet = false;
@@ -803,15 +830,21 @@ void FBXParser::OptimizeVertex(ParserData::CMesh* pMesh)
 		pMesh->m_VertexList[i]->m_Tanget.Normalize();
 	}
 
+	// 인덱스는 그냥 복사
 	SetIndex(pMesh);
 }
 
 void FBXParser::SetIndex(ParserData::CMesh* pMesh)
 {
+	// Face Count..
+	UINT faceCount = (UINT)pMesh->m_MeshFace.size();
+
 	// 인덱스는 그냥 복사
-	for (unsigned int i = 0; i < pMesh->m_MeshFace.size(); i++)
+	pMesh->m_IndexList.resize(faceCount);
+
+	for (unsigned int i = 0; i < faceCount; i++)
 	{
-		pMesh->m_IndexList.push_back(new CIndexList);
+		pMesh->m_IndexList[i] = new CIndexList();
 
 		CIndexList* nowIndexList = pMesh->m_IndexList[i];
 		CFace* nowFace = pMesh->m_MeshFace[i];
@@ -1249,11 +1282,14 @@ void FBXParser::CreateVertex(fbxsdk::FbxMesh* mesh, std::vector<BoneWeights>& bo
 {
 	FbxVector4 fbxPos;
 
+	// 새로운 Vertex 생성..
+	m_OneMesh->m_VertexList.resize(vertexCount);
+
 	// Vertex 개수만큼 Vertex 생성..
 	for (int vertexIndex = 0; vertexIndex < vertexCount; vertexIndex++)
 	{
 		// 새로운 Vertex 생성..
-		m_OneMesh->m_VertexList.push_back(new CVertex);
+		m_OneMesh->m_VertexList[vertexIndex] = new CVertex();
 
 		// 현재 Vertex..
 		CVertex* nowVertex = m_OneMesh->m_VertexList[vertexIndex];

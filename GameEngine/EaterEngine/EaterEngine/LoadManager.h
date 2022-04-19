@@ -23,20 +23,23 @@ namespace ParserData
 class CameraAnimation;
 class ColliderBuffer;
 class ModelAnimationData;
-class LoadMeshData;
 class ModelData;
-class ModelParser;
-class FBXParser;
-class FBXModel;
-class TextureBuffer;
-class Material;
-class Mesh;
+
 class MeshBuffer;
-class OneTriangle;
+class TextureBuffer;
+class AnimationBuffer;
+class EnvironmentBuffer;
+
+class Mesh;
+class Material;
+class Animation;
+class CameraAnimation;
 
 class GraphicEngineManager;
 class MeshManager;
 class MaterialManager;
+class AnimationManager;
+
 class FBXManager;
 class TextureManager;
 class EATERManager;
@@ -57,27 +60,41 @@ public:
 
 	//초기화 및 경로 설정
 	void Initialize(GraphicEngineManager* graphic, CRITICAL_SECTION* _cs);
+	void Start();
 	void Release();
 
+public:
 	void Load(std::string& Path, UINT MODE);
 	void LoadTerrain(std::string mMeshName, std::string mMaskName1, std::string mMaskName2, UINT parsingMode);
-	void Start();
+
+public:
+	void BakeEnvironmentMap(std::string Path);
+	void BakeAnimation();
+
+public:
 	int	GetMeshCount();
 	int	GetTextureCount();
 	int	GetMaterialCount();
 	int	GetAnimationCount();
 
-	static TextureBuffer*	GetTexture(std::string Path);			//텍스쳐 버퍼를 가져옴
-	static ModelData*		GetModel(std::string Path);				//모델 데이터를 가져옴
-	static ModelAnimationData* GetAnimation(std::string Path);		//애니메이션 데이터를 가져옴
-	static Material*		GetMaterial(std::string Path);			//메테리얼 데이터를 가져옴
-	static Mesh*			GetMesh(std::string Path);				//메쉬 데이터를 가져옴
-	static MeshBuffer*		GetMeshBuffer(std::string Path);		//메쉬 버퍼 데이터를 가져옴
-	static CameraAnimation* GetCamAnimation(std::string Path);		//카메라 애니메이션 데이터를가져옴
-	static ColliderBuffer*	GetColliderBuffer(std::string Path);	//카메라 애니메이션 데이터를가져옴
-	static std::vector<OneTriangle*>* GetNavMeshData();				//카메라 애니메이션 데이터를가져옴
-	static bool				FindModel(std::string Name);			
-	static bool				FindTexture(std::string Name);
+	static ModelData*			GetModelData(std::string Path);			//모델 데이터를 가져옴
+	static ModelAnimationData*	GetAnimationData(std::string Path);		//애니메이션 데이터를 가져옴
+
+	static TextureBuffer*		GetTexture(std::string Path);			//텍스쳐 버퍼를 가져옴
+	static EnvironmentBuffer*	GetEnvironment(std::string Path);		//환경맵 버퍼를 가져옴
+	static MeshBuffer*			GetMeshBuffer(std::string Path);		//메쉬 버퍼 데이터를 가져옴
+	static AnimationBuffer*		GetAnimationBuffer(std::string Path);	//애니메이션 버퍼 데이터를 가져옴
+
+	static Mesh*				GetMesh(std::string Path);				//메쉬를 가져옴
+	static Material*			GetMaterial(std::string Path);			//메테리얼을 가져옴
+	static Animation*			GetAnimation(std::string Path);			//애니메이션을 가져옴
+
+	static ColliderBuffer*		GetColliderBuffer(std::string Path);	//카메라 애니메이션 데이터를가져옴
+	static CameraAnimation*		GetCamAnimation(std::string Path);		//카메라 애니메이션 데이터를가져옴
+	
+	static bool					FindModel(std::string Name);			
+	static bool					FindTexture(std::string Name);
+
 private:
 	bool	CheckFolder(std::string& Path);
 	void	LoadFile(std::string& Path, UINT MODE);
@@ -86,15 +103,20 @@ private:
 private:
 	std::string MeshPath;
 	std::string TexturePath;
+
 private:
-	static std::map<std::string, ModelData*>			ModelList;
+	static std::map<std::string, ModelData*>			ModelDataList;
+	static std::map<std::string, ModelAnimationData*>	AnimationDataList;
+
 	static std::map<std::string, TextureBuffer*>		TextureList;
-	static std::map<std::string, Material*>				MaterialList;
-	static std::map<std::string, ModelAnimationData*>	AnimationList;
+	static std::map<std::string, EnvironmentBuffer*>	EnvironmentList;
+
 	static std::map<std::string, Mesh*>					MeshBufferList;
+	static std::map<std::string, Material*>				MaterialList;
+	static std::map<std::string, Animation*>			AnimationList;
+
 	static std::map<std::string, CameraAnimation*>		CamAnimationList;
 	static std::map<std::string, ColliderBuffer*>		ColliderBufferList;
-	static std::vector<OneTriangle*>					NavMeshData;
 private:
 	FBXManager*				mFBX;
 	TextureManager*			mTexture;
@@ -102,9 +124,13 @@ private:
 
 	MeshManager*			mMeshManager;		// Mesh 관리 매니저
 	MaterialManager*		mMaterialManager;	// Material 관리 매니저
+	AnimationManager*		mAnimationManger;	// Animation 관리 매니저
+
+	GraphicEngineManager*	mGraphicManager;	// Graphic 관리 매니저
 
 	friend FBXManager;
 	friend TextureManager;
+	friend AnimationManager;
 	friend EATERManager;
 
 	friend Eater_LoadAnimation;

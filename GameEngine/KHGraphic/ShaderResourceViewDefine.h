@@ -26,6 +26,7 @@ SHADER_RESOURCE_VIEW(gORMMap)
 SHADER_RESOURCE_VIEW(gShadowMap)
 SHADER_RESOURCE_VIEW(gSsaoMap)
 SHADER_RESOURCE_VIEW(gSkyCube)
+SHADER_RESOURCE_VIEW(gAnimationBuffer)
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 // SSAO ShaderResourceView Resource
@@ -110,10 +111,11 @@ SHADER_RESOURCE_VIEW(gColliderBuffer)
 // Engine Gizmo ShaderResourceView Resource
 ///////////////////////////////////////////////////////////////////////////////////////////
 
-SHADER_RESOURCE_VIEW(Camera_Icon)
 SHADER_RESOURCE_VIEW(DirectionalLight_Icon)
 SHADER_RESOURCE_VIEW(PointLight_Icon)
 SHADER_RESOURCE_VIEW(SpotLight_Icon)
+SHADER_RESOURCE_VIEW(Particle_Icon)
+SHADER_RESOURCE_VIEW(Camera_Icon)
 
 /// Resource Hash 재등록 방지 Define
 RESOURCE_DEFINE(DEFINE_SRV)

@@ -21,7 +21,7 @@ public:
 public:
 	void CreateTextureBuffer(std::string path, TextureBuffer** ppResource) override;
 	void CreateMeshBuffer(ParserData::CMesh* mesh, MeshBuffer** ppResource) override;
-	void CreateEnvironmentMap(std::string path) override;
+	void CreateAnimationBuffer(ModelData* model, ModelAnimationData* animation, AnimationBuffer** ppResource) override;
 
 private:
 	void CreateImage(std::string name, Hash_Code hash_code, std::string fileName) override;
@@ -119,6 +119,7 @@ namespace VertexInput
 	struct MeshVertex;
 	struct SkinVertex;
 	struct TerrainVertex;
+	struct PosVertex;
 	struct PosTexVertex;
 }
 
@@ -134,6 +135,9 @@ inline void GraphicResourceFactory::CreateLoadBuffer<VertexInput::SkinVertex>(Pa
 
 template<>
 inline void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(ParserData::CMesh* mesh, MeshBuffer** ppResource);
+
+template<>
+inline void GraphicResourceFactory::CreateLoadBuffer<VertexInput::PosVertex>(ParserData::CMesh* mesh, MeshBuffer** ppResource);
 
 template<>
 inline void GraphicResourceFactory::CreateLoadBuffer<VertexInput::PosTexVertex>(ParserData::CMesh* mesh, MeshBuffer** ppResource);

@@ -10,6 +10,7 @@
 VIEW_PORT(VP_FullScreen)
 VIEW_PORT(VP_Shadow)
 VIEW_PORT(VP_HalfScreen)
+VIEW_PORT(VP_Hiz)
 
 VIEW_PORT(VP_DownSampling)
 

@@ -6,11 +6,12 @@
 
 cbuffer cbStaticMesh
 {
-    float4x4 gWorld              : packoffset(c0);
-    float4x4 gInvWorld           : packoffset(c4);
-    float4x4 gView               : packoffset(c8);
-    float4x4 gProj               : packoffset(c12);
-    float4x4 gTexTransform       : packoffset(c16);
+    float4x4 gWorld     : packoffset(c0);
+    float4x4 gInvWorld  : packoffset(c4);
+    float4x4 gView      : packoffset(c8);
+    float4x4 gProj      : packoffset(c12);    
+    float2 gTexScale    : packoffset(c16.x);
+    float2 gTexPos      : packoffset(c16.z);
 };
 
 MeshVertexOut TerrainMesh_VS(MeshVertexIn vin)
@@ -28,8 +29,9 @@ MeshVertexOut TerrainMesh_VS(MeshVertexIn vin)
     vout.TangentV = mul((float3x3) gView, vout.TangentW);
     
 	// Output vertex attributes for interpolation across triangle.
-    vout.Tex = mul(gTexTransform, float4(vin.Tex, 0.0f, 1.0f)).xy;
-
+    vout.Tex.x = gTexScale.x * vin.Tex.x + gTexPos.x;
+    vout.Tex.y = gTexScale.y * vin.Tex.y + gTexPos.y;
+    
     vout.MaskColor = vin.Mask;
     
     return vout;

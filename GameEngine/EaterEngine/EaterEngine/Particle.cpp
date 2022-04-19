@@ -24,7 +24,6 @@ void Particle::Awake()
 {
 	m_Transform = gameobject->transform;
 
-	m_ParticleData->Tex = &m_Tex;
 	m_ParticleData->World = m_Transform->GetWorld();
 }
 
@@ -70,8 +69,8 @@ void Particle::Update()
 			if (m_AniType & TEXTURE_ANI)
 			{
 				// Texture 출력 영역 변경..
-				m_Tex._41 = (m_TexNowFrame % m_WidthCount) * m_Tex._11;
-				m_Tex._42 = (m_TexNowFrame / m_HeightCount) * m_Tex._22;
+				m_ParticleData->TexPos.x = (m_TexNowFrame % m_WidthCount) * m_ParticleData->TexScale.x;
+				m_ParticleData->TexPos.y = (m_TexNowFrame / m_HeightCount) * m_ParticleData->TexScale.y;
 			}
 		}
 
@@ -312,7 +311,7 @@ void Particle::DataUpdate()
 	m_WidthCount = m_SystemDesc->Tile_Width;
 	m_HeightCount = m_SystemDesc->Tile_Height;
 
-	m_Tex = DirectX::SimpleMath::Matrix::CreateScale(1.0f / m_SystemDesc->Tile_Width, 1.0f / m_SystemDesc->Tile_Height, 1.0f);
+	m_ParticleData->TexScale = Vector2(1.0f / m_SystemDesc->Tile_Width, 1.0f / m_SystemDesc->Tile_Height);
 }
 
 void Particle::Reset()

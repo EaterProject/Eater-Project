@@ -140,3 +140,24 @@ float3 ACESFilm(float3 x)
     float e = 0.14f;
     return saturate((x * (a * x + b)) / (x * (c * x + d) + e));
 }
+
+float3 ScreenPosToWorldPos(float2 ScreenSpaceUV, float Depth, float4x4 ViewProjInv)
+{
+    float4 PosClipSpace;
+    PosClipSpace.xy = ScreenSpaceUV * float2(2.0, -2.0) + float2(-1.0, 1.0);
+    PosClipSpace.z = Depth;
+    PosClipSpace.w = 1.0;
+    float4 WorldPos = mul(PosClipSpace, ViewProjInv);
+    return WorldPos.xyz / WorldPos.w;
+}
+
+float3 QuatRot(in float4 q, in float3 v)
+{
+    float3 uv, uuv;
+    uv = cross(q.xyz, v.xyz);
+    uuv = cross(q.xyz, uv.xyz);
+    uv *= (2.0f * q.w);
+    uuv *= 2.0f;
+
+    return v + uv + uuv;
+}

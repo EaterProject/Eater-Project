@@ -10,12 +10,14 @@ public:
 	int m_InstanceLayerIndex = -1;				// Instance Layer Index..
 	int m_InstanceIndex = -1;					// Instance Index..
 
-	MeshRenderBuffer* m_Mesh;					// 변환된 Mesh Data..
-	MaterialRenderBuffer* m_Material;			// 변환된 Material Data..
-	TerrainRenderBuffer* m_TerrainBuffer;		// 변환된 Terrain Data..
+	MeshRenderBuffer*		m_Mesh;				// 변환된 Mesh Data..
+	MaterialRenderBuffer*	m_Material;			// 변환된 Material Data..
+	TerrainRenderBuffer*	m_Terrain;			// 변환된 Terrain Data..
+	AnimationRenderBuffer*	m_Animation;		// 변환된 Animation Data..
 
-	ObjectData* m_ObjectData;
-	ParticleData* m_ParticleData;
+	ObjectData*		m_ObjectData;
+	AnimationData*	m_AnimationData;
+	ParticleData*	m_ParticleData;
 };
 
 // 동일 Instance를 관리하기 위한 Instance Layer Class

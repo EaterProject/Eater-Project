@@ -35,25 +35,36 @@ public:
 
 	void RenderSetting(RenderOption* renderOption) override;
 	void SetGlobalData(GlobalData* globalData) override;
-	void SetEnvironmentMap(bool enable) override;
+
+public:
+	void SetShadowMap(TextureBuffer* resource) override;
+	void SetEnvironmentMap(EnvironmentBuffer* resource) override;
 
 public:
 	void PushInstance(MeshData* instance) override;
 	void PushMesh(MeshBuffer* mesh) override;
 	void PushMaterial(MaterialBuffer* material) override;
-
+	void PushAnimation(AnimationBuffer* animation) override;
+	
 	void PushChangeInstance(MeshData* instance) override;
 	void PushChangeMesh(MeshBuffer* mesh) override;
 	void PushChangeMaterial(MaterialBuffer* material) override;
+	void PushChangeAnimation(AnimationBuffer* animation) override;
 
 	void DeleteInstance(MeshData* instance) override;
 	void DeleteMesh(MeshBuffer* mesh) override;
 	void DeleteMaterial(MaterialBuffer* material) override;
+	void DeleteAnimation(AnimationBuffer* animation) override;
 
 	void Render() override;
 	void* PickingRender(int x, int y) override;
 
+public:
+	void BakeShadowMap() override;
+
 private:
+	void InstanceResize();
+
 	void RenderSetting();				// 현재 프레임에 설정된 Render Option 적용..
 
 	void ConvertRenderData();			// 현재 프레임에 추가 및 변경된 Render Data 변환..

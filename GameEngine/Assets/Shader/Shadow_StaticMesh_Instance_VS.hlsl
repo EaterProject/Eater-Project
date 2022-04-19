@@ -10,7 +10,6 @@ float4 Shadow_StaticMesh_Instance_VS(MeshPosVertexIn vin, MeshDepthInstanceIn in
 {
     float3 posW = mul(instance.World, float4(vin.PosL, 1.0f)).xyz;
     float4 posH = mul(gViewProj, float4(posW, 1.0f));
-    posH.z -= 0.001f * posH.w;
     
     return posH;
 };

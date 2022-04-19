@@ -5,6 +5,7 @@
 #include "Rigidbody.h"
 #include "Collider.h"
 #include "TimeManager.h"
+#include "MathHelper.h"
 
 Transform::Transform()
 {
@@ -43,6 +44,7 @@ void Transform::Start()
 	{
 
 	}
+
 }
 
 void Transform::TransformUpdate()
@@ -51,9 +53,6 @@ void Transform::TransformUpdate()
 	UpdateWorldXM();
 
 	UpdateLocalPosition();
-
-	//업데이트가 끝난후 오브젝트 안에 매쉬데이터를 업데이트
-	gameobject->OneMeshData->Object_Data->World = GetWorld();
 }
 
 
@@ -373,6 +372,7 @@ void Transform::UpdateWorldXM()
 	ScaleXM		= CreateXMScl4x4();
 
 	RotationXM = CreateXMRot4x4();
+
 	//if (isRigid == false)
 	//{
 	//	RotationXM	= CreateXMRot4x4();
@@ -391,6 +391,10 @@ void Transform::UpdateWorldXM()
 	{
 		World_M = Load_Local*  Master;
 	}
+
+	// Object Matrix 연동..
+	gameobject->OneMeshData->Object_Data->World = World_M;
+	gameobject->OneMeshData->Object_Data->InvWorld = MathHelper::InverseTranspose(World_M);
 }
 
 void Transform::UpdateLocalPosition()

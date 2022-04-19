@@ -147,8 +147,9 @@ void VertexShader::LoadShader(std::string fileName, const char* entry_point, con
 			// Key (Constant Buffer HashCode) && Value (Register Slot, Constant Buffer)
 			m_ConstantBufferList.insert(std::make_pair(hash_key, new ConstantBuffer(bindDesc.Name, cbuffer_register_slot, bufferDesc.Size)));
 		}
-			break;
+		break;
 		case D3D_SIT_TEXTURE:
+		case D3D_SIT_STRUCTURED:
 		{
 			// SRV Hash Code..
 			hash_key = resource_table->FindHashCode(RESOURCE_TYPE::SRV, bindDesc.Name);

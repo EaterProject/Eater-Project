@@ -53,3 +53,20 @@ public:
 
 	void* pTextureBuf = nullptr;
 };
+
+// Animation Array Texture Data Buffer
+class AnimationBuffer : public Resources
+{
+public:
+	virtual ~AnimationBuffer()
+	{
+
+	}
+
+	UINT BufferIndex = 0;						// Animation Buffer Index
+
+	UINT FrameOffset = 0;
+	std::vector<UINT> AnimationOffset;
+
+	void* pAnimationBuf = nullptr;
+};
