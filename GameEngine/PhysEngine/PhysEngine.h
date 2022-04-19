@@ -62,7 +62,6 @@ private:
 	void UpdateDynamicPosition(PxRigidDynamic* Dynamic , PhysData* Data);
 	void UpdateDynamicForce(PxRigidDynamic* Dynamic, PhysData* Data);
 	void UpdateDynamicVelocity(PxRigidDynamic* Dynamic, PhysData* Data);
-
 	void UpdateStaticPosition(PxRigidStatic* Static, PhysData* Data);
 
 

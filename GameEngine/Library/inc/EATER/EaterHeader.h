@@ -6,7 +6,8 @@
 enum class VERTEX_TYPE
 {
 	BASE = 0, //(Pos,UV,Nomal,Tangent)
-	SKIN = 1, //(Pos,UV,Nomal,Tangent,BoneIndex,BoneWeights)
+	POS	 = 1, //(Pos)
+	SKIN = 2, //(Pos,UV,Nomal,Tangent,BoneIndex,BoneWeights)
 };
 
 ///파일의 열기,닫기,생성을 담당하는 함수들
@@ -41,6 +42,8 @@ EATER_PARSER_DLL void EATER_CHANGE_LIST(int NodeCount, std::string ListName, int
 EATER_PARSER_DLL void EATER_SET_VERTEX_START(int VetexCount, VERTEX_TYPE Type);
 EATER_PARSER_DLL void EATER_SET_VERTEX(EATER_VERTEX_BASE& Base);
 EATER_PARSER_DLL void EATER_SET_VERTEX(EATER_VERTEX_SKIN& Skin);
+EATER_PARSER_DLL void EATER_SET_VERTEX(EATER_VERTEX_POS& Pos);
+
 EATER_PARSER_DLL void EATER_SET_INDEX_START(int IndexCount);
 EATER_PARSER_DLL void EATER_SET_INDEX(int& x,int& y,int& z);
 

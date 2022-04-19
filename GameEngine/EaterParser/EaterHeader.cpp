@@ -68,6 +68,11 @@ void EATER_CLOSE_CHANGE_FILE(std::string FileName, std::string OutPath, std::str
 	 Parser->SetVertex(Skin);
  }
 
+ void EATER_SET_VERTEX(EATER_VERTEX_POS& Pos)
+ {
+	 Parser->SetVertex(Pos);
+ }
+
  void EATER_SET_INDEX_START(int IndexCount)
  {
 	 Parser->SetIndexStart(IndexCount);

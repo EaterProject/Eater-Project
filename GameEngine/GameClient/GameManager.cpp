@@ -28,9 +28,8 @@ void GameManager::Start(HWND _g_hWnd)
 	CreateScene<Loading>("Loading");
 
 	//EditorSetting();
-
-	ChoiceScene("TestScene");
-	//ChoiceScene("Loading");
+	//ChoiceScene("TestScene");
+	ChoiceScene("Loading");
 	//ChoiceScene("intro");
 	//ChoiceScene("inGame");
 }

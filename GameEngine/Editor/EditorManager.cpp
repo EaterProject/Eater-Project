@@ -24,7 +24,8 @@ void EditorManager::Initialize()
 {
 	mYaml	= new YamlManager();
 	mFbx	= new FBXManager();
-	mEater = new EaterManager();
+	mEater	= new EaterManager();
+
 	mEater->Initialize();
 	mFbx->Initialize(mEater);
 
@@ -32,7 +33,7 @@ void EditorManager::Initialize()
 	CreateAssetsFile();
 }
 
-void EditorManager::SetPath(std::string Path)
+void EditorManager::ConvertData(std::string Path)
 {
 	size_t start = Path.rfind(".")+1;
 	size_t end = Path.length()- start;
@@ -65,6 +66,22 @@ void EditorManager::SetPath(std::string Path)
 	}
 }
 
+void EditorManager::ConvertData(std::string Path, std::string ChangeName, CHANGE_TYPE Option)
+{
+	if (Option == CHANGE_TYPE::COLLIDER)
+	{
+		ParserData::CModel* Model = mFbx->OpenFile(Path);
+		mEater->Load_FBX_File_MeshBuffer(Path, Model, ChangeName);
+	}
+	else if (Option == CHANGE_TYPE::NAVMESH)
+	{
+		ParserData::CModel* Model = mFbx->OpenFile(Path);
+		mEater->Load_FBX_File_NavMeshBuffer(Path, Model, ChangeName);
+	}
+
+	
+}
+
 void EditorManager::OpenEaterFile(std::string Path,int Type)
 {
 	mEater->Load_Eater_File(Path);
@@ -73,6 +90,11 @@ void EditorManager::OpenEaterFile(std::string Path,int Type)
 void EditorManager::OpenEaterGameObject(GameObject* Object,ObjectOption* Option)
 {
 	mEater->Load_GameObject_File(Object, Option);
+}
+
+void EditorManager::CreateMaterialData(InstanceMaterial* m)
+{
+	mEater->Create_Material(m);
 }
 
 void EditorManager::CreateAssetsFile()
@@ -104,55 +126,3 @@ void EditorManager::CreateAssetsFile()
 	std::filesystem::create_directory("../Assets/Texture/Graphic/Shader");
 }
 
-void EditorManager::LoadAssets()
-{
-	std::string FBXPath = "../Assets/FBX";
-	LoadFolder(FBXPath);
-}
-
-
-void EditorManager::LoadFolder(std::string& Path)
-{
-	//폴더를 로드한다 폴더안에 파일을로드 폴더면 안으로 들어가서 다시로드
-
-	std::filesystem::path p(Path);
-	if (std::filesystem::exists(p) == false)
-	{
-		return;
-	}
-
-	std::filesystem::directory_iterator itr(p);
-	while (itr != std::filesystem::end(itr))
-	{
-		const std::filesystem::directory_entry& entry = *itr;
-
-		//읽을 파일의 이름을 알아온다
-		if (std::filesystem::is_directory(entry.path()) == true)
-		{
-			std::string Path = entry.path().string();
-			std::size_t Swap = Path.rfind('\\');
-			Path[Swap] = '/';
-			LoadFolder(Path);
-		}
-		else
-		{
-			std::string Path = entry.path().string();
-			std::size_t Swap = Path.rfind('\\');
-			Path[Swap] = '/';
-			LoadFile(Path);
-		}
-		itr++;
-	}
-}
-
-void EditorManager::LoadFile(std::string& Path)
-{
-	size_t start = Path.rfind(".") + 1;
-	size_t end = Path.length() - start;
-	std::string FileType = Path.substr(start, end);
-
-	if (FileType == "fbx" || FileType == "FBX")
-	{
-		mFbx->OpenFile(Path);
-	}
-}

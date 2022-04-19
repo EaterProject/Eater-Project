@@ -137,7 +137,9 @@ class PHYS_ENGINEDLL PhysRayCast
 public:
 	struct RaycastHit
 	{
-		int HitCount; //충돌한 오브젝트 개수
+		int HitCount;					//충돌한 오브젝트 개수
+		Vector3 HitPoint = {0,0,0};		//충돌 위치
+		int FaceIndex = 0;				//충돌한 오브젝트의 face인덱슨
 	};
 
 	PhysRayCast();

@@ -27,6 +27,8 @@ void GameLogic::Initialize()
 	//오브젝트 관리 매니저
 	FactoryGM->Initialize(ObjectGM);
 	ObjectGM->Initialize(FactoryGM);
+
+	
 }
 
 void GameLogic::Release()

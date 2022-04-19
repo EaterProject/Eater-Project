@@ -4,6 +4,8 @@
 // AssetsDialog 대화 상자
 class RightOption;
 class FileOption;
+class LoadTerrain;
+class LoadNavMesh;
 class AssetsDialog : public CDialogEx
 {
 	DECLARE_DYNAMIC(AssetsDialog)
@@ -40,8 +42,13 @@ public:
 public:
 	void Initialize(RightOption* mRight);
 	int FindChildFile(HTREEITEM hParentItem, CString str);
+	void CheckTexture(POINT point);
 	RightOption*	mRightOption;
 	FileOption*		mFileOption;
+	LoadTerrain*	mLoadTerrain;
+	LoadNavMesh*	mLoadNavMesh;
+	CButton Terrain_Button;
+	CButton Navigation_Button;
 public:
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnAssetsClick(NMHDR* pNMHDR, LRESULT* pResult);
@@ -51,4 +58,6 @@ public:
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
+	afx_msg void OnBnClickedButton1();
+	afx_msg void OnBnClickedButton2();
 };

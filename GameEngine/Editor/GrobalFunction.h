@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
+#include <atldef.h>
 #include <atlstr.h>
+#include <atltypes.h>
 
 #define FBX		0
 #define PNG		1
@@ -26,6 +28,23 @@ inline int ChangeToInt(std::string Data);			//string	-> int
 //파일의 타입을 가져온다 (.png , .fbx)
 inline int GetFileNameType(std::string Name);
 inline int GetFileNameType(CString Name);
+inline bool DropRect(RECT& rect);
+
+bool DropRect(RECT& rect)
+{
+	POINT point;
+	GetCursorPos(&point);
+	if (rect.left <= point.x && rect.right  >= point.x &&
+		rect.top  <= point.y && rect.bottom >= point.y)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+	return false;
+}
 
 
 CString ChangeToCString(float Data)

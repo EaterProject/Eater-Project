@@ -23,6 +23,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	void SetGameObject(Collider* collider);
+	void SetPoint(CString Name);
 	void UpdateObject();
 
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
@@ -51,4 +52,5 @@ public:
 	CButton Trigger_Check;
 	afx_msg void OnCreatePhyCollider();
 	afx_msg void OnCbnSelchangeCombo1();
+	CEdit TriangleType_Edit;
 };

@@ -9,9 +9,10 @@
 #include "EditorManager.h"
 #include "RightOption.h"
 #include "GrobalFunction.h"
-#include "Demo.h"
+#include "EditorToolScene.h"
 #include "CamAnimation.h"
 #include "SceneSaveDialog.h"
+#include "CreateMaterial.h"
 
 #include "GameObject.h"
 #include "MeshFilter.h"
@@ -70,6 +71,10 @@ void FileOption::Initialize(RightOption* mOption)
 	mRightOption = mOption;
 	mScene = new SceneSaveDialog();
 	mScene->Initialize(mRightOption);
+
+	mMaterial = new CreateMaterial();
+	mMaterial->Create(IDD_CREATE_MATERIAL);
+	mMaterial->ShowWindow(SW_HIDE);
 }
 
 void FileOption::SetChoiceGameObjectName(std::string Name, GameObject* Obj)
@@ -92,12 +97,12 @@ LRESULT FileOption::OnUserFunc(WPARAM wParam, LPARAM lParam)
 
 void FileOption::OnCreateTerrain()
 {
-	GameObject* Object = Demo::Create_Terrain("");
+	EditorToolScene::Create_Terrain("","","");
 }
 
 void FileOption::OnCreateLight()
 {
-	GameObject* Object = Demo::Create_Light();
+	GameObject* Object = EditorToolScene::Create_Light();
 	HTREEITEM Top = mRightOption->HirearchyTree.InsertItem(ChangeToCString(Object->Name));
 	mRightOption->Create_Hirearchy_Item(Object, Top);
 }
@@ -105,7 +110,7 @@ void FileOption::OnCreateLight()
 
 void FileOption::OnCreateParticle()
 {
-	GameObject* Object = Demo::Create_Particle();
+	GameObject* Object = EditorToolScene::Create_Particle();
 	HTREEITEM Top = mRightOption->HirearchyTree.InsertItem(ChangeToCString(Object->Name));
 	mRightOption->Create_Hirearchy_Item(Object, Top);
 }
@@ -118,7 +123,7 @@ void FileOption::OnSceneSave()
 	{
 		std::string SaveName = ChangeToString(mScene->Name);
 		std::string SavePath = "../Assets/Scene/";
-		Demo::SaveScene(SavePath, SaveName);
+		EditorToolScene::SaveScene(SavePath, SaveName);
 		AfxMessageBox(L"저장 완료");
 	}
 }
@@ -186,14 +191,14 @@ BOOL FileOption::PreTranslateMessage(MSG* pMsg)
 
 void FileOption::OnCreateCamera()
 {
-	GameObject* Cam = Demo::Create_Camera();
+	GameObject* Cam = EditorToolScene::Create_Camera();
 	HTREEITEM Top = mRightOption->HirearchyTree.InsertItem(ChangeToCString(Cam->Name));
 	mRightOption->Create_Hirearchy_Item(Cam, Top);
 }
 
 void FileOption::OnCreateGameObject()
 {
-	GameObject* Obj = Demo::Create_GameObject();
+	GameObject* Obj = EditorToolScene::Create_GameObject();
 	HTREEITEM Top = mRightOption->HirearchyTree.InsertItem(ChangeToCString(Obj->Name));
 	mRightOption->Create_Hirearchy_Item(Obj, Top);
 }
@@ -225,7 +230,14 @@ void FileOption::OnAddLight()
 
 void FileOption::OnCreateMaterial()
 {
-	mScene->DoModal();
-	std::string SaveName = ChangeToString(mScene->Name);
-	int num = 0;
+	mMaterial->ShowWindow(SW_SHOW);
+
+	RECT MyDig;
+	RECT Temp;
+	this->GetWindowRect(&MyDig);
+
+	Temp= MyDig;
+	Temp.left = MyDig.right;
+	mMaterial->SetWindowPos(NULL, Temp.left, Temp.top, Temp.right, Temp.bottom, SWP_NOSIZE);
+	//mLoadNavMesh->MoveWindow(&NavMeshWindow);
 }

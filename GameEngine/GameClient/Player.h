@@ -9,8 +9,8 @@ class MeshFilter;
 class Camera;
 class Rigidbody;
 class FrameData;
-class PlayerData;
 class Collider;
+class PhysRayCast;
 enum class PLAYER_STATE
 {
 	IDLE,
@@ -25,7 +25,6 @@ public:
 	void Awake();
 	void SetUp();
 	void Update();
-	void StartUpdate();
 	
 	static Transform* GetPlayerTransform();
 	static PLAYER_STATE GetState();
@@ -34,14 +33,15 @@ public:
 private:
 	//플레이어 키인풋
 	void PlayerKeyinput();
+	void PlayerStateUpdate();
+	void PlayerAttackColliderUpdate();
+	void PlayerGroundCheck();
 private:
 	///컨퍼넌트
 	static Transform* mTransform;
 	AnimationController* mAnimation;
-	Collider*		mCollider;
 	MeshFilter*		mMeshFilter;
 	Transform*		mCameraTR;
-	Rigidbody*		mRigidbody;
 private:
 	Vector3 DirPos;			//방향
 	Vector3 DirRot;			//회전
@@ -49,10 +49,22 @@ private:
 
 	GameObject* AttackColliderObject;
 	Collider*	AttackCollider;
-	Rigidbody*	AttackRigidbody;
 
-	float Speed = 0;
+
+	float Speed = 10;
 	float HP	= 100;
-	float RotationDir;
 	static PLAYER_STATE mState;
+private:
+	PhysRayCast* RayCastHit;
+	const int Ray_Front = 0;
+	const int Ray_Back	= 1;
+	const int Ray_Right = 2;
+	const int Ray_Left	= 3;
+	const int Ray_Center= 4;
+	bool IsFrontRayCheck = false;
+	bool IsBackRayCheck = false;
+	bool IsRightRayCheck = false;
+	bool IsLeftRayCheck = false;
+
+	int HitCount = 0;
 };

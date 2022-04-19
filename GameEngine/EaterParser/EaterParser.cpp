@@ -198,6 +198,13 @@ void EaterParser::SetVertexStart(int VertexCount, int Type)
 		SetData =  LIST_TYPE + Name + SP_TYPE + std::to_string(VertexCount) + SP_TYPE + std::to_string(11) + LINE_TYPE;
 		fputs(SetData.c_str(), WriteFile);
 	}
+	else if (Type == 1)
+	{
+		std::string SetData;
+		std::string Name = "Vertex";
+		SetData = LIST_TYPE + Name + SP_TYPE + std::to_string(VertexCount) + SP_TYPE + std::to_string(3) + LINE_TYPE;
+		fputs(SetData.c_str(), WriteFile);
+	}
 	else
 	{
 		std::string SetData;
@@ -242,6 +249,13 @@ void EaterParser::SetVertex(EATER_VERTEX_SKIN& Base)
 		}
 	}
 
+	fputs(SetData.c_str(), WriteFile);
+}
+
+void EaterParser::SetVertex(EATER_VERTEX_POS& Base)
+{
+	std::string SetData;
+	SetData = std::to_string(Base.POS_X) + SP_TYPE + std::to_string(Base.POS_Y) + SP_TYPE + std::to_string(Base.POS_Z) + LINE_TYPE;
 	fputs(SetData.c_str(), WriteFile);
 }
 
@@ -291,11 +305,10 @@ void EaterParser::GetList(std::vector<float>* Data, int index)
 {
 	int Size = (int)GetListData->F_Data[index].size();
 	Data->clear();
-	Data->reserve(Size);
+	Data->resize(Size);
 	for (int i = 0; i < Size; i++)
 	{
-		float OutData = stof(GetListData->F_Data[index][i]);
-		Data->push_back(OutData);
+		(*Data)[i] = stof(GetListData->F_Data[index][i]);
 	}
 }
 
@@ -303,13 +316,11 @@ void EaterParser::GetList(std::vector<std::string>* Data, int index)
 {
 	int Size = (int)GetListData->F_Data[index].size();
 	Data->clear();
-	Data->reserve(Size);
+	Data->resize(Size);
 	for (int i = 0; i < Size; i++)
 	{
 		std::string OutData = GetListData->F_Data[index][i];
-		
-		OutData = OutData.substr(0, OutData.rfind("\n") );
-		Data->push_back(OutData);
+		(*Data)[i] = OutData.substr(0, OutData.rfind("\n"));
 	}
 }
 

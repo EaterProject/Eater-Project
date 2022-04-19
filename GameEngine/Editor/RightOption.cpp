@@ -4,7 +4,7 @@
 #include "Editor.h"
 #include "RightOption.h"
 #include "afxdialogex.h"
-#include "Demo.h"
+#include "EditorToolScene.h"
 
 #include "CTAP_Collider.h"
 #include "CTAP_Rigidbody.h"
@@ -17,6 +17,7 @@
 #include "FileOption.h"
 #include "EditorManager.h"
 #include "Loading.h"
+#include "CreateMaterial.h"
 
 #include <stack>
 #include "MainHeader.h"
@@ -72,16 +73,20 @@ BOOL RightOption::OnInitDialog()
 	mCam->Create(IDD_CAM_ANIMATION);
 	mCam->ShowWindow(SW_HIDE);
 
+	mMaterial = new CreateMaterial();
+	mMaterial->Create(IDD_CREATE_MATERIAL);
+	mMaterial->ShowWindow(SW_HIDE);
+
 	//Tag 기본 리스트
-	//Tag_Combo.InsertString(0, L"Default");
-	//Tag_Combo.InsertString(1, L"MainCam");
-	//Tag_Combo.InsertString(2, L"Point");
-	//Tag_Combo.InsertString(3, L"Player");
-	//TagList.insert({0,"Default"});
-	//TagList.insert({1,"MainCam"});
-	//TagList.insert({2,"Point"});
-	//TagList.insert({3,"Player"});
-	//Tag_Combo.SetCurSel(0);
+	Tag_Combo.InsertString(0, L"Default");
+	Tag_Combo.InsertString(1, L"MainCam");
+	Tag_Combo.InsertString(2, L"Point");
+	Tag_Combo.InsertString(3, L"Player");
+	TagList.insert({ 0,"Default" });
+	TagList.insert({ 1,"MainCam" });
+	TagList.insert({ 2,"Point" });
+	TagList.insert({ 3,"Player" });
+	Tag_Combo.SetCurSel(0);
 
 	//텝정보들 생성
 	CRect rect;
@@ -157,6 +162,7 @@ BEGIN_MESSAGE_MAP(RightOption, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON1, &RightOption::OnAddTag_Button)
 	ON_CBN_SELCHANGE(IDC_COMBO1, &RightOption::OnChoiceTag)
 	ON_BN_CLICKED(IDC_BUTTON2, &RightOption::OnDeleteTagButton)
+	ON_BN_CLICKED(IDC_BUTTON12, &RightOption::OnCreateBasicMaterial)
 END_MESSAGE_MAP()
 
 RightOption* RightOption::GetThis()
@@ -242,6 +248,11 @@ void RightOption::ChickTapDrag(CPoint point)
 			mMeshFilter->SendMessage(M_MSG_MeshFilter, 0, (LPARAM)pstr);
 			delete pstr;
 		}
+
+		if (ComponentName == "Collider")
+		{
+			mCollider->SetPoint(DragItemName);
+		}
 	}
 }
 
@@ -267,23 +278,23 @@ void RightOption::ChickHirearchyDarg(CPoint point)
 		case EATER: 
 		{
 			Name = Name.substr(0, Name.rfind('.'));
-			GameObject* Object = Demo::Create_Object(Name);
+			GameObject* Object = EditorToolScene::Create_Object(Name);
 			HTREEITEM TopParent = HirearchyTree.InsertItem(ChangeToCString(Object->Name));
 			break;
 		}
 		case SCENE:
 		{
-			Demo::LoadScene(Name);
-			std::map<std::string, GameObject*>::iterator Start_it	= Demo::ObjectList.begin();
-			std::map<std::string, GameObject*>::iterator End_it		= Demo::ObjectList.end();
+			EditorToolScene::LoadScene(Name);
+			std::map<std::string, GameObject*>::iterator Start_it	= EditorToolScene::ObjectList.begin();
+			std::map<std::string, GameObject*>::iterator End_it		= EditorToolScene::ObjectList.end();
 			for (Start_it; Start_it != End_it; Start_it++)
 			{
 				HirearchyTree.InsertItem(ChangeToCString(Start_it->first));
 			}
 
 			Tag_Combo.ResetContent();
-			std::map<int,std::string>::iterator Tag_Start_it	=  Demo::TagList.begin();
-			std::map<int,std::string>::iterator Tag_End_it		=  Demo::TagList.end();
+			std::map<int,std::string>::iterator Tag_Start_it	=  EditorToolScene::TagList.begin();
+			std::map<int,std::string>::iterator Tag_End_it		=  EditorToolScene::TagList.end();
 			for(Tag_Start_it; Tag_Start_it != Tag_End_it; Tag_Start_it++)
 			{
 				Tag_Combo.InsertString( Tag_Start_it->first, ChangeToCString(Tag_Start_it->second) );
@@ -321,11 +332,11 @@ GameObject* RightOption::FindGameObjectParent(HTREEITEM mItem)
 
 	if (ParentName == MeshName)
 	{
-		Object = Demo::FindMesh(ChangeToString(MeshName));
+		Object = EditorToolScene::FindMesh(ChangeToString(MeshName));
 	}
 	else
 	{
-		Object = Demo::FindMesh(ChangeToString(MeshName), ChangeToString(ParentName));
+		Object = EditorToolScene::FindMesh(ChangeToString(MeshName), ChangeToString(ParentName));
 	}
 
 
@@ -433,7 +444,7 @@ void RightOption::OnDelteObject_Button()
 	std::string Name;
 	Name = ChoiceHirearchyName;
 	Name = Name.substr(0, Name.rfind('.'));
-	bool Delete = Demo::DeleteObject(Name);
+	bool Delete = EditorToolScene::DeleteObject(Name);
 	if (Delete == true)
 	{
 		HTREEITEM item = HirearchyTree.GetSelectedItem();
@@ -609,7 +620,7 @@ void RightOption::OnAddTag_Button()
 	CString AddTagName;
 	int MaxIndex = 0;
 	AddTag_Edit.GetWindowTextW(AddTagName);
-	int Count  = Demo::AddTag(ChangeToString(AddTagName));
+	int Count  = EditorToolScene::AddTag(ChangeToString(AddTagName));
 
 	if (Count != -1)
 	{
@@ -626,7 +637,7 @@ void RightOption::OnAddTag_Button()
 
 void RightOption::OnChoiceTag()
 {
-	GameObject* Object = Demo::FindMesh(ChoiceHirearchyName);
+	GameObject* Object = EditorToolScene::FindMesh(ChoiceHirearchyName);
 	if (Object == nullptr) 
 	{
 		AfxMessageBox(L"Error : 선택한 오브젝트가 없습니다");
@@ -642,7 +653,7 @@ void RightOption::OnDeleteTagButton()
 {
 	CString AddTagName;
 	AddTag_Edit.GetWindowTextW(AddTagName);
-	int Count = Demo::DeleteTag(ChangeToString(AddTagName));
+	int Count = EditorToolScene::DeleteTag(ChangeToString(AddTagName));
 
 	if (Count == -1)
 	{
@@ -655,4 +666,10 @@ void RightOption::OnDeleteTagButton()
 		AfxMessageBox(L"삭제 성공");
 		AddTag_Edit.SetWindowTextW(L"");
 	}
+}
+
+
+void RightOption::OnCreateBasicMaterial()
+{
+	mMaterial->ShowWindow(SW_SHOW);
 }

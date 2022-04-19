@@ -13,6 +13,7 @@
 #include "NetworkManagerComponent.h"
 #include "Profiler/Profiler.h"
 
+
 std::vector<Network_Message> Msg_Vec;
 NetworkManager::NetworkManager()
 {

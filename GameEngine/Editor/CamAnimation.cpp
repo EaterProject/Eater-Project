@@ -6,7 +6,7 @@
 #include "CamAnimation.h"
 #include "afxdialogex.h"
 #include "GrobalFunction.h"
-#include "Demo.h"
+#include "EditorToolScene.h"
 #include "GameObject.h"
 #include "Transform.h"
 #include "EaterHeader.h"
@@ -137,7 +137,7 @@ void CamAnimation::AddItem(int index, KeyNode& Node)
 
 void CamAnimation::OnAddKey()
 {
-	MainCam = Demo::FindMainCamera();
+	MainCam = EditorToolScene::FindMainCamera();
 	MainCamTR = MainCam->GetTransform();
 
 	KeyNode Node;

@@ -34,10 +34,10 @@ void Eater_LoadMaterial::LoadData(std::string& Path)
 		std::string NodeName = EATER_GET_NODE_NAME(i);
 		if (NodeName == "EATERMAT")
 		{
-			std::string DiffuseName		= CutStr(EATER_GET_MAP(i, "Diffuse"));
-			std::string NormalName		= CutStr(EATER_GET_MAP(i, "Normal"));
-			std::string EmissiveName	= CutStr(EATER_GET_MAP(i, "Emissive"));
-			std::string ORMName			= CutStr(EATER_GET_MAP(i, "ORM"));
+			std::string DiffuseName		= CutStr(EATER_GET_MAP(i, "DiffuseMap"));
+			std::string NormalName		= CutStr(EATER_GET_MAP(i, "NormalMap"));
+			std::string EmissiveName	= CutStr(EATER_GET_MAP(i, "EmissiveMap"));
+			std::string ORMName			= CutStr(EATER_GET_MAP(i, "ORMMap"));
 
 			Data->Albedo = LoadManager::GetTexture(DiffuseName);
 			Data->Normal = LoadManager::GetTexture(NormalName);
@@ -49,6 +49,7 @@ void Eater_LoadMaterial::LoadData(std::string& Path)
 			if (Data->Emissive) Data->Emissive->Name = EmissiveName;
 			if (Data->ORM) Data->ORM->Name = ORMName;
 
+			Data->Material_SubData->EmissiveFactor = std::stof(EATER_GET_MAP(i, "Emissive"));
 			Data->Material_SubData->RoughnessFactor = std::stof(EATER_GET_MAP(i, "Roughness"));
 			Data->Material_SubData->MetallicFactor = std::stof(EATER_GET_MAP(i, "Metallic"));
 
