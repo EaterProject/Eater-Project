@@ -47,7 +47,7 @@ void EditorManager::ConvertData(std::string Path)
 	{
 		mEater->Load_Eater_File(Path);
 	}
-	else if (FileType == "fbx")
+	else if (FileType == "fbx" || FileType == "FBX")
 	{
 		ParserData::CModel* Model = mFbx->OpenFile(Path);
 		mEater->Load_FBX_File(Path, Model);

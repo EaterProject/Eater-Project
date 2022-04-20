@@ -4,7 +4,11 @@
 Texture2D::Texture2D(Hash_Code hashCode, ID3D11Texture2D* resource)
 	:GraphicResource(RESOURCE_TYPE::TEX2D, hashCode, resource), m_Width_Ratio(1.0f), m_Height_Ratio(1.0f)
 {
+	D3D11_TEXTURE2D_DESC desc;
+	resource->GetDesc(&desc);
 
+	m_Width = desc.Width;
+	m_Height = desc.Height;
 }
 
 Texture2D::~Texture2D()
