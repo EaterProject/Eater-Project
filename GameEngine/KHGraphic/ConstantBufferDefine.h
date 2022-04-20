@@ -53,7 +53,11 @@ struct CB_SkinMesh : public cbSkinMesh
 	DirectX::SimpleMath::Matrix gInvWorld;
 	DirectX::SimpleMath::Matrix gView;
 	DirectX::SimpleMath::Matrix gProj;
-	DirectX::SimpleMath::Matrix gBoneTransforms[96];
+
+	UINT gPrevAnimationIndex = 0;
+	UINT gNextAnimationIndex = 0;
+	float gFrameTime = 0.0f;
+	float gPad = 0.0f;
 };
 
 SHADER_CONSTANT_BUFFER(cbInstanceSkinMesh)
@@ -79,14 +83,17 @@ SHADER_CONSTANT_BUFFER(cbDepthSkinMesh)
 struct CB_DepthSkinMesh : public cbDepthSkinMesh
 {
 	DirectX::SimpleMath::Matrix gWorldViewProj;
-	DirectX::SimpleMath::Matrix gBoneTransforms[96];
+
+	UINT gPrevAnimationIndex = 0;
+	UINT gNextAnimationIndex = 0;
+	float gFrameTime = 0.0f;
+	float gPad = 0.0f;
 };
 
 SHADER_CONSTANT_BUFFER(cbInstanceDepthSkinMesh)
 struct CB_InstanceDepthSkinMesh : public cbInstanceDepthSkinMesh
 {
 	DirectX::SimpleMath::Matrix gViewProj;
-	DirectX::SimpleMath::Matrix gBoneTransforms[96];
 };
 
 SHADER_CONSTANT_BUFFER(cbLightSub)
@@ -264,16 +271,19 @@ struct CB_Instance_StaticMesh_ID : public cbInstanceStaticMeshID
 SHADER_CONSTANT_BUFFER(cbSkinMeshID)
 struct CB_SkinMesh_ID : public cbSkinMeshID
 {
-	DirectX::SimpleMath::Vector4 gHashColor;
 	DirectX::SimpleMath::Matrix gWorldViewProj;
-	DirectX::SimpleMath::Matrix gBoneTransforms[96];
+	DirectX::SimpleMath::Vector4 gHashColor;
+
+	UINT gPrevAnimationIndex = 0;
+	UINT gNextAnimationIndex = 0;
+	float gFrameTime = 0.0f;
+	float gPad = 0.0f;
 };
 
 SHADER_CONSTANT_BUFFER(cbInstanceSkinMeshID)
 struct CB_InstanceSkinMesh_ID : public cbInstanceSkinMeshID
 {
 	DirectX::SimpleMath::Matrix gViewProj;
-	DirectX::SimpleMath::Matrix gBoneTransforms[96];
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////

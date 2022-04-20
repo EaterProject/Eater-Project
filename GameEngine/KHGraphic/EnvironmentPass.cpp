@@ -43,30 +43,27 @@ void EnvironmentPass::Create(int width, int height)
 
 void EnvironmentPass::Start(int width, int height)
 {
-	m_SkyBoxVS = g_Shader->GetShader("SkyBox_VS");
-	m_SkyBoxPS = g_Shader->GetShader("SkyBox_PS");
+	m_SkyBox_VS = g_Shader->GetShader("SkyBox_VS");
+	m_SkyBox_PS = g_Shader->GetShader("SkyBox_PS");
 
-	m_BoxDB = g_Resource->GetDrawBuffer<DB_Sphere>();
+	m_Box_DB = g_Resource->GetDrawBuffer<DB_Sphere>();
 
 	m_OutPut_RT = g_Resource->GetRenderTexture<RT_OutPut1>();
-	m_Position_RT = g_Resource->GetRenderTexture<RT_Deffered_Position>();
 	m_OutPut_RTV = m_OutPut_RT->GetRTV()->Get();
-	m_Position_RTV = m_Position_RT->GetRTV()->Get();
 
-	m_DefaltDSV = g_Resource->GetDepthStencilView<DS_Defalt>()->Get();
+	m_Defalt_DSV = g_Resource->GetDepthStencilView<DS_Defalt>()->Get();
 
-	m_CubeMapRS = g_Resource->GetRasterizerState<RS_CubeMap>()->Get();
-	m_CubeMapDSS = g_Resource->GetDepthStencilState<DSS_CubeMap>()->Get();
+	m_CubeMap_RS = g_Resource->GetRasterizerState<RS_CubeMap>()->Get();
+	m_CubeMap_DSS = g_Resource->GetDepthStencilState<DSS_CubeMap>()->Get();
 }
 
 void EnvironmentPass::OnResize(int width, int height)
 {
 	// 현재 RenderTargetView 재설정..
 	m_OutPut_RTV = m_OutPut_RT->GetRTV()->Get();
-	m_Position_RTV = m_Position_RT->GetRTV()->Get();
 
 	// DepthStencilView 재설정..
-	m_DefaltDSV = g_Resource->GetDepthStencilView<DS_Defalt>()->Get();
+	m_Defalt_DSV = g_Resource->GetDepthStencilView<DS_Defalt>()->Get();
 }
 
 void EnvironmentPass::Release()
@@ -84,14 +81,14 @@ void EnvironmentPass::SetEnvironmentMapResource(EnvironmentBuffer* resource)
 	// SkyCube Resource 설정..
 	ID3D11ShaderResourceView* skycube = (ID3D11ShaderResourceView*)resource->Environment->pTextureBuf;
 
-	m_SkyBoxPS->SetShaderResourceView<gSkyCube>(skycube);
+	m_SkyBox_PS->SetShaderResourceView<gSkyCube>(skycube);
 }
 
 void EnvironmentPass::RenderUpdate()
 {
-	g_Context->RSSetState(m_CubeMapRS);
-	g_Context->OMSetDepthStencilState(m_CubeMapDSS, 0);
-	g_Context->OMSetRenderTargets(1, &m_OutPut_RTV, m_DefaltDSV);
+	g_Context->RSSetState(m_CubeMap_RS);
+	g_Context->OMSetDepthStencilState(m_CubeMap_DSS, 0);
+	g_Context->OMSetRenderTargets(1, &m_OutPut_RTV, m_Defalt_DSV);
 
 	CameraData* cam = g_GlobalData->MainCamera_Data;
 
@@ -101,14 +98,14 @@ void EnvironmentPass::RenderUpdate()
 
 	CB_CubeObject cubeBuf;
 	cubeBuf.gViewProj = Matrix::CreateScale(10.0f) * view * proj;
-	m_SkyBoxVS->ConstantBufferUpdate(&cubeBuf);
-	m_SkyBoxVS->Update();
+	m_SkyBox_VS->ConstantBufferUpdate(&cubeBuf);
+	m_SkyBox_VS->Update();
 
-	m_SkyBoxPS->Update();
+	m_SkyBox_PS->Update();
 
 	g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	g_Context->IASetVertexBuffers(0, 1, m_BoxDB->VertexBuf->GetAddress(), &m_BoxDB->Stride, &m_BoxDB->Offset);
-	g_Context->IASetIndexBuffer(m_BoxDB->IndexBuf->Get(), DXGI_FORMAT_R32_UINT, 0);
+	g_Context->IASetVertexBuffers(0, 1, m_Box_DB->VertexBuf->GetAddress(), &m_Box_DB->Stride, &m_Box_DB->Offset);
+	g_Context->IASetIndexBuffer(m_Box_DB->IndexBuf->Get(), DXGI_FORMAT_R32_UINT, 0);
 
-	g_Context->DrawIndexed(m_BoxDB->IndexCount, 0, 0);
+	g_Context->DrawIndexed(m_Box_DB->IndexCount, 0, 0);
 }

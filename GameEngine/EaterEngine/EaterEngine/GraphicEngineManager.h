@@ -75,11 +75,9 @@ public:
 
 public:
 	//선택한 그래픽엔진으로 텍스쳐 생성
-	void BakeShadowMap(std::string Path);
 	void BakeEnvironmentMap(TextureBuffer* environment, EnvironmentBuffer** ppResource);
 
 public:
-	void SetShadowMap(TextureBuffer* resource);
 	void SetEnvironmentMap(EnvironmentBuffer* resource);
 
 private:

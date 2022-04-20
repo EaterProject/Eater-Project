@@ -19,29 +19,32 @@ public:
 	void RenderUpdate();
 
 private:
-	UINT m_Multiple;
-
-	VertexShader* m_OITRenderVS;
-	PixelShader* m_OITRenderPS;
-	PixelShader* m_OITParticlePS;
+	VertexShader* m_OITRender_VS;
+	PixelShader* m_OITRender_PS;
+	PixelShader* m_OITParticle_PS;
 
 	DrawBuffer* m_Screen_DB;
 
+	RenderBuffer* m_PieceLink_RB;
+	RenderBuffer* m_FirstOffset_RB;
+
 	RenderTexture* m_OutPut_RT;
 
-	RenderBuffer* m_PieceLinkRB;
-	RenderBuffer* m_FirstOffsetRB;
-
-	ID3D11DepthStencilView* m_DefaltDSV;
-	ID3D11DepthStencilState* m_NoStencilDSS;
-	ID3D11RasterizerState* m_NoCullRS;
+private:
+	ID3D11DepthStencilView* m_Defalt_DSV;
+	ID3D11DepthStencilState* m_NoStencil_DSS;
+	ID3D11RasterizerState* m_NoCull_RS;
 
 	ID3D11RenderTargetView* m_OutPut_RTV;
 
-	ID3D11UnorderedAccessView* m_PieceLinkUAV;
-	ID3D11UnorderedAccessView* m_FirstOffsetUAV;
+	ID3D11UnorderedAccessView* m_PieceLink_UAV;
+	ID3D11UnorderedAccessView* m_FirstOffset_UAV;
 
+	ID3D11UnorderedAccessView* m_UAV_List[2];
+
+private:
+	UINT m_Multiple;
 	UINT m_MagicValue;
-	std::vector<ID3D11UnorderedAccessView*> m_UAVList;
+	UINT m_InitCounts[2];
 };
 

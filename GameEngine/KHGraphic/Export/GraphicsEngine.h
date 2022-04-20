@@ -48,7 +48,6 @@ public:
 	virtual GRAPHIC_DLL void SetGlobalData(GlobalData* globalData) abstract;
 
 public:
-	virtual GRAPHIC_DLL void SetShadowMap(TextureBuffer* resource) abstract;
 	virtual GRAPHIC_DLL void SetEnvironmentMap(EnvironmentBuffer* resource) abstract;
 
 public:
@@ -79,7 +78,6 @@ public:
 
 public:
 	/// Graphic Resource Baking Function..
-	virtual GRAPHIC_DLL void BakeShadowMap(std::string path) abstract;
 	virtual GRAPHIC_DLL void BakeEnvironmentMap(TextureBuffer* environment, EnvironmentBuffer** ppResource) abstract;
 
 private:

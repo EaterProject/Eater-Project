@@ -55,11 +55,13 @@ void AlphaPass::Start(int width, int height)
 	m_ParticleInstVS = g_Shader->GetShader("Particle_Instance_VS");
 	m_ParticlePS = g_Shader->GetShader("OIT_Particle_PS");
 
-	m_MeshInstVS = g_Shader->GetShader("StaticMesh_Instance_VS");
+	m_MeshInst_VS = g_Shader->GetShader("StaticMesh_Instance_VS");
 	m_MeshPS = g_Shader->GetShader("Deferred_PBR_PS");
 
 	m_Mesh_IB = g_Resource->GetInstanceBuffer<IB_Mesh>();
 	m_Particle_IB = g_Resource->GetInstanceBuffer<IB_Particle>();
+
+	m_ParticleInstance.resize(500);
 }
 
 void AlphaPass::OnResize(int width, int height)
@@ -97,22 +99,10 @@ void AlphaPass::RenderUpdate(const InstanceRenderBuffer* instance, const RenderD
 	{
 		ParticleUpdate(meshData->m_ParticleData);
 
-		if (m_ParticleInstance.empty()) break;
+		if (m_InstanceCount == 0) return;
 
-		// Mapping SubResource Data..
-		D3D11_MAPPED_SUBRESOURCE mappedResource;
-		ZeroMemory(&mappedResource, sizeof(D3D11_MAPPED_SUBRESOURCE));
-
-		// GPU Access Lock Buffer Data..
-		g_Context->Map(m_Particle_IB->InstanceBuf->Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
-
-		m_InstanceStride = (size_t)m_Particle_IB->Stride * (size_t)m_InstanceCount;
-
-		// Copy Resource Data..
-		memcpy(mappedResource.pData, &m_ParticleInstance[0], m_InstanceStride);
-
-		// GPU Access UnLock Buffer Data..
-		g_Context->Unmap(m_Particle_IB->InstanceBuf->Get(), 0);
+		// Instance Buffer Update..
+		UpdateBuffer(m_Particle_IB->InstanceBuf->Get(), &m_ParticleInstance[0], (size_t)m_Particle_IB->Stride * (size_t)m_InstanceCount);
 
 		// Veretex Shader Update..
 		CB_InstanceParticleMesh particleBuf;
@@ -140,55 +130,44 @@ void AlphaPass::RenderUpdate(const InstanceRenderBuffer* instance, const RenderD
 
 		// Draw..
 		g_Context->DrawIndexedInstanced(mesh->m_IndexCount, m_InstanceCount, 0, 0, 0);
-
-		// Particle Instance Data Clear..
-		m_ParticleInstance.clear();
-		m_InstanceCount = 0;
 	}
 	break;
 	default:
 		break;
 	}
+
+	// Alpha Mesh Instance Data Clear..
+	m_InstanceCount = 0;
 }
 
 void AlphaPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::vector<RenderData*>& meshlist)
 {
-	if (meshlist.size() == 1)
+	m_RenderCount = (int)meshlist.size();
+
+	if (m_RenderCount == 1)
 	{
 		RenderUpdate(instance, meshlist[0]);
 	}
 
-	CameraData* cam = g_GlobalData->MainCamera_Data;
-	MeshRenderBuffer* mesh = instance->m_Mesh;
-	MaterialRenderBuffer* mat = instance->m_Material;
+	const CameraData* cam = g_GlobalData->MainCamera_Data;
+	const MeshRenderBuffer* mesh = instance->m_Mesh;
+	const MaterialRenderBuffer* mat = instance->m_Material;
 
-	Matrix& viewproj = cam->CamViewProj;
+	const Matrix& viewproj = cam->CamViewProj;
 
 	switch (instance->m_Type)
 	{
 	case OBJECT_TYPE::PARTICLE_SYSTEM:
 	{
-		for (int i = 0; i < meshlist.size(); i++)
+		for (int i = 0; i < m_RenderCount; i++)
 		{
 			ParticleUpdate(meshlist[i]->m_ParticleData);
 		}
 
-		if (m_ParticleInstance.empty()) break;
+		if (m_InstanceCount == 0) return;
 
-		// Mapping SubResource Data..
-		D3D11_MAPPED_SUBRESOURCE mappedResource;
-		ZeroMemory(&mappedResource, sizeof(D3D11_MAPPED_SUBRESOURCE));
-
-		// GPU Access Lock Buffer Data..
-		g_Context->Map(m_Particle_IB->InstanceBuf->Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
-
-		m_InstanceStride = (size_t)m_Particle_IB->Stride * (size_t)m_InstanceCount;
-
-		// Copy Resource Data..
-		memcpy(mappedResource.pData, &m_ParticleInstance[0], m_InstanceStride);
-
-		// GPU Access UnLock Buffer Data..
-		g_Context->Unmap(m_Particle_IB->InstanceBuf->Get(), 0);
+		// Instance Buffer Update..
+		UpdateBuffer(m_Particle_IB->InstanceBuf->Get(), &m_ParticleInstance[0], (size_t)m_Particle_IB->Stride * (size_t)m_InstanceCount);
 
 		// Veretex Shader Update..
 		CB_InstanceParticleMesh particleBuf;
@@ -216,23 +195,21 @@ void AlphaPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::ve
 
 		// Draw..
 		g_Context->DrawIndexedInstanced(mesh->m_IndexCount, m_InstanceCount, 0, 0, 0);
-
-		// Particle Instance Data Clear..
-		m_ParticleInstance.clear();
-		m_InstanceCount = 0;
 	}
 	break;
 	default:
 		break;
 	}
+
+	// Alpha Mesh Instance Data Clear..
+	m_InstanceCount = 0;
 }
 
 void AlphaPass::ParticleUpdate(ParticleData* particleSystem)
 {
 	OneParticle* particle = nullptr;
-	CameraData* cam = g_GlobalData->MainCamera_Data;
 
-	Matrix invView = cam->CamInvView;
+	const Matrix& invView = g_GlobalData->MainCamera_Data->CamInvView;
 	Matrix converseTM = Matrix::Identity;
 	Matrix particleWorld;
 
@@ -273,7 +250,6 @@ void AlphaPass::ParticleUpdate(ParticleData* particleSystem)
 		m_ParticleData.TexPos = particle->TexPos;
 		m_ParticleData.Color = particle->Color;
 
-		m_ParticleInstance.push_back(m_ParticleData);
-		m_InstanceCount++;
+		m_ParticleInstance[m_InstanceCount++] = m_ParticleData;
 	}
 }

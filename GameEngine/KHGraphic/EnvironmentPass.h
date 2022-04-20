@@ -18,19 +18,18 @@ public:
 	void RenderUpdate();
 
 private:
-	DrawBuffer* m_BoxDB;
+	DrawBuffer* m_Box_DB;
 
-	VertexShader* m_SkyBoxVS;
-	PixelShader* m_SkyBoxPS;
+	VertexShader* m_SkyBox_VS;
+	PixelShader* m_SkyBox_PS;
 
 	RenderTexture* m_OutPut_RT;
-	RenderTexture* m_Position_RT;
 	
-	ID3D11RasterizerState* m_CubeMapRS;
-	ID3D11DepthStencilState* m_CubeMapDSS;
+private:
+	ID3D11RasterizerState* m_CubeMap_RS;
+	ID3D11DepthStencilState* m_CubeMap_DSS;
 
 	ID3D11RenderTargetView* m_OutPut_RTV;
-	ID3D11RenderTargetView* m_Position_RTV;
-	ID3D11DepthStencilView* m_DefaltDSV;
+	ID3D11DepthStencilView* m_Defalt_DSV;
 };
 

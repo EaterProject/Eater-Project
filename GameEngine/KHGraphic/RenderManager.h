@@ -37,7 +37,6 @@ public:
 	void SetGlobalData(GlobalData* globalData) override;
 
 public:
-	void SetShadowMap(TextureBuffer* resource) override;
 	void SetEnvironmentMap(EnvironmentBuffer* resource) override;
 
 public:
@@ -58,9 +57,6 @@ public:
 
 	void Render() override;
 	void* PickingRender(int x, int y) override;
-
-public:
-	void BakeShadowMap() override;
 
 private:
 	void InstanceResize();

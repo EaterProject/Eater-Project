@@ -14,6 +14,16 @@ class RandomFloat;
 class RandomVector3;
 class RandomVector4;
 
+template<typename T>
+struct RandomRange
+{
+	void SetRange(T range)		{ m_Min = range; m_Max = range; }
+	void SetRange(T min, T max) { m_Min = min; m_Max = max; }
+
+	T m_Min;
+	T m_Max;
+};
+
 class ParticleSystem : public Component
 {
 public:
@@ -67,6 +77,25 @@ public:
 	EATER_ENGINEDLL void SetNextParticle(ParticleSystem* particle);
 
 public:
+	EATER_ENGINEDLL std::string GetMeshName();
+	EATER_ENGINEDLL PARTICLE_RENDER_OPTION GetRenderType();
+	EATER_ENGINEDLL int GetMaxParticles();
+	EATER_ENGINEDLL float GetDelayTime();
+	EATER_ENGINEDLL float GetRateOverTime();
+	EATER_ENGINEDLL Vector3 GetShapeRadius();
+	EATER_ENGINEDLL RandomRange<Vector3> GetStartForce();
+	EATER_ENGINEDLL RandomRange<Vector4> GetStartColor();
+	EATER_ENGINEDLL RandomRange<float> GetStartLifeTime();
+	EATER_ENGINEDLL RandomRange<float> GetStartScale();
+	EATER_ENGINEDLL RandomRange<float> GetStartRotation();
+	EATER_ENGINEDLL RandomRange<Vector3> GetLifeTimeForce();
+	EATER_ENGINEDLL RandomRange<Vector4> GetLifeTimeColor();
+	EATER_ENGINEDLL RandomRange<float> GetLifeTimeScale();
+	EATER_ENGINEDLL RandomRange<float> GetLifeTimeRotation();
+	EATER_ENGINEDLL PARTICLE_LIFETIME_OPTION GetLifeTimeColorOption();
+	EATER_ENGINEDLL PARTICLE_LIFETIME_OPTION GetLifeTimeScaleOption();
+
+public:
 	void Release();
 
 private:
@@ -101,6 +130,18 @@ private:
 	float m_NowDelayTime;		// 현재 지연 시간
 	float m_TickTime;			// 현재 진행 시간
 	float m_RateOverTime;		// 초당 출력할 파티클 개수
+	float m_RateOverTimeCount;	// 초당 출력할 파티클 개수
+
+	RandomRange<Vector3>	m_StartForce;
+	RandomRange<Vector4>	m_StartColor;
+	RandomRange<float>		m_StartLifeTime;
+	RandomRange<float>		m_StartScale;
+	RandomRange<float>		m_StartRotation;
+
+	RandomRange<Vector3>	m_LifeTimeForce;
+	RandomRange<Vector4>	m_LifeTimeColor;
+	RandomRange<float>		m_LifeTimeScale;
+	RandomRange<float>		m_LifeTimeRotation;
 
 	RandomFloat*	m_RandomLifeTime;
 	RandomVector4*	m_RandomStartColor;

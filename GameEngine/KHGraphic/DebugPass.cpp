@@ -62,32 +62,32 @@ void DebugPass::Create(int width, int height)
 void DebugPass::Start(int width, int height)
 {
 	// Debug Shader..
-	m_DebugVS = g_Shader->GetShader("Debug_VS");
-	m_DebugIconVS = g_Shader->GetShader("Debug_Icon_VS");
-	m_DebugMRTVS = g_Shader->GetShader("Debug_MRT_VS");
-	m_DebugPS = g_Shader->GetShader("Debug_PS_Option0");
-	m_DebugColorPS = g_Shader->GetShader("Debug_PS_Option1");
-	m_DebugIconPS = g_Shader->GetShader("Debug_Icon_PS");
-	m_DebugMRTPS = g_Shader->GetShader("Debug_MRT_PS");
+	m_Debug_VS = g_Shader->GetShader("Debug_VS");
+	m_DebugIcon_VS = g_Shader->GetShader("Debug_Icon_VS");
+	m_DebugMRT_VS = g_Shader->GetShader("Debug_MRT_VS");
+	m_Debug_PS = g_Shader->GetShader("Debug_PS_Option0");
+	m_DebugColor_PS = g_Shader->GetShader("Debug_PS_Option1");
+	m_DebugIcon_PS = g_Shader->GetShader("Debug_Icon_PS");
+	m_DebugMRT_PS = g_Shader->GetShader("Debug_MRT_PS");
 
 	// Debug Buffer..
-	m_RayBuffer = g_Resource->GetDrawBuffer<DB_Line_Ray>();
-	m_FrustumBuffer = g_Resource->GetDrawBuffer<DB_Line_Frustum>();
-	m_QuadBuffer = g_Resource->GetDrawBuffer<DB_Line_Quad>();
-	m_AxisBuffer = g_Resource->GetDrawBuffer<DB_Line_Axis>();
-	m_BoxBuffer = g_Resource->GetDrawBuffer<DB_Line_Box>();
-	m_CircleBuffer = g_Resource->GetDrawBuffer<DB_Line_Circle>();
-	m_CircleSphereBuffer = g_Resource->GetDrawBuffer<DB_Line_CircleSphere>();
-	m_GridBuffer = g_Resource->GetDrawBuffer<DB_Line_Grid>();
-	m_SphereBuffer = g_Resource->GetDrawBuffer<DB_Sphere>();
-	m_IconBuffer = g_Resource->GetDrawBuffer<DB_Quad>();
+	m_Ray_DB = g_Resource->GetDrawBuffer<DB_Line_Ray>();
+	m_Frustum_DB = g_Resource->GetDrawBuffer<DB_Line_Frustum>();
+	m_Quad_DB = g_Resource->GetDrawBuffer<DB_Line_Quad>();
+	m_Axis_DB = g_Resource->GetDrawBuffer<DB_Line_Axis>();
+	m_Box_DB = g_Resource->GetDrawBuffer<DB_Line_Box>();
+	m_Circle_DB = g_Resource->GetDrawBuffer<DB_Line_Circle>();
+	m_CircleSphere_DB = g_Resource->GetDrawBuffer<DB_Line_CircleSphere>();
+	m_Grid_DB = g_Resource->GetDrawBuffer<DB_Line_Grid>();
+	m_Sphere_DB = g_Resource->GetDrawBuffer<DB_Sphere>();
+	m_Icon_DB = g_Resource->GetDrawBuffer<DB_Quad>();
 
 	// Graphic State..
-	m_AlphaBlendBS = g_Resource->GetBlendState<BS_AlphaBlend>()->Get();
+	m_AlphaBlend_BS = g_Resource->GetBlendState<BS_AlphaBlend>()->Get();
 
-	m_SolidRS = g_Resource->GetRasterizerState<RS_Solid>()->Get();
-	m_WireRS = g_Resource->GetRasterizerState<RS_WireFrame>()->Get();
-	m_NoCullRS = g_Resource->GetRasterizerState<RS_NoCull>()->Get();
+	m_Solid_RS = g_Resource->GetRasterizerState<RS_Solid>()->Get();
+	m_Wire_RS = g_Resource->GetRasterizerState<RS_WireFrame>()->Get();
+	m_NoCull_RS = g_Resource->GetRasterizerState<RS_NoCull>()->Get();
 	
 	m_MRT1 = g_Resource->GetViewPort<VP_MRT1>()->Get();
 	m_MRT2 = g_Resource->GetViewPort<VP_MRT2>()->Get();
@@ -99,8 +99,8 @@ void DebugPass::Start(int width, int height)
 	m_MRT8 = g_Resource->GetViewPort<VP_MRT8>()->Get();
 
 	// Graphic View..
-	m_MainRTV = g_Resource->GetMainRenderTarget()->GetRTV()->Get();
-	m_DefaltDSV = g_Resource->GetDepthStencilView<DS_Defalt>()->Get();
+	m_Main_RTV = g_Resource->GetMainRenderTarget()->GetRTV()->Get();
+	m_Defalt_DSV = g_Resource->GetDepthStencilView<DS_Defalt>()->Get();
 
 	// Debug Icon..
 	ShaderResourceView* iconSRV = nullptr;
@@ -117,12 +117,12 @@ void DebugPass::Start(int width, int height)
 	if (iconSRV) m_CamerIcon = iconSRV->Get();
 
 	// Debug RenderTarget 설정..
-	m_AlbedoRT = g_Resource->GetShaderResourceView<RT_Deffered_Albedo>()->Get();
-	m_EmissiveRT = g_Resource->GetShaderResourceView<RT_Deffered_Emissive>()->Get();
-	m_NormalRT = g_Resource->GetShaderResourceView<RT_Deffered_Normal>()->Get();
-	m_PositionRT = g_Resource->GetShaderResourceView<RT_Deffered_Position>()->Get();
-	m_NormalDepthRT = g_Resource->GetShaderResourceView<RT_Deffered_NormalDepth>()->Get();
-	m_BloomRT = g_Resource->GetShaderResourceView<RT_Bloom_Brightx4_2>()->Get();
+	m_Albedo_RT = g_Resource->GetShaderResourceView<RT_Deffered_Albedo>()->Get();
+	m_Emissive_RT = g_Resource->GetShaderResourceView<RT_Deffered_Emissive>()->Get();
+	m_Normal_RT = g_Resource->GetShaderResourceView<RT_Deffered_Normal>()->Get();
+	m_Position_RT = g_Resource->GetShaderResourceView<RT_Deffered_Position>()->Get();
+	m_NormalDepth_RT = g_Resource->GetShaderResourceView<RT_Deffered_NormalDepth>()->Get();
+	m_Bloom_RT = g_Resource->GetShaderResourceView<RT_Bloom_Brightx4_2>()->Get();
 
 	m_ShadowMap = g_Resource->GetShaderResourceView<DS_Shadow>()->Get();
 	m_SSAOMap = g_Resource->GetShaderResourceView<RT_SSAO_Blur>()->Get();
@@ -130,17 +130,17 @@ void DebugPass::Start(int width, int height)
 
 void DebugPass::OnResize(int width, int height)
 {
-	m_MainRTV = g_Resource->GetMainRenderTarget()->GetRTV()->Get();
+	m_Main_RTV = g_Resource->GetMainRenderTarget()->GetRTV()->Get();
 
-	m_DefaltDSV = g_Resource->GetDepthStencilView<DS_Defalt>()->Get();
+	m_Defalt_DSV = g_Resource->GetDepthStencilView<DS_Defalt>()->Get();
 
 	// Debug RenderTarget 설정..
-	m_AlbedoRT = g_Resource->GetShaderResourceView<RT_Deffered_Albedo>()->Get();
-	m_EmissiveRT = g_Resource->GetShaderResourceView<RT_Deffered_Emissive>()->Get();
-	m_NormalRT = g_Resource->GetShaderResourceView<RT_Deffered_Normal>()->Get();
-	m_PositionRT = g_Resource->GetShaderResourceView<RT_Deffered_Position>()->Get();
-	m_NormalDepthRT = g_Resource->GetShaderResourceView<RT_Deffered_NormalDepth>()->Get();
-	m_BloomRT = g_Resource->GetShaderResourceView<RT_Bloom_Brightx4_2>()->Get();
+	m_Albedo_RT = g_Resource->GetShaderResourceView<RT_Deffered_Albedo>()->Get();
+	m_Emissive_RT = g_Resource->GetShaderResourceView<RT_Deffered_Emissive>()->Get();
+	m_Normal_RT = g_Resource->GetShaderResourceView<RT_Deffered_Normal>()->Get();
+	m_Position_RT = g_Resource->GetShaderResourceView<RT_Deffered_Position>()->Get();
+	m_NormalDepth_RT = g_Resource->GetShaderResourceView<RT_Deffered_NormalDepth>()->Get();
+	m_Bloom_RT = g_Resource->GetShaderResourceView<RT_Bloom_Brightx4_2>()->Get();
 
 	m_ShadowMap = g_Resource->GetShaderResourceView<DS_Shadow>()->Get();
 	m_SSAOMap = g_Resource->GetShaderResourceView<RT_SSAO_Blur>()->Get();
@@ -154,8 +154,8 @@ void DebugPass::Release()
 void DebugPass::BeginRender()
 {
 	g_Context->RSSetState(0);
-	g_Context->OMSetBlendState(m_AlphaBlendBS, 0, 0xffffffff);
-	g_Context->OMSetRenderTargets(1, &m_MainRTV, m_DefaltDSV);
+	g_Context->OMSetBlendState(m_AlphaBlend_BS, 0, 0xffffffff);
+	g_Context->OMSetRenderTargets(1, &m_Main_RTV, m_Defalt_DSV);
 }
 
 void DebugPass::RenderUpdate(const RenderData* meshData)
@@ -173,13 +173,13 @@ void DebugPass::RenderUpdate(const RenderData* meshData)
 	// Transform Debug..
 	object.gWorldViewProj = world * viewproj;
 
-	m_DebugVS->ConstantBufferUpdate(&object);
-	m_DebugVS->Update();
+	m_Debug_VS->ConstantBufferUpdate(&object);
+	m_Debug_VS->Update();
 
-	m_DebugPS->Update();
+	m_Debug_PS->Update();
 
 	BufferUpdate(DEBUG_TYPE::DEBUG_AXIS);
-	g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+	g_Context->DrawIndexed(m_Debug_DB->IndexCount, 0, 0);
 
 	switch (meshData->m_ObjectData->ObjType)
 	{
@@ -252,13 +252,13 @@ void DebugPass::RenderUpdate(const RenderData* meshData)
 		/// Bone Circle Sphere Draw..
 		object.gWorldViewProj = Matrix::CreateScale(0.05f) * world * viewproj;
 
-		m_DebugVS->ConstantBufferUpdate(&object);
-		m_DebugVS->Update();
+		m_Debug_VS->ConstantBufferUpdate(&object);
+		m_Debug_VS->Update();
 
-		m_DebugPS->Update();
+		m_Debug_PS->Update();
 
 		BufferUpdate(DEBUG_TYPE::DEBUG_CIRCLE);
-		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+		g_Context->DrawIndexed(m_Debug_DB->IndexCount, 0, 0);
 	}
 	break;
 	case OBJECT_TYPE::CAMERA:
@@ -275,16 +275,16 @@ void DebugPass::RenderUpdate(const RenderData* meshData)
 
 		object.gWorldViewProj = iconWorld * viewproj;
 
-		m_DebugIconVS->ConstantBufferUpdate(&object);
-		m_DebugIconVS->Update();
+		m_DebugIcon_VS->ConstantBufferUpdate(&object);
+		m_DebugIcon_VS->Update();
 
-		m_DebugIconPS->ConstantBufferUpdate(&option);
+		m_DebugIcon_PS->ConstantBufferUpdate(&option);
 
-		m_DebugIconPS->SetShaderResourceView<gDiffuseMap>(m_ParticleIcon);
-		m_DebugIconPS->Update();
+		m_DebugIcon_PS->SetShaderResourceView<gDiffuseMap>(m_ParticleIcon);
+		m_DebugIcon_PS->Update();
 
 		BufferUpdate(DEBUG_TYPE::DEBUG_TEXTURE);
-		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+		g_Context->DrawIndexed(m_Debug_DB->IndexCount, 0, 0);
 
 		/// Particle Quad Draw..
 		ParticleData* particles = meshData->m_ParticleData;
@@ -295,13 +295,13 @@ void DebugPass::RenderUpdate(const RenderData* meshData)
 
 		object.gWorldViewProj = world * viewproj;
 
-		m_DebugVS->ConstantBufferUpdate(&object);
-		m_DebugVS->Update();
+		m_Debug_VS->ConstantBufferUpdate(&object);
+		m_Debug_VS->Update();
 
-		m_DebugPS->Update();
+		m_Debug_PS->Update();
 
 		BufferUpdate(DEBUG_TYPE::DEBUG_BOX);
-		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+		g_Context->DrawIndexed(m_Debug_DB->IndexCount, 0, 0);
 
 		Matrix converseTM = Matrix::Identity;
 		switch (particles->RenderType)
@@ -335,14 +335,14 @@ void DebugPass::RenderUpdate(const RenderData* meshData)
 
 			object.gWorldViewProj = particleWorld * viewproj;
 
-			m_DebugVS->ConstantBufferUpdate(&object);
-			m_DebugVS->Update();
+			m_Debug_VS->ConstantBufferUpdate(&object);
+			m_Debug_VS->Update();
 
 			BufferUpdate(DEBUG_TYPE::DEBUG_AXIS);
-			g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+			g_Context->DrawIndexed(m_Debug_DB->IndexCount, 0, 0);
 
 			BufferUpdate(DEBUG_TYPE::DEBUG_QUAD);
-			g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+			g_Context->DrawIndexed(m_Debug_DB->IndexCount, 0, 0);
 		}
 	}
 	break;
@@ -373,25 +373,25 @@ void DebugPass::GlobalRender()
 	// Global Axis..
 	object.gWorldViewProj = Matrix::CreateScale(1000.0f) * Matrix::CreateTranslation(0.0f, 0.1f, 0.0f) * viewproj;
 
-	m_DebugVS->ConstantBufferUpdate(&object);
-	m_DebugVS->Update();
+	m_Debug_VS->ConstantBufferUpdate(&object);
+	m_Debug_VS->Update();
 
-	m_DebugPS->Update();
+	m_Debug_PS->Update();
 
 	BufferUpdate(DEBUG_TYPE::DEBUG_AXIS);
-	g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+	g_Context->DrawIndexed(m_Debug_DB->IndexCount, 0, 0);
 
 	// Global Grid..
 	object.gWorldViewProj = viewproj;
 
-	m_DebugVS->ConstantBufferUpdate(&object);
-	m_DebugVS->Update();
+	m_Debug_VS->ConstantBufferUpdate(&object);
+	m_Debug_VS->Update();
 
 	BufferUpdate(DEBUG_TYPE::DEBUG_GRID);
-	g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+	g_Context->DrawIndexed(m_Debug_DB->IndexCount, 0, 0);
 
 	// Global Data..
-	g_Context->RSSetState(m_NoCullRS);
+	g_Context->RSSetState(m_NoCull_RS);
 
 	for (CameraData* cam : *cameraList)
 	{
@@ -411,16 +411,16 @@ void DebugPass::GlobalRender()
 
 		object.gWorldViewProj = iconWorld * viewproj;
 
-		m_DebugIconVS->ConstantBufferUpdate(&object);
-		m_DebugIconVS->Update();
+		m_DebugIcon_VS->ConstantBufferUpdate(&object);
+		m_DebugIcon_VS->Update();
 
-		m_DebugIconPS->ConstantBufferUpdate(&option);
+		m_DebugIcon_PS->ConstantBufferUpdate(&option);
 
-		m_DebugIconPS->SetShaderResourceView<gDiffuseMap>(m_CamerIcon);
-		m_DebugIconPS->Update();
+		m_DebugIcon_PS->SetShaderResourceView<gDiffuseMap>(m_CamerIcon);
+		m_DebugIcon_PS->Update();
 
 		BufferUpdate(DEBUG_TYPE::DEBUG_TEXTURE);
-		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+		g_Context->DrawIndexed(m_Debug_DB->IndexCount, 0, 0);
 
 		/// Draw Look Vector Ray..
 		ray.RayStart = CamPos;
@@ -429,17 +429,17 @@ void DebugPass::GlobalRender()
 		object.gWorldViewProj = viewproj;
 		option.gColor = Vector3(1.0f, 0.0f, 0.0f);
 
-		m_DebugVS->ConstantBufferUpdate(&object);
-		m_DebugVS->Update();
+		m_Debug_VS->ConstantBufferUpdate(&object);
+		m_Debug_VS->Update();
 
-		m_DebugColorPS->ConstantBufferUpdate(&option);
-		m_DebugColorPS->Update();
+		m_DebugColor_PS->ConstantBufferUpdate(&option);
+		m_DebugColor_PS->Update();
 
 		// Ray Buffer Update
 		SetRay(ray.RayStart, ray.RayEnd);
 
 		BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
-		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+		g_Context->DrawIndexed(m_Debug_DB->IndexCount, 0, 0);
 
 
 		/// View Frustum 설정..
@@ -478,15 +478,15 @@ void DebugPass::GlobalRender()
 
 		object.gWorldViewProj = Matrix::CreateScale(5.0f) * iconWorld * viewproj;
 
-		m_DebugIconVS->ConstantBufferUpdate(&object);
-		m_DebugIconVS->Update();
+		m_DebugIcon_VS->ConstantBufferUpdate(&object);
+		m_DebugIcon_VS->Update();
 
-		m_DebugIconPS->ConstantBufferUpdate(&option);
-		m_DebugIconPS->SetShaderResourceView<gDiffuseMap>(m_DirectionalLightIcon);
-		m_DebugIconPS->Update();
+		m_DebugIcon_PS->ConstantBufferUpdate(&option);
+		m_DebugIcon_PS->SetShaderResourceView<gDiffuseMap>(m_DirectionalLightIcon);
+		m_DebugIcon_PS->Update();
 
 		BufferUpdate(DEBUG_TYPE::DEBUG_TEXTURE);
-		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+		g_Context->DrawIndexed(m_Debug_DB->IndexCount, 0, 0);
 
 		/// Directional Light Circle Draw..
 		// Light Look 최대 Range가 곧 해당 Position..
@@ -497,15 +497,15 @@ void DebugPass::GlobalRender()
 		object.gWorldViewProj = Matrix::CreateScale(RayOffset) * Matrix::CreateRotationX(offsetAngle) * world * viewproj;
 		option.gColor = Vector3(1.0f, 1.0f, 0.0f);
 
-		m_DebugVS->ConstantBufferUpdate(&object);
-		m_DebugVS->Update();
+		m_Debug_VS->ConstantBufferUpdate(&object);
+		m_Debug_VS->Update();
 
-		m_DebugColorPS->ConstantBufferUpdate(&option);
-		m_DebugColorPS->Update();
+		m_DebugColor_PS->ConstantBufferUpdate(&option);
+		m_DebugColor_PS->Update();
 
 		// Draw Ray..
 		BufferUpdate(DEBUG_TYPE::DEBUG_CIRCLE);
-		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+		g_Context->DrawIndexed(m_Debug_DB->IndexCount, 0, 0);
 
 		// Look Vector 기준 Right, Up Vector 추출..
 		look = light->Direction;
@@ -522,17 +522,17 @@ void DebugPass::GlobalRender()
 		object.gWorldViewProj = viewproj;
 		option.gColor = Vector3(1.0f, 0.0f, 0.0f);
 
-		m_DebugVS->ConstantBufferUpdate(&object);
-		m_DebugVS->Update();
+		m_Debug_VS->ConstantBufferUpdate(&object);
+		m_Debug_VS->Update();
 
-		m_DebugColorPS->ConstantBufferUpdate(&option);
-		m_DebugColorPS->Update();
+		m_DebugColor_PS->ConstantBufferUpdate(&option);
+		m_DebugColor_PS->Update();
 
 		// Ray Buffer Update
 		SetRay(ray.RayStart, ray.RayEnd);
 
 		BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
-		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+		g_Context->DrawIndexed(m_Debug_DB->IndexCount, 0, 0);
 
 		/// Directional Light Direction Ray Up Draw..
 		ray.RayStart = LightPos - up * RayOffset;
@@ -540,14 +540,14 @@ void DebugPass::GlobalRender()
 		
 		option.gColor = Vector3(1.0f, 1.0f, 0.0f);
 
-		m_DebugColorPS->ConstantBufferUpdate(&option);
-		m_DebugColorPS->Update();
+		m_DebugColor_PS->ConstantBufferUpdate(&option);
+		m_DebugColor_PS->Update();
 
 		// Ray Buffer Update
 		SetRay(ray.RayStart, ray.RayEnd);
 
 		BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
-		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+		g_Context->DrawIndexed(m_Debug_DB->IndexCount, 0, 0);
 
 		// Light Direction Ray Down..
 		ray.RayStart = LightPos + up * RayOffset;
@@ -557,7 +557,7 @@ void DebugPass::GlobalRender()
 		SetRay(ray.RayStart, ray.RayEnd);
 
 		BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
-		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+		g_Context->DrawIndexed(m_Debug_DB->IndexCount, 0, 0);
 
 		/// Directional Light Direction Ray Left Draw..
 		ray.RayStart = LightPos - right * RayOffset;
@@ -567,7 +567,7 @@ void DebugPass::GlobalRender()
 		SetRay(ray.RayStart, ray.RayEnd);
 
 		BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
-		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+		g_Context->DrawIndexed(m_Debug_DB->IndexCount, 0, 0);
 
 		/// Directional Light Direction Ray Right Draw..
 		ray.RayStart = LightPos + right * RayOffset;
@@ -577,7 +577,7 @@ void DebugPass::GlobalRender()
 		SetRay(ray.RayStart, ray.RayEnd);
 
 		BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
-		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+		g_Context->DrawIndexed(m_Debug_DB->IndexCount, 0, 0);
 	}
 	for (PointLightData* light : *pointList)
 	{
@@ -591,15 +591,15 @@ void DebugPass::GlobalRender()
 
 		object.gWorldViewProj = iconWorld * viewproj;
 
-		m_DebugIconVS->ConstantBufferUpdate(&object);
-		m_DebugIconVS->Update();
+		m_DebugIcon_VS->ConstantBufferUpdate(&object);
+		m_DebugIcon_VS->Update();
 
-		m_DebugIconPS->ConstantBufferUpdate(&option);
-		m_DebugIconPS->SetShaderResourceView<gDiffuseMap>(m_PointLightIcon);
-		m_DebugIconPS->Update();
+		m_DebugIcon_PS->ConstantBufferUpdate(&option);
+		m_DebugIcon_PS->SetShaderResourceView<gDiffuseMap>(m_PointLightIcon);
+		m_DebugIcon_PS->Update();
 
 		BufferUpdate(DEBUG_TYPE::DEBUG_TEXTURE);
-		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+		g_Context->DrawIndexed(m_Debug_DB->IndexCount, 0, 0);
 
 		// Light Range Sphere..
 		Matrix lightWorld = Matrix::CreateScale(light->Range) * Matrix::CreateTranslation(light->Position);
@@ -607,14 +607,14 @@ void DebugPass::GlobalRender()
 		object.gWorldViewProj = lightWorld * viewproj;
 		option.gColor = Vector3(1.0f, 1.0f, 0.0f);
 
-		m_DebugVS->ConstantBufferUpdate(&object);
-		m_DebugVS->Update();
+		m_Debug_VS->ConstantBufferUpdate(&object);
+		m_Debug_VS->Update();
 
-		m_DebugColorPS->ConstantBufferUpdate(&option);
-		m_DebugColorPS->Update();
+		m_DebugColor_PS->ConstantBufferUpdate(&option);
+		m_DebugColor_PS->Update();
 
 		BufferUpdate(DEBUG_TYPE::DEBUG_CIRCLESPHERE);
-		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+		g_Context->DrawIndexed(m_Debug_DB->IndexCount, 0, 0);
 
 		/// Light Range X Ray..
 		ray.RayStart = light->Position + Vector3(light->Range, 0.0f, 0.0f);
@@ -624,17 +624,17 @@ void DebugPass::GlobalRender()
 		option.gColor = ray.Color;
 		object.gWorldViewProj = viewproj;
 
-		m_DebugVS->ConstantBufferUpdate(&object);
-		m_DebugVS->Update();
+		m_Debug_VS->ConstantBufferUpdate(&object);
+		m_Debug_VS->Update();
 
-		m_DebugColorPS->ConstantBufferUpdate(&option);
-		m_DebugColorPS->Update();
+		m_DebugColor_PS->ConstantBufferUpdate(&option);
+		m_DebugColor_PS->Update();
 
 		// Ray Buffer Update
 		SetRay(ray.RayStart, ray.RayEnd);
 
 		BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
-		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+		g_Context->DrawIndexed(m_Debug_DB->IndexCount, 0, 0);
 
 		/// Light Range Y Ray..
 		ray.RayStart = light->Position + Vector3(0.0f, light->Range, 0.0f);
@@ -644,7 +644,7 @@ void DebugPass::GlobalRender()
 		SetRay(ray.RayStart, ray.RayEnd);
 
 		BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
-		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+		g_Context->DrawIndexed(m_Debug_DB->IndexCount, 0, 0);
 
 		/// Light Range Z Ray..
 		ray.RayStart = light->Position + Vector3(0.0f, 0.0f, light->Range);
@@ -654,7 +654,7 @@ void DebugPass::GlobalRender()
 		SetRay(ray.RayStart, ray.RayEnd);
 
 		BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
-		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+		g_Context->DrawIndexed(m_Debug_DB->IndexCount, 0, 0);
 
 	}
 	for (SpotLightData* light : *spotList)
@@ -669,15 +669,15 @@ void DebugPass::GlobalRender()
 
 		object.gWorldViewProj = iconWorld * viewproj;
 
-		m_DebugIconVS->ConstantBufferUpdate(&object);
-		m_DebugIconVS->Update();
+		m_DebugIcon_VS->ConstantBufferUpdate(&object);
+		m_DebugIcon_VS->Update();
 
-		m_DebugIconPS->ConstantBufferUpdate(&option);
-		m_DebugIconPS->SetShaderResourceView<gDiffuseMap>(m_SpotLightIcon);
-		m_DebugIconPS->Update();
+		m_DebugIcon_PS->ConstantBufferUpdate(&option);
+		m_DebugIcon_PS->SetShaderResourceView<gDiffuseMap>(m_SpotLightIcon);
+		m_DebugIcon_PS->Update();
 
 		BufferUpdate(DEBUG_TYPE::DEBUG_TEXTURE);
-		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+		g_Context->DrawIndexed(m_Debug_DB->IndexCount, 0, 0);
 
 		// Light Direction Ray..
 		ray.RayStart = light->Position;
@@ -690,14 +690,14 @@ void DebugPass::GlobalRender()
 		option.gColor = ray.Color;
 		object.gWorldViewProj = viewproj;
 		
-		m_DebugVS->ConstantBufferUpdate(&object);
-		m_DebugVS->Update();
+		m_Debug_VS->ConstantBufferUpdate(&object);
+		m_Debug_VS->Update();
 		
-		m_DebugColorPS->ConstantBufferUpdate(&option);
-		m_DebugColorPS->Update();
+		m_DebugColor_PS->ConstantBufferUpdate(&option);
+		m_DebugColor_PS->Update();
 		
 		BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
-		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+		g_Context->DrawIndexed(m_Debug_DB->IndexCount, 0, 0);
 
 		// Look Vector 기준 Right, Up Vector 추출..
 		right = light->Direction.Cross(Vector3(0.0f, 1.0f, 0.0f));
@@ -711,11 +711,11 @@ void DebugPass::GlobalRender()
 		option.gColor = ray.Color;
 		object.gWorldViewProj = viewproj;
 
-		m_DebugVS->ConstantBufferUpdate(&object);
-		m_DebugVS->Update();
+		m_Debug_VS->ConstantBufferUpdate(&object);
+		m_Debug_VS->Update();
 
-		m_DebugColorPS->ConstantBufferUpdate(&option);
-		m_DebugColorPS->Update();
+		m_DebugColor_PS->ConstantBufferUpdate(&option);
+		m_DebugColor_PS->Update();
 
 		// Look Vector를 Right Vector 기준 Angle로 이동..
 		axis = XMQuaternionRotationAxis(right, light->Angle * 2.0f);
@@ -727,7 +727,7 @@ void DebugPass::GlobalRender()
 
 		// Draw Ray..
 		BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
-		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+		g_Context->DrawIndexed(m_Debug_DB->IndexCount, 0, 0);
 
 		// Look Vector를 Right Vector 기준 -Angle로 이동..
 		axis = XMQuaternionRotationAxis(right, -light->Angle * 2.0f);
@@ -740,7 +740,7 @@ void DebugPass::GlobalRender()
 
 		// Draw Ray..
 		BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
-		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+		g_Context->DrawIndexed(m_Debug_DB->IndexCount, 0, 0);
 
 		// Look Vector를 Up Vector 기준 Angle로 이동..
 		axis = XMQuaternionRotationAxis(up, light->Angle * 2.0f);
@@ -753,7 +753,7 @@ void DebugPass::GlobalRender()
 		
 		// Draw Ray..
 		BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
-		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+		g_Context->DrawIndexed(m_Debug_DB->IndexCount, 0, 0);
 		
 		// Look Vector를 Up Vector 기준 -Angle로 이동..
 		axis = XMQuaternionRotationAxis(up, -light->Angle * 2.0f);
@@ -766,7 +766,7 @@ void DebugPass::GlobalRender()
 		
 		// Draw Ray..
 		BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
-		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+		g_Context->DrawIndexed(m_Debug_DB->IndexCount, 0, 0);
 
 		/// Spot Light Range Circle Draw..
 		// Light Look 최대 Range가 곧 해당 Position..
@@ -783,12 +783,12 @@ void DebugPass::GlobalRender()
 
 		object.gWorldViewProj = scale * Matrix::CreateRotationX(offsetAngle) * world * viewproj;
 
-		m_DebugVS->ConstantBufferUpdate(&object);
-		m_DebugVS->Update();
+		m_Debug_VS->ConstantBufferUpdate(&object);
+		m_Debug_VS->Update();
 
 		// Draw Ray..
 		BufferUpdate(DEBUG_TYPE::DEBUG_CIRCLE);
-		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+		g_Context->DrawIndexed(m_Debug_DB->IndexCount, 0, 0);
 	}
 
 	// Debug Data Draw..
@@ -842,14 +842,14 @@ void DebugPass::GlobalRender()
 			break;
 		}
 
-		m_DebugColorPS->ConstantBufferUpdate(&option);
-		m_DebugColorPS->Update(); 
+		m_DebugColor_PS->ConstantBufferUpdate(&option);
+		m_DebugColor_PS->Update(); 
 		
-		m_DebugVS->ConstantBufferUpdate(&object);
-		m_DebugVS->Update();
+		m_Debug_VS->ConstantBufferUpdate(&object);
+		m_Debug_VS->Update();
 
 		BufferUpdate(debugType);
-		g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+		g_Context->DrawIndexed(m_Debug_DB->IndexCount, 0, 0);
 
 		debugList->pop();
 	}
@@ -864,82 +864,82 @@ void DebugPass::MRTRender()
 	/// MRT 1 (Albedo RT)
 	g_Context->RSSetViewports(1, m_MRT1);
 
-	m_DebugMRTVS->Update();
+	m_DebugMRT_VS->Update();
 
-	m_DebugMRTPS->SetShaderResourceView<gDiffuseMap>(m_AlbedoRT);
-	m_DebugMRTPS->Update();
+	m_DebugMRT_PS->SetShaderResourceView<gDiffuseMap>(m_Albedo_RT);
+	m_DebugMRT_PS->Update();
 
-	g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+	g_Context->DrawIndexed(m_Debug_DB->IndexCount, 0, 0);
 
 	/// MRT 2 (Emissive RT)
 	g_Context->RSSetViewports(1, m_MRT2);
 
-	m_DebugMRTVS->Update();
+	m_DebugMRT_VS->Update();
 
-	m_DebugMRTPS->SetShaderResourceView<gDiffuseMap>(m_EmissiveRT);
-	m_DebugMRTPS->Update();
+	m_DebugMRT_PS->SetShaderResourceView<gDiffuseMap>(m_Emissive_RT);
+	m_DebugMRT_PS->Update();
 
-	g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+	g_Context->DrawIndexed(m_Debug_DB->IndexCount, 0, 0);
 
 	/// MRT 3 (Normal RT)
 	g_Context->RSSetViewports(1, m_MRT3);
 
-	m_DebugMRTVS->Update();
+	m_DebugMRT_VS->Update();
 
-	m_DebugMRTPS->SetShaderResourceView<gDiffuseMap>(m_NormalRT);
-	m_DebugMRTPS->Update();
+	m_DebugMRT_PS->SetShaderResourceView<gDiffuseMap>(m_Normal_RT);
+	m_DebugMRT_PS->Update();
 
-	g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+	g_Context->DrawIndexed(m_Debug_DB->IndexCount, 0, 0);
 
 	/// MRT 4 (Position RT)
 	g_Context->RSSetViewports(1, m_MRT4);
 
-	m_DebugMRTVS->Update();
+	m_DebugMRT_VS->Update();
 
-	m_DebugMRTPS->SetShaderResourceView<gDiffuseMap>(m_PositionRT);
-	m_DebugMRTPS->Update();
+	m_DebugMRT_PS->SetShaderResourceView<gDiffuseMap>(m_Position_RT);
+	m_DebugMRT_PS->Update();
 
-	g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+	g_Context->DrawIndexed(m_Debug_DB->IndexCount, 0, 0);
 
 	/// MRT 5 (NormalDepth Map)
 	g_Context->RSSetViewports(1, m_MRT5);
 
-	m_DebugMRTVS->Update();
+	m_DebugMRT_VS->Update();
 
-	m_DebugMRTPS->SetShaderResourceView<gDiffuseMap>(m_NormalDepthRT);
-	m_DebugMRTPS->Update();
+	m_DebugMRT_PS->SetShaderResourceView<gDiffuseMap>(m_NormalDepth_RT);
+	m_DebugMRT_PS->Update();
 
-	g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+	g_Context->DrawIndexed(m_Debug_DB->IndexCount, 0, 0);
 
 	/// MRT 6 (Bloom Map)
 	g_Context->RSSetViewports(1, m_MRT6);
 	
-	m_DebugMRTVS->Update();
+	m_DebugMRT_VS->Update();
 	
-	m_DebugMRTPS->SetShaderResourceView<gDiffuseMap>(m_BloomRT);
-	m_DebugMRTPS->Update();
+	m_DebugMRT_PS->SetShaderResourceView<gDiffuseMap>(m_Bloom_RT);
+	m_DebugMRT_PS->Update();
 	
-	g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+	g_Context->DrawIndexed(m_Debug_DB->IndexCount, 0, 0);
 
 	/// MRT 7 (SSAO Map)
 	g_Context->RSSetViewports(1, m_MRT7);
 
-	m_DebugMRTVS->Update();
+	m_DebugMRT_VS->Update();
 
-	m_DebugMRTPS->SetShaderResourceView<gDiffuseMap>(m_SSAOMap);
-	m_DebugMRTPS->Update();
+	m_DebugMRT_PS->SetShaderResourceView<gDiffuseMap>(m_SSAOMap);
+	m_DebugMRT_PS->Update();
 
-	g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+	g_Context->DrawIndexed(m_Debug_DB->IndexCount, 0, 0);
 
 	/// MRT 8 (Shadow Map)
 	g_Context->RSSetViewports(1, m_MRT8);
 	
-	m_DebugMRTVS->Update();
+	m_DebugMRT_VS->Update();
 	
-	m_DebugMRTPS->SetShaderResourceView<gDiffuseMap>(m_ShadowMap);
-	m_DebugMRTPS->Update();
+	m_DebugMRT_PS->SetShaderResourceView<gDiffuseMap>(m_ShadowMap);
+	m_DebugMRT_PS->Update();
 	
-	g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+	g_Context->DrawIndexed(m_Debug_DB->IndexCount, 0, 0);
 }
 
 void DebugPass::BufferUpdate(DEBUG_TYPE type)
@@ -947,51 +947,51 @@ void DebugPass::BufferUpdate(DEBUG_TYPE type)
 	switch (type)
 	{
 	case DEBUG_AXIS:
-		m_DebugBuffer = m_AxisBuffer;
+		m_Debug_DB = m_Axis_DB;
 		g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
 		break;
 	case DEBUG_BOX:
-		m_DebugBuffer = m_BoxBuffer;
+		m_Debug_DB = m_Box_DB;
 		g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
 		break;
 	case DEBUG_CIRCLE:
-		m_DebugBuffer = m_CircleBuffer;
+		m_Debug_DB = m_Circle_DB;
 		g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
 		break;
 	case DEBUG_CIRCLESPHERE:
-		m_DebugBuffer = m_CircleSphereBuffer;
+		m_Debug_DB = m_CircleSphere_DB;
 		g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
 		break;
 	case DEBUG_GRID:
-		m_DebugBuffer = m_GridBuffer;
+		m_Debug_DB = m_Grid_DB;
 		g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
 		break;
 	case DEBUG_QUAD:
-		m_DebugBuffer = m_QuadBuffer;
+		m_Debug_DB = m_Quad_DB;
 		g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
 		break;
 	case DEBUG_RAY:
-		m_DebugBuffer = m_RayBuffer;
+		m_Debug_DB = m_Ray_DB;
 		g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
 		break;
 	case DEBUG_FRUSTUM:
-		m_DebugBuffer = m_FrustumBuffer;
+		m_Debug_DB = m_Frustum_DB;
 		g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
 		break;
 	case DEBUG_SPHERE:
-		m_DebugBuffer = m_SphereBuffer;
+		m_Debug_DB = m_Sphere_DB;
 		g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 		break;
 	case DEBUG_TEXTURE:
-		m_DebugBuffer = m_IconBuffer;
+		m_Debug_DB = m_Icon_DB;
 		g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 		break;
 	default:
 		break;
 	}
 
-	g_Context->IASetVertexBuffers(0, 1, m_DebugBuffer->VertexBuf->GetAddress(), &m_DebugBuffer->Stride, &m_DebugBuffer->Offset);
-	g_Context->IASetIndexBuffer(m_DebugBuffer->IndexBuf->Get(), DXGI_FORMAT_R32_UINT, 0);
+	g_Context->IASetVertexBuffers(0, 1, m_Debug_DB->VertexBuf->GetAddress(), &m_Debug_DB->Stride, &m_Debug_DB->Offset);
+	g_Context->IASetIndexBuffer(m_Debug_DB->IndexBuf->Get(), DXGI_FORMAT_R32_UINT, 0);
 }
 
 void DebugPass::SetRay(const Vector3& start, const Vector3& end)
@@ -1000,7 +1000,7 @@ void DebugPass::SetRay(const Vector3& start, const Vector3& end)
 	vertices[0].Pos = start;
 	vertices[1].Pos = end;
 
-	ID3D11Buffer* buffer = m_RayBuffer->VertexBuf->Get();
+	ID3D11Buffer* buffer = m_Ray_DB->VertexBuf->Get();
 
 	// Mapping SubResource Data..
 	D3D11_MAPPED_SUBRESOURCE mappedResource;
@@ -1029,7 +1029,7 @@ void DebugPass::SetFrustum(const Vector3* corner)
 	vertices[6].Pos = corner[6];
 	vertices[7].Pos = corner[7];
 
-	ID3D11Buffer* buffer = m_FrustumBuffer->VertexBuf->Get();
+	ID3D11Buffer* buffer = m_Frustum_DB->VertexBuf->Get();
 
 	// Mapping SubResource Data..
 	D3D11_MAPPED_SUBRESOURCE mappedResource;

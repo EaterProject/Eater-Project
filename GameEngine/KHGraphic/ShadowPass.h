@@ -21,36 +21,32 @@ public:
 	void RenderUpdate(const InstanceRenderBuffer* instance, const std::vector<RenderData*>& meshlist);
 	void RenderUpdate(const InstanceRenderBuffer* instance, const RenderData* meshData);
 
-	void BakeShadowMap();
-	void CopyShadowMap();
-	void SetShadowMap(ID3D11ShaderResourceView* shadowMap);
 private:
-	VertexShader* m_MeshShadowVS;
-	VertexShader* m_MeshInstShadowVS;
-	VertexShader* m_SkinShadowVS;
-	VertexShader* m_SkinInstShadowVS;
+	VertexShader* m_MeshShadow_VS;
+	VertexShader* m_MeshInstShadow_VS;
+	VertexShader* m_SkinShadow_VS;
+	VertexShader* m_SkinInstShadow_VS;
 
-	PixelShader* m_ShadowBaking_PS;
-
-	VertexShader* m_Screen_VS;
-	PixelShader* m_Copy_PS;
-
-	DrawBuffer* m_Screen_DB;
-
-	DepthStencil* m_ShadowDS;
+	DepthStencil* m_Shadow_DS;
 
 	InstanceBuffer* m_Mesh_IB;
-	
+	InstanceBuffer* m_SkinMesh_IB;
+
+private:
+	ID3D11DepthStencilView* m_Shadow_DSV;
+	ID3D11RasterizerState* m_Depth_RS;
+	D3D11_VIEWPORT* m_Shadow_VP;
+
+private:
+	RenderData* m_RenderData;
+
 	VertexInput::MeshDepthInstance m_MeshData;
 	std::vector<VertexInput::MeshDepthInstance>	m_MeshInstance;
 
+	VertexInput::SkinMeshDepthInstance m_SkinMeshData;
+	std::vector<VertexInput::SkinMeshDepthInstance>	m_SkinMeshInstance;
+
+	UINT m_RenderCount = 0;
 	UINT m_InstanceCount = 0;
-	size_t m_InstanceStride = 0;
-
-	ID3D11ShaderResourceView* m_ShadowMap;
-
-	ID3D11DepthStencilView* m_ShadowDSV;
-	ID3D11RasterizerState* m_DepthRS;
-	D3D11_VIEWPORT* m_ShadowVP;
 };
 

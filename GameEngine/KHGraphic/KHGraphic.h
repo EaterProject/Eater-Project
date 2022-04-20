@@ -20,7 +20,6 @@ public:
 	void SetGlobalData(GlobalData* globalData) override;
 
 public:
-	void SetShadowMap(TextureBuffer* resource) override;
 	void SetEnvironmentMap(EnvironmentBuffer* resource) override;
 
 public:
@@ -48,7 +47,6 @@ public:
 	void CreateAnimationBuffer(ModelData* model, ModelAnimationData* animation, AnimationBuffer** ppResource) override;
 
 public:
-	void BakeShadowMap(std::string path) override;
 	void BakeEnvironmentMap(TextureBuffer* environment, EnvironmentBuffer** ppResource) override;
 
 private:
