@@ -44,6 +44,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+    <EnableUnitySupport>false</EnableUnitySupport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -51,6 +52,7 @@
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
+    <EnableUnitySupport>false</EnableUnitySupport>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -170,6 +172,8 @@ copy /Y "$(TargetDir)*.lib" "$(SolutionDir)Library\lib"
       <AdditionalIncludeDirectories>$(SolutionDir)Library\inc;$(ProjectDir)Network\inc;$(ProjectDir)Export;$(ProjectDir)Network\inc\flatbuffers;$(SolutionDir)Library\inc\Graphic;$(SolutionDir)Library\inc\Parser;$(SolutionDir)Library\inc\PhysX;$(SolutionDir)Library\inc\YAML;$(SolutionDir)Library\inc\EATER</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <MaxFilesInUnityFile>5</MaxFilesInUnityFile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -203,6 +207,8 @@ copy /Y "$(ProjectDir)Network\lib\Debug\*lib"  "$(TargetDir)"</Command>
       <AdditionalIncludeDirectories>$(SolutionDir)Library\inc;$(ProjectDir)Export;$(ProjectDir)Network\inc\flatbuffers;$(SolutionDir)Library\inc\Graphic;$(SolutionDir)Library\inc\Parser;$(SolutionDir)Library\inc\PhysX;$(SolutionDir)Library\inc\YAML;$(ProjectDir)Network\inc;$(SolutionDir)Library\inc\EATER</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <MaxFilesInUnityFile>5</MaxFilesInUnityFile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

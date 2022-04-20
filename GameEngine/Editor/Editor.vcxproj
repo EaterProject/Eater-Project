@@ -119,6 +119,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)Library\inc\Component;$(SolutionDir)Library\inc;$(SolutionDir)Library\inc\EATER;$(SolutionDir)Library\inc\Parser;$(SolutionDir)Library\inc\Graphic;$(SolutionDir)Library\inc\YAML;$(SolutionDir)Library\inc\PhysX;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -178,6 +179,7 @@ copy /Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)" </Command>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(SolutionDir)Library\inc\Component;$(SolutionDir)Library\inc\Graphic;$(SolutionDir)Library\inc\PhysX;$(SolutionDir)Library\inc\EATER;$(SolutionDir)Library\inc\YAML;$(SolutionDir)Library\inc\Parser;$(SolutionDir)Library\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
