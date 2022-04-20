@@ -68,6 +68,7 @@ public:
 	CEdit LifeColor_max_B;
 	CEdit LifeColor_max_A;
 	CComboBox LifeColor_Combo;
+
 	afx_msg void OnStartColor_Button();
 	afx_msg void OnShapeRadius_Button();
 	afx_msg void OnStartForce_Button();
