@@ -147,7 +147,7 @@ copy /Y "$(ProjectDir)GraphicDLL.h" "$(SolutionDir)Library\inc"</Command>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
-      <MaxFilesInUnityFile>5</MaxFilesInUnityFile>
+      <MaxFilesInUnityFile>10</MaxFilesInUnityFile>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -173,7 +173,7 @@ copy/Y "$(ProjectDir)Export\*.h"   "$(SolutionDir)Library\inc\Graphic"</Command>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalIncludeDirectories>$(ProjectDir)Export;$(SolutionDir)Library\inc;$(SolutionDir)Library\inc\Parser</AdditionalIncludeDirectories>
-      <MaxFilesInUnityFile>5</MaxFilesInUnityFile>
+      <MaxFilesInUnityFile>10</MaxFilesInUnityFile>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>

@@ -15,13 +15,18 @@ class RandomVector3;
 class RandomVector4;
 
 template<typename T>
-struct RandomRange
+struct Range
 {
 	void SetRange(T range)		{ m_Min = range; m_Max = range; }
 	void SetRange(T min, T max) { m_Min = min; m_Max = max; }
+	void SetSize(T size)		{ m_Width = size; m_Height = size; }
+	void SetSize(T x, T y)		{ m_Width = x; m_Height = y; }
 
 	T m_Min;
 	T m_Max;
+
+	T m_Width;
+	T m_Height;
 };
 
 class ParticleSystem : public Component
@@ -82,18 +87,21 @@ public:
 	EATER_ENGINEDLL int GetMaxParticles();
 	EATER_ENGINEDLL float GetDelayTime();
 	EATER_ENGINEDLL float GetRateOverTime();
+	EATER_ENGINEDLL float GetPlayTime();
+	EATER_ENGINEDLL bool GetLoop();
 	EATER_ENGINEDLL Vector3 GetShapeRadius();
-	EATER_ENGINEDLL RandomRange<Vector3> GetStartForce();
-	EATER_ENGINEDLL RandomRange<Vector4> GetStartColor();
-	EATER_ENGINEDLL RandomRange<float> GetStartLifeTime();
-	EATER_ENGINEDLL RandomRange<float> GetStartScale();
-	EATER_ENGINEDLL RandomRange<float> GetStartRotation();
-	EATER_ENGINEDLL RandomRange<Vector3> GetLifeTimeForce();
-	EATER_ENGINEDLL RandomRange<Vector4> GetLifeTimeColor();
-	EATER_ENGINEDLL RandomRange<float> GetLifeTimeScale();
-	EATER_ENGINEDLL RandomRange<float> GetLifeTimeRotation();
+	EATER_ENGINEDLL Range<Vector3> GetStartForce();
+	EATER_ENGINEDLL Range<Vector4> GetStartColor();
+	EATER_ENGINEDLL Range<float> GetStartLifeTime();
+	EATER_ENGINEDLL Range<float> GetStartScale();
+	EATER_ENGINEDLL Range<float> GetStartRotation();
+	EATER_ENGINEDLL Range<Vector3> GetLifeTimeForce();
+	EATER_ENGINEDLL Range<Vector4> GetLifeTimeColor();
+	EATER_ENGINEDLL Range<float> GetLifeTimeScale();
+	EATER_ENGINEDLL Range<float> GetLifeTimeRotation();
 	EATER_ENGINEDLL PARTICLE_LIFETIME_OPTION GetLifeTimeColorOption();
 	EATER_ENGINEDLL PARTICLE_LIFETIME_OPTION GetLifeTimeScaleOption();
+	EATER_ENGINEDLL Range<int> GetTextureTiling();
 
 public:
 	void Release();
@@ -132,16 +140,17 @@ private:
 	float m_RateOverTime;		// 초당 출력할 파티클 개수
 	float m_RateOverTimeCount;	// 초당 출력할 파티클 개수
 
-	RandomRange<Vector3>	m_StartForce;
-	RandomRange<Vector4>	m_StartColor;
-	RandomRange<float>		m_StartLifeTime;
-	RandomRange<float>		m_StartScale;
-	RandomRange<float>		m_StartRotation;
+	Range<Vector3>	m_StartForce;
+	Range<Vector4>	m_StartColor;
+	Range<float>	m_StartLifeTime;
+	Range<float>	m_StartScale;
+	Range<float>	m_StartRotation;
 
-	RandomRange<Vector3>	m_LifeTimeForce;
-	RandomRange<Vector4>	m_LifeTimeColor;
-	RandomRange<float>		m_LifeTimeScale;
-	RandomRange<float>		m_LifeTimeRotation;
+	Range<Vector3>	m_LifeTimeForce;
+	Range<Vector4>	m_LifeTimeColor;
+	Range<float>	m_LifeTimeScale;
+	Range<float>	m_LifeTimeRotation;
+	Range<int>		m_Tiling;
 
 	RandomFloat*	m_RandomLifeTime;
 	RandomVector4*	m_RandomStartColor;
