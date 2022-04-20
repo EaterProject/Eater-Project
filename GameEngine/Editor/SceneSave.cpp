@@ -154,7 +154,12 @@ void SceneSave::SaveLight(Light* mLight)
 
 void SceneSave::SaveParticle(ParticleSystem* mParticleSystem)
 {
-	mParticleSystem;
+	EATER_SET_LIST_START("Particle", 1, 12);
+	 mParticleSystem->GetRenderType();
+	 mParticleSystem->GetMaxParticles();
+	 mParticleSystem->GetDelayTime();
+	 mParticleSystem->GetShapeRadius();
+	 mParticleSystem;
 
 
 

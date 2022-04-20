@@ -30,6 +30,7 @@
 #include "Collider.h"
 #include "Rigidbody.h"
 #include "CamAnimation.h"
+#include "GrobalFunction.h"
 
 // RightOption 대화 상자
 
@@ -310,75 +311,15 @@ void RightOption::ChickHirearchyDarg(CPoint point)
 	}
 }
 
-GameObject* RightOption::FindGameObjectParent(HTREEITEM mItem)
+void RightOption::ChickObjectTap(GameObject* Obj)
 {
-	//클릭한 아이템이 부모가 있는 아이템이라면 Demo씬에서 부모안에 오브젝트를 찾아 반환
-	HTREEITEM Parent	= mItem;
-	CString	 MeshName	= HirearchyTree.GetItemText(mItem);
-	CString ParentName;
-	GameObject* Object = nullptr;
-	while (true)
-	{
-		if (Parent == NULL)
-		{
-			break;
-		}
-		else
-		{
-			ParentName = HirearchyTree.GetItemText(Parent);
-			Parent = HirearchyTree.GetParentItem(Parent);
-		}
-	}
-
-	if (ParentName == MeshName)
-	{
-		Object = EditorToolScene::FindMesh(ChangeToString(MeshName));
-	}
-	else
-	{
-		Object = EditorToolScene::FindMesh(ChangeToString(MeshName), ChangeToString(ParentName));
-	}
-
-
-	return Object;
-}
-
-void RightOption::OnChoice_Hirearchy_Item(NMHDR* pNMHDR, LRESULT* pResult)
-{
-	mTransform->ShowWindow(SW_HIDE);
-	mMeshFilter->ShowWindow(SW_HIDE);
-	mLight->ShowWindow(SW_HIDE);
-	mPrticle->ShowWindow(SW_HIDE);
-	mCollider->ShowWindow(SW_HIDE);
-	mRigidbody->ShowWindow(SW_HIDE);
-
-	//선택한 아이템의 이름을 가져온다
-	HTREEITEM ChoiceItem = HirearchyTree.GetSelectedItem();
-
-	CString Name = HirearchyTree.GetItemText(ChoiceItem);
-	std::string MeshName = ChangeToString(Name);
-
-	//에디터의 매쉬 이름을 출력
-	ChoiceHirearchyName = MeshName.substr(0, MeshName.rfind('.'));
-	Name = ChoiceHirearchyName.c_str();
-	HirearchyEdit.SetWindowTextW(Name);
-
-
-	Component_TapList.DeleteAllItems();
-	ChoiceObject = FindGameObjectParent(ChoiceItem);
-	Delete_Hirearchy_Item(ChoiceItem);
-	Create_Hirearchy_Item(ChoiceObject, ChoiceItem);
-	Tag_Combo.SetCurSel(ChoiceObject->GetTag());
-
-	mFileOption->SetChoiceGameObjectName(MeshName, ChoiceObject);
-
-	Transform*			 TR	= ChoiceObject->GetTransform();
-	AnimationController* AC	= ChoiceObject->GetComponent<AnimationController>();
-	MeshFilter*			 MF = ChoiceObject->GetComponent<MeshFilter>();
-	ParticleSystem*		 PS = ChoiceObject->GetComponent<ParticleSystem>();
-	Light*				 LT	= ChoiceObject->GetComponent<Light>();
-	Rigidbody*			 RI = ChoiceObject->GetComponent<Rigidbody>();
-	Collider*			 CL = ChoiceObject->GetComponent<Collider>();
+	Transform*				TR = Obj->GetTransform();
+	AnimationController*	AC = Obj->GetComponent<AnimationController>();
+	MeshFilter*				MF = Obj->GetComponent<MeshFilter>();
+	ParticleSystem*			PS = Obj->GetComponent<ParticleSystem>();
+	Light*					LT = Obj->GetComponent<Light>();
+	Rigidbody*				RI = Obj->GetComponent<Rigidbody>();
+	Collider*				CL = Obj->GetComponent<Collider>();
 
 	int FrontCount = 0;
 	if (TR != nullptr)
@@ -437,6 +378,97 @@ void RightOption::OnChoice_Hirearchy_Item(NMHDR* pNMHDR, LRESULT* pResult)
 	}
 
 	Component_TapList.SetCurSel(0);
+}
+
+void RightOption::OnChoice_Hirearchy_Item(GameObject* Obj)
+{
+	//에디터의 매쉬 이름을 출력
+	CString Name = ChangeToCString(Obj->Name);
+	HirearchyEdit.SetWindowTextW(Name);
+
+	//컨퍼넌트를 초기화
+	Component_TapList.DeleteAllItems();
+
+	//만약자식오브젝트를 눌렀다면 맨위 최상위부모를 가져온다
+	//ChoiceObject = FindGameObjectParent(ChoiceItem);
+
+	//Delete_Hirearchy_Item(ChoiceItem);
+	//Create_Hirearchy_Item(ChoiceObject, ChoiceItem);
+	//Tag_Combo.SetCurSel(ChoiceObject->GetTag());
+
+	//mFileOption->SetChoiceGameObjectName(MeshName, ChoiceObject);
+
+	//오브젝트에 해당하는 컨포넌트 Tap을 보여준다
+	ChickObjectTap(Obj);
+}
+
+GameObject* RightOption::FindGameObjectParent(HTREEITEM mItem)
+{
+	//클릭한 아이템이 부모가 있는 아이템이라면 Demo씬에서 부모안에 오브젝트를 찾아 반환
+	HTREEITEM Parent	= mItem;
+	CString	 MeshName	= HirearchyTree.GetItemText(mItem);
+	CString ParentName;
+	GameObject* Object = nullptr;
+	while (true)
+	{
+		if (Parent == NULL)
+		{
+			break;
+		}
+		else
+		{
+			ParentName = HirearchyTree.GetItemText(Parent);
+			Parent = HirearchyTree.GetParentItem(Parent);
+		}
+	}
+
+	if (ParentName == MeshName)
+	{
+		Object = EditorToolScene::FindMesh(ChangeToString(MeshName));
+	}
+	else
+	{
+		Object = EditorToolScene::FindMesh(ChangeToString(MeshName), ChangeToString(ParentName));
+	}
+
+
+	return Object;
+}
+
+void RightOption::OnChoice_Hirearchy_Item(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	mTransform->ShowWindow(SW_HIDE);
+	mMeshFilter->ShowWindow(SW_HIDE);
+	mLight->ShowWindow(SW_HIDE);
+	mPrticle->ShowWindow(SW_HIDE);
+	mCollider->ShowWindow(SW_HIDE);
+	mRigidbody->ShowWindow(SW_HIDE);
+
+	//선택한 아이템의 이름을 가져온다
+	HTREEITEM ChoiceItem = HirearchyTree.GetSelectedItem();
+
+	CString Name = HirearchyTree.GetItemText(ChoiceItem);
+	std::string MeshName = ChangeToString(Name);
+
+	//에디터의 매쉬 이름을 출력
+	ChoiceHirearchyName = MeshName.substr(0, MeshName.rfind('.'));
+	Name = ChoiceHirearchyName.c_str();
+	HirearchyEdit.SetWindowTextW(Name);
+
+	//컨퍼넌트를 초기화
+	Component_TapList.DeleteAllItems();
+
+	//만약자식오브젝트를 눌렀다면 맨위 최상위부모를 가져온다
+	ChoiceObject = FindGameObjectParent(ChoiceItem);
+
+	Delete_Hirearchy_Item(ChoiceItem);
+	Create_Hirearchy_Item(ChoiceObject, ChoiceItem);
+	Tag_Combo.SetCurSel(ChoiceObject->GetTag());
+
+	mFileOption->SetChoiceGameObjectName(MeshName, ChoiceObject);
+
+	//오브젝트에 해당하는 컨포넌트 Tap을 보여준다
+	ChickObjectTap(ChoiceObject);
 }
 
 void RightOption::OnDelteObject_Button()

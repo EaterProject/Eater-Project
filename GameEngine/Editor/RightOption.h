@@ -84,6 +84,8 @@ public:
 	void Delete_Hirearchy_Item(HTREEITEM TOP);
 	void ChickTapDrag(CPoint point);
 	void ChickHirearchyDarg(CPoint point);
+	void ChickObjectTap(GameObject* Obj);
+	void OnChoice_Hirearchy_Item(GameObject* Obj);
 	//void ChickMaterial(CPoint point);
 	GameObject* FindGameObjectParent(HTREEITEM mItem);
 	CEdit FilePathEdit;

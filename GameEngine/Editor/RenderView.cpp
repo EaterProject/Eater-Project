@@ -6,6 +6,7 @@
 #include "RenderView.h"
 #include "MainHeader.h"
 #include "EditorToolScene.h"
+#include "RightOption.h"
 
 // CRightView
 
@@ -102,4 +103,28 @@ void RenderView::OnNcDestroy()
 {
 	CView::OnNcDestroy();
 	EndEngine();
+}
+
+
+BOOL RenderView::PreTranslateMessage(MSG* pMsg)
+{
+	//Picking(LOWORD(lParam), HIWORD(lParam));
+	switch (pMsg->wParam)
+	{
+	case VK_LBUTTON:
+	{
+		float x = LOWORD(pMsg->lParam);
+		float y = HIWORD(pMsg->lParam);
+		GameObject* Obj = Picking(x, y);
+		if (Obj != nullptr)
+		{
+			RightOption::GetThis()->OnChoice_Hirearchy_Item(Obj);
+		}
+	}
+	break;
+	default:
+		break;
+	}
+
+	return CView::PreTranslateMessage(pMsg);
 }
