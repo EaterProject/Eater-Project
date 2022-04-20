@@ -50,7 +50,7 @@ void TestScene::Awake()
 
 	CreateMap();
 
-	//CreateParticle(0,0,0);
+	CreateParticle(0,0,0);
 	SetEnvironmentMap("Night");
 }
 
