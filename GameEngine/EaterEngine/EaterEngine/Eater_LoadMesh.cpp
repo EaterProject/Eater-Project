@@ -432,20 +432,35 @@ void Eater_LoadMesh::LoadAnimation(int index, std::string& Name)
 			std::vector<float> Data;
 			EATER_GET_LIST(&Data, i);
 			int Size = (int)Data.size();
-			Frame->m_LocalPos.x = Data[0];
-			Frame->m_LocalPos.y = Data[1];
-			Frame->m_LocalPos.z = Data[2];
 
-			Frame->m_LocalRotQt.x = Data[3];
-			Frame->m_LocalRotQt.y = Data[4];
-			Frame->m_LocalRotQt.z = Data[5];
-			Frame->m_LocalRotQt.w = Data[6];
+			Frame->m_Time = Data[0];
 
-			Frame->m_LocalScale.x = Data[7];
-			Frame->m_LocalScale.y = Data[8];
-			Frame->m_LocalScale.z = Data[9];
-			Frame->m_Time = Data[10];
+			Frame->m_LocalPos.x = Data[1];
+			Frame->m_LocalPos.y = Data[2];
+			Frame->m_LocalPos.z = Data[3];
 
+			Frame->m_LocalRotQt.x = Data[4];
+			Frame->m_LocalRotQt.y = Data[5];
+			Frame->m_LocalRotQt.z = Data[6];
+			Frame->m_LocalRotQt.w = Data[7];
+
+			Frame->m_LocalScale.x = Data[8];
+			Frame->m_LocalScale.y = Data[9];
+			Frame->m_LocalScale.z = Data[10];
+
+			Frame->m_WorldPos.x = Data[11];
+			Frame->m_WorldPos.y = Data[12];
+			Frame->m_WorldPos.z = Data[13];
+
+			Frame->m_WorldRotQt.x = Data[14];
+			Frame->m_WorldRotQt.y = Data[15];
+			Frame->m_WorldRotQt.z = Data[16];
+			Frame->m_WorldRotQt.w = Data[17];
+
+			Frame->m_WorldScale.x =Data[18];
+			Frame->m_WorldScale.y =Data[19];
+			Frame->m_WorldScale.z =Data[20];
+			
 			OneAnime->m_AniData.push_back(std::move(Frame));
 		}
 
