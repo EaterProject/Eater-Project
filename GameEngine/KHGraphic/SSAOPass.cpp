@@ -66,27 +66,27 @@ void SSAOPass::Create(int width, int height)
 void SSAOPass::Start(int width, int height)
 {
 	// Shader 설정..
-	m_SsaoVS = g_Shader->GetShader("SSAO_VS");
-	m_SsaoPS = g_Shader->GetShader("SSAO_PS");
-	m_BlurVS = g_Shader->GetShader("Screen_VS");
-	m_BlurPS = g_Shader->GetShader("SSAOBlur_PS");
+	m_Ssao_VS = g_Shader->GetShader("SSAO_VS");
+	m_Ssao_PS = g_Shader->GetShader("SSAO_PS");
+	m_Blur_VS = g_Shader->GetShader("Screen_VS");
+	m_Blur_PS = g_Shader->GetShader("SSAOBlur_PS");
 
 	// Buffer 설정..
-	m_SsaoDB = g_Resource->GetDrawBuffer<DB_SSAO>();
+	m_Ssao_DB = g_Resource->GetDrawBuffer<DB_SSAO>();
 
 	// ViewPort 설정..
-	m_HalfScreenVP = g_Resource->GetViewPort<VP_HalfScreen>()->Get();
+	m_HalfScreen_VP = g_Resource->GetViewPort<VP_HalfScreen>()->Get();
 
 	// RenderTarget 설정..
-	m_SsaoRT = g_Resource->GetRenderTexture<RT_SSAO_Main>();
-	m_SsaoRT->SetRatio(0.5f, 0.5f);
-	m_SsaoBlurRT = g_Resource->GetRenderTexture<RT_SSAO_Blur>();
-	m_SsaoBlurRT->SetRatio(0.5f, 0.5f);
+	m_Ssao_RT = g_Resource->GetRenderTexture<RT_SSAO_Main>();
+	m_Ssao_RT->SetRatio(0.5f, 0.5f);
+	m_SsaoBlur_RT = g_Resource->GetRenderTexture<RT_SSAO_Blur>();
+	m_SsaoBlur_RT->SetRatio(0.5f, 0.5f);
 
-	m_SsaoRTV = m_SsaoRT->GetRTV()->Get();
-	m_SsaoSRV = m_SsaoRT->GetSRV()->Get();
-	m_SsaoBlurRTV = m_SsaoBlurRT->GetRTV()->Get();
-	m_SsaoBlurSRV = m_SsaoBlurRT->GetSRV()->Get();
+	m_Ssao_RTV = m_Ssao_RT->GetRTV()->Get();
+	m_Ssao_SRV = m_Ssao_RT->GetSRV()->Get();
+	m_SsaoBlur_RTV = m_SsaoBlur_RT->GetRTV()->Get();
+	m_SsaoBlur_SRV = m_SsaoBlur_RT->GetSRV()->Get();
 
 	// OffsetVector 설정..
 	SetOffsetVectors();
@@ -101,15 +101,15 @@ void SSAOPass::Start(int width, int height)
 	ShaderResourceView* randomVecMap = g_Resource->GetShaderResourceView<gRandomVecMap>();
 	ShaderResourceView* normalDepthRT = g_Resource->GetShaderResourceView<RT_Deffered_NormalDepth>();
 
-	m_SsaoPS->SetShaderResourceView<gRandomVecMap>(randomVecMap->Get());
-	m_SsaoPS->SetShaderResourceView<gNormalDepthMap>(normalDepthRT->Get());
-	m_BlurPS->SetShaderResourceView<gNormalDepthMap>(normalDepthRT->Get());
+	m_Ssao_PS->SetShaderResourceView<gRandomVecMap>(randomVecMap->Get());
+	m_Ssao_PS->SetShaderResourceView<gNormalDepthMap>(normalDepthRT->Get());
+	m_Blur_PS->SetShaderResourceView<gNormalDepthMap>(normalDepthRT->Get());
 
 	// Constant Buffer Update..
 	CB_BlurTexel blurTexelBuf;
-	blurTexelBuf.gTexelSize = DirectX::SimpleMath::Vector2(1.0f / m_HalfScreenVP->Width, 1.0f / m_HalfScreenVP->Height);
+	blurTexelBuf.gTexelSize = DirectX::SimpleMath::Vector2(1.0f / m_HalfScreen_VP->Width, 1.0f / m_HalfScreen_VP->Height);
 
-	m_BlurPS->ConstantBufferUpdate(&blurTexelBuf);
+	m_Blur_PS->ConstantBufferUpdate(&blurTexelBuf);
 }
 
 void SSAOPass::OnResize(int width, int height)
@@ -118,24 +118,24 @@ void SSAOPass::OnResize(int width, int height)
 	SetFrustumFarCorners(width, height);
 
 	// RenderTarget Resource 재설정..
-	m_SsaoRTV = m_SsaoRT->GetRTV()->Get();
-	m_SsaoSRV = m_SsaoRT->GetSRV()->Get();
-	m_SsaoBlurRTV = m_SsaoBlurRT->GetRTV()->Get();
-	m_SsaoBlurSRV = m_SsaoBlurRT->GetSRV()->Get();
+	m_Ssao_RTV = m_Ssao_RT->GetRTV()->Get();
+	m_Ssao_SRV = m_Ssao_RT->GetSRV()->Get();
+	m_SsaoBlur_RTV = m_SsaoBlur_RT->GetRTV()->Get();
+	m_SsaoBlur_SRV = m_SsaoBlur_RT->GetSRV()->Get();
 
 	// ShaderResource 설정..
 	ShaderResourceView* randomVecMap = g_Resource->GetShaderResourceView<gRandomVecMap>();
 	ShaderResourceView* normalDepthRT = g_Resource->GetShaderResourceView<RT_Deffered_NormalDepth>();
 
-	m_SsaoPS->SetShaderResourceView<gRandomVecMap>(randomVecMap->Get());
-	m_SsaoPS->SetShaderResourceView<gNormalDepthMap>(normalDepthRT->Get());
-	m_BlurPS->SetShaderResourceView<gNormalDepthMap>(normalDepthRT->Get());
+	m_Ssao_PS->SetShaderResourceView<gRandomVecMap>(randomVecMap->Get());
+	m_Ssao_PS->SetShaderResourceView<gNormalDepthMap>(normalDepthRT->Get());
+	m_Blur_PS->SetShaderResourceView<gNormalDepthMap>(normalDepthRT->Get());
 
 	// Constant Buffer Update..
 	CB_BlurTexel blurTexelBuf;
-	blurTexelBuf.gTexelSize = DirectX::SimpleMath::Vector2(1.0f / m_HalfScreenVP->Width, 1.0f / m_HalfScreenVP->Height);
+	blurTexelBuf.gTexelSize = DirectX::SimpleMath::Vector2(1.0f / m_HalfScreen_VP->Width, 1.0f / m_HalfScreen_VP->Height);
 
-	m_BlurPS->ConstantBufferUpdate(&blurTexelBuf);
+	m_Blur_PS->ConstantBufferUpdate(&blurTexelBuf);
 }
 
 void SSAOPass::Release()
@@ -146,17 +146,17 @@ void SSAOPass::Release()
 void SSAOPass::SetOption(RenderOption* renderOption)
 {
 	// SSAO RenderTargetView 초기화..
-	g_Context->ClearRenderTargetView(m_SsaoRTV, reinterpret_cast<const float*>(&DXColors::Black));
-	g_Context->ClearRenderTargetView(m_SsaoBlurRTV, reinterpret_cast<const float*>(&DXColors::Black));
+	g_Context->ClearRenderTargetView(m_Ssao_RTV, reinterpret_cast<const float*>(&DXColors::Black));
+	g_Context->ClearRenderTargetView(m_SsaoBlur_RTV, reinterpret_cast<const float*>(&DXColors::Black));
 }
 
 void SSAOPass::RenderUpdate()
 {
 	GPU_MARKER_DEBUG_NAME("SSAO Render");
 	g_Context->OMSetBlendState(0, 0, 0xffffffff);
-	g_Context->OMSetRenderTargets(1, &m_SsaoRTV, 0);
-	g_Context->ClearRenderTargetView(m_SsaoRTV, reinterpret_cast<const float*>(&DXColors::Black));
-	g_Context->RSSetViewports(1, m_HalfScreenVP);
+	g_Context->OMSetRenderTargets(1, &m_Ssao_RTV, 0);
+	g_Context->ClearRenderTargetView(m_Ssao_RTV, reinterpret_cast<const float*>(&DXColors::Black));
+	g_Context->RSSetViewports(1, m_HalfScreen_VP);
 
 	CameraData* cam = g_GlobalData->MainCamera_Data;
 	Matrix& proj = cam->CamProj;
@@ -164,19 +164,19 @@ void SSAOPass::RenderUpdate()
 	CB_SsaoObject objectBuf;
 	objectBuf.gViewToTexSpace = proj * g_GlobalData->TexSpace;
 
-	m_SsaoPS->ConstantBufferUpdate(&objectBuf);
+	m_Ssao_PS->ConstantBufferUpdate(&objectBuf);
 
 	// Vertex Shader Update..
-	m_SsaoVS->Update();
+	m_Ssao_VS->Update();
 
 	// Pixel Shader Update..
-	m_SsaoPS->Update();
+	m_Ssao_PS->Update();
 
 	g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	g_Context->IASetVertexBuffers(0, 1, m_SsaoDB->VertexBuf->GetAddress(), &m_SsaoDB->Stride, &m_SsaoDB->Offset);
-	g_Context->IASetIndexBuffer(m_SsaoDB->IndexBuf->Get(), DXGI_FORMAT_R16_UINT, 0);
+	g_Context->IASetVertexBuffers(0, 1, m_Ssao_DB->VertexBuf->GetAddress(), &m_Ssao_DB->Stride, &m_Ssao_DB->Offset);
+	g_Context->IASetIndexBuffer(m_Ssao_DB->IndexBuf->Get(), DXGI_FORMAT_R16_UINT, 0);
 
-	g_Context->DrawIndexed(m_SsaoDB->IndexCount, 0, 0);
+	g_Context->DrawIndexed(m_Ssao_DB->IndexCount, 0, 0);
 }
 
 void SSAOPass::BlurRender(int blurCount)
@@ -194,43 +194,43 @@ void SSAOPass::BlurRender()
 	CB_BlurOrder blurOrderBuf;
 
 	// Vertex Shader Update..
-	m_BlurVS->Update();
+	m_Blur_VS->Update();
 
 	/// Horizontal Blur
 	blurOrderBuf.gBlurOrder = { SSAO_HORIZONTAL_BLUR, 0.0f };
-	m_BlurPS->ConstantBufferUpdate(&blurOrderBuf);
+	m_Blur_PS->ConstantBufferUpdate(&blurOrderBuf);
 
-	g_Context->OMSetRenderTargets(1, &m_SsaoBlurRTV, 0);
-	g_Context->ClearRenderTargetView(m_SsaoBlurRTV, reinterpret_cast<const float*>(&DXColors::Black));
+	g_Context->OMSetRenderTargets(1, &m_SsaoBlur_RTV, 0);
+	g_Context->ClearRenderTargetView(m_SsaoBlur_RTV, reinterpret_cast<const float*>(&DXColors::Black));
 
-	m_BlurPS->SetShaderResourceView<gInputMap>(m_SsaoSRV);
+	m_Blur_PS->SetShaderResourceView<gInputMap>(m_Ssao_SRV);
 	
 	// Pixel Shader Update..
-	m_BlurPS->Update();
+	m_Blur_PS->Update();
 
 	g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	g_Context->IASetVertexBuffers(0, 1, m_SsaoDB->VertexBuf->GetAddress(), &m_SsaoDB->Stride, &m_SsaoDB->Offset);
-	g_Context->IASetIndexBuffer(m_SsaoDB->IndexBuf->Get(), DXGI_FORMAT_R16_UINT, 0);
+	g_Context->IASetVertexBuffers(0, 1, m_Ssao_DB->VertexBuf->GetAddress(), &m_Ssao_DB->Stride, &m_Ssao_DB->Offset);
+	g_Context->IASetIndexBuffer(m_Ssao_DB->IndexBuf->Get(), DXGI_FORMAT_R16_UINT, 0);
 
-	g_Context->DrawIndexed(m_SsaoDB->IndexCount, 0, 0);
+	g_Context->DrawIndexed(m_Ssao_DB->IndexCount, 0, 0);
 
 	/// Vertical Blur
 	blurOrderBuf.gBlurOrder = { 0.0f, SSAO_VERTICAL_BLUR };
-	m_BlurPS->ConstantBufferUpdate(&blurOrderBuf);
+	m_Blur_PS->ConstantBufferUpdate(&blurOrderBuf);
 
-	g_Context->OMSetRenderTargets(1, &m_SsaoRTV, 0);
-	g_Context->ClearRenderTargetView(m_SsaoRTV, reinterpret_cast<const float*>(&DXColors::Black));
+	g_Context->OMSetRenderTargets(1, &m_Ssao_RTV, 0);
+	g_Context->ClearRenderTargetView(m_Ssao_RTV, reinterpret_cast<const float*>(&DXColors::Black));
 
-	m_BlurPS->SetShaderResourceView<gInputMap>(m_SsaoBlurSRV);
+	m_Blur_PS->SetShaderResourceView<gInputMap>(m_SsaoBlur_SRV);
 
 	// Pixel Shader Update..
-	m_BlurPS->Update();
+	m_Blur_PS->Update();
 
 	g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	g_Context->IASetVertexBuffers(0, 1, m_SsaoDB->VertexBuf->GetAddress(), &m_SsaoDB->Stride, &m_SsaoDB->Offset);
-	g_Context->IASetIndexBuffer(m_SsaoDB->IndexBuf->Get(), DXGI_FORMAT_R16_UINT, 0);
+	g_Context->IASetVertexBuffers(0, 1, m_Ssao_DB->VertexBuf->GetAddress(), &m_Ssao_DB->Stride, &m_Ssao_DB->Offset);
+	g_Context->IASetIndexBuffer(m_Ssao_DB->IndexBuf->Get(), DXGI_FORMAT_R16_UINT, 0);
 
-	g_Context->DrawIndexed(m_SsaoDB->IndexCount, 0, 0);
+	g_Context->DrawIndexed(m_Ssao_DB->IndexCount, 0, 0);
 }
 
 void SSAOPass::SetOffsetVectors()
@@ -280,7 +280,7 @@ void SSAOPass::SetOffsetVectors()
 	}
 
 	// SSAO Option Constant Buffer Update..
-	m_SsaoPS->ConstantBufferUpdate(&option);
+	m_Ssao_PS->ConstantBufferUpdate(&option);
 }
 
 void SSAOPass::SetRandomVectorTexture()
@@ -333,5 +333,5 @@ void SSAOPass::SetFrustumFarCorners(int width, int height)
 	frustum.gFrustumCorners[3] = XMFLOAT4(+halfWidth, -halfHeight, farZ, 0.0f);
 
 	// FrustumCorner Constant Buffer Data 삽입..
-	m_SsaoVS->ConstantBufferUpdate(&frustum);
+	m_Ssao_VS->ConstantBufferUpdate(&frustum);
 }

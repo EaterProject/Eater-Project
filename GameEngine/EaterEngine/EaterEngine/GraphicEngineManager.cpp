@@ -136,20 +136,10 @@ void GraphicEngineManager::CreateAnimationBuffer(ModelData* model, ModelAnimatio
 	GEngine->CreateAnimationBuffer(model, animation, ppResource);
 }
 
-void GraphicEngineManager::BakeShadowMap(std::string Path)
-{
-	GEngine->BakeShadowMap(Path);
-}
-
 void GraphicEngineManager::BakeEnvironmentMap(TextureBuffer* environment, EnvironmentBuffer** ppResource)
 {
 	// Texture »ý¼º..
 	GEngine->BakeEnvironmentMap(environment, ppResource);
-}
-
-void GraphicEngineManager::SetShadowMap(TextureBuffer* resource)
-{
-	GEngine->SetShadowMap(resource);
 }
 
 void GraphicEngineManager::SetEnvironmentMap(EnvironmentBuffer* resource)

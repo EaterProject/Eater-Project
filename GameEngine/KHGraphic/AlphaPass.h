@@ -23,23 +23,18 @@ private:
 
 private:
 	VertexShader* m_ParticleInstVS;
-	VertexShader* m_MeshInstVS;
+	VertexShader* m_MeshInst_VS;
 	PixelShader* m_ParticlePS;
 	PixelShader* m_MeshPS;
 
 	InstanceBuffer* m_Particle_IB;
 	InstanceBuffer* m_Mesh_IB;
 
+private:
 	VertexInput::ParticleInstance m_ParticleData;
 	std::vector<VertexInput::ParticleInstance>	m_ParticleInstance;
 
+	UINT m_RenderCount = 0;
 	UINT m_InstanceCount = 0;
-	size_t m_InstanceStride = 0;
-
-	ID3D11Buffer* m_IndexBuffer;
-	ID3D11Buffer* m_VertexBuffer;
-	UINT m_IndexCount;
-	UINT m_Stride;
-	UINT m_Offset;
 };
 

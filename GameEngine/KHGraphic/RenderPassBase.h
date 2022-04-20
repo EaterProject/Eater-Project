@@ -23,6 +23,9 @@ public:
 	virtual ~RenderPassBase() = default;
 
 public:
+	friend class RenderManager;
+
+public:
 	virtual void Create(int width, int height) abstract;
 	virtual void Start(int width, int height) abstract;
 
@@ -39,8 +42,8 @@ public:
 	static void GraphicReset();
 	static void Reset();
 
-public:
-	friend class RenderManager;
+protected:
+	static void UpdateBuffer(ID3D11Buffer* buffer, void* bufferData, size_t size);
 
 protected:
 	static Microsoft::WRL::ComPtr<ID3D11Device> g_Device;

@@ -150,6 +150,8 @@ void ParticleSystem::SetDelayTime(float delay)
 
 void ParticleSystem::SetRateOverTime(float count)
 {
+	m_RateOverTimeCount = count;
+
 	m_RateOverTime = 1.0f / count;
 }
 
@@ -169,66 +171,92 @@ void ParticleSystem::SetShapeRadius(float x, float y, float z)
 
 void ParticleSystem::SetStartForce(Vector3 force)
 {	
+	m_StartForce.SetRange(force);
+
 	m_RandomStartForce->SetRange(force, force);
 }
 
 void ParticleSystem::SetStartForce(Vector3 minForce, Vector3 maxForce)
 {
+	m_StartForce.SetRange(minForce, maxForce);
+
 	m_RandomStartForce->SetRange(minForce, maxForce);
 }
 
 void ParticleSystem::SetStartColor(Vector4 color)
 {
+	m_StartColor.SetRange(color);
+
 	m_RandomStartColor->SetRange(color / 255.0f, color / 255.0f);
 }
 
 void ParticleSystem::SetStartColor(Vector4 minColor, Vector4 maxColor)
 {
+	m_StartColor.SetRange(minColor, maxColor);
+	
 	m_RandomStartColor->SetRange(minColor / 255.0f, maxColor / 255.0f);
 }
 
 void ParticleSystem::SetStartLifeTime(float time)
 {
+	m_StartLifeTime.SetRange(time);
+
 	m_RandomLifeTime->SetRange(time, time);
 }
 
 void ParticleSystem::SetStartLifeTime(float minTime, float maxTime)
 {
+	m_StartLifeTime.SetRange(minTime, maxTime);
+	
 	m_RandomLifeTime->SetRange(minTime, maxTime);
 }
 
 void ParticleSystem::SetStartScale(float scale)
 {
+	m_StartScale.SetRange(scale);
+
 	m_RandomStartSize->SetRange(scale, scale);
 }
 
 void ParticleSystem::SetStartScale(float minScale, float maxScale)
 {
+	m_StartScale.SetRange(minScale, maxScale);
+	
 	m_RandomStartSize->SetRange(minScale, maxScale);
 }
 
 void ParticleSystem::SetStartRotation(float rot)
 {
+	m_StartRotation.SetRange(rot);
+
 	m_RandomStartRotation->SetRange(rot, rot);
 }
 
 void ParticleSystem::SetStartRotation(float minRot, float maxRot)
 {
+	m_StartRotation.SetRange(minRot, maxRot);
+	
 	m_RandomStartRotation->SetRange(minRot, maxRot);
 }
 
 void ParticleSystem::SetLifeTimeForce(Vector3 force)
 {
+	m_LifeTimeForce.SetRange(force);
+
 	m_RandomLifeTimeForce->SetRange(force, force);
 }
 
 void ParticleSystem::SetLifeTimeForce(Vector3 minForce, Vector3 maxForce)
 {
+	m_LifeTimeForce.SetRange(minForce, maxForce);
+	
 	m_RandomLifeTimeForce->SetRange(minForce, maxForce);
 }
 
 void ParticleSystem::SetLifeTimeColor(Vector4 minColor, Vector4 maxColor, PARTICLE_LIFETIME_OPTION option)
 {
+	m_LifeTimeColor.SetRange(minColor, maxColor);
+
 	m_SystemDesc->ColorType = option;
 
 	m_SystemDesc->LifeTimeMinColor = minColor / 255.0f;
@@ -237,6 +265,8 @@ void ParticleSystem::SetLifeTimeColor(Vector4 minColor, Vector4 maxColor, PARTIC
 
 void ParticleSystem::SetLifeTimeScale(float minScale, float maxScale, PARTICLE_LIFETIME_OPTION option)
 {
+	m_LifeTimeScale.SetRange(minScale, maxScale);
+
 	m_SystemDesc->ScaleType = option;
 
 	if (minScale <= maxScale)
@@ -253,11 +283,15 @@ void ParticleSystem::SetLifeTimeScale(float minScale, float maxScale, PARTICLE_L
 
 void ParticleSystem::SetLifeTimeRotation(float rot)
 {
+	m_LifeTimeRotation.SetRange(rot);
+
 	m_RandomLifeTimeRotation->SetRange(rot, rot);
 }
 
 void ParticleSystem::SetLifeTimeRotation(float minRot, float maxRot)
 {
+	m_LifeTimeRotation.SetRange(minRot, maxRot);
+	
 	m_RandomLifeTimeRotation->SetRange(minRot, maxRot);
 }
 
@@ -305,6 +339,91 @@ void ParticleSystem::Stop()
 void ParticleSystem::SetNextParticle(ParticleSystem* particle)
 {
 	m_NextParticles.push_back(particle);
+}
+
+std::string ParticleSystem::GetMeshName()
+{
+	return m_ParticleMeshName;
+}
+
+PARTICLE_RENDER_OPTION ParticleSystem::GetRenderType()
+{
+	return m_ParticleData->RenderType;
+}
+
+int ParticleSystem::GetMaxParticles()
+{
+	return m_MaxParticle;
+}
+
+float ParticleSystem::GetDelayTime()
+{
+	return m_DelayTime;
+}
+
+float ParticleSystem::GetRateOverTime()
+{
+	return m_RateOverTimeCount;
+}
+
+Vector3 ParticleSystem::GetShapeRadius()
+{
+	return m_ParticleData->Area_Radius;
+}
+
+RandomRange<Vector3> ParticleSystem::GetStartForce()
+{
+	return m_StartForce;
+}
+
+RandomRange<Vector4> ParticleSystem::GetStartColor()
+{
+	return m_StartColor;
+}
+
+RandomRange<float> ParticleSystem::GetStartLifeTime()
+{
+	return m_StartLifeTime;
+}
+
+RandomRange<float> ParticleSystem::GetStartScale()
+{
+	return m_StartScale;
+}
+
+RandomRange<float> ParticleSystem::GetStartRotation()
+{
+	return m_StartRotation;
+}
+
+RandomRange<Vector3> ParticleSystem::GetLifeTimeForce()
+{
+	return m_LifeTimeForce;
+}
+
+RandomRange<Vector4> ParticleSystem::GetLifeTimeColor()
+{
+	return m_LifeTimeColor;
+}
+
+RandomRange<float> ParticleSystem::GetLifeTimeScale()
+{
+	return m_LifeTimeScale;
+}
+
+RandomRange<float> ParticleSystem::GetLifeTimeRotation()
+{
+	return m_LifeTimeRotation;
+}
+
+PARTICLE_LIFETIME_OPTION ParticleSystem::GetLifeTimeColorOption()
+{
+	return m_SystemDesc->ColorType;
+}
+
+PARTICLE_LIFETIME_OPTION ParticleSystem::GetLifeTimeScaleOption()
+{
+	return m_SystemDesc->ScaleType;
 }
 
 void ParticleSystem::StartPlay()

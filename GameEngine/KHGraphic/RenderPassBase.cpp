@@ -34,3 +34,19 @@ void RenderPassBase::Reset()
 	g_Shader = nullptr;
 	g_GlobalData = nullptr;
 }
+
+void RenderPassBase::UpdateBuffer(ID3D11Buffer* buffer, void* bufferData, size_t size)
+{
+	// Mapping SubResource Data..
+	D3D11_MAPPED_SUBRESOURCE mappedResource;
+	ZeroMemory(&mappedResource, sizeof(D3D11_MAPPED_SUBRESOURCE));
+
+	// GPU Access Lock Buffer Data..
+	g_Context->Map(buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
+
+	// Copy Resource Data..
+	memcpy(mappedResource.pData, bufferData, size);
+
+	// GPU Access UnLock Buffer Data..
+	g_Context->Unmap(buffer, 0);
+}

@@ -94,6 +94,7 @@ void PickingPass::Start(int width, int height)
 	m_Mesh_ID_PS = g_Shader->GetShader("ID_Mesh_PS");
 
 	m_MeshID_IB = g_Resource->GetInstanceBuffer<IB_MeshID>();
+	m_SkinMeshID_IB = g_Resource->GetInstanceBuffer<IB_SkinMeshID>();
 	m_Box_DB = g_Resource->GetDrawBuffer<DB_Box>();
 
 	// Render Target 설정..
@@ -124,6 +125,7 @@ void PickingPass::OnResize(int width, int height)
 void PickingPass::InstanceResize(size_t& renderMaxCount, size_t& unRenderMaxCount)
 {
 	(renderMaxCount > unRenderMaxCount) ? m_MeshInstance.resize(renderMaxCount) : m_MeshInstance.resize(unRenderMaxCount);
+	(renderMaxCount > unRenderMaxCount) ? m_SkinMeshInstance.resize(renderMaxCount) : m_SkinMeshInstance.resize(unRenderMaxCount);
 }
 
 void PickingPass::Release()
@@ -157,6 +159,7 @@ void PickingPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rende
 	{
 	case OBJECT_TYPE::BASE:
 	case OBJECT_TYPE::TERRAIN:
+	case OBJECT_TYPE::PARTICLE_SYSTEM:
 	{
 		// Vertex Shader Update..
 		CB_StaticMesh_ID objectBuf;
@@ -179,17 +182,18 @@ void PickingPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rende
 	break;
 	case OBJECT_TYPE::SKINNING:
 	{
+		AnimationData* animation = meshData->m_AnimationData;
+
 		// Vertex Shader Update..
 		CB_SkinMesh_ID objectBuf;
 		objectBuf.gWorldViewProj = world * viewproj;
 		objectBuf.gHashColor = hashColor;
-
-		for (int i = 0; i < obj->BoneOffsetTM.size(); i++)
-		{
-			objectBuf.gBoneTransforms[i] = (obj->BoneOffsetTM)[i];
-		}
+		objectBuf.gPrevAnimationIndex = animation->PrevAnimationIndex + animation->PrevFrameIndex;
+		objectBuf.gNextAnimationIndex = animation->NextAnimationIndex + animation->NextFrameIndex;
+		objectBuf.gFrameTime = animation->FrameTime;
 
 		m_Skin_VS->ConstantBufferUpdate(&objectBuf);
+		m_Skin_VS->SetShaderResourceView<gAnimationBuffer>(instance->m_Animation->m_AnimationBuf);
 
 		m_Skin_VS->Update();
 
@@ -204,27 +208,6 @@ void PickingPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rende
 		g_Context->DrawIndexed(mesh->m_IndexCount, 0, 0);
 	}
 	break;
-	case OBJECT_TYPE::PARTICLE_SYSTEM:
-	{
-		// Vertex Shader Update..
-		CB_StaticMesh_ID objectBuf;
-		objectBuf.gWorldViewProj = world * viewproj;
-		objectBuf.gHashColor = hashColor;
-
-		m_Mesh_VS->ConstantBufferUpdate(&objectBuf);
-		m_Mesh_VS->Update();
-
-		// Pixel Shader Update..
-		m_Mesh_ID_PS->Update();
-
-		// Draw..
-		g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-		g_Context->IASetVertexBuffers(0, 1, m_Box_DB->VertexBuf->GetAddress(), &m_Box_DB->Stride, &m_Box_DB->Offset);
-		g_Context->IASetIndexBuffer(m_Box_DB->IndexBuf->Get(), DXGI_FORMAT_R32_UINT, 0);
-
-		g_Context->DrawIndexed(m_Box_DB->IndexCount, 0, 0);
-	}
-		break;
 	default:
 		break;
 	}
@@ -232,52 +215,42 @@ void PickingPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rende
 
 void PickingPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::vector<RenderData*>& meshlist)
 {
-	if (meshlist.size() == 1)
+	m_RenderCount = (int)meshlist.size();
+
+	if (m_RenderCount == 1)
 	{
 		RenderUpdate(instance, meshlist[0]);
 		return;
 	}
-	
-	ObjectData* obj = nullptr;
+
 	const MeshRenderBuffer* mesh = instance->m_Mesh;
 
 	const Matrix& viewproj = g_GlobalData->MainCamera_Data->CamViewProj;
-
-	for (int i = 0; i < meshlist.size(); i++)
-	{
-		if (meshlist[i]->m_Draw == false) continue;
-
-		// 해당 Instance Data 삽입..
-		obj = meshlist[i]->m_ObjectData;
-		m_MeshData.World = obj->World;
-		m_MeshData.HashColor = obj->HashColor;
-
-		m_MeshInstance[i] = m_MeshData;
-		m_InstanceCount++;
-	}
-
-	// Instance가 없는경우 처리하지 않는다..
-	if (m_InstanceCount == 0) return;
-
-	// Mapping SubResource Data..
-	D3D11_MAPPED_SUBRESOURCE mappedResource;
-	ZeroMemory(&mappedResource, sizeof(D3D11_MAPPED_SUBRESOURCE));
-
-	// GPU Access Lock Buffer Data..
-	g_Context->Map(m_MeshID_IB->InstanceBuf->Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
-
-	m_InstanceStride = (size_t)m_MeshID_IB->Stride * (size_t)m_InstanceCount;
-
-	// Copy Resource Data..
-	memcpy(mappedResource.pData, &m_MeshInstance[0], m_InstanceStride);
-
-	// GPU Access UnLock Buffer Data..
-	g_Context->Unmap(m_MeshID_IB->InstanceBuf->Get(), 0);
 
 	switch (instance->m_Type)
 	{
 	case OBJECT_TYPE::BASE:
 	{
+		// Instance Update..
+		for (int i = 0; i < m_RenderCount; i++)
+		{
+			m_RenderData = meshlist[i];
+
+			if (m_RenderData->m_Draw == false) continue;
+
+			// 해당 Instance Data 삽입..
+			m_MeshData.World = m_RenderData->m_ObjectData->World;
+			m_MeshData.HashColor = m_RenderData->m_ObjectData->HashColor;
+
+			m_MeshInstance[m_InstanceCount++] = m_MeshData;
+		}
+
+		// Instance가 없는경우 처리하지 않는다..
+		if (m_InstanceCount == 0) return;
+
+		// Instance Buffer Update..
+		UpdateBuffer(m_MeshID_IB->InstanceBuf->Get(), &m_MeshInstance[0], (size_t)m_MeshID_IB->Stride * (size_t)m_InstanceCount);
+
 		// Vertex Shader Update..
 		CB_Instance_StaticMesh_ID objectBuf;
 		objectBuf.gViewProj = viewproj;
@@ -303,7 +276,57 @@ void PickingPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::
 	break;
 	case OBJECT_TYPE::SKINNING:
 	{
+		ObjectData* object = nullptr;
+		AnimationData* animation = nullptr;
 
+		// Instance Update..
+		for (int i = 0; i < m_RenderCount; i++)
+		{
+			m_RenderData = meshlist[i];
+
+			if (m_RenderData->m_Draw == false) continue;
+
+			object = m_RenderData->m_ObjectData;
+			animation = m_RenderData->m_AnimationData;
+
+			// 해당 Instance Data 삽입..
+			m_SkinMeshData.World = object->World;
+			m_SkinMeshData.HashColor = object->HashColor;
+			m_SkinMeshData.PrevAnimationIndex = animation->PrevAnimationIndex + animation->PrevFrameIndex;
+			m_SkinMeshData.NextAnimationIndex = animation->NextAnimationIndex + animation->NextFrameIndex;
+			m_SkinMeshData.FrameTime = animation->FrameTime;
+
+			m_SkinMeshInstance[m_InstanceCount++] = m_SkinMeshData;
+		}
+
+		// Instance가 없는경우 처리하지 않는다..
+		if (m_InstanceCount == 0) return;
+
+		// Instance Buffer Update..
+		UpdateBuffer(m_SkinMeshID_IB->InstanceBuf->Get(), &m_SkinMeshInstance[0], (size_t)m_SkinMeshID_IB->Stride * (size_t)m_InstanceCount);
+
+		// Vertex Shader Update..
+		CB_InstanceSkinMesh_ID objectBuf;
+		objectBuf.gViewProj = viewproj;
+
+		m_Skin_Inst_VS->ConstantBufferUpdate(&objectBuf);
+		m_Skin_Inst_VS->SetShaderResourceView<gAnimationBuffer>(instance->m_Animation->m_AnimationBuf);
+
+		m_Skin_Inst_VS->Update();
+
+		// Pixel Shader Update..
+		m_Mesh_ID_PS->Update();
+
+		ID3D11Buffer* vertexBuffers[2] = { mesh->m_VertexBuf, m_SkinMeshID_IB->InstanceBuf->Get() };
+		UINT strides[2] = { mesh->m_Stride, m_SkinMeshID_IB->Stride };
+		UINT offsets[2] = { 0,0 };
+
+		// Draw..
+		g_Context->IASetVertexBuffers(0, 2, vertexBuffers, strides, offsets);
+		g_Context->IASetIndexBuffer(mesh->m_IndexBuf, DXGI_FORMAT_R32_UINT, 0);
+		g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+		g_Context->DrawIndexedInstanced(mesh->m_IndexCount, m_InstanceCount, 0, 0, 0);
 	}
 	break;
 	default:
@@ -316,39 +339,41 @@ void PickingPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::
 
 void PickingPass::NoneMeshRenderUpdate(const std::vector<RenderData*>& meshlist)
 {
-	ObjectData* obj = nullptr;
+	m_RenderCount = (int)meshlist.size();
 
 	const Matrix& viewproj = g_GlobalData->MainCamera_Data->CamViewProj;
 
-	for (int i = 0; i < meshlist.size(); i++)
+	// Instance Update..
+	for (int i = 0; i < m_RenderCount; i++)
 	{
-		if (meshlist[i] == nullptr) continue;
+		m_RenderData = meshlist[i];
 
-		// 해당 Instance Data 삽입..
-		obj = meshlist[i]->m_ObjectData;
-		m_MeshData.World = obj->World;
-		m_MeshData.HashColor = obj->HashColor;
+		if (m_RenderData->m_Draw == false) continue;
 
-		m_MeshInstance[i] = m_MeshData;
-		m_InstanceCount++;
+		// Picking 해야할 Object Type 선별..
+		switch (m_RenderData->m_ObjectData->ObjType)
+		{
+		case::OBJECT_TYPE::CAMERA:
+		case::OBJECT_TYPE::LIGHT:
+		case::OBJECT_TYPE::PARTICLE_SYSTEM:
+		{
+			// 해당 Instance Data 삽입..
+			m_MeshData.World = m_RenderData->m_ObjectData->World;
+			m_MeshData.HashColor = m_RenderData->m_ObjectData->HashColor;
+
+			m_MeshInstance[m_InstanceCount++] = m_MeshData;
+		}
+		break;
+		default:
+			break;
+		}
 	}
-	
+
+	// Instance가 없는경우 처리하지 않는다..
 	if (m_InstanceCount == 0) return;
 
-	// Mapping SubResource Data..
-	D3D11_MAPPED_SUBRESOURCE mappedResource;
-	ZeroMemory(&mappedResource, sizeof(D3D11_MAPPED_SUBRESOURCE));
-
-	// GPU Access Lock Buffer Data..
-	g_Context->Map(m_MeshID_IB->InstanceBuf->Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
-
-	m_InstanceStride = (size_t)m_MeshID_IB->Stride * (size_t)m_InstanceCount;
-
-	// Copy Resource Data..
-	memcpy(mappedResource.pData, &m_MeshInstance[0], m_InstanceStride);
-
-	// GPU Access UnLock Buffer Data..
-	g_Context->Unmap(m_MeshID_IB->InstanceBuf->Get(), 0);
+	// Instance Buffer Update..
+	UpdateBuffer(m_MeshID_IB->InstanceBuf->Get(), &m_MeshInstance[0], (size_t)m_MeshID_IB->Stride * (size_t)m_InstanceCount);
 
 	// Vertex Shader Update..
 	CB_Instance_StaticMesh_ID objectBuf;

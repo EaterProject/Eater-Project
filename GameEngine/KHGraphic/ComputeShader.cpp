@@ -110,7 +110,7 @@ void ComputeShader::LoadShader(std::string fileName, const char* entry_point, co
 			uav_register_slot = bindDesc.BindPoint;
 
 			// UAV Ãß°¡..
-			m_UAVList.insert(std::make_pair(hash_key, new UnorderedAccessBuffer(bindDesc.Name, uav_register_slot)));
+			m_UAV_List.insert(std::make_pair(hash_key, new UnorderedAccessBuffer(bindDesc.Name, uav_register_slot)));
 		}
 		break;
 		default:
@@ -182,13 +182,13 @@ void ComputeShader::Release()
 		RESET_COM(uav);
 	}
 
-	for (std::pair<Hash_Code, UnorderedAccessBuffer*> uav : m_UAVList)
+	for (std::pair<Hash_Code, UnorderedAccessBuffer*> uav : m_UAV_List)
 	{
 		SAFE_DELETE(uav.second);
 	}
 
 	m_UnorderedAccessViews.clear();
-	m_UAVList.clear();
+	m_UAV_List.clear();
 }
 
 void ComputeShader::UnBindConstantBuffer(UINT startSlot, UINT numViews)

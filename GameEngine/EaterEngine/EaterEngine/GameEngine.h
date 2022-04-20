@@ -88,13 +88,11 @@ public:
 
 public:
 	///베이크 관련
-	void BakeShadowMap(std::string& Path);
 	void BakeEnvironmentMap(std::string& Path);
 	void BakeAnimation();
 
 public:
 	///텍스쳐 설정 관련
-	void SetShadowMap(std::string& Path);
 	void SetEnvironmentMap(std::string& Path);
 
 	///충돌체크 관련

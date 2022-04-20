@@ -104,7 +104,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 	case WM_LBUTTONUP:
 	{
-		Picking(LOWORD(lParam), HIWORD(lParam));
+		//Picking(LOWORD(lParam), HIWORD(lParam));
 	}
 	break;
 	case WM_SIZE:

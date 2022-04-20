@@ -381,11 +381,6 @@ ModelData* GameEngine::GetLoadMeshData(std::string& Path)
 	return mLoadManager->GetModelData(Path);
 }
 
-void GameEngine::BakeShadowMap(std::string& Path)
-{
-	mGraphicManager->BakeShadowMap(Path);
-}
-
 void GameEngine::BakeEnvironmentMap(std::string& Path)
 {
 	mLoadManager->BakeEnvironmentMap(Path);
@@ -394,13 +389,6 @@ void GameEngine::BakeEnvironmentMap(std::string& Path)
 void GameEngine::BakeAnimation()
 {
 	mLoadManager->BakeAnimation();
-}
-
-void GameEngine::SetShadowMap(std::string& Path)
-{
-	TextureBuffer* resource = mLoadManager->GetTexture(Path);
-
-	mGraphicManager->SetShadowMap(resource);
 }
 
 void GameEngine::SetEnvironmentMap(std::string& Path)

@@ -35,17 +35,17 @@ private:
 	std::vector<Microsoft::WRL::ComPtr<ID3D11UnorderedAccessView>> m_UnorderedAccessViews;
 
 	// ComputeShader UnorderedAccessView List..
-	std::unordered_map<Hash_Code, UnorderedAccessBuffer*> m_UAVList;
+	std::unordered_map<Hash_Code, UnorderedAccessBuffer*> m_UAV_List;
 };
 
 template<typename T>
 void ComputeShader::SetUnorderedAccessView(ID3D11UnorderedAccessView* uav)
 {
 	// 해당 Value 찾기..
-	std::unordered_map<Hash_Code, UnorderedAccessBuffer*>::iterator it = m_UAVList.find(typeid(T).hash_code());
+	std::unordered_map<Hash_Code, UnorderedAccessBuffer*>::iterator it = m_UAV_List.find(typeid(T).hash_code());
 
 	// 해당 Key에 대한 Value가 없다면..
-	if (it == m_UAVList.end()) return;
+	if (it == m_UAV_List.end()) return;
 
 	// 해당 Register Slot에 삽입..
 	m_UnorderedAccessViews[it->second->register_number] = uav;

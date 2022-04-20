@@ -31,9 +31,6 @@ public:
 	virtual void SetGlobalData(GlobalData* globalData) abstract;
 
 public:
-	// Shadow Map Setting..
-	virtual void SetShadowMap(TextureBuffer* resource) abstract;
-
 	// Environment Map Setting..
 	virtual void SetEnvironmentMap(EnvironmentBuffer* resource) abstract;
 
@@ -61,7 +58,4 @@ public:
 	virtual void Render() abstract;
 
 	virtual void* PickingRender(int x, int y) abstract;
-
-public:
-	virtual void BakeShadowMap() abstract;
 };
