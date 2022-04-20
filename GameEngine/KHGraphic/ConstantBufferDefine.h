@@ -271,16 +271,19 @@ struct CB_Instance_StaticMesh_ID : public cbInstanceStaticMeshID
 SHADER_CONSTANT_BUFFER(cbSkinMeshID)
 struct CB_SkinMesh_ID : public cbSkinMeshID
 {
-	DirectX::SimpleMath::Vector4 gHashColor;
 	DirectX::SimpleMath::Matrix gWorldViewProj;
-	DirectX::SimpleMath::Matrix gBoneTransforms[96];
+	DirectX::SimpleMath::Vector4 gHashColor;
+
+	UINT gPrevAnimationIndex = 0;
+	UINT gNextAnimationIndex = 0;
+	float gFrameTime = 0.0f;
+	float gPad = 0.0f;
 };
 
 SHADER_CONSTANT_BUFFER(cbInstanceSkinMeshID)
 struct CB_InstanceSkinMesh_ID : public cbInstanceSkinMeshID
 {
 	DirectX::SimpleMath::Matrix gViewProj;
-	DirectX::SimpleMath::Matrix gBoneTransforms[96];
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////

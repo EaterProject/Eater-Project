@@ -34,7 +34,7 @@ private:
 	VertexInput::ParticleInstance m_ParticleData;
 	std::vector<VertexInput::ParticleInstance>	m_ParticleInstance;
 
+	UINT m_RenderCount = 0;
 	UINT m_InstanceCount = 0;
-	size_t m_InstanceStride = 0;
 };
 

@@ -2197,6 +2197,7 @@ void GraphicResourceFactory::CreateInstanceBuffers()
 	std::vector<VertexInput::MeshInstance>			meshInstance(instancMax);
 	std::vector<VertexInput::SkinMeshInstance>		skinMeshInstance(instancMax);
 	std::vector<VertexInput::MeshIDInstance>		meshIDInstance(instancMax);
+	std::vector<VertexInput::SkinMeshIDInstance>	skinMeshIDInstance(instancMax);
 	std::vector<VertexInput::ParticleInstance>		particleInstance(instancMax);
 
 	CreateInstanceBuffer(IB_MeshDepth::GetName(), IB_MeshDepth::GetHashCode(), sizeof(VertexInput::MeshDepthInstance), instancMax, &meshDepthInstance[0]);
@@ -2204,6 +2205,7 @@ void GraphicResourceFactory::CreateInstanceBuffers()
 	CreateInstanceBuffer(IB_Mesh::GetName(), IB_Mesh::GetHashCode(), sizeof(VertexInput::MeshInstance), instancMax, &meshInstance[0]);
 	CreateInstanceBuffer(IB_SkinMesh::GetName(), IB_SkinMesh::GetHashCode(), sizeof(VertexInput::SkinMeshInstance), instancMax, &skinMeshInstance[0]);
 	CreateInstanceBuffer(IB_MeshID::GetName(), IB_MeshID::GetHashCode(), sizeof(VertexInput::MeshIDInstance), instancMax, &meshIDInstance[0]);
+	CreateInstanceBuffer(IB_SkinMeshID::GetName(), IB_SkinMeshID::GetHashCode(), sizeof(VertexInput::SkinMeshIDInstance), instancMax, &skinMeshIDInstance[0]);
 	CreateInstanceBuffer(IB_Particle::GetName(), IB_Particle::GetHashCode(), sizeof(VertexInput::ParticleInstance), instancMax, &particleInstance[0]);
 }
 

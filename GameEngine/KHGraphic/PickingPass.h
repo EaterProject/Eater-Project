@@ -28,6 +28,7 @@ private:
 	PixelShader* m_Mesh_ID_PS;
 
 	InstanceBuffer* m_MeshID_IB;
+	InstanceBuffer* m_SkinMeshID_IB;
 
 	DrawBuffer* m_Box_DB;
 
@@ -46,10 +47,15 @@ private:
 	D3D11_BOX m_PickPointBox;
 
 private:
+	RenderData* m_RenderData;
+	
 	VertexInput::MeshIDInstance m_MeshData;
 	std::vector<VertexInput::MeshIDInstance> m_MeshInstance;
 
+	VertexInput::SkinMeshIDInstance m_SkinMeshData;
+	std::vector<VertexInput::SkinMeshIDInstance> m_SkinMeshInstance;
+
+	UINT m_RenderCount = 0;
 	UINT m_InstanceCount = 0;
-	size_t m_InstanceStride = 0;
 };
 

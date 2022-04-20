@@ -17,6 +17,11 @@
 //#define new new( _NORMAL_BLOCK , __FILE__ , __LINE__ )
 //#endif
 
+#include "GameObject.h"
+#include "Transform.h"
+
+GameObject* g_Object = nullptr;
+
 // 윈도 프로시저의 전방선언
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
@@ -82,6 +87,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 		else
 		{
 			GM->Update();
+
+			if (g_Object)
+			{
+				g_Object->GetTransform()->Rotation.y += 0.1f;
+			}
 		}
 	}
 
@@ -104,7 +114,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 	case WM_LBUTTONUP:
 	{
-		Picking(LOWORD(lParam), HIWORD(lParam));
+		g_Object = Picking(LOWORD(lParam), HIWORD(lParam));
 	}
 	break;
 	case WM_SIZE:

@@ -98,6 +98,17 @@ namespace VertexInput
 		DirectX::SimpleMath::Vector4 HashColor;
 	};
 
+	struct SkinMeshIDInstance
+	{
+		DirectX::SimpleMath::Matrix World;
+		DirectX::SimpleMath::Vector4 HashColor;
+
+		UINT PrevAnimationIndex = 0;
+		UINT NextAnimationIndex = 0;
+		float FrameTime = 0.0f;
+		float Pad = 0.0f;
+	};
+
 	struct ParticleInstance
 	{
 		DirectX::SimpleMath::Matrix World;

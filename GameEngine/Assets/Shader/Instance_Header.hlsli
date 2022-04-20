@@ -30,6 +30,13 @@ struct MeshIDInstanceIn
 {
     float4x4 World          : INSTANCE_SEMANTIC(WORLD);
     float4 HashColor        : INSTANCE_SEMANTIC(HASHCOLOR);
+    
+#ifdef SKIN_MESH
+    uint PrevAnimationIndex     : INSTANCE_SEMANTIC(PREV);
+    uint NextAnimationIndex     : INSTANCE_SEMANTIC(NEXT);
+    float FrameTime             : INSTANCE_SEMANTIC(TIME);
+    float Pad                   : INSTANCE_SEMANTIC(PAD);
+#endif
 };
 
 struct ParticleInstanceIn

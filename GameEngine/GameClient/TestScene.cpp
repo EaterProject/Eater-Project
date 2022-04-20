@@ -50,7 +50,6 @@ void TestScene::Awake()
 
 	CreateMap();
 
-
 	CreateParticle(0,0,0);
 	SetEnvironmentMap("Night");
 }
@@ -113,51 +112,51 @@ void TestScene::CreateMap()
 	Object->GetTransform()->Position.x -= 10.0f;
 	Object->GetTransform()->Position.y += 10.0f;
 
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("bossb");
-	//filter->SetAnimationName("bossb");
-	//Object->GetTransform()->Position.z += 20;
-	//AC = Object->AddComponent<AnimationController>();
-	//AC->Choice("idle");
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	filter->SetModelName("bossb");
+	filter->SetAnimationName("bossb");
+	Object->GetTransform()->Position.z += 20;
+	AC = Object->AddComponent<AnimationController>();
+	AC->Choice("idle");
 
 	
-	for (int i = 0; i < 5; i++)
-	{
-		for (int j = 0; j < 5; j++)
-		{
-			Object = Instance();
-			filter = Object->AddComponent<MeshFilter>();
-			filter->SetModelName("bossb");
-			filter->SetAnimationName("bossb");
-			Object->GetTransform()->Position.z += 20;
-			Object->GetTransform()->Position.x = i * 5;
-			Object->GetTransform()->Position.y = j * 5;
-			AC = Object->AddComponent<AnimationController>();
-			AC->Choice("idle");
+	//for (int i = 0; i < 5; i++)
+	//{
+	//	for (int j = 0; j < 5; j++)
+	//	{
+	//		Object = Instance();
+	//		filter = Object->AddComponent<MeshFilter>();
+	//		filter->SetModelName("bossb");
+	//		filter->SetAnimationName("bossb");
+	//		Object->GetTransform()->Position.z += 20;
+	//		Object->GetTransform()->Position.x = i * 5;
+	//		Object->GetTransform()->Position.y = j * 5;
+	//		AC = Object->AddComponent<AnimationController>();
+	//		AC->Choice("idle");
+	//
+	//		Object = Instance();
+	//		filter = Object->AddComponent<MeshFilter>();
+	//		filter->SetModelName("MonsterA");
+	//		filter->SetAnimationName("MonsterA");
+	//		Object->GetTransform()->Position.z -= 20;
+	//		Object->GetTransform()->Position.x = i * 5;
+	//		Object->GetTransform()->Position.y = j * 5;
+	//		AC = Object->AddComponent<AnimationController>();
+	//		AC->Choice("die");
+	//
+	//		ACList.push_back(AC);
+	//	}
+	//}
 	
-			Object = Instance();
-			filter = Object->AddComponent<MeshFilter>();
-			filter->SetModelName("MonsterA");
-			filter->SetAnimationName("MonsterA");
-			Object->GetTransform()->Position.z -= 20;
-			Object->GetTransform()->Position.x = i * 5;
-			Object->GetTransform()->Position.y = j * 5;
-			AC = Object->AddComponent<AnimationController>();
-			AC->Choice("die");
-	
-			ACList.push_back(AC);
-		}
-	}
-	
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("MonsterA");
-	//filter->SetAnimationName("MonsterA");
-	//Object->GetTransform()->Scale = { 10.0f, 10.0f, 10.0f };
-	//Object->GetTransform()->Position.z -= 20;
-	//AC = Object->AddComponent<AnimationController>();
-	//AC->Choice("die");
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	filter->SetModelName("MonsterA");
+	filter->SetAnimationName("MonsterA");
+	Object->GetTransform()->Scale = { 10.0f, 10.0f, 10.0f };
+	Object->GetTransform()->Position.z -= 20;
+	AC = Object->AddComponent<AnimationController>();
+	AC->Choice("die");
 	
 	//Object = Instance();
 	//filter = Object->AddComponent<MeshFilter>();

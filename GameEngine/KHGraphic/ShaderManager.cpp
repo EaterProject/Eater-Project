@@ -140,7 +140,7 @@ void ShaderManager::CreateShader()
 	LoadShader(SHADER_TYPE::VERTEX_SHADER, "ID_StaticMesh_VS.hlsl", "ID_StaticMesh_VS", "ID_StaticMesh_VS");
 	LoadShader(SHADER_TYPE::VERTEX_SHADER, "ID_StaticMesh_Instance_VS.hlsl", "ID_StaticMesh_Instance_VS", "ID_StaticMesh_Instance_VS");
 	LoadShader(SHADER_TYPE::VERTEX_SHADER, "ID_SkinMesh_VS.hlsl", "ID_SkinMesh_VS", "ID_SkinMesh_VS");
-	//LoadShader(SHADER_TYPE::VERTEX_SHADER, "ID_SkinMesh_Instance_VS.hlsl", "ID_SkinMesh_Instance_VS", "ID_SkinMesh_Instance_VS");
+	LoadShader(SHADER_TYPE::VERTEX_SHADER, "ID_SkinMesh_Instance_VS.hlsl", "ID_SkinMesh_Instance_VS", "ID_SkinMesh_Instance_VS");
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "ID_Mesh_PS.hlsl", "ID_Mesh_PS", "ID_Mesh_PS");
 
 	// Depth Shader
