@@ -5,6 +5,7 @@
 #include "TimeManager.h"
 #include "KeyinputManager.h"
 
+
 Animator::Animator()
 {
 	NowAnimationData = nullptr;

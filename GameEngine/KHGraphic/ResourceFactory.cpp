@@ -150,7 +150,7 @@ void GraphicResourceFactory::CreateMeshBuffer(ParserData::CMesh* mesh, MeshBuffe
 
 void GraphicResourceFactory::CreateAnimationBuffer(ModelData* model, ModelAnimationData* animation, AnimationBuffer** ppResource)
 {
-	std::vector<Matrix>& offsetList = model->BoneOffsetList;
+	const std::vector<Matrix>& offsetList = model->BoneOffsetList;
 
 	UINT struct_size = sizeof(XMFLOAT3X4);
 	UINT row_offset = offsetList.size();
@@ -173,6 +173,7 @@ void GraphicResourceFactory::CreateAnimationBuffer(ModelData* model, ModelAnimat
 	animationBuf->FrameOffset = row_offset;
 	animationBuf->AnimationOffset.clear();
 	animationBuf->AnimationOffset.push_back(total_offset);
+	animationBuf->AnimationCount = animation->AnimationCount;
 
 	(*ppResource) = animationBuf;
 
@@ -2158,8 +2159,8 @@ void GraphicResourceFactory::CreateDepthStencilViews(int width, int height)
 	texDesc.Height = height;
 	texDesc.MipLevels = 1;
 	texDesc.ArraySize = 1;
-	texDesc.Format = DXGI_FORMAT_R24G8_TYPELESS;
-	//texDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+	//texDesc.Format = DXGI_FORMAT_R24G8_TYPELESS;
+	texDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
 	texDesc.SampleDesc.Count = 1;
 	texDesc.SampleDesc.Quality = 0;
 	texDesc.Usage = D3D11_USAGE_DEFAULT;

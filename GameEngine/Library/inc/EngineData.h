@@ -390,7 +390,11 @@ public:
 	{
 
 	}
-	std::string ModelName;
+
+	std::string Name;
+
+	UINT AnimationCount = 0;
+
 	std::unordered_map<std::string, CModelAnimation*> AnimList;
 };
 

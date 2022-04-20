@@ -395,24 +395,22 @@ void Eater_LoadMesh::LoadAnimation(int index, std::string& Name)
 	std::size_t End_Anime = Name.rfind('.') - Start_Anime;
 	std::string AnimationName = Name.substr(Start_Anime, End_Anime);
 
-	Animation* animation = nullptr;
 	ModelAnimationData* Data = nullptr;
 	CModelAnimation* AniData = new CModelAnimation();
 
 	//다른 애니메이션이 없다면 새롭게 생성
 	if (LoadManager::AnimationList.find(MeshName) == LoadManager::AnimationList.end())
 	{
-		animation = new Animation();
+		Animation* animation = new Animation();
 		animation->Name = MeshName;
 
 		Data = animation->m_AnimationData;
-		Data->ModelName = MeshName;
+		Data->Name = MeshName;
 
 		LoadManager::AnimationList.insert({ MeshName, animation });
 	}
 	else
 	{
-		animation = LoadManager::GetAnimation(MeshName);
 		Data = LoadManager::GetAnimationData(MeshName);
 	}
 
@@ -457,6 +455,8 @@ void Eater_LoadMesh::LoadAnimation(int index, std::string& Name)
 	//CreateKeyFrame(AniData, 10);
 
 	AniData->m_Index = (int)Data->AnimList.size();
+
+	Data->AnimationCount++;
 
 	Data->AnimList.insert({ AnimationName, std::move(AniData) });
 }

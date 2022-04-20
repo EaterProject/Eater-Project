@@ -431,11 +431,13 @@ void LoadManager::LoadFile(std::string& Path, UINT MODE)
 	{
 		//FBX로드
 		mFBX->Load(Path, MODE);
+		BakeAnimation();
 	}
 	else if (Type == "Eater")
 	{
 		//자체 포멧 로드
 		mEATER->Load(Path, MODE);
+		BakeAnimation();
 	}
 	else if (Type == "Scene")
 	{
@@ -449,6 +451,7 @@ void LoadManager::LoadFile(std::string& Path, UINT MODE)
 	else if (Type == "Emesh")
 	{
 		mEATER->LoadMesh(Path);
+		BakeAnimation();
 	}
 	else if (Type == "Nav")
 	{

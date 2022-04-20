@@ -65,6 +65,7 @@ public:
 
 	UINT BufferIndex = 0;						// Animation Buffer Index
 
+	UINT AnimationCount = 0;
 	UINT FrameOffset = 0;
 	std::vector<UINT> AnimationOffset;
 

@@ -44,11 +44,20 @@ public:
 
 
 	//선택한 그래픽엔진 랜더링
-	void PushInstance(MeshData* mesh);
-	void PushMesh(MeshBuffer* meshData);
-	void PushMaterial(MaterialBuffer* materialData);
-	void PushChangeInstance(MeshData* mesh);
-	void DeleteInstance(MeshData* mesh);
+	void PushInstance(MeshData* meshData);
+	void PushMesh(MeshBuffer* mesh);
+	void PushMaterial(MaterialBuffer* material);
+	void PushAnimation(AnimationBuffer* animation);
+
+	void PushChangeInstance(MeshData* meshData);
+	void PushChangeMesh(MeshBuffer* mesh);
+	void PushChangeMaterial(MaterialBuffer* material);
+	void PushChangeAnimation(AnimationBuffer* animation);
+
+	void DeleteInstance(MeshData* meshData);
+	void DeleteMesh(MeshBuffer* mesh);
+	void DeleteMaterial(MaterialBuffer* material);
+	void DeleteAnimation(AnimationBuffer* animation);
 
 	void Render();
 	void* PickingRender(int x, int y);

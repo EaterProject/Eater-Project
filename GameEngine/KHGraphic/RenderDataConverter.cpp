@@ -208,7 +208,7 @@ void RenderDataConverter::ConvertChangeResource()
 		AnimationBuffer* animation = m_ChangeAnimationList.front();
 
 		// 추가된 Resource 변환..
-		ConvertPushResource<AnimationBuffer, AnimationRenderBuffer>(animation, m_AnimationList);
+		ConvertChangeResource<AnimationBuffer, AnimationRenderBuffer>(animation, m_AnimationList);
 
 		// 변환된 Animation Buffer Pop..
 		m_ChangeAnimationList.pop();
