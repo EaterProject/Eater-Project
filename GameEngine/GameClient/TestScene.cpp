@@ -50,7 +50,7 @@ void TestScene::Awake()
 
 	CreateMap();
 
-	CreateParticle(0,0,0);
+	//CreateParticle(0,0,0);
 	SetEnvironmentMap("Night");
 }
 
@@ -112,42 +112,49 @@ void TestScene::CreateMap()
 	Object->GetTransform()->Position.x -= 10.0f;
 	Object->GetTransform()->Position.y += 10.0f;
 
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	filter->SetModelName("bossb");
+	filter->SetAnimationName("bossb");
+	Object->GetTransform()->Position.z += 20;
+	AC = Object->AddComponent<AnimationController>();
+	AC->Choice("idle");
+
 	//Object = Instance();
 	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("bossb");
-	//filter->SetAnimationName("bossb");
+	//filter->SetModelName("weapone");
+	//filter->SetAnimationName("weapone");
 	//Object->GetTransform()->Position.z += 20;
 	//AC = Object->AddComponent<AnimationController>();
-	//AC->Choice("idle");
+	//AC->Choice("attack");
 
-	
-	for (int i = 0; i < 5; i++)
-	{
-		for (int j = 0; j < 5; j++)
-		{
-			Object = Instance();
-			filter = Object->AddComponent<MeshFilter>();
-			filter->SetModelName("bossb");
-			filter->SetAnimationName("bossb");
-			Object->GetTransform()->Position.z += 20;
-			Object->GetTransform()->Position.x = i * 5;
-			Object->GetTransform()->Position.y = j * 5;
-			AC = Object->AddComponent<AnimationController>();
-			AC->Choice("idle");
-	
-			Object = Instance();
-			filter = Object->AddComponent<MeshFilter>();
-			filter->SetModelName("MonsterA");
-			filter->SetAnimationName("MonsterA");
-			Object->GetTransform()->Position.z -= 20;
-			Object->GetTransform()->Position.x = i * 5;
-			Object->GetTransform()->Position.y = j * 5;
-			AC = Object->AddComponent<AnimationController>();
-			AC->Choice("die");
-	
-			ACList.push_back(AC);
-		}
-	}
+	//for (int i = 0; i < 5; i++)
+	//{
+	//	for (int j = 0; j < 5; j++)
+	//	{
+	//		Object = Instance();
+	//		filter = Object->AddComponent<MeshFilter>();
+	//		filter->SetModelName("bossb");
+	//		filter->SetAnimationName("bossb");
+	//		Object->GetTransform()->Position.z += 20;
+	//		Object->GetTransform()->Position.x = i * 5;
+	//		Object->GetTransform()->Position.y = j * 5;
+	//		AC = Object->AddComponent<AnimationController>();
+	//		AC->Choice("idle");
+	//
+	//		Object = Instance();
+	//		filter = Object->AddComponent<MeshFilter>();
+	//		filter->SetModelName("MonsterA");
+	//		filter->SetAnimationName("MonsterA");
+	//		Object->GetTransform()->Position.z -= 20;
+	//		Object->GetTransform()->Position.x = i * 5;
+	//		Object->GetTransform()->Position.y = j * 5;
+	//		AC = Object->AddComponent<AnimationController>();
+	//		AC->Choice("die");
+	//
+	//		ACList.push_back(AC);
+	//	}
+	//}
 	
 	//Object = Instance();
 	//filter = Object->AddComponent<MeshFilter>();
@@ -196,14 +203,14 @@ void TestScene::CreateMap()
 	//filter = Object->AddComponent<MeshFilter>();
 	//filter->SetModelName("Outside_Pebble");
 
-	testobj = InstanceTerrain("Terrain");
-	Terrain* mTerrain = testobj->GetComponent<Terrain>();
-	mTerrain->SetLayerName("terrain_ground_A_BaseColor", "terrain_ground_A_Normal", "terrain_ground_A_ORM");
-	mTerrain->SetLayerName("terrain_ground_B_BaseColor", "terrain_ground_B_Normal", "terrain_ground_B_ORM");
-	mTerrain->SetLayerName("terrain_ground_C_BaseColor", "terrain_ground_C_Normal", "terrain_ground_C_ORM");
-	mTerrain->SetLayerName("terrain_ground_D_BaseColor", "terrain_ground_D_Normal", "terrain_ground_D_ORM");
-	mTerrain->SetMeshName("Terrain");
-	mTerrain->SetTextureTiling(31.0f);
+	//testobj = InstanceTerrain("Terrain");
+	//Terrain* mTerrain = testobj->GetComponent<Terrain>();
+	//mTerrain->SetLayerName("terrain_ground_A_BaseColor", "terrain_ground_A_Normal", "terrain_ground_A_ORM");
+	//mTerrain->SetLayerName("terrain_ground_B_BaseColor", "terrain_ground_B_Normal", "terrain_ground_B_ORM");
+	//mTerrain->SetLayerName("terrain_ground_C_BaseColor", "terrain_ground_C_Normal", "terrain_ground_C_ORM");
+	//mTerrain->SetLayerName("terrain_ground_D_BaseColor", "terrain_ground_D_Normal", "terrain_ground_D_ORM");
+	//mTerrain->SetMeshName("Terrain");
+	//mTerrain->SetTextureTiling(31.0f);
 }
 
 void TestScene::CreateParticle(float x, float y, float z)
