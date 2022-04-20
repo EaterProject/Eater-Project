@@ -125,6 +125,7 @@ void PickingPass::OnResize(int width, int height)
 void PickingPass::InstanceResize(size_t& renderMaxCount, size_t& unRenderMaxCount)
 {
 	(renderMaxCount > unRenderMaxCount) ? m_MeshInstance.resize(renderMaxCount) : m_MeshInstance.resize(unRenderMaxCount);
+	(renderMaxCount > unRenderMaxCount) ? m_SkinMeshInstance.resize(renderMaxCount) : m_SkinMeshInstance.resize(unRenderMaxCount);
 }
 
 void PickingPass::Release()
@@ -309,6 +310,7 @@ void PickingPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::
 		objectBuf.gViewProj = viewproj;
 
 		m_Skin_Inst_VS->ConstantBufferUpdate(&objectBuf);
+		m_Skin_Inst_VS->SetShaderResourceView<gAnimationBuffer>(instance->m_Animation->m_AnimationBuf);
 
 		m_Skin_Inst_VS->Update();
 

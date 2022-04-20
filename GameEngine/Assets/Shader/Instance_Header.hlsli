@@ -28,8 +28,8 @@ struct MeshInstanceIn
 
 struct MeshIDInstanceIn
 {
-    float4x4 World          : INSTANCE_SEMANTIC(WORLD);
-    float4 HashColor        : INSTANCE_SEMANTIC(HASHCOLOR);
+    float4x4 World              : INSTANCE_SEMANTIC(WORLD);
+    float4 HashColor            : INSTANCE_SEMANTIC(HASHCOLOR);
     
 #ifdef SKIN_MESH
     uint PrevAnimationIndex     : INSTANCE_SEMANTIC(PREV);
