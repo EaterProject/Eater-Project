@@ -1,5 +1,10 @@
 #pragma once
 
+#if defined(DEBUG) || defined(_DEBUG)
+#include <typeinfo>
+#include "Profiler/Profiler.h"
+#endif
+
 #pragma region GraphicResource
 template<typename T>
 GraphicResource<T>::GraphicResource(RESOURCE_TYPE type, Hash_Code hashCode, T* resource)
@@ -17,13 +22,21 @@ GraphicResource<T>::~GraphicResource()
 template<typename T>
 void GraphicResource<T>::Reset()
 {
-	m_Resource.Reset();
+	unsigned long ref_count = m_Resource.Reset();
+
+#if defined(DEBUG) || defined(_DEBUG)
+	PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "[ Graphic ][ Reset ][ %s ] RefCount : %lu", typeid(T).name(), ref_count);
+#endif
 }
 
 template<typename T>
 void GraphicResource<T>::Release()
 {
-	RELEASE_COM(m_Resource);
+	unsigned long ref_count = m_Resource->Release();
+
+#if defined(DEBUG) || defined(_DEBUG)
+	PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "[ Graphic ][ Release ][ %s ] RefCount : %lu", typeid(T).name(), ref_count);
+#endif
 }
 
 template<typename T>
@@ -41,7 +54,13 @@ T** GraphicResource<T>::GetAddress()
 template<typename T>
 T** GraphicResource<T>::ReleaseGetAddress()
 {
-	return m_Resource.ReleaseAndGetAddressOf();
+	unsigned long ref_count = m_Resource->Release();
+
+#if defined(DEBUG) || defined(_DEBUG)
+	PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "[ Graphic ][ ReleaseGetAddress ][ %s ] RefCount : %lu", typeid(T).name(), ref_count);
+#endif
+
+	return m_Resource.GetAddressOf();
 }
 #pragma endregion GraphicResource
 
@@ -111,13 +130,21 @@ GraphicView<T>::~GraphicView()
 template<typename T>
 void GraphicView<T>::Reset()
 {
-	m_Resource.Reset();
+	unsigned long ref_count = m_Resource.Reset();
+
+#if defined(DEBUG) || defined(_DEBUG)
+	PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "[ Graphic ][ Reset ][ %s ] RefCount : %lu", typeid(T).name(), ref_count);
+#endif
 }
 
 template<typename T>
 void GraphicView<T>::Release()
 {
-	RELEASE_COM(m_Resource);
+	unsigned long ref_count = m_Resource->Release();
+
+#if defined(DEBUG) || defined(_DEBUG)
+	PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "[ Graphic ][ Release ][ %s ] RefCount : %lu", typeid(T).name(), ref_count);
+#endif
 }
 
 template<typename T>
@@ -169,7 +196,13 @@ T** GraphicView<T>::GetAddress()
 template<typename T>
 T** GraphicView<T>::ReleaseGetAddress()
 {
-	return m_Resource.ReleaseAndGetAddressOf();
+	unsigned long ref_count = m_Resource->Release();
+
+#if defined(DEBUG) || defined(_DEBUG)
+	PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "[ Graphic ][ ReleaseGetAddress ][ %s ] RefCount : %lu", typeid(T).name(), ref_count);
+#endif
+
+	return m_Resource.GetAddressOf();
 }
 #pragma endregion GraphicView
 
@@ -190,13 +223,21 @@ GraphicState<T>::~GraphicState()
 template<typename T>
 void GraphicState<T>::Reset()
 {
-	m_Resource.Reset();
+	unsigned long ref_count = m_Resource.Reset();
+
+#if defined(DEBUG) || defined(_DEBUG)
+	PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "[ Graphic ][ Reset ][ %s ] RefCount : %lu", typeid(T).name(), ref_count);
+#endif
 }
 
 template<typename T>
 void GraphicState<T>::Release()
 {
-	RELEASE_COM(m_Resource);
+	unsigned long ref_count = m_Resource->Release();
+
+#if defined(DEBUG) || defined(_DEBUG)
+	PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "[ Graphic ][ Release ][ %s ] RefCount : %lu", typeid(T).name(), ref_count);
+#endif
 }
 
 template<typename T>
@@ -214,6 +255,12 @@ T** GraphicState<T>::GetAddress()
 template<typename T>
 T** GraphicState<T>::ReleaseGetAddress()
 {
-	return m_Resource.ReleaseAndGetAddressOf();
+	unsigned long ref_count = m_Resource->Release();
+
+#if defined(DEBUG) || defined(_DEBUG)
+	PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "[ Graphic ][ ReleaseGetAddress ][ %s ] RefCount : %lu", typeid(T).name(), ref_count);
+#endif
+
+	return m_Resource.GetAddressOf();
 }
 #pragma endregion GraphicState

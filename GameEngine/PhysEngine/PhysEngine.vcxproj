@@ -132,6 +132,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(ProjectDir)inc\pxshared\include;$(ProjectDir)inc\source\foundation\include;$(ProjectDir)inc\source\physxextensions\src;$(ProjectDir)inc\include;$(SolutionDir)Library\inc</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -174,6 +175,7 @@ copy /Y "$(ProjectDir)PhysScene.h" "$(SolutionDir)Library\inc\PhysX"</Command>
       <AdditionalIncludeDirectories>$(ProjectDir)inc\pxshared\include;$(ProjectDir)inc\source\foundation\include;$(ProjectDir)inc\source\physxextensions\src;$(ProjectDir)inc\include;$(SolutionDir)Library\inc</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <Optimization>MaxSpeed</Optimization>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

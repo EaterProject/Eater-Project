@@ -118,7 +118,7 @@ void GraphicResourceManager::OnResize(int width, int height)
 
 		// Texture Description ÃßÃâ..
 		tex2D->GetDesc(&texDesc);
-		
+
 		// Texture2D Resize..
 		m_Graphic->CreateTexture2D(&texDesc, nullptr, tex2D->ReleaseGetAddress());
 
