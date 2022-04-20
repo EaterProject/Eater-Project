@@ -135,6 +135,9 @@ void EaterManager::Load_GameObject_File(GameObject* Object ,ObjectOption* mOptio
 	//오브젝트의 정보를 읽어온다
 	MeshFilter* MF				= Object->GetComponent<MeshFilter>();
 	AnimationController* AC		= Object->GetComponent<AnimationController>();
+	
+	if (MF == nullptr) { return; }
+
 	std::string ModelName		= MF->GetModelName();
 	std::string MaterialName	= MF->GetMaterialName();
 

@@ -172,6 +172,9 @@
     <Filter Include="소스 파일\Resource\Animation">
       <UniqueIdentifier>{ee08f069-586a-42b9-8129-476290d8a123}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Manager\NavigationManager">
+      <UniqueIdentifier>{191430b5-d514-4b9d-81d1-ce04bfc74cc5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -342,6 +345,12 @@
     <ClInclude Include="AnimationManager.h">
       <Filter>소스 파일\Manager\AnimationManager</Filter>
     </ClInclude>
+    <ClInclude Include="NavigationManager.h">
+      <Filter>소스 파일\Manager\NavigationManager</Filter>
+    </ClInclude>
+    <ClInclude Include="NavMesh.h">
+      <Filter>소스 파일\Manager\NavigationManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -490,6 +499,12 @@
     </ClCompile>
     <ClCompile Include="AnimationManager.cpp">
       <Filter>소스 파일\Manager\AnimationManager</Filter>
+    </ClCompile>
+    <ClCompile Include="NavigationManager.cpp">
+      <Filter>소스 파일\Manager\NavigationManager</Filter>
+    </ClCompile>
+    <ClCompile Include="NavMesh.cpp">
+      <Filter>소스 파일\Manager\NavigationManager</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

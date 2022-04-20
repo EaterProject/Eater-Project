@@ -154,6 +154,9 @@ void SceneSave::SaveLight(Light* mLight)
 
 void SceneSave::SaveParticle(ParticleSystem* mParticleSystem)
 {
+	mParticleSystem;
+
+
 
 }
 

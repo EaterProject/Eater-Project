@@ -36,15 +36,17 @@ void E_AnimationManager::ChangeEaterFile(ParserData::CModel* FBXMesh)
 	for (int i = 0; i < AnimationCount; i++)
 	{
 		int FrameCount = (int)FBXMesh->m_ModelAnimation->m_AnimationList[i]->m_AniData.size();
-		EATER_SET_LIST_START(std::to_string(i), FrameCount, 11);
+		EATER_SET_LIST_START(std::to_string(i), FrameCount, 21);
 		for (int j = 0; j < FrameCount; j++)
 		{
 			ParserData::CFrame* Frame = FBXMesh->m_ModelAnimation->m_AnimationList[i]->m_AniData[j];
 
+			EATER_SET_LIST(Frame->m_Time);
+
 			EATER_SET_LIST(Frame->m_LocalPos.x);
 			EATER_SET_LIST(Frame->m_LocalPos.y);
 			EATER_SET_LIST(Frame->m_LocalPos.z);
-
+			
 			EATER_SET_LIST(Frame->m_LocalRotQt.x);
 			EATER_SET_LIST(Frame->m_LocalRotQt.y);
 			EATER_SET_LIST(Frame->m_LocalRotQt.z);
@@ -54,7 +56,18 @@ void E_AnimationManager::ChangeEaterFile(ParserData::CModel* FBXMesh)
 			EATER_SET_LIST(Frame->m_LocalScale.y);
 			EATER_SET_LIST(Frame->m_LocalScale.z);
 
-			EATER_SET_LIST(Frame->m_Time, true);
+			EATER_SET_LIST(Frame->m_WorldPos.x);
+			EATER_SET_LIST(Frame->m_WorldPos.y);
+			EATER_SET_LIST(Frame->m_WorldPos.z);
+
+			EATER_SET_LIST(Frame->m_WorldRotQt.x);
+			EATER_SET_LIST(Frame->m_WorldRotQt.y);
+			EATER_SET_LIST(Frame->m_WorldRotQt.z);
+			EATER_SET_LIST(Frame->m_WorldRotQt.w);
+
+			EATER_SET_LIST(Frame->m_WorldScale.x);
+			EATER_SET_LIST(Frame->m_WorldScale.y);
+			EATER_SET_LIST(Frame->m_WorldScale.z,true);
 		}
 	}
 	EATER_CLOSE_WRITE_FILE();

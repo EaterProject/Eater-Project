@@ -30,6 +30,7 @@ public:
 	void UpdateGameObject();
 	void GetData(ObjectOption& Obj);
 	void Reset();
+
 	
 	Transform* ObjectTransform;
 	CEdit Pos_X,Pos_Y,Pos_Z;
