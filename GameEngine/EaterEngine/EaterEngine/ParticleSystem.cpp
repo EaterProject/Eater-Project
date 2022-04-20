@@ -297,6 +297,9 @@ void ParticleSystem::SetLifeTimeRotation(float minRot, float maxRot)
 
 void ParticleSystem::SetTextureTiling(int count_x, int count_y)
 {
+	m_Tiling.m_Height = count_x;
+	m_Tiling.m_Height = count_y;
+
 	m_SystemDesc->Tile_Width = count_x;
 	m_SystemDesc->Tile_Height = count_y;
 	m_SystemDesc->Total_Frame = count_x * count_y;
@@ -366,52 +369,62 @@ float ParticleSystem::GetRateOverTime()
 	return m_RateOverTimeCount;
 }
 
+float ParticleSystem::GetPlayTime()
+{
+	return m_PlayTime;
+}
+
+bool ParticleSystem::GetLoop()
+{
+	return m_Looping;
+}
+
 Vector3 ParticleSystem::GetShapeRadius()
 {
 	return m_ParticleData->Area_Radius;
 }
 
-RandomRange<Vector3> ParticleSystem::GetStartForce()
+Range<Vector3> ParticleSystem::GetStartForce()
 {
 	return m_StartForce;
 }
 
-RandomRange<Vector4> ParticleSystem::GetStartColor()
+Range<Vector4> ParticleSystem::GetStartColor()
 {
 	return m_StartColor;
 }
 
-RandomRange<float> ParticleSystem::GetStartLifeTime()
+Range<float> ParticleSystem::GetStartLifeTime()
 {
 	return m_StartLifeTime;
 }
 
-RandomRange<float> ParticleSystem::GetStartScale()
+Range<float> ParticleSystem::GetStartScale()
 {
 	return m_StartScale;
 }
 
-RandomRange<float> ParticleSystem::GetStartRotation()
+Range<float> ParticleSystem::GetStartRotation()
 {
 	return m_StartRotation;
 }
 
-RandomRange<Vector3> ParticleSystem::GetLifeTimeForce()
+Range<Vector3> ParticleSystem::GetLifeTimeForce()
 {
 	return m_LifeTimeForce;
 }
 
-RandomRange<Vector4> ParticleSystem::GetLifeTimeColor()
+Range<Vector4> ParticleSystem::GetLifeTimeColor()
 {
 	return m_LifeTimeColor;
 }
 
-RandomRange<float> ParticleSystem::GetLifeTimeScale()
+Range<float> ParticleSystem::GetLifeTimeScale()
 {
 	return m_LifeTimeScale;
 }
 
-RandomRange<float> ParticleSystem::GetLifeTimeRotation()
+Range<float> ParticleSystem::GetLifeTimeRotation()
 {
 	return m_LifeTimeRotation;
 }
@@ -424,6 +437,11 @@ PARTICLE_LIFETIME_OPTION ParticleSystem::GetLifeTimeColorOption()
 PARTICLE_LIFETIME_OPTION ParticleSystem::GetLifeTimeScaleOption()
 {
 	return m_SystemDesc->ScaleType;
+}
+
+Range<int> ParticleSystem::GetTextureTiling()
+{
+	return m_Tiling;
 }
 
 void ParticleSystem::StartPlay()

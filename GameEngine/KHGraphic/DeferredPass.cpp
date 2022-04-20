@@ -62,7 +62,7 @@ void DeferredPass::Create(int width, int height)
 	texDescDiffuse.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
 	texDescDiffuse.CPUAccessFlags = 0;
 	texDescDiffuse.MiscFlags = 0;
-
+	
 	// Pixel Data Àü¿ë Texture 2D
 	D3D11_TEXTURE2D_DESC texDescPosNormal;
 	ZeroMemory(&texDescPosNormal, sizeof(texDescPosNormal));

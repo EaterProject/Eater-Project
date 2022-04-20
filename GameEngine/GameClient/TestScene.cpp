@@ -203,14 +203,14 @@ void TestScene::CreateMap()
 	//filter = Object->AddComponent<MeshFilter>();
 	//filter->SetModelName("Outside_Pebble");
 
-	//testobj = InstanceTerrain("Terrain");
-	//Terrain* mTerrain = testobj->GetComponent<Terrain>();
-	//mTerrain->SetLayerName("terrain_ground_A_BaseColor", "terrain_ground_A_Normal", "terrain_ground_A_ORM");
-	//mTerrain->SetLayerName("terrain_ground_B_BaseColor", "terrain_ground_B_Normal", "terrain_ground_B_ORM");
-	//mTerrain->SetLayerName("terrain_ground_C_BaseColor", "terrain_ground_C_Normal", "terrain_ground_C_ORM");
-	//mTerrain->SetLayerName("terrain_ground_D_BaseColor", "terrain_ground_D_Normal", "terrain_ground_D_ORM");
-	//mTerrain->SetMeshName("Terrain");
-	//mTerrain->SetTextureTiling(31.0f);
+	testobj = InstanceTerrain("Terrain");
+	Terrain* mTerrain = testobj->GetComponent<Terrain>();
+	mTerrain->SetLayerName("terrain_ground_A_BaseColor", "terrain_ground_A_Normal", "terrain_ground_A_ORM");
+	mTerrain->SetLayerName("terrain_ground_B_BaseColor", "terrain_ground_B_Normal", "terrain_ground_B_ORM");
+	mTerrain->SetLayerName("terrain_ground_C_BaseColor", "terrain_ground_C_Normal", "terrain_ground_C_ORM");
+	mTerrain->SetLayerName("terrain_ground_D_BaseColor", "terrain_ground_D_Normal", "terrain_ground_D_ORM");
+	mTerrain->SetMeshName("Terrain");
+	mTerrain->SetTextureTiling(31.0f);
 }
 
 void TestScene::CreateParticle(float x, float y, float z)
