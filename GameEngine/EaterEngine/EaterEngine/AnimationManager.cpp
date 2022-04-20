@@ -78,32 +78,22 @@ void AnimationManager::DeleteAnimation(UINT index)
 void AnimationManager::BakeAnimation()
 {
 	ModelData* modelData = nullptr;
-	ModelAnimationData* aniData = nullptr;
+	Animation* animation = nullptr;
 
 	// 로드된 모든 Model Animation Data를 Baking 한다..
-	for (auto& modelAnimation : LoadManager::AnimationDataList)
+	for (auto& modelAnimation : LoadManager::AnimationList)
 	{
-		std::string modelName = modelAnimation.first;
-
-		aniData = modelAnimation.second;
-		modelData = LoadManager::GetModelData(modelName);
+		animation = modelAnimation.second;
+		modelData = LoadManager::GetModelData(modelAnimation.first);
 
 		// 새로운 Animation 생성..
-		Animation* Buffer = new Animation();
-
 		EnterCriticalSection(m_CriticalSection);
-		m_Graphic->CreateAnimationBuffer(modelData, aniData, &Buffer->m_AnimationBuffer);
+		m_Graphic->CreateAnimationBuffer(modelData, animation->m_AnimationData, &animation->m_AnimationBuffer);
 		LeaveCriticalSection(m_CriticalSection);
 
-		if (Buffer->m_AnimationBuffer == nullptr)
+		if (animation->m_AnimationBuffer == nullptr)
 		{
-			PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "[ Engine ][ Bake ][ Animation Buffer ] '%s' FAILED!!", modelName.c_str());
+			PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "[ Engine ][ Bake ][ Animation Buffer ] '%s' FAILED!!", modelAnimation.first.c_str());
 		}
-
-		// Animation Data 설정..
-		Buffer->Name = modelName;
-		Buffer->m_AnimationData = aniData;
-
-		LoadManager::AnimationList.insert({ modelName, Buffer });
 	}
 }

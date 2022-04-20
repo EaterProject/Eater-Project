@@ -95,7 +95,7 @@ void GameEngine::Initialize(HWND Hwnd, bool mConsoleDebug)
 	mTimeManager		= new TimeManager();
 	mLightManager		= new LightManager();
 	mPhysManager		= new PhysManager();
-	mNavigationManager	= new NavigationManager();
+	//mNavigationManager	= new NavigationManager();
 	//mNetworkManager		= new NetworkManager();
 
 	//매니저들 초기화
@@ -107,7 +107,7 @@ void GameEngine::Initialize(HWND Hwnd, bool mConsoleDebug)
 	mLoadManager->Initialize(mGraphicManager, &g_CS);
 	mTimeManager->Initialize();
 	mPhysManager->Initialize();
-	mNavigationManager->Initialize();
+	//mNavigationManager->Initialize();
 	//mNetworkManager->Initialize();
 
 	Component::SetManager(mTimeManager, mKeyManager);
@@ -142,7 +142,7 @@ void GameEngine::Update()
 	mPhysManager->Update(mTimeManager->DeltaTime());
 	mSceneManager->Update();
 	mObjectManager->PlayUpdate();
-	mNavigationManager->Update();
+	//mNavigationManager->Update();
 
 	// 모든 업데이트가 일어난 후 데이터 세팅..
 	GlobalDataManager::Update(mTimeManager->DeltaTime());

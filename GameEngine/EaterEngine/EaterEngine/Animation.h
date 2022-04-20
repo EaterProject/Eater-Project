@@ -16,10 +16,11 @@ public:
 	friend class AnimationManager;
 
 public:
+	void BakeAnimation();
 	void Release();
 
 public:
-	void SetAnimation(ModelAnimationData* animation);
+	int GetAnimationCount();
 
 public:
 	std::string Name;

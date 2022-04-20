@@ -144,96 +144,94 @@ void E_BufferManager::SetIndexBuffer(ParserData::CMesh* mMesh)
 
 void E_BufferManager::SetNavigationBuffer(ParserData::CMesh* mMesh)
 {
-	int VertexCount = (int)mMesh->m_VertexList.size();
-	int IndexCount	= (int)mMesh->m_IndexList.size();
-	Data.clear();
-	Data.resize(IndexCount);
-	for (int i = 0; i < IndexCount; i++)
-	{
-		OneTriangle* OneData = new OneTriangle();
-		//한개의 페이스를 가져온다
-		int Point01Index  = mMesh->m_IndexList[i]->m_Index[0];
-		int Point02Index  = mMesh->m_IndexList[i]->m_Index[1];
-		int Point03Index  = mMesh->m_IndexList[i]->m_Index[2];
-
-		//페이스에 해당하는 버텍스 3개를 가져온다
-		OneData->VertexPos[0] = mMesh->m_VertexList[Point01Index]->m_Pos;
-		OneData->VertexPos[1] = mMesh->m_VertexList[Point02Index]->m_Pos;
-		OneData->VertexPos[2] = mMesh->m_VertexList[Point03Index]->m_Pos;
-
-		//중심점위치를 구한다
-		OneData->CreateCenterPoint();
-		//인덱스 값 넣어주기
-		OneData->Index = i;
-
-		for (int j = 0; j < IndexCount; j++)
-		{
-			//같은 인덱스는 비교하지않는다
-			if (i == j) { continue; }
-
-			int Count = 0;
-			for (int k = 0; k < 3; k++)
-			{
-				if (Point01Index == mMesh->m_IndexList[j]->m_Index[k])
-				{
-					Count++;
-				}
-			}
-
-			for (int k = 0; k < 3; k++)
-			{
-				if (Point02Index == mMesh->m_IndexList[j]->m_Index[k])
-				{
-					Count++;
-				}
-			}
-
-			for (int k = 0; k < 3; k++)
-			{
-				if (Point03Index == mMesh->m_IndexList[j]->m_Index[k])
-				{
-					Count++;
-				}
-			}
-
-			//만약 같은인덱스가 2개이상이라면 인접한 삼각형이라 생각한다
-			if(Count >= 2)
-			{
-				for (int m = 0; m < 3; m++)
-				{
-					if (OneData->FriendFace[m] == -1)
-					{
-						OneData->FriendFace[m] = j;
-						break;
-					}
-				}
-			}
-		}
-		Data[OneData->Index] = OneData;
-	}
-	
-	//모두 구했으니 값을 저장한다
-	int Count = (int)Data.size();
-	EATER_SET_LIST_START("TRIANGLE", Count, 16);
-	for (int i = 0; i < Count; i++)
-	{
-		EATER_SET_LIST((int)Data[i]->Index);
-		for (int j = 0; j < 3; j++)
-		{
-			EATER_SET_LIST(Data[i]->VertexPos[j].x);
-			EATER_SET_LIST(Data[i]->VertexPos[j].y);
-			EATER_SET_LIST(Data[i]->VertexPos[j].z);
-		}
-		EATER_SET_LIST(Data[i]->CenterPoint.x);
-		EATER_SET_LIST(Data[i]->CenterPoint.y);
-		EATER_SET_LIST(Data[i]->CenterPoint.z);
-
-		EATER_SET_LIST(Data[i]->FriendFace[0]);
-		EATER_SET_LIST(Data[i]->FriendFace[1]);
-		EATER_SET_LIST(Data[i]->FriendFace[2],true);
-	}
-
-
+	//int VertexCount = (int)mMesh->m_VertexList.size();
+	//int IndexCount	= (int)mMesh->m_IndexList.size();
+	//Data.clear();
+	//Data.resize(IndexCount);
+	//for (int i = 0; i < IndexCount; i++)
+	//{
+	//	OneTriangle* OneData = new OneTriangle();
+	//	//한개의 페이스를 가져온다
+	//	int Point01Index  = mMesh->m_IndexList[i]->m_Index[0];
+	//	int Point02Index  = mMesh->m_IndexList[i]->m_Index[1];
+	//	int Point03Index  = mMesh->m_IndexList[i]->m_Index[2];
+	//
+	//	//페이스에 해당하는 버텍스 3개를 가져온다
+	//	OneData->VertexPos[0] = mMesh->m_VertexList[Point01Index]->m_Pos;
+	//	OneData->VertexPos[1] = mMesh->m_VertexList[Point02Index]->m_Pos;
+	//	OneData->VertexPos[2] = mMesh->m_VertexList[Point03Index]->m_Pos;
+	//
+	//	//중심점위치를 구한다
+	//	OneData->CreateCenterPoint();
+	//	//인덱스 값 넣어주기
+	//	OneData->Index = i;
+	//
+	//	for (int j = 0; j < IndexCount; j++)
+	//	{
+	//		//같은 인덱스는 비교하지않는다
+	//		if (i == j) { continue; }
+	//
+	//		int Count = 0;
+	//		for (int k = 0; k < 3; k++)
+	//		{
+	//			if (Point01Index == mMesh->m_IndexList[j]->m_Index[k])
+	//			{
+	//				Count++;
+	//			}
+	//		}
+	//
+	//		for (int k = 0; k < 3; k++)
+	//		{
+	//			if (Point02Index == mMesh->m_IndexList[j]->m_Index[k])
+	//			{
+	//				Count++;
+	//			}
+	//		}
+	//
+	//		for (int k = 0; k < 3; k++)
+	//		{
+	//			if (Point03Index == mMesh->m_IndexList[j]->m_Index[k])
+	//			{
+	//				Count++;
+	//			}
+	//		}
+	//
+	//		//만약 같은인덱스가 2개이상이라면 인접한 삼각형이라 생각한다
+	//		if(Count >= 2)
+	//		{
+	//			for (int m = 0; m < 3; m++)
+	//			{
+	//				if (OneData->FriendFace[m] == -1)
+	//				{
+	//					OneData->FriendFace[m] = j;
+	//					break;
+	//				}
+	//			}
+	//		}
+	//	}
+	//	Data[OneData->Index] = OneData;
+	//}
+	//
+	////모두 구했으니 값을 저장한다
+	//int Count = (int)Data.size();
+	//EATER_SET_LIST_START("TRIANGLE", Count, 16);
+	//for (int i = 0; i < Count; i++)
+	//{
+	//	EATER_SET_LIST((int)Data[i]->Index);
+	//	for (int j = 0; j < 3; j++)
+	//	{
+	//		EATER_SET_LIST(Data[i]->VertexPos[j].x);
+	//		EATER_SET_LIST(Data[i]->VertexPos[j].y);
+	//		EATER_SET_LIST(Data[i]->VertexPos[j].z);
+	//	}
+	//	EATER_SET_LIST(Data[i]->CenterPoint.x);
+	//	EATER_SET_LIST(Data[i]->CenterPoint.y);
+	//	EATER_SET_LIST(Data[i]->CenterPoint.z);
+	//
+	//	EATER_SET_LIST(Data[i]->FriendFace[0]);
+	//	EATER_SET_LIST(Data[i]->FriendFace[1]);
+	//	EATER_SET_LIST(Data[i]->FriendFace[2],true);
+	//}
 }
 
 void E_BufferManager::SetSkinVertexBuffer(ParserData::CMesh* mMesh)

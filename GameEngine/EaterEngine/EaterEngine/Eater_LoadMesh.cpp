@@ -3,6 +3,8 @@
 #include "EngineData.h"
 #include "LoadManager.h"
 #include "Eater_LoadCamera.h"
+#include "Animation.h"
+#include "GraphicEngineManager.h"
 
 #define LERP(prev, next, time) ((prev * (1.0f - time)) + (next * time))
 Eater_LoadMesh::Eater_LoadMesh()
@@ -14,8 +16,11 @@ Eater_LoadMesh::~Eater_LoadMesh()
 
 }
 
-void Eater_LoadMesh::Initialize()
+void Eater_LoadMesh::Initialize(GraphicEngineManager* Graphic, CRITICAL_SECTION* _cs)
 {
+	m_Graphic = Graphic;
+	m_CriticalSection = _cs;
+
 	mCamera = new Eater_LoadCamera();
 	mCamera->Initialize();
 }
@@ -390,18 +395,25 @@ void Eater_LoadMesh::LoadAnimation(int index, std::string& Name)
 	std::size_t End_Anime = Name.rfind('.') - Start_Anime;
 	std::string AnimationName = Name.substr(Start_Anime, End_Anime);
 
+	Animation* animation = nullptr;
 	ModelAnimationData* Data = nullptr;
 	CModelAnimation* AniData = new CModelAnimation();
 
 	//다른 애니메이션이 없다면 새롭게 생성
-	if (LoadManager::AnimationDataList.find(MeshName) == LoadManager::AnimationDataList.end())
+	if (LoadManager::AnimationList.find(MeshName) == LoadManager::AnimationList.end())
 	{
-		Data = new ModelAnimationData();
-		LoadManager::AnimationDataList.insert({ MeshName,Data });
+		animation = new Animation();
+		animation->Name = MeshName;
+
+		Data = animation->m_AnimationData;
+		Data->ModelName = MeshName;
+
+		LoadManager::AnimationList.insert({ MeshName, animation });
 	}
 	else
 	{
-		Data = LoadManager::AnimationDataList[MeshName];
+		animation = LoadManager::GetAnimation(MeshName);
+		Data = LoadManager::GetAnimationData(MeshName);
 	}
 
 	AniData->m_TicksPerFrame	= std::stof(EATER_GET_MAP(index, "TickFrame"));
@@ -442,7 +454,7 @@ void Eater_LoadMesh::LoadAnimation(int index, std::string& Name)
 		AniData->m_AnimationList.push_back(std::move(OneAnime));
 	}
 
-	CreateKeyFrame(AniData, 10);
+	//CreateKeyFrame(AniData, 10);
 
 	AniData->m_Index = (int)Data->AnimList.size();
 

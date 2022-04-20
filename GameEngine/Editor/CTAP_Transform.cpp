@@ -53,6 +53,7 @@ BOOL CTAP_Transform::OnInitDialog()
 
 	Rotation_Z_Slider.SetRange(-360, 360);
 	Rotation_Z_Slider.SetPos(2);
+
 	return 0;
 }
 

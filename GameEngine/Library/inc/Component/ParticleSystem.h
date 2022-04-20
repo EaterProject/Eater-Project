@@ -66,6 +66,14 @@ public:
 
 	EATER_ENGINEDLL void SetNextParticle(ParticleSystem* particle);
 
+	///Get
+	EATER_ENGINEDLL PARTICLE_RENDER_OPTION GetRenderType();
+	EATER_ENGINEDLL int GetMaxParticles();
+	EATER_ENGINEDLL float GetDelayTime();
+	EATER_ENGINEDLL float GetRateOverTime();
+	EATER_ENGINEDLL Vector3 GetShapeRadius();
+
+
 public:
 	void Release();
 

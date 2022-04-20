@@ -167,6 +167,20 @@ public:
 	TextureBuffer* Prefilter = nullptr;					// Environment Prefilter Buffer
 };
 
+// Collider Buffer
+class ColliderBuffer
+{
+public:
+	ColliderBuffer() = default;
+	~ColliderBuffer() = default;
+
+	int IndexArrayCount;
+	int VertexArrayCount;
+
+	Vector3* VertexArray;
+	UINT* IndexArray;
+};
+
 // Camera Animation
 class CameraAnimation
 {
@@ -296,11 +310,6 @@ class LoadMeshData
 public:
 	~LoadMeshData()
 	{
-		if (Parent != nullptr)
-		{
-			delete Parent;
-		}
-
 		for (auto k : Child)
 		{
 			delete k;
@@ -381,7 +390,7 @@ public:
 	{
 
 	}
-
+	std::string ModelName;
 	std::unordered_map<std::string, CModelAnimation*> AnimList;
 };
 

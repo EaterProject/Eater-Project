@@ -12,12 +12,12 @@ public:
 	NavigationManager();
 	~NavigationManager();
 	void Initialize();
-	void Update();
-
-	void DebugFriendFace(int FaceIndex);
-	void DebugMoveLine(int StartIndex, int EndIndex);
-	void CreateHeap(unsigned int  StartFaceIndex, unsigned int EndFaceIndex);
-	float FindCost(float& EndX,float& EndY,float& EndZ, int Index);
+	//void Update();
+	//
+	//void DebugFriendFace(int FaceIndex);
+	//void DebugMoveLine(int StartIndex, int EndIndex);
+	//void CreateHeap(unsigned int  StartFaceIndex, unsigned int EndFaceIndex);
+	//float FindCost(float& EndX,float& EndY,float& EndZ, int Index);
 private:
 	std::vector<OneTriangle*>* NavigationData;
 
