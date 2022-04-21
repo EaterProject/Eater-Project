@@ -150,6 +150,8 @@ void GraphicResourceFactory::CreateMeshBuffer(ParserData::CMesh* mesh, MeshBuffe
 
 void GraphicResourceFactory::CreateAnimationBuffer(ModelData* model, ModelAnimationData* animation, AnimationBuffer** ppResource)
 {
+	if (model->BoneOffsetList.empty()) return;
+
 	const std::vector<Matrix>& offsetList = model->BoneOffsetList;
 
 	UINT struct_size = sizeof(XMFLOAT3X4);

@@ -160,6 +160,7 @@ copy/Y "$(SolutionDir)Library\lib\FBX\86\r\libfbxsdk.dll"   "..\\Library\lib"</C
       <AdditionalIncludeDirectories>$(ProjectDir)Export;$(ProjectDir)FBX\inc;$(SolutionDir)Library\inc</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -188,6 +189,7 @@ copy/Y "$(ProjectDir)FBX\lib\64\d\libfbxsdk.dll" "$(SolutionDir)Library\lib"</Co
       <PreprocessorDefinitions>PARSER_EXPORT;_WINDOWS;_USRDLL;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)Export;$(ProjectDir)FBX\inc;$(SolutionDir)Library\inc</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>

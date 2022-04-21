@@ -226,7 +226,14 @@ void AddOccluder(std::string mMeshName)
  {
 	 if (gGameEngine == nullptr) return nullptr;
 
-	 return (GameObject*)gGameEngine->Picking(x, y);
+	 void* object = gGameEngine->Picking(x, y);
+
+	 if (object)
+	 {
+		 return (GameObject*)object;
+	 }
+
+	 return nullptr;
  }
 
  GameObject* GetMainCamera()
