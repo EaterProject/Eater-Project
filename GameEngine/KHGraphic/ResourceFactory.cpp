@@ -1800,6 +1800,10 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(Parser
 	// Debug Name..
 	GPU_RESOURCE_DEBUG_NAME(vb, (mesh->m_NodeName + "_VertexBuffer").c_str());
 	GPU_RESOURCE_DEBUG_NAME(ib, (mesh->m_NodeName + "_IndexBuffer").c_str());
+
+	// Image Erase..
+	m_Parser->EraseImagePixel(maskImage1);
+	m_Parser->EraseImagePixel(maskImage2);
 }
 
 template<>

@@ -4,12 +4,22 @@
 
 cbuffer cbMaterial : register(b0)
 {
-    float4 gAddColor        : packoffset(c0);
+    float3 gAddColor        : packoffset(c0);
+    uint gOption            : packoffset(c0.w);
     float gEmissiveFactor   : packoffset(c1.x);
     float gRoughnessFactor  : packoffset(c1.y);
     float gMetallicFactor   : packoffset(c1.z);
-    uint gTexID             : packoffset(c1.w);
+    float gLimLightFactor   : packoffset(c1.w);
+    
+    float3 gLimLightColor   : packoffset(c2.x);
+    float gLimLightWidth    : packoffset(c2.w);
 };
+
+cbuffer cbCamera : register(b1)
+{
+    float3 gEyePos : packoffset(c0.x);
+    float gPad     : packoffset(c0.w);
+}
 
 #ifdef TERRAIN_MESH
 Texture2D gDiffuseLayer1    : register(t0);
@@ -41,7 +51,8 @@ MeshPixelOut Deferred_PBR_PS(MeshPixelIn pin)
     
     float4 albedo       = float4(0.0f, 0.0f, 0.0f, 1.0f);
     float4 emissive     = float4(0.0f, 0.0f, 0.0f, 1.0f);
-    float3 orm          = float3(0.0f, 1.0f, 0.0f);
+    float3 orm          = float3(0.0f, 0.0f, 0.0f);
+    
     float3 normalColor  = float3(0.0f, 0.0f, 0.0f);
     float3 normalW      = float3(0.0f, 0.0f, 0.0f);
     float3 normalV      = float3(0.0f, 0.0f, 0.0f);
@@ -78,16 +89,12 @@ MeshPixelOut Deferred_PBR_PS(MeshPixelIn pin)
     normalW = UnpackNormal(normalColor, pin.NormalW, pin.TangentW);
     normalV = UnpackNormal(normalColor, pin.NormalV, pin.TangentV);
 #else
-    if (gTexID & ALBEDO_MAP)
+    if (gOption & ALBEDO_MAP)
     {
-        albedo = gDiffuseMap.Sample(gSamWrapLinear, pin.Tex) + gAddColor;
+        albedo = gDiffuseMap.Sample(gSamWrapLinear, pin.Tex);
         clip(albedo.a - 0.1f);
     }
-    else
-    {
-        albedo = gAddColor;
-    }
-    if (gTexID & NORMAL_MAP)
+    if (gOption & NORMAL_MAP)
     {
         normalColor = gNormalMap.Sample(gSamWrapLinear, pin.Tex).rgb;
         normalW = UnpackNormal(normalColor, pin.NormalW, pin.TangentW);
@@ -98,22 +105,26 @@ MeshPixelOut Deferred_PBR_PS(MeshPixelIn pin)
         normalW = normalize(pin.NormalW);
         normalV = normalize(pin.NormalV);
     }
-    if (gTexID & EMISSIVE_MAP)
+    if (gOption & EMISSIVE_MAP)
     {
-        emissive = gEmissiveMap.Sample(gSamWrapLinear, pin.Tex) * gEmissiveFactor;
+        emissive.rgb += gEmissiveMap.Sample(gSamWrapLinear, pin.Tex).rgb * gEmissiveFactor;
     }
-    if (gTexID & ORM_MAP)
+    if (gOption & ORM_MAP)
     {
-        orm = gORMMap.Sample(gSamWrapLinear, pin.Tex).rgb;
-        orm.g += gRoughnessFactor;
-        orm.b += gMetallicFactor;
+        orm += gORMMap.Sample(gSamWrapLinear, pin.Tex).rgb;
     }
-    else
+    if (gOption & LIM_LIGHT)
     {
-        orm.g = gRoughnessFactor;
-        orm.b = gMetallicFactor;
+        float rim = 1.0f - max(0, dot(normalW, normalize(gEyePos - pin.PosW)));
+        rim = smoothstep(1.0f - gLimLightWidth, 1.0f, rim) * gLimLightFactor;
+    
+        emissive.xyz += gLimLightColor * rim;
     }
 #endif
+    
+    albedo.rgb += gAddColor.rgb;
+    orm.g += gRoughnessFactor;
+    orm.b += gMetallicFactor;
     
     pout.Albedo = albedo;
     pout.Emissive = emissive;

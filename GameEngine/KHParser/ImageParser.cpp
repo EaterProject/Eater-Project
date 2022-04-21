@@ -10,6 +10,9 @@
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "stb_image_write.h"
 
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
+
 PARSER_DLL ImageParser* ImageParser::Create(IMAGE_TYPE type)
 {
 	ImageParser* newParser = nullptr;
@@ -54,7 +57,15 @@ PARSER_DLL void ImageParser::WriteImagePixel(const char* fileName, ParserData::I
 	case BMP_IMAGE:
 		stbi_write_bmp(fileName, image.width, image.height, image.channels, image.imgColor);
 		break;
+	case HDR_IMAGE:
+		stbi_write_hdr(fileName, image.width, image.height, image.channels, image.hdrColor);
+		break;
 	default:
 		break;
 	}
+}
+
+PARSER_DLL void ImageParser::EraseImagePixel(ParserData::ImageData image)
+{
+	stbi_image_free(image.imgColor);
 }

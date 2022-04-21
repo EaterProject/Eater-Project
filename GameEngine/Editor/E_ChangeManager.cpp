@@ -123,7 +123,6 @@ void E_ChangeManager::Change_Material(int index, GameObject* Object)
 		EATER_CHANGE_MAP(index, "AddColor_R", std::to_string(AddColor_R));
 		EATER_CHANGE_MAP(index, "AddColor_G", std::to_string(AddColor_G));
 		EATER_CHANGE_MAP(index, "AddColor_B", std::to_string(AddColor_B));
-		EATER_CHANGE_MAP(index, "AddColor_A", "1");
 
 		EATER_CLOSE_CHANGE_FILE(MF->GetMaterialName(), "../Assets/Texture/Material/", ".Emat");
 	}

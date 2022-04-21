@@ -64,7 +64,6 @@ void CTAP_MeshFilter::SetGameObject(MeshFilter* ObjectMeshFilter)
 		float AddColorR = mMaterial->m_MaterialData->Material_SubData->AddColor.x;
 		float AddColorG = mMaterial->m_MaterialData->Material_SubData->AddColor.y;
 		float AddColorB = mMaterial->m_MaterialData->Material_SubData->AddColor.z;
-		float AddColorA = mMaterial->m_MaterialData->Material_SubData->AddColor.w;
 
 	
 		Emissive_Edit.SetWindowTextW(ChangeToCString(EmissiveF));
@@ -172,7 +171,7 @@ void CTAP_MeshFilter::UpdateGameObject()
 	}
 
 	CString GetNumber;
-	Vector4 AddColor;
+	Vector3 AddColor;
 
 	AddColor_R.GetWindowTextW(GetNumber);
 	AddColor.x = ChangeToFloat(GetNumber);

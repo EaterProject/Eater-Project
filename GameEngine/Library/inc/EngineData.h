@@ -119,12 +119,17 @@ public:
 class MaterialSubData
 {
 public:
-	Vector4 AddColor = Vector4(0.0f, 0.0f, 0.0, 1.0f);	// Add Color
+	Vector3 AddColor = Vector3(0.0f, 0.0f, 0.0f);	// Add Color
+	Vector3 LimColor = Vector3(0.0f, 0.0f, 0.0f);	// LimLight Color
 
 	float EmissiveFactor = 1.0f;		// Emissive 강도
-	float RoughnessFactor = 1.0f;		// Roughness 강도
-	float MetallicFactor = 1.0f;		// Metallic 강도
+	float RoughnessFactor = 1.0f;		// Roughness 강도 (0 ~ 1)
+	float MetallicFactor = 1.0f;		// Metallic 강도 (0 ~ 1)
 
+	float LimLightFactor = 1.0f;		// LimLight 강도
+	float LimLightWidth = 0.0f;			// LimLight 범위 (0 ~ 1)
+
+	bool LimLight = false;				// LimLight 활성화 여부
 	bool Alpha = false;					// Alpha Mesh
 
 	Vector2 Tile;						// X, Y Tiling
@@ -246,6 +251,7 @@ public:
 	Matrix CamProj;		// Camera Proj Matrix
 	Matrix CamViewProj;	// Camera View Proj Matrix
 	Vector3 CamPos;		// Camera Pos
+	Vector3 CamLook;	// Camera Look
 
 	BoundingFrustum BoundFrustum;	// Bounding Frustum
 	BoundingFrustum OriginFrustum;	// Bounding Frustum
