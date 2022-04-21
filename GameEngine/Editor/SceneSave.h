@@ -19,7 +19,8 @@ public:
 	~SceneSave();
 	void Initialize(std::map<std::string, GameObject*>* ObjectList);
 
-	void Save(std::string SaveFilePath,std::string SaveFileName);
+	void Scene_Save(std::string SaveFilePath,std::string SaveFileName);
+	void Prefap_Save(std::string SaveFilePath, std::string SaveFileName,GameObject* Obj);
 private:
 	void SceneOption();
 	void SaveTransform(Transform* Obj);

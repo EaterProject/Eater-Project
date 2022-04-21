@@ -102,6 +102,7 @@ public:
 	EATER_ENGINEDLL PARTICLE_LIFETIME_OPTION GetLifeTimeColorOption();
 	EATER_ENGINEDLL PARTICLE_LIFETIME_OPTION GetLifeTimeScaleOption();
 	EATER_ENGINEDLL Range<int> GetTextureTiling();
+	EATER_ENGINEDLL std::string GetTextureName();
 
 public:
 	void Release();

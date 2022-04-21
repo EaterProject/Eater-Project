@@ -182,13 +182,13 @@ void EaterManager::Load_GameObject_File(GameObject* Object ,ObjectOption* mOptio
 		}
 	}
 	
-	if (AC != nullptr)
-	{
-		//애니메이션 정보를 수정한다
-		EATER_OPEN_READ_FILE("");
-
-		EATER_CLOSE_READ_FILE();
-	}
+	//if (AC != nullptr)
+	//{
+	//	//애니메이션 정보를 수정한다
+	//	EATER_OPEN_READ_FILE("");
+	//
+	//	EATER_CLOSE_READ_FILE();
+	//}
 }
 
 void EaterManager::Create_Material(InstanceMaterial* m)
