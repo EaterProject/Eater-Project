@@ -118,12 +118,22 @@ struct CB_Light : public cbLight
 SHADER_CONSTANT_BUFFER(cbMaterial)
 struct CB_Material : public cbMaterial
 {
-	DirectX::SimpleMath::Vector4 gAddColor = DirectX::SimpleMath::Vector4(0.5f, 0.5f, 0.5f, 1.0f);
+	DirectX::SimpleMath::Vector3 gAddColor = DirectX::SimpleMath::Vector3(0.5f, 0.5f, 0.5f);
+	UINT gOption = 0;
 	float gEmissiveFactor = 1.0f;
-	float gRoughnessFactor = 1.0f;
-	float gMetallicFactor = 1.0f;
+	float gRoughnessFactor = 0.0f;
+	float gMetallicFactor = 0.0f;
+	float gLimLightFactor = 0.0f;
+		
+	DirectX::SimpleMath::Vector3 gLimLightColor;
+	float gLimLightWidth = 0.0f;
+};
 
-	UINT gTexID = 0;
+SHADER_CONSTANT_BUFFER(cbCamera)
+struct CB_Camera : public cbCamera
+{
+	DirectX::SimpleMath::Vector3 gEyePos;
+	float gPad;
 };
 
 SHADER_CONSTANT_BUFFER(cbFog)

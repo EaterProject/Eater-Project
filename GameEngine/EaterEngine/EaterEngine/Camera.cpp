@@ -203,6 +203,8 @@ void Camera::CreateView()
 	mCameraData->CamInvView = mView.Invert();
 	mCameraData->CamViewProj = mView * mProj;
 	mCameraData->CamPos = tranform->Position;
+	mCameraData->CamLook = l_;
+	mCameraData->CamLook.Normalize();
 	mCameraData->OriginFrustum.Transform(mCameraData->BoundFrustum, mCameraData->CamInvView);
 }
 

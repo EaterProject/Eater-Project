@@ -9,6 +9,7 @@
 #define NORMAL_MAP      0x00000010
 #define EMISSIVE_MAP    0x00000100
 #define ORM_MAP         0x00001000
+#define LIM_LIGHT       0x00010000
 
 // Specular coefficiant - fixed reflectance value for non-metals
 #define F_ZERO float3(0.04f, 0.04f, 0.04f)

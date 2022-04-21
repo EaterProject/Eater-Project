@@ -40,6 +40,7 @@ typedef enum EXTENSION_TYPE
 {
 	PNG_IMAGE,
 	BMP_IMAGE,
+	HDR_IMAGE,
 }EXTENSION_TYPE;
 
 namespace ParserData
@@ -296,7 +297,15 @@ namespace ParserData
 
 		int width;
 		int height;
-		void* imgColor;
+
+		union
+		{
+			void* imgColor;
+		};
+		union
+		{
+			float* hdrColor;
+		};
 	};
 }
 

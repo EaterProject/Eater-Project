@@ -149,9 +149,12 @@
 #define IDC_SLIDER9                     1058
 #define IDC_RADIO5                      1058
 #define IDC_EDIT49                      1059
+#define IDC_SLIDER10                    1059
 #define IDC_EDIT52                      1060
 #define IDC_SPIN1                       1060
+#define IDC_SLIDER11                    1060
 #define IDC_EDIT53                      1061
+#define IDC_SLIDER12                    1061
 #define IDC_EDIT54                      1062
 #define IDC_EDIT55                      1063
 #define IDC_EDIT56                      1064

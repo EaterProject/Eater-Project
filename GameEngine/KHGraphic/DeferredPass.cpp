@@ -34,6 +34,7 @@
 #define NORMAL_MAP		0x00000010
 #define EMISSIVE_MAP    0x00000100
 #define ORM_MAP         0x00001000
+#define LIM_LIGHT       0x00010000
 
 DeferredPass::DeferredPass()
 {
@@ -262,29 +263,40 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const std:
 		materialBuf.gEmissiveFactor = matSub->EmissiveFactor;
 		materialBuf.gRoughnessFactor = matSub->RoughnessFactor;
 		materialBuf.gMetallicFactor = matSub->MetallicFactor;
+		materialBuf.gLimLightFactor = matSub->LimLightFactor;
+		materialBuf.gLimLightColor = matSub->LimColor;
+		materialBuf.gLimLightWidth = matSub->LimLightWidth;
+
+		CB_Camera cameraBuf;
+		cameraBuf.gEyePos = cam->CamPos;
 
 		if (mat->m_Albedo)
 		{
-			materialBuf.gTexID |= ALBEDO_MAP;
+			materialBuf.gOption |= ALBEDO_MAP;
 			m_Deferred_PS->SetShaderResourceView<gDiffuseMap>(mat->m_Albedo);
 		}
 		if (mat->m_Normal)
 		{
-			materialBuf.gTexID |= NORMAL_MAP;
+			materialBuf.gOption |= NORMAL_MAP;
 			m_Deferred_PS->SetShaderResourceView<gNormalMap>(mat->m_Normal);
 		}
 		if (mat->m_Emissive)
 		{
-			materialBuf.gTexID |= EMISSIVE_MAP;
+			materialBuf.gOption |= EMISSIVE_MAP;
 			m_Deferred_PS->SetShaderResourceView<gEmissiveMap>(mat->m_Emissive);
 		}
 		if (mat->m_ORM)
 		{
-			materialBuf.gTexID |= ORM_MAP;
+			materialBuf.gOption |= ORM_MAP;
 			m_Deferred_PS->SetShaderResourceView<gORMMap>(mat->m_ORM);
+		}
+		if (matSub->LimLightFactor > 0.0f)
+		{
+			materialBuf.gOption |= LIM_LIGHT;
 		}
 
 		m_Deferred_PS->ConstantBufferUpdate(&materialBuf);
+		m_Deferred_PS->ConstantBufferUpdate(&cameraBuf);
 
 		m_Deferred_PS->Update();
 
@@ -346,29 +358,40 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const std:
 		materialBuf.gEmissiveFactor = matSub->EmissiveFactor;
 		materialBuf.gRoughnessFactor = matSub->RoughnessFactor;
 		materialBuf.gMetallicFactor = matSub->MetallicFactor;
+		materialBuf.gLimLightFactor = matSub->LimLightFactor;
+		materialBuf.gLimLightColor = matSub->LimColor;
+		materialBuf.gLimLightWidth = matSub->LimLightWidth;
+
+		CB_Camera cameraBuf;
+		cameraBuf.gEyePos = cam->CamPos;
 
 		if (mat->m_Albedo)
 		{
-			materialBuf.gTexID |= ALBEDO_MAP;
+			materialBuf.gOption |= ALBEDO_MAP;
 			m_Deferred_PS->SetShaderResourceView<gDiffuseMap>(mat->m_Albedo);
 		}
 		if (mat->m_Normal)
 		{
-			materialBuf.gTexID |= NORMAL_MAP;
+			materialBuf.gOption |= NORMAL_MAP;
 			m_Deferred_PS->SetShaderResourceView<gNormalMap>(mat->m_Normal);
 		}
 		if (mat->m_Emissive)
 		{
-			materialBuf.gTexID |= EMISSIVE_MAP;
+			materialBuf.gOption |= EMISSIVE_MAP;
 			m_Deferred_PS->SetShaderResourceView<gEmissiveMap>(mat->m_Emissive);
 		}
 		if (mat->m_ORM)
 		{
-			materialBuf.gTexID |= ORM_MAP;
+			materialBuf.gOption |= ORM_MAP;
 			m_Deferred_PS->SetShaderResourceView<gORMMap>(mat->m_ORM);
+		}
+		if (matSub->LimLightFactor > 0.0f)
+		{
+			materialBuf.gOption |= LIM_LIGHT;
 		}
 
 		m_Deferred_PS->ConstantBufferUpdate(&materialBuf);
+		m_Deferred_PS->ConstantBufferUpdate(&cameraBuf);
 
 		m_Deferred_PS->Update();
 
@@ -428,29 +451,40 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rend
 		materialBuf.gEmissiveFactor = matSub->EmissiveFactor;
 		materialBuf.gRoughnessFactor = matSub->RoughnessFactor;
 		materialBuf.gMetallicFactor = matSub->MetallicFactor;
+		materialBuf.gLimLightFactor = matSub->LimLightFactor;
+		materialBuf.gLimLightColor = matSub->LimColor;
+		materialBuf.gLimLightWidth = matSub->LimLightWidth;
+
+		CB_Camera cameraBuf;
+		cameraBuf.gEyePos = cam->CamPos;
 
 		if (mat->m_Albedo)
 		{
-			materialBuf.gTexID |= ALBEDO_MAP;
+			materialBuf.gOption |= ALBEDO_MAP;
 			m_Deferred_PS->SetShaderResourceView<gDiffuseMap>(mat->m_Albedo);
 		}
 		if (mat->m_Normal)
 		{
-			materialBuf.gTexID |= NORMAL_MAP;
+			materialBuf.gOption |= NORMAL_MAP;
 			m_Deferred_PS->SetShaderResourceView<gNormalMap>(mat->m_Normal);
 		}
 		if (mat->m_Emissive)
 		{
-			materialBuf.gTexID |= EMISSIVE_MAP;
+			materialBuf.gOption |= EMISSIVE_MAP;
 			m_Deferred_PS->SetShaderResourceView<gEmissiveMap>(mat->m_Emissive);
 		}
 		if (mat->m_ORM)
 		{
-			materialBuf.gTexID |= ORM_MAP;
+			materialBuf.gOption |= ORM_MAP;
 			m_Deferred_PS->SetShaderResourceView<gORMMap>(mat->m_ORM);
+		}
+		if (matSub->LimLightFactor > 0.0f)
+		{
+			materialBuf.gOption |= LIM_LIGHT;
 		}
 
 		m_Deferred_PS->ConstantBufferUpdate(&materialBuf);
+		m_Deferred_PS->ConstantBufferUpdate(&cameraBuf);
 
 		m_Deferred_PS->Update();
 
@@ -535,29 +569,40 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rend
 		materialBuf.gEmissiveFactor = matSub->EmissiveFactor;
 		materialBuf.gRoughnessFactor = matSub->RoughnessFactor;
 		materialBuf.gMetallicFactor = matSub->MetallicFactor;
+		materialBuf.gLimLightFactor = matSub->LimLightFactor;
+		materialBuf.gLimLightColor = matSub->LimColor;
+		materialBuf.gLimLightWidth = matSub->LimLightWidth;
+
+		CB_Camera cameraBuf;
+		cameraBuf.gEyePos = cam->CamPos;
 
 		if (mat->m_Albedo)
 		{
-			materialBuf.gTexID |= ALBEDO_MAP;
+			materialBuf.gOption |= ALBEDO_MAP;
 			m_Deferred_PS->SetShaderResourceView<gDiffuseMap>(mat->m_Albedo);
 		}
 		if (mat->m_Normal)
 		{
-			materialBuf.gTexID |= NORMAL_MAP;
+			materialBuf.gOption |= NORMAL_MAP;
 			m_Deferred_PS->SetShaderResourceView<gNormalMap>(mat->m_Normal);
 		}
 		if (mat->m_Emissive)
 		{
-			materialBuf.gTexID |= EMISSIVE_MAP;
+			materialBuf.gOption |= EMISSIVE_MAP;
 			m_Deferred_PS->SetShaderResourceView<gEmissiveMap>(mat->m_Emissive);
 		}
 		if (mat->m_ORM)
 		{
-			materialBuf.gTexID |= ORM_MAP;
+			materialBuf.gOption |= ORM_MAP;
 			m_Deferred_PS->SetShaderResourceView<gORMMap>(mat->m_ORM);
+		}
+		if (matSub->LimLightFactor > 0.0f)
+		{
+			materialBuf.gOption |= LIM_LIGHT;
 		}
 
 		m_Deferred_PS->ConstantBufferUpdate(&materialBuf);
+		m_Deferred_PS->ConstantBufferUpdate(&cameraBuf);
 
 		m_Deferred_PS->Update();
 

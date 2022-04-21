@@ -710,5 +710,5 @@ void RightOption::OnCreateBasicMaterial()
 
 void RightOption::OnCreatePrefap()
 {
-	.
+	
 }

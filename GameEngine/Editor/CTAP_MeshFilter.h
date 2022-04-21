@@ -74,4 +74,14 @@ public:
 	CSliderCtrl Add_B_Slider;
 	CEdit MaterialName_Edit;
 	afx_msg void OnMaterialName_Button();
+	CSliderCtrl LimLight_R;
+	CSliderCtrl LimLight_G;
+	CSliderCtrl LimLight_B;
+	CEdit LimLight_R_Edit;
+	CEdit LimLight_G_Edit;
+	CEdit LimLight_B_Edit;
+	CSliderCtrl LimLight_Factor;
+	CSliderCtrl LimLight_Width;
+	CEdit LimLight_Factor_Edit;
+	CEdit LimLight_Width_Edit;
 };
