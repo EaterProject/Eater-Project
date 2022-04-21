@@ -120,6 +120,7 @@ void PickingPass::OnResize(int width, int height)
 {
 	m_ID_RTV = m_ID_RT->GetRTV()->Get();
 	m_ID_Tex2D = m_ID_RT->GetTex2D()->Get();
+	m_Defalt_DSV = g_Resource->GetDepthStencilView<DS_Defalt>()->Get();
 }
 
 void PickingPass::InstanceResize(size_t& renderMaxCount, size_t& unRenderMaxCount)

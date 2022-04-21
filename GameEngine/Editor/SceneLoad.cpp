@@ -14,7 +14,9 @@
 #include "Collider.h"
 #include "Rigidbody.h"
 #include "PhysCollider.h"
+#include "ParticleSystem.h"
 
+using namespace std;
 Eater_LoadScene::Eater_LoadScene()
 {
 }
@@ -153,7 +155,56 @@ void Eater_LoadScene::Load_Component_Light(int index, GameObject* Object)
 
 void Eater_LoadScene::Load_Component_Particle(int index, GameObject* Object)
 {
+	ParticleSystem* mParticle = Object->AddComponent<ParticleSystem>();
+	std::vector<std::string> Data;
+	EATER_GET_LIST(&Data, 0);
+	std::string Type = Data[0];
+	if		(Type == "BILLBOARD"){mParticle->SetRenderType(BILLBOARD);}
+	else if (Type == "VERTICAL"){mParticle->SetRenderType(VERTICAL_BILLBOARD);}
+	else if (Type == "HORIZONTAL"){mParticle->SetRenderType(HORIZONTAL_BILLBOARD);}
+	else if (Type == "MESH"){mParticle->SetRenderType(MESH);}
+	mParticle->SetMeshName("Quad");
+	mParticle->SetDiffuseName("particle_hotCloud");
+	mParticle->SetMaxParticles(std::stoi(Data[1]));
+	mParticle->SetDelayTime(std::stof(Data[2]));
+	mParticle->SetShapeRadius(std::stof(Data[3]), std::stof(Data[4]), std::stof(Data[5]));
+	Vector3 Min = {std::stof(Data[6]),std::stof(Data[7]),std::stof(Data[8]) };
+	Vector3 Max = {std::stof(Data[9]),std::stof(Data[10]),std::stof(Data[11]) };
+	mParticle->SetStartForce(Min, Max);
+	
+	Vector4 Min4 = {std::stof(Data[12]) ,std::stof(Data[13]),std::stof(Data[14]),std::stof(Data[15])};
+	Vector4 Max4 = {std::stof(Data[16]) ,std::stof(Data[17]),std::stof(Data[18]),std::stof(Data[19])};
+	mParticle->SetStartColor(Min4, Max4);
+	mParticle->SetStartLifeTime(std::stof(Data[20]), std::stof(Data[21]));
 
+	float StartScaleX = std::stof(Data[22]);
+
+	EATER_GET_LIST(&Data, 1);
+	mParticle->SetStartScale(StartScaleX, std::stof(Data[0]));
+	mParticle->SetStartRotation(std::stof(Data[1]), std::stof(Data[2]));
+	
+	Min = { std::stof(Data[3]),std::stof(Data[4]),std::stof(Data[5]) };
+	Max = { std::stof(Data[6]),std::stof(Data[7]),std::stof(Data[8]) };
+	mParticle->SetLifeTimeForce(Min, Max);
+	
+	Min4 = { std::stof(Data[9]) ,std::stof(Data[10]),std::stof(Data[11]),std::stof(Data[12]) };
+	Max4 = { std::stof(Data[13]) ,std::stof(Data[14]),std::stof(Data[15]),std::stof(Data[16]) };
+	Type = Data[17];
+	if (Type == "NONE") { mParticle->SetLifeTimeColor(Min4, Max4,NONE);}
+	else if(Type == "UP"){ mParticle->SetLifeTimeColor(Min4, Max4, UP);}
+	else if(Type == "DOWN"){ mParticle->SetLifeTimeColor(Min4, Max4, DOWN);}
+	else if(Type == "UPDOWN"){ mParticle->SetLifeTimeColor(Min4, Max4, UPDOWN);}
+	
+	Vector2 Scale = { std::stof(Data[18]), std::stof(Data[19]) };
+	Type = Data[20];
+	if (Type == "NONE") { mParticle->SetLifeTimeScale(Scale.x, Scale.y, NONE); }
+	else if (Type == "UP") { mParticle->SetLifeTimeScale(Scale.x, Scale.y, UP); }
+	else if (Type == "DOWN") { mParticle->SetLifeTimeScale(Scale.x, Scale.y, DOWN); }
+	else if (Type == "UPDOWN") { mParticle->SetLifeTimeScale(Scale.x, Scale.y, UPDOWN); }
+	mParticle->SetLifeTimeRotation(std::stof(Data[21]), std::stof(Data[22]));
+	mParticle->SetTextureTiling(8, 8);
+	mParticle->SetPlayTime(1, true);
+	mParticle->Play();
 }
 
 void Eater_LoadScene::Load_Component_Collider(int index, GameObject* Object)
