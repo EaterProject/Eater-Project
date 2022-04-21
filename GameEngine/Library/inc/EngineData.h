@@ -120,16 +120,16 @@ class MaterialSubData
 {
 public:
 	Vector3 AddColor = Vector3(0.0f, 0.0f, 0.0f);	// Add Color
-	Vector3 LimColor = Vector3(0.0f, 0.0f, 0.0f);	// LimLight Color
 
 	float EmissiveFactor = 1.0f;		// Emissive 강도
 	float RoughnessFactor = 1.0f;		// Roughness 강도 (0 ~ 1)
 	float MetallicFactor = 1.0f;		// Metallic 강도 (0 ~ 1)
 
-	float LimLightFactor = 1.0f;		// LimLight 강도
-	float LimLightWidth = 0.0f;			// LimLight 범위 (0 ~ 1)
+	Vector3 LimColor = Vector3(0.0f, 0.0f, 0.0f);	// LimLight Color
 
-	bool LimLight = false;				// LimLight 활성화 여부
+	float LimLightFactor = 0.0f;		// LimLight 강도
+	float LimLightWidth = 0.0f;			// LimLight 범위 (0 ~ 1)
+	
 	bool Alpha = false;					// Alpha Mesh
 
 	Vector2 Tile;						// X, Y Tiling
@@ -149,7 +149,7 @@ public:
 	UINT BufferIndex = 0;							// Material Buffer Index
 
 	MaterialSubData* Material_SubData = nullptr;	// Material SubData
-
+	
 	TextureBuffer* Albedo = nullptr;				// DiffuseMap Texture
 	TextureBuffer* Normal = nullptr;				// NormalMap Texture
 	TextureBuffer* Emissive = nullptr;				// Emissive Texture

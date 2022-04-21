@@ -182,7 +182,6 @@ void CTAP_MeshFilter::UpdateGameObject()
 	AddColor_B.GetWindowTextW(GetNumber);
 	AddColor.z = ChangeToFloat(GetNumber);
 
-
 	if (mMaterial != nullptr)
 	{
 		mMaterial->SetAddColor(AddColor);

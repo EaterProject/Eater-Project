@@ -290,7 +290,7 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const std:
 			materialBuf.gOption |= ORM_MAP;
 			m_Deferred_PS->SetShaderResourceView<gORMMap>(mat->m_ORM);
 		}
-		if (matSub->LimLight)
+		if (matSub->LimLightFactor > 0.0f)
 		{
 			materialBuf.gOption |= LIM_LIGHT;
 		}
@@ -385,7 +385,7 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const std:
 			materialBuf.gOption |= ORM_MAP;
 			m_Deferred_PS->SetShaderResourceView<gORMMap>(mat->m_ORM);
 		}
-		if (matSub->LimLight)
+		if (matSub->LimLightFactor > 0.0f)
 		{
 			materialBuf.gOption |= LIM_LIGHT;
 		}
@@ -478,7 +478,7 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rend
 			materialBuf.gOption |= ORM_MAP;
 			m_Deferred_PS->SetShaderResourceView<gORMMap>(mat->m_ORM);
 		}
-		if (matSub->LimLight)
+		if (matSub->LimLightFactor > 0.0f)
 		{
 			materialBuf.gOption |= LIM_LIGHT;
 		}
@@ -596,7 +596,7 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rend
 			materialBuf.gOption |= ORM_MAP;
 			m_Deferred_PS->SetShaderResourceView<gORMMap>(mat->m_ORM);
 		}
-		if (matSub->LimLight)
+		if (matSub->LimLightFactor > 0.0f)
 		{
 			materialBuf.gOption |= LIM_LIGHT;
 		}
