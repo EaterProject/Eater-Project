@@ -158,6 +158,7 @@
 #define IDC_EDIT57                      1065
 #define IDC_EDIT58                      1066
 #define IDC_COMBO4                      1067
+#define IDC_EDIT64                      1068
 
 // Next default values for new objects
 // 

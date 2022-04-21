@@ -31,6 +31,7 @@ public:
 	HWND hwnd;
 	afx_msg void OnClose();
 	afx_msg void OnNcDestroy();
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
 };
 
 

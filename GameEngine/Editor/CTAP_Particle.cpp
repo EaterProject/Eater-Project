@@ -87,6 +87,7 @@ void CTAP_Particle::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EDIT57, LifeColor_max_B);
 	DDX_Control(pDX, IDC_EDIT58, LifeColor_max_A);
 	DDX_Control(pDX, IDC_COMBO4, LifeColor_Combo);
+	DDX_Control(pDX, IDC_EDIT64, RateOverTime_Edit);
 }
 
 BOOL CTAP_Particle::OnInitDialog()
@@ -204,7 +205,261 @@ BOOL CTAP_Particle::OnInitDialog()
 	LifeColor_max_A.SetWindowTextW(L"255");
 	LifeColor_Combo.SetCurSel(0);
 
+	MaxCount_Edit.SetWindowTextW(L"0");
+	DelayTime_Edit.SetWindowTextW(L"0");
+	ShapeRadius_Edit.SetWindowTextW(L"0");
+	TextureTiling_X_Edit.SetWindowTextW(L"1");
+	TextureTiling_Y_Edit.SetWindowTextW(L"1");
+	RateOverTime_Edit.SetWindowTextW(L"25");
 	return 0;
+}
+
+void CTAP_Particle::UpDateSetting()
+{
+	//랜더 옵션 셋팅
+	int Choice01 = RenderType_Combo.GetCurSel();
+	switch (Choice01)
+	{
+	case 0:
+		mParticleSystem->SetRenderType(PARTICLE_RENDER_OPTION::BILLBOARD);
+		break;
+	case 1:
+		mParticleSystem->SetRenderType(PARTICLE_RENDER_OPTION::VERTICAL_BILLBOARD);
+		break;
+	case 2:
+		mParticleSystem->SetRenderType(PARTICLE_RENDER_OPTION::HORIZONTAL_BILLBOARD);
+		break;
+	case 3:
+		mParticleSystem->SetRenderType(PARTICLE_RENDER_OPTION::MESH);
+		break;
+	}
+
+	//최대 카운터 셋팅
+	CString Number;
+	MaxCount_Edit.GetWindowTextW(Number);
+	mParticleSystem->SetMaxParticles(ChangeToInt(Number));
+
+	//딜레시 시간 셋팅
+	DelayTime_Edit.GetWindowTextW(Number);
+	mParticleSystem->SetDelayTime(ChangeToFloat(Number));
+
+	//범위 조정 셋팅
+	CString NumberX, NumberY, NumberZ;
+	int Check = ShapeRadius_Check.GetCheck();
+	if (Check)
+	{
+		ShapeRadius_X_Edit.GetWindowTextW(NumberX);
+		ShapeRadius_Y_Edit.GetWindowTextW(NumberY);
+		ShapeRadius_Z_Edit.GetWindowTextW(NumberZ);
+		mParticleSystem->SetShapeRadius(ChangeToFloat(NumberX), ChangeToFloat(NumberY), ChangeToFloat(NumberZ));
+	}
+	else
+	{
+		ShapeRadius_Edit.GetWindowTextW(NumberX);
+		mParticleSystem->SetShapeRadius(ChangeToFloat(NumberX));
+	}
+
+	//타일링 셋팅
+	TextureTiling_X_Edit.GetWindowTextW(NumberX);
+	TextureTiling_Y_Edit.GetWindowTextW(NumberY);
+	if (NumberX == L"0")
+	{
+		NumberX = L"1";
+		TextureTiling_X_Edit.SetWindowTextW(L"1");
+	}
+	if (NumberY == L"0")
+	{
+		NumberY = L"1";
+		TextureTiling_Y_Edit.SetWindowTextW(L"1");
+	}
+	mParticleSystem->SetTextureTiling(ChangeToInt(NumberX), ChangeToInt(NumberY));
+
+	//1초에 출력할 파티클 개수
+	RateOverTime_Edit.GetWindowTextW(Number);
+	mParticleSystem->SetRateOverTime(ChangeToFloat(Number));
+}
+
+void CTAP_Particle::UpDateStartSetting()
+{
+	//Start Setting
+	CString NumberX, NumberY, NumberZ, NumberW;
+	int Check = StartForce_Check.GetCheck();
+	if (Check)
+	{
+		StartForce_X.GetWindowTextW(NumberX);
+		StartForce_Y.GetWindowTextW(NumberY);
+		StartForce_Z.GetWindowTextW(NumberZ);
+		Vector3 Start = Vector3(ChangeToFloat(NumberX), ChangeToFloat(NumberY), ChangeToFloat(NumberZ));
+		StartForce_X_R.GetWindowTextW(NumberX);
+		StartForce_Y_R.GetWindowTextW(NumberY);
+		StartForce_Z_R.GetWindowTextW(NumberZ);
+		Vector3 End = Vector3(ChangeToFloat(NumberX), ChangeToFloat(NumberY), ChangeToFloat(NumberZ));
+		mParticleSystem->SetStartForce(Start, End);
+	}
+	else
+	{
+		StartForce_X.GetWindowTextW(NumberX);
+		StartForce_Y.GetWindowTextW(NumberY);
+		StartForce_Z.GetWindowTextW(NumberZ);
+		Vector3 Start = Vector3(ChangeToFloat(NumberX), ChangeToFloat(NumberY), ChangeToFloat(NumberZ));
+		mParticleSystem->SetStartForce(Start);
+	}
+
+	Check = StartColor_Check.GetCheck();
+	if (Check)
+	{
+		StartColor_min_R.GetWindowTextW(NumberX);
+		StartColor_min_G.GetWindowTextW(NumberY);
+		StartColor_min_B.GetWindowTextW(NumberZ);
+		StartColor_min_A.GetWindowTextW(NumberW);
+		Vector4 Start = Vector4(ChangeToFloat(NumberX), ChangeToFloat(NumberY), ChangeToFloat(NumberZ), ChangeToFloat(NumberW));
+		StartColor_max_R.GetWindowTextW(NumberX);
+		StartColor_max_G.GetWindowTextW(NumberY);
+		StartColor_max_B.GetWindowTextW(NumberZ);
+		StartColor_max_A.GetWindowTextW(NumberW);
+		Vector4 End = Vector4(ChangeToFloat(NumberX), ChangeToFloat(NumberY), ChangeToFloat(NumberZ), ChangeToFloat(NumberW));
+		mParticleSystem->SetStartColor(Start, End);
+	}
+	else
+	{
+		StartColor_min_R.GetWindowTextW(NumberX);
+		StartColor_min_G.GetWindowTextW(NumberY);
+		StartColor_min_B.GetWindowTextW(NumberZ);
+		StartColor_min_A.GetWindowTextW(NumberW);
+		Vector4 Start = Vector4(ChangeToFloat(NumberX), ChangeToFloat(NumberY), ChangeToFloat(NumberZ), ChangeToFloat(NumberW));
+		mParticleSystem->SetStartColor(Start);
+	}
+
+	Check = StartLife_Check.GetCheck();
+	if (Check)
+	{
+		StartLifeTime_min.GetWindowTextW(NumberX);
+		StartLifeTime_max.GetWindowTextW(NumberY);
+		mParticleSystem->SetStartLifeTime(ChangeToFloat(NumberX), ChangeToFloat(NumberY));
+	}
+	else
+	{
+		StartLifeTime.GetWindowTextW(NumberX);
+		mParticleSystem->SetStartLifeTime(ChangeToFloat(NumberX));
+	}
+
+
+	Check = StartScale_Check.GetCheck();
+	if (Check)
+	{
+		StartScale_min.GetWindowTextW(NumberX);
+		StartScale_max.GetWindowTextW(NumberY);
+		mParticleSystem->SetStartScale(ChangeToFloat(NumberX), ChangeToFloat(NumberY));
+	}
+	else
+	{
+		StartScale.GetWindowTextW(NumberX);
+		mParticleSystem->SetStartScale(ChangeToFloat(NumberX));
+	}
+
+	Check = StartRotation_Check.GetCheck();
+	if (Check)
+	{
+		StartRotation_max.GetWindowTextW(NumberX);
+		StartRotation_min.GetWindowTextW(NumberY);
+		mParticleSystem->SetStartRotation(ChangeToFloat(NumberX), ChangeToFloat(NumberY));
+	}
+	else
+	{
+		StartRotation.GetWindowTextW(NumberX);
+		mParticleSystem->SetStartRotation(ChangeToFloat(NumberX));
+	}
+}
+
+void CTAP_Particle::UpDateLifeSetting()
+{
+	CString NumberX, NumberY, NumberZ, NumberW;
+	int Check = LifeForce_Check.GetCheck();
+	if (Check)
+	{
+		LifeForce_X.GetWindowTextW(NumberX);
+		LifeForce_Y.GetWindowTextW(NumberY);
+		LifeForce_Z.GetWindowTextW(NumberZ);
+		Vector3 Start = Vector3(ChangeToFloat(NumberX), ChangeToFloat(NumberY), ChangeToFloat(NumberZ));
+		LifeForce_X_max.GetWindowTextW(NumberX);
+		LifeForce_Y_max.GetWindowTextW(NumberY);
+		LifeForce_Z_max.GetWindowTextW(NumberZ);
+		Vector3 End = Vector3(ChangeToFloat(NumberX), ChangeToFloat(NumberY), ChangeToFloat(NumberZ));
+		mParticleSystem->SetLifeTimeForce(Start, End);
+	}
+	else
+	{
+		LifeForce_X.GetWindowTextW(NumberX);
+		LifeForce_Y.GetWindowTextW(NumberY);
+		LifeForce_Z.GetWindowTextW(NumberZ);
+		Vector3 Start = Vector3(ChangeToFloat(NumberX), ChangeToFloat(NumberY), ChangeToFloat(NumberZ));
+		mParticleSystem->SetLifeTimeForce(Start);
+	}
+
+	Check = LifeRotation_Check.GetCheck();
+	if (Check)
+	{
+		LifeRotation_min.GetWindowTextW(NumberX);
+		LifeRotation_max.GetWindowTextW(NumberY);
+		mParticleSystem->SetLifeTimeRotation(ChangeToFloat(NumberX), ChangeToFloat(NumberY));
+	}
+	else
+	{
+		LifeRotation.GetWindowTextW(NumberX);
+		mParticleSystem->SetLifeTimeRotation(ChangeToFloat(NumberX));
+	}
+
+
+	int Choice = LifeScale_Combo.GetCurSel();
+	LifeScale_min.GetWindowTextW(NumberX);
+	LifeScale_max.GetWindowTextW(NumberY);
+	switch (Choice)
+	{
+	case 0:
+		mParticleSystem->SetLifeTimeScale(ChangeToFloat(NumberX), ChangeToFloat(NumberY), PARTICLE_LIFETIME_OPTION::NONE);
+		break;
+	case 1:
+		mParticleSystem->SetLifeTimeScale(ChangeToFloat(NumberX), ChangeToFloat(NumberY), PARTICLE_LIFETIME_OPTION::UP);
+		break;
+	case 2:
+		mParticleSystem->SetLifeTimeScale(ChangeToFloat(NumberX), ChangeToFloat(NumberY), PARTICLE_LIFETIME_OPTION::DOWN);
+		break;
+	case 3:
+		mParticleSystem->SetLifeTimeScale(ChangeToFloat(NumberX), ChangeToFloat(NumberY), PARTICLE_LIFETIME_OPTION::UPDOWN);
+		break;
+	}
+
+	LifeColor_min_R.GetWindowTextW(NumberX);
+	LifeColor_min_G.GetWindowTextW(NumberY);
+	LifeColor_min_B.GetWindowTextW(NumberZ);
+	LifeColor_min_A.GetWindowTextW(NumberW);
+	Vector4 Start = Vector4(ChangeToFloat(NumberX), ChangeToFloat(NumberY), ChangeToFloat(NumberZ), ChangeToFloat(NumberW));
+
+	LifeColor_max_R.GetWindowTextW(NumberX);
+	LifeColor_max_G.GetWindowTextW(NumberY);
+	LifeColor_max_B.GetWindowTextW(NumberZ);
+	LifeColor_max_A.GetWindowTextW(NumberW);
+	Vector4 End = Vector4(ChangeToFloat(NumberX), ChangeToFloat(NumberY), ChangeToFloat(NumberZ), ChangeToFloat(NumberW));
+
+	int Choice02 = LifeColor_Combo.GetCurSel();
+	switch (Choice02)
+	{
+	case 0:
+		mParticleSystem->SetLifeTimeColor(Start, End, PARTICLE_LIFETIME_OPTION::NONE);
+		break;
+	case 1:
+		mParticleSystem->SetLifeTimeColor(Start, End, PARTICLE_LIFETIME_OPTION::UP);
+		break;
+	case 2:
+		mParticleSystem->SetLifeTimeColor(Start, End, PARTICLE_LIFETIME_OPTION::DOWN);
+		break;
+	case 3:
+		mParticleSystem->SetLifeTimeColor(Start, End, PARTICLE_LIFETIME_OPTION::UPDOWN);
+		break;
+	}
+
+	RateOverTime_Edit.GetWindowTextW(NumberX);
+	mParticleSystem->SetRateOverTime(ChangeToFloat(NumberX));
 }
 
 
@@ -228,240 +483,150 @@ END_MESSAGE_MAP()
 void CTAP_Particle::SetGameObject(ParticleSystem* ObjectParticleSystem)
 {
 	mParticleSystem = ObjectParticleSystem;
+	switch (mParticleSystem->GetRenderType())
+	{
+	case PARTICLE_RENDER_OPTION::BILLBOARD:
+		RenderType_Combo.SetCurSel(0);
+		break;
+	case PARTICLE_RENDER_OPTION::VERTICAL_BILLBOARD:
+		RenderType_Combo.SetCurSel(1);
+		break;
+	case PARTICLE_RENDER_OPTION::HORIZONTAL_BILLBOARD:
+		RenderType_Combo.SetCurSel(2);
+		break;
+	case PARTICLE_RENDER_OPTION::MESH:
+		RenderType_Combo.SetCurSel(3);
+		break;
+	}
+	MaxCount_Edit.SetWindowTextW(ChangeToCString(mParticleSystem->GetMaxParticles()));
+	DelayTime_Edit.SetWindowTextW(ChangeToCString(mParticleSystem->GetDelayTime()));
 
-	CRect rt;
-	GetWindowRect(rt);
-	int Num = rt.Height();
+	//ShapeRadius
+	auto Shape = mParticleSystem->GetShapeRadius();
+	ShapeRadius_X_Edit.SetWindowTextW(ChangeToCString(Shape.x));
+	ShapeRadius_Y_Edit.SetWindowTextW(ChangeToCString(Shape.y));
+	ShapeRadius_Z_Edit.SetWindowTextW(ChangeToCString(Shape.z));
 
+	//TextureTiling
+	auto Tiling = mParticleSystem->GetTextureTiling();
+	TextureTiling_X_Edit.SetWindowTextW(ChangeToCString(Tiling.m_Width));
+	TextureTiling_Y_Edit.SetWindowTextW(ChangeToCString(Tiling.m_Height));
 
-	MaxCount_Edit.SetWindowTextW(L"0");
-	DelayTime_Edit.SetWindowTextW(L"0");
-	ShapeRadius_Edit.SetWindowTextW(L"0");
-	TextureTiling_X_Edit.SetWindowTextW(L"1");
-	TextureTiling_Y_Edit.SetWindowTextW(L"1");
+	//RateOverTime
+	auto RateOverTime = mParticleSystem->GetRateOverTime();
+	RateOverTime_Edit.SetWindowTextW(ChangeToCString(RateOverTime));
+
+	//StartForce
+	auto StartForce = mParticleSystem->GetStartForce();
+	StartForce_X.SetWindowTextW(ChangeToCString(StartForce.m_Min.x));
+	StartForce_Y.SetWindowTextW(ChangeToCString(StartForce.m_Min.y));
+	StartForce_Z.SetWindowTextW(ChangeToCString(StartForce.m_Min.z));
+	StartForce_X_R.SetWindowTextW(ChangeToCString(StartForce.m_Max.x));
+	StartForce_Y_R.SetWindowTextW(ChangeToCString(StartForce.m_Max.y));
+	StartForce_Z_R.SetWindowTextW(ChangeToCString(StartForce.m_Max.z));
+
+	//StartColor
+	auto StartColor = mParticleSystem->GetStartColor();
+	StartColor_min_R.SetWindowTextW(ChangeToCString(StartColor.m_Min.x));
+	StartColor_min_G.SetWindowTextW(ChangeToCString(StartColor.m_Min.y));
+	StartColor_min_B.SetWindowTextW(ChangeToCString(StartColor.m_Min.z));
+	StartColor_min_A.SetWindowTextW(ChangeToCString(StartColor.m_Min.w));
+	StartColor_max_R.SetWindowTextW(ChangeToCString(StartColor.m_Max.x));
+	StartColor_max_G.SetWindowTextW(ChangeToCString(StartColor.m_Max.y));
+	StartColor_max_B.SetWindowTextW(ChangeToCString(StartColor.m_Max.z));
+	StartColor_max_A.SetWindowTextW(ChangeToCString(StartColor.m_Max.w));
+
+	//StartLife
+	auto StartLife = mParticleSystem->GetStartLifeTime();
+	StartLifeTime.SetWindowTextW(ChangeToCString(StartLife.m_Min));
+	StartLifeTime_min.SetWindowTextW(ChangeToCString(StartLife.m_Min));
+	StartLifeTime_max.SetWindowTextW(ChangeToCString(StartLife.m_Max));
+
+	//StartScale
+	auto mStartScale = mParticleSystem->GetStartScale();
+	StartScale.SetWindowTextW(ChangeToCString(mStartScale.m_Min));
+	StartScale_min.SetWindowTextW(ChangeToCString(mStartScale.m_Min));
+	StartScale_max.SetWindowTextW(ChangeToCString(mStartScale.m_Max));
+
+	//StartRotation
+	auto mStartRotation = mParticleSystem->GetStartRotation();
+	StartRotation.SetWindowTextW(ChangeToCString(mStartRotation.m_Min));
+	StartRotation_min.SetWindowTextW(ChangeToCString(mStartRotation.m_Min));
+	StartRotation_max.SetWindowTextW(ChangeToCString(mStartRotation.m_Max));
+
+	//LifeForce
+	auto mLifeForce = mParticleSystem->GetLifeTimeForce();
+	LifeForce_X.SetWindowTextW(ChangeToCString(mLifeForce.m_Min.x));
+	LifeForce_Y.SetWindowTextW(ChangeToCString(mLifeForce.m_Min.y));
+	LifeForce_Z.SetWindowTextW(ChangeToCString(mLifeForce.m_Min.z));
+	LifeForce_X_max.SetWindowTextW(ChangeToCString(mLifeForce.m_Max.x));
+	LifeForce_Y_max.SetWindowTextW(ChangeToCString(mLifeForce.m_Max.y));
+	LifeForce_Z_max.SetWindowTextW(ChangeToCString(mLifeForce.m_Max.z));
+
+	//LifeColor
+	auto mLifeColor = mParticleSystem->GetLifeTimeColor();
+	LifeColor_min_R.SetWindowTextW(ChangeToCString(mLifeColor.m_Min.x));
+	LifeColor_min_G.SetWindowTextW(ChangeToCString(mLifeColor.m_Min.y));
+	LifeColor_min_B.SetWindowTextW(ChangeToCString(mLifeColor.m_Min.z));
+	LifeColor_min_A.SetWindowTextW(ChangeToCString(mLifeColor.m_Min.w));
+	LifeColor_max_R.SetWindowTextW(ChangeToCString(mLifeColor.m_Max.x));
+	LifeColor_max_G.SetWindowTextW(ChangeToCString(mLifeColor.m_Max.y));
+	LifeColor_max_B.SetWindowTextW(ChangeToCString(mLifeColor.m_Max.z));
+	LifeColor_max_A.SetWindowTextW(ChangeToCString(mLifeColor.m_Max.w));
+	switch (mParticleSystem->GetLifeTimeColorOption())
+	{
+	case PARTICLE_LIFETIME_OPTION::NONE:
+		LifeColor_Combo.SetCurSel(0);
+		break;
+	case PARTICLE_LIFETIME_OPTION::UP:
+		LifeColor_Combo.SetCurSel(1);
+		break;
+	case PARTICLE_LIFETIME_OPTION::DOWN:
+		LifeColor_Combo.SetCurSel(2);
+		break;
+	case PARTICLE_LIFETIME_OPTION::UPDOWN:
+		LifeColor_Combo.SetCurSel(3);
+		break;
+	}
+	 
+	//LifeScale
+	auto mLifeScale = mParticleSystem->GetLifeTimeScale();
+	LifeScale_min.SetWindowTextW(ChangeToCString(mLifeScale.m_Min));
+	LifeScale_max.SetWindowTextW(ChangeToCString(mLifeScale.m_Max));
+	switch (mParticleSystem->GetLifeTimeScaleOption())
+	{
+	case PARTICLE_LIFETIME_OPTION::NONE:
+		LifeScale_Combo.SetCurSel(0);
+		break;
+	case PARTICLE_LIFETIME_OPTION::UP:
+		LifeScale_Combo.SetCurSel(1);
+		break;
+	case PARTICLE_LIFETIME_OPTION::DOWN:
+		LifeScale_Combo.SetCurSel(2);
+		break;
+	case PARTICLE_LIFETIME_OPTION::UPDOWN:
+		LifeScale_Combo.SetCurSel(3);
+		break;
+	}
+
+	//LifeRotation
+	auto mLifeRotation = mParticleSystem->GetLifeTimeRotation();
+	LifeRotation.SetWindowTextW(ChangeToCString(mLifeRotation.m_Min));
+	LifeRotation_min.SetWindowTextW(ChangeToCString(mLifeRotation.m_Min));
+	LifeRotation_max.SetWindowTextW(ChangeToCString(mLifeRotation.m_Max));
 }
 
 void CTAP_Particle::GetObjectData()
 {
-	CString Temp01;
-	CString Temp02;
-	CString Temp03;
-	CString Temp04;
-	int Check;
+	//처음 기본셋팅
+	UpDateSetting();
 
-	int Choice01 = RenderType_Combo.GetCurSel();
-	switch (Choice01)
-	{
-	case 0:
-		mParticleSystem->SetRenderType(PARTICLE_RENDER_OPTION::BILLBOARD);
-		break;
-	case 1:
-		mParticleSystem->SetRenderType(PARTICLE_RENDER_OPTION::VERTICAL_BILLBOARD);
-		break;
-	case 2:
-		mParticleSystem->SetRenderType(PARTICLE_RENDER_OPTION::HORIZONTAL_BILLBOARD);
-		break;
-	case 3:
-		mParticleSystem->SetRenderType(PARTICLE_RENDER_OPTION::MESH);
-		break;
-	}
-
-	MaxCount_Edit.GetWindowTextW(Temp01);
-	mParticleSystem->SetMaxParticles(ChangeToInt(Temp01));
-
-	DelayTime_Edit.GetWindowTextW(Temp01);
-	mParticleSystem->SetDelayTime(ChangeToFloat(Temp01));
-
-	Check = ShapeRadius_Check.GetCheck();
-	if (Check)
-	{
-		ShapeRadius_X_Edit.GetWindowTextW(Temp01);
-		ShapeRadius_Y_Edit.GetWindowTextW(Temp02);
-		ShapeRadius_Z_Edit.GetWindowTextW(Temp03);
-		mParticleSystem->SetShapeRadius(ChangeToFloat(Temp01), ChangeToFloat(Temp02), ChangeToFloat(Temp03));
-	}
-	else
-	{
-		ShapeRadius_Edit.GetWindowTextW(Temp01);
-		mParticleSystem->SetShapeRadius(ChangeToFloat(Temp01));
-	}
-
-	TextureTiling_X_Edit.GetWindowTextW(Temp01);
-	TextureTiling_Y_Edit.GetWindowTextW(Temp02);
-	mParticleSystem->SetTextureTiling(ChangeToInt(Temp01), ChangeToInt(Temp02));
-
-
-	Check = StartForce_Check.GetCheck();
-	if (Check)
-	{
-		StartForce_X.GetWindowTextW(Temp01);
-		StartForce_Y.GetWindowTextW(Temp02);
-		StartForce_Z.GetWindowTextW(Temp03);
-		Vector3 Start = Vector3(ChangeToFloat(Temp01), ChangeToFloat(Temp02), ChangeToFloat(Temp03));
-		StartForce_X_R.GetWindowTextW(Temp01);
-		StartForce_Y_R.GetWindowTextW(Temp02);
-		StartForce_Z_R.GetWindowTextW(Temp03);
-		Vector3 End = Vector3(ChangeToFloat(Temp01), ChangeToFloat(Temp02), ChangeToFloat(Temp03));
-		mParticleSystem->SetStartForce(Start,End);
-	}
-	else
-	{
-		StartForce_X.GetWindowTextW(Temp01);
-		StartForce_Y.GetWindowTextW(Temp02);
-		StartForce_Z.GetWindowTextW(Temp03);
-		Vector3 Start = Vector3(ChangeToFloat(Temp01), ChangeToFloat(Temp02), ChangeToFloat(Temp03));
-		mParticleSystem->SetStartForce(Start);
-	}
-
-	Check = StartColor_Check.GetCheck();
-	if (Check)
-	{
-		StartColor_min_R.GetWindowTextW(Temp01);
-		StartColor_min_G.GetWindowTextW(Temp02);
-		StartColor_min_B.GetWindowTextW(Temp03);
-		StartColor_min_A.GetWindowTextW(Temp04);
-		Vector4 Start = Vector4(ChangeToFloat(Temp01), ChangeToFloat(Temp02), ChangeToFloat(Temp03), ChangeToFloat(Temp04));
-		StartColor_max_R.GetWindowTextW(Temp01);
-		StartColor_max_G.GetWindowTextW(Temp02);
-		StartColor_max_B.GetWindowTextW(Temp03);
-		StartColor_max_A.GetWindowTextW(Temp04);
-		Vector4 End = Vector4(ChangeToFloat(Temp01), ChangeToFloat(Temp02), ChangeToFloat(Temp03), ChangeToFloat(Temp04));
-		mParticleSystem->SetStartColor(Start, End);
-	}
-	else
-	{
-		StartColor_min_R.GetWindowTextW(Temp01);
-		StartColor_min_G.GetWindowTextW(Temp02);
-		StartColor_min_B.GetWindowTextW(Temp03);
-		StartColor_min_A.GetWindowTextW(Temp04);
-		Vector4 Start = Vector4(ChangeToFloat(Temp01), ChangeToFloat(Temp02), ChangeToFloat(Temp03), ChangeToFloat(Temp04));
-		mParticleSystem->SetStartColor(Start);
-	}
-
-	Check = StartLife_Check.GetCheck();
-	if (Check)
-	{
-		StartLifeTime_min.GetWindowTextW(Temp01);
-		StartLifeTime_max.GetWindowTextW(Temp02);
-		mParticleSystem->SetStartLifeTime(ChangeToFloat(Temp01), ChangeToFloat(Temp02));
-	}
-	else
-	{
-		StartLifeTime.GetWindowTextW(Temp01);
-		mParticleSystem->SetStartLifeTime(ChangeToFloat(Temp01));
-	}
-
-	Check = StartScale_Check.GetCheck();
-	if (Check)
-	{
-		StartScale_min.GetWindowTextW(Temp01);
-		StartScale_max.GetWindowTextW(Temp02);
-		mParticleSystem->SetStartScale(ChangeToFloat(Temp01), ChangeToFloat(Temp02));
-	}
-	else
-	{
-		StartScale.GetWindowTextW(Temp01);
-		mParticleSystem->SetStartScale(ChangeToFloat(Temp01));
-	}
-
-	Check = StartRotation_Check.GetCheck();
-	if (Check)
-	{
-		StartRotation_max.GetWindowTextW(Temp01);
-		StartRotation_min.GetWindowTextW(Temp02);
-		mParticleSystem->SetStartRotation(ChangeToFloat(Temp01), ChangeToFloat(Temp02));
-	}
-	else
-	{
-		StartRotation.GetWindowTextW(Temp01);
-		mParticleSystem->SetStartRotation(ChangeToFloat(Temp01));
-	}
-
-
-	Check = LifeForce_Check.GetCheck();
-	if (Check)
-	{
-		LifeForce_X.GetWindowTextW(Temp01);
-		LifeForce_Y.GetWindowTextW(Temp02);
-		LifeForce_Z.GetWindowTextW(Temp03);
-		Vector3 Start = Vector3(ChangeToFloat(Temp01), ChangeToFloat(Temp02), ChangeToFloat(Temp03));
-		LifeForce_X_max.GetWindowTextW(Temp01);
-		LifeForce_Y_max.GetWindowTextW(Temp02);
-		LifeForce_Z_max.GetWindowTextW(Temp03);
-		Vector3 End = Vector3(ChangeToFloat(Temp01), ChangeToFloat(Temp02), ChangeToFloat(Temp03));
-		mParticleSystem->SetLifeTimeForce(Start, End);
-	}
-	else
-	{
-		LifeForce_X.GetWindowTextW(Temp01);
-		LifeForce_Y.GetWindowTextW(Temp02);
-		LifeForce_Z.GetWindowTextW(Temp03);
-		Vector3 Start = Vector3(ChangeToFloat(Temp01), ChangeToFloat(Temp02), ChangeToFloat(Temp03));
-		mParticleSystem->SetLifeTimeForce(Start);
-	}
-
-	Check = LifeRotation_Check.GetCheck();
-	if (Check)
-	{
-		LifeRotation_min.GetWindowTextW(Temp01);
-		LifeRotation_max.GetWindowTextW(Temp02);
-		mParticleSystem->SetLifeTimeRotation(ChangeToFloat(Temp01), ChangeToFloat(Temp02));
-	}
-	else
-	{
-		LifeRotation.GetWindowTextW(Temp01);
-		mParticleSystem->SetLifeTimeRotation(ChangeToFloat(Temp01));
-	}
-
-
-	int Choice = LifeScale_Combo.GetCurSel();
-	LifeScale_min.GetWindowTextW(Temp01);
-	LifeScale_max.GetWindowTextW(Temp02);
-	switch (Choice)
-	{
-	case 0:
-		mParticleSystem->SetLifeTimeScale(ChangeToFloat(Temp01), ChangeToFloat(Temp02),PARTICLE_LIFETIME_OPTION::NONE);
-		break;
-	case 1:
-		mParticleSystem->SetLifeTimeScale(ChangeToFloat(Temp01), ChangeToFloat(Temp02), PARTICLE_LIFETIME_OPTION::UP);
-		break;
-	case 2:
-		mParticleSystem->SetLifeTimeScale(ChangeToFloat(Temp01), ChangeToFloat(Temp02), PARTICLE_LIFETIME_OPTION::DOWN);
-		break;
-	case 3:
-		mParticleSystem->SetLifeTimeScale(ChangeToFloat(Temp01), ChangeToFloat(Temp02), PARTICLE_LIFETIME_OPTION::UPDOWN);
-		break;
-	}
-
-	LifeColor_min_R.GetWindowTextW(Temp01);
-	LifeColor_min_G.GetWindowTextW(Temp02);
-	LifeColor_min_B.GetWindowTextW(Temp03);
-	LifeColor_min_A.GetWindowTextW(Temp04);
-	Vector4 Start = Vector4(ChangeToFloat(Temp01), ChangeToFloat(Temp02), ChangeToFloat(Temp03), ChangeToFloat(Temp04));
-
-	LifeColor_max_R.GetWindowTextW(Temp01);
-	LifeColor_max_G.GetWindowTextW(Temp02);
-	LifeColor_max_B.GetWindowTextW(Temp03);
-	LifeColor_max_A.GetWindowTextW(Temp04);
-	Vector4 End = Vector4(ChangeToFloat(Temp01), ChangeToFloat(Temp02), ChangeToFloat(Temp03), ChangeToFloat(Temp04));
-
-	int Choice02 = LifeColor_Combo.GetCurSel();
-	switch (Choice02)
-	{
-	case 0:
-		mParticleSystem->SetLifeTimeColor(Start, End, PARTICLE_LIFETIME_OPTION::NONE);
-		break;
-	case 1:
-		mParticleSystem->SetLifeTimeColor(Start, End, PARTICLE_LIFETIME_OPTION::UP);
-		break;
-	case 2:
-		mParticleSystem->SetLifeTimeColor(Start, End, PARTICLE_LIFETIME_OPTION::DOWN);
-		break;
-	case 3:
-		mParticleSystem->SetLifeTimeColor(Start, End, PARTICLE_LIFETIME_OPTION::UPDOWN);
-		break;
-	}
+	//Start 관련 셋팅
+	UpDateStartSetting();
 	
+	//Life 관련 셋팅
+	UpDateLifeSetting();
+
 	// 변한 데이터 업데이트..
 	mParticleSystem->DataUpdate();
 }

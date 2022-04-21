@@ -22,6 +22,9 @@ protected:
 	virtual BOOL OnInitDialog();
 	DECLARE_MESSAGE_MAP()
 public:
+	void UpDateSetting();
+	void UpDateStartSetting();
+	void UpDateLifeSetting();
 	void SetGameObject(ParticleSystem* ObjectParticleSystem);
 	void GetObjectData();
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
@@ -68,6 +71,7 @@ public:
 	CEdit LifeColor_max_B;
 	CEdit LifeColor_max_A;
 	CComboBox LifeColor_Combo;
+	CEdit RateOverTime_Edit;
 
 	afx_msg void OnStartColor_Button();
 	afx_msg void OnShapeRadius_Button();

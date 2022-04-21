@@ -429,6 +429,7 @@ void FBXManager::LoadQuad()
 	quadMesh->m_MeshData->Name = "Quad";
 
 	quad->MeshType = QUAD_MESH;
+	quad->ModelName = "Quad";
 	quad->BufferName = "Quad";
 
 	ParserData::CMesh* mesh = new ParserData::CMesh();

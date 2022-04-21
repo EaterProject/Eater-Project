@@ -39,6 +39,9 @@ public:
 	static void SaveScene(std::string SaveFilePath,std::string SaveFileName);	//씬 저장
 	static void LoadScene(std::string LoadScenePath);							//씬 로드
 public:
+	///Prefap
+	static void SavePrefap(std::string SaveFilePath, std::string SaveFileName, std::string ObjectName);
+public:
 	///Find
 	static GameObject* FindMesh(std::string MeshName);							//매쉬를 찾는다
 	static GameObject* FindMesh(std::string MeshName,std::string ParentName);	//메쉬의 자식오브젝트를찾는다

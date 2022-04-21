@@ -157,13 +157,18 @@ bool EditorToolScene::DeleteObject(std::string MeshName)
 
 void EditorToolScene::SaveScene(std::string SaveFilePath,std::string SaveFileName)
 {
-	mSaveManager->Save(SaveFilePath, SaveFileName);
+	mSaveManager->Scene_Save(SaveFilePath, SaveFileName);
 }
 
 void EditorToolScene::LoadScene(std::string LoadScenePath)
 {
 	std::string Path = "../Assets/Scene/" + LoadScenePath;
 	mLoadManager->Load(Path);
+}
+
+void EditorToolScene::SavePrefap(std::string SaveFilePath, std::string SaveFileName, std::string ObjectName)
+{
+	mSaveManager->Prefap_Save(SaveFilePath, SaveFileName, FindMesh(ObjectName));
 }
 
 GameObject* EditorToolScene::FindMesh(std::string MeshName)
@@ -267,8 +272,6 @@ bool EditorToolScene::ChoiceTag(std::string TagName, GameObject* Obj)
 
 GameObject* EditorToolScene::Create_Terrain(std::string MeshPath,std::string mask01,std::string mask02)
 {
-
-
 	//터레인 생성
 	LoadTerrainMesh("../Assets/Model/TerrainModel/Terrain.fbx", "../Assets/Texture/Terrain/Terrain_RGB_1.png", "../Assets/Texture/Terrain/Terrain_RGB_2.png", SCALING);
 
@@ -301,10 +304,10 @@ GameObject* EditorToolScene::Create_Particle()
 
 	ParticleSystem* particles = obj->GetComponent<ParticleSystem>();
 	particles->SetMeshName("Quad");
-	particles->SetRenderType(PARTICLE_RENDER_OPTION::VERTICAL_BILLBOARD);
 	particles->SetDiffuseName("particle_hotCloud");
+	particles->SetRenderType(PARTICLE_RENDER_OPTION::BILLBOARD);
 	particles->SetStartLifeTime(1.5f, 1.8f);
-	particles->SetStartScale(0.0f, 7.0f);
+	particles->SetStartScale(1.0f, 7.0f);
 	particles->SetStartRotation(-360, 360);
 	particles->SetStartColor(Vector4(255, 174, 73, 28), Vector4(255, 111, 53, 255));
 	particles->SetMaxParticles(60);
@@ -312,6 +315,8 @@ GameObject* EditorToolScene::Create_Particle()
 	particles->SetShapeRadius(0.1875f);
 	particles->SetStartForce(Vector3(0, 5, 0));
 	particles->SetLifeTimeRotation(-15.0f, 15.0f);
+	particles->SetLifeTimeScale(1, 1, PARTICLE_LIFETIME_OPTION::NONE);
+	particles->SetLifeTimeColor(Vector4(255,255,255,255), Vector4(255, 255, 255, 255),PARTICLE_LIFETIME_OPTION::NONE);
 	particles->SetTextureTiling(8, 8);
 	particles->SetPlayTime(1, true);
 	particles->Play();

@@ -29,4 +29,7 @@ public:
 	AnimationController* AC;
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	afx_msg void OnCbnSelchangeCombo1();
+	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
+	CEdit AnimationEndEdit;
+	CEdit AnimationStartEdit;
 };
