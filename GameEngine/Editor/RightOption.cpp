@@ -164,6 +164,7 @@ BEGIN_MESSAGE_MAP(RightOption, CDialogEx)
 	ON_CBN_SELCHANGE(IDC_COMBO1, &RightOption::OnChoiceTag)
 	ON_BN_CLICKED(IDC_BUTTON2, &RightOption::OnDeleteTagButton)
 	ON_BN_CLICKED(IDC_BUTTON12, &RightOption::OnCreateBasicMaterial)
+	ON_BN_CLICKED(IDC_BUTTON9, &RightOption::OnCreatePrefap)
 END_MESSAGE_MAP()
 
 RightOption* RightOption::GetThis()
@@ -704,4 +705,10 @@ void RightOption::OnDeleteTagButton()
 void RightOption::OnCreateBasicMaterial()
 {
 	mMaterial->ShowWindow(SW_SHOW);
+}
+
+
+void RightOption::OnCreatePrefap()
+{
+	.
 }

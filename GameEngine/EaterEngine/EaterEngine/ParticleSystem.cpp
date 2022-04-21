@@ -297,7 +297,7 @@ void ParticleSystem::SetLifeTimeRotation(float minRot, float maxRot)
 
 void ParticleSystem::SetTextureTiling(int count_x, int count_y)
 {
-	m_Tiling.m_Height = count_x;
+	m_Tiling.m_Width  = count_x;
 	m_Tiling.m_Height = count_y;
 
 	m_SystemDesc->Tile_Width = count_x;
@@ -442,6 +442,15 @@ PARTICLE_LIFETIME_OPTION ParticleSystem::GetLifeTimeScaleOption()
 Range<int> ParticleSystem::GetTextureTiling()
 {
 	return m_Tiling;
+}
+
+std::string ParticleSystem::GetTextureName()
+{
+	if (m_MeshFilter != nullptr)
+	{
+		return m_MeshFilter->GetDiffuseTextureName();
+	}
+	return m_DiffuseName;
 }
 
 void ParticleSystem::StartPlay()

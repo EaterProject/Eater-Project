@@ -31,7 +31,7 @@ void SceneSave::Initialize(std::map<std::string, GameObject*>* ObjectList)
 	SaveList = ObjectList;
 }
 
-void SceneSave::Save(std::string SaveFilePath, std::string SaveFileName)
+void SceneSave::Scene_Save(std::string SaveFilePath, std::string SaveFileName)
 {
 	EATER_OPEN_WRITE_FILE(SaveFileName, SaveFilePath,".Scene");
 	std::map<std::string, GameObject*>::iterator Start_it	= SaveList->begin();
@@ -77,6 +77,14 @@ void SceneSave::Save(std::string SaveFilePath, std::string SaveFileName)
 
 	//저장 종료
 	EATER_CLOSE_WRITE_FILE();
+}
+
+void SceneSave::Prefap_Save(std::string SaveFilePath, std::string SaveFileName, GameObject* Obj)
+{
+
+
+
+
 }
 
 void SceneSave::SceneOption()
@@ -156,7 +164,9 @@ void SceneSave::SaveLight(Light* mLight)
 void SceneSave::SaveParticle(ParticleSystem* mParticleSystem)
 {
 	//46
-	EATER_SET_LIST_START("Particle", 2, 23);
+	EATER_SET_LIST_START("Particle", 2, 25);
+
+	EATER_SET_LIST(mParticleSystem->GetTextureName());		//0
 	switch (mParticleSystem->GetRenderType())
 	{
 	case PARTICLE_RENDER_OPTION::BILLBOARD:
@@ -172,61 +182,66 @@ void SceneSave::SaveParticle(ParticleSystem* mParticleSystem)
 		EATER_SET_LIST("MESH");
 		break;
 	}
-	EATER_SET_LIST(mParticleSystem->GetMaxParticles());		//1
-	EATER_SET_LIST(mParticleSystem->GetDelayTime());		//2
-
+	EATER_SET_LIST(mParticleSystem->GetMaxParticles());		//2
+	EATER_SET_LIST(mParticleSystem->GetDelayTime());		//3
+	
 	auto ShapeRadius = mParticleSystem->GetShapeRadius();
-	EATER_SET_LIST(ShapeRadius.x);							//3
-	EATER_SET_LIST(ShapeRadius.y);							//4
-	EATER_SET_LIST(ShapeRadius.z);							//5
+	EATER_SET_LIST(ShapeRadius.x);							//4
+	EATER_SET_LIST(ShapeRadius.y);							//5
+	EATER_SET_LIST(ShapeRadius.z);							//6
+
+	auto mTiling = mParticleSystem->GetTextureTiling();
+	EATER_SET_LIST(mTiling.m_Width);						//7
+	EATER_SET_LIST(mTiling.m_Height);						//8
 
 	auto StartForce = mParticleSystem->GetStartForce();
-	EATER_SET_LIST(StartForce.m_Min.x);						//6
-	EATER_SET_LIST(StartForce.m_Min.y);						//7
-	EATER_SET_LIST(StartForce.m_Min.z);						//8
-	EATER_SET_LIST(StartForce.m_Max.x);						//9
-	EATER_SET_LIST(StartForce.m_Max.y);						//10
-	EATER_SET_LIST(StartForce.m_Max.z);						//11
+	EATER_SET_LIST(StartForce.m_Min.x);						//9
+	EATER_SET_LIST(StartForce.m_Min.y);						//10
+	EATER_SET_LIST(StartForce.m_Min.z);						//11
+	EATER_SET_LIST(StartForce.m_Max.x);						//12
+	EATER_SET_LIST(StartForce.m_Max.y);						//13
+	EATER_SET_LIST(StartForce.m_Max.z);						//14
 
 	auto StartColor = mParticleSystem->GetStartColor();
-	EATER_SET_LIST(StartColor.m_Min.x);						//12
-	EATER_SET_LIST(StartColor.m_Min.y);						//13
-	EATER_SET_LIST(StartColor.m_Min.z);						//14
-	EATER_SET_LIST(StartColor.m_Min.w);						//15
-	EATER_SET_LIST(StartColor.m_Max.x);						//16
-	EATER_SET_LIST(StartColor.m_Max.y);						//17
-	EATER_SET_LIST(StartColor.m_Max.z);						//18
-	EATER_SET_LIST(StartColor.m_Max.w);						//19
+	EATER_SET_LIST(StartColor.m_Min.x);						//15
+	EATER_SET_LIST(StartColor.m_Min.y);						//16
+	EATER_SET_LIST(StartColor.m_Min.z);						//17
+	EATER_SET_LIST(StartColor.m_Min.w);						//18
+	EATER_SET_LIST(StartColor.m_Max.x);						//19
+	EATER_SET_LIST(StartColor.m_Max.y);						//20
+	EATER_SET_LIST(StartColor.m_Max.z);						//21
+	EATER_SET_LIST(StartColor.m_Max.w);						//22
 
 	auto StartLifeTime = mParticleSystem->GetStartLifeTime();
-	EATER_SET_LIST(StartLifeTime.m_Min);					//20
-	EATER_SET_LIST(StartLifeTime.m_Max);					//21
+	EATER_SET_LIST(StartLifeTime.m_Min);					//23
+	EATER_SET_LIST(StartLifeTime.m_Max,true);				//24
 	
 	auto StartScale = mParticleSystem->GetStartScale();
-	EATER_SET_LIST(StartScale.m_Min,true);					//22
-	EATER_SET_LIST(StartScale.m_Max);						//23
+	EATER_SET_LIST(StartScale.m_Min);						//25
+	EATER_SET_LIST(StartScale.m_Max);						//26
+
 	
 	auto StartRotation = mParticleSystem->GetStartRotation();
-	EATER_SET_LIST(StartRotation.m_Min);					//24
-	EATER_SET_LIST(StartRotation.m_Max);					//25
+	EATER_SET_LIST(StartRotation.m_Min);					//27
+	EATER_SET_LIST(StartRotation.m_Max);					//28
 	
 	auto LifeForce = mParticleSystem->GetLifeTimeForce();
-	EATER_SET_LIST(LifeForce.m_Min.x);						//26	
-	EATER_SET_LIST(LifeForce.m_Min.y);						//27
-	EATER_SET_LIST(LifeForce.m_Min.z);						//28
-	EATER_SET_LIST(LifeForce.m_Max.x);						//29
-	EATER_SET_LIST(LifeForce.m_Max.y);						//30
-	EATER_SET_LIST(LifeForce.m_Max.z);						//31
+	EATER_SET_LIST(LifeForce.m_Min.x);						//29	
+	EATER_SET_LIST(LifeForce.m_Min.y);						//30
+	EATER_SET_LIST(LifeForce.m_Min.z);						//31
+	EATER_SET_LIST(LifeForce.m_Max.x);						//32
+	EATER_SET_LIST(LifeForce.m_Max.y);						//33
+	EATER_SET_LIST(LifeForce.m_Max.z);						//34
 	
 	auto LifeColor = mParticleSystem->GetLifeTimeColor();
-	EATER_SET_LIST(LifeColor.m_Min.x);
-	EATER_SET_LIST(LifeColor.m_Min.y);
-	EATER_SET_LIST(LifeColor.m_Min.z);
-	EATER_SET_LIST(LifeColor.m_Min.w);
-	EATER_SET_LIST(LifeColor.m_Max.x);
-	EATER_SET_LIST(LifeColor.m_Max.y);
-	EATER_SET_LIST(LifeColor.m_Max.z);
-	EATER_SET_LIST(LifeColor.m_Max.w);
+	EATER_SET_LIST(LifeColor.m_Min.x);						//35
+	EATER_SET_LIST(LifeColor.m_Min.y);						//36
+	EATER_SET_LIST(LifeColor.m_Min.z);						//37
+	EATER_SET_LIST(LifeColor.m_Min.w);						//38
+	EATER_SET_LIST(LifeColor.m_Max.x);						//39
+	EATER_SET_LIST(LifeColor.m_Max.y);						//40
+	EATER_SET_LIST(LifeColor.m_Max.z);						//41
+	EATER_SET_LIST(LifeColor.m_Max.w);						//42
 
 	switch (mParticleSystem->GetLifeTimeColorOption())
 	{
@@ -245,8 +260,8 @@ void SceneSave::SaveParticle(ParticleSystem* mParticleSystem)
 	}
 	
 	auto LifeScale = mParticleSystem->GetLifeTimeScale();
-	EATER_SET_LIST(LifeScale.m_Min);
-	EATER_SET_LIST(LifeScale.m_Max);
+	EATER_SET_LIST(LifeScale.m_Min);						//44
+	EATER_SET_LIST(LifeScale.m_Max);						//45
 	
 	switch (mParticleSystem->GetLifeTimeScaleOption())
 	{
@@ -265,8 +280,10 @@ void SceneSave::SaveParticle(ParticleSystem* mParticleSystem)
 	}
 	
 	auto LifeRotation = mParticleSystem->GetLifeTimeRotation();
-	EATER_SET_LIST(LifeRotation.m_Min);
-	EATER_SET_LIST(LifeRotation.m_Max,true);
+	EATER_SET_LIST(LifeRotation.m_Min);						//47
+	EATER_SET_LIST(LifeRotation.m_Max);						//48
+
+	EATER_SET_LIST(mParticleSystem->GetRateOverTime(),true);//49
 }
 
 void SceneSave::SaveCollider(Collider* mCollider)

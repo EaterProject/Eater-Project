@@ -106,4 +106,5 @@ public:
 	afx_msg void OnChoiceTag();
 	afx_msg void OnDeleteTagButton();
 	afx_msg void OnCreateBasicMaterial();
+	afx_msg void OnCreatePrefap();
 };
