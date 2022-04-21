@@ -22,7 +22,7 @@ public:
 	EATER_ENGINEDLL void SetEmissiveTexture(std::string emissiveName);
 	EATER_ENGINEDLL void SetORMTexture(std::string ormName);
 
-	EATER_ENGINEDLL void SetAddColor(DirectX::SimpleMath::Vector4 color);
+	EATER_ENGINEDLL void SetAddColor(DirectX::SimpleMath::Vector3 color);
 
 	EATER_ENGINEDLL void SetEmissiveFactor(float emissiveFactor);
 	EATER_ENGINEDLL void SetRoughnessFactor(float roughnessFactor);

@@ -50,7 +50,7 @@ void TestScene::Awake()
 
 	CreateMap();
 
-	//CreateParticle(0,0,0);
+	CreateParticle(0,0,0);
 	SetEnvironmentMap("Night");
 }
 
@@ -156,13 +156,13 @@ void TestScene::CreateMap()
 	//	}
 	//}
 	
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("MonsterA");
-	//filter->SetAnimationName("MonsterA");
-	//Object->GetTransform()->Scale = { 10.0f, 10.0f, 10.0f };
-	//Object->GetTransform()->Position.z -= 20;
-	//AC = Object->AddComponent<AnimationController>();
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	filter->SetModelName("MonsterA");
+	filter->SetAnimationName("MonsterA");
+	Object->GetTransform()->Scale = { 10.0f, 10.0f, 10.0f };
+	Object->GetTransform()->Position.z -= 20;
+	AC = Object->AddComponent<AnimationController>();
 	//AC->Choice("die");
 	
 	//Object = Instance();
@@ -221,7 +221,7 @@ void TestScene::CreateParticle(float x, float y, float z)
 	ParticleObj->ChoiceChild(testobj);
 	ParticleSystem* particles = testobj->GetComponent<ParticleSystem>();
 	particles->SetMeshName("Quad");
-	particles->SetRenderType(PARTICLE_RENDER_OPTION::VERTICAL_BILLBOARD);
+	particles->SetRenderType(PARTICLE_RENDER_OPTION::BILLBOARD);
 	particles->SetDiffuseName("particle_hotCloud");
 	particles->SetStartLifeTime(1.5f, 1.8f);
 	particles->SetStartScale(4.0f, 7.0f);

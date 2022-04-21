@@ -60,7 +60,6 @@ void Eater_LoadMaterial::LoadData(std::string& Path)
 			Data->Material_SubData->AddColor.x = std::stof(EATER_GET_MAP(i, "AddColor_R"));
 			Data->Material_SubData->AddColor.y = std::stof(EATER_GET_MAP(i, "AddColor_G"));
 			Data->Material_SubData->AddColor.z = std::stof(EATER_GET_MAP(i, "AddColor_B"));
-			Data->Material_SubData->AddColor.w = std::stof(EATER_GET_MAP(i, "AddColor_A"));
 
 			Mat->m_MaterialData->Name = SaveName;
 

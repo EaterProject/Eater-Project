@@ -25,7 +25,7 @@ public:
 public:
 	// Pixel Data를 통해 Image File 생성..
 	static PARSER_DLL void WriteImagePixel(const char* fileName, ParserData::ImageData image, EXTENSION_TYPE extension_type);
-
+	static PARSER_DLL void EraseImagePixel(ParserData::ImageData image);
 public:
 	// 기본적인 초기화 함수..
 	virtual PARSER_DLL void Initialize() abstract;

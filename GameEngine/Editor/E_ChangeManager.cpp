@@ -104,6 +104,12 @@ void E_ChangeManager::Change_Material(int index, GameObject* Object)
 		float AddColor_R = mMaterialData->m_MaterialData->Material_SubData->AddColor.x;
 		float AddColor_G = mMaterialData->m_MaterialData->Material_SubData->AddColor.y;
 		float AddColor_B = mMaterialData->m_MaterialData->Material_SubData->AddColor.z;
+
+		float LimColor_R = mMaterialData->m_MaterialData->Material_SubData->LimColor.x;
+		float LimColor_G = mMaterialData->m_MaterialData->Material_SubData->LimColor.y;
+		float LimColor_B = mMaterialData->m_MaterialData->Material_SubData->LimColor.z;
+		float LimFactor = mMaterialData->m_MaterialData->Material_SubData->LimLightFactor;
+		float LimWidth = mMaterialData->m_MaterialData->Material_SubData->LimLightWidth;
 		//Å¸ÀÏ¸µ »©Áà¾ßÇÔ ....
 
 		EATER_CHANGE_MAP(index, "MaterialName", mMaterial);
@@ -123,7 +129,13 @@ void E_ChangeManager::Change_Material(int index, GameObject* Object)
 		EATER_CHANGE_MAP(index, "AddColor_R", std::to_string(AddColor_R));
 		EATER_CHANGE_MAP(index, "AddColor_G", std::to_string(AddColor_G));
 		EATER_CHANGE_MAP(index, "AddColor_B", std::to_string(AddColor_B));
-		EATER_CHANGE_MAP(index, "AddColor_A", "1");
+
+		EATER_CHANGE_MAP(index, "LimColor_R", std::to_string(LimColor_R));
+		EATER_CHANGE_MAP(index, "LimColor_G", std::to_string(LimColor_G));
+		EATER_CHANGE_MAP(index, "LimColor_B", std::to_string(LimColor_B));
+
+		EATER_CHANGE_MAP(index, "LimFactor", std::to_string(LimFactor));
+		EATER_CHANGE_MAP(index, "LimWidth", std::to_string(LimWidth));
 
 		EATER_CLOSE_CHANGE_FILE(MF->GetMaterialName(), "../Assets/Texture/Material/", ".Emat");
 	}

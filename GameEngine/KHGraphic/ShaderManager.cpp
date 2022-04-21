@@ -206,7 +206,8 @@ void ShaderManager::AddConstantBuffer()
 void ShaderManager::AddConstantBufferUsage()
 {
 	/// Default Usage Constant Buffer Push..
-	// Light ฐüทร Constant Buffer
+
+	// Material..
 	PushConstantBufferUsage<CB_Material>(CBUFFER_USAGE::DEFAULT);
 
 	// Fog..
@@ -244,6 +245,7 @@ void ShaderManager::AddConstantBufferUsage()
 	PushConstantBufferUsage<CB_InstanceSkinMesh>(CBUFFER_USAGE::DYNAMIC);
 
 	// Light..
+	PushConstantBufferUsage<CB_Camera>(CBUFFER_USAGE::DYNAMIC);
 	PushConstantBufferUsage<CB_LightSub>(CBUFFER_USAGE::DYNAMIC);
 	PushConstantBufferUsage<CB_Light>(CBUFFER_USAGE::DYNAMIC);
 
