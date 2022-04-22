@@ -90,6 +90,28 @@ void CTAP_MeshFilter::SetGameObject(MeshFilter* ObjectMeshFilter)
 		AddColor_R.SetWindowTextW(ChangeToCString(AddColorR));
 		AddColor_G.SetWindowTextW(ChangeToCString(AddColorG));
 		AddColor_B.SetWindowTextW(ChangeToCString(AddColorB));
+
+		Vector4 Lim = mMaterial->m_MaterialData->Material_SubData->LimColor;
+		LimLight_R.SetRange(0, 255);
+		LimLight_G.SetRange(0, 255);
+		LimLight_B.SetRange(0, 255);
+		LimLight_R.SetPos((int)(Lim.x * 255.0f));
+		LimLight_G.SetPos((int)(Lim.y * 255.0f));
+		LimLight_B.SetPos((int)(Lim.z * 255.0f));
+
+		LimLight_R_Edit.SetWindowTextW(ChangeToCString(Lim.x));
+		LimLight_G_Edit.SetWindowTextW(ChangeToCString(Lim.y));
+		LimLight_B_Edit.SetWindowTextW(ChangeToCString(Lim.z));
+
+
+		float LimFactor = mMaterial->m_MaterialData->Material_SubData->LimLightFactor * 100.0f;
+		float LimWidth  = mMaterial->m_MaterialData->Material_SubData->LimLightWidth * 100.0f;
+		LimLight_Factor.SetRange(0, 100);
+		LimLight_Width.SetRange(0, 100);
+		LimLight_Factor.SetPos(LimFactor);
+		LimLight_Width.SetPos(LimWidth);
+		LimLight_Factor_Edit.SetWindowTextW(ChangeToCString(LimFactor/100.0f));
+		LimLight_Width_Edit.SetWindowTextW(ChangeToCString(LimWidth / 100.0f));
 	}
 	else
 	{
@@ -108,6 +130,21 @@ void CTAP_MeshFilter::SetGameObject(MeshFilter* ObjectMeshFilter)
 		Emissive_Slider.SetPos(10);
 		Roughnees_Slider.SetPos(100);
 		Matallic_Slider.SetPos(100);
+
+
+		LimLight_R.SetRange(0, 255);
+		LimLight_G.SetRange(0, 255);
+		LimLight_B.SetRange(0, 255);
+		LimLight_R.SetPos(0);
+		LimLight_G.SetPos(0);
+		LimLight_B.SetPos(0);
+		LimLight_R_Edit.SetWindowTextW(L"0");
+		LimLight_G_Edit.SetWindowTextW(L"0");
+		LimLight_B_Edit.SetWindowTextW(L"0");
+		LimLight_Factor.SetPos(0);
+		LimLight_Width.SetPos(0);
+		LimLight_Factor_Edit.SetWindowTextW(L"0");
+		LimLight_Width_Edit.SetWindowTextW(L"0");
 	}
 }
 
@@ -210,6 +247,16 @@ void CTAP_MeshFilter::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_SLIDER9, Add_B_Slider);
 	DDX_Control(pDX, IDC_EDIT15, ModelName_Edit);
 	DDX_Control(pDX, IDC_EDIT16, MaterialName_Edit);
+	DDX_Control(pDX, IDC_SLIDER10, LimLight_R);
+	DDX_Control(pDX, IDC_SLIDER11, LimLight_G);
+	DDX_Control(pDX, IDC_SLIDER12, LimLight_B);
+	DDX_Control(pDX, IDC_EDIT24, LimLight_R_Edit);
+	DDX_Control(pDX, IDC_EDIT25, LimLight_G_Edit);
+	DDX_Control(pDX, IDC_EDIT26, LimLight_B_Edit);
+	DDX_Control(pDX, IDC_SLIDER4, LimLight_Factor);
+	DDX_Control(pDX, IDC_SLIDER5, LimLight_Width);
+	DDX_Control(pDX, IDC_EDIT18, LimLight_Factor_Edit);
+	DDX_Control(pDX, IDC_EDIT27, LimLight_Width_Edit);
 }
 
 BOOL CTAP_MeshFilter::OnInitDialog()
@@ -227,6 +274,17 @@ BOOL CTAP_MeshFilter::OnInitDialog()
 	AddColor_R.SetWindowTextW(L"255");
 	AddColor_G.SetWindowTextW(L"255");
 	AddColor_B.SetWindowTextW(L"255");
+
+	LimLight_R.SetRange(0, 255);
+	LimLight_G.SetRange(0, 255);
+	LimLight_B.SetRange(0, 255);
+	LimLight_R.SetPos(0);
+	LimLight_G.SetPos(0);
+	LimLight_B.SetPos(0);
+	LimLight_R_Edit.SetWindowTextW(L"0");
+	LimLight_G_Edit.SetWindowTextW(L"0");
+	LimLight_B_Edit.SetWindowTextW(L"0");
+	
 
 	return 0;
 }
@@ -434,6 +492,41 @@ void CTAP_MeshFilter::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 		int AddColor = Add_B_Slider.GetPos();
 		mMaterial->m_MaterialData->Material_SubData->AddColor.z = AddColor / 255.0f;
 		AddColor_B.SetWindowTextW(ChangeToCString(AddColor / 255.0f));
+	}
+
+	if (pScrollBar->GetDlgCtrlID() == LimLight_R.GetDlgCtrlID())
+	{
+		int LimColor = LimLight_R.GetPos();
+		mMaterial->m_MaterialData->Material_SubData->LimColor.x = LimColor / 255.0f;
+		LimLight_R_Edit.SetWindowTextW(ChangeToCString(LimColor / 255.0f));
+	}
+
+	if (pScrollBar->GetDlgCtrlID() == LimLight_G.GetDlgCtrlID())
+	{
+		int LimColor = LimLight_G.GetPos();
+		mMaterial->m_MaterialData->Material_SubData->LimColor.y = LimColor / 255.0f;
+		LimLight_G_Edit.SetWindowTextW(ChangeToCString(LimColor / 255.0f));
+	}
+
+	if (pScrollBar->GetDlgCtrlID() == LimLight_B.GetDlgCtrlID())
+	{
+		int LimColor = LimLight_B.GetPos();
+		mMaterial->m_MaterialData->Material_SubData->LimColor.z = LimColor / 255.0f;
+		LimLight_B_Edit.SetWindowTextW(ChangeToCString(LimColor / 255.0f));
+	}
+
+	if (pScrollBar->GetDlgCtrlID() == LimLight_Factor.GetDlgCtrlID())
+	{
+		int Factor = LimLight_Factor.GetPos();
+		mMaterial->m_MaterialData->Material_SubData->LimLightFactor = Factor / 100.0f;
+		LimLight_Factor_Edit.SetWindowTextW(ChangeToCString(Factor / 100.0f));
+	}
+
+	if (pScrollBar->GetDlgCtrlID() == LimLight_Width.GetDlgCtrlID())
+	{
+		int Width = LimLight_Width.GetPos();
+		mMaterial->m_MaterialData->Material_SubData->LimLightWidth = Width / 100.0f;
+		LimLight_Width_Edit.SetWindowTextW(ChangeToCString(Width / 100.0f));
 	}
 
 	CDialogEx::OnHScroll(nSBCode, nPos, pScrollBar);
