@@ -104,14 +104,14 @@ void CTAP_MeshFilter::SetGameObject(MeshFilter* ObjectMeshFilter)
 		LimLight_B_Edit.SetWindowTextW(ChangeToCString(Lim.z));
 
 
-		float LimFactor = mMaterial->m_MaterialData->Material_SubData->LimLightFactor * 100.0f;
-		float LimWidth  = mMaterial->m_MaterialData->Material_SubData->LimLightWidth * 100.0f;
+		float LimFactor = mMaterial->m_MaterialData->Material_SubData->LimLightFactor * 10.0f;
+		float LimWidth  = mMaterial->m_MaterialData->Material_SubData->LimLightWidth * 10.0f;
 		LimLight_Factor.SetRange(0, 100);
 		LimLight_Width.SetRange(0, 100);
 		LimLight_Factor.SetPos(LimFactor);
 		LimLight_Width.SetPos(LimWidth);
-		LimLight_Factor_Edit.SetWindowTextW(ChangeToCString(LimFactor/100.0f));
-		LimLight_Width_Edit.SetWindowTextW(ChangeToCString(LimWidth / 100.0f));
+		LimLight_Factor_Edit.SetWindowTextW(ChangeToCString(LimFactor / 10.0f));
+		LimLight_Width_Edit.SetWindowTextW(ChangeToCString(LimWidth / 10.0f));
 	}
 	else
 	{
@@ -518,15 +518,15 @@ void CTAP_MeshFilter::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 	if (pScrollBar->GetDlgCtrlID() == LimLight_Factor.GetDlgCtrlID())
 	{
 		int Factor = LimLight_Factor.GetPos();
-		mMaterial->m_MaterialData->Material_SubData->LimLightFactor = Factor / 100.0f;
-		LimLight_Factor_Edit.SetWindowTextW(ChangeToCString(Factor / 100.0f));
+		mMaterial->m_MaterialData->Material_SubData->LimLightFactor = Factor / 10.0f;
+		LimLight_Factor_Edit.SetWindowTextW(ChangeToCString(Factor / 10.0f));
 	}
 
 	if (pScrollBar->GetDlgCtrlID() == LimLight_Width.GetDlgCtrlID())
 	{
 		int Width = LimLight_Width.GetPos();
-		mMaterial->m_MaterialData->Material_SubData->LimLightWidth = Width / 100.0f;
-		LimLight_Width_Edit.SetWindowTextW(ChangeToCString(Width / 100.0f));
+		mMaterial->m_MaterialData->Material_SubData->LimLightWidth = Width / 10.0f;
+		LimLight_Width_Edit.SetWindowTextW(ChangeToCString(Width / 10.0f));
 	}
 
 	CDialogEx::OnHScroll(nSBCode, nPos, pScrollBar);
