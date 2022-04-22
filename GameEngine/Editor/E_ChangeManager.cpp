@@ -136,7 +136,7 @@ void E_ChangeManager::Change_Material(int index, GameObject* Object)
 
 		EATER_CHANGE_MAP(index, "LimFactor", std::to_string(LimFactor));
 		EATER_CHANGE_MAP(index, "LimWidth", std::to_string(LimWidth));
-
+		
 		EATER_CLOSE_CHANGE_FILE(MF->GetMaterialName(), "../Assets/Texture/Material/", ".Emat");
 	}
 	else
