@@ -213,7 +213,7 @@ void FBXManager::SetMaterialData(ParserData::CMesh* mMesh, LoadMeshData* SaveDat
 			newMaterial = new Material();
 
 			// Alpha 상태 설정..
-			newMaterial->m_MaterialData->Material_SubData->Alpha = mat->m_Alpha;
+			newMaterial->m_MaterialData->Material_Property->Alpha = mat->m_Alpha;
 
 			std::string mapName;
 			if (mat->m_TextureBind & DIFFUSE_TEXTURE)

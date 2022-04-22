@@ -1347,7 +1347,7 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::MeshVertex>(ParserDat
 	}
 
 	// ³Ñ°ÜÁà¾ßÇÒ Bounding Data..
-	MeshSubData* subData = newMeshBuf->Mesh_SubData;
+	MeshProperty* subData = newMeshBuf->Mesh_Property;
 
 	subData->BoundSphere.Center = (vMin + vMax) * 0.5f;
 	subData->BoundSphere.Radius = DISTANCE(vMax, vMin) * 0.5f;
@@ -1485,7 +1485,7 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::SkinVertex>(ParserDat
 	}
 
 	// ³Ñ°ÜÁà¾ßÇÒ Bounding Data..
-	MeshSubData* subData = newMeshBuf->Mesh_SubData;
+	MeshProperty* subData = newMeshBuf->Mesh_Property;
 
 	subData->BoundSphere.Center = (vMin + vMax) * 0.5f;
 	subData->BoundSphere.Radius = DISTANCE(vMax, vMin) * 0.5f;
@@ -1781,7 +1781,7 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(Parser
 	}
 
 	// ³Ñ°ÜÁà¾ßÇÒ Bounding Data..
-	MeshSubData* subData = newMeshBuf->Mesh_SubData;
+	MeshProperty* subData = newMeshBuf->Mesh_Property;
 
 	subData->BoundSphere.Center = (vMin + vMax) * 0.5f;
 	subData->BoundSphere.Radius = DISTANCE(vMax, vMin) * 0.5f;

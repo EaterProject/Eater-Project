@@ -238,6 +238,8 @@ FXAA_SUBPIX_CAP - Insures fine detail is not completely removed.
 
 #define FXAA_SUBPIX_TRIM_SCALE (1.0/(1.0 - FXAA_SUBPIX_TRIM))
 
+#define Luma 1.9632107
+
 /*=====================================================
                                    HELPERS
 =======================================================*/
@@ -247,7 +249,8 @@ FXAA_SUBPIX_CAP - Insures fine detail is not completely removed.
 // FxaaLuma() will range 0.0 to 2.963210702.
 float FxaaLuma(float3 rgb)
 {
-    return rgb.y * (0.587 / 0.299) + rgb.x;
+    //return rgb.y * (0.587 / 0.299) + rgb.x;
+    return rgb.y * Luma + rgb.x;
 }
 
 float3 FxaaLerp3(float3 a, float3 b, float amountOfA)

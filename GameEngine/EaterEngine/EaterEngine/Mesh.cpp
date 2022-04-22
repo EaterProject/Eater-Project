@@ -11,7 +11,7 @@ Mesh::Mesh()
 	m_MeshData = new MeshBuffer();
 	m_MeshData->Name = "None";
 
-	m_MeshData->Mesh_SubData = new MeshSubData();
+	m_MeshData->Mesh_Property = new MeshProperty();
 
 	// Mesh µî·Ï..
 	MeshManager::PushMesh(this);

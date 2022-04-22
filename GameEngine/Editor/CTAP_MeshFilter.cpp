@@ -57,13 +57,13 @@ void CTAP_MeshFilter::SetGameObject(MeshFilter* ObjectMeshFilter)
 		ORM_Edit.SetWindowTextW(ChangeToCString(ORM));
 		EmissiveName_Edit.SetWindowTextW(ChangeToCString(Emissive));
 
-		float EmissiveF		= mMaterial->m_MaterialData->Material_SubData->EmissiveFactor;
-		float RoughnessF	= mMaterial->m_MaterialData->Material_SubData->RoughnessFactor;
-		float MetallicF		= mMaterial->m_MaterialData->Material_SubData->MetallicFactor;
+		float EmissiveF		= mMaterial->m_MaterialData->Material_Property->EmissiveFactor;
+		float RoughnessF	= mMaterial->m_MaterialData->Material_Property->RoughnessFactor;
+		float MetallicF		= mMaterial->m_MaterialData->Material_Property->MetallicFactor;
 
-		float AddColorR = mMaterial->m_MaterialData->Material_SubData->AddColor.x;
-		float AddColorG = mMaterial->m_MaterialData->Material_SubData->AddColor.y;
-		float AddColorB = mMaterial->m_MaterialData->Material_SubData->AddColor.z;
+		float AddColorR = mMaterial->m_MaterialData->Material_Property->AddColor.x;
+		float AddColorG = mMaterial->m_MaterialData->Material_Property->AddColor.y;
+		float AddColorB = mMaterial->m_MaterialData->Material_Property->AddColor.z;
 
 	
 		Emissive_Edit.SetWindowTextW(ChangeToCString(EmissiveF));
@@ -78,7 +78,7 @@ void CTAP_MeshFilter::SetGameObject(MeshFilter* ObjectMeshFilter)
 		Matallic_Slider.SetRange(0, 200);
 		Roughnees_Slider.SetRange(0, 200);
 
-		Vector4 Add = mMaterial->m_MaterialData->Material_SubData->AddColor;
+		Vector4 Add = mMaterial->m_MaterialData->Material_Property->AddColor;
 	
 		Add_R_Slider.SetRange(0, 255);
 		Add_G_Slider.SetRange(0, 255);
@@ -91,7 +91,7 @@ void CTAP_MeshFilter::SetGameObject(MeshFilter* ObjectMeshFilter)
 		AddColor_G.SetWindowTextW(ChangeToCString(AddColorG));
 		AddColor_B.SetWindowTextW(ChangeToCString(AddColorB));
 
-		Vector4 Lim = mMaterial->m_MaterialData->Material_SubData->LimColor;
+		Vector4 Lim = mMaterial->m_MaterialData->Material_Property->LimColor;
 		LimLight_R.SetRange(0, 255);
 		LimLight_G.SetRange(0, 255);
 		LimLight_B.SetRange(0, 255);
@@ -104,8 +104,8 @@ void CTAP_MeshFilter::SetGameObject(MeshFilter* ObjectMeshFilter)
 		LimLight_B_Edit.SetWindowTextW(ChangeToCString(Lim.z));
 
 
-		float LimFactor = mMaterial->m_MaterialData->Material_SubData->LimLightFactor * 10.0f;
-		float LimWidth  = mMaterial->m_MaterialData->Material_SubData->LimLightWidth * 10.0f;
+		float LimFactor = mMaterial->m_MaterialData->Material_Property->LimLightFactor * 10.0f;
+		float LimWidth  = mMaterial->m_MaterialData->Material_Property->LimLightWidth * 10.0f;
 		LimLight_Factor.SetRange(0, 100);
 		LimLight_Width.SetRange(0, 100);
 		LimLight_Factor.SetPos(LimFactor);
@@ -194,17 +194,17 @@ void CTAP_MeshFilter::UpdateGameObject()
 	if (Name00 != "")
 	{
 		float Emissive = ChangeToFloat(Name00);
-		mMaterial->m_MaterialData->Material_SubData->EmissiveFactor = ChangeToFloat(Name00);
+		mMaterial->m_MaterialData->Material_Property->EmissiveFactor = ChangeToFloat(Name00);
 	}
 
 	if (Name01 != "")
 	{
-		mMaterial->m_MaterialData->Material_SubData->RoughnessFactor = ChangeToFloat(Name01);
+		mMaterial->m_MaterialData->Material_Property->RoughnessFactor = ChangeToFloat(Name01);
 	}
 
 	if (Name02 != "")
 	{
-		mMaterial->m_MaterialData->Material_SubData->MetallicFactor = ChangeToFloat(Name02);
+		mMaterial->m_MaterialData->Material_Property->MetallicFactor = ChangeToFloat(Name02);
 	}
 
 	CString GetNumber;
@@ -476,56 +476,56 @@ void CTAP_MeshFilter::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 	if (pScrollBar->GetDlgCtrlID() == Add_R_Slider.GetDlgCtrlID())
 	{
 		int AddColor = Add_R_Slider.GetPos();
-		mMaterial->m_MaterialData->Material_SubData->AddColor.x = AddColor / 255.0f;
+		mMaterial->m_MaterialData->Material_Property->AddColor.x = AddColor / 255.0f;
 		AddColor_R.SetWindowTextW(ChangeToCString(AddColor / 255.0f));
 	}
 
 	if (pScrollBar->GetDlgCtrlID() == Add_G_Slider.GetDlgCtrlID())
 	{
 		int AddColor = Add_G_Slider.GetPos();
-		mMaterial->m_MaterialData->Material_SubData->AddColor.y = AddColor / 255.0f;
+		mMaterial->m_MaterialData->Material_Property->AddColor.y = AddColor / 255.0f;
 		AddColor_G.SetWindowTextW(ChangeToCString(AddColor / 255.0f));
 	}
 
 	if (pScrollBar->GetDlgCtrlID() == Add_B_Slider.GetDlgCtrlID())
 	{
 		int AddColor = Add_B_Slider.GetPos();
-		mMaterial->m_MaterialData->Material_SubData->AddColor.z = AddColor / 255.0f;
+		mMaterial->m_MaterialData->Material_Property->AddColor.z = AddColor / 255.0f;
 		AddColor_B.SetWindowTextW(ChangeToCString(AddColor / 255.0f));
 	}
 
 	if (pScrollBar->GetDlgCtrlID() == LimLight_R.GetDlgCtrlID())
 	{
 		int LimColor = LimLight_R.GetPos();
-		mMaterial->m_MaterialData->Material_SubData->LimColor.x = LimColor / 255.0f;
+		mMaterial->m_MaterialData->Material_Property->LimColor.x = LimColor / 255.0f;
 		LimLight_R_Edit.SetWindowTextW(ChangeToCString(LimColor / 255.0f));
 	}
 
 	if (pScrollBar->GetDlgCtrlID() == LimLight_G.GetDlgCtrlID())
 	{
 		int LimColor = LimLight_G.GetPos();
-		mMaterial->m_MaterialData->Material_SubData->LimColor.y = LimColor / 255.0f;
+		mMaterial->m_MaterialData->Material_Property->LimColor.y = LimColor / 255.0f;
 		LimLight_G_Edit.SetWindowTextW(ChangeToCString(LimColor / 255.0f));
 	}
 
 	if (pScrollBar->GetDlgCtrlID() == LimLight_B.GetDlgCtrlID())
 	{
 		int LimColor = LimLight_B.GetPos();
-		mMaterial->m_MaterialData->Material_SubData->LimColor.z = LimColor / 255.0f;
+		mMaterial->m_MaterialData->Material_Property->LimColor.z = LimColor / 255.0f;
 		LimLight_B_Edit.SetWindowTextW(ChangeToCString(LimColor / 255.0f));
 	}
 
 	if (pScrollBar->GetDlgCtrlID() == LimLight_Factor.GetDlgCtrlID())
 	{
 		int Factor = LimLight_Factor.GetPos();
-		mMaterial->m_MaterialData->Material_SubData->LimLightFactor = Factor / 10.0f;
+		mMaterial->m_MaterialData->Material_Property->LimLightFactor = Factor / 10.0f;
 		LimLight_Factor_Edit.SetWindowTextW(ChangeToCString(Factor / 10.0f));
 	}
 
 	if (pScrollBar->GetDlgCtrlID() == LimLight_Width.GetDlgCtrlID())
 	{
 		int Width = LimLight_Width.GetPos();
-		mMaterial->m_MaterialData->Material_SubData->LimLightWidth = Width / 10.0f;
+		mMaterial->m_MaterialData->Material_Property->LimLightWidth = Width / 10.0f;
 		LimLight_Width_Edit.SetWindowTextW(ChangeToCString(Width / 10.0f));
 	}
 

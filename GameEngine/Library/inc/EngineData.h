@@ -87,8 +87,8 @@ public:
 	float FrameTime = 0.0f;							// Animation Frame Time
 };
 
-// Mesh Sub Data
-class MeshSubData
+// Mesh Property
+class MeshProperty
 {
 public:
 	BoundingBox		BoundBox;
@@ -101,7 +101,7 @@ class MeshBuffer : public Resources
 public:
 	virtual ~MeshBuffer()
 	{
-		delete Mesh_SubData;
+		delete Mesh_Property;
 		delete IndexBuf;
 		delete VertexBuf;
 	}
@@ -109,14 +109,14 @@ public:
 public:
 	UINT BufferIndex = 0;		// Mesh Buffer Index
 
-	MeshSubData* Mesh_SubData;	// Mesh Sub Data
+	MeshProperty* Mesh_Property;	// Mesh Sub Data
 
 	IndexBuffer* IndexBuf;		// Index Buffer
 	VertexBuffer* VertexBuf;	// Vertex Buffer
 };
 
-// Material Sub Data
-class MaterialSubData
+// Material Property
+class MaterialProperty
 {
 public:
 	Vector3 AddColor = Vector3(0.0f, 0.0f, 0.0f);	// Add Color
@@ -136,19 +136,27 @@ public:
 	Matrix TexTM;						// Material의 텍스쳐 행렬
 };
 
+// Material Property Block
+class MaterialPropertyBlock : public MaterialProperty
+{
+public:
+	bool Enable = false;
+
+};
+
 // Material Buffer
 class MaterialBuffer : public Resources
 {
 public:
 	virtual ~MaterialBuffer()
 	{
-		delete Material_SubData;
+		delete Material_Property;
 	}
 
 public:
 	UINT BufferIndex = 0;							// Material Buffer Index
 
-	MaterialSubData* Material_SubData = nullptr;	// Material SubData
+	MaterialProperty* Material_Property = nullptr;	// Material SubData
 	
 	TextureBuffer* Albedo = nullptr;				// DiffuseMap Texture
 	TextureBuffer* Normal = nullptr;				// NormalMap Texture

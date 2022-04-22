@@ -49,17 +49,17 @@ void Eater_LoadMaterial::LoadData(std::string& Path)
 			if (Data->Emissive) Data->Emissive->Name = EmissiveName;
 			if (Data->ORM) Data->ORM->Name = ORMName;
 
-			Data->Material_SubData->EmissiveFactor = std::stof(EATER_GET_MAP(i, "Emissive"));
-			Data->Material_SubData->RoughnessFactor = std::stof(EATER_GET_MAP(i, "Roughness"));
-			Data->Material_SubData->MetallicFactor = std::stof(EATER_GET_MAP(i, "Metallic"));
+			Data->Material_Property->EmissiveFactor = std::stof(EATER_GET_MAP(i, "Emissive"));
+			Data->Material_Property->RoughnessFactor = std::stof(EATER_GET_MAP(i, "Roughness"));
+			Data->Material_Property->MetallicFactor = std::stof(EATER_GET_MAP(i, "Metallic"));
 
 			float Scale_X = std::stof(EATER_GET_MAP(i, "Tileing_X"));
 			float Scale_Y = std::stof(EATER_GET_MAP(i, "Tileing_Y"));
-			Data->Material_SubData->TexTM = Matrix::CreateScale(1 / Scale_X, 1 / Scale_Y, 1.0f);
+			Data->Material_Property->TexTM = Matrix::CreateScale(1 / Scale_X, 1 / Scale_Y, 1.0f);
 
-			Data->Material_SubData->AddColor.x = std::stof(EATER_GET_MAP(i, "AddColor_R"));
-			Data->Material_SubData->AddColor.y = std::stof(EATER_GET_MAP(i, "AddColor_G"));
-			Data->Material_SubData->AddColor.z = std::stof(EATER_GET_MAP(i, "AddColor_B"));
+			Data->Material_Property->AddColor.x = std::stof(EATER_GET_MAP(i, "AddColor_R"));
+			Data->Material_Property->AddColor.y = std::stof(EATER_GET_MAP(i, "AddColor_G"));
+			Data->Material_Property->AddColor.z = std::stof(EATER_GET_MAP(i, "AddColor_B"));
 
 			Mat->m_MaterialData->Name = SaveName;
 
