@@ -1,8 +1,7 @@
 #EATERMAT
-@MaterialName MonsterA+_body.001
-@Alpha NO
 @ORMMap monsterA_ORM
-@LimColor_B 1.000000
+@Alpha NO
+@MaterialName MonsterA+_body.001
 @DiffuseMap monsterA_BaseColor
 @NormalMap monsterA_Normal
 @EmissiveMap monsterA_Emissive
@@ -11,12 +10,13 @@
 @Metallic 0.000000
 @Tileing_X 1
 @Tileing_Y 1
-@AddColor_R 0.482353
-@AddColor_G 0.596078
-@AddColor_B 0.274510
-@LimFactor 1.000000
+@AddColor_R 0.000000
+@AddColor_G 0.000000
+@AddColor_B 0.000000
 @AddColor_A 0
-@LimColor_R 0.000000
-@LimColor_G 0.000000
-@LimWidth 1.000000
+@LimColor_R 0
+@LimColor_G 0
+@LimColor_B 0
+@LimFactor 0
+@LimWidth 0
 &

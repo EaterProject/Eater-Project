@@ -130,12 +130,12 @@ void E_ChangeManager::Change_Material(int index, GameObject* Object)
 		EATER_CHANGE_MAP(index, "AddColor_G", std::to_string(AddColor_G));
 		EATER_CHANGE_MAP(index, "AddColor_B", std::to_string(AddColor_B));
 
-		EATER_CHANGE_MAP(index, "LimColor_R", std::to_string(LimColor_R));
-		EATER_CHANGE_MAP(index, "LimColor_G", std::to_string(LimColor_G));
-		EATER_CHANGE_MAP(index, "LimColor_B", std::to_string(LimColor_B));
-
-		EATER_CHANGE_MAP(index, "LimFactor", std::to_string(LimFactor));
-		EATER_CHANGE_MAP(index, "LimWidth", std::to_string(LimWidth));
+		//EATER_CHANGE_MAP(index, "LimColor_R", std::to_string(LimColor_R));
+		//EATER_CHANGE_MAP(index, "LimColor_G", std::to_string(LimColor_G));
+		//EATER_CHANGE_MAP(index, "LimColor_B", std::to_string(LimColor_B));
+		//
+		//EATER_CHANGE_MAP(index, "LimFactor", std::to_string(LimFactor));
+		//EATER_CHANGE_MAP(index, "LimWidth", std::to_string(LimWidth));
 
 		EATER_CLOSE_CHANGE_FILE(MF->GetMaterialName(), "../Assets/Texture/Material/", ".Emat");
 	}
