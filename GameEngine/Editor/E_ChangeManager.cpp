@@ -105,9 +105,9 @@ void E_ChangeManager::Change_Material(int index, GameObject* Object)
 		float AddColor_G = mMaterialData->m_MaterialData->Material_Property->AddColor.y;
 		float AddColor_B = mMaterialData->m_MaterialData->Material_Property->AddColor.z;
 
-		float LimColor_R = mMaterialData->m_MaterialData->Material_Property->LimColor.x;
-		float LimColor_G = mMaterialData->m_MaterialData->Material_Property->LimColor.y;
-		float LimColor_B = mMaterialData->m_MaterialData->Material_Property->LimColor.z;
+		float LimColor_R = mMaterialData->m_MaterialData->Material_Property->LimLightColor.x;
+		float LimColor_G = mMaterialData->m_MaterialData->Material_Property->LimLightColor.y;
+		float LimColor_B = mMaterialData->m_MaterialData->Material_Property->LimLightColor.z;
 		float LimFactor = mMaterialData->m_MaterialData->Material_Property->LimLightFactor;
 		float LimWidth = mMaterialData->m_MaterialData->Material_Property->LimLightWidth;
 		//≈∏¿œ∏µ ª©¡‡æﬂ«‘ ....

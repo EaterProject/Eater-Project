@@ -63,15 +63,15 @@ void ShaderManager::CreateShader()
 	D3D_SHADER_MACRO light_macro3[] = { {"SHADOW"}, {"SSAO"}, {NULL, NULL} };
 
 	// Light Shader
-	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Light_PBR_PS.hlsl", "Light_PBR_PS", "Light_PBR_PS_Option0");
-	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Light_PBR_PS.hlsl", "Light_PBR_PS", "Light_PBR_PS_Option1", light_macro1);
-	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Light_PBR_PS.hlsl", "Light_PBR_PS", "Light_PBR_PS_Option2", light_macro2);
-	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Light_PBR_PS.hlsl", "Light_PBR_PS", "Light_PBR_PS_Option3", light_macro3);
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Light_PBR_PS.hlsl", "Light_PBR_PS", "Light_PBR_PS_Option0");					// None
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Light_PBR_PS.hlsl", "Light_PBR_PS", "Light_PBR_PS_Option1", light_macro1);	// Shadow
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Light_PBR_PS.hlsl", "Light_PBR_PS", "Light_PBR_PS_Option2", light_macro2);	// SSAO
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Light_PBR_PS.hlsl", "Light_PBR_PS", "Light_PBR_PS_Option3", light_macro3);	// Shadow + SSAO
 
-	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Light_IBL_PS.hlsl", "Light_IBL_PS", "Light_IBL_PS_Option0");
-	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Light_IBL_PS.hlsl", "Light_IBL_PS", "Light_IBL_PS_Option1", light_macro1);
-	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Light_IBL_PS.hlsl", "Light_IBL_PS", "Light_IBL_PS_Option2", light_macro2);
-	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Light_IBL_PS.hlsl", "Light_IBL_PS", "Light_IBL_PS_Option3", light_macro3);
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Light_IBL_PS.hlsl", "Light_IBL_PS", "Light_IBL_PS_Option0");					// None
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Light_IBL_PS.hlsl", "Light_IBL_PS", "Light_IBL_PS_Option1", light_macro1);	// Shadow
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Light_IBL_PS.hlsl", "Light_IBL_PS", "Light_IBL_PS_Option2", light_macro2);	// SSAO
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Light_IBL_PS.hlsl", "Light_IBL_PS", "Light_IBL_PS_Option3", light_macro3);	// Shadow + SSAO
 
 	// Deferred Shader Macro
 	D3D_SHADER_MACRO deferred_macro1[] = { {"TERRAIN_MESH"}, {NULL, NULL} };
@@ -123,15 +123,23 @@ void ShaderManager::CreateShader()
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "BloomSampling_PS.hlsl", "DrawScreen_PS", "DrawScreen_PS");
 
 	// Tone Map Shader Macro
-	D3D_SHADER_MACRO tonemap_macro1[] = { {"BLOOM"}, {NULL, NULL} };
-	D3D_SHADER_MACRO tonemap_macro2[] = { {"HDR"}, {NULL, NULL} };
-	D3D_SHADER_MACRO tonemap_macro3[] = { {"BLOOM"}, {"HDR"}, {NULL, NULL} };
+	D3D_SHADER_MACRO combine_macro1[] = { {"BLOOM"}, {NULL, NULL} };
+	D3D_SHADER_MACRO combine_macro2[] = { {"HDR"}, {NULL, NULL} };
+	D3D_SHADER_MACRO combine_macro3[] = { {"OUT_LINE"}, {NULL, NULL} };
+	D3D_SHADER_MACRO combine_macro4[] = { {"BLOOM"}, {"HDR"}, {NULL, NULL} };
+	D3D_SHADER_MACRO combine_macro5[] = { {"BLOOM"}, {"OUT_LINE"}, {NULL, NULL} };
+	D3D_SHADER_MACRO combine_macro6[] = { {"HDR"}, {"OUT_LINE"}, {NULL, NULL} };
+	D3D_SHADER_MACRO combine_macro7[] = { {"BLOOM"}, {"HDR"}, {"OUT_LINE"}, {NULL, NULL} };
 
-	// Tone Map Shader
-	LoadShader(SHADER_TYPE::PIXEL_SHADER, "ToneMapping_PS.hlsl", "ToneMapping_PS", "GammaCorrection_PS");
-	LoadShader(SHADER_TYPE::PIXEL_SHADER, "ToneMapping_PS.hlsl", "ToneMapping_PS", "Bloom_PS", tonemap_macro1);
-	LoadShader(SHADER_TYPE::PIXEL_SHADER, "ToneMapping_PS.hlsl", "ToneMapping_PS", "ToneMapping_PS", tonemap_macro2);
-	LoadShader(SHADER_TYPE::PIXEL_SHADER, "ToneMapping_PS.hlsl", "ToneMapping_PS", "BloomToneMapping_PS", tonemap_macro3);
+	// Combine Shader
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Combine_PS.hlsl", "Combine_PS", "Combine_PS_Option0");					// None
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Combine_PS.hlsl", "Combine_PS", "Combine_PS_Option1", combine_macro1);	// Bloom
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Combine_PS.hlsl", "Combine_PS", "Combine_PS_Option2", combine_macro2);	// HDR
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Combine_PS.hlsl", "Combine_PS", "Combine_PS_Option3", combine_macro3);	// OutLine
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Combine_PS.hlsl", "Combine_PS", "Combine_PS_Option4", combine_macro4);	// Bloom + HDR
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Combine_PS.hlsl", "Combine_PS", "Combine_PS_Option5", combine_macro5);	// Bloom + OutLine
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Combine_PS.hlsl", "Combine_PS", "Combine_PS_Option6", combine_macro6);	// HDR + OutLine
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Combine_PS.hlsl", "Combine_PS", "Combine_PS_Option7", combine_macro7);	// Bloom + HDR + OutLine
 	 
 	// Fog Shader
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Fog_PS.hlsl", "Fog_PS", "Fog_PS");
@@ -151,6 +159,11 @@ void ShaderManager::CreateShader()
 	// Hierarchical Z Map Shader
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "HizMipMap_PS.hlsl", "HizMipMap_PS", "HizMipMap_PS");
 	LoadShader(SHADER_TYPE::COMPUTE_SHADER, "HizCull_CS.hlsl", "HizCull_CS", "HizCull_CS");
+
+	// OutLine Shader
+	LoadShader(SHADER_TYPE::VERTEX_SHADER, "OutLine_StaticMesh_VS.hlsl", "OutLine_StaticMesh_VS", "OutLine_StaticMesh_VS");
+	LoadShader(SHADER_TYPE::VERTEX_SHADER, "OutLine_SkinMesh_VS.hlsl", "OutLine_SkinMesh_VS", "OutLine_SkinMesh_VS");
+
 
 
 	// Debug Shader Macro
@@ -228,7 +241,12 @@ void ShaderManager::AddConstantBufferUsage()
 
 	// Bloom..
 	PushConstantBufferUsage<CB_BloomBright>(CBUFFER_USAGE::DEFAULT);
-	PushConstantBufferUsage<CB_BloomFinal>(CBUFFER_USAGE::DEFAULT);
+
+	// OutLine..
+	PushConstantBufferUsage<CB_OutLine>(CBUFFER_USAGE::DEFAULT);
+
+	// Combine..
+	PushConstantBufferUsage<CB_DrawFinal>(CBUFFER_USAGE::DEFAULT);
 
 
 	/// Dynamic Usage Constant Buffer Push..

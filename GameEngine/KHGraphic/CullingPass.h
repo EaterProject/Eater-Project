@@ -67,7 +67,7 @@ private:
 
 private:
 	std::vector<RenderData*> CullingRenderMeshList;
-
+	
 	RenderData* m_RenderData;
 	Cull::Frustum m_Frustum;
 	BoundingSphere m_Sphere;

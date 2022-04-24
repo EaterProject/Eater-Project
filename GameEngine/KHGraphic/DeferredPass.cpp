@@ -264,7 +264,7 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const std:
 		materialBuf.gRoughnessFactor = matSub->RoughnessFactor;
 		materialBuf.gMetallicFactor = matSub->MetallicFactor;
 		materialBuf.gLimLightFactor = matSub->LimLightFactor;
-		materialBuf.gLimLightColor = matSub->LimColor;
+		materialBuf.gLimLightColor = matSub->LimLightColor;
 		materialBuf.gLimLightWidth = matSub->LimLightWidth;
 
 		CB_Camera cameraBuf;
@@ -359,7 +359,7 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const std:
 		materialBuf.gRoughnessFactor = matSub->RoughnessFactor;
 		materialBuf.gMetallicFactor = matSub->MetallicFactor;
 		materialBuf.gLimLightFactor = matSub->LimLightFactor;
-		materialBuf.gLimLightColor = matSub->LimColor;
+		materialBuf.gLimLightColor = matSub->LimLightColor;
 		materialBuf.gLimLightWidth = matSub->LimLightWidth;
 
 		CB_Camera cameraBuf;
@@ -452,7 +452,7 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rend
 		materialBuf.gRoughnessFactor = matSub->RoughnessFactor;
 		materialBuf.gMetallicFactor = matSub->MetallicFactor;
 		materialBuf.gLimLightFactor = matSub->LimLightFactor;
-		materialBuf.gLimLightColor = matSub->LimColor;
+		materialBuf.gLimLightColor = matSub->LimLightColor;
 		materialBuf.gLimLightWidth = matSub->LimLightWidth;
 
 		CB_Camera cameraBuf;
@@ -570,7 +570,7 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rend
 		materialBuf.gRoughnessFactor = matSub->RoughnessFactor;
 		materialBuf.gMetallicFactor = matSub->MetallicFactor;
 		materialBuf.gLimLightFactor = matSub->LimLightFactor;
-		materialBuf.gLimLightColor = matSub->LimColor;
+		materialBuf.gLimLightColor = matSub->LimLightColor;
 		materialBuf.gLimLightWidth = matSub->LimLightWidth;
 
 		CB_Camera cameraBuf;

@@ -160,9 +160,6 @@
     <Filter Include="소스 파일\Shader\HLSL\PostProcess\FXAA">
       <UniqueIdentifier>{85175e8e-5366-472f-8c5a-8ed5ace344ef}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Shader\HLSL\PostProcess\ToneMap">
-      <UniqueIdentifier>{13697756-ee79-4412-b865-2bf14e4280fb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Shader\HLSL\PostProcess\Fog">
       <UniqueIdentifier>{366e781e-3175-4394-8f57-99adf5053213}</UniqueIdentifier>
     </Filter>
@@ -226,9 +223,6 @@
     <Filter Include="소스 파일\RenderPass\PostProcess\Bloom">
       <UniqueIdentifier>{a29fe984-d3af-4e86-8be5-123d72295941}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\RenderPass\PostProcess\ToneMap">
-      <UniqueIdentifier>{4296c02e-8ff8-499c-a371-ef451f4d8c6d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\RenderPass\PostProcess\Fog">
       <UniqueIdentifier>{de54fade-8306-470c-8c10-27e95f60206a}</UniqueIdentifier>
     </Filter>
@@ -255,6 +249,18 @@
     </Filter>
     <Filter Include="소스 파일\Shader\HLSL\Render\Depth">
       <UniqueIdentifier>{653f353f-dac2-4382-ad6b-0fb2764473e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\RenderPass\SubPass\OutLine">
+      <UniqueIdentifier>{9efccc99-5939-469c-8bd4-4b0411050828}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Shader\HLSL\PostProcess\OutLine">
+      <UniqueIdentifier>{e1c92ec5-a23a-4903-a7e0-7a9c4927ab1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\RenderPass\PostProcess\Combine">
+      <UniqueIdentifier>{4296c02e-8ff8-499c-a371-ef451f4d8c6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Shader\HLSL\PostProcess\Combine">
+      <UniqueIdentifier>{13697756-ee79-4412-b865-2bf14e4280fb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -459,9 +465,6 @@
     <ClInclude Include="ResourceBase.inl">
       <Filter>소스 파일\Resource\Base</Filter>
     </ClInclude>
-    <ClInclude Include="ToneMapPass.h">
-      <Filter>소스 파일\RenderPass\PostProcess\ToneMap</Filter>
-    </ClInclude>
     <ClInclude Include="FogPass.h">
       <Filter>소스 파일\RenderPass\PostProcess\Fog</Filter>
     </ClInclude>
@@ -488,6 +491,12 @@
     </ClInclude>
     <ClInclude Include="CullingData.h">
       <Filter>소스 파일\RenderPass\SubPass\Culling</Filter>
+    </ClInclude>
+    <ClInclude Include="OutLinePass.h">
+      <Filter>소스 파일\RenderPass\SubPass\OutLine</Filter>
+    </ClInclude>
+    <ClInclude Include="CombinePass.h">
+      <Filter>소스 파일\RenderPass\PostProcess\Combine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -596,9 +605,6 @@
     <ClCompile Include="GraphicResource.cpp">
       <Filter>소스 파일\Resource\Graphic\GraphicResource</Filter>
     </ClCompile>
-    <ClCompile Include="ToneMapPass.cpp">
-      <Filter>소스 파일\RenderPass\PostProcess\ToneMap</Filter>
-    </ClCompile>
     <ClCompile Include="FogPass.cpp">
       <Filter>소스 파일\RenderPass\PostProcess\Fog</Filter>
     </ClCompile>
@@ -610,6 +616,12 @@
     </ClCompile>
     <ClCompile Include="CullingPass.cpp">
       <Filter>소스 파일\RenderPass\SubPass\Culling</Filter>
+    </ClCompile>
+    <ClCompile Include="OutLinePass.cpp">
+      <Filter>소스 파일\RenderPass\SubPass\OutLine</Filter>
+    </ClCompile>
+    <ClCompile Include="CombinePass.cpp">
+      <Filter>소스 파일\RenderPass\PostProcess\Combine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -642,9 +654,6 @@
     </FxCompile>
     <FxCompile Include="..\Assets\Shader\FXAA_PS.hlsl">
       <Filter>소스 파일\Shader\HLSL\PostProcess\FXAA</Filter>
-    </FxCompile>
-    <FxCompile Include="..\Assets\Shader\ToneMapping_PS.hlsl">
-      <Filter>소스 파일\Shader\HLSL\PostProcess\ToneMap</Filter>
     </FxCompile>
     <FxCompile Include="..\Assets\Shader\PostProcess_PS.hlsl">
       <Filter>소스 파일\Shader\HLSL\PostProcess</Filter>
@@ -744,6 +753,18 @@
     </FxCompile>
     <FxCompile Include="..\Assets\Shader\HizMipmap_VS.hlsl">
       <Filter>소스 파일\Shader\HLSL\Sub\Culling</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Assets\Shader\OutLine_SkinMesh_VS.hlsl">
+      <Filter>소스 파일\Shader\HLSL\PostProcess\OutLine</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Assets\Shader\OutLine_StaticMesh_VS.hlsl">
+      <Filter>소스 파일\Shader\HLSL\PostProcess\OutLine</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Assets\Shader\OutLine_Combine_PS.hlsl">
+      <Filter>소스 파일\Shader\HLSL\PostProcess\OutLine</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Assets\Shader\Combine_PS.hlsl">
+      <Filter>소스 파일\Shader\HLSL\PostProcess\Combine</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>

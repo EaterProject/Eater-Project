@@ -119,18 +119,21 @@ public:
 class MaterialProperty
 {
 public:
-	Vector3 AddColor = Vector3(0.0f, 0.0f, 0.0f);	// Add Color
+	bool Alpha = false;					// Alpha Mesh
+	bool OutLine = false;				// Out Line
+	bool LimLight = false;				// Lim Light
 
+	Vector3 AddColor = Vector3(0.0f, 0.0f, 0.0f);	// Add Color
 	float EmissiveFactor = 1.0f;		// Emissive 강도
 	float RoughnessFactor = 1.0f;		// Roughness 강도 (0 ~ 1)
 	float MetallicFactor = 1.0f;		// Metallic 강도 (0 ~ 1)
 
-	Vector3 LimColor = Vector3(0.0f, 0.0f, 0.0f);	// LimLight Color
-
+	Vector3 LimLightColor = Vector3(0.0f, 0.0f, 0.0f);	// LimLight Color
 	float LimLightFactor = 0.0f;		// LimLight 강도
-	float LimLightWidth = 0.0f;			// LimLight 범위 (0 ~ 1)
-	
-	bool Alpha = false;					// Alpha Mesh
+	float LimLightWidth = 0.0f;			// LimLight 범위
+
+	Vector3 OutLineColor = Vector3(1.0f, 1.0f, 1.0f);	// OutLine Color
+	float OutLineWidth = 0.0f;			// OutLine 범위
 
 	Vector2 Tile;						// X, Y Tiling
 	Matrix TexTM;						// Material의 텍스쳐 행렬
@@ -141,7 +144,6 @@ class MaterialPropertyBlock : public MaterialProperty
 {
 public:
 	bool Enable = false;
-
 };
 
 // Material Buffer
@@ -289,6 +291,8 @@ public:
 	AnimationData*	Animation_Data = nullptr;		// Animation Data
 	TerrainData*	Terrain_Data	= nullptr;		// Terrain Data
 	ParticleData*	Particle_Data	= nullptr;		// Particle Data
+
+	MaterialPropertyBlock* Material_Block = nullptr;
 };
 
 /// <summary>
@@ -308,7 +312,7 @@ public:
 	std::vector<PointLightData*>		PointLightList;
 	std::vector<SpotLightData*>			SpotLightList;
 
-	// Culling Data
+	// Culling Mesh
 	std::vector<MeshBuffer*> OccluderList;
 
 	// Debug Data

@@ -1,9 +1,11 @@
 #pragma once
-class ToneMapPass : public RenderPassBase
+struct CB_DrawFinal;
+
+class CombinePass : public RenderPassBase
 {
 public:
-	ToneMapPass();
-	~ToneMapPass();
+	CombinePass();
+	~CombinePass();
 
 public:
 	void Create(int width, int height) override;
@@ -16,9 +18,13 @@ public:
 	void RenderUpdate();
 	void SetConstantBuffer();
 
+public:
+	static CB_DrawFinal g_DrawFinalBuf;
+	static UINT g_CombineOption;
+
 private:
 	VertexShader* m_Screen_VS;
-	PixelShader* m_ToneMapping_PS;
+	PixelShader* m_Combine_PS;
 
 	DrawBuffer* m_Screen_DB;
 

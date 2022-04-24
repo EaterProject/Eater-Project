@@ -1,5 +1,5 @@
 
-// Shadow Vertex Shader Input & Output Data Struct
+// Mesh Position Vertex Shader Input & Output Data Struct
 struct MeshPosVertexIn
 {
 #ifdef SKIN_MESH

@@ -91,7 +91,7 @@ void CTAP_MeshFilter::SetGameObject(MeshFilter* ObjectMeshFilter)
 		AddColor_G.SetWindowTextW(ChangeToCString(AddColorG));
 		AddColor_B.SetWindowTextW(ChangeToCString(AddColorB));
 
-		Vector4 Lim = mMaterial->m_MaterialData->Material_Property->LimColor;
+		Vector4 Lim = mMaterial->m_MaterialData->Material_Property->LimLightColor;
 		LimLight_R.SetRange(0, 255);
 		LimLight_G.SetRange(0, 255);
 		LimLight_B.SetRange(0, 255);
@@ -496,23 +496,23 @@ void CTAP_MeshFilter::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 
 	if (pScrollBar->GetDlgCtrlID() == LimLight_R.GetDlgCtrlID())
 	{
-		int LimColor = LimLight_R.GetPos();
-		mMaterial->m_MaterialData->Material_Property->LimColor.x = LimColor / 255.0f;
-		LimLight_R_Edit.SetWindowTextW(ChangeToCString(LimColor / 255.0f));
+		int LimLightColor = LimLight_R.GetPos();
+		mMaterial->m_MaterialData->Material_Property->LimLightColor.x = LimLightColor / 255.0f;
+		LimLight_R_Edit.SetWindowTextW(ChangeToCString(LimLightColor / 255.0f));
 	}
 
 	if (pScrollBar->GetDlgCtrlID() == LimLight_G.GetDlgCtrlID())
 	{
-		int LimColor = LimLight_G.GetPos();
-		mMaterial->m_MaterialData->Material_Property->LimColor.y = LimColor / 255.0f;
-		LimLight_G_Edit.SetWindowTextW(ChangeToCString(LimColor / 255.0f));
+		int LimLightColor = LimLight_G.GetPos();
+		mMaterial->m_MaterialData->Material_Property->LimLightColor.y = LimLightColor / 255.0f;
+		LimLight_G_Edit.SetWindowTextW(ChangeToCString(LimLightColor / 255.0f));
 	}
 
 	if (pScrollBar->GetDlgCtrlID() == LimLight_B.GetDlgCtrlID())
 	{
-		int LimColor = LimLight_B.GetPos();
-		mMaterial->m_MaterialData->Material_Property->LimColor.z = LimColor / 255.0f;
-		LimLight_B_Edit.SetWindowTextW(ChangeToCString(LimColor / 255.0f));
+		int LimLightColor = LimLight_B.GetPos();
+		mMaterial->m_MaterialData->Material_Property->LimLightColor.z = LimLightColor / 255.0f;
+		LimLight_B_Edit.SetWindowTextW(ChangeToCString(LimLightColor / 255.0f));
 	}
 
 	if (pScrollBar->GetDlgCtrlID() == LimLight_Factor.GetDlgCtrlID())

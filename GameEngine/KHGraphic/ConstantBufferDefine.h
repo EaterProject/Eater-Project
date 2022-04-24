@@ -256,10 +256,11 @@ struct CB_BloomBlurOrder : public cbBloomBlurOrder
 	DirectX::SimpleMath::Vector2 gBlurOrder;
 };
 
-SHADER_CONSTANT_BUFFER(cbBloomFinal)
-struct CB_BloomFinal : public cbBloomFinal
+SHADER_CONSTANT_BUFFER(cbDrawFinal)
+struct CB_DrawFinal : public cbDrawFinal
 {
-	float gCoefficient;
+	DirectX::SimpleMath::Vector3 gOutLineColor;
+	float gBloomFactor;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -313,6 +314,17 @@ struct CB_HizCull : public cbHizCull
 
 	DirectX::SimpleMath::Vector2 gPad;
 };
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+//// OutLine Constant Buffer
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+SHADER_CONSTANT_BUFFER(cbOutLine)
+struct CB_OutLine : public cbOutLine
+{
+	float gSize;
+};
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 //// Debug Constant Buffer
