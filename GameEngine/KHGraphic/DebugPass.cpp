@@ -189,7 +189,7 @@ void DebugPass::RenderUpdate(const RenderData* meshData)
 	{
 		/// Bounding Box Draw..
 		//BoundingBox box;
-		//mesh->m_MeshSubData->BoundBox.Transform(box, world);
+		//mesh->m_MeshProperty->BoundBox.Transform(box, world);
 		//
 		//object.gWorldViewProj = Matrix::CreateScale(box.Extents) * Matrix::CreateTranslation(box.Center) * viewproj;
 		//
@@ -208,7 +208,7 @@ void DebugPass::RenderUpdate(const RenderData* meshData)
 		//g_Context->RSSetState(m_WireRS);
 		//
 		//BoundingSphere sphere;
-		//mesh->m_MeshSubData->BoundSphere.Transform(sphere, world);
+		//mesh->m_MeshProperty->BoundSphere.Transform(sphere, world);
 		//
 		//object.gWorldViewProj = Matrix::CreateScale(sphere.Radius * 2.0f) * Matrix::CreateTranslation(sphere.Center) * viewproj;
 		//

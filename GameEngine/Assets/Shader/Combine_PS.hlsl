@@ -1,23 +1,29 @@
 #include "Output_Header.hlsli"
 #include "Function_Header.hlsli"
 
-cbuffer cbBloomFinal : register(b0)
+cbuffer cbDrawFinal : register(b0)
 {
-    float gCoefficient;
+    float3 gOutLineColor : packoffset(c0.x);
+    float gBloomFactor   : packoffset(c0.w);
 }
 
 Texture2D gOriginMap : register(t0);
 Texture2D gBloomMap : register(t1);
+Texture2D gOutLineMap : register(t2);
 
 SamplerState gSamClampLinear : register(s0);
 
-float4 ToneMapping_PS(ScreenPixelIn pin) : SV_TARGET
+float4 Combine_PS(ScreenPixelIn pin) : SV_TARGET
 {
 #ifdef BLOOM
     // output: gOriginMap + coefficient * gBlurMap
-    float4 outColor = mad(gCoefficient, gBloomMap.Sample(gSamClampLinear, pin.Tex), gOriginMap.Sample(gSamClampLinear, pin.Tex));
+    float4 outColor = mad(gBloomFactor, gBloomMap.Sample(gSamClampLinear, pin.Tex), gOriginMap.Sample(gSamClampLinear, pin.Tex));
 #else
     float4 outColor = gOriginMap.Sample(gSamClampLinear, pin.Tex);
+#endif
+    
+#ifdef OUT_LINE
+    outColor.rgb += gOutLineMap.Sample(gSamClampLinear, pin.Tex).rgb;
 #endif
     
 #ifdef HDR

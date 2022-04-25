@@ -11,7 +11,7 @@ class MaterialRenderBuffer : public RenderResource
 public:
 	UINT m_BufferIndex;
 	
-	MaterialSubData* m_MaterialSubData;
+	MaterialProperty* m_MaterialProperty;
 
 	ID3D11ShaderResourceView* m_Albedo;
 	ID3D11ShaderResourceView* m_Normal;
@@ -32,7 +32,7 @@ public:
 	ID3D11Buffer* m_VertexBuf;
 	ID3D11Buffer* m_IndexBuf;
 
-	MeshSubData* m_MeshSubData;
+	MeshProperty* m_MeshProperty;
 };
 
 // Game Engine 측 AnimationBuffer와 대응하는 DirectX 11 전용 Animation Data Class

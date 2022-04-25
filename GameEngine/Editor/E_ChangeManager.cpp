@@ -97,19 +97,19 @@ void E_ChangeManager::Change_Material(int index, GameObject* Object)
 		std::string Tileing_Y = EATER_GET_MAP(index, "Tileing_Y");
 
 
-		float mMetallicF = mMaterialData->m_MaterialData->Material_SubData->MetallicFactor;
-		float mEmissiveF = mMaterialData->m_MaterialData->Material_SubData->EmissiveFactor;
-		float mRoughnessF = mMaterialData->m_MaterialData->Material_SubData->RoughnessFactor;
+		float mMetallicF = mMaterialData->m_MaterialData->Material_Property->MetallicFactor;
+		float mEmissiveF = mMaterialData->m_MaterialData->Material_Property->EmissiveFactor;
+		float mRoughnessF = mMaterialData->m_MaterialData->Material_Property->RoughnessFactor;
 
-		float AddColor_R = mMaterialData->m_MaterialData->Material_SubData->AddColor.x;
-		float AddColor_G = mMaterialData->m_MaterialData->Material_SubData->AddColor.y;
-		float AddColor_B = mMaterialData->m_MaterialData->Material_SubData->AddColor.z;
+		float AddColor_R = mMaterialData->m_MaterialData->Material_Property->AddColor.x;
+		float AddColor_G = mMaterialData->m_MaterialData->Material_Property->AddColor.y;
+		float AddColor_B = mMaterialData->m_MaterialData->Material_Property->AddColor.z;
 
-		float LimColor_R = mMaterialData->m_MaterialData->Material_SubData->LimColor.x;
-		float LimColor_G = mMaterialData->m_MaterialData->Material_SubData->LimColor.y;
-		float LimColor_B = mMaterialData->m_MaterialData->Material_SubData->LimColor.z;
-		float LimFactor = mMaterialData->m_MaterialData->Material_SubData->LimLightFactor;
-		float LimWidth = mMaterialData->m_MaterialData->Material_SubData->LimLightWidth;
+		float LimColor_R = mMaterialData->m_MaterialData->Material_Property->LimLightColor.x;
+		float LimColor_G = mMaterialData->m_MaterialData->Material_Property->LimLightColor.y;
+		float LimColor_B = mMaterialData->m_MaterialData->Material_Property->LimLightColor.z;
+		float LimFactor = mMaterialData->m_MaterialData->Material_Property->LimLightFactor;
+		float LimWidth = mMaterialData->m_MaterialData->Material_Property->LimLightWidth;
 		//≈∏¿œ∏µ ª©¡‡æﬂ«‘ ....
 
 		EATER_CHANGE_MAP(index, "MaterialName", mMaterial);

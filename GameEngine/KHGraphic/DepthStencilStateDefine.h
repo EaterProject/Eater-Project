@@ -8,7 +8,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////
 
 DEPTH_STENCIL_STATE(DSS_Defalt)
-DEPTH_STENCIL_STATE(DSS_NoDepth)
+DEPTH_STENCIL_STATE(DSS_OutLine)
 DEPTH_STENCIL_STATE(DSS_NoStencil)
-DEPTH_STENCIL_STATE(DSS_NoDepthStencil)
+DEPTH_STENCIL_STATE(DSS_Mask)
 DEPTH_STENCIL_STATE(DSS_CubeMap)
