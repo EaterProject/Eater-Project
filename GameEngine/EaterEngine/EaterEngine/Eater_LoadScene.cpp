@@ -14,6 +14,8 @@
 #include "PhysCollider.h"
 #include "ObjectManager.h"
 #include "Rigidbody.h"
+#include "GameObject.h"
+#include "LoadManager.h"
 
 Eater_LoadScene::Eater_LoadScene()
 {
@@ -103,8 +105,78 @@ void Eater_LoadScene::LoadData(std::string& FilePath)
 			}
 		}
 	}
-
 	EATER_CLOSE_READ_FILE();
+}
+
+void Eater_LoadScene::LoadPrefap(std::string Path)
+{
+	
+
+	EATER_OPEN_READ_FILE(Path);
+	int Count = EATER_GET_NODE_COUNT();
+	for (int i = 0; i < Count; i++)
+	{
+		std::string NodeName = EATER_GET_NODE_NAME(i);
+		if (NodeName == "GAMEOBJECT")
+		{
+			GameObject* Obj = Instance();
+			Obj->SetTag(std::stoi(EATER_GET_MAP(i, "TAG")));
+			Obj->Name = EATER_GET_MAP(i, "NAME");
+
+			//트랜스폼은 기본
+			Load_Component_Transform(i, Obj);
+
+			int Find = 0;
+			//매쉬필터
+			Find = EATER_GET_LIST_CHOICE(i, "MeshFilter");
+			if (Find != -1)
+			{
+				Load_Component_MeshFilter(i, Obj);
+			}
+
+			//애니메이션
+			Find = EATER_GET_LIST_CHOICE(i, "Animation");
+			if (Find != -1)
+			{
+				Load_Component_Animation(i, Obj);
+			}
+
+			//라이트
+			Find = EATER_GET_LIST_CHOICE(i, "Light");
+			if (Find != -1)
+			{
+				Load_Component_Light(i, Obj);
+			}
+
+			Find = EATER_GET_LIST_CHOICE(i, "Rigidbody");
+			if (Find != -1)
+			{
+				Load_Component_Rigidbody(i, Obj);
+			}
+
+			Find = EATER_GET_LIST_CHOICE(i, "Collider");
+			if (Find != -1)
+			{
+				Load_Component_Collider(i, Obj);
+			}
+
+
+			//카메라
+			Find = EATER_GET_LIST_CHOICE(i, "Camera");
+			if (Find != -1)
+			{
+				Load_Component_Camera(i, Obj);
+			}
+
+			//파티클
+			Find = EATER_GET_LIST_CHOICE(i, "Particle");
+			if (Find != -1)
+			{
+				Load_Component_Particle(i, Obj);
+			}
+		}
+		LoadManager::PrefapList.insert({ CutStr(Path),nullptr});
+	}
 }
 
 void Eater_LoadScene::Load_Component_Light(int index, GameObject* Object)

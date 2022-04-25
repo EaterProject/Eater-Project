@@ -20,6 +20,7 @@ namespace ParserData
 	class CAnimation;
 }
 
+class GameObject;
 class CameraAnimation;
 class ColliderBuffer;
 class ModelAnimationData;
@@ -48,6 +49,7 @@ class Eater_LoadBuffer;
 class Eater_LoadMaterial;
 class Eater_LoadMesh;
 class Eater_LoadCamera;
+class Eater_LoadScene;
 
 class LoadManager
 {
@@ -116,6 +118,7 @@ private:
 
 	static std::map<std::string, CameraAnimation*>		CamAnimationList;
 	static std::map<std::string, ColliderBuffer*>		ColliderBufferList;
+	static std::map<std::string, GameObject*>			PrefapList;
 private:
 	FBXManager*				mFBX;
 	TextureManager*			mTexture;
@@ -132,6 +135,7 @@ private:
 	friend AnimationManager;
 	friend EATERManager;
 
+	friend Eater_LoadScene;
 	friend Eater_LoadAnimation;
 	friend Eater_LoadBuffer;
 	friend Eater_LoadMaterial;

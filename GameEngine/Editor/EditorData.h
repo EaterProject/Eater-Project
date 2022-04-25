@@ -107,5 +107,12 @@ struct InstanceMaterial
 	float AddColorR;
 	float AddColorG;
 	float AddColorB;
+
+	float LimColorR;
+	float LimColorG;
+	float LimColorB;
+
+	float LimFactor;
+	float LimWidth;
 };
 

@@ -71,6 +71,7 @@ void EditorToolScene::ThreadFunction()
 	Load("../Assets/Model/Animation");
 	Load("../Assets/Model/MeshBuffer");
 	Load("../Assets/Model/ModelData");
+	Load("../Assets/Model/Prefap");
 	Load("../Assets/Texture/Environment");
 	
 	BakeEnvironmentMap("Night");
@@ -80,10 +81,8 @@ void EditorToolScene::ThreadFunction()
 GameObject* EditorToolScene::Create_GameObject()
 {
 	GameObject* Object = Instance("None_GameObject");
-
 	Object->Name = FindMeshName("None_GameObject");
 	ObjectList.insert({ Object->Name,Object });
-
 	return Object;
 }
 
@@ -246,7 +245,6 @@ int EditorToolScene::DeleteTag(std::string TagName)
 	{
 		return false;
 	}
-
 	//태그 리스트를 한번 순환
 	std::map<int, std::string>::iterator Start_it	= TagList.begin();
 	std::map<int, std::string>::iterator End_it		= TagList.end();
@@ -261,7 +259,6 @@ int EditorToolScene::DeleteTag(std::string TagName)
 			return MaxIndex;
 		}
 	}
-
 	return -1;
 }
 
@@ -275,16 +272,16 @@ GameObject* EditorToolScene::Create_Terrain(std::string MeshPath,std::string mas
 	//터레인 생성
 	LoadTerrainMesh("../Assets/Model/TerrainModel/Terrain.fbx", "../Assets/Texture/Terrain/Terrain_RGB_1.png", "../Assets/Texture/Terrain/Terrain_RGB_2.png", SCALING);
 
-	//GameObject* TerrainObect = InstanceTerrain("Terrain");
-	//
-	//Terrain* mTerrain = TerrainObect->GetComponent<Terrain>();
-	//mTerrain->SetLayerName("terrain_ground_A_BaseColor", "terrain_ground_A_Normal", "terrain_ground_A_ORM");
-	//mTerrain->SetLayerName("terrain_ground_B_BaseColor", "terrain_ground_B_Normal", "terrain_ground_B_ORM");
-	//mTerrain->SetLayerName("terrain_ground_C_BaseColor", "terrain_ground_C_Normal", "terrain_ground_C_ORM");
-	//mTerrain->SetLayerName("terrain_ground_D_BaseColor", "terrain_ground_D_Normal", "terrain_ground_D_ORM");
-	//mTerrain->SetMeshName("Terrain");
-	////mTerrain->SetColliderName("TerrainDecimate");
-	//mTerrain->SetTextureTiling(31.0f);
+	GameObject* TerrainObect = InstanceTerrain("Terrain");
+	
+	Terrain* mTerrain = TerrainObect->GetComponent<Terrain>();
+	mTerrain->SetLayerName("terrain_ground_A_BaseColor", "terrain_ground_A_Normal", "terrain_ground_A_ORM");
+	mTerrain->SetLayerName("terrain_ground_B_BaseColor", "terrain_ground_B_Normal", "terrain_ground_B_ORM");
+	mTerrain->SetLayerName("terrain_ground_C_BaseColor", "terrain_ground_C_Normal", "terrain_ground_C_ORM");
+	mTerrain->SetLayerName("terrain_ground_D_BaseColor", "terrain_ground_D_Normal", "terrain_ground_D_ORM");
+	mTerrain->SetMeshName("Terrain");
+	//mTerrain->SetColliderName("TerrainDecimate");
+	mTerrain->SetTextureTiling(31.0f);
 	return nullptr;
 }
 

@@ -87,6 +87,21 @@ public:
 	float FrameTime = 0.0f;							// Animation Frame Time
 };
 
+// Prefap Data를 저장하기 위한 데이터
+class PrefapData
+{
+public:
+	~PrefapData()
+	{
+
+	}
+	//std::string ParentName; //부모의 이름
+	//GameObject* Object;
+};
+
+
+
+
 // Mesh Sub Data
 class MeshSubData
 {

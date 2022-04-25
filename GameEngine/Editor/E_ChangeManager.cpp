@@ -52,8 +52,8 @@ void E_ChangeManager::Change_Skin(int index, GameObject* Object)
 {
 	std::string ParentName = EATER_GET_MAP(index, "ParentName");
 	std::string NodeName = EATER_GET_MAP(index, "NodeName");
-
-	if (NodeName == Object->Name)
+	std::string ObjectOriginalName = GetOriginalName(Object->Name);
+	if (ObjectOriginalName == ModelName && ParentName == "RootNode")
 	{
 		MeshFilter* MF = Object->GetComponent<MeshFilter>();
 		Transform* TR = Object->GetComponent<Transform>();
@@ -69,7 +69,8 @@ void E_ChangeManager::Change_Bone(int index, GameObject* Object)
 	std::string ParentName = EATER_GET_MAP(index, "ParentName");
 	std::string NodeName = EATER_GET_MAP(index, "NodeName");
 
-	if (NodeName == Object->Name)
+	std::string ObjectOriginalName = GetOriginalName(Object->Name);
+	if (ObjectOriginalName == ModelName && ParentName == "RootNode")
 	{
 		MeshFilter* MF = Object->GetComponent<MeshFilter>();
 		Transform* TR = Object->GetComponent<Transform>();
@@ -145,6 +146,12 @@ void E_ChangeManager::Change_Material(int index, GameObject* Object)
 		EATER_CLOSE_READ_FILE();
 	}
 	
+}
+
+void E_ChangeManager::Change_Animation(int index, GameObject* Object)
+{
+
+
 }
 
 void E_ChangeManager::Change_LocalTM(int Nodeindex, Transform* TR)

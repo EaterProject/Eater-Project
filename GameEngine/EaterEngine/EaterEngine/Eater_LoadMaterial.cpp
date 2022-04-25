@@ -61,6 +61,13 @@ void Eater_LoadMaterial::LoadData(std::string& Path)
 			Data->Material_SubData->AddColor.y = std::stof(EATER_GET_MAP(i, "AddColor_G"));
 			Data->Material_SubData->AddColor.z = std::stof(EATER_GET_MAP(i, "AddColor_B"));
 
+			Data->Material_SubData->LimColor.x = std::stof(EATER_GET_MAP(i, "LimColor_R"));
+			Data->Material_SubData->LimColor.y = std::stof(EATER_GET_MAP(i, "LimColor_G"));
+			Data->Material_SubData->LimColor.z = std::stof(EATER_GET_MAP(i, "LimColor_B"));
+
+			Data->Material_SubData->LimLightFactor = std::stof(EATER_GET_MAP(i, "LimFactor"));
+			Data->Material_SubData->LimLightWidth = std::stof(EATER_GET_MAP(i, "LimWidth"));
+
 			Mat->m_MaterialData->Name = SaveName;
 
 			// Material Buffer 리스트 삽입..

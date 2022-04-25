@@ -317,36 +317,36 @@ void RenderManager::Render()
 
 	// Render Data 선별 작업..
 	SelectRenderData();
-
-	GPU_BEGIN_EVENT_DEBUG_NAME("Picking Pass");
-	m_Picking->BeginRender();
-
-	// Static Object Picking Draw..
-	for (int i = 0; i < m_RenderMeshList.size(); i++)
-	{
-		m_InstanceLayer = m_RenderMeshList[i];
-
-		m_Picking->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_MeshList);
-	}
-
-	// Transparency Object Picking Draw..
-	for (int i = 0; i < m_ParticleMeshList.size(); i++)
-	{
-		m_InstanceLayer = m_ParticleMeshList[i];
-
-		m_Picking->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_MeshList);
-	}
-
-	// UnRender Object Picking Draw..
-	m_Picking->NoneMeshRenderUpdate(m_UnRenderMeshList);
-
-	// 현재 클릭한 Pixel ID 검출..
-	int pickID = (int)m_Picking->FindPick(1, 1);
-
-	GPU_END_EVENT_DEBUG_NAME();
-
-	// 해당 Render Data 검색..
-	RenderData* renderData = m_Converter->GetRenderData(pickID);
+	//
+	//GPU_BEGIN_EVENT_DEBUG_NAME("Picking Pass");
+	//m_Picking->BeginRender();
+	//
+	//// Static Object Picking Draw..
+	//for (int i = 0; i < m_RenderMeshList.size(); i++)
+	//{
+	//	m_InstanceLayer = m_RenderMeshList[i];
+	//
+	//	m_Picking->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_MeshList);
+	//}
+	//
+	//// Transparency Object Picking Draw..
+	//for (int i = 0; i < m_ParticleMeshList.size(); i++)
+	//{
+	//	m_InstanceLayer = m_ParticleMeshList[i];
+	//
+	//	m_Picking->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_MeshList);
+	//}
+	//
+	//// UnRender Object Picking Draw..
+	//m_Picking->NoneMeshRenderUpdate(m_UnRenderMeshList);
+	//
+	//// 현재 클릭한 Pixel ID 검출..
+	//int pickID = (int)m_Picking->FindPick(1, 1);
+	//
+	//GPU_END_EVENT_DEBUG_NAME();
+	//
+	//// 해당 Render Data 검색..
+	//RenderData* renderData = m_Converter->GetRenderData(pickID);
 
 
 	// Shadow Render..

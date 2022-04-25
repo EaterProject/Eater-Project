@@ -1,17 +1,22 @@
 #EATERMAT
-@MaterialName bossb+_bone
-@Alpha NO
 @ORMMap bossb_body_ ORM
+@Alpha NO
+@MaterialName bossb+_bone
+@LimColor_B 0.000000
 @DiffuseMap bossb_body_BaseColor
 @NormalMap bossb_body_Normal
 @EmissiveMap bossb_body_Emissive
-@Emissive 2.400000
+@Emissive 0.000000
 @Roughness 0.000000
 @Metallic 0.000000
 @Tileing_X 1
 @Tileing_Y 1
 @AddColor_R 0.000000
 @AddColor_G 0.000000
+@LimFactor 0.000000
 @AddColor_B 0.000000
-@AddColor_A 1
+@AddColor_A 0
+@LimColor_R 0.000000
+@LimColor_G 0.000000
+@LimWidth 0.000000
 &

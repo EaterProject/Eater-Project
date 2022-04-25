@@ -14,7 +14,7 @@
 #include "MaterialManager.h"
 #include "AnimationManager.h"
 #include "GraphicEngineManager.h"
-
+#include "GameObject.h"
 #include "Profiler/Profiler.h"
 
 
@@ -30,7 +30,7 @@ std::map<std::string, Animation*>			LoadManager::AnimationList;
 
 std::map<std::string, CameraAnimation*>		LoadManager::CamAnimationList;
 std::map<std::string, ColliderBuffer*>		LoadManager::ColliderBufferList;		
-//std::vector<OneTriangle*>					LoadManager::NavMeshData;		
+std::map<std::string, GameObject*>			LoadManager::PrefapList;
 
 LoadManager::LoadManager()
 {
@@ -453,9 +453,9 @@ void LoadManager::LoadFile(std::string& Path, UINT MODE)
 		mEATER->LoadMesh(Path);
 		BakeAnimation();
 	}
-	else if (Type == "Nav")
+	else if (Type == "Prefap")
 	{
-		mEATER->LoadMesh(Path);
+		mEATER->LoadPrefap(Path);
 	}
 }
 

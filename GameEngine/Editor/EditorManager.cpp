@@ -112,6 +112,7 @@ void EditorManager::CreateAssetsFile()
 	std::filesystem::create_directory("../Assets/Model/ModelData");
 	std::filesystem::create_directory("../Assets/Model/TerrainModel");
 	std::filesystem::create_directory("../Assets/Model/MeshBuffer");
+	std::filesystem::create_directory("../Assets/Model/Prefap");
 
 	//텍스쳐 폴더 생성
 	std::filesystem::create_directory("../Assets/Texture/Particle");
