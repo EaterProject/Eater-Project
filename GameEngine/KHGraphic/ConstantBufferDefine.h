@@ -266,6 +266,7 @@ struct CB_DrawFinal : public cbDrawFinal
 /////////////////////////////////////////////////////////////////////////////////////////////
 //// Picking Constant Buffer
 /////////////////////////////////////////////////////////////////////////////////////////////
+
 SHADER_CONSTANT_BUFFER(cbStaticMeshID)
 struct CB_StaticMesh_ID : public cbStaticMeshID
 {
@@ -336,6 +337,25 @@ struct CB_OutLineOption : public cbOutLineOption
 /////////////////////////////////////////////////////////////////////////////////////////////
 //// Debug Constant Buffer
 /////////////////////////////////////////////////////////////////////////////////////////////
+
+SHADER_CONSTANT_BUFFER(cbOutLineStaticMesh)
+struct CB_OutLineStaticMesh : public cbOutLineStaticMesh
+{
+	DirectX::SimpleMath::Matrix gWorldViewProj;
+	DirectX::SimpleMath::Matrix gInvWorld;
+};
+
+SHADER_CONSTANT_BUFFER(cbOutLineSkinMesh)
+struct CB_OutLineSkinMesh : public cbOutLineSkinMesh
+{
+	DirectX::SimpleMath::Matrix gWorldViewProj;
+	DirectX::SimpleMath::Matrix gInvWorld;
+
+	UINT gPrevAnimationIndex = 0;
+	UINT gNextAnimationIndex = 0;
+	float gFrameTime = 0.0f;
+	float gPad = 0.0f;
+};
 
 SHADER_CONSTANT_BUFFER(cbDebugObject)
 struct CB_DebugObject : public cbDebugObject
