@@ -74,5 +74,10 @@ void EATERManager::LoadMaterial(std::string& Path)
 	mEaterMaterial->LoadData(Path);
 }
 
+void EATERManager::LoadPrefap(std::string& path)
+{
+	mEaterScene->LoadPrefap(path);
+}
+
 
 

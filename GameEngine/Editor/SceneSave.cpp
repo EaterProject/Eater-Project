@@ -81,10 +81,39 @@ void SceneSave::Scene_Save(std::string SaveFilePath, std::string SaveFileName)
 
 void SceneSave::Prefap_Save(std::string SaveFilePath, std::string SaveFileName, GameObject* Obj)
 {
+	EATER_OPEN_WRITE_FILE(SaveFileName, SaveFilePath, ".Prefap");
+	EATER_SET_NODE("GAMEOBJECT");
+	GameObject* Object = Obj;
+	MeshData* OneMesh = Object->OneMeshData;
 
+	//어떤 컨퍼넌트를 들어있는지 몰라서 모두 찾는다
+	Transform* mTransform = Object->GetComponent<Transform>();
+	MeshFilter* mMeshFilter = Object->GetComponent<MeshFilter>();
+	Light* mLight = Object->GetComponent<Light>();
+	Camera* mCamera = Object->GetComponent<Camera>();
+	Collider* mCollider = Object->GetComponent<Collider>();
+	Rigidbody* mRigidbody = Object->GetComponent<Rigidbody>();
+	AnimationController* mAnimationController = Object->GetComponent<AnimationController>();
+	ParticleSystem* mParticleSystem = Object->GetComponent<ParticleSystem>();
 
+	//오브젝트 저장 시작
+	EATER_SET_NODE("GAMEOBJECT");
 
+	//공통 데이터 저장
+	EATER_SET_MAP("NAME", Object->Name);
+	EATER_SET_MAP("TAG", std::to_string(Object->GetTag()));
 
+	//컨퍼넌트 저장
+	SaveTransform(mTransform);
+	if (mMeshFilter != nullptr) { SaveMeshFilter(mMeshFilter); }
+	if (mLight != nullptr) { SaveLight(mLight); }
+	if (mCamera != nullptr) { SaveCamera(mCamera); }
+	if (mCollider != nullptr) { SaveCollider(mCollider); }
+	if (mRigidbody != nullptr) { SaveRigidbody(mRigidbody); }
+	if (mAnimationController != nullptr) { SaveAnimation(mAnimationController); }
+	if (mParticleSystem != nullptr) { SaveParticle(mParticleSystem); }
+
+	EATER_CLOSE_WRITE_FILE();
 }
 
 void SceneSave::SceneOption()

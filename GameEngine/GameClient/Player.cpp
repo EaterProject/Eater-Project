@@ -222,7 +222,6 @@ void Player::PlayerGroundCheck()
 			break;
 		case 4:
 			mTransform->Position.y = RayCastHit[i].Hit.HitPoint.y;
-			DebugPrint("%d", RayCastHit[i].Hit.FaceIndex);
 			break;
 		}
 	}

@@ -29,6 +29,7 @@ public:
 	void LoadScene(std::string& Path);
 	void LoadMesh(std::string& Path);
 	void LoadMaterial(std::string& Path);
+	void LoadPrefap(std::string& path);
 private:
 	GraphicEngineManager* m_Graphic;
 	CRITICAL_SECTION* m_CriticalSection;

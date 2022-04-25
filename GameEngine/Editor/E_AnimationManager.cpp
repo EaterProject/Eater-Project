@@ -46,12 +46,10 @@ void E_AnimationManager::ChangeEaterFile(ParserData::CModel* FBXMesh)
 			EATER_SET_LIST(Frame->m_LocalPos.x);
 			EATER_SET_LIST(Frame->m_LocalPos.y);
 			EATER_SET_LIST(Frame->m_LocalPos.z);
-			
 			EATER_SET_LIST(Frame->m_LocalRotQt.x);
 			EATER_SET_LIST(Frame->m_LocalRotQt.y);
 			EATER_SET_LIST(Frame->m_LocalRotQt.z);
 			EATER_SET_LIST(Frame->m_LocalRotQt.w);
-
 			EATER_SET_LIST(Frame->m_LocalScale.x);
 			EATER_SET_LIST(Frame->m_LocalScale.y);
 			EATER_SET_LIST(Frame->m_LocalScale.z);
@@ -59,12 +57,10 @@ void E_AnimationManager::ChangeEaterFile(ParserData::CModel* FBXMesh)
 			EATER_SET_LIST(Frame->m_WorldPos.x);
 			EATER_SET_LIST(Frame->m_WorldPos.y);
 			EATER_SET_LIST(Frame->m_WorldPos.z);
-
 			EATER_SET_LIST(Frame->m_WorldRotQt.x);
 			EATER_SET_LIST(Frame->m_WorldRotQt.y);
 			EATER_SET_LIST(Frame->m_WorldRotQt.z);
 			EATER_SET_LIST(Frame->m_WorldRotQt.w);
-
 			EATER_SET_LIST(Frame->m_WorldScale.x);
 			EATER_SET_LIST(Frame->m_WorldScale.y);
 			EATER_SET_LIST(Frame->m_WorldScale.z,true);
