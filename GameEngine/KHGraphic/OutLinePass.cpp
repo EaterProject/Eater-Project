@@ -3,6 +3,7 @@
 #include "ShaderBase.h"
 #include "VertexShader.h"
 #include "PixelShader.h"
+#include "ComputeShader.h"
 #include "GraphicState.h"
 #include "GraphicView.h"
 #include "GraphicResource.h"
@@ -20,6 +21,7 @@
 #include "ShaderManagerBase.h"
 #include "ConstantBufferDefine.h"
 #include "ShaderResourceViewDefine.h"
+#include "UnorderedAccessViewDefine.h"
 #include "ViewPortDefine.h"
 #include "RenderTargetDefine.h"
 #include "DepthStencilViewDefine.h"
@@ -51,7 +53,7 @@ void OutLinePass::Create(int width, int height)
 	texDescRT.SampleDesc.Count = 1;
 	texDescRT.SampleDesc.Quality = 0;
 	texDescRT.Usage = D3D11_USAGE_DEFAULT;
-	texDescRT.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
+	texDescRT.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS;
 	texDescRT.CPUAccessFlags = 0;
 	texDescRT.MiscFlags = 0;
 
@@ -67,6 +69,11 @@ void OutLinePass::Create(int width, int height)
 	srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
 	srvDesc.Texture2D.MostDetailedMip = 0;
 	srvDesc.Texture2D.MipLevels = 1;
+
+	D3D11_UNORDERED_ACCESS_VIEW_DESC uavDesc;
+	uavDesc.Format = texDescRT.Format;
+	uavDesc.ViewDimension = D3D11_UAV_DIMENSION_TEXTURE2D;
+	uavDesc.Texture2D.MipSlice = 0;
 
 	// OutLine DepthStencil 생성..
 	D3D11_TEXTURE2D_DESC texDescDS;
@@ -91,8 +98,8 @@ void OutLinePass::Create(int width, int height)
 	descDSV.Texture2D.MipSlice = 0;
 
 	// OutLine RenderTarget 생성..
-	g_Factory->CreateRenderTexture<RT_Origin>(&texDescRT, nullptr, &rtvDesc, &srvDesc, nullptr);
-	g_Factory->CreateRenderTexture<RT_OutLine>(&texDescRT, nullptr, &rtvDesc, &srvDesc, nullptr);
+	g_Factory->CreateRenderTexture<RT_Origin>(&texDescRT, nullptr, &rtvDesc, &srvDesc, &uavDesc);
+	g_Factory->CreateRenderTexture<RT_OutLine>(&texDescRT, nullptr, &rtvDesc, &srvDesc, &uavDesc);
 
 	// OutLine DepthStencilView 생성..
 	g_Factory->CreateDepthStencil<DS_OutLine>(&texDescDS, nullptr, &descDSV, nullptr);
@@ -123,6 +130,15 @@ void OutLinePass::Start(int width, int height)
 
 	m_Origin_RTV = m_Origin_RT->GetRTV()->Get();
 	m_OutLine_RTV = m_OutLine_RT->GetRTV()->Get();
+
+	/// Test
+	m_BlurHorizon_CS = g_Shader->GetShader("Blur_Horizon_CS");
+	m_BlurVertical_CS = g_Shader->GetShader("Blur_Vertical_CS");
+
+	m_Width = width;
+	m_Height = height;
+	m_NumGroupsX = (UINT)ceilf(width / 256.0f);
+	m_NumGroupsY = (UINT)ceilf(height / 256.0f);
 }
 
 void OutLinePass::OnResize(int width, int height)
@@ -133,6 +149,11 @@ void OutLinePass::OnResize(int width, int height)
 	// RenderTarget 재설정..
 	m_Origin_RTV = m_Origin_RT->GetRTV()->Get();
 	m_OutLine_RTV = m_OutLine_RT->GetRTV()->Get();
+
+	m_Width = width;
+	m_Height = height;
+	m_NumGroupsX = (UINT)ceilf(width / 256.0f);
+	m_NumGroupsY = (UINT)ceilf(height / 256.0f);
 }
 
 void OutLinePass::Release()
@@ -144,6 +165,7 @@ void OutLinePass::RenderUpdate()
 {
 	// RenderTarget 초기화.. 
 	g_Context->ClearRenderTargetView(m_OutLine_RTV, reinterpret_cast<const float*>(&DXColors::NonBlack));
+	g_Context->ClearRenderTargetView(m_Origin_RTV, reinterpret_cast<const float*>(&DXColors::NonBlack));
 
 	if (g_Picking == nullptr) return;
 
@@ -266,6 +288,8 @@ void OutLinePass::RenderUpdate()
 	default:
 		break;
 	}
+
+	//BlurOutLine();
 }
 
 void OutLinePass::BeginMask()
@@ -285,4 +309,33 @@ void OutLinePass::BeginOutLine()
 	// OutLine RenderTarget 설정..
 	g_Context->OMSetRenderTargets(1, &m_OutLine_RTV, m_OutLine_DSV);
 	g_Context->OMSetDepthStencilState(m_OutLine_DSS, 0);
+}
+
+void OutLinePass::BlurOutLine()
+{
+	// HORIZONTAL blur pass.
+	m_BlurHorizon_CS->SetShaderResourceView<gInputMap>(m_OutLine_RT->GetSRV()->Get());
+	m_BlurHorizon_CS->SetUnorderedAccessView<gOutputUAV>(m_Origin_RT->GetUAV()->Get());
+
+	m_BlurHorizon_CS->Update();
+
+	// How many groups do we need to dispatch to cover a row of pixels, where each
+	// group covers 256 pixels (the 256 is defined in the CS).
+	g_Context->Dispatch(m_NumGroupsX, m_Height, 1);
+
+	ComputeShader::UnBindShaderResourceView(0, 1);
+	ComputeShader::UnBindUnorderedAccessView(0, 1);
+
+	// VERTICAL blur pass.
+	m_BlurVertical_CS->SetShaderResourceView<gInputMap>(m_Origin_RT->GetSRV()->Get());
+	m_BlurVertical_CS->SetUnorderedAccessView<gOutputUAV>(m_OutLine_RT->GetUAV()->Get());
+
+	m_BlurVertical_CS->Update();
+
+	// How many groups do we need to dispatch to cover a column of pixels, where each
+	// group covers 256 pixels  (the 256 is defined in the CS).
+	g_Context->Dispatch(m_Width, m_NumGroupsY, 1);
+
+	ComputeShader::UnBindShaderResourceView(0, 1);
+	ComputeShader::UnBindUnorderedAccessView(0, 1);
 }

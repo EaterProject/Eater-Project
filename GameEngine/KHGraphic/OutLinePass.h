@@ -18,6 +18,7 @@ public:
 private:
 	void BeginMask();
 	void BeginOutLine();
+	void BlurOutLine();
 
 private:
 	VertexShader* m_MeshOrigin_VS;
@@ -40,5 +41,15 @@ private:
 	ID3D11RasterizerState* m_Solid_RS;
 
 	D3D11_VIEWPORT* m_Screen_VP;
+
+private:
+	ComputeShader* m_BlurHorizon_CS;
+	ComputeShader* m_BlurVertical_CS;
+
+	UINT m_Width;
+	UINT m_Height;
+
+	UINT m_NumGroupsX;
+	UINT m_NumGroupsY;
 };
 

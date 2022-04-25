@@ -13,11 +13,21 @@ public:
 
 	void Release() override;
 
-	void RenderUpdate();
+	void RenderUpdate(RenderTarget* input, RenderTarget* output);
 
 private:
 	ComputeShader* m_BlurHorizon_CS;
 	ComputeShader* m_BlurVertical_CS;
 
+private:
+	ID3D11RasterizerState* m_Solid_RS;
+
+
+private:
+	UINT m_Width;
+	UINT m_Height;
+
+	UINT m_NumGroupsX;
+	UINT m_NumGroupsY;
 };
 

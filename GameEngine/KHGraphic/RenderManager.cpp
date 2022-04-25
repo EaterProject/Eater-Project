@@ -398,11 +398,12 @@ void* RenderManager::PickingRender(int x, int y)
 
 	// 해당 Render Data 검색..
 	RenderData* renderData = m_Converter->GetRenderData(pickID);
-	
+
+	/// Test
+	RenderPassBase::g_Picking = renderData;
+
 	// 검색된 Render Data가 없는것은 선택된 Object가 없다는 것..
 	if (renderData == nullptr) return nullptr;
-
-	RenderPassBase::g_Picking = renderData;
 
 	// 해당 Render Data의 원본 GameObject를 반환..
 	return renderData->m_ObjectData->Object;
