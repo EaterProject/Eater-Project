@@ -178,18 +178,21 @@ void OutLinePass::RenderUpdate()
 	const MeshRenderBuffer* mesh = g_Picking->m_Mesh;
 
 	const Matrix& worldviewproj = obj->World * cam->CamViewProj;
+	const Matrix& invWorld = obj->InvWorld;
 
-	CB_OutLine outlineBuf;
-	outlineBuf.gSize = 0.005f; 
 	CB_OutLineOption outlineOptionBuf;
 	outlineOptionBuf.gOutLineColor = Vector3(1.0f, 1.0f, 1.0f);
+
+	CB_OutLine outlineBuf;
+	outlineBuf.gSize = 0.1f;
 
 	switch (obj->ObjType)
 	{
 	case OBJECT_TYPE::BASE:
 	{
-		CB_DepthStaticMesh objectBuf;
+		CB_OutLineStaticMesh objectBuf;
 		objectBuf.gWorldViewProj = worldviewproj;
+		objectBuf.gInvWorld = invWorld;
 
 		m_MeshOrigin_VS->ConstantBufferUpdate(&objectBuf);
 
@@ -207,8 +210,9 @@ void OutLinePass::RenderUpdate()
 	{
 		AnimationData* animation = g_Picking->m_AnimationData;
 		
-		CB_DepthSkinMesh objectBuf;
+		CB_OutLineSkinMesh objectBuf;
 		objectBuf.gWorldViewProj = worldviewproj;
+		objectBuf.gInvWorld = invWorld;
 		objectBuf.gPrevAnimationIndex = animation->PrevAnimationIndex + animation->PrevFrameIndex;
 		objectBuf.gNextAnimationIndex = animation->NextAnimationIndex + animation->NextFrameIndex;
 		objectBuf.gFrameTime = animation->FrameTime;
@@ -237,8 +241,9 @@ void OutLinePass::RenderUpdate()
 	{
 	case OBJECT_TYPE::BASE:
 	{
-		CB_DepthStaticMesh objectBuf;
+		CB_OutLineStaticMesh objectBuf;
 		objectBuf.gWorldViewProj = worldviewproj;
+		objectBuf.gInvWorld = invWorld;
 
 		m_MeshOutLine_VS->ConstantBufferUpdate(&objectBuf);
 		m_MeshOutLine_VS->ConstantBufferUpdate(&outlineBuf);
@@ -261,8 +266,9 @@ void OutLinePass::RenderUpdate()
 	{
 		AnimationData* animation = g_Picking->m_AnimationData;
 
-		CB_DepthSkinMesh objectBuf;
+		CB_OutLineSkinMesh objectBuf;
 		objectBuf.gWorldViewProj = worldviewproj;
+		objectBuf.gInvWorld = invWorld;
 		objectBuf.gPrevAnimationIndex = animation->PrevAnimationIndex + animation->PrevFrameIndex;
 		objectBuf.gNextAnimationIndex = animation->NextAnimationIndex + animation->NextFrameIndex;
 		objectBuf.gFrameTime = animation->FrameTime;
