@@ -200,15 +200,12 @@ void ComputeShader::UnBindConstantBuffer(UINT startSlot, UINT numViews)
 
 void ComputeShader::UnBindShaderResourceView(UINT startSlot, UINT numViews)
 {
-	constexpr ID3D11ShaderResourceView* nullSRV = nullptr;
-
-	g_DeviceContext->CSSetShaderResources(startSlot, numViews, &nullSRV);
+	ID3D11ShaderResourceView* srv[16] = { nullptr, };
+	g_DeviceContext->CSSetShaderResources(startSlot, numViews, srv);
 }
 
 void ComputeShader::UnBindUnorderedAccessView(UINT startSlot, UINT numViews)
 {
-	constexpr ID3D11UnorderedAccessView* nullUAV = nullptr;
-	constexpr UINT nullOffset = -1;
-
-	g_DeviceContext->CSSetUnorderedAccessViews(startSlot, numViews, &nullUAV, &nullOffset);
+	ID3D11UnorderedAccessView* uav[8] = { nullptr, };
+	g_DeviceContext->CSSetUnorderedAccessViews(startSlot, numViews, uav, 0);
 }

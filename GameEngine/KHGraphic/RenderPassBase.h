@@ -15,7 +15,9 @@ class RenderOption;
 ///
 /// - 각각 Rendering Class에서 해당 Rendering에 맞는 GraphicResource 생성을 위해
 ///   각종 Manager & DeviceContext를 전역으로 두고 사용
-/// 
+///
+
+class RenderData;
 class RenderPassBase
 {
 public:
@@ -54,4 +56,6 @@ protected:
 	static IShaderManager* g_Shader;
 
 	static GlobalData* g_GlobalData;
+
+	static RenderData* g_Picking;
 };

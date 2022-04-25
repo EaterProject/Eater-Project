@@ -217,13 +217,13 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const std:
 		return;
 	}
 
-	CameraData* cam = g_GlobalData->MainCamera_Data;
-	MeshRenderBuffer* mesh = instance->m_Mesh;
-	MaterialRenderBuffer* mat = instance->m_Material;
-	MaterialSubData* matSub = mat->m_MaterialSubData;
+	const CameraData* cam = g_GlobalData->MainCamera_Data;
+	const MeshRenderBuffer* mesh = instance->m_Mesh;
+	const MaterialRenderBuffer* mat = instance->m_Material;
+	const MaterialProperty* matSub = mat->m_MaterialProperty;
 
-	Matrix& view = cam->CamView;
-	Matrix& proj = cam->CamProj;
+	const Matrix& view = cam->CamView;
+	const Matrix& proj = cam->CamProj;
 
 	switch (instance->m_Type)
 	{
@@ -264,7 +264,7 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const std:
 		materialBuf.gRoughnessFactor = matSub->RoughnessFactor;
 		materialBuf.gMetallicFactor = matSub->MetallicFactor;
 		materialBuf.gLimLightFactor = matSub->LimLightFactor;
-		materialBuf.gLimLightColor = matSub->LimColor;
+		materialBuf.gLimLightColor = matSub->LimLightColor;
 		materialBuf.gLimLightWidth = matSub->LimLightWidth;
 
 		CB_Camera cameraBuf;
@@ -359,7 +359,7 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const std:
 		materialBuf.gRoughnessFactor = matSub->RoughnessFactor;
 		materialBuf.gMetallicFactor = matSub->MetallicFactor;
 		materialBuf.gLimLightFactor = matSub->LimLightFactor;
-		materialBuf.gLimLightColor = matSub->LimColor;
+		materialBuf.gLimLightColor = matSub->LimLightColor;
 		materialBuf.gLimLightWidth = matSub->LimLightWidth;
 
 		CB_Camera cameraBuf;
@@ -423,7 +423,7 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rend
 	ObjectData* obj = meshData->m_ObjectData;
 	MeshRenderBuffer* mesh = instance->m_Mesh;
 	MaterialRenderBuffer* mat = instance->m_Material;
-	MaterialSubData* matSub = mat->m_MaterialSubData;
+	MaterialProperty* matSub = mat->m_MaterialProperty;
 
 	const Matrix& world = obj->World;
 	const Matrix& invWorld = obj->InvWorld;
@@ -452,7 +452,7 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rend
 		materialBuf.gRoughnessFactor = matSub->RoughnessFactor;
 		materialBuf.gMetallicFactor = matSub->MetallicFactor;
 		materialBuf.gLimLightFactor = matSub->LimLightFactor;
-		materialBuf.gLimLightColor = matSub->LimColor;
+		materialBuf.gLimLightColor = matSub->LimLightColor;
 		materialBuf.gLimLightWidth = matSub->LimLightWidth;
 
 		CB_Camera cameraBuf;
@@ -570,7 +570,7 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rend
 		materialBuf.gRoughnessFactor = matSub->RoughnessFactor;
 		materialBuf.gMetallicFactor = matSub->MetallicFactor;
 		materialBuf.gLimLightFactor = matSub->LimLightFactor;
-		materialBuf.gLimLightColor = matSub->LimColor;
+		materialBuf.gLimLightColor = matSub->LimLightColor;
 		materialBuf.gLimLightWidth = matSub->LimLightWidth;
 
 		CB_Camera cameraBuf;

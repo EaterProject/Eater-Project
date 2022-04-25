@@ -87,23 +87,8 @@ public:
 	float FrameTime = 0.0f;							// Animation Frame Time
 };
 
-// Prefap Data를 저장하기 위한 데이터
-class PrefapData
-{
-public:
-	~PrefapData()
-	{
-
-	}
-	//std::string ParentName; //부모의 이름
-	//GameObject* Object;
-};
-
-
-
-
-// Mesh Sub Data
-class MeshSubData
+// Mesh Property
+class MeshProperty
 {
 public:
 	BoundingBox		BoundBox;
@@ -116,7 +101,7 @@ class MeshBuffer : public Resources
 public:
 	virtual ~MeshBuffer()
 	{
-		delete Mesh_SubData;
+		delete Mesh_Property;
 		delete IndexBuf;
 		delete VertexBuf;
 	}
@@ -124,31 +109,41 @@ public:
 public:
 	UINT BufferIndex = 0;		// Mesh Buffer Index
 
-	MeshSubData* Mesh_SubData;	// Mesh Sub Data
+	MeshProperty* Mesh_Property;	// Mesh Sub Data
 
 	IndexBuffer* IndexBuf;		// Index Buffer
 	VertexBuffer* VertexBuf;	// Vertex Buffer
 };
 
-// Material Sub Data
-class MaterialSubData
+// Material Property
+class MaterialProperty
 {
 public:
-	Vector3 AddColor = Vector3(0.0f, 0.0f, 0.0f);	// Add Color
+	bool Alpha = false;					// Alpha Mesh
+	bool OutLine = false;				// Out Line
+	bool LimLight = false;				// Lim Light
 
+	Vector3 AddColor = Vector3(0.0f, 0.0f, 0.0f);	// Add Color
 	float EmissiveFactor = 1.0f;		// Emissive 강도
 	float RoughnessFactor = 1.0f;		// Roughness 강도 (0 ~ 1)
 	float MetallicFactor = 1.0f;		// Metallic 강도 (0 ~ 1)
 
-	Vector3 LimColor = Vector3(0.0f, 0.0f, 0.0f);	// LimLight Color
-
+	Vector3 LimLightColor = Vector3(0.0f, 0.0f, 0.0f);	// LimLight Color
 	float LimLightFactor = 0.0f;		// LimLight 강도
-	float LimLightWidth = 0.0f;			// LimLight 범위 (0 ~ 1)
-	
-	bool Alpha = false;					// Alpha Mesh
+	float LimLightWidth = 0.0f;			// LimLight 범위
+
+	Vector3 OutLineColor = Vector3(1.0f, 1.0f, 1.0f);	// OutLine Color
+	float OutLineWidth = 0.0f;			// OutLine 범위
 
 	Vector2 Tile;						// X, Y Tiling
 	Matrix TexTM;						// Material의 텍스쳐 행렬
+};
+
+// Material Property Block
+class MaterialPropertyBlock : public MaterialProperty
+{
+public:
+	bool Enable = false;
 };
 
 // Material Buffer
@@ -157,13 +152,13 @@ class MaterialBuffer : public Resources
 public:
 	virtual ~MaterialBuffer()
 	{
-		delete Material_SubData;
+		delete Material_Property;
 	}
 
 public:
 	UINT BufferIndex = 0;							// Material Buffer Index
 
-	MaterialSubData* Material_SubData = nullptr;	// Material SubData
+	MaterialProperty* Material_Property = nullptr;	// Material SubData
 	
 	TextureBuffer* Albedo = nullptr;				// DiffuseMap Texture
 	TextureBuffer* Normal = nullptr;				// NormalMap Texture
@@ -296,6 +291,8 @@ public:
 	AnimationData*	Animation_Data = nullptr;		// Animation Data
 	TerrainData*	Terrain_Data	= nullptr;		// Terrain Data
 	ParticleData*	Particle_Data	= nullptr;		// Particle Data
+
+	MaterialPropertyBlock* Material_Block = nullptr;
 };
 
 /// <summary>
@@ -315,7 +312,7 @@ public:
 	std::vector<PointLightData*>		PointLightList;
 	std::vector<SpotLightData*>			SpotLightList;
 
-	// Culling Data
+	// Culling Mesh
 	std::vector<MeshBuffer*> OccluderList;
 
 	// Debug Data

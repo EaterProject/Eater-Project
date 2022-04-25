@@ -8,47 +8,49 @@
 #include "GraphicResource.h"
 #include "DrawBuffer.h"
 #include "RenderTarget.h"
-#include "ToneMapPass.h"
+#include "CombinePass.h"
 
 #include "MathDefine.h"
 #include "FactoryManagerBase.h"
 #include "ResourceManagerBase.h"
 #include "ShaderManagerBase.h"
+#include "DepthStencilViewDefine.h"
 #include "RenderTargetDefine.h"
 #include "DrawBufferDefine.h"
 #include "ShaderResourceViewDefine.h"
 #include "ConstantBufferDefine.h"
 #include "ViewPortDefine.h"
 
-ToneMapPass::ToneMapPass()
+CombinePass::CombinePass()
 {
 
 }
 
-ToneMapPass::~ToneMapPass()
+CombinePass::~CombinePass()
 {
 
 }
 
-void ToneMapPass::Create(int width, int height)
+void CombinePass::Create(int width, int height)
 {
 
 }
 
-void ToneMapPass::Start(int width, int height)
+void CombinePass::Start(int width, int height)
 {
 	// Shader..
 	m_Screen_VS = g_Shader->GetShader("Screen_VS");
-	m_ToneMapping_PS = g_Shader->GetShader("BloomToneMapping_PS");
+	m_Combine_PS = g_Shader->GetShader("Combine_PS_Option4");
 
 	m_Screen_DB = g_Resource->GetDrawBuffer<DB_Quad>();
 
 	m_Screen_VP = g_Resource->GetViewPort<VP_FullScreen>()->Get();
 
 	m_Bloom_RT = g_Resource->GetRenderTexture<RT_Bloom_Brightx4_2>();
+	m_OutLine_RT = g_Resource->GetRenderTexture<RT_OutLine>();
 }
 
-void ToneMapPass::OnResize(int width, int height)
+void CombinePass::OnResize(int width, int height)
 {
 	// 현재 RenderTarget 재설정..
 	m_OutPut_RTV = m_OutPut_RT->GetRTV()->Get();
@@ -56,33 +58,35 @@ void ToneMapPass::OnResize(int width, int height)
 	// ShaderResource 재설정..
 	ID3D11ShaderResourceView* originSRV = m_Origin_RT->GetSRV()->Get();
 	ID3D11ShaderResourceView* bloomSRV = m_Bloom_RT->GetSRV()->Get();
+	ID3D11ShaderResourceView* outlineSRV = m_OutLine_RT->GetSRV()->Get();
 
-	m_ToneMapping_PS->SetShaderResourceView<gOriginMap>(originSRV);
-	m_ToneMapping_PS->SetShaderResourceView<gBloomMap>(bloomSRV);
+	m_Combine_PS->SetShaderResourceView<gOriginMap>(originSRV);
+	m_Combine_PS->SetShaderResourceView<gBloomMap>(bloomSRV);
+	m_Combine_PS->SetShaderResourceView<gOutLineMap>(outlineSRV);
 }
 
-void ToneMapPass::Release()
+void CombinePass::Release()
 {
 
 }
 
-void ToneMapPass::SetOption(RenderOption* renderOption)
+void CombinePass::SetOption(RenderOption* renderOption)
 {
-	UINT tonemapOption = renderOption->PostProcessOption & (RENDER_BLOOM | RENDER_HDR);
+	UINT combineOption = renderOption->PostProcessOption & (RENDER_BLOOM | RENDER_HDR);
 
-	switch (tonemapOption)
+	switch (combineOption)
 	{
 	case RENDER_BLOOM:
-		m_ToneMapping_PS = g_Shader->GetShader("Bloom_PS");
+		m_Combine_PS = g_Shader->GetShader("Combine_PS_Option1");
 		break;
 	case RENDER_HDR:
-		m_ToneMapping_PS = g_Shader->GetShader("ToneMapping_PS");
+		m_Combine_PS = g_Shader->GetShader("Combine_PS_Option2");
 		break;
 	case RENDER_BLOOM | RENDER_HDR:
-		m_ToneMapping_PS = g_Shader->GetShader("BloomToneMapping_PS");
+		m_Combine_PS = g_Shader->GetShader("Combine_PS_Option7");
 		break;
 	default:
-		m_ToneMapping_PS = g_Shader->GetShader("GammaCorrection_PS");
+		m_Combine_PS = g_Shader->GetShader("Combine_PS_Option0");
 		break;
 	}
 
@@ -110,14 +114,16 @@ void ToneMapPass::SetOption(RenderOption* renderOption)
 	// ShaderResource 설정..
 	ID3D11ShaderResourceView* originSRV = m_Origin_RT->GetSRV()->Get();
 	ID3D11ShaderResourceView* bloomSRV = m_Bloom_RT->GetSRV()->Get();
+	ID3D11ShaderResourceView* outlineSRV = m_OutLine_RT->GetSRV()->Get();
 
-	m_ToneMapping_PS->SetShaderResourceView<gOriginMap>(originSRV);
-	m_ToneMapping_PS->SetShaderResourceView<gBloomMap>(bloomSRV);
+	m_Combine_PS->SetShaderResourceView<gOriginMap>(originSRV);
+	m_Combine_PS->SetShaderResourceView<gBloomMap>(bloomSRV);
+	m_Combine_PS->SetShaderResourceView<gOutLineMap>(outlineSRV);
 
 	SetConstantBuffer();
 }
 
-void ToneMapPass::RenderUpdate()
+void CombinePass::RenderUpdate()
 {
 	GPU_MARKER_DEBUG_NAME("Tone Mapping + Bloom Blend");
 
@@ -128,7 +134,7 @@ void ToneMapPass::RenderUpdate()
 
 	m_Screen_VS->Update();
 
-	m_ToneMapping_PS->Update();
+	m_Combine_PS->Update();
 
 	g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	g_Context->IASetVertexBuffers(0, 1, m_Screen_DB->VertexBuf->GetAddress(), &m_Screen_DB->Stride, &m_Screen_DB->Offset);
@@ -137,9 +143,9 @@ void ToneMapPass::RenderUpdate()
 	g_Context->DrawIndexed(m_Screen_DB->IndexCount, 0, 0);
 }
 
-void ToneMapPass::SetConstantBuffer()
+void CombinePass::SetConstantBuffer()
 {
-	CB_BloomFinal bloomFinalBuf;
-	bloomFinalBuf.gCoefficient = 0.25f;
-	m_ToneMapping_PS->ConstantBufferUpdate(&bloomFinalBuf);
+	CB_DrawFinal drawFinalBuf;
+	drawFinalBuf.gBloomFactor = 0.25f;
+	m_Combine_PS->ConstantBufferUpdate(&drawFinalBuf);
 }

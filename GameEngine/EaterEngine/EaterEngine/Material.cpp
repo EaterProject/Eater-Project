@@ -13,10 +13,10 @@ Material::Material()
 	m_MaterialData = new MaterialBuffer();
 
 	// Material Data 생성..
-	m_MaterialData->Material_SubData = new MaterialSubData();
+	m_MaterialData->Material_Property = new MaterialProperty();
 
-	m_MaterialData->Material_SubData->Tile = { 1.0f, 1.0f };
-	m_MaterialData->Material_SubData->TexTM = DirectX::SimpleMath::Matrix::CreateScale(1.0f, 1.0f, 1.0f);
+	m_MaterialData->Material_Property->Tile = { 1.0f, 1.0f };
+	m_MaterialData->Material_Property->TexTM = DirectX::SimpleMath::Matrix::CreateScale(1.0f, 1.0f, 1.0f);
 
 	// Material 등록..
 	MaterialManager::PushMaterial(this);
@@ -34,8 +34,8 @@ Material::~Material()
 void Material::SetTextureTiling(float scale_x, float scale_y)
 {
 	// 설정 Tiling에 따른 Texture Transform 설정..
-	m_MaterialData->Material_SubData->Tile = { scale_x, scale_y };
-	m_MaterialData->Material_SubData->TexTM = DirectX::SimpleMath::Matrix::CreateScale(1.0f / scale_x, 1.0f / scale_y, 1.0f);
+	m_MaterialData->Material_Property->Tile = { scale_x, scale_y };
+	m_MaterialData->Material_Property->TexTM = DirectX::SimpleMath::Matrix::CreateScale(1.0f / scale_x, 1.0f / scale_y, 1.0f);
 }
 
 void Material::SetDiffuseTexture(std::string diffuseName)
@@ -104,22 +104,22 @@ void Material::SetORMTexture(std::string ormName)
 
 void Material::SetAddColor(DirectX::SimpleMath::Vector3 color)
 {
-	m_MaterialData->Material_SubData->AddColor = color;
+	m_MaterialData->Material_Property->AddColor = color;
 }
 
 void Material::SetEmissiveFactor(float emissiveFactor)
 {
-	m_MaterialData->Material_SubData->EmissiveFactor = emissiveFactor;
+	m_MaterialData->Material_Property->EmissiveFactor = emissiveFactor;
 }
 
 void Material::SetRoughnessFactor(float roughnessFactor)
 {
-	m_MaterialData->Material_SubData->RoughnessFactor = roughnessFactor;
+	m_MaterialData->Material_Property->RoughnessFactor = roughnessFactor;
 }
 
 void Material::SetMetallicFactor(float metallicFactor)
 {
-	m_MaterialData->Material_SubData->MetallicFactor = metallicFactor;
+	m_MaterialData->Material_Property->MetallicFactor = metallicFactor;
 }
 
 void Material::Release()

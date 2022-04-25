@@ -227,7 +227,7 @@ void RenderDataConverter::ConvertResource(MeshBuffer* origin, MeshRenderBuffer* 
 	convert->m_Name = origin->Name;
 
 	// Mesh Sub Data Convert..
-	convert->m_MeshSubData = origin->Mesh_SubData;
+	convert->m_MeshProperty = origin->Mesh_Property;
 
 	// Index Buffer Data Convert..
 	convert->m_IndexCount = origin->IndexBuf->Count;
@@ -251,7 +251,7 @@ void RenderDataConverter::ConvertResource(MaterialBuffer* origin, MaterialRender
 	convert->m_Name = origin->Name;
 
 	// Material Sub Data Convert..
-	convert->m_MaterialSubData = origin->Material_SubData;
+	convert->m_MaterialProperty = origin->Material_Property;
 
 	// Material Data Convert..
 	convert->m_Albedo	= (origin->Albedo == nullptr)	? nullptr : (ID3D11ShaderResourceView*)origin->Albedo->pTextureBuf;

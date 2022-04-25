@@ -29,10 +29,11 @@
 #include "OITPass.h"
 #include "FXAAPass.h"
 #include "BloomPass.h"
-#include "ToneMapPass.h"
+#include "CombinePass.h"
 #include "FogPass.h"
 #include "PickingPass.h"
 #include "CullingPass.h"
+#include "OutLinePass.h"
 #include "DebugPass.h"
 
 #include "RenderDataConverter.h"
@@ -61,10 +62,11 @@ RenderManager::RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, I
 	m_OIT			= new OITPass();
 	m_FXAA			= new FXAAPass();
 	m_Bloom			= new BloomPass();
-	m_ToneMap		= new ToneMapPass();
 	m_Fog			= new FogPass();
 	m_Culling		= new CullingPass();
 	m_Picking		= new PickingPass();
+	m_OutLine		= new OutLinePass();
+	m_Combine		= new CombinePass();
 	m_Debug			= new DebugPass();
 
 	// 설정을 위한 Render Pass List Up..
@@ -77,10 +79,11 @@ RenderManager::RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, I
 	m_RenderPassList.push_back(m_OIT);
 	m_RenderPassList.push_back(m_FXAA);
 	m_RenderPassList.push_back(m_Bloom);
-	m_RenderPassList.push_back(m_ToneMap);
 	m_RenderPassList.push_back(m_Fog);
 	m_RenderPassList.push_back(m_Culling);
 	m_RenderPassList.push_back(m_Picking);
+	m_RenderPassList.push_back(m_OutLine);
+	m_RenderPassList.push_back(m_Combine);
 	m_RenderPassList.push_back(m_Debug);
 }
 
@@ -317,37 +320,6 @@ void RenderManager::Render()
 
 	// Render Data 선별 작업..
 	SelectRenderData();
-	//
-	//GPU_BEGIN_EVENT_DEBUG_NAME("Picking Pass");
-	//m_Picking->BeginRender();
-	//
-	//// Static Object Picking Draw..
-	//for (int i = 0; i < m_RenderMeshList.size(); i++)
-	//{
-	//	m_InstanceLayer = m_RenderMeshList[i];
-	//
-	//	m_Picking->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_MeshList);
-	//}
-	//
-	//// Transparency Object Picking Draw..
-	//for (int i = 0; i < m_ParticleMeshList.size(); i++)
-	//{
-	//	m_InstanceLayer = m_ParticleMeshList[i];
-	//
-	//	m_Picking->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_MeshList);
-	//}
-	//
-	//// UnRender Object Picking Draw..
-	//m_Picking->NoneMeshRenderUpdate(m_UnRenderMeshList);
-	//
-	//// 현재 클릭한 Pixel ID 검출..
-	//int pickID = (int)m_Picking->FindPick(1, 1);
-	//
-	//GPU_END_EVENT_DEBUG_NAME();
-	//
-	//// 해당 Render Data 검색..
-	//RenderData* renderData = m_Converter->GetRenderData(pickID);
-
 
 	// Shadow Render..
 	GPU_BEGIN_EVENT_DEBUG_NAME("Shadow Pass");
@@ -426,7 +398,10 @@ void* RenderManager::PickingRender(int x, int y)
 
 	// 해당 Render Data 검색..
 	RenderData* renderData = m_Converter->GetRenderData(pickID);
-	
+
+	/// Test
+	RenderPassBase::g_Picking = renderData;
+
 	// 검색된 Render Data가 없는것은 선택된 Object가 없다는 것..
 	if (renderData == nullptr) return nullptr;
 
@@ -501,36 +476,32 @@ void RenderManager::AlphaRender()
 void RenderManager::PostProcessingRender()
 {
 	GPU_BEGIN_EVENT_DEBUG_NAME("Fog Pass");
-
 	if (m_NowRenderOption.PostProcessOption & RENDER_FOG)
 	{
 		m_Fog->RenderUpdate();
 	}
-
 	GPU_END_EVENT_DEBUG_NAME();
 
 	GPU_BEGIN_EVENT_DEBUG_NAME("Bloom Pass");
-
 	if (m_NowRenderOption.PostProcessOption & RENDER_BLOOM)
 	{
 		m_Bloom->RenderUpdate();
 	}
-
 	GPU_END_EVENT_DEBUG_NAME();
 
-	GPU_BEGIN_EVENT_DEBUG_NAME("ToneMap + Bloom Blend Pass");
+	GPU_BEGIN_EVENT_DEBUG_NAME("OutLine Pass");
+	m_OutLine->RenderUpdate();
+	GPU_END_EVENT_DEBUG_NAME();
 
-	m_ToneMap->RenderUpdate();
-
+	GPU_BEGIN_EVENT_DEBUG_NAME("Combine Pass");
+	m_Combine->RenderUpdate();
 	GPU_END_EVENT_DEBUG_NAME();
 
 	GPU_BEGIN_EVENT_DEBUG_NAME("FXAA Pass");
-
 	if (m_NowRenderOption.PostProcessOption & RENDER_FXAA)
 	{
 		m_FXAA->RenderUpdate();
 	}
-
 	GPU_END_EVENT_DEBUG_NAME();
 }
 
@@ -863,6 +834,12 @@ void RenderManager::DeleteMeshRenderData(MeshData* meshData)
 {
 	// Render Data 변환..
 	RenderData* renderData = (RenderData*)meshData->Render_Data;
+
+	/// Test
+	if (renderData == RenderPassBase::g_Picking)
+	{
+		RenderPassBase::g_Picking = nullptr;
+	}
 
 	// 해당 Layer 검색..
 	InstanceLayer* instanceLayer = m_Converter->GetLayer(renderData->m_InstanceLayerIndex);
