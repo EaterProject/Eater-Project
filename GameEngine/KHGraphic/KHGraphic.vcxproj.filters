@@ -778,7 +778,10 @@
     <FxCompile Include="..\Assets\Shader\Combine_PS.hlsl">
       <Filter>소스 파일\Shader\HLSL\PostProcess\Combine</Filter>
     </FxCompile>
-    <FxCompile Include="..\Assets\Shader\Blur_CS.hlsl">
+    <FxCompile Include="..\Assets\Shader\Blur_Vertical_CS.hlsl">
+      <Filter>소스 파일\Shader\HLSL\PostProcess\Blur</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Assets\Shader\Blur_Horizon_CS.hlsl">
       <Filter>소스 파일\Shader\HLSL\PostProcess\Blur</Filter>
     </FxCompile>
   </ItemGroup>

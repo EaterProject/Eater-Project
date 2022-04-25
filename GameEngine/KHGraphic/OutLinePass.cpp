@@ -137,8 +137,8 @@ void OutLinePass::Start(int width, int height)
 
 	m_Width = width;
 	m_Height = height;
-	m_NumGroupsX = (UINT)ceilf(width / 256.0f);
-	m_NumGroupsY = (UINT)ceilf(height / 256.0f);
+	m_NumGroupsX = (UINT)ceilf(m_Width / 256.0f);
+	m_NumGroupsY = (UINT)ceilf(m_Height / 256.0f);
 }
 
 void OutLinePass::OnResize(int width, int height)
@@ -152,8 +152,8 @@ void OutLinePass::OnResize(int width, int height)
 
 	m_Width = width;
 	m_Height = height;
-	m_NumGroupsX = (UINT)ceilf(width / 256.0f);
-	m_NumGroupsY = (UINT)ceilf(height / 256.0f);
+	m_NumGroupsX = (UINT)ceilf(m_Width / 256.0f);
+	m_NumGroupsY = (UINT)ceilf(m_Height / 256.0f);
 }
 
 void OutLinePass::Release()
@@ -184,7 +184,7 @@ void OutLinePass::RenderUpdate()
 	outlineOptionBuf.gOutLineColor = Vector3(1.0f, 1.0f, 1.0f);
 
 	CB_OutLine outlineBuf;
-	outlineBuf.gSize = 0.1f;
+	outlineBuf.gSize = 0.02f;
 
 	switch (obj->ObjType)
 	{
@@ -319,6 +319,8 @@ void OutLinePass::BeginOutLine()
 
 void OutLinePass::BlurOutLine()
 {
+	g_Context->OMSetRenderTargets(0, nullptr, nullptr);
+
 	// HORIZONTAL blur pass.
 	m_BlurHorizon_CS->SetShaderResourceView<gInputMap>(m_OutLine_RT->GetSRV()->Get());
 	m_BlurHorizon_CS->SetUnorderedAccessView<gOutputUAV>(m_Origin_RT->GetUAV()->Get());
@@ -344,4 +346,6 @@ void OutLinePass::BlurOutLine()
 
 	ComputeShader::UnBindShaderResourceView(0, 1);
 	ComputeShader::UnBindUnorderedAccessView(0, 1);
+
+	ComputeShader::UnBindComputeShader();
 }

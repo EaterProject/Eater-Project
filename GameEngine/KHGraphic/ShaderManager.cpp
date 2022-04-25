@@ -171,8 +171,8 @@ void ShaderManager::CreateShader()
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "OutLine_PS.hlsl", "OutLine_PS", "OutLine_PS");
 
 	// Blur Shader
-	LoadShader(SHADER_TYPE::COMPUTE_SHADER, "Blur_CS.hlsl", "Blur_Horizon_CS", "Blur_Horizon_CS");
-	LoadShader(SHADER_TYPE::COMPUTE_SHADER, "Blur_CS.hlsl", "Blur_Vertical_CS", "Blur_Vertical_CS");
+	LoadShader(SHADER_TYPE::COMPUTE_SHADER, "Blur_Horizon_CS.hlsl", "Blur_Horizon_CS", "Blur_Horizon_CS");
+	LoadShader(SHADER_TYPE::COMPUTE_SHADER, "Blur_Vertical_CS.hlsl", "Blur_Vertical_CS", "Blur_Vertical_CS");
 
 
 	// Debug Shader Macro

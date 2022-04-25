@@ -191,6 +191,11 @@ void ComputeShader::Release()
 	m_UAV_List.clear();
 }
 
+void ComputeShader::UnBindComputeShader()
+{
+	g_DeviceContext->CSSetShader(nullptr, nullptr, 0);
+}
+
 void ComputeShader::UnBindConstantBuffer(UINT startSlot, UINT numViews)
 {
 	constexpr ID3D11Buffer* nullbuffer = nullptr;
