@@ -835,6 +835,12 @@ void RenderManager::DeleteMeshRenderData(MeshData* meshData)
 	// Render Data 변환..
 	RenderData* renderData = (RenderData*)meshData->Render_Data;
 
+	/// Test
+	if (renderData == RenderPassBase::g_Picking)
+	{
+		RenderPassBase::g_Picking = nullptr;
+	}
+
 	// 해당 Layer 검색..
 	InstanceLayer* instanceLayer = m_Converter->GetLayer(renderData->m_InstanceLayerIndex);
 
