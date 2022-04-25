@@ -6,7 +6,7 @@
 @DiffuseMap bossb_body_BaseColor
 @NormalMap bossb_body_Normal
 @EmissiveMap bossb_body_Emissive
-@Emissive 0.000000
+@Emissive 2.400000
 @Roughness 0.000000
 @Metallic 0.000000
 @Tileing_X 1
