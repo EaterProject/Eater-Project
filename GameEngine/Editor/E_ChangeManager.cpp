@@ -52,8 +52,8 @@ void E_ChangeManager::Change_Skin(int index, GameObject* Object)
 {
 	std::string ParentName = EATER_GET_MAP(index, "ParentName");
 	std::string NodeName = EATER_GET_MAP(index, "NodeName");
-
-	if (NodeName == Object->Name)
+	std::string ObjectOriginalName = GetOriginalName(Object->Name);
+	if (ObjectOriginalName == ModelName && ParentName == "RootNode")
 	{
 		MeshFilter* MF = Object->GetComponent<MeshFilter>();
 		Transform* TR = Object->GetComponent<Transform>();
@@ -69,7 +69,8 @@ void E_ChangeManager::Change_Bone(int index, GameObject* Object)
 	std::string ParentName = EATER_GET_MAP(index, "ParentName");
 	std::string NodeName = EATER_GET_MAP(index, "NodeName");
 
-	if (NodeName == Object->Name)
+	std::string ObjectOriginalName = GetOriginalName(Object->Name);
+	if (ObjectOriginalName == ModelName && ParentName == "RootNode")
 	{
 		MeshFilter* MF = Object->GetComponent<MeshFilter>();
 		Transform* TR = Object->GetComponent<Transform>();
@@ -130,6 +131,7 @@ void E_ChangeManager::Change_Material(int index, GameObject* Object)
 		EATER_CHANGE_MAP(index, "AddColor_G", std::to_string(AddColor_G));
 		EATER_CHANGE_MAP(index, "AddColor_B", std::to_string(AddColor_B));
 
+
 		EATER_CHANGE_MAP(index, "LimColor_R", std::to_string(LimColor_R));
 		EATER_CHANGE_MAP(index, "LimColor_G", std::to_string(LimColor_G));
 		EATER_CHANGE_MAP(index, "LimColor_B", std::to_string(LimColor_B));
@@ -144,6 +146,12 @@ void E_ChangeManager::Change_Material(int index, GameObject* Object)
 		EATER_CLOSE_READ_FILE();
 	}
 	
+}
+
+void E_ChangeManager::Change_Animation(int index, GameObject* Object)
+{
+
+
 }
 
 void E_ChangeManager::Change_LocalTM(int Nodeindex, Transform* TR)

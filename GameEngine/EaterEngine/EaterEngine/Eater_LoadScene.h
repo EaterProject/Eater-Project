@@ -12,6 +12,7 @@ public:
 
 	// Eater_Interface을(를) 통해 상속됨
 	virtual void LoadData(std::string& Path) override;
+	void LoadPrefap(std::string Path);
 private:
 	void Load_Component_Transform(int index, GameObject* Object);
 	void Load_Component_MeshFilter(int index, GameObject* Object);

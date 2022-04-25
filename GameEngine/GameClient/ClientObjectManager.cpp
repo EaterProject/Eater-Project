@@ -42,10 +42,10 @@ void ClientObjectManager::Initialize(ObjectFactory* Factory)
 	mFactory->CreateHealingDrone(0, 1.5f, 0);
 
 	//포탈 태그가 붙어있는 오브젝트를 모두 가져와 리스트에 담아놓는다
-	FindGameObjectTags("Potal", &PotalPoint_List);
+	//FindGameObjectTags("Potal", &PotalPoint_List);
 
-	CreateObjectMemorySize();
-	OnActivePotal(true);
+	//CreateObjectMemorySize();
+	//OnActivePotal(true);
 
 	GameObject* obj = InstanceTerrain();
 }
