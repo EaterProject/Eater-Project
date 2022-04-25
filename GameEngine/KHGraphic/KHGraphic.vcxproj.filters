@@ -262,6 +262,12 @@
     <Filter Include="소스 파일\Shader\HLSL\PostProcess\Combine">
       <UniqueIdentifier>{13697756-ee79-4412-b865-2bf14e4280fb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\RenderPass\PostProcess\Blur">
+      <UniqueIdentifier>{6127fe47-6983-4964-8d87-d5bf50200792}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Shader\HLSL\PostProcess\Blur">
+      <UniqueIdentifier>{73e8d335-a5dc-4ceb-bd58-aab15bfbea16}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -498,6 +504,9 @@
     <ClInclude Include="CombinePass.h">
       <Filter>소스 파일\RenderPass\PostProcess\Combine</Filter>
     </ClInclude>
+    <ClInclude Include="BlurPass.h">
+      <Filter>소스 파일\RenderPass\PostProcess\Blur</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="D3D11Graphic.cpp">
@@ -622,6 +631,9 @@
     </ClCompile>
     <ClCompile Include="CombinePass.cpp">
       <Filter>소스 파일\RenderPass\PostProcess\Combine</Filter>
+    </ClCompile>
+    <ClCompile Include="BlurPass.cpp">
+      <Filter>소스 파일\RenderPass\PostProcess\Blur</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -760,11 +772,14 @@
     <FxCompile Include="..\Assets\Shader\OutLine_StaticMesh_VS.hlsl">
       <Filter>소스 파일\Shader\HLSL\PostProcess\OutLine</Filter>
     </FxCompile>
-    <FxCompile Include="..\Assets\Shader\OutLine_Combine_PS.hlsl">
+    <FxCompile Include="..\Assets\Shader\OutLine_PS.hlsl">
       <Filter>소스 파일\Shader\HLSL\PostProcess\OutLine</Filter>
     </FxCompile>
     <FxCompile Include="..\Assets\Shader\Combine_PS.hlsl">
       <Filter>소스 파일\Shader\HLSL\PostProcess\Combine</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Assets\Shader\Blur_CS.hlsl">
+      <Filter>소스 파일\Shader\HLSL\PostProcess\Blur</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>

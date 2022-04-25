@@ -14,14 +14,12 @@
 #include "FactoryManagerBase.h"
 #include "ResourceManagerBase.h"
 #include "ShaderManagerBase.h"
+#include "DepthStencilViewDefine.h"
 #include "RenderTargetDefine.h"
 #include "DrawBufferDefine.h"
 #include "ShaderResourceViewDefine.h"
 #include "ConstantBufferDefine.h"
 #include "ViewPortDefine.h"
-
-CB_DrawFinal CombinePass::g_DrawFinalBuf;
-UINT CombinePass::g_CombineOption;
 
 CombinePass::CombinePass()
 {
@@ -49,6 +47,7 @@ void CombinePass::Start(int width, int height)
 	m_Screen_VP = g_Resource->GetViewPort<VP_FullScreen>()->Get();
 
 	m_Bloom_RT = g_Resource->GetRenderTexture<RT_Bloom_Brightx4_2>();
+	m_OutLine_RT = g_Resource->GetRenderTexture<RT_OutLine>();
 }
 
 void CombinePass::OnResize(int width, int height)
@@ -59,9 +58,11 @@ void CombinePass::OnResize(int width, int height)
 	// ShaderResource 재설정..
 	ID3D11ShaderResourceView* originSRV = m_Origin_RT->GetSRV()->Get();
 	ID3D11ShaderResourceView* bloomSRV = m_Bloom_RT->GetSRV()->Get();
+	ID3D11ShaderResourceView* outlineSRV = m_OutLine_RT->GetSRV()->Get();
 
 	m_Combine_PS->SetShaderResourceView<gOriginMap>(originSRV);
 	m_Combine_PS->SetShaderResourceView<gBloomMap>(bloomSRV);
+	m_Combine_PS->SetShaderResourceView<gOutLineMap>(outlineSRV);
 }
 
 void CombinePass::Release()
@@ -71,9 +72,9 @@ void CombinePass::Release()
 
 void CombinePass::SetOption(RenderOption* renderOption)
 {
-	g_CombineOption = renderOption->PostProcessOption & (RENDER_BLOOM | RENDER_HDR);
+	UINT combineOption = renderOption->PostProcessOption & (RENDER_BLOOM | RENDER_HDR);
 
-	switch (g_CombineOption)
+	switch (combineOption)
 	{
 	case RENDER_BLOOM:
 		m_Combine_PS = g_Shader->GetShader("Combine_PS_Option1");
@@ -82,7 +83,7 @@ void CombinePass::SetOption(RenderOption* renderOption)
 		m_Combine_PS = g_Shader->GetShader("Combine_PS_Option2");
 		break;
 	case RENDER_BLOOM | RENDER_HDR:
-		m_Combine_PS = g_Shader->GetShader("Combine_PS_Option4");
+		m_Combine_PS = g_Shader->GetShader("Combine_PS_Option7");
 		break;
 	default:
 		m_Combine_PS = g_Shader->GetShader("Combine_PS_Option0");
@@ -113,9 +114,11 @@ void CombinePass::SetOption(RenderOption* renderOption)
 	// ShaderResource 설정..
 	ID3D11ShaderResourceView* originSRV = m_Origin_RT->GetSRV()->Get();
 	ID3D11ShaderResourceView* bloomSRV = m_Bloom_RT->GetSRV()->Get();
+	ID3D11ShaderResourceView* outlineSRV = m_OutLine_RT->GetSRV()->Get();
 
 	m_Combine_PS->SetShaderResourceView<gOriginMap>(originSRV);
 	m_Combine_PS->SetShaderResourceView<gBloomMap>(bloomSRV);
+	m_Combine_PS->SetShaderResourceView<gOutLineMap>(outlineSRV);
 
 	SetConstantBuffer();
 }
@@ -142,6 +145,7 @@ void CombinePass::RenderUpdate()
 
 void CombinePass::SetConstantBuffer()
 {
-	g_DrawFinalBuf.gBloomFactor = 0.25f;
-	m_Combine_PS->ConstantBufferUpdate(&g_DrawFinalBuf);
+	CB_DrawFinal drawFinalBuf;
+	drawFinalBuf.gBloomFactor = 0.25f;
+	m_Combine_PS->ConstantBufferUpdate(&drawFinalBuf);
 }

@@ -197,6 +197,7 @@ copy/Y "$(ProjectDir)Export\*.h"   "$(SolutionDir)Library\inc\Graphic"</Command>
     <ClInclude Include="BakingFactoryBase.h" />
     <ClInclude Include="BlendStateDefine.h" />
     <ClInclude Include="BloomPass.h" />
+    <ClInclude Include="BlurPass.h" />
     <ClInclude Include="ConvertData.h" />
     <ClInclude Include="CullingData.h" />
     <ClInclude Include="CullingPass.h" />
@@ -275,6 +276,7 @@ copy/Y "$(ProjectDir)Export\*.h"   "$(SolutionDir)Library\inc\Graphic"</Command>
     <ClCompile Include="AlphaPass.cpp" />
     <ClCompile Include="BakingFactory.cpp" />
     <ClCompile Include="BloomPass.cpp" />
+    <ClCompile Include="BlurPass.cpp" />
     <ClCompile Include="CullingPass.cpp" />
     <ClCompile Include="DrawBuffer.cpp" />
     <ClCompile Include="ComputeShader.cpp" />
@@ -320,6 +322,16 @@ copy/Y "$(ProjectDir)Export\*.h"   "$(SolutionDir)Library\inc\Graphic"</Command>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="..\Assets\Shader\Blur_CS.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">main</EntryPointName>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">main</EntryPointName>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="..\Assets\Shader\Depth_SkinMesh_VS.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
@@ -483,7 +495,7 @@ copy/Y "$(ProjectDir)Export\*.h"   "$(SolutionDir)Library\inc\Graphic"</Command>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
-    <FxCompile Include="..\Assets\Shader\OutLine_Combine_PS.hlsl">
+    <FxCompile Include="..\Assets\Shader\OutLine_PS.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>

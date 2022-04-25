@@ -217,13 +217,13 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const std:
 		return;
 	}
 
-	CameraData* cam = g_GlobalData->MainCamera_Data;
-	MeshRenderBuffer* mesh = instance->m_Mesh;
-	MaterialRenderBuffer* mat = instance->m_Material;
-	MaterialProperty* matSub = mat->m_MaterialProperty;
+	const CameraData* cam = g_GlobalData->MainCamera_Data;
+	const MeshRenderBuffer* mesh = instance->m_Mesh;
+	const MaterialRenderBuffer* mat = instance->m_Material;
+	const MaterialProperty* matSub = mat->m_MaterialProperty;
 
-	Matrix& view = cam->CamView;
-	Matrix& proj = cam->CamProj;
+	const Matrix& view = cam->CamView;
+	const Matrix& proj = cam->CamProj;
 
 	switch (instance->m_Type)
 	{

@@ -325,6 +325,13 @@ struct CB_OutLine : public cbOutLine
 	float gSize;
 };
 
+SHADER_CONSTANT_BUFFER(cbOutLineOption)
+struct CB_OutLineOption : public cbOutLineOption
+{
+	DirectX::SimpleMath::Vector3 gOutLineColor;
+	float gPad;
+};
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 //// Debug Constant Buffer

@@ -160,10 +160,19 @@ void ShaderManager::CreateShader()
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "HizMipMap_PS.hlsl", "HizMipMap_PS", "HizMipMap_PS");
 	LoadShader(SHADER_TYPE::COMPUTE_SHADER, "HizCull_CS.hlsl", "HizCull_CS", "HizCull_CS");
 
-	// OutLine Shader
-	LoadShader(SHADER_TYPE::VERTEX_SHADER, "OutLine_StaticMesh_VS.hlsl", "OutLine_StaticMesh_VS", "OutLine_StaticMesh_VS");
-	LoadShader(SHADER_TYPE::VERTEX_SHADER, "OutLine_SkinMesh_VS.hlsl", "OutLine_SkinMesh_VS", "OutLine_SkinMesh_VS");
+	// OutLine Shader Macro
+	D3D_SHADER_MACRO outline_macro1[] = { {"OUT_LINE"}, {NULL, NULL} };
 
+	// OutLine Shader
+	LoadShader(SHADER_TYPE::VERTEX_SHADER, "OutLine_StaticMesh_VS.hlsl", "OutLine_StaticMesh_VS", "Origin_StaticMesh_VS");
+	LoadShader(SHADER_TYPE::VERTEX_SHADER, "OutLine_SkinMesh_VS.hlsl", "OutLine_SkinMesh_VS", "Origin_SkinMesh_VS");
+	LoadShader(SHADER_TYPE::VERTEX_SHADER, "OutLine_StaticMesh_VS.hlsl", "OutLine_StaticMesh_VS", "OutLine_StaticMesh_VS", outline_macro1);
+	LoadShader(SHADER_TYPE::VERTEX_SHADER, "OutLine_SkinMesh_VS.hlsl", "OutLine_SkinMesh_VS", "OutLine_SkinMesh_VS", outline_macro1);
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "OutLine_PS.hlsl", "OutLine_PS", "OutLine_PS");
+
+	// Blur Shader
+	LoadShader(SHADER_TYPE::COMPUTE_SHADER, "Blur_CS.hlsl", "Blur_Horizon_CS", "Blur_Horizon_CS");
+	LoadShader(SHADER_TYPE::COMPUTE_SHADER, "Blur_CS.hlsl", "Blur_Vertical_CS", "Blur_Vertical_CS");
 
 
 	// Debug Shader Macro
@@ -244,6 +253,7 @@ void ShaderManager::AddConstantBufferUsage()
 
 	// OutLine..
 	PushConstantBufferUsage<CB_OutLine>(CBUFFER_USAGE::DEFAULT);
+	PushConstantBufferUsage<CB_OutLineOption>(CBUFFER_USAGE::DEFAULT);
 
 	// Combine..
 	PushConstantBufferUsage<CB_DrawFinal>(CBUFFER_USAGE::DEFAULT);

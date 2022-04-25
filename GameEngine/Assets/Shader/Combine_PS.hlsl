@@ -23,7 +23,7 @@ float4 Combine_PS(ScreenPixelIn pin) : SV_TARGET
 #endif
     
 #ifdef OUT_LINE
-    outColor += gOutLineColor * gOutLineMap.Sample(gSamClampLinear, pin.Tex).z;
+    outColor.rgb += gOutLineMap.Sample(gSamClampLinear, pin.Tex).rgb;
 #endif
     
 #ifdef HDR

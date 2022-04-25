@@ -18,10 +18,6 @@ public:
 	void RenderUpdate();
 	void SetConstantBuffer();
 
-public:
-	static CB_DrawFinal g_DrawFinalBuf;
-	static UINT g_CombineOption;
-
 private:
 	VertexShader* m_Screen_VS;
 	PixelShader* m_Combine_PS;
@@ -30,6 +26,7 @@ private:
 
 	RenderTexture* m_Origin_RT;
 	RenderTexture* m_Bloom_RT;
+	RenderTexture* m_OutLine_RT;
 	RenderTexture* m_OutPut_RT;
 
 private:
