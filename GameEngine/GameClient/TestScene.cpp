@@ -19,7 +19,6 @@
 #include "ParticleSystem.h"
 #include "Collider.h"
 
-#define RELEASE_PROFILE
 #include "./Profiler/Profiler.h"
 
 void TestScene::Awake()
@@ -32,12 +31,13 @@ void TestScene::Awake()
 	Load("../Assets/Texture/Terrain");
 	Load("../Assets/Texture/Environment");
 	//Load("../Assets/Texture/Bake");
-	Load("../Assets/Texture/Particle");
+	//Load("../Assets/Texture/Particle");
 	Load("../Assets/Texture/ModelTexture");
-	Load("../Assets/Texture/Material");
-	Load("../Assets/Model/MeshBuffer");
-	Load("../Assets/Model/ModelData");
+	//Load("../Assets/Texture/Material");
+	//Load("../Assets/Model/MeshBuffer");
+	//Load("../Assets/Model/ModelData");
 	//Load("../Assets/Model/Animation");
+	Load("../Assets/Model/Test");
 	PROFILE_TIMER_END("Load Folder"); 
 
 	BakeEnvironmentMap("Day");

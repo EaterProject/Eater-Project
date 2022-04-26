@@ -24,7 +24,7 @@ LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR    lpCmdLine, _In_ int nCmdShow)
 {
 	GameManager* GM = new GameManager();
-	srand((int)GetTickCount64());
+
 	/// 윈도를 등록한다.
 	WNDCLASSEXW wcex;
 	wcex.cbSize = sizeof(WNDCLASSEX);

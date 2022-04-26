@@ -29,9 +29,9 @@ void FBXParser::Initialize()
 	FbxIOSettings* ios = FbxIOSettings::Create(pManager, IOSROOT);
 	pManager->SetIOSettings(ios);
 
-	FbxString lExtension = "dll";
-	FbxString lPath = FbxGetApplicationDirectory();
-	pManager->LoadPluginsDirectory(lPath.Buffer(), lExtension.Buffer());
+	//FbxString lExtension = "dll";
+	//FbxString lPath = FbxGetApplicationDirectory();
+	//pManager->LoadPluginsDirectory(lPath.Buffer(), lExtension.Buffer());
 
 	// FbxImporter °´Ã¼ »ý¼º
 	pImporter = FbxImporter::Create(pManager, "");

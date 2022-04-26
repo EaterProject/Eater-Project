@@ -95,6 +95,12 @@ void AlphaPass::RenderUpdate(const InstanceRenderBuffer* instance, const RenderD
 
 	switch (instance->m_Type)
 	{
+	case OBJECT_TYPE::BASE:
+	case OBJECT_TYPE::SKINNING:
+	{
+
+	}
+	break;
 	case OBJECT_TYPE::PARTICLE_SYSTEM:
 	{
 		ParticleUpdate(meshData->m_ParticleData);
@@ -157,6 +163,12 @@ void AlphaPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::ve
 
 	switch (instance->m_Type)
 	{
+	case OBJECT_TYPE::BASE:
+	case OBJECT_TYPE::SKINNING:
+	{
+
+	}
+		break;
 	case OBJECT_TYPE::PARTICLE_SYSTEM:
 	{
 		for (int i = 0; i < m_RenderCount; i++)

@@ -1,6 +1,6 @@
 #EATERMAT
 @MaterialName Outside_Grass_inst_grass
-@Alpha NO
+@Alpha YES
 @DiffuseMap organic_grass_Basecolor.png
 @NormalMap organic_grass_Normal.png
 @EmissiveMap NO
