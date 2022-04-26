@@ -38,6 +38,7 @@ public:
 	//OnResize 에서 실행될 함수
 	void SetSize(int Change_Width, int Change_Height);
 	void CreateProj(int winsizeX,int WinSizeY, bool ViewPoint = false);
+	EATER_ENGINEDLL void SetCulling(bool cull);
 
 private:
 	Transform* tranform;

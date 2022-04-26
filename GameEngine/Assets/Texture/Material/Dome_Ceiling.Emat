@@ -2,9 +2,9 @@
 @MaterialName Dome_Ceiling
 @Alpha NO
 @DiffuseMap Dome_Ceiling_BaseColor.png
-@NormalMap Dome_Bending_Normal.png
+@NormalMap Dome_Ceiling_Normal.png
 @EmissiveMap NO
-@ORMMap Dome_Bending_ORM.png
+@ORMMap Dome_Ceiling_ORM.png
 @Emissive 0
 @Roughness 0
 @Metallic 0

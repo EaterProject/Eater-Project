@@ -342,14 +342,14 @@ SHADER_CONSTANT_BUFFER(cbOutLineStaticMesh)
 struct CB_OutLineStaticMesh : public cbOutLineStaticMesh
 {
 	DirectX::SimpleMath::Matrix gWorldViewProj;
-	DirectX::SimpleMath::Matrix gInvWorld;
+	DirectX::SimpleMath::Matrix gWorld;
 };
 
 SHADER_CONSTANT_BUFFER(cbOutLineSkinMesh)
 struct CB_OutLineSkinMesh : public cbOutLineSkinMesh
 {
 	DirectX::SimpleMath::Matrix gWorldViewProj;
-	DirectX::SimpleMath::Matrix gInvWorld;
+	DirectX::SimpleMath::Matrix gWorld;
 
 	UINT gPrevAnimationIndex = 0;
 	UINT gNextAnimationIndex = 0;

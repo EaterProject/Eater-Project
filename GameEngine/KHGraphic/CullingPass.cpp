@@ -123,7 +123,18 @@ void CullingPass::RenderOccluders()
 {
 	if (CullingRenderMeshList.empty() || g_GlobalData->OccluderList.empty()) return;
 	
-	CameraData* cam = g_GlobalData->MainCamera_Data;
+	CameraData* cam = nullptr;
+
+	for (CameraData* camera : g_GlobalData->CameraList)
+	{
+		if (camera->Culling)
+		{
+			cam = camera;
+			break;
+		}
+	}
+
+	if (cam == nullptr) return;
 
 	Matrix& viewproj = cam->CamViewProj;
 
@@ -173,7 +184,18 @@ void CullingPass::OcclusionCullingQuery()
 {
 	if (CullingRenderMeshList.empty() || g_GlobalData->OccluderList.empty()) return;
 
-	CameraData* cam = g_GlobalData->MainCamera_Data;
+	CameraData* cam = nullptr;
+
+	for (CameraData* camera : g_GlobalData->CameraList)
+	{
+		if (camera->Culling)
+		{
+			cam = camera;
+			break;
+		}
+	}
+
+	if (cam == nullptr) return;
 
 	Matrix& view = cam->CamView;
 	Matrix& proj = cam->CamProj;

@@ -443,23 +443,23 @@ void DebugPass::GlobalRender()
 
 
 		/// View Frustum ¼³Á¤..
-		//Vector3 corner[8];
-		//BoundingFrustum frustum = cam->OriginFrustum;
-		//frustum.GetCorners(corner);
-		//
-		//SetFrustum(corner);
-		//
-		//object.gWorldViewProj = Matrix::CreateTranslation(CamPos) * viewproj;
-		//option.gColor = Vector3(0.0f, 1.0f, 0.0f);
-		//
-		//m_DebugVS->ConstantBufferUpdate(&object);
-		//m_DebugVS->Update();
-		//
-		//m_DebugColorPS->ConstantBufferUpdate(&option);
-		//m_DebugColorPS->Update();
-		//
-		//BufferUpdate(DEBUG_TYPE::DEBUG_FRUSTUM);
-		//g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+		Vector3 corner[8];
+		BoundingFrustum frustum = cam->OriginFrustum;
+		frustum.GetCorners(corner);
+		
+		SetFrustum(corner);
+		
+		object.gWorldViewProj = Matrix::CreateTranslation(CamPos) * viewproj;
+		option.gColor = Vector3(0.0f, 1.0f, 0.0f);
+		
+		m_Debug_VS->ConstantBufferUpdate(&object);
+		m_Debug_VS->Update();
+		
+		m_DebugColor_PS->ConstantBufferUpdate(&option);
+		m_DebugColor_PS->Update();
+		
+		BufferUpdate(DEBUG_TYPE::DEBUG_FRUSTUM);
+		g_Context->DrawIndexed(m_Debug_DB->IndexCount, 0, 0);
 	}
 
 	for (DirectionalLightData* light : *directionList)

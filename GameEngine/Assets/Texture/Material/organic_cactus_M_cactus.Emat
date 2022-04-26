@@ -1,0 +1,22 @@
+#EATERMAT
+@MaterialName organic_cactus_M_cactus
+@Alpha NO
+@DiffuseMap organic_cactus_BaseColor.png
+@NormalMap organic_cactus_Normal.png
+@EmissiveMap NO
+@ORMMap organic_cactus_ORM.png
+@Emissive 0
+@Roughness 0
+@Metallic 0
+@Tileing_X 1
+@Tileing_Y 1
+@AddColor_R 0
+@AddColor_G 0
+@AddColor_B 0
+@AddColor_A 0
+@LimColor_R 0
+@LimColor_G 0
+@LimColor_B 0
+@LimFactor 0
+@LimWidth 0
+&

@@ -35,9 +35,8 @@ void TestScene::Awake()
 	Load("../Assets/Texture/Particle");
 	Load("../Assets/Texture/ModelTexture");
 	Load("../Assets/Texture/Material");
-	Load("../Assets/Model/Test");
-	//Load("../Assets/Model/MeshBuffer");
-	//Load("../Assets/Model/ModelData");
+	Load("../Assets/Model/MeshBuffer");
+	Load("../Assets/Model/ModelData");
 	//Load("../Assets/Model/Animation");
 	PROFILE_TIMER_END("Load Folder"); 
 
@@ -46,11 +45,18 @@ void TestScene::Awake()
 	BakeEnvironmentMap("skybox1");
 	BakeEnvironmentMap("TestSky");
 
-	//AddOccluder("Dome_Occluder_0");
+	AddOccluder("Dome_Occluder_0");
+
+	Cam1 = GetMainCamera()->GetComponent<Camera>();
+
+	GameObject* Cam = InstanceCamera("Cam2");
+	Cam2TR = Cam->GetTransform();
+	Cam2 = Cam->GetComponent<Camera>();
+	Cam2->SetCulling(true);
 
 	CreateMap();
 
-	CreateParticle(0,0,0);
+	//CreateParticle(0,0,0);
 	SetEnvironmentMap("Night");
 }
 
@@ -112,13 +118,13 @@ void TestScene::CreateMap()
 	Object->GetTransform()->Position.x -= 10.0f;
 	Object->GetTransform()->Position.y += 10.0f;
 
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("bossb");
-	filter->SetAnimationName("bossb");
-	Object->GetTransform()->Position.z += 20;
-	AC = Object->AddComponent<AnimationController>();
-	AC->Choice("idle");
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("bossb");
+	//filter->SetAnimationName("bossb");
+	//Object->GetTransform()->Position.z += 20;
+	//AC = Object->AddComponent<AnimationController>();
+	//AC->Choice("idle");
 
 	//Object = Instance();
 	//filter = Object->AddComponent<MeshFilter>();
@@ -156,13 +162,13 @@ void TestScene::CreateMap()
 	//	}
 	//}
 	
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("MonsterA");
-	filter->SetAnimationName("MonsterA");
-	Object->GetTransform()->Scale = { 10.0f, 10.0f, 10.0f };
-	Object->GetTransform()->Position.z -= 20;
-	AC = Object->AddComponent<AnimationController>();
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("MonsterA");
+	//filter->SetAnimationName("MonsterA");
+	//Object->GetTransform()->Scale = { 10.0f, 10.0f, 10.0f };
+	//Object->GetTransform()->Position.z -= 20;
+	//AC = Object->AddComponent<AnimationController>();
 	//AC->Choice("die");
 	
 	//Object = Instance();
@@ -178,30 +184,29 @@ void TestScene::CreateMap()
 	//filter = Object->AddComponent<MeshFilter>();
 	//filter->SetModelName("Dome_Occluder");
 	//
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("Dome");
-	//
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("organic_cactus");
-	//
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//Object->GetTransform()->Scale = {0.01f, 0.01f, 0.01f};
-	//filter->SetModelName("Outside_Rock");
-	//
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("Outside_bossOBJ");
-	//
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("Outside_Other");
-	//
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("Outside_Pebble");
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	filter->SetModelName("Dome");
+	
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	filter->SetModelName("organic_cactus");
+	
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	filter->SetModelName("Outside_Rock");
+	
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	filter->SetModelName("Outside_bossOBJ");
+	
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	filter->SetModelName("Outside_Other");
+	
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	filter->SetModelName("Outside_Pebble");
 
 	testobj = InstanceTerrain("Terrain");
 	Terrain* mTerrain = testobj->GetComponent<Terrain>();
@@ -302,48 +307,38 @@ void TestScene::CreateParticle(float x, float y, float z)
 
 void TestScene::ChangeCubeMap()
 {
-	//if (GetKey(VK_UP))
-	//{
-	//	subCam->Position.y += 0.1f;
-	//}
-	//if (GetKey(VK_DOWN))
-	//{
-	//	subCam->Position.y -= 0.1f;
-	//}
-	//if (GetKey(VK_LEFT))
-	//{
-	//	subCam->Position.x -= 0.1f;
-	//}
-	//if (GetKey(VK_RIGHT))
-	//{
-	//	subCam->Position.x += 0.1f;
-	//}
-	//if (GetKey(VK_PRIOR))
-	//{
-	//	subCam->Position.z += 0.1f;
-	//}
-	//if (GetKey(VK_NEXT))
-	//{
-	//	subCam->Position.z -= 0.1f;
-	//}
+	if (GetKey(VK_UP))
+	{
+		Cam2TR->Position.y += 0.5f;
+	}
+	if (GetKey(VK_DOWN))
+	{
+		Cam2TR->Position.y -= 0.5f;
+	}
+	if (GetKey(VK_LEFT))
+	{
+		Cam2TR->Position.x -= 0.5f;
+	}
+	if (GetKey(VK_RIGHT))
+	{
+		Cam2TR->Position.x += 0.5f;
+	}
+	if (GetKey(VK_PRIOR))
+	{
+		Cam2TR->Position.z += 0.5f;
+	}
+	if (GetKey(VK_NEXT))
+	{
+		Cam2TR->Position.z -= 0.5f;
+	}
 
 	if (GetKeyUp('1'))
 	{
-		for (auto k : ACList)
-		{
-			k->Choice("idle");
-		}
-
-		SetEnvironmentMap("Day");
+		Cam1->ChoiceMainCam();
 	}
 	if (GetKeyUp('2'))
 	{
-		for (auto k : ACList)
-		{
-			k->Choice("die");
-		}
-
-		SetEnvironmentMap("Night");
+		Cam2->ChoiceMainCam();
 	}
 	if (GetKeyUp('3'))
 	{

@@ -256,6 +256,8 @@ public:
 class CameraData
 {
 public:
+	bool Culling = false;
+
 	Matrix CamInvView;	// Camera Inverse XY View Matrix
 	Matrix CamView;		// Camera View Matrix
 	Matrix CamProj;		// Camera Proj Matrix

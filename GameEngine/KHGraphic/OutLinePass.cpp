@@ -192,7 +192,6 @@ void OutLinePass::RenderUpdate()
 	{
 		CB_OutLineStaticMesh objectBuf;
 		objectBuf.gWorldViewProj = worldviewproj;
-		objectBuf.gInvWorld = invWorld;
 
 		m_MeshOrigin_VS->ConstantBufferUpdate(&objectBuf);
 
@@ -212,7 +211,6 @@ void OutLinePass::RenderUpdate()
 		
 		CB_OutLineSkinMesh objectBuf;
 		objectBuf.gWorldViewProj = worldviewproj;
-		objectBuf.gInvWorld = invWorld;
 		objectBuf.gPrevAnimationIndex = animation->PrevAnimationIndex + animation->PrevFrameIndex;
 		objectBuf.gNextAnimationIndex = animation->NextAnimationIndex + animation->NextFrameIndex;
 		objectBuf.gFrameTime = animation->FrameTime;
@@ -243,7 +241,7 @@ void OutLinePass::RenderUpdate()
 	{
 		CB_OutLineStaticMesh objectBuf;
 		objectBuf.gWorldViewProj = worldviewproj;
-		objectBuf.gInvWorld = invWorld;
+		objectBuf.gWorld = invWorld;
 
 		m_MeshOutLine_VS->ConstantBufferUpdate(&objectBuf);
 		m_MeshOutLine_VS->ConstantBufferUpdate(&outlineBuf);
@@ -268,7 +266,7 @@ void OutLinePass::RenderUpdate()
 
 		CB_OutLineSkinMesh objectBuf;
 		objectBuf.gWorldViewProj = worldviewproj;
-		objectBuf.gInvWorld = invWorld;
+		objectBuf.gWorld = invWorld;
 		objectBuf.gPrevAnimationIndex = animation->PrevAnimationIndex + animation->PrevFrameIndex;
 		objectBuf.gNextAnimationIndex = animation->NextAnimationIndex + animation->NextFrameIndex;
 		objectBuf.gFrameTime = animation->FrameTime;
