@@ -1,0 +1,22 @@
+#EATERMAT
+@MaterialName MonsterB+_Material
+@Alpha NO
+@DiffuseMap MonsterB_BaseColor.png
+@NormalMap NO
+@EmissiveMap NO
+@ORMMap MonsterB_Normal.PNG
+@Emissive 0
+@Roughness 0
+@Metallic 0
+@Tileing_X 1
+@Tileing_Y 1
+@AddColor_R 0
+@AddColor_G 0
+@AddColor_B 0
+@AddColor_A 0
+@LimColor_R 0
+@LimColor_G 0
+@LimColor_B 0
+@LimFactor 0
+@LimWidth 0
+&
