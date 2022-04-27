@@ -73,6 +73,4 @@ private:
 
 	static LOG_DESC g_Log;
 	static HANDLE g_Console;
-
-	UINT m_LogCount;
 };

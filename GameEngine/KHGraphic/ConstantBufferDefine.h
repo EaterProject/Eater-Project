@@ -5,8 +5,8 @@
 #include "EngineData.h"
 
 #define DIRECTION_LIGHT_COUNT	1
-#define POINT_LIGHT_COUNT		5
-#define SPOT_LIGHT_COUNT		5
+#define POINT_LIGHT_COUNT		20
+#define SPOT_LIGHT_COUNT		20
 #define GAUSSIAN_RADIUS			7
 
 #define SHADER_CONSTANT_BUFFER(ClassName) CREATE_HASH_CLASS(ClassName, RESOURCE_TYPE::CB) RESOURCE_PUSH(ClassName, RESOURCE_TYPE::CB)
@@ -342,14 +342,14 @@ SHADER_CONSTANT_BUFFER(cbOutLineStaticMesh)
 struct CB_OutLineStaticMesh : public cbOutLineStaticMesh
 {
 	DirectX::SimpleMath::Matrix gWorldViewProj;
-	DirectX::SimpleMath::Matrix gInvWorld;
+	DirectX::SimpleMath::Matrix gWorld;
 };
 
 SHADER_CONSTANT_BUFFER(cbOutLineSkinMesh)
 struct CB_OutLineSkinMesh : public cbOutLineSkinMesh
 {
 	DirectX::SimpleMath::Matrix gWorldViewProj;
-	DirectX::SimpleMath::Matrix gInvWorld;
+	DirectX::SimpleMath::Matrix gWorld;
 
 	UINT gPrevAnimationIndex = 0;
 	UINT gNextAnimationIndex = 0;

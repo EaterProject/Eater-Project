@@ -419,11 +419,11 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rend
 {
 	if (meshData->m_Draw == false) return;
 
-	CameraData* cam = g_GlobalData->MainCamera_Data;
-	ObjectData* obj = meshData->m_ObjectData;
-	MeshRenderBuffer* mesh = instance->m_Mesh;
-	MaterialRenderBuffer* mat = instance->m_Material;
-	MaterialProperty* matSub = mat->m_MaterialProperty;
+	const CameraData* cam = g_GlobalData->MainCamera_Data;
+	const ObjectData* obj = meshData->m_ObjectData;
+	const MeshRenderBuffer* mesh = instance->m_Mesh;
+	const MaterialRenderBuffer* mat = instance->m_Material;
+	const MaterialProperty* matSub = mat->m_MaterialProperty;
 
 	const Matrix& world = obj->World;
 	const Matrix& invWorld = obj->InvWorld;

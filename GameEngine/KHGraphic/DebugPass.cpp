@@ -205,25 +205,25 @@ void DebugPass::RenderUpdate(const RenderData* meshData)
 		//g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
 
 		/// Bounding Sphere Draw..
-		//g_Context->RSSetState(m_WireRS);
+		//g_Context->RSSetState(m_Wire_RS);
 		//
 		//BoundingSphere sphere;
 		//mesh->m_MeshProperty->BoundSphere.Transform(sphere, world);
 		//
 		//object.gWorldViewProj = Matrix::CreateScale(sphere.Radius * 2.0f) * Matrix::CreateTranslation(sphere.Center) * viewproj;
 		//
-		//m_DebugVS->ConstantBufferUpdate(&object);
-		//m_DebugVS->Update();
+		//m_Debug_VS->ConstantBufferUpdate(&object);
+		//m_Debug_VS->Update();
 		//
 		//option.gColor = Vector3(1.0f, 1.0f, 0.0f);
 		//
-		//m_DebugColorPS->ConstantBufferUpdate(&option);
-		//m_DebugColorPS->Update();
+		//m_DebugColor_PS->ConstantBufferUpdate(&option);
+		//m_DebugColor_PS->Update();
 		//
 		//BufferUpdate(DEBUG_TYPE::DEBUG_SPHERE);
-		//g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+		//g_Context->DrawIndexed(m_Debug_DB->IndexCount, 0, 0);
 		//
-		//g_Context->RSSetState(m_SolidRS);
+		//g_Context->RSSetState(m_Solid_RS);
 		
 		/// Bounding Sphere Ray Draw..
 		//DebugData ray;
@@ -443,23 +443,23 @@ void DebugPass::GlobalRender()
 
 
 		/// View Frustum ¼³Á¤..
-		//Vector3 corner[8];
-		//BoundingFrustum frustum = cam->OriginFrustum;
-		//frustum.GetCorners(corner);
-		//
-		//SetFrustum(corner);
-		//
-		//object.gWorldViewProj = Matrix::CreateTranslation(CamPos) * viewproj;
-		//option.gColor = Vector3(0.0f, 1.0f, 0.0f);
-		//
-		//m_DebugVS->ConstantBufferUpdate(&object);
-		//m_DebugVS->Update();
-		//
-		//m_DebugColorPS->ConstantBufferUpdate(&option);
-		//m_DebugColorPS->Update();
-		//
-		//BufferUpdate(DEBUG_TYPE::DEBUG_FRUSTUM);
-		//g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+		Vector3 corner[8];
+		BoundingFrustum frustum = cam->OriginFrustum;
+		frustum.GetCorners(corner);
+		
+		SetFrustum(corner);
+		
+		object.gWorldViewProj = Matrix::CreateTranslation(CamPos) * viewproj;
+		option.gColor = Vector3(0.0f, 1.0f, 0.0f);
+		
+		m_Debug_VS->ConstantBufferUpdate(&object);
+		m_Debug_VS->Update();
+		
+		m_DebugColor_PS->ConstantBufferUpdate(&option);
+		m_DebugColor_PS->Update();
+		
+		BufferUpdate(DEBUG_TYPE::DEBUG_FRUSTUM);
+		g_Context->DrawIndexed(m_Debug_DB->IndexCount, 0, 0);
 	}
 
 	for (DirectionalLightData* light : *directionList)

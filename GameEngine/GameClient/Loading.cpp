@@ -37,8 +37,6 @@ void Loading::Awake()
 	particles->SetTextureTiling(8, 8);
 	particles->SetPlayTime(1, true);
 	particles->Play();
-
-	LoadTerrainMesh("../Assets/Model/TerrainModel/Terrain.fbx", "../Assets/Texture/Terrain/Terrain_RGB_1.png", "../Assets/Texture/Terrain/Terrain_RGB_2.png", SCALING);
 }
 
 
@@ -46,7 +44,8 @@ void Loading::Update()
 {
 	if (ThreadRun == false)
 	{
-		ChoiceScene("inGame");
+		//ChoiceScene("inGame");
+		ChoiceScene("TestScene");
 	}
 }
 
@@ -66,9 +65,6 @@ void Loading::ThreadFunction()
 	Load("../Assets/Model/Animation");
 	Load("../Assets/Model/MeshBuffer");
 	Load("../Assets/Model/ModelData");
-
-	BakeEnvironmentMap("Night");
-	SetEnvironmentMap("Night");
 }
 
 

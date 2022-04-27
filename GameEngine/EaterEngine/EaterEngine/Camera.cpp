@@ -173,6 +173,11 @@ void Camera::CreateProj(int winsizeX, int WinSizeY, bool ViewPoint)
 	BoundingFrustum::CreateFromMatrix(mCameraData->OriginFrustum, mProj);
 }
 
+void Camera::SetCulling(bool cull)
+{
+	mCameraData->Culling = cull;
+}
+
 void Camera::CreateView()
 {
 	DirectX::XMFLOAT3 r_ = gameobject->GetTransform()->GetLocalPosition_Right();

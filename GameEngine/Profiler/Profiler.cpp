@@ -5,19 +5,6 @@
 
 Debugger g_Debugger;
 
-PROFILER_DLL bool Create()
-{
-	static bool isCreate = false;
-
-	if (!isCreate)
-	{
-		isCreate = true;
-		g_Debugger.Create();
-	}
-
-	return true;
-}
-
 PROFILER_DLL void Log(PROFILE_OUTPUT outputType, long result, const char* file, const char* func, int&& line, const char* message, ...)
 {
 	std::string fileinfo = g_Debugger.GetFileInfo(file, func, line);

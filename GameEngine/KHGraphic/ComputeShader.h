@@ -23,6 +23,7 @@ public:
 	void SetUnorderedAccessView(ID3D11UnorderedAccessView* uav);
 
 public:
+	static void UnBindComputeShader();
 	static void UnBindConstantBuffer(UINT startSlot, UINT numViews);
 	static void UnBindShaderResourceView(UINT startSlot, UINT numViews);
 	static void UnBindUnorderedAccessView(UINT startSlot, UINT numViews);
