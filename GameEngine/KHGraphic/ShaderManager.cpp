@@ -86,7 +86,15 @@ void ShaderManager::CreateShader()
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Deferred_PBR_PS.hlsl", "Deferred_PBR_PS", "Terrain_PBR_PS", deferred_macro1);
 
 	// OIT Shader
+	D3D_SHADER_MACRO alpha_macro1[] = { {"SHADOW"}, {NULL, NULL} };
+	D3D_SHADER_MACRO alpha_macro2[] = { {"IBL"}, {NULL, NULL} };
+	D3D_SHADER_MACRO alpha_macro3[] = { {"SHADOW"}, {"IBL"}, {NULL, NULL} };
+	
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "OIT_Particle_PS.hlsl", "OIT_Particle_PS", "OIT_Particle_PS");
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "OIT_Mesh_PS.hlsl", "OIT_Mesh_PS", "OIT_Mesh_PS_Option0");
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "OIT_Mesh_PS.hlsl", "OIT_Mesh_PS", "OIT_Mesh_PS_Option1", alpha_macro1);
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "OIT_Mesh_PS.hlsl", "OIT_Mesh_PS", "OIT_Mesh_PS_Option2", alpha_macro2);
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "OIT_Mesh_PS.hlsl", "OIT_Mesh_PS", "OIT_Mesh_PS_Option3", alpha_macro3);
 
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "OIT_Blend_PS.hlsl", "OIT_PS", "OIT_PS");
 

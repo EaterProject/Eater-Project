@@ -92,6 +92,7 @@ MeshPixelOut Deferred_PBR_PS(MeshPixelIn pin)
     if (gOption & ALBEDO_MAP)
     {
         albedo = gDiffuseMap.Sample(gSamWrapLinear, pin.Tex);
+
         clip(albedo.a - 0.1f);
     }
     if (gOption & NORMAL_MAP)
@@ -118,7 +119,7 @@ MeshPixelOut Deferred_PBR_PS(MeshPixelIn pin)
         float rim = 1.0f - max(0, dot(normalW, normalize(gEyePos - pin.PosW)));
         rim = smoothstep(1.0f - gLimLightWidth, 1.0f, rim) * gLimLightFactor;
     
-        emissive.xyz += gLimLightColor * rim;
+        emissive.rgb += gLimLightColor * rim;
     }
 #endif
     

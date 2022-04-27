@@ -28,36 +28,30 @@ void TestScene::Awake()
 	//Load("../Assets/Texture/Particle/particle_hotCloud.png");
 
 	PROFILE_TIMER_START(PROFILE_OUTPUT::CONSOLE, 1, "Load Folder");
-	Load("../Assets/Texture/Terrain");
-	Load("../Assets/Texture/Environment");
+	//Load("../Assets/Texture/Terrain");
+	//Load("../Assets/Texture/Environment");
 	//Load("../Assets/Texture/Bake");
 	//Load("../Assets/Texture/Particle");
-	Load("../Assets/Texture/ModelTexture");
+	//Load("../Assets/Texture/ModelTexture");
 	//Load("../Assets/Texture/Material");
 	//Load("../Assets/Model/MeshBuffer");
 	//Load("../Assets/Model/ModelData");
 	//Load("../Assets/Model/Animation");
-	Load("../Assets/Model/Test");
 	PROFILE_TIMER_END("Load Folder"); 
 
 	BakeEnvironmentMap("Day");
-	BakeEnvironmentMap("Night");
-	BakeEnvironmentMap("skybox1");
-	BakeEnvironmentMap("TestSky");
+	//BakeEnvironmentMap("Night");
+	//BakeEnvironmentMap("skybox1");
+	//BakeEnvironmentMap("TestSky");
 
 	AddOccluder("Dome_Occluder_0");
-
-	Cam1 = GetMainCamera()->GetComponent<Camera>();
-
-	GameObject* Cam = InstanceCamera("Cam2");
-	Cam2TR = Cam->GetTransform();
-	Cam2 = Cam->GetComponent<Camera>();
-	Cam2->SetCulling(true);
 
 	CreateMap();
 
 	//CreateParticle(0,0,0);
-	SetEnvironmentMap("Night");
+	SetEnvironmentMap("Day");
+
+	Load("../Assets/Scene/test.Scene");
 }
 
 void TestScene::Update()
@@ -70,7 +64,7 @@ void TestScene::Update()
 
 	
 
-	ChangeCubeMap();
+	//ChangeCubeMap();
 	//DebugDrawLine(Vector3(0.0f, 0.0f, 0.0f), Vector3(0.0f, 50.0f, 0.0f), Vector4(1.0f, 0.0f, 0.0f, 1.0f));
 	
 	//PROFILE_TIMER_END("Update");
@@ -110,13 +104,13 @@ void TestScene::CreateMap()
 	//particles->SetPlayTime(1, false);
 	//particles->Play();
 
-	Object = InstanceLight("Light", LIGHT_TYPE::POINT_LIGHT);
-	Object->GetTransform()->Position.x += 10.0f;
-	Object->GetTransform()->Position.y += 10.0f;
-
-	Object = InstanceLight("Light", LIGHT_TYPE::SPOT_LIGHT);
-	Object->GetTransform()->Position.x -= 10.0f;
-	Object->GetTransform()->Position.y += 10.0f;
+	//Object = InstanceLight("Light", LIGHT_TYPE::POINT_LIGHT);
+	//Object->GetTransform()->Position.x += 10.0f;
+	//Object->GetTransform()->Position.y += 10.0f;
+	//
+	//Object = InstanceLight("Light", LIGHT_TYPE::SPOT_LIGHT);
+	//Object->GetTransform()->Position.x -= 10.0f;
+	//Object->GetTransform()->Position.y += 10.0f;
 
 	//Object = Instance();
 	//filter = Object->AddComponent<MeshFilter>();
@@ -184,29 +178,33 @@ void TestScene::CreateMap()
 	//filter = Object->AddComponent<MeshFilter>();
 	//filter->SetModelName("Dome_Occluder");
 	//
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("Dome");
-	
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("organic_cactus");
-	
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("Outside_Rock");
-	
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("Outside_bossOBJ");
-	
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("Outside_Other");
-	
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("Outside_Pebble");
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("Dome");
+	//
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("Outside_Grass");
+
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("organic_cactus");
+
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("Outside_Rock");
+	//
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("Outside_bossOBJ");
+	//
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("Outside_Other");
+	//
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("Outside_Pebble");
 
 	testobj = InstanceTerrain("Terrain");
 	Terrain* mTerrain = testobj->GetComponent<Terrain>();

@@ -93,7 +93,7 @@ void EnvironmentPass::RenderUpdate()
 	CameraData* cam = g_GlobalData->MainCamera_Data;
 
 	Matrix& proj = cam->CamProj;
-	Matrix& view = cam->CamView;
+	Matrix view = cam->CamView;
 	view._41 = 0; view._42 = 0; view._43 = 0;
 
 	CB_CubeObject cubeBuf;

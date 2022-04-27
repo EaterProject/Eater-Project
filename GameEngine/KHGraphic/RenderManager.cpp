@@ -192,6 +192,7 @@ void RenderManager::SetGlobalData(GlobalData* globalData)
 void RenderManager::SetEnvironmentMap(EnvironmentBuffer* resource)
 {
 	m_Light->SetIBLEnvironmentMapResource(resource);
+	m_Alpha->SetIBLEnvironmentMapResource(resource);
 	m_Environment->SetEnvironmentMapResource(resource);
 }
 
@@ -715,18 +716,15 @@ void RenderManager::PushOpacityMeshData(RenderData* renderData)
 	// Culling 전용 List 삽입..
 	m_Culling->PushCullingMesh(renderData);
 
-	// List 내의 Layer 유무 확인..
-	for (InstanceLayer* layer : m_OpacityMeshList)
+	// 해당 Layer가 등록되어 있는지 확인..
+	if (instanceLayer->m_Instance->m_Material->m_MaterialProperty->Alpha)
 	{
-		// 이미 현재 Layer가 List에 등록 됬다면 등록하지 않는다..
-		if (layer->m_LayerIndex == instanceLayer->m_LayerIndex)
-		{
-			return;
-		}
+		FindInstanceLayer(m_TransparencyMeshList, instanceLayer);
 	}
-
-	// 등록되지 않은 Layer 삽입..
-	m_OpacityMeshList.push_back(instanceLayer);
+	else
+	{
+		FindInstanceLayer(m_OpacityMeshList, instanceLayer);
+	}
 }
 
 void RenderManager::PushTransparencyRenderData(RenderData* renderData)
@@ -740,18 +738,8 @@ void RenderManager::PushTransparencyRenderData(RenderData* renderData)
 	// Culling 전용 List 삽입..
 	///m_Culling->PushCullingMesh(renderData);
 
-	// List 내의 Layer 유무 확인..
-	for (InstanceLayer* layer : m_TransparencyMeshList)
-	{
-		// 이미 현재 Layer가 List에 등록 됬다면 등록하지 않는다..
-		if (layer->m_LayerIndex == instanceLayer->m_LayerIndex)
-		{
-			return;
-		}
-	}
-
-	// 등록되지 않은 Layer 삽입..
-	m_TransparencyMeshList.push_back(instanceLayer);
+	// 해당 Layer가 등록되어 있는지 확인..
+	FindInstanceLayer(m_TransparencyMeshList, instanceLayer);
 }
 
 void RenderManager::PushUnRenderData(RenderData* renderData)

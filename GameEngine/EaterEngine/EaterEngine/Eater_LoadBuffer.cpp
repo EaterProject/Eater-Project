@@ -37,7 +37,9 @@ void Eater_LoadBuffer::LoadData(std::string& Path)
 
 		//이름 설정
 		std::string SaveName = CutStr(Path);
+
 		ParserData::CMesh* mMesh = new ParserData::CMesh();
+		mMesh->m_NodeName = SaveName;
 
 		if (NodeName == "SKIN_BUFFER")
 		{

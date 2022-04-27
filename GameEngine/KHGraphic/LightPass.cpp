@@ -168,16 +168,22 @@ void LightPass::RenderUpdate()
 
 	for (UINT d = 0; d < lightBuf.gDirLightCount; d++)
 	{
+		if (d >= DIRECTION_LIGHT_COUNT) break;
+
 		lightBuf.gDirLights[d] = *g_GlobalData->DirectionLightList[d];
 		lightBuf.gDirLights[d].LightViewProj *= texSpace;
 	}
 	for (UINT p = 0; p < lightBuf.gPointLightCount; p++)
 	{
+		if (p >= POINT_LIGHT_COUNT) break;
+		
 		lightBuf.gPointLights[p] = *g_GlobalData->PointLightList[p];
 		lightBuf.gPointLights[p].LightViewProj *= texSpace;
 	}
 	for (UINT s = 0; s < lightBuf.gSpotLightCount; s++)
 	{
+		if (s >= SPOT_LIGHT_COUNT) break;
+		
 		lightBuf.gSpotLights[s] = *g_GlobalData->SpotLightList[s];
 		lightBuf.gSpotLights[s].LightViewProj *= texSpace;
 	}
