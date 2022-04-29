@@ -39,8 +39,8 @@ void TestScene::Awake()
 	//Load("../Assets/Model/Animation");
 	PROFILE_TIMER_END("Load Folder"); 
 
-	BakeEnvironmentMap("Day");
-	//BakeEnvironmentMap("Night");
+	//BakeEnvironmentMap("Day");
+	BakeEnvironmentMap("Night");
 	//BakeEnvironmentMap("skybox1");
 	//BakeEnvironmentMap("TestSky");
 
@@ -49,7 +49,8 @@ void TestScene::Awake()
 	CreateMap();
 
 	//CreateParticle(0,0,0);
-	SetEnvironmentMap("Day");
+	//SetEnvironmentMap("Day");
+	SetEnvironmentMap("Night");
 
 	Load("../Assets/Scene/test.Scene");
 }
