@@ -30,6 +30,10 @@ private:
 	GameObject* testobj;
 	GameObject* ParticleObj;
 
+	Camera* Cam1;
+	Camera* Cam2;
+	Transform* Cam2TR;
+
 	AnimationController* AC;
 	std::vector<AnimationController*> ACList;
 };

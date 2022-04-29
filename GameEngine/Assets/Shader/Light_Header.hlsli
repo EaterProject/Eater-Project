@@ -5,9 +5,8 @@
 //***************************************************************************************
 
 #define DIRECTION_LIGHT_COUNT	1
-#define POINT_LIGHT_COUNT		5
-#define SPOT_LIGHT_COUNT		5
-#define MATERIAL_COUNT			5
+#define POINT_LIGHT_COUNT		20
+#define SPOT_LIGHT_COUNT		20
 
 struct DirectionalLight
 {

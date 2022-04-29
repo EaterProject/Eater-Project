@@ -80,20 +80,20 @@ private:
 	void EndRender();
 
 private:
-	void ConvertPushInstance();								// 현재 프레임 진행중 추가된 Instance 변환..
-	void ConvertChangeInstance();							// 현재 프레임 진행중 변경된 Instance 변환..
+	void ConvertPushInstance();									// 현재 프레임 진행중 추가된 Instance 변환..
+	void ConvertChangeInstance();								// 현재 프레임 진행중 변경된 Instance 변환..
 
-	void PushMeshRenderData(RenderData* renderData);		// Static Mesh Render List 삽입..
-	void PushParticleRenderData(RenderData* renderData);	// Transparency Mesh Render List 삽입..
-	void PushUnRenderData(RenderData* renderData);			// Un Render List 삽입..
+	void PushOpacityMeshData(RenderData* renderData);			// Opacity Mesh Render List 삽입..
+	void PushTransparencyRenderData(RenderData* renderData);	// Transparency Mesh Render List 삽입..
+	void PushUnRenderData(RenderData* renderData);				// Un Render List 삽입..
 
-	void ChangeMeshRenderData(MeshData* meshData);			// Static Mesh Render Data 변환..
-	void ChangeParticleRenderData(MeshData* meshData);		// Transparency Mesh Render Data 변환..
-	void ChangeUnRenderData(MeshData* meshData);			// Un Render Data 변환..
+	void ChangeOpacityMeshData(MeshData* meshData);				// Opacity Mesh Render Data 변환..
+	void ChangeTransparencyRenderData(MeshData* meshData);		// Transparency Mesh Render Data 변환..
+	void ChangeUnRenderData(MeshData* meshData);				// Un Render Data 변환..
 
-	void DeleteMeshRenderData(MeshData* meshData);			// Static Mesh Render Data 제거..
-	void DeleteParticleRenderData(MeshData* meshData);		// Transparency Mesh Render Data 제거..
-	void DeleteUnRenderData(MeshData* meshData);			// Un Render Data 제거..
+	void DeleteOpacityMeshData(MeshData* meshData);				// Opacity Mesh Render Data 제거..
+	void DeleteTransparencyRenderData(MeshData* meshData);		// Transparency Mesh Render Data 제거..
+	void DeleteUnRenderData(MeshData* meshData);				// Un Render Data 제거..
 
 	void CheckInstanceLayer(std::vector<InstanceLayer*>& layerList);						// 비어있는 Insatnce Layer 검사 및 제거..
 	void FindInstanceLayer(std::vector<InstanceLayer*>& layerList, InstanceLayer* layer);	// 해당 Instance Layer 검색 및 추가..
@@ -109,8 +109,8 @@ private:
 
 	std::queue<RenderData*> m_RenderQueue;
 
-	std::vector<InstanceLayer*> m_RenderMeshList;
-	std::vector<InstanceLayer*> m_ParticleMeshList;
+	std::vector<InstanceLayer*> m_OpacityMeshList;
+	std::vector<InstanceLayer*> m_TransparencyMeshList;
 	std::vector<RenderData*> m_UnRenderMeshList;
 
 	std::vector<RenderPassBase*> m_RenderPassList;

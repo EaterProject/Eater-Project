@@ -16,7 +16,7 @@
 ///	   #define RELEASE_PROFILE
 ///    #include "Profile.h"
 
-#if defined(DEBUG) || defined(_DEBUG) || defined(RELEASE_PROFILE)
+#if defined(DEBUG) || defined(_DEBUG)
 // Log Profiling
 // # 해당 Log Message 출력.
 // #Prameters
@@ -55,13 +55,8 @@
 #define PROFILE_TIMER_END(key, ...)					
 #endif
 
-#define PROFILE_CREATE static bool debug_create = Create();
-
-#if defined(DEBUG) || defined(_DEBUG) || defined(RELEASE_PROFILE)
-PROFILER_DLL bool Create();
+#if defined(DEBUG) || defined(_DEBUG)
 PROFILER_DLL void Log(PROFILE_OUTPUT outputType, long result, const char* file, const char* func, int&& line, const char* message, ...);
 PROFILER_DLL void TimerStart(PROFILE_OUTPUT outputType, const char* file, const char* func, int&& line, int&& totalFrame, const char* timerKey, ...);
 PROFILER_DLL void TimerEnd(const char* timerKey, ...);
-
-PROFILE_CREATE
 #endif

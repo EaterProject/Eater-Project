@@ -10,7 +10,7 @@ StructuredBuffer<BoneAnimation> gAnimationBuffer : register(t0);
 cbuffer cbOutLineSkinMesh : register(b0)
 {
     float4x4 gWorldViewProj     : packoffset(c0);
-    float4x4 gInvWorld          : packoffset(c4);
+    float4x4 gWorld             : packoffset(c4);
     uint gPrevAnimationIndex    : packoffset(c8.x);
     uint gNextAnimationIndex    : packoffset(c8.y);
     float gFrameTime            : packoffset(c8.z);
@@ -62,12 +62,12 @@ float4 OutLine_SkinMesh_VS(MeshVertexIn vin) : SV_POSITION
         posL += vin.BoneWeights2[j] * mul(float4(vin.PosL, 1.0f), prevBoneTM).xyz;
         normalL += vin.BoneWeights2[j] * mul(vin.NormalL, (float3x3) prevBoneTM);
     }
-    
-#ifdef OUT_LINE
-    posL += mul((float3x3) gInvWorld, normalL * 0.25f) * gSize;
-#endif
-    
+
     float4 posH = mul(gWorldViewProj, float4(posL, 1.0f));
 
+#ifdef OUT_LINE
+    posH.xyz += mul((float3x3) gWorldViewProj, normalL).xyz * gSize;
+#endif
+    
     return posH;
 }

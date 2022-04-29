@@ -21,6 +21,7 @@ public:
 private:
 	VertexShader* m_OITRender_VS;
 	PixelShader* m_OITRender_PS;
+	PixelShader* m_OITMesh_PS;
 	PixelShader* m_OITParticle_PS;
 
 	DrawBuffer* m_Screen_DB;

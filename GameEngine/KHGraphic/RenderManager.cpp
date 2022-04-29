@@ -192,6 +192,7 @@ void RenderManager::SetGlobalData(GlobalData* globalData)
 void RenderManager::SetEnvironmentMap(EnvironmentBuffer* resource)
 {
 	m_Light->SetIBLEnvironmentMapResource(resource);
+	m_Alpha->SetIBLEnvironmentMapResource(resource);
 	m_Environment->SetEnvironmentMapResource(resource);
 }
 
@@ -251,10 +252,10 @@ void RenderManager::DeleteInstance(MeshData* instance)
 	case OBJECT_TYPE::BASE:
 	case OBJECT_TYPE::SKINNING:
 	case OBJECT_TYPE::TERRAIN:
-		DeleteMeshRenderData(instance);
+		DeleteOpacityMeshData(instance);
 		break;
 	case OBJECT_TYPE::PARTICLE_SYSTEM:
-		DeleteParticleRenderData(instance);
+		DeleteTransparencyRenderData(instance);
 		break;
 	case OBJECT_TYPE::PARTICLE:
 		break;
@@ -373,17 +374,17 @@ void* RenderManager::PickingRender(int x, int y)
 	m_Picking->BeginRender();
 	
 	// Static Object Picking Draw..
-	for (int i = 0; i < m_RenderMeshList.size(); i++)
+	for (int i = 0; i < m_OpacityMeshList.size(); i++)
 	{
-		m_InstanceLayer = m_RenderMeshList[i];
+		m_InstanceLayer = m_OpacityMeshList[i];
 
 		m_Picking->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_MeshList);
 	}
 
 	// Transparency Object Picking Draw..
-	for (int i = 0; i < m_ParticleMeshList.size(); i++)
+	for (int i = 0; i < m_TransparencyMeshList.size(); i++)
 	{
-		m_InstanceLayer = m_ParticleMeshList[i];
+		m_InstanceLayer = m_TransparencyMeshList[i];
 
 		m_Picking->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_MeshList);
 	}
@@ -415,9 +416,9 @@ void RenderManager::ShadowRender()
 	{
 		m_Shadow->BeginRender();
 
-		for (int i = 0; i < m_RenderMeshList.size(); i++)
+		for (int i = 0; i < m_OpacityMeshList.size(); i++)
 		{
-			m_InstanceLayer = m_RenderMeshList[i];
+			m_InstanceLayer = m_OpacityMeshList[i];
 
 			m_Shadow->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_MeshList);
 		}
@@ -428,9 +429,9 @@ void RenderManager::DeferredRender()
 {
 	m_Deferred->BeginRender();
 
-	for (int i = 0; i < m_RenderMeshList.size(); i++)
+	for (int i = 0; i < m_OpacityMeshList.size(); i++)
 	{
-		m_InstanceLayer = m_RenderMeshList[i];
+		m_InstanceLayer = m_OpacityMeshList[i];
 
 		m_Deferred->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_MeshList);
 	}
@@ -461,9 +462,9 @@ void RenderManager::AlphaRender()
 {
 	m_OIT->BeginRender();
 
-	for (int i = 0; i < m_ParticleMeshList.size(); i++)
+	for (int i = 0; i < m_TransparencyMeshList.size(); i++)
 	{
-		m_InstanceLayer = m_ParticleMeshList[i];
+		m_InstanceLayer = m_TransparencyMeshList[i];
 
 		m_Alpha->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_MeshList);
 	}
@@ -518,9 +519,9 @@ void RenderManager::DebugRender()
 		m_Debug->BeginRender();
 
 		// Render Mesh Debugging..
-		for (int i = 0; i < m_RenderMeshList.size(); i++)
+		for (int i = 0; i < m_OpacityMeshList.size(); i++)
 		{
-			m_InstanceLayer = m_RenderMeshList[i];
+			m_InstanceLayer = m_OpacityMeshList[i];
 
 			for (int j = 0; j < m_InstanceLayer->m_MeshList.size(); j++)
 			{
@@ -546,9 +547,9 @@ void RenderManager::DebugRender()
 		}
 
 		// Particle Mesh Debugging..
-		for (int i = 0; i < m_ParticleMeshList.size(); i++)
+		for (int i = 0; i < m_TransparencyMeshList.size(); i++)
 		{
-			m_InstanceLayer = m_ParticleMeshList[i];
+			m_InstanceLayer = m_TransparencyMeshList[i];
 
 			for (int j = 0; j < m_InstanceLayer->m_MeshList.size(); j++)
 			{
@@ -630,10 +631,10 @@ void RenderManager::ConvertPushInstance()
 		case OBJECT_TYPE::BASE:
 		case OBJECT_TYPE::SKINNING:
 		case OBJECT_TYPE::TERRAIN:
-			PushMeshRenderData(convertRenderData);
+			PushOpacityMeshData(convertRenderData);
 			break;
 		case OBJECT_TYPE::PARTICLE_SYSTEM:
-			PushParticleRenderData(convertRenderData);
+			PushTransparencyRenderData(convertRenderData);
 			break;
 		default:
 			PushUnRenderData(convertRenderData);
@@ -682,10 +683,10 @@ void RenderManager::ConvertChangeInstance()
 		case OBJECT_TYPE::BASE:
 		case OBJECT_TYPE::SKINNING:
 		case OBJECT_TYPE::TERRAIN:
-			ChangeMeshRenderData(originMeshData);
+			ChangeOpacityMeshData(originMeshData);
 			break;
 		case OBJECT_TYPE::PARTICLE_SYSTEM:
-			ChangeParticleRenderData(originMeshData);
+			ChangeTransparencyRenderData(originMeshData);
 			break;
 		default:
 			ChangeUnRenderData(originMeshData);
@@ -697,11 +698,11 @@ void RenderManager::ConvertChangeInstance()
 	}
 
 	// 모든 변환이 끝난후 List 재설정..
-	CheckInstanceLayer(m_RenderMeshList);
-	CheckInstanceLayer(m_ParticleMeshList);
+	CheckInstanceLayer(m_OpacityMeshList);
+	CheckInstanceLayer(m_TransparencyMeshList);
 }
 
-void RenderManager::PushMeshRenderData(RenderData* renderData)
+void RenderManager::PushOpacityMeshData(RenderData* renderData)
 {
 	// 그릴수 없는 상태인 경우 Layer에 삽입하지 않는다..
 	if (renderData->m_InstanceLayerIndex == -1) return;
@@ -715,21 +716,18 @@ void RenderManager::PushMeshRenderData(RenderData* renderData)
 	// Culling 전용 List 삽입..
 	m_Culling->PushCullingMesh(renderData);
 
-	// List 내의 Layer 유무 확인..
-	for (InstanceLayer* layer : m_RenderMeshList)
+	// 해당 Layer가 등록되어 있는지 확인..
+	if (instanceLayer->m_Instance->m_Material->m_MaterialProperty->Alpha)
 	{
-		// 이미 현재 Layer가 List에 등록 됬다면 등록하지 않는다..
-		if (layer->m_LayerIndex == instanceLayer->m_LayerIndex)
-		{
-			return;
-		}
+		FindInstanceLayer(m_TransparencyMeshList, instanceLayer);
 	}
-
-	// 등록되지 않은 Layer 삽입..
-	m_RenderMeshList.push_back(instanceLayer);
+	else
+	{
+		FindInstanceLayer(m_OpacityMeshList, instanceLayer);
+	}
 }
 
-void RenderManager::PushParticleRenderData(RenderData* renderData)
+void RenderManager::PushTransparencyRenderData(RenderData* renderData)
 {
 	// 해당 Layer 검색..
 	InstanceLayer* instanceLayer = m_Converter->GetLayer(renderData->m_InstanceLayerIndex);
@@ -737,18 +735,11 @@ void RenderManager::PushParticleRenderData(RenderData* renderData)
 	// 해당 Layer에 Render Data 삽입..
 	instanceLayer->PushRenderData(renderData);
 
-	// List 내의 Layer 유무 확인..
-	for (InstanceLayer* layer : m_ParticleMeshList)
-	{
-		// 이미 현재 Layer가 List에 등록 됬다면 등록하지 않는다..
-		if (layer->m_LayerIndex == instanceLayer->m_LayerIndex)
-		{
-			return;
-		}
-	}
+	// Culling 전용 List 삽입..
+	///m_Culling->PushCullingMesh(renderData);
 
-	// 등록되지 않은 Layer 삽입..
-	m_ParticleMeshList.push_back(instanceLayer);
+	// 해당 Layer가 등록되어 있는지 확인..
+	FindInstanceLayer(m_TransparencyMeshList, instanceLayer);
 }
 
 void RenderManager::PushUnRenderData(RenderData* renderData)
@@ -756,7 +747,7 @@ void RenderManager::PushUnRenderData(RenderData* renderData)
 	m_UnRenderMeshList.push_back(renderData);
 }
 
-void RenderManager::ChangeMeshRenderData(MeshData* meshData)
+void RenderManager::ChangeOpacityMeshData(MeshData* meshData)
 {
 	// Render Data 변환..
 	RenderData* convertRenderData = (RenderData*)meshData->Render_Data;
@@ -791,10 +782,17 @@ void RenderManager::ChangeMeshRenderData(MeshData* meshData)
 	layer = m_Converter->GetLayer(convertRenderData->m_InstanceLayerIndex);
 
 	// 해당 Layer가 등록되어 있는지 확인..
-	FindInstanceLayer(m_RenderMeshList, layer);
+	if (layer->m_Instance->m_Material->m_MaterialProperty->Alpha)
+	{
+		FindInstanceLayer(m_TransparencyMeshList, layer);
+	}
+	else
+	{
+		FindInstanceLayer(m_OpacityMeshList, layer);
+	}
 }
 
-void RenderManager::ChangeParticleRenderData(MeshData* meshData)
+void RenderManager::ChangeTransparencyRenderData(MeshData* meshData)
 {
 	// Render Data 변환..
 	RenderData* convertRenderData = (RenderData*)meshData->Render_Data;
@@ -822,7 +820,7 @@ void RenderManager::ChangeParticleRenderData(MeshData* meshData)
 	m_Converter->ConvertRenderData(meshData, convertRenderData);
 
 	// 해당 Layer가 등록되어 있는지 확인..
-	FindInstanceLayer(m_ParticleMeshList, layer);
+	FindInstanceLayer(m_TransparencyMeshList, layer);
 }
 
 void RenderManager::ChangeUnRenderData(MeshData* meshData)
@@ -830,7 +828,7 @@ void RenderManager::ChangeUnRenderData(MeshData* meshData)
 
 }
 
-void RenderManager::DeleteMeshRenderData(MeshData* meshData)
+void RenderManager::DeleteOpacityMeshData(MeshData* meshData)
 {
 	// Render Data 변환..
 	RenderData* renderData = (RenderData*)meshData->Render_Data;
@@ -872,10 +870,10 @@ void RenderManager::DeleteMeshRenderData(MeshData* meshData)
 	instanceLayer->DeleteRenderData(index);
 
 	// Instance Layer 빈곳 체크..
-	CheckInstanceLayer(m_RenderMeshList);
+	CheckInstanceLayer(m_OpacityMeshList);
 }
 
-void RenderManager::DeleteParticleRenderData(MeshData* meshData)
+void RenderManager::DeleteTransparencyRenderData(MeshData* meshData)
 {
 	// Render Data 변환..
 	RenderData* renderData = (RenderData*)meshData->Render_Data;
@@ -908,7 +906,7 @@ void RenderManager::DeleteParticleRenderData(MeshData* meshData)
 	instanceLayer->DeleteRenderData(index);
 
 	// Instance Layer 빈곳 체크..
-	CheckInstanceLayer(m_ParticleMeshList);
+	CheckInstanceLayer(m_TransparencyMeshList);
 }
 
 void RenderManager::DeleteUnRenderData(MeshData* meshData)

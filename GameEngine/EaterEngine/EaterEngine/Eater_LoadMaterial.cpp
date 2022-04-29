@@ -29,11 +29,16 @@ void Eater_LoadMaterial::LoadData(std::string& Path)
 		// 货肺款 Material 积己..
 		Material* Mat = new Material();
 		Mat->Name = SaveName;
-
+		
 		MaterialBuffer* Data = Mat->m_MaterialData;
 		std::string NodeName = EATER_GET_NODE_NAME(i);
 		if (NodeName == "EATERMAT")
 		{
+			if (EATER_GET_MAP(i, "Alpha") != "NO")
+			{
+				Data->Material_Property->Alpha = true;
+			}
+
 			std::string DiffuseName		= CutStr(EATER_GET_MAP(i, "DiffuseMap"));
 			std::string NormalName		= CutStr(EATER_GET_MAP(i, "NormalMap"));
 			std::string EmissiveName	= CutStr(EATER_GET_MAP(i, "EmissiveMap"));

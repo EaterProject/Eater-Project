@@ -23,15 +23,16 @@ HANDLE Debugger::g_Console;
 
 Debugger::Debugger()
 {
-
+	Create();
 }
 
 void Debugger::Create()
 {
+#if defined(DEBUG) || defined(_DEBUG)
 	AllocConsole();
 	system("cls");
 	g_Console = GetStdHandle(STD_OUTPUT_HANDLE);
-	m_LogCount = 0;
+#endif
 
 	if ((_waccess(_T("./Log"), 0)) == -1) //여기에 LOG폴더가 없으면...
 		CreateDirectory(_T("./Log"), NULL);
@@ -188,18 +189,13 @@ void Debugger::Log(PROFILE_OUTPUT& outputType, HRESULT result, const char* fileI
 		break;
 	case PROFILE_OUTPUT::CONSOLE:
 	{
+#if defined(DEBUG) || defined(_DEBUG)
 		std::string output = message;
 		output += errMessage;
 		output += TOKEN::Enter;
 
 		WriteFile(g_Console, output.c_str(), (DWORD)(output.size()), NULL, NULL);
-
-		//m_LogCount++;
-		//if (m_LogCount > 30)
-		//{
-		//	system("cls");
-		//	m_LogCount = 0;
-		//}
+#endif
 	}
 	break;
 	case PROFILE_OUTPUT::VS_CODE:
