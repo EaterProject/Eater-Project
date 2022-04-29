@@ -74,8 +74,8 @@ void EditorToolScene::ThreadFunction()
 	Load("../Assets/Model/Prefap");
 	Load("../Assets/Texture/Environment");
 	
-	BakeEnvironmentMap("Day");
-	SetEnvironmentMap("Day");
+	BakeEnvironmentMap("Night");
+	SetEnvironmentMap("Night");
 }
 
 GameObject* EditorToolScene::Create_GameObject()

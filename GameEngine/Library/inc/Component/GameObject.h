@@ -65,6 +65,7 @@ public:
 
 	EATER_ENGINEDLL void PushChildMeshObject(GameObject* obj); //나의 자식으로 기본 게임오브젝트를 넣는다
 	EATER_ENGINEDLL void PushChildBoneObject(GameObject* obj); //나의 자식으로 기본 게임오브젝트를 넣는다
+
 public:
 	///컨퍼넌트를 추가 시킨다
 	template<typename T>
