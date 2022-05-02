@@ -130,9 +130,26 @@ void LightPass::SetIBLEnvironmentMapResource(EnvironmentBuffer* resource)
 	ID3D11ShaderResourceView* prefilter = (ID3D11ShaderResourceView*)resource->Prefilter->pTextureBuf;
 	ID3D11ShaderResourceView* irradiance = (ID3D11ShaderResourceView*)resource->Irradiance->pTextureBuf;
 
-	m_Light_PS->SetShaderResourceView<gBRDFlut>(brdflut);
-	m_Light_PS->SetShaderResourceView<gIBLPrefilter>(prefilter);
-	m_Light_PS->SetShaderResourceView<gIBLIrradiance>(irradiance);
+	PixelShader* IBL_Shader0 = g_Shader->GetShader("Light_IBL_PS_Option0");
+	PixelShader* IBL_Shader1 = g_Shader->GetShader("Light_IBL_PS_Option1");
+	PixelShader* IBL_Shader2 = g_Shader->GetShader("Light_IBL_PS_Option2");
+	PixelShader* IBL_Shader3 = g_Shader->GetShader("Light_IBL_PS_Option3");
+
+	IBL_Shader0->SetShaderResourceView<gBRDFlut>(brdflut);
+	IBL_Shader0->SetShaderResourceView<gIBLPrefilter>(prefilter);
+	IBL_Shader0->SetShaderResourceView<gIBLIrradiance>(irradiance);
+
+	IBL_Shader1->SetShaderResourceView<gBRDFlut>(brdflut);
+	IBL_Shader1->SetShaderResourceView<gIBLPrefilter>(prefilter);
+	IBL_Shader1->SetShaderResourceView<gIBLIrradiance>(irradiance);
+
+	IBL_Shader2->SetShaderResourceView<gBRDFlut>(brdflut);
+	IBL_Shader2->SetShaderResourceView<gIBLPrefilter>(prefilter);
+	IBL_Shader2->SetShaderResourceView<gIBLIrradiance>(irradiance);
+
+	IBL_Shader3->SetShaderResourceView<gBRDFlut>(brdflut);
+	IBL_Shader3->SetShaderResourceView<gIBLPrefilter>(prefilter);
+	IBL_Shader3->SetShaderResourceView<gIBLIrradiance>(irradiance);
 }
 
 void LightPass::Reset()

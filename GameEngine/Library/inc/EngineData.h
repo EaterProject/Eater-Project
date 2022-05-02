@@ -17,9 +17,9 @@ class Component;
 class RenderOption
 {
 public:
-	UINT DebugOption;
-	UINT RenderingOption;
-	UINT PostProcessOption;
+	UINT DebugOption = 0;
+	UINT RenderingOption = 0;
+	UINT PostProcessOption = 0;
 
 public:
 	bool operator == (const RenderOption& option)
