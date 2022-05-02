@@ -1569,7 +1569,7 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(Parser
 		Vector4 maskColor2_00 = m_Parser->GetPixelColor(maskImage2, width, height);
 		maskColor1_00.z = maskColor2_00.x;
 		maskColor1_00.w = maskColor2_00.y;
-		maskColor1_00 = maskColor1_00 / (maskColor1_00.x + maskColor1_00.y + maskColor1_00.z + maskColor1_00.w) * 9.0f;
+		maskColor1_00 *= 2.0f;
 
 		// бр бр бр
 		// бр бр бс
@@ -1585,7 +1585,7 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(Parser
 		Vector4 maskColor2_p0 = m_Parser->GetPixelColor(maskImage2, width, height);
 		maskColor1_p0.z = maskColor2_p0.x;
 		maskColor1_p0.w = maskColor2_p0.y;
-		maskColor1_p0 = maskColor1_p0 / (maskColor1_p0.x + maskColor1_p0.y + maskColor1_p0.z + maskColor1_p0.w) * 0.5f;
+		maskColor1_p0 *= 0.5f;
 
 		// бр бр бр
 		// бр бр бр
@@ -1601,7 +1601,7 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(Parser
 		Vector4 maskColor2_0p = m_Parser->GetPixelColor(maskImage2, width, height);
 		maskColor1_0p.z = maskColor2_0p.x;
 		maskColor1_0p.w = maskColor2_0p.y;
-		maskColor1_0p = maskColor1_0p / (maskColor1_0p.x + maskColor1_0p.y + maskColor1_0p.z + maskColor1_0p.w) * 0.5f;
+		maskColor1_0p *= 0.5f;
 
 		// бр бр бр
 		// бр бр бр
@@ -1621,7 +1621,7 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(Parser
 		Vector4 maskColor2_pp = m_Parser->GetPixelColor(maskImage2, width, height);
 		maskColor1_pp.z = maskColor2_pp.x;
 		maskColor1_pp.w = maskColor2_pp.y;
-		maskColor1_pp = maskColor1_pp / (maskColor1_pp.x + maskColor1_pp.y + maskColor1_pp.z + maskColor1_pp.w) * 0.5f;
+		maskColor1_pp *= 0.25f;
 
 		// бр бр бр
 		// бс бр бр
@@ -1637,7 +1637,7 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(Parser
 		Vector4 maskColor2_m0 = m_Parser->GetPixelColor(maskImage2, width, height);
 		maskColor1_m0.z = maskColor2_m0.x;
 		maskColor1_m0.w = maskColor2_m0.y;
-		maskColor1_m0 = maskColor1_m0 / (maskColor1_m0.x + maskColor1_m0.y + maskColor1_m0.z + maskColor1_m0.w) * 0.5f;
+		maskColor1_m0 *= 0.5f;
 
 		// бр бс бр
 		// бр бр бр
@@ -1653,7 +1653,7 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(Parser
 		Vector4 maskColor2_0m = m_Parser->GetPixelColor(maskImage2, width, height);
 		maskColor1_0m.z = maskColor2_0m.x;
 		maskColor1_0m.w = maskColor2_0m.y;
-		maskColor1_0m = maskColor1_0m / (maskColor1_0m.x + maskColor1_0m.y + maskColor1_0m.z + maskColor1_0m.w) * 0.5f;
+		maskColor1_0m *= 0.5f;
 
 		// бс бр бр
 		// бр бр бр
@@ -1673,7 +1673,7 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(Parser
 		Vector4 maskColor2_mm = m_Parser->GetPixelColor(maskImage2, width, height);
 		maskColor1_mm.z = maskColor2_mm.x;
 		maskColor1_mm.w = maskColor2_mm.y;
-		maskColor1_mm = maskColor1_mm / (maskColor1_mm.x + maskColor1_mm.y + maskColor1_mm.z + maskColor1_mm.w) * 0.5f;
+		maskColor1_mm *= 0.25f;
 
 		// бр бр бс 
 		// бр бр бр
@@ -1693,7 +1693,7 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(Parser
 		Vector4 maskColor2_pm = m_Parser->GetPixelColor(maskImage2, width, height);
 		maskColor1_pm.z = maskColor2_pm.x;
 		maskColor1_pm.w = maskColor2_pm.y;
-		maskColor1_pm = maskColor1_pm / (maskColor1_pm.x + maskColor1_pm.y + maskColor1_pm.z + maskColor1_pm.w) * 0.5f;
+		maskColor1_pm *= 0.25f;
 
 		// бр бр бр
 		// бр бр бр
@@ -1712,10 +1712,10 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(Parser
 		Vector4 maskColor2_mp = m_Parser->GetPixelColor(maskImage2, width, height);
 		maskColor1_mp.z = maskColor2_mp.x;
 		maskColor1_mp.w = maskColor2_mp.y;
-		maskColor1_mp = maskColor1_mp / (maskColor1_mp.x + maskColor1_mp.y + maskColor1_mp.z + maskColor1_mp.w) * 0.5f;
+		maskColor1_mp *= 0.25f;
 
 		// Final Calculate..
-		Vector4 finalColor = maskColor1_p0 + maskColor1_0p + maskColor1_pp + maskColor1_m0 + maskColor1_0m + maskColor1_mm + maskColor2_pm + maskColor1_mp;
+		Vector4 finalColor = maskColor1_00 + maskColor1_p0 + maskColor1_0p + maskColor1_pp + maskColor1_m0 + maskColor1_0m + maskColor1_mm + maskColor2_pm + maskColor1_mp;
 		vertices[i].Mask = finalColor / (finalColor.x + finalColor.y + finalColor.z + finalColor.w);
 
 		// Bounding Data..
