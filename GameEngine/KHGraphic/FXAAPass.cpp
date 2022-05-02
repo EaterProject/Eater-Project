@@ -73,7 +73,7 @@ void FXAAPass::Release()
 
 }
 
-void FXAAPass::SetOption(RenderOption* renderOption)
+void FXAAPass::ApplyOption()
 {
 
 }

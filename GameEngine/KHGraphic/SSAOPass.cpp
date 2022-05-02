@@ -21,6 +21,7 @@
 #include "ShaderResourceViewDefine.h"
 #include "DepthStencilStateDefine.h"
 #include "DepthStencilViewDefine.h"
+#include "RasterizerStateDefine.h"
 #include "RenderTargetDefine.h"
 #include "ViewPortDefine.h"
 #include "DrawBufferDefine.h"
@@ -75,6 +76,7 @@ void SSAOPass::Start(int width, int height)
 	m_Ssao_DB = g_Resource->GetDrawBuffer<DB_SSAO>();
 
 	// ViewPort 설정..
+	m_Solid_RS = g_Resource->GetRasterizerState<RS_Solid>()->Get();
 	m_HalfScreen_VP = g_Resource->GetViewPort<VP_HalfScreen>()->Get();
 
 	// RenderTarget 설정..
@@ -143,11 +145,20 @@ void SSAOPass::Release()
 
 }
 
-void SSAOPass::SetOption(RenderOption* renderOption)
+void SSAOPass::ApplyOption()
 {
 	// SSAO RenderTargetView 초기화..
 	g_Context->ClearRenderTargetView(m_Ssao_RTV, reinterpret_cast<const float*>(&DXColors::Black));
 	g_Context->ClearRenderTargetView(m_SsaoBlur_RTV, reinterpret_cast<const float*>(&DXColors::Black));
+
+	// SSAO Option 재설정..
+	CB_SsaoOption option;
+	option.gOcclusionRadius = g_RenderOption->AO_Radius;
+	option.gOcclusionFadeStart = g_RenderOption->AO_FadeStart;
+	option.gOcclusionFadeEnd = g_RenderOption->AO_FadeEnd;
+	option.gSurfaceEpsilon = g_RenderOption->AO_SurfaceEpsilon;
+
+	m_Ssao_PS->ConstantBufferUpdate(&option);
 }
 
 void SSAOPass::RenderUpdate()
@@ -155,8 +166,10 @@ void SSAOPass::RenderUpdate()
 	GPU_MARKER_DEBUG_NAME("SSAO Render");
 	g_Context->OMSetBlendState(0, 0, 0xffffffff);
 	g_Context->OMSetRenderTargets(1, &m_Ssao_RTV, 0);
+	g_Context->OMSetDepthStencilState(nullptr, 0);
 	g_Context->ClearRenderTargetView(m_Ssao_RTV, reinterpret_cast<const float*>(&DXColors::Black));
 	g_Context->RSSetViewports(1, m_HalfScreen_VP);
+	g_Context->RSSetState(m_Solid_RS);
 
 	CameraData* cam = g_GlobalData->MainCamera_Data;
 	Matrix& proj = cam->CamProj;
@@ -235,11 +248,7 @@ void SSAOPass::BlurRender()
 
 void SSAOPass::SetOffsetVectors()
 {
-	CB_SsaoOption option;
-	option.gOcclusionRadius = 0.25f;
-	option.gOcclusionFadeStart = 0.01f;
-	option.gOcclusionFadeEnd = 2.0f;
-	option.gSurfaceEpsilon = 0.05f;
+	CB_SsaoOffset offset;
 
 	// 8 cube corners
 	XMFLOAT4 m_Offsets[14];
@@ -276,11 +285,11 @@ void SSAOPass::SetOffsetVectors()
 		XMVECTOR v = s * XMVector4Normalize(XMLoadFloat4(&m_Offsets[i]));
 
 		// OffsetVector Constant Buffer Data 삽입..
-		XMStoreFloat4(&option.gOffsetVectors[i], v);
+		XMStoreFloat4(&offset.gOffsetVectors[i], v);
 	}
 
 	// SSAO Option Constant Buffer Update..
-	m_Ssao_PS->ConstantBufferUpdate(&option);
+	m_Ssao_PS->ConstantBufferUpdate(&offset);
 }
 
 void SSAOPass::SetRandomVectorTexture()

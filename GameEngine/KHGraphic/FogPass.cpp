@@ -82,18 +82,24 @@ void FogPass::Release()
 
 }
 
-void FogPass::SetOption(RenderOption* renderOption)
+void FogPass::ApplyOption()
 {
+	CB_FogOption fogOptionBuf;
+	fogOptionBuf.gFogColor			= g_RenderOption->FOG_Color;
+	fogOptionBuf.gFogStartDistance	= g_RenderOption->FOG_StartDistance;
+	fogOptionBuf.gFogDistanceOffset = g_RenderOption->FOG_DistanceOffset;
+	fogOptionBuf.gFogDistanceValue	= g_RenderOption->FOG_DistanceValue;
+	fogOptionBuf.gFogHeightOffset	= g_RenderOption->FOG_HeightOffset;
+	fogOptionBuf.gFogHeightValue	= g_RenderOption->FOG_HeightValue;
+	m_Fog_PS->ConstantBufferUpdate(&fogOptionBuf);
 
+	m_FogSpeed = g_RenderOption->FOG_MoveSpeed;
 }
 
 void FogPass::RenderUpdate()
 {
-	const Vector3 FogColor = { 0.9f, 0.745f, 0.35f };
-	const Vector3 FogHighlightColor = { 0.835f, 0.7f, 0.33f };
-	const float FogStartDepth = 50.0f;
 	static float Time = 0;
-	Time += g_GlobalData->Time * 0.05f;
+	Time += g_GlobalData->Time * m_FogSpeed;
 
 	g_Context->OMSetRenderTargets(1, &m_OutPut_RTV, nullptr);
 	g_Context->RSSetViewports(1, m_Screen_VP);
@@ -101,13 +107,11 @@ void FogPass::RenderUpdate()
 	// Vertex Shader Update..
 	m_Screen_VS->Update();
 
-	CB_Fog fogBuf;
-	fogBuf.gFogColor = FogColor;
-	fogBuf.gFogStartPos = FogStartDepth;
-	fogBuf.gEyePosW = g_GlobalData->MainCamera_Data->CamPos;
-	fogBuf.gTime = Time;
+	CB_FogData fogDataBuf;
+	fogDataBuf.gEyePosW = g_GlobalData->MainCamera_Data->CamPos;
+	fogDataBuf.gTime = Time;
 
-	m_Fog_PS->ConstantBufferUpdate(&fogBuf);
+	m_Fog_PS->ConstantBufferUpdate(&fogDataBuf);
 
 	// Pixel Shader Update..
 	m_Fog_PS->Update();

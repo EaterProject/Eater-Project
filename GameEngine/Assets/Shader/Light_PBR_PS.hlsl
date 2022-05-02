@@ -6,7 +6,7 @@ cbuffer cbLightSub : register(b0)
 {
     float4x4 gViewProjTex   : packoffset(c0);
     float3 gEyePosW         : packoffset(c4.x);
-    uint gInt               : packoffset(c4.w);
+    float gPad              : packoffset(c4.w);
 }
 
 cbuffer cbLight : register(b1)
@@ -48,7 +48,7 @@ float4 Light_PBR_PS(ScreenPixelIn pin) : SV_TARGET
     float metallic = positionRT.w;
     
     if (any(normal) == false)
-        discard;
+        return float4(albedo, 1.0f);
     
 	// View Direction
     float3 ViewDirection = normalize(gEyePosW - positionRT.xyz);

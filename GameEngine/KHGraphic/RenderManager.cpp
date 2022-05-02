@@ -152,35 +152,20 @@ void RenderManager::InstanceResize()
 void RenderManager::RenderSetting(RenderOption* renderOption)
 {
 	// RenderOption 저장..
-	m_RenderOption = renderOption;
-
-	// 현재 Render Option 저장..
-	m_NowRenderOption.DebugOption = m_RenderOption->DebugOption;
-	m_NowRenderOption.RenderingOption = m_RenderOption->RenderingOption;
-	m_NowRenderOption.PostProcessOption = m_RenderOption->PostProcessOption;
+	RenderPassBase::g_RenderOption = renderOption;
 
 	// 최초 Render Setting..
-	for (RenderPassBase* renderPass : m_RenderPassList)
-	{
-		renderPass->SetOption(m_RenderOption);
-	}
+	RenderSetting();
 }
 
 void RenderManager::RenderSetting()
 {
-	// 변동된 Render Option이 없을경우..
-	if (*m_RenderOption == m_NowRenderOption) return;
-
-	// 현재 Render Option 저장..
-	m_NowRenderOption.DebugOption = m_RenderOption->DebugOption;
-	m_NowRenderOption.RenderingOption = m_RenderOption->RenderingOption;
-	m_NowRenderOption.PostProcessOption = m_RenderOption->PostProcessOption;
-
-	// 최초 Render Setting..
 	for (RenderPassBase* renderPass : m_RenderPassList)
 	{
-		renderPass->SetOption(m_RenderOption);
+		renderPass->ApplyOption();
 	}
+
+	m_NowRenderOption = *RenderPassBase::g_RenderOption;
 }
 
 void RenderManager::SetGlobalData(GlobalData* globalData)
@@ -313,9 +298,6 @@ void RenderManager::SelectRenderData()
 
 void RenderManager::Render()
 {
-	// Rendering Option Setting..
-	RenderSetting();
-
 	// Rendering Resource 동기화 작업..
 	ConvertRenderData();
 
@@ -332,6 +314,11 @@ void RenderManager::Render()
 	DeferredRender();
 	GPU_END_EVENT_DEBUG_NAME();
 
+	// Environment Render..
+	GPU_BEGIN_EVENT_DEBUG_NAME("Environment Pass");
+	EnvironmentRender();
+	GPU_END_EVENT_DEBUG_NAME();
+
 	// SSAO Render..
 	GPU_BEGIN_EVENT_DEBUG_NAME("SSAO Pass");
 	SSAORender();
@@ -342,10 +329,6 @@ void RenderManager::Render()
 	LightRender();
 	GPU_END_EVENT_DEBUG_NAME();
 
-	// Environment Render..
-	GPU_BEGIN_EVENT_DEBUG_NAME("Environment Pass");
-	EnvironmentRender();
-	GPU_END_EVENT_DEBUG_NAME();
 
 	// Alpha Render..
 	GPU_BEGIN_EVENT_DEBUG_NAME("Alpha Pass");

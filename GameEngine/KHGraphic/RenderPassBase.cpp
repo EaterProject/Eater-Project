@@ -12,6 +12,7 @@ IFactoryManager* RenderPassBase::g_Factory = nullptr;
 IGraphicResourceManager* RenderPassBase::g_Resource = nullptr;
 IShaderManager* RenderPassBase::g_Shader = nullptr;
 GlobalData* RenderPassBase::g_GlobalData = nullptr;
+RenderOption* RenderPassBase::g_RenderOption = nullptr;
 RenderData* RenderPassBase::g_Picking = nullptr;
 
 void RenderPassBase::Initialize(Microsoft::WRL::ComPtr<ID3D11Device> device, Microsoft::WRL::ComPtr<ID3D11DeviceContext> context, IFactoryManager* factory, IGraphicResourceManager* resourceManager, IShaderManager* shaderManager)

@@ -12,7 +12,7 @@ public:
 	void OnResize(int width, int height) override;
 	void Release() override;
 
-	void SetOption(RenderOption* renderOption) override;
+	void ApplyOption() override;
 
 	void RenderUpdate();
 
@@ -28,5 +28,8 @@ private:
 	ID3D11RenderTargetView* m_OutPut_RTV;
 
 	D3D11_VIEWPORT* m_Screen_VP;
+
+private:
+	float m_FogSpeed;
 };
 

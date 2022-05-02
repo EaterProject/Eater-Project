@@ -16,7 +16,9 @@ public:
 	void Release() override;
 
 public:
+	void RenderSetting() override;
 	void RenderSetting(RenderOption* renderOption) override;
+
 	void SetGlobalData(GlobalData* globalData) override;
 
 public:

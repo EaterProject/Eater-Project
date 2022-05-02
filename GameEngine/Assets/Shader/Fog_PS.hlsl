@@ -1,11 +1,19 @@
 #include "Output_Header.hlsli"
 
-cbuffer cbFog : register(b0)
+cbuffer cbFogOption : register(b0)
 {
     float3 gFogColor            : packoffset(c0);
-    float gFogStartDepth        : packoffset(c0.w);
-    float3 gEyePosW             : packoffset(c1);
-    float gTime                 : packoffset(c1.w);
+    float gFogStartDistance     : packoffset(c0.w);
+    float gFogDistanceOffset    : packoffset(c1.x);
+    float gFogDistanceValue     : packoffset(c1.y);
+    float gFogHeightOffset      : packoffset(c1.z);
+    float gFogHeightValue       : packoffset(c1.w);
+}
+
+cbuffer cbFogData : register(b1)
+{
+    float3 gEyePosW : packoffset(c0);
+    float gTime     : packoffset(c0.w);
 }
 
 Texture2D gOriginMap : register(t0);
@@ -20,27 +28,27 @@ float3 ApplyFog(float3 originalColor, float3 toEye, float noise)
     float convertPercent = 0.1f;
     
     // 지정 범위로 변환된 Distance..
-    float pixelDistance = convertPercent * (length(gEyePosW - toEye) - gFogStartDepth);
+    float pixelDistance = convertPercent * (length(gEyePosW - toEye) - gFogStartDistance);
     
     // 지정 범위로 변환된 Height..
     float pixelHeight = convertPercent * toEye.y;
     
-    float distanceOffset = min(pow(2.0f, pixelDistance - 8.0f), 1.0f);
-    float heightOffset = min(pow(1.2f, -(pixelHeight + 3.0f)), 1.0f);
+    float distanceOffset = min(pow(2.0f, pixelDistance - gFogDistanceOffset), 1.0f);
+    float heightOffset = min(pow(1.2f, -(pixelHeight + gFogHeightOffset)), 1.0f);
     
 	// 거리 기반 안개 강도 설정..
-    float distanceValue = exp(0.01f * pow(pixelDistance - 5.0f, 3.0f));
+    float distanceValue = exp(0.01f * pow(pixelDistance - gFogDistanceValue, 3.0f));
     float fogDistanceFactor = min(distanceValue, 1.0f);
     
     //if (fogDistanceFactor > 0.5f)
     //    return lerp(originalColor, gFogColor, fogDistanceFactor);
     
 	// 높이 기반 안개 강도 설정..
-    float heightValue = (pixelHeight * 3.0f) - 0.1f;
+    float heightValue = (pixelHeight * gFogHeightValue) - 0.1f;
     float fogHeightFactor = pow(pow(2.0f, -heightValue), heightValue) * (1.0f - distanceOffset);
 
 	// 두 요소를 결합한 최종 요소..
-    float fogFinalFactor = min(fogDistanceFactor * fogHeightFactor * noise, 1.0f) + min(distanceOffset * heightOffset, 1.0f) + 0.01f;
+    float fogFinalFactor = min(min(fogDistanceFactor * fogHeightFactor * noise, 1.0f) + min(distanceOffset * heightOffset, 1.0f) + 0.01f, 1.0f);
     
     return lerp(originalColor, gFogColor, fogFinalFactor);
 }
@@ -60,7 +68,7 @@ float4 Fog_PS(ScreenPixelIn pin) : SV_TARGET
     // Noise 값
     float noise = gNoiseVolume.SampleLevel(gSamWrapLinear, coord, 0).x;
     
-    outColor = any(position) ? ApplyFog(outColor, position, noise) : lerp(outColor, gFogColor, 0.75f);
+    outColor = ApplyFog(outColor, position, noise);
     
     return float4(outColor, 1.0f);
 }

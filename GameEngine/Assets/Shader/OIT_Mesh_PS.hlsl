@@ -22,7 +22,7 @@ cbuffer cbLightSub : register(b2)
 {
     float4x4 gViewProjTex : packoffset(c0);
     float3 gEyePosW       : packoffset(c4.x);
-    uint gInt             : packoffset(c4.w);
+    float gIBLFactor      : packoffset(c4.w);
 }
 
 cbuffer cbLight : register(b3)
@@ -132,7 +132,7 @@ void OIT_Mesh_PS(MeshPixelIn pin)
     float2 brdf = gBRDFlut.Sample(gSamClampLinear, float2(max(dot(normal, ViewDirection), 0.0f), roughness)).rg;
     
     litColor.rgb += IBL_EnvironmentLight(ViewDirection, normal, irradiance, prefilteredColor, brdf,
-                                        albedo.rgb, 1.0f, roughness, metallic);
+                                        albedo.rgb, 1.0f, roughness, metallic, gIBLFactor);
 #endif
 
     litColor.rgb += emissive.rgb;

@@ -48,8 +48,12 @@ void EnvironmentPass::Start(int width, int height)
 
 	m_Box_DB = g_Resource->GetDrawBuffer<DB_Sphere>();
 
-	m_OutPut_RT = g_Resource->GetRenderTexture<RT_OutPut1>();
-	m_OutPut_RTV = m_OutPut_RT->GetRTV()->Get();
+	m_Albedo_RT = g_Resource->GetRenderTexture<RT_Deffered_Albedo>();
+	m_Position_RT = g_Resource->GetRenderTexture<RT_Deffered_Position>();
+
+	m_RTV_List.resize(2);
+	m_RTV_List[0] = m_Albedo_RT->GetRTV()->Get();
+	m_RTV_List[1] = m_Position_RT->GetRTV()->Get();
 
 	m_Defalt_DSV = g_Resource->GetDepthStencilView<DS_Defalt>()->Get();
 
@@ -60,7 +64,8 @@ void EnvironmentPass::Start(int width, int height)
 void EnvironmentPass::OnResize(int width, int height)
 {
 	// 현재 RenderTargetView 재설정..
-	m_OutPut_RTV = m_OutPut_RT->GetRTV()->Get();
+	m_RTV_List[0] = m_Albedo_RT->GetRTV()->Get();
+	m_RTV_List[1] = m_Position_RT->GetRTV()->Get();
 
 	// DepthStencilView 재설정..
 	m_Defalt_DSV = g_Resource->GetDepthStencilView<DS_Defalt>()->Get();
@@ -71,9 +76,9 @@ void EnvironmentPass::Release()
 
 }
 
-void EnvironmentPass::SetOption(RenderOption* renderOption)
+void EnvironmentPass::ApplyOption()
 {
-
+	m_EnvironmentWorld = Matrix::CreateScale(g_RenderOption->EnvironmentSize);
 }
 
 void EnvironmentPass::SetEnvironmentMapResource(EnvironmentBuffer* resource)
@@ -88,7 +93,7 @@ void EnvironmentPass::RenderUpdate()
 {
 	g_Context->RSSetState(m_CubeMap_RS);
 	g_Context->OMSetDepthStencilState(m_CubeMap_DSS, 0);
-	g_Context->OMSetRenderTargets(1, &m_OutPut_RTV, m_Defalt_DSV);
+	g_Context->OMSetRenderTargets(2, &m_RTV_List[0], m_Defalt_DSV);
 
 	CameraData* cam = g_GlobalData->MainCamera_Data;
 
@@ -97,7 +102,8 @@ void EnvironmentPass::RenderUpdate()
 	view._41 = 0; view._42 = 0; view._43 = 0;
 
 	CB_CubeObject cubeBuf;
-	cubeBuf.gViewProj = Matrix::CreateScale(10.0f) * view * proj;
+	cubeBuf.gCubeWorld = m_EnvironmentWorld;
+	cubeBuf.gCubeWorldViewProj = view * proj;
 	m_SkyBox_VS->ConstantBufferUpdate(&cubeBuf);
 	m_SkyBox_VS->Update();
 

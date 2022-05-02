@@ -12,7 +12,7 @@ public:
 	void OnResize(int width, int height) override;
 	void Release() override;
 	
-	void SetOption(RenderOption* renderOption) override;
+	void ApplyOption() override;
 
 public:
 	void RenderUpdate();
@@ -41,6 +41,8 @@ private:
 
 	ID3D11ShaderResourceView* m_Ssao_SRV;
 	ID3D11ShaderResourceView* m_SsaoBlur_SRV;
+
+	ID3D11RasterizerState* m_Solid_RS;
 
 	D3D11_VIEWPORT* m_HalfScreen_VP;
 };

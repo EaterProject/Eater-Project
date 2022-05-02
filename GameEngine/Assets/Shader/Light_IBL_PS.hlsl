@@ -7,7 +7,7 @@ cbuffer cbLightSub : register(b0)
 {
     float4x4 gViewProjTex   : packoffset(c0);
     float3 gEyePosW         : packoffset(c4.x);
-    uint gInt               : packoffset(c4.w);
+    float gIBLFactor        : packoffset(c4.w);
 }
 
 cbuffer cbLight : register(b1)
@@ -53,7 +53,7 @@ float4 Light_IBL_PS(ScreenPixelIn pin) : SV_TARGET
     float metallic = positionRT.w;
     
     if (any(normal) == false)
-        discard;
+        return float4(albedo, 1.0f);
     
 	// View Direction
     float3 ViewDirection = normalize(gEyePosW - positionRT.xyz);
@@ -94,7 +94,7 @@ float4 Light_IBL_PS(ScreenPixelIn pin) : SV_TARGET
     float2 brdf = gBRDFlut.Sample(gSamClampLinear, float2(max(dot(normal, ViewDirection), 0.0f), roughness)).rg;
     
     litColor += IBL_EnvironmentLight(ViewDirection, normal, irradiance, prefilteredColor, brdf, 
-                                        albedo, ao, roughness, metallic);
+                                        albedo, ao, roughness, metallic, gIBLFactor);
 
     litColor += emissive;
     

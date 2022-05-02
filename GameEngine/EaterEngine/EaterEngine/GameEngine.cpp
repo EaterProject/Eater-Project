@@ -60,6 +60,7 @@ GameEngine::GameEngine()
 
 	ConsoleDebug = true;
 
+	// Render Option 초기 설정..
 	mRenderOption = new RenderOption();
 
 	mRenderOption->DebugOption			= DEBUG_ENGINE;
@@ -100,7 +101,7 @@ void GameEngine::Initialize(HWND Hwnd, bool mConsoleDebug)
 
 	//매니저들 초기화
 	GlobalDataManager::Initialize();
-	mGraphicManager->Initialize(Hwnd, WinSizeWidth, WinSizeHeight);
+	mGraphicManager->Initialize(Hwnd, WinSizeWidth, WinSizeHeight, mRenderOption);
 	mKeyManager->Initialize(mHwnd);
 	mObjectManager->Initialize();
 	mSceneManager->Initialize(mObjectManager);
@@ -111,9 +112,6 @@ void GameEngine::Initialize(HWND Hwnd, bool mConsoleDebug)
 	//mNetworkManager->Initialize();
 
 	Component::SetManager(mTimeManager, mKeyManager);
-
-	// 최초 Render Setting..
-	mGraphicManager->RenderSetting(mRenderOption);
 }
 
 void GameEngine::Start()
@@ -537,44 +535,59 @@ void GameEngine::CreateObject()
 
 void GameEngine::RenderOptionCheck()
 {
+	bool change = false;
+
 	if (mKeyManager->GetKeyUp(VK_F1))
 	{
 		// Debug On/Off
 		mRenderOption->RenderingOption ^= RENDER_DEBUG;
+		change = true;
 	}
 	if (mKeyManager->GetKeyUp(VK_F2))
 	{
 		// Shadow On/Off
 		mRenderOption->RenderingOption ^= RENDER_SHADOW;
+		change = true;
 	}
 	if (mKeyManager->GetKeyUp(VK_F3))
 	{
 		// SSAO On/Off
 		mRenderOption->RenderingOption ^= RENDER_SSAO;
+		change = true;
 	}
 	if (mKeyManager->GetKeyUp(VK_F4))
 	{
 		// IBL On/Off
 		mRenderOption->RenderingOption ^= RENDER_IBL;
+		change = true;
 	}
 	if (mKeyManager->GetKeyUp(VK_F5))
 	{
 		// Fog On/Off
 		mRenderOption->PostProcessOption ^= RENDER_FOG;
+		change = true;
 	}
 	if (mKeyManager->GetKeyUp(VK_F6))
 	{
 		// Bloom On/Off
 		mRenderOption->PostProcessOption ^= RENDER_BLOOM;
+		change = true;
 	}
 	if (mKeyManager->GetKeyUp(VK_F7))
 	{
 		// HDR On/Off
 		mRenderOption->PostProcessOption ^= RENDER_HDR;
+		change = true;
 	}
 	if (mKeyManager->GetKeyUp(VK_F8))
 	{
 		// FXAA On/Off
 		mRenderOption->PostProcessOption ^= RENDER_FXAA;
+		change = true;
+	}
+
+	if (change)
+	{
+		mGraphicManager->RenderSetting();
 	}
 }

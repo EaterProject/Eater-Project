@@ -42,7 +42,14 @@ struct ParticlePixelIn
 struct SkyBoxPixelIn
 {
     float4 PosH : SV_POSITION;
-    float3 PosL : POSITION;
+    float3 PosL : POSITION0;
+    float3 PosW : POSITION1;
+};
+
+struct SkyBoxPixelOut
+{
+    float4 Albedo : SV_Target0;
+    float4 Position : SV_Target1;
 };
 
 // Screen Pixel Shader Input & Output Data Struct

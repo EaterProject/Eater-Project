@@ -184,9 +184,6 @@ void BloomPass::Start(int width, int height)
 	downSampleData->OriginHeight		= (float)(UINT)down144x144height;
 	downSampleData->TexelWidth			= 1.0f / (UINT)down144x144width;
 	downSampleData->TexelHeight			= 1.0f / (UINT)down144x144height;
-
-	// ShaderResource 설정..
-	SetConstantBuffer();
 }
 
 void BloomPass::OnResize(int width, int height)
@@ -266,9 +263,9 @@ void BloomPass::Release()
 
 }
 
-void BloomPass::SetOption(RenderOption* renderOption)
+void BloomPass::ApplyOption()
 {
-	if (renderOption->PostProcessOption & RENDER_FOG)
+	if (g_RenderOption->PostProcessOption & RENDER_FOG)
 	{
 		m_Origin_RT = g_Resource->GetRenderTexture<RT_OutPut1>();
 	}
@@ -283,6 +280,11 @@ void BloomPass::SetOption(RenderOption* renderOption)
 	m_BloomBright_PS->SetShaderResourceView<gOriginMap>(originSRV->Get());
 
 	g_Context->ClearRenderTargetView(m_Brightx4_RTV2, reinterpret_cast<const float*>(&DXColors::NonBlack));
+
+	// Shader Constant Buffer 설정..
+	CB_BloomBright bloomdownsamplingBuf;
+	bloomdownsamplingBuf.gThreshold = g_RenderOption->BLOOM_Threshold;
+	m_BloomBright_PS->ConstantBufferUpdate(&bloomdownsamplingBuf);
 }
 
 void BloomPass::RenderUpdate()
@@ -433,13 +435,6 @@ void BloomPass::GaussianBlur(ID3D11RenderTargetView* rtv[2], ID3D11ShaderResourc
 	g_Context->IASetIndexBuffer(m_Screen_DB->IndexBuf->Get(), DXGI_FORMAT_R32_UINT, 0);
 
 	g_Context->DrawIndexed(m_Screen_DB->IndexCount, 0, 0);
-}
-
-void BloomPass::SetConstantBuffer()
-{
-	CB_BloomBright bloomdownsamplingBuf;
-	bloomdownsamplingBuf.gThreshold = 1.0f;
-	m_BloomBright_PS->ConstantBufferUpdate(&bloomdownsamplingBuf);
 }
 
 void BloomPass::SetSamplingViewPort(const SamplingData& downScreen)
