@@ -41,8 +41,8 @@ void TestScene::Awake()
 
 	//BakeEnvironmentMap("Day");
 	BakeEnvironmentMap("Night");
-	//BakeEnvironmentMap("skybox1");
-	//BakeEnvironmentMap("TestSky");
+	BakeEnvironmentMap("skybox1");
+	BakeEnvironmentMap("TestSky");
 
 	AddOccluder("Dome_Occluder_0");
 
@@ -306,45 +306,42 @@ void TestScene::CreateParticle(float x, float y, float z)
 
 void TestScene::ChangeCubeMap()
 {
-	if (GetKey(VK_UP))
-	{
-		Cam2TR->Position.y += 0.5f;
-	}
-	if (GetKey(VK_DOWN))
-	{
-		Cam2TR->Position.y -= 0.5f;
-	}
-	if (GetKey(VK_LEFT))
-	{
-		Cam2TR->Position.x -= 0.5f;
-	}
-	if (GetKey(VK_RIGHT))
-	{
-		Cam2TR->Position.x += 0.5f;
-	}
-	if (GetKey(VK_PRIOR))
-	{
-		Cam2TR->Position.z += 0.5f;
-	}
-	if (GetKey(VK_NEXT))
-	{
-		Cam2TR->Position.z -= 0.5f;
-	}
+	//if (GetKey(VK_UP))
+	//{
+	//	Cam2TR->Position.y += 0.5f;
+	//}
+	//if (GetKey(VK_DOWN))
+	//{
+	//	Cam2TR->Position.y -= 0.5f;
+	//}
+	//if (GetKey(VK_LEFT))
+	//{
+	//	Cam2TR->Position.x -= 0.5f;
+	//}
+	//if (GetKey(VK_RIGHT))
+	//{
+	//	Cam2TR->Position.x += 0.5f;
+	//}
+	//if (GetKey(VK_PRIOR))
+	//{
+	//	Cam2TR->Position.z += 0.5f;
+	//}
+	//if (GetKey(VK_NEXT))
+	//{
+	//	Cam2TR->Position.z -= 0.5f;
+	//}
 
 	if (GetKeyUp('1'))
 	{
-		Cam1->ChoiceMainCam();
+		SetEnvironmentMap("Night");
 	}
 	if (GetKeyUp('2'))
 	{
-		Cam2->ChoiceMainCam();
+		SetEnvironmentMap("skybox1");
 	}
 	if (GetKeyUp('3'))
 	{
-		SetEnvironmentMap("skybox1");
-	}
-	if (GetKeyUp('4'))
-	{
 		SetEnvironmentMap("TestSky");
 	}
+
 }

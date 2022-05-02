@@ -1,10 +1,10 @@
 #EATERMAT
-@ORMMap ORM_10
+@ORMMap ORM_1
 @Alpha NO
 @MaterialName Sphere_2
 @LimColor_B 0.000000
-@DiffuseMap Albedo_10
-@NormalMap Normal_10
+@DiffuseMap Albedo_1
+@NormalMap Normal_1
 @EmissiveMap NO
 @Emissive 0.000000
 @Roughness 0.000000

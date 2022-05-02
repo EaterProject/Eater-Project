@@ -491,7 +491,7 @@ void RenderManager::PostProcessingRender()
 	GPU_END_EVENT_DEBUG_NAME();
 
 	GPU_BEGIN_EVENT_DEBUG_NAME("OutLine Pass");
-	m_OutLine->RenderUpdate();
+	//m_OutLine->RenderUpdate();
 	GPU_END_EVENT_DEBUG_NAME();
 
 	GPU_BEGIN_EVENT_DEBUG_NAME("Combine Pass");
