@@ -98,6 +98,7 @@ LRESULT FileOption::OnUserFunc(WPARAM wParam, LPARAM lParam)
 void FileOption::OnCreateTerrain()
 {
 	EditorToolScene::Create_Terrain("","","");
+	mRightOption->HirearchyTree.InsertItem(L"Terrain");
 }
 
 void FileOption::OnCreateLight()

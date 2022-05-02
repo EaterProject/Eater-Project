@@ -159,6 +159,16 @@ int GetLoadAnimationCount()
   return gGameEngine->LoadAnimationCount();
 }
 
+int GetLoadMaterialCount()
+{
+	return gGameEngine->LoadMaterialCount();
+}
+
+int GetLoadBufferCount()
+{
+	return gGameEngine->LoadBufferCount();
+}
+
 void AddOccluder(std::string mMeshName)
 {
 	gGameEngine->AddOccluder(mMeshName);

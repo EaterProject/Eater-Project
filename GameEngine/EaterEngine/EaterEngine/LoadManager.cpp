@@ -184,6 +184,11 @@ int LoadManager::GetAnimationCount()
 	return Count;
 }
 
+int LoadManager::GetBufferCount()
+{
+	return (int)MeshBufferList.size();
+}
+
 TextureBuffer* LoadManager::GetTexture(std::string Path)
 {
 	std::map<std::string,TextureBuffer*>::iterator End_it	= TextureList.end();

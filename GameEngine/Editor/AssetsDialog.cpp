@@ -101,6 +101,13 @@ void AssetsDialog::Initialize(RightOption* mRight)
 {
 	mRightOption	= mRight;
 	mFileOption		= mRight->GetThis()->mFileOption;
+	
+
+	GameObject* MainCamera	= FindGameObjectName("MainCamera");
+	GameObject* Direction	= FindGameObjectName("DirectionLight");
+
+	mRightOption->HirearchyTree.InsertItem(L"MainCamera");
+	mRightOption->HirearchyTree.InsertItem(L"DirectionLight");
 }
 
 int AssetsDialog::FindChildFile(HTREEITEM hParentItem, CString str)
@@ -366,14 +373,14 @@ void AssetsDialog::OnLButtonUp(UINT nFlags, CPoint point)
 
 		 //if (mLoadNavMesh->IsWindowVisible() == true)
 		 //{
-		//	 mLoadNavMesh->SetPoint(point);
-		//	 mLoadNavMesh->SetLoadPath("");
+		 //	 mLoadNavMesh->SetPoint(point);
+		 //	 mLoadNavMesh->SetLoadPath("");
 		 //}
 
 		 //mFileOption = mRightOption->GetThis()->mFileOption;
 		 //if (mFileOption->IsWindowVisible() == true)
 		 //{
-		//	mFileOption->ChickDrag(point);
+		 //	mFileOption->ChickDrag(point);
 		 //}
 	}
 	CDialogEx::OnLButtonUp(nFlags, point);
@@ -443,5 +450,4 @@ void AssetsDialog::OnBnClickedButton2()
 	//	mLoadNavMesh->ShowWindow(SW_SHOW);
 	//	mLoadNavMesh->SetWindowPos(NULL, x, y, ClientRect.right, ClientRect.bottom, SWP_NOSIZE);
 	//}
-	
 }

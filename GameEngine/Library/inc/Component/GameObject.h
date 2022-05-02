@@ -111,20 +111,6 @@ inline T* GameObject::AddComponent(typename std::enable_if<std::is_base_of<Compo
 	//컨퍼넌트가 이미 있다면 추가하지않는다
 	bool isFind =  FindComponent<T>();
 	if (isFind == true){return nullptr;}
-
-	/* 함수 호출 순서
-	생성후 한번만 호출
-	1.Awake
-	2.SetUp
-	3.Start
-
-	매 프레임 호출
-	4.StartUpdate
-	5.TransformUpdate
-	6.PhysicsUpdate
-	7.Update
-	8.EndUpdate
-	*/
 	T* mComponent = new T();
 	//게임오브젝트 설정
 	mComponent->gameobject = this;

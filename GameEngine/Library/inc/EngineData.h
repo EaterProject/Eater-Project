@@ -256,6 +256,12 @@ public:
 class CameraData
 {
 public:
+	~CameraData()
+	{
+
+	}
+
+public:
 	bool Culling = false;
 
 	Matrix CamInvView;	// Camera Inverse XY View Matrix

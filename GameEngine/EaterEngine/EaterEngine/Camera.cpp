@@ -22,16 +22,17 @@ Camera::Camera()
 
 Camera::~Camera()
 {
+	GlobalData* globalData = GlobalDataManager::g_GlobalData;
+	
 	if (g_MainCam == this)
 	{
 		g_MainCam = nullptr;
+		globalData->MainCamera_Data = nullptr;
 	}
 
 	CamList[MyIndex] = nullptr;
 
 	// Global Camera Data Á¦°Å..
-	GlobalData* globalData = GlobalDataManager::g_GlobalData;
-
 	for (int i = 0; i < globalData->CameraList.size(); i++)
 	{
 		if (globalData->CameraList[i] == mCameraData)
@@ -42,6 +43,7 @@ Camera::~Camera()
 	}
 
 	delete mCameraData;
+	mCameraData = nullptr;
 }
 
 void Camera::Awake()

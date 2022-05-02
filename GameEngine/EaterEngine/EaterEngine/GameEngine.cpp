@@ -122,7 +122,7 @@ void GameEngine::Start()
 	mLoadManager->Start();
 
 	//카메라처음 생성 키인풋을 받을수있도록 컨퍼넌트 붙임
-	GameObject* obj = InstanceCamera("DebugCam");
+	GameObject* obj = InstanceCamera("DebugCamera");
 	obj->AddComponent<CameraDebugKeyInput>();
 	obj->SetDontDestroy(true);
 	obj->transform->Position = {0,10,-25};
@@ -376,6 +376,14 @@ int GameEngine::LoadAnimationCount()
 {
 	return mLoadManager->GetAnimationCount();
 }
+int GameEngine::LoadBufferCount()
+{
+	return mLoadManager->GetBufferCount();
+}
+int GameEngine::LoadMaterialCount()
+{
+	return mLoadManager->GetMaterialCount();
+}
 ModelData* GameEngine::GetLoadMeshData(std::string& Path)
 {
 	return mLoadManager->GetModelData(Path);
@@ -523,9 +531,6 @@ Material* GameEngine::CreateMaterial()
 {
 	// 새로운 Material 생성..
 	Material* newMaterial = new Material();
-
-	//
-
 	return newMaterial;
 }
 

@@ -66,10 +66,6 @@ BOOL RightOption::OnInitDialog()
 	mFileOption->Initialize(this);
 	mFileOption->ShowWindow(SW_HIDE);
 
-	mLoading = new Loading();
-	mLoading->Create(IDD_LOADING);
-	mLoading->ShowWindow(SW_HIDE);
-
 	mCam = new CamAnimation();
 	mCam->Create(IDD_CAM_ANIMATION);
 	mCam->ShowWindow(SW_HIDE);
@@ -129,7 +125,10 @@ BOOL RightOption::OnInitDialog()
 	mCollider->ShowWindow(SW_HIDE);
 
 	thisPointer = this;
-	
+
+	HirearchyTree.InsertItem(L"DirectionLight");
+	HirearchyTree.InsertItem(L"DebugCamera");
+
 	return 0;
 }
 
@@ -224,7 +223,6 @@ void RightOption::Delete_Hirearchy_Item(HTREEITEM TOP)
 
 void RightOption::ChickTapDrag(CPoint point)
 {
-
 	//Tap컨트롤에  드래그했을때 처리
 	CRect rect;
 	Component_TapList.GetWindowRect(&rect);
@@ -264,6 +262,7 @@ void RightOption::ChickHirearchyDarg(CPoint point)
 	CRect rect;
 	HirearchyTree.GetWindowRect(&rect);
 
+	
 	//범위 안에 들어와있는지 체크
 	if (rect.left	<= point.x &&
 		rect.right	>= point.x &&

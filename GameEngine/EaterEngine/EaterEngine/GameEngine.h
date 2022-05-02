@@ -81,11 +81,13 @@ public:
 	///로드 관련 
 	void Load(std::string& Path, UINT MODE);
 	void LoadTerrain(std::string mMeshName, std::string mMaskName1, std::string mMaskName2, UINT parsingMode);
+
 	int  LoadMeshCount();
 	int  LoadTextureCount();
 	int  LoadAnimationCount();
+	int	 LoadBufferCount();
+	int  LoadMaterialCount();
 	ModelData* GetLoadMeshData(std::string& Path);
-
 public:
 	///베이크 관련
 	void BakeEnvironmentMap(std::string& Path);

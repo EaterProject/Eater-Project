@@ -78,6 +78,7 @@ public:
 	int	GetTextureCount();
 	int	GetMaterialCount();
 	int	GetAnimationCount();
+	int GetBufferCount();
 
 	static ModelData*			GetModelData(std::string Path);			//모델 데이터를 가져옴
 	static ModelAnimationData*	GetAnimationData(std::string Path);		//애니메이션 데이터를 가져옴

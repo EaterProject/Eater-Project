@@ -32,6 +32,18 @@ void Eater_LoadScene::Initialize(std::map<std::string, GameObject*>* ObjectList)
 
 void Eater_LoadScene::Load(std::string FilePath)
 {
+	//기존 씬 데이터를 모두 지운다
+	auto List_begin = EditorToolScene::ObjectList.begin();
+	auto List_end	= EditorToolScene::ObjectList.end();
+	for (List_begin; List_begin != List_end; List_begin++)
+	{
+		if (List_begin->first == "DebugCamera" || List_begin->first == "DirectionLight")
+		{
+			continue;
+		}
+		Destroy(List_begin->second);
+	}
+
 	EATER_OPEN_READ_FILE(FilePath);
 	int Count = EATER_GET_NODE_COUNT();
 	for (int i = 0; i < Count; i++)
@@ -68,12 +80,14 @@ void Eater_LoadScene::Load(std::string FilePath)
 				Load_Component_Light(i, Obj);
 			}
 
+			//콜라이더
 			Find = EATER_GET_LIST_CHOICE(i, "Collider");
 			if (Find != -1)
 			{
 				Load_Component_Collider(i, Obj);
 			}
 
+			//Rigidbody
 			Find = EATER_GET_LIST_CHOICE(i, "Rigidbody");
 			if (Find != -1)
 			{
@@ -108,6 +122,7 @@ void Eater_LoadScene::Load(std::string FilePath)
 		}
 	}
 
+	
 	EATER_CLOSE_READ_FILE();
 }
 

@@ -64,7 +64,6 @@ BOOL CEditorApp::InitInstance()
 
 	CWinApp::InitInstance();
 	
-
 	EnableTaskbarInteraction(FALSE);
 
 	// RichEdit 컨트롤을 사용하려면 AfxInitRichEdit2()가 있어야 합니다.
@@ -113,6 +112,8 @@ BOOL CEditorApp::InitInstance()
 	pFrame	= (CMainFrame*)AfxGetMainWnd();
 	mRenderView	= (RenderView*)pFrame->GetActiveView();
 	mOptionView	= (OptionView*)pFrame->GetActiveView();
+
+	pFrame->SetWindowTextW(L"EATER ENGINE(Tool)");
 	return TRUE;
 }
 
