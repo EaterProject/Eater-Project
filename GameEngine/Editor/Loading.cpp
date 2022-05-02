@@ -53,11 +53,20 @@ void Loading::SetUpdate(int Number)
 	//}
 }
 
+BOOL Loading::OnInitDialog()
+{
+	CDialog::OnInitDialog();
+	LoadingTypeEdit.SetWindowTextW(L"MFC 초기화 중...");
+	return 0;
+}
+
 void Loading::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_PROGRESS1, LoadingBar);
-	DDX_Control(pDX, IDC_EDIT1, TextEdit);
+	DDX_Control(pDX, IDC_EDIT1, LoadingTypeEdit);
+	DDX_Control(pDX, IDC_LIST2, LoadFileList);
+	DDX_Control(pDX, IDC_EDIT3, AllAssetsCount);
 }
 void Loading::SetMessage(std::string Msg)
 {

@@ -21,7 +21,7 @@ Eater_LoadScene* EditorToolScene::mLoadManager = nullptr;
 GameObject* EditorToolScene::CamObject = nullptr;
 GameObject* EditorToolScene::DebugCamObject = nullptr;
 std::map<int, std::string> EditorToolScene::TagList;
-
+bool EditorToolScene::ThreadLoading = false;
 EditorToolScene::EditorToolScene()
 {
 
@@ -34,10 +34,14 @@ EditorToolScene::~EditorToolScene()
 
 void EditorToolScene::Awake()
 {
+	ThreadLoading = false;
 	mSaveManager = new SceneSave();
 	mLoadManager = new Eater_LoadScene();
 	mSaveManager->Initialize(&ObjectList);
 	mLoadManager->Initialize(&ObjectList);
+
+	RenderOption* Option = GetRenderOptionData();
+	
 
 	//텍스쳐를 로드
 	Load("../Assets/Texture/ModelTexture");
@@ -46,18 +50,24 @@ void EditorToolScene::Awake()
 	Load("../Assets/Texture/Particle");
 
 	DebugCamObject = GetMainCamera();
-	TagList.insert({ 0, "Default"});
-	TagList.insert({ 1, "MainCam"});
+	TagList.insert({ 0, "Default" });
+	TagList.insert({ 1, "MainCam" });
 	TagList.insert({ 2, "Point" });
-	TagList.insert({ 3, "Player"});
-}
+	TagList.insert({ 3, "Player" });
 
+	GameObject* mCameraObject	 = FindGameObjectName("DebugCamera");
+	GameObject* mDiractionObject = FindGameObjectName("DirectionLight");
+
+	ObjectList.insert({ "DebugCamera",mCameraObject });
+	ObjectList.insert({ "DirectionLight",mDiractionObject });
+}
 void EditorToolScene::Update()
 {
 	if (ThreadRun == true) 
 	{
 		return;
 	}
+	ThreadLoading = true;
 }
 
 void EditorToolScene::End()
@@ -74,8 +84,8 @@ void EditorToolScene::ThreadFunction()
 	Load("../Assets/Model/Prefap");
 	Load("../Assets/Texture/Environment");
 	
-	BakeEnvironmentMap("Night");
-	SetEnvironmentMap("Night");
+	BakeEnvironmentMap("Day");
+	SetEnvironmentMap("Day");
 }
 
 GameObject* EditorToolScene::Create_GameObject()
@@ -154,6 +164,11 @@ bool EditorToolScene::DeleteObject(std::string MeshName)
 	}
 }
 
+bool EditorToolScene::GetThreadLoading()
+{
+	return ThreadLoading;
+}
+
 void EditorToolScene::SaveScene(std::string SaveFilePath,std::string SaveFileName)
 {
 	mSaveManager->Scene_Save(SaveFilePath, SaveFileName);
@@ -186,7 +201,7 @@ std::string EditorToolScene::FindMeshName(std::string MeshName)
 {
 	std::string ObjectName = MeshName;
 
-	std::map<std::string, GameObject*>::iterator Start_it		= ObjectList.end();
+	std::map<std::string, GameObject*>::iterator Start_it = ObjectList.end();
 
 	int Meshindex = 0;
 	while (true)
@@ -282,6 +297,8 @@ GameObject* EditorToolScene::Create_Terrain(std::string MeshPath,std::string mas
 	mTerrain->SetMeshName("Terrain");
 	//mTerrain->SetColliderName("TerrainDecimate");
 	mTerrain->SetTextureTiling(31.0f);
+
+	ObjectList.insert({"Terrain",mTerrain->gameobject});
 	return nullptr;
 }
 

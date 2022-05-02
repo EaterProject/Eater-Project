@@ -17,6 +17,7 @@ class PhysRayCast;
 class NetworkManagerComponent;
 class LoadMeshData;
 class ModelData;
+class RenderOption;
 
 extern "C" EATER_ENGINEDLL void EngineInitialize(HWND _g_hWnd,bool ON_DEBUG);	//GameEngine 시작
 extern "C" EATER_ENGINEDLL void EndEngine();						//GameEngine 종료
@@ -56,10 +57,11 @@ extern "C" EATER_ENGINEDLL void BakeAnimation();
 
 ///맵 설정
 extern "C" EATER_ENGINEDLL void SetEnvironmentMap(std::string mPath);
-
 extern "C" EATER_ENGINEDLL int GetLoadMeshCount();		//로드된 메쉬 카운터
 extern "C" EATER_ENGINEDLL int GetLoadTextureCount();	//로드된 텍스쳐 카운터
-extern "C" EATER_ENGINEDLL int GetLoadAnimationCount();	//로드된 텍스쳐 카운터
+extern "C" EATER_ENGINEDLL int GetLoadAnimationCount();	//로드된 애니메이션 카운터
+extern "C" EATER_ENGINEDLL int GetLoadMaterialCount();	//로드된 메테리얼 카운터
+extern "C" EATER_ENGINEDLL int GetLoadBufferCount();	//로드된 버퍼 카운터
 
 extern "C" EATER_ENGINEDLL void AddOccluder(std::string mMeshName);	//충돌 전용 매쉬 설정
 
@@ -89,7 +91,8 @@ extern "C" EATER_ENGINEDLL float GetDeltaTime();
 extern "C" EATER_ENGINEDLL bool RayCast(PhysRayCast* ray);
 
 /// 디버그
-EATER_ENGINEDLL void EditorSetting();
+EATER_ENGINEDLL void RenderSetting();
+EATER_ENGINEDLL RenderOption* GetRenderOptionData();
 EATER_ENGINEDLL void DebugDrawLine(Vector3 start, Vector3 end, Vector3 color);
 EATER_ENGINEDLL void DebugDrawLine(Vector3 start, Vector3 dir, float distance, Vector3 color);
 EATER_ENGINEDLL void DebugDrawCircle(float scale, DirectX::SimpleMath::Vector3 pos, DirectX::SimpleMath::Vector3 rot, DirectX::SimpleMath::Vector3 color);

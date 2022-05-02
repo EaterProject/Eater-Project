@@ -34,6 +34,7 @@ public:
 	///Load,Save,Delete
 	static void MeshLoad(std::string Path, UINT Option = 0);	//Object 로드
 	static bool DeleteObject(std::string MeshName);				//Object 삭제
+	static bool GetThreadLoading();								//씬 쓰레드 로딩이 끝났는지 여부
 public:
 	///Scene
 	static void SaveScene(std::string SaveFilePath,std::string SaveFileName);	//씬 저장
@@ -57,6 +58,7 @@ public:
 private:
 	static GameObject* CamObject;
 	static GameObject* DebugCamObject;
+	static bool ThreadLoading;
 	static GameObject* CreateBaseObject(std::string ObjectName, std::string MeshName); 
 	static GameObject* CreateSkinObject(std::string ObjectName, std::string MeshName);
 private:

@@ -19,6 +19,7 @@ public:
 #endif
 
 protected:
+	virtual BOOL OnInitDialog();
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 지원입니다.
 
 	DECLARE_MESSAGE_MAP()
@@ -26,7 +27,9 @@ protected:
 	static void SetMessage(std::string Msg);
 public:
 	CProgressCtrl LoadingBar;
-	CEdit TextEdit;
 	int LoadingMax;
 	static std::string mMsg;
+	CEdit LoadingTypeEdit;
+	CListBox LoadFileList;
+	CEdit AllAssetsCount;
 };

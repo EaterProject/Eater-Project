@@ -8,11 +8,12 @@ public:
 	~Bullet();
 
 	void SetUp();
-	void Shooting(Vector3 Dir);
 	void Update();
 	void ReSet();
 
 	void OnTriggerEnter(GameObject* Obj);
+
+	void Shooting(Vector3 Dir);
 private:
 	Transform*	mTransform;
 	Vector3		Direction;

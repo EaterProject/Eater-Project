@@ -9,6 +9,8 @@ class RightOption;
 class EditorManager;
 class SceneSaveDialog;
 class CreateMaterial;
+class RenderOption;
+
 class FileOption : public CDialogEx
 {
 	DECLARE_DYNAMIC(FileOption)
@@ -51,4 +53,23 @@ public:
 	afx_msg void OnAddRigidbody();
 	afx_msg void OnAddLight();
 	afx_msg void OnCreateMaterial();
+	afx_msg void OnDebugButton();
+
+	CButton Debug_Check;
+	CButton SSAO_Check;
+	CButton FOG_Check;
+	CButton Shadow_Check;
+	CButton IBL_Check;
+	CButton Bloom_Check;
+	CButton FXAA_Check;
+
+	RenderOption* mRenderOption;
+	afx_msg void OnHDR_Button();
+	afx_msg void OnSSAO_Button();
+	afx_msg void OnFOG_Button();
+	afx_msg void OnShadow_Button();
+	afx_msg void OnIBL_Button();
+	afx_msg void OnBloom_Button();
+	afx_msg void OnFXAA_Button();
+	CButton HDR_Check;
 };

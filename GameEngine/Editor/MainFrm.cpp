@@ -11,6 +11,8 @@
 #include "MainHeader.h"
 #include "OptionView.h"
 #include "AssetView.h"
+#include "Loading.h"
+#include "EditorToolScene.h"
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -31,8 +33,8 @@ static UINT indicators[] =
 	ID_INDICATOR_SCRL,
 };
 
-// CMainFrame 생성/소멸
 
+// CMainFrame 생성/소멸
 CMainFrame::CMainFrame() noexcept
 {
 	// TODO: 여기에 멤버 초기화 코드를 추가합니다.
@@ -90,7 +92,7 @@ BOOL CMainFrame::OnCreateClient(LPCREATESTRUCT /*lpcs*/,
 	int ClientSizeY = (int)GetSystemMetrics(SM_CYSCREEN);
 	int RenderSize	= ClientSizeX -750;
 	
-	if (m_wndSplitter[1].CreateView(0, 0, RUNTIME_CLASS(RenderView), CSize(0, ClientSizeY - 350), pContext) == false)
+	if (m_wndSplitter[1].CreateView(0, 0, RUNTIME_CLASS(RenderView), CSize(0, ClientSizeY - 550), pContext) == false)
 	{
 		MessageBox(_T("윈도우 VIEW 생성실패"));
 		return false;
@@ -111,6 +113,14 @@ BOOL CMainFrame::OnCreateClient(LPCREATESTRUCT /*lpcs*/,
 	m_OptionView = static_cast<OptionView*>(m_wndSplitter[1].GetPane(1, 0));
 	m_AssetView  = static_cast<AssetView*>(m_wndSplitter[0].GetPane(0, 1));
 	m_wndSplitter[0].SetColumnInfo(0, RenderSize, 10);
+
+	mThread = AfxBeginThread(ThreadFunction, this);
+	mThread->m_bAutoDelete = FALSE;
+	if (mThread == NULL)
+	{
+		AfxMessageBox(L"쓰레드 오류");
+	}
+
 	return true;
 }
 
@@ -120,8 +130,6 @@ BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 		return FALSE;
 	// TODO: CREATESTRUCT cs를 수정하여 여기에서
 	//  Window 클래스 또는 스타일을 수정합니다.
-
-	
 	cs.cx = (int)GetSystemMetrics(SM_CXSCREEN);
 	cs.cy = (int)GetSystemMetrics(SM_CYSCREEN);
 	return TRUE;
@@ -140,7 +148,70 @@ void CMainFrame::Dump(CDumpContext& dc) const
 	CFrameWnd::Dump(dc);
 }
 #endif //_DEBUG
+UINT CMainFrame::ThreadFunction(LPVOID _mothod)
+{
+	CMainFrame* Main = (CMainFrame*)_mothod;
 
+	Main->mLoading = new Loading();
+	Main->mLoading->Create(IDD_LOADING);
+	Main->mLoading->ShowWindow(SW_SHOW);
+	
+	CString TextureCount_Str;
+	CString ModelCount_Str;
+	CString AnimationCount_Str;
+	CString MeshBufferCount_Str;
+	CString MaterialCount_Str;
+	CString AllAssetsCount_Str;
+	
 
-// CMainFrame 메시지 처리기
+	//Main->mLoading->LoadFileList.InsertString(0, L"Texture Count..");
+	//Main->mLoading->LoadFileList.InsertString(1, L"Model Count..");
+
+	while (EditorToolScene::GetThreadLoading() == false)
+	{
+		Sleep(100);
+		Main->mLoading->LoadFileList.DeleteString(0);
+		Main->mLoading->LoadFileList.DeleteString(0);
+		Main->mLoading->LoadFileList.DeleteString(0);
+		Main->mLoading->LoadFileList.DeleteString(0);
+		Main->mLoading->LoadFileList.DeleteString(0);
+
+		int TextureCount	= GetLoadTextureCount();
+		int ModelCount		= GetLoadMeshCount();
+		int AnimationCount	= GetLoadAnimationCount();
+		int MaterialCount	= GetLoadMaterialCount();
+		int MeshBufferCount = GetLoadBufferCount();
+		int AllAssetsCount  = 0;
+
+		if (TextureCount != 0 || ModelCount != 0)
+		{
+			Main->mLoading->LoadingTypeEdit.SetWindowTextW(L"리소스 로드중...");
+		}
+
+		TextureCount_Str.Format(_T("Texture Count ... %d"), TextureCount);
+		ModelCount_Str.Format(_T("Model Count ... %d"), ModelCount);
+		AnimationCount_Str.Format(_T("Animation Count ... %d"), AnimationCount);
+		MaterialCount_Str.Format(_T("Material Count ... %d"), MaterialCount);
+		MeshBufferCount_Str.Format(_T("Buffer Count ... %d"), MeshBufferCount);
+
+		Main->mLoading->LoadFileList.InsertString(0, TextureCount_Str);
+		Main->mLoading->LoadFileList.InsertString(1, ModelCount_Str);
+		Main->mLoading->LoadFileList.InsertString(2, AnimationCount_Str);
+		Main->mLoading->LoadFileList.InsertString(3, MeshBufferCount_Str);
+		Main->mLoading->LoadFileList.InsertString(4, MaterialCount_Str);
+		
+		AllAssetsCount_Str.Format(_T("로드된 에셋 : %d"), TextureCount + ModelCount + AnimationCount + MaterialCount + MeshBufferCount);
+		Main->mLoading->AllAssetsCount.SetWindowTextW(AllAssetsCount_Str);
+		Main->mLoading->UpdateWindow();
+	}
+
+	if (::TerminateThread(Main->mThread->m_hThread, 1)) 
+	{
+		::CloseHandle(Main->mThread->m_hThread);
+		Main->mThread = NULL;
+	}
+
+	Main->mLoading->ShowWindow(SW_HIDE);
+	return 0;
+}
 

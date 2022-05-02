@@ -79,7 +79,6 @@ void RenderView::OnInitialUpdate()
 	hwnd = this->GetSafeHwnd();
 
 	EngineInitialize(hwnd,false);
-	EditorSetting();
 
 	CreateScene<EditorToolScene>("Demo");
 	ChoiceScene("Demo");

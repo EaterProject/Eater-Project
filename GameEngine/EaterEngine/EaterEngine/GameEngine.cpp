@@ -65,7 +65,7 @@ GameEngine::GameEngine()
 
 	mRenderOption->DebugOption			= DEBUG_ENGINE;
 	mRenderOption->RenderingOption		= RENDER_DEBUG | RENDER_SHADOW | RENDER_SSAO | RENDER_IBL;
-	mRenderOption->PostProcessOption	= RENDER_BLOOM | RENDER_HDR | RENDER_FXAA;
+	mRenderOption->PostProcessOption	= RENDER_BLOOM | RENDER_HDR | RENDER_FXAA| RENDER_FOG;
 }
 
 GameEngine::~GameEngine()
@@ -120,7 +120,7 @@ void GameEngine::Start()
 	mLoadManager->Start();
 
 	//카메라처음 생성 키인풋을 받을수있도록 컨퍼넌트 붙임
-	GameObject* obj = InstanceCamera("DebugCam");
+	GameObject* obj = InstanceCamera("DebugCamera");
 	obj->AddComponent<CameraDebugKeyInput>();
 	obj->SetDontDestroy(true);
 	obj->transform->Position = {0,10,-25};
@@ -374,6 +374,14 @@ int GameEngine::LoadAnimationCount()
 {
 	return mLoadManager->GetAnimationCount();
 }
+int GameEngine::LoadBufferCount()
+{
+	return mLoadManager->GetBufferCount();
+}
+int GameEngine::LoadMaterialCount()
+{
+	return mLoadManager->GetMaterialCount();
+}
 ModelData* GameEngine::GetLoadMeshData(std::string& Path)
 {
 	return mLoadManager->GetModelData(Path);
@@ -501,9 +509,14 @@ void GameEngine::NETWORK_CONNECT(int ServerPort, std::string  Local_Connect_IP)
 	mNetworkManager->C2S_CONNECT(ServerPort, Local_Connect_IP);
 }
 
-void GameEngine::EditorSetting()
+RenderOption* GameEngine::GetRenderOptionData()
 {
-	mRenderOption->DebugOption = DEBUG_EDITOR;
+	return mRenderOption;
+}
+
+void GameEngine::RenderSetting()
+{
+	mGraphicManager->RenderSetting();
 }
 
 GameObject* GameEngine::CreateInstance()
@@ -521,9 +534,6 @@ Material* GameEngine::CreateMaterial()
 {
 	// 새로운 Material 생성..
 	Material* newMaterial = new Material();
-
-	//
-
 	return newMaterial;
 }
 
