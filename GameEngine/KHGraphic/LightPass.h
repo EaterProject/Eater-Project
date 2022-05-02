@@ -1,4 +1,5 @@
 #pragma once
+
 class LightPass : public RenderPassBase
 {
 public:
@@ -12,7 +13,8 @@ public:
 	void OnResize(int width, int height) override;
 	void Release() override;
 
-	void SetOption(RenderOption* renderOption) override;
+	void ApplyOption() override;
+
 	void SetIBLEnvironmentMapResource(EnvironmentBuffer* resource);
 
 	void Reset();
@@ -25,8 +27,6 @@ private:
 	VertexShader* m_Light_VS;
 	PixelShader* m_Light_PS; 
 	
-	ID3D11RenderTargetView* m_OutPut_RTV;
-
 	RenderTexture* m_OutPut_RT;
 
 	RenderTexture* m_Albedo_RT;
@@ -34,6 +34,8 @@ private:
 	RenderTexture* m_Position_RT;
 	RenderTexture* m_Emissive_RT;
 
+private:
+	ID3D11RenderTargetView* m_OutPut_RTV;
+
 	D3D11_VIEWPORT* m_Screen_VP;
 };
-

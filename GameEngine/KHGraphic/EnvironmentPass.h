@@ -12,7 +12,7 @@ public:
 	void OnResize(int width, int height) override;
 	void Release() override;
 
-	void SetOption(RenderOption* renderOption) override;
+	void ApplyOption() override;
 	void SetEnvironmentMapResource(EnvironmentBuffer* resource);
 
 	void RenderUpdate();
@@ -23,13 +23,17 @@ private:
 	VertexShader* m_SkyBox_VS;
 	PixelShader* m_SkyBox_PS;
 
-	RenderTexture* m_OutPut_RT;
+	RenderTexture* m_Albedo_RT;
+	RenderTexture* m_Position_RT;
 	
 private:
 	ID3D11RasterizerState* m_CubeMap_RS;
 	ID3D11DepthStencilState* m_CubeMap_DSS;
 
-	ID3D11RenderTargetView* m_OutPut_RTV;
+	std::vector<ID3D11RenderTargetView*> m_RTV_List;
 	ID3D11DepthStencilView* m_Defalt_DSV;
+
+private:
+	Matrix m_EnvironmentWorld;
 };
 

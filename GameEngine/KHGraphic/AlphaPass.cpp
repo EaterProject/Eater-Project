@@ -94,9 +94,9 @@ void AlphaPass::Release()
 
 }
 
-void AlphaPass::SetOption(RenderOption* renderOption)
+void AlphaPass::ApplyOption()
 {
-	UINT alphaOption = renderOption->RenderingOption & (RENDER_SHADOW | RENDER_IBL);
+	UINT alphaOption = g_RenderOption->RenderingOption & (RENDER_SHADOW | RENDER_IBL);
 
 	switch (alphaOption)
 	{
@@ -209,6 +209,7 @@ void AlphaPass::RenderUpdate(const InstanceRenderBuffer* instance, const RenderD
 		CB_LightSub lightsubBuf;
 		lightsubBuf.gEyePosW = cam->CamPos;
 		lightsubBuf.gViewProjTex = cam->CamView * cam->CamProj * texSpace;
+		lightsubBuf.gIBLFactor = g_RenderOption->IBL_Factor;
 
 		if (mat->m_Albedo)
 		{
@@ -407,6 +408,7 @@ void AlphaPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::ve
 			CB_LightSub lightsubBuf;
 			lightsubBuf.gEyePosW = cam->CamPos;
 			lightsubBuf.gViewProjTex = cam->CamView * cam->CamProj * texSpace;
+			lightsubBuf.gIBLFactor = g_RenderOption->IBL_Factor;
 
 			if (mat->m_Albedo)
 			{

@@ -177,7 +177,7 @@ void OITPass::SetResize(int width, int height)
 	m_FirstOffset_RB->SetNumElements(width * height);
 }
 
-void OITPass::SetOption(RenderOption* renderOption)
+void OITPass::ApplyOption()
 {
 
 }

@@ -37,7 +37,8 @@ public:
 	virtual void InstanceResize(size_t& renderMaxCount, size_t& unRenderMaxCount) {}
 
 	virtual void SetResize(int width, int height) {}
-	virtual void SetOption(RenderOption* renderOption) {}
+
+	virtual void ApplyOption() {}
 
 public:
 	static void Initialize(Microsoft::WRL::ComPtr<ID3D11Device> device, Microsoft::WRL::ComPtr<ID3D11DeviceContext> context, IFactoryManager* factory, IGraphicResourceManager* resource, IShaderManager* shader);
@@ -56,6 +57,7 @@ protected:
 	static IShaderManager* g_Shader;
 
 	static GlobalData* g_GlobalData;
+	static RenderOption* g_RenderOption;
 
 	static RenderData* g_Picking;
 };

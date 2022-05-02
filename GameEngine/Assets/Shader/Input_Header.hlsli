@@ -85,7 +85,8 @@ struct SkyBoxVertexIn
 struct SkyBoxVertexOut
 {
     float4 PosH : SV_POSITION;
-    float3 PosL : POSITION;
+    float3 PosL : POSITION0;
+    float3 PosW : POSITION1;
 };
 
 // Screen Vertex Shader Input & Output Data Struct

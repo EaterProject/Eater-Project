@@ -263,7 +263,7 @@ void BakingFactory::PreBakeEnvironmentMap(EnvironmentBuffer* tex)
 		context->ClearRenderTargetView(irradianceRTV.Get(), reinterpret_cast<const float*>(&DXColors::DeepDarkGray));
 
 		CB_CubeObject cubeBuf;
-		cubeBuf.gViewProj = view * proj;
+		cubeBuf.gCubeWorldViewProj = view * proj;
 
 		cubmapVS->ConstantBufferUpdate(&cubeBuf);
 		cubmapVS->Update();
@@ -304,7 +304,7 @@ void BakingFactory::PreBakeEnvironmentMap(EnvironmentBuffer* tex)
 			context->ClearRenderTargetView(prefilterRTV.Get(), reinterpret_cast<const float*>(&DXColors::DeepDarkGray));
 
 			CB_CubeObject cubeBuf;
-			cubeBuf.gViewProj = view * proj;
+			cubeBuf.gCubeWorldViewProj = view * proj;
 
 			cubmapVS->ConstantBufferUpdate(&cubeBuf);
 			cubmapVS->Update();

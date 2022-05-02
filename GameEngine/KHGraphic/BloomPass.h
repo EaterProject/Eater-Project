@@ -31,7 +31,7 @@ public:
 	void OnResize(int width, int height) override;
 	void Release() override;
 
-	void SetOption(RenderOption* renderOption) override;
+	void ApplyOption() override;
 	void RenderUpdate();
 
 	void BrightRender();
@@ -40,7 +40,6 @@ public:
 	void GaussianBlur(ID3D11RenderTargetView* rtv[2], ID3D11ShaderResourceView* srv[2], const SamplingData& downScreen);
 
 private:
-	void SetConstantBuffer();
 	void SetSamplingViewPort(const SamplingData& downScreen);
 	void SetBlurViewPort(const SamplingData& downScreen);
 

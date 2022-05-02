@@ -105,7 +105,7 @@ float3 PBR_DirectionalLight(
     float3 acc_color = float3(0.0f, 0.0f, 0.0f);
     
     // Burley roughness bias
-    const float roughness2 = max(roughness * roughness, 0.1f);
+    const float roughness2 = max(roughness * roughness, EPSILON);
     
     // Blend base colors
     const float3 c_diff = lerp(albedo, float3(0, 0, 0), metallic) * ambientOcclusion;
@@ -116,16 +116,16 @@ float3 PBR_DirectionalLight(
     const float3 H = normalize(V + L);
     
     // products
-    float NdotL = max(dot(N, L) * 0.5f + 0.5f, EPSILON);
-    float NdotV = max(dot(N, V), EPSILON);
-    float NdotH = max(dot(N, H), EPSILON);
-    float HdotV = max(dot(H, V), EPSILON);
+    const float NdotL = max(dot(N, L) * 0.5f + 0.5f, EPSILON);
+    const float NdotV = abs(dot(N, V)) + EPSILON;
+    const float NdotH = max(dot(N, H), EPSILON);
+    const float HdotV = max(dot(H, V), EPSILON);
 
     // BRDF
     float3 brdf_factor = BRDF(roughness2, metallic, c_diff, c_spec, NdotH, NdotV, NdotL, HdotV);
     
     // Directional light
-    acc_color += light.Diffuse.rgb * shadow * brdf_factor;
+    acc_color += light.Diffuse.rgb * light.Power * shadow * brdf_factor;
 
     return acc_color;
 }
@@ -156,9 +156,9 @@ float3 PBR_PointLight(
         
         // products
         const float NdotL = max(dot(N, L) * 0.5f + 0.5f, EPSILON);
+        const float NdotV = abs(dot(N, V)) + EPSILON;
         const float NdotH = max(dot(N, H), EPSILON);
         const float HdotV = max(dot(H, V), EPSILON);
-        const float NdotV = max(dot(N, V), EPSILON);
 
         // Attenuation
         float DistToLightNorm = 1.0 - saturate(distance * (1.0f / light.Range));
@@ -208,9 +208,9 @@ float3 PBR_SpotLight(
 
         // products
         const float NdotL = max(dot(N, L) * 0.5f + 0.5f, EPSILON);
+        const float NdotV = abs(dot(N, V)) + EPSILON;
         const float NdotH = max(dot(N, H), EPSILON);
         const float HdotV = max(dot(H, V), EPSILON);
-        const float NdotV = max(dot(N, V), EPSILON);
 
 	    // Cone attenuation
         float cosAng = dot(-light.Direction, L);

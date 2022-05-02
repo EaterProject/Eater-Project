@@ -101,6 +101,7 @@ struct CB_LightSub : public cbLightSub
 {
 	DirectX::SimpleMath::Matrix gViewProjTex;
 	DirectX::SimpleMath::Vector3 gEyePosW;
+	float gIBLFactor;
 }; 
 
 SHADER_CONSTANT_BUFFER(cbLight)
@@ -136,11 +137,20 @@ struct CB_Camera : public cbCamera
 	float gPad;
 };
 
-SHADER_CONSTANT_BUFFER(cbFog)
-struct CB_Fog : public cbFog
+SHADER_CONSTANT_BUFFER(cbFogOption)
+struct CB_FogOption : public cbFogOption
 {
 	DirectX::SimpleMath::Vector3 gFogColor;
-	float gFogStartPos;
+	float gFogStartDistance;
+	float gFogDistanceOffset;
+	float gFogDistanceValue;
+	float gFogHeightOffset;
+	float gFogHeightValue;
+};
+
+SHADER_CONSTANT_BUFFER(cbFogData)
+struct CB_FogData : public cbFogData
+{
 	DirectX::SimpleMath::Vector3 gEyePosW;
 	float gTime;
 };
@@ -177,11 +187,15 @@ struct CB_SsaoFrustum : public cbSsaoFrustum
 	DirectX::SimpleMath::Vector4 gFrustumCorners[4];
 };
 
+SHADER_CONSTANT_BUFFER(cbSsaoOffset)
+struct CB_SsaoOffset : public cbSsaoOffset
+{
+	DirectX::SimpleMath::Vector4 gOffsetVectors[14];
+};
+
 SHADER_CONSTANT_BUFFER(cbSsaoOption)
 struct CB_SsaoOption : public cbSsaoOption
 {
-	DirectX::SimpleMath::Vector4 gOffsetVectors[14];
-
 	float    gOcclusionRadius = 0.1f;
 	float    gOcclusionFadeStart = 0.2f;
 	float    gOcclusionFadeEnd = 4.0f;
@@ -226,7 +240,8 @@ struct CB_FxaaFrame : public cbFxaaFrame
 SHADER_CONSTANT_BUFFER(cbCubeObject)
 struct CB_CubeObject : public cbCubeObject
 {
-	DirectX::SimpleMath::Matrix gViewProj;
+	DirectX::SimpleMath::Matrix gCubeWorldViewProj;
+	DirectX::SimpleMath::Matrix gCubeWorld;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////
