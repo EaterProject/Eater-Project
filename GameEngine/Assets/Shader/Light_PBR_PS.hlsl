@@ -48,7 +48,7 @@ float4 Light_PBR_PS(ScreenPixelIn pin) : SV_TARGET
     float metallic = positionRT.w;
     
     if (any(normal) == false)
-        return float4(albedo, 1.0f);
+        discard;
     
 	// View Direction
     float3 ViewDirection = normalize(gEyePosW - positionRT.xyz);

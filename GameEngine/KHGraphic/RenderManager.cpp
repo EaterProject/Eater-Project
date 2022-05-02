@@ -314,11 +314,6 @@ void RenderManager::Render()
 	DeferredRender();
 	GPU_END_EVENT_DEBUG_NAME();
 
-	// Environment Render..
-	GPU_BEGIN_EVENT_DEBUG_NAME("Environment Pass");
-	EnvironmentRender();
-	GPU_END_EVENT_DEBUG_NAME();
-
 	// SSAO Render..
 	GPU_BEGIN_EVENT_DEBUG_NAME("SSAO Pass");
 	SSAORender();
@@ -329,6 +324,10 @@ void RenderManager::Render()
 	LightRender();
 	GPU_END_EVENT_DEBUG_NAME();
 
+	// Environment Render..
+	GPU_BEGIN_EVENT_DEBUG_NAME("Environment Pass");
+	EnvironmentRender();
+	GPU_END_EVENT_DEBUG_NAME();
 
 	// Alpha Render..
 	GPU_BEGIN_EVENT_DEBUG_NAME("Alpha Pass");
