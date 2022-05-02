@@ -1,6 +1,6 @@
 #STATIC
-@NodeName gate00_ground_cable_16.001
 @ParentName RootNode
+@NodeName gate00_ground_cable_16.001
 @MeshName Outside_bossOBJ_0
 @MaterialName Outside_bossOBJ_M_gate00_ground_cable
 $WorldTM 4 4
@@ -14,8 +14,8 @@ $LocalTM 4 4
 -0.009624 0.001279 0.002398 0.000000
 -43.770767 1.370816 -34.422695 1.000000
 #STATIC
-@NodeName bossb_cutighthouse02.002
 @ParentName RootNode
+@NodeName bossb_cutighthouse02.002
 @MeshName Outside_bossOBJ_1
 @MaterialName Outside_bossOBJ_M_bossb_cutlighthouse
 $WorldTM 4 4
@@ -29,8 +29,8 @@ $LocalTM 4 4
 -0.000579 0.000297 -0.009979 0.000000
 -52.784935 5.263101 35.567554 1.000000
 #STATIC
-@NodeName gate00_ground_cable_25.002
 @ParentName RootNode
+@NodeName gate00_ground_cable_25.002
 @MeshName Outside_bossOBJ_2
 @MaterialName Outside_bossOBJ_M_gate00_ground_cable
 $WorldTM 4 4
@@ -44,8 +44,8 @@ $LocalTM 4 4
 -0.006842 -0.000694 -0.007260 0.000000
 -29.233797 6.102666 52.863689 1.000000
 #STATIC
-@NodeName gate00_ground_cable_11.002
 @ParentName RootNode
+@NodeName gate00_ground_cable_11.002
 @MeshName Outside_bossOBJ_3
 @MaterialName Outside_bossOBJ_M_gate00_ground_cable
 $WorldTM 4 4
@@ -59,8 +59,8 @@ $LocalTM 4 4
 0.000261 -0.000644 -0.009976 0.000000
 -30.961187 6.024445 51.934109 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName gate00_ground_cable_12.002
-@ParentName RootNode
 @MeshName Outside_bossOBJ_2
 @MaterialName Outside_bossOBJ_M_gate00_ground_cable
 $WorldTM 4 4
@@ -74,8 +74,8 @@ $LocalTM 4 4
 -0.006584 0.000181 0.007524 0.000000
 -32.346825 5.895437 49.548077 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName gate00_ground_cable_13.002
-@ParentName RootNode
 @MeshName Outside_bossOBJ_2
 @MaterialName Outside_bossOBJ_M_gate00_ground_cable
 $WorldTM 4 4
@@ -89,8 +89,8 @@ $LocalTM 4 4
 -0.008104 0.000114 0.005858 0.000000
 -28.870590 6.757870 71.949989 1.000000
 #STATIC
-@NodeName gate00_ground_cable_14.002
 @ParentName RootNode
+@NodeName gate00_ground_cable_14.002
 @MeshName Outside_bossOBJ_4
 @MaterialName Outside_bossOBJ_M_gate00_ground_cable
 $WorldTM 4 4
@@ -104,8 +104,8 @@ $LocalTM 4 4
 -0.009562 0.000027 0.002925 0.000000
 -55.556675 5.765946 52.286568 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Bridge2_0.002
-@ParentName RootNode
 @MeshName Outside_bossOBJ_5
 @MaterialName Outside_bossOBJ_M_bossa_railroad_b
 $WorldTM 4 4
@@ -119,8 +119,8 @@ $LocalTM 4 4
 0.000547 -0.009401 -0.003365 0.000000
 11.468419 4.171062 -96.220650 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Bridge_low3_4
-@ParentName RootNode
 @MeshName Outside_bossOBJ_6
 @MaterialName Outside_bossOBJ_M_bossa_railroad_b
 $WorldTM 4 4
@@ -134,8 +134,8 @@ $LocalTM 4 4
 0.008908 -0.000058 0.009649 0.000000
 137.454407 10.453282 -74.481880 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Bridge4.002
-@ParentName RootNode
 @MeshName Outside_bossOBJ_5
 @MaterialName Outside_bossOBJ_M_bossa_railroad_b
 $WorldTM 4 4
@@ -149,8 +149,8 @@ $LocalTM 4 4
 -0.001018 -0.005897 0.012656 0.000000
 22.899471 16.170238 -111.181610 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName BridgeCrack_3.002
-@ParentName RootNode
 @MeshName Outside_bossOBJ_7
 @MaterialName Outside_bossOBJ_M_bossa_railroad_b
 $WorldTM 4 4
@@ -164,8 +164,8 @@ $LocalTM 4 4
 0.004814 0.000876 0.011834 0.000000
 25.451572 -3.645539 -89.170441 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName BridgeCrack2.002
-@ParentName RootNode
 @MeshName Outside_bossOBJ_7
 @MaterialName Outside_bossOBJ_M_bossa_railroad_b
 $WorldTM 4 4
@@ -179,8 +179,8 @@ $LocalTM 4 4
 -0.000238 -0.012268 -0.003663 0.000000
 25.010372 -3.060117 -91.450302 1.000000
 #STATIC
-@NodeName bossb_cutighthouse03.002
 @ParentName RootNode
+@NodeName bossb_cutighthouse03.002
 @MeshName Outside_bossOBJ_1
 @MaterialName Outside_bossOBJ_M_bossb_cutlighthouse
 $WorldTM 4 4
@@ -194,8 +194,8 @@ $LocalTM 4 4
 -0.000667 0.003209 -0.009448 0.000000
 -51.524578 7.275086 40.240070 1.000000
 #STATIC
-@NodeName Railroad_low10.001
 @ParentName RootNode
+@NodeName Railroad_low10.001
 @MeshName Outside_bossOBJ_8
 @MaterialName Outside_bossOBJ_M_bossa_railroad_a
 $WorldTM 4 4
@@ -209,8 +209,8 @@ $LocalTM 4 4
 0.008184 -0.006441 0.009982 0.000000
 156.312851 22.460773 -63.473419 1.000000
 #STATIC
-@NodeName Bridge5.001
 @ParentName RootNode
+@NodeName Bridge5.001
 @MeshName Outside_bossOBJ_5
 @MaterialName Outside_bossOBJ_M_bossa_railroad_b
 $WorldTM 4 4
@@ -224,8 +224,8 @@ $LocalTM 4 4
 0.001784 -0.009397 -0.002918 0.000000
 157.273926 10.787851 -62.229305 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Railroad_low11.001
-@ParentName RootNode
 @MeshName Outside_bossOBJ_8
 @MaterialName Outside_bossOBJ_M_bossa_railroad_a
 $WorldTM 4 4
@@ -239,8 +239,8 @@ $LocalTM 4 4
 0.008185 -0.006441 0.009982 0.000000
 167.745773 13.430779 -49.536072 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Bridge_low12
-@ParentName RootNode
 @MeshName Outside_bossOBJ_6
 @MaterialName Outside_bossOBJ_M_bossa_railroad_b
 $WorldTM 4 4
@@ -254,8 +254,8 @@ $LocalTM 4 4
 0.012478 0.000000 0.004094 0.000000
 66.207832 7.567063 -119.905655 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Bridge_low13_36
-@ParentName RootNode
 @MeshName Outside_bossOBJ_6
 @MaterialName Outside_bossOBJ_M_bossa_railroad_b
 $WorldTM 4 4
@@ -269,8 +269,8 @@ $LocalTM 4 4
 0.011125 -0.000430 -0.008489 0.000000
 -190.464020 53.833679 -91.106491 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Railroad_low15_37
-@ParentName RootNode
 @MeshName Outside_bossOBJ_8
 @MaterialName Outside_bossOBJ_M_bossa_railroad_a
 $WorldTM 4 4
@@ -284,8 +284,8 @@ $LocalTM 4 4
 0.009877 -0.000042 -0.007435 0.000000
 -189.493744 74.166885 -91.950180 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Bridge_low14_38
-@ParentName RootNode
 @MeshName Outside_bossOBJ_6
 @MaterialName Outside_bossOBJ_M_bossa_railroad_b
 $WorldTM 4 4
@@ -299,8 +299,8 @@ $LocalTM 4 4
 0.011125 -0.000430 -0.008489 0.000000
 -204.474487 53.893665 -80.561844 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Bridge_low4_5
-@ParentName RootNode
 @MeshName Outside_bossOBJ_6
 @MaterialName Outside_bossOBJ_M_bossa_railroad_b
 $WorldTM 4 4
@@ -314,8 +314,8 @@ $LocalTM 4 4
 0.008908 -0.000058 0.009649 0.000000
 125.848152 10.529039 -87.054726 1.000000
 #STATIC
-@NodeName Railroad_low16_39
 @ParentName RootNode
+@NodeName Railroad_low16_39
 @MeshName Outside_bossOBJ_8
 @MaterialName Outside_bossOBJ_M_bossa_railroad_a
 $WorldTM 4 4
@@ -329,8 +329,8 @@ $LocalTM 4 4
 0.009877 -0.000042 -0.007435 0.000000
 -203.504456 74.226883 -81.405479 1.000000
 #STATIC
-@NodeName Bridge_low15
 @ParentName RootNode
+@NodeName Bridge_low15
 @MeshName Outside_bossOBJ_6
 @MaterialName Outside_bossOBJ_M_bossa_railroad_b
 $WorldTM 4 4
@@ -344,8 +344,8 @@ $LocalTM 4 4
 0.011126 -0.000430 -0.008487 0.000000
 -218.268478 53.988602 -70.186119 1.000000
 #STATIC
-@NodeName bossb_cutighthouse05.002
 @ParentName RootNode
+@NodeName bossb_cutighthouse05.002
 @MeshName Outside_bossOBJ_1
 @MaterialName Outside_bossOBJ_M_bossb_cutlighthouse
 $WorldTM 4 4
@@ -359,8 +359,8 @@ $LocalTM 4 4
 0.005027 -0.000301 0.008640 0.000000
 -30.763277 12.616411 80.141228 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Railroad_low17
-@ParentName RootNode
 @MeshName Outside_bossOBJ_8
 @MaterialName Outside_bossOBJ_M_bossa_railroad_a
 $WorldTM 4 4
@@ -374,8 +374,8 @@ $LocalTM 4 4
 0.009877 -0.000042 -0.007434 0.000000
 -217.298203 74.321739 -71.029778 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Bridge_low16
-@ParentName RootNode
 @MeshName Outside_bossOBJ_6
 @MaterialName Outside_bossOBJ_M_bossa_railroad_b
 $WorldTM 4 4
@@ -389,8 +389,8 @@ $LocalTM 4 4
 0.011125 -0.000430 -0.008489 0.000000
 -232.278824 54.048618 -59.641682 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Bridge_low17
-@ParentName RootNode
 @MeshName Outside_bossOBJ_6
 @MaterialName Outside_bossOBJ_M_bossa_railroad_b
 $WorldTM 4 4
@@ -404,8 +404,8 @@ $LocalTM 4 4
 0.011125 -0.000430 -0.008489 0.000000
 -246.164368 54.071602 -49.181038 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Railroad_low19
-@ParentName RootNode
 @MeshName Outside_bossOBJ_8
 @MaterialName Outside_bossOBJ_M_bossa_railroad_a
 $WorldTM 4 4
@@ -419,8 +419,8 @@ $LocalTM 4 4
 0.009877 -0.000042 -0.007435 0.000000
 -245.194016 74.404854 -50.024918 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Bridge_low18
-@ParentName RootNode
 @MeshName Outside_bossOBJ_6
 @MaterialName Outside_bossOBJ_M_bossa_railroad_b
 $WorldTM 4 4
@@ -434,8 +434,8 @@ $LocalTM 4 4
 0.011125 -0.000430 -0.008489 0.000000
 -260.175385 54.131725 -38.636757 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Railroad_low20_52
-@ParentName RootNode
 @MeshName Outside_bossOBJ_8
 @MaterialName Outside_bossOBJ_M_bossa_railroad_a
 $WorldTM 4 4
@@ -449,8 +449,8 @@ $LocalTM 4 4
 0.009877 -0.000042 -0.007435 0.000000
 -259.204956 74.464912 -39.480301 1.000000
 #STATIC
-@NodeName Bridge_low22
 @ParentName RootNode
+@NodeName Bridge_low22
 @MeshName Outside_bossOBJ_6
 @MaterialName Outside_bossOBJ_M_bossa_railroad_b
 $WorldTM 4 4
@@ -464,8 +464,8 @@ $LocalTM 4 4
 0.011125 -0.000430 -0.008489 0.000000
 -176.675583 52.807510 -101.493149 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Railroad_low24
-@ParentName RootNode
 @MeshName Outside_bossOBJ_8
 @MaterialName Outside_bossOBJ_M_bossa_railroad_a
 $WorldTM 4 4
@@ -479,8 +479,8 @@ $LocalTM 4 4
 0.009877 -0.000042 -0.007435 0.000000
 -175.681595 74.105850 -102.354462 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Railroad_low_111.002
-@ParentName RootNode
 @MeshName Outside_bossOBJ_8
 @MaterialName Outside_bossOBJ_M_bossa_railroad_a
 $WorldTM 4 4
@@ -494,8 +494,8 @@ $LocalTM 4 4
 0.010232 -0.003354 0.006075 0.000000
 10.953470 30.735506 -107.229385 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Railroad_low2_83
-@ParentName RootNode
 @MeshName Outside_bossOBJ_8
 @MaterialName Outside_bossOBJ_M_bossa_railroad_a
 $WorldTM 4 4
@@ -509,8 +509,8 @@ $LocalTM 4 4
 0.006105 -0.007171 -0.008009 0.000000
 -165.451904 69.886177 -114.561668 1.000000
 #STATIC
-@NodeName bossb_lighthouse_8.002
 @ParentName RootNode
+@NodeName bossb_lighthouse_8.002
 @MeshName Outside_bossOBJ_9
 @MaterialName Outside_bossOBJ_M_bossb_lighthouse
 $WorldTM 4 4
@@ -524,8 +524,8 @@ $LocalTM 4 4
 -0.000558 0.006751 0.007356 0.000000
 -46.084103 22.624393 91.757744 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Railroad_low7
-@ParentName RootNode
 @MeshName Outside_bossOBJ_8
 @MaterialName Outside_bossOBJ_M_bossa_railroad_a
 $WorldTM 4 4
@@ -539,8 +539,8 @@ $LocalTM 4 4
 0.011172 -0.000970 -0.009075 0.000000
 -143.400940 42.459003 -120.110909 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Bridge_low23_84
-@ParentName RootNode
 @MeshName Outside_bossOBJ_6
 @MaterialName Outside_bossOBJ_M_bossa_railroad_b
 $WorldTM 4 4
@@ -554,8 +554,8 @@ $LocalTM 4 4
 0.009069 -0.000401 -0.010658 0.000000
 -142.622162 22.681040 -119.850365 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Bridge6_85
-@ParentName RootNode
 @MeshName Outside_bossOBJ_5
 @MaterialName Outside_bossOBJ_M_bossa_railroad_b
 $WorldTM 4 4
@@ -569,8 +569,8 @@ $LocalTM 4 4
 -0.004400 -0.003248 -0.008373 0.000000
 -150.515518 45.542133 -112.129585 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Bridge7_86
-@ParentName RootNode
 @MeshName Outside_bossOBJ_5
 @MaterialName Outside_bossOBJ_M_bossa_railroad_b
 $WorldTM 4 4
@@ -584,8 +584,8 @@ $LocalTM 4 4
 -0.002147 -0.007004 0.011930 0.000000
 -144.750107 23.301983 -117.085213 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Bridge_low9_2
-@ParentName RootNode
 @MeshName Outside_bossOBJ_6
 @MaterialName Outside_bossOBJ_M_bossa_railroad_b
 $WorldTM 4 4
@@ -599,8 +599,8 @@ $LocalTM 4 4
 0.013855 0.000000 -0.002012 0.000000
 -7.487527 13.035632 -111.271484 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Railroad_low14
-@ParentName RootNode
 @MeshName Outside_bossOBJ_8
 @MaterialName Outside_bossOBJ_M_bossa_railroad_a
 $WorldTM 4 4
@@ -614,8 +614,8 @@ $LocalTM 4 4
 0.012241 0.000338 -0.001696 0.000000
 -24.013803 32.925194 -109.071434 1.000000
 #STATIC
-@NodeName Bridge_low19
 @ParentName RootNode
+@NodeName Bridge_low19
 @MeshName Outside_bossOBJ_6
 @MaterialName Outside_bossOBJ_M_bossa_railroad_b
 $WorldTM 4 4
@@ -629,8 +629,8 @@ $LocalTM 4 4
 -0.013999 0.000000 0.000145 0.000000
 -23.371698 13.035632 -109.721573 1.000000
 #STATIC
-@NodeName Railroad_low21
 @ParentName RootNode
+@NodeName Railroad_low21
 @MeshName Outside_bossOBJ_8
 @MaterialName Outside_bossOBJ_M_bossa_railroad_a
 $WorldTM 4 4
@@ -644,8 +644,8 @@ $LocalTM 4 4
 0.012241 0.000338 -0.001696 0.000000
 -6.848628 33.398636 -111.449638 1.000000
 #STATIC
-@NodeName Bridge8
 @ParentName RootNode
+@NodeName Bridge8
 @MeshName Outside_bossOBJ_5
 @MaterialName Outside_bossOBJ_M_bossa_railroad_b
 $WorldTM 4 4
@@ -659,8 +659,8 @@ $LocalTM 4 4
 0.002718 -0.008006 -0.005340 0.000000
 -272.870453 60.495789 -31.178677 1.000000
 #STATIC
-@NodeName Railroad_low3_113
 @ParentName RootNode
+@NodeName Railroad_low3_113
 @MeshName Outside_bossOBJ_8
 @MaterialName Outside_bossOBJ_M_bossa_railroad_a
 $WorldTM 4 4
@@ -674,8 +674,8 @@ $LocalTM 4 4
 0.009678 -0.000052 0.010697 0.000000
 128.806030 28.359213 -86.281609 1.000000
 #STATIC
-@NodeName gate00_ground_cable_8.002
 @ParentName RootNode
+@NodeName gate00_ground_cable_8.002
 @MeshName Outside_bossOBJ_10
 @MaterialName Outside_bossOBJ_M_gate00_ground_cable
 $WorldTM 4 4
@@ -689,8 +689,8 @@ $LocalTM 4 4
 -0.009066 -0.000777 0.004147 0.000000
 -28.993605 14.059563 79.573563 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Bridge9
-@ParentName RootNode
 @MeshName Outside_bossOBJ_5
 @MaterialName Outside_bossOBJ_M_bossa_railroad_b
 $WorldTM 4 4
@@ -704,8 +704,8 @@ $LocalTM 4 4
 0.001952 -0.004958 -0.012946 0.000000
 152.750992 11.356169 -63.256775 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Bridge10
-@ParentName RootNode
 @MeshName Outside_bossOBJ_5
 @MaterialName Outside_bossOBJ_M_bossa_railroad_b
 $WorldTM 4 4
@@ -719,8 +719,8 @@ $LocalTM 4 4
 0.012282 -0.006372 -0.002134 0.000000
 93.994675 11.871775 -125.189842 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Bridge_low5_23
-@ParentName RootNode
 @MeshName Outside_bossOBJ_6
 @MaterialName Outside_bossOBJ_M_bossa_railroad_b
 $WorldTM 4 4
@@ -734,8 +734,8 @@ $LocalTM 4 4
 0.008908 -0.000058 0.009649 0.000000
 114.179039 10.579175 -100.213661 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Railroad_low4
-@ParentName RootNode
 @MeshName Outside_bossOBJ_8
 @MaterialName Outside_bossOBJ_M_bossa_railroad_a
 $WorldTM 4 4
@@ -749,8 +749,8 @@ $LocalTM 4 4
 0.009678 -0.000052 0.010697 0.000000
 115.214882 28.432707 -101.307625 1.000000
 #STATIC
-@NodeName Bridge_low6_3
 @ParentName RootNode
+@NodeName Bridge_low6_3
 @MeshName Outside_bossOBJ_6
 @MaterialName Outside_bossOBJ_M_bossa_railroad_b
 $WorldTM 4 4
@@ -764,8 +764,8 @@ $LocalTM 4 4
 0.008908 -0.000058 0.009649 0.000000
 102.838936 10.639018 -112.748413 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Railroad_low8_4
-@ParentName RootNode
 @MeshName Outside_bossOBJ_8
 @MaterialName Outside_bossOBJ_M_bossa_railroad_a
 $WorldTM 4 4
@@ -779,8 +779,8 @@ $LocalTM 4 4
 0.009678 -0.000052 0.010697 0.000000
 101.964005 28.502844 -115.955215 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Railroad_low9.001
-@ParentName RootNode
 @MeshName Outside_bossOBJ_8
 @MaterialName Outside_bossOBJ_M_bossa_railroad_a
 $WorldTM 4 4
@@ -794,8 +794,8 @@ $LocalTM 4 4
 0.014043 0.000000 -0.003302 0.000000
 71.068321 27.192900 -121.598564 1.000000
 #STATIC
-@NodeName Bridge11
 @ParentName RootNode
+@NodeName Bridge11
 @MeshName Outside_bossOBJ_5
 @MaterialName Outside_bossOBJ_M_bossa_railroad_b
 $WorldTM 4 4
@@ -809,8 +809,8 @@ $LocalTM 4 4
 -0.007473 -0.001389 -0.006499 0.000000
 -157.267670 26.319418 -103.275948 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Railroad_low5_115.002
-@ParentName RootNode
 @MeshName Outside_bossOBJ_8
 @MaterialName Outside_bossOBJ_M_bossa_railroad_a
 $WorldTM 4 4
@@ -824,8 +824,8 @@ $LocalTM 4 4
 0.013069 0.001434 -0.005938 0.000000
 32.058426 26.172148 -110.283424 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Railroad_low6_116.002
-@ParentName RootNode
 @MeshName Outside_bossOBJ_8
 @MaterialName Outside_bossOBJ_M_bossa_railroad_a
 $WorldTM 4 4
@@ -839,8 +839,8 @@ $LocalTM 4 4
 0.014043 0.000000 -0.003302 0.000000
 51.631748 27.192900 -117.027916 1.000000
 #STATIC
-@NodeName gate00_ground_cable_28
 @ParentName RootNode
+@NodeName gate00_ground_cable_28
 @MeshName Outside_bossOBJ_11
 @MaterialName Outside_bossOBJ_M_gate00_ground_cable
 $WorldTM 4 4
@@ -854,8 +854,8 @@ $LocalTM 4 4
 0.009745 -0.000080 0.002241 0.000000
 -48.939209 6.667542 77.141006 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Bridge_low7.002
-@ParentName RootNode
 @MeshName Outside_bossOBJ_6
 @MaterialName Outside_bossOBJ_M_bossa_railroad_b
 $WorldTM 4 4
@@ -869,8 +869,8 @@ $LocalTM 4 4
 0.012986 0.000000 -0.005231 0.000000
 29.389259 6.763871 -111.839325 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Bridge_low8.002
-@ParentName RootNode
 @MeshName Outside_bossOBJ_6
 @MaterialName Outside_bossOBJ_M_bossa_railroad_b
 $WorldTM 4 4
@@ -884,8 +884,8 @@ $LocalTM 4 4
 0.013707 0.000000 -0.002850 0.000000
 47.897572 5.914784 -116.074989 1.000000
 #STATIC
-@NodeName Bridge3.002
 @ParentName RootNode
+@NodeName Bridge3.002
 @MeshName Outside_bossOBJ_5
 @MaterialName Outside_bossOBJ_M_bossa_railroad_b
 $WorldTM 4 4
@@ -899,8 +899,8 @@ $LocalTM 4 4
 0.004958 -0.008006 -0.003365 0.000000
 13.868908 12.881266 -112.840584 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Lamp_Object2
-@ParentName RootNode
 @MeshName Outside_bossOBJ_12
 @MaterialName Outside_bossOBJ_M_ETC2
 $WorldTM 4 4
@@ -914,8 +914,8 @@ $LocalTM 4 4
 0.007403 0.001093 0.005945 0.000000
 41.369312 7.280992 -51.366814 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Lamp_Object_13
-@ParentName RootNode
 @MeshName Outside_bossOBJ_12
 @MaterialName Outside_bossOBJ_M_ETC2
 $WorldTM 4 4
@@ -929,8 +929,8 @@ $LocalTM 4 4
 0.009458 0.001340 0.000289 0.000000
 42.196186 7.865879 -58.855129 1.000000
 #STATIC
-@NodeName LampA
 @ParentName RootNode
+@NodeName LampA
 @MeshName Outside_bossOBJ_13
 @MaterialName Outside_bossOBJ_M_LampA_material
 $WorldTM 4 4
@@ -944,8 +944,8 @@ $LocalTM 4 4
 0.000000 0.000000 0.004170 0.000000
 40.353397 6.250946 -58.919090 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName map6_cable_9
-@ParentName RootNode
 @MeshName Outside_bossOBJ_14
 @MaterialName Outside_bossOBJ_M_ETC2
 $WorldTM 4 4
@@ -959,8 +959,8 @@ $LocalTM 4 4
 0.004250 0.001800 0.020402 0.000000
 -35.366825 -25.964045 -79.629784 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName map6_cable_10
-@ParentName RootNode
 @MeshName Outside_bossOBJ_14
 @MaterialName Outside_bossOBJ_M_ETC2
 $WorldTM 4 4
@@ -974,8 +974,8 @@ $LocalTM 4 4
 0.004250 0.001800 0.020402 0.000000
 -35.528107 -22.059340 -79.655144 1.000000
 #STATIC
-@NodeName map15_34
 @ParentName RootNode
+@NodeName map15_34
 @MeshName Outside_bossOBJ_15
 @MaterialName Outside_bossOBJ_M_ETC2
 $WorldTM 4 4
@@ -989,8 +989,8 @@ $LocalTM 4 4
 -0.005287 0.002769 0.020415 0.000000
 1.402109 -11.965998 -151.550598 1.000000
 #STATIC
-@NodeName LampA.001
 @ParentName RootNode
+@NodeName LampA.001
 @MeshName Outside_bossOBJ_13
 @MaterialName Outside_bossOBJ_M_LampA_material
 $WorldTM 4 4
@@ -1004,8 +1004,8 @@ $LocalTM 4 4
 0.000000 0.000000 0.004170 0.000000
 39.968872 5.765142 -52.503296 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName bossb_cutighthouse01.002
-@ParentName RootNode
 @MeshName Outside_bossOBJ_1
 @MaterialName Outside_bossOBJ_M_bossb_cutlighthouse
 $WorldTM 4 4
@@ -1019,8 +1019,8 @@ $LocalTM 4 4
 0.001039 -0.001826 0.009777 0.000000
 -48.608120 6.210354 30.607967 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName bossb_cutighthouse04.002
-@ParentName RootNode
 @MeshName Outside_bossOBJ_1
 @MaterialName Outside_bossOBJ_M_bossb_cutlighthouse
 $WorldTM 4 4
@@ -1034,8 +1034,8 @@ $LocalTM 4 4
 -0.006226 0.006989 0.003521 0.000000
 -19.675600 13.108061 59.534637 1.000000
 #STATIC
-@NodeName gate00_ground_cable_9.002
 @ParentName RootNode
+@NodeName gate00_ground_cable_9.002
 @MeshName Outside_bossOBJ_3
 @MaterialName Outside_bossOBJ_M_gate00_ground_cable
 $WorldTM 4 4

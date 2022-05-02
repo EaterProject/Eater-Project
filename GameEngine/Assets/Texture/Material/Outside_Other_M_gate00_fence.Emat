@@ -1,6 +1,6 @@
 #EATERMAT
 @MaterialName Outside_Other_M_gate00_fence
-@Alpha YES
+@Alpha NO
 @DiffuseMap gate00_fence_BaseColor.png
 @NormalMap gate00_fixture_Normal.png
 @EmissiveMap NO

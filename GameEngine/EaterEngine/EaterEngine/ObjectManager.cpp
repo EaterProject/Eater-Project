@@ -291,9 +291,9 @@ void ObjectManager::PlayUpdate()
 	///각각의 함수포인터들을 재생시킨다
 	//컨퍼넌트들을 가져오는 함수 포인터
 	AwakeFunction.PlayOnce();
-	//컨퍼넌트 초기화된 값을 한번 실행하는 함수포인터
+	//컨퍼넌트 초기화 
 	SetUpFunction.PlayOnce();
-	//컨퍼넌트들을 초기화 하는 함수포인터
+	//컨퍼넌트들을 초기화된 값 셋팅
 	StartFunction.PlayOnce();
 
 	//가장 먼저실행되는 StartUpdate 함수 리스트(각 컨퍼넌트들의 초기화작업을 해줄때)

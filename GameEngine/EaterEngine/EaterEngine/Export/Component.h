@@ -54,6 +54,7 @@ protected:
 	//마지막 업데이트
 	virtual void EndUpdate() {};
 
+	//충돌 체크용 오버라이딩 함수들
 	virtual void OnTriggerEnter(GameObject* Obj) {};
 	virtual void OnTriggerStay(GameObject* Obj) {};
 	virtual void OnTriggerExit(GameObject* Obj) {};
