@@ -65,7 +65,7 @@ GameEngine::GameEngine()
 
 	mRenderOption->DebugOption			= DEBUG_ENGINE;
 	mRenderOption->RenderingOption		= RENDER_DEBUG | RENDER_SHADOW | RENDER_SSAO | RENDER_IBL;
-	mRenderOption->PostProcessOption	= RENDER_BLOOM | RENDER_HDR | RENDER_FXAA;
+	mRenderOption->PostProcessOption	= RENDER_BLOOM | RENDER_HDR | RENDER_FXAA| RENDER_FOG;
 }
 
 GameEngine::~GameEngine()

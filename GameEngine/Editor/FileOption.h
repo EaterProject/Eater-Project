@@ -71,4 +71,5 @@ public:
 	afx_msg void OnIBL_Button();
 	afx_msg void OnBloom_Button();
 	afx_msg void OnFXAA_Button();
+	CButton HDR_Check;
 };

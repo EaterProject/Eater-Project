@@ -57,6 +57,7 @@ void FileOption::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_CHECK9, IBL_Check);
 	DDX_Control(pDX, IDC_CHECK5, Bloom_Check);
 	DDX_Control(pDX, IDC_CHECK10, FXAA_Check);
+	DDX_Control(pDX, IDC_CHECK6, HDR_Check);
 }
 
 BEGIN_MESSAGE_MAP(FileOption, CDialogEx)
@@ -111,11 +112,13 @@ void FileOption::Initialize(RightOption* mOption)
 
 	Debug_Check.SetCheck(true);
 	SSAO_Check.SetCheck(true);
-	FOG_Check.SetCheck(false);
+	FOG_Check.SetCheck(true);
 	Shadow_Check.SetCheck(true);
 	IBL_Check.SetCheck(true);
 	Bloom_Check.SetCheck(true);
 	FXAA_Check.SetCheck(true);
+	HDR_Check.SetCheck(true);
+
 }
 
 void FileOption::SetChoiceGameObjectName(std::string Name, GameObject* Obj)
