@@ -20,11 +20,6 @@ void RenderDataConverter::ConvertMeshData(MeshData* originData, RenderData* rend
 	renderData->m_AnimationData = originData->Animation_Data;
 	renderData->m_ParticleData = originData->Particle_Data;
 
-	if (originData->Animation_Data)
-	{
-		int a = 0;
-	}
-
 	// ID 설정을 위한 Hash Color 생성..
 	// UINT 형식으로 찍을 것이기에 0번 인덱스는 비워둔다..
 	renderData->m_ObjectData->HashColor = ObjectData::HashToColor(renderData->m_ObjectData->ObjectIndex + 1);
