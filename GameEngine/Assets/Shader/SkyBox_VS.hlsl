@@ -12,7 +12,6 @@ SkyBoxVertexOut SkyBox_VS(SkyBoxVertexIn vin)
 
     vout.PosL = vin.PosL;
     vout.PosW = mul(gCubeWorld, float4(vin.PosL, 1.0f)).xyz;
-    
     vout.PosH = mul(gCubeWorldViewProj, float4(vin.PosL, 1.0f)).xyww;
     
     return vout;

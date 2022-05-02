@@ -48,11 +48,11 @@ void EnvironmentPass::Start(int width, int height)
 
 	m_Box_DB = g_Resource->GetDrawBuffer<DB_Sphere>();
 
-	m_Albedo_RT = g_Resource->GetRenderTexture<RT_Deffered_Albedo>();
+	m_OutPut_RT = g_Resource->GetRenderTexture<RT_OutPut1>();
 	m_Position_RT = g_Resource->GetRenderTexture<RT_Deffered_Position>();
 
 	m_RTV_List.resize(2);
-	m_RTV_List[0] = m_Albedo_RT->GetRTV()->Get();
+	m_RTV_List[0] = m_OutPut_RT->GetRTV()->Get();
 	m_RTV_List[1] = m_Position_RT->GetRTV()->Get();
 
 	m_Defalt_DSV = g_Resource->GetDepthStencilView<DS_Defalt>()->Get();
@@ -64,7 +64,7 @@ void EnvironmentPass::Start(int width, int height)
 void EnvironmentPass::OnResize(int width, int height)
 {
 	// 현재 RenderTargetView 재설정..
-	m_RTV_List[0] = m_Albedo_RT->GetRTV()->Get();
+	m_RTV_List[0] = m_OutPut_RT->GetRTV()->Get();
 	m_RTV_List[1] = m_Position_RT->GetRTV()->Get();
 
 	// DepthStencilView 재설정..

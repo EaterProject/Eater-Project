@@ -23,7 +23,7 @@ private:
 	VertexShader* m_SkyBox_VS;
 	PixelShader* m_SkyBox_PS;
 
-	RenderTexture* m_Albedo_RT;
+	RenderTexture* m_OutPut_RT;
 	RenderTexture* m_Position_RT;
 	
 private:
