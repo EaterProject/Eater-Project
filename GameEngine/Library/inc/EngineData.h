@@ -21,14 +21,30 @@ public:
 	UINT RenderingOption = 0;
 	UINT PostProcessOption = 0;
 
-public:
-	bool operator == (const RenderOption& option)
-	{
-		if (DebugOption == option.DebugOption && RenderingOption == option.RenderingOption && PostProcessOption == option.PostProcessOption)
-			return true;
-		else
-			return false;
-	}
+	// SSAO Option
+	float AO_Radius = 0.25f;							// 샘플링시 비교할 Texel 반지름	(0.0 ~ 5.0)
+	float AO_FadeStart = 0.01f;							// AO 너비를 결정하는 시작 지점	(0.0 ~ 10.0)
+	float AO_FadeEnd = 2.0f;							// AO 너비를 결정하는 끝 지점		(0.0 ~ 10.0)
+	float AO_SurfaceEpsilon = 0.05f;					// 차폐되는 최소 깊이값			(0.0 ~ 1.0)
+
+	// Fog Option
+	Vector3 FOG_Color = Vector3(0.9f, 0.745f, 0.35f);	// Fog 색상
+	float FOG_MoveSpeed = 0.05f;						// Fog 움직이는 속도				(0.0 ~ 1.0)
+	float FOG_StartDistance = 50.0f;					// Fog 시작 거리					(0.0 ~ 1000.0)
+	float FOG_DistanceOffset = 8.0f;					// Fog 거리 오프셋				(0.0 ~ 100.0)
+	float FOG_DistanceValue = 5.0f;						// Fog 거리 범위					(0.0 ~ 100.0)
+	float FOG_HeightOffset = 3.0f;						// Fog 높이 오프셋				(0.0 ~ 100.0)
+	float FOG_HeightValue = 3.0f;						// Fog 높이 범위					(0.0 ~ 100.0)
+
+	// Environment Option
+	float EnvironmentSize = 500.0f;						// Environment Map 크기			(1.0 ~ 5000.0)
+
+	// Bloom Option
+	float BLOOM_Threshold = 1.0f;						// Bloom 추출 시작 영역			(0.0 ~ 2.0)
+	float BLOOM_Factor = 0.25f;							// Bloom 혼합률					(0.0 ~ 1.0)
+
+	// IBL Option
+	float IBL_Factor = 1.0f;							// IBL 강도						(0.0 ~ 5.0)
 };
 
 // Object Data

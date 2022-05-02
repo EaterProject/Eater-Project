@@ -3,15 +3,18 @@ cbuffer cbSsaoObject : register(b0)
 	float4x4 gViewToTexSpace;	// Proj * Texture
 };
 
-cbuffer cbSsaoOption : register(b1)
+cbuffer cbSsaoOffset : register(b1)
 {
-	float4   gOffsetVectors[14];
-	
+	float4 gOffsetVectors[14];
+}
+
+cbuffer cbSsaoOption : register(b2)
+{
 	// Coordinates given in view space.
-    float gOcclusionRadius = 0.1f;
-    float gOcclusionFadeStart = 0.1f;
-    float gOcclusionFadeEnd = 1.0f;
-    float gSurfaceEpsilon = 0.1f;
+    float gOcclusionRadius;
+    float gOcclusionFadeStart;
+    float gOcclusionFadeEnd;
+    float gSurfaceEpsilon;
 }
 
 Texture2D gNormalDepthMap : register(t0);

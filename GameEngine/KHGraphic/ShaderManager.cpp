@@ -241,13 +241,14 @@ void ShaderManager::AddConstantBufferUsage()
 	PushConstantBufferUsage<CB_Material>(CBUFFER_USAGE::DEFAULT);
 
 	// Fog..
-	PushConstantBufferUsage<CB_Fog>(CBUFFER_USAGE::DEFAULT);
+	PushConstantBufferUsage<CB_FogOption>(CBUFFER_USAGE::DEFAULT);
 
 	// Blur..
 	PushConstantBufferUsage<CB_BlurTexel>(CBUFFER_USAGE::DEFAULT);
 
 	// SSAO..
 	PushConstantBufferUsage<CB_SsaoFrustum>(CBUFFER_USAGE::DEFAULT);
+	PushConstantBufferUsage<CB_SsaoOffset>(CBUFFER_USAGE::DEFAULT);
 	PushConstantBufferUsage<CB_SsaoOption>(CBUFFER_USAGE::DEFAULT);
 
 	// OIT..
@@ -286,7 +287,7 @@ void ShaderManager::AddConstantBufferUsage()
 	PushConstantBufferUsage<CB_Light>(CBUFFER_USAGE::DYNAMIC);
 
 	// Fog..
-	PushConstantBufferUsage<CB_Fog>(CBUFFER_USAGE::DYNAMIC);
+	PushConstantBufferUsage<CB_FogData>(CBUFFER_USAGE::DYNAMIC);
 
 	// Blur..
 	PushConstantBufferUsage<CB_BlurOrder>(CBUFFER_USAGE::DYNAMIC);

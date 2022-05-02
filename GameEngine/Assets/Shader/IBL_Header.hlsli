@@ -82,7 +82,7 @@ float3 ImportanceSampleGGX(float2 Xi, float Roughness2, float3 normalVec)
     return normalize((TangentX * halfwayVec.x) + (TangentY * halfwayVec.y) + (normalVec * halfwayVec.z));
 }
 
-float3 IBL_EnvironmentLight(in float3 V, in float3 N, in float3 irradiance, in float3 prefilterColor, in float2 brdf, in float3 albedo, in float ao, in float roughness, in float metallic)
+float3 IBL_EnvironmentLight(in float3 V, in float3 N, in float3 irradiance, in float3 prefilterColor, in float2 brdf, in float3 albedo, in float ao, in float roughness, in float metallic, in float factor)
 {
     float3 F0 = lerp(F_ZERO, albedo, metallic);
     
@@ -94,5 +94,5 @@ float3 IBL_EnvironmentLight(in float3 V, in float3 N, in float3 irradiance, in f
     
     float3 specular = prefilterColor * (kS * brdf.x + brdf.y);
     
-    return (diffuse + specular) * ao;
+    return (diffuse + specular) * ao * factor;
 }

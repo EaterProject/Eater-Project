@@ -90,11 +90,11 @@ void LightPass::Release()
 
 }
 
-void LightPass::SetOption(RenderOption* renderOption)
+void LightPass::ApplyOption()
 {
 	std::string renderType;
 
-	if (renderOption->RenderingOption & RENDER_IBL)
+	if (g_RenderOption->RenderingOption & RENDER_IBL)
 	{
 		renderType = "_IBL_PS_";
 	}
@@ -103,7 +103,7 @@ void LightPass::SetOption(RenderOption* renderOption)
 		renderType = "_PBR_PS_";
 	}
 
-	UINT lightOption = renderOption->RenderingOption & (RENDER_SHADOW | RENDER_SSAO);
+	UINT lightOption = g_RenderOption->RenderingOption & (RENDER_SHADOW | RENDER_SSAO);
 	
 	switch (lightOption)
 	{
@@ -208,6 +208,7 @@ void LightPass::RenderUpdate()
 	CB_LightSub lightsubBuf;
 	lightsubBuf.gEyePosW = cam->CamPos;
 	lightsubBuf.gViewProjTex = cam->CamView * cam->CamProj * texSpace;
+	lightsubBuf.gIBLFactor = g_RenderOption->IBL_Factor;
 
 	// Vertex Shader Update..
 	m_Light_VS->Update();

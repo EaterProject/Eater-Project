@@ -25,6 +25,7 @@ public:
 
 public:
 	// Render Option Setting..
+	virtual void RenderSetting() abstract;
 	virtual void RenderSetting(RenderOption* renderOption) abstract;
 
 	// Global Data Setting..

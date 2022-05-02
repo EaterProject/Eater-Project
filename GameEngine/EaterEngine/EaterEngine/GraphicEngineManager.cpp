@@ -16,7 +16,7 @@ GraphicEngineManager::~GraphicEngineManager()
 
 }
 
-void GraphicEngineManager::Initialize(HWND Hwnd, int WinSizeWidth, int WinSizeHeight)
+void GraphicEngineManager::Initialize(HWND Hwnd, int WinSizeWidth, int WinSizeHeight, RenderOption* renderOption)
 {
 	// Graphic Engine Create..
 	GEngine = GraphicEngine::Get();
@@ -24,8 +24,11 @@ void GraphicEngineManager::Initialize(HWND Hwnd, int WinSizeWidth, int WinSizeHe
 	// Graphic Engine Initialize..
 	GEngine->Initialize(Hwnd, WinSizeWidth, WinSizeHeight);
 
-	// Graphic Engine RenderSetting..
+	// Graphic Engine Global Data Setting..
 	GEngine->SetGlobalData(GlobalDataManager::g_GlobalData);
+
+	// Graphic Engine Render Setting..
+	GEngine->RenderSetting(renderOption);
 }
 
 void GraphicEngineManager::OnReSize(int Change_Width, int Change_Height)
@@ -39,9 +42,9 @@ void GraphicEngineManager::Release()
 	GEngine->Release();
 }
 
-void GraphicEngineManager::RenderSetting(RenderOption* renderOption)
+void GraphicEngineManager::RenderSetting()
 {
-	GEngine->RenderSetting(renderOption);
+	GEngine->RenderSetting();
 }
 
 void GraphicEngineManager::PushInstance(MeshData* meshData)

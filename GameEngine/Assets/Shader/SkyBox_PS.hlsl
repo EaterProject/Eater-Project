@@ -4,7 +4,11 @@ TextureCube gSkyCube : register(t0);
 SamplerState gSamWrapLinear : register(s0);
 
 [earlydepthstencil]
-float4 SkyBox_PS(SkyBoxPixelIn pin) : SV_TARGET
+SkyBoxPixelOut SkyBox_PS(SkyBoxPixelIn pin)
 {
-    return pow(gSkyCube.Sample(gSamWrapLinear, pin.PosL), 2.2f);
+    SkyBoxPixelOut pout;
+    pout.Albedo = pow(gSkyCube.Sample(gSamWrapLinear, pin.PosL), 2.2f);
+    pout.Position = float4(pin.PosW, 1.0f);
+    
+    return pout;
 }

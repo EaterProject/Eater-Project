@@ -70,9 +70,9 @@ void CombinePass::Release()
 
 }
 
-void CombinePass::SetOption(RenderOption* renderOption)
+void CombinePass::ApplyOption()
 {
-	UINT combineOption = renderOption->PostProcessOption & (RENDER_BLOOM | RENDER_HDR);
+	UINT combineOption = g_RenderOption->PostProcessOption & (RENDER_BLOOM | RENDER_HDR);
 
 	switch (combineOption)
 	{
@@ -90,7 +90,7 @@ void CombinePass::SetOption(RenderOption* renderOption)
 		break;
 	}
 
-	if (renderOption->PostProcessOption & RENDER_FOG)
+	if (g_RenderOption->PostProcessOption & RENDER_FOG)
 	{
 		m_Origin_RT = g_Resource->GetRenderTexture<RT_OutPut1>();
 	}
@@ -99,7 +99,7 @@ void CombinePass::SetOption(RenderOption* renderOption)
 		m_Origin_RT = g_Resource->GetRenderTexture<RT_OutPut2>();
 	}
 
-	if (renderOption->PostProcessOption & RENDER_FXAA)
+	if (g_RenderOption->PostProcessOption & RENDER_FXAA)
 	{
 		m_OutPut_RT = g_Resource->GetRenderTexture<RT_OutPut3>();
 	}
@@ -120,7 +120,10 @@ void CombinePass::SetOption(RenderOption* renderOption)
 	m_Combine_PS->SetShaderResourceView<gBloomMap>(bloomSRV);
 	m_Combine_PS->SetShaderResourceView<gOutLineMap>(outlineSRV);
 
-	SetConstantBuffer();
+	// Shader Constant Buffer ¼³Á¤..
+	CB_DrawFinal drawFinalBuf;
+	drawFinalBuf.gBloomFactor = g_RenderOption->BLOOM_Factor;
+	m_Combine_PS->ConstantBufferUpdate(&drawFinalBuf);
 }
 
 void CombinePass::RenderUpdate()
@@ -129,7 +132,7 @@ void CombinePass::RenderUpdate()
 
 	g_Context->OMSetRenderTargets(1, &m_OutPut_RTV, nullptr);
 	g_Context->RSSetViewports(1, m_Screen_VP);
-	
+
 	g_Context->ClearRenderTargetView(m_OutPut_RTV, reinterpret_cast<const float*>(&DXColors::NonBlack));
 
 	m_Screen_VS->Update();
@@ -141,11 +144,4 @@ void CombinePass::RenderUpdate()
 	g_Context->IASetIndexBuffer(m_Screen_DB->IndexBuf->Get(), DXGI_FORMAT_R32_UINT, 0);
 
 	g_Context->DrawIndexed(m_Screen_DB->IndexCount, 0, 0);
-}
-
-void CombinePass::SetConstantBuffer()
-{
-	CB_DrawFinal drawFinalBuf;
-	drawFinalBuf.gBloomFactor = 0.25f;
-	m_Combine_PS->ConstantBufferUpdate(&drawFinalBuf);
 }

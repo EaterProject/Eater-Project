@@ -63,6 +63,11 @@ void KHGraphic::Release()
 
 }
 
+void KHGraphic::RenderSetting()
+{
+	m_RenderManager->RenderSetting();
+}
+
 void KHGraphic::RenderSetting(RenderOption* renderOption)
 {
 	m_RenderManager->RenderSetting(renderOption);

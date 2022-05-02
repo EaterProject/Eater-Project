@@ -14,7 +14,7 @@ public:
 
 	void Release() override;
 
-	void SetOption(RenderOption* renderOption) override;
+	void ApplyOption() override;
 
 public:
 	void BeginRender();

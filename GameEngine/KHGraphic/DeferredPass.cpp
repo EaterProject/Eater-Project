@@ -182,7 +182,7 @@ void DeferredPass::Release()
 
 }
 
-void DeferredPass::SetOption(UINT renderOption)
+void DeferredPass::ApplyOption(UINT renderOption)
 {
 
 }

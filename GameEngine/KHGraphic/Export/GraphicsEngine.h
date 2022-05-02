@@ -44,6 +44,7 @@ public:
 	virtual GRAPHIC_DLL void Release() abstract;
 
 	/// Graphic Data Setting Function..
+	virtual GRAPHIC_DLL void RenderSetting() abstract;
 	virtual GRAPHIC_DLL void RenderSetting(RenderOption* renderOption) abstract;
 	virtual GRAPHIC_DLL void SetGlobalData(GlobalData* globalData) abstract;
 

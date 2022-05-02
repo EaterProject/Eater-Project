@@ -33,15 +33,14 @@ public:
 
 public:
 	//선택한 그래픽엔진을 초기화
-	void Initialize(HWND Hwnd, int WinSizeWidth, int WinSizeHeight);
+	void Initialize(HWND Hwnd, int WinSizeWidth, int WinSizeHeight, RenderOption* renderOption);
 
 	//선택한 그래픽 엔진으로 Resize
 	void OnReSize(int Change_Width, int Change_Height);
 	void Release();
 
 	//선택한 그래픽엔진 셋팅
-	void RenderSetting(RenderOption* renderOption);
-
+	void RenderSetting();
 
 	//선택한 그래픽엔진 랜더링
 	void PushInstance(MeshData* meshData);
