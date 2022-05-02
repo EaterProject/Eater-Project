@@ -13,6 +13,8 @@
 #include "CamAnimation.h"
 #include "SceneSaveDialog.h"
 #include "CreateMaterial.h"
+#include "MainHeader.h"
+#include "TypeOptionHeader.h"
 
 #include "GameObject.h"
 #include "MeshFilter.h"
@@ -38,6 +40,9 @@ FileOption::~FileOption()
 BOOL FileOption::OnInitDialog()
 {
 	CDialog::OnInitDialog();
+
+
+
 	return 0;
 }
 
@@ -63,6 +68,7 @@ BEGIN_MESSAGE_MAP(FileOption, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON8, &FileOption::OnAddRigidbody)
 	ON_BN_CLICKED(IDC_BUTTON16, &FileOption::OnAddLight)
 	ON_BN_CLICKED(IDC_BUTTON7, &FileOption::OnCreateMaterial)
+	ON_BN_CLICKED(IDC_CHECK1, &FileOption::OnDebugButton)
 END_MESSAGE_MAP()
 
 
@@ -241,4 +247,12 @@ void FileOption::OnCreateMaterial()
 	Temp.left = MyDig.right;
 	mMaterial->SetWindowPos(NULL, Temp.left, Temp.top, Temp.right, Temp.bottom, SWP_NOSIZE);
 	//mLoadNavMesh->MoveWindow(&NavMeshWindow);
+}
+
+
+void FileOption::OnDebugButton()
+{
+	RenderOption* Option = GetRenderOptionData();
+	Option->DebugOption ^= RENDER_DEBUG;
+	RenderSetting();
 }

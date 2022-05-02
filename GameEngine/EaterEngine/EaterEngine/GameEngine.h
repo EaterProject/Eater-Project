@@ -33,7 +33,6 @@ class NavigationManager;
 class GameObject;
 class ModelData;
 class Material;
-
 class RenderOption;
 
 class GameEngine
@@ -118,22 +117,19 @@ public:
 public:
 	///카메라 관련
 	GameObject* GetMainCamera();
-
 public:
 	///시간 관련
 	float GetdeltaTime();
-
 public:
 	///네트워크 관련
 	void SetNetworkManager(NetworkManagerComponent* Manager);
 	void NETWORK_SEND(flatbuffers::FlatBufferBuilder* Builder, int Type);
 	void NETWORK_LOADING_COMPLETE(unsigned int Number);
 	void NETWORK_CONNECT(int ServerPort, std::string  Local_Connect_IP);
-
 public:
-	///디버그 관련
-	void EditorSetting();
-
+	///Scene Setting
+	RenderOption* GetRenderOptionData();
+	void RenderSetting();
 private:
 	GameObject* CreateInstance();
 	Material* CreateMaterial();

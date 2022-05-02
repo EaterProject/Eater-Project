@@ -509,9 +509,14 @@ void GameEngine::NETWORK_CONNECT(int ServerPort, std::string  Local_Connect_IP)
 	mNetworkManager->C2S_CONNECT(ServerPort, Local_Connect_IP);
 }
 
-void GameEngine::EditorSetting()
+RenderOption* GameEngine::GetRenderOptionData()
 {
-	mRenderOption->DebugOption = DEBUG_EDITOR;
+	return mRenderOption;
+}
+
+void GameEngine::RenderSetting()
+{
+	mGraphicManager->RenderSetting();
 }
 
 GameObject* GameEngine::CreateInstance()

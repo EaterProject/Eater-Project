@@ -17,6 +17,7 @@ class PhysRayCast;
 class NetworkManagerComponent;
 class LoadMeshData;
 class ModelData;
+class RenderOption;
 
 extern "C" EATER_ENGINEDLL void EngineInitialize(HWND _g_hWnd,bool ON_DEBUG);	//GameEngine 시작
 extern "C" EATER_ENGINEDLL void EndEngine();						//GameEngine 종료
@@ -90,7 +91,8 @@ extern "C" EATER_ENGINEDLL float GetDeltaTime();
 extern "C" EATER_ENGINEDLL bool RayCast(PhysRayCast* ray);
 
 /// 디버그
-EATER_ENGINEDLL void EditorSetting();
+EATER_ENGINEDLL void RenderSetting();
+EATER_ENGINEDLL RenderOption* GetRenderOptionData();
 EATER_ENGINEDLL void DebugDrawLine(Vector3 start, Vector3 end, Vector3 color);
 EATER_ENGINEDLL void DebugDrawLine(Vector3 start, Vector3 dir, float distance, Vector3 color);
 EATER_ENGINEDLL void DebugDrawCircle(float scale, DirectX::SimpleMath::Vector3 pos, DirectX::SimpleMath::Vector3 rot, DirectX::SimpleMath::Vector3 color);

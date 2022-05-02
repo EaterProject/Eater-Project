@@ -147,6 +147,7 @@ void CMainFrame::Dump(CDumpContext& dc) const
 {
 	CFrameWnd::Dump(dc);
 }
+#endif //_DEBUG
 UINT CMainFrame::ThreadFunction(LPVOID _mothod)
 {
 	CMainFrame* Main = (CMainFrame*)_mothod;
@@ -213,5 +214,4 @@ UINT CMainFrame::ThreadFunction(LPVOID _mothod)
 	Main->mLoading->ShowWindow(SW_HIDE);
 	return 0;
 }
-#endif //_DEBUG
 

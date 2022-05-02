@@ -262,9 +262,14 @@ void AddOccluder(std::string mMeshName)
 	 return PhysManager::RayCast(ray);
  }
 
- void EditorSetting()
+ void RenderSetting()
  {
-	 gGameEngine->EditorSetting();
+	 return gGameEngine->RenderSetting();
+ }
+
+ RenderOption* GetRenderOptionData()
+ {
+	 return gGameEngine->GetRenderOptionData();
  }
 
  void DebugDrawLine(Vector3 start, Vector3 end, Vector3 color)

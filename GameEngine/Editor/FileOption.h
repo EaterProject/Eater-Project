@@ -51,4 +51,5 @@ public:
 	afx_msg void OnAddRigidbody();
 	afx_msg void OnAddLight();
 	afx_msg void OnCreateMaterial();
+	afx_msg void OnDebugButton();
 };

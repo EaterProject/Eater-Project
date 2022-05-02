@@ -40,6 +40,9 @@ void EditorToolScene::Awake()
 	mSaveManager->Initialize(&ObjectList);
 	mLoadManager->Initialize(&ObjectList);
 
+	RenderOption* Option = GetRenderOptionData();
+	
+
 	//텍스쳐를 로드
 	Load("../Assets/Texture/ModelTexture");
 	Load("../Assets/Texture/Terrain");
