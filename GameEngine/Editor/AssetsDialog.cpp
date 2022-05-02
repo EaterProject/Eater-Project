@@ -227,7 +227,7 @@ void AssetsDialog::OnAssetsClick(NMHDR* pNMHDR, LRESULT* pResult)
 
 void AssetsDialog::OnDropFiles(HDROP hDropInfo)
 {
-	RightOption::GetThis()->mLoading->ShowWindow(SW_SHOW);
+	//RightOption::GetThis()->mLoading->ShowWindow(SW_SHOW);
 
 	//외부 폴더에서 Tool쪽으로 파일을 옮겼을때 처리
 	TCHAR FileName[MAXPATH] = { 0, };
@@ -271,7 +271,7 @@ void AssetsDialog::OnDropFiles(HDROP hDropInfo)
 	}
 	CDialogEx::OnDropFiles(hDropInfo);
 
-	RightOption::GetThis()->mLoading->ShowWindow(SW_HIDE);
+	//RightOption::GetThis()->mLoading->ShowWindow(SW_HIDE);
 }
 
 
