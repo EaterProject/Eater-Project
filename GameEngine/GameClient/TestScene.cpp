@@ -52,7 +52,7 @@ void TestScene::Awake()
 	//SetEnvironmentMap("Day");
 	SetEnvironmentMap("Night");
 
-	Load("../Assets/Scene/test.Scene");
+	Load("../Assets/Scene/test1.Scene");
 }
 
 void TestScene::Update()
@@ -129,33 +129,19 @@ void TestScene::CreateMap()
 	//AC = Object->AddComponent<AnimationController>();
 	//AC->Choice("attack");
 
-	//for (int i = 0; i < 5; i++)
-	//{
-	//	for (int j = 0; j < 5; j++)
-	//	{
-	//		Object = Instance();
-	//		filter = Object->AddComponent<MeshFilter>();
-	//		filter->SetModelName("bossb");
-	//		filter->SetAnimationName("bossb");
-	//		Object->GetTransform()->Position.z += 20;
-	//		Object->GetTransform()->Position.x = i * 5;
-	//		Object->GetTransform()->Position.y = j * 5;
-	//		AC = Object->AddComponent<AnimationController>();
-	//		AC->Choice("idle");
-	//
-	//		Object = Instance();
-	//		filter = Object->AddComponent<MeshFilter>();
-	//		filter->SetModelName("MonsterA");
-	//		filter->SetAnimationName("MonsterA");
-	//		Object->GetTransform()->Position.z -= 20;
-	//		Object->GetTransform()->Position.x = i * 5;
-	//		Object->GetTransform()->Position.y = j * 5;
-	//		AC = Object->AddComponent<AnimationController>();
-	//		AC->Choice("die");
-	//
-	//		ACList.push_back(AC);
-	//	}
-	//}
+	for (int i = 0; i < 30; i++)
+	{
+		for (int j = 0; j < 50; j++)
+		{
+			Object = Instance();
+			filter = Object->AddComponent<MeshFilter>();
+			filter->SetModelName("mesh_grass");
+			filter->SetAnimationName("mesh_grass");
+			Object->GetTransform()->Scale = { 0.01f, 0.01f, 0.01f };
+			Object->GetTransform()->Position.x = i;
+			Object->GetTransform()->Position.z = j;
+		}
+	}
 	
 	//Object = Instance();
 	//filter = Object->AddComponent<MeshFilter>();
