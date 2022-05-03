@@ -73,9 +73,9 @@ public:
 	DirectX::SimpleMath::Matrix Load_Local; //로드된 로컬
 
 	//자식객체 넣기
-	void SetChild(Transform* mChild);
+	EATER_ENGINEDLL void SetChild(Transform* mChild);
 	//부모 객체 넣기
-	void SetParent(Transform* mParent);
+	EATER_ENGINEDLL void SetParent(Transform* mParent);
 	//자식객체 로컬 업데이트
 	void Child_Local_Updata();
 

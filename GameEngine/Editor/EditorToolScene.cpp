@@ -42,22 +42,28 @@ void EditorToolScene::Awake()
 
 	RenderOption* Option = GetRenderOptionData();
 	
-
-	//텍스쳐를 로드
+	//리소스를 로드
 	Load("../Assets/Texture/ModelTexture");
 	Load("../Assets/Texture/Terrain");
 	Load("../Assets/Texture/Material");
 	Load("../Assets/Texture/Particle");
+	Load("../Assets/Texture/Environment");
 
+	Load("../Assets/Model/Animation");
+	Load("../Assets/Model/MeshBuffer");
+	Load("../Assets/Model/ModelData");
+	Load("../Assets/Model/Prefap");
+
+	//기본 태그 설정
 	DebugCamObject = GetMainCamera();
 	TagList.insert({ 0, "Default" });
 	TagList.insert({ 1, "MainCam" });
 	TagList.insert({ 2, "Point" });
 	TagList.insert({ 3, "Player" });
 
+	//기본 오브젝트 셋팅
 	GameObject* mCameraObject	 = FindGameObjectName("DebugCamera");
 	GameObject* mDiractionObject = FindGameObjectName("DirectionLight");
-
 	ObjectList.insert({ "DebugCamera",mCameraObject });
 	ObjectList.insert({ "DirectionLight",mDiractionObject });
 }
@@ -78,12 +84,6 @@ void EditorToolScene::End()
 
 void EditorToolScene::ThreadFunction()
 {
-	Load("../Assets/Model/Animation");
-	Load("../Assets/Model/MeshBuffer");
-	Load("../Assets/Model/ModelData");
-	Load("../Assets/Model/Prefap");
-	Load("../Assets/Texture/Environment");
-	
 	BakeEnvironmentMap("Day");
 	SetEnvironmentMap("Day");
 }

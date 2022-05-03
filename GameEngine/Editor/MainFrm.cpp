@@ -13,6 +13,9 @@
 #include "AssetView.h"
 #include "Loading.h"
 #include "EditorToolScene.h"
+#include "DialogFactory.h"
+
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -32,7 +35,6 @@ static UINT indicators[] =
 	ID_INDICATOR_NUM,
 	ID_INDICATOR_SCRL,
 };
-
 
 // CMainFrame 생성/소멸
 CMainFrame::CMainFrame() noexcept
@@ -114,12 +116,14 @@ BOOL CMainFrame::OnCreateClient(LPCREATESTRUCT /*lpcs*/,
 	m_AssetView  = static_cast<AssetView*>(m_wndSplitter[0].GetPane(0, 1));
 	m_wndSplitter[0].SetColumnInfo(0, RenderSize, 10);
 
+	
 	mThread = AfxBeginThread(ThreadFunction, this);
 	mThread->m_bAutoDelete = FALSE;
 	if (mThread == NULL)
 	{
 		AfxMessageBox(L"쓰레드 오류");
 	}
+
 
 	return true;
 }
@@ -150,12 +154,17 @@ void CMainFrame::Dump(CDumpContext& dc) const
 #endif //_DEBUG
 UINT CMainFrame::ThreadFunction(LPVOID _mothod)
 {
+	Sleep(1000);
 	CMainFrame* Main = (CMainFrame*)_mothod;
 
-	Main->mLoading = new Loading();
-	Main->mLoading->Create(IDD_LOADING);
-	Main->mLoading->ShowWindow(SW_SHOW);
+	Loading * mLoading = new Loading();
+	mLoading->Create(IDD_LOADING);
+	mLoading->ShowWindow(SW_SHOW);
+	//mLoading = DialogFactory::GetFactory()->GetLoading();
 	
+	
+	
+
 	CString TextureCount_Str;
 	CString ModelCount_Str;
 	CString AnimationCount_Str;
@@ -170,11 +179,14 @@ UINT CMainFrame::ThreadFunction(LPVOID _mothod)
 	while (EditorToolScene::GetThreadLoading() == false)
 	{
 		Sleep(100);
-		Main->mLoading->LoadFileList.DeleteString(0);
-		Main->mLoading->LoadFileList.DeleteString(0);
-		Main->mLoading->LoadFileList.DeleteString(0);
-		Main->mLoading->LoadFileList.DeleteString(0);
-		Main->mLoading->LoadFileList.DeleteString(0);
+		
+		mLoading->UpdateWindow();
+		mLoading->LoadFileList.DeleteString(0);
+		mLoading->LoadFileList.DeleteString(0);
+		mLoading->LoadFileList.DeleteString(0);
+		mLoading->LoadFileList.DeleteString(0);
+		mLoading->LoadFileList.DeleteString(0);
+
 
 		int TextureCount	= GetLoadTextureCount();
 		int ModelCount		= GetLoadMeshCount();
@@ -185,25 +197,29 @@ UINT CMainFrame::ThreadFunction(LPVOID _mothod)
 
 		if (TextureCount != 0 || ModelCount != 0)
 		{
-			Main->mLoading->LoadingTypeEdit.SetWindowTextW(L"리소스 로드중...");
+			mLoading->LoadingTypeEdit.SetWindowTextW(L"리소스 로드중...");
 		}
 
-		TextureCount_Str.Format(_T("Texture Count ... %d"), TextureCount);
-		ModelCount_Str.Format(_T("Model Count ... %d"), ModelCount);
-		AnimationCount_Str.Format(_T("Animation Count ... %d"), AnimationCount);
-		MaterialCount_Str.Format(_T("Material Count ... %d"), MaterialCount);
-		MeshBufferCount_Str.Format(_T("Buffer Count ... %d"), MeshBufferCount);
+		TextureCount_Str.Format(_T("Texture ... %d"), TextureCount);
+		ModelCount_Str.Format(_T("Model  ... %d"), ModelCount);
+		AnimationCount_Str.Format(_T("Animation ... %d"), AnimationCount);
+		MaterialCount_Str.Format(_T("Material ... %d"), MaterialCount);
+		MeshBufferCount_Str.Format(_T("Buffer ... %d"), MeshBufferCount);
 
-		Main->mLoading->LoadFileList.InsertString(0, TextureCount_Str);
-		Main->mLoading->LoadFileList.InsertString(1, ModelCount_Str);
-		Main->mLoading->LoadFileList.InsertString(2, AnimationCount_Str);
-		Main->mLoading->LoadFileList.InsertString(3, MeshBufferCount_Str);
-		Main->mLoading->LoadFileList.InsertString(4, MaterialCount_Str);
+		mLoading->LoadFileList.InsertString(0, TextureCount_Str);
+		mLoading->LoadFileList.InsertString(1, ModelCount_Str);
+		mLoading->LoadFileList.InsertString(2, AnimationCount_Str);
+		mLoading->LoadFileList.InsertString(3, MeshBufferCount_Str);
+		mLoading->LoadFileList.InsertString(4, MaterialCount_Str);
 		
-		AllAssetsCount_Str.Format(_T("로드된 에셋 : %d"), TextureCount + ModelCount + AnimationCount + MaterialCount + MeshBufferCount);
-		Main->mLoading->AllAssetsCount.SetWindowTextW(AllAssetsCount_Str);
-		Main->mLoading->UpdateWindow();
+		AllAssetsCount_Str.Format(_T("Load Assets Count : %d"), TextureCount + ModelCount + AnimationCount + MaterialCount + MeshBufferCount);
+		mLoading->AllAssetsCount.SetWindowTextW(AllAssetsCount_Str);
+		mLoading->UpdateWindow();
 	}
+
+	mLoading->DestroyWindow();
+	delete mLoading;
+	mLoading = nullptr;
 
 	if (::TerminateThread(Main->mThread->m_hThread, 1)) 
 	{
@@ -211,7 +227,6 @@ UINT CMainFrame::ThreadFunction(LPVOID _mothod)
 		Main->mThread = NULL;
 	}
 
-	Main->mLoading->ShowWindow(SW_HIDE);
 	return 0;
 }
 

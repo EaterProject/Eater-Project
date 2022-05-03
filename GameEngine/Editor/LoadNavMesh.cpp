@@ -5,7 +5,6 @@
 #include "Editor.h"
 #include "LoadNavMesh.h"
 #include "afxdialogex.h"
-#include "GrobalFunction.h"
 #include "EditorToolScene.h"
 #include "RightOption.h"
 #include "EditorManager.h"
@@ -13,7 +12,7 @@
 
 // LoadNavMesh 대화 상자
 
-IMPLEMENT_DYNAMIC(LoadNavMesh, CDialogEx)
+IMPLEMENT_DYNAMIC(LoadNavMesh, CustomDialog)
 
 void LoadNavMesh::SetLoadPath(std::string&& Path)
 {
@@ -26,7 +25,7 @@ void LoadNavMesh::SetPoint(POINT point)
 }
 
 LoadNavMesh::LoadNavMesh(CWnd* pParent /*=nullptr*/)
-	: CDialogEx(IDD_LOAD_NAVMESH, pParent)
+	: CustomDialog(IDD_LOAD_NAVMESH, pParent)
 {
 
 }

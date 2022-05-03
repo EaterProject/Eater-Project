@@ -30,29 +30,33 @@
 #include "Collider.h"
 #include "Rigidbody.h"
 #include "CamAnimation.h"
-#include "GrobalFunction.h"
+#include "DialogFactory.h"
+
 
 // RightOption 대화 상자
 
 GameObject* RightOption::ChoiceObject = nullptr;
 
-IMPLEMENT_DYNAMIC(RightOption, CDialogEx)
+IMPLEMENT_DYNAMIC(RightOption, CustomDialog)
 RightOption*  RightOption::thisPointer = nullptr;
 RightOption::RightOption(CWnd* pParent /*=nullptr*/)
-	: CDialogEx(IDD_RIGHT_OPTION, pParent)
+	: CustomDialog(IDD_RIGHT_OPTION, pParent)
 {
 
 }
 
 RightOption::~RightOption()
 {
-	delete mRigidbody;
-	delete mCollider;
-	delete mTransform;
-	delete mAnimation;
-	delete mMeshFilter;
-	delete mPrticle;
-	delete mLight;
+	mRigidbody	= nullptr;
+	mCollider	= nullptr;
+	mTransform	= nullptr;
+	mAnimation	= nullptr;
+	mMeshFilter = nullptr;
+	mPrticle	= nullptr;
+	mLight		= nullptr;
+	mFileOption = nullptr;
+	mCam		= nullptr;
+	mMaterial	= nullptr;
 }
 
 BOOL RightOption::OnInitDialog()
@@ -61,19 +65,14 @@ BOOL RightOption::OnInitDialog()
 	m_EditorManager = new EditorManager();
 	m_EditorManager->Initialize();
 
-	mFileOption = new FileOption();
-	mFileOption->Create(IDD_FILE_OPTION);
-	mFileOption->Initialize(this);
-	mFileOption->ShowWindow(SW_HIDE);
+	
 
-	mCam = new CamAnimation();
-	mCam->Create(IDD_CAM_ANIMATION);
-	mCam->ShowWindow(SW_HIDE);
+	mFileOption = DialogFactory::GetFactory()->GetFileOption();
+	mCam		= DialogFactory::GetFactory()->GetCamAnimation();
+	mMaterial	= DialogFactory::GetFactory()->GetCreateMaterial();
 
-	mMaterial = new CreateMaterial();
-	mMaterial->Create(IDD_CREATE_MATERIAL);
-	mMaterial->ShowWindow(SW_HIDE);
-
+	DialogFactory::GetFactory()->SetRightOption(this);
+	
 	//Tag 기본 리스트
 	Tag_Combo.InsertString(0, L"Default");
 	Tag_Combo.InsertString(1, L"MainCam");
@@ -89,37 +88,37 @@ BOOL RightOption::OnInitDialog()
 	CRect rect;
 	Component_TapList.GetWindowRect(&rect);
 
-	mTransform = new CTAP_Transform();
+	mTransform = DialogFactory::GetFactory()->GetCTAP_Transform();
 	mTransform->Create(IDD_TAP_TRANSFORM, &Component_TapList);
 	mTransform->MoveWindow(0, 25, rect.Width() - 5, rect.Height() - 25);
 	mTransform->ShowWindow(SW_HIDE);
 
-	mAnimation = new CTAP_Animation();
+	mAnimation = DialogFactory::GetFactory()->GetCTAP_Animation();
 	mAnimation->Create(IDD_TAP_ANIMATION, &Component_TapList);
 	mAnimation->MoveWindow(0, 25, rect.Width() - 5, rect.Height() - 25);
 	mAnimation->ShowWindow(SW_HIDE);
 
-	mMeshFilter = new CTAP_MeshFilter();
+	mMeshFilter = DialogFactory::GetFactory()->GetCTAP_MeshFilter();
 	mMeshFilter->Create(IDD_TAP_MESHFILTER, &Component_TapList);
 	mMeshFilter->MoveWindow(0, 25, rect.Width() - 5, rect.Height() - 25);
 	mMeshFilter->ShowWindow(SW_HIDE);
 
-	mPrticle = new CTAP_Particle();
+	mPrticle = DialogFactory::GetFactory()->GetCTAP_Particle();
 	mPrticle->Create(IDD_TAP_PARTICLE, &Component_TapList);
 	mPrticle->MoveWindow(0, 25, rect.Width() - 5, rect.Height() - 25);
 	mPrticle->ShowWindow(SW_HIDE);
 
-	mLight = new CTAP_Light();
+	mLight = DialogFactory::GetFactory()->GetCTAP_Light();
 	mLight->Create(IDD_TAP_LIGHT, &Component_TapList);
 	mLight->MoveWindow(0, 25, rect.Width() - 5, rect.Height() - 25);
 	mLight->ShowWindow(SW_HIDE);
 
-	mRigidbody = new CTAP_Rigidbody();
+	mRigidbody = DialogFactory::GetFactory()->GetCTAP_Rigidbody();
 	mRigidbody->Create(IDD_TAP_RIGIDBODY, &Component_TapList);
 	mRigidbody->MoveWindow(0, 25, rect.Width() - 5, rect.Height() - 25);
 	mRigidbody->ShowWindow(SW_HIDE);
 
-	mCollider = new CTAP_Collider();
+	mCollider = DialogFactory::GetFactory()->GetCTAP_Collider();
 	mCollider->Create(IDD_TAP_COLLIDER, &Component_TapList);
 	mCollider->MoveWindow(0, 25, rect.Width() - 5, rect.Height() - 25);
 	mCollider->ShowWindow(SW_HIDE);

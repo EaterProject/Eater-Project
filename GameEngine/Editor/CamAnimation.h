@@ -3,6 +3,8 @@
 
 // CamAnimation 대화 상자
 #include <vector>
+#include "CustomDialog.h"
+
 class GameObject;
 class Transform;
 struct KeyNode 
@@ -16,7 +18,7 @@ struct KeyNode
 	float RotZ	= 0;
 };
 
-class CamAnimation : public CDialogEx
+class CamAnimation : public CustomDialog
 {
 	DECLARE_DYNAMIC(CamAnimation)
 

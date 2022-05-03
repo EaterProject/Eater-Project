@@ -1,12 +1,12 @@
 ﻿#pragma once
-
+#include "CustomDialog.h"
 
 // AssetsDialog 대화 상자
 class RightOption;
 class FileOption;
 class LoadTerrain;
 class LoadNavMesh;
-class AssetsDialog : public CDialogEx
+class AssetsDialog : public CustomDialog
 {
 	DECLARE_DYNAMIC(AssetsDialog)
 

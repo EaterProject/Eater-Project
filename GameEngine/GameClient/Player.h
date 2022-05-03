@@ -22,9 +22,9 @@ class Player :public Component
 public:
 	Player();
 	virtual ~Player();
-	void Awake();
-	void SetUp();
-	void Update();
+	void Awake() override;
+	void Start() override;
+	void Update() override;
 	
 	static Transform* GetPlayerTransform();
 	static PLAYER_STATE GetState();

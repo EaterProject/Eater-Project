@@ -7,15 +7,14 @@
 #include "afxdialogex.h"
 #include "Collider.h"
 #include "PhysCollider.h"
-#include "GrobalFunction.h"
 
 
 // CTAP_Collider 대화 상자
 
-IMPLEMENT_DYNAMIC(CTAP_Collider, CDialogEx)
+IMPLEMENT_DYNAMIC(CTAP_Collider, CustomDialog)
 
 CTAP_Collider::CTAP_Collider(CWnd* pParent /*=nullptr*/)
-	: CDialogEx(IDD_TAP_COLLIDER, pParent)
+	: CustomDialog(IDD_TAP_COLLIDER, pParent)
 {
 
 }

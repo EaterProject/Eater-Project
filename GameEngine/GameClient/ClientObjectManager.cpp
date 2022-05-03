@@ -39,7 +39,7 @@ void ClientObjectManager::Initialize(ObjectFactory* Factory)
 
 	//기본 생성 오브젝트들
 	PlayerObject = mFactory->CreatePlayer();
-	mFactory->CreateHealingDrone(0, 1.5f, 0);
+	//mFactory->CreateHealingDrone(0, 1.5f, 0);
 
 	//포탈 태그가 붙어있는 오브젝트를 모두 가져와 리스트에 담아놓는다
 	//FindGameObjectTags("Potal", &PotalPoint_List);

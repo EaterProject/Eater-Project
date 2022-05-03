@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include <string>
 #include <map>
+#include "CustomDialog.h"
 
 
 
@@ -18,7 +19,7 @@ class Loading;
 class EditorManager;
 class CamAnimation;
 class CreateMaterial;
-class RightOption : public CDialogEx
+class RightOption : public CustomDialog
 {
 	DECLARE_DYNAMIC(RightOption)
 
@@ -73,6 +74,7 @@ public:
 	bool isDrag = false;
 public:
 	static GameObject*			ChoiceObject;
+
 	FileOption*			mFileOption;		//자체포맷 변환 창
 	EditorManager*		m_EditorManager;	//자체포맷 변환 관리 매니저
 	Loading*			mLoading;			//로딩 바

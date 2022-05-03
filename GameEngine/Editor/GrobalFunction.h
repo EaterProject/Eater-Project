@@ -3,6 +3,7 @@
 #include <atldef.h>
 #include <atlstr.h>
 #include <atltypes.h>
+#include "Loading.h"
 
 #define FBX		0
 #define PNG		1
@@ -28,7 +29,10 @@ inline int ChangeToInt(std::string Data);			//string	-> int
 //파일의 타입을 가져온다 (.png , .fbx)
 inline int GetFileNameType(std::string Name);
 inline int GetFileNameType(CString Name);
+
+//RECT에 마우스가 충돌했는지 여부
 inline bool DropRect(RECT& rect);
+
 
 bool DropRect(RECT& rect)
 {

@@ -76,9 +76,6 @@
     <Filter Include="소스 파일\MFC\Dialog\FileOption">
       <UniqueIdentifier>{3168b26d-3221-4d10-874d-e1532f1fbf3e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\MFC\Function">
-      <UniqueIdentifier>{d4225d1b-7427-4c6e-b1e9-92c4a0a6d30b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\MFC\Dialog\TAP\TAP_MeshFileter">
       <UniqueIdentifier>{abb4c301-4955-4dd3-89b1-08517bed9269}</UniqueIdentifier>
     </Filter>
@@ -154,6 +151,18 @@
     <Filter Include="소스 파일\Scene\EditorToolScene">
       <UniqueIdentifier>{56c58bac-1bb5-4516-ab70-e7a8b8ef8668}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\MFC\Dialog\DialogManager">
+      <UniqueIdentifier>{56e8870c-0dec-4979-b0ee-ad650aeb7e23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\Dialog\DialogManager\Factory">
+      <UniqueIdentifier>{620407a5-12ee-49d6-aa2e-c3fe2375af12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\Dialog\DialogManager\CustomDialog">
+      <UniqueIdentifier>{67f52411-c24f-43e3-b725-46a2d223cd5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\EditorDefine">
+      <UniqueIdentifier>{d4225d1b-7427-4c6e-b1e9-92c4a0a6d30b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -209,9 +218,6 @@
     </ClInclude>
     <ClInclude Include="RightOption.h">
       <Filter>소스 파일\MFC\Dialog\RightOption</Filter>
-    </ClInclude>
-    <ClInclude Include="GrobalFunction.h">
-      <Filter>소스 파일\MFC\Function</Filter>
     </ClInclude>
     <ClInclude Include="CTAP_MeshFilter.h">
       <Filter>소스 파일\MFC\Dialog\TAP\TAP_MeshFileter</Filter>
@@ -278,6 +284,15 @@
     </ClInclude>
     <ClInclude Include="AssetsDialog.h">
       <Filter>소스 파일\MFC\Dialog\Assets\AssetsDialog</Filter>
+    </ClInclude>
+    <ClInclude Include="DialogFactory.h">
+      <Filter>소스 파일\MFC\Dialog\DialogManager\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomDialog.h">
+      <Filter>소스 파일\MFC\Dialog\DialogManager\CustomDialog</Filter>
+    </ClInclude>
+    <ClInclude Include="EditorDefine.h">
+      <Filter>소스 파일\MFC\EditorDefine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -391,6 +406,12 @@
     </ClCompile>
     <ClCompile Include="AssetsDialog.cpp">
       <Filter>소스 파일\MFC\Dialog\Assets\AssetsDialog</Filter>
+    </ClCompile>
+    <ClCompile Include="DialogFactory.cpp">
+      <Filter>소스 파일\MFC\Dialog\DialogManager\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="CustomDialog.cpp">
+      <Filter>소스 파일\MFC\Dialog\DialogManager\CustomDialog</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

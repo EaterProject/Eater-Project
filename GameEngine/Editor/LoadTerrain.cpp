@@ -5,7 +5,6 @@
 #include "Editor.h"
 #include "LoadTerrain.h"
 #include "afxdialogex.h"
-#include "GrobalFunction.h"
 #include "RightOption.h"
 #include "EditorManager.h"
 #include "EditorToolScene.h"
@@ -14,10 +13,10 @@
 
 // LoadTerrain 대화 상자
 
-IMPLEMENT_DYNAMIC(LoadTerrain, CDialogEx)
+IMPLEMENT_DYNAMIC(LoadTerrain, CustomDialog)
 
 LoadTerrain::LoadTerrain(CWnd* pParent /*=nullptr*/)
-	: CDialogEx(IDD_LOAD_TERRAIN, pParent)
+	: CustomDialog(IDD_LOAD_TERRAIN, pParent)
 {
 
 }
