@@ -184,13 +184,19 @@ copy /Y "$(TargetDir)*.lib" "$(SolutionDir)Library\lib"
     </Link>
     <PostBuildEvent>
       <Command>copy/Y "$(TargetDir)*.lib"   "$(SolutionDir)Library\lib"
+
 copy/Y "$(TargetDir)*.dll"   "$(SolutionDir)Library\lib"
 
+
 copy /Y "$(ProjectDir)Export\*.h" "$(SolutionDir)Library\inc\Component"
+
 copy /Y "$(ProjectDir)Network\inc\GameClientGameServerPacketDefine.h" "$(SolutionDir)Library\inc\Network"
+
 copy /Y "$(ProjectDir)Network\inc\PortIPDefine.h" "$(SolutionDir)Library\inc\Network"
 
+
 copy /Y "$(ProjectDir)Network\lib\Debug\*dll"  "$(TargetDir)"
+
 copy /Y "$(ProjectDir)Network\lib\Debug\*lib"  "$(TargetDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -265,7 +271,7 @@ copy /Y "$(ProjectDir)Network\lib\Release\*lib"  "$(TargetDir)"</Command>
     <ClInclude Include="Export\EaterEngineDLL.h" />
     <ClInclude Include="Export\GameObject.h" />
     <ClInclude Include="Export\Light.h" />
-    <ClInclude Include="Export\MainHeader.h" />
+    <ClInclude Include="Export\EaterEngineAPI.h" />
     <ClInclude Include="Export\Material.h" />
     <ClInclude Include="Export\Mesh.h" />
     <ClInclude Include="Export\MeshFilter.h" />
@@ -329,7 +335,7 @@ copy /Y "$(ProjectDir)Network\lib\Release\*lib"  "$(TargetDir)"</Command>
     <ClCompile Include="KeyinputManager.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="LightManager.cpp" />
-    <ClCompile Include="MainHeader.cpp" />
+    <ClCompile Include="EaterEngineAPI.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="MaterialManager.cpp" />
     <ClCompile Include="MeshFilter.cpp" />

@@ -4,7 +4,7 @@
 #include "pch.h"
 #include "Editor.h"
 #include "RenderView.h"
-#include "MainHeader.h"
+#include "EaterEngineAPI.h"
 #include "EditorToolScene.h"
 #include "RightOption.h"
 
@@ -112,8 +112,8 @@ BOOL RenderView::PreTranslateMessage(MSG* pMsg)
 	{
 	case VK_LBUTTON:
 	{
-		float x = LOWORD(pMsg->lParam);
-		float y = HIWORD(pMsg->lParam);
+		int x = LOWORD(pMsg->lParam);
+		int y = HIWORD(pMsg->lParam);
 		GameObject* Obj = Picking(x, y);
 		if (Obj != nullptr)
 		{

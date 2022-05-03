@@ -6,7 +6,7 @@
 #include "EaterHeader.h"
 #include "Mesh.h"
 #include "GraphicEngineManager.h"
-#include "MainHeader.h"
+#include "EaterEngineAPI.h"
 Eater_LoadBuffer::Eater_LoadBuffer()
 {
 

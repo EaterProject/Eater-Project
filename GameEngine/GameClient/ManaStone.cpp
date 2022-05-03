@@ -2,7 +2,7 @@
 #include "GameObject.h"
 #include "MeshFilter.h"
 #include "Transform.h"
-#include "MainHeader.h"
+#include "EaterEngineAPI.h"
 ManaStone::ManaStone()
 {
 	mMeshFilter = nullptr;
