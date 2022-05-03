@@ -5,13 +5,14 @@
 #include <string>
 #include "EditorData.h"
 #include "GameObject.h"
+#include "CustomDialog.h"
 class RightOption;
 class EditorManager;
 class SceneSaveDialog;
 class CreateMaterial;
 class RenderOption;
 
-class FileOption : public CDialogEx
+class FileOption : public CustomDialog
 {
 	DECLARE_DYNAMIC(FileOption)
 

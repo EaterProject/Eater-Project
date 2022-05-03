@@ -6,15 +6,14 @@
 #include "CTAP_Rigidbody.h"
 #include "afxdialogex.h"
 #include "Rigidbody.h"
-#include "GrobalFunction.h"
 
 
 // CTAP_Rigidbody 대화 상자
 
-IMPLEMENT_DYNAMIC(CTAP_Rigidbody, CDialogEx)
+IMPLEMENT_DYNAMIC(CTAP_Rigidbody, CustomDialog)
 
 CTAP_Rigidbody::CTAP_Rigidbody(CWnd* pParent /*=nullptr*/)
-	: CDialogEx(IDD_TAP_RIGIDBODY, pParent)
+	: CustomDialog(IDD_TAP_RIGIDBODY, pParent)
 {
 
 }

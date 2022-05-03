@@ -3,7 +3,8 @@
 
 // LoadNavMesh 대화 상자
 #include <string>
-class LoadNavMesh : public CDialogEx
+#include "CustomDialog.h"
+class LoadNavMesh : public CustomDialog
 {
 	DECLARE_DYNAMIC(LoadNavMesh)
 

@@ -25,6 +25,8 @@ Player::Player()
 	AttackCollider = nullptr;
 
 	RayCastHit = new PhysRayCast[5]();
+
+	Start_Order = FUNCTION_ORDER_LAST;
 }
 
 Player::~Player()
@@ -46,13 +48,20 @@ void Player::Awake()
 	mMeshFilter = gameobject->GetComponent<MeshFilter>();
 	mAnimation	= gameobject->GetComponent<AnimationController>();
 	
-	AttackColliderObject = FindGameObjectTag("AttackCollider");
-	AttackCollider = AttackColliderObject->GetComponent<Collider>();
+	//AttackColliderObject = FindGameObjectTag("AttackCollider");
+	//AttackCollider = AttackColliderObject->GetComponent<Collider>();
 }
 
-void Player::SetUp()
+void Player::Start()
 {
 	mCameraTR = GetMainCamera()->GetTransform();
+
+	GameObject* Hand = gameobject->GetChildBone("hand.l");
+	GameObject* WeponObejct = FindGameObjectTag("Weapon");
+	
+	Hand->GetTransform()->SetChild(WeponObejct->GetTransform());
+	WeponObejct->GetTransform()->SetParent(Hand->GetTransform());
+	WeponObejct->GetTransform()->Rotation = { -90,0,90 };
 }
 
 void Player::Update()
@@ -172,7 +181,7 @@ void Player::PlayerAttackColliderUpdate()
 	Look *= 2;
 	Look.y = 1;
 	Look.z *= -1;
-	AttackColliderObject->GetTransform()->Position = mTransform->Position + Look;
+	//AttackColliderObject->GetTransform()->Position = mTransform->Position + Look;
 }
 
 void Player::PlayerGroundCheck()

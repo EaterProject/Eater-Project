@@ -2,9 +2,9 @@
 
 
 // CTAP_Particle 대화 상자
-
+#include "CustomDialog.h"
 class ParticleSystem;
-class CTAP_Particle : public CDialogEx
+class CTAP_Particle : public CustomDialog
 {
 	DECLARE_DYNAMIC(CTAP_Particle)
 

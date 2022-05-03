@@ -39,7 +39,6 @@ public:
 	static UINT ThreadFunction(LPVOID _mothod);
 	bool m_ThreadStart;
 	CWinThread* mThread;
-	Loading*		mLoading;
 protected:  // 컨트롤 모음이 포함된 멤버입니다.
 	CToolBar        m_wndToolBar;
 	CStatusBar      m_wndStatusBar;
@@ -50,7 +49,6 @@ protected:  // 컨트롤 모음이 포함된 멤버입니다.
 	OptionView*		m_OptionView;
 	AssetView*		m_AssetView;
 	
-
 // 생성된 메시지 맵 함수
 protected:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);

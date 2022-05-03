@@ -1,9 +1,10 @@
 ﻿#pragma once
+#include "CustomDialog.h"
 
 
 // CreateMaterial 대화 상자
 class Material;
-class CreateMaterial : public CDialogEx
+class CreateMaterial : public CustomDialog
 {
 	DECLARE_DYNAMIC(CreateMaterial)
 

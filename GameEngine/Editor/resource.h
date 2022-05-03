@@ -29,6 +29,7 @@
 #define IDD_LOAD_TERRAIN                353
 #define IDD_LOAD_NAVMESH                355
 #define IDD_CREATE_MATERIAL             357
+#define IDD_CUSTOM                      359
 #define IDC_TREE1                       1000
 #define IDC_TREE2                       1001
 #define IDC_TREE3                       1002
@@ -167,7 +168,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        359
+#define _APS_NEXT_RESOURCE_VALUE        361
 #define _APS_NEXT_COMMAND_VALUE         32771
 #define _APS_NEXT_CONTROL_VALUE         1061
 #define _APS_NEXT_SYMED_VALUE           312

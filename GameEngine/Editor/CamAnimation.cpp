@@ -5,7 +5,6 @@
 #include "Editor.h"
 #include "CamAnimation.h"
 #include "afxdialogex.h"
-#include "GrobalFunction.h"
 #include "EditorToolScene.h"
 #include "GameObject.h"
 #include "Transform.h"
@@ -14,10 +13,10 @@
 
 // CamAnimation 대화 상자
 
-IMPLEMENT_DYNAMIC(CamAnimation, CDialogEx)
+IMPLEMENT_DYNAMIC(CamAnimation, CustomDialog)
 #define LERP(prev, next, time) ((prev * (1.0f - time)) + (next * time))
 CamAnimation::CamAnimation(CWnd* pParent /*=nullptr*/)
-	: CDialogEx(IDD_CAM_ANIMATION, pParent)
+	: CustomDialog(IDD_CAM_ANIMATION, pParent)
 {
 
 }

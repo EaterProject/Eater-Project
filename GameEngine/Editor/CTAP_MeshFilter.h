@@ -1,10 +1,11 @@
 ﻿#pragma once
 #include "EditorData.h"
+#include "CustomDialog.h"
 
 // CTAP_MeshFilter 대화 상자
 class MeshFilter;
 class Material;
-class CTAP_MeshFilter : public CDialogEx
+class CTAP_MeshFilter : public CustomDialog
 {
 	DECLARE_DYNAMIC(CTAP_MeshFilter)
 

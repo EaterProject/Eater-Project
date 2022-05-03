@@ -7,14 +7,13 @@
 #include "CTAP_Particle.h"
 
 #include "ParticleSystem.h"
-#include "GrobalFunction.h"
 
 // CTAP_Particle 대화 상자
 
-IMPLEMENT_DYNAMIC(CTAP_Particle, CDialogEx)
+IMPLEMENT_DYNAMIC(CTAP_Particle, CustomDialog)
 
 CTAP_Particle::CTAP_Particle(CWnd* pParent /*=nullptr*/)
-	: CDialogEx(IDD_TAP_PARTICLE, pParent)
+	: CustomDialog(IDD_TAP_PARTICLE, pParent)
 {
 
 }

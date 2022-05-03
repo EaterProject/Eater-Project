@@ -15,6 +15,7 @@
 #include "CreateMaterial.h"
 #include "MainHeader.h"
 #include "TypeOptionHeader.h"
+#include "DialogFactory.h"
 
 #include "GameObject.h"
 #include "MeshFilter.h"
@@ -24,10 +25,10 @@
 
 // FileOption 대화 상자
 
-IMPLEMENT_DYNAMIC(FileOption, CDialogEx)
+IMPLEMENT_DYNAMIC(FileOption, CustomDialog)
 
 FileOption::FileOption(CWnd* pParent /*=nullptr*/)
-	: CDialogEx(IDD_BUTTON_OPTION, pParent)
+	: CustomDialog(IDD_BUTTON_OPTION, pParent)
 {
 
 }
@@ -41,7 +42,14 @@ BOOL FileOption::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 
-
+	Debug_Check.SetCheck(true);
+	SSAO_Check.SetCheck(true);
+	FOG_Check.SetCheck(true);
+	Shadow_Check.SetCheck(true);
+	IBL_Check.SetCheck(true);
+	Bloom_Check.SetCheck(true);
+	FXAA_Check.SetCheck(true);
+	HDR_Check.SetCheck(true);
 
 	return 0;
 }
@@ -89,13 +97,13 @@ END_MESSAGE_MAP()
 
 void FileOption::Initialize(RightOption* mOption)
 {
-	mRightOption = mOption;
-	mScene = new SceneSaveDialog();
-	mScene->Initialize(mRightOption);
+	mRightOption =DialogFactory::GetFactory()->GetRightOption();
+	//mScene = new SceneSaveDialog();
+	//mScene->Initialize(mRightOption);
 
-	mMaterial = new CreateMaterial();
-	mMaterial->Create(IDD_CREATE_MATERIAL);
-	mMaterial->ShowWindow(SW_HIDE);
+	//mMaterial = new CreateMaterial();
+	//mMaterial->Create(IDD_CREATE_MATERIAL);
+	//mMaterial->ShowWindow(SW_HIDE);
 
 	//mRenderOption = GetRenderOptionData();
 	//mRenderOption->DebugOption ^= DEBUG_EDITOR;
@@ -110,14 +118,7 @@ void FileOption::Initialize(RightOption* mOption)
 	//mRenderOption->PostProcessOption ^= RENDER_HDR;
 	//mRenderOption->PostProcessOption ^= RENDER_FXAA;
 
-	Debug_Check.SetCheck(true);
-	SSAO_Check.SetCheck(true);
-	FOG_Check.SetCheck(true);
-	Shadow_Check.SetCheck(true);
-	IBL_Check.SetCheck(true);
-	Bloom_Check.SetCheck(true);
-	FXAA_Check.SetCheck(true);
-	HDR_Check.SetCheck(true);
+	
 
 }
 
@@ -142,6 +143,7 @@ LRESULT FileOption::OnUserFunc(WPARAM wParam, LPARAM lParam)
 void FileOption::OnCreateTerrain()
 {
 	EditorToolScene::Create_Terrain("","","");
+	mRightOption = DialogFactory::GetFactory()->GetRightOption();
 	mRightOption->HirearchyTree.InsertItem(L"Terrain");
 }
 
@@ -149,6 +151,7 @@ void FileOption::OnCreateLight()
 {
 	GameObject* Object = EditorToolScene::Create_Light();
 	HTREEITEM Top = mRightOption->HirearchyTree.InsertItem(ChangeToCString(Object->Name));
+	mRightOption = DialogFactory::GetFactory()->GetRightOption();
 	mRightOption->Create_Hirearchy_Item(Object, Top);
 }
 
@@ -157,12 +160,14 @@ void FileOption::OnCreateParticle()
 {
 	GameObject* Object = EditorToolScene::Create_Particle();
 	HTREEITEM Top = mRightOption->HirearchyTree.InsertItem(ChangeToCString(Object->Name));
+	mRightOption = DialogFactory::GetFactory()->GetRightOption();
 	mRightOption->Create_Hirearchy_Item(Object, Top);
 }
 
 
 void FileOption::OnSceneSave()
 {
+	mScene = DialogFactory::GetFactory()->GetSceneSaveDialog();
 	mScene->DoModal();
 	if(mScene->isOK == true)
 	{
@@ -238,6 +243,7 @@ void FileOption::OnCreateCamera()
 {
 	GameObject* Cam = EditorToolScene::Create_Camera();
 	HTREEITEM Top = mRightOption->HirearchyTree.InsertItem(ChangeToCString(Cam->Name));
+	mRightOption = DialogFactory::GetFactory()->GetRightOption();
 	mRightOption->Create_Hirearchy_Item(Cam, Top);
 }
 
@@ -245,6 +251,7 @@ void FileOption::OnCreateGameObject()
 {
 	GameObject* Obj = EditorToolScene::Create_GameObject();
 	HTREEITEM Top = mRightOption->HirearchyTree.InsertItem(ChangeToCString(Obj->Name));
+	mRightOption = DialogFactory::GetFactory()->GetRightOption();
 	mRightOption->Create_Hirearchy_Item(Obj, Top);
 }
 

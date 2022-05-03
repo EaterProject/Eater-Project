@@ -10,11 +10,12 @@
 
 // SceneSaveDialog 대화 상자
 
-IMPLEMENT_DYNAMIC(SceneSaveDialog, CDialogEx)
+IMPLEMENT_DYNAMIC(SceneSaveDialog, CustomDialog)
 
 SceneSaveDialog::SceneSaveDialog(CWnd* pParent /*=nullptr*/)
-	: CDialogEx(IDD_SCENE_SAVE, pParent)
+	: CustomDialog(IDD_SCENE_SAVE, pParent)
 {
+
 
 }
 
@@ -36,15 +37,6 @@ BEGIN_MESSAGE_MAP(SceneSaveDialog, CDialogEx)
 	ON_BN_CLICKED(IDOK, &SceneSaveDialog::OnBnClickedOk)
 	ON_BN_CLICKED(IDCANCEL, &SceneSaveDialog::OnBnClickedCancel)
 END_MESSAGE_MAP()
-
-
-// SceneSaveDialog 메시지 처리기
-
-
-void SceneSaveDialog::Initialize(RightOption* mRight)
-{
-	mRight = mRightOption;
-}
 
 void SceneSaveDialog::OnBnClickedOk()
 {

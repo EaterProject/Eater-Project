@@ -5,7 +5,6 @@
 #include "Editor.h"
 #include "AssetsDialog.h"
 #include "afxdialogex.h"
-#include "GrobalFunction.h"
 #include <stack>
 #include "EditorToolScene.h"
 #include "RightOption.h"
@@ -16,13 +15,14 @@
 #include "LoadTerrain.h"
 #include "LoadNavMesh.h"
 #include "CreateMaterial.h"
+#include "DialogFactory.h"
 #define MAXPATH 256
 // AssetsDialog 대화 상자
 
-IMPLEMENT_DYNAMIC(AssetsDialog, CDialogEx)
+IMPLEMENT_DYNAMIC(AssetsDialog, CustomDialog)
 
 AssetsDialog::AssetsDialog(CWnd* pParent /*=nullptr*/)
-	: CDialogEx(IDD_ASSETS, pParent)
+	: CustomDialog(IDD_ASSETS, pParent)
 {
 
 }
@@ -227,11 +227,20 @@ void AssetsDialog::OnAssetsClick(NMHDR* pNMHDR, LRESULT* pResult)
 
 void AssetsDialog::OnDropFiles(HDROP hDropInfo)
 {
-	RightOption::GetThis()->mLoading->ShowWindow(SW_SHOW);
+	Loading* mLoading = DialogFactory::GetFactory()->GetLoading();
+	mLoading->ShowWindow(SW_SHOW);
+	mLoading->LoadingTypeEdit.SetWindowTextW(L"파일 변환중입니다");
+	mLoading->LoadFileList.AddString(L"변환이 완료되면 자동으로 종료됩니다");
+
+	//RightOption::GetThis()->mLoading->ShowWindow(SW_SHOW);
 
 	//외부 폴더에서 Tool쪽으로 파일을 옮겼을때 처리
 	TCHAR FileName[MAXPATH] = { 0, };
 	UINT count = DragQueryFile(hDropInfo, 0xFFFFFFFF, FileName, MAXPATH);
+	CString DataCount;
+	DataCount.Format(_T("변환할 파일 개수 %d"),(int)count);
+	mLoading->AllAssetsCount.SetWindowTextW(DataCount);
+	mLoading->UpdateWindow();
 	for (UINT i = 0; i < count; i++)
 	{
 		DragQueryFile(hDropInfo, i, FileName, MAXPATH);
@@ -271,7 +280,8 @@ void AssetsDialog::OnDropFiles(HDROP hDropInfo)
 	}
 	CDialogEx::OnDropFiles(hDropInfo);
 
-	RightOption::GetThis()->mLoading->ShowWindow(SW_HIDE);
+	mLoading->LoadFileList.DeleteString(0);
+	mLoading->ShowWindow(SW_HIDE);
 }
 
 

@@ -11,10 +11,10 @@
 #include "Transform.h"
 // CTAP_1 대화 상자
 
-IMPLEMENT_DYNAMIC(CTAP_Transform, CDialogEx)
+IMPLEMENT_DYNAMIC(CTAP_Transform, CustomDialog)
 
 CTAP_Transform::CTAP_Transform(CWnd* pParent /*=nullptr*/)
-	: CDialogEx(IDD_TAP_TRANSFORM, pParent)
+	: CustomDialog(IDD_TAP_TRANSFORM, pParent)
 {
 
 }

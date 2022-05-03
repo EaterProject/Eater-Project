@@ -1,10 +1,10 @@
 ﻿#pragma once
-
+#include "CustomDialog.h"
 
 // CTAP_Collider 대화 상자
 class Collider;
 class PhysCollider;
-class CTAP_Collider : public CDialogEx
+class CTAP_Collider : public CustomDialog
 {
 	DECLARE_DYNAMIC(CTAP_Collider)
 
