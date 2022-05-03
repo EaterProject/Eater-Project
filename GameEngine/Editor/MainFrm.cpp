@@ -8,7 +8,7 @@
 
 #include "MainFrm.h"
 #include "RenderView.h"
-#include "MainHeader.h"
+#include "EaterEngineAPI.h"
 #include "OptionView.h"
 #include "AssetView.h"
 #include "Loading.h"
@@ -26,6 +26,7 @@ IMPLEMENT_DYNCREATE(CMainFrame, CFrameWnd)
 
 BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 	ON_WM_CREATE()
+	ON_WM_CLOSE()
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -230,3 +231,10 @@ UINT CMainFrame::ThreadFunction(LPVOID _mothod)
 	return 0;
 }
 
+
+
+void CMainFrame::OnClose()
+{
+	DialogFactory::GetFactory()->Release();
+	CFrameWnd::OnClose();
+}

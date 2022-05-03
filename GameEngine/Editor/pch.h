@@ -9,7 +9,7 @@
 
 // 여기에 미리 컴파일하려는 헤더 추가
 #include "framework.h"
-#include "MainHeader.h"
+#include "EaterEngineAPI.h"
 
 #define M_MSG_MeshFilter	WM_USER +1
 #define M_MSG_FILE_CHANGE	WM_USER +2

@@ -7,6 +7,9 @@
 #include "CreateMaterial.h"
 #include "CamAnimation.h"
 #include "SceneSaveDialog.h"
+#include "LoadNavMesh.h"
+#include "LoadTerrain.h"
+#include "CustomDialog.h"
 
 
 
@@ -54,7 +57,14 @@ void DialogFactory::Initialize()
 	mFileOption_Dlog->ShowWindow(SW_HIDE);
 
 	mSceneSave = new SceneSaveDialog();
-	
+
+	mLoadNavMesh = new LoadNavMesh();
+	mLoadNavMesh->Create(IDD_LOAD_NAVMESH);
+	mLoadNavMesh->ShowWindow(SW_HIDE);
+
+	mLoadTerrain = new LoadTerrain();
+	mLoadTerrain->Create(IDD_LOAD_TERRAIN);
+	mLoadTerrain->ShowWindow(SW_HIDE);
 	
 	mTransform	= new CTAP_Transform();
 	mAnimation	= new CTAP_Animation();
@@ -67,9 +77,21 @@ void DialogFactory::Initialize()
 
 void DialogFactory::Release()
 {
+	CustomDlgDelete(mLoading_Dlog);
+	CustomDlgDelete(mMaterial_Dlog);
+	CustomDlgDelete(mCamAnimation_Dlog);
+	CustomDlgDelete(mFileOption_Dlog);
+	CustomDlgDelete(mSceneSave);
+	CustomDlgDelete(mLoadNavMesh);
+	CustomDlgDelete(mLoadTerrain);
 
-
-
+	CustomDlgDelete(mTransform);
+	CustomDlgDelete(mAnimation);
+	CustomDlgDelete(mMeshFilter);
+	CustomDlgDelete(mPrticle);
+	CustomDlgDelete(mLight);
+	CustomDlgDelete(mRigidbody);
+	CustomDlgDelete(mCollider);
 }
 
 DialogFactory* DialogFactory::GetFactory()
@@ -80,4 +102,11 @@ DialogFactory* DialogFactory::GetFactory()
 		instance->Initialize();
 	}
 	return instance;
+}
+
+void DialogFactory::CustomDlgDelete(CustomDialog* Dlg)
+{
+	Dlg->DestroyWindow();
+	delete Dlg;
+	Dlg = nullptr;
 }

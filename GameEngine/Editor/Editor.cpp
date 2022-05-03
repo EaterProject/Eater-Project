@@ -8,7 +8,7 @@
 #include "afxdialogex.h"
 #include "Editor.h"
 #include "MainFrm.h"
-#include "MainHeader.h"
+#include "EaterEngineAPI.h"
 
 #include "EditorDoc.h"
 #include "EditorView.h"

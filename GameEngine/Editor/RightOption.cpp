@@ -20,7 +20,7 @@
 #include "CreateMaterial.h"
 
 #include <stack>
-#include "MainHeader.h"
+#include "EaterEngineAPI.h"
 #include "GameObject.h"
 #include "Transform.h"
 #include "AnimationController.h"
@@ -225,10 +225,7 @@ void RightOption::ChickTapDrag(CPoint point)
 	//Tap컨트롤에  드래그했을때 처리
 	CRect rect;
 	Component_TapList.GetWindowRect(&rect);
-	if (rect.left <= point.x &&
-		rect.right >= point.x &&
-		rect.top <= point.y &&
-		rect.bottom >= point.y)
+	if (DropRect(rect))
 	{
 		//현재 켜져있는 창을 알아온다
 		int num = Component_TapList.GetCurSel();
@@ -263,10 +260,7 @@ void RightOption::ChickHirearchyDarg(CPoint point)
 
 	
 	//범위 안에 들어와있는지 체크
-	if (rect.left	<= point.x &&
-		rect.right	>= point.x &&
-		rect.top	<= point.y &&
-		rect.bottom >= point.y)
+	if (DropRect(rect))
 	{
 		std::string Name = ChangeToString(DragItemName);
 		int Type = GetFileNameType(Name);

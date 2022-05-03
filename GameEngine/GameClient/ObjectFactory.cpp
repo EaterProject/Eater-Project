@@ -1,5 +1,5 @@
 #include "ObjectFactory.h"
-#include "MainHeader.h"
+#include "EaterEngineAPI.h"
 #include "GameObject.h"
 
 //엔진쪽 컨퍼넌트

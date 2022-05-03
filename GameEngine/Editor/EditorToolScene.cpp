@@ -1,6 +1,6 @@
 #include "EditorToolScene.h"
 #include "GameObject.h"
-#include "MainHeader.h"
+#include "EaterEngineAPI.h"
 #include "TypeOptionHeader.h"
 #include "EngineData.h"
 
@@ -41,6 +41,8 @@ void EditorToolScene::Awake()
 	mLoadManager->Initialize(&ObjectList);
 
 	RenderOption* Option = GetRenderOptionData();
+	Option->DebugOption ^= DEBUG_EDITOR;
+	RenderSetting();
 	
 	//리소스를 로드
 	Load("../Assets/Texture/ModelTexture");

@@ -4,7 +4,7 @@
 #include "pch.h"
 #include "Editor.h"
 #include "afxdialogex.h"
-#include "MainHeader.h"
+#include "EaterEngineAPI.h"
 #include "Loading.h"
 
 IMPLEMENT_DYNAMIC(Loading, CustomDialog)

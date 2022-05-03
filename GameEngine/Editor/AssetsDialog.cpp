@@ -89,8 +89,8 @@ BEGIN_MESSAGE_MAP(AssetsDialog, CDialogEx)
 	ON_NOTIFY(NM_CLICK, IDC_LIST2, &AssetsDialog::OnNMClickList2)
 	ON_WM_MOUSEMOVE()
 	ON_WM_LBUTTONUP()
-	ON_BN_CLICKED(IDC_BUTTON1, &AssetsDialog::OnBnClickedButton1)
-	ON_BN_CLICKED(IDC_BUTTON2, &AssetsDialog::OnBnClickedButton2)
+	ON_BN_CLICKED(IDC_BUTTON1, &AssetsDialog::OnLoadBuffer)
+	ON_BN_CLICKED(IDC_BUTTON2, &AssetsDialog::OnLoadNavMesh)
 END_MESSAGE_MAP()
 
 
@@ -397,7 +397,7 @@ void AssetsDialog::OnLButtonUp(UINT nFlags, CPoint point)
 }
 
 
-void AssetsDialog::OnBnClickedButton1()
+void AssetsDialog::OnLoadBuffer()
 {
 	mLoadTerrain->ShowWindow(SW_SHOW);
 	//네비매쉬창이 활성화되었을때 옆으로 옮겨줌
@@ -430,34 +430,7 @@ void AssetsDialog::OnBnClickedButton1()
 }
 
 
-void AssetsDialog::OnBnClickedButton2()
+void AssetsDialog::OnLoadNavMesh()
 {
 	mLoadNavMesh->ShowWindow(SW_SHOW);
-	//터레인 로드창이 켜져있을때 창을 옆으로 옮겨준다
-	//if (mLoadTerrain->IsWindowVisible() == true)
-	//{
-	//	mLoadNavMesh->ShowWindow(SW_SHOW);
-	//	RECT NavMeshWindow;
-	//	RECT TerrainWindow;
-	//	mLoadTerrain->GetWindowRect(&TerrainWindow);
-	//
-	//	NavMeshWindow = TerrainWindow;
-	//	NavMeshWindow.left = TerrainWindow.right;
-	//	mLoadNavMesh->SetWindowPos(NULL, NavMeshWindow.left, NavMeshWindow.top, NavMeshWindow.right, NavMeshWindow.bottom, SWP_NOSIZE);
-	//	//mLoadNavMesh->MoveWindow(&NavMeshWindow);
-	//}
-	//else
-	//{
-	//	//화면 해상도의 가운데값을 구해옴
-	//	int x = (int)GetSystemMetrics(SM_CXSCREEN)* 0.5f;
-	//	int y = (int)GetSystemMetrics(SM_CYSCREEN)*0.5f;
-	//
-	//	//다이얼로그창 
-	//	RECT ClientRect;
-	//	mLoadNavMesh->GetWindowRect(&ClientRect);
-	//
-	//
-	//	mLoadNavMesh->ShowWindow(SW_SHOW);
-	//	mLoadNavMesh->SetWindowPos(NULL, x, y, ClientRect.right, ClientRect.bottom, SWP_NOSIZE);
-	//}
 }

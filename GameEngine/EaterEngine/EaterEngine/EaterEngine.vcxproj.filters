@@ -213,9 +213,6 @@
     <ClInclude Include="Export\Scene.h">
       <Filter>소스 파일\Manager\SceneManager</Filter>
     </ClInclude>
-    <ClInclude Include="Export\MainHeader.h">
-      <Filter>소스 파일\MainHeader</Filter>
-    </ClInclude>
     <ClInclude Include="Export\GameObject.h">
       <Filter>소스 파일\GameObject</Filter>
     </ClInclude>
@@ -351,6 +348,9 @@
     <ClInclude Include="NavMesh.h">
       <Filter>소스 파일\Manager\NavigationManager</Filter>
     </ClInclude>
+    <ClInclude Include="Export\EaterEngineAPI.h">
+      <Filter>소스 파일\MainHeader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -361,9 +361,6 @@
     </ClCompile>
     <ClCompile Include="Component.cpp">
       <Filter>소스 파일\Component\ComponentBase</Filter>
-    </ClCompile>
-    <ClCompile Include="MainHeader.cpp">
-      <Filter>소스 파일\MainHeader</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>소스 파일\Manager\SceneManager</Filter>
@@ -505,6 +502,9 @@
     </ClCompile>
     <ClCompile Include="NavMesh.cpp">
       <Filter>소스 파일\Manager\NavigationManager</Filter>
+    </ClCompile>
+    <ClCompile Include="EaterEngineAPI.cpp">
+      <Filter>소스 파일\MainHeader</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

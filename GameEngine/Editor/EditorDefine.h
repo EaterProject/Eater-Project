@@ -7,3 +7,4 @@
 #define  SETTER(T,Member)\
 void Set##T(T* Value)\
 {Member = Value;}
+

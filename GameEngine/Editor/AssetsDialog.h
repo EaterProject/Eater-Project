@@ -58,6 +58,6 @@ public:
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
-	afx_msg void OnBnClickedButton1();
-	afx_msg void OnBnClickedButton2();
+	afx_msg void OnLoadBuffer();
+	afx_msg void OnLoadNavMesh();
 };
