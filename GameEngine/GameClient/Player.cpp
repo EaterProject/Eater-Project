@@ -37,7 +37,6 @@ Player::~Player()
 	mCameraTR = nullptr;
 	AttackColliderObject = nullptr;
 	AttackCollider = nullptr;
-
 	delete[] RayCastHit;
 }
 

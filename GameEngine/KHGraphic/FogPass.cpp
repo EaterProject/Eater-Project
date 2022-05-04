@@ -101,6 +101,8 @@ void FogPass::RenderUpdate()
 	static float Time = 0;
 	Time += g_GlobalData->Time * m_FogSpeed;
 
+	if (Time > 100.0f) Time = 0.0f;
+
 	g_Context->OMSetRenderTargets(1, &m_OutPut_RTV, nullptr);
 	g_Context->RSSetViewports(1, m_Screen_VP);
 

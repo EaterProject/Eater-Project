@@ -129,6 +129,26 @@ void SceneSave::SceneOption()
 		EATER_SET_LIST(Start_it->first);
 		EATER_SET_LIST(Start_it->second, true);
 	}
+
+	RenderOption* mOption = GetRenderOptionData();
+
+	EATER_SET_LIST_START("OPTION", 1, 16);
+	EATER_SET_LIST(mOption->AO_Radius);
+	EATER_SET_LIST(mOption->AO_SurfaceEpsilon);
+	EATER_SET_LIST(mOption->AO_BlurCount);
+	EATER_SET_LIST(mOption->FOG_Color.x);
+	EATER_SET_LIST(mOption->FOG_Color.y);
+	EATER_SET_LIST(mOption->FOG_Color.z);
+	EATER_SET_LIST(mOption->FOG_MoveSpeed);
+	EATER_SET_LIST(mOption->FOG_StartDistance);
+	EATER_SET_LIST(mOption->FOG_DistanceOffset);
+	EATER_SET_LIST(mOption->FOG_DistanceValue);
+	EATER_SET_LIST(mOption->FOG_HeightOffset);
+	EATER_SET_LIST(mOption->FOG_HeightValue);
+	EATER_SET_LIST(mOption->EnvironmentSize);
+	EATER_SET_LIST(mOption->BLOOM_Threshold);
+	EATER_SET_LIST(mOption->BLOOM_Factor);
+	EATER_SET_LIST(mOption->IBL_Factor,true);
 }
 
 void SceneSave::SaveTransform(Transform* mTransform)

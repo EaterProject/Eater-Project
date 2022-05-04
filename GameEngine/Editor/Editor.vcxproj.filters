@@ -73,9 +73,6 @@
     <Filter Include="소스 파일\MFC\Dialog\RightOption">
       <UniqueIdentifier>{b4a31b4e-e33f-4873-8f61-9b9ab4b3e54b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\MFC\Dialog\FileOption">
-      <UniqueIdentifier>{3168b26d-3221-4d10-874d-e1532f1fbf3e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\MFC\Dialog\TAP\TAP_MeshFileter">
       <UniqueIdentifier>{abb4c301-4955-4dd3-89b1-08517bed9269}</UniqueIdentifier>
     </Filter>
@@ -112,12 +109,6 @@
     <Filter Include="소스 파일\Manager\Eater\EaterChange">
       <UniqueIdentifier>{251eda48-e89d-4ff2-8061-1c3529e20f11}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\MFC\Dialog\Loading">
-      <UniqueIdentifier>{d75bf0cc-b2b0-40a4-8468-23a3724434c1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\MFC\Dialog\CamAnimation">
-      <UniqueIdentifier>{a203aa94-bb5a-4e2e-bd09-aa41386b252a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\MFC\Dialog\TAP\TAP_Camera">
       <UniqueIdentifier>{973e5e89-e78c-4641-9133-1421d63be25e}</UniqueIdentifier>
     </Filter>
@@ -132,9 +123,6 @@
     </Filter>
     <Filter Include="소스 파일\Scene\SceneSaveLoad">
       <UniqueIdentifier>{981e2971-4e0f-482d-87e6-be53a21779b8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\MFC\Dialog\Material">
-      <UniqueIdentifier>{41162ea8-57b7-4b4f-888e-f4c9c5868e23}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\MFC\Dialog\Assets\ChangeDataType">
       <UniqueIdentifier>{acdedabf-7806-4e8e-9b87-797e3b9003d5}</UniqueIdentifier>
@@ -162,6 +150,24 @@
     </Filter>
     <Filter Include="소스 파일\MFC\EditorDefine">
       <UniqueIdentifier>{d4225d1b-7427-4c6e-b1e9-92c4a0a6d30b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\Dialog\Option">
+      <UniqueIdentifier>{7bce9bd8-c754-4208-91e1-06581dee9867}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\Dialog\Option\Material">
+      <UniqueIdentifier>{41162ea8-57b7-4b4f-888e-f4c9c5868e23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\Dialog\Option\Loading">
+      <UniqueIdentifier>{d75bf0cc-b2b0-40a4-8468-23a3724434c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\Dialog\Option\FileOption">
+      <UniqueIdentifier>{3168b26d-3221-4d10-874d-e1532f1fbf3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\Dialog\Option\CamAnimation">
+      <UniqueIdentifier>{a203aa94-bb5a-4e2e-bd09-aa41386b252a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\Dialog\Option\SceneSetting">
+      <UniqueIdentifier>{4e2920fa-5115-4164-b0e6-f060e40496fd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -208,10 +214,10 @@
       <Filter>소스 파일\Scene\EditorToolScene</Filter>
     </ClInclude>
     <ClInclude Include="FileOption.h">
-      <Filter>소스 파일\MFC\Dialog\FileOption</Filter>
+      <Filter>소스 파일\MFC\Dialog\Option\FileOption</Filter>
     </ClInclude>
     <ClInclude Include="Loading.h">
-      <Filter>소스 파일\MFC\Dialog\Loading</Filter>
+      <Filter>소스 파일\MFC\Dialog\Option\Loading</Filter>
     </ClInclude>
     <ClInclude Include="OptionView.h">
       <Filter>소스 파일\MFC\View\OptionView</Filter>
@@ -262,7 +268,7 @@
       <Filter>소스 파일\Manager\Eater\EaterChange</Filter>
     </ClInclude>
     <ClInclude Include="CamAnimation.h">
-      <Filter>소스 파일\MFC\Dialog\CamAnimation</Filter>
+      <Filter>소스 파일\MFC\Dialog\Option\CamAnimation</Filter>
     </ClInclude>
     <ClInclude Include="SceneLoad.h">
       <Filter>소스 파일\Scene\SceneSaveLoad</Filter>
@@ -280,7 +286,7 @@
       <Filter>소스 파일\MFC\Dialog\Assets\ChangeDataType\LoadNavMesh</Filter>
     </ClInclude>
     <ClInclude Include="CreateMaterial.h">
-      <Filter>소스 파일\MFC\Dialog\Material</Filter>
+      <Filter>소스 파일\MFC\Dialog\Option\Material</Filter>
     </ClInclude>
     <ClInclude Include="AssetsDialog.h">
       <Filter>소스 파일\MFC\Dialog\Assets\AssetsDialog</Filter>
@@ -293,6 +299,9 @@
     </ClInclude>
     <ClInclude Include="EditorDefine.h">
       <Filter>소스 파일\MFC\EditorDefine</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneSetting.h">
+      <Filter>소스 파일\MFC\Dialog\Option\SceneSetting</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -330,10 +339,10 @@
       <Filter>소스 파일\Manager\Struct</Filter>
     </ClCompile>
     <ClCompile Include="FileOption.cpp">
-      <Filter>소스 파일\MFC\Dialog\FileOption</Filter>
+      <Filter>소스 파일\MFC\Dialog\Option\FileOption</Filter>
     </ClCompile>
     <ClCompile Include="Loading.cpp">
-      <Filter>소스 파일\MFC\Dialog\Loading</Filter>
+      <Filter>소스 파일\MFC\Dialog\Option\Loading</Filter>
     </ClCompile>
     <ClCompile Include="OptionView.cpp">
       <Filter>소스 파일\MFC\View\OptionView</Filter>
@@ -384,7 +393,7 @@
       <Filter>소스 파일\Manager\Eater\EaterChange</Filter>
     </ClCompile>
     <ClCompile Include="CamAnimation.cpp">
-      <Filter>소스 파일\MFC\Dialog\CamAnimation</Filter>
+      <Filter>소스 파일\MFC\Dialog\Option\CamAnimation</Filter>
     </ClCompile>
     <ClCompile Include="SceneLoad.cpp">
       <Filter>소스 파일\Scene\SceneSaveLoad</Filter>
@@ -402,7 +411,7 @@
       <Filter>소스 파일\MFC\Dialog\Assets\ChangeDataType\LoadNavMesh</Filter>
     </ClCompile>
     <ClCompile Include="CreateMaterial.cpp">
-      <Filter>소스 파일\MFC\Dialog\Material</Filter>
+      <Filter>소스 파일\MFC\Dialog\Option\Material</Filter>
     </ClCompile>
     <ClCompile Include="AssetsDialog.cpp">
       <Filter>소스 파일\MFC\Dialog\Assets\AssetsDialog</Filter>
@@ -412,6 +421,9 @@
     </ClCompile>
     <ClCompile Include="CustomDialog.cpp">
       <Filter>소스 파일\MFC\Dialog\DialogManager\CustomDialog</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneSetting.cpp">
+      <Filter>소스 파일\MFC\Dialog\Option\SceneSetting</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -42,7 +42,7 @@ BOOL FileOption::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 
-	Debug_Check.SetCheck(true);
+	Debug_Check.SetCheck(false);
 	SSAO_Check.SetCheck(true);
 	FOG_Check.SetCheck(true);
 	Shadow_Check.SetCheck(true);

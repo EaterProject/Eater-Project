@@ -54,7 +54,6 @@ public:
 	afx_msg void OnAddRigidbody();
 	afx_msg void OnAddLight();
 	afx_msg void OnCreateMaterial();
-	afx_msg void OnDebugButton();
 
 	CButton Debug_Check;
 	CButton SSAO_Check;
@@ -63,8 +62,10 @@ public:
 	CButton IBL_Check;
 	CButton Bloom_Check;
 	CButton FXAA_Check;
+	CButton HDR_Check;
 
 	RenderOption* mRenderOption;
+	afx_msg void OnDebugButton();
 	afx_msg void OnHDR_Button();
 	afx_msg void OnSSAO_Button();
 	afx_msg void OnFOG_Button();
@@ -72,5 +73,4 @@ public:
 	afx_msg void OnIBL_Button();
 	afx_msg void OnBloom_Button();
 	afx_msg void OnFXAA_Button();
-	CButton HDR_Check;
 };

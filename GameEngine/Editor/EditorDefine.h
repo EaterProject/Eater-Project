@@ -8,3 +8,4 @@
 void Set##T(T* Value)\
 {Member = Value;}
 
+#define LERP(prev, next, time) ((prev * (1.0f - time)) + (next * time))

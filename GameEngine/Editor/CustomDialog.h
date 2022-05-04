@@ -40,14 +40,16 @@ protected:
 	float ChangeToFloat(CString Data);			//Cstring	-> float
 	int ChangeToInt(CString Data);				//Cstring	-> int
 	int ChangeToInt(std::string Data);			//string	-> int
-
 protected:
 	///파일의 타입을 가져온다 (.png , .fbx)
 	int GetFileNameType(std::string Name);
 	int GetFileNameType(CString Name);
 protected:
-	///RECT에 마우스가 충돌했는지 여부
+	///기능
 	bool DropRect(RECT& rect);
+	float Lerp(float prev, float next, float time);
 protected:
+	CToolTipCtrl mTooltip;
+
 	DECLARE_MESSAGE_MAP()
 };
