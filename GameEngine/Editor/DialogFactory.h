@@ -10,6 +10,7 @@ class CamAnimation;
 class SceneSaveDialog;
 class LoadTerrain;
 class LoadNavMesh;
+class SceneSetting;
 
 class CTAP_Animation;
 class CTAP_Collider;
@@ -31,6 +32,7 @@ public:
 
 public:
 	///GET
+	GETTER(SceneSetting,	mSceneSetting);
 	GETTER(Loading,			mLoading_Dlog);
 	GETTER(FileOption,		mFileOption_Dlog);
 	GETTER(CamAnimation,	mCamAnimation_Dlog);
@@ -44,8 +46,8 @@ public:
 	GETTER(CTAP_Particle,	mPrticle);
 	GETTER(CTAP_Light,		mLight);
 
-	GETTER(RightOption, mRightOption_Dlog);
-	GETTER(AssetsDialog, mAssets_Dlog);
+	GETTER(RightOption,		mRightOption_Dlog);
+	GETTER(AssetsDialog,	mAssets_Dlog);
 
 	///SET
 	SETTER(RightOption, mRightOption_Dlog);
@@ -56,6 +58,7 @@ private:
 	static DialogFactory* instance;
 private:
 	//옵션 다이얼로그
+	SceneSetting*		mSceneSetting;
 	Loading*			mLoading_Dlog;		//로딩을 위한 다이얼로그
 	FileOption*			mFileOption_Dlog;	//
 	CreateMaterial*		mMaterial_Dlog;		//메테리얼 생성 다이얼 로그

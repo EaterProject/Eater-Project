@@ -193,6 +193,11 @@ bool CustomDialog::DropRect(RECT& rect)
 	return false;
 }
 
+float CustomDialog::Lerp(float prev, float next, float time)
+{
+	return ((prev * (1.0f - time)) + (next * time));
+}
+
 
 BEGIN_MESSAGE_MAP(CustomDialog, CDialogEx)
 END_MESSAGE_MAP()

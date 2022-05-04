@@ -10,6 +10,7 @@
 #include "LoadNavMesh.h"
 #include "LoadTerrain.h"
 #include "CustomDialog.h"
+#include "SceneSetting.h"
 
 
 
@@ -65,6 +66,10 @@ void DialogFactory::Initialize()
 	mLoadTerrain = new LoadTerrain();
 	mLoadTerrain->Create(IDD_LOAD_TERRAIN);
 	mLoadTerrain->ShowWindow(SW_HIDE);
+
+	mSceneSetting = new SceneSetting();
+	mSceneSetting->Create(IDD_SCENE_SETTING);
+	mSceneSetting->ShowWindow(SW_HIDE);
 	
 	mTransform	= new CTAP_Transform();
 	mAnimation	= new CTAP_Animation();

@@ -19,6 +19,7 @@ class Loading;
 class EditorManager;
 class CamAnimation;
 class CreateMaterial;
+class SceneSetting;
 class RightOption : public CustomDialog
 {
 	DECLARE_DYNAMIC(RightOption)
@@ -78,6 +79,7 @@ public:
 	FileOption*			mFileOption;		//자체포맷 변환 창
 	EditorManager*		m_EditorManager;	//자체포맷 변환 관리 매니저
 	Loading*			mLoading;			//로딩 바
+	SceneSetting*		mSceneSetting;
 	CamAnimation*		mCam;
 	CreateMaterial*		mMaterial;
 public:
@@ -102,11 +104,12 @@ public:
 	afx_msg void OnChange_DataFormat();
 	afx_msg void OnClickTap(NMHDR* pNMHDR, LRESULT* pResult);
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
-	afx_msg void OnOpenOption();
+	afx_msg void OnSceneSetting();
 	afx_msg void OnOpenCamAnimation();
 	afx_msg void OnAddTag_Button();
 	afx_msg void OnChoiceTag();
 	afx_msg void OnDeleteTagButton();
 	afx_msg void OnCreateBasicMaterial();
 	afx_msg void OnCreatePrefap();
+	afx_msg void OnOpenOption();
 };

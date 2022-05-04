@@ -30,6 +30,7 @@
 #include "Collider.h"
 #include "Rigidbody.h"
 #include "CamAnimation.h"
+#include "SceneSetting.h"
 #include "DialogFactory.h"
 
 
@@ -70,6 +71,7 @@ BOOL RightOption::OnInitDialog()
 	mFileOption = DialogFactory::GetFactory()->GetFileOption();
 	mCam		= DialogFactory::GetFactory()->GetCamAnimation();
 	mMaterial	= DialogFactory::GetFactory()->GetCreateMaterial();
+	mSceneSetting = DialogFactory::GetFactory()->GetSceneSetting();
 
 	DialogFactory::GetFactory()->SetRightOption(this);
 	
@@ -156,13 +158,14 @@ BEGIN_MESSAGE_MAP(RightOption, CDialogEx)
 	ON_NOTIFY(TCN_SELCHANGE, IDC_TAB1, &RightOption::OnClickTap)
 	ON_WM_MOUSEHWHEEL()
 	ON_WM_SIZE()
-	ON_BN_CLICKED(IDC_BUTTON10, &RightOption::OnOpenOption)
+	ON_BN_CLICKED(IDC_BUTTON10, &RightOption::OnSceneSetting)
 	ON_BN_CLICKED(IDC_BUTTON11, &RightOption::OnOpenCamAnimation)
 	ON_BN_CLICKED(IDC_BUTTON1, &RightOption::OnAddTag_Button)
 	ON_CBN_SELCHANGE(IDC_COMBO1, &RightOption::OnChoiceTag)
 	ON_BN_CLICKED(IDC_BUTTON2, &RightOption::OnDeleteTagButton)
 	ON_BN_CLICKED(IDC_BUTTON12, &RightOption::OnCreateBasicMaterial)
 	ON_BN_CLICKED(IDC_BUTTON9, &RightOption::OnCreatePrefap)
+	ON_BN_CLICKED(IDC_BUTTON26, &RightOption::OnOpenOption)
 END_MESSAGE_MAP()
 
 RightOption* RightOption::GetThis()
@@ -629,9 +632,10 @@ BOOL RightOption::PreTranslateMessage(MSG* pMsg)
 	return CDialog::PreTranslateMessage(pMsg);
 }
 
-void RightOption::OnOpenOption()
+void RightOption::OnSceneSetting()
 {
-	mFileOption->ShowWindow(SW_SHOW);
+	mSceneSetting->ShowWindow(SW_SHOW);
+	mSceneSetting->Setting();
 }
 
 
@@ -703,4 +707,10 @@ void RightOption::OnCreateBasicMaterial()
 void RightOption::OnCreatePrefap()
 {
 	EditorToolScene::SavePrefap("../Assets/Model/Prefap/","Test", ChoiceHirearchyName);
+}
+
+
+void RightOption::OnOpenOption()
+{
+	mFileOption->ShowWindow(SW_SHOW);
 }
