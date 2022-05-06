@@ -144,8 +144,8 @@ public:
 
 	Vector3 AddColor = Vector3(0.0f, 0.0f, 0.0f);	// Add Color
 	float EmissiveFactor = 1.0f;		// Emissive 강도
-	float RoughnessFactor = 1.0f;		// Roughness 강도 (0 ~ 1)
-	float MetallicFactor = 1.0f;		// Metallic 강도 (0 ~ 1)
+	float RoughnessFactor = 0.0f;		// Roughness 강도 (0 ~ 1)
+	float MetallicFactor = 0.0f;		// Metallic 강도 (0 ~ 1)
 
 	Vector3 LimLightColor = Vector3(0.0f, 0.0f, 0.0f);	// LimLight Color
 	float LimLightFactor = 0.0f;		// LimLight 강도

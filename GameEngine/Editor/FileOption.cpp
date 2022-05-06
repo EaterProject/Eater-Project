@@ -42,14 +42,6 @@ BOOL FileOption::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 
-	Debug_Check.SetCheck(false);
-	SSAO_Check.SetCheck(true);
-	FOG_Check.SetCheck(true);
-	Shadow_Check.SetCheck(true);
-	IBL_Check.SetCheck(true);
-	Bloom_Check.SetCheck(true);
-	FXAA_Check.SetCheck(true);
-	HDR_Check.SetCheck(true);
 
 	return 0;
 }
@@ -58,14 +50,6 @@ void FileOption::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_EDIT2, AddComponent_ObjectName_Edit);
-	DDX_Control(pDX, IDC_CHECK1, Debug_Check);
-	DDX_Control(pDX, IDC_CHECK3, SSAO_Check);
-	DDX_Control(pDX, IDC_CHECK4, FOG_Check);
-	DDX_Control(pDX, IDC_CHECK2, Shadow_Check);
-	DDX_Control(pDX, IDC_CHECK9, IBL_Check);
-	DDX_Control(pDX, IDC_CHECK5, Bloom_Check);
-	DDX_Control(pDX, IDC_CHECK10, FXAA_Check);
-	DDX_Control(pDX, IDC_CHECK6, HDR_Check);
 }
 
 BEGIN_MESSAGE_MAP(FileOption, CDialogEx)
@@ -84,14 +68,6 @@ BEGIN_MESSAGE_MAP(FileOption, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON8, &FileOption::OnAddRigidbody)
 	ON_BN_CLICKED(IDC_BUTTON16, &FileOption::OnAddLight)
 	ON_BN_CLICKED(IDC_BUTTON7, &FileOption::OnCreateMaterial)
-	ON_BN_CLICKED(IDC_CHECK1, &FileOption::OnDebugButton)
-	ON_BN_CLICKED(IDC_CHECK6, &FileOption::OnHDR_Button)
-	ON_BN_CLICKED(IDC_CHECK3, &FileOption::OnSSAO_Button)
-	ON_BN_CLICKED(IDC_CHECK4, &FileOption::OnFOG_Button)
-	ON_BN_CLICKED(IDC_CHECK2, &FileOption::OnShadow_Button)
-	ON_BN_CLICKED(IDC_CHECK9, &FileOption::OnIBL_Button)
-	ON_BN_CLICKED(IDC_CHECK5, &FileOption::OnBloom_Button)
-	ON_BN_CLICKED(IDC_CHECK10, &FileOption::OnFXAA_Button)
 END_MESSAGE_MAP()
 
 
@@ -150,8 +126,8 @@ void FileOption::OnCreateTerrain()
 void FileOption::OnCreateLight()
 {
 	GameObject* Object = EditorToolScene::Create_Light();
-	HTREEITEM Top = mRightOption->HirearchyTree.InsertItem(ChangeToCString(Object->Name));
 	mRightOption = DialogFactory::GetFactory()->GetRightOption();
+	HTREEITEM Top = mRightOption->HirearchyTree.InsertItem(ChangeToCString(Object->Name));
 	mRightOption->Create_Hirearchy_Item(Object, Top);
 }
 
@@ -159,23 +135,15 @@ void FileOption::OnCreateLight()
 void FileOption::OnCreateParticle()
 {
 	GameObject* Object = EditorToolScene::Create_Particle();
-	HTREEITEM Top = mRightOption->HirearchyTree.InsertItem(ChangeToCString(Object->Name));
 	mRightOption = DialogFactory::GetFactory()->GetRightOption();
+	HTREEITEM Top = mRightOption->HirearchyTree.InsertItem(ChangeToCString(Object->Name));
 	mRightOption->Create_Hirearchy_Item(Object, Top);
 }
 
 
 void FileOption::OnSceneSave()
 {
-	mScene = DialogFactory::GetFactory()->GetSceneSaveDialog();
-	mScene->DoModal();
-	if(mScene->isOK == true)
-	{
-		std::string SaveName = ChangeToString(mScene->Name);
-		std::string SavePath = "../Assets/Scene/";
-		EditorToolScene::SaveScene(SavePath, SaveName);
-		AfxMessageBox(L"저장 완료");
-	}
+	
 }
 
 
@@ -294,66 +262,3 @@ void FileOption::OnCreateMaterial()
 	//mLoadNavMesh->MoveWindow(&NavMeshWindow);
 }
 
-
-void FileOption::OnDebugButton()
-{
-	RenderOption* Option = GetRenderOptionData();
-	Option->DebugOption ^= RENDER_DEBUG;
-	RenderSetting();
-}
-
-
-void FileOption::OnHDR_Button()
-{
-	RenderOption* Option = GetRenderOptionData();
-	Option->PostProcessOption ^= POSTPROCESS_OPTION::RENDER_HDR;
-	RenderSetting();
-}
-
-
-void FileOption::OnSSAO_Button()
-{
-	RenderOption* Option = GetRenderOptionData();
-	Option->RenderingOption ^= RENDER_OPTION::RENDER_SSAO;
-	RenderSetting();
-}
-
-
-void FileOption::OnFOG_Button()
-{
-	RenderOption* Option = GetRenderOptionData();
-	Option->PostProcessOption ^= POSTPROCESS_OPTION::RENDER_FOG;
-	RenderSetting();
-}
-
-
-void FileOption::OnShadow_Button()
-{
-	RenderOption* Option = GetRenderOptionData();
-	Option->RenderingOption ^= RENDER_OPTION::RENDER_SHADOW;
-	RenderSetting();
-}
-
-
-void FileOption::OnIBL_Button()
-{
-	RenderOption* Option = GetRenderOptionData();
-	Option->RenderingOption ^= RENDER_OPTION::RENDER_IBL;
-	RenderSetting();
-}
-
-
-void FileOption::OnBloom_Button()
-{
-	RenderOption* Option = GetRenderOptionData();
-	Option->PostProcessOption ^= POSTPROCESS_OPTION::RENDER_BLOOM;
-	RenderSetting();
-}
-
-
-void FileOption::OnFXAA_Button()
-{
-	RenderOption* Option = GetRenderOptionData();
-	Option->PostProcessOption ^= POSTPROCESS_OPTION::RENDER_FXAA;
-	RenderSetting();
-}

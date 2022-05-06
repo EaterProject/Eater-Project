@@ -50,6 +50,7 @@ protected:
 	float Lerp(float prev, float next, float time);
 protected:
 	CToolTipCtrl mTooltip;
+	CFont mfont;
 
 	DECLARE_MESSAGE_MAP()
 };
