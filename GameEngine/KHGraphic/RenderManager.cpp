@@ -176,8 +176,6 @@ void RenderManager::SetGlobalData(GlobalData* globalData)
 
 void RenderManager::SetEnvironmentMap(EnvironmentBuffer* resource)
 {
-	m_Light->SetIBLEnvironmentMapResource(resource);
-	m_Alpha->SetIBLEnvironmentMapResource(resource);
 	m_Environment->SetEnvironmentMapResource(resource);
 }
 
@@ -303,6 +301,9 @@ void RenderManager::Render()
 
 	// Render Data 선별 작업..
 	SelectRenderData();
+
+	// Render Pass 공유자원 Update..
+	RenderPassBase::ShareResourceUpdate();
 
 	// Shadow Render..
 	GPU_BEGIN_EVENT_DEBUG_NAME("Shadow Pass");
@@ -458,13 +459,6 @@ void RenderManager::AlphaRender()
 
 void RenderManager::PostProcessingRender()
 {
-	GPU_BEGIN_EVENT_DEBUG_NAME("Fog Pass");
-	if (m_NowRenderOption.PostProcessOption & RENDER_FOG)
-	{
-		m_Fog->RenderUpdate();
-	}
-	GPU_END_EVENT_DEBUG_NAME();
-
 	GPU_BEGIN_EVENT_DEBUG_NAME("Bloom Pass");
 	if (m_NowRenderOption.PostProcessOption & RENDER_BLOOM)
 	{

@@ -1,14 +1,17 @@
+#include "SamplerState_Header.hlsli"
 #include "Output_Header.hlsli"
+#include "Fog_Header.hlsli"
 
 TextureCube gSkyCube : register(t0);
-SamplerState gSamWrapLinear : register(s0);
 
 [earlydepthstencil]
-SkyBoxPixelOut SkyBox_PS(SkyBoxPixelIn pin)
+float4 SkyBox_PS(SkyBoxPixelIn pin) : SV_TARGET
 {
-    SkyBoxPixelOut pout;
-    pout.Albedo = pow(gSkyCube.Sample(gSamWrapLinear, pin.PosL), 2.2f);
-    pout.Position = float4(pin.PosW, 1.0f);
+    float4 texColor = pow(gSkyCube.Sample(gSamWrapLinear, pin.PosL), 2.2f);
     
-    return pout;
+#ifdef FOG
+    texColor.rgb = Fog(texColor.rgb, pin.PosW);
+#endif
+    
+    return texColor;
 }

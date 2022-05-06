@@ -15,10 +15,6 @@ public:
 
 	void ApplyOption() override;
 
-	void SetIBLEnvironmentMapResource(EnvironmentBuffer* resource);
-
-	void Reset();
-
 	void RenderUpdate();
 
 private:

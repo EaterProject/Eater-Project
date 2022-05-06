@@ -54,11 +54,11 @@ void AlphaPass::Start(int width, int height)
 {
 	// Shader 설정..
 	m_ParticleInst_VS = g_Shader->GetShader("Particle_Instance_VS");
-	m_Particle_PS = g_Shader->GetShader("OIT_Particle_PS");
+	m_Particle_PS = g_Shader->GetShader("OIT_Particle_PS_Option1");
 
 	m_Mesh_VS = g_Shader->GetShader("StaticMesh_VS");
 	m_MeshInst_VS = g_Shader->GetShader("StaticMesh_Instance_VS");
-	m_Mesh_PS = g_Shader->GetShader("OIT_Mesh_PS_Option3");
+	m_Mesh_PS = g_Shader->GetShader("OIT_Mesh_PS_Option7");
 
 	m_Mesh_IB = g_Resource->GetInstanceBuffer<IB_Mesh>();
 	m_Particle_IB = g_Resource->GetInstanceBuffer<IB_Particle>();
@@ -96,7 +96,16 @@ void AlphaPass::Release()
 
 void AlphaPass::ApplyOption()
 {
-	UINT alphaOption = g_RenderOption->RenderingOption & (RENDER_SHADOW | RENDER_IBL);
+	UINT alphaOption = g_RenderOption->RenderingOption & (RENDER_SHADOW | RENDER_IBL | RENDER_FOG);
+
+	if (alphaOption & RENDER_FOG)
+	{
+		m_Particle_PS = g_Shader->GetShader("OIT_Particle_PS_Option1");
+	}
+	else
+	{
+		m_Particle_PS = g_Shader->GetShader("OIT_Particle_PS_Option0");
+	}
 
 	switch (alphaOption)
 	{
@@ -106,8 +115,20 @@ void AlphaPass::ApplyOption()
 	case RENDER_IBL:
 		m_Mesh_PS = g_Shader->GetShader("OIT_Mesh_PS_Option2");
 		break;
-	case RENDER_SHADOW | RENDER_IBL:
+	case RENDER_FOG:
 		m_Mesh_PS = g_Shader->GetShader("OIT_Mesh_PS_Option3");
+		break;
+	case RENDER_SHADOW | RENDER_IBL:
+		m_Mesh_PS = g_Shader->GetShader("OIT_Mesh_PS_Option4");
+		break;
+	case RENDER_SHADOW | RENDER_FOG:
+		m_Mesh_PS = g_Shader->GetShader("OIT_Mesh_PS_Option5");
+		break;
+	case RENDER_IBL | RENDER_FOG:
+		m_Mesh_PS = g_Shader->GetShader("OIT_Mesh_PS_Option6");
+		break;
+	case RENDER_SHADOW | RENDER_IBL | RENDER_FOG:
+		m_Mesh_PS = g_Shader->GetShader("OIT_Mesh_PS_Option7");
 		break;
 	default:
 		m_Mesh_PS = g_Shader->GetShader("OIT_Mesh_PS_Option0");
@@ -115,24 +136,9 @@ void AlphaPass::ApplyOption()
 	}
 
 	// Sub Resource 재설정..
-	ShaderResourceView* shadowSRV = g_Resource->GetShaderResourceView<DS_Shadow>();
-
-	m_Mesh_PS->SetShaderResourceView<gShadowMap>(shadowSRV->Get());
-
 	CB_OitFrame oitBuf;
 	oitBuf.gFrameWidth = m_Width;
 	m_Mesh_PS->ConstantBufferUpdate<CB_OitFrame>(&oitBuf);
-}
-
-void AlphaPass::SetIBLEnvironmentMapResource(EnvironmentBuffer* resource)
-{
-	ID3D11ShaderResourceView* brdflut = g_Resource->GetShaderResourceView<gBRDFlut>()->Get();
-	ID3D11ShaderResourceView* prefilter = (ID3D11ShaderResourceView*)resource->Prefilter->pTextureBuf;
-	ID3D11ShaderResourceView* irradiance = (ID3D11ShaderResourceView*)resource->Irradiance->pTextureBuf;
-
-	m_Mesh_PS->SetShaderResourceView<gBRDFlut>(brdflut);
-	m_Mesh_PS->SetShaderResourceView<gIBLPrefilter>(prefilter);
-	m_Mesh_PS->SetShaderResourceView<gIBLIrradiance>(irradiance);
 }
 
 void AlphaPass::BeginRender()

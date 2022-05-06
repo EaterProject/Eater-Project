@@ -1,11 +1,12 @@
 #include "Output_Header.hlsli"
 #include "OIT_Header.hlsli"
+#include "Fog_Header.hlsli"
 
 StructuredBuffer<FLStaticNode> gPieceLinkBuffer : register(t0);
 ByteAddressBuffer gFirstOffsetBuffer : register(t1);
 Texture2D gBackGround : register(t2);
 
-#define MAX_SORTED_PIXELS 50
+#define MAX_SORTED_PIXELS 12
 
 static FragmentData gSortedPixels[MAX_SORTED_PIXELS];
 

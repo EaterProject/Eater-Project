@@ -315,7 +315,7 @@ void FileOption::OnSSAO_Button()
 void FileOption::OnFOG_Button()
 {
 	RenderOption* Option = GetRenderOptionData();
-	Option->PostProcessOption ^= POSTPROCESS_OPTION::RENDER_FOG;
+	Option->RenderingOption ^= RENDER_OPTION::RENDER_FOG;
 	RenderSetting();
 }
 

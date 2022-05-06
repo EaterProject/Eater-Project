@@ -5,6 +5,7 @@
 #include "ShaderManagerBase.h"
 #include "EngineData.h"
 #include "RenderData.h"
+#include "ShaderBase.h"
 
 Microsoft::WRL::ComPtr<ID3D11Device> RenderPassBase::g_Device = nullptr;
 Microsoft::WRL::ComPtr<ID3D11DeviceContext> RenderPassBase::g_Context = nullptr;
@@ -13,7 +14,17 @@ IGraphicResourceManager* RenderPassBase::g_Resource = nullptr;
 IShaderManager* RenderPassBase::g_Shader = nullptr;
 GlobalData* RenderPassBase::g_GlobalData = nullptr;
 RenderOption* RenderPassBase::g_RenderOption = nullptr;
+RenderSceneData* RenderPassBase::g_RenderSceneData = nullptr;
 RenderData* RenderPassBase::g_Picking = nullptr;
+
+void RenderPassBase::PushShader(const char* shaderName)
+{
+	ShaderBase* shader = g_Shader->GetShader(shaderName);
+
+	if (shader == nullptr) return;
+
+	m_OptionShaderList.push_back(shader);
+}
 
 void RenderPassBase::Initialize(Microsoft::WRL::ComPtr<ID3D11Device> device, Microsoft::WRL::ComPtr<ID3D11DeviceContext> context, IFactoryManager* factory, IGraphicResourceManager* resourceManager, IShaderManager* shaderManager)
 {
@@ -22,6 +33,21 @@ void RenderPassBase::Initialize(Microsoft::WRL::ComPtr<ID3D11Device> device, Mic
 	g_Factory = factory;
 	g_Resource = resourceManager;
 	g_Shader = shaderManager;
+
+	g_RenderSceneData = new RenderSceneData();
+}
+
+void RenderPassBase::ShareResourceUpdate()
+{
+	if (g_RenderOption->RenderingOption & RENDER_FOG)
+	{
+		g_RenderSceneData->Fog_Timer += g_GlobalData->Time * g_RenderOption->FOG_MoveSpeed;
+
+		if (g_RenderSceneData->Fog_Timer > 100.0f)
+		{
+			g_RenderSceneData->Fog_Timer = 0.0f;
+		}
+	}
 }
 
 void RenderPassBase::GraphicReset()

@@ -1,11 +1,12 @@
+#include "SamplerState_Header.hlsli"
 #include "Output_Header.hlsli"
 #include "OIT_Header.hlsli"
+#include "Fog_Header.hlsli"
 
 RWStructuredBuffer<FLStaticNode> gPieceLinkBuffer : register(u0);
 RWByteAddressBuffer gFirstOffsetBuffer : register(u1);
 
 Texture2D gDiffuseMap : register(t0);
-SamplerState gSamWrapLinear : register(s0);
 
 [earlydepthstencil]
 void OIT_Particle_PS(ParticlePixelIn pin)
@@ -18,6 +19,10 @@ void OIT_Particle_PS(ParticlePixelIn pin)
     texColor.rgb = pow(texColor.rgb, 2.2f) * 4.0f;
     texColor = texColor * pin.Color;
     texColor = saturate(texColor);
+    
+#ifdef FOG
+    texColor.rgb = Fog(texColor.rgb, pin.PosW);
+#endif
     
     uint pixelCount = gPieceLinkBuffer.IncrementCounter();
     

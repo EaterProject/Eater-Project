@@ -90,18 +90,27 @@ void ShadowPass::Start(int width, int height)
 
 	m_Shadow_DS = g_Resource->GetDepthStencil<DS_Shadow>();
 	m_Shadow_DS->SetRatio(4.0f, 4.0f);
-
+	
 	m_Shadow_VP = g_Resource->GetViewPort<VP_Shadow>()->Get();
 	m_Depth_RS = g_Resource->GetRasterizerState<RS_Depth>()->Get();
 
 	// Shadow DepthStencilView 설정..
 	m_Shadow_DSV = m_Shadow_DS->GetDSV()->Get();
+
+	// Fog Shader List Up
+	SetShaderList();
+
+	// Fog Shader Resource Setting..
+	SetShaderResourceView();
 }
 
 void ShadowPass::OnResize(int width, int height)
 {
 	// Shadow DepthStencilView 재설정..
 	m_Shadow_DSV = m_Shadow_DS->GetDSV()->Get();
+
+	// Fog Shader Resource Setting..
+	SetShaderResourceView();
 }
 
 void ShadowPass::InstanceResize(size_t& renderMaxCount, size_t& unRenderMaxCount)
@@ -329,4 +338,32 @@ void ShadowPass::RenderUpdate(const InstanceRenderBuffer* instance, const Render
 	g_Context->IASetIndexBuffer(mesh->m_IndexBuf, DXGI_FORMAT_R32_UINT, 0);
 
 	g_Context->DrawIndexed(mesh->m_IndexCount, 0, 0);
+}
+
+void ShadowPass::SetShaderList()
+{
+	PushShader("Light_PBR_PS_Option1");
+	PushShader("Light_PBR_PS_Option4");
+	PushShader("Light_PBR_PS_Option5");
+	PushShader("Light_PBR_PS_Option7");
+
+	PushShader("Light_IBL_PS_Option1");
+	PushShader("Light_IBL_PS_Option4");
+	PushShader("Light_IBL_PS_Option5");
+	PushShader("Light_IBL_PS_Option7");
+
+	PushShader("OIT_Mesh_PS_Option1");
+	PushShader("OIT_Mesh_PS_Option4");
+	PushShader("OIT_Mesh_PS_Option5");
+	PushShader("OIT_Mesh_PS_Option7");
+}
+
+void ShadowPass::SetShaderResourceView()
+{
+	ID3D11ShaderResourceView* shadowMap = m_Shadow_DS->GetSRV()->Get();
+
+	for (ShaderBase* shader : m_OptionShaderList)
+	{
+		shader->SetShaderResourceView<gShadowMap>(shadowMap);
+	}
 }

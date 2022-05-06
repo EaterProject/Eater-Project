@@ -152,11 +152,11 @@ float3 PBR_PointLight(
             continue;
         
         const float3 L = normalize(lightVec);
-        const float3 H = normalize(L + V);
+        const float3 H = normalize(V + L);
         
         // products
         const float NdotL = max(dot(N, L), EPSILON);
-        const float NdotV = abs(dot(N, V)) + EPSILON;
+        const float NdotV = max(dot(N, V), EPSILON);
         const float NdotH = max(dot(N, H), EPSILON);
         const float HdotV = max(dot(H, V), EPSILON);
 
@@ -208,7 +208,7 @@ float3 PBR_SpotLight(
 
         // products
         const float NdotL = max(dot(N, L), EPSILON);
-        const float NdotV = abs(dot(N, V)) + EPSILON;
+        const float NdotV = max(dot(N, V), EPSILON);
         const float NdotH = max(dot(N, H), EPSILON);
         const float HdotV = max(dot(H, V), EPSILON);
 

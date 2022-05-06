@@ -1,6 +1,6 @@
-#include "Output_Header.hlsli"
+#include "SamplerState_Header.hlsli"
 
-cbuffer cbFogOption : register(b0)
+cbuffer cbFogOption
 {
     float3 gFogColor            : packoffset(c0);
     float gFogStartDistance     : packoffset(c0.w);
@@ -10,18 +10,13 @@ cbuffer cbFogOption : register(b0)
     float gFogHeightValue       : packoffset(c1.w);
 }
 
-cbuffer cbFogData : register(b1)
+cbuffer cbFogData
 {
     float3 gEyePos  : packoffset(c0);
     float gTime     : packoffset(c0.w);
 }
 
-Texture2D gOriginMap : register(t0);
-Texture2D gPositionRT : register(t1);
-Texture3D gNoiseVolume : register(t2);
-
-SamplerState gSamClampLinear : register(s0);
-SamplerState gSamWrapLinear : register(s1);
+Texture3D gNoiseVolume;
 
 float3 ApplyFog(float3 originalColor, float3 toEye, float noise)
 {
@@ -53,11 +48,8 @@ float3 ApplyFog(float3 originalColor, float3 toEye, float noise)
     return lerp(originalColor, gFogColor, fogFinalFactor);
 }
 
-float4 Fog_PS(ScreenPixelIn pin) : SV_TARGET
+float3 Fog(in float3 color, in float3 position)
 {
-    float3 outColor = gOriginMap.Sample(gSamClampLinear, pin.Tex);
-    float3 position = gPositionRT.Sample(gSamClampLinear, pin.Tex).xyz;
-	
     // 현재 Position을 Perlin Noise Texture 크기로 정규화..
     float3 coord = float3(int3(position * 100) % 12800) / 12800.0f;
     
@@ -68,7 +60,5 @@ float4 Fog_PS(ScreenPixelIn pin) : SV_TARGET
     // Noise 값
     float noise = gNoiseVolume.SampleLevel(gSamWrapLinear, coord, 0).x;
     
-    outColor = ApplyFog(outColor, position, noise);
-    
-    return float4(outColor, 1.0f);
+    return ApplyFog(color, position, noise);
 }

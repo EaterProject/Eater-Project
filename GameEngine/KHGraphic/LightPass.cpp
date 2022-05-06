@@ -70,19 +70,6 @@ void LightPass::OnResize(int width, int height)
 {
 	// 현재 RenderTargetView 재설정..
 	m_OutPut_RTV = m_OutPut_RT->GetRTV()->Get();
-
-	// ShaderResource 재설정..
-	m_Light_PS->SetShaderResourceView<gAlbedoRT>(m_Albedo_RT->GetSRV()->Get());
-	m_Light_PS->SetShaderResourceView<gEmissiveRT>(m_Emissive_RT->GetSRV()->Get());
-	m_Light_PS->SetShaderResourceView<gNormalRT>(m_Normal_RT->GetSRV()->Get());
-	m_Light_PS->SetShaderResourceView<gPositionRT>(m_Position_RT->GetSRV()->Get());
-
-	// Sub Resource 재설정..
-	ShaderResourceView* ssaoSRV = g_Resource->GetShaderResourceView<RT_SSAO_Main>();
-	ShaderResourceView* shadowSRV = g_Resource->GetShaderResourceView<DS_Shadow>();
-
-	m_Light_PS->SetShaderResourceView<gShadowMap>(shadowSRV->Get());
-	m_Light_PS->SetShaderResourceView<gSsaoMap>(ssaoSRV->Get());
 }
 
 void LightPass::Release()
@@ -103,7 +90,7 @@ void LightPass::ApplyOption()
 		renderType = "_PBR_PS_";
 	}
 
-	UINT lightOption = g_RenderOption->RenderingOption & (RENDER_SHADOW | RENDER_SSAO);
+	UINT lightOption = g_RenderOption->RenderingOption & (RENDER_SHADOW | RENDER_SSAO | RENDER_FOG);
 	
 	switch (lightOption)
 	{
@@ -113,59 +100,25 @@ void LightPass::ApplyOption()
 	case RENDER_SSAO:
 		m_Light_PS = g_Shader->GetShader("Light" + renderType + "Option2");
 		break;
-	case RENDER_SHADOW | RENDER_SSAO:
+	case RENDER_FOG:
 		m_Light_PS = g_Shader->GetShader("Light" + renderType + "Option3");
+		break;
+	case RENDER_SHADOW | RENDER_SSAO:
+		m_Light_PS = g_Shader->GetShader("Light" + renderType + "Option4");
+		break;
+	case RENDER_SHADOW | RENDER_FOG:
+		m_Light_PS = g_Shader->GetShader("Light" + renderType + "Option5");
+		break;
+	case RENDER_SSAO | RENDER_FOG:
+		m_Light_PS = g_Shader->GetShader("Light" + renderType + "Option6");
+		break;
+	case RENDER_SHADOW | RENDER_SSAO | RENDER_FOG:
+		m_Light_PS = g_Shader->GetShader("Light" + renderType + "Option7");
 		break;
 	default:
 		m_Light_PS = g_Shader->GetShader("Light" + renderType + "Option0");
 		break;
 	}
-
-	Reset();
-}
-
-void LightPass::SetIBLEnvironmentMapResource(EnvironmentBuffer* resource)
-{
-	ID3D11ShaderResourceView* brdflut = g_Resource->GetShaderResourceView<gBRDFlut>()->Get();
-	ID3D11ShaderResourceView* prefilter = (ID3D11ShaderResourceView*)resource->Prefilter->pTextureBuf;
-	ID3D11ShaderResourceView* irradiance = (ID3D11ShaderResourceView*)resource->Irradiance->pTextureBuf;
-
-	PixelShader* IBL_Shader0 = g_Shader->GetShader("Light_IBL_PS_Option0");
-	PixelShader* IBL_Shader1 = g_Shader->GetShader("Light_IBL_PS_Option1");
-	PixelShader* IBL_Shader2 = g_Shader->GetShader("Light_IBL_PS_Option2");
-	PixelShader* IBL_Shader3 = g_Shader->GetShader("Light_IBL_PS_Option3");
-
-	IBL_Shader0->SetShaderResourceView<gBRDFlut>(brdflut);
-	IBL_Shader0->SetShaderResourceView<gIBLPrefilter>(prefilter);
-	IBL_Shader0->SetShaderResourceView<gIBLIrradiance>(irradiance);
-
-	IBL_Shader1->SetShaderResourceView<gBRDFlut>(brdflut);
-	IBL_Shader1->SetShaderResourceView<gIBLPrefilter>(prefilter);
-	IBL_Shader1->SetShaderResourceView<gIBLIrradiance>(irradiance);
-
-	IBL_Shader2->SetShaderResourceView<gBRDFlut>(brdflut);
-	IBL_Shader2->SetShaderResourceView<gIBLPrefilter>(prefilter);
-	IBL_Shader2->SetShaderResourceView<gIBLIrradiance>(irradiance);
-
-	IBL_Shader3->SetShaderResourceView<gBRDFlut>(brdflut);
-	IBL_Shader3->SetShaderResourceView<gIBLPrefilter>(prefilter);
-	IBL_Shader3->SetShaderResourceView<gIBLIrradiance>(irradiance);
-}
-
-void LightPass::Reset()
-{
-	// ShaderResource 재설정..
-	m_Light_PS->SetShaderResourceView<gAlbedoRT>(m_Albedo_RT->GetSRV()->Get());
-	m_Light_PS->SetShaderResourceView<gNormalRT>(m_Normal_RT->GetSRV()->Get());
-	m_Light_PS->SetShaderResourceView<gPositionRT>(m_Position_RT->GetSRV()->Get());
-	m_Light_PS->SetShaderResourceView<gEmissiveRT>(m_Emissive_RT->GetSRV()->Get());
-
-	// Sub Resource 재설정..
-	ShaderResourceView* ssaoSRV = g_Resource->GetShaderResourceView<RT_SSAO_Main>();
-	ShaderResourceView* shadowSRV = g_Resource->GetShaderResourceView<DS_Shadow>();
-
-	m_Light_PS->SetShaderResourceView<gShadowMap>(shadowSRV->Get());
-	m_Light_PS->SetShaderResourceView<gSsaoMap>(ssaoSRV->Get());
 }
 
 void LightPass::RenderUpdate()

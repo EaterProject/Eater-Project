@@ -156,6 +156,12 @@ void DeferredPass::Start(int width, int height)
 	m_RTV_List[2] = m_Normal_RT->GetRTV()->Get();
 	m_RTV_List[3] = m_Position_RT->GetRTV()->Get();
 	m_RTV_List[4] = m_NormalDepth_RT->GetRTV()->Get();
+
+	// Deferred Shader List Up..
+	SetShaderList();
+
+	// Deferred Shader Resource View Set Up..
+	SetShaderResourceView();
 }
 
 void DeferredPass::OnResize(int width, int height)
@@ -169,6 +175,9 @@ void DeferredPass::OnResize(int width, int height)
 	m_RTV_List[2] = m_Normal_RT->GetRTV()->Get();
 	m_RTV_List[3] = m_Position_RT->GetRTV()->Get();
 	m_RTV_List[4] = m_NormalDepth_RT->GetRTV()->Get();
+
+	// Deferred Shader Resource View Set Up..
+	SetShaderResourceView();
 }
 
 void DeferredPass::InstanceResize(size_t& renderMaxCount, size_t& unRenderMaxCount)
@@ -657,5 +666,47 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rend
 	break;
 	default:
 		break;
+	}
+}
+
+void DeferredPass::SetShaderList()
+{
+	PushShader("Light_PBR_PS_Option0");
+	PushShader("Light_PBR_PS_Option1");
+	PushShader("Light_PBR_PS_Option2");
+	PushShader("Light_PBR_PS_Option3");
+	PushShader("Light_PBR_PS_Option4");
+	PushShader("Light_PBR_PS_Option5");
+	PushShader("Light_PBR_PS_Option6");
+	PushShader("Light_PBR_PS_Option7");
+
+	PushShader("Light_IBL_PS_Option0");
+	PushShader("Light_IBL_PS_Option1");
+	PushShader("Light_IBL_PS_Option2");
+	PushShader("Light_IBL_PS_Option3");
+	PushShader("Light_IBL_PS_Option4");
+	PushShader("Light_IBL_PS_Option5");
+	PushShader("Light_IBL_PS_Option6");
+	PushShader("Light_IBL_PS_Option7");
+
+	PushShader("SSAO_PS");
+	PushShader("SSAOBlur_PS");
+}
+
+void DeferredPass::SetShaderResourceView()
+{
+	ID3D11ShaderResourceView* albedoMap			= m_Albedo_RT->GetSRV()->Get();
+	ID3D11ShaderResourceView* emissiveMap		= m_Emissive_RT->GetSRV()->Get();
+	ID3D11ShaderResourceView* normalMap			= m_Normal_RT->GetSRV()->Get();
+	ID3D11ShaderResourceView* positionMap		= m_Position_RT->GetSRV()->Get();
+	ID3D11ShaderResourceView* normalDepthMap	= m_NormalDepth_RT->GetSRV()->Get();
+
+	for (ShaderBase* shader : m_OptionShaderList)
+	{
+		shader->SetShaderResourceView<gAlbedoRT>(albedoMap);
+		shader->SetShaderResourceView<gEmissiveRT>(emissiveMap);
+		shader->SetShaderResourceView<gNormalRT>(normalMap);
+		shader->SetShaderResourceView<gPositionRT>(positionMap);
+		shader->SetShaderResourceView<gNormalDepthRT>(normalDepthMap);
 	}
 }

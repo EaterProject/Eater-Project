@@ -15,8 +15,8 @@ public:
 	void Release() override;
 
 	void ApplyOption() override;
-	void SetIBLEnvironmentMapResource(EnvironmentBuffer* resource);
 
+public:
 	void BeginRender();
 	void RenderUpdate(const InstanceRenderBuffer* instance, const std::vector<RenderData*>& meshlist);
 	void RenderUpdate(const InstanceRenderBuffer* instance, const RenderData* meshData);

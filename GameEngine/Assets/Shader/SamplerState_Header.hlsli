@@ -1,0 +1,14 @@
+#ifndef SAMPLER_STATE
+#define SAMPLER_STATE
+
+SamplerState gSamWrapLinear;
+SamplerState gSamWrapLinearPoint;
+SamplerState gSamWrapAnisotropic;
+SamplerState gSamClampAnisotropic;
+SamplerState gSamClampLinear;
+SamplerState gSamClampPoint;
+SamplerState gSamMirrorLinear;
+SamplerState gSamBorderLinear;
+SamplerState gSamBorderLinearPoint;
+SamplerComparisonState gSamBorderComparisonLinearPoint;
+#endif

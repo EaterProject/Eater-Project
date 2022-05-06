@@ -67,3 +67,12 @@ public:
 	MaterialRenderBuffer*	m_Material;		// Instance의 기준이 되는 Material Buffer..
 	AnimationRenderBuffer*	m_Animation;	// Instance의 기준이 되는 Animation Buffer..
 };
+
+// Render Pass 별 공유해야할 Scene Data Class..
+class RenderSceneData
+{
+public:
+	// Fog 관련..
+	float Fog_Timer = 0.0f;
+
+};

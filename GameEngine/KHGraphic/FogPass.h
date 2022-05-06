@@ -14,7 +14,10 @@ public:
 
 	void ApplyOption() override;
 
-	void RenderUpdate();
+private:
+	void SetShaderList();
+	void SetShaderResourceView();
+	void SetShaderConstantBuffer();
 
 private:
 	DrawBuffer* m_Screen_DB;

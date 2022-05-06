@@ -99,19 +99,17 @@ void SSAOPass::Start(int width, int height)
 	// Frustum 설정..
 	SetFrustumFarCorners(width, height);
 
-	// ShaderResource 설정..
-	ShaderResourceView* randomVecMap = g_Resource->GetShaderResourceView<gRandomVecMap>();
-	ShaderResourceView* normalDepthRT = g_Resource->GetShaderResourceView<RT_Deffered_NormalDepth>();
-
-	m_Ssao_PS->SetShaderResourceView<gRandomVecMap>(randomVecMap->Get());
-	m_Ssao_PS->SetShaderResourceView<gNormalDepthMap>(normalDepthRT->Get());
-	m_Blur_PS->SetShaderResourceView<gNormalDepthMap>(normalDepthRT->Get());
-
 	// Constant Buffer Update..
 	CB_BlurTexel blurTexelBuf;
 	blurTexelBuf.gTexelSize = DirectX::SimpleMath::Vector2(1.0f / m_HalfScreen_VP->Width, 1.0f / m_HalfScreen_VP->Height);
 
 	m_Blur_PS->ConstantBufferUpdate(&blurTexelBuf);
+
+	// SSAO Shader List Up..
+	SetShaderList();
+
+	// SSAO Shader Resoruce View Set Up..
+	SetShaderResourceView();
 }
 
 void SSAOPass::OnResize(int width, int height)
@@ -125,19 +123,14 @@ void SSAOPass::OnResize(int width, int height)
 	m_SsaoBlur_RTV = m_SsaoBlur_RT->GetRTV()->Get();
 	m_SsaoBlur_SRV = m_SsaoBlur_RT->GetSRV()->Get();
 
-	// ShaderResource 설정..
-	ShaderResourceView* randomVecMap = g_Resource->GetShaderResourceView<gRandomVecMap>();
-	ShaderResourceView* normalDepthRT = g_Resource->GetShaderResourceView<RT_Deffered_NormalDepth>();
-
-	m_Ssao_PS->SetShaderResourceView<gRandomVecMap>(randomVecMap->Get());
-	m_Ssao_PS->SetShaderResourceView<gNormalDepthMap>(normalDepthRT->Get());
-	m_Blur_PS->SetShaderResourceView<gNormalDepthMap>(normalDepthRT->Get());
-
 	// Constant Buffer Update..
 	CB_BlurTexel blurTexelBuf;
 	blurTexelBuf.gTexelSize = DirectX::SimpleMath::Vector2(1.0f / m_HalfScreen_VP->Width, 1.0f / m_HalfScreen_VP->Height);
 
 	m_Blur_PS->ConstantBufferUpdate(&blurTexelBuf);
+
+	// SSAO Shader Resoruce View Set Up..
+	SetShaderResourceView();
 }
 
 void SSAOPass::Release()
@@ -323,6 +316,11 @@ void SSAOPass::SetRandomVectorTexture()
 
 	// RandomVectorMap 생성..
 	g_Factory->CreateShaderResourceView<gRandomVecMap>(&texDesc, &initData, nullptr);
+
+	// ShaderResource 설정..
+	ShaderResourceView* randomVecMap = g_Resource->GetShaderResourceView<gRandomVecMap>();
+
+	m_Ssao_PS->SetShaderResourceView<gRandomVecMap>(randomVecMap->Get());
 }
 
 void SSAOPass::SetFrustumFarCorners(int width, int height)
@@ -343,4 +341,32 @@ void SSAOPass::SetFrustumFarCorners(int width, int height)
 
 	// FrustumCorner Constant Buffer Data 삽입..
 	m_Ssao_VS->ConstantBufferUpdate(&frustum);
+}
+
+void SSAOPass::SetShaderList()
+{
+	PushShader("Light_PBR_PS_Option1");
+	PushShader("Light_PBR_PS_Option4");
+	PushShader("Light_PBR_PS_Option5");
+	PushShader("Light_PBR_PS_Option7");
+
+	PushShader("Light_IBL_PS_Option1");
+	PushShader("Light_IBL_PS_Option4");
+	PushShader("Light_IBL_PS_Option5");
+	PushShader("Light_IBL_PS_Option7");
+
+	PushShader("OIT_Mesh_PS_Option1");
+	PushShader("OIT_Mesh_PS_Option4");
+	PushShader("OIT_Mesh_PS_Option5");
+	PushShader("OIT_Mesh_PS_Option7");
+}
+
+void SSAOPass::SetShaderResourceView()
+{
+	ID3D11ShaderResourceView* ssaoMap = m_Ssao_RT->GetSRV()->Get();
+
+	for (ShaderBase* shader : m_OptionShaderList)
+	{
+		shader->SetShaderResourceView<gSsaoMap>(ssaoMap);
+	}
 }
