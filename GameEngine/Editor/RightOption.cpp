@@ -139,7 +139,6 @@ void RightOption::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_TREE2, HirearchyTree);
 	DDX_Control(pDX, IDC_EDIT2, HirearchyEdit);
 	DDX_Control(pDX, IDC_TAB1, Component_TapList);
-	DDX_Control(pDX, IDC_EDIT9, FilePathEdit);
 	DDX_Control(pDX, IDC_COMBO1, Tag_Combo);
 	DDX_Control(pDX, IDC_EDIT1, AddTag_Edit);
 }
@@ -151,7 +150,6 @@ BEGIN_MESSAGE_MAP(RightOption, CDialogEx)
 	ON_WM_LBUTTONUP()
 	ON_NOTIFY(NM_DBLCLK, IDC_TREE2, &RightOption::OnChoice_Hirearchy_Item)
 	ON_BN_CLICKED(IDC_BUTTON8, &RightOption::OnDelteObject_Button)
-	ON_BN_CLICKED(IDC_BUTTON4, &RightOption::OnDeleteFile_Button)
 	ON_BN_CLICKED(IDC_BUTTON7, &RightOption::OnChange_DataFormat)
 	ON_WM_TIMER()
 	ON_WM_ACTIVATE()
@@ -159,7 +157,6 @@ BEGIN_MESSAGE_MAP(RightOption, CDialogEx)
 	ON_WM_MOUSEHWHEEL()
 	ON_WM_SIZE()
 	ON_BN_CLICKED(IDC_BUTTON10, &RightOption::OnSceneSetting)
-	ON_BN_CLICKED(IDC_BUTTON11, &RightOption::OnOpenCamAnimation)
 	ON_BN_CLICKED(IDC_BUTTON1, &RightOption::OnAddTag_Button)
 	ON_CBN_SELCHANGE(IDC_COMBO1, &RightOption::OnChoiceTag)
 	ON_BN_CLICKED(IDC_BUTTON2, &RightOption::OnDeleteTagButton)
@@ -281,6 +278,8 @@ void RightOption::ChickHirearchyDarg(CPoint point)
 		}
 		case SCENE:
 		{
+			HirearchyTree.DeleteAllItems();
+
 			EditorToolScene::LoadScene(Name);
 			std::map<std::string, GameObject*>::iterator Start_it	= EditorToolScene::ObjectList.begin();
 			std::map<std::string, GameObject*>::iterator End_it		= EditorToolScene::ObjectList.end();
@@ -490,23 +489,6 @@ void RightOption::OnDelteObject_Button()
 	}
 }
 
-void RightOption::OnDeleteFile_Button()
-{
-	//에셋폴더안에 파일을 삭제한다
-	CString PathName = ClickAssetsPath;
-	PathName += _T("/");
-	PathName += ClickItemName;
-	bool FileDelete = DeleteFile(PathName);
-	if (FileDelete == false)
-	{
-		AfxMessageBox(_T("파일 지우기 실패"));
-	}
-	else
-	{
-		AfxMessageBox(_T("파일 지우기 성공"));
-	}
-}
-
 void RightOption::OnChange_DataFormat()
 {
 	//자체포멧의 값을 변경한다
@@ -629,6 +611,21 @@ BOOL RightOption::PreTranslateMessage(MSG* pMsg)
 			break;
 		}
 	}
+
+	if (pMsg->message == WM_COMMAND)
+	{
+		switch (pMsg->wParam)
+		{
+		case VK_ESCAPE:
+		case VK_RETURN:
+			return TRUE;
+		default:
+			break;
+		}
+	}
+
+
+
 	return CDialog::PreTranslateMessage(pMsg);
 }
 
@@ -636,12 +633,6 @@ void RightOption::OnSceneSetting()
 {
 	mSceneSetting->ShowWindow(SW_SHOW);
 	mSceneSetting->Setting();
-}
-
-
-void RightOption::OnOpenCamAnimation()
-{
-	mCam->ShowWindow(SW_SHOW);
 }
 
 void RightOption::OnAddTag_Button()

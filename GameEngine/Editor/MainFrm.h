@@ -56,6 +56,19 @@ protected:
 
 public:
 	afx_msg void OnClose();
+	afx_msg void OnSceneSetting();
+	afx_msg void OnOpenCameraAnimation();
+	afx_msg void OnContextMenu(CWnd* /*pWnd*/, CPoint /*point*/);
+	afx_msg void OnCreateobjectLight();
+	afx_msg void OnCreateobjectCamera();
+	afx_msg void OnCreateobjectParticle();
+	afx_msg void OnCreateobjectTerrain();
+	afx_msg void OnGameobjectPoint();
+	afx_msg void OnGameobjectSphere();
+	afx_msg void OnGameobjectBox();
+	afx_msg void OnPlayerGame();
+	afx_msg void OpenAssetsFile();
+	afx_msg void SceneSaveFile();
 };
 
 

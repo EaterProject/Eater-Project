@@ -23,13 +23,9 @@ Camera::~Camera()
 {
 	GlobalData* globalData = GlobalDataManager::g_GlobalData;
 	
-	if (g_MainCam == this)
-	{
-		g_MainCam = nullptr;
-		globalData->MainCamera_Data = nullptr;
-	}
-
+	// 현재 카메라 제거..
 	CamList[MyIndex] = nullptr;
+	CamList.erase(std::next(CamList.begin(), MyIndex));
 
 	// Global Camera Data 제거..
 	for (int i = 0; i < globalData->CameraList.size(); i++)
@@ -43,6 +39,17 @@ Camera::~Camera()
 
 	delete mCameraData;
 	mCameraData = nullptr;
+
+	if (g_MainCam == this)
+	{
+		Camera* otherCamera = *CamList.begin();
+
+		if (otherCamera)
+		{
+			g_MainCam = otherCamera;
+			globalData->MainCamera_Data = otherCamera->GetCameraData();
+		}
+	}
 }
 
 void Camera::Awake()
