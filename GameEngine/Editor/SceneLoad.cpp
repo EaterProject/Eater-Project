@@ -32,17 +32,23 @@ void Eater_LoadScene::Initialize(std::map<std::string, GameObject*>* ObjectList)
 
 void Eater_LoadScene::Load(std::string FilePath)
 {
+	GameObject* mCam	= nullptr;
+	GameObject* mLight	= nullptr;
+
 	//기존 씬 데이터를 모두 지운다
 	auto List_begin = EditorToolScene::ObjectList.begin();
 	auto List_end	= EditorToolScene::ObjectList.end();
 	for (List_begin; List_begin != List_end; List_begin++)
 	{
-		if (List_begin->first == "DebugCamera" || List_begin->first == "DirectionLight")
+		if (List_begin->first == "DebugCamera")
 		{
+			mCam = List_begin->second;
 			continue;
 		}
 		Destroy(List_begin->second);
 	}
+	EditorToolScene::ObjectList.clear();
+	//Destroy(mLight);
 
 	EATER_OPEN_READ_FILE(FilePath);
 	int Count = EATER_GET_NODE_COUNT();
@@ -73,7 +79,7 @@ void Eater_LoadScene::Load(std::string FilePath)
 				Load_Component_Animation(i, Obj);
 			}
 
-			//라이트
+			//라이트A
 			Find = EATER_GET_LIST_CHOICE(i, "Light");
 			if (Find != -1)
 			{
@@ -120,7 +126,6 @@ void Eater_LoadScene::Load(std::string FilePath)
 				EditorToolScene::TagList.insert({ std::stoi(Data[0]) ,Data[1]});
 			}
 
-
 			RenderOption* mOption = GetRenderOptionData();
 			Find = EATER_GET_LIST_CHOICE(i, "OPTION");
 			std::vector<float> Data;
@@ -144,9 +149,12 @@ void Eater_LoadScene::Load(std::string FilePath)
 			RenderSetting();
 		}
 	}
-
-	
 	EATER_CLOSE_READ_FILE();
+	EditorToolScene::ObjectList.insert({"DebugCamera", mCam});
+
+	//mCam->GetComponent<Camera>()->ChoiceMainCam();
+	//Destroy(mCam);
+	//Destroy(mLight);
 }
 
 void Eater_LoadScene::LoadData(std::string& Paht)

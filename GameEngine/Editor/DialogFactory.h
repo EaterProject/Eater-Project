@@ -32,6 +32,8 @@ public:
 
 public:
 	///GET
+	GETTER(LoadTerrain,		mLoadTerrain);
+	GETTER(LoadNavMesh,		mLoadNavMesh);
 	GETTER(SceneSetting,	mSceneSetting);
 	GETTER(Loading,			mLoading_Dlog);
 	GETTER(FileOption,		mFileOption_Dlog);

@@ -92,7 +92,6 @@ public:
 	void OnChoice_Hirearchy_Item(GameObject* Obj);
 	//void ChickMaterial(CPoint point);
 	GameObject* FindGameObjectParent(HTREEITEM mItem);
-	CEdit FilePathEdit;
 
 	static RightOption* GetThis();
 	static RightOption* thisPointer;
@@ -100,12 +99,10 @@ public:
 	//버튼들
 	afx_msg void OnChoice_Hirearchy_Item(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDelteObject_Button();
-	afx_msg void OnDeleteFile_Button();
 	afx_msg void OnChange_DataFormat();
 	afx_msg void OnClickTap(NMHDR* pNMHDR, LRESULT* pResult);
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	afx_msg void OnSceneSetting();
-	afx_msg void OnOpenCamAnimation();
 	afx_msg void OnAddTag_Button();
 	afx_msg void OnChoiceTag();
 	afx_msg void OnDeleteTagButton();
