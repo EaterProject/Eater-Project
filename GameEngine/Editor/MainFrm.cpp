@@ -370,7 +370,14 @@ void CMainFrame::OnGameobjectSphere()
 
 void CMainFrame::OnGameobjectBox()
 {
-	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	RightOption* mRightOption = DialogFactory::GetFactory()->GetRightOption();
+	GameObject* Object = EditorToolScene::Create_Box();
+	CString Data;
+	Data = Object->Name.c_str();
+	HTREEITEM Top = mRightOption->HirearchyTree.InsertItem(Data);
+
+	mRightOption->Create_Hirearchy_Item(Object, Top);
+
 }
 
 

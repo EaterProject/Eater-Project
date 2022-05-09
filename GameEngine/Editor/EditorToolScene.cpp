@@ -122,6 +122,22 @@ GameObject* EditorToolScene::Create_Camera()
 	return Cam;
 }
 
+GameObject* EditorToolScene::Create_Box()
+{
+	GameObject* box = Instance("Box");
+	MeshFilter* mMeshFileter = box->AddComponent<MeshFilter>();
+	mMeshFileter->SetMeshName("Box_0");
+	mMeshFileter->SetModelName("Box");
+	box->Name = FindMeshName("Box");
+	ObjectList.insert({box->Name,box});
+	return box;
+}
+
+GameObject* EditorToolScene::Create_Sphere()
+{
+	return nullptr;
+}
+
 GameObject* EditorToolScene::CreateBaseObject(std::string ObjectName, std::string MeshName)
 {
 	GameObject* Object = Instance(ObjectName);

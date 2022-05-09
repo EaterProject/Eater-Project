@@ -24,7 +24,5 @@ private:
 	ObjectFactory*			FactoryGM;	//오브젝트 생성 클래스
 	ClientObjectManager*	ObjectGM;	//오브젝트 관리 클래스
 private:
-	std::vector<GameObject*>	PotalList;
-	std::vector<MonsterBase*>	MonsterList;
 };
 

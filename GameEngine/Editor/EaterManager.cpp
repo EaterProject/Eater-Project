@@ -19,15 +19,20 @@
 
 EaterManager::EaterManager()
 {
-
-
+	mMeshManager		= nullptr;
+	mAnimationManager	= nullptr;
+	mMaterialManager	= nullptr;
+	mBufferManager		= nullptr;
+	mChangeManager		= nullptr;
 }
 
 EaterManager::~EaterManager()
 {
-
-
-
+	delete mMeshManager;
+	delete mAnimationManager;
+	delete mMaterialManager;
+	delete mBufferManager;
+	delete mChangeManager;
 }
 
 void EaterManager::Initialize()
@@ -37,6 +42,17 @@ void EaterManager::Initialize()
 	mMaterialManager	= new E_MaterialManager();
 	mBufferManager		= new E_BufferManager();
 	mChangeManager		= new E_ChangeManager();
+}
+
+void EaterManager::CreateBaseObject()
+{
+	//¸ðµ¨ µ¥ÀÌÅÍ
+	mMeshManager->CreateBox();
+	mBufferManager->CreateBox();
+	//
+
+
+	//
 }
 
 std::string EaterManager::CutFileName(std::string FilePath)
