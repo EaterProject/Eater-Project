@@ -1,11 +1,17 @@
 #pragma once
+#include <vector>
 
 interface IShaderManager;
 interface IFactoryManager;
 interface IGraphicResourceManager;
 
-class GlobalData;
+class ShaderBase;
+
 class RenderOption;
+class RenderSceneData;
+
+class GlobalData;
+class RenderData;
 
 ///
 /// 2021/11/08 2:22
@@ -17,7 +23,6 @@ class RenderOption;
 ///   각종 Manager & DeviceContext를 전역으로 두고 사용
 ///
 
-class RenderData;
 class RenderPassBase
 {
 public:
@@ -39,9 +44,16 @@ public:
 	virtual void SetResize(int width, int height) {}
 
 	virtual void ApplyOption() {}
+	virtual void PreUpdate() {}
 
 public:
-	static void Initialize(Microsoft::WRL::ComPtr<ID3D11Device> device, Microsoft::WRL::ComPtr<ID3D11DeviceContext> context, IFactoryManager* factory, IGraphicResourceManager* resource, IShaderManager* shader);
+	void PushShader(const char* shaderName);
+	
+protected:
+	std::vector<ShaderBase*> m_OptionShaderList;
+
+public:
+	static void Initialize(Microsoft::WRL::ComPtr<ID3D11Device> device, Microsoft::WRL::ComPtr<ID3D11DeviceContext> context, IFactoryManager* factory, IGraphicResourceManager* resource, IShaderManager* shader, RenderOption* renderOption);
 	static void GraphicReset();
 	static void Reset();
 
@@ -57,7 +69,10 @@ protected:
 	static IShaderManager* g_Shader;
 
 	static GlobalData* g_GlobalData;
+
 	static RenderOption* g_RenderOption;
+	static RenderSceneData* g_RenderSceneData;
 
 	static RenderData* g_Picking;
+
 };

@@ -8,6 +8,11 @@
 #include "ShaderManager.h"
 #include "ShaderTypes.h"
 
+OriginalShader::operator ShaderBase* ()
+{
+	return pThis->GetBaseShader(shaderName);
+}
+
 OriginalShader::operator VertexShader* ()
 {
 	return pThis->GetVertexShader(shaderName);

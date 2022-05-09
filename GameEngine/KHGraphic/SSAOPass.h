@@ -25,6 +25,10 @@ private:
 	void SetFrustumFarCorners(int width, int height);
 
 private:
+	void SetShaderList();
+	void SetShaderResourceView();
+
+private:
 	VertexShader* m_Ssao_VS;
 	PixelShader* m_Ssao_PS;
 	VertexShader* m_Blur_VS;

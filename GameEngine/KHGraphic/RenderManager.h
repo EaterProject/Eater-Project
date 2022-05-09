@@ -25,13 +25,14 @@ class RenderDataConverter;
 class RenderManager : public IRenderManager
 {
 public:
-	RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, IGraphicResourceManager* resource, IShaderManager* shader);
+	RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, IGraphicResourceManager* resource, IShaderManager* shader, RenderOption* renderOption);
 	~RenderManager();
 
 public:
 	void Create(int width, int height) override;
 	void Start(int width, int height) override;
 	void OnResize(int width, int height) override;
+
 	void Release() override;
 
 	void RenderSetting() override;
@@ -61,6 +62,8 @@ public:
 	void* PickingRender(int x, int y) override;
 
 private:
+	void PreUpdate();
+
 	void InstanceResize();
 
 	void ConvertRenderData();			// 현재 프레임에 추가 및 변경된 Render Data 변환..

@@ -39,7 +39,7 @@ public:
 
 public:
 	/// Graphic Engine Funtion..
-	virtual GRAPHIC_DLL void Initialize(HWND _hWnd, int screenWidth, int screenHeight) abstract;
+	virtual GRAPHIC_DLL void Initialize(HWND _hWnd, int screenWidth, int screenHeight, RenderOption* renderOption) abstract;
 	virtual GRAPHIC_DLL void OnReSize(int screenWidth, int screenHeight) abstract;				
 	virtual GRAPHIC_DLL void Release() abstract;
 

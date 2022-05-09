@@ -21,6 +21,7 @@
 #include "RenderTargetDefine.h"
 #include "ViewPortDefine.h"
 #include "DrawBufferDefine.h"
+#include "RenderData.h"
 
 FogPass::FogPass()
 {
@@ -36,45 +37,23 @@ void FogPass::Create(int width, int height)
 {
 	// Noise Texture 생성..
 	g_Factory->CreateImage<gNoiseVolume>("Noise/NoiseVolume.dds");
-
 }
 
 void FogPass::Start(int width, int height)
 {
-	// Shader..
-	m_Screen_VS = g_Shader->GetShader("Screen_VS");
-	m_Fog_PS = g_Shader->GetShader("Fog_PS");
+	// Fog Shader List Up..
+	SetShaderList();
 
-	// Buffer 설정..
-	m_Screen_DB = g_Resource->GetDrawBuffer<DB_Quad>();
+	// Set Fog Shader Resoruce View..
+	SetShaderResourceView();
 
-	m_OutPut_RT = g_Resource->GetRenderTexture<RT_OutPut1>();
-	m_OutPut_RTV = m_OutPut_RT->GetRTV()->Get();
-
-	// ViewPort 설정..
-	m_Screen_VP = g_Resource->GetViewPort<VP_FullScreen>()->Get();
-
-	// ShaderResource 설정..
-	ShaderResourceView* originSRV = g_Resource->GetShaderResourceView<RT_OutPut2>();
-	ShaderResourceView* positionSRV = g_Resource->GetShaderResourceView<RT_Deffered_Position>();
-	ShaderResourceView* noiseSRV = g_Resource->GetShaderResourceView<gNoiseVolume>();
-
-	m_Fog_PS->SetShaderResourceView<gOriginMap>(originSRV->Get());
-	m_Fog_PS->SetShaderResourceView<gPositionRT>(positionSRV->Get());
-	m_Fog_PS->SetShaderResourceView<gNoiseVolume>(noiseSRV->Get());
+	// Set Fog Shader Constant Buffer..
+	SetShaderConstantBuffer();
 }
 
 void FogPass::OnResize(int width, int height)
 {
-	// 현재 RenderTarget 재설정..
-	m_OutPut_RTV = m_OutPut_RT->GetRTV()->Get();
 
-	// ShaderResource 재설정..
-	ShaderResourceView* originSRV = g_Resource->GetShaderResourceView<RT_OutPut2>();
-	ShaderResourceView* positionSRV = g_Resource->GetShaderResourceView<RT_Deffered_Position>();
-
-	m_Fog_PS->SetShaderResourceView<gOriginMap>(originSRV->Get());
-	m_Fog_PS->SetShaderResourceView<gPositionRT>(positionSRV->Get());
 }
 
 void FogPass::Release()
@@ -84,43 +63,73 @@ void FogPass::Release()
 
 void FogPass::ApplyOption()
 {
-	CB_FogOption fogOptionBuf;
-	fogOptionBuf.gFogColor			= g_RenderOption->FOG_Color;
-	fogOptionBuf.gFogStartDistance	= g_RenderOption->FOG_StartDistance;
-	fogOptionBuf.gFogDistanceOffset = g_RenderOption->FOG_DistanceOffset;
-	fogOptionBuf.gFogDistanceValue	= g_RenderOption->FOG_DistanceValue;
-	fogOptionBuf.gFogHeightOffset	= g_RenderOption->FOG_HeightOffset;
-	fogOptionBuf.gFogHeightValue	= g_RenderOption->FOG_HeightValue;
-	m_Fog_PS->ConstantBufferUpdate(&fogOptionBuf);
-
-	m_FogSpeed = g_RenderOption->FOG_MoveSpeed;
+	// Set Fog Shader Constant Buffer..
+	SetShaderConstantBuffer();
 }
 
-void FogPass::RenderUpdate()
+void FogPass::PreUpdate()
 {
-	static float Time = 0;
-	Time += g_GlobalData->Time * m_FogSpeed;
+	g_RenderSceneData->Fog_Timer += g_GlobalData->Time * g_RenderOption->FOG_MoveSpeed;
 
-	if (Time > 100.0f) Time = 0.0f;
-
-	g_Context->OMSetRenderTargets(1, &m_OutPut_RTV, nullptr);
-	g_Context->RSSetViewports(1, m_Screen_VP);
-
-	// Vertex Shader Update..
-	m_Screen_VS->Update();
+	if (g_RenderSceneData->Fog_Timer > 100.0f)
+	{
+		g_RenderSceneData->Fog_Timer = 0.0f;
+	}
 
 	CB_FogData fogDataBuf;
 	fogDataBuf.gEyePosW = g_GlobalData->MainCamera_Data->CamPos;
-	fogDataBuf.gTime = Time;
+	fogDataBuf.gTime = g_RenderSceneData->Fog_Timer;
 
-	m_Fog_PS->ConstantBufferUpdate(&fogDataBuf);
+	for (ShaderBase* shader : m_OptionShaderList)
+	{
+		shader->ConstantBufferUpdate(&fogDataBuf);
+	}
+}
 
-	// Pixel Shader Update..
-	m_Fog_PS->Update();
+void FogPass::SetShaderList()
+{
+	PushShader("Light_PBR_PS_Option3");
+	PushShader("Light_PBR_PS_Option5");
+	PushShader("Light_PBR_PS_Option6");
+	PushShader("Light_PBR_PS_Option7");
 
-	g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	g_Context->IASetVertexBuffers(0, 1, m_Screen_DB->VertexBuf->GetAddress(), &m_Screen_DB->Stride, &m_Screen_DB->Offset);
-	g_Context->IASetIndexBuffer(m_Screen_DB->IndexBuf->Get(), DXGI_FORMAT_R32_UINT, 0);
+	PushShader("Light_IBL_PS_Option3");
+	PushShader("Light_IBL_PS_Option5");
+	PushShader("Light_IBL_PS_Option6");
+	PushShader("Light_IBL_PS_Option7");
 
-	g_Context->DrawIndexed(m_Screen_DB->IndexCount, 0, 0);
+	PushShader("SkyBox_PS_Option1");
+
+	PushShader("OIT_Particle_PS_Option1");
+
+	PushShader("OIT_Mesh_PS_Option3");
+	PushShader("OIT_Mesh_PS_Option5");
+	PushShader("OIT_Mesh_PS_Option6");
+	PushShader("OIT_Mesh_PS_Option7");
+}
+
+void FogPass::SetShaderResourceView()
+{
+	ID3D11ShaderResourceView* noiseMap = g_Resource->GetShaderResourceView<gNoiseVolume>()->Get();
+
+	for (ShaderBase* shader : m_OptionShaderList)
+	{
+		shader->SetShaderResourceView<gNoiseVolume>(noiseMap);
+	}
+}
+
+void FogPass::SetShaderConstantBuffer()
+{
+	CB_FogOption fogOptionBuf;
+	fogOptionBuf.gFogColor = g_RenderOption->FOG_Color;
+	fogOptionBuf.gFogStartDistance = g_RenderOption->FOG_StartDistance;
+	fogOptionBuf.gFogDistanceOffset = g_RenderOption->FOG_DistanceOffset;
+	fogOptionBuf.gFogDistanceValue = g_RenderOption->FOG_DistanceValue;
+	fogOptionBuf.gFogHeightOffset = g_RenderOption->FOG_HeightOffset;
+	fogOptionBuf.gFogHeightValue = g_RenderOption->FOG_HeightValue;
+
+	for (ShaderBase* shader : m_OptionShaderList)
+	{
+		shader->ConstantBufferUpdate(&fogOptionBuf);
+	}
 }

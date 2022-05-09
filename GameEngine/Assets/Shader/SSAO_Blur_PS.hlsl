@@ -11,7 +11,7 @@ cbuffer cbBlurOrder : register(b1)
 static float gWeights[11] = { 0.05f, 0.05f, 0.1f, 0.1f, 0.1f, 0.2f, 0.1f, 0.1f, 0.1f, 0.05f, 0.05f };
 static int gBlurRadius = 5;
 
-Texture2D gNormalDepthMap : register(t0);
+Texture2D gNormalDepthRT : register(t0);
 Texture2D gInputMap	: register(t1);
 
 SamplerState gSamClampLinearPoint : register(s0);
@@ -31,7 +31,7 @@ float4 SSAOBlur_PS(VertexIn pin) : SV_Target
     float4 color = gWeights[gBlurRadius] * gInputMap.Sample(gSamClampLinearPoint, pin.Tex);
     float totalWeight = gWeights[gBlurRadius];
 
-    float4 centerNormalDepth = gNormalDepthMap.Sample(gSamBorderLinearPoint, pin.Tex);
+    float4 centerNormalDepth = gNormalDepthRT.Sample(gSamBorderLinearPoint, pin.Tex);
 	
     if (dot(centerNormalDepth.xyz, centerNormalDepth.xyz) < 0.00001)
         return 1.0f;
@@ -44,7 +44,7 @@ float4 SSAOBlur_PS(VertexIn pin) : SV_Target
 
 		float2 tex = pin.Tex + i * texOffset;
 
-        float4 neighborNormalDepth = gNormalDepthMap.Sample(gSamBorderLinearPoint, tex);
+        float4 neighborNormalDepth = gNormalDepthRT.Sample(gSamBorderLinearPoint, tex);
 		
 		//
 		// If the center value and neighbor values differ too much (either in 

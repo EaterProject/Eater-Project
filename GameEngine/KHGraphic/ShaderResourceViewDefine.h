@@ -32,7 +32,6 @@ SHADER_RESOURCE_VIEW(gAnimationBuffer)
 // SSAO ShaderResourceView Resource
 ///////////////////////////////////////////////////////////////////////////////////////////
 
-SHADER_RESOURCE_VIEW(gNormalDepthMap)
 SHADER_RESOURCE_VIEW(gRandomVecMap)
 SHADER_RESOURCE_VIEW(gInputMap)
 
@@ -44,7 +43,7 @@ SHADER_RESOURCE_VIEW(gAlbedoRT)
 SHADER_RESOURCE_VIEW(gNormalRT)
 SHADER_RESOURCE_VIEW(gPositionRT)
 SHADER_RESOURCE_VIEW(gEmissiveRT)
-SHADER_RESOURCE_VIEW(gDepthRT)
+SHADER_RESOURCE_VIEW(gNormalDepthRT)
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 // Terrain ShaderResourceView Resource

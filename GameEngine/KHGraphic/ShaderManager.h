@@ -34,6 +34,7 @@ private:
 	template<typename T>
 	void PushConstantBufferUsage(UINT usage);
 
+	ShaderBase* GetBaseShader(std::string shaderName);
 	VertexShader* GetVertexShader(std::string shaderName);
 	PixelShader* GetPixelShader(std::string shaderName);
 	ComputeShader* GetComputeShader(std::string shaderName);

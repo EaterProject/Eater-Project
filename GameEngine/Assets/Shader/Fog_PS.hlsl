@@ -12,7 +12,7 @@ cbuffer cbFogOption : register(b0)
 
 cbuffer cbFogData : register(b1)
 {
-    float3 gEyePosW : packoffset(c0);
+    float3 gEyePos  : packoffset(c0);
     float gTime     : packoffset(c0.w);
 }
 
@@ -28,7 +28,7 @@ float3 ApplyFog(float3 originalColor, float3 toEye, float noise)
     float convertPercent = 0.1f;
     
     // 지정 범위로 변환된 Distance..
-    float pixelDistance = convertPercent * (length(gEyePosW - toEye) - gFogStartDistance);
+    float pixelDistance = convertPercent * (length(gEyePos - toEye) - gFogStartDistance);
     
     // 지정 범위로 변환된 Height..
     float pixelHeight = convertPercent * toEye.y;

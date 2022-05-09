@@ -234,47 +234,64 @@ void PickingPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::
 	{
 	case OBJECT_TYPE::BASE:
 	{
-		// Instance Update..
-		for (int i = 0; i < m_RenderCount; i++)
+		int loopCount = 0;
+		int renderCount = 0;
+		int nowCount = 0;
+		int checkCount = 0;
+
+		while (true)
 		{
-			m_RenderData = meshlist[i];
+			checkCount = m_RenderCount - renderCount;
+			nowCount = (checkCount > 500) ? 500 : checkCount;
 
-			if (m_RenderData->m_Draw == false) continue;
+			if (nowCount < 1) break;
 
-			// 해당 Instance Data 삽입..
-			m_MeshData.World = m_RenderData->m_ObjectData->World;
-			m_MeshData.HashColor = m_RenderData->m_ObjectData->HashColor;
+			// Instance Update..
+			for (int i = 0; i < nowCount; i++)
+			{
+				m_RenderData = meshlist[i + renderCount];
 
-			m_MeshInstance[m_InstanceCount++] = m_MeshData;
+				if (m_RenderData->m_Draw == false) continue;
+
+				// 해당 Instance Data 삽입..
+				m_MeshData.World = m_RenderData->m_ObjectData->World;
+				m_MeshData.HashColor = m_RenderData->m_ObjectData->HashColor;
+
+				m_MeshInstance[m_InstanceCount++] = m_MeshData;
+			}
+
+			// Instance가 없는경우 처리하지 않는다..
+			if (m_InstanceCount == 0) return;
+
+			// Instance Buffer Update..
+			UpdateBuffer(m_MeshID_IB->InstanceBuf->Get(), &m_MeshInstance[0], (size_t)m_MeshID_IB->Stride * (size_t)m_InstanceCount);
+
+			// Vertex Shader Update..
+			CB_Instance_StaticMesh_ID objectBuf;
+			objectBuf.gViewProj = viewproj;
+
+			m_Mesh_Inst_VS->ConstantBufferUpdate(&objectBuf);
+
+			m_Mesh_Inst_VS->Update();
+
+			// Pixel Shader Update..
+			m_Mesh_ID_PS->Update();
+
+			ID3D11Buffer* vertexBuffers[2] = { mesh->m_VertexBuf, m_MeshID_IB->InstanceBuf->Get() };
+			UINT strides[2] = { mesh->m_Stride, m_MeshID_IB->Stride };
+			UINT offsets[2] = { 0,0 };
+
+			// Draw..
+			g_Context->IASetVertexBuffers(0, 2, vertexBuffers, strides, offsets);
+			g_Context->IASetIndexBuffer(mesh->m_IndexBuf, DXGI_FORMAT_R32_UINT, 0);
+			g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+			g_Context->DrawIndexedInstanced(mesh->m_IndexCount, m_InstanceCount, 0, 0, 0);
+
+			loopCount++;
+			renderCount = loopCount * 500;
+			m_InstanceCount = 0;
 		}
-
-		// Instance가 없는경우 처리하지 않는다..
-		if (m_InstanceCount == 0) return;
-
-		// Instance Buffer Update..
-		UpdateBuffer(m_MeshID_IB->InstanceBuf->Get(), &m_MeshInstance[0], (size_t)m_MeshID_IB->Stride * (size_t)m_InstanceCount);
-
-		// Vertex Shader Update..
-		CB_Instance_StaticMesh_ID objectBuf;
-		objectBuf.gViewProj = viewproj;
-
-		m_Mesh_Inst_VS->ConstantBufferUpdate(&objectBuf);
-
-		m_Mesh_Inst_VS->Update();
-
-		// Pixel Shader Update..
-		m_Mesh_ID_PS->Update();
-
-		ID3D11Buffer* vertexBuffers[2] = { mesh->m_VertexBuf, m_MeshID_IB->InstanceBuf->Get() };
-		UINT strides[2] = { mesh->m_Stride, m_MeshID_IB->Stride };
-		UINT offsets[2] = { 0,0 };
-
-		// Draw..
-		g_Context->IASetVertexBuffers(0, 2, vertexBuffers, strides, offsets);
-		g_Context->IASetIndexBuffer(mesh->m_IndexBuf, DXGI_FORMAT_R32_UINT, 0);
-		g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-		g_Context->DrawIndexedInstanced(mesh->m_IndexCount, m_InstanceCount, 0, 0, 0);
 	}
 	break;
 	case OBJECT_TYPE::SKINNING:
@@ -282,54 +299,71 @@ void PickingPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::
 		ObjectData* object = nullptr;
 		AnimationData* animation = nullptr;
 
-		// Instance Update..
-		for (int i = 0; i < m_RenderCount; i++)
+		int loopCount = 0;
+		int renderCount = 0;
+		int nowCount = 0;
+		int checkCount = 0;
+
+		while (true)
 		{
-			m_RenderData = meshlist[i];
+			checkCount = m_RenderCount - renderCount;
+			nowCount = (checkCount > 500) ? 500 : checkCount;
 
-			if (m_RenderData->m_Draw == false) continue;
+			if (nowCount < 1) break;
 
-			object = m_RenderData->m_ObjectData;
-			animation = m_RenderData->m_AnimationData;
+			// Instance Update..
+			for (int i = 0; i < nowCount; i++)
+			{
+				m_RenderData = meshlist[i + renderCount];
 
-			// 해당 Instance Data 삽입..
-			m_SkinMeshData.World = object->World;
-			m_SkinMeshData.HashColor = object->HashColor;
-			m_SkinMeshData.PrevAnimationIndex = animation->PrevAnimationIndex + animation->PrevFrameIndex;
-			m_SkinMeshData.NextAnimationIndex = animation->NextAnimationIndex + animation->NextFrameIndex;
-			m_SkinMeshData.FrameTime = animation->FrameTime;
+				if (m_RenderData->m_Draw == false) continue;
 
-			m_SkinMeshInstance[m_InstanceCount++] = m_SkinMeshData;
+				object = m_RenderData->m_ObjectData;
+				animation = m_RenderData->m_AnimationData;
+
+				// 해당 Instance Data 삽입..
+				m_SkinMeshData.World = object->World;
+				m_SkinMeshData.HashColor = object->HashColor;
+				m_SkinMeshData.PrevAnimationIndex = animation->PrevAnimationIndex + animation->PrevFrameIndex;
+				m_SkinMeshData.NextAnimationIndex = animation->NextAnimationIndex + animation->NextFrameIndex;
+				m_SkinMeshData.FrameTime = animation->FrameTime;
+
+				m_SkinMeshInstance[m_InstanceCount++] = m_SkinMeshData;
+			}
+
+			// Instance가 없는경우 처리하지 않는다..
+			if (m_InstanceCount == 0) return;
+
+			// Instance Buffer Update..
+			UpdateBuffer(m_SkinMeshID_IB->InstanceBuf->Get(), &m_SkinMeshInstance[0], (size_t)m_SkinMeshID_IB->Stride * (size_t)m_InstanceCount);
+
+			// Vertex Shader Update..
+			CB_InstanceSkinMesh_ID objectBuf;
+			objectBuf.gViewProj = viewproj;
+
+			m_Skin_Inst_VS->ConstantBufferUpdate(&objectBuf);
+			m_Skin_Inst_VS->SetShaderResourceView<gAnimationBuffer>(instance->m_Animation->m_AnimationBuf);
+
+			m_Skin_Inst_VS->Update();
+
+			// Pixel Shader Update..
+			m_Mesh_ID_PS->Update();
+
+			ID3D11Buffer* vertexBuffers[2] = { mesh->m_VertexBuf, m_SkinMeshID_IB->InstanceBuf->Get() };
+			UINT strides[2] = { mesh->m_Stride, m_SkinMeshID_IB->Stride };
+			UINT offsets[2] = { 0,0 };
+
+			// Draw..
+			g_Context->IASetVertexBuffers(0, 2, vertexBuffers, strides, offsets);
+			g_Context->IASetIndexBuffer(mesh->m_IndexBuf, DXGI_FORMAT_R32_UINT, 0);
+			g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+			g_Context->DrawIndexedInstanced(mesh->m_IndexCount, m_InstanceCount, 0, 0, 0);
+
+			loopCount++;
+			renderCount = loopCount * 500;
+			m_InstanceCount = 0;
 		}
-
-		// Instance가 없는경우 처리하지 않는다..
-		if (m_InstanceCount == 0) return;
-
-		// Instance Buffer Update..
-		UpdateBuffer(m_SkinMeshID_IB->InstanceBuf->Get(), &m_SkinMeshInstance[0], (size_t)m_SkinMeshID_IB->Stride * (size_t)m_InstanceCount);
-
-		// Vertex Shader Update..
-		CB_InstanceSkinMesh_ID objectBuf;
-		objectBuf.gViewProj = viewproj;
-
-		m_Skin_Inst_VS->ConstantBufferUpdate(&objectBuf);
-		m_Skin_Inst_VS->SetShaderResourceView<gAnimationBuffer>(instance->m_Animation->m_AnimationBuf);
-
-		m_Skin_Inst_VS->Update();
-
-		// Pixel Shader Update..
-		m_Mesh_ID_PS->Update();
-
-		ID3D11Buffer* vertexBuffers[2] = { mesh->m_VertexBuf, m_SkinMeshID_IB->InstanceBuf->Get() };
-		UINT strides[2] = { mesh->m_Stride, m_SkinMeshID_IB->Stride };
-		UINT offsets[2] = { 0,0 };
-
-		// Draw..
-		g_Context->IASetVertexBuffers(0, 2, vertexBuffers, strides, offsets);
-		g_Context->IASetIndexBuffer(mesh->m_IndexBuf, DXGI_FORMAT_R32_UINT, 0);
-		g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-		g_Context->DrawIndexedInstanced(mesh->m_IndexCount, m_InstanceCount, 0, 0, 0);
 	}
 	break;
 	default:

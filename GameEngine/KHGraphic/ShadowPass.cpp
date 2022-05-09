@@ -90,18 +90,27 @@ void ShadowPass::Start(int width, int height)
 
 	m_Shadow_DS = g_Resource->GetDepthStencil<DS_Shadow>();
 	m_Shadow_DS->SetRatio(4.0f, 4.0f);
-
+	
 	m_Shadow_VP = g_Resource->GetViewPort<VP_Shadow>()->Get();
 	m_Depth_RS = g_Resource->GetRasterizerState<RS_Depth>()->Get();
 
 	// Shadow DepthStencilView ¼³Á¤..
 	m_Shadow_DSV = m_Shadow_DS->GetDSV()->Get();
+
+	// Fog Shader List Up
+	SetShaderList();
+
+	// Fog Shader Resource Setting..
+	SetShaderResourceView();
 }
 
 void ShadowPass::OnResize(int width, int height)
 {
 	// Shadow DepthStencilView Àç¼³Á¤..
 	m_Shadow_DSV = m_Shadow_DS->GetDSV()->Get();
+
+	// Fog Shader Resource Setting..
+	SetShaderResourceView();
 }
 
 void ShadowPass::InstanceResize(size_t& renderMaxCount, size_t& unRenderMaxCount)
@@ -150,40 +159,57 @@ void ShadowPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::v
 	{
 	case OBJECT_TYPE::BASE:
 	{
-		// Instance Update..
-		for (int i = 0; i < m_RenderCount; i++)
+		int loopCount = 0;
+		int renderCount = 0;
+		int nowCount = 0;
+		int checkCount = 0;
+
+		while (true)
 		{
-			if (meshlist[i]->m_Draw == false) continue;
+			checkCount = m_RenderCount - renderCount;
+			nowCount = (checkCount > 500) ? 500 : checkCount;
 
-			// ÇØ´ç Instance Data »ðÀÔ..
-			m_MeshData.World = meshlist[i]->m_ObjectData->World;
+			if (nowCount < 1) break;
 
-			m_MeshInstance[m_InstanceCount++] = m_MeshData;
+			// Instance Update..
+			for (int i = 0; i < nowCount; i++)
+			{
+				if (meshlist[i]->m_Draw == false) continue;
+
+				// ÇØ´ç Instance Data »ðÀÔ..
+				m_MeshData.World = meshlist[i + renderCount]->m_ObjectData->World;
+
+				m_MeshInstance[m_InstanceCount++] = m_MeshData;
+			}
+
+			if (m_InstanceCount == 0) return;
+
+			// Instance Buffer Update..
+			UpdateBuffer(m_Mesh_IB->InstanceBuf->Get(), &m_MeshInstance[0], (size_t)m_Mesh_IB->Stride * (size_t)m_InstanceCount);
+
+			// Vertex Shader Update..
+			CB_InstanceDepthStaticMesh shadowBuf;
+			shadowBuf.gViewProj = viewproj;
+
+			m_MeshInstShadow_VS->ConstantBufferUpdate(&shadowBuf);
+
+			m_MeshInstShadow_VS->Update();
+
+			ID3D11Buffer* vertexBuffers[2] = { mesh->m_VertexBuf, m_Mesh_IB->InstanceBuf->Get() };
+			UINT strides[2] = { mesh->m_Stride, m_Mesh_IB->Stride };
+			UINT offsets[2] = { 0,0 };
+
+			// Draw..
+			g_Context->IASetVertexBuffers(0, 2, vertexBuffers, strides, offsets);
+			g_Context->IASetIndexBuffer(mesh->m_IndexBuf, DXGI_FORMAT_R32_UINT, 0);
+			g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+			g_Context->DrawIndexedInstanced(mesh->m_IndexCount, m_InstanceCount, 0, 0, 0);
+
+			loopCount++;
+			renderCount = loopCount * 500;
+			m_InstanceCount = 0;
 		}
-
-		if (m_InstanceCount == 0) return;
-
-		// Instance Buffer Update..
-		UpdateBuffer(m_Mesh_IB->InstanceBuf->Get(), &m_MeshInstance[0], (size_t)m_Mesh_IB->Stride * (size_t)m_InstanceCount);
-
-		// Vertex Shader Update..
-		CB_InstanceDepthStaticMesh shadowBuf;
-		shadowBuf.gViewProj = viewproj;
-
-		m_MeshInstShadow_VS->ConstantBufferUpdate(&shadowBuf);
-
-		m_MeshInstShadow_VS->Update();
-
-		ID3D11Buffer* vertexBuffers[2] = { mesh->m_VertexBuf, m_Mesh_IB->InstanceBuf->Get() };
-		UINT strides[2] = { mesh->m_Stride, m_Mesh_IB->Stride };
-		UINT offsets[2] = { 0,0 };
-
-		// Draw..
-		g_Context->IASetVertexBuffers(0, 2, vertexBuffers, strides, offsets);
-		g_Context->IASetIndexBuffer(mesh->m_IndexBuf, DXGI_FORMAT_R32_UINT, 0);
-		g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-		g_Context->DrawIndexedInstanced(mesh->m_IndexCount, m_InstanceCount, 0, 0, 0);
 	}
 	break;
 	case OBJECT_TYPE::SKINNING:
@@ -191,49 +217,66 @@ void ShadowPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::v
 		ObjectData* object = nullptr;
 		AnimationData* animation = nullptr;
 
-		// Instance Update..
-		for (int i = 0; i < m_RenderCount; i++)
+		int loopCount = 0;
+		int renderCount = 0;
+		int nowCount = 0;
+		int checkCount = 0;
+
+		while (true)
 		{
-			m_RenderData = meshlist[i];
+			checkCount = m_RenderCount - renderCount;
+			nowCount = (checkCount > 500) ? 500 : checkCount;
 
-			if (m_RenderData->m_Draw == false) continue;
+			if (nowCount < 1) break;
 
-			object = m_RenderData->m_ObjectData;
-			animation = m_RenderData->m_AnimationData;
+			// Instance Update..
+			for (int i = 0; i < nowCount; i++)
+			{
+				m_RenderData = meshlist[i + renderCount];
 
-			// ÇØ´ç Instance Data »ðÀÔ..
-			m_SkinMeshData.World = object->World;
-			m_SkinMeshData.PrevAnimationIndex = animation->PrevAnimationIndex + animation->PrevFrameIndex;
-			m_SkinMeshData.NextAnimationIndex = animation->NextAnimationIndex + animation->NextFrameIndex;
-			m_SkinMeshData.FrameTime = animation->FrameTime;
+				if (m_RenderData->m_Draw == false) continue;
 
-			m_SkinMeshInstance[m_InstanceCount++] = m_SkinMeshData;
+				object = m_RenderData->m_ObjectData;
+				animation = m_RenderData->m_AnimationData;
+
+				// ÇØ´ç Instance Data »ðÀÔ..
+				m_SkinMeshData.World = object->World;
+				m_SkinMeshData.PrevAnimationIndex = animation->PrevAnimationIndex + animation->PrevFrameIndex;
+				m_SkinMeshData.NextAnimationIndex = animation->NextAnimationIndex + animation->NextFrameIndex;
+				m_SkinMeshData.FrameTime = animation->FrameTime;
+
+				m_SkinMeshInstance[m_InstanceCount++] = m_SkinMeshData;
+			}
+
+			if (m_InstanceCount == 0) return;
+
+			// Instance Buffer Update..
+			UpdateBuffer(m_SkinMesh_IB->InstanceBuf->Get(), &m_SkinMeshInstance[0], (size_t)m_SkinMesh_IB->Stride * (size_t)m_InstanceCount);
+
+			// Vertex Shader Update..
+			CB_InstanceDepthSkinMesh shadowBuf;
+			shadowBuf.gViewProj = viewproj;
+
+			m_SkinInstShadow_VS->ConstantBufferUpdate(&shadowBuf);
+			m_SkinInstShadow_VS->SetShaderResourceView<gAnimationBuffer>(instance->m_Animation->m_AnimationBuf);
+
+			m_SkinInstShadow_VS->Update();
+
+			ID3D11Buffer* vertexBuffers[2] = { mesh->m_VertexBuf, m_SkinMesh_IB->InstanceBuf->Get() };
+			UINT strides[2] = { mesh->m_Stride, m_SkinMesh_IB->Stride };
+			UINT offsets[2] = { 0,0 };
+
+			// Draw..
+			g_Context->IASetVertexBuffers(0, 2, vertexBuffers, strides, offsets);
+			g_Context->IASetIndexBuffer(mesh->m_IndexBuf, DXGI_FORMAT_R32_UINT, 0);
+			g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+			g_Context->DrawIndexedInstanced(mesh->m_IndexCount, m_InstanceCount, 0, 0, 0);
+
+			loopCount++;
+			renderCount = loopCount * 500;
+			m_InstanceCount = 0;
 		}
-
-		if (m_InstanceCount == 0) return;
-
-		// Instance Buffer Update..
-		UpdateBuffer(m_SkinMesh_IB->InstanceBuf->Get(), &m_SkinMeshInstance[0], (size_t)m_SkinMesh_IB->Stride * (size_t)m_InstanceCount);
-
-		// Vertex Shader Update..
-		CB_InstanceDepthSkinMesh shadowBuf;
-		shadowBuf.gViewProj = viewproj;
-
-		m_SkinInstShadow_VS->ConstantBufferUpdate(&shadowBuf);
-		m_SkinInstShadow_VS->SetShaderResourceView<gAnimationBuffer>(instance->m_Animation->m_AnimationBuf);
-
-		m_SkinInstShadow_VS->Update();
-
-		ID3D11Buffer* vertexBuffers[2] = { mesh->m_VertexBuf, m_SkinMesh_IB->InstanceBuf->Get() };
-		UINT strides[2] = { mesh->m_Stride, m_SkinMesh_IB->Stride };
-		UINT offsets[2] = { 0,0 };
-
-		// Draw..
-		g_Context->IASetVertexBuffers(0, 2, vertexBuffers, strides, offsets);
-		g_Context->IASetIndexBuffer(mesh->m_IndexBuf, DXGI_FORMAT_R32_UINT, 0);
-		g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-		g_Context->DrawIndexedInstanced(mesh->m_IndexCount, m_InstanceCount, 0, 0, 0);
 	}
 	break;
 	default:
@@ -295,4 +338,32 @@ void ShadowPass::RenderUpdate(const InstanceRenderBuffer* instance, const Render
 	g_Context->IASetIndexBuffer(mesh->m_IndexBuf, DXGI_FORMAT_R32_UINT, 0);
 
 	g_Context->DrawIndexed(mesh->m_IndexCount, 0, 0);
+}
+
+void ShadowPass::SetShaderList()
+{
+	PushShader("Light_PBR_PS_Option1");
+	PushShader("Light_PBR_PS_Option4");
+	PushShader("Light_PBR_PS_Option5");
+	PushShader("Light_PBR_PS_Option7");
+
+	PushShader("Light_IBL_PS_Option1");
+	PushShader("Light_IBL_PS_Option4");
+	PushShader("Light_IBL_PS_Option5");
+	PushShader("Light_IBL_PS_Option7");
+
+	PushShader("OIT_Mesh_PS_Option1");
+	PushShader("OIT_Mesh_PS_Option4");
+	PushShader("OIT_Mesh_PS_Option5");
+	PushShader("OIT_Mesh_PS_Option7");
+}
+
+void ShadowPass::SetShaderResourceView()
+{
+	ID3D11ShaderResourceView* shadowMap = m_Shadow_DS->GetSRV()->Get();
+
+	for (ShaderBase* shader : m_OptionShaderList)
+	{
+		shader->SetShaderResourceView<gShadowMap>(shadowMap);
+	}
 }

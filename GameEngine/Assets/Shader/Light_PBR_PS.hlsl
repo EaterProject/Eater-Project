@@ -1,6 +1,8 @@
+#include "SamplerState_Header.hlsli"
 #include "Output_Header.hlsli"
 #include "Function_Header.hlsli"
 #include "PBR_Header.hlsli"
+#include "Fog_Header.hlsli"
 
 cbuffer cbLightSub : register(b0)
 {
@@ -27,9 +29,6 @@ Texture2D gPositionRT   : register(t3);
 
 Texture2D gSsaoMap      : register(t4);
 Texture2D gShadowMap    : register(t5);
-
-SamplerComparisonState gSamBorderComparisonLinearPoint : register(s0);
-SamplerState gSamClampLinear : register(s1);
 
 float4 Light_PBR_PS(ScreenPixelIn pin) : SV_TARGET
 {
@@ -85,5 +84,9 @@ float4 Light_PBR_PS(ScreenPixelIn pin) : SV_TARGET
     
     litColor += emissive;
 
+#ifdef FOG
+    litColor = Fog(litColor, positionRT.xyz);
+#endif
+    
     return float4(litColor, 1.0f);
 }

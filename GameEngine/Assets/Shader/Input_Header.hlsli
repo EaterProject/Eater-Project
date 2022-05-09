@@ -72,7 +72,8 @@ struct ParticleVertexIn
 struct ParticleVertexOut
 {
     float4 PosH  : SV_POSITION;
-    float2 Tex   : TEXCOORD;
+    float3 PosW  : POSITION;
+    float2 Tex : TEXCOORD;
     float4 Color : COLOR;
 };
 
