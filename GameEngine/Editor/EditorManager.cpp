@@ -127,3 +127,13 @@ void EditorManager::CreateAssetsFile()
 	std::filesystem::create_directory("../Assets/Texture/Graphic/Shader");
 }
 
+void EditorManager::CreateBaseObject()
+{
+	mEater->CreateBaseObject();
+
+
+
+
+
+}
+

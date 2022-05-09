@@ -19,24 +19,40 @@
 
 EaterManager::EaterManager()
 {
-
-
+	mMeshManager = nullptr;
+	mAnimationManager = nullptr;
+	mMaterialManager = nullptr;
+	mBufferManager = nullptr;
+	mChangeManager = nullptr;
 }
 
 EaterManager::~EaterManager()
 {
-
-
-
+	delete mMeshManager;
+	delete mAnimationManager;
+	delete mMaterialManager;
+	delete mBufferManager;
+	delete mChangeManager;
 }
 
 void EaterManager::Initialize()
 {
-	mMeshManager		= new E_MeshManager();
-	mAnimationManager	= new E_AnimationManager();
-	mMaterialManager	= new E_MaterialManager();
-	mBufferManager		= new E_BufferManager();
-	mChangeManager		= new E_ChangeManager();
+	mMeshManager = new E_MeshManager();
+	mAnimationManager = new E_AnimationManager();
+	mMaterialManager = new E_MaterialManager();
+	mBufferManager = new E_BufferManager();
+	mChangeManager = new E_ChangeManager();
+}
+
+void EaterManager::CreateBaseObject()
+{
+	//모델 데이터
+	mMeshManager->CreateBox();
+	mBufferManager->CreateBox();
+	//
+
+
+	//
 }
 
 std::string EaterManager::CutFileName(std::string FilePath)
@@ -45,11 +61,11 @@ std::string EaterManager::CutFileName(std::string FilePath)
 	size_t end = FilePath.rfind(".") - start;
 	std::string FileType = FilePath.substr(start, end);
 
-	if(FileType.rfind('+') != std::string::npos)
+	if (FileType.rfind('+') != std::string::npos)
 	{
 		isSkin = true;
-		SkinName		= FileType.substr(0, FileType.rfind('+'));
-		AnimationName	= FileType.substr(FileType.rfind('+'), FileType.length());
+		SkinName = FileType.substr(0, FileType.rfind('+'));
+		AnimationName = FileType.substr(FileType.rfind('+'), FileType.length());
 	}
 
 
@@ -59,9 +75,9 @@ std::string EaterManager::CutFileName(std::string FilePath)
 int EaterManager::CheckModelType(ParserData::CModel* FBXModel)
 {
 	int TYPE = E_STATIC_MESH;
-	int BoneCount	= FBXModel->m_BoneCount;
+	int BoneCount = FBXModel->m_BoneCount;
 	int StaticCount = FBXModel->m_StaticCount;
-	int SkinCount	= FBXModel->m_SkinCount;
+	int SkinCount = FBXModel->m_SkinCount;
 
 	if (SkinCount > 0)
 	{
@@ -72,7 +88,7 @@ int EaterManager::CheckModelType(ParserData::CModel* FBXModel)
 
 void EaterManager::Load_Eater_File(std::string& Path)
 {
-	
+
 
 
 
@@ -82,7 +98,7 @@ void EaterManager::Load_Eater_File(std::string& Path)
 
 }
 
-void EaterManager::Load_FBX_File(std::string& Path,ParserData::CModel* FBXMesh)
+void EaterManager::Load_FBX_File(std::string& Path, ParserData::CModel* FBXMesh)
 {
 	std::string FileName = CutFileName(Path);
 	std::string AnimationName = FileName;
@@ -91,9 +107,9 @@ void EaterManager::Load_FBX_File(std::string& Path,ParserData::CModel* FBXMesh)
 	//스킨 오브젝트라면 이름을 짤라줘야한다
 	if (ModelType == E_SKIN_MESH)
 	{
-		std::size_t Start	= FileName.rfind('+')+1;
-		std::size_t End		= FileName.length() - Start;
-		FileName = FileName.substr(0, FileName.rfind('+')+1);
+		std::size_t Start = FileName.rfind('+') + 1;
+		std::size_t End = FileName.length() - Start;
+		FileName = FileName.substr(0, FileName.rfind('+') + 1);
 	}
 
 	///Model 정보를 저장한다
@@ -130,21 +146,21 @@ void EaterManager::Load_FBX_File_NavMeshBuffer(std::string& Path, ParserData::CM
 	mBufferManager->ChangeEaterFile_NavMEsh(FBXMesh, ChangeFileName);
 }
 
-void EaterManager::Load_GameObject_File(GameObject* Object ,ObjectOption* mOption)
+void EaterManager::Load_GameObject_File(GameObject* Object, ObjectOption* mOption)
 {
 	//오브젝트의 정보를 읽어온다
-	MeshFilter* MF				= Object->GetComponent<MeshFilter>();
-	AnimationController* AC		= Object->GetComponent<AnimationController>();
-	
+	MeshFilter* MF = Object->GetComponent<MeshFilter>();
+	AnimationController* AC = Object->GetComponent<AnimationController>();
+
 	if (MF == nullptr) { return; }
 
-	std::string ModelName		= MF->GetModelName();
-	std::string MaterialName	= MF->GetMaterialName();
+	std::string ModelName = MF->GetModelName();
+	std::string MaterialName = MF->GetMaterialName();
 
 
 	//읽어올 파일의 경로를 설정
-	std::string ModelPath		= "../Assets/Model/ModelData/" + ModelName + ".Eater";
-	std::string MaterialPath	= "../Assets/Texture/Material/" + MaterialName + ".Emat";
+	std::string ModelPath = "../Assets/Model/ModelData/" + ModelName + ".Eater";
+	std::string MaterialPath = "../Assets/Texture/Material/" + MaterialName + ".Emat";
 	mChangeManager->SetModelName(ModelName);
 
 	//모델 정보를 수정 후 다시 저장
@@ -166,7 +182,7 @@ void EaterManager::Load_GameObject_File(GameObject* Object ,ObjectOption* mOptio
 			mChangeManager->Change_Bone(i, Object);
 		}
 	}
-	EATER_CLOSE_CHANGE_FILE(ModelName, "../Assets/Model/ModelData/",".Eater");
+	EATER_CLOSE_CHANGE_FILE(ModelName, "../Assets/Model/ModelData/", ".Eater");
 	//변환한 파일로 다시로드한다
 	EditorToolScene::MeshLoad(ModelPath);
 
@@ -181,7 +197,7 @@ void EaterManager::Load_GameObject_File(GameObject* Object ,ObjectOption* mOptio
 			mChangeManager->Change_Material(i, Object);
 		}
 	}
-	
+
 	//if (AC != nullptr)
 	//{
 	//	//애니메이션 정보를 수정한다
