@@ -42,17 +42,17 @@ void ManaStone::Update()
 	int Size = (int)TrianglePoint.size();
 	for (int i = 0; i < Size; i++)
 	{
-		Vector3 MonsterPoint = TrianglePoint[i] * 5;
+		Vector3 MonsterPoint = TrianglePoint[i] * 10;
 		MonsterPoint.y = 1;
 		DebugDrawLine(Point, MonsterPoint, Vector3(0, 0, 1));
 	}
 
-	Size = (int)TriangleCenterPoint.size();
+	Size = (int)TrianglePoint.size();
 	for (int i = 0; i < Size; i++)
 	{
-		Vector3 MonsterPoint = TrianglePoint[i] * 5;
+		Vector3 MonsterPoint = TrianglePoint[i] * 10;
 		MonsterPoint.y = 1;
-		DebugDrawCircle(TrianglePointDir, MonsterPoint, Vector3(0, 0, 0), Vector3(0, 0, 1));
+		DebugDrawCircle(5, MonsterPoint, Vector3(0, 0, 0), Vector3(0, 0, 1));
 	}
 }
 

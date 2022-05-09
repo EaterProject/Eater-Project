@@ -124,11 +124,11 @@ GameObject* EditorToolScene::Create_Camera()
 
 GameObject* EditorToolScene::Create_Box()
 {
-	GameObject* box = Instance("Box");
+	GameObject* box = Instance("box");
 	MeshFilter* mMeshFileter = box->AddComponent<MeshFilter>();
-	mMeshFileter->SetMeshName("Box_0");
-	mMeshFileter->SetModelName("Box");
-	box->Name = FindMeshName("Box");
+	mMeshFileter->SetMeshName("box_0");
+	mMeshFileter->SetModelName("box");
+	box->Name = FindMeshName("box");
 	ObjectList.insert({ box->Name,box });
 	return box;
 }

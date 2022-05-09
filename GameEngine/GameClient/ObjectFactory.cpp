@@ -112,9 +112,9 @@ MonsterB* ObjectFactory::CreateMonsterB(float x, float y, float z)
 
 ManaStone* ObjectFactory::CreateManaStone(float x, float y, float z)
 {
-	CreateMonsterA(x+5,y,z);
-	CreateMonsterA(x-5,y,z);
-	CreateMonsterA(x,y,z-5);
+	//CreateMonsterA(x+5,y,z);
+	//CreateMonsterA(x-5,y,z);
+	//CreateMonsterA(x,y,z-5);
 
 	GameObject* Object_ManaStone = Instance("ManaStone");
 	Object_ManaStone->AddComponent<MeshFilter>();
