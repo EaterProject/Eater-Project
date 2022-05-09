@@ -14,7 +14,7 @@ public:
 	ClientComponent();
 	virtual ~ClientComponent();
 public:
-	void SetOBjManager(ClientObjectManager* OBJ_GM){mObjectGM = OBJ_GM;}
+	void	SetOBjManager(ClientObjectManager* OBJ_GM){mObjectGM = OBJ_GM;}
 	int		GetType();
 	bool	GetLife();
 	void	SetLife(bool isLife);

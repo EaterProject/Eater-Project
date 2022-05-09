@@ -45,8 +45,8 @@ void E_MeshManager::CreateBox()
 	EATER_SET_NODE("STATIC");
 	EATER_SET_MAP("ParentName ", "RootNode");
 	EATER_SET_MAP("NodeName", "Cube");
-	EATER_SET_MAP("MeshName", "Box_0");
-	EATER_SET_MAP("MaterialName", "Box_Material");
+	EATER_SET_MAP("MeshName", "box_0");
+	EATER_SET_MAP("MaterialName", "box_Material");
 	EATER_SET_LIST_START("WorldTM", 4, 4);
 	EATER_SET_LIST(1.0f);	EATER_SET_LIST(0.0f);	EATER_SET_LIST(0.0f);	EATER_SET_LIST(0.0f, true);
 	EATER_SET_LIST(0.0f);	EATER_SET_LIST(1.0f);	EATER_SET_LIST(0.0f);	EATER_SET_LIST(0.0f, true);

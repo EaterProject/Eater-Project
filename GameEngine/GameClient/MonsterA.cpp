@@ -49,7 +49,7 @@ void MonsterA::SetUp()
 	//매쉬 생성
 	mMeshFilter->SetModelName("MonsterA+");
 	mMeshFilter->SetAnimationName("MonsterA+");
-	mAnimation->Choice("move");
+	mAnimation->Choice("idle");
 }
 
 void MonsterA::Update()
@@ -66,7 +66,7 @@ void MonsterA::OnTriggerStay(GameObject* Obj)
 	if (Player::GetState() == PLAYER_STATE::ATTACK)
 	{
 		Vector3 Look = Player::GetPlayerTransform()->GetLocalPosition_Look() * PushPower;
-		mRigidbody->SetAddForce(Look.x, Look.y + PushPower, Look.z * -1);
+		//mRigidbody->SetAddForce(Look.x, Look.y + PushPower, Look.z * -1);
 	}
 
 	//if (Player::GetState() == PLAYER_STATE::ATTACK)

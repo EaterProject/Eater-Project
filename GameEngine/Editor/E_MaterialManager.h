@@ -19,6 +19,7 @@ public:
 	void SetFileName(std::string& FileName);
 
 	void Create(InstanceMaterial* mInstanceMaterial);
+	void CreateBase(std::string Filename);
 private:
 	std::string SaveFileName;
 	std::string CutStr(std::string& Path);
