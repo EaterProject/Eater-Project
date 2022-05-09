@@ -27,6 +27,9 @@ ParticleSystem::ParticleSystem()
 
 	m_RandomLifeTimeForce = new RandomVector3();
 	m_RandomLifeTimeRotation = new RandomFloat();
+
+	// 초기 강도 설정..
+	SetStrength(1.0f);
 }
 
 ParticleSystem::~ParticleSystem()
@@ -153,6 +156,13 @@ void ParticleSystem::SetRateOverTime(float count)
 	m_RateOverTimeCount = count;
 
 	m_RateOverTime = 1.0f / count;
+}
+
+void ParticleSystem::SetStrength(float strength)
+{
+	m_Strength = strength;
+
+	m_ParticleData->Particle_Strength = strength;
 }
 
 void ParticleSystem::SetShapeRadius(float radius)
@@ -367,6 +377,11 @@ float ParticleSystem::GetDelayTime()
 float ParticleSystem::GetRateOverTime()
 {
 	return m_RateOverTimeCount;
+}
+
+float ParticleSystem::GetStrength()
+{
+	return m_Strength;
 }
 
 float ParticleSystem::GetPlayTime()

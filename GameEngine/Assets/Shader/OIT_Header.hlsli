@@ -1,4 +1,4 @@
-cbuffer cbOitFrame : register(b0)
+cbuffer cbOitFrame
 {
     uint gFrameWidth;
 }
@@ -6,6 +6,7 @@ cbuffer cbOitFrame : register(b0)
 struct FragmentData
 {
     uint Color;
+    float Strength;
     float Depth;
 };
 

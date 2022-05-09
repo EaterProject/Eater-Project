@@ -7,7 +7,7 @@
 #include "IBL_Header.hlsli"
 #include "Fog_Header.hlsli"
 
-cbuffer cbMaterial : register(b1)
+cbuffer cbMaterial : register(b0)
 {
     float3 gAddColor        : packoffset(c0);
     uint gOption            : packoffset(c0.w);
@@ -20,14 +20,14 @@ cbuffer cbMaterial : register(b1)
     float gLimLightWidth    : packoffset(c2.w);
 };
 
-cbuffer cbLightSub : register(b2)
+cbuffer cbLightSub : register(b1)
 {
     float4x4 gViewProjTex : packoffset(c0);
     float3 gEyePosW       : packoffset(c4.x);
     float gIBLFactor      : packoffset(c4.w);
 }
 
-cbuffer cbLight : register(b3)
+cbuffer cbLight : register(b2)
 {
     DirectionalLight gDirLights[DIRECTION_LIGHT_COUNT];
     PointLight gPointLights[POINT_LIGHT_COUNT];
@@ -147,8 +147,11 @@ void OIT_Mesh_PS(MeshPixelIn pin)
     gFirstOffsetBuffer.InterlockedExchange(
         startOffsetAddress, pixelCount, oldStartOffset);
     
+    float strength = length(litColor);
+    
     FLStaticNode node;
-    node.Data.Color = PackColorFromFloat4(litColor);
+    node.Data.Strength = strength;
+    node.Data.Color = PackColorFromFloat4(litColor / strength);
     node.Data.Depth = pin.PosH.z;
     node.Next = oldStartOffset;
     

@@ -6,7 +6,7 @@ StructuredBuffer<FLStaticNode> gPieceLinkBuffer : register(t0);
 ByteAddressBuffer gFirstOffsetBuffer : register(t1);
 Texture2D gBackGround : register(t2);
 
-#define MAX_SORTED_PIXELS 12
+#define MAX_SORTED_PIXELS 20
 
 static FragmentData gSortedPixels[MAX_SORTED_PIXELS];
 
@@ -52,9 +52,12 @@ float4 OIT_PS(ScreenPixelIn pin) : SV_Target
     
     float4 currColor = gBackGround.Load(int3(pin.PosH.xy, 0));
 
+    FragmentData data;
+    
     for (int i = 0; i < numPixels; ++i)
     {
-        float4 pixelColor = UnpackColorFromUInt(gSortedPixels[i].Color);
+        data = gSortedPixels[i];
+        float4 pixelColor = UnpackColorFromUInt(data.Color) * data.Strength;
         currColor.xyz = lerp(currColor.xyz, pixelColor.xyz, pixelColor.w);
     }
     
