@@ -45,6 +45,5 @@ private:
 
 	UINT m_RenderCount = 0;
 	UINT m_InstanceCount = 0;
-	UINT m_Width = 0;
 };
 

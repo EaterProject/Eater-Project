@@ -63,24 +63,12 @@ void AlphaPass::Start(int width, int height)
 	m_Mesh_IB = g_Resource->GetInstanceBuffer<IB_Mesh>();
 	m_Particle_IB = g_Resource->GetInstanceBuffer<IB_Particle>();
 
-	m_Width = width;
-
-	CB_OitFrame oitBuf;
-	oitBuf.gFrameWidth = m_Width;
-	m_Mesh_PS->ConstantBufferUpdate<CB_OitFrame>(&oitBuf);
-	m_Particle_PS->ConstantBufferUpdate<CB_OitFrame>(&oitBuf);
-
 	m_ParticleInstance.resize(500);
 }
 
 void AlphaPass::OnResize(int width, int height)
 {
-	m_Width = width;
-	
-	CB_OitFrame oitBuf;
-	oitBuf.gFrameWidth = m_Width;
-	m_Mesh_PS->ConstantBufferUpdate<CB_OitFrame>(&oitBuf);
-	m_Particle_PS->ConstantBufferUpdate<CB_OitFrame>(&oitBuf);
+
 }
 
 void AlphaPass::InstanceResize(size_t& renderMaxCount, size_t& unRenderMaxCount)
@@ -134,11 +122,6 @@ void AlphaPass::ApplyOption()
 		m_Mesh_PS = g_Shader->GetShader("OIT_Mesh_PS_Option0");
 		break;
 	}
-
-	// Sub Resource Àç¼³Á¤..
-	CB_OitFrame oitBuf;
-	oitBuf.gFrameWidth = m_Width;
-	m_Mesh_PS->ConstantBufferUpdate<CB_OitFrame>(&oitBuf);
 }
 
 void AlphaPass::BeginRender()

@@ -29,7 +29,6 @@ private:
 	PixelShader* m_SkyBox_PS;
 
 	RenderTexture* m_OutPut_RT;
-	RenderTexture* m_Position_RT;
 	
 private:
 	ID3D11RasterizerState* m_CubeMap_RS;

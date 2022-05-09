@@ -22,13 +22,13 @@ void GraphicEngineManager::Initialize(HWND Hwnd, int WinSizeWidth, int WinSizeHe
 	GEngine = GraphicEngine::Get();
 
 	// Graphic Engine Initialize..
-	GEngine->Initialize(Hwnd, WinSizeWidth, WinSizeHeight);
+	GEngine->Initialize(Hwnd, WinSizeWidth, WinSizeHeight, renderOption);
 
 	// Graphic Engine Global Data Setting..
 	GEngine->SetGlobalData(GlobalDataManager::g_GlobalData);
 
 	// Graphic Engine Render Setting..
-	GEngine->RenderSetting(renderOption);
+	//GEngine->RenderSetting(renderOption);
 }
 
 void GraphicEngineManager::OnReSize(int Change_Width, int Change_Height)

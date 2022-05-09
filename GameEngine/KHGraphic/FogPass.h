@@ -13,6 +13,7 @@ public:
 	void Release() override;
 
 	void ApplyOption() override;
+	void PreUpdate() override;
 
 private:
 	void SetShaderList();
@@ -31,8 +32,5 @@ private:
 	ID3D11RenderTargetView* m_OutPut_RTV;
 
 	D3D11_VIEWPORT* m_Screen_VP;
-
-private:
-	float m_FogSpeed;
 };
 

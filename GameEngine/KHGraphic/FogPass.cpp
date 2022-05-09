@@ -21,6 +21,7 @@
 #include "RenderTargetDefine.h"
 #include "ViewPortDefine.h"
 #include "DrawBufferDefine.h"
+#include "RenderData.h"
 
 FogPass::FogPass()
 {
@@ -64,8 +65,25 @@ void FogPass::ApplyOption()
 {
 	// Set Fog Shader Constant Buffer..
 	SetShaderConstantBuffer();
+}
 
-	m_FogSpeed = g_RenderOption->FOG_MoveSpeed;
+void FogPass::PreUpdate()
+{
+	g_RenderSceneData->Fog_Timer += g_GlobalData->Time * g_RenderOption->FOG_MoveSpeed;
+
+	if (g_RenderSceneData->Fog_Timer > 100.0f)
+	{
+		g_RenderSceneData->Fog_Timer = 0.0f;
+	}
+
+	CB_FogData fogDataBuf;
+	fogDataBuf.gEyePosW = g_GlobalData->MainCamera_Data->CamPos;
+	fogDataBuf.gTime = g_RenderSceneData->Fog_Timer;
+
+	for (ShaderBase* shader : m_OptionShaderList)
+	{
+		shader->ConstantBufferUpdate(&fogDataBuf);
+	}
 }
 
 void FogPass::SetShaderList()

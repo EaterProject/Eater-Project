@@ -44,6 +44,7 @@ public:
 	virtual void SetResize(int width, int height) {}
 
 	virtual void ApplyOption() {}
+	virtual void PreUpdate() {}
 
 public:
 	void PushShader(const char* shaderName);
@@ -52,8 +53,7 @@ protected:
 	std::vector<ShaderBase*> m_OptionShaderList;
 
 public:
-	static void Initialize(Microsoft::WRL::ComPtr<ID3D11Device> device, Microsoft::WRL::ComPtr<ID3D11DeviceContext> context, IFactoryManager* factory, IGraphicResourceManager* resource, IShaderManager* shader);
-	static void ShareResourceUpdate();
+	static void Initialize(Microsoft::WRL::ComPtr<ID3D11Device> device, Microsoft::WRL::ComPtr<ID3D11DeviceContext> context, IFactoryManager* factory, IGraphicResourceManager* resource, IShaderManager* shader, RenderOption* renderOption);
 	static void GraphicReset();
 	static void Reset();
 

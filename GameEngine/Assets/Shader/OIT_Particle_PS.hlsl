@@ -11,7 +11,7 @@ Texture2D gDiffuseMap : register(t0);
 [earlydepthstencil]
 void OIT_Particle_PS(ParticlePixelIn pin)
 {
-    float4 texColor = gDiffuseMap.Sample(gSamWrapLinear, pin.Tex);
+    float4 texColor = gDiffuseMap.Sample(gSamClampLinear, pin.Tex);
     
     clip(texColor.a - 0.1f);
 

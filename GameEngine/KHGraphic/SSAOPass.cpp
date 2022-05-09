@@ -345,20 +345,15 @@ void SSAOPass::SetFrustumFarCorners(int width, int height)
 
 void SSAOPass::SetShaderList()
 {
-	PushShader("Light_PBR_PS_Option1");
+	PushShader("Light_PBR_PS_Option2");
 	PushShader("Light_PBR_PS_Option4");
-	PushShader("Light_PBR_PS_Option5");
+	PushShader("Light_PBR_PS_Option6");
 	PushShader("Light_PBR_PS_Option7");
 
-	PushShader("Light_IBL_PS_Option1");
+	PushShader("Light_IBL_PS_Option2");
 	PushShader("Light_IBL_PS_Option4");
-	PushShader("Light_IBL_PS_Option5");
+	PushShader("Light_IBL_PS_Option6");
 	PushShader("Light_IBL_PS_Option7");
-
-	PushShader("OIT_Mesh_PS_Option1");
-	PushShader("OIT_Mesh_PS_Option4");
-	PushShader("OIT_Mesh_PS_Option5");
-	PushShader("OIT_Mesh_PS_Option7");
 }
 
 void SSAOPass::SetShaderResourceView()

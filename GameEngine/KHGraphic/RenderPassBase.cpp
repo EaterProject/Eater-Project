@@ -26,7 +26,7 @@ void RenderPassBase::PushShader(const char* shaderName)
 	m_OptionShaderList.push_back(shader);
 }
 
-void RenderPassBase::Initialize(Microsoft::WRL::ComPtr<ID3D11Device> device, Microsoft::WRL::ComPtr<ID3D11DeviceContext> context, IFactoryManager* factory, IGraphicResourceManager* resourceManager, IShaderManager* shaderManager)
+void RenderPassBase::Initialize(Microsoft::WRL::ComPtr<ID3D11Device> device, Microsoft::WRL::ComPtr<ID3D11DeviceContext> context, IFactoryManager* factory, IGraphicResourceManager* resourceManager, IShaderManager* shaderManager, RenderOption* renderOption)
 {
 	g_Device = device;
 	g_Context = context;
@@ -34,20 +34,9 @@ void RenderPassBase::Initialize(Microsoft::WRL::ComPtr<ID3D11Device> device, Mic
 	g_Resource = resourceManager;
 	g_Shader = shaderManager;
 
+	g_RenderOption = renderOption;
+
 	g_RenderSceneData = new RenderSceneData();
-}
-
-void RenderPassBase::ShareResourceUpdate()
-{
-	if (g_RenderOption->RenderingOption & RENDER_FOG)
-	{
-		g_RenderSceneData->Fog_Timer += g_GlobalData->Time * g_RenderOption->FOG_MoveSpeed;
-
-		if (g_RenderSceneData->Fog_Timer > 100.0f)
-		{
-			g_RenderSceneData->Fog_Timer = 0.0f;
-		}
-	}
 }
 
 void RenderPassBase::GraphicReset()

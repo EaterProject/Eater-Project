@@ -91,10 +91,12 @@ void OITPass::Create(int width, int height)
 
 void OITPass::Start(int width, int height)
 {
+	// OIT Shader List Up..
+	SetShaderList();
+
 	// Shader 설정..
 	m_OITRender_VS = g_Shader->GetShader("Screen_VS");
 	m_OITRender_PS = g_Shader->GetShader("OIT_PS");
-	m_OITParticle_PS = g_Shader->GetShader("OIT_Particle_PS");
 
 	// Buffer 설정..
 	m_Screen_DB = g_Resource->GetDrawBuffer<DB_Quad>();
@@ -122,10 +124,7 @@ void OITPass::Start(int width, int height)
 	m_NoCull_RS = g_Resource->GetRasterizerState<RS_NoCull>()->Get();
 
 	// Shader Resource 설정..
-	CB_OitFrame oitBuf;
-	oitBuf.gFrameWidth = width;
-	m_OITRender_PS->ConstantBufferUpdate<CB_OitFrame>(&oitBuf);
-	m_OITParticle_PS->ConstantBufferUpdate<CB_OitFrame>(&oitBuf);
+	SetShaderConstantBuffer(width);
 
 	ShaderResourceView* backGround = g_Resource->GetShaderResourceView<RT_OutPut1>();
 	
@@ -151,10 +150,7 @@ void OITPass::OnResize(int width, int height)
 	m_Defalt_DSV = g_Resource->GetDepthStencilView<DS_Defalt>()->Get();
 
 	// Shader Resource 설정..
-	CB_OitFrame oitBuf;
-	oitBuf.gFrameWidth = width;
-	m_OITRender_PS->ConstantBufferUpdate<CB_OitFrame>(&oitBuf);
-	m_OITParticle_PS->ConstantBufferUpdate<CB_OitFrame>(&oitBuf);
+	SetShaderConstantBuffer(width);
 
 	ShaderResourceView* backGround = g_Resource->GetShaderResourceView<RT_OutPut1>();
 
@@ -211,4 +207,32 @@ void OITPass::RenderUpdate()
 
 	g_Context->DrawIndexed(m_Screen_DB->IndexCount, 0, 0);
 
+}
+
+void OITPass::SetShaderList()
+{
+	PushShader("OIT_PS");
+
+	PushShader("OIT_Particle_PS_Option0");
+	PushShader("OIT_Particle_PS_Option1");
+
+	PushShader("OIT_Mesh_PS_Option0");
+	PushShader("OIT_Mesh_PS_Option1");
+	PushShader("OIT_Mesh_PS_Option2");
+	PushShader("OIT_Mesh_PS_Option3");
+	PushShader("OIT_Mesh_PS_Option4");
+	PushShader("OIT_Mesh_PS_Option5");
+	PushShader("OIT_Mesh_PS_Option6");
+	PushShader("OIT_Mesh_PS_Option7");
+}
+
+void OITPass::SetShaderConstantBuffer(UINT width)
+{
+	CB_OitFrame oitBuf;
+	oitBuf.gFrameWidth = width;
+
+	for (ShaderBase* shader : m_OptionShaderList)
+	{
+		shader->ConstantBufferUpdate(&oitBuf);
+	}
 }

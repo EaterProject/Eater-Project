@@ -49,7 +49,6 @@ void EnvironmentPass::Start(int width, int height)
 	m_Box_DB = g_Resource->GetDrawBuffer<DB_Sphere>();
 
 	m_OutPut_RT = g_Resource->GetRenderTexture<RT_OutPut1>();
-	m_Position_RT = g_Resource->GetRenderTexture<RT_Deffered_Position>();
 
 	m_OutPut_RTV = m_OutPut_RT->GetRTV()->Get();
 
@@ -92,18 +91,16 @@ void EnvironmentPass::ApplyOption()
 
 void EnvironmentPass::SetEnvironmentMapResource(EnvironmentBuffer* resource)
 {
-	// SkyCube Shader Resource 설정..
+	// SkyCube & IBL Shader Resource 설정..
 	ID3D11ShaderResourceView* skycube = (ID3D11ShaderResourceView*)resource->Environment->pTextureBuf;
-
-	m_SkyBox_PS->SetShaderResourceView<gSkyCube>(skycube);
-
-	// IBL Shader Resource 설정..
 	ID3D11ShaderResourceView* brdflut = g_Resource->GetShaderResourceView<gBRDFlut>()->Get();
 	ID3D11ShaderResourceView* prefilter = (ID3D11ShaderResourceView*)resource->Prefilter->pTextureBuf;
 	ID3D11ShaderResourceView* irradiance = (ID3D11ShaderResourceView*)resource->Irradiance->pTextureBuf;
 
 	for (ShaderBase* shader : m_OptionShaderList)
 	{
+		shader->SetShaderResourceView<gSkyCube>(skycube);
+
 		shader->SetShaderResourceView<gBRDFlut>(brdflut);
 		shader->SetShaderResourceView<gIBLPrefilter>(prefilter);
 		shader->SetShaderResourceView<gIBLIrradiance>(irradiance);
@@ -139,6 +136,9 @@ void EnvironmentPass::RenderUpdate()
 
 void EnvironmentPass::SetShaderList()
 {
+	PushShader("SkyBox_PS_Option0");
+	PushShader("SkyBox_PS_Option1");
+
 	PushShader("Light_IBL_PS_Option0");
 	PushShader("Light_IBL_PS_Option1");
 	PushShader("Light_IBL_PS_Option2");

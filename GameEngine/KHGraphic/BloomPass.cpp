@@ -111,6 +111,8 @@ void BloomPass::Start(int width, int height)
 	// Graphic View..
 	m_DownSample_VP = g_Resource->GetViewPort<VP_DownSampling>()->Get();
 
+	m_Origin_RT = g_Resource->GetRenderTexture<RT_OutPut2>();
+
 	m_Brightx4_RT1 = g_Resource->GetRenderTexture<RT_Bloom_Brightx4_1>();
 	m_Brightx4_RT1->SetRatio(m_Down4x4);
 	m_Brightx4_RT2 = g_Resource->GetRenderTexture<RT_Bloom_Brightx4_2>();
@@ -184,6 +186,11 @@ void BloomPass::Start(int width, int height)
 	downSampleData->OriginHeight		= (float)(UINT)down144x144height;
 	downSampleData->TexelWidth			= 1.0f / (UINT)down144x144width;
 	downSampleData->TexelHeight			= 1.0f / (UINT)down144x144height;
+
+	// ShaderResource 설정..
+	ShaderResourceView* originSRV = m_Origin_RT->GetSRV();
+
+	m_BloomBright_PS->SetShaderResourceView<gOriginMap>(originSRV->Get());
 }
 
 void BloomPass::OnResize(int width, int height)
@@ -265,20 +272,6 @@ void BloomPass::Release()
 
 void BloomPass::ApplyOption()
 {
-	if (g_RenderOption->PostProcessOption & RENDER_FOG)
-	{
-		m_Origin_RT = g_Resource->GetRenderTexture<RT_OutPut1>();
-	}
-	else
-	{
-		m_Origin_RT = g_Resource->GetRenderTexture<RT_OutPut2>();
-	}
-
-	// ShaderResource 설정..
-	ShaderResourceView* originSRV = m_Origin_RT->GetSRV();
-
-	m_BloomBright_PS->SetShaderResourceView<gOriginMap>(originSRV->Get());
-
 	g_Context->ClearRenderTargetView(m_Brightx4_RTV2, reinterpret_cast<const float*>(&DXColors::NonBlack));
 
 	// Shader Constant Buffer 설정..
