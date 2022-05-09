@@ -1,5 +1,5 @@
 #include "ObjectFactory.h"
-#include "MainHeader.h"
+#include "EaterEngineAPI.h"
 #include "GameObject.h"
 
 //엔진쪽 컨퍼넌트
@@ -53,13 +53,17 @@ void ObjectFactory::Release()
 GameObject* ObjectFactory::CreatePlayer()
 {
 	//툴에서 만들어놓은 플레이어, 카메라를 가져옴
-	PlayerObject		= FindGameObjectTag("Player");
-	PlayerMainCamera	= FindGameObjectTag("MainCam");
+	PlayerObject			= FindGameObjectTag("Player");
+	
+
+	
+
+	//PlayerMainCamera	= FindGameObjectTag("MainCam");
 
 	//클라이언트쪽 컨퍼넌트 Add
 	PlayerObject->AddComponent<Player>();
-	PlayerMainCamera->GetComponent<Camera>()->ChoiceMainCam();
-	PlayerMainCamera->AddComponent<PlayerCamera>();
+	//PlayerMainCamera->GetComponent<Camera>()->ChoiceMainCam();
+	//PlayerMainCamera->AddComponent<PlayerCamera>();
 
 	return PlayerObject;
 }
@@ -108,7 +112,10 @@ MonsterB* ObjectFactory::CreateMonsterB(float x, float y, float z)
 
 ManaStone* ObjectFactory::CreateManaStone(float x, float y, float z)
 {
-	return nullptr;
+	GameObject* Object_ManaStone = Instance("ManaStone");
+	Object_ManaStone->AddComponent<MeshFilter>();
+	ManaStone* mMana = Object_ManaStone->AddComponent<ManaStone>();
+	return mMana;
 }
 
 HealingDrone* ObjectFactory::CreateHealingDrone(float x, float y, float z)

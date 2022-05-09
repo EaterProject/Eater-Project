@@ -3,8 +3,9 @@
 
 // CTAP_2 대화 상자
 #include "EditorData.h"
+#include "CustomDialog.h"
 class AnimationController;
-class CTAP_Animation : public CDialogEx
+class CTAP_Animation : public CustomDialog
 {
 	DECLARE_DYNAMIC(CTAP_Animation)
 

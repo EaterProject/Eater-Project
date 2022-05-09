@@ -8,11 +8,19 @@
 
 #include "MainFrm.h"
 #include "RenderView.h"
-#include "MainHeader.h"
+#include "EaterEngineAPI.h"
 #include "OptionView.h"
 #include "AssetView.h"
 #include "Loading.h"
 #include "EditorToolScene.h"
+#include "DialogFactory.h"
+#include "SceneSetting.h"
+#include "CamAnimation.h"
+#include "GameObject.h"
+#include "SceneSaveDialog.h"
+#include <string>
+
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -23,6 +31,20 @@ IMPLEMENT_DYNCREATE(CMainFrame, CFrameWnd)
 
 BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 	ON_WM_CREATE()
+	ON_WM_CLOSE()
+	ON_COMMAND(ID_SCENE_SETTING, &CMainFrame::OnSceneSetting)
+	ON_COMMAND(ID_32774, &CMainFrame::OnOpenCameraAnimation)
+	ON_WM_CONTEXTMENU()
+	ON_COMMAND(ID_CREATEOBJECT_LIGHT, &CMainFrame::OnCreateobjectLight)
+	ON_COMMAND(ID_CREATEOBJECT_CAMERA, &CMainFrame::OnCreateobjectCamera)
+	ON_COMMAND(ID_CREATEOBJECT_PARTICLE, &CMainFrame::OnCreateobjectParticle)
+	ON_COMMAND(ID_CREATEOBJECT_TERRAIN, &CMainFrame::OnCreateobjectTerrain)
+	ON_COMMAND(ID_GAMEOBJECT_POINT, &CMainFrame::OnGameobjectPoint)
+	ON_COMMAND(ID_GAMEOBJECT_SPHERE, &CMainFrame::OnGameobjectSphere)
+	ON_COMMAND(ID_GAMEOBJECT_BOX, &CMainFrame::OnGameobjectBox)
+	ON_COMMAND(ID_32784, &CMainFrame::OnPlayerGame)
+	ON_COMMAND(ID_32785, &CMainFrame::OpenAssetsFile)
+	ON_COMMAND(ID_32783, &CMainFrame::SceneSaveFile)
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -32,7 +54,6 @@ static UINT indicators[] =
 	ID_INDICATOR_NUM,
 	ID_INDICATOR_SCRL,
 };
-
 
 // CMainFrame 생성/소멸
 CMainFrame::CMainFrame() noexcept
@@ -114,12 +135,14 @@ BOOL CMainFrame::OnCreateClient(LPCREATESTRUCT /*lpcs*/,
 	m_AssetView  = static_cast<AssetView*>(m_wndSplitter[0].GetPane(0, 1));
 	m_wndSplitter[0].SetColumnInfo(0, RenderSize, 10);
 
+	
 	mThread = AfxBeginThread(ThreadFunction, this);
 	mThread->m_bAutoDelete = FALSE;
 	if (mThread == NULL)
 	{
 		AfxMessageBox(L"쓰레드 오류");
 	}
+
 
 	return true;
 }
@@ -150,12 +173,17 @@ void CMainFrame::Dump(CDumpContext& dc) const
 #endif //_DEBUG
 UINT CMainFrame::ThreadFunction(LPVOID _mothod)
 {
+	Sleep(1000);
 	CMainFrame* Main = (CMainFrame*)_mothod;
 
-	Main->mLoading = new Loading();
-	Main->mLoading->Create(IDD_LOADING);
-	Main->mLoading->ShowWindow(SW_SHOW);
+	Loading * mLoading = new Loading();
+	mLoading->Create(IDD_LOADING);
+	mLoading->ShowWindow(SW_SHOW);
+	//mLoading = DialogFactory::GetFactory()->GetLoading();
 	
+	
+	
+
 	CString TextureCount_Str;
 	CString ModelCount_Str;
 	CString AnimationCount_Str;
@@ -170,11 +198,14 @@ UINT CMainFrame::ThreadFunction(LPVOID _mothod)
 	while (EditorToolScene::GetThreadLoading() == false)
 	{
 		Sleep(100);
-		Main->mLoading->LoadFileList.DeleteString(0);
-		Main->mLoading->LoadFileList.DeleteString(0);
-		Main->mLoading->LoadFileList.DeleteString(0);
-		Main->mLoading->LoadFileList.DeleteString(0);
-		Main->mLoading->LoadFileList.DeleteString(0);
+		
+		mLoading->UpdateWindow();
+		mLoading->LoadFileList.DeleteString(0);
+		mLoading->LoadFileList.DeleteString(0);
+		mLoading->LoadFileList.DeleteString(0);
+		mLoading->LoadFileList.DeleteString(0);
+		mLoading->LoadFileList.DeleteString(0);
+
 
 		int TextureCount	= GetLoadTextureCount();
 		int ModelCount		= GetLoadMeshCount();
@@ -185,25 +216,29 @@ UINT CMainFrame::ThreadFunction(LPVOID _mothod)
 
 		if (TextureCount != 0 || ModelCount != 0)
 		{
-			Main->mLoading->LoadingTypeEdit.SetWindowTextW(L"리소스 로드중...");
+			mLoading->LoadingTypeEdit.SetWindowTextW(L"리소스 로드중...");
 		}
 
-		TextureCount_Str.Format(_T("Texture Count ... %d"), TextureCount);
-		ModelCount_Str.Format(_T("Model Count ... %d"), ModelCount);
-		AnimationCount_Str.Format(_T("Animation Count ... %d"), AnimationCount);
-		MaterialCount_Str.Format(_T("Material Count ... %d"), MaterialCount);
-		MeshBufferCount_Str.Format(_T("Buffer Count ... %d"), MeshBufferCount);
+		TextureCount_Str.Format(_T("Texture ... %d"), TextureCount);
+		ModelCount_Str.Format(_T("Model  ... %d"), ModelCount);
+		AnimationCount_Str.Format(_T("Animation ... %d"), AnimationCount);
+		MaterialCount_Str.Format(_T("Material ... %d"), MaterialCount);
+		MeshBufferCount_Str.Format(_T("Buffer ... %d"), MeshBufferCount);
 
-		Main->mLoading->LoadFileList.InsertString(0, TextureCount_Str);
-		Main->mLoading->LoadFileList.InsertString(1, ModelCount_Str);
-		Main->mLoading->LoadFileList.InsertString(2, AnimationCount_Str);
-		Main->mLoading->LoadFileList.InsertString(3, MeshBufferCount_Str);
-		Main->mLoading->LoadFileList.InsertString(4, MaterialCount_Str);
+		mLoading->LoadFileList.InsertString(0, TextureCount_Str);
+		mLoading->LoadFileList.InsertString(1, ModelCount_Str);
+		mLoading->LoadFileList.InsertString(2, AnimationCount_Str);
+		mLoading->LoadFileList.InsertString(3, MeshBufferCount_Str);
+		mLoading->LoadFileList.InsertString(4, MaterialCount_Str);
 		
-		AllAssetsCount_Str.Format(_T("로드된 에셋 : %d"), TextureCount + ModelCount + AnimationCount + MaterialCount + MeshBufferCount);
-		Main->mLoading->AllAssetsCount.SetWindowTextW(AllAssetsCount_Str);
-		Main->mLoading->UpdateWindow();
+		AllAssetsCount_Str.Format(_T("Load Assets Count : %d"), TextureCount + ModelCount + AnimationCount + MaterialCount + MeshBufferCount);
+		mLoading->AllAssetsCount.SetWindowTextW(AllAssetsCount_Str);
+		mLoading->UpdateWindow();
 	}
+
+	mLoading->DestroyWindow();
+	delete mLoading;
+	mLoading = nullptr;
 
 	if (::TerminateThread(Main->mThread->m_hThread, 1)) 
 	{
@@ -211,7 +246,194 @@ UINT CMainFrame::ThreadFunction(LPVOID _mothod)
 		Main->mThread = NULL;
 	}
 
-	Main->mLoading->ShowWindow(SW_HIDE);
 	return 0;
 }
 
+void CMainFrame::OnClose()
+{
+	DialogFactory::GetFactory()->Release();
+	CFrameWnd::OnClose();
+}
+
+void CMainFrame::OnSceneSetting()
+{
+	CRect rectParent;
+	CRect rect;
+
+	((CMainFrame*)AfxGetMainWnd())->GetWindowRect(&rectParent);
+	SceneSetting* mScene = DialogFactory::GetFactory()->GetSceneSetting();
+	mScene->GetClientRect(rect);
+
+
+	float PosX = rectParent.left + (rectParent.right - rectParent.left) / 2 - rect.Width() / 2;
+	float PosY = rectParent.top + (rectParent.bottom - rectParent.top) / 2 - rect.Height() / 2;
+
+	mScene->SetWindowPos(NULL, PosX, PosY, 0, 0, SWP_NOSIZE);
+	mScene->ShowWindow(SW_SHOW);
+	mScene->Setting();
+}
+
+
+void CMainFrame::OnOpenCameraAnimation()
+{
+	CamAnimation* mCam = DialogFactory::GetFactory()->GetCamAnimation();
+	mCam->ShowWindow(SW_SHOW);
+}
+
+
+void CMainFrame::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
+{
+	RightOption* mRight = DialogFactory::GetFactory()->GetRightOption();
+
+	CRect rect;
+	mRight->HirearchyTree.GetWindowRect(rect);
+
+	if (rect.left <= point.x && rect.right >= point.x &&
+		rect.top <= point.y && rect.bottom >= point.y)
+	{
+		
+
+		CMenu popup;
+		CMenu* pMenu;
+		popup.LoadMenuW(IDR_CREATE_OBJECT);
+		pMenu = popup.GetSubMenu(0);
+		pMenu->TrackPopupMenu(TPM_LEFTALIGN || TPM_RIGHTBUTTON, point.x, point.y, this);
+	}
+
+}
+
+void CMainFrame::OnCreateobjectLight()
+{
+	RightOption* mRightOption = DialogFactory::GetFactory()->GetRightOption();
+	GameObject* Obj = EditorToolScene::Create_Light();
+
+	CString Data;
+	Data = Obj->Name.c_str();
+	HTREEITEM Top = mRightOption->HirearchyTree.InsertItem(Data);
+
+	mRightOption->Create_Hirearchy_Item(Obj, Top);
+}
+
+
+void CMainFrame::OnCreateobjectCamera()
+{
+	RightOption* mRightOption = DialogFactory::GetFactory()->GetRightOption();
+	GameObject* Obj = EditorToolScene::Create_Camera();
+
+	CString Data;
+	Data = Obj->Name.c_str();
+	HTREEITEM Top = mRightOption->HirearchyTree.InsertItem(Data);
+
+	mRightOption->Create_Hirearchy_Item(Obj, Top);
+}
+
+
+void CMainFrame::OnCreateobjectParticle()
+{
+	RightOption* mRightOption = DialogFactory::GetFactory()->GetRightOption();
+	GameObject* Obj = EditorToolScene::Create_Particle();
+
+	CString Data;
+	Data = Obj->Name.c_str();
+	HTREEITEM Top = mRightOption->HirearchyTree.InsertItem(Data);
+
+	mRightOption->Create_Hirearchy_Item(Obj, Top);
+}
+
+
+void CMainFrame::OnCreateobjectTerrain()
+{
+	RightOption* mRightOption = DialogFactory::GetFactory()->GetRightOption();
+	GameObject* Obj = EditorToolScene::Create_Terrain("","","");
+	HTREEITEM Top = mRightOption->HirearchyTree.InsertItem(L"Terrain");
+}
+
+
+void CMainFrame::OnGameobjectPoint()
+{
+	RightOption* mRightOption = DialogFactory::GetFactory()->GetRightOption();
+	GameObject* Obj = EditorToolScene::Create_GameObject();
+
+	CString Data;
+	Data = Obj->Name.c_str();
+	HTREEITEM Top = mRightOption->HirearchyTree.InsertItem(Data);
+
+	mRightOption->Create_Hirearchy_Item(Obj, Top);
+}
+
+
+void CMainFrame::OnGameobjectSphere()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+}
+
+
+void CMainFrame::OnGameobjectBox()
+{
+	RightOption* mRightOption = DialogFactory::GetFactory()->GetRightOption();
+	GameObject* Object = EditorToolScene::Create_Box();
+	CString Data;
+	Data = Object->Name.c_str();
+	HTREEITEM Top = mRightOption->HirearchyTree.InsertItem(Data);
+
+	mRightOption->Create_Hirearchy_Item(Object, Top);
+
+}
+
+
+void CMainFrame::OnPlayerGame()
+{
+	//exe 파일을 실행시킨다
+	wchar_t path[256] = { 0 };
+	GetModuleFileName(NULL, path, 256);
+
+	USES_CONVERSION;
+	std::string str = W2A(path);
+	std::size_t Start = 0;
+	std::size_t End = str.rfind('\\');
+	str = str.substr(Start, End);
+	str += "\\GameClient.exe";
+	CString FileName;
+	FileName = str.c_str();
+
+	STARTUPINFO Startupinfo = { 0 };
+	PROCESS_INFORMATION processInfo;
+	Startupinfo.cb = sizeof(STARTUPINFO);
+	::CreateProcess
+	(
+		FileName,
+		NULL, NULL, NULL,
+		false, 0, NULL, NULL,
+		&Startupinfo, &processInfo
+	);
+}
+
+void CMainFrame::OpenAssetsFile()
+{
+	//에셋폴더를 연다
+	TCHAR chFilePath[256] = { 0, };
+	GetModuleFileName(NULL, chFilePath, 256);
+
+	CString strFolderPath(chFilePath);
+	for (int i = 0; i < 2; i++)
+	{
+		strFolderPath = strFolderPath.Left(strFolderPath.ReverseFind('\\'));
+	}
+	strFolderPath += _T("\\Assets");
+	ShellExecute(NULL, _T("open"), _T("explorer"), strFolderPath, NULL, SW_SHOW);
+}
+
+
+void CMainFrame::SceneSaveFile()
+{
+	SceneSaveDialog* mScene = DialogFactory::GetFactory()->GetSceneSaveDialog();
+	mScene->DoModal();
+	if (mScene->isOK == true)
+	{
+		CT2CA convertedString = mScene->Name;
+		std::string SaveName = (std::string)convertedString;
+		std::string SavePath = "../Assets/Scene/";
+		EditorToolScene::SaveScene(SavePath, SaveName);
+		AfxMessageBox(L"저장 완료");
+	}
+}

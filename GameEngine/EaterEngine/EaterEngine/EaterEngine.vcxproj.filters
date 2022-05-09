@@ -82,9 +82,6 @@
     <Filter Include="소스 파일\Component\Animator">
       <UniqueIdentifier>{5d4d878e-6e04-41e7-a1e6-ee77e43803d7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\MainHeader">
-      <UniqueIdentifier>{f73757eb-5a6f-4d7b-9396-09c400c48563}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Component\Rigidbody">
       <UniqueIdentifier>{d2678508-d693-4487-b08e-f8610a35fc5f}</UniqueIdentifier>
     </Filter>
@@ -175,6 +172,9 @@
     <Filter Include="소스 파일\Manager\NavigationManager">
       <UniqueIdentifier>{191430b5-d514-4b9d-81d1-ce04bfc74cc5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\EngineAPI">
+      <UniqueIdentifier>{f73757eb-5a6f-4d7b-9396-09c400c48563}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -212,9 +212,6 @@
     </ClInclude>
     <ClInclude Include="Export\Scene.h">
       <Filter>소스 파일\Manager\SceneManager</Filter>
-    </ClInclude>
-    <ClInclude Include="Export\MainHeader.h">
-      <Filter>소스 파일\MainHeader</Filter>
     </ClInclude>
     <ClInclude Include="Export\GameObject.h">
       <Filter>소스 파일\GameObject</Filter>
@@ -351,6 +348,9 @@
     <ClInclude Include="NavMesh.h">
       <Filter>소스 파일\Manager\NavigationManager</Filter>
     </ClInclude>
+    <ClInclude Include="Export\EaterEngineAPI.h">
+      <Filter>소스 파일\EngineAPI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -361,9 +361,6 @@
     </ClCompile>
     <ClCompile Include="Component.cpp">
       <Filter>소스 파일\Component\ComponentBase</Filter>
-    </ClCompile>
-    <ClCompile Include="MainHeader.cpp">
-      <Filter>소스 파일\MainHeader</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>소스 파일\Manager\SceneManager</Filter>
@@ -505,6 +502,9 @@
     </ClCompile>
     <ClCompile Include="NavMesh.cpp">
       <Filter>소스 파일\Manager\NavigationManager</Filter>
+    </ClCompile>
+    <ClCompile Include="EaterEngineAPI.cpp">
+      <Filter>소스 파일\EngineAPI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

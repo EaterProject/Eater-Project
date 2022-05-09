@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include <string>
 #include <map>
+#include "CustomDialog.h"
 
 
 
@@ -18,7 +19,8 @@ class Loading;
 class EditorManager;
 class CamAnimation;
 class CreateMaterial;
-class RightOption : public CDialogEx
+class SceneSetting;
+class RightOption : public CustomDialog
 {
 	DECLARE_DYNAMIC(RightOption)
 
@@ -73,9 +75,11 @@ public:
 	bool isDrag = false;
 public:
 	static GameObject*			ChoiceObject;
+
 	FileOption*			mFileOption;		//자체포맷 변환 창
 	EditorManager*		m_EditorManager;	//자체포맷 변환 관리 매니저
 	Loading*			mLoading;			//로딩 바
+	SceneSetting*		mSceneSetting;
 	CamAnimation*		mCam;
 	CreateMaterial*		mMaterial;
 public:
@@ -88,7 +92,6 @@ public:
 	void OnChoice_Hirearchy_Item(GameObject* Obj);
 	//void ChickMaterial(CPoint point);
 	GameObject* FindGameObjectParent(HTREEITEM mItem);
-	CEdit FilePathEdit;
 
 	static RightOption* GetThis();
 	static RightOption* thisPointer;
@@ -96,15 +99,14 @@ public:
 	//버튼들
 	afx_msg void OnChoice_Hirearchy_Item(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDelteObject_Button();
-	afx_msg void OnDeleteFile_Button();
 	afx_msg void OnChange_DataFormat();
 	afx_msg void OnClickTap(NMHDR* pNMHDR, LRESULT* pResult);
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
-	afx_msg void OnOpenOption();
-	afx_msg void OnOpenCamAnimation();
+	afx_msg void OnSceneSetting();
 	afx_msg void OnAddTag_Button();
 	afx_msg void OnChoiceTag();
 	afx_msg void OnDeleteTagButton();
 	afx_msg void OnCreateBasicMaterial();
 	afx_msg void OnCreatePrefap();
+	afx_msg void OnOpenOption();
 };

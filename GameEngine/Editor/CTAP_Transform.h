@@ -3,10 +3,10 @@
 
 // CTAP_1 대화 상자
 #include "EditorData.h"
-#include "GrobalFunction.h"
 #include "SimpleMath.h"
+#include "CustomDialog.h"
 class Transform;
-class CTAP_Transform : public CDialogEx
+class CTAP_Transform : public CustomDialog
 {
 	DECLARE_DYNAMIC(CTAP_Transform)
 

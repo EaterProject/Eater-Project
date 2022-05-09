@@ -1,12 +1,12 @@
 ﻿#pragma once
-
+#include "CustomDialog.h"
 
 // AssetsDialog 대화 상자
 class RightOption;
 class FileOption;
 class LoadTerrain;
 class LoadNavMesh;
-class AssetsDialog : public CDialogEx
+class AssetsDialog : public CustomDialog
 {
 	DECLARE_DYNAMIC(AssetsDialog)
 
@@ -49,15 +49,19 @@ public:
 	LoadNavMesh*	mLoadNavMesh;
 	CButton Terrain_Button;
 	CButton Navigation_Button;
+
+	CEdit DeleteFileName_Edit;
 public:
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnAssetsClick(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDropFiles(HDROP hDropInfo);
 	afx_msg void OnLvnBegindragList2(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnNMClickList2(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnAssetsFileClick(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
-	afx_msg void OnBnClickedButton1();
-	afx_msg void OnBnClickedButton2();
+	afx_msg void OnLoadBuffer();
+	afx_msg void OnLoadNavMesh();
+	CButton DeleteFileButton;
+	afx_msg void OnDeleteAssetsFile();
 };

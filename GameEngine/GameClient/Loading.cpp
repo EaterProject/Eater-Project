@@ -1,5 +1,5 @@
 #include "Loading.h"
-#include "MainHeader.h"
+#include "EaterEngineAPI.h"
 #include "GameObject.h"
 #include "Camera.h"
 #include "Light.h"
@@ -44,8 +44,8 @@ void Loading::Update()
 {
 	if (ThreadRun == false)
 	{
-		//ChoiceScene("inGame");
-		ChoiceScene("TestScene");
+		ChoiceScene("inGame");
+		//ChoiceScene("TestScene");
 	}
 }
 

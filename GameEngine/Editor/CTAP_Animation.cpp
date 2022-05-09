@@ -7,15 +7,14 @@
 #include "afxdialogex.h"
 #include "EditorData.h"
 #include "AnimationController.h"
-#include "GrobalFunction.h"
 
 
 // CTAP_2 대화 상자
 
-IMPLEMENT_DYNAMIC(CTAP_Animation, CDialogEx)
+IMPLEMENT_DYNAMIC(CTAP_Animation, CustomDialog)
 
 CTAP_Animation::CTAP_Animation(CWnd* pParent /*=nullptr*/)
-	: CDialogEx(IDD_TAP_ANIMATION, pParent)
+	: CustomDialog(IDD_TAP_ANIMATION, pParent)
 {
 
 }

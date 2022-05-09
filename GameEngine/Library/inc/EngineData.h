@@ -23,9 +23,12 @@ public:
 
 	// SSAO Option
 	float AO_Radius = 0.25f;							// 샘플링시 비교할 Texel 반지름	(0.0 ~ 5.0)
+	float AO_SurfaceEpsilon = 0.05f;					// 차폐되는 최소 깊이값			(0.0 ~ 1.0)
+	int AO_BlurCount = 4;								// AO Blur Count				(1 ~ 8)
+
+	/// 지워야댐
 	float AO_FadeStart = 0.01f;							// AO 너비를 결정하는 시작 지점	(0.0 ~ 10.0)
 	float AO_FadeEnd = 2.0f;							// AO 너비를 결정하는 끝 지점		(0.0 ~ 10.0)
-	float AO_SurfaceEpsilon = 0.05f;					// 차폐되는 최소 깊이값			(0.0 ~ 1.0)
 
 	// Fog Option
 	Vector3 FOG_Color = Vector3(0.9f, 0.745f, 0.35f);	// Fog 색상
@@ -141,8 +144,8 @@ public:
 
 	Vector3 AddColor = Vector3(0.0f, 0.0f, 0.0f);	// Add Color
 	float EmissiveFactor = 1.0f;		// Emissive 강도
-	float RoughnessFactor = 1.0f;		// Roughness 강도 (0 ~ 1)
-	float MetallicFactor = 1.0f;		// Metallic 강도 (0 ~ 1)
+	float RoughnessFactor = 0.0f;		// Roughness 강도 (0 ~ 1)
+	float MetallicFactor = 0.0f;		// Metallic 강도 (0 ~ 1)
 
 	Vector3 LimLightColor = Vector3(0.0f, 0.0f, 0.0f);	// LimLight Color
 	float LimLightFactor = 0.0f;		// LimLight 강도

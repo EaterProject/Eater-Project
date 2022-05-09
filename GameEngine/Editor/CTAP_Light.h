@@ -1,9 +1,9 @@
 ﻿#pragma once
-
+#include "CustomDialog.h"
 
 // CTAP_Light 대화 상자
 class Light;
-class CTAP_Light : public CDialogEx
+class CTAP_Light : public CustomDialog
 {
 	DECLARE_DYNAMIC(CTAP_Light)
 

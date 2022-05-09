@@ -5,7 +5,6 @@
 #include "Editor.h"
 #include "CreateMaterial.h"
 #include "afxdialogex.h"
-#include "GrobalFunction.h"
 #include "EngineData.h"
 #include "Material.h"
 #include "RightOption.h"
@@ -13,10 +12,10 @@
 #include "EditorManager.h"
 // CreateMaterial 대화 상자
 
-IMPLEMENT_DYNAMIC(CreateMaterial, CDialogEx)
+IMPLEMENT_DYNAMIC(CreateMaterial, CustomDialog)
 
 CreateMaterial::CreateMaterial(CWnd* pParent /*=nullptr*/)
-	: CDialogEx(IDD_CREATE_MATERIAL, pParent)
+	: CustomDialog(IDD_CREATE_MATERIAL, pParent)
 {
 	
 }

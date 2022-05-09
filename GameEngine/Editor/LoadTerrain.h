@@ -1,9 +1,9 @@
 ﻿#pragma once
 #include <string>
-
+#include "CustomDialog.h"
 // LoadTerrain 대화 상자
 
-class LoadTerrain : public CDialogEx
+class LoadTerrain : public CustomDialog
 {
 	DECLARE_DYNAMIC(LoadTerrain)
 

@@ -2,7 +2,7 @@
 #include "Camera.h"
 #include "Light.h"
 #include "EditorToolScene.h"
-#include "MainHeader.h"
+#include "EaterEngineAPI.h"
 #include "EaterHeader.h"
 
 
@@ -32,17 +32,23 @@ void Eater_LoadScene::Initialize(std::map<std::string, GameObject*>* ObjectList)
 
 void Eater_LoadScene::Load(std::string FilePath)
 {
+	GameObject* mCam	= nullptr;
+	GameObject* mLight	= nullptr;
+
 	//기존 씬 데이터를 모두 지운다
 	auto List_begin = EditorToolScene::ObjectList.begin();
 	auto List_end	= EditorToolScene::ObjectList.end();
 	for (List_begin; List_begin != List_end; List_begin++)
 	{
-		if (List_begin->first == "DebugCamera" || List_begin->first == "DirectionLight")
+		if (List_begin->first == "DebugCamera")
 		{
+			mCam = List_begin->second;
 			continue;
 		}
 		Destroy(List_begin->second);
 	}
+	EditorToolScene::ObjectList.clear();
+	//Destroy(mLight);
 
 	EATER_OPEN_READ_FILE(FilePath);
 	int Count = EATER_GET_NODE_COUNT();
@@ -73,7 +79,7 @@ void Eater_LoadScene::Load(std::string FilePath)
 				Load_Component_Animation(i, Obj);
 			}
 
-			//라이트
+			//라이트A
 			Find = EATER_GET_LIST_CHOICE(i, "Light");
 			if (Find != -1)
 			{
@@ -119,11 +125,36 @@ void Eater_LoadScene::Load(std::string FilePath)
 				EATER_GET_LIST(&Data, i);
 				EditorToolScene::TagList.insert({ std::stoi(Data[0]) ,Data[1]});
 			}
+
+			RenderOption* mOption = GetRenderOptionData();
+			Find = EATER_GET_LIST_CHOICE(i, "OPTION");
+			std::vector<float> Data;
+			EATER_GET_LIST(&Data, i);
+			mOption->AO_Radius = Data[0];
+			mOption->AO_SurfaceEpsilon = Data[1];
+			mOption->AO_BlurCount = Data[2];
+			mOption->FOG_Color.x = Data[3];
+			mOption->FOG_Color.y = Data[4];
+			mOption->FOG_Color.z = Data[5];
+			mOption->FOG_MoveSpeed = Data[6];
+			mOption->FOG_StartDistance = Data[7];
+			mOption->FOG_DistanceOffset = Data[8];
+			mOption->FOG_DistanceValue = Data[9];
+			mOption->FOG_HeightOffset = Data[10];
+			mOption->FOG_HeightValue = Data[11];
+			mOption->EnvironmentSize = Data[12];
+			mOption->BLOOM_Threshold = Data[13];
+			mOption->BLOOM_Factor = Data[14];
+			mOption->IBL_Factor = Data[15];
+			RenderSetting();
 		}
 	}
-
-	
 	EATER_CLOSE_READ_FILE();
+	EditorToolScene::ObjectList.insert({"DebugCamera", mCam});
+
+	//mCam->GetComponent<Camera>()->ChoiceMainCam();
+	//Destroy(mCam);
+	//Destroy(mLight);
 }
 
 void Eater_LoadScene::LoadData(std::string& Paht)

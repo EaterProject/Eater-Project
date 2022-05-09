@@ -1,6 +1,6 @@
 #include "EditorToolScene.h"
 #include "GameObject.h"
-#include "MainHeader.h"
+#include "EaterEngineAPI.h"
 #include "TypeOptionHeader.h"
 #include "EngineData.h"
 
@@ -41,23 +41,31 @@ void EditorToolScene::Awake()
 	mLoadManager->Initialize(&ObjectList);
 
 	RenderOption* Option = GetRenderOptionData();
+	Option->DebugOption ^= DEBUG_EDITOR;
+	RenderSetting();
 	
-
-	//텍스쳐를 로드
+	//리소스를 로드
 	Load("../Assets/Texture/ModelTexture");
 	Load("../Assets/Texture/Terrain");
 	Load("../Assets/Texture/Material");
 	Load("../Assets/Texture/Particle");
+	Load("../Assets/Texture/Environment");
 
+	Load("../Assets/Model/Animation");
+	Load("../Assets/Model/MeshBuffer");
+	Load("../Assets/Model/ModelData");
+	Load("../Assets/Model/Prefap");
+
+	//기본 태그 설정
 	DebugCamObject = GetMainCamera();
 	TagList.insert({ 0, "Default" });
 	TagList.insert({ 1, "MainCam" });
 	TagList.insert({ 2, "Point" });
 	TagList.insert({ 3, "Player" });
 
+	//기본 오브젝트 셋팅
 	GameObject* mCameraObject	 = FindGameObjectName("DebugCamera");
 	GameObject* mDiractionObject = FindGameObjectName("DirectionLight");
-
 	ObjectList.insert({ "DebugCamera",mCameraObject });
 	ObjectList.insert({ "DirectionLight",mDiractionObject });
 }
@@ -78,12 +86,6 @@ void EditorToolScene::End()
 
 void EditorToolScene::ThreadFunction()
 {
-	Load("../Assets/Model/Animation");
-	Load("../Assets/Model/MeshBuffer");
-	Load("../Assets/Model/ModelData");
-	Load("../Assets/Model/Prefap");
-	Load("../Assets/Texture/Environment");
-	
 	BakeEnvironmentMap("Day");
 	SetEnvironmentMap("Day");
 }
@@ -118,6 +120,22 @@ GameObject* EditorToolScene::Create_Camera()
 	Cam->Name = FindMeshName("Camera");
 	ObjectList.insert({Cam->Name, Cam});
 	return Cam;
+}
+
+GameObject* EditorToolScene::Create_Box()
+{
+	GameObject* box = Instance("Box");
+	MeshFilter* mMeshFileter = box->AddComponent<MeshFilter>();
+	mMeshFileter->SetMeshName("Box_0");
+	mMeshFileter->SetModelName("Box");
+	box->Name = FindMeshName("Box");
+	ObjectList.insert({box->Name,box});
+	return box;
+}
+
+GameObject* EditorToolScene::Create_Sphere()
+{
+	return nullptr;
 }
 
 GameObject* EditorToolScene::CreateBaseObject(std::string ObjectName, std::string MeshName)

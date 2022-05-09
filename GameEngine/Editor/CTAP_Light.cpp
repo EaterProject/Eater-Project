@@ -6,15 +6,14 @@
 #include "CTAP_Light.h"
 #include "afxdialogex.h"
 #include "Light.h"
-#include "GrobalFunction.h"
 
 
 // CTAP_Light 대화 상자
 
-IMPLEMENT_DYNAMIC(CTAP_Light, CDialogEx)
+IMPLEMENT_DYNAMIC(CTAP_Light, CustomDialog)
 
 CTAP_Light::CTAP_Light(CWnd* pParent /*=nullptr*/)
-	: CDialogEx(IDD_TAP_LIGHT, pParent)
+	: CustomDialog(IDD_TAP_LIGHT, pParent)
 {
 
 }

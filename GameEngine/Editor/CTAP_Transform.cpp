@@ -11,10 +11,10 @@
 #include "Transform.h"
 // CTAP_1 대화 상자
 
-IMPLEMENT_DYNAMIC(CTAP_Transform, CDialogEx)
+IMPLEMENT_DYNAMIC(CTAP_Transform, CustomDialog)
 
 CTAP_Transform::CTAP_Transform(CWnd* pParent /*=nullptr*/)
-	: CDialogEx(IDD_TAP_TRANSFORM, pParent)
+	: CustomDialog(IDD_TAP_TRANSFORM, pParent)
 {
 
 }
@@ -208,13 +208,6 @@ BOOL CTAP_Transform::PreTranslateMessage(MSG* pMsg)
 		case VK_RETURN:
 			UpdateGameObject();
 			return TRUE;
-
-		case VK_RIGHT:
-			ObjectTransform->SetTranlate(1, 0, 0);
-			break;
-		case VK_LEFT:
-			ObjectTransform->SetTranlate(-1, 0, 0);
-			break;
 		default:
 			break;
 		}

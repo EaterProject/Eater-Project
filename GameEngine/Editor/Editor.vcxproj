@@ -214,12 +214,14 @@ copy /Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)" </Command>
     <ClInclude Include="CTAP_Transform.h" />
     <ClInclude Include="CTAP_Animation.h" />
     <ClInclude Include="CTAP_MeshFilter.h" />
+    <ClInclude Include="CustomDialog.h" />
+    <ClInclude Include="DialogFactory.h" />
+    <ClInclude Include="EditorDefine.h" />
     <ClInclude Include="E_AnimationManager.h" />
     <ClInclude Include="E_BufferManager.h" />
     <ClInclude Include="E_ChangeManager.h" />
     <ClInclude Include="E_MaterialManager.h" />
     <ClInclude Include="E_MeshManager.h" />
-    <ClInclude Include="GrobalFunction.h" />
     <ClInclude Include="Loading.h" />
     <ClInclude Include="LoadNavMesh.h" />
     <ClInclude Include="LoadTerrain.h" />
@@ -245,6 +247,7 @@ copy /Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)" </Command>
     <ClInclude Include="SceneLoad.h" />
     <ClInclude Include="SceneSave.h" />
     <ClInclude Include="SceneSaveDialog.h" />
+    <ClInclude Include="SceneSetting.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="YamlManager.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
@@ -263,6 +266,8 @@ copy /Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)" </Command>
     <ClCompile Include="CTAP_Transform.cpp" />
     <ClCompile Include="CTAP_Animation.cpp" />
     <ClCompile Include="CTAP_MeshFilter.cpp" />
+    <ClCompile Include="CustomDialog.cpp" />
+    <ClCompile Include="DialogFactory.cpp" />
     <ClCompile Include="EditorData.cpp" />
     <ClCompile Include="E_AnimationManager.cpp" />
     <ClCompile Include="E_BufferManager.cpp" />
@@ -296,6 +301,7 @@ copy /Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)" </Command>
     <ClCompile Include="SceneLoad.cpp" />
     <ClCompile Include="SceneSave.cpp" />
     <ClCompile Include="SceneSaveDialog.cpp" />
+    <ClCompile Include="SceneSetting.cpp" />
     <ClCompile Include="YamlManager.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>

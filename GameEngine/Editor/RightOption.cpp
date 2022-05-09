@@ -20,7 +20,7 @@
 #include "CreateMaterial.h"
 
 #include <stack>
-#include "MainHeader.h"
+#include "EaterEngineAPI.h"
 #include "GameObject.h"
 #include "Transform.h"
 #include "AnimationController.h"
@@ -30,29 +30,34 @@
 #include "Collider.h"
 #include "Rigidbody.h"
 #include "CamAnimation.h"
-#include "GrobalFunction.h"
+#include "SceneSetting.h"
+#include "DialogFactory.h"
+
 
 // RightOption 대화 상자
 
 GameObject* RightOption::ChoiceObject = nullptr;
 
-IMPLEMENT_DYNAMIC(RightOption, CDialogEx)
+IMPLEMENT_DYNAMIC(RightOption, CustomDialog)
 RightOption*  RightOption::thisPointer = nullptr;
 RightOption::RightOption(CWnd* pParent /*=nullptr*/)
-	: CDialogEx(IDD_RIGHT_OPTION, pParent)
+	: CustomDialog(IDD_RIGHT_OPTION, pParent)
 {
 
 }
 
 RightOption::~RightOption()
 {
-	delete mRigidbody;
-	delete mCollider;
-	delete mTransform;
-	delete mAnimation;
-	delete mMeshFilter;
-	delete mPrticle;
-	delete mLight;
+	mRigidbody	= nullptr;
+	mCollider	= nullptr;
+	mTransform	= nullptr;
+	mAnimation	= nullptr;
+	mMeshFilter = nullptr;
+	mPrticle	= nullptr;
+	mLight		= nullptr;
+	mFileOption = nullptr;
+	mCam		= nullptr;
+	mMaterial	= nullptr;
 }
 
 BOOL RightOption::OnInitDialog()
@@ -61,19 +66,15 @@ BOOL RightOption::OnInitDialog()
 	m_EditorManager = new EditorManager();
 	m_EditorManager->Initialize();
 
-	mFileOption = new FileOption();
-	mFileOption->Create(IDD_FILE_OPTION);
-	mFileOption->Initialize(this);
-	mFileOption->ShowWindow(SW_HIDE);
+	
 
-	mCam = new CamAnimation();
-	mCam->Create(IDD_CAM_ANIMATION);
-	mCam->ShowWindow(SW_HIDE);
+	mFileOption = DialogFactory::GetFactory()->GetFileOption();
+	mCam		= DialogFactory::GetFactory()->GetCamAnimation();
+	mMaterial	= DialogFactory::GetFactory()->GetCreateMaterial();
+	mSceneSetting = DialogFactory::GetFactory()->GetSceneSetting();
 
-	mMaterial = new CreateMaterial();
-	mMaterial->Create(IDD_CREATE_MATERIAL);
-	mMaterial->ShowWindow(SW_HIDE);
-
+	DialogFactory::GetFactory()->SetRightOption(this);
+	
 	//Tag 기본 리스트
 	Tag_Combo.InsertString(0, L"Default");
 	Tag_Combo.InsertString(1, L"MainCam");
@@ -89,37 +90,37 @@ BOOL RightOption::OnInitDialog()
 	CRect rect;
 	Component_TapList.GetWindowRect(&rect);
 
-	mTransform = new CTAP_Transform();
+	mTransform = DialogFactory::GetFactory()->GetCTAP_Transform();
 	mTransform->Create(IDD_TAP_TRANSFORM, &Component_TapList);
 	mTransform->MoveWindow(0, 25, rect.Width() - 5, rect.Height() - 25);
 	mTransform->ShowWindow(SW_HIDE);
 
-	mAnimation = new CTAP_Animation();
+	mAnimation = DialogFactory::GetFactory()->GetCTAP_Animation();
 	mAnimation->Create(IDD_TAP_ANIMATION, &Component_TapList);
 	mAnimation->MoveWindow(0, 25, rect.Width() - 5, rect.Height() - 25);
 	mAnimation->ShowWindow(SW_HIDE);
 
-	mMeshFilter = new CTAP_MeshFilter();
+	mMeshFilter = DialogFactory::GetFactory()->GetCTAP_MeshFilter();
 	mMeshFilter->Create(IDD_TAP_MESHFILTER, &Component_TapList);
 	mMeshFilter->MoveWindow(0, 25, rect.Width() - 5, rect.Height() - 25);
 	mMeshFilter->ShowWindow(SW_HIDE);
 
-	mPrticle = new CTAP_Particle();
+	mPrticle = DialogFactory::GetFactory()->GetCTAP_Particle();
 	mPrticle->Create(IDD_TAP_PARTICLE, &Component_TapList);
 	mPrticle->MoveWindow(0, 25, rect.Width() - 5, rect.Height() - 25);
 	mPrticle->ShowWindow(SW_HIDE);
 
-	mLight = new CTAP_Light();
+	mLight = DialogFactory::GetFactory()->GetCTAP_Light();
 	mLight->Create(IDD_TAP_LIGHT, &Component_TapList);
 	mLight->MoveWindow(0, 25, rect.Width() - 5, rect.Height() - 25);
 	mLight->ShowWindow(SW_HIDE);
 
-	mRigidbody = new CTAP_Rigidbody();
+	mRigidbody = DialogFactory::GetFactory()->GetCTAP_Rigidbody();
 	mRigidbody->Create(IDD_TAP_RIGIDBODY, &Component_TapList);
 	mRigidbody->MoveWindow(0, 25, rect.Width() - 5, rect.Height() - 25);
 	mRigidbody->ShowWindow(SW_HIDE);
 
-	mCollider = new CTAP_Collider();
+	mCollider = DialogFactory::GetFactory()->GetCTAP_Collider();
 	mCollider->Create(IDD_TAP_COLLIDER, &Component_TapList);
 	mCollider->MoveWindow(0, 25, rect.Width() - 5, rect.Height() - 25);
 	mCollider->ShowWindow(SW_HIDE);
@@ -138,7 +139,6 @@ void RightOption::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_TREE2, HirearchyTree);
 	DDX_Control(pDX, IDC_EDIT2, HirearchyEdit);
 	DDX_Control(pDX, IDC_TAB1, Component_TapList);
-	DDX_Control(pDX, IDC_EDIT9, FilePathEdit);
 	DDX_Control(pDX, IDC_COMBO1, Tag_Combo);
 	DDX_Control(pDX, IDC_EDIT1, AddTag_Edit);
 }
@@ -150,20 +150,19 @@ BEGIN_MESSAGE_MAP(RightOption, CDialogEx)
 	ON_WM_LBUTTONUP()
 	ON_NOTIFY(NM_DBLCLK, IDC_TREE2, &RightOption::OnChoice_Hirearchy_Item)
 	ON_BN_CLICKED(IDC_BUTTON8, &RightOption::OnDelteObject_Button)
-	ON_BN_CLICKED(IDC_BUTTON4, &RightOption::OnDeleteFile_Button)
 	ON_BN_CLICKED(IDC_BUTTON7, &RightOption::OnChange_DataFormat)
 	ON_WM_TIMER()
 	ON_WM_ACTIVATE()
 	ON_NOTIFY(TCN_SELCHANGE, IDC_TAB1, &RightOption::OnClickTap)
 	ON_WM_MOUSEHWHEEL()
 	ON_WM_SIZE()
-	ON_BN_CLICKED(IDC_BUTTON10, &RightOption::OnOpenOption)
-	ON_BN_CLICKED(IDC_BUTTON11, &RightOption::OnOpenCamAnimation)
+	ON_BN_CLICKED(IDC_BUTTON10, &RightOption::OnSceneSetting)
 	ON_BN_CLICKED(IDC_BUTTON1, &RightOption::OnAddTag_Button)
 	ON_CBN_SELCHANGE(IDC_COMBO1, &RightOption::OnChoiceTag)
 	ON_BN_CLICKED(IDC_BUTTON2, &RightOption::OnDeleteTagButton)
 	ON_BN_CLICKED(IDC_BUTTON12, &RightOption::OnCreateBasicMaterial)
 	ON_BN_CLICKED(IDC_BUTTON9, &RightOption::OnCreatePrefap)
+	ON_BN_CLICKED(IDC_BUTTON26, &RightOption::OnOpenOption)
 END_MESSAGE_MAP()
 
 RightOption* RightOption::GetThis()
@@ -226,10 +225,7 @@ void RightOption::ChickTapDrag(CPoint point)
 	//Tap컨트롤에  드래그했을때 처리
 	CRect rect;
 	Component_TapList.GetWindowRect(&rect);
-	if (rect.left <= point.x &&
-		rect.right >= point.x &&
-		rect.top <= point.y &&
-		rect.bottom >= point.y)
+	if (DropRect(rect))
 	{
 		//현재 켜져있는 창을 알아온다
 		int num = Component_TapList.GetCurSel();
@@ -264,10 +260,7 @@ void RightOption::ChickHirearchyDarg(CPoint point)
 
 	
 	//범위 안에 들어와있는지 체크
-	if (rect.left	<= point.x &&
-		rect.right	>= point.x &&
-		rect.top	<= point.y &&
-		rect.bottom >= point.y)
+	if (DropRect(rect))
 	{
 		std::string Name = ChangeToString(DragItemName);
 		int Type = GetFileNameType(Name);
@@ -285,6 +278,8 @@ void RightOption::ChickHirearchyDarg(CPoint point)
 		}
 		case SCENE:
 		{
+			HirearchyTree.DeleteAllItems();
+
 			EditorToolScene::LoadScene(Name);
 			std::map<std::string, GameObject*>::iterator Start_it	= EditorToolScene::ObjectList.begin();
 			std::map<std::string, GameObject*>::iterator End_it		= EditorToolScene::ObjectList.end();
@@ -494,23 +489,6 @@ void RightOption::OnDelteObject_Button()
 	}
 }
 
-void RightOption::OnDeleteFile_Button()
-{
-	//에셋폴더안에 파일을 삭제한다
-	CString PathName = ClickAssetsPath;
-	PathName += _T("/");
-	PathName += ClickItemName;
-	bool FileDelete = DeleteFile(PathName);
-	if (FileDelete == false)
-	{
-		AfxMessageBox(_T("파일 지우기 실패"));
-	}
-	else
-	{
-		AfxMessageBox(_T("파일 지우기 성공"));
-	}
-}
-
 void RightOption::OnChange_DataFormat()
 {
 	//자체포멧의 값을 변경한다
@@ -633,18 +611,28 @@ BOOL RightOption::PreTranslateMessage(MSG* pMsg)
 			break;
 		}
 	}
+
+	if (pMsg->message == WM_COMMAND)
+	{
+		switch (pMsg->wParam)
+		{
+		case VK_ESCAPE:
+		case VK_RETURN:
+			return TRUE;
+		default:
+			break;
+		}
+	}
+
+
+
 	return CDialog::PreTranslateMessage(pMsg);
 }
 
-void RightOption::OnOpenOption()
+void RightOption::OnSceneSetting()
 {
-	mFileOption->ShowWindow(SW_SHOW);
-}
-
-
-void RightOption::OnOpenCamAnimation()
-{
-	mCam->ShowWindow(SW_SHOW);
+	mSceneSetting->ShowWindow(SW_SHOW);
+	mSceneSetting->Setting();
 }
 
 void RightOption::OnAddTag_Button()
@@ -710,4 +698,10 @@ void RightOption::OnCreateBasicMaterial()
 void RightOption::OnCreatePrefap()
 {
 	EditorToolScene::SavePrefap("../Assets/Model/Prefap/","Test", ChoiceHirearchyName);
+}
+
+
+void RightOption::OnOpenOption()
+{
+	mFileOption->ShowWindow(SW_SHOW);
 }

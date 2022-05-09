@@ -46,7 +46,7 @@ private:
 	std::vector<AttackDrone*>		AttackDrone_List;
 	std::vector<Bullet*>			Bullet_List;
 	std::vector<Potal*>				Potal_List;
-	std::vector<GameObject*>		PotalPoint_List;
+	std::vector<GameObject*>		ManaPoint_List;
 	HealingDrone* DroneList;
 private:
 	const int CreateMonsterACount		= 0;		//몬스터A 생성할 카운터

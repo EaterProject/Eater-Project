@@ -1,9 +1,9 @@
 ﻿#pragma once
-
+#include "CustomDialog.h"
 
 // SceneSaveDialog 대화 상자
 class RightOption;
-class SceneSaveDialog : public CDialogEx
+class SceneSaveDialog : public CustomDialog
 {
 	DECLARE_DYNAMIC(SceneSaveDialog)
 
@@ -22,11 +22,9 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
-	void Initialize(RightOption* mRight);
 	CEdit SceneName_Edit;
 	CString Name;
 	bool isOK = false;
-	RightOption* mRightOption;
 	afx_msg void OnBnClickedOk();
 	afx_msg void OnBnClickedCancel();
 };

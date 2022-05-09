@@ -5,7 +5,6 @@
 #include "Editor.h"
 #include "AssetsDialog.h"
 #include "afxdialogex.h"
-#include "GrobalFunction.h"
 #include <stack>
 #include "EditorToolScene.h"
 #include "RightOption.h"
@@ -16,13 +15,15 @@
 #include "LoadTerrain.h"
 #include "LoadNavMesh.h"
 #include "CreateMaterial.h"
+#include "DialogFactory.h"
+#include <iostream>
 #define MAXPATH 256
 // AssetsDialog 대화 상자
 
-IMPLEMENT_DYNAMIC(AssetsDialog, CDialogEx)
+IMPLEMENT_DYNAMIC(AssetsDialog, CustomDialog)
 
 AssetsDialog::AssetsDialog(CWnd* pParent /*=nullptr*/)
-	: CDialogEx(IDD_ASSETS, pParent)
+	: CustomDialog(IDD_ASSETS, pParent)
 {
 
 }
@@ -58,14 +59,8 @@ BOOL AssetsDialog::OnInitDialog()
 	//ChangeWindowMessageFilter(WM_DROPFILES, MSGFLT_ADD);
 	DragAcceptFiles(TRUE);
 
-	
-	mLoadTerrain = new LoadTerrain();
-	mLoadTerrain->Create(IDD_LOAD_TERRAIN);
-	mLoadTerrain->ShowWindow(SW_HIDE);
-
-	mLoadNavMesh = new LoadNavMesh();
-	mLoadNavMesh->Create(IDD_LOAD_NAVMESH);
-	mLoadNavMesh->ShowWindow(SW_HIDE);
+	mfont.CreatePointFont(130, L"나눔고딕");
+	DeleteFileName_Edit.SetFont(&mfont);
 
 	return 0;
 }
@@ -77,6 +72,8 @@ void AssetsDialog::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_LIST2, AssetsFile);
 	DDX_Control(pDX, IDC_BUTTON1, Terrain_Button);
 	DDX_Control(pDX, IDC_BUTTON2, Navigation_Button);
+	DDX_Control(pDX, IDC_EDIT1, DeleteFileName_Edit);
+	DDX_Control(pDX, IDC_BUTTON4, DeleteFileButton);
 }
 
 
@@ -86,11 +83,12 @@ BEGIN_MESSAGE_MAP(AssetsDialog, CDialogEx)
 	ON_NOTIFY(NM_DBLCLK, IDC_TREE1, &AssetsDialog::OnAssetsClick)
 	ON_WM_DROPFILES()
 	ON_NOTIFY(LVN_BEGINDRAG, IDC_LIST2, &AssetsDialog::OnLvnBegindragList2)
-	ON_NOTIFY(NM_CLICK, IDC_LIST2, &AssetsDialog::OnNMClickList2)
+	ON_NOTIFY(NM_CLICK, IDC_LIST2, &AssetsDialog::OnAssetsFileClick)
 	ON_WM_MOUSEMOVE()
 	ON_WM_LBUTTONUP()
-	ON_BN_CLICKED(IDC_BUTTON1, &AssetsDialog::OnBnClickedButton1)
-	ON_BN_CLICKED(IDC_BUTTON2, &AssetsDialog::OnBnClickedButton2)
+	ON_BN_CLICKED(IDC_BUTTON1, &AssetsDialog::OnLoadBuffer)
+	ON_BN_CLICKED(IDC_BUTTON2, &AssetsDialog::OnLoadNavMesh)
+	ON_BN_CLICKED(IDC_BUTTON4, &AssetsDialog::OnDeleteAssetsFile)
 END_MESSAGE_MAP()
 
 
@@ -108,6 +106,11 @@ void AssetsDialog::Initialize(RightOption* mRight)
 
 	mRightOption->HirearchyTree.InsertItem(L"MainCamera");
 	mRightOption->HirearchyTree.InsertItem(L"DirectionLight");
+
+	mfont.CreatePointFont(30, L"나눔고딕");
+
+	DeleteFileName_Edit.SetFont(&mfont);
+	DeleteFileName_Edit.SetWindowTextW(_T("테스트"));
 }
 
 int AssetsDialog::FindChildFile(HTREEITEM hParentItem, CString str)
@@ -156,17 +159,27 @@ void AssetsDialog::OnSize(UINT nType, int cx, int cy)
 
 	if (AssetsFile)
 	{
-		AssetsFile.MoveWindow(250, 0, cx- 350, cy);
+		AssetsFile.MoveWindow(250, 30, cx- 350, cy);
 	}
 
 	if (Terrain_Button) 
 	{
-		Terrain_Button.MoveWindow((250 +cx) - 350, 0, 100, 50);
+		Terrain_Button.MoveWindow((250 +cx) - 350, 50, 100, 50);
 	}
 
 	if (Navigation_Button)
 	{
-		Navigation_Button.MoveWindow((250 + cx) - 350, 50, 100, 50);
+		Navigation_Button.MoveWindow((250 + cx) - 350, 100, 100, 50);
+	}
+
+	if (DeleteFileButton)
+	{
+		DeleteFileButton.MoveWindow((250 + cx) - 350, 0, 100, 50);
+	}
+
+	if (DeleteFileName_Edit)
+	{
+		DeleteFileName_Edit.MoveWindow((250), 0, cx - 350, 30);
 	}
 
 	CDialogEx::OnSize(nType, cx, cy);
@@ -212,6 +225,7 @@ void AssetsDialog::OnAssetsClick(NMHDR* pNMHDR, LRESULT* pResult)
 
 	CFileFind FileFind;
 	CString FilePath = ChangeToCString(ClickItemPath);
+	
 	RightOption::GetThis()->ClickAssetsPath = ClickAssetsPath;
 	BOOL bFound = FileFind.FindFile(FilePath);
 	while (bFound)
@@ -227,11 +241,22 @@ void AssetsDialog::OnAssetsClick(NMHDR* pNMHDR, LRESULT* pResult)
 
 void AssetsDialog::OnDropFiles(HDROP hDropInfo)
 {
+	setlocale(LC_ALL, "");
+
+	Loading* mLoading = DialogFactory::GetFactory()->GetLoading();
+	mLoading->ShowWindow(SW_SHOW);
+	mLoading->LoadingTypeEdit.SetWindowTextW(L"파일 변환중입니다");
+	mLoading->LoadFileList.AddString(L"변환이 완료되면 자동으로 종료됩니다");
+
 	//RightOption::GetThis()->mLoading->ShowWindow(SW_SHOW);
 
 	//외부 폴더에서 Tool쪽으로 파일을 옮겼을때 처리
 	TCHAR FileName[MAXPATH] = { 0, };
 	UINT count = DragQueryFile(hDropInfo, 0xFFFFFFFF, FileName, MAXPATH);
+	CString DataCount;
+	DataCount.Format(_T("변환할 파일 개수 %d"),(int)count);
+	mLoading->AllAssetsCount.SetWindowTextW(DataCount);
+	mLoading->UpdateWindow();
 	for (UINT i = 0; i < count; i++)
 	{
 		DragQueryFile(hDropInfo, i, FileName, MAXPATH);
@@ -271,7 +296,8 @@ void AssetsDialog::OnDropFiles(HDROP hDropInfo)
 	}
 	CDialogEx::OnDropFiles(hDropInfo);
 
-	//RightOption::GetThis()->mLoading->ShowWindow(SW_HIDE);
+	mLoading->LoadFileList.DeleteString(0);
+	mLoading->ShowWindow(SW_HIDE);
 }
 
 
@@ -285,6 +311,7 @@ void AssetsDialog::OnLvnBegindragList2(NMHDR* pNMHDR, LRESULT* pResult)
 	DragItemIndex = pNMLV->iItem;
 
 	DragItemName = AssetsFile.GetItemText(DragItemIndex, 0);
+	DeleteFileName_Edit.SetWindowTextW(DragItemName);
 
 	//이동시킬 아이템 랜더링
 	DragImg = AssetsFile.CreateDragImage(DragItemIndex, &ptDrag);
@@ -299,14 +326,13 @@ void AssetsDialog::OnLvnBegindragList2(NMHDR* pNMHDR, LRESULT* pResult)
 }
 
 
-void AssetsDialog::OnNMClickList2(NMHDR* pNMHDR, LRESULT* pResult)
+void AssetsDialog::OnAssetsFileClick(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
 	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
 	int ClickItemIndex = pNMListView->iItem;
 	ClickItemName = AssetsFile.GetItemText(ClickItemIndex, 0);
-	RightOption::GetThis()->ClickItemName = ClickItemName;
-	RightOption::GetThis()->FilePathEdit.SetWindowTextW(ClickItemName);
+	DeleteFileName_Edit.SetWindowTextW(ClickItemName);
 	*pResult = 0;
 }
 
@@ -387,67 +413,33 @@ void AssetsDialog::OnLButtonUp(UINT nFlags, CPoint point)
 }
 
 
-void AssetsDialog::OnBnClickedButton1()
+void AssetsDialog::OnLoadBuffer()
 {
+	mLoadTerrain = DialogFactory::GetFactory()->GetLoadTerrain();
 	mLoadTerrain->ShowWindow(SW_SHOW);
-	//네비매쉬창이 활성화되었을때 옆으로 옮겨줌
-	//if (mLoadNavMesh->IsWindowVisible() == true)
-	//{
-	//	mLoadTerrain->ShowWindow(SW_SHOW);
-	//	RECT NavMeshWindow;
-	//	RECT TerrainWindow;
-	//	mLoadNavMesh->GetWindowRect(&NavMeshWindow);
-	//
-	//	TerrainWindow = NavMeshWindow;
-	//	TerrainWindow.left = NavMeshWindow.right;
-	//	mLoadTerrain->SetWindowPos(NULL,TerrainWindow.left,TerrainWindow.top, TerrainWindow.right, TerrainWindow.bottom,SWP_NOSIZE);
-	//	//mLoadTerrain->MoveWindow(&TerrainWindow);
-	//}
-	//else
-	//{
-	//	//화면 해상도의 가운데값을 구해옴
-	//	int x = (int)GetSystemMetrics(SM_CXSCREEN) * 0.5f;
-	//	int y = (int)GetSystemMetrics(SM_CYSCREEN) * 0.5f;
-	//
-	//	//다이얼로그창 
-	//	RECT ClientRect;
-	//	mLoadTerrain->GetWindowRect(&ClientRect);
-	//
-	//	mLoadTerrain->ShowWindow(SW_SHOW);
-	//	mLoadTerrain->SetWindowPos(NULL, x, y, ClientRect.right, ClientRect.bottom, SWP_NOSIZE);
-	//	//mLoadTerrain->ShowWindow(SW_SHOW);
-	//}
 }
 
 
-void AssetsDialog::OnBnClickedButton2()
+void AssetsDialog::OnLoadNavMesh()
 {
+	mLoadNavMesh = DialogFactory::GetFactory()->GetLoadNavMesh();
 	mLoadNavMesh->ShowWindow(SW_SHOW);
-	//터레인 로드창이 켜져있을때 창을 옆으로 옮겨준다
-	//if (mLoadTerrain->IsWindowVisible() == true)
-	//{
-	//	mLoadNavMesh->ShowWindow(SW_SHOW);
-	//	RECT NavMeshWindow;
-	//	RECT TerrainWindow;
-	//	mLoadTerrain->GetWindowRect(&TerrainWindow);
-	//
-	//	NavMeshWindow = TerrainWindow;
-	//	NavMeshWindow.left = TerrainWindow.right;
-	//	mLoadNavMesh->SetWindowPos(NULL, NavMeshWindow.left, NavMeshWindow.top, NavMeshWindow.right, NavMeshWindow.bottom, SWP_NOSIZE);
-	//	//mLoadNavMesh->MoveWindow(&NavMeshWindow);
-	//}
-	//else
-	//{
-	//	//화면 해상도의 가운데값을 구해옴
-	//	int x = (int)GetSystemMetrics(SM_CXSCREEN)* 0.5f;
-	//	int y = (int)GetSystemMetrics(SM_CYSCREEN)*0.5f;
-	//
-	//	//다이얼로그창 
-	//	RECT ClientRect;
-	//	mLoadNavMesh->GetWindowRect(&ClientRect);
-	//
-	//
-	//	mLoadNavMesh->ShowWindow(SW_SHOW);
-	//	mLoadNavMesh->SetWindowPos(NULL, x, y, ClientRect.right, ClientRect.bottom, SWP_NOSIZE);
-	//}
+}
+
+
+void AssetsDialog::OnDeleteAssetsFile()
+{
+	//에셋폴더안에 파일을 삭제한다
+	CString PathName = ClickAssetsPath;
+	PathName += _T("/");
+	PathName += ClickItemName;
+	bool FileDelete = DeleteFile(PathName);
+	if (FileDelete == false)
+	{
+		AfxMessageBox(_T("파일 지우기 실패"));
+	}
+	else
+	{
+		AfxMessageBox(_T("파일 지우기 성공"));
+	}
 }

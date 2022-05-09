@@ -1,21 +1,21 @@
 ﻿// CTAP_MeshFilter.cpp: 구현 파일
-//
 
 #include "pch.h"
 #include "Editor.h"
 #include "CTAP_MeshFilter.h"
 #include "afxdialogex.h"
 #include "MeshFilter.h"
-#include "GrobalFunction.h"
 #include "EngineData.h"
 #include "Material.h"
 
+
+
 // CTAP_MeshFilter 대화 상자
 
-IMPLEMENT_DYNAMIC(CTAP_MeshFilter, CDialogEx)
+IMPLEMENT_DYNAMIC(CTAP_MeshFilter, CustomDialog)
 
 CTAP_MeshFilter::CTAP_MeshFilter(CWnd* pParent /*=nullptr*/)
-	: CDialogEx(IDD_TAP_MESHFILTER, pParent)
+	: CustomDialog(IDD_TAP_MESHFILTER, pParent)
 {
 
 }
@@ -108,7 +108,7 @@ void CTAP_MeshFilter::SetGameObject(MeshFilter* ObjectMeshFilter)
 		float LimWidth  = mMaterial->m_MaterialData->Material_Property->LimLightWidth * 10.0f;
 		LimLight_Factor.SetRange(0, 100);
 		LimLight_Width.SetRange(0, 100);
-		LimLight_Factor.SetPos(LimFactor);
+		LimLight_Factor.SetPos((int)LimFactor);
 		LimLight_Width.SetPos(LimWidth);
 		LimLight_Factor_Edit.SetWindowTextW(ChangeToCString(LimFactor / 10.0f));
 		LimLight_Width_Edit.SetWindowTextW(ChangeToCString(LimWidth / 10.0f));

@@ -1,6 +1,6 @@
 #include "SceneSave.h"
 
-#include "MainHeader.h"
+#include "EaterEngineAPI.h"
 #include "EaterHeader.h"
 #include "GameObject.h"
 #include "EngineData.h"
@@ -46,6 +46,8 @@ void SceneSave::Scene_Save(std::string SaveFilePath, std::string SaveFileName)
 		MeshData*	OneMesh		= Object->OneMeshData;
 		Object->Name = Start_it->first;
 
+		//if (Start_it->first == "DebugCamera" || Start_it->first == "DirectionLight") { continue; }
+
 		//어떤 컨퍼넌트를 들어있는지 몰라서 모두 찾는다
 		Transform*	mTransform	= Object->GetComponent<Transform>();
 		MeshFilter* mMeshFilter = Object->GetComponent<MeshFilter>();
@@ -68,7 +70,7 @@ void SceneSave::Scene_Save(std::string SaveFilePath, std::string SaveFileName)
 		SaveTransform(mTransform);
 		if (mMeshFilter != nullptr) {SaveMeshFilter(mMeshFilter);}
 		if (mLight != nullptr) { SaveLight(mLight);}
-		if (mCamera != nullptr) { SaveCamera(mCamera);}
+		//if (mCamera != nullptr) { SaveCamera(mCamera);}
 		if (mCollider != nullptr) { SaveCollider(mCollider);}
 		if (mRigidbody != nullptr) { SaveRigidbody(mRigidbody);}
 		if (mAnimationController != nullptr) { SaveAnimation(mAnimationController);}
@@ -129,6 +131,26 @@ void SceneSave::SceneOption()
 		EATER_SET_LIST(Start_it->first);
 		EATER_SET_LIST(Start_it->second, true);
 	}
+
+	RenderOption* mOption = GetRenderOptionData();
+
+	EATER_SET_LIST_START("OPTION", 1, 16);
+	EATER_SET_LIST(mOption->AO_Radius);
+	EATER_SET_LIST(mOption->AO_SurfaceEpsilon);
+	EATER_SET_LIST(mOption->AO_BlurCount);
+	EATER_SET_LIST(mOption->FOG_Color.x);
+	EATER_SET_LIST(mOption->FOG_Color.y);
+	EATER_SET_LIST(mOption->FOG_Color.z);
+	EATER_SET_LIST(mOption->FOG_MoveSpeed);
+	EATER_SET_LIST(mOption->FOG_StartDistance);
+	EATER_SET_LIST(mOption->FOG_DistanceOffset);
+	EATER_SET_LIST(mOption->FOG_DistanceValue);
+	EATER_SET_LIST(mOption->FOG_HeightOffset);
+	EATER_SET_LIST(mOption->FOG_HeightValue);
+	EATER_SET_LIST(mOption->EnvironmentSize);
+	EATER_SET_LIST(mOption->BLOOM_Threshold);
+	EATER_SET_LIST(mOption->BLOOM_Factor);
+	EATER_SET_LIST(mOption->IBL_Factor,true);
 }
 
 void SceneSave::SaveTransform(Transform* mTransform)

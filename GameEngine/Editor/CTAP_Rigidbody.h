@@ -2,8 +2,9 @@
 
 
 // CTAP_Rigidbody 대화 상자
+#include "CustomDialog.h"
 class Rigidbody;
-class CTAP_Rigidbody : public CDialogEx
+class CTAP_Rigidbody : public CustomDialog
 {
 	DECLARE_DYNAMIC(CTAP_Rigidbody)
 
