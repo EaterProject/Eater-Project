@@ -16,7 +16,6 @@ public:
 
 	void ChangeEaterFile(ParserData::CModel* FBXMesh);
 	void SetFileName(std::string& FileName);
-	void CreateBox();
 private:
 	void ChangeEaterFile_Static(ParserData::CMesh* OneMesh);
 	void ChangeEaterFile_Skin(ParserData::CMesh* OneMesh);

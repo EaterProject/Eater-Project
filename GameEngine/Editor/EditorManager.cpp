@@ -78,6 +78,8 @@ void EditorManager::ConvertData(std::string Path, std::string ChangeName, CHANGE
 		ParserData::CModel* Model = mFbx->OpenFile(Path);
 		mEater->Load_FBX_File_NavMeshBuffer(Path, Model, ChangeName);
 	}
+
+	
 }
 
 void EditorManager::OpenEaterFile(std::string Path,int Type)
@@ -123,18 +125,5 @@ void EditorManager::CreateAssetsFile()
 	std::filesystem::create_directory("../Assets/Texture/Graphic/Icon");
 	std::filesystem::create_directory("../Assets/Texture/Graphic/Noise");
 	std::filesystem::create_directory("../Assets/Texture/Graphic/Shader");
-
-	//기본 오브젝트들 생성
-	CreateBaseObject();
-}
-
-void EditorManager::CreateBaseObject()
-{
-	mEater->CreateBaseObject();
-
-
-
-
-
 }
 

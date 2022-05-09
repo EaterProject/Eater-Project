@@ -36,8 +36,6 @@ public:
 
 	void Load_GameObject_File(GameObject* Object, ObjectOption* mOption);
 	void Create_Material(InstanceMaterial* m);
-
-	void CreateBaseObject();
 	void Initialize();
 private:
 	static const int E_STATIC_MESH	= 0;

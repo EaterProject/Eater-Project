@@ -30,9 +30,6 @@ public:
 	static GameObject* Create_Light();							//扼捞飘 积己
 	static GameObject* Create_Particle();						//颇萍努 积己
 	static GameObject* Create_Camera();							//墨皋扼 积己
-	
-	static GameObject* Create_Box();							//Box 积己
-	static GameObject* Create_Sphere();							//Sphere 积己
 public:
 	///Load,Save,Delete
 	static void MeshLoad(std::string Path, UINT Option = 0);	//Object 肺靛

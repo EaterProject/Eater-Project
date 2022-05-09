@@ -249,6 +249,8 @@ UINT CMainFrame::ThreadFunction(LPVOID _mothod)
 	return 0;
 }
 
+
+
 void CMainFrame::OnClose()
 {
 	DialogFactory::GetFactory()->Release();
@@ -370,14 +372,7 @@ void CMainFrame::OnGameobjectSphere()
 
 void CMainFrame::OnGameobjectBox()
 {
-	RightOption* mRightOption = DialogFactory::GetFactory()->GetRightOption();
-	GameObject* Object = EditorToolScene::Create_Box();
-	CString Data;
-	Data = Object->Name.c_str();
-	HTREEITEM Top = mRightOption->HirearchyTree.InsertItem(Data);
-
-	mRightOption->Create_Hirearchy_Item(Object, Top);
-
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
 }
 
 
