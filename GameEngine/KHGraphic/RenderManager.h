@@ -117,6 +117,8 @@ private:
 
 	std::vector<RenderPassBase*> m_RenderPassList;
 
+	std::vector<std::function<void()>> m_FuntionList;
+
 	InstanceLayer* m_InstanceLayer;
 	RenderData* m_RenderData;
 

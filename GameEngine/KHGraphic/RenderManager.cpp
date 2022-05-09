@@ -184,7 +184,6 @@ void RenderManager::SetGlobalData(GlobalData* globalData)
 	RenderPassBase::g_GlobalData = globalData;
 }
 
-
 void RenderManager::SetEnvironmentMap(EnvironmentBuffer* resource)
 {
 	m_Environment->SetEnvironmentMapResource(resource);
