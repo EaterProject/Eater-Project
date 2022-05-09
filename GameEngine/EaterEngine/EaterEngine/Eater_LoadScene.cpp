@@ -226,7 +226,7 @@ void Eater_LoadScene::Load_Component_Particle(int index, GameObject* Object)
 	else if (Type == "VERTICAL") { mParticle->SetRenderType(VERTICAL_BILLBOARD); }
 	else if (Type == "HORIZONTAL") { mParticle->SetRenderType(HORIZONTAL_BILLBOARD); }
 	else if (Type == "MESH") { mParticle->SetRenderType(MESH); }
-	mParticle->SetMaxParticles(std::stof(Data[2]));
+	mParticle->SetMaxParticles(std::stoi(Data[2]));
 	mParticle->SetDelayTime(std::stof(Data[3]));
 	mParticle->SetShapeRadius(std::stof(Data[4]), std::stof(Data[5]), std::stof(Data[6]));
 	mParticle->SetTextureTiling(std::stoi(Data[7]), std::stoi(Data[8]));

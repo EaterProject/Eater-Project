@@ -322,6 +322,7 @@ void ShaderManager::AddConstantBufferUsage()
 
 	// Particle..
 	PushConstantBufferUsage<CB_InstanceParticleMesh>(CBUFFER_USAGE::DYNAMIC);
+	PushConstantBufferUsage<CB_ParticleOption>(CBUFFER_USAGE::DYNAMIC);
 
 	// SkyCube..
 	PushConstantBufferUsage<CB_CubeObject>(CBUFFER_USAGE::DYNAMIC);

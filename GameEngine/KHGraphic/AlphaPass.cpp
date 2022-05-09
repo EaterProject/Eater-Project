@@ -271,6 +271,11 @@ void AlphaPass::RenderUpdate(const InstanceRenderBuffer* instance, const RenderD
 			m_Particle_PS->SetShaderResourceView<gDiffuseMap>(mat->m_Albedo);
 		}
 
+		CB_ParticleOption particleOptionBuf;
+		particleOptionBuf.gStrength = meshData->m_ParticleData->Particle_Strength;
+
+		m_Particle_PS->ConstantBufferUpdate(&particleOptionBuf);
+
 		m_Particle_PS->Update();
 
 		ID3D11Buffer* vertexBuffers[2] = { mesh->m_VertexBuf, m_Particle_IB->InstanceBuf->Get() };
@@ -451,7 +456,6 @@ void AlphaPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::ve
 			renderCount = loopCount * 500;
 			m_InstanceCount = 0;
 		}
-
 	}
 	break;
 	case OBJECT_TYPE::SKINNING:
@@ -484,6 +488,11 @@ void AlphaPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::ve
 		{
 			m_Particle_PS->SetShaderResourceView<gDiffuseMap>(mat->m_Albedo);
 		}
+
+		CB_ParticleOption particleOptionBuf;
+		particleOptionBuf.gStrength = meshlist[0]->m_ParticleData->Particle_Strength;
+
+		m_Particle_PS->ConstantBufferUpdate(&particleOptionBuf);
 
 		m_Particle_PS->Update();
 
