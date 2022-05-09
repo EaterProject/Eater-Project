@@ -41,8 +41,6 @@ FileOption::~FileOption()
 BOOL FileOption::OnInitDialog()
 {
 	CDialog::OnInitDialog();
-
-
 	return 0;
 }
 
@@ -50,6 +48,7 @@ void FileOption::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_EDIT2, AddComponent_ObjectName_Edit);
+	
 }
 
 BEGIN_MESSAGE_MAP(FileOption, CDialogEx)
@@ -74,28 +73,6 @@ END_MESSAGE_MAP()
 void FileOption::Initialize(RightOption* mOption)
 {
 	mRightOption =DialogFactory::GetFactory()->GetRightOption();
-	//mScene = new SceneSaveDialog();
-	//mScene->Initialize(mRightOption);
-
-	//mMaterial = new CreateMaterial();
-	//mMaterial->Create(IDD_CREATE_MATERIAL);
-	//mMaterial->ShowWindow(SW_HIDE);
-
-	//mRenderOption = GetRenderOptionData();
-	//mRenderOption->DebugOption ^= DEBUG_EDITOR;
-	//
-	//mRenderOption->RenderingOption ^= RENDER_DEBUG;
-	//mRenderOption->RenderingOption ^= RENDER_SHADOW;
-	//mRenderOption->RenderingOption ^= RENDER_SSAO;
-	//mRenderOption->RenderingOption ^= RENDER_IBL;
-	//
-	//mRenderOption->PostProcessOption ^= RENDER_FOG;
-	//mRenderOption->PostProcessOption ^= RENDER_BLOOM;
-	//mRenderOption->PostProcessOption ^= RENDER_HDR;
-	//mRenderOption->PostProcessOption ^= RENDER_FXAA;
-
-	
-
 }
 
 void FileOption::SetChoiceGameObjectName(std::string Name, GameObject* Obj)
@@ -126,8 +103,8 @@ void FileOption::OnCreateTerrain()
 void FileOption::OnCreateLight()
 {
 	GameObject* Object = EditorToolScene::Create_Light();
-	mRightOption = DialogFactory::GetFactory()->GetRightOption();
 	HTREEITEM Top = mRightOption->HirearchyTree.InsertItem(ChangeToCString(Object->Name));
+	mRightOption = DialogFactory::GetFactory()->GetRightOption();
 	mRightOption->Create_Hirearchy_Item(Object, Top);
 }
 
@@ -135,15 +112,23 @@ void FileOption::OnCreateLight()
 void FileOption::OnCreateParticle()
 {
 	GameObject* Object = EditorToolScene::Create_Particle();
-	mRightOption = DialogFactory::GetFactory()->GetRightOption();
 	HTREEITEM Top = mRightOption->HirearchyTree.InsertItem(ChangeToCString(Object->Name));
+	mRightOption = DialogFactory::GetFactory()->GetRightOption();
 	mRightOption->Create_Hirearchy_Item(Object, Top);
 }
 
 
 void FileOption::OnSceneSave()
 {
-	
+	mScene = DialogFactory::GetFactory()->GetSceneSaveDialog();
+	mScene->DoModal();
+	if(mScene->isOK == true)
+	{
+		std::string SaveName = ChangeToString(mScene->Name);
+		std::string SavePath = "../Assets/Scene/";
+		EditorToolScene::SaveScene(SavePath, SaveName);
+		AfxMessageBox(L"저장 완료");
+	}
 }
 
 

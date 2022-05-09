@@ -108,7 +108,7 @@ void CTAP_MeshFilter::SetGameObject(MeshFilter* ObjectMeshFilter)
 		float LimWidth  = mMaterial->m_MaterialData->Material_Property->LimLightWidth * 10.0f;
 		LimLight_Factor.SetRange(0, 100);
 		LimLight_Width.SetRange(0, 100);
-		LimLight_Factor.SetPos(LimFactor);
+		LimLight_Factor.SetPos((int)LimFactor);
 		LimLight_Width.SetPos(LimWidth);
 		LimLight_Factor_Edit.SetWindowTextW(ChangeToCString(LimFactor / 10.0f));
 		LimLight_Width_Edit.SetWindowTextW(ChangeToCString(LimWidth / 10.0f));

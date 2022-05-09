@@ -38,7 +38,6 @@ public:
 public:
 	CEdit AddComponent_ObjectName_Edit;
 	GameObject* ChoiceObject;
-	RenderOption* mRenderOption;
 
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg LRESULT OnUserFunc(WPARAM wParam, LPARAM lParam);
@@ -55,4 +54,7 @@ public:
 	afx_msg void OnAddRigidbody();
 	afx_msg void OnAddLight();
 	afx_msg void OnCreateMaterial();
+
+	
+	RenderOption* mRenderOption;
 };

@@ -249,8 +249,6 @@ UINT CMainFrame::ThreadFunction(LPVOID _mothod)
 	return 0;
 }
 
-
-
 void CMainFrame::OnClose()
 {
 	DialogFactory::GetFactory()->Release();
