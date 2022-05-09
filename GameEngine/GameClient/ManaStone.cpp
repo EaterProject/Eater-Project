@@ -25,13 +25,12 @@ void ManaStone::Awake()
 
 void ManaStone::SetUp()
 {
-	mMeshFilter->SetModelName("box");
+	mMeshFilter->SetModelName("mana");
 }
 
 void ManaStone::Update()
 {
-	
-
+	DebugDrawCircle(10, Vector3(0, 5, 0), Vector3(0, 0, 0), Vector3(1,0,0));
 }
 
 void ManaStone::ManaStoneUpdate(Vector3 Pos)

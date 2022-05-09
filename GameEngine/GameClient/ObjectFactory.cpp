@@ -112,7 +112,10 @@ MonsterB* ObjectFactory::CreateMonsterB(float x, float y, float z)
 
 ManaStone* ObjectFactory::CreateManaStone(float x, float y, float z)
 {
-	return nullptr;
+	GameObject* Object_ManaStone = Instance("ManaStone");
+	Object_ManaStone->AddComponent<MeshFilter>();
+	ManaStone* mMana = Object_ManaStone->AddComponent<ManaStone>();
+	return mMana;
 }
 
 HealingDrone* ObjectFactory::CreateHealingDrone(float x, float y, float z)

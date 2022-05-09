@@ -35,6 +35,7 @@ public:
 	void CreateMaterialData(InstanceMaterial* m);
 private:
 	void CreateAssetsFile();
+	void CreateBaseObject();
 
 	YamlManager*	mYaml;
 	FBXManager*		mFbx;

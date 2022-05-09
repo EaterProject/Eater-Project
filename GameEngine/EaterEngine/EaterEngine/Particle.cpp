@@ -70,7 +70,7 @@ void Particle::Update()
 			{
 				// Texture 출력 영역 변경..
 				m_ParticleData->TexPos.x = (m_TexNowFrame % m_WidthCount) * m_ParticleData->TexScale.x;
-				m_ParticleData->TexPos.y = (m_TexNowFrame / m_HeightCount) * m_ParticleData->TexScale.y;
+				m_ParticleData->TexPos.y = (m_TexNowFrame / m_WidthCount) * m_ParticleData->TexScale.y;
 			}
 		}
 

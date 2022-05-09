@@ -39,6 +39,28 @@ void E_MeshManager::SetFileName(std::string& FileName)
 	SaveFileName = FileName;
 }
 
+void E_MeshManager::CreateBox()
+{
+	EATER_OPEN_WRITE_FILE("Box","../Assets/Model/ModelData/");
+	EATER_SET_NODE("STATIC");
+	EATER_SET_MAP("ParentName ", "RootNode");
+	EATER_SET_MAP("NodeName", "Cube");
+	EATER_SET_MAP("MeshName", "Box_0");
+	EATER_SET_MAP("MaterialName", "Box_Material");
+	EATER_SET_LIST_START("WorldTM", 4, 4);
+	EATER_SET_LIST(1.0f);	EATER_SET_LIST(0.0f);	EATER_SET_LIST(0.0f);	EATER_SET_LIST(0.0f,true);
+	EATER_SET_LIST(0.0f);	EATER_SET_LIST(1.0f);	EATER_SET_LIST(0.0f);	EATER_SET_LIST(0.0f,true);
+	EATER_SET_LIST(0.0f);	EATER_SET_LIST(0.0f);	EATER_SET_LIST(1.0f);	EATER_SET_LIST(0.0f,true);
+	EATER_SET_LIST(0.0f);	EATER_SET_LIST(0.0f);	EATER_SET_LIST(0.0f);	EATER_SET_LIST(1.0f,true);
+	
+	EATER_SET_LIST_START("LocalTM", 4, 4);
+	EATER_SET_LIST(1.0f);	EATER_SET_LIST(0.0f);	EATER_SET_LIST(0.0f);	EATER_SET_LIST(0.0f, true);
+	EATER_SET_LIST(0.0f);	EATER_SET_LIST(1.0f);	EATER_SET_LIST(0.0f);	EATER_SET_LIST(0.0f, true);
+	EATER_SET_LIST(0.0f);	EATER_SET_LIST(0.0f);	EATER_SET_LIST(1.0f);	EATER_SET_LIST(0.0f, true);
+	EATER_SET_LIST(0.0f);	EATER_SET_LIST(0.0f);	EATER_SET_LIST(0.0f);	EATER_SET_LIST(1.0f, true);
+	EATER_CLOSE_WRITE_FILE();
+}
+
 void E_MeshManager::ChangeEaterFile_Static(ParserData::CMesh* OneMesh)
 {
 	EATER_SET_NODE("STATIC");
