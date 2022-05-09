@@ -50,6 +50,7 @@ public:
 	EATER_ENGINEDLL void SetMaxParticles(int maxCount);									// 최대 파티클 출력 개수
 	EATER_ENGINEDLL void SetDelayTime(float delay);										// 파티클 실행 전 지연 시간
 	EATER_ENGINEDLL void SetRateOverTime(float count);									// 1초에 출력할 파티클 개수
+	EATER_ENGINEDLL void SetStrength(float strength);									// 파티클 밝기 강도
 	EATER_ENGINEDLL void SetShapeRadius(float radius);									// 파티클 랜덤 생성 범위
 	EATER_ENGINEDLL void SetShapeRadius(float x, float y, float z);						// 파티클 랜덤 생성 범위
 
@@ -87,6 +88,7 @@ public:
 	EATER_ENGINEDLL int GetMaxParticles();
 	EATER_ENGINEDLL float GetDelayTime();
 	EATER_ENGINEDLL float GetRateOverTime();
+	EATER_ENGINEDLL float GetStrength();
 	EATER_ENGINEDLL float GetPlayTime();
 	EATER_ENGINEDLL bool GetLoop();
 	EATER_ENGINEDLL Vector3 GetShapeRadius();
@@ -132,6 +134,8 @@ private:
 	bool m_Playing;				// 재생 여부
 	int m_MaxParticle;			// 최대 파티클 개수
 	int m_PlayCount;			// 이번에 실행할 파티클 개수
+
+	float m_Strength;			// 파티클 밝기 강도
 
 	float m_PlayTime;			// 실행 지속 시간
 	float m_NowPlayTime;		// 현재 지속 시간

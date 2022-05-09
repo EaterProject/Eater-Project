@@ -29,7 +29,7 @@
 
 OITPass::OITPass()
 {
-	m_Multiple = 4;
+	m_Multiple = 20;
 	m_MagicValue = 0xffffffff;
 	m_InitCounts[0] = 0;
 	m_InitCounts[1] = 0;
@@ -44,10 +44,10 @@ void OITPass::Create(int width, int height)
 {
 	D3D11_BUFFER_DESC structbufferDesc;
 	structbufferDesc.Usage = D3D11_USAGE_DEFAULT;
-	structbufferDesc.ByteWidth = width * height * m_Multiple * 12;
+	structbufferDesc.ByteWidth = width * height * m_Multiple * 16;
 	structbufferDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS;
 	structbufferDesc.CPUAccessFlags = 0;
-	structbufferDesc.StructureByteStride = 12;
+	structbufferDesc.StructureByteStride = 16;
 	structbufferDesc.MiscFlags = D3D11_RESOURCE_MISC_BUFFER_STRUCTURED;
 
 	D3D11_BUFFER_DESC rawbufferDesc;

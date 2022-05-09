@@ -212,6 +212,12 @@ struct CB_InstanceParticleMesh : public cbInstanceParticleMesh
 	DirectX::SimpleMath::Matrix  gViewProj;
 };
 
+SHADER_CONSTANT_BUFFER(cbParticleOption)
+struct CB_ParticleOption : public cbParticleOption
+{
+	float gStrength;
+};
+
 /////////////////////////////////////////////////////////////////////////////////////////////
 //// OIT Constant Buffer
 /////////////////////////////////////////////////////////////////////////////////////////////

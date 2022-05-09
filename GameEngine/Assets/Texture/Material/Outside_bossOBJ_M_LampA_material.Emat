@@ -1,6 +1,6 @@
 #EATERMAT
 @MaterialName Outside_bossOBJ_M_LampA_material
-@Alpha NO
+@Alpha YES
 @DiffuseMap gate00_lamp_A_BaseColor.png
 @NormalMap gate00_lamp_A_Normal.png
 @EmissiveMap gate00_lamp_A_Emissive.png
