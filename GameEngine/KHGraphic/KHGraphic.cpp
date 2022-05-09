@@ -19,7 +19,7 @@ KHGraphic::~KHGraphic()
 
 }
 
-void KHGraphic::Initialize(HWND hwnd, int screenWidth, int screenHeight)
+void KHGraphic::Initialize(HWND hwnd, int screenWidth, int screenHeight, RenderOption* renderOption)
 {
 	// DirectX11 Device 持失..
 	D3D11Graphic* graphic = new D3D11Graphic(hwnd, screenWidth, screenHeight);
@@ -34,7 +34,7 @@ void KHGraphic::Initialize(HWND hwnd, int screenWidth, int screenHeight)
 	FactoryManager* factory = new FactoryManager(graphic, shader, resource);
 
 	// Render Manager 持失..
-	RenderManager* renderer = new RenderManager(graphic, factory, resource, shader);
+	RenderManager* renderer = new RenderManager(graphic, factory, resource, shader, renderOption);
 
 	// Initialize..
 	factory->Create(screenWidth, screenHeight);

@@ -1,9 +1,11 @@
+#include "SamplerState_Header.hlsli"
 #include "Output_Header.hlsli"
 #include "OIT_Header.hlsli"
 #include "Function_Header.hlsli"
 #include "Define_Header.hlsli"
 #include "PBR_Header.hlsli"
 #include "IBL_Header.hlsli"
+#include "Fog_Header.hlsli"
 
 cbuffer cbMaterial : register(b1)
 {
@@ -49,10 +51,6 @@ Texture2D gShadowMap        : register(t4);
 TextureCube gIBLIrradiance  : register(t5);
 TextureCube gIBLPrefilter   : register(t6);
 Texture2D gBRDFlut          : register(t7);
-
-SamplerComparisonState gSamBorderComparisonLinearPoint : register(s0);
-SamplerState gSamWrapLinear : register(s1);
-SamplerState gSamClampLinear : register(s2);
 
 [earlydepthstencil]
 void OIT_Mesh_PS(MeshPixelIn pin)
@@ -136,6 +134,10 @@ void OIT_Mesh_PS(MeshPixelIn pin)
 #endif
 
     litColor.rgb += emissive.rgb;
+    
+#ifdef FOG
+    litColor.rgb = Fog(litColor.rgb, pin.PosW);
+#endif
     
     uint pixelCount = gPieceLinkBuffer.IncrementCounter();
     

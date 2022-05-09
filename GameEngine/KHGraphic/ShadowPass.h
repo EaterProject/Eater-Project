@@ -22,6 +22,10 @@ public:
 	void RenderUpdate(const InstanceRenderBuffer* instance, const RenderData* meshData);
 
 private:
+	void SetShaderList();
+	void SetShaderResourceView();
+
+private:
 	VertexShader* m_MeshShadow_VS;
 	VertexShader* m_MeshInstShadow_VS;
 	VertexShader* m_SkinShadow_VS;

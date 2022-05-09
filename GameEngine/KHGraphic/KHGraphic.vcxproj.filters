@@ -819,5 +819,11 @@
     <None Include="..\Assets\Shader\VertexFetch_Header.hlsli">
       <Filter>소스 파일\Shader\HLSL\Header</Filter>
     </None>
+    <None Include="..\Assets\Shader\Fog_Header.hlsli">
+      <Filter>소스 파일\Shader\HLSL\Header</Filter>
+    </None>
+    <None Include="..\Assets\Shader\SamplerState_Header.hlsli">
+      <Filter>소스 파일\Shader\HLSL\Header</Filter>
+    </None>
   </ItemGroup>
 </Project>

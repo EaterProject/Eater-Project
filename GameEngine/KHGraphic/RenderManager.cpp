@@ -42,10 +42,10 @@
 
 #include "./Profiler/Profiler.h"
 
-RenderManager::RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, IGraphicResourceManager* resource, IShaderManager* shader)
+RenderManager::RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, IGraphicResourceManager* resource, IShaderManager* shader, RenderOption* renderOption)
 {
 	// Rendering Initialize..
-	RenderPassBase::Initialize(graphic->GetDevice(), graphic->GetContext(), factory, resource, shader);
+	RenderPassBase::Initialize(graphic->GetDevice(), graphic->GetContext(), factory, resource, shader, renderOption);
 
 	m_SwapChain = graphic->GetSwapChain();
 
@@ -108,6 +108,9 @@ void RenderManager::Start(int width, int height)
 	{
 		renderPass->Start(width, height);
 	}
+
+	// 최초 Render Setting..
+	RenderSetting();
 }
 
 void RenderManager::OnResize(int width, int height)
@@ -136,6 +139,14 @@ void RenderManager::Release()
 	}
 
 	m_RenderPassList.clear();
+}
+
+void RenderManager::PreUpdate()
+{
+	for (RenderPassBase* renderPass : m_RenderPassList)
+	{
+		renderPass->PreUpdate();
+	}
 }
 
 void RenderManager::InstanceResize()
@@ -176,8 +187,6 @@ void RenderManager::SetGlobalData(GlobalData* globalData)
 
 void RenderManager::SetEnvironmentMap(EnvironmentBuffer* resource)
 {
-	m_Light->SetIBLEnvironmentMapResource(resource);
-	m_Alpha->SetIBLEnvironmentMapResource(resource);
 	m_Environment->SetEnvironmentMapResource(resource);
 }
 
@@ -303,6 +312,9 @@ void RenderManager::Render()
 
 	// Render Data 선별 작업..
 	SelectRenderData();
+
+	// Render Pass 사전 Update..
+	PreUpdate();
 
 	// Shadow Render..
 	GPU_BEGIN_EVENT_DEBUG_NAME("Shadow Pass");
@@ -458,13 +470,6 @@ void RenderManager::AlphaRender()
 
 void RenderManager::PostProcessingRender()
 {
-	GPU_BEGIN_EVENT_DEBUG_NAME("Fog Pass");
-	if (m_NowRenderOption.PostProcessOption & RENDER_FOG)
-	{
-		m_Fog->RenderUpdate();
-	}
-	GPU_END_EVENT_DEBUG_NAME();
-
 	GPU_BEGIN_EVENT_DEBUG_NAME("Bloom Pass");
 	if (m_NowRenderOption.PostProcessOption & RENDER_BLOOM)
 	{

@@ -6,6 +6,8 @@
 /// </summary>
 
 class ShaderManager;
+
+class ShaderBase;
 class VertexShader;
 class PixelShader;
 class ComputeShader;
@@ -17,6 +19,7 @@ public:
 	std::string shaderName;
 
 public:
+	operator ShaderBase*();
 	operator VertexShader*();
 	operator PixelShader*();
 	operator ComputeShader*();

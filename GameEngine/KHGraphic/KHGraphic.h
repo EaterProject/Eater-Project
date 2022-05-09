@@ -11,7 +11,7 @@ public:
 	~KHGraphic();
 
 public:
-	void Initialize(HWND hwnd, int screenWidth, int screenHeight) override;
+	void Initialize(HWND hwnd, int screenWidth, int screenHeight, RenderOption* renderOption) override;
 	void OnReSize(int screenWidth, int screenHeight) override;
 	void Release() override;
 

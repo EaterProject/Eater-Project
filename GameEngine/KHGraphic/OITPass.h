@@ -19,6 +19,10 @@ public:
 	void RenderUpdate();
 
 private:
+	void SetShaderList();
+	void SetShaderConstantBuffer(UINT width);
+
+private:
 	VertexShader* m_OITRender_VS;
 	PixelShader* m_OITRender_PS;
 	PixelShader* m_OITMesh_PS;

@@ -60,18 +60,30 @@ void ShaderManager::CreateShader()
 	// Light Shader Macro
 	D3D_SHADER_MACRO light_macro1[] = { {"SHADOW"}, {NULL, NULL} };
 	D3D_SHADER_MACRO light_macro2[] = { {"SSAO"}, {NULL, NULL} };
-	D3D_SHADER_MACRO light_macro3[] = { {"SHADOW"}, {"SSAO"}, {NULL, NULL} };
+	D3D_SHADER_MACRO light_macro3[] = { {"FOG"}, {NULL, NULL} };
+	D3D_SHADER_MACRO light_macro4[] = { {"SHADOW"}, {"SSAO"}, {NULL, NULL} };
+	D3D_SHADER_MACRO light_macro5[] = { {"SHADOW"}, {"FOG"}, {NULL, NULL} };
+	D3D_SHADER_MACRO light_macro6[] = { {"SSAO"}, {"FOG"}, {NULL, NULL} };
+	D3D_SHADER_MACRO light_macro7[] = { {"SHADOW"}, {"SSAO"}, {"FOG"}, {NULL, NULL} };
 
 	// Light Shader
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Light_PBR_PS.hlsl", "Light_PBR_PS", "Light_PBR_PS_Option0");					// None
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Light_PBR_PS.hlsl", "Light_PBR_PS", "Light_PBR_PS_Option1", light_macro1);	// Shadow
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Light_PBR_PS.hlsl", "Light_PBR_PS", "Light_PBR_PS_Option2", light_macro2);	// SSAO
-	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Light_PBR_PS.hlsl", "Light_PBR_PS", "Light_PBR_PS_Option3", light_macro3);	// Shadow + SSAO
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Light_PBR_PS.hlsl", "Light_PBR_PS", "Light_PBR_PS_Option3", light_macro3);	// Fog
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Light_PBR_PS.hlsl", "Light_PBR_PS", "Light_PBR_PS_Option4", light_macro4);	// Shadow + SSAO
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Light_PBR_PS.hlsl", "Light_PBR_PS", "Light_PBR_PS_Option5", light_macro5);	// Shadow + Fog
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Light_PBR_PS.hlsl", "Light_PBR_PS", "Light_PBR_PS_Option6", light_macro6);	// SSAO + Fog
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Light_PBR_PS.hlsl", "Light_PBR_PS", "Light_PBR_PS_Option7", light_macro7);	// Shadow + SSAO + Fog
 
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Light_IBL_PS.hlsl", "Light_IBL_PS", "Light_IBL_PS_Option0");					// None
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Light_IBL_PS.hlsl", "Light_IBL_PS", "Light_IBL_PS_Option1", light_macro1);	// Shadow
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Light_IBL_PS.hlsl", "Light_IBL_PS", "Light_IBL_PS_Option2", light_macro2);	// SSAO
-	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Light_IBL_PS.hlsl", "Light_IBL_PS", "Light_IBL_PS_Option3", light_macro3);	// Shadow + SSAO
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Light_IBL_PS.hlsl", "Light_IBL_PS", "Light_IBL_PS_Option3", light_macro3);	// Fog
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Light_IBL_PS.hlsl", "Light_IBL_PS", "Light_IBL_PS_Option4", light_macro4);	// Shadow + SSAO
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Light_IBL_PS.hlsl", "Light_IBL_PS", "Light_IBL_PS_Option5", light_macro5);	// Shadow + Fog
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Light_IBL_PS.hlsl", "Light_IBL_PS", "Light_IBL_PS_Option6", light_macro6);	// SSAO + Fog
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Light_IBL_PS.hlsl", "Light_IBL_PS", "Light_IBL_PS_Option7", light_macro7);	// Shadow + SSAO + Fog
 
 	// Deferred Shader Macro
 	D3D_SHADER_MACRO deferred_macro1[] = { {"TERRAIN_MESH"}, {NULL, NULL} };
@@ -88,13 +100,23 @@ void ShaderManager::CreateShader()
 	// OIT Shader
 	D3D_SHADER_MACRO alpha_macro1[] = { {"SHADOW"}, {NULL, NULL} };
 	D3D_SHADER_MACRO alpha_macro2[] = { {"IBL"}, {NULL, NULL} };
-	D3D_SHADER_MACRO alpha_macro3[] = { {"SHADOW"}, {"IBL"}, {NULL, NULL} };
+	D3D_SHADER_MACRO alpha_macro3[] = { {"FOG"}, {NULL, NULL} };
+	D3D_SHADER_MACRO alpha_macro4[] = { {"SHADOW"}, {"IBL"}, {NULL, NULL} };
+	D3D_SHADER_MACRO alpha_macro5[] = { {"SHADOW"}, {"FOG"}, {NULL, NULL} };
+	D3D_SHADER_MACRO alpha_macro6[] = { {"IBL"}, {"FOG"}, {NULL, NULL} };
+	D3D_SHADER_MACRO alpha_macro7[] = { {"SHADOW"}, {"IBL"}, {"FOG"}, {NULL, NULL} };
 	
-	LoadShader(SHADER_TYPE::PIXEL_SHADER, "OIT_Particle_PS.hlsl", "OIT_Particle_PS", "OIT_Particle_PS");
-	LoadShader(SHADER_TYPE::PIXEL_SHADER, "OIT_Mesh_PS.hlsl", "OIT_Mesh_PS", "OIT_Mesh_PS_Option0");
-	LoadShader(SHADER_TYPE::PIXEL_SHADER, "OIT_Mesh_PS.hlsl", "OIT_Mesh_PS", "OIT_Mesh_PS_Option1", alpha_macro1);
-	LoadShader(SHADER_TYPE::PIXEL_SHADER, "OIT_Mesh_PS.hlsl", "OIT_Mesh_PS", "OIT_Mesh_PS_Option2", alpha_macro2);
-	LoadShader(SHADER_TYPE::PIXEL_SHADER, "OIT_Mesh_PS.hlsl", "OIT_Mesh_PS", "OIT_Mesh_PS_Option3", alpha_macro3);
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "OIT_Particle_PS.hlsl", "OIT_Particle_PS", "OIT_Particle_PS_Option0");				// None
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "OIT_Particle_PS.hlsl", "OIT_Particle_PS", "OIT_Particle_PS_Option1", alpha_macro3);	// Fog
+
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "OIT_Mesh_PS.hlsl", "OIT_Mesh_PS", "OIT_Mesh_PS_Option0");							// None
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "OIT_Mesh_PS.hlsl", "OIT_Mesh_PS", "OIT_Mesh_PS_Option1", alpha_macro1);				// Shadow
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "OIT_Mesh_PS.hlsl", "OIT_Mesh_PS", "OIT_Mesh_PS_Option2", alpha_macro2);				// IBL
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "OIT_Mesh_PS.hlsl", "OIT_Mesh_PS", "OIT_Mesh_PS_Option3", alpha_macro3);				// Fog
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "OIT_Mesh_PS.hlsl", "OIT_Mesh_PS", "OIT_Mesh_PS_Option4", alpha_macro4);				// Shadow + IBL
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "OIT_Mesh_PS.hlsl", "OIT_Mesh_PS", "OIT_Mesh_PS_Option5", alpha_macro5);				// Shadow + Fog
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "OIT_Mesh_PS.hlsl", "OIT_Mesh_PS", "OIT_Mesh_PS_Option6", alpha_macro6);				// IBL + Fog
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "OIT_Mesh_PS.hlsl", "OIT_Mesh_PS", "OIT_Mesh_PS_Option7", alpha_macro7);				// Shadow + IBL + Fog
 
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "OIT_Blend_PS.hlsl", "OIT_PS", "OIT_PS");
 
@@ -115,8 +137,11 @@ void ShaderManager::CreateShader()
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "FXAA_PS.hlsl", "FXAA_PS", "FXAA_PS");
 
 	// SkyBox Shader
+	D3D_SHADER_MACRO skyBox_macro1[] = { {"FOG"}, {NULL, NULL} };
+
 	LoadShader(SHADER_TYPE::VERTEX_SHADER, "SkyBox_VS.hlsl", "SkyBox_VS", "SkyBox_VS");
-	LoadShader(SHADER_TYPE::PIXEL_SHADER, "SkyBox_PS.hlsl", "SkyBox_PS", "SkyBox_PS");
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "SkyBox_PS.hlsl", "SkyBox_PS", "SkyBox_PS_Option0");					// None
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "SkyBox_PS.hlsl", "SkyBox_PS", "SkyBox_PS_Option1", skyBox_macro1);	// Fog
 
 	// IBL Shader
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "IBL_Convolution_PS.hlsl", "IBL_Convolution_PS", "IBL_Convolution_PS");
@@ -237,9 +262,6 @@ void ShaderManager::AddConstantBufferUsage()
 {
 	/// Default Usage Constant Buffer Push..
 
-	// Material..
-	PushConstantBufferUsage<CB_Material>(CBUFFER_USAGE::DEFAULT);
-
 	// Fog..
 	PushConstantBufferUsage<CB_FogOption>(CBUFFER_USAGE::DEFAULT);
 
@@ -280,6 +302,9 @@ void ShaderManager::AddConstantBufferUsage()
 	PushConstantBufferUsage<CB_DepthSkinMesh>(CBUFFER_USAGE::DYNAMIC);
 	PushConstantBufferUsage<CB_InstanceDepthSkinMesh>(CBUFFER_USAGE::DYNAMIC);
 	PushConstantBufferUsage<CB_InstanceSkinMesh>(CBUFFER_USAGE::DYNAMIC);
+
+	// Material..
+	PushConstantBufferUsage<CB_Material>(CBUFFER_USAGE::DYNAMIC);
 
 	// Light..
 	PushConstantBufferUsage<CB_Camera>(CBUFFER_USAGE::DYNAMIC);
@@ -363,6 +388,15 @@ OriginalShader ShaderManager::GetShader(std::string shaderName)
 	return OriginalShader{ this, shaderName };
 }
 
+ShaderBase* ShaderManager::GetBaseShader(std::string shaderName)
+{
+	std::unordered_map<std::string, ShaderBase*>::iterator shader = m_ShaderList.find(shaderName);
+
+	// 해당 Shader가 없을 경우..
+	if (shader == m_ShaderList.end()) return nullptr;
+
+	return shader->second;
+}
 
 VertexShader* ShaderManager::GetVertexShader(std::string shaderName)
 {

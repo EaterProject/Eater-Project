@@ -18,6 +18,11 @@ public:
 	void RenderUpdate();
 
 private:
+	void SetShaderList();
+	void SetShaderResourceView();
+	void SetConstantBuffer();
+
+private:
 	VertexShader* m_Screen_VS;
 	PixelShader* m_Combine_PS;
 

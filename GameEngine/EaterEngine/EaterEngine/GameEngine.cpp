@@ -64,8 +64,8 @@ GameEngine::GameEngine()
 	mRenderOption = new RenderOption();
 
 	mRenderOption->DebugOption			= DEBUG_ENGINE;
-	mRenderOption->RenderingOption		= RENDER_DEBUG | RENDER_SHADOW | RENDER_SSAO | RENDER_IBL;
-	mRenderOption->PostProcessOption	= RENDER_BLOOM | RENDER_HDR | RENDER_FXAA| RENDER_FOG;
+	mRenderOption->RenderingOption		= RENDER_DEBUG | RENDER_SHADOW | RENDER_SSAO | RENDER_IBL | RENDER_FOG;
+	mRenderOption->PostProcessOption	= RENDER_BLOOM | RENDER_HDR | RENDER_FXAA;
 }
 
 GameEngine::~GameEngine()
@@ -574,7 +574,7 @@ void GameEngine::RenderOptionCheck()
 	if (mKeyManager->GetKeyUp(VK_F5))
 	{
 		// Fog On/Off
-		mRenderOption->PostProcessOption ^= RENDER_FOG;
+		mRenderOption->RenderingOption ^= RENDER_FOG;
 		change = true;
 	}
 	if (mKeyManager->GetKeyUp(VK_F6))

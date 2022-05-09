@@ -26,7 +26,7 @@ EditorToolScene::EditorToolScene()
 {
 
 }
-                                          
+
 EditorToolScene::~EditorToolScene()
 {
 
@@ -43,7 +43,7 @@ void EditorToolScene::Awake()
 	RenderOption* Option = GetRenderOptionData();
 	Option->DebugOption ^= DEBUG_EDITOR;
 	RenderSetting();
-	
+
 	//리소스를 로드
 	Load("../Assets/Texture/ModelTexture");
 	Load("../Assets/Texture/Terrain");
@@ -64,14 +64,14 @@ void EditorToolScene::Awake()
 	TagList.insert({ 3, "Player" });
 
 	//기본 오브젝트 셋팅
-	GameObject* mCameraObject	 = FindGameObjectName("DebugCamera");
+	GameObject* mCameraObject = FindGameObjectName("DebugCamera");
 	GameObject* mDiractionObject = FindGameObjectName("DirectionLight");
 	ObjectList.insert({ "DebugCamera",mCameraObject });
 	ObjectList.insert({ "DirectionLight",mDiractionObject });
 }
 void EditorToolScene::Update()
 {
-	if (ThreadRun == true) 
+	if (ThreadRun == true)
 	{
 		return;
 	}
@@ -118,8 +118,24 @@ GameObject* EditorToolScene::Create_Camera()
 {
 	GameObject* Cam = InstanceCamera("Camera");
 	Cam->Name = FindMeshName("Camera");
-	ObjectList.insert({Cam->Name, Cam});
+	ObjectList.insert({ Cam->Name, Cam });
 	return Cam;
+}
+
+GameObject* EditorToolScene::Create_Box()
+{
+	GameObject* box = Instance("Box");
+	MeshFilter* mMeshFileter = box->AddComponent<MeshFilter>();
+	mMeshFileter->SetMeshName("Box_0");
+	mMeshFileter->SetModelName("Box");
+	box->Name = FindMeshName("Box");
+	ObjectList.insert({ box->Name,box });
+	return box;
+}
+
+GameObject* EditorToolScene::Create_Sphere()
+{
+	return nullptr;
 }
 
 GameObject* EditorToolScene::CreateBaseObject(std::string ObjectName, std::string MeshName)
@@ -146,7 +162,7 @@ GameObject* EditorToolScene::CreateSkinObject(std::string ObjectName, std::strin
 	return Skin;
 }
 
-void EditorToolScene::MeshLoad(std::string Path,UINT Option)
+void EditorToolScene::MeshLoad(std::string Path, UINT Option)
 {
 	Load(Path, Option);
 }
@@ -171,7 +187,7 @@ bool EditorToolScene::GetThreadLoading()
 	return ThreadLoading;
 }
 
-void EditorToolScene::SaveScene(std::string SaveFilePath,std::string SaveFileName)
+void EditorToolScene::SaveScene(std::string SaveFilePath, std::string SaveFileName)
 {
 	mSaveManager->Scene_Save(SaveFilePath, SaveFileName);
 }
@@ -194,8 +210,8 @@ GameObject* EditorToolScene::FindMesh(std::string MeshName)
 
 GameObject* EditorToolScene::FindMesh(std::string MeshName, std::string ParentName)
 {
-	GameObject* Parent =  FindMesh(ParentName);
-	GameObject* Child	= Parent->GetChildObject(MeshName);
+	GameObject* Parent = FindMesh(ParentName);
+	GameObject* Child = Parent->GetChildObject(MeshName);
 	return Child;
 }
 
@@ -235,8 +251,8 @@ int EditorToolScene::AddTag(std::string TagName)
 	}
 
 	//태그 리스트를 한번 순환
-	std::map<int, std::string>::iterator Start_it	= TagList.begin();
-	std::map<int, std::string>::iterator End_it		= TagList.end();
+	std::map<int, std::string>::iterator Start_it = TagList.begin();
+	std::map<int, std::string>::iterator End_it = TagList.end();
 	for (Start_it; Start_it != End_it; Start_it++)
 	{
 		//이름이 겹치는게 있는지 체크한다
@@ -251,7 +267,7 @@ int EditorToolScene::AddTag(std::string TagName)
 		}
 	}
 
-	TagList.insert({ MaxIndex+1,TagName });
+	TagList.insert({ MaxIndex + 1,TagName });
 	return MaxIndex + 1;
 }
 
@@ -263,8 +279,8 @@ int EditorToolScene::DeleteTag(std::string TagName)
 		return false;
 	}
 	//태그 리스트를 한번 순환
-	std::map<int, std::string>::iterator Start_it	= TagList.begin();
-	std::map<int, std::string>::iterator End_it		= TagList.end();
+	std::map<int, std::string>::iterator Start_it = TagList.begin();
+	std::map<int, std::string>::iterator End_it = TagList.end();
 
 	for (Start_it; Start_it != End_it; Start_it++)
 	{
@@ -284,13 +300,13 @@ bool EditorToolScene::ChoiceTag(std::string TagName, GameObject* Obj)
 	return false;
 }
 
-GameObject* EditorToolScene::Create_Terrain(std::string MeshPath,std::string mask01,std::string mask02)
+GameObject* EditorToolScene::Create_Terrain(std::string MeshPath, std::string mask01, std::string mask02)
 {
 	//터레인 생성
 	LoadTerrainMesh("../Assets/Model/TerrainModel/Terrain.fbx", "../Assets/Texture/Terrain/Terrain_RGB_1.png", "../Assets/Texture/Terrain/Terrain_RGB_2.png", SCALING);
 
 	GameObject* TerrainObect = InstanceTerrain("Terrain");
-	
+
 	Terrain* mTerrain = TerrainObect->GetComponent<Terrain>();
 	mTerrain->SetLayerName("terrain_ground_A_BaseColor", "terrain_ground_A_Normal", "terrain_ground_A_ORM");
 	mTerrain->SetLayerName("terrain_ground_B_BaseColor", "terrain_ground_B_Normal", "terrain_ground_B_ORM");
@@ -300,7 +316,7 @@ GameObject* EditorToolScene::Create_Terrain(std::string MeshPath,std::string mas
 	//mTerrain->SetColliderName("TerrainDecimate");
 	mTerrain->SetTextureTiling(31.0f);
 
-	ObjectList.insert({"Terrain",mTerrain->gameobject});
+	ObjectList.insert({ "Terrain",mTerrain->gameobject });
 	return nullptr;
 }
 
@@ -332,7 +348,7 @@ GameObject* EditorToolScene::Create_Particle()
 	particles->SetStartForce(Vector3(0, 5, 0));
 	particles->SetLifeTimeRotation(-15.0f, 15.0f);
 	particles->SetLifeTimeScale(1, 1, PARTICLE_LIFETIME_OPTION::NONE);
-	particles->SetLifeTimeColor(Vector4(255,255,255,255), Vector4(255, 255, 255, 255),PARTICLE_LIFETIME_OPTION::NONE);
+	particles->SetLifeTimeColor(Vector4(255, 255, 255, 255), Vector4(255, 255, 255, 255), PARTICLE_LIFETIME_OPTION::NONE);
 	particles->SetTextureTiling(8, 8);
 	particles->SetPlayTime(1, true);
 	particles->Play();

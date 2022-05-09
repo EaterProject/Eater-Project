@@ -13,9 +13,14 @@ public:
 	void Release() override;
 
 	void ApplyOption() override;
+
+public:
 	void SetEnvironmentMapResource(EnvironmentBuffer* resource);
 
 	void RenderUpdate();
+
+private:
+	void SetShaderList();
 
 private:
 	DrawBuffer* m_Box_DB;
@@ -24,13 +29,12 @@ private:
 	PixelShader* m_SkyBox_PS;
 
 	RenderTexture* m_OutPut_RT;
-	RenderTexture* m_Position_RT;
 	
 private:
 	ID3D11RasterizerState* m_CubeMap_RS;
 	ID3D11DepthStencilState* m_CubeMap_DSS;
 
-	std::vector<ID3D11RenderTargetView*> m_RTV_List;
+	ID3D11RenderTargetView* m_OutPut_RTV;
 	ID3D11DepthStencilView* m_Defalt_DSV;
 
 private:

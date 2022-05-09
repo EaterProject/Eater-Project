@@ -44,7 +44,7 @@ void FXAAPass::Start(int width, int height)
 	m_Screen_DB = g_Resource->GetDrawBuffer<DB_Quad>();
 
 	// Graphic View..
-	m_Origin_RT = g_Resource->GetRenderTexture<RT_OutPut3>();
+	m_Origin_RT = g_Resource->GetRenderTexture<RT_OutPut1>();
 	m_OutPut_RTV = g_Resource->GetMainRenderTarget()->GetRTV()->Get();
 
 	// Shader Resource ¼³Á¤..
