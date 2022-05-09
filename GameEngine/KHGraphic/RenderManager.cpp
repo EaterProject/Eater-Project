@@ -89,7 +89,7 @@ RenderManager::RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, I
 
 RenderManager::~RenderManager()
 {
-
+	
 }
 
 void RenderManager::Create(int width, int height)
