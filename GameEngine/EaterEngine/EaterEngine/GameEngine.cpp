@@ -215,6 +215,13 @@ GameObject* GameEngine::Instance(std::string ObjName)
 	Transform* Tr = temp->AddComponent<Transform>();
 	temp->transform = Tr;
 
+	//오브젝트를 생성할때 AWAKE상태가 아닐떄
+	int State = ObjectManager::GetFunctionState();
+	if (State != (int)FUNCTION_STATE::FUNCTION_AWAKE)
+	{
+		int num = 0;
+	}
+
 	return temp;
 }
 

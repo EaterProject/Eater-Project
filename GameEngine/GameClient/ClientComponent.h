@@ -19,7 +19,6 @@ public:
 	bool	GetLife();
 	void	SetLife(bool isLife);
 public:
-	virtual void ReSet() = 0;
 protected:
 	ClientObjectManager* mObjectGM;
 	size_t ObjType;

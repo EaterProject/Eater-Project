@@ -7,6 +7,7 @@
 #include "Collider.h"
 #include "Rigidbody.h"
 #include "Player.h"
+#include "ManaStone.h"
 
 MonsterA::MonsterA()
 {
@@ -44,56 +45,54 @@ void MonsterA::SetUp()
 	mRigidbody->SetGravity(true);
 	mColider->CreatePhys();
 
-	BulletTag = FindTagNumber("Bullet");
-
 	//매쉬 생성
 	mMeshFilter->SetModelName("MonsterA+");
 	mMeshFilter->SetAnimationName("MonsterA+");
 	mAnimation->Choice("idle");
+
+	//이동 위치
+	Vector3 Point = Mana->GetPoint(0, 1);
+	SetMovePoint(Point.x, Point.y, Point.z);
 }
 
 void MonsterA::Update()
 {
-	if (isLife == true)
-	{	
-		mTransform->Slow_Y_Rotation(MovePoint, 50, true);
+	if (GetKeyDown(VK_NUMPAD0))
+	{
+		Vector3 Point = Mana->GetPoint(0, 0);
+		SetMovePoint(Point.x, Point.y, Point.z);
+	}
+	else if (GetKeyDown(VK_NUMPAD1))
+	{
+		Vector3 Point = Mana->GetPoint(0, 1);
+		SetMovePoint(Point.x, Point.y, Point.z);
+	}
+	else if (GetKeyDown(VK_NUMPAD2))
+	{
+		Vector3 Point = Mana->GetPoint(0, 2);
+		SetMovePoint(Point.x, Point.y, Point.z);
+	}
+	else if (GetKeyDown(VK_NUMPAD3))
+	{
+		Vector3 Point = Mana->GetPoint(0, 3);
+		SetMovePoint(Point.x, Point.y, Point.z);
+	}
+	else if (GetKeyDown(VK_NUMPAD4))
+	{
+		Vector3 Point = Mana->GetPoint(0, 4);
+		SetMovePoint(Point.x, Point.y, Point.z);
+	}
+
+
+
+
+	if (GetStopPoint() == false)
+	{
+		mTransform->Slow_Y_Rotation(MovePoint, 200, true);
 		mRigidbody->SetVelocity(DirPoint.x, DirPoint.y, DirPoint.z);
 	}
-}
 
-void MonsterA::OnTriggerStay(GameObject* Obj)
-{
-	if (Player::GetState() == PLAYER_STATE::ATTACK)
-	{
-		Vector3 Look = Player::GetPlayerTransform()->GetLocalPosition_Look() * PushPower;
-		//mRigidbody->SetAddForce(Look.x, Look.y + PushPower, Look.z * -1);
-	}
-
-	//if (Player::GetState() == PLAYER_STATE::ATTACK)
-	//{
-	//	Vector3 Look = Player::GetPlayerTransform()->GetLocalPosition_Look() * 10;
-	//	mRigidbody->SetAddForce(Look.x, Look.y + 10, Look.z * -1);
-	//}
-}
-
-void MonsterA::OnTriggerEnter(GameObject* Obj)
-{
-	if (Obj->GetTag() == BulletTag)
-	{
-		HP -= 20;
-		if(HP <= 0)
-		{
-			mTransform->Position = { 15, 0, -10 };
-			isLife = false;
-			mAnimation->Choice("die");
-		}
-	}
-}
-
-void MonsterA::ReSet()
-{
-	mAnimation->Choice("move");
-	HP = MaxHP;
+	DebugDrawCircle(2.5f, mTransform->Position, Vector3(0, 0, 0), Vector3(1, 0, 0));
 }
 
 void MonsterA::SetMovePoint(float x, float y, float z)
@@ -104,5 +103,19 @@ void MonsterA::SetMovePoint(float x, float y, float z)
 	MovePoint.x = x;
 	MovePoint.y = y;
 	MovePoint.z = z;
+}
+
+bool MonsterA::GetStopPoint()
+{
+	if (mTransform->Position.x > (MovePoint.x - 0.5f) && mTransform->Position.x < (MovePoint.x + 0.5f) &&
+		mTransform->Position.z >(MovePoint.z - 0.5f) &&  mTransform->Position.z < (MovePoint.z + 0.5f))
+	{
+		return true;
+
+	}
+	else
+	{
+		return false;
+	}
 }
 

@@ -75,7 +75,6 @@ MonsterA* ClientObjectManager::GetMonsterA()
 		if (MonsterA_List[i]->GetLife() == false)
 		{
 			MonsterA_List[i]->SetLife(true);
-			MonsterA_List[i]->ReSet();
 			return MonsterA_List[i];
 		}
 	}

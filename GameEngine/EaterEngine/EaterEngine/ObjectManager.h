@@ -33,7 +33,7 @@ public:
 
 	//초기화 단계
 	static void PushStart(Component* obj,int Order);
-	static void PushStartPlay(Component* obj, int Order);
+	static void PushSetUp(Component* obj, int Order);
 	static void PushAwake(Component* obj, int Order);
 
 	// 컨퍼넌트의 업데이트 함수를 넣어준다
@@ -46,6 +46,7 @@ public:
 	static void AddTag(int Key,std::string TagName);
 	static int FindTag(std::string TagName);
 	//static void DeleteTag(int TagNumber);
+	static int GetFunctionState();
 
 	// 최초 한번 호출되는 함수 리스트를 실행시킴
 	void InitializeFuntion();
@@ -92,9 +93,10 @@ private:
 	static Delegate_Map Update;				//디폴트  중간단계의 시작되는 업데이트
 	static Delegate_Map EndUpdate;			//가장 마지막에 실행되는 업데이트
 
+	/// 현재 어떤 함수포인터가 돌아가는중인지 체크하는 State
+	static int FunctionState;
 	//컨퍼넌트 를넣으면 해당 함수포인터에 넣었던 포인터를 삭제시켜줌
 	void DeleteComponent(Component* cpt);
-
 private:
 	friend class GameObject;
 };

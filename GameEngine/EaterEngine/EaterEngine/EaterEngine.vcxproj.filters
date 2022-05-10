@@ -85,9 +85,6 @@
     <Filter Include="소스 파일\Component\Rigidbody">
       <UniqueIdentifier>{d2678508-d693-4487-b08e-f8610a35fc5f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Component\Terrain">
-      <UniqueIdentifier>{93570656-4fcd-4816-b74b-d46c9fd72da6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Delegate">
       <UniqueIdentifier>{2acc9f63-4775-495f-ac9b-67423609cfca}</UniqueIdentifier>
     </Filter>
@@ -175,6 +172,9 @@
     <Filter Include="소스 파일\EngineAPI">
       <UniqueIdentifier>{f73757eb-5a6f-4d7b-9396-09c400c48563}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Component\Transform\Terrain">
+      <UniqueIdentifier>{93570656-4fcd-4816-b74b-d46c9fd72da6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -250,7 +250,7 @@
       <Filter>소스 파일\Manager\PhysManager</Filter>
     </ClInclude>
     <ClInclude Include="Export\Terrain.h">
-      <Filter>소스 파일\Component\Terrain</Filter>
+      <Filter>소스 파일\Component\Transform\Terrain</Filter>
     </ClInclude>
     <ClInclude Include="Export\ComponentBase.h">
       <Filter>소스 파일\Component\ComponentBase</Filter>
@@ -426,7 +426,7 @@
       <Filter>소스 파일\Component\Rigidbody</Filter>
     </ClCompile>
     <ClCompile Include="Terrain.cpp">
-      <Filter>소스 파일\Component\Terrain</Filter>
+      <Filter>소스 파일\Component\Transform\Terrain</Filter>
     </ClCompile>
     <ClCompile Include="NetworkManager.cpp">
       <Filter>소스 파일\Manager\NetworkManager</Filter>

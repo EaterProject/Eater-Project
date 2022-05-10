@@ -13,7 +13,6 @@ public:
 
 	void OnPotalActivation(bool Active);
 
-	virtual void ReSet() override;
 private:
 	Transform* mTransform;
 private:

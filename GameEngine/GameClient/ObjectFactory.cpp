@@ -53,7 +53,7 @@ void ObjectFactory::Release()
 GameObject* ObjectFactory::CreatePlayer()
 {
 	//툴에서 만들어놓은 플레이어, 카메라를 가져옴
-	PlayerObject			= FindGameObjectTag("Player");
+	//PlayerObject			= FindGameObjectTag("Player");
 	
 
 	
@@ -61,11 +61,11 @@ GameObject* ObjectFactory::CreatePlayer()
 	//PlayerMainCamera	= FindGameObjectTag("MainCam");
 
 	//클라이언트쪽 컨퍼넌트 Add
-	PlayerObject->AddComponent<Player>();
+	//PlayerObject->AddComponent<Player>();
 	//PlayerMainCamera->GetComponent<Camera>()->ChoiceMainCam();
 	//PlayerMainCamera->AddComponent<PlayerCamera>();
 
-	return PlayerObject;
+	return nullptr;
 }
 
 Bullet* ObjectFactory::CreateBullet(float x, float y, float z)
@@ -89,11 +89,9 @@ MonsterA* ObjectFactory::CreateMonsterA(float x, float y, float z)
 	Object_Monster->AddComponent<AnimationController>();
 	Object_Monster->AddComponent<Collider>();
 	Object_Monster->AddComponent<Rigidbody>();
+
 	MonsterA* monster = Object_Monster->AddComponent<MonsterA>();
-	int num = FindTagNumber("Monster");
-	Object_Monster->SetTag(num);
 	Object_Monster->GetTransform()->Position = { x,y,z };
-	monster->SetOBjManager(mOBJ_GM);
 	return monster;
 }
 
@@ -112,48 +110,19 @@ MonsterB* ObjectFactory::CreateMonsterB(float x, float y, float z)
 
 ManaStone* ObjectFactory::CreateManaStone(float x, float y, float z)
 {
-	//CreateMonsterA(x+5,y,z);
-	//CreateMonsterA(x-5,y,z);
-	//CreateMonsterA(x,y,z-5);
-
 	GameObject* Object_ManaStone = Instance("ManaStone");
 	Object_ManaStone->AddComponent<MeshFilter>();
 	ManaStone* mMana = Object_ManaStone->AddComponent<ManaStone>();
+	
+
+
+
+	//mMana->MonsterList.push_back();
+
 	return mMana;
 }
 
-HealingDrone* ObjectFactory::CreateHealingDrone(float x, float y, float z)
-{
-	GameObject* Healing		= Instance("HealingDrone");
-	MeshFilter*		MF		= Healing->AddComponent<MeshFilter>();
-	HealingDrone*   Drone	= Healing->AddComponent<HealingDrone>();
-	
-	Drone->SetPlayer(PlayerObject);
-	return Drone;
-}
 
-AttackDrone* ObjectFactory::CreateAttackDrone(float x, float y, float z)
-{
-	GameObject*		Drone		 = Instance("AttackDrone");
-	MeshFilter*		mMeshFileter = Drone->AddComponent<MeshFilter>();
-	AttackDrone*	mAttackDrone = Drone->AddComponent<AttackDrone>();
-	Collider*		mCollider	 = Drone->AddComponent<Collider>();
 
-	mAttackDrone->SetOBjManager(mOBJ_GM);
-	Drone->GetTransform()->Position = {x,y,z};
-
-	return mAttackDrone;
-}
-
-Potal* ObjectFactory::CreatePortal(float x, float y, float z)
-{
-	GameObject* mPotalObj = Instance();
-	MeshFilter* mMeshFileter = mPotalObj->AddComponent<MeshFilter>();
-	Potal*		mPotal		 = mPotalObj->AddComponent<Potal>();
-
-	mPotal->SetOBjManager(mOBJ_GM);
-	mPotalObj->GetTransform()->Position = { x,y,z };
-	return mPotal;
-}
 
 

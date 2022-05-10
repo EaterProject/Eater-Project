@@ -42,9 +42,5 @@ void Potal::OnPotalActivation(bool Active)
 	Activation = Active;
 }
 
-void Potal::ReSet()
-{
 
-
-}
 
