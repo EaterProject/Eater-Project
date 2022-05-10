@@ -63,7 +63,7 @@ void BakingFactory::PreBakeBRDFMap()
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> brdflutSRV = nullptr;
 	
 	DrawBuffer* quadDB = g_ResourceManager->GetDrawBuffer<DB_Quad>();
-	VertexShader* screenVS = g_ShaderManager->GetShader("Screen_VS");
+	VertexShader* screenVS = g_ShaderManager->GetShader("SkyBox_VS");
 	PixelShader* brdflutPS = g_ShaderManager->GetShader("IBL_IntegrateBRDF_PS");
 
 	D3D11_TEXTURE2D_DESC brdflutDesc;

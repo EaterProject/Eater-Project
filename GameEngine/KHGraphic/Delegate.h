@@ -12,7 +12,6 @@
 #include <utility>
 #include <functional>
 
-using namespace std;
 
 template<typename T, typename ..._Args>
 class FunctionEvent
@@ -24,38 +23,34 @@ public:
 	FunctionEvent(_Func&& _func, _Types&&... _args)
 	{
 		pfunction = std::bind_front(std::forward<_Func>(_func), std::forward<_Types>(_args)...);
-
-		pfunctionEvent.push_back(pfunction);
 	}
 
 public:
-	template<typename ..._Types>
-	void operator()(_Types&&... _types)
+	template<typename _Func, typename ..._Types>
+	void Bind(_Func&& _func, _Types&&... _args)
 	{
-		for (auto& function : pfunctionEvent)
-		{
-			function(std::forward<_Types>(_types)...);
-		}
+		std::function<T(_Args...)> result = std::bind_front(std::forward<_Func>(_func), std::forward<_Types>(_args)...);
+
+		pfunction = result;
 	}
 
 public:
-	template<typename ..._Types>
-	static void EventCall(_Types&&... _types)
+	bool operator==(const FunctionEvent<T, _Args...>& func)
 	{
-		for (auto& function : pfunctionEvent)
-		{
-			function(std::forward<_Types>(_types)...);
-		}
+		if (this->pfunction.target_type() == func.pfunction.target_type())
+			return true;
+
+		return false;
+	}
+
+	void operator()(_Args... _types)
+	{
+		pfunction(std::forward<_Args>(_types)...);
 	}
 
 public:
 	std::function<T(_Args...)> pfunction;
-
-	static std::vector<std::function<T(_Args...)>> pfunctionEvent;
 };
-
-template<typename T, typename ..._Args>
-std::vector<std::function<T(_Args...)>> FunctionEvent<T, _Args...>::pfunctionEvent;
 
 
 
@@ -63,13 +58,14 @@ template<typename T, typename ..._Args>
 class FunctionEventList
 {
 public:
-	std::vector<std::function<T(_Args...)>> pfunctionEvent;
-
-public:
 	template<typename _Func, typename ..._Types>
-	void Push(_Func&& _func, _Types&&... _args)
+	FunctionEvent<_Func, _Types...> Push(_Func&& _func, _Types&&... _args)
 	{
-		pfunctionEvent.push_back(std::bind_front(std::forward<_Func>(_func), std::forward<_Types>(_args)...));
+		auto pFunction = std::bind_front(std::forward<_Func>(_func), std::forward<_Types>(_args)...);
+
+		pfunctionEvent.push_back(pFunction);
+
+		return pFunction;
 	}
 
 	template<typename ..._Types>
@@ -85,78 +81,32 @@ public:
 	template<typename _Func, typename ..._Types>
 	void operator+=(FunctionEvent<_Func, _Types...>& func)
 	{
-		pfunctionEvent.push_back(func.pfunction);
+		pfunctionEvent.push_back(func);
 	}
 
 	template<typename _Func, typename ..._Types>
 	void operator-=(FunctionEvent<_Func, _Types...>& func)
 	{
-
+		int index = 0;
+		for (auto& function : pfunctionEvent)
+		{
+			if (function == func)
+			{
+				pfunctionEvent.erase(std::next(pfunctionEvent.begin(), index));
+				break;
+			}
+			index++;
+		}
 	}
 
-	template<typename ..._Types>
-	void operator()(_Types&&... _types)
+	void operator()(_Args... _types)
 	{
 		for (auto& function : pfunctionEvent)
 		{
-			function(std::forward<_Types>(_types)...);
+			function(std::forward<_Args>(_types)...);
 		}
 	}
+
+private:
+	std::vector<FunctionEvent<T, _Args...>> pfunctionEvent;
 };
-
-
-
-
-
-class A
-{
-public:
-	int Add(int a, int c)
-	{
-		return 0;
-	}
-};
-
-int Add(int a, int c)
-{
-	return a;
-};
-
-void Add2(int a, int b, int c)
-{
-
-}
-
-int main(void)
-{
-	A a;
-
-	FunctionEventList<int, int, int> eventFunction;
-	FunctionEvent<int, int, int> OneFunction(&A::Add, &a);
-	FunctionEvent<int, int, int> OneFunction1(&Add);
-
-	FunctionEvent<void, int, int, int> OneFunction2(&Add2);
-
-	eventFunction += OneFunction;
-	eventFunction += OneFunction1;
-
-	/// Function Version
-	//eventFunction.Push(Add);
-	//eventFunction.Push(&A::Add, &a);
-	//
-	//eventFunction.EventCall(10, 10);
-
-	/// Operator Version
-	FunctionEvent<int, int, int>::EventCall(10, 2);
-	eventFunction(1, 20);
-
-	return 0;
-}
-
-class Delegate
-{
-
-};
-
-
-

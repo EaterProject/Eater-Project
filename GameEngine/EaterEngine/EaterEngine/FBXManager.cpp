@@ -518,4 +518,6 @@ void FBXManager::LoadAnimation(ParserData::CModel* MeshData, std::string& Path)
 	Data->AnimationCount++;
 
 	Data->AnimList.insert({ key, std::move(MeshData->m_ModelAnimation) });
+
+	LoadManager::IsLoadAnimation = true;
 }

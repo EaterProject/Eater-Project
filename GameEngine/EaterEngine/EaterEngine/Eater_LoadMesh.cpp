@@ -474,4 +474,6 @@ void Eater_LoadMesh::LoadAnimation(int index, std::string& Name)
 	Data->AnimationCount++;
 
 	Data->AnimList.insert({ AnimationName, std::move(AniData) });
+
+	LoadManager::IsLoadAnimation = true;
 }
