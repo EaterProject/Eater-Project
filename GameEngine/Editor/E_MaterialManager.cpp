@@ -151,3 +151,37 @@ std::string E_MaterialManager::CutStr(std::string& Path)
 	std::string FileType = Path.substr(start, end);
 	return FileType;
 }
+
+void E_MaterialManager::CreateBase(std::string Filename)
+{
+	Filename += "_Material";
+	EATER_OPEN_WRITE_FILE(Filename, "../Assets/Texture/Material/", ".Emat");
+	EATER_SET_NODE("EATERMAT");
+	EATER_SET_MAP("MaterialName", Filename);
+	EATER_SET_MAP("Alpha", "NO");
+	EATER_SET_MAP("DiffuseMap", "NO");
+	EATER_SET_MAP("NormalMap", "NO");
+	EATER_SET_MAP("EmissiveMap", "NO");
+	EATER_SET_MAP("ORMMap", "NO");
+
+	EATER_SET_MAP("Emissive", "0");
+	EATER_SET_MAP("Roughness", "0");
+	EATER_SET_MAP("Metallic", "0");
+
+	EATER_SET_MAP("Tileing_X", "1");
+	EATER_SET_MAP("Tileing_Y", "1");
+
+	EATER_SET_MAP("AddColor_R", "0");
+	EATER_SET_MAP("AddColor_G", "0");
+	EATER_SET_MAP("AddColor_B", "0");
+	EATER_SET_MAP("AddColor_A", "0");
+
+	EATER_SET_MAP("LimColor_R", "0");
+	EATER_SET_MAP("LimColor_G", "0");
+	EATER_SET_MAP("LimColor_B", "0");
+
+	EATER_SET_MAP("LimFactor", "0");
+	EATER_SET_MAP("LimWidth", "0");
+
+	EATER_CLOSE_WRITE_FILE();
+}

@@ -63,7 +63,7 @@ void BakingFactory::PreBakeBRDFMap()
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> brdflutSRV = nullptr;
 	
 	DrawBuffer* quadDB = g_ResourceManager->GetDrawBuffer<DB_Quad>();
-	VertexShader* screenVS = g_ShaderManager->GetShader("SkyBox_VS");
+	VertexShader* screenVS = g_ShaderManager->GetShader("Screen_VS");
 	PixelShader* brdflutPS = g_ShaderManager->GetShader("IBL_IntegrateBRDF_PS");
 
 	D3D11_TEXTURE2D_DESC brdflutDesc;
@@ -158,7 +158,7 @@ void BakingFactory::PreBakeEnvironmentMap(EnvironmentBuffer* tex)
 	irradianceDesc.Height = 64;
 	irradianceDesc.MipLevels = 1;
 	irradianceDesc.ArraySize = 6;
-	irradianceDesc.Format = DXGI_FORMAT_R16G16B16A16_FLOAT;
+	irradianceDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
 	irradianceDesc.Usage = D3D11_USAGE_DEFAULT;
 	irradianceDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
 	irradianceDesc.CPUAccessFlags = 0;
@@ -195,7 +195,7 @@ void BakingFactory::PreBakeEnvironmentMap(EnvironmentBuffer* tex)
 	prefilterDesc.Height = 256;
 	prefilterDesc.MipLevels = maxMipLevels;
 	prefilterDesc.ArraySize = 6;
-	prefilterDesc.Format = DXGI_FORMAT_R16G16B16A16_FLOAT;
+	prefilterDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
 	prefilterDesc.Usage = D3D11_USAGE_DEFAULT;
 	prefilterDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
 	prefilterDesc.CPUAccessFlags = 0;

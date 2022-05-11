@@ -89,7 +89,7 @@ void E_BufferManager::SetFileName(std::string& FileName)
 
 void E_BufferManager::CreateBox()
 {
-	EATER_OPEN_WRITE_FILE("Box_0", "../Assets/Model/MeshBuffer/");
+	EATER_OPEN_WRITE_FILE("box_0", "../Assets/Model/MeshBuffer/");
 	EATER_SET_NODE("STATIC_BUFFER");
 	EATER_SET_LIST_START("Vertex", 24, 11);
 	SetVertexBuffer(1.000000, 1.000000, 1.000000, 0.625000, 0.500000, 0.000000, 1.000000, 0.000000, -1.000000, 0.000000, 0.000000);

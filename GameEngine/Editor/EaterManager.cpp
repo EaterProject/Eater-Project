@@ -49,6 +49,7 @@ void EaterManager::CreateBaseObject()
 	//¸ðµ¨ µ¥ÀÌÅÍ
 	mMeshManager->CreateBox();
 	mBufferManager->CreateBox();
+	mMaterialManager->CreateBase("box");
 	//
 
 

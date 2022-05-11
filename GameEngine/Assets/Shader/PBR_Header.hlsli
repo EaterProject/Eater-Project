@@ -105,7 +105,7 @@ float3 PBR_DirectionalLight(
     float3 acc_color = float3(0.0f, 0.0f, 0.0f);
     
     // Burley roughness bias
-    const float roughness2 = max(roughness * roughness, EPSILON);
+    const float roughness2 = max(roughness * roughness, 0.01f);
     
     // Blend base colors
     const float3 c_diff = lerp(albedo, float3(0, 0, 0), metallic) * ambientOcclusion;
@@ -167,7 +167,7 @@ float3 PBR_PointLight(
         float3 radiance = Attn * light.Power;
     
         // Burley roughness bias
-        const float roughness2 = max(roughness * roughness, 0.1f);
+        const float roughness2 = max(roughness * roughness, 0.01f);
     
         // Blend base colors
         const float3 c_diff = lerp(albedo, float3(0, 0, 0), metallic) * ambientOcclusion;
@@ -224,7 +224,7 @@ float3 PBR_SpotLight(
         float3 radiance = Attn * conAtt * light.Power;
 
         // Burley roughness bias
-        const float roughness2 = max(roughness * roughness, 0.1f);
+        const float roughness2 = max(roughness * roughness, 0.01f);
     
         // Blend base colors
         const float3 c_diff = lerp(albedo, float3(0, 0, 0), metallic) * ambientOcclusion;

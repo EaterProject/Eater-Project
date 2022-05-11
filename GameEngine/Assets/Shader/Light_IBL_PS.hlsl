@@ -89,8 +89,8 @@ float4 Light_IBL_PS(ScreenPixelIn pin) : SV_TARGET
                                 albedo, ao, roughness, metallic, shadows);
     
     float3 irradiance = gIBLIrradiance.Sample(gSamClampLinear, normal).rgb;
-    float3 prefilteredColor = gIBLPrefilter.SampleLevel(gSamClampLinear, -normalize(reflect(ViewDirection, normal)), roughness * MAX_REF_LOD).rgb;
-    float2 brdf = gBRDFlut.Sample(gSamClampLinear, float2(max(dot(normal, ViewDirection), 0.0f), roughness)).rg;
+    float3 prefilteredColor = gIBLPrefilter.SampleLevel(gSamClampLinear, reflect(-ViewDirection, normal), roughness * roughness * MAX_REF_LOD).rgb;
+    float2 brdf = gBRDFlut.Sample(gSamClampLinear, float2(max(dot(normal, ViewDirection), 0.0f), roughness * roughness)).rg;
     
     litColor += IBL_EnvironmentLight(ViewDirection, normal, irradiance, prefilteredColor, brdf, 
                                         albedo, ao, roughness, metallic, gIBLFactor);
