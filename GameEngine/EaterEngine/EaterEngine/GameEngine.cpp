@@ -63,8 +63,13 @@ GameEngine::GameEngine()
 	// Render Option 초기 설정..
 	mRenderOption = new RenderOption();
 
-	mRenderOption->DebugOption			= DEBUG_ENGINE;
-	mRenderOption->RenderingOption		= RENDER_DEBUG | RENDER_SHADOW | RENDER_SSAO | RENDER_IBL | RENDER_FOG;
+#if defined(DEBUG) || defined(_DEBUG)
+	mRenderOption->DebugOption			= DEBUG_RENDERTARGET | DEBUG_MODE;
+#else
+	mRenderOption->DebugOption			= DEBUG_MODE;
+#endif
+
+	mRenderOption->RenderingOption		= RENDER_SHADOW | RENDER_SSAO | RENDER_IBL | RENDER_FOG;
 	mRenderOption->PostProcessOption	= RENDER_BLOOM | RENDER_HDR | RENDER_FXAA;
 }
 
@@ -209,6 +214,13 @@ GameObject* GameEngine::Instance(std::string ObjName)
 	//Transform 은 기본으로 넣어준다
 	Transform* Tr = temp->AddComponent<Transform>();
 	temp->transform = Tr;
+
+	//오브젝트를 생성할때 AWAKE상태가 아닐떄
+	int State = ObjectManager::GetFunctionState();
+	if (State != (int)FUNCTION_STATE::FUNCTION_AWAKE)
+	{
+		int num = 0;
+	}
 
 	return temp;
 }
@@ -550,13 +562,13 @@ void GameEngine::RenderOptionCheck()
 	if (mKeyManager->GetKeyUp(VK_F1))
 	{
 		// Debug On/Off
-		mRenderOption->RenderingOption ^= RENDER_DEBUG;
+		mRenderOption->DebugOption ^= DEBUG_MODE;
 		change = true;
 	}
 	if (mKeyManager->GetKeyUp(VK_F2))
 	{
 		// Shadow On/Off
-		mRenderOption->RenderingOption ^= RENDER_SHADOW;
+		mRenderOption->DebugOption ^= DEBUG_RENDERTARGET;
 		change = true;
 	}
 	if (mKeyManager->GetKeyUp(VK_F3))

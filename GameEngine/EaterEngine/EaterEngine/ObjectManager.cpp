@@ -22,6 +22,9 @@ Delegate_Map ObjectManager::EndUpdate;
 //오브젝트 리스트
 std::vector<GameObject*>			ObjectManager::ObjectList;
 std::map<int, std::string>			ObjectManager::TagList;
+
+//함수 포인터 리스트의 상태
+int ObjectManager::FunctionState = (int)FUNCTION_STATE::FUNCTION_AWAKE;
 ObjectManager::ObjectManager()
 {
 
@@ -153,6 +156,8 @@ void ObjectManager::PushAwake(Component* mComponent, int Order)
 	//컨퍼넌트 순서
 	data.OrderCount = Order;
 
+	mComponent->FUNCTION_MASK |= AWAKE;
+
 	AwakeFunction.Push(data);
 }
 void ObjectManager::PushStartUpdate(Component* mComponent, int Order)
@@ -166,6 +171,8 @@ void ObjectManager::PushStartUpdate(Component* mComponent, int Order)
 	data.ComponentPointer = mComponent;
 	//컨퍼넌트 순서
 	data.OrderCount = Order;
+
+	mComponent->FUNCTION_MASK |= START_UPDATE;
 	StartUpdate.Push(data);
 }
 void ObjectManager::PushTransformUpdate(Component* mComponent, int Order)
@@ -179,6 +186,8 @@ void ObjectManager::PushTransformUpdate(Component* mComponent, int Order)
 	data.ComponentPointer = mComponent;
 	//컨퍼넌트 순서
 	data.OrderCount = Order;
+
+	mComponent->FUNCTION_MASK |= Transform_UPDATE;
 
 	TransformUpdate.Push(data);
 }
@@ -194,6 +203,7 @@ void ObjectManager::PushPhysicsUpdate(Component* mComponent, int Order)
 	//컨퍼넌트 순서
 	data.OrderCount = Order;
 
+	mComponent->FUNCTION_MASK |= Physics_UPDATE;
 	PhysicsUpdate.Push(data);
 }
 void ObjectManager::PushUpdate(Component* mComponent, int Order)
@@ -207,6 +217,8 @@ void ObjectManager::PushUpdate(Component* mComponent, int Order)
 	data.ComponentPointer = mComponent;
 	//컨퍼넌트 순서
 	data.OrderCount = Order;
+
+	mComponent->FUNCTION_MASK |= UPDATE;
 
 	Update.Push(data);
 }
@@ -235,6 +247,11 @@ int ObjectManager::FindTag(std::string TagName)
 	return FindIndex;
 }
 
+int ObjectManager::GetFunctionState()
+{
+	return FunctionState;
+}
+
 void ObjectManager::PushEndUpdate(Component* mComponent, int Order)
 {
 	ComponentFunctionData data;
@@ -246,6 +263,8 @@ void ObjectManager::PushEndUpdate(Component* mComponent, int Order)
 	data.ComponentPointer = mComponent;
 	//컨퍼넌트 순서
 	data.OrderCount = Order;
+
+	mComponent->FUNCTION_MASK |= END_UPDATE;
 
 	EndUpdate.Push(data);
 }
@@ -262,10 +281,12 @@ void ObjectManager::PushStart(Component* mComponent, int Order)
 	//컨퍼넌트 순서
 	data.OrderCount = Order;
 
+	mComponent->FUNCTION_MASK |= START;
+
 	StartFunction.Push(data);
 }
 
-void ObjectManager::PushStartPlay(Component* mComponent, int Order)
+void ObjectManager::PushSetUp(Component* mComponent, int Order)
 {
 	ComponentFunctionData data;
 	//활성화 여부
@@ -276,6 +297,8 @@ void ObjectManager::PushStartPlay(Component* mComponent, int Order)
 	data.ComponentPointer = mComponent;
 	//컨퍼넌트 순서
 	data.OrderCount = Order;
+
+	mComponent->FUNCTION_MASK |= SETUP;
 
 	SetUpFunction.Push(data);
 }
@@ -291,21 +314,37 @@ void ObjectManager::PlayUpdate()
 	///각각의 함수포인터들을 재생시킨다
 	//컨퍼넌트들을 가져오는 함수 포인터
 	AwakeFunction.PlayOnce();
+	
 	//컨퍼넌트 초기화 
+	FunctionState = (int)FUNCTION_STATE::FUNCTION_SETUP;
 	SetUpFunction.PlayOnce();
+
 	//컨퍼넌트들을 초기화된 값 셋팅
+	FunctionState = (int)FUNCTION_STATE::FUNCTION_START;
 	StartFunction.PlayOnce();
 
 	//가장 먼저실행되는 StartUpdate 함수 리스트(각 컨퍼넌트들의 초기화작업을 해줄때)
+	FunctionState = (int)FUNCTION_STATE::FUNCTION_SETAT_UPDATE;
 	StartUpdate.Play();
+
 	//물리 충돌관련 Update 함수 리스트 (물리관련 컨퍼넌트들을 업데이트)
+	FunctionState = (int)FUNCTION_STATE::FUNCTION_PHYSICS_UPDATE;
 	PhysicsUpdate.Play();
+
 	//이동행렬 실행되는 Update 함수 리스트
+	FunctionState = (int)FUNCTION_STATE::FUNCTION_TRANSFORM_UPDATE;
 	TransformUpdate.Play();
+
 	//중간 단계에 실행되는 Update 함수 리스트 (클라이언트쪽에서 만든 컨퍼넌트들이 업데이트될곳)
+	FunctionState = (int)FUNCTION_STATE::FUNCTION_UPDATE;
 	Update.Play();
+
 	//가장 마지막에 실행되는 Update 함수 리스트
+	FunctionState = (int)FUNCTION_STATE::FUNCTION_END_UPDATE;
 	EndUpdate.Play();
+
+	//모든 업데이트가 끝나고 상태를 AWAKE로 변경해줌 
+	FunctionState = (int)FUNCTION_STATE::FUNCTION_AWAKE;
 }
 
 void ObjectManager::ClearFunctionList()
@@ -313,7 +352,6 @@ void ObjectManager::ClearFunctionList()
 	AwakeFunction.Clear();
 	SetUpFunction.Clear();
 	StartFunction.Clear();
-
 	StartUpdate.Clear();
 	TransformUpdate.Clear();
 	PhysicsUpdate.Clear();

@@ -43,7 +43,7 @@ BOOL SceneSetting::OnInitDialog()
 	mTooltip.AddTool(GetDlgItem(IDC_SLIDER18), _T("IBL 강도"));
 
 	//체크 박스 초기화
-	Debug_Check.SetCheck(false);
+	Debug_Check.SetCheck(true);
 	SSAO_Check.SetCheck(true);
 	FOG_Check.SetCheck(true);
 	Shadow_Check.SetCheck(true);
@@ -112,6 +112,7 @@ void SceneSetting::DoDataExchange(CDataExchange* pDX)
 
 	DDX_Control(pDX, IDC_SLIDER18, IBL_Factor_Slider);
 	DDX_Control(pDX, IDC_EDIT22, IBL_Factor_Edit);
+	DDX_Control(pDX, IDC_CHECK12, RenderTarget_Check);
 }
 
 void SceneSetting::SSAO_DataSetting()
@@ -373,6 +374,7 @@ BEGIN_MESSAGE_MAP(SceneSetting, CDialogEx)
 	ON_BN_CLICKED(IDC_CHECK9, &SceneSetting::OnIBL_Button)
 	ON_BN_CLICKED(IDC_CHECK5, &SceneSetting::OnBloom_Button)
 	ON_BN_CLICKED(IDC_CHECK10, &SceneSetting::OnFXAA_Button)
+	ON_BN_CLICKED(IDC_CHECK12, &SceneSetting::OnBnClickedCheck12)
 END_MESSAGE_MAP()
 
 
@@ -397,7 +399,7 @@ void SceneSetting::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 void SceneSetting::OnDebugButton()
 {
 	RenderOption* Option = GetRenderOptionData();
-	Option->DebugOption ^= RENDER_DEBUG;
+	Option->DebugOption ^= DEBUG_OPTION::DEBUG_MODE;
 	RenderSetting();
 }
 
@@ -458,6 +460,13 @@ void SceneSetting::OnFXAA_Button()
 }
 
 
+void SceneSetting::OnBnClickedCheck12()
+{
+	RenderOption* Option = GetRenderOptionData();
+	Option->DebugOption ^= DEBUG_OPTION::DEBUG_RENDERTARGET;
+	RenderSetting();
+}
+
 
 
 BOOL SceneSetting::PreTranslateMessage(MSG* pMsg)
@@ -466,3 +475,4 @@ BOOL SceneSetting::PreTranslateMessage(MSG* pMsg)
 	mTooltip.RelayEvent(pMsg);
 	return CustomDialog::PreTranslateMessage(pMsg);
 }
+

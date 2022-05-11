@@ -261,39 +261,32 @@ Component* GameObject::GetComponent(int index)
 
 void GameObject::PushComponentFunction(Component* con, unsigned int type)
 {
+	int State = ObjectManager::GetFunctionState();
 	switch (type)
 	{
 	case AWAKE:
-		ObjectManager::PushAwake(con,con->Awake_Order);
-		con->FUNCTION_MASK |= AWAKE;
+		ObjectManager::PushAwake(con, con->Awake_Order);
 		break;
 	case START:
 		ObjectManager::PushStart(con, con->Start_Order);
-		con->FUNCTION_MASK |= START;
 		break;
 	case SETUP:
-		ObjectManager::PushStartPlay(con, con->Start_Order);
-		con->FUNCTION_MASK |= SETUP;
+		ObjectManager::PushSetUp(con, con->SetUp_Order);
 		break;
 	case START_UPDATE:
 		ObjectManager::PushStartUpdate(con, con->StartUpdate_Order);
-		con->FUNCTION_MASK |= START_UPDATE;
 		break;
 	case Transform_UPDATE:
 		ObjectManager::PushTransformUpdate(con, con->TransformUpdate_Order);
-		con->FUNCTION_MASK |= Transform_UPDATE;
 		break;
 	case Physics_UPDATE:
 		ObjectManager::PushPhysicsUpdate(con, con->PhysicsUpdate_Order);
-		con->FUNCTION_MASK |= Physics_UPDATE;
 		break;
 	case UPDATE:
 		ObjectManager::PushUpdate(con, con->DefaultUpdate_Order);
-		con->FUNCTION_MASK |= UPDATE;
 		break;
 	case END_UPDATE:
 		ObjectManager::PushEndUpdate(con, con->EndUpdate_Order);
-		con->FUNCTION_MASK |= END_UPDATE;
 		break;
 	}
 }

@@ -499,7 +499,7 @@ void RenderManager::UIRender()
 
 void RenderManager::DebugRender()
 {
-	if (m_NowRenderOption.RenderingOption & RENDER_DEBUG)
+	if (m_NowRenderOption.DebugOption & DEBUG_MODE)
 	{
 		GPU_MARKER_DEBUG_NAME("Object Debug");
 		m_Debug->BeginRender();
@@ -577,7 +577,7 @@ void RenderManager::DebugRender()
 		GPU_MARKER_DEBUG_NAME("Global Debug");
 		m_Debug->GlobalRender();
 
-		if (m_NowRenderOption.DebugOption == DEBUG_ENGINE)
+		if (m_NowRenderOption.DebugOption & DEBUG_RENDERTARGET)
 		{
 			GPU_MARKER_DEBUG_NAME("MRT Debug");
 			m_Debug->MRTRender();

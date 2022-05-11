@@ -50,10 +50,6 @@ void EaterManager::CreateBaseObject()
 	mMeshManager->CreateBox();
 	mBufferManager->CreateBox();
 	mMaterialManager->CreateBase("box");
-	//
-
-
-	//
 }
 
 std::string EaterManager::CutFileName(std::string FilePath)

@@ -172,6 +172,7 @@
   <ItemGroup>
     <ClInclude Include="AttackDrone.h" />
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="ClientTypeOption.h" />
     <ClInclude Include="HealingDrone.h" />
     <ClInclude Include="GameLogic.h" />
     <ClInclude Include="Loading.h" />
@@ -192,6 +193,7 @@
     <ClInclude Include="MonsterB.h" />
     <ClInclude Include="ClientComponent.h" />
     <ClInclude Include="ClientObjectManager.h" />
+    <ClInclude Include="MonsterComponent.h" />
     <ClInclude Include="ObjectFactory.h" />
     <ClInclude Include="PlayerCamera.h" />
     <ClInclude Include="Potal.h" />
@@ -222,6 +224,7 @@
     <ClCompile Include="MonsterB.cpp" />
     <ClCompile Include="ClientComponent.cpp" />
     <ClCompile Include="ClientObjectManager.cpp" />
+    <ClCompile Include="MonsterComponent.cpp" />
     <ClCompile Include="ObjectFactory.cpp" />
     <ClCompile Include="PlayerCamera.cpp" />
     <ClCompile Include="Player.cpp" />
