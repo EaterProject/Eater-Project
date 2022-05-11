@@ -177,18 +177,24 @@ HRESULT D3D11Graphic::CreateTextureBuffer(std::string filePath, ID3D11Resource**
 	HRESULT result;
 	std::wstring wPath(filePath.begin(), filePath.end());
 
+	std::size_t Start = filePath.rfind('.') + 1;
+	std::size_t End = filePath.length() - Start;
+	std::string Type = filePath.substr(Start, End);
+
 	// 확장자에 따른 텍스처 파일 로드 방식..
-	if (filePath.rfind(".dds") != std::string::npos)
+	if (Type == "dds" || Type == "DDS")
 	{
 		result = DirectX::CreateDDSTextureFromFile(m_Device.Get(), m_DeviceContext.Get(), wPath.c_str(), resource, srv);
 	}
-	else if (filePath.rfind(".hdr") != std::string::npos)
+	else if (Type == "hdr" || Type == "HDR")
 	{
 		DirectX::TexMetadata tex;
 		DirectX::ScratchImage image;
 
 		result = DirectX::LoadFromHDRFile(wPath.c_str(), &tex, image);
-		result = DirectX::CreateTexture(m_Device.Get(), image.GetImages(), image.GetImageCount(), tex, resource);
+		result = DirectX::CreateShaderResourceView(m_Device.Get(), image.GetImages(), image.GetImageCount(), tex, srv);
+
+		(*srv)->GetResource(resource);
 	}
 	else
 	{

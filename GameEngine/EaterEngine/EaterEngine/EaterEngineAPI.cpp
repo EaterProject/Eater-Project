@@ -124,9 +124,9 @@ int LoadAssetsCount()
   return gGameEngine->LoadMeshCount();
 }
 
-void BakeEnvironmentMap(std::string mPath)
+void BakeSkyLightMap(std::string mPath)
 {
-	gGameEngine->BakeEnvironmentMap(mPath);
+	gGameEngine->BakeSkyLightMap(mPath);
 }
 
 void BakeAnimation()
@@ -134,9 +134,14 @@ void BakeAnimation()
 	gGameEngine->BakeAnimation();
 }
 
-void SetEnvironmentMap(std::string mPath)
+void SetEnvironment(std::string mPath)
 {
-	gGameEngine->SetEnvironmentMap(mPath);
+	gGameEngine->SetEnvironment(mPath);
+}
+
+void SetSkyLight(std::string mPath)
+{
+	gGameEngine->SetSkyLight(mPath);
 }
 
 ModelData* GetLoadMeshData(std::string mPath)

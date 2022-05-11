@@ -19,7 +19,7 @@ class MeshBuffer;
 class MaterialBuffer;
 class TextureBuffer;
 class AnimationBuffer;
-class EnvironmentBuffer;
+class SkyLightBuffer;
 class RenderOption;
 
 namespace ParserData 
@@ -49,7 +49,8 @@ public:
 	virtual GRAPHIC_DLL void SetGlobalData(GlobalData* globalData) abstract;
 
 public:
-	virtual GRAPHIC_DLL void SetEnvironmentMap(EnvironmentBuffer* resource) abstract;
+	virtual GRAPHIC_DLL void SetEnvironment(TextureBuffer* resource) abstract;
+	virtual GRAPHIC_DLL void SetSkyLight(SkyLightBuffer* resource) abstract;
 
 public:
 	/// Render Mesh Data & Rendering Function..
@@ -79,7 +80,7 @@ public:
 
 public:
 	/// Graphic Resource Baking Function..
-	virtual GRAPHIC_DLL void BakeEnvironmentMap(TextureBuffer* environment, EnvironmentBuffer** ppResource) abstract;
+	virtual GRAPHIC_DLL void BakeSkyLightMap(TextureBuffer* environment, SkyLightBuffer** ppResource) abstract;
 
 private:
 	static GraphicEngine* Graphic;

@@ -29,7 +29,7 @@ class ModelData;
 class MeshBuffer;
 class TextureBuffer;
 class AnimationBuffer;
-class EnvironmentBuffer;
+class SkyLightBuffer;
 
 class Mesh;
 class Material;
@@ -70,7 +70,7 @@ public:
 	void LoadTerrain(std::string mMeshName, std::string mMaskName1, std::string mMaskName2, UINT parsingMode);
 
 public:
-	void BakeEnvironmentMap(std::string Path);
+	void BakeSkyLightMap(std::string Path);
 	void BakeAnimation();
 
 public:
@@ -84,7 +84,7 @@ public:
 	static ModelAnimationData*	GetAnimationData(std::string Path);		//애니메이션 데이터를 가져옴
 
 	static TextureBuffer*		GetTexture(std::string Path);			//텍스쳐 버퍼를 가져옴
-	static EnvironmentBuffer*	GetEnvironment(std::string Path);		//환경맵 버퍼를 가져옴
+	static SkyLightBuffer*	GetEnvironment(std::string Path);		//환경맵 버퍼를 가져옴
 	static MeshBuffer*			GetMeshBuffer(std::string Path);		//메쉬 버퍼 데이터를 가져옴
 	static AnimationBuffer*		GetAnimationBuffer(std::string Path);	//애니메이션 버퍼 데이터를 가져옴
 
@@ -111,7 +111,7 @@ private:
 	static std::map<std::string, ModelData*>			ModelDataList;
 
 	static std::map<std::string, TextureBuffer*>		TextureList;
-	static std::map<std::string, EnvironmentBuffer*>	EnvironmentList;
+	static std::map<std::string, SkyLightBuffer*>	EnvironmentList;
 
 	static std::map<std::string, Mesh*>					MeshBufferList;
 	static std::map<std::string, Material*>				MaterialList;

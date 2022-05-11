@@ -399,9 +399,9 @@ ModelData* GameEngine::GetLoadMeshData(std::string& Path)
 	return mLoadManager->GetModelData(Path);
 }
 
-void GameEngine::BakeEnvironmentMap(std::string& Path)
+void GameEngine::BakeSkyLightMap(std::string& Path)
 {
-	mLoadManager->BakeEnvironmentMap(Path);
+	mLoadManager->BakeSkyLightMap(Path);
 }
 
 void GameEngine::BakeAnimation()
@@ -409,11 +409,18 @@ void GameEngine::BakeAnimation()
 	mLoadManager->BakeAnimation();
 }
 
-void GameEngine::SetEnvironmentMap(std::string& Path)
+void GameEngine::SetEnvironment(std::string& Path)
 {
-	EnvironmentBuffer* environment = mLoadManager->GetEnvironment(Path);
+	TextureBuffer* environment = mLoadManager->GetTexture(Path);
 
-	mGraphicManager->SetEnvironmentMap(environment);
+	mGraphicManager->SetEnvironment(environment);
+}
+
+void GameEngine::SetSkyLight(std::string& Path)
+{
+	SkyLightBuffer* skyLight = mLoadManager->GetEnvironment(Path);
+
+	mGraphicManager->SetSkyLight(skyLight);
 }
 
 void GameEngine::AddOccluder(std::string mMeshName)

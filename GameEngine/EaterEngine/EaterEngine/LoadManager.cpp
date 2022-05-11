@@ -22,7 +22,7 @@
 std::map<std::string, ModelData*>			LoadManager::ModelDataList;
 
 std::map<std::string, TextureBuffer*>		LoadManager::TextureList;
-std::map<std::string, EnvironmentBuffer*>	LoadManager::EnvironmentList;
+std::map<std::string, SkyLightBuffer*>	LoadManager::EnvironmentList;
 
 std::map<std::string, Mesh*>				LoadManager::MeshBufferList;
 std::map<std::string, Material*>			LoadManager::MaterialList;
@@ -148,10 +148,10 @@ void LoadManager::LoadTerrain(std::string mMeshName, std::string mMaskName1, std
 	mFBX->LoadTerrain(mMeshName, mMaskName1, mMaskName2, parsingMode);
 }
 
-void LoadManager::BakeEnvironmentMap(std::string Path)
+void LoadManager::BakeSkyLightMap(std::string Path)
 {
 	//텍스쳐 로드
-	mTexture->BakeEnvironmentMap(Path);
+	mTexture->BakeSkyLightMap(Path);
 }
 
 void LoadManager::BakeAnimation()
@@ -211,10 +211,10 @@ TextureBuffer* LoadManager::GetTexture(std::string Path)
 	}
 }
 
-EnvironmentBuffer* LoadManager::GetEnvironment(std::string Path)
+SkyLightBuffer* LoadManager::GetEnvironment(std::string Path)
 {
-	std::map<std::string, EnvironmentBuffer*>::iterator End_it = EnvironmentList.end();
-	std::map<std::string, EnvironmentBuffer*>::iterator Find_it = EnvironmentList.find(Path);
+	std::map<std::string, SkyLightBuffer*>::iterator End_it = EnvironmentList.end();
+	std::map<std::string, SkyLightBuffer*>::iterator Find_it = EnvironmentList.find(Path);
 
 	if (End_it == Find_it)
 	{
@@ -433,7 +433,7 @@ void LoadManager::LoadFile(std::string& Path, UINT MODE)
 	std::size_t End		= Path.length() - Start;
 	std::string Type	= Path.substr(Start, End);
 	
-	if (Type == "png" || Type == "dds")
+	if (Type == "png" || Type == "PNG" || Type == "dds" || Type == "DDS" || Type == "hdr" || Type == "HDR")
 	{
 		//텍스쳐 로드
 		mTexture->LoadTexture(Path);

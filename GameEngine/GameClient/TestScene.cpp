@@ -39,18 +39,19 @@ void TestScene::Awake()
 	//Load("../Assets/Model/Animation");
 	PROFILE_TIMER_END("Load Folder"); 
 
-	//BakeEnvironmentMap("Day");
-	BakeEnvironmentMap("Night");
-	BakeEnvironmentMap("skybox1");
-	BakeEnvironmentMap("TestSky");
+	//BakeSkyLightMap("Day");
+	BakeSkyLightMap("Night");
+	BakeSkyLightMap("skybox1");
+	BakeSkyLightMap("TestSky");
 
 	AddOccluder("Dome_Occluder_0");
 
 	CreateMap();
 
 	//CreateParticle(0,0,0);
-	//SetEnvironmentMap("Day");
-	SetEnvironmentMap("Night");
+	//SetSkyLight("Day");
+	SetSkyLight("Night");
+	SetEnvironment("Night");
 
 	Load("../Assets/Scene/test1.Scene");
 }
@@ -319,15 +320,14 @@ void TestScene::ChangeCubeMap()
 
 	if (GetKeyUp('1'))
 	{
-		SetEnvironmentMap("Night");
+		SetSkyLight("Night");
 	}
 	if (GetKeyUp('2'))
 	{
-		SetEnvironmentMap("skybox1");
+		SetSkyLight("skybox1");
 	}
 	if (GetKeyUp('3'))
 	{
-		SetEnvironmentMap("TestSky");
+		SetSkyLight("TestSky");
 	}
-
 }

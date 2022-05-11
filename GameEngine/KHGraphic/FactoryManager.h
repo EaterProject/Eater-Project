@@ -26,7 +26,7 @@ public:
 
 public:
 	void BakeShadowMap(std::string fileName) override;
-	void BakeEnvironmentMap(TextureBuffer* environment, EnvironmentBuffer** ppResource) override;
+	void BakeSkyLightMap(TextureBuffer* skyLight, SkyLightBuffer** ppResource) override;
 
 private:
 	void CreateImg(std::string name, Hash_Code hash_code, std::string fileName) override;

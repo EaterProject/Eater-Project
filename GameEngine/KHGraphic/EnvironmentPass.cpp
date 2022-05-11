@@ -89,17 +89,27 @@ void EnvironmentPass::ApplyOption()
 	}
 }
 
-void EnvironmentPass::SetEnvironmentMapResource(EnvironmentBuffer* resource)
+void EnvironmentPass::SetEnvironmentResource(TextureBuffer* resource)
 {
-	// SkyCube & IBL Shader Resource 설정..
-	ID3D11ShaderResourceView* skycube = (ID3D11ShaderResourceView*)resource->Environment->pTextureBuf;
+	// SkyCube Shader Resource 설정..
+	ID3D11ShaderResourceView* skycube = (ID3D11ShaderResourceView*)resource->pTextureBuf;
+
+	for (ShaderBase* shader : m_OptionShaderList)
+	{
+		shader->SetShaderResourceView<gSkyCube>(skycube);
+	}
+}
+
+void EnvironmentPass::SetSkyLightResource(SkyLightBuffer* resource)
+{
+	// IBL Shader Resource 설정..
 	ID3D11ShaderResourceView* brdflut = g_Resource->GetShaderResourceView<gBRDFlut>()->Get();
 	ID3D11ShaderResourceView* prefilter = (ID3D11ShaderResourceView*)resource->Prefilter->pTextureBuf;
 	ID3D11ShaderResourceView* irradiance = (ID3D11ShaderResourceView*)resource->Irradiance->pTextureBuf;
 
 	for (ShaderBase* shader : m_OptionShaderList)
 	{
-		shader->SetShaderResourceView<gSkyCube>(skycube);
+		//shader->SetShaderResourceView<gSkyCube>(skycube);
 
 		shader->SetShaderResourceView<gBRDFlut>(brdflut);
 		shader->SetShaderResourceView<gIBLPrefilter>(prefilter);

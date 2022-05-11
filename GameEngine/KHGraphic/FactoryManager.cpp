@@ -57,11 +57,11 @@ void FactoryManager::BakeShadowMap(std::string fileName)
 	m_BakingFactory->PreBakeShadowMap(fileName);
 }
 
-void FactoryManager::BakeEnvironmentMap(TextureBuffer* environment, EnvironmentBuffer** ppResource)
+void FactoryManager::BakeSkyLightMap(TextureBuffer* skyLight, SkyLightBuffer** ppResource)
 {
 	// 货肺款 Environment Buffer 积己..
-	(*ppResource) = new EnvironmentBuffer();
-	(*ppResource)->Environment = environment;
+	(*ppResource) = new SkyLightBuffer();
+	(*ppResource)->Environment = skyLight;
 
 	m_BakingFactory->PreBakeEnvironmentMap(*ppResource);
 }

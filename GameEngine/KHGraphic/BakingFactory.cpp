@@ -139,7 +139,7 @@ void BakingFactory::PreBakeBRDFMap()
 	RELEASE_COM(brdflutTex2D);
 }
 
-void BakingFactory::PreBakeEnvironmentMap(EnvironmentBuffer* tex)
+void BakingFactory::PreBakeEnvironmentMap(SkyLightBuffer* tex)
 {
 	if (tex == nullptr) return;
 

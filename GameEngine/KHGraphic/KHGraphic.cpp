@@ -78,9 +78,14 @@ void KHGraphic::SetGlobalData(GlobalData* globalData)
 	m_RenderManager->SetGlobalData(globalData);
 }
 
-void KHGraphic::SetEnvironmentMap(EnvironmentBuffer* resource)
+void KHGraphic::SetEnvironment(TextureBuffer* resource)
 {
-	m_RenderManager->SetEnvironmentMap(resource);
+	m_RenderManager->SetEnvironment(resource);
+}
+
+void KHGraphic::SetSkyLight(SkyLightBuffer* resource)
+{
+	m_RenderManager->SetSkyLight(resource);
 }
 
 void KHGraphic::PushInstance(MeshData* instance)
@@ -168,7 +173,7 @@ void KHGraphic::CreateAnimationBuffer(ModelData* model, ModelAnimationData* anim
 	m_FactoryManager->CreateAnimationBuffer(model, animation, ppResource);
 }
 
-void KHGraphic::BakeEnvironmentMap(TextureBuffer* environment, EnvironmentBuffer** ppResource)
+void KHGraphic::BakeSkyLightMap(TextureBuffer* environment, SkyLightBuffer** ppResource)
 {
-	m_FactoryManager->BakeEnvironmentMap(environment, ppResource);
+	m_FactoryManager->BakeSkyLightMap(environment, ppResource);
 }

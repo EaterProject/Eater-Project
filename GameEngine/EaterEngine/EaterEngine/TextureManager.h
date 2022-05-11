@@ -18,7 +18,7 @@ public:
 	void LoadTexture(std::string& Path);
 
 public:
-	void BakeEnvironmentMap(std::string& Path);
+	void BakeSkyLightMap(std::string& Path);
 
 private:
 	bool CheckFolder(std::string& Path);

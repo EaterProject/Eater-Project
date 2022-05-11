@@ -52,11 +52,12 @@ extern "C" EATER_ENGINEDLL void Load(std::string mPath,UINT Mode = 0);
 extern "C" EATER_ENGINEDLL int	LoadAssetsCount();
 
 ///베이킹 관련
-extern "C" EATER_ENGINEDLL void BakeEnvironmentMap(std::string mPath);
+extern "C" EATER_ENGINEDLL void BakeSkyLightMap(std::string mPath);
 extern "C" EATER_ENGINEDLL void BakeAnimation();
 
 ///맵 설정
-extern "C" EATER_ENGINEDLL void SetEnvironmentMap(std::string mPath);
+extern "C" EATER_ENGINEDLL void SetEnvironment(std::string mPath);
+extern "C" EATER_ENGINEDLL void SetSkyLight(std::string mPath);
 extern "C" EATER_ENGINEDLL int GetLoadMeshCount();		//로드된 메쉬 카운터
 extern "C" EATER_ENGINEDLL int GetLoadTextureCount();	//로드된 텍스쳐 카운터
 extern "C" EATER_ENGINEDLL int GetLoadAnimationCount();	//로드된 애니메이션 카운터

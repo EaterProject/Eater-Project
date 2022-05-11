@@ -89,12 +89,13 @@ public:
 	ModelData* GetLoadMeshData(std::string& Path);
 public:
 	///베이크 관련
-	void BakeEnvironmentMap(std::string& Path);
+	void BakeSkyLightMap(std::string& Path);
 	void BakeAnimation();
 
 public:
 	///텍스쳐 설정 관련
-	void SetEnvironmentMap(std::string& Path);
+	void SetEnvironment(std::string& Path);
+	void SetSkyLight(std::string& Path);
 
 	///충돌체크 관련
 	void AddOccluder(std::string mMeshName);

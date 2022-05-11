@@ -17,7 +17,7 @@ class MeshBuffer;
 class MaterialBuffer;
 class TextureBuffer;
 class AnimationBuffer;
-class EnvironmentBuffer;
+class SkyLightBuffer;
 class RenderOption;
 
 namespace ParserData
@@ -74,10 +74,11 @@ public:
 
 public:
 	//선택한 그래픽엔진으로 텍스쳐 생성
-	void BakeEnvironmentMap(TextureBuffer* environment, EnvironmentBuffer** ppResource);
+	void BakeSkyLightMap(TextureBuffer* skyLight, SkyLightBuffer** ppResource);
 
 public:
-	void SetEnvironmentMap(EnvironmentBuffer* resource);
+	void SetEnvironment(TextureBuffer* environment);
+	void SetSkyLight(SkyLightBuffer* skyLight);
 
 private:
 	GraphicEngine* GEngine;

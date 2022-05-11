@@ -152,6 +152,8 @@ void SSAOPass::ApplyOption()
 	option.gSurfaceEpsilon = g_RenderOption->AO_SurfaceEpsilon;
 
 	m_Ssao_PS->ConstantBufferUpdate(&option);
+
+	m_BlurCount = g_RenderOption->AO_BlurCount;
 }
 
 void SSAOPass::RenderUpdate()
@@ -183,60 +185,58 @@ void SSAOPass::RenderUpdate()
 	g_Context->IASetIndexBuffer(m_Ssao_DB->IndexBuf->Get(), DXGI_FORMAT_R16_UINT, 0);
 
 	g_Context->DrawIndexed(m_Ssao_DB->IndexCount, 0, 0);
-}
 
-void SSAOPass::BlurRender(int blurCount)
-{
-	GPU_MARKER_DEBUG_NAME("SSAO Blur");
-	
-	for (int i = 0; i < blurCount; i++)
-	{
-		BlurRender();
-	}
+	// SSAO Blur Render Update..
+	BlurRender();
 }
 
 void SSAOPass::BlurRender()
 {
+	GPU_MARKER_DEBUG_NAME("SSAO Blur");
+	
 	CB_BlurOrder blurOrderBuf;
 
-	// Vertex Shader Update..
-	m_Blur_VS->Update();
+	for (int i = 0; i < m_BlurCount; i++)
+	{
+		// Vertex Shader Update..
+		m_Blur_VS->Update();
 
-	/// Horizontal Blur
-	blurOrderBuf.gBlurOrder = { SSAO_HORIZONTAL_BLUR, 0.0f };
-	m_Blur_PS->ConstantBufferUpdate(&blurOrderBuf);
+		/// Horizontal Blur
+		blurOrderBuf.gBlurOrder = { SSAO_HORIZONTAL_BLUR, 0.0f };
+		m_Blur_PS->ConstantBufferUpdate(&blurOrderBuf);
 
-	g_Context->OMSetRenderTargets(1, &m_SsaoBlur_RTV, 0);
-	g_Context->ClearRenderTargetView(m_SsaoBlur_RTV, reinterpret_cast<const float*>(&DXColors::Black));
+		g_Context->OMSetRenderTargets(1, &m_SsaoBlur_RTV, 0);
+		g_Context->ClearRenderTargetView(m_SsaoBlur_RTV, reinterpret_cast<const float*>(&DXColors::Black));
 
-	m_Blur_PS->SetShaderResourceView<gInputMap>(m_Ssao_SRV);
-	
-	// Pixel Shader Update..
-	m_Blur_PS->Update();
+		m_Blur_PS->SetShaderResourceView<gInputMap>(m_Ssao_SRV);
 
-	g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	g_Context->IASetVertexBuffers(0, 1, m_Ssao_DB->VertexBuf->GetAddress(), &m_Ssao_DB->Stride, &m_Ssao_DB->Offset);
-	g_Context->IASetIndexBuffer(m_Ssao_DB->IndexBuf->Get(), DXGI_FORMAT_R16_UINT, 0);
+		// Pixel Shader Update..
+		m_Blur_PS->Update();
 
-	g_Context->DrawIndexed(m_Ssao_DB->IndexCount, 0, 0);
+		g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		g_Context->IASetVertexBuffers(0, 1, m_Ssao_DB->VertexBuf->GetAddress(), &m_Ssao_DB->Stride, &m_Ssao_DB->Offset);
+		g_Context->IASetIndexBuffer(m_Ssao_DB->IndexBuf->Get(), DXGI_FORMAT_R16_UINT, 0);
 
-	/// Vertical Blur
-	blurOrderBuf.gBlurOrder = { 0.0f, SSAO_VERTICAL_BLUR };
-	m_Blur_PS->ConstantBufferUpdate(&blurOrderBuf);
+		g_Context->DrawIndexed(m_Ssao_DB->IndexCount, 0, 0);
 
-	g_Context->OMSetRenderTargets(1, &m_Ssao_RTV, 0);
-	g_Context->ClearRenderTargetView(m_Ssao_RTV, reinterpret_cast<const float*>(&DXColors::Black));
+		/// Vertical Blur
+		blurOrderBuf.gBlurOrder = { 0.0f, SSAO_VERTICAL_BLUR };
+		m_Blur_PS->ConstantBufferUpdate(&blurOrderBuf);
 
-	m_Blur_PS->SetShaderResourceView<gInputMap>(m_SsaoBlur_SRV);
+		g_Context->OMSetRenderTargets(1, &m_Ssao_RTV, 0);
+		g_Context->ClearRenderTargetView(m_Ssao_RTV, reinterpret_cast<const float*>(&DXColors::Black));
 
-	// Pixel Shader Update..
-	m_Blur_PS->Update();
+		m_Blur_PS->SetShaderResourceView<gInputMap>(m_SsaoBlur_SRV);
 
-	g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	g_Context->IASetVertexBuffers(0, 1, m_Ssao_DB->VertexBuf->GetAddress(), &m_Ssao_DB->Stride, &m_Ssao_DB->Offset);
-	g_Context->IASetIndexBuffer(m_Ssao_DB->IndexBuf->Get(), DXGI_FORMAT_R16_UINT, 0);
+		// Pixel Shader Update..
+		m_Blur_PS->Update();
 
-	g_Context->DrawIndexed(m_Ssao_DB->IndexCount, 0, 0);
+		g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		g_Context->IASetVertexBuffers(0, 1, m_Ssao_DB->VertexBuf->GetAddress(), &m_Ssao_DB->Stride, &m_Ssao_DB->Offset);
+		g_Context->IASetIndexBuffer(m_Ssao_DB->IndexBuf->Get(), DXGI_FORMAT_R16_UINT, 0);
+
+		g_Context->DrawIndexed(m_Ssao_DB->IndexCount, 0, 0);
+	}
 }
 
 void SSAOPass::SetOffsetVectors()

@@ -184,9 +184,14 @@ void RenderManager::SetGlobalData(GlobalData* globalData)
 	RenderPassBase::g_GlobalData = globalData;
 }
 
-void RenderManager::SetEnvironmentMap(EnvironmentBuffer* resource)
+void RenderManager::SetEnvironment(TextureBuffer* resource)
 {
-	m_Environment->SetEnvironmentMapResource(resource);
+	m_Environment->SetEnvironmentResource(resource);
+}
+
+void RenderManager::SetSkyLight(SkyLightBuffer* resource)
+{
+	m_Environment->SetSkyLightResource(resource);
 }
 
 void RenderManager::PushInstance(MeshData* instance)
@@ -435,7 +440,6 @@ void RenderManager::SSAORender()
 	if (m_NowRenderOption.RenderingOption & RENDER_SSAO)
 	{
 		m_SSAO->RenderUpdate();
-		m_SSAO->BlurRender(4);
 	}
 }
 

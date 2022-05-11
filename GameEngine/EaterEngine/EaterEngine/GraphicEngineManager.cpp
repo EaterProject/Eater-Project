@@ -139,13 +139,18 @@ void GraphicEngineManager::CreateAnimationBuffer(ModelData* model, ModelAnimatio
 	GEngine->CreateAnimationBuffer(model, animation, ppResource);
 }
 
-void GraphicEngineManager::BakeEnvironmentMap(TextureBuffer* environment, EnvironmentBuffer** ppResource)
+void GraphicEngineManager::BakeSkyLightMap(TextureBuffer* skyLight, SkyLightBuffer** ppResource)
 {
 	// Texture »ý¼º..
-	GEngine->BakeEnvironmentMap(environment, ppResource);
+	GEngine->BakeSkyLightMap(skyLight, ppResource);
 }
 
-void GraphicEngineManager::SetEnvironmentMap(EnvironmentBuffer* resource)
+void GraphicEngineManager::SetEnvironment(TextureBuffer* environment)
 {
-	GEngine->SetEnvironmentMap(resource);
+	GEngine->SetEnvironment(environment);
+}
+
+void GraphicEngineManager::SetSkyLight(SkyLightBuffer* skyLight)
+{
+	GEngine->SetSkyLight(skyLight);
 }

@@ -76,23 +76,6 @@ void EditorToolScene::Update()
 		return;
 	}
 	ThreadLoading = true;
-
-	if (GetAsyncKeyState('1'))
-	{
-		SetEnvironmentMap("Day");
-	}
-	if (GetAsyncKeyState('2'))
-	{
-		SetEnvironmentMap("Night");
-	}
-	if (GetAsyncKeyState('3'))
-	{
-		SetEnvironmentMap("skybox1");
-	}
-	if (GetAsyncKeyState('4'))
-	{
-		SetEnvironmentMap("TestSky");
-	}
 }
 
 void EditorToolScene::End()
@@ -103,14 +86,10 @@ void EditorToolScene::End()
 
 void EditorToolScene::ThreadFunction()
 {
-	BakeEnvironmentMap("Day");
-	BakeEnvironmentMap("Night");
-	BakeEnvironmentMap("skybox1");
-	BakeEnvironmentMap("TestSky");
-	SetEnvironmentMap("Day");
-	SetEnvironmentMap("Night");
-	SetEnvironmentMap("skybox1");
-	SetEnvironmentMap("TestSky");
+	BakeSkyLightMap("Day");
+
+	SetSkyLight("Day");
+	SetEnvironment("Day");
 }
 
 GameObject* EditorToolScene::Create_GameObject()

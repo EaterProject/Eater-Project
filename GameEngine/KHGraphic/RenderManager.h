@@ -40,7 +40,8 @@ public:
 	void SetGlobalData(GlobalData* globalData) override;
 
 public:
-	void SetEnvironmentMap(EnvironmentBuffer* resource) override;
+	void SetEnvironment(TextureBuffer* resource) override;
+	void SetSkyLight(SkyLightBuffer* resource) override;
 
 public:
 	void PushInstance(MeshData* instance) override;

@@ -48,6 +48,7 @@ public:
 
 	// IBL Option
 	float IBL_Factor = 1.0f;							// IBL 강도						(0.0 ~ 5.0)
+	float IBL_Angle = 0.0f;								// IBL Map Y축 회전 각도			(0.0 ~ 360.0)
 };
 
 // Object Data
@@ -186,14 +187,12 @@ public:
 };
 
 // Environment Buffer
-class EnvironmentBuffer : public Resources
+class SkyLightBuffer : public Resources
 {
 public:
-	virtual ~EnvironmentBuffer()
+	virtual ~SkyLightBuffer()
 	{
-		delete Environment;
-		delete Irradiance;
-		delete Prefilter;
+
 	};
 
 	TextureBuffer* Environment = nullptr;				// Environment Buffer

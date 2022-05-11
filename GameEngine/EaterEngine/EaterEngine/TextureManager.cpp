@@ -41,22 +41,24 @@ void TextureManager::LoadTexture(std::string& Path)
 	}
 }
 
-void TextureManager::BakeEnvironmentMap(std::string& Path)
+void TextureManager::BakeSkyLightMap(std::string& Path)
 {
-	EnvironmentBuffer* buffer = LoadManager::GetEnvironment(Path);
-	TextureBuffer* environment = LoadManager::GetTexture(Path);
+	SkyLightBuffer* buffer = LoadManager::GetEnvironment(Path);
 
 	// 이미 만들어진 EnvironmentMap이 있다면 처리하지 않는다..
 	if (buffer != nullptr)	return;
 
+	TextureBuffer* lightMap = LoadManager::GetTexture(Path);
+
 	// 해당 Texture가 없을 경우..
-	if (environment == nullptr)
+	if (lightMap == nullptr)
 	{
 		PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "[ Engine ][ Bake ][ Environment Buffer ] '%s' Texture가 로드되지 않았습니다!!", Path.c_str());
+		return;
 	}
 
 	EnterCriticalSection(m_CriticalSection);
-	m_Graphic->BakeEnvironmentMap(environment, &buffer);
+	m_Graphic->BakeSkyLightMap(lightMap, &buffer);
 	LeaveCriticalSection(m_CriticalSection);
 
 	if (buffer == nullptr)

@@ -22,7 +22,8 @@ public:
 	void SetGlobalData(GlobalData* globalData) override;
 
 public:
-	void SetEnvironmentMap(EnvironmentBuffer* resource) override;
+	void SetEnvironment(TextureBuffer* resource) override;
+	void SetSkyLight(SkyLightBuffer* resource) override;
 
 public:
 	void PushInstance(MeshData* instance) override;
@@ -49,7 +50,7 @@ public:
 	void CreateAnimationBuffer(ModelData* model, ModelAnimationData* animation, AnimationBuffer** ppResource) override;
 
 public:
-	void BakeEnvironmentMap(TextureBuffer* environment, EnvironmentBuffer** ppResource) override;
+	void BakeSkyLightMap(TextureBuffer* environment, SkyLightBuffer** ppResource) override;
 
 private:
 	IFactoryManager* m_FactoryManager;
