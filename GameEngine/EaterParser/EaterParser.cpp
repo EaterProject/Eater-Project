@@ -9,6 +9,7 @@
 
 EaterParser::EaterParser()
 {
+
 }
 
 EaterParser::~EaterParser()
@@ -106,6 +107,33 @@ void EaterParser::CLOSE_READ_FILE()
 {
 	ClearNode();
 	fclose(ReadFile);
+}
+
+void EaterParser::SetMaterial(const EATER_MATERIAL_DATA& Data)
+{
+	std::string SetData;
+	SetData += MAP_TYPE + Data.MaterialName + LINE_TYPE;
+	SetData += MAP_TYPE + std::to_string(Data.Alpha) + LINE_TYPE;
+	SetData += MAP_TYPE + std::to_string(Data.DiffuseMap) + LINE_TYPE;
+	SetData += MAP_TYPE + std::to_string(Data.NormalMap) + LINE_TYPE;
+	SetData += MAP_TYPE + std::to_string(Data.EmissiveMap) + LINE_TYPE;
+	SetData += MAP_TYPE + std::to_string(Data.ORMMap) + LINE_TYPE;
+	SetData += MAP_TYPE + std::to_string(Data.Emissive) + LINE_TYPE;
+	SetData += MAP_TYPE + std::to_string(Data.Roughness) + LINE_TYPE;
+	SetData += MAP_TYPE + std::to_string(Data.Metallic) + LINE_TYPE;
+	SetData += MAP_TYPE + std::to_string(Data.Tileing_X) + LINE_TYPE;
+	SetData += MAP_TYPE + std::to_string(Data.Tileing_Y) + LINE_TYPE;
+	SetData += MAP_TYPE + std::to_string(Data.AddColor_R) + LINE_TYPE;
+	SetData += MAP_TYPE + std::to_string(Data.AddColor_G) + LINE_TYPE;
+	SetData += MAP_TYPE + std::to_string(Data.AddColor_B) + LINE_TYPE;
+	SetData += MAP_TYPE + std::to_string(Data.AddColor_A) + LINE_TYPE;
+	SetData += MAP_TYPE + std::to_string(Data.LimColor_R) + LINE_TYPE;
+	SetData += MAP_TYPE + std::to_string(Data.LimColor_G) + LINE_TYPE;
+	SetData += MAP_TYPE + std::to_string(Data.LimColor_B) + LINE_TYPE;
+	SetData += MAP_TYPE + std::to_string(Data.LimFactor) + LINE_TYPE;
+	SetData += MAP_TYPE + std::to_string(Data.LimWidth) + LINE_TYPE;
+
+	fputs(SetData.c_str(), WriteFile);
 }
 
 void EaterParser::SetNode(std::string& name)
