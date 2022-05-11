@@ -41,7 +41,7 @@ void E_MeshManager::SetFileName(std::string& FileName)
 
 void E_MeshManager::CreateBox()
 {
-	EATER_OPEN_WRITE_FILE("Box", "../Assets/Model/ModelData/");
+	EATER_OPEN_WRITE_FILE("box", "../Assets/Model/ModelData/");
 	EATER_SET_NODE("STATIC");
 	EATER_SET_MAP("ParentName ", "RootNode");
 	EATER_SET_MAP("NodeName", "Cube");

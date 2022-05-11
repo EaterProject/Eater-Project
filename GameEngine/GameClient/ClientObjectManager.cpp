@@ -67,37 +67,37 @@ Bullet* ClientObjectManager::GetBullet()
 	return nullptr;
 }
 
-MonsterA* ClientObjectManager::GetMonsterA()
-{
-	int Size = (int)MonsterA_List.size();
-	for (int i = 0; i < Size; i++)
-	{
-		if (MonsterA_List[i]->GetLife() == false)
-		{
-			MonsterA_List[i]->SetLife(true);
-			return MonsterA_List[i];
-		}
-	}
+//MonsterA* ClientObjectManager::GetMonsterA()
+//{
+//	int Size = (int)MonsterA_List.size();
+//	for (int i = 0; i < Size; i++)
+//	{
+//		if (MonsterA_List[i]->GetLife() == false)
+//		{
+//			MonsterA_List[i]->SetLife(true);
+//			return MonsterA_List[i];
+//		}
+//	}
+//
+//	return nullptr;
+//}
 
-	return nullptr;
-}
-
-MonsterB* ClientObjectManager::GetMonsterB()
-{
-	int Size = (int)MonsterB_List.size();
-	for (int i = 0; i < Size; i++)
-	{
-		if (MonsterB_List[i]->GetLife() == false)
-		{
-			MonsterB_List[i]->SetLife(true);
-			MonsterB_List[i]->ReSet();
-			return MonsterB_List[i];
-		}
-	}
-
-	
-	return nullptr;
-}
+//MonsterB* ClientObjectManager::GetMonsterB()
+//{
+//	int Size = (int)MonsterB_List.size();
+//	for (int i = 0; i < Size; i++)
+//	{
+//		if (MonsterB_List[i]->GetLife() == false)
+//		{
+//			MonsterB_List[i]->SetLife(true);
+//			MonsterB_List[i]->ReSet();
+//			return MonsterB_List[i];
+//		}
+//	}
+//
+//	
+//	return nullptr;
+//}
 
 Transform* ClientObjectManager::GetPlayerTransform()
 {

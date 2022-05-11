@@ -4,7 +4,9 @@
 #include "Transform.h"
 #include "EaterEngineAPI.h"
 #include "ObjectFactory.h"
+#include <time.h>
 #include "MonsterA.h"
+#include "MonsterB.h"
 
 std::vector<Vector3> ManaStone::MonsterMovePoint;
 ManaStone::ManaStone()
@@ -29,15 +31,15 @@ void ManaStone::Awake()
 	//한번만 5방향의 꼭지점을 구한다
 	if ((int)MonsterMovePoint.size() == 0){CreateMonsterRangePoint(5);}
 
-	Vector3 Poistion = MonsterMovePoint[0] * 10;
-	MonsterA* Monster = ObjectFactory::CreateMonsterA(0, 0, 0);
-	Monster->Mana = this;
-	MonsterList.push_back(Monster);
+	srand((unsigned int)time(NULL));
+
+	CreateMonster(4, 1);
 }
 
 void ManaStone::SetUp()
 {
 	mMeshFilter->SetModelName("mana");
+	
 }
 
 void ManaStone::Update()
@@ -52,6 +54,40 @@ Vector3 ManaStone::GetPoint(int CreateRangeIndex, int MovePointIndex)
 	return GetMonsterPoint(MonsterPoint, MovePointIndex, Range * 0.25f);
 }
 
+void ManaStone::CreateMonster(int MonsterACount, int MonsterBCount)
+{
+	int index = 0;
+	bool CreatePointCheck[5] = { false, };
+	for (int i = 0; i < 5; i++)
+	{
+		if (MonsterACount != 0)
+		{
+			do 
+			{
+				index = rand() % 5;
+				
+			}
+			while (CreatePointCheck[index]);
+
+			CreateMonsterA(index);
+			CreatePointCheck[index] = true;
+			MonsterACount--;
+		}
+		else if (MonsterBCount != 0)
+		{
+			do
+			{
+				index = rand() % 5;
+
+			} while (CreatePointCheck[index]);
+
+			CreateMonsterB(index);
+			CreatePointCheck[index] = true;
+			MonsterBCount--;
+		}
+	}
+}
+
 void ManaStone::Debug()
 {
 	Vector3 Point = mTransform->Position;
@@ -62,7 +98,7 @@ void ManaStone::Debug()
 	int Size = (int)MonsterMovePoint.size();
 	for (int i = 0; i < Size; i++)
 	{
-		float DebugHeight = 1;		//디버깅 높이
+		float DebugHeight = 0;		//디버깅 높이
 
 		//나의 생성위치에서의 5방향의 꼭지점 그방향으로의 범위값을 곱함
 		Vector3 MonsterPoint = GetMonsterPoint(mTransform->Position, i, Range *0.5);
@@ -81,12 +117,9 @@ void ManaStone::Debug()
 
 void ManaStone::CreateMonsterRangePoint(int MonsterCount)
 {
+	///몬스터 생성 위치를 구한다
 	//1마리 일때
-	if (MonsterCount == 1)
-	{
-		
-
-	}
+	if (MonsterCount == 1) { return; }
 
 	//주어진 범위에서 몬스터의 생성 수만큼 원분리
 	float Angle = 360 / MonsterCount;
@@ -105,10 +138,27 @@ void ManaStone::CreateMonsterRangePoint(int MonsterCount)
 	}
 }
 
+void ManaStone::CreateMonsterA(int index)
+{
+	///몬스터 A를 생성
+	Vector3 Poistion = MonsterMovePoint[index] * 10;
+	MonsterA* Monster = ObjectFactory::CreateMonsterA(Poistion.x, 0, Poistion.z);
+	Monster->Create(this, index);
+	MonsterA_List.push_back(Monster);
+}
+
+void ManaStone::CreateMonsterB(int index)
+{
+	///몬스터 B를 생성
+	Vector3 Poistion = MonsterMovePoint[index] * 10;
+	MonsterB* Monster = ObjectFactory::CreateMonsterB(Poistion.x, 0, Poistion.z);
+	Monster->Create(this, index);
+	MonsterB_List.push_back(Monster);
+}
+
 Vector3 ManaStone::GetMonsterPoint(const Vector3& MyPosition, int MonsterPointIndex, float Range)
 {
 	if (MonsterPointIndex >= 5) { return Vector3(0, 0, 0); }
-
 	Vector3 Point = MyPosition + (MonsterMovePoint[MonsterPointIndex] * Range);
 	Point.y = 1;
 	return Point;

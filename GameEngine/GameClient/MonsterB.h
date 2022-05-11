@@ -1,29 +1,24 @@
 #pragma once
-#include "ClientComponent.h"
-class MeshFilter;
-class Transform;
-class GameObject;
-class AnimationController;
-class Collider;
-class Rigidbody;
-class MonsterBase;
-
-class MonsterB  :public ClientComponent
+#include "MonsterComponent.h"
+class ManaStone;
+class MonsterB  :public MonsterComponent
 {
 public:
 	MonsterB();
 	virtual ~MonsterB();
 public:
+	void Create(ManaStone* mMana, int mCreatePointIndex);
+public:
 	void Awake();
 	void SetUp();
 	void Update();
-	void ReSet();
+
+	void Move();
+	void Attack();
+	void Idle();
+	void Debug();
 private:
-	MeshFilter*				mMeshFilter;
-	Transform*				mTransform;
-	AnimationController*	mAnimation;
-	Collider*				mColider;
-	Rigidbody*				mRigidbody;
-	MonsterBase*			mBase;
+	ManaStone* Mana;
+	int PointIndex = 0;
 };
 

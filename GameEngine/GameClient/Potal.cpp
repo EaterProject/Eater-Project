@@ -22,19 +22,19 @@ void Potal::SetUp()
 
 void Potal::Update()
 {
-	if (Activation == true)
-	{
-		CreateTime += GetDeltaTime();
-		if (CreateTime >= CreateMonsterMaxTime)
-		{
-			CreateTime -= CreateMonsterMaxTime;
-			MonsterA* Monster = mObjectGM->GetMonsterA();
-
-			if (Monster == nullptr) { return; }
-			Monster->gameobject->GetTransform()->Position = mTransform->Position;
-			Monster->SetMovePoint(5, 0, -10);
-		}
-	}
+	//if (Activation == true)
+	//{
+	//	CreateTime += GetDeltaTime();
+	//	if (CreateTime >= CreateMonsterMaxTime)
+	//	{
+	//		CreateTime -= CreateMonsterMaxTime;
+	//		MonsterA* Monster = mObjectGM->GetMonsterA();
+	//
+	//		if (Monster == nullptr) { return; }
+	//		Monster->gameobject->GetTransform()->Position = mTransform->Position;
+	//		Monster->SetMovePoint(5, 0, -10);
+	//	}
+	//}
 }
 
 void Potal::OnPotalActivation(bool Active)
