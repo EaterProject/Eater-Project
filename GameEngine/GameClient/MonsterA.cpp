@@ -7,6 +7,9 @@
 #include "Collider.h"
 #include "Rigidbody.h"
 #include "Player.h"
+#include "ManaStone.h"
+#include "ClientTypeOption.h"
+#include <time.h>
 
 MonsterA::MonsterA()
 {
@@ -26,83 +29,125 @@ MonsterA::~MonsterA()
 	mRigidbody	= nullptr;
 }
 
+void MonsterA::Create(ManaStone* mMana, int mCreatePointIndex)
+{
+	Mana = mMana;
+	PointIndex = mCreatePointIndex;
+}
+
 void MonsterA::Awake()
 {
 	mMeshFilter = gameobject->GetComponent<MeshFilter>();
 	mTransform	= gameobject->GetTransform();
 	mAnimation	= gameobject->GetComponent<AnimationController>();
 	mColider	= gameobject->GetComponent<Collider>();
-	mRigidbody	= gameobject->GetComponent<Rigidbody>();
+	mRigidbody  = gameobject->GetComponent<Rigidbody>();
 }
 void MonsterA::SetUp()
 {
 	//콜라이더 값 조정
 	mColider->SetCenter(0, 0.5, 0);
-	mColider->SetBoxCollider(0.25f, 0.5f, 0.75f);
+	mColider->SetSphereCollider(0.25f);
 	mColider->SetMaterial_Restitution(0);
 	mRigidbody->SetFreezeRotation(true, true, true);
 	mRigidbody->SetGravity(true);
 	mColider->CreatePhys();
 
-	BulletTag = FindTagNumber("Bullet");
-
 	//매쉬 생성
 	mMeshFilter->SetModelName("MonsterA+");
 	mMeshFilter->SetAnimationName("MonsterA+");
-	mAnimation->Choice("move");
+	mAnimation->Choice("idle");
+
+	//이동 위치
+	Vector3 Point = Mana->GetPoint(PointIndex, 1);
+	SetMovePoint(Point.x, Point.y, Point.z);
+
+	srand((unsigned int)time(NULL));
+	State = (int)MONSTER_STATE::IDLE;
 }
 
 void MonsterA::Update()
 {
-	if (isLife == true)
-	{	
-		mTransform->Slow_Y_Rotation(MovePoint, 50, true);
+	switch (State)
+	{
+	case (int)MONSTER_STATE::IDLE:
+		Idle();
+		break;
+	case (int)MONSTER_STATE::MOVE:
+		Move();
+		break;
+	case (int)MONSTER_STATE::ATTACK:
+		Attack();
+		break;
+	}
+
+	Debug();
+}
+
+void MonsterA::Move()
+{
+	if (MoveStart == false)
+	{
+		mAnimation->Choice("move");
+		MoveStart = true;
+	}
+	
+	if (GetStopPoint() == false)
+	{
+		//목표지점의 도달하지 않았을때
+		mTransform->Slow_Y_Rotation(MovePoint, 100,true);
 		mRigidbody->SetVelocity(DirPoint.x, DirPoint.y, DirPoint.z);
 	}
-}
-
-void MonsterA::OnTriggerStay(GameObject* Obj)
-{
-	if (Player::GetState() == PLAYER_STATE::ATTACK)
+	else
 	{
-		Vector3 Look = Player::GetPlayerTransform()->GetLocalPosition_Look() * PushPower;
-		mRigidbody->SetAddForce(Look.x, Look.y + PushPower, Look.z * -1);
-	}
-
-	//if (Player::GetState() == PLAYER_STATE::ATTACK)
-	//{
-	//	Vector3 Look = Player::GetPlayerTransform()->GetLocalPosition_Look() * 10;
-	//	mRigidbody->SetAddForce(Look.x, Look.y + 10, Look.z * -1);
-	//}
-}
-
-void MonsterA::OnTriggerEnter(GameObject* Obj)
-{
-	if (Obj->GetTag() == BulletTag)
-	{
-		HP -= 20;
-		if(HP <= 0)
-		{
-			mTransform->Position = { 15, 0, -10 };
-			isLife = false;
-			mAnimation->Choice("die");
-		}
+		//목표지점 도달 후 상태 변화
+		State = (int)MONSTER_STATE::IDLE;
+		PointNumber = -1;
+		MoveStart = false;
 	}
 }
 
-void MonsterA::ReSet()
+void MonsterA::Attack()
 {
-	mAnimation->Choice("move");
-	HP = MaxHP;
+	if (AttackStart == false) 
+	{
+
+		
+		AttackStart = true;
+	}
 }
 
-void MonsterA::SetMovePoint(float x, float y, float z)
+void MonsterA::Idle()
 {
-	DirPoint = (gameobject->GetTransform()->Position - Vector3(x, y, z)) * -1;
-	DirPoint.Normalize();
-	DirPoint *= Speed;
-	MovePoint.x = x;
-	MovePoint.y = y;
-	MovePoint.z = z;
+	//기본 값 셋팅
+	if (IdleStart == false)
+	{
+		mAnimation->Choice("idle");
+		PointNumber		= rand() % 5;
+		Idle_MaxTime	= (rand() % Idle_MaxTime_Max) + Idle_MaxTime_Min;
+		Vector3 Point = Mana->GetPoint(PointIndex, PointNumber);
+		SetMovePoint(Point.x, Point.y, Point.z);
+		IdleStart = true;
+	}
+
+
+	if (IdleTime <= Idle_MaxTime)
+	{
+		IdleTime += GetDeltaTime();
+	}
+	else
+	{
+		//상태 변화 기본값 초기화
+		State = (int)MONSTER_STATE::MOVE;
+		IdleStart	= false;
+		IdleTime	= 0;
+	}
 }
+
+void MonsterA::Debug()
+{
+	DebugDrawCircle(2.5f, mTransform->Position, Vector3(0, 0, 0), Vector3(1, 0, 0));
+}
+
+
 

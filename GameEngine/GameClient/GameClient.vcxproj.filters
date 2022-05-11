@@ -82,6 +82,15 @@
     <Filter Include="소스 파일\Component\Base">
       <UniqueIdentifier>{89b60ef9-7572-4bbd-855d-364826a1bc4e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\TypeOption">
+      <UniqueIdentifier>{ef448e58-0b69-427d-ada2-231cf7bfb17c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\Base\MonsterComponent">
+      <UniqueIdentifier>{d97fd655-d15b-4404-a566-cc93a172992a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\Base\ClientComponent">
+      <UniqueIdentifier>{06336456-8bf0-4919-abfa-d84e38d2593f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -147,8 +156,14 @@
     <ClInclude Include="Bullet.h">
       <Filter>소스 파일\Component\Bullet</Filter>
     </ClInclude>
+    <ClInclude Include="ClientTypeOption.h">
+      <Filter>소스 파일\TypeOption</Filter>
+    </ClInclude>
     <ClInclude Include="ClientComponent.h">
-      <Filter>소스 파일\Component\Base</Filter>
+      <Filter>소스 파일\Component\Base\ClientComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterComponent.h">
+      <Filter>소스 파일\Component\Base\MonsterComponent</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -207,7 +222,10 @@
       <Filter>소스 파일\Component\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="ClientComponent.cpp">
-      <Filter>소스 파일\Component\Base</Filter>
+      <Filter>소스 파일\Component\Base\ClientComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterComponent.cpp">
+      <Filter>소스 파일\Component\Base\MonsterComponent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

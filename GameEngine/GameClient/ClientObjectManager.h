@@ -32,8 +32,8 @@ public:
 	void Release();
 
 	Bullet* GetBullet();
-	MonsterA* GetMonsterA();
-	MonsterB* GetMonsterB();
+	//MonsterA* GetMonsterA();
+	//MonsterB* GetMonsterB();
 	Transform* GetPlayerTransform();
 private:
 	void CreateObjectMemorySize();	//필요한 오브젝트들 미리 생성

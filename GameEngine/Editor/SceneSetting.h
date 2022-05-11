@@ -102,4 +102,6 @@ public:
 	afx_msg void OnIBL_Button();
 	afx_msg void OnBloom_Button();
 	afx_msg void OnFXAA_Button();
+	CButton RenderTarget_Check;
+	afx_msg void OnBnClickedCheck12();
 };
