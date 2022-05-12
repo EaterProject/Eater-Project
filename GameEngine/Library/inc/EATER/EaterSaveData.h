@@ -73,33 +73,27 @@ struct EATER_MATERIAL_DATA
 	float LimFactor		= 0;
 	float LimWidth		= 0;
 
-	//template<typename T ,typename = int,typename = float>
-	//void SetColor(T &R, T &G, T &B, T &A)
-	//{
-	//	AddColor_R = R;
-	//	AddColor_G = G;
-	//	AddColor_B = B;
-	//	AddColor_A = A;
-	//}
-	//
-	//template<typename T, typename = int, typename = float>
-	//void SetColor(T&& R, T&& G, T&& B, T&& A)
-	//{
-	//	if constexpr (T == int)
-	//	{
-	//		AddColor_R = R;
-	//		AddColor_G = G;
-	//		AddColor_B = B;
-	//		AddColor_A = A;
-	//	}
-	//}
-	void SetLimColor(float& R, float& G, float& B, float& A)
+	void SetColor(float &R, float &G, float &B, float &A)
+	{
+		AddColor_R = R;
+		AddColor_G = G;
+		AddColor_B = B;
+		AddColor_A = A;
+	}
+	void SetColor(float&& R, float&& G, float&& B, float&& A = 0)
+	{
+		AddColor_R = R;
+		AddColor_G = G;
+		AddColor_B = B;
+		AddColor_A = A;
+	}
+	void SetLimColor(float& R, float& G, float& B)
 	{
 		LimColor_R = R;
 		LimColor_G = G;
 		LimColor_B = B;
 	}
-	void SetLimColor(float&& R, float&& G, float&& B, float&& A)
+	void SetLimColor(float&& R, float&& G, float&& B)
 	{
 		LimColor_R = R;
 		LimColor_G = G;

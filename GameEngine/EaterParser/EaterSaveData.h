@@ -80,20 +80,20 @@ struct EATER_MATERIAL_DATA
 		AddColor_B = B;
 		AddColor_A = A;
 	}
-	void SetColor(float&& R, float&& G, float&& B, float&& A)
+	void SetColor(float&& R, float&& G, float&& B, float&& A = 0)
 	{
 		AddColor_R = R;
 		AddColor_G = G;
 		AddColor_B = B;
 		AddColor_A = A;
 	}
-	void SetLimColor(float& R, float& G, float& B, float& A)
+	void SetLimColor(float& R, float& G, float& B)
 	{
 		LimColor_R = R;
 		LimColor_G = G;
 		LimColor_B = B;
 	}
-	void SetLimColor(float&& R, float&& G, float&& B, float&& A)
+	void SetLimColor(float&& R, float&& G, float&& B)
 	{
 		LimColor_R = R;
 		LimColor_G = G;
