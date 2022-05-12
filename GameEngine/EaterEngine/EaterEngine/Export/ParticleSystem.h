@@ -17,16 +17,23 @@ class RandomVector4;
 template<typename T>
 struct Range
 {
+	Range() {}
+
 	void SetRange(T range)		{ m_Min = range; m_Max = range; }
 	void SetRange(T min, T max) { m_Min = min; m_Max = max; }
 	void SetSize(T size)		{ m_Width = size; m_Height = size; }
 	void SetSize(T x, T y)		{ m_Width = x; m_Height = y; }
 
-	T m_Min;
-	T m_Max;
-
-	T m_Width;
-	T m_Height;
+	union
+	{
+		T m_Min;
+		T m_Width;
+	};
+	union
+	{
+		T m_Max;
+		T m_Height;
+	};
 };
 
 class ParticleSystem : public Component

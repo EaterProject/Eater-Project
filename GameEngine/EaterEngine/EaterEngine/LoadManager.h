@@ -121,7 +121,6 @@ private:
 	static std::map<std::string, ColliderBuffer*>		ColliderBufferList;
 	static std::map<std::string, GameObject*>			PrefapList;
 
-	static bool IsLoadAnimation;
 private:
 	FBXManager*				mFBX;
 	TextureManager*			mTexture;

@@ -32,8 +32,6 @@ std::map<std::string, CameraAnimation*>		LoadManager::CamAnimationList;
 std::map<std::string, ColliderBuffer*>		LoadManager::ColliderBufferList;		
 std::map<std::string, GameObject*>			LoadManager::PrefapList;
 
-bool LoadManager::IsLoadAnimation = false;
-
 LoadManager::LoadManager()
 {
 
@@ -156,11 +154,7 @@ void LoadManager::BakeSkyLightMap(std::string Path)
 
 void LoadManager::BakeAnimation()
 {
-	if (IsLoadAnimation)
-	{
-		mAnimationManger->BakeAnimation();
-		IsLoadAnimation = false;
-	}
+	mAnimationManger->BakeAnimation();
 }
 
 int LoadManager::GetMeshCount()

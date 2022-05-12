@@ -78,6 +78,7 @@ void AnimationManager::DeleteAnimation(UINT index)
 void AnimationManager::BakeAnimation()
 {
 	// 로드된 모든 Model Animation Data를 Baking 한다..
+
 	for (auto& modelAnimation : LoadManager::AnimationList)
 	{
 		Animation* animation = modelAnimation.second;
@@ -99,7 +100,19 @@ void AnimationManager::BakeAnimation()
 		}
 		else
 		{
+			ResetAnimationIndex(animation);
+
 			m_Graphic->PushChangeAnimation(animation->m_AnimationBuffer);
 		}
+	}
+}
+
+void AnimationManager::ResetAnimationIndex(Animation* animation)
+{
+	int animation_Index = 0;
+
+	for (auto& model_animation : animation->m_AnimationData->AnimList)
+	{
+		model_animation.second->m_Index = animation_Index++;
 	}
 }
