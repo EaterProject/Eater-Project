@@ -87,12 +87,12 @@ void EditorToolScene::End()
 void EditorToolScene::ThreadFunction()
 {
 	//BakeSkyLightMap("Day");
-	BakeSkyLightMap("HDRID");
+	BakeSkyLightMap("HDRI_DDS_Test");
 
 	//SetSkyLight("Day");
-	SetSkyLight("HDRID");
+	SetSkyLight("HDRI_DDS_Test");
 	//SetEnvironment("Day");
-	SetEnvironment("HDRID");
+	SetEnvironment("HDRI_DDS_Test");
 }
 
 GameObject* EditorToolScene::Create_GameObject()

@@ -25,7 +25,7 @@ float4 IBL_Convolution_PS(SkyBoxPixelIn pin) : SV_TARGET
 			float3 tangentSample = float3(sin(theta) * cos(phi), sin(theta) * sin(phi), cos(theta));
 			float3 sampleVec = (tangentSample.xxx * right) + (tangentSample.yyy * up) + (tangentSample.zzz * normal);
 
-            irradiance += gSkyCube.SampleLevel(gSamWrapLinear, sampleVec, 3.0f).rgb * cos(theta) * sin(theta);
+            irradiance += gSkyCube.SampleLevel(gSamWrapLinear, sampleVec, 0.0f).rgb * cos(theta) * sin(theta);
 			nrSamples++;
 		}
 	}

@@ -168,7 +168,7 @@ float3 QuatRot(in float4 q, in float3 v)
 
 float2 SampleSphericalMap(float3 V)
 {
-    float2 UV = float2(atan2(V.z, V.x), asin(V.y));
+    float2 UV = float2(atan2(V.z, -V.x), asin(-V.y));
     UV *= float2(0.1591f, 0.3183f);
     UV += 0.5f;
     return UV;
