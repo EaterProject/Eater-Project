@@ -51,45 +51,6 @@ public:
 	float IBL_Angle = 0.0f;								// IBL Map Y축 회전 각도			(0.0 ~ 360.0)
 };
 
-// Object Data
-class ObjectData
-{
-public:
-	OBJECT_TYPE ObjType = OBJECT_TYPE::DEFALT;		//오브젝트 타입
-	std::string Name;								//오브젝트 이름
-
-	bool IsActive = true;							//오브젝트 활성화 여부
-
-	void* Object;									//Grahpic 전용 GameObject
-
-	UINT ObjectIndex;								//오브젝트의 고유한 인덱스
-	Vector4 HashColor;								//오브젝트의 고유한 Hash Color
-	
-	std::vector<Matrix> BoneOffsetTM;				//본 오프셋 TM
-
-	Matrix World;									//매쉬의 월드 행렬
-	Matrix InvWorld;								//매쉬의 월드 역행렬
-
-public:
-	static Vector4 HashToColor(int hash)
-	{
-		return Vector4( (float)((hash) & 0xff), 
-						(float)((hash >> 8) & 0xff), 
-						(float)((hash >> 16) & 0xff), 
-						(float)((hash >> 24) & 0xff) );
-	}
-	static UINT ColorToHash(Vector4 color)
-	{
-		if (color.x < 0.0f || color.y < 0.0f || color.z < 0.0f || color.w < 0.0f)
-			return -1;
-
-		return	((int)color.x) +
-				((int)color.y * 256) +
-				((int)color.z * 65536) +
-				((int)color.w * 16777216);
-	}
-};
-
 // Animation Data
 class AnimationData
 {
@@ -157,14 +118,18 @@ public:
 
 	Vector2 Tile;						// X, Y Tiling
 	Matrix TexTM;						// Material의 텍스쳐 행렬
+
+public:
+	MaterialProperty& operator=(const MaterialProperty& material_property)
+	{
+		memcpy(this, &material_property, sizeof(MaterialProperty));
+
+		return *this;
+	}
 };
 
 // Material Property Block
-class MaterialPropertyBlock : public MaterialProperty
-{
-public:
-	bool Enable = false;
-};
+class MaterialPropertyBlock : public MaterialProperty {};
 
 // Material Buffer
 class MaterialBuffer : public Resources
@@ -296,6 +261,47 @@ public:
 	BoundingFrustum OriginFrustum;	// Bounding Frustum
 };
 
+// Object Data
+class ObjectData
+{
+public:
+	OBJECT_TYPE ObjType = OBJECT_TYPE::DEFALT;		//오브젝트 타입
+	std::string Name;								//오브젝트 이름
+
+	bool IsActive = true;							//오브젝트 활성화 여부
+
+	void* Object;									//Grahpic 전용 GameObject
+
+	UINT ObjectIndex;								//오브젝트의 고유한 인덱스
+	Vector4 HashColor;								//오브젝트의 고유한 Hash Color
+
+	std::vector<Matrix> BoneOffsetTM;				//본 오프셋 TM
+
+	Matrix World;									//매쉬의 월드 행렬
+	Matrix InvWorld;								//매쉬의 월드 역행렬
+
+	bool IsMaterialBlock = false;
+	MaterialPropertyBlock* Material_Block;
+public:
+	static Vector4 HashToColor(int hash)
+	{
+		return Vector4((float)((hash) & 0xff),
+			(float)((hash >> 8) & 0xff),
+			(float)((hash >> 16) & 0xff),
+			(float)((hash >> 24) & 0xff));
+	}
+	static UINT ColorToHash(Vector4 color)
+	{
+		if (color.x < 0.0f || color.y < 0.0f || color.z < 0.0f || color.w < 0.0f)
+			return -1;
+
+		return	((int)color.x) +
+			((int)color.y * 256) +
+			((int)color.z * 65536) +
+			((int)color.w * 16777216);
+	}
+};
+
 /// <summary>
 /// 게임엔진에서 그래픽엔진으로 던저줄 한개의 메쉬 데이터
 /// </summary>
@@ -320,8 +326,6 @@ public:
 	AnimationData*	Animation_Data = nullptr;		// Animation Data
 	TerrainData*	Terrain_Data	= nullptr;		// Terrain Data
 	ParticleData*	Particle_Data	= nullptr;		// Particle Data
-
-	MaterialPropertyBlock* Material_Block = nullptr;
 };
 
 /// <summary>

@@ -28,6 +28,7 @@ class Transform;
 class Mesh;
 class Material;
 class MeshData;
+class MaterialPropertyBlock;
 
 class  MeshFilter : public Component
 {
@@ -53,6 +54,8 @@ public:
 	EATER_ENGINEDLL void SetEmissiveFactor(float emissiveFactor);
 	EATER_ENGINEDLL void SetRoughnessFactor(float roughnessFactor);
 	EATER_ENGINEDLL void SetMetallicFactor(float metallicFactor);
+	
+	EATER_ENGINEDLL void SetMaterialPropertyBlock(bool enable);
 
 	EATER_ENGINEDLL std::string GetBufferName();
 	EATER_ENGINEDLL std::string GetModelName();
@@ -62,6 +65,7 @@ public:
 	EATER_ENGINEDLL std::string GetORMTextureName();
 
 	EATER_ENGINEDLL Material* GetMaterial();
+	EATER_ENGINEDLL MaterialPropertyBlock* GetMaterialPropertyBlock();
 
 public:
 	Mesh* m_Mesh;

@@ -13,8 +13,11 @@ GameObject::GameObject()
 	Name = "GameObject";
 
 	OneMeshData = new MeshData();
+
 	OneMeshData->Object_Data = new ObjectData();
 	OneMeshData->Object_Data->Object = this;
+
+	OneMeshData->Object_Data->Material_Block = new MaterialPropertyBlock();
 
 	transform = nullptr;
 	DontDestroy = false;
@@ -25,6 +28,7 @@ GameObject::GameObject()
 
 GameObject::~GameObject()
 {
+	delete OneMeshData->Object_Data->Material_Block;
 	delete OneMeshData->Object_Data;
 	delete OneMeshData;
 	OneMeshData = nullptr;

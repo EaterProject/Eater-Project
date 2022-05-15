@@ -34,6 +34,9 @@ private:
 	Camera* Cam2;
 	Transform* Cam2TR;
 
+	MeshFilter* meshfilter;
+	bool up;
+
 	AnimationController* AC;
 	std::vector<AnimationController*> ACList;
 };

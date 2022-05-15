@@ -1,6 +1,6 @@
 #STATIC
-@NodeName Sphere
 @ParentName RootNode
+@NodeName Sphere
 @MeshName Sphere_0
 @MaterialName Sphere_1
 $WorldTM 4 4

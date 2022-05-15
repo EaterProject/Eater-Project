@@ -44,8 +44,8 @@ void Loading::Update()
 {
 	if (ThreadRun == false)
 	{
-		ChoiceScene("inGame");
-		//ChoiceScene("TestScene");
+		//ChoiceScene("inGame");
+		ChoiceScene("TestScene");
 	}
 }
 

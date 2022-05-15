@@ -260,6 +260,14 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const std:
 
 				if (m_RenderData->m_Draw == false) continue;
 
+				object = m_RenderData->m_ObjectData;
+
+				if (object->IsMaterialBlock)
+				{
+					RenderUpdate(instance, m_RenderData);
+					continue;
+				}
+
 				// ÇØ´ç Instance Data »ðÀÔ..
 				m_MeshData.World = m_RenderData->m_ObjectData->World;
 				m_MeshData.InvWorld = m_RenderData->m_ObjectData->InvWorld;
@@ -368,6 +376,13 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const std:
 				if (m_RenderData->m_Draw == false) continue;
 
 				object = m_RenderData->m_ObjectData;
+
+				if (object->IsMaterialBlock)
+				{
+					RenderUpdate(instance, m_RenderData);
+					continue;
+				}
+
 				animation = m_RenderData->m_AnimationData;
 
 				// ÇØ´ç Instance Data »ðÀÔ..
@@ -473,7 +488,16 @@ void DeferredPass::RenderUpdate(const InstanceRenderBuffer* instance, const Rend
 	const ObjectData* obj = meshData->m_ObjectData;
 	const MeshRenderBuffer* mesh = instance->m_Mesh;
 	const MaterialRenderBuffer* mat = instance->m_Material;
-	const MaterialProperty* matSub = mat->m_MaterialProperty;
+	const MaterialProperty* matSub;
+
+	if (obj->IsMaterialBlock)
+	{
+		matSub = obj->Material_Block;
+	}
+	else
+	{
+		matSub = mat->m_MaterialProperty;
+	}
 
 	const Matrix& world = obj->World;
 	const Matrix& invWorld = obj->InvWorld;

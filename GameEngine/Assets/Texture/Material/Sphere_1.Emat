@@ -1,7 +1,7 @@
 #EATERMAT
-@ORMMap ORM_9
-@Alpha NO
 @MaterialName Sphere_1
+@Alpha NO
+@ORMMap ORM_9
 @LimColor_B 0.000000
 @DiffuseMap Albedo_9
 @NormalMap Normal_9
@@ -13,10 +13,10 @@
 @Tileing_Y 1
 @AddColor_R 0.000000
 @AddColor_G 0.000000
-@LimFactor 0.000000
 @AddColor_B 0.000000
+@LimFactor 1.800000
 @AddColor_A 0
-@LimColor_R 0.000000
+@LimColor_R 1.000000
 @LimColor_G 0.000000
-@LimWidth 0.000000
+@LimWidth 1.800000
 &

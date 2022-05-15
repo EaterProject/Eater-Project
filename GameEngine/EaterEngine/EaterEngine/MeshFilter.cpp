@@ -198,6 +198,17 @@ void MeshFilter::SetMetallicFactor(float metallicFactor)
 	m_Material->SetMetallicFactor(metallicFactor);
 }
 
+void MeshFilter::SetMaterialPropertyBlock(bool enable)
+{
+	// 활성화와 동시에 기존 Property Data 복사..
+	if (enable)
+	{
+		(*(MaterialProperty*)gameobject->OneMeshData->Object_Data->Material_Block) = (*m_Material->m_MaterialData->Material_Property);
+	}
+
+	gameobject->OneMeshData->Object_Data->IsMaterialBlock = enable;
+}
+
 std::string MeshFilter::GetBufferName()
 {
 	return BufferName;
@@ -238,6 +249,11 @@ std::string MeshFilter::GetORMTextureName()
 Material* MeshFilter::GetMaterial()
 {
 	return m_Material;
+}
+
+MaterialPropertyBlock* MeshFilter::GetMaterialPropertyBlock()
+{
+	return gameobject->OneMeshData->Object_Data->Material_Block;
 }
 
 void MeshFilter::CheckMesh()
