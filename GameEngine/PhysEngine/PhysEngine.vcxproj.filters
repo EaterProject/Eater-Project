@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="소스 파일\PhysEngine">
+      <UniqueIdentifier>{e91549e7-96f0-4c22-9c19-5bded107d307}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\PhysAPI">
+      <UniqueIdentifier>{2ebc0d29-1c01-4d20-8437-85155d19bc87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager">
+      <UniqueIdentifier>{b1e3e00d-d275-47f8-bbcd-90e8c0955eaa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\Factory">
+      <UniqueIdentifier>{0e0d0ab0-8736-466d-ad9c-7a8ac1fd3f45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\RayCast">
+      <UniqueIdentifier>{9b963b53-2183-4d63-b9c9-d25bc40f429f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MainDLL">
+      <UniqueIdentifier>{68b67251-3f82-456b-9a4c-71db0c272897}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\EventCallback">
+      <UniqueIdentifier>{ae5a4030-e3f2-4212-ad55-0debf049cba6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\OutputStruct">
+      <UniqueIdentifier>{3f0e3621-b1f7-4509-8a8b-59017096badd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\OutputStruct\ActorData">
+      <UniqueIdentifier>{e1a74042-e8a3-4599-ab12-45e5dab8711e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\OutputStruct\SceneData">
+      <UniqueIdentifier>{c4026359-cbaf-4201-a201-104a4f4ddab5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\OutputStruct\ColliderData">
+      <UniqueIdentifier>{88d7d4c5-4e49-4e87-92b6-b768f97a3430}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\OutputStruct\MaterialData">
+      <UniqueIdentifier>{88535f40-4b4d-45f8-946e-f506669f2e4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\OutputStruct\RayData">
+      <UniqueIdentifier>{0e5737a4-56c1-467f-8660-bd87a32e96e5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="framework.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysEngine.h">
+      <Filter>소스 파일\PhysEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX_API.h">
+      <Filter>소스 파일\PhysAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Factory.h">
+      <Filter>소스 파일\Manager\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="RaycastManager.h">
+      <Filter>소스 파일\Manager\RayCast</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysEngineDLL.h">
+      <Filter>소스 파일\MainDLL</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseEventCallBack.h">
+      <Filter>소스 파일\Manager\EventCallback</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysData.h">
+      <Filter>소스 파일\OutputStruct\ActorData</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysCollider.h">
+      <Filter>소스 파일\OutputStruct\ColliderData</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysScene.h">
+      <Filter>소스 파일\OutputStruct\SceneData</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysMaterial.h">
+      <Filter>소스 파일\OutputStruct\MaterialData</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysRay.h">
+      <Filter>소스 파일\OutputStruct\RayData</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="dllmain.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysEngine.cpp">
+      <Filter>소스 파일\PhysEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysX_API.cpp">
+      <Filter>소스 파일\PhysAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="Factory.cpp">
+      <Filter>소스 파일\Manager\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="RaycastManager.cpp">
+      <Filter>소스 파일\Manager\RayCast</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseEventCallBack.cpp">
+      <Filter>소스 파일\Manager\EventCallback</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysData.cpp">
+      <Filter>소스 파일\OutputStruct\ActorData</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysCollider.cpp">
+      <Filter>소스 파일\OutputStruct\ColliderData</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysScene.cpp">
+      <Filter>소스 파일\OutputStruct\SceneData</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysMaterial.cpp">
+      <Filter>소스 파일\OutputStruct\MaterialData</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysRay.cpp">
+      <Filter>소스 파일\OutputStruct\RayData</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

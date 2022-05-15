@@ -1,0 +1,459 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="소스 파일\MFC">
+      <UniqueIdentifier>{8a8f1940-0713-4655-ae1e-fc150cc34544}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\Main">
+      <UniqueIdentifier>{7efbadd4-d155-4144-a3db-3bd068ea7440}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\Editor">
+      <UniqueIdentifier>{d7da6ef9-d3c2-47b6-b79a-2ddfc012afd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\DOC">
+      <UniqueIdentifier>{0f34b094-c543-4546-81f6-60a4ab8c8874}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\PCH">
+      <UniqueIdentifier>{799ed417-e028-43d9-97af-f2a9613c8373}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\View">
+      <UniqueIdentifier>{9054fdfe-17cd-4726-874b-64ea24de00b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\View\EditorView">
+      <UniqueIdentifier>{d81f22e7-bf27-44b1-b374-04c7078fd034}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager">
+      <UniqueIdentifier>{233c97ac-3fbf-4547-aa93-8c050930780c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\Editor">
+      <UniqueIdentifier>{58aeeb22-fd48-4fef-8cfa-2f0a7ac9a235}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\Eater">
+      <UniqueIdentifier>{def07274-cb07-48a0-befa-9f0048202ba6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\YAML">
+      <UniqueIdentifier>{beff09d7-6ed3-4b7a-93c4-b679b49e6fcf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\FBX">
+      <UniqueIdentifier>{7b53c1b6-4e4f-4feb-b74d-e1141258f0ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\Struct">
+      <UniqueIdentifier>{bae563c5-9653-4746-a777-a50873c85ab1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Scene">
+      <UniqueIdentifier>{b7fc991c-1431-4ecb-bca7-0b4f1f0160e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\View\RenderView">
+      <UniqueIdentifier>{d3cd7575-3572-45c0-a804-3ede483cb2a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\View\OptionView">
+      <UniqueIdentifier>{546f7e5c-a2dd-4f44-a068-6c4bc6da4490}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\Dialog">
+      <UniqueIdentifier>{999c2bf4-a634-48de-80fa-b40f89531641}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\Dialog\TAP">
+      <UniqueIdentifier>{c3de5814-3405-437c-86b4-2de0d3feb08c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\Dialog\TAP\TAP_Animation">
+      <UniqueIdentifier>{54a11f13-f90f-45f2-af9a-143804cf378f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\Dialog\RightOption">
+      <UniqueIdentifier>{b4a31b4e-e33f-4873-8f61-9b9ab4b3e54b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\Dialog\TAP\TAP_MeshFileter">
+      <UniqueIdentifier>{abb4c301-4955-4dd3-89b1-08517bed9269}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\Dialog\TAP\TAP_Particle">
+      <UniqueIdentifier>{f4113f15-ab8b-460d-85d1-7bd25e33de55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\Dialog\TAP\TAP_Light">
+      <UniqueIdentifier>{1843782e-4928-46d6-9165-e1138867a28d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\Dialog\SceneSave">
+      <UniqueIdentifier>{f173164e-58ee-4853-b86a-381d8d07c698}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\View\AssetView">
+      <UniqueIdentifier>{c76e772e-3ae3-49dc-8a28-48f6c8da3ca1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\Dialog\Assets">
+      <UniqueIdentifier>{a8cbe88f-567a-4ae8-afc1-2c4ed9b903b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\Eater\Manager">
+      <UniqueIdentifier>{0a4fd463-5197-4d4d-925e-9124eab5700b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\Eater\EaterAnimation">
+      <UniqueIdentifier>{aff7e431-a352-4a0a-82ff-2cce3ab25594}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\Eater\EaterBuffer">
+      <UniqueIdentifier>{41e76107-04c6-4f8b-aaaa-f0c5c2aef00d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\Eater\EaterMaterial">
+      <UniqueIdentifier>{58b1aefe-58d2-4a28-bcfb-5b5582c8ed8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\Eater\EaterMesh">
+      <UniqueIdentifier>{4dfe9510-17f3-46f4-96e7-26eb70c509d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\Eater\EaterChange">
+      <UniqueIdentifier>{251eda48-e89d-4ff2-8061-1c3529e20f11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\Dialog\TAP\TAP_Camera">
+      <UniqueIdentifier>{973e5e89-e78c-4641-9133-1421d63be25e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\Dialog\TAP\TAP_Collider">
+      <UniqueIdentifier>{6af54049-bd2c-42f2-b488-5497433fd4a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\Dialog\TAP\TAP_Rigidbody">
+      <UniqueIdentifier>{fd871840-f6f3-4811-8621-a70b2c6736b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\Dialog\TAP\TAP_Transform">
+      <UniqueIdentifier>{a95c39aa-a8b8-42cf-afd7-af4530b8c5e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Scene\SceneSaveLoad">
+      <UniqueIdentifier>{981e2971-4e0f-482d-87e6-be53a21779b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\Dialog\Assets\ChangeDataType">
+      <UniqueIdentifier>{acdedabf-7806-4e8e-9b87-797e3b9003d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\Dialog\Assets\AssetsDialog">
+      <UniqueIdentifier>{8fe75041-9028-451d-869c-c8ece16bf5eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\Dialog\Assets\ChangeDataType\LoadNavMesh">
+      <UniqueIdentifier>{ab3549dd-455c-42ae-87ac-0a376eca5aac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\Dialog\Assets\ChangeDataType\LoadTerrain">
+      <UniqueIdentifier>{99268209-724d-4c9c-8369-7aedfbb43bf2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Scene\EditorToolScene">
+      <UniqueIdentifier>{56c58bac-1bb5-4516-ab70-e7a8b8ef8668}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\Dialog\DialogManager">
+      <UniqueIdentifier>{56e8870c-0dec-4979-b0ee-ad650aeb7e23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\Dialog\DialogManager\Factory">
+      <UniqueIdentifier>{620407a5-12ee-49d6-aa2e-c3fe2375af12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\Dialog\DialogManager\CustomDialog">
+      <UniqueIdentifier>{67f52411-c24f-43e3-b725-46a2d223cd5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\EditorDefine">
+      <UniqueIdentifier>{d4225d1b-7427-4c6e-b1e9-92c4a0a6d30b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\Dialog\Option">
+      <UniqueIdentifier>{7bce9bd8-c754-4208-91e1-06581dee9867}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\Dialog\Option\Material">
+      <UniqueIdentifier>{41162ea8-57b7-4b4f-888e-f4c9c5868e23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\Dialog\Option\Loading">
+      <UniqueIdentifier>{d75bf0cc-b2b0-40a4-8468-23a3724434c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\Dialog\Option\FileOption">
+      <UniqueIdentifier>{3168b26d-3221-4d10-874d-e1532f1fbf3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\Dialog\Option\CamAnimation">
+      <UniqueIdentifier>{a203aa94-bb5a-4e2e-bd09-aa41386b252a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\Dialog\Option\SceneSetting">
+      <UniqueIdentifier>{4e2920fa-5115-4164-b0e6-f060e40496fd}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="framework.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="MainFrm.h">
+      <Filter>소스 파일\MFC\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>소스 파일\MFC\PCH</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor.h">
+      <Filter>소스 파일\MFC\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="EditorDoc.h">
+      <Filter>소스 파일\MFC\DOC</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderView.h">
+      <Filter>소스 파일\MFC\View\RenderView</Filter>
+    </ClInclude>
+    <ClInclude Include="EditorView.h">
+      <Filter>소스 파일\MFC\View\EditorView</Filter>
+    </ClInclude>
+    <ClInclude Include="EditorManager.h">
+      <Filter>소스 파일\Manager\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="YamlManager.h">
+      <Filter>소스 파일\Manager\YAML</Filter>
+    </ClInclude>
+    <ClInclude Include="FBXManager.h">
+      <Filter>소스 파일\Manager\FBX</Filter>
+    </ClInclude>
+    <ClInclude Include="EditorData.h">
+      <Filter>소스 파일\Manager\Struct</Filter>
+    </ClInclude>
+    <ClInclude Include="EditorToolScene.h">
+      <Filter>소스 파일\Scene\EditorToolScene</Filter>
+    </ClInclude>
+    <ClInclude Include="FileOption.h">
+      <Filter>소스 파일\MFC\Dialog\Option\FileOption</Filter>
+    </ClInclude>
+    <ClInclude Include="Loading.h">
+      <Filter>소스 파일\MFC\Dialog\Option\Loading</Filter>
+    </ClInclude>
+    <ClInclude Include="OptionView.h">
+      <Filter>소스 파일\MFC\View\OptionView</Filter>
+    </ClInclude>
+    <ClInclude Include="RightOption.h">
+      <Filter>소스 파일\MFC\Dialog\RightOption</Filter>
+    </ClInclude>
+    <ClInclude Include="CTAP_MeshFilter.h">
+      <Filter>소스 파일\MFC\Dialog\TAP\TAP_MeshFileter</Filter>
+    </ClInclude>
+    <ClInclude Include="CTAP_Transform.h">
+      <Filter>소스 파일\MFC\Dialog\TAP\TAP_Transform</Filter>
+    </ClInclude>
+    <ClInclude Include="CTAP_Animation.h">
+      <Filter>소스 파일\MFC\Dialog\TAP\TAP_Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="CTAP_Particle.h">
+      <Filter>소스 파일\MFC\Dialog\TAP\TAP_Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="CTAP_Light.h">
+      <Filter>소스 파일\MFC\Dialog\TAP\TAP_Light</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneSave.h">
+      <Filter>소스 파일\Scene\SceneSaveLoad</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneSaveDialog.h">
+      <Filter>소스 파일\MFC\Dialog\SceneSave</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetView.h">
+      <Filter>소스 파일\MFC\View\AssetView</Filter>
+    </ClInclude>
+    <ClInclude Include="E_MeshManager.h">
+      <Filter>소스 파일\Manager\Eater\EaterMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="E_AnimationManager.h">
+      <Filter>소스 파일\Manager\Eater\EaterAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="E_MaterialManager.h">
+      <Filter>소스 파일\Manager\Eater\EaterMaterial</Filter>
+    </ClInclude>
+    <ClInclude Include="EaterManager.h">
+      <Filter>소스 파일\Manager\Eater\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="E_BufferManager.h">
+      <Filter>소스 파일\Manager\Eater\EaterBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="E_ChangeManager.h">
+      <Filter>소스 파일\Manager\Eater\EaterChange</Filter>
+    </ClInclude>
+    <ClInclude Include="CamAnimation.h">
+      <Filter>소스 파일\MFC\Dialog\Option\CamAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneLoad.h">
+      <Filter>소스 파일\Scene\SceneSaveLoad</Filter>
+    </ClInclude>
+    <ClInclude Include="CTAP_Collider.h">
+      <Filter>소스 파일\MFC\Dialog\TAP\TAP_Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="CTAP_Rigidbody.h">
+      <Filter>소스 파일\MFC\Dialog\TAP\TAP_Rigidbody</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadTerrain.h">
+      <Filter>소스 파일\MFC\Dialog\Assets\ChangeDataType\LoadTerrain</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadNavMesh.h">
+      <Filter>소스 파일\MFC\Dialog\Assets\ChangeDataType\LoadNavMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="CreateMaterial.h">
+      <Filter>소스 파일\MFC\Dialog\Option\Material</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetsDialog.h">
+      <Filter>소스 파일\MFC\Dialog\Assets\AssetsDialog</Filter>
+    </ClInclude>
+    <ClInclude Include="DialogFactory.h">
+      <Filter>소스 파일\MFC\Dialog\DialogManager\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomDialog.h">
+      <Filter>소스 파일\MFC\Dialog\DialogManager\CustomDialog</Filter>
+    </ClInclude>
+    <ClInclude Include="EditorDefine.h">
+      <Filter>소스 파일\MFC\EditorDefine</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneSetting.h">
+      <Filter>소스 파일\MFC\Dialog\Option\SceneSetting</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="MainFrm.cpp">
+      <Filter>소스 파일\MFC\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>소스 파일\MFC\PCH</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor.cpp">
+      <Filter>소스 파일\MFC\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="EditorDoc.cpp">
+      <Filter>소스 파일\MFC\DOC</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderView.cpp">
+      <Filter>소스 파일\MFC\View\RenderView</Filter>
+    </ClCompile>
+    <ClCompile Include="EditorView.cpp">
+      <Filter>소스 파일\MFC\View\EditorView</Filter>
+    </ClCompile>
+    <ClCompile Include="EditorManager.cpp">
+      <Filter>소스 파일\Manager\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="YamlManager.cpp">
+      <Filter>소스 파일\Manager\YAML</Filter>
+    </ClCompile>
+    <ClCompile Include="FBXManager.cpp">
+      <Filter>소스 파일\Manager\FBX</Filter>
+    </ClCompile>
+    <ClCompile Include="EditorToolScene.cpp">
+      <Filter>소스 파일\Scene\EditorToolScene</Filter>
+    </ClCompile>
+    <ClCompile Include="EditorData.cpp">
+      <Filter>소스 파일\Manager\Struct</Filter>
+    </ClCompile>
+    <ClCompile Include="FileOption.cpp">
+      <Filter>소스 파일\MFC\Dialog\Option\FileOption</Filter>
+    </ClCompile>
+    <ClCompile Include="Loading.cpp">
+      <Filter>소스 파일\MFC\Dialog\Option\Loading</Filter>
+    </ClCompile>
+    <ClCompile Include="OptionView.cpp">
+      <Filter>소스 파일\MFC\View\OptionView</Filter>
+    </ClCompile>
+    <ClCompile Include="RightOption.cpp">
+      <Filter>소스 파일\MFC\Dialog\RightOption</Filter>
+    </ClCompile>
+    <ClCompile Include="CTAP_MeshFilter.cpp">
+      <Filter>소스 파일\MFC\Dialog\TAP\TAP_MeshFileter</Filter>
+    </ClCompile>
+    <ClCompile Include="CTAP_Transform.cpp">
+      <Filter>소스 파일\MFC\Dialog\TAP\TAP_Transform</Filter>
+    </ClCompile>
+    <ClCompile Include="CTAP_Animation.cpp">
+      <Filter>소스 파일\MFC\Dialog\TAP\TAP_Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="CTAP_Particle.cpp">
+      <Filter>소스 파일\MFC\Dialog\TAP\TAP_Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="CTAP_Light.cpp">
+      <Filter>소스 파일\MFC\Dialog\TAP\TAP_Light</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneSave.cpp">
+      <Filter>소스 파일\Scene\SceneSaveLoad</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneSaveDialog.cpp">
+      <Filter>소스 파일\MFC\Dialog\SceneSave</Filter>
+    </ClCompile>
+    <ClCompile Include="AssetView.cpp">
+      <Filter>소스 파일\MFC\View\AssetView</Filter>
+    </ClCompile>
+    <ClCompile Include="E_MeshManager.cpp">
+      <Filter>소스 파일\Manager\Eater\EaterMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="E_AnimationManager.cpp">
+      <Filter>소스 파일\Manager\Eater\EaterAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="E_MaterialManager.cpp">
+      <Filter>소스 파일\Manager\Eater\EaterMaterial</Filter>
+    </ClCompile>
+    <ClCompile Include="EaterManager.cpp">
+      <Filter>소스 파일\Manager\Eater\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="E_BufferManager.cpp">
+      <Filter>소스 파일\Manager\Eater\EaterBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="E_ChangeManager.cpp">
+      <Filter>소스 파일\Manager\Eater\EaterChange</Filter>
+    </ClCompile>
+    <ClCompile Include="CamAnimation.cpp">
+      <Filter>소스 파일\MFC\Dialog\Option\CamAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneLoad.cpp">
+      <Filter>소스 파일\Scene\SceneSaveLoad</Filter>
+    </ClCompile>
+    <ClCompile Include="CTAP_Collider.cpp">
+      <Filter>소스 파일\MFC\Dialog\TAP\TAP_Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="CTAP_Rigidbody.cpp">
+      <Filter>소스 파일\MFC\Dialog\TAP\TAP_Rigidbody</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadTerrain.cpp">
+      <Filter>소스 파일\MFC\Dialog\Assets\ChangeDataType\LoadTerrain</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadNavMesh.cpp">
+      <Filter>소스 파일\MFC\Dialog\Assets\ChangeDataType\LoadNavMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="CreateMaterial.cpp">
+      <Filter>소스 파일\MFC\Dialog\Option\Material</Filter>
+    </ClCompile>
+    <ClCompile Include="AssetsDialog.cpp">
+      <Filter>소스 파일\MFC\Dialog\Assets\AssetsDialog</Filter>
+    </ClCompile>
+    <ClCompile Include="DialogFactory.cpp">
+      <Filter>소스 파일\MFC\Dialog\DialogManager\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="CustomDialog.cpp">
+      <Filter>소스 파일\MFC\Dialog\DialogManager\CustomDialog</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneSetting.cpp">
+      <Filter>소스 파일\MFC\Dialog\Option\SceneSetting</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Editor.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\Editor.rc2">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="resource.hm">
+      <Filter>헤더 파일</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\EditorDoc.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="res\Editor.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="res\Toolbar.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="res\bitmap3.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="res\fileimg.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
