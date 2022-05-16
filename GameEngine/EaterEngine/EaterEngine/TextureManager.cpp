@@ -89,7 +89,7 @@ void TextureManager::BakeConvertCubeMap(std::string& Path, float angle, bool sav
 	TextureBuffer* buffer = LoadManager::GetTexture(Name);
 
 	// 생성된 Convert Cube Map이 있다면 제거..
-	if (buffer)
+	if (buffer && apply_environment)
 	{
 		LoadManager::DeleteTexture(Name);
 		buffer = nullptr;

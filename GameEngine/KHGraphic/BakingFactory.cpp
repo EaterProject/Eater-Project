@@ -378,7 +378,7 @@ void BakingFactory::BakeConvertCubeMap(TextureBuffer* resource, float angle, boo
 	cubemapDesc.Height = origin_Desc.Height;
 	cubemapDesc.MipLevels = 1;
 	cubemapDesc.ArraySize = 6;
-	cubemapDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+	cubemapDesc.Format = origin_Desc.Format;
 	cubemapDesc.Usage = D3D11_USAGE_DEFAULT;
 	cubemapDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
 	cubemapDesc.CPUAccessFlags = 0;

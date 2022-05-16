@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="소스 파일\Image">
-      <UniqueIdentifier>{abeef8ea-824f-4750-b145-1500a86c7d7d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\ParserBase">
       <UniqueIdentifier>{399884c6-03d9-4583-8461-8543cc6ecf40}</UniqueIdentifier>
     </Filter>
@@ -27,12 +24,6 @@
     </Filter>
     <Filter Include="소스 파일\Model\ASE">
       <UniqueIdentifier>{ca0eeb09-38f3-44b7-a9e0-b4a3319ba187}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Image\Char">
-      <UniqueIdentifier>{042334ff-5b7e-44fe-9cbd-b601fb9dbf33}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Image\Float">
-      <UniqueIdentifier>{e7d4d9bc-0c1b-4099-81f5-e2d9e0e84761}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -54,12 +45,6 @@
     <ClCompile Include="ImageParser.cpp">
       <Filter>소스 파일\ParserBase</Filter>
     </ClCompile>
-    <ClCompile Include="CharImage.cpp">
-      <Filter>소스 파일\Image\Char</Filter>
-    </ClCompile>
-    <ClCompile Include="FloatImage.cpp">
-      <Filter>소스 파일\Image\Float</Filter>
-    </ClCompile>
     <ClCompile Include="ModelParser.cpp">
       <Filter>소스 파일\ParserBase</Filter>
     </ClCompile>
@@ -79,12 +64,6 @@
     </ClInclude>
     <ClInclude Include="BoneWeights.h">
       <Filter>소스 파일\Model\FBX</Filter>
-    </ClInclude>
-    <ClInclude Include="CharImage.h">
-      <Filter>소스 파일\Image\Char</Filter>
-    </ClInclude>
-    <ClInclude Include="FloatImage.h">
-      <Filter>소스 파일\Image\Float</Filter>
     </ClInclude>
     <ClInclude Include="Export\ImageParser.h">
       <Filter>소스 파일\ParserBase</Filter>

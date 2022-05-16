@@ -216,9 +216,7 @@ copy/Y "$(ProjectDir)FBX\lib\64\r\libfbxsdk.dll"   "..\\Library\lib"</Command>
     <ClCompile Include="ASEFile.cpp" />
     <ClCompile Include="BoneWeights.cpp" />
     <ClCompile Include="ASEParser.cpp" />
-    <ClCompile Include="CharImage.cpp" />
     <ClCompile Include="FBXParser.cpp" />
-    <ClCompile Include="FloatImage.cpp" />
     <ClCompile Include="ImageParser.cpp" />
     <ClCompile Include="ModelParser.cpp" />
     <ClCompile Include="Lexer.cpp" />
@@ -227,12 +225,10 @@ copy/Y "$(ProjectDir)FBX\lib\64\r\libfbxsdk.dll"   "..\\Library\lib"</Command>
     <ClInclude Include="ASEFile.h" />
     <ClInclude Include="BoneWeights.h" />
     <ClInclude Include="ASEParser.h" />
-    <ClInclude Include="CharImage.h" />
     <ClInclude Include="Export\ImageParser.h" />
     <ClInclude Include="Export\ModelParser.h" />
     <ClInclude Include="Export\ParserDLL.h" />
     <ClInclude Include="FBXParser.h" />
-    <ClInclude Include="FloatImage.h" />
     <ClInclude Include="Lexer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
