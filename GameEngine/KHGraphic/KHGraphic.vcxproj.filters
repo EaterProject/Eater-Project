@@ -513,6 +513,9 @@
     <ClInclude Include="Delegate.h">
       <Filter>소스 파일\Helper\Delegate</Filter>
     </ClInclude>
+    <ClInclude Include="RenderDataConverterBase.h">
+      <Filter>소스 파일\Converter</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="D3D11Graphic.cpp">
@@ -792,6 +795,9 @@
     </FxCompile>
     <FxCompile Include="..\Assets\Shader\Blur_Horizon_CS.hlsl">
       <Filter>소스 파일\Shader\HLSL\PostProcess\Blur</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Assets\Shader\SkyBox_Convert_PS.hlsl">
+      <Filter>소스 파일\Shader\HLSL\SkyBox</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>

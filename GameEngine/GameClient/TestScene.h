@@ -37,6 +37,8 @@ private:
 	MeshFilter* meshfilter;
 	bool up;
 
+	float angle = 0.0f;
+
 	AnimationController* AC;
 	std::vector<AnimationController*> ACList;
 };

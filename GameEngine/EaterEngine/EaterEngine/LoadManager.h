@@ -71,6 +71,7 @@ public:
 
 public:
 	void BakeSkyLightMap(std::string Path);
+	void BakeConvertCubeMap(std::string& Path, float angle, bool save_file, bool apply_skylight, bool apply_environment);
 	void BakeAnimation();
 
 public:
@@ -84,7 +85,7 @@ public:
 	static ModelAnimationData*	GetAnimationData(std::string Path);		//애니메이션 데이터를 가져옴
 
 	static TextureBuffer*		GetTexture(std::string Path);			//텍스쳐 버퍼를 가져옴
-	static SkyLightBuffer*	GetEnvironment(std::string Path);		//환경맵 버퍼를 가져옴
+	static SkyLightBuffer*		GetSkyLight(std::string Path);			//환경맵 버퍼를 가져옴
 	static MeshBuffer*			GetMeshBuffer(std::string Path);		//메쉬 버퍼 데이터를 가져옴
 	static AnimationBuffer*		GetAnimationBuffer(std::string Path);	//애니메이션 버퍼 데이터를 가져옴
 
@@ -97,6 +98,9 @@ public:
 	
 	static bool					FindModel(std::string Name);			
 	static bool					FindTexture(std::string Name);
+
+	static void					DeleteTexture(std::string Path);
+	static void					DeleteSkyLight(std::string Path);
 
 private:
 	bool	CheckFolder(std::string& Path);
@@ -111,7 +115,7 @@ private:
 	static std::map<std::string, ModelData*>			ModelDataList;
 
 	static std::map<std::string, TextureBuffer*>		TextureList;
-	static std::map<std::string, SkyLightBuffer*>	EnvironmentList;
+	static std::map<std::string, SkyLightBuffer*>		SkyLightList;
 
 	static std::map<std::string, Mesh*>					MeshBufferList;
 	static std::map<std::string, Material*>				MaterialList;

@@ -3,6 +3,7 @@
 
 interface IRenderManager;
 interface IFactoryManager;
+interface IRenderDataConverter;
 
 class KHGraphic : public GraphicEngine
 {
@@ -41,6 +42,9 @@ public:
 	void DeleteMaterial(MaterialBuffer* material) override;
 	void DeleteAnimation(AnimationBuffer* animation) override;
 
+	void DeleteTexture(TextureBuffer* resource) override;
+	void DeleteSkyLight(SkyLightBuffer* resource) override;
+
 	void Render() override;
 	void* PickingRender(int x, int y) override;
 
@@ -51,9 +55,11 @@ public:
 
 public:
 	void BakeSkyLightMap(TextureBuffer* environment, SkyLightBuffer** ppResource) override;
+	void BakeConvertCubeMap(TextureBuffer* resource, float angle, bool save_file, TextureBuffer** ppResource) override;
 
 private:
 	IFactoryManager* m_FactoryManager;
 	IRenderManager* m_RenderManager;
+	IRenderDataConverter* m_Converter;
 };
 

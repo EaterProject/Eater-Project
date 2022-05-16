@@ -18,6 +18,7 @@
  
 ====================================================================*/
 
+#include "SamplerState_Header.hlsli"
 #include "Output_Header.hlsli"
 
 #define FxaaInt2 int2
@@ -35,7 +36,6 @@ cbuffer cbFxaaFrame : register(b0)
 };
 
 Texture2D gOriginMap : register(t0);
-SamplerState gSamClampAnisotropic: register(s0);
 
 #define FxaaToFloat3(a) FxaaFloat3((a), (a), (a))
 

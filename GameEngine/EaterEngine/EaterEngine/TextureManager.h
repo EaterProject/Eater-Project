@@ -19,6 +19,7 @@ public:
 
 public:
 	void BakeSkyLightMap(std::string& Path);
+	void BakeConvertCubeMap(std::string& Path, float angle, bool save_file, bool apply_skylight, bool apply_environment);
 
 private:
 	bool CheckFolder(std::string& Path);

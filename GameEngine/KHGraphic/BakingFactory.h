@@ -14,7 +14,8 @@ public:
 
 public:
 	void PreBakeShadowMap(std::string fileName) override;
-	void PreBakeEnvironmentMap(SkyLightBuffer* tex) override;
+	void PreBakeEnvironmentMap(SkyLightBuffer* resource) override;
+	void BakeConvertCubeMap(TextureBuffer* resource, float angle, bool save_file, TextureBuffer* pResource);
 
 private:
 	void PreBakeBRDFMap();

@@ -116,7 +116,7 @@ void GraphicResourceFactory::CreateTextureBuffer(std::string path, TextureBuffer
 		std::string texName = path.substr(indexSlash, path.size() - indexSlash);
 
 		// Texture Buffer »ý¼º ¹× Data »ðÀÔ..
-		*ppResource = new TextureBuffer();
+		if((*ppResource) == nullptr) (*ppResource) = new TextureBuffer();
 		(*ppResource)->pTextureBuf = newTex;
 
 		// Debug Name..

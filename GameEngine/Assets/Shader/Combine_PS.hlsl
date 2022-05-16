@@ -1,3 +1,4 @@
+#include "SamplerState_Header.hlsli"
 #include "Output_Header.hlsli"
 #include "Function_Header.hlsli"
 
@@ -10,8 +11,6 @@ cbuffer cbDrawFinal : register(b0)
 Texture2D gOriginMap : register(t0);
 Texture2D gBloomMap : register(t1);
 Texture2D gOutLineMap : register(t2);
-
-SamplerState gSamClampLinear : register(s0);
 
 float4 Combine_PS(ScreenPixelIn pin) : SV_TARGET
 {

@@ -1,7 +1,7 @@
+#include "SamplerState_Header.hlsli"
 #include "Output_Header.hlsli"
 
 Texture2D gOriginMap : register(t0);
-SamplerState gSamClampLinear : register(s0);
 
 // Pixel shader: monochrome.
 float4 Monochrome_PS(ScreenPixelIn pin) : SV_TARGET

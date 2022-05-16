@@ -1,3 +1,6 @@
+#ifndef CONVERSION_HEADER
+#define CONVERSION_HEADER
+
 #include "Define_Header.hlsli"
 
 //--------------------------------------------------------------------------------------
@@ -63,3 +66,5 @@ float3 UintToFloat3(uint uValue)
                     ((uValue & 0x0000FF00) >> 8) / 255.0f,
                     ((uValue & 0x00FF0000) >> 16) / 255.0f);
 }
+
+#endif

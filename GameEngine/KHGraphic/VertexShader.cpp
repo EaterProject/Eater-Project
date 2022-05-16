@@ -193,15 +193,15 @@ void VertexShader::Update()
 
 	// Vertex Shader SamplerState 설정..
 	if (!m_SamplerStates.empty())
-		g_DeviceContext->VSSetSamplers(0, (UINT)m_SamplerStates.size(), m_SamplerStates[0].GetAddressOf());
+		g_DeviceContext->VSSetSamplers(0, (UINT)m_SamplerStates.size(), &m_SamplerStates[0]);
 
 	// Vertex Shader ConstantBuffer 설정..
 	if (!m_ConstantBuffers.empty())
-		g_DeviceContext->VSSetConstantBuffers(0, (UINT)m_ConstantBuffers.size(), m_ConstantBuffers[0].GetAddressOf());
+		g_DeviceContext->VSSetConstantBuffers(0, (UINT)m_ConstantBuffers.size(), &m_ConstantBuffers[0]);
 	
 	// Vertex Shader ShaderResourceView 설정..
 	if (!m_ShaderResourceViews.empty())
-		g_DeviceContext->VSSetShaderResources(0, (UINT)m_ShaderResourceViews.size(), m_ShaderResourceViews[0].GetAddressOf());
+		g_DeviceContext->VSSetShaderResources(0, (UINT)m_ShaderResourceViews.size(), &m_ShaderResourceViews[0]);
 
 	// Shader InputLayout 설정.. 
 	g_DeviceContext->IASetInputLayout(m_InputLayout.Get());
@@ -214,15 +214,15 @@ void VertexShader::Update(ID3D11DeviceContext* context)
 
 	// Vertex Shader SamplerState 설정..
 	if (!m_SamplerStates.empty())
-		context->VSSetSamplers(0, (UINT)m_SamplerStates.size(), m_SamplerStates[0].GetAddressOf());
+		context->VSSetSamplers(0, (UINT)m_SamplerStates.size(), &m_SamplerStates[0]);
 
 	// Vertex Shader ConstantBuffer 설정..
 	if (!m_ConstantBuffers.empty())
-		context->VSSetConstantBuffers(0, (UINT)m_ConstantBuffers.size(), m_ConstantBuffers[0].GetAddressOf());
+		context->VSSetConstantBuffers(0, (UINT)m_ConstantBuffers.size(), &m_ConstantBuffers[0]);
 
 	// Vertex Shader ShaderResourceView 설정..
 	if (!m_ShaderResourceViews.empty())
-		context->VSSetShaderResources(0, (UINT)m_ShaderResourceViews.size(), m_ShaderResourceViews[0].GetAddressOf());
+		context->VSSetShaderResources(0, (UINT)m_ShaderResourceViews.size(), &m_ShaderResourceViews[0]);
 
 	// Shader InputLayout 설정.. 
 	context->IASetInputLayout(m_InputLayout.Get());

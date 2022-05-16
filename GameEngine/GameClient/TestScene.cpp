@@ -370,4 +370,19 @@ void TestScene::ChangeCubeMap()
 	{
 		meshfilter->SetMaterialPropertyBlock(false);
 	}
+	if (GetKey('7'))
+	{
+		angle += 1.0f;
+
+		if (angle > 360.0f)
+		{
+			angle -= 360.0f;
+		}
+
+		SetConvertCubeMap("TestHDR", angle, true, true);
+	}
+	if (GetKeyUp('8'))
+	{
+		BakeConvertCubeMap("TestHDR", angle);
+	}
 }

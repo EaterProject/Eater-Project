@@ -20,12 +20,11 @@ class DebugPass;
 
 class RenderData;
 class InstanceLayer;
-class RenderDataConverter;
 
 class RenderManager : public IRenderManager
 {
 public:
-	RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, IGraphicResourceManager* resource, IShaderManager* shader, RenderOption* renderOption);
+	RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, IGraphicResourceManager* resource, IShaderManager* shader, IRenderDataConverter* converter, RenderOption* renderOption);
 	~RenderManager();
 
 public:
@@ -123,7 +122,7 @@ private:
 	InstanceLayer* m_InstanceLayer;
 	RenderData* m_RenderData;
 
-	RenderDataConverter* m_Converter;
+	IRenderDataConverter* m_Converter;
 
 	RenderOption* m_RenderOption;
 	RenderOption m_NowRenderOption;

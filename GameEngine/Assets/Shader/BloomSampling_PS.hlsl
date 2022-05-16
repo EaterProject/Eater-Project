@@ -1,10 +1,9 @@
 #define GAUSSIAN_RADIUS 4
+#include "SamplerState_Header.hlsli"
 #include "Output_Header.hlsli"
 
 Texture2D gOriginMap : register(t0);
 Texture2D gDownMap : register(t1);
-SamplerState gSamClampLinear : register(s0);
-SamplerState gSamBorderLinear : register(s1);
 
 cbuffer cbBloomBright : register(b0)
 {

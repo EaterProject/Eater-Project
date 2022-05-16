@@ -404,6 +404,11 @@ void GameEngine::BakeSkyLightMap(std::string& Path)
 	mLoadManager->BakeSkyLightMap(Path);
 }
 
+void GameEngine::BakeConvertCubeMap(std::string& Path, float angle, bool save_file, bool apply_skylight, bool apply_environment)
+{
+	mLoadManager->BakeConvertCubeMap(Path, angle, save_file, apply_skylight, apply_environment);
+}
+
 void GameEngine::BakeAnimation()
 {
 	mLoadManager->BakeAnimation();
@@ -418,7 +423,7 @@ void GameEngine::SetEnvironment(std::string& Path)
 
 void GameEngine::SetSkyLight(std::string& Path)
 {
-	SkyLightBuffer* skyLight = mLoadManager->GetEnvironment(Path);
+	SkyLightBuffer* skyLight = mLoadManager->GetSkyLight(Path);
 
 	mGraphicManager->SetSkyLight(skyLight);
 }

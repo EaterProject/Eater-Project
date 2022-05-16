@@ -7,6 +7,8 @@
 #include "ResourceManager.h"
 #include "RenderManager.h"
 #include "FactoryManager.h"
+#include "RenderDataConverter.h"
+#include "atlbase.h"
 
 KHGraphic::KHGraphic()
 	:m_FactoryManager(nullptr), m_RenderManager(nullptr)
@@ -33,8 +35,11 @@ void KHGraphic::Initialize(HWND hwnd, int screenWidth, int screenHeight, RenderO
 	// Resource Factory 持失..
 	FactoryManager* factory = new FactoryManager(graphic, shader, resource);
 
+	// Render Data Converter 持失..
+	RenderDataConverter* converter = new RenderDataConverter();
+
 	// Render Manager 持失..
-	RenderManager* renderer = new RenderManager(graphic, factory, resource, shader, renderOption);
+	RenderManager* renderer = new RenderManager(graphic, factory, resource, shader, converter, renderOption);
 
 	// Initialize..
 	factory->Create(screenWidth, screenHeight);
@@ -51,6 +56,7 @@ void KHGraphic::Initialize(HWND hwnd, int screenWidth, int screenHeight, RenderO
 	// Pointer 竺舛..
 	m_FactoryManager = factory;
 	m_RenderManager = renderer;
+	m_Converter = converter;
 }
 
 void KHGraphic::OnReSize(int screenWidth, int screenHeight)
@@ -148,6 +154,28 @@ void KHGraphic::DeleteAnimation(AnimationBuffer* animation)
 	m_RenderManager->DeleteAnimation(animation);
 }
 
+void KHGraphic::DeleteTexture(TextureBuffer* resource)
+{
+	ID3D11ShaderResourceView* texture = (ID3D11ShaderResourceView*)resource->pTextureBuf;
+
+	RELEASE_COM(texture);
+
+	resource->pTextureBuf = nullptr;
+}
+
+void KHGraphic::DeleteSkyLight(SkyLightBuffer* resource)
+{
+	ID3D11ShaderResourceView* irradiance = (ID3D11ShaderResourceView*)resource->Irradiance->pTextureBuf;
+	ID3D11ShaderResourceView* prefilter = (ID3D11ShaderResourceView*)resource->Prefilter->pTextureBuf;
+	
+	RELEASE_COM(irradiance);
+	RELEASE_COM(prefilter);
+
+	resource->Environment = nullptr;
+	resource->Irradiance->pTextureBuf = nullptr;
+	resource->Prefilter->pTextureBuf = nullptr;
+}
+
 void KHGraphic::Render()
 {
 	m_RenderManager->Render();
@@ -176,4 +204,9 @@ void KHGraphic::CreateAnimationBuffer(ModelData* model, ModelAnimationData* anim
 void KHGraphic::BakeSkyLightMap(TextureBuffer* environment, SkyLightBuffer** ppResource)
 {
 	m_FactoryManager->BakeSkyLightMap(environment, ppResource);
+}
+
+void KHGraphic::BakeConvertCubeMap(TextureBuffer* resource, float angle, bool save_file, TextureBuffer** ppResource)
+{
+	m_FactoryManager->BakeConvertCubeMap(resource, angle, save_file, ppResource);
 }

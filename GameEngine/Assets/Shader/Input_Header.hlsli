@@ -1,3 +1,5 @@
+#ifndef INPUT_HEADER
+#define INPUT_HEADER
 
 // Mesh Position Vertex Shader Input & Output Data Struct
 struct MeshPosVertexIn
@@ -135,3 +137,5 @@ struct DebugTextureVertexOut
     float4 PosH : SV_POSITION;
     float2 Tex : TEXCOORD;
 };
+
+#endif

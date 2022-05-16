@@ -1,8 +1,8 @@
+#include "SamplerState_Header.hlsli"
 #include "Output_Header.hlsli"
 #include "IBL_Header.hlsli"
 
 TextureCube gSkyCube		: register(t0);
-SamplerState gSamWrapLinear : register(s0);
 
 cbuffer cbExternalData : register(b0) 
 {

@@ -227,6 +227,7 @@ copy/Y "$(ProjectDir)Export\*.h"   "$(SolutionDir)Library\inc\Graphic"</Command>
     <ClInclude Include="DeferredPass.h" />
     <ClInclude Include="DepthStencil.h" />
     <ClInclude Include="InstanceBufferDefine.h" />
+    <ClInclude Include="RenderDataConverterBase.h" />
     <ClInclude Include="LightPass.h" />
     <ClInclude Include="MathDefine.h" />
     <ClInclude Include="OITPass.h" />
@@ -586,6 +587,10 @@ copy/Y "$(ProjectDir)Export\*.h"   "$(SolutionDir)Library\inc\Graphic"</Command>
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">SkinMesh_VS</EntryPointName>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="..\Assets\Shader\SkyBox_Convert_PS.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
     <FxCompile Include="..\Assets\Shader\SkyBox_PS.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>

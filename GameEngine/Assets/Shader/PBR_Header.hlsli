@@ -1,3 +1,6 @@
+#ifndef PBR_HEADER
+#define PBR_HEADER
+
 #include "Define_Header.hlsli"
 #include "Light_Header.hlsli"
 
@@ -239,3 +242,5 @@ float3 PBR_SpotLight(
     
     return acc_color;
 }
+
+#endif

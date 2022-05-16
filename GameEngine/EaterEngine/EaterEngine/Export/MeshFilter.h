@@ -72,6 +72,9 @@ public:
 	Material* m_Material;
 
 private:
+	MaterialPropertyBlock* m_PropertyBlock;
+
+private:
 	//Transform을 연결한다
 	void LinkHierarchy(Transform* my,Transform*parent);
 

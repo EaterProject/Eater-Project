@@ -1,8 +1,8 @@
+#include "SamplerState_Header.hlsli"
 #include "Output_Header.hlsli"
 #include "Define_Header.hlsli"
 
 TextureCube gSkyCube		: register(t0);
-SamplerState gSamWrapLinear : register(s0);
 
 float4 IBL_Convolution_PS(SkyBoxPixelIn pin) : SV_TARGET
 {

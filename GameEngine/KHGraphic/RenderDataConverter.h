@@ -1,5 +1,6 @@
 #pragma once
 #include <unordered_map>
+#include "RenderDataConverterBase.h"
 
 /// 2022/03/19 20:00
 /// SeoKyuHwang
@@ -18,47 +19,47 @@
 ///  4) 실질적인 Resource Instance Layer 관리는 위 클래스에서 하고 
 ///     해당 Layer를 참조하여 Render Manager에서 Rendering만 한다.
 
-class RenderDataConverter
+class RenderDataConverter : public IRenderDataConverter
 {
 public:
 	RenderDataConverter();
 	~RenderDataConverter();
 
 public:
-	void ConvertMeshData(MeshData* originData, RenderData* renderData);		// Mesh Data -> Render Data 변환..
-	void ConvertRenderData(MeshData* originData, RenderData* renderData);	// Mesh Data -> Render Data 변환..
+	void ConvertMeshData(MeshData* originData, RenderData* renderData) override;	// Mesh Data -> Render Data 변환..
+	void ConvertRenderData(MeshData* originData, RenderData* renderData) override;	// Mesh Data -> Render Data 변환..
 	
-	void ResourceUpdate();		// 현재 프레임에 생성 & 삽입 Resource Update..
+	void ResourceUpdate() override;		// 현재 프레임에 생성 & 삽입 Resource Update..
 
-	void Release();
-
-public:
-	void PushMesh(MeshBuffer* mesh);						// 현재 프레임에 생성된 Mesh 임시 Queue에 삽입..
-	void PushMaterial(MaterialBuffer* material);			// 현재 프레임에 생성된 Material 임시 Queue에 삽입..
-	void PushAnimation(AnimationBuffer* animation);			// 현재 프레임에 생성된 Animation 임시 Queue에 삽입..
+	void Release() override;
 
 public:
-	void PushChangeMesh(MeshBuffer* mesh);					// 현재 프레임에 변경된 Mesh 임시 Queue에 삽입..
-	void PushChangeMaterial(MaterialBuffer* material);		// 현재 프레임에 변경된 Material 임시 Queue에 삽입..
-	void PushChangeAnimation(AnimationBuffer* animation);	// 현재 프레임에 생성된 Animation 임시 Queue에 삽입..
+	void PushMesh(MeshBuffer* mesh) override;						// 현재 프레임에 생성된 Mesh 임시 Queue에 삽입..
+	void PushMaterial(MaterialBuffer* material) override;			// 현재 프레임에 생성된 Material 임시 Queue에 삽입..
+	void PushAnimation(AnimationBuffer* animation) override;		// 현재 프레임에 생성된 Animation 임시 Queue에 삽입..
 
 public:
-	void DeleteRenderData(UINT index);						// 해당 Render Data 즉시 제거..
-	void DeleteInstance(UINT index);						// 해당 Instance Resource 즉시 제거..
-	void DeleteMesh(UINT index);							// 해당 Mesh Resource 즉시 제거..
-	void DeleteMaterial(UINT index);						// 해당 Material Resource 즉시 제거..
-	void DeleteAnimation(UINT index);						// 해당 Animation Resource 즉시 제거..
+	void PushChangeMesh(MeshBuffer* mesh) override;					// 현재 프레임에 변경된 Mesh 임시 Queue에 삽입..
+	void PushChangeMaterial(MaterialBuffer* material) override;		// 현재 프레임에 변경된 Material 임시 Queue에 삽입..
+	void PushChangeAnimation(AnimationBuffer* animation) override;	// 현재 프레임에 생성된 Animation 임시 Queue에 삽입..
 
 public:
-	size_t FindMaxInstanceCount();							// 모든 Layer 내부의 Instance 개수 중 제일 큰 개수 반환..
+	void DeleteRenderData(UINT index) override;						// 해당 Render Data 즉시 제거..
+	void DeleteInstance(UINT index) override;						// 해당 Instance Resource 즉시 제거..
+	void DeleteMesh(UINT index) override;							// 해당 Mesh Resource 즉시 제거..
+	void DeleteMaterial(UINT index) override;						// 해당 Material Resource 즉시 제거..
+	void DeleteAnimation(UINT index) override;						// 해당 Animation Resource 즉시 제거..
 
 public:
-	RenderData* GetRenderData(int index);					// Render Data 고유 Index로 검색..
-	MeshRenderBuffer* GetMesh(int index);					// Mesh Resource 고유 Index로 검색..
-	MaterialRenderBuffer* GetMaterial(int index);			// Material Resource 고유 Index로 검색..
-	AnimationRenderBuffer* GetAnimation(int index);			// Animation Resource 고유 Index로 검색..
-	InstanceRenderBuffer* GetInstance(int index);			// Instance Resource 고유 Index로 검색..
-	InstanceLayer* GetLayer(int index);						// Layer Resource 고유 Index로 검색..
+	size_t FindMaxInstanceCount() override;							// 모든 Layer 내부의 Instance 개수 중 제일 큰 개수 반환..
+
+public:
+	RenderData* GetRenderData(int index) override;					// Render Data 고유 Index로 검색..
+	MeshRenderBuffer* GetMesh(int index) override;					// Mesh Resource 고유 Index로 검색..
+	MaterialRenderBuffer* GetMaterial(int index) override;			// Material Resource 고유 Index로 검색..
+	AnimationRenderBuffer* GetAnimation(int index) override;		// Animation Resource 고유 Index로 검색..
+	InstanceRenderBuffer* GetInstance(int index) override;			// Instance Resource 고유 Index로 검색..
+	InstanceLayer* GetLayer(int index) override;					// Layer Resource 고유 Index로 검색..
 
 private:
 	void ConvertPushResource();			// 현재 프레임에 생성된 Resource Update..

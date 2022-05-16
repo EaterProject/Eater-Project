@@ -242,7 +242,6 @@ struct CB_FxaaFrame : public cbFxaaFrame
 //// SkyBox Constant Buffer
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-/// 필요 없을듯
 SHADER_CONSTANT_BUFFER(cbCubeObject)
 struct CB_CubeObject : public cbCubeObject
 {

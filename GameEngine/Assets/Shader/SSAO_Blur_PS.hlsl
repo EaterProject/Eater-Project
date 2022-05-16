@@ -1,3 +1,5 @@
+#include "SamplerState_Header.hlsli"
+
 cbuffer cbBlurTexel : register(b0)
 {
     float2 gTexelSize	: packoffset(c0.x);
@@ -13,9 +15,6 @@ static int gBlurRadius = 5;
 
 Texture2D gNormalDepthRT : register(t0);
 Texture2D gInputMap	: register(t1);
-
-SamplerState gSamClampLinearPoint : register(s0);
-SamplerState gSamBorderLinearPoint : register(s1);
 
 struct VertexIn
 {

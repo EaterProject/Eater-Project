@@ -8,6 +8,7 @@
 #include "FactoryManagerBase.h"
 #include "ResourceManager.h"
 #include "RenderPassBase.h"
+#include "RenderDataConverterBase.h"
 #include "RenderManager.h"
 
 #include "ShaderBase.h"
@@ -36,13 +37,12 @@
 #include "OutLinePass.h"
 #include "DebugPass.h"
 
-#include "RenderDataConverter.h"
 
 #include <algorithm>
 
 #include "./Profiler/Profiler.h"
 
-RenderManager::RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, IGraphicResourceManager* resource, IShaderManager* shader, RenderOption* renderOption)
+RenderManager::RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, IGraphicResourceManager* resource, IShaderManager* shader, IRenderDataConverter* converter, RenderOption* renderOption)
 {
 	// Rendering Initialize..
 	RenderPassBase::Initialize(graphic->GetDevice(), graphic->GetContext(), factory, resource, shader, renderOption);
@@ -50,7 +50,7 @@ RenderManager::RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, I
 	m_SwapChain = graphic->GetSwapChain();
 
 	// Render Data Converter 持失..
-	m_Converter = new RenderDataConverter();
+	m_Converter = converter;
 
 	// Render Pass 持失..
 	m_Deferred		= new DeferredPass();

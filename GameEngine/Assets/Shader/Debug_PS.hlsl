@@ -1,3 +1,4 @@
+#include "SamplerState_Header.hlsli"
 #include "Output_Header.hlsli"
 
 cbuffer cbDebugOption : register(b0)
@@ -6,7 +7,6 @@ cbuffer cbDebugOption : register(b0)
 }
 
 Texture2D gDiffuseMap : register(t0);
-SamplerState gSamBorderLinear : register(s0);
 
 float4 Debug_PS(DebugLinePixelIn pin) : SV_TARGET
 {

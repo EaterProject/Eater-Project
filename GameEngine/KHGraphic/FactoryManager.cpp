@@ -60,10 +60,18 @@ void FactoryManager::BakeShadowMap(std::string fileName)
 void FactoryManager::BakeSkyLightMap(TextureBuffer* skyLight, SkyLightBuffer** ppResource)
 {
 	// 货肺款 Environment Buffer 积己..
-	(*ppResource) = new SkyLightBuffer();
+	if(*ppResource == nullptr) (*ppResource) = new SkyLightBuffer();
 	(*ppResource)->Environment = skyLight;
 
 	m_BakingFactory->PreBakeEnvironmentMap(*ppResource);
+}
+
+void FactoryManager::BakeConvertCubeMap(TextureBuffer* resource, float angle, bool save_file, TextureBuffer** ppResource)
+{
+	// 货肺款 Texture Buffer 积己..
+	if (*ppResource == nullptr) (*ppResource) = new TextureBuffer();
+
+	m_BakingFactory->BakeConvertCubeMap(resource, angle, save_file, *ppResource);
 }
 
 void FactoryManager::CreateImg(std::string name, Hash_Code hash_code, std::string fileName)

@@ -58,9 +58,9 @@ void BakingFactory::PreBakeBRDFMap()
 {
 	// 货肺款 Resource Pointer 积己..
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext> context = g_Graphic->GetContext();
-	Microsoft::WRL::ComPtr<ID3D11Texture2D> brdflutTex2D = nullptr;
-	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> brdflutRTV = nullptr;
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> brdflutSRV = nullptr;
+	ID3D11Texture2D* brdflutTex2D = nullptr;
+	ID3D11RenderTargetView* brdflutRTV = nullptr;
+	ID3D11ShaderResourceView* brdflutSRV = nullptr;
 	
 	DrawBuffer* quadDB = g_ResourceManager->GetDrawBuffer<DB_Quad>();
 	VertexShader* screenVS = g_ShaderManager->GetShader("Screen_VS");
@@ -100,20 +100,20 @@ void BakingFactory::PreBakeBRDFMap()
 	brdflutViewport.TopLeftX = 0.0f;
 	brdflutViewport.TopLeftY = 0.0f;
 
-	g_Graphic->CreateTexture2D(&brdflutDesc, nullptr, brdflutTex2D.GetAddressOf());
-	g_Graphic->CreateRenderTargetView(brdflutTex2D.Get(), &brdflutRTVDesc, brdflutRTV.GetAddressOf());
-	g_Graphic->CreateShaderResourceView(brdflutTex2D.Get(), &brdflutSRVDesc, brdflutSRV.GetAddressOf());
+	g_Graphic->CreateTexture2D(&brdflutDesc, nullptr, &brdflutTex2D);
+	g_Graphic->CreateRenderTargetView(brdflutTex2D, &brdflutRTVDesc, &brdflutRTV);
+	g_Graphic->CreateShaderResourceView(brdflutTex2D, &brdflutSRVDesc, &brdflutSRV);
 
 	// ShaderResourceView 积己..
-	ShaderResourceView* newResource = new ShaderResourceView(gBRDFlut::GetHashCode(), brdflutSRV.Get());
+	ShaderResourceView* newResource = new ShaderResourceView(gBRDFlut::GetHashCode(), brdflutSRV);
 
 	// Resource 殿废..
 	g_ResourceManager->AddResource<gBRDFlut>(newResource);
 
 	// BRDF LUT Texture Create..
-	context->OMSetRenderTargets(1, brdflutRTV.GetAddressOf(), 0);
+	context->OMSetRenderTargets(1, &brdflutRTV, 0);
 	context->RSSetViewports(1, &brdflutViewport);
-	context->ClearRenderTargetView(brdflutRTV.Get(), reinterpret_cast<const float*>(&DXColors::DeepDarkGray));
+	context->ClearRenderTargetView(brdflutRTV, reinterpret_cast<const float*>(&DXColors::DeepDarkGray));
 
 	screenVS->Update();
 
@@ -126,31 +126,30 @@ void BakingFactory::PreBakeBRDFMap()
 	context->DrawIndexed(quadDB->IndexCount, 0, 0);
 
 	// Save Texture..
-	g_Graphic->SaveTextureDDS(brdflutSRV.Get(), "BRDF_LUT");
+	//g_Graphic->SaveTextureDDS(brdflutSRV, "BRDF_LUT");
 
 	// Debug Name..
 	CPU_RESOURCE_DEBUG_NAME(newResource, "gBRDFlut");
 
-	GPU_RESOURCE_DEBUG_NAME(brdflutSRV.Get(), "gBRDFlut");
+	GPU_RESOURCE_DEBUG_NAME(brdflutSRV, "gBRDFlut");
 
 	RESET_COM(context);
-	RESET_COM(brdflutSRV);
 	RELEASE_COM(brdflutRTV);
 	RELEASE_COM(brdflutTex2D);
 }
 
-void BakingFactory::PreBakeEnvironmentMap(SkyLightBuffer* tex)
+void BakingFactory::PreBakeEnvironmentMap(SkyLightBuffer* resource)
 {
-	if (tex == nullptr) return;
+	if (resource == nullptr) return;
 
 	// 货肺款 Resource Pointer 积己..
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext> context = g_Graphic->GetContext();
-	Microsoft::WRL::ComPtr<ID3D11Texture2D> irradianceTex2D = nullptr;
-	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> irradianceRTV = nullptr;
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> irradianceSRV = nullptr;
-	Microsoft::WRL::ComPtr<ID3D11Texture2D> prefilterTex2D = nullptr;
-	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> prefilterRTV = nullptr;
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> prefilterSRV = nullptr;
+	ID3D11Texture2D* irradianceTex2D = nullptr;
+	ID3D11RenderTargetView* irradianceRTV = nullptr;
+	ID3D11ShaderResourceView* irradianceSRV = nullptr;
+	ID3D11Texture2D* prefilterTex2D = nullptr;
+	ID3D11RenderTargetView* prefilterRTV = nullptr;
+	ID3D11ShaderResourceView* prefilterSRV = nullptr;
 
 	D3D11_TEXTURE2D_DESC irradianceDesc;
 	ZeroMemory(&irradianceDesc, sizeof(irradianceDesc));
@@ -191,8 +190,8 @@ void BakingFactory::PreBakeEnvironmentMap(SkyLightBuffer* tex)
 	unsigned int maxMipLevels = 5;
 	D3D11_TEXTURE2D_DESC prefilterDesc;
 	ZeroMemory(&prefilterDesc, sizeof(prefilterDesc));
-	prefilterDesc.Width = 256;
-	prefilterDesc.Height = 256;
+	prefilterDesc.Width = 512;
+	prefilterDesc.Height = 512;
 	prefilterDesc.MipLevels = maxMipLevels;
 	prefilterDesc.ArraySize = 6;
 	prefilterDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
@@ -225,15 +224,15 @@ void BakingFactory::PreBakeEnvironmentMap(SkyLightBuffer* tex)
 	prefilterViewport.TopLeftX = 0.0f;
 	prefilterViewport.TopLeftY = 0.0f;
 
-	g_Graphic->CreateTexture2D(&irradianceDesc, nullptr, irradianceTex2D.GetAddressOf());
-	g_Graphic->CreateTexture2D(&prefilterDesc, nullptr, prefilterTex2D.GetAddressOf());
-	g_Graphic->CreateShaderResourceView(irradianceTex2D.Get(), &irradianceSRVDesc, irradianceSRV.GetAddressOf());
-	g_Graphic->CreateShaderResourceView(prefilterTex2D.Get(), &prefilterSRVDesc, prefilterSRV.GetAddressOf());
+	g_Graphic->CreateTexture2D(&irradianceDesc, nullptr, &irradianceTex2D);
+	g_Graphic->CreateTexture2D(&prefilterDesc, nullptr, &prefilterTex2D);
+	g_Graphic->CreateShaderResourceView(irradianceTex2D, &irradianceSRVDesc, &irradianceSRV);
+	g_Graphic->CreateShaderResourceView(prefilterTex2D, &prefilterSRVDesc, &prefilterSRV);
 
 	XMVECTOR tar[] = { XMVectorSet(1, 0, 0, 0), XMVectorSet(-1, 0, 0, 0), XMVectorSet(0, 1, 0, 0), XMVectorSet(0, -1, 0, 0), XMVectorSet(0, 0, 1, 0), XMVectorSet(0, 0, -1, 0) };
 	XMVECTOR up[] = { XMVectorSet(0, 1, 0, 0), XMVectorSet(0, 1, 0, 0), XMVectorSet(0, 0, -1, 0), XMVectorSet(0, 0, 1, 0), XMVectorSet(0, 1, 0, 0), XMVectorSet(0, 1, 0, 0) };
 
-	ID3D11ShaderResourceView* skycube		= (ID3D11ShaderResourceView*)tex->Environment->pTextureBuf;
+	ID3D11ShaderResourceView* skycube		= (ID3D11ShaderResourceView*)resource->Environment->pTextureBuf;
 	ID3D11RasterizerState* cubemapRS		= g_ResourceManager->GetRasterizerState<RS_CubeMap>()->Get();
 	ID3D11DepthStencilState* cubemapDSS		= g_ResourceManager->GetDepthStencilState<DSS_CubeMap>()->Get();
 
@@ -245,22 +244,22 @@ void BakingFactory::PreBakeEnvironmentMap(SkyLightBuffer* tex)
 
 	context->OMSetDepthStencilState(cubemapDSS, 0);
 	context->RSSetState(cubemapRS);
-	context->GenerateMips(prefilterSRV.Get());
+	context->GenerateMips(prefilterSRV);
 
 	// Irradiance IBL EnvMap Create..
 	for (unsigned int i = 0; i < 6; i++)
 	{
 		irradianceRTVDesc.Texture2DArray.FirstArraySlice = i;
-		g_Graphic->CreateRenderTargetView(irradianceTex2D.Get(), &irradianceRTVDesc, irradianceRTV.GetAddressOf());
+		g_Graphic->CreateRenderTargetView(irradianceTex2D, &irradianceRTVDesc, &irradianceRTV);
 
 		XMVECTOR dir = XMVector3Rotate(tar[i], XMQuaternionIdentity());
 
 		XMMATRIX view = DirectX::XMMatrixLookToLH(XMVectorSet(0, 0, 0, 0), dir, up[i]);
 		XMMATRIX proj = DirectX::XMMatrixPerspectiveFovLH(0.5f * XM_PI, 1.0f, 0.1f, 4000.0f);
 
-		context->OMSetRenderTargets(1, irradianceRTV.GetAddressOf(), 0);
+		context->OMSetRenderTargets(1, &irradianceRTV, 0);
 		context->RSSetViewports(1, &irradianceViewport);
-		context->ClearRenderTargetView(irradianceRTV.Get(), reinterpret_cast<const float*>(&DXColors::DeepDarkGray));
+		context->ClearRenderTargetView(irradianceRTV, reinterpret_cast<const float*>(&DXColors::DeepDarkGray));
 
 		CB_CubeObject cubeBuf;
 		cubeBuf.gCubeWorldViewProj = view * proj;
@@ -285,23 +284,23 @@ void BakingFactory::PreBakeEnvironmentMap(SkyLightBuffer* tex)
 	{
 		prefilterRTVDesc.Texture2DArray.MipSlice = mip;
 
-		prefilterViewport.Width = 256.0f * powf(0.5f, (float)mip);
-		prefilterViewport.Height = 256.0f * powf(0.5f, (float)mip);
+		prefilterViewport.Width = 512.0f * powf(0.5f, (float)mip);
+		prefilterViewport.Height = 512.0f * powf(0.5f, (float)mip);
 
 		float roughness = (float)mip / (float)(maxMipLevels - 1);
 		for (int i = 0; i < 6; i++)
 		{
 			prefilterRTVDesc.Texture2DArray.FirstArraySlice = i;
-			g_Graphic->CreateRenderTargetView(prefilterTex2D.Get(), &prefilterRTVDesc, prefilterRTV.GetAddressOf());
+			g_Graphic->CreateRenderTargetView(prefilterTex2D, &prefilterRTVDesc, &prefilterRTV);
 
 			XMVECTOR dir = XMVector3Rotate(tar[i], XMQuaternionIdentity());
 
 			XMMATRIX view = DirectX::XMMatrixLookToLH(XMVectorSet(0, 0, 0, 0), dir, up[i]);
 			XMMATRIX proj = DirectX::XMMatrixPerspectiveFovLH(0.5f * XM_PI, 1.0f, 0.1f, 4000.0f);
 
-			context->OMSetRenderTargets(1, prefilterRTV.GetAddressOf(), 0);
+			context->OMSetRenderTargets(1, &prefilterRTV, 0);
 			context->RSSetViewports(1, &prefilterViewport);
-			context->ClearRenderTargetView(prefilterRTV.Get(), reinterpret_cast<const float*>(&DXColors::DeepDarkGray));
+			context->ClearRenderTargetView(prefilterRTV, reinterpret_cast<const float*>(&DXColors::DeepDarkGray));
 
 			CB_CubeObject cubeBuf;
 			cubeBuf.gCubeWorldViewProj = view * proj;
@@ -326,23 +325,144 @@ void BakingFactory::PreBakeEnvironmentMap(SkyLightBuffer* tex)
 		}
 	}
 
-	g_Graphic->SaveTextureDDS(irradianceSRV.Get(), std::string(tex->Environment->Name + "_Irradiance").c_str());
-	g_Graphic->SaveTextureDDS(prefilterSRV.Get(), std::string(tex->Environment->Name + "_Prefilter").c_str());
+	//g_Graphic->SaveTextureDDS(irradianceSRV.Get(), std::string(resource->Environment->Name + "_Irradiance").c_str());
+	//g_Graphic->SaveTextureDDS(prefilterSRV.Get(), std::string(resource->Environment->Name + "_Prefilter").c_str());
 
 	// Debug Name..
-	GPU_RESOURCE_DEBUG_NAME(irradianceSRV.Get(), "gIBLIrradiance");
-	GPU_RESOURCE_DEBUG_NAME(prefilterSRV.Get(), "gIBLPrefilter");
+	GPU_RESOURCE_DEBUG_NAME(irradianceSRV, "gIBLIrradiance");
+	GPU_RESOURCE_DEBUG_NAME(prefilterSRV, "gIBLPrefilter");
 
 	// Resource 火涝..
-	tex->Irradiance = new TextureBuffer();
-	tex->Irradiance->pTextureBuf = irradianceSRV.Detach();
+	if (resource->Irradiance == nullptr) resource->Irradiance = new TextureBuffer();
+	resource->Irradiance->pTextureBuf = irradianceSRV;
+	
+	if (resource->Prefilter == nullptr) resource->Prefilter = new TextureBuffer();
+	resource->Prefilter->pTextureBuf = prefilterSRV;
 
-	tex->Prefilter = new TextureBuffer();
-	tex->Prefilter->pTextureBuf = prefilterSRV.Detach();
-
+	// Resouce 秦力..
 	RESET_COM(context);
-	RESET_COM(irradianceSRV);
-	RESET_COM(prefilterSRV);
 	RELEASE_COM(irradianceTex2D);
 	RELEASE_COM(prefilterTex2D);
+}
+
+void BakingFactory::BakeConvertCubeMap(TextureBuffer* resource, float angle, bool save_file, TextureBuffer* pResource)
+{
+	if (resource == nullptr) return;
+
+	if (resource->pTextureBuf == nullptr) return;
+
+	// 货肺款 Resource Pointer 积己..
+	Microsoft::WRL::ComPtr<ID3D11DeviceContext> context = g_Graphic->GetContext();
+	ID3D11Texture2D* cubemapTex2D = nullptr;
+	ID3D11RenderTargetView* cubemapRTV = nullptr;
+	ID3D11ShaderResourceView* cubemapSRV = nullptr;
+
+	ID3D11ShaderResourceView* skycube = (ID3D11ShaderResourceView*)resource->pTextureBuf;
+	ID3D11RasterizerState* cubemapRS = g_ResourceManager->GetRasterizerState<RS_CubeMap>()->Get();
+	ID3D11DepthStencilState* cubemapDSS = g_ResourceManager->GetDepthStencilState<DSS_CubeMap>()->Get();
+
+	DrawBuffer* boxDB = g_ResourceManager->GetDrawBuffer<DB_Box>();
+
+	VertexShader* cubemap_VS = g_ShaderManager->GetShader("SkyBox_VS");
+	PixelShader* cubemap_convert_PS = g_ShaderManager->GetShader("SkyBox_Convert_PS");
+	
+	ID3D11Resource* origin_Tex2D = nullptr;
+	skycube->GetResource(&origin_Tex2D);
+
+	D3D11_TEXTURE2D_DESC origin_Desc;
+	((ID3D11Texture2D*)origin_Tex2D)->GetDesc(&origin_Desc);
+
+	D3D11_TEXTURE2D_DESC cubemapDesc;
+	ZeroMemory(&cubemapDesc, sizeof(cubemapDesc));
+	cubemapDesc.Width = origin_Desc.Width;
+	cubemapDesc.Height = origin_Desc.Height;
+	cubemapDesc.MipLevels = 1;
+	cubemapDesc.ArraySize = 6;
+	cubemapDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+	cubemapDesc.Usage = D3D11_USAGE_DEFAULT;
+	cubemapDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
+	cubemapDesc.CPUAccessFlags = 0;
+	cubemapDesc.MiscFlags = D3D11_RESOURCE_MISC_TEXTURECUBE | D3D11_RESOURCE_MISC_GENERATE_MIPS;
+	cubemapDesc.SampleDesc.Count = 1;
+	cubemapDesc.SampleDesc.Quality = 0;
+
+	D3D11_SHADER_RESOURCE_VIEW_DESC cubemapSRVDesc;
+	ZeroMemory(&cubemapSRVDesc, sizeof(cubemapSRVDesc));
+	cubemapSRVDesc.Format = cubemapDesc.Format;
+	cubemapSRVDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURECUBE;
+	cubemapSRVDesc.TextureCube.MostDetailedMip = 0;
+	cubemapSRVDesc.TextureCube.MipLevels = 1;
+
+	D3D11_RENDER_TARGET_VIEW_DESC cubemapRTVDesc;
+	ZeroMemory(&cubemapRTVDesc, sizeof(cubemapRTVDesc));
+	cubemapRTVDesc.Format = cubemapDesc.Format;
+	cubemapRTVDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2DARRAY;
+	cubemapRTVDesc.Texture2DArray.ArraySize = 1;
+	cubemapRTVDesc.Texture2DArray.MipSlice = 0;
+
+	D3D11_VIEWPORT cubemapViewport;
+	cubemapViewport.Width = origin_Desc.Width;
+	cubemapViewport.Height = origin_Desc.Height;
+	cubemapViewport.MinDepth = 0.0f;
+	cubemapViewport.MaxDepth = 1.0f;
+	cubemapViewport.TopLeftX = 0.0f;
+	cubemapViewport.TopLeftY = 0.0f;
+
+	Matrix world = Matrix::CreateRotationY(angle * PI / 180.0f);
+
+	XMVECTOR tar[] = { XMVectorSet(1, 0, 0, 0), XMVectorSet(-1, 0, 0, 0), XMVectorSet(0, 1, 0, 0), XMVectorSet(0, -1, 0, 0), XMVectorSet(0, 0, 1, 0), XMVectorSet(0, 0, -1, 0) };
+	XMVECTOR up[] = { XMVectorSet(0, 1, 0, 0), XMVectorSet(0, 1, 0, 0), XMVectorSet(0, 0, -1, 0), XMVectorSet(0, 0, 1, 0), XMVectorSet(0, 1, 0, 0), XMVectorSet(0, 1, 0, 0) };
+
+	g_Graphic->CreateTexture2D(&cubemapDesc, nullptr, &cubemapTex2D);
+	g_Graphic->CreateShaderResourceView(cubemapTex2D, &cubemapSRVDesc, &cubemapSRV);
+
+	context->OMSetDepthStencilState(cubemapDSS, 0);
+	context->RSSetState(cubemapRS);
+
+	for (int i = 0; i < 6; i++)
+	{
+		cubemapRTVDesc.Texture2DArray.FirstArraySlice = i;
+		g_Graphic->CreateRenderTargetView(cubemapTex2D, &cubemapRTVDesc, &cubemapRTV);
+
+		XMVECTOR dir = XMVector3Rotate(tar[i], XMQuaternionIdentity());
+
+		XMMATRIX view = DirectX::XMMatrixLookToLH(XMVectorSet(0, 0, 0, 0), dir, up[i]);
+		XMMATRIX proj = DirectX::XMMatrixPerspectiveFovLH(0.5f * XM_PI, 1.0f, 0.1f, 4000.0f);
+
+		context->OMSetRenderTargets(1, &cubemapRTV, 0);
+		context->RSSetViewports(1, &cubemapViewport);
+		context->ClearRenderTargetView(cubemapRTV, reinterpret_cast<const float*>(&DXColors::DeepDarkGray));
+
+		CB_CubeObject cubeBuf;
+		cubeBuf.gCubeWorldViewProj = view * proj;
+		cubeBuf.gCubeWorld = world;
+
+		cubemap_VS->ConstantBufferUpdate(&cubeBuf);
+		cubemap_VS->Update();
+
+		cubemap_convert_PS->SetShaderResourceView<gSkyCube>(skycube);
+		cubemap_convert_PS->Update();
+
+		context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		context->IASetVertexBuffers(0, 1, boxDB->VertexBuf->GetAddress(), &boxDB->Stride, &boxDB->Offset);
+		context->IASetIndexBuffer(boxDB->IndexBuf->Get(), DXGI_FORMAT_R32_UINT, 0);
+
+		context->DrawIndexed(boxDB->IndexCount, 0, 0);
+
+		RELEASE_COM(cubemapRTV);
+	}
+
+	if (save_file)
+	{
+		g_Graphic->SaveTextureDDS(cubemapSRV, std::string(resource->Name + "_" + std::to_string((int)angle)).c_str());
+	}
+
+	pResource->pTextureBuf = cubemapSRV;
+
+	// Debug Name..
+	GPU_RESOURCE_DEBUG_NAME(cubemapSRV, "ConvertCubeMap");
+
+	// Resouce 秦力..
+	RESET_COM(context);
+	RELEASE_COM(cubemapTex2D);
 }

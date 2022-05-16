@@ -69,6 +69,9 @@ public:
 	virtual GRAPHIC_DLL void DeleteMaterial(MaterialBuffer* material) abstract;
 	virtual GRAPHIC_DLL void DeleteAnimation(AnimationBuffer* animation) abstract;
 
+	virtual GRAPHIC_DLL void DeleteTexture(TextureBuffer* resource) abstract;
+	virtual GRAPHIC_DLL void DeleteSkyLight(SkyLightBuffer* resource) abstract;
+
 	virtual GRAPHIC_DLL void Render() abstract;
 	virtual GRAPHIC_DLL void* PickingRender(int x, int y) abstract;
 
@@ -81,6 +84,7 @@ public:
 public:
 	/// Graphic Resource Baking Function..
 	virtual GRAPHIC_DLL void BakeSkyLightMap(TextureBuffer* environment, SkyLightBuffer** ppResource) abstract;
+	virtual GRAPHIC_DLL void BakeConvertCubeMap(TextureBuffer* resource, float angle, bool save_file, TextureBuffer** ppResource) abstract;
 
 private:
 	static GraphicEngine* Graphic;

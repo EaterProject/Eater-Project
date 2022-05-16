@@ -1,3 +1,6 @@
+#ifndef FUNCTION_HEADER
+#define FUNCTION_HEADER
+
 #include "Define_Header.hlsli"
 
 float3 UnpackNormal(in float3 normalMapSample, in float3 normal, in float3 tangent)
@@ -173,3 +176,5 @@ float2 SampleSphericalMap(float3 V)
     UV += 0.5f;
     return UV;
 }
+
+#endif

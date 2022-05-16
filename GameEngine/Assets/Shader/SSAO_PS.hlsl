@@ -1,3 +1,5 @@
+#include "SamplerState_Header.hlsli"
+
 cbuffer cbSsaoObject : register(b0)
 {
 	float4x4 gViewToTexSpace;	// Proj * Texture
@@ -19,9 +21,6 @@ cbuffer cbSsaoOption : register(b2)
 
 Texture2D gNormalDepthRT : register(t0);
 Texture2D gRandomVecMap : register(t1);
-
-SamplerState gSamBorderLinearPoint : register(s0);
-SamplerState gSamWrapLinearPoint : register(s1);
 
 struct VertexIn
 {

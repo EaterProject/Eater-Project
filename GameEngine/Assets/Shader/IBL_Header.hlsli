@@ -1,3 +1,6 @@
+#ifndef IBL_HEADER
+#define IBL_HEADER
+
 #include "Define_Header.hlsli"
 
 #define MAX_REF_LOD 4.0
@@ -117,3 +120,5 @@ float3 IBL_EnvironmentLight(in float3 V, in float3 N, in float3 irradiance, in f
     
     return (diffuse + specular) * ao * factor;
 }
+
+#endif

@@ -129,6 +129,16 @@ void BakeSkyLightMap(std::string mPath)
 	gGameEngine->BakeSkyLightMap(mPath);
 }
 
+void BakeConvertCubeMap(std::string mPath, float angle)
+{
+	gGameEngine->BakeConvertCubeMap(mPath, angle, true, false, false);
+}
+
+void SetConvertCubeMap(std::string mPath, float angle, bool apply_skylight, bool apply_environment)
+{
+	gGameEngine->BakeConvertCubeMap(mPath, angle, false, apply_skylight, apply_environment);
+}
+
 void BakeAnimation()
 {
 	gGameEngine->BakeAnimation();

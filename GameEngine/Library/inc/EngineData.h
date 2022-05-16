@@ -157,7 +157,9 @@ class SkyLightBuffer : public Resources
 public:
 	virtual ~SkyLightBuffer()
 	{
-
+		Environment = nullptr;
+		delete Irradiance;
+		delete Prefilter;
 	};
 
 	TextureBuffer* Environment = nullptr;				// Environment Buffer

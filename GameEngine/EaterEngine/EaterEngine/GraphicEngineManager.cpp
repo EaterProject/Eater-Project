@@ -145,6 +145,11 @@ void GraphicEngineManager::BakeSkyLightMap(TextureBuffer* skyLight, SkyLightBuff
 	GEngine->BakeSkyLightMap(skyLight, ppResource);
 }
 
+void GraphicEngineManager::BakeConvertCubeMap(TextureBuffer* resource, float angle, bool save_file, TextureBuffer** ppResource)
+{
+	GEngine->BakeConvertCubeMap(resource, angle, save_file, ppResource);
+}
+
 void GraphicEngineManager::SetEnvironment(TextureBuffer* environment)
 {
 	GEngine->SetEnvironment(environment);
