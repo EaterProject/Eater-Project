@@ -1,8 +1,9 @@
 #include "SamplerState_Header.hlsli"
-#include "Output_Header.hlsli"
 #include "Define_Header.hlsli"
+#include "Output_Header.hlsli"
+#include "Function_Header.hlsli"
 
-TextureCube gSkyCube		: register(t0);
+TextureCube gSkyCube : register(t0);
 
 float4 IBL_Convolution_PS(SkyBoxPixelIn pin) : SV_TARGET
 {
@@ -24,8 +25,9 @@ float4 IBL_Convolution_PS(SkyBoxPixelIn pin) : SV_TARGET
 		{
 			float3 tangentSample = float3(sin(theta) * cos(phi), sin(theta) * sin(phi), cos(theta));
 			float3 sampleVec = (tangentSample.xxx * right) + (tangentSample.yyy * up) + (tangentSample.zzz * normal);
-
+			
             irradiance += gSkyCube.SampleLevel(gSamWrapLinear, sampleVec, 0.0f).rgb * cos(theta) * sin(theta);
+			
 			nrSamples++;
 		}
 	}

@@ -36,7 +36,6 @@ float GetBloomCurve(float x, float threshold)
     return result * 0.5f;
 }
 
-
 float4 DownSampling_Bright_PS(ScreenPixelIn pin) : SV_TARGET
 {
     float3 outColor = float3(0.0f, 0.0f, 0.0f);
@@ -55,7 +54,7 @@ float4 DownSampling_Bright_PS(ScreenPixelIn pin) : SV_TARGET
     float intensity = max(dot(outColor, float3(0.3f, 0.3f, 0.3f)), 0.000001f);
     //float intensity = max(dot(outColor, float3(0.3f, 0.59f, 0.11f)), 0.000001f);
     
-    float bloom_intensity = GetBloomCurve(intensity, gThreshold);
+    float bloom_intensity = min(GetBloomCurve(intensity, gThreshold), 100.0f);
     float3 bloom_color = outColor * bloom_intensity / intensity;
     
     return float4(bloom_color, 1.0f);

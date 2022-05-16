@@ -1,8 +1,9 @@
 #include "SamplerState_Header.hlsli"
 #include "Output_Header.hlsli"
+#include "Function_Header.hlsli"
 #include "IBL_Header.hlsli"
 
-TextureCube gSkyCube		: register(t0);
+TextureCube gSkyCube : register(t0);
 
 cbuffer cbExternalData : register(b0) 
 {
@@ -42,6 +43,7 @@ float4 IBL_PrefilterMap_PS(SkyBoxPixelIn pin) : SV_TARGET
             float fMipLevel = gRoughness == 0.0 ? 0.0 : max(0.5 * log2(saSample / saTexel) + fMipBias, 0.0f);
 			
             PrefilteredColor += gSkyCube.SampleLevel(gSamWrapLinear, lightDir, fMipLevel).rgb * NdotL;
+			
 			totalWeight += NdotL;
 		}
 	}

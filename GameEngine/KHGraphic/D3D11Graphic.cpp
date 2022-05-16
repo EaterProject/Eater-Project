@@ -190,12 +190,6 @@ HRESULT D3D11Graphic::CreateTextureBuffer(std::string filePath, ID3D11Resource**
 	}
 	else if (Type == "hdr" || Type == "HDR")
 	{
-		ParserData::ImageData img = ImageParser::LoadImagePixel(filePath.c_str(), 4, PIXEL_TYPE::HDR_TYPE);
-
-		DirectX::SimpleMath::Vector4 color0 = ImageParser::GetPixelColor(img, 0, 0);
-		DirectX::SimpleMath::Vector4 color1 = ImageParser::GetPixelColor(img, 0, 1);
-		DirectX::SimpleMath::Vector4 color2 = ImageParser::GetPixelColor(img, 0, 2);
-
 		DirectX::TexMetadata tex;
 		DirectX::ScratchImage image;
 

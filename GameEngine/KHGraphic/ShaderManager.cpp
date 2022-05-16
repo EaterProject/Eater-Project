@@ -137,12 +137,18 @@ void ShaderManager::CreateShader()
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "FXAA_PS.hlsl", "FXAA_PS", "FXAA_PS");
 
 	// SkyBox Shader
+	D3D_SHADER_MACRO skyBox_convert_macro1[] = { {"HDRI"}, {NULL, NULL} };
 	D3D_SHADER_MACRO skyBox_macro1[] = { {"FOG"}, {NULL, NULL} };
+	D3D_SHADER_MACRO skyBox_macro2[] = { {"HDR"}, {NULL, NULL} };
+	D3D_SHADER_MACRO skyBox_macro3[] = { {"FOG"}, {"HDR"}, {NULL, NULL} };
 
 	LoadShader(SHADER_TYPE::VERTEX_SHADER, "SkyBox_VS.hlsl", "SkyBox_VS", "SkyBox_VS");
-	LoadShader(SHADER_TYPE::PIXEL_SHADER, "SkyBox_Convert_PS.hlsl", "SkyBox_Convert_PS", "SkyBox_Convert_PS");	// None
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "SkyBox_Convert_PS.hlsl", "SkyBox_Convert_PS", "SkyBox_Convert_PS");						// None
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "SkyBox_Convert_PS.hlsl", "SkyBox_Convert_PS", "SkyBox_Convert_HDRI_PS", skyBox_convert_macro1);	// HDRI
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "SkyBox_PS.hlsl", "SkyBox_PS", "SkyBox_PS_Option0");					// None
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "SkyBox_PS.hlsl", "SkyBox_PS", "SkyBox_PS_Option1", skyBox_macro1);	// Fog
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "SkyBox_PS.hlsl", "SkyBox_PS", "SkyBox_PS_Option2", skyBox_macro2);	// HDR
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "SkyBox_PS.hlsl", "SkyBox_PS", "SkyBox_PS_Option3", skyBox_macro3);	// Fog + HDR
 
 	// IBL Shader
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "IBL_Convolution_PS.hlsl", "IBL_Convolution_PS", "IBL_Convolution_PS");
