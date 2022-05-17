@@ -37,10 +37,8 @@ BOOL SceneSetting::OnInitDialog()
 	mTooltip.AddTool(GetDlgItem(IDC_SLIDER12), _T("FOG 거리 범위"));
 	mTooltip.AddTool(GetDlgItem(IDC_SLIDER13), _T("FOG 높이 오프셋"));
 	mTooltip.AddTool(GetDlgItem(IDC_SLIDER14), _T("FOG 높이 범위"));
-	mTooltip.AddTool(GetDlgItem(IDC_SLIDER15), _T("Environment Map 크기"));
 	mTooltip.AddTool(GetDlgItem(IDC_SLIDER16), _T("Bloom 추출 시작 영역"));
 	mTooltip.AddTool(GetDlgItem(IDC_SLIDER17), _T("Bloom 혼합률"));
-	mTooltip.AddTool(GetDlgItem(IDC_SLIDER18), _T("IBL 강도"));
 
 	//체크 박스 초기화
 	Debug_Check.SetCheck(true);
@@ -56,8 +54,8 @@ BOOL SceneSetting::OnInitDialog()
 	SSAO_DataSetting();
 	FOG_DataSetting();
 	Bloom_DataSetting();
-	IBL_DataSetting();
-	Environment_DataSetting();
+	//IBL_DataSetting();
+	//Environment_DataSetting();
 
 
 	return true;
@@ -102,16 +100,11 @@ void SceneSetting::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_SLIDER19, Fog_DistanceOffset_Slider);
 	DDX_Control(pDX, IDC_EDIT23, Fog_DistanceOffset_Edit);
 
-	DDX_Control(pDX, IDC_SLIDER15, Environment_size_Slider);
-	DDX_Control(pDX, IDC_EDIT17, Environment_size_Edit);
-
 	DDX_Control(pDX, IDC_SLIDER16, Bloom_Threhold_Slider);
 	DDX_Control(pDX, IDC_EDIT18, Bloom_Threhold_Edit);
 	DDX_Control(pDX, IDC_SLIDER17, Bloom_Factor_Slider);
 	DDX_Control(pDX, IDC_EDIT21, Bloom_Factor_Edit);
 
-	DDX_Control(pDX, IDC_SLIDER18, IBL_Factor_Slider);
-	DDX_Control(pDX, IDC_EDIT22, IBL_Factor_Edit);
 	DDX_Control(pDX, IDC_CHECK12, RenderTarget_Check);
 }
 
@@ -173,19 +166,19 @@ void SceneSetting::Bloom_DataSetting()
 	Bloom_Threhold_Edit.SetWindowTextW(L"0");
 }
 
-void SceneSetting::IBL_DataSetting()
-{
-	IBL_Factor_Slider.SetRange(1, 5000);
-	IBL_Factor_Slider.SetPos(0);
-	IBL_Factor_Edit.SetWindowTextW(L"0");
-}
-
-void SceneSetting::Environment_DataSetting()
-{
-	Environment_size_Slider.SetRange(1, 5000);
-	Environment_size_Slider.SetPos(500);
-	Environment_size_Edit.SetWindowTextW(L"500.0");
-}
+//void SceneSetting::IBL_DataSetting()
+//{
+//	IBL_Factor_Slider.SetRange(1, 5000);
+//	IBL_Factor_Slider.SetPos(0);
+//	IBL_Factor_Edit.SetWindowTextW(L"0");
+//}
+//
+//void SceneSetting::Environment_DataSetting()
+//{
+//	Environment_size_Slider.SetRange(1, 5000);
+//	Environment_size_Slider.SetPos(500);
+//	Environment_size_Edit.SetWindowTextW(L"500.0");
+//}
 
 void SceneSetting::SSAO_Slider_Setting(RenderOption* Option, CScrollBar* pScrollBar)
 {
@@ -277,25 +270,25 @@ void SceneSetting::FOG_Slider_Setting(RenderOption* Option, CScrollBar* pScrollB
 	}
 }
 
-void SceneSetting::Environment_Slider_Setting(RenderOption* Option, CScrollBar* pScrollBar)
-{
-	if (pScrollBar->GetDlgCtrlID() == Environment_size_Slider.GetDlgCtrlID())
-	{
-		float Pos = (float)Environment_size_Slider.GetPos();
-		Option->SkyCube_Size = Pos;
-		Environment_size_Edit.SetWindowTextW(ChangeToCString(Pos));
-	}
-}
-
-void SceneSetting::IBL_Slider_Setting(RenderOption* Option, CScrollBar* pScrollBar)
-{
-	if (pScrollBar->GetDlgCtrlID() == IBL_Factor_Slider.GetDlgCtrlID())
-	{
-		float Pos = (float)IBL_Factor_Slider.GetPos();
-		Option->SkyLight_Factor = Pos * 0.001f;
-		IBL_Factor_Edit.SetWindowTextW(ChangeToCString(Pos * 0.001f));
-	}
-}
+//void SceneSetting::Environment_Slider_Setting(RenderOption* Option, CScrollBar* pScrollBar)
+//{
+//	if (pScrollBar->GetDlgCtrlID() == Environment_size_Slider.GetDlgCtrlID())
+//	{
+//		float Pos = (float)Environment_size_Slider.GetPos();
+//		Option->SkyCube_Size = Pos;
+//		Environment_size_Edit.SetWindowTextW(ChangeToCString(Pos));
+//	}
+//}
+//
+//void SceneSetting::IBL_Slider_Setting(RenderOption* Option, CScrollBar* pScrollBar)
+//{
+//	if (pScrollBar->GetDlgCtrlID() == IBL_Factor_Slider.GetDlgCtrlID())
+//	{
+//		float Pos = (float)IBL_Factor_Slider.GetPos();
+//		Option->SkyLight_Factor = Pos * 0.001f;
+//		IBL_Factor_Edit.SetWindowTextW(ChangeToCString(Pos * 0.001f));
+//	}
+//}
 
 void SceneSetting::Bloom_Slider_Setting(RenderOption* Option, CScrollBar* pScrollBar)
 {
@@ -348,9 +341,9 @@ void SceneSetting::Setting()
 	Fog_DistanceOffset_Slider.SetPos((int)mOption->FOG_DistanceOffset);
 	Fog_DistanceOffset_Edit.SetWindowTextW(ChangeToCString(mOption->FOG_DistanceOffset));
 
-	///Environment
-	Environment_size_Slider.SetPos(mOption->SkyCube_Size);
-	Environment_size_Edit.SetWindowTextW(ChangeToCString(mOption->SkyCube_Size));
+	///SkyCube
+	//Environment_size_Slider.SetPos(mOption->SkyCube_Size);
+	//Environment_size_Edit.SetWindowTextW(ChangeToCString(mOption->SkyCube_Size));
 
 	///Bloom
 	Bloom_Threhold_Slider.SetPos((int)mOption->BLOOM_Threshold_Min * 1000);
@@ -358,9 +351,9 @@ void SceneSetting::Setting()
 	Bloom_Factor_Slider.SetPos((int)mOption->BLOOM_Factor*1000);
 	Bloom_Factor_Edit.SetWindowTextW(ChangeToCString(mOption->BLOOM_Factor));
 
-	///IBL
-	IBL_Factor_Slider.SetPos((int)mOption->SkyLight_Factor * 1000);
-	IBL_Factor_Edit.SetWindowTextW(ChangeToCString(mOption->SkyLight_Factor));
+	///SkyLight
+	//IBL_Factor_Slider.SetPos((int)mOption->SkyLight_Factor * 1000);
+	//IBL_Factor_Edit.SetWindowTextW(ChangeToCString(mOption->SkyLight_Factor));
 }
 
 
@@ -387,9 +380,9 @@ void SceneSetting::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 
 	SSAO_Slider_Setting(Option, pScrollBar);
 	FOG_Slider_Setting(Option, pScrollBar);
-	IBL_Slider_Setting(Option, pScrollBar);
+	//IBL_Slider_Setting(Option, pScrollBar);
 	Bloom_Slider_Setting(Option, pScrollBar);
-	Environment_Slider_Setting(Option, pScrollBar);
+	//Environment_Slider_Setting(Option, pScrollBar);
 	
 	RenderSetting();
 	CustomDialog::OnHScroll(nSBCode, nPos, pScrollBar);

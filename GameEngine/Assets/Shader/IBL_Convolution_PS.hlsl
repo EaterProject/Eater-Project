@@ -32,9 +32,9 @@ float4 IBL_Convolution_PS(SkyBoxPixelIn pin) : SV_TARGET
 			
 		#ifdef HDRI
 			float2 UV = SampleSphericalMap(sampleVec);
-            irradiance += min(gSkyCube.Sample(gSamWrapLinear, UV).rgb, 100.0f) * cos(theta) * sin(theta);
+            irradiance += gSkyCube.Sample(gSamWrapLinear, UV).rgb * cos(theta) * sin(theta);
 		#else
-            irradiance += min(gSkyCube.Sample(gSamWrapLinear, sampleVec).rgb, 100.0f) * cos(theta) * sin(theta);
+            irradiance += gSkyCube.Sample(gSamWrapLinear, sampleVec).rgb * cos(theta) * sin(theta);
 		#endif			
 			nrSamples++;
         }

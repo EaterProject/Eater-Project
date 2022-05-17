@@ -129,14 +129,19 @@ void BakeSkyLightMap(std::string mPath, bool hdri)
 	gGameEngine->BakeSkyLightMap(mPath, hdri);
 }
 
-void BakeConvertCubeMap(std::string mPath, float angle, bool hdri)
+void BakeConvertSkyCubeMap(std::string mPath, float angle, float threshold, bool hdri)
 {
-	gGameEngine->BakeConvertCubeMap(mPath, angle, true, hdri, false, false);
+	gGameEngine->BakeConvertSkyCubeMap(mPath, angle, threshold, hdri);
 }
 
-void SetConvertCubeMap(std::string mPath, float angle, bool hdri, bool apply_skylight, bool apply_environment)
+void BakeConvertSkyLightMap(std::string mPath, float angle, float threshold, bool hdri)
 {
-	gGameEngine->BakeConvertCubeMap(mPath, angle, false, hdri, apply_skylight, apply_environment);
+	gGameEngine->BakeConvertSkyLightMap(mPath, angle, threshold, hdri);
+}
+
+void SaveConvertCubeMap(std::string mPath)
+{
+	gGameEngine->SaveConvertCubeMap(mPath);
 }
 
 void BakeAnimation()
@@ -144,9 +149,9 @@ void BakeAnimation()
 	gGameEngine->BakeAnimation();
 }
 
-void SetEnvironment(std::string mPath)
+void SetSkyCube(std::string mPath)
 {
-	gGameEngine->SetEnvironment(mPath);
+	gGameEngine->SetSkyCube(mPath);
 }
 
 void SetSkyLight(std::string mPath)

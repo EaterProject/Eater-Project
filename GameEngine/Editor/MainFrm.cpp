@@ -574,7 +574,7 @@ void CMainFrame::OnCreateBuildFile()
 	{
 		auto exe = std::filesystem::path(path).extension();
 
-		if (exe != ".dll" && exe != ".exe")
+		if (exe != ".dll" && exe != ".exe" && exe != "")
 		{
 			std::filesystem::remove(path);
 		}

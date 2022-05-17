@@ -75,10 +75,12 @@ public:
 public:
 	//선택한 그래픽엔진으로 텍스쳐 생성
 	void BakeSkyLightMap(TextureBuffer* skyLight, bool hdri, SkyLightBuffer** ppResource);
-	void BakeConvertCubeMap(TextureBuffer* resource, float angle, bool save_file, bool hdri, TextureBuffer** ppResource);
+	void BakeConvertCubeMap(TextureBuffer* resource, float angle, float threshold, bool hdri, TextureBuffer** ppResource);
+
+	void SaveConvertCubeMap(TextureBuffer* resource);
 
 public:
-	void SetEnvironment(TextureBuffer* environment);
+	void SetSkyCube(TextureBuffer* environment);
 	void SetSkyLight(SkyLightBuffer* skyLight);
 
 private:

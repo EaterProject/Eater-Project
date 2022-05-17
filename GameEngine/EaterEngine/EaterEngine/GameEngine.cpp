@@ -404,21 +404,31 @@ void GameEngine::BakeSkyLightMap(std::string& Path, bool hdri)
 	mLoadManager->BakeSkyLightMap(Path, hdri);
 }
 
-void GameEngine::BakeConvertCubeMap(std::string& Path, float angle, bool save_file, bool hdri, bool apply_skylight, bool apply_environment)
-{
-	mLoadManager->BakeConvertCubeMap(Path, angle, save_file, hdri, apply_skylight, apply_environment);
-}
-
 void GameEngine::BakeAnimation()
 {
 	mLoadManager->BakeAnimation();
 }
 
-void GameEngine::SetEnvironment(std::string& Path)
+void GameEngine::BakeConvertSkyLightMap(std::string& Path, float angle, float threshold, bool hdri)
+{
+	mLoadManager->BakeConvertSkyLightMap(Path, angle, threshold, hdri);
+}
+
+void GameEngine::BakeConvertSkyCubeMap(std::string& Path, float angle, float threshold, bool hdri)
+{
+	mLoadManager->BakeConvertSkyCubeMap(Path, angle, threshold, hdri);
+}
+
+void GameEngine::SaveConvertCubeMap(std::string& Path)
+{
+	mLoadManager->SaveConvertCubeMap(Path);
+}
+
+void GameEngine::SetSkyCube(std::string& Path)
 {
 	TextureBuffer* environment = mLoadManager->GetTexture(Path);
 
-	mGraphicManager->SetEnvironment(environment);
+	mGraphicManager->SetSkyCube(environment);
 }
 
 void GameEngine::SetSkyLight(std::string& Path)

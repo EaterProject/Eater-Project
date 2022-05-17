@@ -153,14 +153,24 @@ void LoadManager::BakeSkyLightMap(std::string Path, bool hdri)
 	mTexture->BakeSkyLightMap(Path, hdri);
 }
 
-void LoadManager::BakeConvertCubeMap(std::string& Path, float angle, bool save_file, bool hdri, bool apply_skylight, bool apply_environment)
+void LoadManager::BakeConvertSkyLightMap(std::string& Path, float angle, float threshold, bool hdri)
 {
-	mTexture->BakeConvertCubeMap(Path, angle, save_file, hdri, apply_skylight, apply_environment);
+	mTexture->BakeConvertSkyLightMap(Path, angle, threshold, hdri);
+}
+
+void LoadManager::BakeConvertSkyCubeMap(std::string& Path, float angle, float threshold, bool hdri)
+{
+	mTexture->BakeConvertSkyCubeMap(Path, angle, threshold, hdri);
 }
 
 void LoadManager::BakeAnimation()
 {
 	mAnimationManger->BakeAnimation();
+}
+
+void LoadManager::SaveConvertCubeMap(std::string& Path)
+{
+	mTexture->SaveConvertCubeMap(Path);
 }
 
 int LoadManager::GetMeshCount()

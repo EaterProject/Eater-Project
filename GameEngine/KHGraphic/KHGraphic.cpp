@@ -84,9 +84,9 @@ void KHGraphic::SetGlobalData(GlobalData* globalData)
 	m_RenderManager->SetGlobalData(globalData);
 }
 
-void KHGraphic::SetEnvironment(TextureBuffer* resource)
+void KHGraphic::SetSkyCube(TextureBuffer* resource)
 {
-	m_RenderManager->SetEnvironment(resource);
+	m_RenderManager->SetSkyCube(resource);
 }
 
 void KHGraphic::SetSkyLight(SkyLightBuffer* resource)
@@ -205,7 +205,12 @@ void KHGraphic::BakeSkyLightMap(TextureBuffer* environment, bool hdri, SkyLightB
 	m_FactoryManager->BakeSkyLightMap(environment, hdri, ppResource);
 }
 
-void KHGraphic::BakeConvertCubeMap(TextureBuffer* resource, float angle, bool save_file, bool hdri, TextureBuffer** ppResource)
+void KHGraphic::BakeConvertCubeMap(TextureBuffer* resource, float angle, float threshold, bool hdri, TextureBuffer** ppResource)
 {
-	m_FactoryManager->BakeConvertCubeMap(resource, angle, save_file, hdri, ppResource);
+	m_FactoryManager->BakeConvertCubeMap(resource, angle, threshold, hdri, ppResource);
+}
+
+void KHGraphic::SaveConvertCubeMap(TextureBuffer* resource)
+{
+	m_FactoryManager->SaveConvertCubeMap(resource);
 }

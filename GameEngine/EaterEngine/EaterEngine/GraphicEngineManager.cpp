@@ -145,14 +145,19 @@ void GraphicEngineManager::BakeSkyLightMap(TextureBuffer* skyLight, bool hdri, S
 	GEngine->BakeSkyLightMap(skyLight, hdri, ppResource);
 }
 
-void GraphicEngineManager::BakeConvertCubeMap(TextureBuffer* resource, float angle, bool save_file, bool hdri, TextureBuffer** ppResource)
+void GraphicEngineManager::BakeConvertCubeMap(TextureBuffer* resource, float angle, float threshold, bool hdri, TextureBuffer** ppResource)
 {
-	GEngine->BakeConvertCubeMap(resource, angle, save_file, hdri, ppResource);
+	GEngine->BakeConvertCubeMap(resource, angle, threshold, hdri, ppResource);
 }
 
-void GraphicEngineManager::SetEnvironment(TextureBuffer* environment)
+void GraphicEngineManager::SaveConvertCubeMap(TextureBuffer* resource)
 {
-	GEngine->SetEnvironment(environment);
+	GEngine->SaveConvertCubeMap(resource);
+}
+
+void GraphicEngineManager::SetSkyCube(TextureBuffer* environment)
+{
+	GEngine->SetSkyCube(environment);
 }
 
 void GraphicEngineManager::SetSkyLight(SkyLightBuffer* skyLight)

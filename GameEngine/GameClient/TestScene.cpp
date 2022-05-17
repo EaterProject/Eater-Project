@@ -52,7 +52,7 @@ void TestScene::Awake()
 	//CreateParticle(0,0,0);
 	//SetSkyLight("Day");
 	SetSkyLight("Night");
-	SetEnvironment("HDRI");
+	SetSkyCube("HDRI");
 
 	Load("../Assets/Scene/test1.Scene");
 }
@@ -379,10 +379,11 @@ void TestScene::ChangeCubeMap()
 			angle -= 360.0f;
 		}
 
-		SetConvertCubeMap("HDRI_2", angle, true, true, true);
+		BakeConvertSkyCubeMap("HDRI_2", angle, 100.0f, true);
+		BakeConvertSkyLightMap("HDRI_2", angle, 100.0f, true);
 	}
 	if (GetKeyUp('8'))
 	{
-		BakeConvertCubeMap("HDRI_2", angle, true);
+		SaveConvertCubeMap("HDRI_2");
 	}
 }
