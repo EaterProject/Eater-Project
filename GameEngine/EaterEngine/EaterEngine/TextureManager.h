@@ -24,7 +24,8 @@ public:
 	void BakeConvertSkyCubeMap(std::string& Path, float angle, float threshold, bool hdri);
 	
 public:
-	void SaveConvertCubeMap(std::string& Path);
+	void SaveConvertSkyLightMap(std::string& Path);
+	void SaveConvertSkyCubeMap(std::string& Path);
 
 private:
 	bool CheckFolder(std::string& Path);

@@ -155,7 +155,7 @@ void TextureManager::BakeConvertSkyLightMap(std::string& Path, float angle, floa
 		return;
 	}
 
-	std::string Name = Path + "_Convert";
+	std::string Name = "SkyLight_Convert_" + Path;
 
 	TextureBuffer* buffer = LoadManager::GetTexture(Name);
 
@@ -222,7 +222,7 @@ void TextureManager::BakeConvertSkyCubeMap(std::string& Path, float angle, float
 		return;
 	}
 
-	std::string Name = Path + "_Convert";
+	std::string Name = "SkyCube_Convert_" + Path;
 
 	TextureBuffer* buffer = LoadManager::GetTexture(Name);
 
@@ -252,9 +252,18 @@ void TextureManager::BakeConvertSkyCubeMap(std::string& Path, float angle, float
 	m_Graphic->SetSkyCube(buffer);
 }
 
-void TextureManager::SaveConvertCubeMap(std::string& Path)
+void TextureManager::SaveConvertSkyLightMap(std::string& Path)
 {
-	std::string Name = Path + "_Convert";
+	std::string Name = "SkyLight_Convert_" + Path;
+
+	TextureBuffer* buffer = LoadManager::GetTexture(Name);
+
+	m_Graphic->SaveConvertCubeMap(buffer);
+}
+
+void TextureManager::SaveConvertSkyCubeMap(std::string& Path)
+{
+	std::string Name = "SkyCube_Convert_" + Path;
 
 	TextureBuffer* buffer = LoadManager::GetTexture(Name);
 

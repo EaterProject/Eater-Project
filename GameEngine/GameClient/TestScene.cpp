@@ -384,6 +384,7 @@ void TestScene::ChangeCubeMap()
 	}
 	if (GetKeyUp('8'))
 	{
-		SaveConvertCubeMap("HDRI_2");
+		SaveConvertSkyLightMap("HDRI_2");
+		SaveConvertSkyCubeMap("HDRI_2");
 	}
 }

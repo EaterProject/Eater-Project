@@ -96,7 +96,8 @@ public:
 	void BakeConvertSkyCubeMap(std::string& Path, float angle, float threshold, bool hdri);
 
 	///저장 관련
-	void SaveConvertCubeMap(std::string& Path);
+	void SaveConvertSkyLightMap(std::string& Path);
+	void SaveConvertSkyCubeMap(std::string& Path);
 
 public:
 	///텍스쳐 설정 관련

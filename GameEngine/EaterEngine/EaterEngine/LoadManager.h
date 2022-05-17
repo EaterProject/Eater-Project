@@ -78,7 +78,8 @@ public:
 	void BakeAnimation();
 
 public:
-	void SaveConvertCubeMap(std::string& Path);
+	void SaveConvertSkyLightMap(std::string& Path);
+	void SaveConvertSkyCubeMap(std::string& Path);
 
 public:
 	int	GetMeshCount();

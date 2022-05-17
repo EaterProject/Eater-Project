@@ -139,14 +139,19 @@ void BakeConvertSkyLightMap(std::string mPath, float angle, float threshold, boo
 	gGameEngine->BakeConvertSkyLightMap(mPath, angle, threshold, hdri);
 }
 
-void SaveConvertCubeMap(std::string mPath)
-{
-	gGameEngine->SaveConvertCubeMap(mPath);
-}
-
 void BakeAnimation()
 {
 	gGameEngine->BakeAnimation();
+}
+
+void SaveConvertSkyLightMap(std::string mPath)
+{
+	gGameEngine->SaveConvertSkyLightMap(mPath);
+}
+
+void SaveConvertSkyCubeMap(std::string mPath)
+{
+	gGameEngine->SaveConvertSkyCubeMap(mPath);
 }
 
 void SetSkyCube(std::string mPath)

@@ -168,9 +168,14 @@ void LoadManager::BakeAnimation()
 	mAnimationManger->BakeAnimation();
 }
 
-void LoadManager::SaveConvertCubeMap(std::string& Path)
+void LoadManager::SaveConvertSkyLightMap(std::string& Path)
 {
-	mTexture->SaveConvertCubeMap(Path);
+	mTexture->SaveConvertSkyLightMap(Path);
+}
+
+void LoadManager::SaveConvertSkyCubeMap(std::string& Path)
+{
+	mTexture->SaveConvertSkyCubeMap(Path);
 }
 
 int LoadManager::GetMeshCount()
