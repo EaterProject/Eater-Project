@@ -11,6 +11,6 @@ public:
 
 public:
 	virtual void PreBakeShadowMap(std::string fileName) abstract;
-	virtual void PreBakeEnvironmentMap(SkyLightBuffer* resource) abstract;
-	virtual void BakeConvertCubeMap(TextureBuffer* resource, float angle, bool save_file, TextureBuffer* pResource) abstract;
+	virtual void PreBakeEnvironmentMap(TextureBuffer* resource, bool hdri, SkyLightBuffer* pResource) abstract;
+	virtual void BakeConvertCubeMap(TextureBuffer* resource, float angle, bool save_file, bool hdri, TextureBuffer* pResource) abstract;
 };

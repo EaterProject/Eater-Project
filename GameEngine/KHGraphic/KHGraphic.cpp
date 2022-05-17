@@ -171,7 +171,6 @@ void KHGraphic::DeleteSkyLight(SkyLightBuffer* resource)
 	RELEASE_COM(irradiance);
 	RELEASE_COM(prefilter);
 
-	resource->Environment = nullptr;
 	resource->Irradiance->pTextureBuf = nullptr;
 	resource->Prefilter->pTextureBuf = nullptr;
 }
@@ -201,12 +200,12 @@ void KHGraphic::CreateAnimationBuffer(ModelData* model, ModelAnimationData* anim
 	m_FactoryManager->CreateAnimationBuffer(model, animation, ppResource);
 }
 
-void KHGraphic::BakeSkyLightMap(TextureBuffer* environment, SkyLightBuffer** ppResource)
+void KHGraphic::BakeSkyLightMap(TextureBuffer* environment, bool hdri, SkyLightBuffer** ppResource)
 {
-	m_FactoryManager->BakeSkyLightMap(environment, ppResource);
+	m_FactoryManager->BakeSkyLightMap(environment, hdri, ppResource);
 }
 
-void KHGraphic::BakeConvertCubeMap(TextureBuffer* resource, float angle, bool save_file, TextureBuffer** ppResource)
+void KHGraphic::BakeConvertCubeMap(TextureBuffer* resource, float angle, bool save_file, bool hdri, TextureBuffer** ppResource)
 {
-	m_FactoryManager->BakeConvertCubeMap(resource, angle, save_file, ppResource);
+	m_FactoryManager->BakeConvertCubeMap(resource, angle, save_file, hdri, ppResource);
 }

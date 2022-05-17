@@ -15,7 +15,7 @@ float4 SkyBox_Convert_PS(SkyBoxPixelIn pin) : SV_TARGET
     float4 texColor = gSkyCube.Sample(gSamWrapLinear, UV);
 #else
     float3 normal = normalize(float4(pin.PosW, 1.0f));
-    float4 texColor = gSkyCube.SampleLevel(gSamWrapLinear, normal, 0.0f);
+    float4 texColor = gSkyCube.Sample(gSamWrapLinear, normal);
 #endif
     
     return texColor;

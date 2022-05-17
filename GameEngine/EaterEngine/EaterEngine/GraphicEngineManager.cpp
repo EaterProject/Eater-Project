@@ -139,15 +139,15 @@ void GraphicEngineManager::CreateAnimationBuffer(ModelData* model, ModelAnimatio
 	GEngine->CreateAnimationBuffer(model, animation, ppResource);
 }
 
-void GraphicEngineManager::BakeSkyLightMap(TextureBuffer* skyLight, SkyLightBuffer** ppResource)
+void GraphicEngineManager::BakeSkyLightMap(TextureBuffer* skyLight, bool hdri, SkyLightBuffer** ppResource)
 {
 	// Texture »ý¼º..
-	GEngine->BakeSkyLightMap(skyLight, ppResource);
+	GEngine->BakeSkyLightMap(skyLight, hdri, ppResource);
 }
 
-void GraphicEngineManager::BakeConvertCubeMap(TextureBuffer* resource, float angle, bool save_file, TextureBuffer** ppResource)
+void GraphicEngineManager::BakeConvertCubeMap(TextureBuffer* resource, float angle, bool save_file, bool hdri, TextureBuffer** ppResource)
 {
-	GEngine->BakeConvertCubeMap(resource, angle, save_file, ppResource);
+	GEngine->BakeConvertCubeMap(resource, angle, save_file, hdri, ppResource);
 }
 
 void GraphicEngineManager::SetEnvironment(TextureBuffer* environment)

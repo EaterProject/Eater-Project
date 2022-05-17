@@ -26,8 +26,8 @@ public:
 
 public:
 	void BakeShadowMap(std::string fileName) override;
-	void BakeSkyLightMap(TextureBuffer* skyLight, SkyLightBuffer** ppResource) override;
-	void BakeConvertCubeMap(TextureBuffer* resource, float angle, bool save_file, TextureBuffer** ppResource) override;
+	void BakeSkyLightMap(TextureBuffer* skyLight, bool hdri, SkyLightBuffer** ppResource) override;
+	void BakeConvertCubeMap(TextureBuffer* resource, float angle, bool save_file, bool hdri, TextureBuffer** ppResource) override;
 
 private:
 	void CreateImg(std::string name, Hash_Code hash_code, std::string fileName) override;

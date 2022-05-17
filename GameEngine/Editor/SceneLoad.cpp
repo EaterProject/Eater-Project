@@ -142,10 +142,10 @@ void Eater_LoadScene::Load(std::string FilePath)
 			mOption->FOG_DistanceValue = Data[9];
 			mOption->FOG_HeightOffset = Data[10];
 			mOption->FOG_HeightValue = Data[11];
-			mOption->EnvironmentSize = Data[12];
-			mOption->BLOOM_Threshold = Data[13];
+			mOption->SkyCube_Size = Data[12];
+			mOption->BLOOM_Threshold_Min = Data[13];
 			mOption->BLOOM_Factor = Data[14];
-			mOption->IBL_Factor = Data[15];
+			mOption->SkyLight_Factor = Data[15];
 			RenderSetting();
 		}
 	}

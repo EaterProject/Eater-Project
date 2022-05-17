@@ -32,8 +32,8 @@ public:
 public:
 	// Baking Graphic Resource..
 	virtual void BakeShadowMap(std::string fileName) abstract;
-	virtual void BakeSkyLightMap(TextureBuffer* skyLight, SkyLightBuffer** ppResource) abstract;
-	virtual void BakeConvertCubeMap(TextureBuffer* resource, float angle, bool save_file, TextureBuffer** ppResource) abstract;
+	virtual void BakeSkyLightMap(TextureBuffer* skyLight, bool hdri, SkyLightBuffer** ppResource) abstract;
+	virtual void BakeConvertCubeMap(TextureBuffer* resource, float angle, bool save_file, bool hdri, TextureBuffer** ppResource) abstract;
 
 public:
 	template<typename T, Enable_Check<T> = NULL> void CreateImage(std::string path);

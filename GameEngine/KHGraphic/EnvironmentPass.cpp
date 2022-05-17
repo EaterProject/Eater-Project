@@ -77,15 +77,29 @@ void EnvironmentPass::Release()
 
 void EnvironmentPass::ApplyOption()
 {
-	m_EnvironmentWorld = Matrix::CreateScale(g_RenderOption->EnvironmentSize);
+	m_EnvironmentWorld = Matrix::CreateScale(g_RenderOption->SkyCube_Size);
 
 	if (g_RenderOption->RenderingOption & RENDER_FOG)
 	{
-		m_SkyBox_PS = g_Shader->GetShader("SkyBox_PS_Option1");
+		if (g_RenderOption->SkyCube_HDR)
+		{
+			m_SkyBox_PS = g_Shader->GetShader("SkyBox_PS_Option3");
+		}
+		else
+		{
+			m_SkyBox_PS = g_Shader->GetShader("SkyBox_PS_Option1");
+		}
 	}
 	else
 	{
-		m_SkyBox_PS = g_Shader->GetShader("SkyBox_PS_Option0");
+		if (g_RenderOption->SkyCube_HDR)
+		{
+			m_SkyBox_PS = g_Shader->GetShader("SkyBox_PS_Option2");
+		}
+		else
+		{
+			m_SkyBox_PS = g_Shader->GetShader("SkyBox_PS_Option0");
+		}
 	}
 }
 
@@ -148,6 +162,8 @@ void EnvironmentPass::SetShaderList()
 {
 	PushShader("SkyBox_PS_Option0");
 	PushShader("SkyBox_PS_Option1");
+	PushShader("SkyBox_PS_Option2");
+	PushShader("SkyBox_PS_Option3");
 
 	PushShader("Light_IBL_PS_Option0");
 	PushShader("Light_IBL_PS_Option1");

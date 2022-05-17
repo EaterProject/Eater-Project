@@ -138,7 +138,7 @@ void BakingFactory::PreBakeBRDFMap()
 	RELEASE_COM(brdflutTex2D);
 }
 
-void BakingFactory::PreBakeEnvironmentMap(SkyLightBuffer* resource)
+void BakingFactory::PreBakeEnvironmentMap(TextureBuffer* resource, bool hdri, SkyLightBuffer* pResource)
 {
 	if (resource == nullptr) return;
 
@@ -232,15 +232,26 @@ void BakingFactory::PreBakeEnvironmentMap(SkyLightBuffer* resource)
 	XMVECTOR tar[] = { XMVectorSet(1, 0, 0, 0), XMVectorSet(-1, 0, 0, 0), XMVectorSet(0, 1, 0, 0), XMVectorSet(0, -1, 0, 0), XMVectorSet(0, 0, 1, 0), XMVectorSet(0, 0, -1, 0) };
 	XMVECTOR up[] = { XMVectorSet(0, 1, 0, 0), XMVectorSet(0, 1, 0, 0), XMVectorSet(0, 0, -1, 0), XMVectorSet(0, 0, 1, 0), XMVectorSet(0, 1, 0, 0), XMVectorSet(0, 1, 0, 0) };
 
-	ID3D11ShaderResourceView* skycube		= (ID3D11ShaderResourceView*)resource->Environment->pTextureBuf;
+	ID3D11ShaderResourceView* skycube		= (ID3D11ShaderResourceView*)resource->pTextureBuf;
 	ID3D11RasterizerState* cubemapRS		= g_ResourceManager->GetRasterizerState<RS_CubeMap>()->Get();
 	ID3D11DepthStencilState* cubemapDSS		= g_ResourceManager->GetDepthStencilState<DSS_CubeMap>()->Get();
 
 	DrawBuffer* boxDB = g_ResourceManager->GetDrawBuffer<DB_Box>();
 
 	VertexShader* cubmapVS		= g_ShaderManager->GetShader("SkyBox_VS");
-	PixelShader* irradiancePS	= g_ShaderManager->GetShader("IBL_Convolution_PS");
-	PixelShader* prefilterPS	= g_ShaderManager->GetShader("IBL_PrefilterMap_PS");
+	PixelShader* irradiancePS	= nullptr;
+	PixelShader* prefilterPS	= nullptr;
+
+	if (hdri)
+	{
+		irradiancePS = g_ShaderManager->GetShader("IBL_Convolution_HDRI_PS");
+		prefilterPS = g_ShaderManager->GetShader("IBL_PrefilterMap_HDRI_PS");
+	}
+	else
+	{
+		irradiancePS = g_ShaderManager->GetShader("IBL_Convolution_PS");
+		prefilterPS = g_ShaderManager->GetShader("IBL_PrefilterMap_PS");
+	}
 
 	context->OMSetDepthStencilState(cubemapDSS, 0);
 	context->RSSetState(cubemapRS);
@@ -325,19 +336,16 @@ void BakingFactory::PreBakeEnvironmentMap(SkyLightBuffer* resource)
 		}
 	}
 
-	//g_Graphic->SaveTextureDDS(irradianceSRV.Get(), std::string(resource->Environment->Name + "_Irradiance").c_str());
-	//g_Graphic->SaveTextureDDS(prefilterSRV.Get(), std::string(resource->Environment->Name + "_Prefilter").c_str());
+	//g_Graphic->SaveTextureDDS(irradianceSRV.Get(), std::string(resource->Name + "_Irradiance").c_str());
+	//g_Graphic->SaveTextureDDS(prefilterSRV.Get(), std::string(resource->Name + "_Prefilter").c_str());
 
 	// Debug Name..
 	GPU_RESOURCE_DEBUG_NAME(irradianceSRV, "gIBLIrradiance");
 	GPU_RESOURCE_DEBUG_NAME(prefilterSRV, "gIBLPrefilter");
 
 	// Resource »ðÀÔ..
-	if (resource->Irradiance == nullptr) resource->Irradiance = new TextureBuffer();
-	resource->Irradiance->pTextureBuf = irradianceSRV;
-	
-	if (resource->Prefilter == nullptr) resource->Prefilter = new TextureBuffer();
-	resource->Prefilter->pTextureBuf = prefilterSRV;
+	pResource->Irradiance->pTextureBuf = irradianceSRV;
+	pResource->Prefilter->pTextureBuf = prefilterSRV;
 
 	// Resouce ÇØÁ¦..
 	RESET_COM(context);
@@ -345,7 +353,7 @@ void BakingFactory::PreBakeEnvironmentMap(SkyLightBuffer* resource)
 	RELEASE_COM(prefilterTex2D);
 }
 
-void BakingFactory::BakeConvertCubeMap(TextureBuffer* resource, float angle, bool save_file, TextureBuffer* pResource)
+void BakingFactory::BakeConvertCubeMap(TextureBuffer* resource, float angle, bool save_file, bool hdri, TextureBuffer* pResource)
 {
 	if (resource == nullptr) return;
 
@@ -364,7 +372,16 @@ void BakingFactory::BakeConvertCubeMap(TextureBuffer* resource, float angle, boo
 	DrawBuffer* boxDB = g_ResourceManager->GetDrawBuffer<DB_Box>();
 
 	VertexShader* cubemap_VS = g_ShaderManager->GetShader("SkyBox_VS");
-	PixelShader* cubemap_convert_PS = g_ShaderManager->GetShader("SkyBox_Convert_PS");
+	PixelShader* cubemap_convert_PS = nullptr;
+
+	if (hdri)
+	{
+		cubemap_convert_PS = g_ShaderManager->GetShader("SkyBox_Convert_HDRI_PS");
+	}
+	else
+	{
+		cubemap_convert_PS = g_ShaderManager->GetShader("SkyBox_Convert_PS");
+	}
 	
 	ID3D11Resource* origin_Tex2D = nullptr;
 	skycube->GetResource(&origin_Tex2D);
@@ -374,8 +391,8 @@ void BakingFactory::BakeConvertCubeMap(TextureBuffer* resource, float angle, boo
 
 	D3D11_TEXTURE2D_DESC cubemapDesc;
 	ZeroMemory(&cubemapDesc, sizeof(cubemapDesc));
-	cubemapDesc.Width = origin_Desc.Width;
-	cubemapDesc.Height = origin_Desc.Height;
+	cubemapDesc.Width = 512;
+	cubemapDesc.Height = 512;
 	cubemapDesc.MipLevels = 1;
 	cubemapDesc.ArraySize = 6;
 	cubemapDesc.Format = origin_Desc.Format;
@@ -401,8 +418,8 @@ void BakingFactory::BakeConvertCubeMap(TextureBuffer* resource, float angle, boo
 	cubemapRTVDesc.Texture2DArray.MipSlice = 0;
 
 	D3D11_VIEWPORT cubemapViewport;
-	cubemapViewport.Width = origin_Desc.Width;
-	cubemapViewport.Height = origin_Desc.Height;
+	cubemapViewport.Width = 512.0f;
+	cubemapViewport.Height = 512.0f;
 	cubemapViewport.MinDepth = 0.0f;
 	cubemapViewport.MaxDepth = 1.0f;
 	cubemapViewport.TopLeftX = 0.0f;

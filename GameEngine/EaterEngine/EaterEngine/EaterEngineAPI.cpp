@@ -124,19 +124,19 @@ int LoadAssetsCount()
   return gGameEngine->LoadMeshCount();
 }
 
-void BakeSkyLightMap(std::string mPath)
+void BakeSkyLightMap(std::string mPath, bool hdri)
 {
-	gGameEngine->BakeSkyLightMap(mPath);
+	gGameEngine->BakeSkyLightMap(mPath, hdri);
 }
 
-void BakeConvertCubeMap(std::string mPath, float angle)
+void BakeConvertCubeMap(std::string mPath, float angle, bool hdri)
 {
-	gGameEngine->BakeConvertCubeMap(mPath, angle, true, false, false);
+	gGameEngine->BakeConvertCubeMap(mPath, angle, true, hdri, false, false);
 }
 
-void SetConvertCubeMap(std::string mPath, float angle, bool apply_skylight, bool apply_environment)
+void SetConvertCubeMap(std::string mPath, float angle, bool hdri, bool apply_skylight, bool apply_environment)
 {
-	gGameEngine->BakeConvertCubeMap(mPath, angle, false, apply_skylight, apply_environment);
+	gGameEngine->BakeConvertCubeMap(mPath, angle, false, hdri, apply_skylight, apply_environment);
 }
 
 void BakeAnimation()

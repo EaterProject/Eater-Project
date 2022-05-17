@@ -266,7 +266,8 @@ struct CB_ExternalData : public cbExternalData
 SHADER_CONSTANT_BUFFER(cbBloomBright)
 struct CB_BloomBright : public cbBloomBright
 {
-	float gThreshold;
+	float gThreshold_Min;
+	float gThreshold_Max;
 };
 
 SHADER_CONSTANT_BUFFER(cbBloomBlurOrder)

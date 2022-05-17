@@ -52,9 +52,9 @@ extern "C" EATER_ENGINEDLL void Load(std::string mPath,UINT Mode = 0);
 extern "C" EATER_ENGINEDLL int	LoadAssetsCount();
 
 ///베이킹 관련
-extern "C" EATER_ENGINEDLL void BakeSkyLightMap(std::string mPath);
-extern "C" EATER_ENGINEDLL void BakeConvertCubeMap(std::string mPath, float angle);
-extern "C" EATER_ENGINEDLL void SetConvertCubeMap(std::string mPath, float angle, bool apply_skylight, bool apply_environment);
+extern "C" EATER_ENGINEDLL void BakeSkyLightMap(std::string mPath, bool hdri);
+extern "C" EATER_ENGINEDLL void BakeConvertCubeMap(std::string mPath, float angle, bool hdri);
+extern "C" EATER_ENGINEDLL void SetConvertCubeMap(std::string mPath, float angle, bool hdri, bool apply_skylight, bool apply_environment);
 extern "C" EATER_ENGINEDLL void BakeAnimation();
 
 ///맵 설정

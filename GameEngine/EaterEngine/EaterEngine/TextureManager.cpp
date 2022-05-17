@@ -41,7 +41,7 @@ void TextureManager::LoadTexture(std::string& Path)
 	}
 }
 
-void TextureManager::BakeSkyLightMap(std::string& Path)
+void TextureManager::BakeSkyLightMap(std::string& Path, bool hdri)
 {
 	SkyLightBuffer* buffer = LoadManager::GetSkyLight(Path);
 
@@ -58,7 +58,7 @@ void TextureManager::BakeSkyLightMap(std::string& Path)
 	}
 
 	EnterCriticalSection(m_CriticalSection);
-	m_Graphic->BakeSkyLightMap(lightMap, &buffer);
+	m_Graphic->BakeSkyLightMap(lightMap, hdri, &buffer);
 	LeaveCriticalSection(m_CriticalSection);
 
 	if (buffer == nullptr)
@@ -73,7 +73,7 @@ void TextureManager::BakeSkyLightMap(std::string& Path)
 	}
 }
 
-void TextureManager::BakeConvertCubeMap(std::string& Path, float angle, bool save_file, bool apply_skylight, bool apply_environment)
+void TextureManager::BakeConvertCubeMap(std::string& Path, float angle, bool save_file, bool hdri, bool apply_skylight, bool apply_environment)
 {
 	TextureBuffer* cubeMap = LoadManager::GetTexture(Path);
 
@@ -96,7 +96,7 @@ void TextureManager::BakeConvertCubeMap(std::string& Path, float angle, bool sav
 	}
 
 	EnterCriticalSection(m_CriticalSection);
-	m_Graphic->BakeConvertCubeMap(cubeMap, angle, save_file, &buffer);
+	m_Graphic->BakeConvertCubeMap(cubeMap, angle, save_file, hdri, &buffer);
 	LeaveCriticalSection(m_CriticalSection);
 
 	if (buffer == nullptr)
@@ -122,7 +122,7 @@ void TextureManager::BakeConvertCubeMap(std::string& Path, float angle, bool sav
 		}
 
 		EnterCriticalSection(m_CriticalSection);
-		m_Graphic->BakeSkyLightMap(buffer, &skyLight);
+		m_Graphic->BakeSkyLightMap(buffer, false, &skyLight);
 		LeaveCriticalSection(m_CriticalSection);
 
 		if (skyLight == nullptr)

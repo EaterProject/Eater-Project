@@ -276,7 +276,8 @@ void BloomPass::ApplyOption()
 
 	// Shader Constant Buffer ¼³Á¤..
 	CB_BloomBright bloomdownsamplingBuf;
-	bloomdownsamplingBuf.gThreshold = g_RenderOption->BLOOM_Threshold;
+	bloomdownsamplingBuf.gThreshold_Min = g_RenderOption->BLOOM_Threshold_Min;
+	bloomdownsamplingBuf.gThreshold_Max = g_RenderOption->BLOOM_Threshold_Max;
 	m_BloomBright_PS->ConstantBufferUpdate(&bloomdownsamplingBuf);
 }
 

@@ -18,8 +18,8 @@ public:
 	void LoadTexture(std::string& Path);
 
 public:
-	void BakeSkyLightMap(std::string& Path);
-	void BakeConvertCubeMap(std::string& Path, float angle, bool save_file, bool apply_skylight, bool apply_environment);
+	void BakeSkyLightMap(std::string& Path, bool hdri);
+	void BakeConvertCubeMap(std::string& Path, float angle, bool save_file, bool hdri, bool apply_skylight, bool apply_environment);
 
 private:
 	bool CheckFolder(std::string& Path);

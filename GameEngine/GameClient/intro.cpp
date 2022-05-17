@@ -33,7 +33,7 @@ void intro::Awake()
 	MainCam->AddComponent<PlayerCamera>();
 	Cam->ChoiceMainCam();
 
-	BakeSkyLightMap("Night");
+	BakeSkyLightMap("Night", false);
 	SetSkyLight("Night");
 
 	SetEnvironment("Night");

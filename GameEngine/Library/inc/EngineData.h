@@ -21,6 +21,7 @@ public:
 	UINT RenderingOption = 0;
 	UINT PostProcessOption = 0;
 
+public:
 	// SSAO Option
 	float AO_Radius = 0.25f;							// 샘플링시 비교할 Texel 반지름	(0.0 ~ 5.0)
 	float AO_SurfaceEpsilon = 0.05f;					// 차폐되는 최소 깊이값			(0.0 ~ 1.0)
@@ -39,16 +40,18 @@ public:
 	float FOG_HeightOffset = 3.0f;						// Fog 높이 오프셋				(0.0 ~ 100.0)
 	float FOG_HeightValue = 3.0f;						// Fog 높이 범위					(0.0 ~ 100.0)
 
-	// Environment Option
-	float EnvironmentSize = 500.0f;						// Environment Map 크기			(1.0 ~ 5000.0)
-
 	// Bloom Option
-	float BLOOM_Threshold = 1.0f;						// Bloom 추출 시작 영역			(0.0 ~ 2.0)
+	float BLOOM_Threshold_Min = 1.0f;					// Bloom 추출 최소 영역			(0.0 ~ 2.0)
+	float BLOOM_Threshold_Max = 100.0f;					// Bloom 추출 최대 영역			(1.0 ~ 1000.0)
 	float BLOOM_Factor = 0.25f;							// Bloom 혼합률					(0.0 ~ 1.0)
 
-	// IBL Option
-	float IBL_Factor = 1.0f;							// IBL 강도						(0.0 ~ 5.0)
-	float IBL_Angle = 0.0f;								// IBL Map Y축 회전 각도			(0.0 ~ 360.0)
+	// SkyCube Option
+	float SkyCube_Size = 500.0f;						// SkyCube Map 크기				(1.0 ~ 5000.0)
+	bool SkyCube_HDR = true;							// SkyCube HDR 여부
+
+	// SkyLight Option
+	float SkyLight_Factor = 1.0f;						// SkyLight 강도					(0.0 ~ 5.0)
+	float SkyLight_Threshold = 100.0f;					// SkyLight Map 최대 밝기		(1.0 ~ 1000.0)
 };
 
 // Animation Data
@@ -157,12 +160,10 @@ class SkyLightBuffer : public Resources
 public:
 	virtual ~SkyLightBuffer()
 	{
-		Environment = nullptr;
 		delete Irradiance;
 		delete Prefilter;
 	};
 
-	TextureBuffer* Environment = nullptr;				// Environment Buffer
 	TextureBuffer* Irradiance = nullptr;				// Environment Irradiance Buffer
 	TextureBuffer* Prefilter = nullptr;					// Environment Prefilter Buffer
 };

@@ -174,6 +174,7 @@
 #define IDC_SLIDER19                    1068
 #define IDC_CHECK12                     1069
 #define IDC_CHECK13                     1070
+#define IDC_SLIDER20                    1070
 #define ID_32771                        32771
 #define ID_32772                        32772
 #define ID_SCENE_SETTING                32773

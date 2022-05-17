@@ -83,8 +83,8 @@ public:
 
 public:
 	/// Graphic Resource Baking Function..
-	virtual GRAPHIC_DLL void BakeSkyLightMap(TextureBuffer* environment, SkyLightBuffer** ppResource) abstract;
-	virtual GRAPHIC_DLL void BakeConvertCubeMap(TextureBuffer* resource, float angle, bool save_file, TextureBuffer** ppResource) abstract;
+	virtual GRAPHIC_DLL void BakeSkyLightMap(TextureBuffer* environment, bool hdri, SkyLightBuffer** ppResource) abstract;
+	virtual GRAPHIC_DLL void BakeConvertCubeMap(TextureBuffer* resource, float angle, bool save_file, bool hdri, TextureBuffer** ppResource) abstract;
 
 private:
 	static GraphicEngine* Graphic;

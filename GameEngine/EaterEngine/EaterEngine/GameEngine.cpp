@@ -399,14 +399,14 @@ ModelData* GameEngine::GetLoadMeshData(std::string& Path)
 	return mLoadManager->GetModelData(Path);
 }
 
-void GameEngine::BakeSkyLightMap(std::string& Path)
+void GameEngine::BakeSkyLightMap(std::string& Path, bool hdri)
 {
-	mLoadManager->BakeSkyLightMap(Path);
+	mLoadManager->BakeSkyLightMap(Path, hdri);
 }
 
-void GameEngine::BakeConvertCubeMap(std::string& Path, float angle, bool save_file, bool apply_skylight, bool apply_environment)
+void GameEngine::BakeConvertCubeMap(std::string& Path, float angle, bool save_file, bool hdri, bool apply_skylight, bool apply_environment)
 {
-	mLoadManager->BakeConvertCubeMap(Path, angle, save_file, apply_skylight, apply_environment);
+	mLoadManager->BakeConvertCubeMap(Path, angle, save_file, hdri, apply_skylight, apply_environment);
 }
 
 void GameEngine::BakeAnimation()

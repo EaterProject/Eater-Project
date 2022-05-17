@@ -54,8 +54,8 @@ public:
 	void CreateAnimationBuffer(ModelData* model, ModelAnimationData* animation, AnimationBuffer** ppResource) override;
 
 public:
-	void BakeSkyLightMap(TextureBuffer* environment, SkyLightBuffer** ppResource) override;
-	void BakeConvertCubeMap(TextureBuffer* resource, float angle, bool save_file, TextureBuffer** ppResource) override;
+	void BakeSkyLightMap(TextureBuffer* environment, bool hdri, SkyLightBuffer** ppResource) override;
+	void BakeConvertCubeMap(TextureBuffer* resource, float angle, bool save_file, bool hdri, TextureBuffer** ppResource) override;
 
 private:
 	IFactoryManager* m_FactoryManager;

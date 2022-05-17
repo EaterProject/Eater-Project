@@ -57,21 +57,22 @@ void FactoryManager::BakeShadowMap(std::string fileName)
 	m_BakingFactory->PreBakeShadowMap(fileName);
 }
 
-void FactoryManager::BakeSkyLightMap(TextureBuffer* skyLight, SkyLightBuffer** ppResource)
+void FactoryManager::BakeSkyLightMap(TextureBuffer* skyLight, bool hdri, SkyLightBuffer** ppResource)
 {
 	// 货肺款 Environment Buffer 积己..
-	if(*ppResource == nullptr) (*ppResource) = new SkyLightBuffer();
-	(*ppResource)->Environment = skyLight;
+	if(*ppResource == nullptr)					(*ppResource) = new SkyLightBuffer();
+	if ((*ppResource)->Irradiance == nullptr)	(*ppResource)->Irradiance = new TextureBuffer();
+	if ((*ppResource)->Prefilter == nullptr)	(*ppResource)->Prefilter = new TextureBuffer();
 
-	m_BakingFactory->PreBakeEnvironmentMap(*ppResource);
+	m_BakingFactory->PreBakeEnvironmentMap(skyLight, hdri, *ppResource);
 }
 
-void FactoryManager::BakeConvertCubeMap(TextureBuffer* resource, float angle, bool save_file, TextureBuffer** ppResource)
+void FactoryManager::BakeConvertCubeMap(TextureBuffer* resource, float angle, bool save_file, bool hdri, TextureBuffer** ppResource)
 {
 	// 货肺款 Texture Buffer 积己..
 	if (*ppResource == nullptr) (*ppResource) = new TextureBuffer();
 
-	m_BakingFactory->BakeConvertCubeMap(resource, angle, save_file, *ppResource);
+	m_BakingFactory->BakeConvertCubeMap(resource, angle, save_file, hdri, *ppResource);
 }
 
 void FactoryManager::CreateImg(std::string name, Hash_Code hash_code, std::string fileName)

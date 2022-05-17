@@ -3,7 +3,11 @@
 #include "Function_Header.hlsli"
 #include "IBL_Header.hlsli"
 
+#ifdef HDRI
+Texture2D gSkyCube : register(t0);
+#else
 TextureCube gSkyCube : register(t0);
+#endif
 
 cbuffer cbExternalData : register(b0) 
 {
@@ -42,10 +46,14 @@ float4 IBL_PrefilterMap_PS(SkyBoxPixelIn pin) : SV_TARGET
             float fMipBias = 1.0f;
             float fMipLevel = gRoughness == 0.0 ? 0.0 : max(0.5 * log2(saSample / saTexel) + fMipBias, 0.0f);
 			
-            PrefilteredColor += gSkyCube.SampleLevel(gSamWrapLinear, lightDir, fMipLevel).rgb * NdotL;
-			
+			#ifdef HDRI
+			float2 UV = SampleSphericalMap(lightDir);
+            PrefilteredColor += min(gSkyCube.SampleLevel(gSamWrapLinear, UV, fMipLevel).rgb, 100.0f) * NdotL;
+			#else
+            PrefilteredColor += min(gSkyCube.SampleLevel(gSamWrapLinear, lightDir, fMipLevel).rgb, 100.0f) * NdotL;
+			#endif		
 			totalWeight += NdotL;
-		}
+        }
 	}
 
     PrefilteredColor /= max(totalWeight, EPSILON);

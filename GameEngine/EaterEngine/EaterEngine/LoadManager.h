@@ -70,8 +70,8 @@ public:
 	void LoadTerrain(std::string mMeshName, std::string mMaskName1, std::string mMaskName2, UINT parsingMode);
 
 public:
-	void BakeSkyLightMap(std::string Path);
-	void BakeConvertCubeMap(std::string& Path, float angle, bool save_file, bool apply_skylight, bool apply_environment);
+	void BakeSkyLightMap(std::string Path, bool hdri);
+	void BakeConvertCubeMap(std::string& Path, float angle, bool save_file, bool hdri, bool apply_skylight, bool apply_environment);
 	void BakeAnimation();
 
 public:

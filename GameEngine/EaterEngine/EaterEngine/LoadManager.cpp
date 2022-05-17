@@ -147,15 +147,15 @@ void LoadManager::LoadTerrain(std::string mMeshName, std::string mMaskName1, std
 	mFBX->LoadTerrain(mMeshName, mMaskName1, mMaskName2, parsingMode);
 }
 
-void LoadManager::BakeSkyLightMap(std::string Path)
+void LoadManager::BakeSkyLightMap(std::string Path, bool hdri)
 {
 	//텍스쳐 로드
-	mTexture->BakeSkyLightMap(Path);
+	mTexture->BakeSkyLightMap(Path, hdri);
 }
 
-void LoadManager::BakeConvertCubeMap(std::string& Path, float angle, bool save_file, bool apply_skylight, bool apply_environment)
+void LoadManager::BakeConvertCubeMap(std::string& Path, float angle, bool save_file, bool hdri, bool apply_skylight, bool apply_environment)
 {
-	mTexture->BakeConvertCubeMap(Path, angle, save_file, apply_skylight, apply_environment);
+	mTexture->BakeConvertCubeMap(Path, angle, save_file, hdri, apply_skylight, apply_environment);
 }
 
 void LoadManager::BakeAnimation()

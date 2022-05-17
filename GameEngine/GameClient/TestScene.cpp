@@ -41,9 +41,9 @@ void TestScene::Awake()
 	PROFILE_TIMER_END("Load Folder"); 
 
 	//BakeSkyLightMap("Day");
-	BakeSkyLightMap("Night");
-	BakeSkyLightMap("skybox1");
-	BakeSkyLightMap("TestSky");
+	BakeSkyLightMap("Night", false);
+	BakeSkyLightMap("skybox1", false);
+	BakeSkyLightMap("TestSky", false);
 
 	//AddOccluder("Dome_Occluder_0");
 
@@ -52,7 +52,7 @@ void TestScene::Awake()
 	//CreateParticle(0,0,0);
 	//SetSkyLight("Day");
 	SetSkyLight("Night");
-	SetEnvironment("Night");
+	SetEnvironment("HDRI");
 
 	Load("../Assets/Scene/test1.Scene");
 }
@@ -379,10 +379,10 @@ void TestScene::ChangeCubeMap()
 			angle -= 360.0f;
 		}
 
-		SetConvertCubeMap("TestHDR", angle, true, true);
+		SetConvertCubeMap("HDRI_2", angle, true, true, true);
 	}
 	if (GetKeyUp('8'))
 	{
-		BakeConvertCubeMap("TestHDR", angle);
+		BakeConvertCubeMap("HDRI_2", angle, true);
 	}
 }

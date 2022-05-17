@@ -161,7 +161,7 @@ void LightPass::RenderUpdate()
 	CB_LightSub lightsubBuf;
 	lightsubBuf.gEyePosW = cam->CamPos;
 	lightsubBuf.gViewProjTex = cam->CamView * cam->CamProj * texSpace;
-	lightsubBuf.gIBLFactor = g_RenderOption->IBL_Factor;
+	lightsubBuf.gIBLFactor = g_RenderOption->SkyLight_Factor;
 
 	// Vertex Shader Update..
 	m_Light_VS->Update();
