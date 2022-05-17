@@ -90,13 +90,13 @@ protected:
 
 protected:
 	// 연속된 메모리 공간에 있는 ConstantBuffer List..
-	std::vector<Microsoft::WRL::ComPtr<ID3D11Buffer>> m_ConstantBuffers;
+	std::vector<ID3D11Buffer*> m_ConstantBuffers;
 
 	// 연속된 메모리 공간에 있는 SamplerState List..
-	std::vector<Microsoft::WRL::ComPtr<ID3D11SamplerState>> m_SamplerStates;
+	std::vector<ID3D11SamplerState*> m_SamplerStates;
 
 	// 연속된 메모리 공간에 있는 ShaderResourceView List..
-	std::vector<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> m_ShaderResourceViews;
+	std::vector<ID3D11ShaderResourceView*> m_ShaderResourceViews;
 
 	// PixelShader ConstantBuffer List..
 	std::unordered_map<Hash_Code, ConstantBuffer*> m_ConstantBufferList;
@@ -126,7 +126,7 @@ inline void ShaderBase::ConstantBufferUpdate(T* cBuffer)
 
 	// 해당 Constant Buffer Register Bind Index의 Resource 검색..
 	ConstantBuffer* cBuf = it->second;
-	ID3D11Buffer* buffer = m_ConstantBuffers[cBuf->register_number].Get();
+	ID3D11Buffer* buffer = m_ConstantBuffers[cBuf->register_number];
 
 	// Constant Buffer Usage에 따른 Resource Update..
 	switch (cBuf->cUsage)
@@ -170,7 +170,7 @@ void ShaderBase::ConstantBufferUpdate(T* cBuffer, ID3D11DeviceContext* context)
 	if (it == m_ConstantBufferList.end()) return;
 
 	ConstantBuffer* cBuf = it->second;
-	ID3D11Buffer* buffer = m_ConstantBuffers[cBuf->register_number].Get();
+	ID3D11Buffer* buffer = m_ConstantBuffers[cBuf->register_number];
 
 	switch (cBuf->cUsage)
 	{

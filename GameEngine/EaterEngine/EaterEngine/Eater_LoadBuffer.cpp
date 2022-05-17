@@ -74,6 +74,10 @@ void Eater_LoadBuffer::LoadData(std::string& Path)
 			LoadNavigationBuffer(i);
 			delete mMesh;
 		}
+		else
+		{
+			delete mMesh;
+		}
 
 	}
 	EATER_CLOSE_READ_FILE();

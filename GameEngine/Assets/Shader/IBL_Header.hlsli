@@ -1,3 +1,6 @@
+#ifndef IBL_HEADER
+#define IBL_HEADER
+
 #include "Define_Header.hlsli"
 
 #define MAX_REF_LOD 4.0
@@ -5,7 +8,14 @@
 float3 FresnelSchlickRoughness(float NdotV, float3 F0, float roughness)   // cosTheta is n.v and F0 is the base reflectivity
 {
     float roughnessPercent = 1.0f - roughness;
+    
     return F0 + (max(float3(roughnessPercent, roughnessPercent, roughnessPercent), F0) - F0) * pow(1.0 - NdotV, 5.0f);
+}
+
+float3 FresnelLerp(float NdotV, float3 F0, float3 F90)
+{
+    float t = pow(1 - NdotV, 5.0f); // ala Schlick interpoliation
+    return lerp(F0, F90, t);
 }
 
 float NormalDistributionGGXTR(float3 normalVec, float3 halfwayVec, float Roughness2)
@@ -86,13 +96,29 @@ float3 IBL_EnvironmentLight(in float3 V, in float3 N, in float3 irradiance, in f
 {
     float3 F0 = lerp(F_ZERO, albedo, metallic);
     
-    float3 kS = FresnelSchlickRoughness(max(dot(N, V), 0.0f), F0, roughness);
+    //float kD = (1 - metallic) * 0.779083699;
+    
+    float perceptualRoughness = max(roughness * roughness, 0.01f);
+    //float smoothness = 1.0f - perceptualRoughness;
+    //float grazingTerm = clamp((smoothness + (1.0f - kD)), 0.0f, 1.0f);
+    
+    //float3 kS = FresnelLerp(max(dot(N, V), 0.0f), F0, float3(grazingTerm, grazingTerm, grazingTerm));
+    float3 kS = FresnelSchlickRoughness(max(dot(N, V), 0.0f), F0, roughness * roughness);
     float3 kD = float3(1.0f, 1.0f, 1.0f) - kS;
     kD *= 1.0 - metallic;
     
-    float3 diffuse = albedo * irradiance;
+    //float kd = (1 - metallic) * 0.779083699f;
+    //
+    //
+    //float surfaceReduction = 1.0f - 0.28f * roughness * perceptualRoughness;
+
+    //float3 specular = surfaceReduction * prefilterColor * FresnelLerp(max(dot(N, V), 0.0f), F0, float3(grazingTerm));
+    
+    float3 diffuse = albedo * irradiance * kD;
     
     float3 specular = prefilterColor * (kS * brdf.x + brdf.y);
     
-    return (diffuse + specular) * kD * ao * factor;
+    return (diffuse + specular) * ao * factor;
 }
+
+#endif

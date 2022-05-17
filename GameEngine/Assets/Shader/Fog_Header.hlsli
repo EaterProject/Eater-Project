@@ -1,3 +1,6 @@
+#ifndef FOG_HEADER
+#define FOG_HEADER
+
 #include "SamplerState_Header.hlsli"
 
 cbuffer cbFogOption
@@ -62,3 +65,5 @@ float3 Fog(in float3 color, in float3 position)
     
     return ApplyFog(color, position, noise);
 }
+
+#endif

@@ -57,6 +57,7 @@ private:
 	Animation* mAnimation;
 
 	AnimationBuffer* NowAnimationBuffer;
+	AnimationBuffer* NextAnimationBuffer;
 	AnimationData* mAnimationData;
 
 	ParserData::CModelAnimation* NowAnimation;

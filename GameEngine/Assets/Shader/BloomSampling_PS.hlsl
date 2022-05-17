@@ -1,14 +1,14 @@
 #define GAUSSIAN_RADIUS 4
+#include "SamplerState_Header.hlsli"
 #include "Output_Header.hlsli"
 
 Texture2D gOriginMap : register(t0);
 Texture2D gDownMap : register(t1);
-SamplerState gSamClampLinear : register(s0);
-SamplerState gSamBorderLinear : register(s1);
 
 cbuffer cbBloomBright : register(b0)
 {
-    float gThreshold : packoffset(c0.x);
+    float gThreshold_Min : packoffset(c0.x);
+    float gThreshold_Max : packoffset(c0.y);
 }
 
 cbuffer cbBloomBlurOrder : register(b1)
@@ -37,7 +37,6 @@ float GetBloomCurve(float x, float threshold)
     return result * 0.5f;
 }
 
-
 float4 DownSampling_Bright_PS(ScreenPixelIn pin) : SV_TARGET
 {
     float3 outColor = float3(0.0f, 0.0f, 0.0f);
@@ -56,7 +55,7 @@ float4 DownSampling_Bright_PS(ScreenPixelIn pin) : SV_TARGET
     float intensity = max(dot(outColor, float3(0.3f, 0.3f, 0.3f)), 0.000001f);
     //float intensity = max(dot(outColor, float3(0.3f, 0.59f, 0.11f)), 0.000001f);
     
-    float bloom_intensity = GetBloomCurve(intensity, gThreshold);
+    float bloom_intensity = min(GetBloomCurve(intensity, gThreshold_Min), gThreshold_Max);
     float3 bloom_color = outColor * bloom_intensity / intensity;
     
     return float4(bloom_color, 1.0f);

@@ -33,7 +33,7 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11ComputeShader> m_CS;
 
 	// 연속된 메모리 공간에 있는 UnorderedAccessView List..
-	std::vector<Microsoft::WRL::ComPtr<ID3D11UnorderedAccessView>> m_UnorderedAccessViews;
+	std::vector<ID3D11UnorderedAccessView*> m_UnorderedAccessViews;
 
 	// ComputeShader UnorderedAccessView List..
 	std::unordered_map<Hash_Code, UnorderedAccessBuffer*> m_UAV_List;

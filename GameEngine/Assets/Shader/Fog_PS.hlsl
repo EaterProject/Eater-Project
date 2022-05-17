@@ -1,3 +1,4 @@
+#include "SamplerState_Header.hlsli"
 #include "Output_Header.hlsli"
 
 cbuffer cbFogOption : register(b0)
@@ -19,9 +20,6 @@ cbuffer cbFogData : register(b1)
 Texture2D gOriginMap : register(t0);
 Texture2D gPositionRT : register(t1);
 Texture3D gNoiseVolume : register(t2);
-
-SamplerState gSamClampLinear : register(s0);
-SamplerState gSamWrapLinear : register(s1);
 
 float3 ApplyFog(float3 originalColor, float3 toEye, float noise)
 {

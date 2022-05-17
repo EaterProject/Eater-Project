@@ -16,7 +16,6 @@ public:
 
 public:
 	void RenderUpdate();
-	void BlurRender(int blurCount);
 	void BlurRender();
 
 private:
@@ -38,6 +37,8 @@ private:
 
 	RenderTexture* m_Ssao_RT;
 	RenderTexture* m_SsaoBlur_RT;
+
+	UINT m_BlurCount;
 
 private:
 	ID3D11RenderTargetView* m_Ssao_RTV;

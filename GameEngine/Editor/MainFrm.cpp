@@ -552,6 +552,7 @@ void CMainFrame::OnCreateBuildFile()
 	//저장할 경로 
 	FilePath += "/Editor";
 	////그아래 폴더 생성
+	std::filesystem::create_directory(FilePath);
 	std::string AssetsFilePath = FilePath + "/Assets";
 	std::string ExeFilePath = FilePath + "/Exe";
 	std::filesystem::create_directory(AssetsFilePath);
@@ -565,8 +566,19 @@ void CMainFrame::OnCreateBuildFile()
 #else
 	std::string OriginalExePath = "../x64/Release";
 #endif
+
 	std::filesystem::copy(OriginalFilePath, AssetsFilePath, std::filesystem::copy_options::recursive | std::filesystem::copy_options::overwrite_existing);
 	std::filesystem::copy(OriginalExePath, ExeFilePath, std::filesystem::copy_options::recursive | std::filesystem::copy_options::overwrite_existing);
+
+	for (auto& path : std::filesystem::recursive_directory_iterator(ExeFilePath.c_str()))
+	{
+		auto exe = std::filesystem::path(path).extension();
+
+		if (exe != ".dll" && exe != ".exe")
+		{
+			std::filesystem::remove(path);
+		}
+	}
 
 	AfxMessageBox(L"빌드파일 생성완료");
 }

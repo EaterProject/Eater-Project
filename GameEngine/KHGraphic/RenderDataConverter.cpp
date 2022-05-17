@@ -354,10 +354,10 @@ void RenderDataConverter::DeleteMaterial(UINT index)
 	CheckEmptyInstance(material);
 
 	// 해당 Resource 제거..
-	RELEASE_COM(material->m_Albedo);
-	RELEASE_COM(material->m_Normal);
-	RELEASE_COM(material->m_Emissive);
-	RELEASE_COM(material->m_ORM);
+	//RELEASE_COM(material->m_Albedo);
+	//RELEASE_COM(material->m_Normal);
+	//RELEASE_COM(material->m_Emissive);
+	//RELEASE_COM(material->m_ORM);
 	
 	// 해당 Instance Buffer 삭제..
 	SAFE_DELETE(material);

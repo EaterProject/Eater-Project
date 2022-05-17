@@ -147,10 +147,10 @@ void SceneSave::SceneOption()
 	EATER_SET_LIST(mOption->FOG_DistanceValue);
 	EATER_SET_LIST(mOption->FOG_HeightOffset);
 	EATER_SET_LIST(mOption->FOG_HeightValue);
-	EATER_SET_LIST(mOption->EnvironmentSize);
-	EATER_SET_LIST(mOption->BLOOM_Threshold);
+	EATER_SET_LIST(mOption->SkyCube_Size);
+	EATER_SET_LIST(mOption->BLOOM_Threshold_Min);
 	EATER_SET_LIST(mOption->BLOOM_Factor);
-	EATER_SET_LIST(mOption->IBL_Factor,true);
+	EATER_SET_LIST(mOption->SkyLight_Factor,true);
 }
 
 void SceneSave::SaveTransform(Transform* mTransform)

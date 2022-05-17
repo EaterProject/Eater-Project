@@ -1,3 +1,6 @@
+#ifndef OIT_HEADER
+#define OIT_HEADER
+
 cbuffer cbOitFrame
 {
     uint gFrameWidth;
@@ -27,3 +30,5 @@ float4 UnpackColorFromUInt(uint color)
     uint4 colorUInt4 = uint4(color, color >> 8, color >> 16, color >> 24) & (0x000000FF);
     return (float4) colorUInt4 / 255.0f;
 }
+
+#endif

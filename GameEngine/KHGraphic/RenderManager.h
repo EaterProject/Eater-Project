@@ -20,12 +20,11 @@ class DebugPass;
 
 class RenderData;
 class InstanceLayer;
-class RenderDataConverter;
 
 class RenderManager : public IRenderManager
 {
 public:
-	RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, IGraphicResourceManager* resource, IShaderManager* shader, RenderOption* renderOption);
+	RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, IGraphicResourceManager* resource, IShaderManager* shader, IRenderDataConverter* converter, RenderOption* renderOption);
 	~RenderManager();
 
 public:
@@ -40,7 +39,8 @@ public:
 	void SetGlobalData(GlobalData* globalData) override;
 
 public:
-	void SetEnvironmentMap(EnvironmentBuffer* resource) override;
+	void SetEnvironment(TextureBuffer* resource) override;
+	void SetSkyLight(SkyLightBuffer* resource) override;
 
 public:
 	void PushInstance(MeshData* instance) override;
@@ -117,10 +117,12 @@ private:
 
 	std::vector<RenderPassBase*> m_RenderPassList;
 
+	std::vector<std::function<void()>> m_FuntionList;
+
 	InstanceLayer* m_InstanceLayer;
 	RenderData* m_RenderData;
 
-	RenderDataConverter* m_Converter;
+	IRenderDataConverter* m_Converter;
 
 	RenderOption* m_RenderOption;
 	RenderOption m_NowRenderOption;

@@ -2,7 +2,7 @@
 #include "FactoryBase.h"
 
 class TextureBuffer;
-class EnvironmentBuffer;
+class SkyLightBuffer;
 
 interface IBakingFactory : public FactoryBase
 {
@@ -11,5 +11,6 @@ public:
 
 public:
 	virtual void PreBakeShadowMap(std::string fileName) abstract;
-	virtual void PreBakeEnvironmentMap(EnvironmentBuffer* tex) abstract;
+	virtual void PreBakeEnvironmentMap(TextureBuffer* resource, bool hdri, SkyLightBuffer* pResource) abstract;
+	virtual void BakeConvertCubeMap(TextureBuffer* resource, float angle, bool save_file, bool hdri, TextureBuffer* pResource) abstract;
 };

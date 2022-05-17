@@ -18,6 +18,7 @@
 #include "Player.h"
 #include "ParticleSystem.h"
 #include "Collider.h"
+#include "EngineData.h"
 
 #include "./Profiler/Profiler.h"
 
@@ -39,18 +40,19 @@ void TestScene::Awake()
 	//Load("../Assets/Model/Animation");
 	PROFILE_TIMER_END("Load Folder"); 
 
-	//BakeEnvironmentMap("Day");
-	BakeEnvironmentMap("Night");
-	BakeEnvironmentMap("skybox1");
-	BakeEnvironmentMap("TestSky");
+	//BakeSkyLightMap("Day");
+	BakeSkyLightMap("Night", false);
+	BakeSkyLightMap("skybox1", false);
+	BakeSkyLightMap("TestSky", false);
 
-	AddOccluder("Dome_Occluder_0");
+	//AddOccluder("Dome_Occluder_0");
 
 	CreateMap();
 
 	//CreateParticle(0,0,0);
-	//SetEnvironmentMap("Day");
-	SetEnvironmentMap("Night");
+	//SetSkyLight("Day");
+	SetSkyLight("Night");
+	SetEnvironment("HDRI");
 
 	Load("../Assets/Scene/test1.Scene");
 }
@@ -65,7 +67,7 @@ void TestScene::Update()
 
 	
 
-	//ChangeCubeMap();
+	ChangeCubeMap();
 	//DebugDrawLine(Vector3(0.0f, 0.0f, 0.0f), Vector3(0.0f, 50.0f, 0.0f), Vector4(1.0f, 0.0f, 0.0f, 1.0f));
 	
 	//PROFILE_TIMER_END("Update");
@@ -113,6 +115,27 @@ void TestScene::CreateMap()
 	//Object->GetTransform()->Position.x -= 10.0f;
 	//Object->GetTransform()->Position.y += 10.0f;
 
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	filter->SetModelName("Sphere1");
+	Object->GetTransform()->Position.x -= 30.0f;
+
+	Object = Instance();
+	meshfilter = Object->AddComponent<MeshFilter>();
+	meshfilter->SetModelName("Sphere1");
+	Object->GetTransform()->Position.x -= 10.0f;
+
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	filter->SetModelName("Sphere1");
+	Object->GetTransform()->Position.x += 10.0f;
+
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	filter->SetModelName("Sphere1");
+	Object->GetTransform()->Position.x += 30.0f;
+
+
 	//Object = Instance();
 	//filter = Object->AddComponent<MeshFilter>();
 	//filter->SetModelName("bossb");
@@ -128,20 +151,6 @@ void TestScene::CreateMap()
 	//Object->GetTransform()->Position.z += 20;
 	//AC = Object->AddComponent<AnimationController>();
 	//AC->Choice("attack");
-
-	for (int i = 0; i < 30; i++)
-	{
-		for (int j = 0; j < 50; j++)
-		{
-			Object = Instance();
-			filter = Object->AddComponent<MeshFilter>();
-			filter->SetModelName("mesh_grass");
-			filter->SetAnimationName("mesh_grass");
-			Object->GetTransform()->Scale = { 0.01f, 0.01f, 0.01f };
-			Object->GetTransform()->Position.x = i;
-			Object->GetTransform()->Position.z = j;
-		}
-	}
 	
 	//Object = Instance();
 	//filter = Object->AddComponent<MeshFilter>();
@@ -319,15 +328,61 @@ void TestScene::ChangeCubeMap()
 
 	if (GetKeyUp('1'))
 	{
-		SetEnvironmentMap("Night");
+		SetSkyLight("Night");
 	}
 	if (GetKeyUp('2'))
 	{
-		SetEnvironmentMap("skybox1");
+		SetSkyLight("skybox1");
 	}
 	if (GetKeyUp('3'))
 	{
-		SetEnvironmentMap("TestSky");
+		SetSkyLight("TestSky");
 	}
+	if (GetKeyUp('4'))
+	{
+		MaterialPropertyBlock* block = meshfilter->GetMaterialPropertyBlock();
 
+		if (up)
+		{
+			block->LimLightColor.x += 0.1f;
+		}
+		else
+		{
+			block->LimLightColor.x -= 0.1f;
+		}
+
+		if (block->LimLightColor.x > 1.0f)
+		{
+			block->LimLightColor.x = 1.0f;
+			up = false;
+		}
+		if (block->LimLightColor.x < 0.0f)
+		{
+			block->LimLightColor.x = 0.0f;
+			up = true;
+		}
+	}
+	if (GetKeyUp('5'))
+	{
+		meshfilter->SetMaterialPropertyBlock(true);
+	}
+	if (GetKeyUp('6'))
+	{
+		meshfilter->SetMaterialPropertyBlock(false);
+	}
+	if (GetKey('7'))
+	{
+		angle += 1.0f;
+
+		if (angle > 360.0f)
+		{
+			angle -= 360.0f;
+		}
+
+		SetConvertCubeMap("HDRI_2", angle, true, true, true);
+	}
+	if (GetKeyUp('8'))
+	{
+		BakeConvertCubeMap("HDRI_2", angle, true);
+	}
 }

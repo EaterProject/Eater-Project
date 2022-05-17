@@ -1,3 +1,4 @@
+#include "SamplerState_Header.hlsli"
 #include "Output_Header.hlsli"
 #include "Function_Header.hlsli"
 #include "Define_Header.hlsli"
@@ -40,9 +41,6 @@ Texture2D gNormalMap        : register(t1);
 Texture2D gEmissiveMap      : register(t2);
 Texture2D gORMMap           : register(t3);
 #endif
-
-SamplerState gSamWrapLinear      : register(s0);
-SamplerState gSamWrapAnisotropic : register(s1);
 
 [earlydepthstencil]
 MeshPixelOut Deferred_PBR_PS(MeshPixelIn pin)

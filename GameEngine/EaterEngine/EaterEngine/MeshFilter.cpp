@@ -19,6 +19,8 @@ MeshFilter::MeshFilter()
 {
 	ModelName = "";
 
+	m_PropertyBlock = new MaterialPropertyBlock();
+
 	//Component Terrain보다 먼저 실행되어야함
 	SetUp_Order = FUNCTION_ORDER_FIRST;
 	Start_Order = FUNCTION_ORDER_FIRST;
@@ -26,6 +28,8 @@ MeshFilter::MeshFilter()
 
 MeshFilter::~MeshFilter()
 {
+	delete m_PropertyBlock;
+
 	if (m_Material && m_Material->Defalt)
 	{
 		delete m_Material;
@@ -34,6 +38,9 @@ MeshFilter::~MeshFilter()
 
 void MeshFilter::Start()
 {
+	// GameObject Material Property Block 연결..
+	gameobject->OneMeshData->Object_Data->Material_Block = m_PropertyBlock;
+	
 	//클라이언트쪽에서 텍스쳐의 이름을 넣고 애니메이션을 넣고 모두 끝난상태
 	if (isLoad_Model == true)
 	{
@@ -198,6 +205,17 @@ void MeshFilter::SetMetallicFactor(float metallicFactor)
 	m_Material->SetMetallicFactor(metallicFactor);
 }
 
+void MeshFilter::SetMaterialPropertyBlock(bool enable)
+{
+	// 활성화와 동시에 기존 Property Data 복사..
+	if (enable)
+	{
+		(*(MaterialProperty*)m_PropertyBlock) = (*m_Material->m_MaterialData->Material_Property);
+	}
+
+	gameobject->OneMeshData->Object_Data->IsMaterialBlock = enable;
+}
+
 std::string MeshFilter::GetBufferName()
 {
 	return BufferName;
@@ -238,6 +256,11 @@ std::string MeshFilter::GetORMTextureName()
 Material* MeshFilter::GetMaterial()
 {
 	return m_Material;
+}
+
+MaterialPropertyBlock* MeshFilter::GetMaterialPropertyBlock()
+{
+	return m_PropertyBlock;
 }
 
 void MeshFilter::CheckMesh()

@@ -42,10 +42,6 @@ using namespace DirectX::SimpleMath;
 
 GraphicResourceFactory::GraphicResourceFactory()
 {
-	// Parser 생성 및 초기화..
-	m_Parser = ImageParser::Create(IMAGE_TYPE::FLOAT_IMAGE);
-	m_Parser->Initialize();
-
 	// Icon Texture Route 설정..
 	m_TextureRoute = "../Assets/Texture/Graphic/";
 }
@@ -96,7 +92,7 @@ void GraphicResourceFactory::Start()
 
 void GraphicResourceFactory::Release()
 {
-	SAFE_DELETE(m_Parser);
+
 }
 
 void GraphicResourceFactory::CreateTextureBuffer(std::string path, TextureBuffer** ppResource)
@@ -116,7 +112,7 @@ void GraphicResourceFactory::CreateTextureBuffer(std::string path, TextureBuffer
 		std::string texName = path.substr(indexSlash, path.size() - indexSlash);
 
 		// Texture Buffer 생성 및 Data 삽입..
-		*ppResource = new TextureBuffer();
+		if((*ppResource) == nullptr) (*ppResource) = new TextureBuffer();
 		(*ppResource)->pTextureBuf = newTex;
 
 		// Debug Name..
@@ -1533,8 +1529,8 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(Parser
 	Vector3 vMax(-FLT_MAX, -FLT_MAX, -FLT_MAX);
 
 	// Mask Pixel Data Parsing..
-	ParserData::ImageData maskImage1 = m_Parser->LoadImagePixel(mesh->m_MaskName1.c_str(), 4);
-	ParserData::ImageData maskImage2 = m_Parser->LoadImagePixel(mesh->m_MaskName2.c_str(), 4);
+	ParserData::ImageData maskImage1 = ImageParser::LoadImagePixel(mesh->m_MaskName1.c_str(), 4, PIXEL_TYPE::FLOAT_TYPE);
+	ParserData::ImageData maskImage2 = ImageParser::LoadImagePixel(mesh->m_MaskName2.c_str(), 4, PIXEL_TYPE::FLOAT_TYPE);
 
 	std::vector<VertexInput::TerrainVertex> vertices(vCount);
 	for (UINT i = 0; i < vCount; i++)
@@ -1565,8 +1561,8 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(Parser
 			height = maskImage1.height - 1;
 		}
 
-		Vector4 maskColor1_00 = m_Parser->GetPixelColor(maskImage1, width, height);
-		Vector4 maskColor2_00 = m_Parser->GetPixelColor(maskImage2, width, height);
+		Vector4 maskColor1_00 = ImageParser::GetPixelColor(maskImage1, width, height);
+		Vector4 maskColor2_00 = ImageParser::GetPixelColor(maskImage2, width, height);
 		maskColor1_00.z = maskColor2_00.x;
 		maskColor1_00.w = maskColor2_00.y;
 		maskColor1_00 *= 2.0f;
@@ -1581,8 +1577,8 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(Parser
 		}
 		height = originHeight;
 
-		Vector4 maskColor1_p0 = m_Parser->GetPixelColor(maskImage1, width, height);
-		Vector4 maskColor2_p0 = m_Parser->GetPixelColor(maskImage2, width, height);
+		Vector4 maskColor1_p0 = ImageParser::GetPixelColor(maskImage1, width, height);
+		Vector4 maskColor2_p0 = ImageParser::GetPixelColor(maskImage2, width, height);
 		maskColor1_p0.z = maskColor2_p0.x;
 		maskColor1_p0.w = maskColor2_p0.y;
 		maskColor1_p0 *= 0.5f;
@@ -1597,8 +1593,8 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(Parser
 			height = maskImage1.height - 1;
 		}
 
-		Vector4 maskColor1_0p = m_Parser->GetPixelColor(maskImage1, width, height);
-		Vector4 maskColor2_0p = m_Parser->GetPixelColor(maskImage2, width, height);
+		Vector4 maskColor1_0p = ImageParser::GetPixelColor(maskImage1, width, height);
+		Vector4 maskColor2_0p = ImageParser::GetPixelColor(maskImage2, width, height);
 		maskColor1_0p.z = maskColor2_0p.x;
 		maskColor1_0p.w = maskColor2_0p.y;
 		maskColor1_0p *= 0.5f;
@@ -1617,8 +1613,8 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(Parser
 			height = maskImage1.height - 1;
 		}
 
-		Vector4 maskColor1_pp = m_Parser->GetPixelColor(maskImage1, width, height);
-		Vector4 maskColor2_pp = m_Parser->GetPixelColor(maskImage2, width, height);
+		Vector4 maskColor1_pp = ImageParser::GetPixelColor(maskImage1, width, height);
+		Vector4 maskColor2_pp = ImageParser::GetPixelColor(maskImage2, width, height);
 		maskColor1_pp.z = maskColor2_pp.x;
 		maskColor1_pp.w = maskColor2_pp.y;
 		maskColor1_pp *= 0.25f;
@@ -1633,8 +1629,8 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(Parser
 		}
 		height = originHeight;
 
-		Vector4 maskColor1_m0 = m_Parser->GetPixelColor(maskImage1, width, height);
-		Vector4 maskColor2_m0 = m_Parser->GetPixelColor(maskImage2, width, height);
+		Vector4 maskColor1_m0 = ImageParser::GetPixelColor(maskImage1, width, height);
+		Vector4 maskColor2_m0 = ImageParser::GetPixelColor(maskImage2, width, height);
 		maskColor1_m0.z = maskColor2_m0.x;
 		maskColor1_m0.w = maskColor2_m0.y;
 		maskColor1_m0 *= 0.5f;
@@ -1649,8 +1645,8 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(Parser
 			height = 0;
 		}
 
-		Vector4 maskColor1_0m = m_Parser->GetPixelColor(maskImage1, width, height);
-		Vector4 maskColor2_0m = m_Parser->GetPixelColor(maskImage2, width, height);
+		Vector4 maskColor1_0m = ImageParser::GetPixelColor(maskImage1, width, height);
+		Vector4 maskColor2_0m = ImageParser::GetPixelColor(maskImage2, width, height);
 		maskColor1_0m.z = maskColor2_0m.x;
 		maskColor1_0m.w = maskColor2_0m.y;
 		maskColor1_0m *= 0.5f;
@@ -1669,8 +1665,8 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(Parser
 			height = 0;
 		}
 
-		Vector4 maskColor1_mm = m_Parser->GetPixelColor(maskImage1, width, height);
-		Vector4 maskColor2_mm = m_Parser->GetPixelColor(maskImage2, width, height);
+		Vector4 maskColor1_mm = ImageParser::GetPixelColor(maskImage1, width, height);
+		Vector4 maskColor2_mm = ImageParser::GetPixelColor(maskImage2, width, height);
 		maskColor1_mm.z = maskColor2_mm.x;
 		maskColor1_mm.w = maskColor2_mm.y;
 		maskColor1_mm *= 0.25f;
@@ -1689,8 +1685,8 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(Parser
 			height = 0;
 		}
 
-		Vector4 maskColor1_pm = m_Parser->GetPixelColor(maskImage1, width, height);
-		Vector4 maskColor2_pm = m_Parser->GetPixelColor(maskImage2, width, height);
+		Vector4 maskColor1_pm = ImageParser::GetPixelColor(maskImage1, width, height);
+		Vector4 maskColor2_pm = ImageParser::GetPixelColor(maskImage2, width, height);
 		maskColor1_pm.z = maskColor2_pm.x;
 		maskColor1_pm.w = maskColor2_pm.y;
 		maskColor1_pm *= 0.25f;
@@ -1708,8 +1704,8 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(Parser
 		{
 			height = maskImage1.height - 1;
 		}
-		Vector4 maskColor1_mp = m_Parser->GetPixelColor(maskImage1, width, height);
-		Vector4 maskColor2_mp = m_Parser->GetPixelColor(maskImage2, width, height);
+		Vector4 maskColor1_mp = ImageParser::GetPixelColor(maskImage1, width, height);
+		Vector4 maskColor2_mp = ImageParser::GetPixelColor(maskImage2, width, height);
 		maskColor1_mp.z = maskColor2_mp.x;
 		maskColor1_mp.w = maskColor2_mp.y;
 		maskColor1_mp *= 0.25f;
@@ -1802,8 +1798,8 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(Parser
 	GPU_RESOURCE_DEBUG_NAME(ib, (mesh->m_NodeName + "_IndexBuffer").c_str());
 
 	// Image Erase..
-	m_Parser->EraseImagePixel(maskImage1);
-	m_Parser->EraseImagePixel(maskImage2);
+	ImageParser::EraseImagePixel(maskImage1);
+	ImageParser::EraseImagePixel(maskImage2);
 }
 
 template<>

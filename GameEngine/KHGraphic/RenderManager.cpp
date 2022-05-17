@@ -8,6 +8,7 @@
 #include "FactoryManagerBase.h"
 #include "ResourceManager.h"
 #include "RenderPassBase.h"
+#include "RenderDataConverterBase.h"
 #include "RenderManager.h"
 
 #include "ShaderBase.h"
@@ -36,13 +37,12 @@
 #include "OutLinePass.h"
 #include "DebugPass.h"
 
-#include "RenderDataConverter.h"
 
 #include <algorithm>
 
 #include "./Profiler/Profiler.h"
 
-RenderManager::RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, IGraphicResourceManager* resource, IShaderManager* shader, RenderOption* renderOption)
+RenderManager::RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, IGraphicResourceManager* resource, IShaderManager* shader, IRenderDataConverter* converter, RenderOption* renderOption)
 {
 	// Rendering Initialize..
 	RenderPassBase::Initialize(graphic->GetDevice(), graphic->GetContext(), factory, resource, shader, renderOption);
@@ -50,7 +50,7 @@ RenderManager::RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, I
 	m_SwapChain = graphic->GetSwapChain();
 
 	// Render Data Converter 持失..
-	m_Converter = new RenderDataConverter();
+	m_Converter = converter;
 
 	// Render Pass 持失..
 	m_Deferred		= new DeferredPass();
@@ -89,7 +89,7 @@ RenderManager::RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, I
 
 RenderManager::~RenderManager()
 {
-
+	
 }
 
 void RenderManager::Create(int width, int height)
@@ -184,10 +184,14 @@ void RenderManager::SetGlobalData(GlobalData* globalData)
 	RenderPassBase::g_GlobalData = globalData;
 }
 
-
-void RenderManager::SetEnvironmentMap(EnvironmentBuffer* resource)
+void RenderManager::SetEnvironment(TextureBuffer* resource)
 {
-	m_Environment->SetEnvironmentMapResource(resource);
+	m_Environment->SetEnvironmentResource(resource);
+}
+
+void RenderManager::SetSkyLight(SkyLightBuffer* resource)
+{
+	m_Environment->SetSkyLightResource(resource);
 }
 
 void RenderManager::PushInstance(MeshData* instance)
@@ -436,7 +440,6 @@ void RenderManager::SSAORender()
 	if (m_NowRenderOption.RenderingOption & RENDER_SSAO)
 	{
 		m_SSAO->RenderUpdate();
-		m_SSAO->BlurRender(4);
 	}
 }
 

@@ -142,7 +142,7 @@ copy /Y "$(ProjectDir)GraphicDLL.h" "$(SolutionDir)Library\inc"</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;GRAPHIC_EXPORT;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
       <AdditionalIncludeDirectories>$(ProjectDir)Export;$(SolutionDir)Library\inc;$(SolutionDir)Library\inc\Parser</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -171,7 +171,7 @@ copy/Y "$(ProjectDir)Export\*.h"   "$(SolutionDir)Library\inc\Graphic"</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;GRAPHIC_EXPORT;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
       <AdditionalIncludeDirectories>$(ProjectDir)Export;$(SolutionDir)Library\inc;$(SolutionDir)Library\inc\Parser</AdditionalIncludeDirectories>
       <MaxFilesInUnityFile>10</MaxFilesInUnityFile>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -201,6 +201,7 @@ copy/Y "$(ProjectDir)Export\*.h"   "$(SolutionDir)Library\inc\Graphic"</Command>
     <ClInclude Include="ConvertData.h" />
     <ClInclude Include="CullingData.h" />
     <ClInclude Include="CullingPass.h" />
+    <ClInclude Include="Delegate.h" />
     <ClInclude Include="DrawBuffer.h" />
     <ClInclude Include="DrawBufferDefine.h" />
     <ClInclude Include="DebugPass.h" />
@@ -226,6 +227,7 @@ copy/Y "$(ProjectDir)Export\*.h"   "$(SolutionDir)Library\inc\Graphic"</Command>
     <ClInclude Include="DeferredPass.h" />
     <ClInclude Include="DepthStencil.h" />
     <ClInclude Include="InstanceBufferDefine.h" />
+    <ClInclude Include="RenderDataConverterBase.h" />
     <ClInclude Include="LightPass.h" />
     <ClInclude Include="MathDefine.h" />
     <ClInclude Include="OITPass.h" />
@@ -278,6 +280,7 @@ copy/Y "$(ProjectDir)Export\*.h"   "$(SolutionDir)Library\inc\Graphic"</Command>
     <ClCompile Include="BloomPass.cpp" />
     <ClCompile Include="BlurPass.cpp" />
     <ClCompile Include="CullingPass.cpp" />
+    <ClCompile Include="Delegate.cpp" />
     <ClCompile Include="DrawBuffer.cpp" />
     <ClCompile Include="ComputeShader.cpp" />
     <ClCompile Include="D3D11Graphic.cpp" />
@@ -584,6 +587,10 @@ copy/Y "$(ProjectDir)Export\*.h"   "$(SolutionDir)Library\inc\Graphic"</Command>
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">SkinMesh_VS</EntryPointName>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="..\Assets\Shader\SkyBox_Convert_PS.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
     <FxCompile Include="..\Assets\Shader\SkyBox_PS.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>

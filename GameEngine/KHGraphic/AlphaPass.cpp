@@ -198,7 +198,7 @@ void AlphaPass::RenderUpdate(const InstanceRenderBuffer* instance, const RenderD
 		CB_LightSub lightsubBuf;
 		lightsubBuf.gEyePosW = cam->CamPos;
 		lightsubBuf.gViewProjTex = cam->CamView * cam->CamProj * texSpace;
-		lightsubBuf.gIBLFactor = g_RenderOption->IBL_Factor;
+		lightsubBuf.gIBLFactor = g_RenderOption->SkyLight_Factor;
 
 		if (mat->m_Albedo)
 		{
@@ -402,7 +402,7 @@ void AlphaPass::RenderUpdate(const InstanceRenderBuffer* instance, const std::ve
 			CB_LightSub lightsubBuf;
 			lightsubBuf.gEyePosW = cam->CamPos;
 			lightsubBuf.gViewProjTex = cam->CamView * cam->CamProj * texSpace;
-			lightsubBuf.gIBLFactor = g_RenderOption->IBL_Factor;
+			lightsubBuf.gIBLFactor = g_RenderOption->SkyLight_Factor;
 
 			if (mat->m_Albedo)
 			{

@@ -30,11 +30,12 @@ typedef enum MODEL_TYPE
 	ASE_MODEL
 }MODEL_TYPE;
 
-typedef enum IMAGE_TYPE
+typedef enum PIXEL_TYPE
 {
-	FLOAT_IMAGE,
-	CHAR_IMAGE,
-}IMAGE_TYPE;
+	FLOAT_TYPE,
+	CHAR_TYPE,
+	HDR_TYPE,
+}PIXEL_TYPE;
 
 typedef enum EXTENSION_TYPE
 {
@@ -292,20 +293,16 @@ namespace ParserData
 	class ImageData
 	{
 	public:
-		IMAGE_TYPE type;
+		PIXEL_TYPE type;
+
 		unsigned int channels;
 
 		int width;
 		int height;
 
-		union
-		{
-			void* imgColor;
-		};
-		union
-		{
-			float* hdrColor;
-		};
+		int comp;
+
+		void* imgColor;
 	};
 }
 

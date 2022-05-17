@@ -21,6 +21,7 @@ public:
 	static void DeleteAnimation(UINT index);
 
 	void BakeAnimation();
+	void ResetAnimationIndex(Animation* animation);
 
 private:
 	static std::vector<std::pair<UINT, bool>> g_IndexList;

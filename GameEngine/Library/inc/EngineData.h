@@ -21,6 +21,7 @@ public:
 	UINT RenderingOption = 0;
 	UINT PostProcessOption = 0;
 
+public:
 	// SSAO Option
 	float AO_Radius = 0.25f;							// 샘플링시 비교할 Texel 반지름	(0.0 ~ 5.0)
 	float AO_SurfaceEpsilon = 0.05f;					// 차폐되는 최소 깊이값			(0.0 ~ 1.0)
@@ -39,54 +40,18 @@ public:
 	float FOG_HeightOffset = 3.0f;						// Fog 높이 오프셋				(0.0 ~ 100.0)
 	float FOG_HeightValue = 3.0f;						// Fog 높이 범위					(0.0 ~ 100.0)
 
-	// Environment Option
-	float EnvironmentSize = 500.0f;						// Environment Map 크기			(1.0 ~ 5000.0)
-
 	// Bloom Option
-	float BLOOM_Threshold = 1.0f;						// Bloom 추출 시작 영역			(0.0 ~ 2.0)
+	float BLOOM_Threshold_Min = 1.0f;					// Bloom 추출 최소 영역			(0.0 ~ 2.0)
+	float BLOOM_Threshold_Max = 100.0f;					// Bloom 추출 최대 영역			(1.0 ~ 1000.0)
 	float BLOOM_Factor = 0.25f;							// Bloom 혼합률					(0.0 ~ 1.0)
 
-	// IBL Option
-	float IBL_Factor = 1.0f;							// IBL 강도						(0.0 ~ 5.0)
-};
+	// SkyCube Option
+	float SkyCube_Size = 500.0f;						// SkyCube Map 크기				(1.0 ~ 5000.0)
+	bool SkyCube_HDR = true;							// SkyCube HDR 여부
 
-// Object Data
-class ObjectData
-{
-public:
-	OBJECT_TYPE ObjType = OBJECT_TYPE::DEFALT;		//오브젝트 타입
-	std::string Name;								//오브젝트 이름
-
-	bool IsActive = true;							//오브젝트 활성화 여부
-
-	void* Object;									//Grahpic 전용 GameObject
-
-	UINT ObjectIndex;								//오브젝트의 고유한 인덱스
-	Vector4 HashColor;								//오브젝트의 고유한 Hash Color
-	
-	std::vector<Matrix> BoneOffsetTM;				//본 오프셋 TM
-
-	Matrix World;									//매쉬의 월드 행렬
-	Matrix InvWorld;								//매쉬의 월드 역행렬
-
-public:
-	static Vector4 HashToColor(int hash)
-	{
-		return Vector4( (float)((hash) & 0xff), 
-						(float)((hash >> 8) & 0xff), 
-						(float)((hash >> 16) & 0xff), 
-						(float)((hash >> 24) & 0xff) );
-	}
-	static UINT ColorToHash(Vector4 color)
-	{
-		if (color.x < 0.0f || color.y < 0.0f || color.z < 0.0f || color.w < 0.0f)
-			return -1;
-
-		return	((int)color.x) +
-				((int)color.y * 256) +
-				((int)color.z * 65536) +
-				((int)color.w * 16777216);
-	}
+	// SkyLight Option
+	float SkyLight_Factor = 1.0f;						// SkyLight 강도					(0.0 ~ 5.0)
+	float SkyLight_Threshold = 100.0f;					// SkyLight Map 최대 밝기		(1.0 ~ 1000.0)
 };
 
 // Animation Data
@@ -156,14 +121,18 @@ public:
 
 	Vector2 Tile;						// X, Y Tiling
 	Matrix TexTM;						// Material의 텍스쳐 행렬
+
+public:
+	MaterialProperty& operator=(const MaterialProperty& material_property)
+	{
+		memcpy(this, &material_property, sizeof(MaterialProperty));
+
+		return *this;
+	}
 };
 
 // Material Property Block
-class MaterialPropertyBlock : public MaterialProperty
-{
-public:
-	bool Enable = false;
-};
+class MaterialPropertyBlock : public MaterialProperty {};
 
 // Material Buffer
 class MaterialBuffer : public Resources
@@ -186,17 +155,15 @@ public:
 };
 
 // Environment Buffer
-class EnvironmentBuffer : public Resources
+class SkyLightBuffer : public Resources
 {
 public:
-	virtual ~EnvironmentBuffer()
+	virtual ~SkyLightBuffer()
 	{
-		delete Environment;
 		delete Irradiance;
 		delete Prefilter;
 	};
 
-	TextureBuffer* Environment = nullptr;				// Environment Buffer
 	TextureBuffer* Irradiance = nullptr;				// Environment Irradiance Buffer
 	TextureBuffer* Prefilter = nullptr;					// Environment Prefilter Buffer
 };
@@ -297,6 +264,47 @@ public:
 	BoundingFrustum OriginFrustum;	// Bounding Frustum
 };
 
+// Object Data
+class ObjectData
+{
+public:
+	OBJECT_TYPE ObjType = OBJECT_TYPE::DEFALT;		//오브젝트 타입
+	std::string Name;								//오브젝트 이름
+
+	bool IsActive = true;							//오브젝트 활성화 여부
+
+	void* Object;									//Grahpic 전용 GameObject
+
+	UINT ObjectIndex;								//오브젝트의 고유한 인덱스
+	Vector4 HashColor;								//오브젝트의 고유한 Hash Color
+
+	std::vector<Matrix> BoneOffsetTM;				//본 오프셋 TM
+
+	Matrix World;									//매쉬의 월드 행렬
+	Matrix InvWorld;								//매쉬의 월드 역행렬
+
+	bool IsMaterialBlock = false;
+	MaterialPropertyBlock* Material_Block;
+public:
+	static Vector4 HashToColor(int hash)
+	{
+		return Vector4((float)((hash) & 0xff),
+			(float)((hash >> 8) & 0xff),
+			(float)((hash >> 16) & 0xff),
+			(float)((hash >> 24) & 0xff));
+	}
+	static UINT ColorToHash(Vector4 color)
+	{
+		if (color.x < 0.0f || color.y < 0.0f || color.z < 0.0f || color.w < 0.0f)
+			return -1;
+
+		return	((int)color.x) +
+			((int)color.y * 256) +
+			((int)color.z * 65536) +
+			((int)color.w * 16777216);
+	}
+};
+
 /// <summary>
 /// 게임엔진에서 그래픽엔진으로 던저줄 한개의 메쉬 데이터
 /// </summary>
@@ -321,8 +329,6 @@ public:
 	AnimationData*	Animation_Data = nullptr;		// Animation Data
 	TerrainData*	Terrain_Data	= nullptr;		// Terrain Data
 	ParticleData*	Particle_Data	= nullptr;		// Particle Data
-
-	MaterialPropertyBlock* Material_Block = nullptr;
 };
 
 /// <summary>

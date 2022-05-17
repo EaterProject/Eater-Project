@@ -1,8 +1,13 @@
-#include "Output_Header.hlsli"
+#include "SamplerState_Header.hlsli"
 #include "Define_Header.hlsli"
+#include "Output_Header.hlsli"
+#include "Function_Header.hlsli"
 
-TextureCube gSkyCube		: register(t0);
-SamplerState gSamWrapLinear : register(s0);
+#ifdef HDRI
+Texture2D gSkyCube : register(t0);
+#else
+TextureCube gSkyCube : register(t0);
+#endif
 
 float4 IBL_Convolution_PS(SkyBoxPixelIn pin) : SV_TARGET
 {
@@ -24,10 +29,15 @@ float4 IBL_Convolution_PS(SkyBoxPixelIn pin) : SV_TARGET
 		{
 			float3 tangentSample = float3(sin(theta) * cos(phi), sin(theta) * sin(phi), cos(theta));
 			float3 sampleVec = (tangentSample.xxx * right) + (tangentSample.yyy * up) + (tangentSample.zzz * normal);
-
-            irradiance += gSkyCube.SampleLevel(gSamWrapLinear, sampleVec, 3.0f).rgb * cos(theta) * sin(theta);
+			
+		#ifdef HDRI
+			float2 UV = SampleSphericalMap(sampleVec);
+            irradiance += min(gSkyCube.Sample(gSamWrapLinear, UV).rgb, 100.0f) * cos(theta) * sin(theta);
+		#else
+            irradiance += min(gSkyCube.Sample(gSamWrapLinear, sampleVec).rgb, 100.0f) * cos(theta) * sin(theta);
+		#endif			
 			nrSamples++;
-		}
+        }
 	}
 	
 	irradiance = PI * irradiance / nrSamples;

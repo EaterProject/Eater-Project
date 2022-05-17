@@ -137,15 +137,24 @@ void ShaderManager::CreateShader()
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "FXAA_PS.hlsl", "FXAA_PS", "FXAA_PS");
 
 	// SkyBox Shader
+	D3D_SHADER_MACRO skyBox_convert_macro1[] = { {"HDRI"}, {NULL, NULL} };
 	D3D_SHADER_MACRO skyBox_macro1[] = { {"FOG"}, {NULL, NULL} };
+	D3D_SHADER_MACRO skyBox_macro2[] = { {"HDR"}, {NULL, NULL} };
+	D3D_SHADER_MACRO skyBox_macro3[] = { {"FOG"}, {"HDR"}, {NULL, NULL} };
 
 	LoadShader(SHADER_TYPE::VERTEX_SHADER, "SkyBox_VS.hlsl", "SkyBox_VS", "SkyBox_VS");
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "SkyBox_Convert_PS.hlsl", "SkyBox_Convert_PS", "SkyBox_Convert_PS");								// None
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "SkyBox_Convert_PS.hlsl", "SkyBox_Convert_PS", "SkyBox_Convert_HDRI_PS", skyBox_convert_macro1);	// HDRI
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "SkyBox_PS.hlsl", "SkyBox_PS", "SkyBox_PS_Option0");					// None
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "SkyBox_PS.hlsl", "SkyBox_PS", "SkyBox_PS_Option1", skyBox_macro1);	// Fog
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "SkyBox_PS.hlsl", "SkyBox_PS", "SkyBox_PS_Option2", skyBox_macro2);	// HDR
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "SkyBox_PS.hlsl", "SkyBox_PS", "SkyBox_PS_Option3", skyBox_macro3);	// Fog + HDR
 
 	// IBL Shader
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "IBL_Convolution_PS.hlsl", "IBL_Convolution_PS", "IBL_Convolution_PS");
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "IBL_Convolution_PS.hlsl", "IBL_Convolution_PS", "IBL_Convolution_HDRI_PS", skyBox_convert_macro1);
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "IBL_PrefilterMap_PS.hlsl", "IBL_PrefilterMap_PS", "IBL_PrefilterMap_PS");
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "IBL_PrefilterMap_PS.hlsl", "IBL_PrefilterMap_PS", "IBL_PrefilterMap_HDRI_PS", skyBox_convert_macro1);
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "IBL_IntegrateBRDF_PS.hlsl", "IBL_IntegrateBRDF_PS", "IBL_IntegrateBRDF_PS");
 
 	// Bloom Shader
@@ -174,9 +183,6 @@ void ShaderManager::CreateShader()
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Combine_PS.hlsl", "Combine_PS", "Combine_PS_Option6", combine_macro6);	// HDR + OutLine
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Combine_PS.hlsl", "Combine_PS", "Combine_PS_Option7", combine_macro7);	// Bloom + HDR + OutLine
 	 
-	// Fog Shader
-	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Fog_PS.hlsl", "Fog_PS", "Fog_PS");
-
 	// Picking ID Shader
 	LoadShader(SHADER_TYPE::VERTEX_SHADER, "ID_StaticMesh_VS.hlsl", "ID_StaticMesh_VS", "ID_StaticMesh_VS");
 	LoadShader(SHADER_TYPE::VERTEX_SHADER, "ID_StaticMesh_Instance_VS.hlsl", "ID_StaticMesh_Instance_VS", "ID_StaticMesh_Instance_VS");
@@ -186,7 +192,7 @@ void ShaderManager::CreateShader()
 
 	// Depth Shader
 	LoadShader(SHADER_TYPE::VERTEX_SHADER, "Depth_StaticMesh_VS.hlsl", "Depth_StaticMesh_VS", "Depth_StaticMesh_VS");
-	LoadShader(SHADER_TYPE::VERTEX_SHADER, "Depth_SkinMesh_VS.hlsl", "Depth_SkinMesh_VS", "Depth_SkinMesh_VS");
+	//LoadShader(SHADER_TYPE::VERTEX_SHADER, "Depth_SkinMesh_VS.hlsl", "Depth_SkinMesh_VS", "Depth_SkinMesh_VS");
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Depth_PS.hlsl", "Depth_PS", "Depth_PS");
 
 	// Hierarchical Z Map Shader

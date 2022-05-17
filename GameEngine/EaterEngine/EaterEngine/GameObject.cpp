@@ -13,6 +13,7 @@ GameObject::GameObject()
 	Name = "GameObject";
 
 	OneMeshData = new MeshData();
+
 	OneMeshData->Object_Data = new ObjectData();
 	OneMeshData->Object_Data->Object = this;
 

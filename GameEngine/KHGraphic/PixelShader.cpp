@@ -160,15 +160,15 @@ void PixelShader::Update()
 
 	// Pixel Shader SamplerState 설정..
 	if (!m_SamplerStates.empty())
-		g_DeviceContext->PSSetSamplers(0, (UINT)m_SamplerStates.size(), m_SamplerStates[0].GetAddressOf());
+		g_DeviceContext->PSSetSamplers(0, (UINT)m_SamplerStates.size(), &m_SamplerStates[0]);
 
 	// Pixel Shader ConstantBuffer 설정..
 	if (!m_ConstantBuffers.empty())
-		g_DeviceContext->PSSetConstantBuffers(0, (UINT)m_ConstantBuffers.size(), m_ConstantBuffers[0].GetAddressOf());
+		g_DeviceContext->PSSetConstantBuffers(0, (UINT)m_ConstantBuffers.size(), &m_ConstantBuffers[0]);
 
 	// Pixel Shader ShaderResourceView 설정..
 	if (!m_ShaderResourceViews.empty())
-		g_DeviceContext->PSSetShaderResources(0, (UINT)m_ShaderResourceViews.size(), m_ShaderResourceViews[0].GetAddressOf());
+		g_DeviceContext->PSSetShaderResources(0, (UINT)m_ShaderResourceViews.size(), &m_ShaderResourceViews[0]);
 }
 
 void PixelShader::Update(ID3D11DeviceContext* context)
@@ -178,15 +178,15 @@ void PixelShader::Update(ID3D11DeviceContext* context)
 
 	// Pixel Shader SamplerState 설정..
 	if (!m_SamplerStates.empty())
-		context->PSSetSamplers(0, (UINT)m_SamplerStates.size(), m_SamplerStates[0].GetAddressOf());
+		context->PSSetSamplers(0, (UINT)m_SamplerStates.size(), &m_SamplerStates[0]);
 
 	// Pixel Shader ConstantBuffer 설정..
 	if (!m_ConstantBuffers.empty())
-		context->PSSetConstantBuffers(0, (UINT)m_ConstantBuffers.size(), m_ConstantBuffers[0].GetAddressOf());
+		context->PSSetConstantBuffers(0, (UINT)m_ConstantBuffers.size(), &m_ConstantBuffers[0]);
 
 	// Pixel Shader ShaderResourceView 설정..
 	if (!m_ShaderResourceViews.empty())
-		context->PSSetShaderResources(0, (UINT)m_ShaderResourceViews.size(), m_ShaderResourceViews[0].GetAddressOf());
+		context->PSSetShaderResources(0, (UINT)m_ShaderResourceViews.size(), &m_ShaderResourceViews[0]);
 }
 
 void PixelShader::Release()

@@ -8,7 +8,7 @@ class ModelAnimationData;
 
 class TextureBuffer;
 class AnimationBuffer;
-class EnvironmentBuffer;
+class SkyLightBuffer;
 class MeshBuffer;
 
 ///

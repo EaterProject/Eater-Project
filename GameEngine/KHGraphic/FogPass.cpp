@@ -99,6 +99,7 @@ void FogPass::SetShaderList()
 	PushShader("Light_IBL_PS_Option7");
 
 	PushShader("SkyBox_PS_Option1");
+	PushShader("SkyBox_PS_Option3");
 
 	PushShader("OIT_Particle_PS_Option1");
 

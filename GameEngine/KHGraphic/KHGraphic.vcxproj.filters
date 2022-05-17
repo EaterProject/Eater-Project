@@ -268,6 +268,9 @@
     <Filter Include="소스 파일\Shader\HLSL\PostProcess\Blur">
       <UniqueIdentifier>{73e8d335-a5dc-4ceb-bd58-aab15bfbea16}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Helper\Delegate">
+      <UniqueIdentifier>{c3c1be08-7c0d-457a-808e-ec8cd13bb516}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -507,6 +510,12 @@
     <ClInclude Include="BlurPass.h">
       <Filter>소스 파일\RenderPass\PostProcess\Blur</Filter>
     </ClInclude>
+    <ClInclude Include="Delegate.h">
+      <Filter>소스 파일\Helper\Delegate</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderDataConverterBase.h">
+      <Filter>소스 파일\Converter</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="D3D11Graphic.cpp">
@@ -634,6 +643,9 @@
     </ClCompile>
     <ClCompile Include="BlurPass.cpp">
       <Filter>소스 파일\RenderPass\PostProcess\Blur</Filter>
+    </ClCompile>
+    <ClCompile Include="Delegate.cpp">
+      <Filter>소스 파일\Helper\Delegate</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -783,6 +795,9 @@
     </FxCompile>
     <FxCompile Include="..\Assets\Shader\Blur_Horizon_CS.hlsl">
       <Filter>소스 파일\Shader\HLSL\PostProcess\Blur</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Assets\Shader\SkyBox_Convert_PS.hlsl">
+      <Filter>소스 파일\Shader\HLSL\SkyBox</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>

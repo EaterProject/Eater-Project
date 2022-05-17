@@ -1,3 +1,6 @@
+#ifndef INSTANCE_HEADER
+#define INSTANCE_HEADER
+
 #define INSTANCE_SEMANTIC(SemanticName) INSTANCE_##SemanticName
 
 // Instance Vertex Shader Input & Output Data Struct
@@ -46,3 +49,5 @@ struct ParticleInstanceIn
     float2 TexPos           : INSTANCE_SEMANTIC(POS);
     float4 Color            : INSTANCE_SEMANTIC(COLOR);
 };
+
+#endif

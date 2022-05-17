@@ -1,3 +1,6 @@
+#ifndef OUTPUT_HEADER
+#define OUTPUT_HEADER
+
 // Mesh Pixel Shader Input & Output Data Struct
 struct MeshPixelIn
 {
@@ -70,3 +73,5 @@ struct DebugTexturePixelIn
     float4 PosH : SV_POSITION;
     float2 Tex  : TEXCOORD;
 };
+
+#endif

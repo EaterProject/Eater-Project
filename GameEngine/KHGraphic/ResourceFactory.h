@@ -2,8 +2,6 @@
 #include "ResourceFactoryBase.h"
 #include "HashBase.h"
 
-class ImageParser;
-
 class GraphicResourceFactory : public IGraphicResourceFactory
 {
 public:
@@ -85,8 +83,6 @@ private:
 	void CreateLineGridBuffer();
 
 private:
-	ImageParser* m_Parser;
-
 	std::string m_TextureRoute;
 
 	HRESULT m_Result;

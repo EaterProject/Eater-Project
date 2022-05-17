@@ -1,3 +1,5 @@
+#ifndef VERTEXFETCH_HEADER
+#define VERTEXFETCH_HEADER
 
 // Bone Animation float3x4 Struct
 struct BoneAnimation
@@ -15,3 +17,5 @@ float4x4 LoadBoneMatrix(in BoneAnimation bone)
                      float4(bone.Row3.xyz, 0.0f),
                      float4(bone.Row1.w, bone.Row2.w, bone.Row3.w, 1.0f));
 }
+
+#endif

@@ -1,3 +1,5 @@
+#include "SamplerState_Header.hlsli"
+
 cbuffer cbHizCull : register(b0)
 {
     matrix gView;
@@ -18,8 +20,7 @@ StructuredBuffer<float4> gColliderBuffer : register(t0);
 RWStructuredBuffer<float> gCullingBuffer : register(u0);
 
 Texture2D gHizMap : register(t1);
-SamplerState gSamClampPoint : register(s0);
- 	 
+
 // 점과 평면 사이의 부호 있는 거리를 계산합니다.
 // vPlane: 평면 계수(a,b,c,d)를 포함합니다. 여기서 ax + by + cz = d
 // vPoint: 평면에 대해 테스트할 점입니다.

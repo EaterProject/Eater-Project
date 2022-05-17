@@ -15,7 +15,8 @@ public:
 	void ApplyOption() override;
 
 public:
-	void SetEnvironmentMapResource(EnvironmentBuffer* resource);
+	void SetEnvironmentResource(TextureBuffer* resource);
+	void SetSkyLightResource(SkyLightBuffer* resource);
 
 	void RenderUpdate();
 
