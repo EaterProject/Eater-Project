@@ -20,6 +20,8 @@
 #include "SceneSaveDialog.h"
 #include <string>
 #include <filesystem>
+#include <stdio.h>
+#include <stdlib.h>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -296,7 +298,7 @@ void CMainFrame::CopyEditorFolder(std::string& mPath, std::string& mCopyPath)
 			std::string FolderName = Path.substr(Start, End);
 			std::string CopyPath = mCopyPath  + FolderName;
 
-			std::filesystem::create_directory(CopyPath);
+			std::filesystem::create_directories(CopyPath);
 			CopyEditorFolder(Path, CopyPath);
 		}
 		else
@@ -305,17 +307,15 @@ void CMainFrame::CopyEditorFolder(std::string& mPath, std::string& mCopyPath)
 			std::size_t Swap = Path.rfind('\\');
 			Path[Swap] = '/';
 
-
-
 			std::size_t Start = Path.rfind('/');
 			std::size_t End = Path.size();
 			//
 			std::string FolderName = Path.substr(Start+1, End);
 			std::string CopyPath = mCopyPath + '/' +FolderName;
 			
-			
+			//int Type = std::fileCopy()
 
-			std::filesystem::copy_file(Path, CopyPath);
+			std::filesystem::copy_file(Path, CopyPath, std::filesystem::copy_options::recursive);
 			CopyEditorFile(Path, mCopyPath);
 		}
 		itr++;
@@ -542,18 +542,6 @@ void CMainFrame::OnCreateBuildFile()
 	CT2CA convertedString = str;
 	std::string FilePath = (std::string)convertedString;
 
-	//저장할 경로 
-	FilePath += "/Editor";
-	//최상위 폴더 생성
-	std::filesystem::create_directory(FilePath);
-	
-	//그아래 폴더 생성
-	std::string AssetsFilePath = FilePath ;
-	std::string ExeFilePath = FilePath + "/Exe";
-	std::filesystem::create_directory(AssetsFilePath);
-	std::filesystem::create_directory(ExeFilePath);
-
-
 	for (int i = 0; i < FilePath.size(); i++)
 	{
 		if (FilePath[i] == '\\')
@@ -561,17 +549,26 @@ void CMainFrame::OnCreateBuildFile()
 			FilePath[i] = '/';
 		}
 	}
+	//저장할 경로 
+	FilePath += "/Editor";
+	////그아래 폴더 생성
+	std::string AssetsFilePath = FilePath + "/Assets";
+	std::string ExeFilePath = FilePath + "/Exe";
+	std::filesystem::create_directory(AssetsFilePath);
+	std::filesystem::create_directory(ExeFilePath);
+	
 
-	FilePath+= "/Assets";
+
 	std::string OriginalFilePath = "../Assets";
-	if (CheckFolder(OriginalFilePath) == true)
-	{
-		CopyEditorFolder(OriginalFilePath , FilePath);
-	}
-	else
-	{
-		CopyEditorFile(OriginalFilePath, FilePath);
-	}
+#ifdef _DEBUG
+	std::string OriginalExePath = "../x64/Debug";
+#else
+	std::string OriginalExePath = "../x64/Release";
+#endif
+	std::filesystem::copy(OriginalFilePath, AssetsFilePath, std::filesystem::copy_options::recursive | std::filesystem::copy_options::overwrite_existing);
+	std::filesystem::copy(OriginalExePath, ExeFilePath, std::filesystem::copy_options::recursive | std::filesystem::copy_options::overwrite_existing);
+
+	AfxMessageBox(L"빌드파일 생성완료");
 }
 
 
