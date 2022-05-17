@@ -335,17 +335,17 @@ void SceneSetting::Setting()
 	FOG_ColorR_Edit.SetWindowTextW(ChangeToCString(mOption->FOG_Color.x * 255));
 	FOG_ColorG_Edit.SetWindowTextW(ChangeToCString(mOption->FOG_Color.y * 255));
 	FOG_ColorB_Edit.SetWindowTextW(ChangeToCString(mOption->FOG_Color.z * 255));
-	FOG_MoveSpeed_Slider.SetPos(mOption->FOG_MoveSpeed * 100);
+	FOG_MoveSpeed_Slider.SetPos((int)mOption->FOG_MoveSpeed * 100);
 	FOG_MoveSpeed_Edit.SetWindowTextW(ChangeToCString(mOption->FOG_MoveSpeed));
-	FOG_StartDistance_Slider.SetPos(mOption->FOG_StartDistance);
+	FOG_StartDistance_Slider.SetPos((int)mOption->FOG_StartDistance);
 	FOG_StartDistance_Edit.SetWindowTextW(ChangeToCString(mOption->FOG_StartDistance));
-	FOG_DistanceValue_Slider.SetPos(mOption->FOG_DistanceValue);
+	FOG_DistanceValue_Slider.SetPos((int)mOption->FOG_DistanceValue);
 	FOG_DistanceValue_Edit.SetWindowTextW(ChangeToCString(mOption->FOG_DistanceValue));
-	FOG_HeightOffset_Slider.SetPos(mOption->FOG_HeightOffset);
+	FOG_HeightOffset_Slider.SetPos((int)mOption->FOG_HeightOffset);
 	FOG_HeightOffset_Edit.SetWindowTextW(ChangeToCString(mOption->FOG_HeightOffset));
-	FOG_HeightValue_Slider.SetPos(mOption->FOG_HeightValue);
+	FOG_HeightValue_Slider.SetPos((int)mOption->FOG_HeightValue);
 	FOG_HeightValue_Edit.SetWindowTextW(ChangeToCString(mOption->FOG_HeightValue));
-	Fog_DistanceOffset_Slider.SetPos(mOption->FOG_DistanceOffset);
+	Fog_DistanceOffset_Slider.SetPos((int)mOption->FOG_DistanceOffset);
 	Fog_DistanceOffset_Edit.SetWindowTextW(ChangeToCString(mOption->FOG_DistanceOffset));
 
 	///Environment
@@ -353,13 +353,13 @@ void SceneSetting::Setting()
 	Environment_size_Edit.SetWindowTextW(ChangeToCString(mOption->EnvironmentSize));
 
 	///Bloom
-	Bloom_Threhold_Slider.SetPos(mOption->BLOOM_Threshold * 1000);
+	Bloom_Threhold_Slider.SetPos((int)mOption->BLOOM_Threshold * 1000);
 	Bloom_Threhold_Edit.SetWindowTextW(ChangeToCString(mOption->BLOOM_Threshold));
-	Bloom_Factor_Slider.SetPos(mOption->BLOOM_Factor*1000);
+	Bloom_Factor_Slider.SetPos((int)mOption->BLOOM_Factor*1000);
 	Bloom_Factor_Edit.SetWindowTextW(ChangeToCString(mOption->BLOOM_Factor));
 
 	///IBL
-	IBL_Factor_Slider.SetPos(mOption->IBL_Factor * 1000);
+	IBL_Factor_Slider.SetPos((int)mOption->IBL_Factor * 1000);
 	IBL_Factor_Edit.SetWindowTextW(ChangeToCString(mOption->IBL_Factor));
 }
 

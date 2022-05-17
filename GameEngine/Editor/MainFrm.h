@@ -3,11 +3,13 @@
 //
 
 #pragma once
+#include <string>
 class RightView;
 class RenderView;
 class OptionView;
 class AssetView;
 class Loading;
+
 class CMainFrame : public CFrameWnd
 {
 	
@@ -35,10 +37,16 @@ public:
 	virtual void AssertValid() const;
 	virtual void Dump(CDumpContext& dc) const;
 #endif
-
+	
 	static UINT ThreadFunction(LPVOID _mothod);
 	bool m_ThreadStart;
 	CWinThread* mThread;
+	void CopyAssets();
+	bool CheckFolder(std::string& Path);
+
+	void CopyEditorFolder(std::string& Path,std::string& CopyPath);
+	void CopyEditorFile(std::string& Path, std::string& CopyPath);
+
 protected:  // 컨트롤 모음이 포함된 멤버입니다.
 	CToolBar        m_wndToolBar;
 	CStatusBar      m_wndStatusBar;
@@ -69,6 +77,7 @@ public:
 	afx_msg void OnPlayerGame();
 	afx_msg void OpenAssetsFile();
 	afx_msg void SceneSaveFile();
+	afx_msg void OnCreateBuildFile();
 };
 
 

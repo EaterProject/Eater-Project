@@ -34,11 +34,10 @@ void Eater_LoadMaterial::LoadData(std::string& Path)
 		std::string NodeName = EATER_GET_NODE_NAME(i);
 		if (NodeName == "EATERMAT")
 		{
-			if (EATER_GET_MAP(i, "Alpha") != "NO")
-			{
-				Data->Material_Property->Alpha = true;
-			}
-
+			
+			//Data->Material_Property->Alpha = std::stoi(EATER_GET_MAP(i, "Alpha"));
+			//Data->Material_Property->Alpha = EATER_GET_MAP(i, "Alpha");
+			Data->Material_Property->Alpha = std::stoi(EATER_GET_MAP(i, "Alpha"));
 			std::string DiffuseName		= CutStr(EATER_GET_MAP(i, "DiffuseMap"));
 			std::string NormalName		= CutStr(EATER_GET_MAP(i, "NormalMap"));
 			std::string EmissiveName	= CutStr(EATER_GET_MAP(i, "EmissiveMap"));

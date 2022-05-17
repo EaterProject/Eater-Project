@@ -29,14 +29,17 @@ EATER_PARSER_DLL void EATER_CHANGE_MAP(int NodeIndex, std::string key,std::strin
 EATER_PARSER_DLL std::string& EATER_GET_MAP(int NodeIndex,std::string Key);
 
 ///리스트 정보를 읽기,쓰기,변경을 위한 함수들
+EATER_PARSER_DLL void EATER_SET_MATERIAL(const EATER_MATERIAL_DATA& Data);
+
 EATER_PARSER_DLL void EATER_SET_LIST_START(std::string Name, int LineCount, int WordCount);
 EATER_PARSER_DLL void EATER_SET_LIST(std::string Data,bool Line = false);
 EATER_PARSER_DLL void EATER_SET_LIST(int Data,bool Line = false);
 EATER_PARSER_DLL void EATER_SET_LIST(float Data,bool Line = false);
-EATER_PARSER_DLL int EATER_GET_LIST_CHOICE(int NodeCount, std::string ListName);
+EATER_PARSER_DLL int  EATER_GET_LIST_CHOICE(int NodeCount, std::string ListName);
 EATER_PARSER_DLL void EATER_GET_LIST(std::vector<float>* Data, int index);
 EATER_PARSER_DLL void EATER_GET_LIST(std::vector<std::string>* Data, int index);
 EATER_PARSER_DLL void EATER_CHANGE_LIST(int NodeCount, std::string ListName, int cx_index, int cy_index, std::string ChangeData);
+
 
 ///인덱스,버텍스 정보를 넣기위한 함수들
 EATER_PARSER_DLL void EATER_SET_VERTEX_START(int VetexCount, VERTEX_TYPE Type);

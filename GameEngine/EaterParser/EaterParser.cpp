@@ -2,13 +2,13 @@
 #include "EaterSaveData.h"
 #include "EaterNode.h"
 #include "EaterList.h"
-
 #include <stdio.h>
 
 #define _CRT_SECURE_NO_WARNINGS
 
 EaterParser::EaterParser()
 {
+
 }
 
 EaterParser::~EaterParser()
@@ -106,6 +106,32 @@ void EaterParser::CLOSE_READ_FILE()
 {
 	ClearNode();
 	fclose(ReadFile);
+}
+
+void EaterParser::SetMaterial(const EATER_MATERIAL_DATA& Data)
+{
+	std::string SetData = "";
+	SetData += MAP_TYPE + std::string("MaterialName")+ SP_TYPE +Data.MaterialName + LINE_TYPE;
+	SetData += MAP_TYPE + std::string("Alpha") + SP_TYPE +std::to_string(Data.Alpha) + LINE_TYPE;
+	SetData += MAP_TYPE + std::string("DiffuseMap") + SP_TYPE +std::to_string(Data.DiffuseMap) + LINE_TYPE;
+	SetData += MAP_TYPE + std::string("NormalMap") + SP_TYPE +std::to_string(Data.NormalMap) + LINE_TYPE;
+	SetData += MAP_TYPE + std::string("EmissiveMap") + SP_TYPE +std::to_string(Data.EmissiveMap) + LINE_TYPE;
+	SetData += MAP_TYPE + std::string("ORMMap") + SP_TYPE +std::to_string(Data.ORMMap) + LINE_TYPE;
+	SetData += MAP_TYPE + std::string("Emissive") + SP_TYPE +std::to_string(Data.Emissive) + LINE_TYPE;
+	SetData += MAP_TYPE + std::string("Roughness")+ SP_TYPE +std::to_string(Data.Roughness) + LINE_TYPE;
+	SetData += MAP_TYPE + std::string("Metallic") + SP_TYPE +std::to_string(Data.Metallic) + LINE_TYPE;
+	SetData += MAP_TYPE + std::string("Tileing_X")+ SP_TYPE +std::to_string(Data.Tileing_X) + LINE_TYPE;
+	SetData += MAP_TYPE + std::string("Tileing_Y")+ SP_TYPE +std::to_string(Data.Tileing_Y) + LINE_TYPE;
+	SetData += MAP_TYPE + std::string("AddColor_R")+ SP_TYPE +std::to_string(Data.AddColor_R) + LINE_TYPE;
+	SetData += MAP_TYPE + std::string("AddColor_G")+ SP_TYPE +std::to_string(Data.AddColor_G) + LINE_TYPE;
+	SetData += MAP_TYPE + std::string("AddColor_B")+ SP_TYPE +std::to_string(Data.AddColor_B) + LINE_TYPE;
+	SetData += MAP_TYPE + std::string("AddColor_A")+ SP_TYPE +std::to_string(Data.AddColor_A) + LINE_TYPE;
+	SetData += MAP_TYPE + std::string("LimColor_R")+ SP_TYPE +std::to_string(Data.LimColor_R) + LINE_TYPE;
+	SetData += MAP_TYPE + std::string("LimColor_G")+ SP_TYPE +std::to_string(Data.LimColor_G) + LINE_TYPE;
+	SetData += MAP_TYPE + std::string("LimColor_B")+ SP_TYPE +std::to_string(Data.LimColor_B) + LINE_TYPE;
+	SetData += MAP_TYPE + std::string("LimFactor")+ SP_TYPE +std::to_string(Data.LimFactor) + LINE_TYPE;
+	SetData += MAP_TYPE + std::string("LimWidth")+ SP_TYPE +std::to_string(Data.LimWidth) + LINE_TYPE;
+	fputs(SetData.c_str(), WriteFile);
 }
 
 void EaterParser::SetNode(std::string& name)
