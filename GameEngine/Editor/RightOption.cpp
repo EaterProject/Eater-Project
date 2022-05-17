@@ -496,6 +496,7 @@ void RightOption::OnChange_DataFormat()
 	mTransform->GetData(mObjectOption);
 	mMeshFilter->GetData(mObjectOption);
 
+	mObjectOption.WorldSave = false;
 	m_EditorManager->OpenEaterGameObject(ChoiceObject,&mObjectOption);
 	AfxMessageBox(L"변환 완료");
 }

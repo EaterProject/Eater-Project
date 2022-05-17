@@ -45,6 +45,8 @@ struct ObjectOption
 	float Metallic;
 	Vector2 Tileing;
 	Vector3 AddColor;
+
+	bool WorldSave = false;
 };
 
 //struct FBXMeshData
