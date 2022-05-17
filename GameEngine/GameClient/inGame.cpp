@@ -10,6 +10,13 @@ void InGame::Awake()
 	//Tool에서 만들어놓은 씬을 로드
 	Load("../Assets/Scene/inGame.Scene");
 
+	BakeSkyLightMap("HDRI_2_CubeMap", false);
+
+	//SetSkyLight("Day");
+	SetSkyLight("HDRI_2_CubeMap");
+	//SetEnvironment("Day");
+	SetEnvironment("HDRI_2_CubeMap");
+
 	//로직매니저 초기화
 	Logic->Initialize();
 }

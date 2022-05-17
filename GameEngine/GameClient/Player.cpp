@@ -55,12 +55,12 @@ void Player::Start()
 {
 	mCameraTR = GetMainCamera()->GetTransform();
 
-	GameObject* Hand = gameobject->GetChildBone("hand.l");
-	GameObject* WeponObejct = FindGameObjectTag("Weapon");
-	
-	Hand->GetTransform()->SetChild(WeponObejct->GetTransform());
-	WeponObejct->GetTransform()->SetParent(Hand->GetTransform());
-	WeponObejct->GetTransform()->Rotation = { -90,0,90 };
+	//GameObject* Hand = gameobject->GetChildBone("hand.l");
+	//GameObject* WeponObejct = FindGameObjectTag("Weapon");
+	//
+	//Hand->GetTransform()->SetChild(WeponObejct->GetTransform());
+	//WeponObejct->GetTransform()->SetParent(Hand->GetTransform());
+	//WeponObejct->GetTransform()->Rotation = { -90,0,90 };
 }
 
 void Player::Update()
@@ -171,6 +171,8 @@ void Player::PlayerStateUpdate()
 	if (GetKeyDown(VK_SPACE))
 	{
 		mState = PLAYER_STATE::ATTACK;
+		mAnimation->Choice("skill3");
+		mAnimation->Play(1, false);
 	}
 }
 
