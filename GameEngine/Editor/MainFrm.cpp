@@ -19,7 +19,9 @@
 #include "GameObject.h"
 #include "SceneSaveDialog.h"
 #include <string>
-
+#include <filesystem>
+#include <stdio.h>
+#include <stdlib.h>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -45,6 +47,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 	ON_COMMAND(ID_32784, &CMainFrame::OnPlayerGame)
 	ON_COMMAND(ID_32785, &CMainFrame::OpenAssetsFile)
 	ON_COMMAND(ID_32783, &CMainFrame::SceneSaveFile)
+	ON_COMMAND(ID_32786, &CMainFrame::OnCreateBuildFile)
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -152,10 +155,10 @@ BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 	if (!CFrameWnd::PreCreateWindow(cs))
 		return FALSE;
 	// TODO: CREATESTRUCT cs를 수정하여 여기에서
-	//  Window 클래스 또는 스타일을 수정합니다.
-	cs.cx = (int)GetSystemMetrics(SM_CXSCREEN);
-	cs.cy = (int)GetSystemMetrics(SM_CYSCREEN);
-	return TRUE;
+//  Window 클래스 또는 스타일을 수정합니다.
+cs.cx = (int)GetSystemMetrics(SM_CXSCREEN);
+cs.cy = (int)GetSystemMetrics(SM_CYSCREEN);
+return TRUE;
 }
 
 // CMainFrame 진단
@@ -247,6 +250,82 @@ UINT CMainFrame::ThreadFunction(LPVOID _mothod)
 	}
 
 	return 0;
+}
+
+void CMainFrame::CopyAssets()
+{
+	
+}
+
+bool CMainFrame::CheckFolder(std::string& Path)
+{
+	//경로에서 .을 찾지못했다면 폴더
+	std::size_t Chick = Path.rfind('.');
+	int length = (int)Path.length();
+	if (Chick < 2 || Chick == std::string::npos)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+void CMainFrame::CopyEditorFolder(std::string& mPath, std::string& mCopyPath)
+{
+	std::filesystem::path p(mPath);
+	if (std::filesystem::exists(p) == false)
+	{
+		return;
+	}
+
+	std::filesystem::directory_iterator itr(p);
+	while (itr != std::filesystem::end(itr))
+	{
+		const std::filesystem::directory_entry& entry = *itr;
+
+		//읽을 파일의 이름을 알아온다
+		if (std::filesystem::is_directory(entry.path()) == true)
+		{
+			std::string Path = entry.path().string();
+			std::size_t Swap = Path.rfind('\\');
+			Path[Swap] = '/';
+
+			std::size_t Start	= Path.rfind('/');
+			std::size_t End		= Path.size();
+
+			std::string FolderName = Path.substr(Start, End);
+			std::string CopyPath = mCopyPath  + FolderName;
+
+			std::filesystem::create_directories(CopyPath);
+			CopyEditorFolder(Path, CopyPath);
+		}
+		else
+		{
+			std::string Path = entry.path().string();
+			std::size_t Swap = Path.rfind('\\');
+			Path[Swap] = '/';
+
+			std::size_t Start = Path.rfind('/');
+			std::size_t End = Path.size();
+			//
+			std::string FolderName = Path.substr(Start+1, End);
+			std::string CopyPath = mCopyPath + '/' +FolderName;
+			
+			//int Type = std::fileCopy()
+
+			std::filesystem::copy_file(Path, CopyPath, std::filesystem::copy_options::recursive);
+			CopyEditorFile(Path, mCopyPath);
+		}
+		itr++;
+	}
+}
+
+void CMainFrame::CopyEditorFile(std::string& Path, std::string& CopyPath)
+{
+
+
 }
 
 
@@ -439,3 +518,58 @@ void CMainFrame::SceneSaveFile()
 		AfxMessageBox(L"저장 완료");
 	}
 }
+
+
+void CMainFrame::OnCreateBuildFile()
+{
+	BROWSEINFO BrInfo;
+	TCHAR szBuffer[512];                                      // 경로저장 버퍼 
+
+	::ZeroMemory(&BrInfo, sizeof(BROWSEINFO));
+	::ZeroMemory(szBuffer, 512);
+
+	BrInfo.hwndOwner = GetSafeHwnd();
+	BrInfo.lpszTitle = _T("파일이 저장될 폴더를 선택하세요");
+	BrInfo.ulFlags = BIF_NEWDIALOGSTYLE | BIF_EDITBOX | BIF_RETURNONLYFSDIRS;
+	LPITEMIDLIST pItemIdList = ::SHBrowseForFolder(&BrInfo);
+	::SHGetPathFromIDList(pItemIdList, szBuffer);               // 파일경로 읽어오기
+
+	// 경로를 가져와 사용할 경우, Edit Control 에 값 저장
+	CString str;
+	str.Format(_T("%s"), szBuffer);
+	SetDlgItemText(IDC_EDIT2, str);
+
+	CT2CA convertedString = str;
+	std::string FilePath = (std::string)convertedString;
+
+	for (int i = 0; i < FilePath.size(); i++)
+	{
+		if (FilePath[i] == '\\')
+		{
+			FilePath[i] = '/';
+		}
+	}
+	//저장할 경로 
+	FilePath += "/Editor";
+	////그아래 폴더 생성
+	std::string AssetsFilePath = FilePath + "/Assets";
+	std::string ExeFilePath = FilePath + "/Exe";
+	std::filesystem::create_directory(AssetsFilePath);
+	std::filesystem::create_directory(ExeFilePath);
+	
+
+
+	std::string OriginalFilePath = "../Assets";
+#ifdef _DEBUG
+	std::string OriginalExePath = "../x64/Debug";
+#else
+	std::string OriginalExePath = "../x64/Release";
+#endif
+	std::filesystem::copy(OriginalFilePath, AssetsFilePath, std::filesystem::copy_options::recursive | std::filesystem::copy_options::overwrite_existing);
+	std::filesystem::copy(OriginalExePath, ExeFilePath, std::filesystem::copy_options::recursive | std::filesystem::copy_options::overwrite_existing);
+
+	AfxMessageBox(L"빌드파일 생성완료");
+}
+
+
+

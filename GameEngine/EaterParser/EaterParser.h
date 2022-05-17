@@ -7,6 +7,7 @@
 struct EATER_VERTEX_BASE;
 struct EATER_VERTEX_SKIN;
 struct EATER_VERTEX_POS;
+struct EATER_MATERIAL_DATA;
 class EaterNode;
 class EaterList;
 class EaterParser
@@ -20,6 +21,7 @@ public:
 	void CLOSE_WRITE_FILE();
 	void CLOSE_READ_FILE();
 public:
+	void SetMaterial(const EATER_MATERIAL_DATA& Data);
 	void SetNode(std::string& name);
 	void SetMap(std::string& Key, std::string& value);
 	void SetListStart(std::string& name, int LineCount, int WordCount);

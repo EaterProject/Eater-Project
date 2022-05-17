@@ -282,7 +282,7 @@ void SceneSetting::Environment_Slider_Setting(RenderOption* Option, CScrollBar* 
 	if (pScrollBar->GetDlgCtrlID() == Environment_size_Slider.GetDlgCtrlID())
 	{
 		float Pos = (float)Environment_size_Slider.GetPos();
-		Option->SkyCube_Size = Pos;
+		Option->EnvironmentSize = Pos;
 		Environment_size_Edit.SetWindowTextW(ChangeToCString(Pos));
 	}
 }
@@ -292,7 +292,7 @@ void SceneSetting::IBL_Slider_Setting(RenderOption* Option, CScrollBar* pScrollB
 	if (pScrollBar->GetDlgCtrlID() == IBL_Factor_Slider.GetDlgCtrlID())
 	{
 		float Pos = (float)IBL_Factor_Slider.GetPos();
-		Option->SkyLight_Factor = Pos * 0.001f;
+		Option->IBL_Factor = Pos * 0.001f;
 		IBL_Factor_Edit.SetWindowTextW(ChangeToCString(Pos * 0.001f));
 	}
 }
@@ -302,7 +302,7 @@ void SceneSetting::Bloom_Slider_Setting(RenderOption* Option, CScrollBar* pScrol
 	if (pScrollBar->GetDlgCtrlID() == Bloom_Threhold_Slider.GetDlgCtrlID())
 	{
 		float Pos = (float)Bloom_Threhold_Slider.GetPos();
-		Option->BLOOM_Threshold_Min = Pos * 0.001f;
+		Option->BLOOM_Threshold = Pos * 0.001f;
 		Bloom_Threhold_Edit.SetWindowTextW(ChangeToCString(Pos *  0.001f));
 	}
 
@@ -335,32 +335,32 @@ void SceneSetting::Setting()
 	FOG_ColorR_Edit.SetWindowTextW(ChangeToCString(mOption->FOG_Color.x * 255));
 	FOG_ColorG_Edit.SetWindowTextW(ChangeToCString(mOption->FOG_Color.y * 255));
 	FOG_ColorB_Edit.SetWindowTextW(ChangeToCString(mOption->FOG_Color.z * 255));
-	FOG_MoveSpeed_Slider.SetPos(mOption->FOG_MoveSpeed * 100);
+	FOG_MoveSpeed_Slider.SetPos((int)mOption->FOG_MoveSpeed * 100);
 	FOG_MoveSpeed_Edit.SetWindowTextW(ChangeToCString(mOption->FOG_MoveSpeed));
-	FOG_StartDistance_Slider.SetPos(mOption->FOG_StartDistance);
+	FOG_StartDistance_Slider.SetPos((int)mOption->FOG_StartDistance);
 	FOG_StartDistance_Edit.SetWindowTextW(ChangeToCString(mOption->FOG_StartDistance));
-	FOG_DistanceValue_Slider.SetPos(mOption->FOG_DistanceValue);
+	FOG_DistanceValue_Slider.SetPos((int)mOption->FOG_DistanceValue);
 	FOG_DistanceValue_Edit.SetWindowTextW(ChangeToCString(mOption->FOG_DistanceValue));
-	FOG_HeightOffset_Slider.SetPos(mOption->FOG_HeightOffset);
+	FOG_HeightOffset_Slider.SetPos((int)mOption->FOG_HeightOffset);
 	FOG_HeightOffset_Edit.SetWindowTextW(ChangeToCString(mOption->FOG_HeightOffset));
-	FOG_HeightValue_Slider.SetPos(mOption->FOG_HeightValue);
+	FOG_HeightValue_Slider.SetPos((int)mOption->FOG_HeightValue);
 	FOG_HeightValue_Edit.SetWindowTextW(ChangeToCString(mOption->FOG_HeightValue));
-	Fog_DistanceOffset_Slider.SetPos(mOption->FOG_DistanceOffset);
+	Fog_DistanceOffset_Slider.SetPos((int)mOption->FOG_DistanceOffset);
 	Fog_DistanceOffset_Edit.SetWindowTextW(ChangeToCString(mOption->FOG_DistanceOffset));
 
 	///Environment
-	Environment_size_Slider.SetPos(mOption->SkyCube_Size);
-	Environment_size_Edit.SetWindowTextW(ChangeToCString(mOption->SkyCube_Size));
+	Environment_size_Slider.SetPos(mOption->EnvironmentSize);
+	Environment_size_Edit.SetWindowTextW(ChangeToCString(mOption->EnvironmentSize));
 
 	///Bloom
-	Bloom_Threhold_Slider.SetPos(mOption->BLOOM_Threshold_Min * 1000);
-	Bloom_Threhold_Edit.SetWindowTextW(ChangeToCString(mOption->BLOOM_Threshold_Min));
-	Bloom_Factor_Slider.SetPos(mOption->BLOOM_Factor*1000);
+	Bloom_Threhold_Slider.SetPos((int)mOption->BLOOM_Threshold * 1000);
+	Bloom_Threhold_Edit.SetWindowTextW(ChangeToCString(mOption->BLOOM_Threshold));
+	Bloom_Factor_Slider.SetPos((int)mOption->BLOOM_Factor*1000);
 	Bloom_Factor_Edit.SetWindowTextW(ChangeToCString(mOption->BLOOM_Factor));
 
 	///IBL
-	IBL_Factor_Slider.SetPos(mOption->SkyLight_Factor * 1000);
-	IBL_Factor_Edit.SetWindowTextW(ChangeToCString(mOption->SkyLight_Factor));
+	IBL_Factor_Slider.SetPos((int)mOption->IBL_Factor * 1000);
+	IBL_Factor_Edit.SetWindowTextW(ChangeToCString(mOption->IBL_Factor));
 }
 
 

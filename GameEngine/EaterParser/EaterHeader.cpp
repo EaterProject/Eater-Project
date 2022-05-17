@@ -43,6 +43,11 @@ void EATER_CLOSE_CHANGE_FILE(std::string FileName, std::string OutPath, std::str
 	 Parser->ChangeMap(NodeIndex, key, value);
  }
 
+ void EATER_SET_MATERIAL(const EATER_MATERIAL_DATA& Data)
+ {
+	 Parser->SetMaterial(Data);
+ }
+
  void EATER_SET_LIST_START(std::string Name, int LineCount, int WordCount)
  {
 	 Parser->SetListStart(Name, LineCount, WordCount);

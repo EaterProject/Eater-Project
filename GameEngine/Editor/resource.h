@@ -173,8 +173,6 @@
 #define IDC_EDIT64                      1068
 #define IDC_SLIDER19                    1068
 #define IDC_CHECK12                     1069
-#define IDC_CHECK13                     1070
-#define IDC_SLIDER20                    1070
 #define ID_32771                        32771
 #define ID_32772                        32772
 #define ID_SCENE_SETTING                32773
@@ -190,13 +188,14 @@
 #define ID_32783                        32783
 #define ID_32784                        32784
 #define ID_32785                        32785
+#define ID_32786                        32786
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        364
-#define _APS_NEXT_COMMAND_VALUE         32786
+#define _APS_NEXT_COMMAND_VALUE         32787
 #define _APS_NEXT_CONTROL_VALUE         1061
 #define _APS_NEXT_SYMED_VALUE           312
 #endif
