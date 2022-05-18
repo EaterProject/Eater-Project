@@ -258,6 +258,12 @@ void TextureManager::SaveConvertSkyLightMap(std::string& Path)
 
 	TextureBuffer* buffer = LoadManager::GetTexture(Name);
 
+	if (buffer == nullptr)
+	{
+		PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "[ Engine ][ Save ][ Save Convert SkyLight CubeMap ] '%s' FAILED!!", Path.c_str());
+		return;
+	}
+
 	m_Graphic->SaveConvertCubeMap(buffer);
 }
 
@@ -266,6 +272,12 @@ void TextureManager::SaveConvertSkyCubeMap(std::string& Path)
 	std::string Name = "SkyCube_Convert_" + Path;
 
 	TextureBuffer* buffer = LoadManager::GetTexture(Name);
+
+	if (buffer == nullptr)
+	{
+		PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "[ Engine ][ Save ][ Save Convert SkyCube CubeMap ] '%s' FAILED!!", Path.c_str());
+		return;
+	}
 
 	m_Graphic->SaveConvertCubeMap(buffer);
 }

@@ -37,6 +37,7 @@ public:
 
 
 	/// 체크박스
+	CButton RenderTarget_Check;
 	CButton Debug_Check;
 	CButton SSAO_Check;
 	CButton FOG_Check;
@@ -75,8 +76,10 @@ public:
 	CEdit FOG_ColorB_Edit;
 
 	///Bloom
-	CSliderCtrl Bloom_Threhold_Slider;
-	CEdit Bloom_Threhold_Edit;
+	CSliderCtrl Bloom_Threshold_Min_Slider;
+	CEdit Bloom_Threshold_Min_Edit;
+	CSliderCtrl Bloom_Threshold_Max_Slider;
+	CEdit Bloom_Threshold_Max_Edit;
 	CSliderCtrl Bloom_Factor_Slider;
 	CEdit Bloom_Factor_Edit;
 
@@ -94,6 +97,6 @@ public:
 	afx_msg void OnIBL_Button();
 	afx_msg void OnBloom_Button();
 	afx_msg void OnFXAA_Button();
-	CButton RenderTarget_Check;
 	afx_msg void OnBnClickedCheck12();
+
 };

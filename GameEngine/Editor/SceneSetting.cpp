@@ -100,12 +100,14 @@ void SceneSetting::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_SLIDER19, Fog_DistanceOffset_Slider);
 	DDX_Control(pDX, IDC_EDIT23, Fog_DistanceOffset_Edit);
 
-	DDX_Control(pDX, IDC_SLIDER16, Bloom_Threhold_Slider);
-	DDX_Control(pDX, IDC_EDIT18, Bloom_Threhold_Edit);
+	DDX_Control(pDX, IDC_SLIDER16, Bloom_Threshold_Min_Slider);
+	DDX_Control(pDX, IDC_EDIT18, Bloom_Threshold_Min_Edit);
 	DDX_Control(pDX, IDC_SLIDER17, Bloom_Factor_Slider);
 	DDX_Control(pDX, IDC_EDIT21, Bloom_Factor_Edit);
 
 	DDX_Control(pDX, IDC_CHECK12, RenderTarget_Check);
+	DDX_Control(pDX, IDC_SLIDER20, Bloom_Threshold_Max_Slider);
+	DDX_Control(pDX, IDC_EDIT24, Bloom_Threshold_Max_Edit);
 }
 
 void SceneSetting::SSAO_DataSetting()
@@ -160,10 +162,12 @@ void SceneSetting::FOG_DataSetting()
 void SceneSetting::Bloom_DataSetting()
 {
 	Bloom_Factor_Slider.SetRange(0,1000);
-	Bloom_Threhold_Slider.SetRange(0,2000);
+	Bloom_Threshold_Min_Slider.SetRange(0,2000);
+	Bloom_Threshold_Max_Slider.SetRange(10000, 1000000);
 
 	Bloom_Factor_Edit.SetWindowTextW(L"0");
-	Bloom_Threhold_Edit.SetWindowTextW(L"0");
+	Bloom_Threshold_Min_Edit.SetWindowTextW(L"0");
+	Bloom_Threshold_Max_Edit.SetWindowTextW(L"100");
 }
 
 //void SceneSetting::IBL_DataSetting()
@@ -292,11 +296,18 @@ void SceneSetting::FOG_Slider_Setting(RenderOption* Option, CScrollBar* pScrollB
 
 void SceneSetting::Bloom_Slider_Setting(RenderOption* Option, CScrollBar* pScrollBar)
 {
-	if (pScrollBar->GetDlgCtrlID() == Bloom_Threhold_Slider.GetDlgCtrlID())
+	if (pScrollBar->GetDlgCtrlID() == Bloom_Threshold_Min_Slider.GetDlgCtrlID())
 	{
-		float Pos = (float)Bloom_Threhold_Slider.GetPos();
+		float Pos = (float)Bloom_Threshold_Min_Slider.GetPos();
 		Option->BLOOM_Threshold_Min = Pos * 0.001f;
-		Bloom_Threhold_Edit.SetWindowTextW(ChangeToCString(Pos *  0.001f));
+		Bloom_Threshold_Min_Edit.SetWindowTextW(ChangeToCString(Pos *  0.001f));
+	}
+
+	if (pScrollBar->GetDlgCtrlID() == Bloom_Threshold_Max_Slider.GetDlgCtrlID())
+	{
+		float Pos = (float)Bloom_Threshold_Max_Slider.GetPos();
+		Option->BLOOM_Threshold_Max = Pos * 0.001f;
+		Bloom_Threshold_Max_Edit.SetWindowTextW(ChangeToCString(Pos * 0.001f));
 	}
 
 	if (pScrollBar->GetDlgCtrlID() == Bloom_Factor_Slider.GetDlgCtrlID())
@@ -346,9 +357,11 @@ void SceneSetting::Setting()
 	//Environment_size_Edit.SetWindowTextW(ChangeToCString(mOption->SkyCube_Size));
 
 	///Bloom
-	Bloom_Threhold_Slider.SetPos((int)mOption->BLOOM_Threshold_Min * 1000);
-	Bloom_Threhold_Edit.SetWindowTextW(ChangeToCString(mOption->BLOOM_Threshold_Min));
-	Bloom_Factor_Slider.SetPos((int)mOption->BLOOM_Factor*1000);
+	Bloom_Threshold_Min_Slider.SetPos((int)mOption->BLOOM_Threshold_Min * 1000);
+	Bloom_Threshold_Min_Edit.SetWindowTextW(ChangeToCString(mOption->BLOOM_Threshold_Min));
+	Bloom_Threshold_Max_Slider.SetPos((int)mOption->BLOOM_Threshold_Max * 1000);
+	Bloom_Threshold_Max_Edit.SetWindowTextW(ChangeToCString(mOption->BLOOM_Threshold_Max));
+	Bloom_Factor_Slider.SetPos((int)mOption->BLOOM_Factor * 1000);
 	Bloom_Factor_Edit.SetWindowTextW(ChangeToCString(mOption->BLOOM_Factor));
 
 	///SkyLight

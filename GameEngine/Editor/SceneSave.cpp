@@ -134,7 +134,7 @@ void SceneSave::SceneOption()
 
 	RenderOption* mOption = GetRenderOptionData();
 
-	EATER_SET_LIST_START("OPTION", 1, 16);
+	EATER_SET_LIST_START("OPTION", 1, 17);
 	EATER_SET_LIST(mOption->AO_Radius);
 	EATER_SET_LIST(mOption->AO_SurfaceEpsilon);
 	EATER_SET_LIST(mOption->AO_BlurCount);
@@ -149,6 +149,7 @@ void SceneSave::SceneOption()
 	EATER_SET_LIST(mOption->FOG_HeightValue);
 	EATER_SET_LIST(mOption->SkyCube_Size);
 	EATER_SET_LIST(mOption->BLOOM_Threshold_Min);
+	EATER_SET_LIST(mOption->BLOOM_Threshold_Max);
 	EATER_SET_LIST(mOption->BLOOM_Factor);
 	EATER_SET_LIST(mOption->SkyLight_Factor,true);
 }
