@@ -28,6 +28,7 @@ public:
 	void Change_Animation(int index, GameObject* Object);
 public:
 	void Change_LocalTM(int Nodeindex, Transform* TR);
+	void Change_WorldTM(int NodeIndex, Transform* TR);
 	void Change_Name(int Nodeindex,MeshFilter* MF);
 	std::string GetOriginalName(std::string Original);
 	std::string ModelName;
