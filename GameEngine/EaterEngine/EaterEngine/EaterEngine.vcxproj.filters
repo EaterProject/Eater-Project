@@ -172,7 +172,7 @@
     <Filter Include="소스 파일\Component\Transform\Terrain">
       <UniqueIdentifier>{93570656-4fcd-4816-b74b-d46c9fd72da6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Manager\GlobalDataManager\GraphicManager">
+    <Filter Include="소스 파일\Manager\GraphicManager">
       <UniqueIdentifier>{b223fce5-c4e2-428b-b257-6e662f5be63b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -205,7 +205,7 @@
       <Filter>소스 파일\Manager\TimeManager</Filter>
     </ClInclude>
     <ClInclude Include="GraphicEngineManager.h">
-      <Filter>소스 파일\Manager\GlobalDataManager\GraphicManager</Filter>
+      <Filter>소스 파일\Manager\GraphicManager</Filter>
     </ClInclude>
     <ClInclude Include="Export\Transform.h">
       <Filter>소스 파일\Component\Transform</Filter>
@@ -396,7 +396,7 @@
       <Filter>소스 파일\Manager\TimeManager</Filter>
     </ClCompile>
     <ClCompile Include="GraphicEngineManager.cpp">
-      <Filter>소스 파일\Manager\GlobalDataManager\GraphicManager</Filter>
+      <Filter>소스 파일\Manager\GraphicManager</Filter>
     </ClCompile>
     <ClCompile Include="SkinningFilter.cpp">
       <Filter>소스 파일\Component\SkinningFilter</Filter>

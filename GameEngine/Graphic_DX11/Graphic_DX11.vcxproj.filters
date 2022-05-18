@@ -13,12 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="소스 파일\Graphic">
-      <UniqueIdentifier>{59ada70c-c0ea-439b-a1b4-c4c7e113e25c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Graphic\DirectX11">
-      <UniqueIdentifier>{7236e5e6-6b6b-4071-a6dd-4c9ed54838d3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Manager">
       <UniqueIdentifier>{7f4da657-b1b8-4a5e-815f-23118f1e31d7}</UniqueIdentifier>
     </Filter>
@@ -61,9 +55,6 @@
     <Filter Include="소스 파일\Resource">
       <UniqueIdentifier>{8cc1a971-c6af-49d5-be80-ec7da4297248}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Engine">
-      <UniqueIdentifier>{05d1b672-0e21-4ea7-bc78-b86be73fda33}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Shader\HLSL">
       <UniqueIdentifier>{49208fd3-d4b8-4bb3-8fe8-5a692a5b46d8}</UniqueIdentifier>
     </Filter>
@@ -78,9 +69,6 @@
     </Filter>
     <Filter Include="소스 파일\Resource\Graphic\GraphicState">
       <UniqueIdentifier>{10b1e356-c304-4831-90ea-72b5f29b7902}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Engine\Base">
-      <UniqueIdentifier>{af030aa3-e2f1-487a-bc86-30a1d1a778cb}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\Shader\HLSL\Render">
       <UniqueIdentifier>{7670020a-59b2-470e-8914-ae0c41d84ad6}</UniqueIdentifier>
@@ -271,16 +259,28 @@
     <Filter Include="소스 파일\Helper\Delegate">
       <UniqueIdentifier>{c3c1be08-7c0d-457a-808e-ec8cd13bb516}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Core">
+      <UniqueIdentifier>{59ada70c-c0ea-439b-a1b4-c4c7e113e25c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Core\DirectX11">
+      <UniqueIdentifier>{7236e5e6-6b6b-4071-a6dd-4c9ed54838d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Graphic">
+      <UniqueIdentifier>{05d1b672-0e21-4ea7-bc78-b86be73fda33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Graphic\API">
+      <UniqueIdentifier>{af030aa3-e2f1-487a-bc86-30a1d1a778cb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="D3D11Graphic.h">
-      <Filter>소스 파일\Graphic\DirectX11</Filter>
+      <Filter>소스 파일\Core\DirectX11</Filter>
     </ClInclude>
     <ClInclude Include="D3D11GraphicBase.h">
-      <Filter>소스 파일\Graphic\DirectX11</Filter>
+      <Filter>소스 파일\Core\DirectX11</Filter>
     </ClInclude>
     <ClInclude Include="VertexShader.h">
       <Filter>소스 파일\Shader\ShaderClass\VertexShader</Filter>
@@ -330,8 +330,8 @@
     <ClInclude Include="VertexDefine.h">
       <Filter>소스 파일\Define</Filter>
     </ClInclude>
-    <ClInclude Include="KHGraphic.h">
-      <Filter>소스 파일\Engine</Filter>
+    <ClInclude Include="Graphic_DX11.h">
+      <Filter>소스 파일\Graphic</Filter>
     </ClInclude>
     <ClInclude Include="ResourceFactoryBase.h">
       <Filter>소스 파일\Factory\Resource</Filter>
@@ -372,11 +372,11 @@
     <ClInclude Include="ShaderResourceHashTable.h">
       <Filter>소스 파일\Hash\HashTable</Filter>
     </ClInclude>
-    <ClInclude Include="Export\GraphicsEngine.h">
-      <Filter>소스 파일\Engine\Base</Filter>
+    <ClInclude Include="Export\GraphicEngineAPI.h">
+      <Filter>소스 파일\Graphic\API</Filter>
     </ClInclude>
     <ClInclude Include="Export\GraphicDLL.h">
-      <Filter>소스 파일\Engine\Base</Filter>
+      <Filter>소스 파일\Graphic\API</Filter>
     </ClInclude>
     <ClInclude Include="SSAOPass.h">
       <Filter>소스 파일\RenderPass\SSAO</Filter>
@@ -519,7 +519,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="D3D11Graphic.cpp">
-      <Filter>소스 파일\Graphic\DirectX11</Filter>
+      <Filter>소스 파일\Core\DirectX11</Filter>
     </ClCompile>
     <ClCompile Include="VertexShader.cpp">
       <Filter>소스 파일\Shader\ShaderClass\VertexShader</Filter>
@@ -548,8 +548,8 @@
     <ClCompile Include="ResourceManager.cpp">
       <Filter>소스 파일\Manager\Resource</Filter>
     </ClCompile>
-    <ClCompile Include="KHGraphic.cpp">
-      <Filter>소스 파일\Engine</Filter>
+    <ClCompile Include="Graphic_DX11.cpp">
+      <Filter>소스 파일\Graphic</Filter>
     </ClCompile>
     <ClCompile Include="ShadowPass.cpp">
       <Filter>소스 파일\RenderPass\Shadow</Filter>
@@ -572,8 +572,8 @@
     <ClCompile Include="ShaderResourceHashTable.cpp">
       <Filter>소스 파일\Hash\HashTable</Filter>
     </ClCompile>
-    <ClCompile Include="GraphicEngine.cpp">
-      <Filter>소스 파일\Engine\Base</Filter>
+    <ClCompile Include="GraphicEngineAPI.cpp">
+      <Filter>소스 파일\Graphic\API</Filter>
     </ClCompile>
     <ClCompile Include="SSAOPass.cpp">
       <Filter>소스 파일\RenderPass\SSAO</Filter>

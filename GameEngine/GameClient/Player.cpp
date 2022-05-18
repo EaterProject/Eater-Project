@@ -172,7 +172,7 @@ void Player::PlayerStateUpdate()
 	{
 		mState = PLAYER_STATE::ATTACK;
 		mAnimation->Choice("skill3");
-		mAnimation->Play(1, false);
+		mAnimation->Play();
 	}
 }
 
