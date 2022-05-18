@@ -31,6 +31,8 @@ void EditorManager::Initialize()
 
 	//에셋폴더안에 필요한 폴더들을 미리 생성한다
 	CreateAssetsFile();
+
+	//mEater->Load_Eater_File("../Assets/Model/MeshBuffer/Player+_0.Emsh");
 }
 
 void EditorManager::ConvertData(std::string Path)
@@ -126,7 +128,7 @@ void EditorManager::CreateAssetsFile()
 	std::filesystem::create_directory("../Assets/Texture/Graphic/Noise");
 	std::filesystem::create_directory("../Assets/Texture/Graphic/Shader");
 
-	CreateBaseObject();
+	//CreateBaseObject();
 }
 
 void EditorManager::CreateBaseObject()
