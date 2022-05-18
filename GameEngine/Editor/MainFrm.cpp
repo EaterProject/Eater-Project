@@ -18,6 +18,7 @@
 #include "CamAnimation.h"
 #include "GameObject.h"
 #include "SceneSaveDialog.h"
+#include "SkySetting.h"
 #include <string>
 #include <filesystem>
 #include <stdio.h>
@@ -48,6 +49,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 	ON_COMMAND(ID_32785, &CMainFrame::OpenAssetsFile)
 	ON_COMMAND(ID_32783, &CMainFrame::SceneSaveFile)
 	ON_COMMAND(ID_32786, &CMainFrame::OnCreateBuildFile)
+	ON_COMMAND(ID_32787, &CMainFrame::OnSkySetting)
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -583,5 +585,8 @@ void CMainFrame::OnCreateBuildFile()
 	AfxMessageBox(L"빌드파일 생성완료");
 }
 
-
-
+void CMainFrame::OnSkySetting()
+{
+	SkySetting* mSky = DialogFactory::GetFactory()->GetSkySetting();
+	mSky->ShowWindow(SW_SHOW);
+}

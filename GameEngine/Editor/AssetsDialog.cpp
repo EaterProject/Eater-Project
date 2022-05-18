@@ -16,6 +16,7 @@
 #include "LoadNavMesh.h"
 #include "CreateMaterial.h"
 #include "DialogFactory.h"
+#include "SkySetting.h"
 #include <iostream>
 #define MAXPATH 562
 // AssetsDialog 대화 상자
@@ -395,6 +396,13 @@ void AssetsDialog::OnLButtonUp(UINT nFlags, CPoint point)
 		 {
 			mRightOption->mMaterial->CheckTexture(point);
 		 }
+
+		 SkySetting* mSkySetting = DialogFactory::GetFactory()->GetSkySetting();
+		 if (mSkySetting->IsWindowEnabled())
+		 {
+			 mSkySetting->SetCheck(DragItemName);
+		 }
+		 
 
 		 //if (mLoadNavMesh->IsWindowVisible() == true)
 		 //{

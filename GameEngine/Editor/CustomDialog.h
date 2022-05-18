@@ -11,6 +11,8 @@
 #define PREFAB	5
 #define EMAT	6
 #define EMESH	7
+#define HDR	    8
+
 
 class CustomDialog : public CDialogEx
 {
@@ -44,6 +46,8 @@ protected:
 	///파일의 타입을 가져온다 (.png , .fbx)
 	int GetFileNameType(std::string Name);
 	int GetFileNameType(CString Name);
+	std::string CutStringFileType(std::string& FileName);
+	std::string CutStringFileType(CString& FileName);
 protected:
 	///기능
 	bool DropRect(RECT& rect);

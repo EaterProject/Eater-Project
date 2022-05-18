@@ -143,15 +143,15 @@ int CustomDialog::GetFileNameType(std::string Name)
 	{
 		Type = EATER;
 	}
-	else if (Name == "fbx")
+	else if (Name == "fbx" || Name == "FBX")
 	{
 		Type = FBX;
 	}
-	else if (Name == "png")
+	else if (Name == "png" || Name == "PNG")
 	{
 		Type = PNG;
 	}
-	else if (Name == "dds")
+	else if (Name == "dds" || Name == "DDS")
 	{
 		Type = DDS;
 	}
@@ -167,6 +167,10 @@ int CustomDialog::GetFileNameType(std::string Name)
 	{
 		Type = EMESH;
 	}
+	else if (Name == "HDR" || Name == "hdr")
+	{
+		Type = HDR;
+	}
 	return Type;
 }
 
@@ -176,6 +180,20 @@ int CustomDialog::GetFileNameType(CString Name)
 	return GetFileNameType(str);
 }
 
+std::string CustomDialog::CutStringFileType(std::string& FileName)
+{
+	std::string Output;
+	Output = FileName.substr(0, FileName.rfind('.'));
+	return Output;
+}
+
+std::string CustomDialog::CutStringFileType(CString& FileName)
+{
+	std::string Output;
+	std::string File = ChangeToString(FileName);
+	Output = File.substr(0, File.rfind('.'));
+	return Output;
+}
 
 bool CustomDialog::DropRect(RECT& rect)
 {
