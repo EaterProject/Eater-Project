@@ -90,16 +90,28 @@ void EaterParser::OPEN_FILE(std::string& Path)
 	}
 }
 
+#include <windows.h>
+
 void EaterParser::CREATE_FILE(std::string& FileName, std::string& OutPath, std::string& FileType)
 {
 	std::string Name = OutPath + FileName + FileType;
-	WriteFile = fopen(Name.c_str(), "w+");
+
+	// 시발
+	do 
+	{
+		WriteFile = fopen(Name.c_str(), "w+");
+	} 
+	while (WriteFile == nullptr);
 }
 
 void EaterParser::CLOSE_WRITE_FILE()
 {
 	fputs("&",WriteFile);
-	fclose(WriteFile);
+	if (fclose(WriteFile) == -1)
+	{
+		HWND hWndActive = ::GetForegroundWindow();
+		MessageBox(hWndActive, L"파일이 제대로 닫치지않음", L"Error", MB_OK);
+	}
 }
 
 void EaterParser::CLOSE_READ_FILE()
@@ -362,7 +374,7 @@ void EaterParser::ChangeList(int NodeCount,std::string &ListName, int cx_index,i
 
 void EaterParser::ChangeDataSave(std::string& FileName, std::string& OutPath, std::string& FileType)
 {
-	fclose(ReadFile);
+	//fclose(ReadFile);
 
 	CREATE_FILE(FileName, OutPath, FileType);
 
