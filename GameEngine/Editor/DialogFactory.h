@@ -11,6 +11,8 @@ class SceneSaveDialog;
 class LoadTerrain;
 class LoadNavMesh;
 class SceneSetting;
+class SkySetting;
+
 
 class CTAP_Animation;
 class CTAP_Collider;
@@ -19,6 +21,7 @@ class CTAP_MeshFilter;
 class CTAP_Particle;
 class CTAP_Rigidbody;
 class CTAP_Transform;
+
 
 class CustomDialog;
 class DialogFactory
@@ -32,6 +35,7 @@ public:
 
 public:
 	///GET
+	GETTER(SkySetting,		mSkySetting);
 	GETTER(LoadTerrain,		mLoadTerrain);
 	GETTER(LoadNavMesh,		mLoadNavMesh);
 	GETTER(SceneSetting,	mSceneSetting);
@@ -68,6 +72,7 @@ private:
 	SceneSaveDialog*	mSceneSave;
 	LoadTerrain*		mLoadTerrain;
 	LoadNavMesh*		mLoadNavMesh;
+	SkySetting*			mSkySetting;
 private:
 	//알아서 생성되는 다이얼로그
 	RightOption*	mRightOption_Dlog;	//View의 오른쪽 모든 정보들을 담당하는 다이얼 로그

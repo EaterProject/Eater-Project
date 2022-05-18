@@ -49,15 +49,6 @@ void CTAP_Animation::SetGameObject(AnimationController* Data)
 	AnimationStartEdit.SetWindowTextW(L"0");
 }
 
-//AnimationData CTAP_Animation::GetObjectData()
-//{
-//	//AnimationData Data;
-//	//CString str;
-//	//AnimationList.GetLBText(AnimationList.GetCurSel(), str);
-//	//Data.NowAnimation = GetDataString(str);
-//	//return Data;
-//}
-
 void CTAP_Animation::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
@@ -69,6 +60,9 @@ void CTAP_Animation::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CTAP_Animation, CDialogEx)
 	ON_CBN_SELCHANGE(IDC_COMBO1, &CTAP_Animation::OnCbnSelchangeCombo1)
 	ON_WM_HSCROLL()
+	ON_BN_CLICKED(IDC_BUTTON1, &CTAP_Animation::OnPlayAnimation)
+	ON_BN_CLICKED(IDC_BUTTON2, &CTAP_Animation::OnStopAnimation)
+	ON_BN_CLICKED(IDC_BUTTON9, &CTAP_Animation::OnPauseAnimation)
 END_MESSAGE_MAP()
 
 BOOL CTAP_Animation::PreTranslateMessage(MSG* pMsg)
@@ -94,6 +88,7 @@ void CTAP_Animation::OnCbnSelchangeCombo1()
 	CString AnimationName;
 	AnimationList.GetLBText(AnimationList.GetCurSel(), AnimationName);
 	AC->Choice(ChangeToString(AnimationName));
+	//AnimationEndEdit.SetWindowTextW(ChangeToString(AC->GetEndFrame() );
 }
 
 
@@ -106,4 +101,22 @@ void CTAP_Animation::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 	//}
 
 	CDialogEx::OnHScroll(nSBCode, nPos, pScrollBar);
+}
+
+
+void CTAP_Animation::OnPlayAnimation()
+{
+	
+}
+
+
+void CTAP_Animation::OnStopAnimation()
+{
+
+}
+
+
+void CTAP_Animation::OnPauseAnimation()
+{
+
 }

@@ -11,6 +11,7 @@
 #include "LoadTerrain.h"
 #include "CustomDialog.h"
 #include "SceneSetting.h"
+#include "SkySetting.h"
 
 
 
@@ -70,6 +71,13 @@ void DialogFactory::Initialize()
 	mSceneSetting = new SceneSetting();
 	mSceneSetting->Create(IDD_SCENE_SETTING);
 	mSceneSetting->ShowWindow(SW_HIDE);
+
+	mSkySetting = new SkySetting();
+	mSkySetting->Create(IDD_SKY_SETTING);
+	mSkySetting->ShowWindow(SW_HIDE);
+
+
+
 	
 	mTransform	= new CTAP_Transform();
 	mAnimation	= new CTAP_Animation();
