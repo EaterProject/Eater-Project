@@ -72,6 +72,8 @@ void D3D11Graphic::Initialize(HWND hwnd, int screenWidth, int screenHeight)
 		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, result, "[ Graphic ][ Create ][ Device ] FAILED!!");
 		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, result, "[ Graphic ][ Create ][ Device ] FAILED!!");
 	}
+
+	
 }
 
 void D3D11Graphic::Release()

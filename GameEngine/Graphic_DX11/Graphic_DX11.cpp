@@ -1,6 +1,6 @@
 #include "DirectDefine.h"
 #include "D3D11Graphic.h"
-#include "KHGraphic.h"
+#include "Graphic_DX11.h"
 
 #include "ShaderBase.h"
 #include "ShaderManager.h"
@@ -10,18 +10,18 @@
 #include "RenderDataConverter.h"
 #include "atlbase.h"
 
-KHGraphic::KHGraphic()
+Graphic_DX11::Graphic_DX11()
 	:m_FactoryManager(nullptr), m_RenderManager(nullptr)
 {
 
 }
 
-KHGraphic::~KHGraphic()
+Graphic_DX11::~Graphic_DX11()
 {
 
 }
 
-void KHGraphic::Initialize(HWND hwnd, int screenWidth, int screenHeight, RenderOption* renderOption)
+void Graphic_DX11::Initialize(HWND hwnd, int screenWidth, int screenHeight, RenderOption* renderOption)
 {
 	// DirectX11 Device »ý¼º..
 	D3D11Graphic* graphic = new D3D11Graphic(hwnd, screenWidth, screenHeight);
@@ -59,102 +59,102 @@ void KHGraphic::Initialize(HWND hwnd, int screenWidth, int screenHeight, RenderO
 	m_Converter = converter;
 }
 
-void KHGraphic::OnReSize(int screenWidth, int screenHeight)
+void Graphic_DX11::OnReSize(int screenWidth, int screenHeight)
 {
 	m_RenderManager->OnResize(screenWidth, screenHeight);
 }
 
-void KHGraphic::Release()
+void Graphic_DX11::Release()
 {
 
 }
 
-void KHGraphic::RenderSetting()
+void Graphic_DX11::RenderSetting()
 {
 	m_RenderManager->RenderSetting();
 }
 
-void KHGraphic::RenderSetting(RenderOption* renderOption)
+void Graphic_DX11::RenderSetting(RenderOption* renderOption)
 {
 	m_RenderManager->RenderSetting(renderOption);
 }
 
-void KHGraphic::SetGlobalData(GlobalData* globalData)
+void Graphic_DX11::SetGlobalData(GlobalData* globalData)
 {
 	m_RenderManager->SetGlobalData(globalData);
 }
 
-void KHGraphic::SetSkyCube(TextureBuffer* resource)
+void Graphic_DX11::SetSkyCube(TextureBuffer* resource)
 {
 	m_RenderManager->SetSkyCube(resource);
 }
 
-void KHGraphic::SetSkyLight(SkyLightBuffer* resource)
+void Graphic_DX11::SetSkyLight(SkyLightBuffer* resource)
 {
 	m_RenderManager->SetSkyLight(resource);
 }
 
-void KHGraphic::PushInstance(MeshData* instance)
+void Graphic_DX11::PushInstance(MeshData* instance)
 {
 	m_RenderManager->PushInstance(instance);
 }
 
-void KHGraphic::PushMesh(MeshBuffer* mesh)
+void Graphic_DX11::PushMesh(MeshBuffer* mesh)
 {
 	m_RenderManager->PushMesh(mesh);
 }
 
-void KHGraphic::PushMaterial(MaterialBuffer* material)
+void Graphic_DX11::PushMaterial(MaterialBuffer* material)
 {
 	m_RenderManager->PushMaterial(material);
 }
 
-void KHGraphic::PushAnimation(AnimationBuffer* animation)
+void Graphic_DX11::PushAnimation(AnimationBuffer* animation)
 {
 	m_RenderManager->PushAnimation(animation);
 }
 
-void KHGraphic::PushChangeInstance(MeshData* instance)
+void Graphic_DX11::PushChangeInstance(MeshData* instance)
 {
 	m_RenderManager->PushChangeInstance(instance);
 }
 
-void KHGraphic::PushChangeMesh(MeshBuffer* mesh)
+void Graphic_DX11::PushChangeMesh(MeshBuffer* mesh)
 {
 	m_RenderManager->PushChangeMesh(mesh);
 }
 
-void KHGraphic::PushChangeMaterial(MaterialBuffer* material)
+void Graphic_DX11::PushChangeMaterial(MaterialBuffer* material)
 {
 	m_RenderManager->PushChangeMaterial(material);
 }
 
-void KHGraphic::PushChangeAnimation(AnimationBuffer* animation)
+void Graphic_DX11::PushChangeAnimation(AnimationBuffer* animation)
 {
 	m_RenderManager->PushChangeAnimation(animation);
 }
 
-void KHGraphic::DeleteInstance(MeshData* meshData)
+void Graphic_DX11::DeleteInstance(MeshData* meshData)
 {
 	m_RenderManager->DeleteInstance(meshData);
 }
 
-void KHGraphic::DeleteMesh(MeshBuffer* mesh)
+void Graphic_DX11::DeleteMesh(MeshBuffer* mesh)
 {
 	m_RenderManager->DeleteMesh(mesh);
 }
 
-void KHGraphic::DeleteMaterial(MaterialBuffer* material)
+void Graphic_DX11::DeleteMaterial(MaterialBuffer* material)
 {
 	m_RenderManager->DeleteMaterial(material);
 }
 
-void KHGraphic::DeleteAnimation(AnimationBuffer* animation)
+void Graphic_DX11::DeleteAnimation(AnimationBuffer* animation)
 {
 	m_RenderManager->DeleteAnimation(animation);
 }
 
-void KHGraphic::DeleteTexture(TextureBuffer* resource)
+void Graphic_DX11::DeleteTexture(TextureBuffer* resource)
 {
 	ID3D11ShaderResourceView* texture = (ID3D11ShaderResourceView*)resource->pTextureBuf;
 
@@ -163,7 +163,7 @@ void KHGraphic::DeleteTexture(TextureBuffer* resource)
 	resource->pTextureBuf = nullptr;
 }
 
-void KHGraphic::DeleteSkyLight(SkyLightBuffer* resource)
+void Graphic_DX11::DeleteSkyLight(SkyLightBuffer* resource)
 {
 	ID3D11ShaderResourceView* irradiance = (ID3D11ShaderResourceView*)resource->Irradiance->pTextureBuf;
 	ID3D11ShaderResourceView* prefilter = (ID3D11ShaderResourceView*)resource->Prefilter->pTextureBuf;
@@ -175,42 +175,42 @@ void KHGraphic::DeleteSkyLight(SkyLightBuffer* resource)
 	resource->Prefilter->pTextureBuf = nullptr;
 }
 
-void KHGraphic::Render()
+void Graphic_DX11::Render()
 {
 	m_RenderManager->Render();
 }
 
-void* KHGraphic::PickingRender(int x, int y)
+void* Graphic_DX11::PickingRender(int x, int y)
 {
 	return m_RenderManager->PickingRender(x, y);
 }
 
-void KHGraphic::CreateTextureBuffer(std::string path, TextureBuffer** ppResource)
+void Graphic_DX11::CreateTextureBuffer(std::string path, TextureBuffer** ppResource)
 {
 	m_FactoryManager->CreateTextureBuffer(path, ppResource);
 }
 
-void KHGraphic::CreateMeshBuffer(ParserData::CMesh* mesh, MeshBuffer** ppResource)
+void Graphic_DX11::CreateMeshBuffer(ParserData::CMesh* mesh, MeshBuffer** ppResource)
 {
 	m_FactoryManager->CreateMeshBuffer(mesh, ppResource);
 }
 
-void KHGraphic::CreateAnimationBuffer(ModelData* model, ModelAnimationData* animation, AnimationBuffer** ppResource)
+void Graphic_DX11::CreateAnimationBuffer(ModelData* model, ModelAnimationData* animation, AnimationBuffer** ppResource)
 {
 	m_FactoryManager->CreateAnimationBuffer(model, animation, ppResource);
 }
 
-void KHGraphic::BakeSkyLightMap(TextureBuffer* environment, bool hdri, SkyLightBuffer** ppResource)
+void Graphic_DX11::BakeSkyLightMap(TextureBuffer* environment, bool hdri, SkyLightBuffer** ppResource)
 {
 	m_FactoryManager->BakeSkyLightMap(environment, hdri, ppResource);
 }
 
-void KHGraphic::BakeConvertCubeMap(TextureBuffer* resource, float angle, float threshold, bool hdri, TextureBuffer** ppResource)
+void Graphic_DX11::BakeConvertCubeMap(TextureBuffer* resource, float angle, float threshold, bool hdri, TextureBuffer** ppResource)
 {
 	m_FactoryManager->BakeConvertCubeMap(resource, angle, threshold, hdri, ppResource);
 }
 
-void KHGraphic::SaveConvertCubeMap(TextureBuffer* resource)
+void Graphic_DX11::SaveConvertCubeMap(TextureBuffer* resource)
 {
 	m_FactoryManager->SaveConvertCubeMap(resource);
 }

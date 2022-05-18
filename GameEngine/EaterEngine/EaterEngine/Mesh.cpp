@@ -1,7 +1,7 @@
 #include "Mesh.h"
 #include "EngineData.h"
 #include "MeshManager.h"
-#include "GraphicsEngine.h"
+#include "GraphicEngineAPI.h"
 
 #define SAFE_RELEASE(x) { if(x != nullptr){ x->Release(); delete x; x = nullptr; } }
 

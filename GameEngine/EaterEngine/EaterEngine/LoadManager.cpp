@@ -13,7 +13,7 @@
 #include "MeshManager.h"
 #include "MaterialManager.h"
 #include "AnimationManager.h"
-#include "GraphicsEngine.h"
+#include "GraphicEngineAPI.h"
 #include "GraphicEngineManager.h"
 #include "GameObject.h"
 #include "Profiler/Profiler.h"

@@ -1,15 +1,15 @@
 #pragma once
-#include "GraphicsEngine.h"
+#include "GraphicEngineAPI.h"
 
 interface IRenderManager;
 interface IFactoryManager;
 interface IRenderDataConverter;
 
-class KHGraphic : public GraphicEngine
+class Graphic_DX11 : public GraphicEngine
 {
 public:
-	KHGraphic();
-	~KHGraphic();
+	Graphic_DX11();
+	~Graphic_DX11();
 
 public:
 	void Initialize(HWND hwnd, int screenWidth, int screenHeight, RenderOption* renderOption) override;

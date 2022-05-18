@@ -12,7 +12,7 @@
 #include "Terrain.h"
 #include "EaterEngineAPI.h"
 #include "TextureManager.h"
-#include "GraphicsEngine.h"
+#include "GraphicEngineAPI.h"
 #include "Profiler/Profiler.h"
 
 MeshFilter::MeshFilter()

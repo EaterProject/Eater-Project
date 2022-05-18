@@ -86,7 +86,7 @@ ParserData::CModel* FBXParser::LoadModel(std::string fileName, UINT state)
 
 	// 혹시라도 RootNode가 없을 경우를 대비..
 	if (pRootNode == nullptr) return nullptr;
-
+	
 	/// Material Data Loading..
 	LoadMaterial();
 

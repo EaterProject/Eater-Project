@@ -19,15 +19,15 @@
 
 	#ifdef _WIN64
 		#ifdef _DEBUG
-			#pragma comment(lib, "KHParser_x64d")		// 64bit + Debug
+			#pragma comment(lib, "FBXParser_x64d")		// 64bit + Debug
 		#else
-			#pragma comment(lib, "KHParser_x64r")		// 64bit
+			#pragma comment(lib, "FBXParser_x64r")		// 64bit
 		#endif
 	#else
 		#ifdef _DEBUG
-			#pragma comment(lib, "KHParser_x86d")		// 32bit + Debug
+			#pragma comment(lib, "FBXParser_x86d")		// 32bit + Debug
 		#else
-			#pragma comment(lib, "KHParser_x86r")		// 32bit
+			#pragma comment(lib, "FBXParser_x86r")		// 32bit
 		#endif
 	#endif
 #endif

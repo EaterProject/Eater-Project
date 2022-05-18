@@ -2,7 +2,7 @@
 #include "EngineData.h"
 #include "MaterialManager.h"
 #include "LoadManager.h"
-#include "GraphicsEngine.h"
+#include "GraphicEngineAPI.h"
 
 #define SAFE_RELEASE(x) { if(x != nullptr){ x->Release(); delete x; x = nullptr; } }
 

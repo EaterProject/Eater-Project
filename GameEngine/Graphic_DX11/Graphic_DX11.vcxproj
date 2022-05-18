@@ -24,6 +24,7 @@
     <ProjectGuid>{c30c0d52-7379-4659-a70c-6f9a15342031}</ProjectGuid>
     <RootNamespace>KHGraphic</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>Graphic_DX11</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -140,7 +141,7 @@ copy /Y "$(ProjectDir)GraphicDLL.h" "$(SolutionDir)Library\inc"</Command>
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;GRAPHIC_EXPORT;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;GRAPHIC_DX11_EXPORT;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <AdditionalIncludeDirectories>$(ProjectDir)Export;$(SolutionDir)Library\inc;$(SolutionDir)Library\inc\Parser</AdditionalIncludeDirectories>
@@ -157,10 +158,7 @@ copy /Y "$(ProjectDir)GraphicDLL.h" "$(SolutionDir)Library\inc"</Command>
       <AdditionalLibraryDirectories>$(SolutionDir)Library\lib</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>copy/Y "$(TargetDir)*.lib"   "$(SolutionDir)Library\lib"
-copy/Y "$(TargetDir)*.dll"   "$(SolutionDir)Library\lib"
-
-copy/Y "$(ProjectDir)Export\*.h"   "$(SolutionDir)Library\inc\Graphic"</Command>
+      <Command>copy/Y "$(ProjectDir)Export\*.h"   "$(SolutionDir)Library\inc\Graphic"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -169,7 +167,7 @@ copy/Y "$(ProjectDir)Export\*.h"   "$(SolutionDir)Library\inc\Graphic"</Command>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;GRAPHIC_EXPORT;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;GRAPHIC_DX11_EXPORT;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <AdditionalIncludeDirectories>$(ProjectDir)Export;$(SolutionDir)Library\inc;$(SolutionDir)Library\inc\Parser</AdditionalIncludeDirectories>
@@ -185,10 +183,7 @@ copy/Y "$(ProjectDir)Export\*.h"   "$(SolutionDir)Library\inc\Graphic"</Command>
       <AdditionalLibraryDirectories>$(SolutionDir)Library\lib</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>copy/Y "$(TargetDir)*.lib"   "$(SolutionDir)Library\lib"
-copy/Y "$(TargetDir)*.dll"   "$(SolutionDir)Library\lib"
-
-copy/Y "$(ProjectDir)Export\*.h"   "$(SolutionDir)Library\inc\Graphic"</Command>
+      <Command>copy/Y "$(ProjectDir)Export\*.h"   "$(SolutionDir)Library\inc\Graphic"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -209,7 +204,7 @@ copy/Y "$(ProjectDir)Export\*.h"   "$(SolutionDir)Library\inc\Graphic"</Command>
     <ClInclude Include="DepthStencilViewDefine.h" />
     <ClInclude Include="EnvironmentPass.h" />
     <ClInclude Include="Export\GraphicDLL.h" />
-    <ClInclude Include="Export\GraphicsEngine.h" />
+    <ClInclude Include="Export\GraphicEngineAPI.h" />
     <ClInclude Include="FactoryManager.h" />
     <ClInclude Include="FactoryManagerBase.h" />
     <ClInclude Include="FactoryBase.h" />
@@ -244,7 +239,7 @@ copy/Y "$(ProjectDir)Export\*.h"   "$(SolutionDir)Library\inc\Graphic"</Command>
     <ClInclude Include="ResourceFactoryBase.h" />
     <ClInclude Include="RenderManagerBase.h" />
     <ClInclude Include="ResourceManagerBase.h" />
-    <ClInclude Include="KHGraphic.h" />
+    <ClInclude Include="Graphic_DX11.h" />
     <ClInclude Include="DirectDefine.h" />
     <ClInclude Include="EnumDefine.h" />
     <ClInclude Include="framework.h" />
@@ -293,11 +288,11 @@ copy/Y "$(ProjectDir)Export\*.h"   "$(SolutionDir)Library\inc\Graphic"</Command>
     <ClCompile Include="FogPass.cpp" />
     <ClCompile Include="FXAAPass.cpp" />
     <ClCompile Include="GeometryGenerator.cpp" />
-    <ClCompile Include="GraphicEngine.cpp" />
+    <ClCompile Include="GraphicEngineAPI.cpp" />
     <ClCompile Include="GraphicResource.cpp" />
     <ClCompile Include="GraphicState.cpp" />
     <ClCompile Include="GraphicView.cpp" />
-    <ClCompile Include="KHGraphic.cpp" />
+    <ClCompile Include="Graphic_DX11.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="LightPass.cpp" />
     <ClCompile Include="OITPass.cpp" />

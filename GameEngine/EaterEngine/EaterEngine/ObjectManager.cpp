@@ -7,7 +7,7 @@
 #include "KeyinputManager.h"
 #include "MeshFilter.h"
 #include "Light.h"
-#include "GraphicsEngine.h"
+#include "GraphicEngineAPI.h"
 
 //함수포인터 리스트들
 Delegate_Map ObjectManager::AwakeFunction;

@@ -1,5 +1,5 @@
-#include "GraphicsEngine.h"
-#include "KHGraphic.h"
+#include "GraphicEngineAPI.h"
+#include "Graphic_DX11.h"
 
 GraphicEngine* GraphicEngine::Graphic = nullptr;
 
@@ -7,7 +7,7 @@ GraphicEngine* GraphicEngine::Get()
 {
 	if (Graphic == nullptr)
 	{
-		Graphic = new KHGraphic();
+		Graphic = new Graphic_DX11();
 	}
 
 	return Graphic;
