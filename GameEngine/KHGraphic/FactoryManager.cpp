@@ -64,15 +64,20 @@ void FactoryManager::BakeSkyLightMap(TextureBuffer* skyLight, bool hdri, SkyLigh
 	if ((*ppResource)->Irradiance == nullptr)	(*ppResource)->Irradiance = new TextureBuffer();
 	if ((*ppResource)->Prefilter == nullptr)	(*ppResource)->Prefilter = new TextureBuffer();
 
-	m_BakingFactory->PreBakeEnvironmentMap(skyLight, hdri, *ppResource);
+	m_BakingFactory->BakeSkyLightMap(skyLight, hdri, *ppResource);
 }
 
-void FactoryManager::BakeConvertCubeMap(TextureBuffer* resource, float angle, bool save_file, bool hdri, TextureBuffer** ppResource)
+void FactoryManager::BakeConvertCubeMap(TextureBuffer* resource, float angle, float threshold, bool hdri, TextureBuffer** ppResource)
 {
 	// 货肺款 Texture Buffer 积己..
 	if (*ppResource == nullptr) (*ppResource) = new TextureBuffer();
 
-	m_BakingFactory->BakeConvertCubeMap(resource, angle, save_file, hdri, *ppResource);
+	m_BakingFactory->BakeConvertCubeMap(resource, angle, threshold, hdri, *ppResource);
+}
+
+void FactoryManager::SaveConvertCubeMap(TextureBuffer* resource)
+{
+	m_BakingFactory->SaveConvertCubeMap(resource);
 }
 
 void FactoryManager::CreateImg(std::string name, Hash_Code hash_code, std::string fileName)

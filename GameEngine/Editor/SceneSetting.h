@@ -24,13 +24,13 @@ public:
 	void SSAO_DataSetting();
 	void FOG_DataSetting();
 	void Bloom_DataSetting();
-	void IBL_DataSetting();
-	void Environment_DataSetting();
+	//void IBL_DataSetting();
+	//void Environment_DataSetting();
 
 	void SSAO_Slider_Setting(RenderOption* Option,CScrollBar* pScrollBar);
 	void FOG_Slider_Setting(RenderOption* Option, CScrollBar* pScrollBar);
-	void Environment_Slider_Setting(RenderOption* Option, CScrollBar* pScrollBar);
-	void IBL_Slider_Setting(RenderOption* Option, CScrollBar* pScrollBar);
+	//void Environment_Slider_Setting(RenderOption* Option, CScrollBar* pScrollBar);
+	//void IBL_Slider_Setting(RenderOption* Option, CScrollBar* pScrollBar);
 	void Bloom_Slider_Setting(RenderOption* Option, CScrollBar* pScrollBar);
 
 	void Setting();
@@ -74,19 +74,11 @@ public:
 	CEdit FOG_ColorG_Edit;
 	CEdit FOG_ColorB_Edit;
 
-	///Environment
-	CSliderCtrl Environment_size_Slider;
-	CEdit Environment_size_Edit;
-
 	///Bloom
 	CSliderCtrl Bloom_Threhold_Slider;
 	CEdit Bloom_Threhold_Edit;
 	CSliderCtrl Bloom_Factor_Slider;
 	CEdit Bloom_Factor_Edit;
-
-	///IBL
-	CSliderCtrl IBL_Factor_Slider;
-	CEdit IBL_Factor_Edit;
 
 
 	virtual BOOL OnInitDialog();

@@ -33,7 +33,7 @@ public:
 
 public:
 	// Environment Map Setting..
-	virtual void SetEnvironment(TextureBuffer* resource) abstract;
+	virtual void SetSkyCube(TextureBuffer* resource) abstract;
 	virtual void SetSkyLight(SkyLightBuffer* resource) abstract;
 
 public:

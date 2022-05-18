@@ -332,6 +332,7 @@ void ShaderManager::AddConstantBufferUsage()
 
 	// SkyCube..
 	PushConstantBufferUsage<CB_CubeObject>(CBUFFER_USAGE::DYNAMIC);
+	PushConstantBufferUsage<CB_CubeConvert>(CBUFFER_USAGE::DYNAMIC);
 
 	// IBL Baking..
 	PushConstantBufferUsage<CB_ExternalData>(CBUFFER_USAGE::DYNAMIC);

@@ -73,35 +73,107 @@ void TextureManager::BakeSkyLightMap(std::string& Path, bool hdri)
 	}
 }
 
-void TextureManager::BakeConvertCubeMap(std::string& Path, float angle, bool save_file, bool hdri, bool apply_skylight, bool apply_environment)
+//void TextureManager::BakeConvertCubeMap(std::string& Path, float angle, bool save_file, bool hdri, bool apply_skylight, bool apply_environment)
+//{
+//	TextureBuffer* cubeMap = LoadManager::GetTexture(Path);
+//
+//	// 해당 Texture가 없을 경우..
+//	if (cubeMap == nullptr)
+//	{
+//		PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "[ Engine ][ Bake ][ Convert CubeMap Buffer ] '%s' Texture가 로드되지 않았습니다!!", Path.c_str());
+//		return;
+//	}
+//
+//	std::string Name = Path + "_Convert";
+//
+//	TextureBuffer* buffer = LoadManager::GetTexture(Name);
+//
+//	// 생성된 Convert Cube Map이 있다면 제거..
+//	if (buffer && apply_environment)
+//	{
+//		LoadManager::DeleteTexture(Name);
+//		buffer = nullptr;
+//	}
+//
+//	EnterCriticalSection(m_CriticalSection);
+//	m_Graphic->BakeConvertCubeMap(cubeMap, angle, save_file, hdri, &buffer);
+//	LeaveCriticalSection(m_CriticalSection);
+//
+//	if (buffer == nullptr)
+//	{
+//		PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "[ Engine ][ Bake ][ Convert CubeMap Buffer ] '%s' FAILED!!", Path.c_str());
+//		return;
+//	}
+//	else
+//	{
+//		buffer->Name = Name;
+//		LoadManager::TextureList.insert({ Name, buffer });
+//	}
+//
+//	if (apply_skylight)
+//	{
+//		SkyLightBuffer* skyLight = LoadManager::GetSkyLight(Name);
+//
+//		// 생성된 Convert Sky Light가 있다면 제거..
+//		if (skyLight)
+//		{
+//			LoadManager::DeleteSkyLight(Name);
+//			skyLight = nullptr;
+//		}
+//
+//		EnterCriticalSection(m_CriticalSection);
+//		m_Graphic->BakeSkyLightMap(buffer, false, &skyLight);
+//		LeaveCriticalSection(m_CriticalSection);
+//
+//		if (skyLight == nullptr)
+//		{
+//			PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "[ Engine ][ Bake ][ SkyLight Buffer ] '%s' FAILED!!", Path.c_str());
+//		}
+//		else
+//		{
+//			skyLight->Name = Name;
+//			LoadManager::SkyLightList.insert({ Name, skyLight });
+//		}
+//
+//		m_Graphic->SetSkyLight(skyLight);
+//	}
+//
+//	if (apply_environment)
+//	{
+//		m_Graphic->SetSkyCube(buffer);
+//	}
+//}
+
+void TextureManager::BakeConvertSkyLightMap(std::string& Path, float angle, float threshold, bool hdri)
 {
 	TextureBuffer* cubeMap = LoadManager::GetTexture(Path);
-
+	
 	// 해당 Texture가 없을 경우..
 	if (cubeMap == nullptr)
 	{
-		PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "[ Engine ][ Bake ][ Convert CubeMap Buffer ] '%s' Texture가 로드되지 않았습니다!!", Path.c_str());
+		PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "[ Engine ][ Convert ][ Convert SkyLight Buffer ] '%s' Texture가 로드되지 않았습니다!!", Path.c_str());
 		return;
 	}
 
-	std::string Name = Path + "_Convert";
+	std::string Name = "SkyLight_Convert_" + Path;
 
 	TextureBuffer* buffer = LoadManager::GetTexture(Name);
 
 	// 생성된 Convert Cube Map이 있다면 제거..
-	if (buffer && apply_environment)
+	if (buffer)
 	{
 		LoadManager::DeleteTexture(Name);
 		buffer = nullptr;
 	}
 
 	EnterCriticalSection(m_CriticalSection);
-	m_Graphic->BakeConvertCubeMap(cubeMap, angle, save_file, hdri, &buffer);
+	m_Graphic->BakeConvertCubeMap(cubeMap, angle, threshold, hdri, &buffer);
 	LeaveCriticalSection(m_CriticalSection);
 
+	// 새로 생성한 SkyLight CubeMap 삽입..
 	if (buffer == nullptr)
 	{
-		PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "[ Engine ][ Bake ][ Convert CubeMap Buffer ] '%s' FAILED!!", Path.c_str());
+		PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "[ Engine ][ Convert ][ Convert SkyCube Buffer ] '%s' FAILED!!", Path.c_str());
 		return;
 	}
 	else
@@ -110,38 +182,92 @@ void TextureManager::BakeConvertCubeMap(std::string& Path, float angle, bool sav
 		LoadManager::TextureList.insert({ Name, buffer });
 	}
 
-	if (apply_skylight)
+	// 해당 SkyLight 검색..
+	SkyLightBuffer* skyLight = LoadManager::GetSkyLight(Name);
+
+	// 생성된 Convert SkyLight가 있다면 제거..
+	if (skyLight)
 	{
-		SkyLightBuffer* skyLight = LoadManager::GetSkyLight(Name);
-
-		// 생성된 Convert Sky Light가 있다면 제거..
-		if (skyLight)
-		{
-			LoadManager::DeleteSkyLight(Name);
-			skyLight = nullptr;
-		}
-
-		EnterCriticalSection(m_CriticalSection);
-		m_Graphic->BakeSkyLightMap(buffer, false, &skyLight);
-		LeaveCriticalSection(m_CriticalSection);
-
-		if (skyLight == nullptr)
-		{
-			PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "[ Engine ][ Bake ][ SkyLight Buffer ] '%s' FAILED!!", Path.c_str());
-		}
-		else
-		{
-			skyLight->Name = Name;
-			LoadManager::SkyLightList.insert({ Name, skyLight });
-		}
-
-		m_Graphic->SetSkyLight(skyLight);
+		LoadManager::DeleteSkyLight(Name);
+		skyLight = nullptr;
 	}
 
-	if (apply_environment)
+	EnterCriticalSection(m_CriticalSection);
+	m_Graphic->BakeSkyLightMap(buffer, false, &skyLight);
+	LeaveCriticalSection(m_CriticalSection);
+
+	// 새로 생성한 SkyLight Buffer 삽입..
+	if (skyLight == nullptr)
 	{
-		m_Graphic->SetEnvironment(buffer);
+		PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "[ Engine ][ Convert ][ SkyLight Buffer ] '%s' FAILED!!", Path.c_str());
 	}
+	else
+	{
+		skyLight->Name = Name;
+		LoadManager::SkyLightList.insert({ Name, skyLight });
+	}
+
+	// 변경한 SkyLight 적용..
+	m_Graphic->SetSkyLight(skyLight);
+}
+
+void TextureManager::BakeConvertSkyCubeMap(std::string& Path, float angle, float threshold, bool hdri)
+{
+	TextureBuffer* cubeMap = LoadManager::GetTexture(Path);
+
+	// 해당 Texture가 없을 경우..
+	if (cubeMap == nullptr)
+	{
+		PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "[ Engine ][ Convert ][ Convert SkyCube Buffer ] '%s' Texture가 로드되지 않았습니다!!", Path.c_str());
+		return;
+	}
+
+	std::string Name = "SkyCube_Convert_" + Path;
+
+	TextureBuffer* buffer = LoadManager::GetTexture(Name);
+
+	// 생성된 Convert Cube Map이 있다면 제거..
+	if (buffer)
+	{
+		LoadManager::DeleteTexture(Name);
+		buffer = nullptr;
+	}
+
+	EnterCriticalSection(m_CriticalSection);
+	m_Graphic->BakeConvertCubeMap(cubeMap, angle, threshold, hdri, &buffer);
+	LeaveCriticalSection(m_CriticalSection);
+
+	if (buffer == nullptr)
+	{
+		PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "[ Engine ][ Convert ][ Convert SkyCube Buffer ] '%s' FAILED!!", Path.c_str());
+		return;
+	}
+	else
+	{
+		buffer->Name = Name;
+		LoadManager::TextureList.insert({ Name, buffer });
+	}
+
+	// 변경한 SkyCube 적용..
+	m_Graphic->SetSkyCube(buffer);
+}
+
+void TextureManager::SaveConvertSkyLightMap(std::string& Path)
+{
+	std::string Name = "SkyLight_Convert_" + Path;
+
+	TextureBuffer* buffer = LoadManager::GetTexture(Name);
+
+	m_Graphic->SaveConvertCubeMap(buffer);
+}
+
+void TextureManager::SaveConvertSkyCubeMap(std::string& Path)
+{
+	std::string Name = "SkyCube_Convert_" + Path;
+
+	TextureBuffer* buffer = LoadManager::GetTexture(Name);
+
+	m_Graphic->SaveConvertCubeMap(buffer);
 }
 
 void TextureManager::Initialize(GraphicEngineManager* Graphic, CRITICAL_SECTION* _cs)
