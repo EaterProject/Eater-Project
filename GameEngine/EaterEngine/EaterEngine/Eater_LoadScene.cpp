@@ -340,7 +340,7 @@ void Eater_LoadScene::Load_Component_Animation(int index, GameObject* Object)
 	EATER_GET_LIST(&Data, 0);
 	MF->SetAnimationName(MF->GetModelName());
 	AC->Choice(Data[0]);
-	AC->Play(1, true);
+	AC->Play();
 }
 
 void Eater_LoadScene::Load_Component_Transform(int index, GameObject* Object)

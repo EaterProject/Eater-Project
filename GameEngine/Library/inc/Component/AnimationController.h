@@ -27,9 +27,12 @@ public:
 	virtual void StartUpdate();
 	virtual void Update();
 
-	EATER_ENGINEDLL void Choice(std::string Name);		//선택
-	EATER_ENGINEDLL void Play(float Speed, bool Loop);	//재생
-	EATER_ENGINEDLL void Stop();						//일시정지
+	EATER_ENGINEDLL void Choice(std::string Name,float Speed =1 ,bool Loop = true);//선택
+	
+	EATER_ENGINEDLL void Play();	//재생
+	EATER_ENGINEDLL void Stop();	//멈춤
+	EATER_ENGINEDLL void Pause();	//중지
+	EATER_ENGINEDLL void SetFrame(int index);
 
 	EATER_ENGINEDLL int GetNowFrame();	//선택한 애니메이션 프레임
 	EATER_ENGINEDLL int GetEndFrame();	//선택한 애니메이션 끝 프레임
@@ -69,11 +72,13 @@ private:
 
 	bool	mStop;
 	bool	mLoop;
+	bool	mPlay;
 
 	int		mPrevFrame;
 	int		mNowFrame;
 	int		mNextFrame;
 
+	float	mSpeed;
 	float	mPlayTime;		//애니메이션을 한바퀴 도는 시간 
 	float 	mTime;			//현재 재생타임
 	float 	mFrameTime;		//현재 프레임 재생타임
