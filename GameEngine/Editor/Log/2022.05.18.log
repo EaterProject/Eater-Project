@@ -8528,3 +8528,6 @@
 [TIME] 12:09:15 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeConvertSkyLightMap [LINE] 154
 [ Engine ][ Convert ][ Convert SkyLight Buffer ] '' Texture가 로드되지 않았습니다!!
 
+[TIME] 14:47:55 [FILE] TextureManager.cpp [FUNC] TextureManager::SaveConvertSkyLightMap [LINE] 264
+[ Engine ][ Save ][ Save Convert SkyLight CubeMap ] '' FAILED!!
+

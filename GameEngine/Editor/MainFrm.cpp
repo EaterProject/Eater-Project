@@ -274,55 +274,7 @@ bool CMainFrame::CheckFolder(std::string& Path)
 	}
 }
 
-void CMainFrame::CopyEditorFolder(std::string& mPath, std::string& mCopyPath)
-{
-	std::filesystem::path p(mPath);
-	if (std::filesystem::exists(p) == false)
-	{
-		return;
-	}
 
-	std::filesystem::directory_iterator itr(p);
-	while (itr != std::filesystem::end(itr))
-	{
-		const std::filesystem::directory_entry& entry = *itr;
-
-		//읽을 파일의 이름을 알아온다
-		if (std::filesystem::is_directory(entry.path()) == true)
-		{
-			std::string Path = entry.path().string();
-			std::size_t Swap = Path.rfind('\\');
-			Path[Swap] = '/';
-
-			std::size_t Start	= Path.rfind('/');
-			std::size_t End		= Path.size();
-
-			std::string FolderName = Path.substr(Start, End);
-			std::string CopyPath = mCopyPath  + FolderName;
-
-			std::filesystem::create_directories(CopyPath);
-			CopyEditorFolder(Path, CopyPath);
-		}
-		else
-		{
-			std::string Path = entry.path().string();
-			std::size_t Swap = Path.rfind('\\');
-			Path[Swap] = '/';
-
-			std::size_t Start = Path.rfind('/');
-			std::size_t End = Path.size();
-			//
-			std::string FolderName = Path.substr(Start+1, End);
-			std::string CopyPath = mCopyPath + '/' +FolderName;
-			
-			//int Type = std::fileCopy()
-
-			std::filesystem::copy_file(Path, CopyPath, std::filesystem::copy_options::recursive);
-			CopyEditorFile(Path, mCopyPath);
-		}
-		itr++;
-	}
-}
 
 void CMainFrame::CopyEditorFile(std::string& Path, std::string& CopyPath)
 {
@@ -539,6 +491,10 @@ void CMainFrame::OnCreateBuildFile()
 	// 경로를 가져와 사용할 경우, Edit Control 에 값 저장
 	CString str;
 	str.Format(_T("%s"), szBuffer);
+
+	// 취소 버튼을 눌렀을 경우..
+	if (str.IsEmpty()) return;
+
 	SetDlgItemText(IDC_EDIT2, str);
 
 	CT2CA convertedString = str;

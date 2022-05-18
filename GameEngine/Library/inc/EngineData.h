@@ -42,7 +42,7 @@ public:
 
 	// Bloom Option
 	float BLOOM_Threshold_Min = 1.0f;					// Bloom 추출 최소 영역			(0.0 ~ 2.0)
-	float BLOOM_Threshold_Max = 100.0f;					// Bloom 추출 최대 영역			(1.0 ~ 1000.0)
+	float BLOOM_Threshold_Max = 100.0f;					// Bloom 추출 최대 영역			(10.0 ~ 1000.0)
 	float BLOOM_Factor = 0.25f;							// Bloom 혼합률					(0.0 ~ 1.0)
 
 	// SkyCube Option

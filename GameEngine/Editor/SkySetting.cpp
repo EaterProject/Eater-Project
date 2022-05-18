@@ -103,11 +103,27 @@ void SkySetting::OnSkyCubeHDRI()
 
 void SkySetting::OnSkyCubeBakeButton()
 {
+	if (SkyCubeName.empty())
+	{
+		HWND hWndActive = ::GetForegroundWindow();
+		MessageBoxA(hWndActive, "텍스쳐가 없는뎅?", "Error", MB_OK);
+
+		return;
+	}
+
 	SaveConvertSkyCubeMap(SkyCubeName);
 }
 
 void SkySetting::OnSkyLightBakeButton()
 {
+	if (SkyLightName.empty())
+	{
+		HWND hWndActive = ::GetForegroundWindow();
+		MessageBoxA(hWndActive, "텍스쳐가 없는뎅?", "Error", MB_OK);
+
+		return;
+	}
+
 	SaveConvertSkyLightMap(SkyLightName);
 }
 
@@ -132,7 +148,7 @@ void SkySetting::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 
 	if (pScrollBar->GetDlgCtrlID() == SkyCube_Threhold_Slider.GetDlgCtrlID())
 	{
-		SkyCubeThreshold = (float)SkyCube_Threhold_Slider.GetPos();
+		SkyCubeThreshold = (float)SkyCube_Threhold_Slider.GetPos() * 0.01f;
 		SkyCube_Threshold_Edit.SetWindowTextW(ChangeToCString(SkyCubeThreshold));
 		BakeConvertSkyCubeMap(SkyCubeName, SkyCubeAngle, SkyCubeThreshold, SkyCubeHDRI);
 	}
@@ -140,14 +156,14 @@ void SkySetting::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 	if (pScrollBar->GetDlgCtrlID() == SkyCube_Angle_Slider.GetDlgCtrlID())
 	{
 		float pos = (float)SkyCube_Angle_Slider.GetPos();
-		SkyCubeAngle = pos/10.0f;
+		SkyCubeAngle = pos / 10.0f;
 		SkyCube_Angle_Edit.SetWindowTextW(ChangeToCString(SkyCubeAngle));
 		BakeConvertSkyCubeMap(SkyCubeName, SkyCubeAngle, SkyCubeThreshold, SkyCubeHDRI);
 	}
 
 	if (pScrollBar->GetDlgCtrlID() == SkyLight_Factor_Slider.GetDlgCtrlID()) 
 	{
-		float pos = (float)SkyLight_Factor_Slider.GetPos() / 100.0f;
+		float pos = (float)SkyLight_Factor_Slider.GetPos() * 0.01f;
 		mRenderOption->SkyLight_Factor = pos;
 		SkyLight_Factor_Edit.SetWindowTextW(ChangeToCString(pos));
 		RenderSetting();
@@ -155,7 +171,7 @@ void SkySetting::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 
 	if (pScrollBar->GetDlgCtrlID() == SkyLight_Threshold_Slider.GetDlgCtrlID())
 	{
-		SkyLightThreshold = (float)SkyLight_Threshold_Slider.GetPos();
+		SkyLightThreshold = (float)SkyLight_Threshold_Slider.GetPos() * 0.01f;
 		SkyLight_Threshold_Edit.SetWindowTextW(ChangeToCString(SkyLightThreshold));
 		BakeConvertSkyLightMap(SkyLightName, SkyLightAngle, SkyLightThreshold, SkyLightHDRI);
 	}
@@ -167,8 +183,6 @@ void SkySetting::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 		SkyLight_Angle_Edit.SetWindowTextW(ChangeToCString(SkyLightAngle));
 		BakeConvertSkyLightMap(SkyLightName, SkyLightAngle, SkyLightThreshold, SkyLightHDRI);
 	}
-
-
 }
 
 
@@ -179,11 +193,11 @@ BOOL SkySetting::OnInitDialog()
 	CustomDialog::OnInitDialog();
 
 	SkyCube_Size_Slider.SetRange(1,5000);
-	SkyCube_Threhold_Slider.SetRange(1,1000);
+	SkyCube_Threhold_Slider.SetRange(100,10000);
 	SkyCube_Angle_Slider.SetRange(0,3600);
 
 	SkyCube_Size_Slider.SetPos(500);
-	SkyCube_Threhold_Slider.SetPos(100);
+	SkyCube_Threhold_Slider.SetPos(10000);
 	SkyCube_Angle_Slider.SetPos(0);
 
 	SkyCube_Threshold_Edit.SetWindowTextW(L"100");
@@ -195,17 +209,17 @@ BOOL SkySetting::OnInitDialog()
 	SkyCubeHDRI = false;
 
 	SkyLight_Factor_Slider.SetRange(0,500);
-	SkyLight_Threshold_Slider.SetRange(1,1000);
+	SkyLight_Threshold_Slider.SetRange(100,10000);
 	SkyLight_Angle_Slider.SetRange(0, 3600);
 
 	SkyLight_Factor_Slider.SetPos(100);
-	SkyLight_Threshold_Slider.SetPos(100);
+	SkyLight_Threshold_Slider.SetPos(10000);
 	SkyLight_Angle_Slider.SetPos(0);
 
 
-	SkyLight_Factor_Edit.SetWindowTextW(L"1");
 	SkyLight_Threshold_Edit.SetWindowTextW(L"100");
 	SkyLight_Angle_Edit.SetWindowTextW(L"0");
+	SkyLight_Factor_Edit.SetWindowTextW(L"1");
 
 	SkyLightAngle = 0.0f;
 	SkyLightThreshold = 100.0f;

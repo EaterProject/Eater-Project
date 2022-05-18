@@ -41,7 +41,7 @@ void EditorToolScene::Awake()
 	mLoadManager->Initialize(&ObjectList);
 
 	RenderOption* Option = GetRenderOptionData();
-	Option->DebugOption ^= DEBUG_RENDERTARGET;
+	Option->DebugOption = DEBUG_OPTION::DEBUG_MODE;
 	RenderSetting();
 
 	//리소스를 로드

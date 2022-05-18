@@ -64,13 +64,13 @@ GameEngine::GameEngine()
 	mRenderOption = new RenderOption();
 
 #if defined(DEBUG) || defined(_DEBUG)
-	mRenderOption->DebugOption			= DEBUG_RENDERTARGET | DEBUG_MODE;
+	mRenderOption->DebugOption			= DEBUG_OPTION::DEBUG_RENDERTARGET | DEBUG_OPTION::DEBUG_MODE;
 #else
-	mRenderOption->DebugOption			= DEBUG_MODE;
+	mRenderOption->DebugOption			= DEBUG_OPTION::DEBUG_MODE;
 #endif
 
-	mRenderOption->RenderingOption		= RENDER_SHADOW | RENDER_SSAO | RENDER_IBL | RENDER_FOG;
-	mRenderOption->PostProcessOption	= RENDER_BLOOM | RENDER_HDR | RENDER_FXAA;
+	mRenderOption->RenderingOption		= RENDER_OPTION::RENDER_SHADOW | RENDER_OPTION::RENDER_SSAO | RENDER_OPTION::RENDER_IBL | RENDER_OPTION::RENDER_FOG;
+	mRenderOption->PostProcessOption	= POSTPROCESS_OPTION::RENDER_BLOOM | POSTPROCESS_OPTION::RENDER_HDR | POSTPROCESS_OPTION::RENDER_FXAA;
 }
 
 GameEngine::~GameEngine()
@@ -589,49 +589,49 @@ void GameEngine::RenderOptionCheck()
 	if (mKeyManager->GetKeyUp(VK_F1))
 	{
 		// Debug On/Off
-		mRenderOption->DebugOption ^= DEBUG_MODE;
+		mRenderOption->DebugOption ^= DEBUG_OPTION::DEBUG_MODE;
 		change = true;
 	}
 	if (mKeyManager->GetKeyUp(VK_F2))
 	{
 		// Shadow On/Off
-		mRenderOption->DebugOption ^= DEBUG_RENDERTARGET;
+		mRenderOption->DebugOption ^= DEBUG_OPTION::DEBUG_RENDERTARGET;
 		change = true;
 	}
 	if (mKeyManager->GetKeyUp(VK_F3))
 	{
 		// SSAO On/Off
-		mRenderOption->RenderingOption ^= RENDER_SSAO;
+		mRenderOption->RenderingOption ^= RENDER_OPTION::RENDER_SSAO;
 		change = true;
 	}
 	if (mKeyManager->GetKeyUp(VK_F4))
 	{
 		// IBL On/Off
-		mRenderOption->RenderingOption ^= RENDER_IBL;
+		mRenderOption->RenderingOption ^= RENDER_OPTION::RENDER_IBL;
 		change = true;
 	}
 	if (mKeyManager->GetKeyUp(VK_F5))
 	{
 		// Fog On/Off
-		mRenderOption->RenderingOption ^= RENDER_FOG;
+		mRenderOption->RenderingOption ^= RENDER_OPTION::RENDER_FOG;
 		change = true;
 	}
 	if (mKeyManager->GetKeyUp(VK_F6))
 	{
 		// Bloom On/Off
-		mRenderOption->PostProcessOption ^= RENDER_BLOOM;
+		mRenderOption->PostProcessOption ^= POSTPROCESS_OPTION::RENDER_BLOOM;
 		change = true;
 	}
 	if (mKeyManager->GetKeyUp(VK_F7))
 	{
 		// HDR On/Off
-		mRenderOption->PostProcessOption ^= RENDER_HDR;
+		mRenderOption->PostProcessOption ^= POSTPROCESS_OPTION::RENDER_HDR;
 		change = true;
 	}
 	if (mKeyManager->GetKeyUp(VK_F8))
 	{
 		// FXAA On/Off
-		mRenderOption->PostProcessOption ^= RENDER_FXAA;
+		mRenderOption->PostProcessOption ^= POSTPROCESS_OPTION::RENDER_FXAA;
 		change = true;
 	}
 
