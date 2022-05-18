@@ -395,12 +395,14 @@ void AssetsDialog::OnLButtonUp(UINT nFlags, CPoint point)
 		 if (mRightOption->mMaterial->IsWindowVisible() == TRUE)
 		 {
 			mRightOption->mMaterial->CheckTexture(point);
+			return;
 		 }
 
 		 SkySetting* mSkySetting = DialogFactory::GetFactory()->GetSkySetting();
-		 if (mSkySetting->IsWindowEnabled())
+		 if (mSkySetting->IsWindowVisible() == TRUE)
 		 {
 			 mSkySetting->SetCheck(DragItemName);
+			 return;
 		 }
 		 
 

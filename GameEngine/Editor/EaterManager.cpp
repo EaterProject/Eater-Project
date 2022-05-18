@@ -86,12 +86,7 @@ int EaterManager::CheckModelType(ParserData::CModel* FBXModel)
 void EaterManager::Load_Eater_File(std::string& Path)
 {
 
-
-
-
-
-
-
+	
 
 }
 
