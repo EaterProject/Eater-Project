@@ -26,14 +26,23 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
-	CComboBox AnimationList;
 	AnimationController* AC;
+
+	CComboBox AnimationList;
+	CString AnimationName;
+	CEdit AnimationEndEdit;
+	CEdit AnimationStartEdit;
+	CEdit Animation_Speed_Edit;
+	CButton Loop_Check;
+
+	int Speed = 1;
+	bool Loop = true;
+
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	afx_msg void OnCbnSelchangeCombo1();
 	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
-	CEdit AnimationEndEdit;
-	CEdit AnimationStartEdit;
-	afx_msg void OnPlayAnimation();
-	afx_msg void OnStopAnimation();
-	afx_msg void OnPauseAnimation();
+	afx_msg void OnPlayButton();
+	afx_msg void OnPauseButton();
+	afx_msg void OnStopButton();
+	afx_msg void OnLoopCheck();
 };

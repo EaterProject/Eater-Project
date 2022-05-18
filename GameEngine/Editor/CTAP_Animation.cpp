@@ -47,6 +47,7 @@ void CTAP_Animation::SetGameObject(AnimationController* Data)
 	int EndFrame = AC->GetEndFrame();
 	AnimationEndEdit.SetWindowText(ChangeToCString(EndFrame));
 	AnimationStartEdit.SetWindowTextW(L"0");
+	Loop_Check.SetCheck(true);
 }
 
 void CTAP_Animation::DoDataExchange(CDataExchange* pDX)
@@ -55,14 +56,17 @@ void CTAP_Animation::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_COMBO1, AnimationList);
 	DDX_Control(pDX, IDC_EDIT1, AnimationEndEdit);
 	DDX_Control(pDX, IDC_EDIT4, AnimationStartEdit);
+	DDX_Control(pDX, IDC_EDIT5, Animation_Speed_Edit);
+	DDX_Control(pDX, IDC_CHECK1, Loop_Check);
 }
 
 BEGIN_MESSAGE_MAP(CTAP_Animation, CDialogEx)
 	ON_CBN_SELCHANGE(IDC_COMBO1, &CTAP_Animation::OnCbnSelchangeCombo1)
 	ON_WM_HSCROLL()
-	ON_BN_CLICKED(IDC_BUTTON1, &CTAP_Animation::OnPlayAnimation)
-	ON_BN_CLICKED(IDC_BUTTON2, &CTAP_Animation::OnStopAnimation)
-	ON_BN_CLICKED(IDC_BUTTON9, &CTAP_Animation::OnPauseAnimation)
+	ON_BN_CLICKED(IDC_BUTTON5, &CTAP_Animation::OnPlayButton)
+	ON_BN_CLICKED(IDC_BUTTON6, &CTAP_Animation::OnPauseButton)
+	ON_BN_CLICKED(IDC_BUTTON8, &CTAP_Animation::OnStopButton)
+	ON_BN_CLICKED(IDC_CHECK1, &CTAP_Animation::OnLoopCheck)
 END_MESSAGE_MAP()
 
 BOOL CTAP_Animation::PreTranslateMessage(MSG* pMsg)
@@ -85,7 +89,7 @@ BOOL CTAP_Animation::PreTranslateMessage(MSG* pMsg)
 
 void CTAP_Animation::OnCbnSelchangeCombo1()
 {
-	CString AnimationName;
+	AnimationName;
 	AnimationList.GetLBText(AnimationList.GetCurSel(), AnimationName);
 	AC->Choice(ChangeToString(AnimationName));
 	//AnimationEndEdit.SetWindowTextW(ChangeToString(AC->GetEndFrame() );
@@ -104,19 +108,26 @@ void CTAP_Animation::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 }
 
 
-void CTAP_Animation::OnPlayAnimation()
+void CTAP_Animation::OnPlayButton()
 {
-	
+	AC->Play();
 }
 
 
-void CTAP_Animation::OnStopAnimation()
+void CTAP_Animation::OnPauseButton()
 {
-
+	AC->Pause();
 }
 
 
-void CTAP_Animation::OnPauseAnimation()
+void CTAP_Animation::OnStopButton()
 {
+	AC->Stop();
+}
 
+
+void CTAP_Animation::OnLoopCheck()
+{
+	Loop ^= true;
+	AC->Choice(ChangeToString(AnimationName),Speed,Loop);
 }
