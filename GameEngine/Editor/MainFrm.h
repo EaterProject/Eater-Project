@@ -78,6 +78,7 @@ public:
 	afx_msg void OpenAssetsFile();
 	afx_msg void SceneSaveFile();
 	afx_msg void OnCreateBuildFile();
+	afx_msg void OnSkySetting();
 };
 
 

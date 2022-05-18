@@ -248,6 +248,7 @@ copy /Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)" </Command>
     <ClInclude Include="SceneSave.h" />
     <ClInclude Include="SceneSaveDialog.h" />
     <ClInclude Include="SceneSetting.h" />
+    <ClInclude Include="SkySetting.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="YamlManager.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
@@ -302,6 +303,7 @@ copy /Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)" </Command>
     <ClCompile Include="SceneSave.cpp" />
     <ClCompile Include="SceneSaveDialog.cpp" />
     <ClCompile Include="SceneSetting.cpp" />
+    <ClCompile Include="SkySetting.cpp" />
     <ClCompile Include="YamlManager.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>

@@ -169,6 +169,9 @@
     <Filter Include="소스 파일\MFC\Dialog\Option\SceneSetting">
       <UniqueIdentifier>{4e2920fa-5115-4164-b0e6-f060e40496fd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\MFC\Dialog\Option\SkySetting">
+      <UniqueIdentifier>{b72025cf-5e8e-4a67-9c2a-c39b976ecda0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -303,6 +306,9 @@
     <ClInclude Include="SceneSetting.h">
       <Filter>소스 파일\MFC\Dialog\Option\SceneSetting</Filter>
     </ClInclude>
+    <ClInclude Include="SkySetting.h">
+      <Filter>소스 파일\MFC\Dialog\Option\SkySetting</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainFrm.cpp">
@@ -424,6 +430,9 @@
     </ClCompile>
     <ClCompile Include="SceneSetting.cpp">
       <Filter>소스 파일\MFC\Dialog\Option\SceneSetting</Filter>
+    </ClCompile>
+    <ClCompile Include="SkySetting.cpp">
+      <Filter>소스 파일\MFC\Dialog\Option\SkySetting</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
