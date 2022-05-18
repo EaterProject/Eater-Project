@@ -35,9 +35,22 @@ void AnimationController::StartUpdate()
 
 void AnimationController::Update()
 {
-	if (NowAnimationName != "" && mAnimation != nullptr)
+	// 현재 재생중일 경우에만 Play..
+	if (mStop == true) return;
+	if (mPlay == false)return;
+
+	// 현재 Animation Frame 재설정..
+	AnimationFrameIndex();
+
+	//PROFILE_TIMER_START(PROFILE_OUTPUT::VS_CODE, 60, "%d Animation Lerp", SkinObject->OneMeshData->Object_Data->ObjectIndex);
+
+	//Animator 컨퍼넌트들의 Play함수를 실행시킨다
+	int Size = AnimatorList.size();
+	for (int i = 0; i < Size; i++)
 	{
-		Play(1, true);
+		if (AnimatorList[i] == nullptr) { continue; }
+
+		AnimatorList[i]->Play(mPrevFrame, mNextFrame, mFrameTime, mLoop);
 	}
 }
 
@@ -84,9 +97,11 @@ void AnimationController::SetAnimation(Animation* animation)
 
 void AnimationController::ChangeAnime()
 {
+	
 	if (ChangeAnimation == true)
 	{
 		NowAnimation = mAnimation->m_AnimationData->AnimList[NowAnimationName];
+		if (NowAnimation == nullptr) { return; }
 
 		mAnimationData->PrevAnimationIndex = NowAnimationBuffer->AnimationOffset[NowAnimation->m_Index];
 		mAnimationData->NextAnimationIndex = NowAnimationBuffer->AnimationOffset[NowAnimation->m_Index];
@@ -173,41 +188,65 @@ void AnimationController::Reset()
 	mAnimationData->NextFrameIndex = mNextFrame * NowAnimationBuffer->FrameOffset;
 }
 
-void AnimationController::Choice(std::string Name)
+void AnimationController::Choice(std::string Name, float Speed, bool Loop)
 {
 	//나의 애니메이션 리스트에서 선택한 애니메이션을 본에게 넘겨준다
 	if (NowAnimationName != Name)
 	{
 		ChangeAnimation = true;
 		NowAnimationName = Name;
+		mLoop	= Loop;
+		mSpeed	= Speed;
 	}
 }
 
-void AnimationController::Play(float Speed, bool Loop)
+void AnimationController::Play()
 {
-	// 현재 재생중일 경우에만 Play..
-	if (mStop) return;
-
-	// 현재 Animation Frame 재설정..
-	AnimationFrameIndex();
-
-	//PROFILE_TIMER_START(PROFILE_OUTPUT::VS_CODE, 60, "%d Animation Lerp", SkinObject->OneMeshData->Object_Data->ObjectIndex);
-	
-	//Animator 컨퍼넌트들의 Play함수를 실행시킨다
-	int Size = AnimatorList.size();
-	for (int i = 0; i <Size; i++)
-	{
-		if (AnimatorList[i] == nullptr) { continue;}
-		
-		AnimatorList[i]->Play(mPrevFrame, mNextFrame, mFrameTime, Loop);
-	} 
-
-	//PROFILE_TIMER_END("%d Animation Lerp", SkinObject->OneMeshData->Object_Data->ObjectIndex);
+	mPlay = true;
+	mStop = false;
 }
 
 void AnimationController::Stop()
 {
+	mPlay = false;
+	//mStop = true;
+
+	SetFrame(0);
+}
+
+void AnimationController::Pause()
+{
+	mPlay = false;
 	mStop = true;
+	mNowFrame = 0;
+}
+
+void AnimationController::SetFrame(int index)
+{
+	// 현재 프레임의 총 진행 시간 설정..
+	mTime = index * NowAnimation->m_TicksPerFrame;
+
+	// 해당 프레임 인덱스 설정..
+	mPrevFrame = index;
+
+	if (mPrevFrame > NowAnimation->m_EndFrame)
+	{
+		mPrevFrame = 0;
+	}
+
+	mNextFrame = mPrevFrame + 1;
+
+	if (mNextFrame > NowAnimation->m_EndFrame)
+	{
+		mNextFrame = 0;
+	}
+
+	// 설정 당시 해당 프레임 진행시간 초기화..
+	mFrameTime = 0.0f;
+
+	// 애니메이션 오프셋 설정..
+	mAnimationData->PrevFrameIndex = mPrevFrame * NowAnimationBuffer->FrameOffset;
+	mAnimationData->NextFrameIndex = mNextFrame * NowAnimationBuffer->FrameOffset;
 }
 
 int AnimationController::GetNowFrame()

@@ -128,7 +128,7 @@ void EditorManager::CreateAssetsFile()
 	std::filesystem::create_directory("../Assets/Texture/Graphic/Noise");
 	std::filesystem::create_directory("../Assets/Texture/Graphic/Shader");
 
-	//CreateBaseObject();
+	CreateBaseObject();
 }
 
 void EditorManager::CreateBaseObject()

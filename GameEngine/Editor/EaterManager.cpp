@@ -109,7 +109,9 @@ void EaterManager::Load_FBX_File(std::string& Path, ParserData::CModel* FBXMesh)
 	mMeshManager->SetFileName(FileName);
 	mMeshManager->ChangeEaterFile(FBXMesh);
 	EATER_CLOSE_WRITE_FILE();
+
 	std::string LoadPath = "../Assets/Model/ModelData/" + FileName + ".Eater";
+
 	EditorToolScene::MeshLoad(LoadPath);
 
 	///MeshBuffer 정보를 저장한다
