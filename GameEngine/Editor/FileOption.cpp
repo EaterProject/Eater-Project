@@ -74,28 +74,6 @@ END_MESSAGE_MAP()
 void FileOption::Initialize(RightOption* mOption)
 {
 	mRightOption =DialogFactory::GetFactory()->GetRightOption();
-	//mScene = new SceneSaveDialog();
-	//mScene->Initialize(mRightOption);
-
-	//mMaterial = new CreateMaterial();
-	//mMaterial->Create(IDD_CREATE_MATERIAL);
-	//mMaterial->ShowWindow(SW_HIDE);
-
-	//mRenderOption = GetRenderOptionData();
-	//mRenderOption->DebugOption ^= DEBUG_EDITOR;
-	//
-	//mRenderOption->RenderingOption ^= RENDER_DEBUG;
-	//mRenderOption->RenderingOption ^= RENDER_SHADOW;
-	//mRenderOption->RenderingOption ^= RENDER_SSAO;
-	//mRenderOption->RenderingOption ^= RENDER_IBL;
-	//
-	//mRenderOption->PostProcessOption ^= RENDER_FOG;
-	//mRenderOption->PostProcessOption ^= RENDER_BLOOM;
-	//mRenderOption->PostProcessOption ^= RENDER_HDR;
-	//mRenderOption->PostProcessOption ^= RENDER_FXAA;
-
-	
-
 }
 
 void FileOption::SetChoiceGameObjectName(std::string Name, GameObject* Obj)

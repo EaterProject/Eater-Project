@@ -33,4 +33,7 @@ public:
 	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 	CEdit AnimationEndEdit;
 	CEdit AnimationStartEdit;
+	afx_msg void OnPlayAnimation();
+	afx_msg void OnStopAnimation();
+	afx_msg void OnPauseAnimation();
 };
