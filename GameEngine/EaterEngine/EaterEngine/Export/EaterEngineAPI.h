@@ -53,12 +53,16 @@ extern "C" EATER_ENGINEDLL int	LoadAssetsCount();
 
 ///베이킹 관련
 extern "C" EATER_ENGINEDLL void BakeSkyLightMap(std::string mPath, bool hdri);
-extern "C" EATER_ENGINEDLL void BakeConvertCubeMap(std::string mPath, float angle, bool hdri);
-extern "C" EATER_ENGINEDLL void SetConvertCubeMap(std::string mPath, float angle, bool hdri, bool apply_skylight, bool apply_environment);
+extern "C" EATER_ENGINEDLL void BakeConvertSkyCubeMap(std::string mPath, float angle, float threshold, bool hdri);
+extern "C" EATER_ENGINEDLL void BakeConvertSkyLightMap(std::string mPath, float angle, float threshold, bool hdri);
 extern "C" EATER_ENGINEDLL void BakeAnimation();
 
+///저장 관련
+extern "C" EATER_ENGINEDLL void SaveConvertSkyLightMap(std::string mPath);
+extern "C" EATER_ENGINEDLL void SaveConvertSkyCubeMap(std::string mPath);
+
 ///맵 설정
-extern "C" EATER_ENGINEDLL void SetEnvironment(std::string mPath);
+extern "C" EATER_ENGINEDLL void SetSkyCube(std::string mPath);
 extern "C" EATER_ENGINEDLL void SetSkyLight(std::string mPath);
 extern "C" EATER_ENGINEDLL int GetLoadMeshCount();		//로드된 메쉬 카운터
 extern "C" EATER_ENGINEDLL int GetLoadTextureCount();	//로드된 텍스쳐 카운터

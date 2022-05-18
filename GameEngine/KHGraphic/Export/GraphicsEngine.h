@@ -49,7 +49,7 @@ public:
 	virtual GRAPHIC_DLL void SetGlobalData(GlobalData* globalData) abstract;
 
 public:
-	virtual GRAPHIC_DLL void SetEnvironment(TextureBuffer* resource) abstract;
+	virtual GRAPHIC_DLL void SetSkyCube(TextureBuffer* resource) abstract;
 	virtual GRAPHIC_DLL void SetSkyLight(SkyLightBuffer* resource) abstract;
 
 public:
@@ -84,7 +84,9 @@ public:
 public:
 	/// Graphic Resource Baking Function..
 	virtual GRAPHIC_DLL void BakeSkyLightMap(TextureBuffer* environment, bool hdri, SkyLightBuffer** ppResource) abstract;
-	virtual GRAPHIC_DLL void BakeConvertCubeMap(TextureBuffer* resource, float angle, bool save_file, bool hdri, TextureBuffer** ppResource) abstract;
+	virtual GRAPHIC_DLL void BakeConvertCubeMap(TextureBuffer* resource, float angle, float threshold, bool hdri, TextureBuffer** ppResource) abstract;
+
+	virtual GRAPHIC_DLL void SaveConvertCubeMap(TextureBuffer* resource) abstract;
 
 private:
 	static GraphicEngine* Graphic;

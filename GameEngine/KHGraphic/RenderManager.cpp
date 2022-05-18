@@ -184,9 +184,9 @@ void RenderManager::SetGlobalData(GlobalData* globalData)
 	RenderPassBase::g_GlobalData = globalData;
 }
 
-void RenderManager::SetEnvironment(TextureBuffer* resource)
+void RenderManager::SetSkyCube(TextureBuffer* resource)
 {
-	m_Environment->SetEnvironmentResource(resource);
+	m_Environment->SetSkyCubeResource(resource);
 }
 
 void RenderManager::SetSkyLight(SkyLightBuffer* resource)

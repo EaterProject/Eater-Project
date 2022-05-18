@@ -23,7 +23,7 @@ public:
 	void SetGlobalData(GlobalData* globalData) override;
 
 public:
-	void SetEnvironment(TextureBuffer* resource) override;
+	void SetSkyCube(TextureBuffer* resource) override;
 	void SetSkyLight(SkyLightBuffer* resource) override;
 
 public:
@@ -55,7 +55,9 @@ public:
 
 public:
 	void BakeSkyLightMap(TextureBuffer* environment, bool hdri, SkyLightBuffer** ppResource) override;
-	void BakeConvertCubeMap(TextureBuffer* resource, float angle, bool save_file, bool hdri, TextureBuffer** ppResource) override;
+	void BakeConvertCubeMap(TextureBuffer* resource, float angle, float threshold, bool hdri, TextureBuffer** ppResource) override;
+
+	void SaveConvertCubeMap(TextureBuffer* resource) override;
 
 private:
 	IFactoryManager* m_FactoryManager;

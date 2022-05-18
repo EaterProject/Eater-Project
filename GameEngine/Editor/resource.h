@@ -32,6 +32,7 @@
 #define IDD_CUSTOM                      359
 #define IDD_SCENE_SETTING               361
 #define IDR_CREATE_OBJECT               363
+#define IDD_SKY_SETTING                 364
 #define IDC_TREE1                       1000
 #define IDC_TREE2                       1001
 #define IDC_TREE3                       1002
@@ -105,6 +106,7 @@
 #define IDC_LIST1                       1030
 #define IDC_EDIT32                      1030
 #define IDC_EDIT33                      1031
+#define IDC_BUTTON28                    1031
 #define IDC_EDIT34                      1032
 #define IDC_EDIT35                      1033
 #define IDC_COMBO1                      1034
@@ -173,6 +175,12 @@
 #define IDC_EDIT64                      1068
 #define IDC_SLIDER19                    1068
 #define IDC_CHECK12                     1069
+#define IDC_SLIDER20                    1070
+#define IDC_CHECK14                     1073
+#define IDC_SLIDER22                    1074
+#define IDC_CHECK15                     1075
+#define IDC_SLIDER23                    1076
+#define IDC_SLIDER24                    1077
 #define ID_32771                        32771
 #define ID_32772                        32772
 #define ID_SCENE_SETTING                32773
@@ -194,7 +202,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        364
+#define _APS_NEXT_RESOURCE_VALUE        366
 #define _APS_NEXT_COMMAND_VALUE         32787
 #define _APS_NEXT_CONTROL_VALUE         1061
 #define _APS_NEXT_SYMED_VALUE           312

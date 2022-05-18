@@ -9,9 +9,9 @@ Texture2D gSkyCube : register(t0);
 TextureCube gSkyCube : register(t0);
 #endif
 
-cbuffer cbExternalData : register(b0) 
+cbuffer cbExternalData : register(b0)
 {
-	float gRoughness;
+    float gRoughness;
 }
 
 float4 IBL_PrefilterMap_PS(SkyBoxPixelIn pin) : SV_TARGET
@@ -48,9 +48,9 @@ float4 IBL_PrefilterMap_PS(SkyBoxPixelIn pin) : SV_TARGET
 			
 			#ifdef HDRI
 			float2 UV = SampleSphericalMap(lightDir);
-            PrefilteredColor += min(gSkyCube.SampleLevel(gSamWrapLinear, UV, fMipLevel).rgb, 100.0f) * NdotL;
+            PrefilteredColor += gSkyCube.SampleLevel(gSamWrapLinear, UV, fMipLevel).rgb * NdotL;
 			#else
-            PrefilteredColor += min(gSkyCube.SampleLevel(gSamWrapLinear, lightDir, fMipLevel).rgb, 100.0f) * NdotL;
+            PrefilteredColor += gSkyCube.SampleLevel(gSamWrapLinear, lightDir, fMipLevel).rgb * NdotL;
 			#endif		
 			totalWeight += NdotL;
         }

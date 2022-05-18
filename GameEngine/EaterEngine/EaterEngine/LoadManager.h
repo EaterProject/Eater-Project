@@ -71,8 +71,15 @@ public:
 
 public:
 	void BakeSkyLightMap(std::string Path, bool hdri);
-	void BakeConvertCubeMap(std::string& Path, float angle, bool save_file, bool hdri, bool apply_skylight, bool apply_environment);
+
+	void BakeConvertSkyLightMap(std::string& Path, float angle, float threshold, bool hdri);
+	void BakeConvertSkyCubeMap(std::string& Path, float angle, float threshold, bool hdri);
+
 	void BakeAnimation();
+
+public:
+	void SaveConvertSkyLightMap(std::string& Path);
+	void SaveConvertSkyCubeMap(std::string& Path);
 
 public:
 	int	GetMeshCount();

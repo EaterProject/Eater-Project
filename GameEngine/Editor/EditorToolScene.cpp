@@ -91,8 +91,8 @@ void EditorToolScene::ThreadFunction()
 
 	//SetSkyLight("Day");
 	SetSkyLight("HDRI_2_CubeMap");
-	//SetEnvironment("Day");
-	SetEnvironment("HDRI_2_CubeMap");
+	//SetSkyCube("Day");
+	SetSkyCube("HDRI_2_CubeMap");
 }
 
 GameObject* EditorToolScene::Create_GameObject()

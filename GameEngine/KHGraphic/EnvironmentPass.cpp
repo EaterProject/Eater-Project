@@ -103,7 +103,7 @@ void EnvironmentPass::ApplyOption()
 	}
 }
 
-void EnvironmentPass::SetEnvironmentResource(TextureBuffer* resource)
+void EnvironmentPass::SetSkyCubeResource(TextureBuffer* resource)
 {
 	// SkyCube Shader Resource ¼³Á¤..
 	ID3D11ShaderResourceView* skycube = (ID3D11ShaderResourceView*)resource->pTextureBuf;

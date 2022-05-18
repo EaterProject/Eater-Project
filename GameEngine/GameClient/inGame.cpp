@@ -15,7 +15,7 @@ void InGame::Awake()
 	//SetSkyLight("Day");
 	SetSkyLight("HDRI_2_CubeMap");
 	//SetEnvironment("Day");
-	SetEnvironment("HDRI_2_CubeMap");
+	SetSkyCube("HDRI_2_CubeMap");
 
 	//로직매니저 초기화
 	Logic->Initialize();

@@ -36,7 +36,7 @@ void intro::Awake()
 	BakeSkyLightMap("Night", false);
 	SetSkyLight("Night");
 
-	SetEnvironment("Night");
+	SetSkyCube("Night");
 }
 
 void intro::Update()

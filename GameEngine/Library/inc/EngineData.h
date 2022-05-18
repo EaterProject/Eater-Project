@@ -51,7 +51,6 @@ public:
 
 	// SkyLight Option
 	float SkyLight_Factor = 1.0f;						// SkyLight 강도					(0.0 ~ 5.0)
-	float SkyLight_Threshold = 100.0f;					// SkyLight Map 최대 밝기		(1.0 ~ 1000.0)
 };
 
 // Animation Data

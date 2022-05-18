@@ -39,7 +39,7 @@ public:
 	void SetGlobalData(GlobalData* globalData) override;
 
 public:
-	void SetEnvironment(TextureBuffer* resource) override;
+	void SetSkyCube(TextureBuffer* resource) override;
 	void SetSkyLight(SkyLightBuffer* resource) override;
 
 public:

@@ -90,12 +90,18 @@ public:
 public:
 	///베이크 관련
 	void BakeSkyLightMap(std::string& Path, bool hdri);
-	void BakeConvertCubeMap(std::string& Path, float angle, bool save_file, bool hdri, bool apply_skylight, bool apply_environment);
 	void BakeAnimation();
+	
+	void BakeConvertSkyLightMap(std::string& Path, float angle, float threshold, bool hdri);
+	void BakeConvertSkyCubeMap(std::string& Path, float angle, float threshold, bool hdri);
+
+	///저장 관련
+	void SaveConvertSkyLightMap(std::string& Path);
+	void SaveConvertSkyCubeMap(std::string& Path);
 
 public:
 	///텍스쳐 설정 관련
-	void SetEnvironment(std::string& Path);
+	void SetSkyCube(std::string& Path);
 	void SetSkyLight(std::string& Path);
 
 	///충돌체크 관련
