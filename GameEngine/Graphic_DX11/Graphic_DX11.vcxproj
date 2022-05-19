@@ -203,7 +203,7 @@ copy /Y "$(ProjectDir)GraphicDLL.h" "$(SolutionDir)Library\inc"</Command>
     <ClInclude Include="DepthStencilStateDefine.h" />
     <ClInclude Include="DepthStencilViewDefine.h" />
     <ClInclude Include="EnvironmentPass.h" />
-    <ClInclude Include="Export\GraphicDLL.h" />
+    <ClInclude Include="Export\Graphic_DX11_DLL.h" />
     <ClInclude Include="Export\GraphicEngineAPI.h" />
     <ClInclude Include="FactoryManager.h" />
     <ClInclude Include="FactoryManagerBase.h" />

@@ -255,6 +255,7 @@ public:
 	Matrix CamInvView;	// Camera Inverse XY View Matrix
 	Matrix CamView;		// Camera View Matrix
 	Matrix CamProj;		// Camera Proj Matrix
+	Matrix CamOrthProj;	// Camera Orth Proj Matrix
 	Matrix CamViewProj;	// Camera View Proj Matrix
 	Vector3 CamPos;		// Camera Pos
 	Vector3 CamLook;	// Camera Look

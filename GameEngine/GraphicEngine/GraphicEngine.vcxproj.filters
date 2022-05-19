@@ -30,6 +30,9 @@
     <ClInclude Include="GraphicEngine.h">
       <Filter>소스 파일\Graphic</Filter>
     </ClInclude>
+    <ClInclude Include="Export\GraphicEngine_DLL.h">
+      <Filter>소스 파일\Graphic\API</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">

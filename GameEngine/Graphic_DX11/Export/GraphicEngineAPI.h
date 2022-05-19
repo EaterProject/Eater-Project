@@ -2,7 +2,7 @@
 #include <windows.h>
 #include <string>
 #include <queue>
-#include "GraphicDLL.h"
+#include "Graphic_DX11_DLL.h"
 
 /// <summary>
 /// 게임 엔진에서 제공하는 그래픽 엔진 최상위 클래스
