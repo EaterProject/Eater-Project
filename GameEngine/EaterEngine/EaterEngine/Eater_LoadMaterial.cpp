@@ -34,7 +34,6 @@ void Eater_LoadMaterial::LoadData(std::string& Path)
 		std::string NodeName = EATER_GET_NODE_NAME(i);
 		if (NodeName == "EATERMAT")
 		{
-			
 			//Data->Material_Property->Alpha = std::stoi(EATER_GET_MAP(i, "Alpha"));
 			//Data->Material_Property->Alpha = EATER_GET_MAP(i, "Alpha");
 			Data->Material_Property->Alpha = std::stoi(EATER_GET_MAP(i, "Alpha"));

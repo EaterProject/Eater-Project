@@ -56,6 +56,7 @@ void MonsterB::SetUp()
 	mMeshFilter->SetModelName("MonsterB+");
 	mMeshFilter->SetAnimationName("MonsterB+");
 	mAnimation->Choice("idle");
+	mAnimation->Play();
 
 	//이동 위치
 	Vector3 Point = Mana->GetPoint(PointIndex, 1);
@@ -94,7 +95,7 @@ void MonsterB::Move()
 	if (GetStopPoint() == false)
 	{
 		//목표지점의 도달하지 않았을때
-		mTransform->Slow_Y_Rotation(MovePoint, 100, true);
+		mTransform->Slow_Y_Rotation(MovePoint, 100, false);
 		mRigidbody->SetVelocity(DirPoint.x, DirPoint.y, DirPoint.z);
 	}
 	else

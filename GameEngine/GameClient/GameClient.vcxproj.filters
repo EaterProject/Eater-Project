@@ -25,9 +25,6 @@
     <Filter Include="소스 파일\Scene\inGame">
       <UniqueIdentifier>{e93e28d7-0fc6-4289-b4a5-74957091c4b2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Component\Player">
-      <UniqueIdentifier>{a59a5f89-b961-40e7-8282-6208957b9634}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Scene\Loading">
       <UniqueIdentifier>{f6aae002-8b2f-4f9e-9f7f-1cf3cad1c77d}</UniqueIdentifier>
     </Filter>
@@ -90,6 +87,9 @@
     </Filter>
     <Filter Include="소스 파일\Component\Base\ClientComponent">
       <UniqueIdentifier>{06336456-8bf0-4919-abfa-d84e38d2593f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\Player">
+      <UniqueIdentifier>{a59a5f89-b961-40e7-8282-6208957b9634}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

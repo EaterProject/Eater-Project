@@ -12,7 +12,7 @@
 #include "PlayerCamera.h"
 
 Transform* Player::mTransform = nullptr;
-PLAYER_STATE Player::mState;
+//PLAYER_STATE Player::mState;
 
 #define LERP(prev, next, time) ((prev * (1.0f - time)) + (next * time))
 Player::Player()
@@ -25,7 +25,7 @@ Player::Player()
 	AttackCollider = nullptr;
 
 	RayCastHit = new PhysRayCast[5]();
-
+	BasePos = Vector3(0, 0, 0);
 	Start_Order = FUNCTION_ORDER_LAST;
 }
 
@@ -47,27 +47,45 @@ void Player::Awake()
 	mMeshFilter = gameobject->GetComponent<MeshFilter>();
 	mAnimation	= gameobject->GetComponent<AnimationController>();
 	
-	//AttackColliderObject = FindGameObjectTag("AttackCollider");
-	//AttackCollider = AttackColliderObject->GetComponent<Collider>();
+	//무기 오브젝트 가져오기
+	WeaponObject = FindGameObjectTag("Weapon");
+	WeaponObject->GetComponent<MeshFilter>()->SetModelName("player_Weapon");
+
+	//충돌 범위 가져오기
+	AttackColliderObject = FindGameObjectTag("PlayerCollider");
+	AttackCollider = AttackColliderObject->GetComponent<Collider>();
+}
+
+void Player::SetUp()
+{
+	//Player 컨퍼넌트값 넣어주기
+	mCameraTR = GetMainCamera()->GetTransform();
+	mMeshFilter->SetModelName("Player+");
+	mMeshFilter->SetAnimationName("Player+");
+	//AttackCollider 범위
+	AttackCollider->SetSphereCollider(AttackRange);
+	//애니메이션 기본 
+	mAnimation->Choice("move", 1, true);
+	mAnimation->Play();
+
 }
 
 void Player::Start()
 {
-	mCameraTR = GetMainCamera()->GetTransform();
-
-	//GameObject* Hand = gameobject->GetChildBone("hand.l");
-	//GameObject* WeponObejct = FindGameObjectTag("Weapon");
+	//무기와 손을 연결
+	GameObject* Hand = gameobject->GetChildBone("hand.l");
+	GameObject* WeponObejct = FindGameObjectTag("Weapon");
 	//
-	//Hand->GetTransform()->SetChild(WeponObejct->GetTransform());
-	//WeponObejct->GetTransform()->SetParent(Hand->GetTransform());
-	//WeponObejct->GetTransform()->Rotation = { -90,0,90 };
+	Hand->GetTransform()->SetChild(WeponObejct->GetTransform());
+	Transform* WeaponTR = WeponObejct->GetTransform();
+	WeaponTR->SetParent(Hand->GetTransform());
+
+	WeaponTR->Rotation = { 90,180,90 };
+	WeaponTR->Position = { 0.25,0,0.1f};
 }
 
 void Player::Update()
 {
-	//로직이 시작할때 플레이어 상태를 기본상태로 변환
-	mState = PLAYER_STATE::IDLE;
-
 	//플레이어 땅 체크
 	PlayerGroundCheck();
 
@@ -77,8 +95,17 @@ void Player::Update()
 	//공격 충돌체의 위치를 설정
 	PlayerAttackColliderUpdate();
 
-	//플레이어 상태 업데이트
-	PlayerStateUpdate();
+	//공격상태일때 아닐떄를 먼저 체크
+	if (mState & (PLAYER_STATE_ATTACK_01 | PLAYER_STATE_ATTACK_02 | PLAYER_STATE_SKILL_01 | PLAYER_STATE_SKILL_02))
+	{
+		PlayerState_Attack();
+	}
+	else
+	{
+		PlayerState_Base();
+	}
+
+	DirPos = { 0,0,0 };
 }
 
 Transform* Player::GetPlayerTransform()
@@ -86,10 +113,10 @@ Transform* Player::GetPlayerTransform()
 	return mTransform;
 }
 
-PLAYER_STATE Player::GetState()
-{
-	return mState;
-}
+//PLAYER_STATE Player::GetState()
+//{
+//	return mState;
+//}
 
 void Player::Healing(float HealingPower)
 {
@@ -148,31 +175,205 @@ void Player::PlayerKeyinput()
 		DirRot += mCameraTR->GetLocalPosition_Look()* -1;
 	}
 
+	if (GetKeyDown(VK_LBUTTON))
+	{
+		AttackKeyDownCount++;
+		mState |= PLAYER_STATE_ATTACK_01;
+	}
+	else if (GetKeyDown(VK_RBUTTON))
+	{
+		if (IsAttack == false)
+		{
+			 mState |= PLAYER_STATE_SKILL_01;
+		}
+	 	AttackKeyDownCount++;
+	}
+	else if (GetKeyDown('E'))
+	{
+		AttackKeyDownCount++;
+		mState |= PLAYER_STATE_SKILL_02;
+	}
+	else if (GetKeyDown('Q'))
+	{
+		//mState |= PLAYER_STATE_SKILL_03;
+	}
+	else if (GetKeyDown(VK_SPACE))
+	{
+		mState |= PLAYER_STATE_JUMP;
+	}
+
 	//이번프레임에 이동해야하는 방향
 	DirPos.Normalize();
 
-	//방향값이 있다면 회전과 이동
-	if (DirPos != Vector3(0, 0, 0))
-	{
-		Vector3 MyPos = DirPos + mTransform->Position;
-		mTransform->SetTranlate(DirPos * Speed * GetDeltaTime());
-	}
+	
 
 	DirRot.Normalize();
-	mTransform->Slow_Y_Rotation(DirRot + mTransform->Position, 450);
-	
-	//이동을완료했으므로 방향값을 초기화
-	DirPos = { 0,0,0 };
+	if (IsAttack == false)
+	{
+		mTransform->Slow_Y_Rotation(DirRot + mTransform->Position, 450);
+
+		//공격중이 아니고 회전값이 있을경우
+		if (DirPos != Vector3(0, 0, 0))
+		{
+			Vector3 MyPos = DirPos + mTransform->Position;
+			mTransform->SetTranlate(DirPos * Speed * GetDeltaTime());
+		}
+		Attack_Rot = false;
+	}
+	else
+	{
+		if (Attack_Rot == false)
+		{
+			AttackStartRot = mCameraTR->GetLocalPosition_Look();
+			Attack_Rot = true;
+		}
+		mTransform->Slow_Y_Rotation(AttackStartRot + mTransform->Position, 450);
+	}
 }
 
-void Player::PlayerStateUpdate()
+void Player::PlayerState_Attack()
 {
-	//공격키를 누르면 상태변환
-	if (GetKeyDown(VK_SPACE))
+	IsAttack = true;
+	IsMove = false;
+	/// <summary>
+	/// 플레이어 공격상태일때 들어옵니다
+	/// </summary>
+	Speed = 0;
+	if (mState & PLAYER_STATE_ATTACK_01)
 	{
-		mState = PLAYER_STATE::ATTACK;
-		mAnimation->Choice("skill3");
-		mAnimation->Play();
+		AnimationName = "attack1";
+		Player_Attack_01();
+	}
+	else if (mState & PLAYER_STATE_ATTACK_02)
+	{
+		AnimationName = "attack2";
+		Player_Attack_02();
+	}
+	else if (mState & PLAYER_STATE_SKILL_01)
+	{
+		AnimationName = "skill1";
+		Player_Skill_01();
+	}
+	else if (mState & PLAYER_STATE_SKILL_02)
+	{
+		AnimationName = "skill2";
+		AnimationSpeed = 2;
+		Player_Skill_02();
+	}
+	//else
+	//{
+	//	AnimationName = "skill3";
+	//	Player_Skill_03();
+	//}
+	mAnimation->Choice(AnimationName, AnimationSpeed, false);
+	AnimationSpeed = 1;
+}
+
+void Player::PlayerState_Base()
+{
+	IsAttack	= false;
+	/// <summary>
+	/// 플레이어 공격상태가 아닐때 들어옵니다
+	/// </summary>
+	Speed = MaxSpeed;
+	if (mState & PLAYER_STATE_JUMP)
+	{
+		mAnimation->Choice("evade", 1, true);
+		Player_Jump();
+	}
+	else
+	{
+		Player_Move_Check();
+	}
+}
+
+bool Player::PlayerEndFrameCheck()
+{
+	AttackEndFrame	= mAnimation->GetEndFrame();
+	NowFrame		= mAnimation->GetNowFrame();
+	if (NowFrame > AttackEndFrame)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+void Player::Player_Attack_01()
+{
+	//망치를 살짝올리고 내려찍는 공격
+	if (PlayerEndFrameCheck() == true)
+	{
+		if (AttackKeyDownCount > 1)
+		{
+			mState = PLAYER_STATE_ATTACK_02;
+			AttackKeyDownCount = 0;
+		}
+		else
+		{
+			Player_Move_Check();
+		}
+	}
+}
+
+void Player::Player_Attack_02()
+{
+	//망치를 뒤로 돌리고 크게 내려찍는 공격
+	if (PlayerEndFrameCheck() == true)
+	{
+		Player_Move_Check();
+	}
+}
+
+void Player::Player_Skill_01()
+{
+	if (PlayerEndFrameCheck())
+	{
+		Player_Move_Check();
+	}
+}
+
+void Player::Player_Skill_02()
+{
+	if (PlayerEndFrameCheck())
+	{
+		Player_Move_Check();
+	}
+}
+
+void Player::Player_Skill_03()
+{
+	if (PlayerEndFrameCheck())
+	{
+		Player_Move_Check();
+	}
+}
+
+void Player::Player_Jump()
+{
+	if (PlayerEndFrameCheck() == true)
+	{
+		Player_Move_Check();
+	}
+}
+
+bool Player::Player_Move_Check()
+{
+	if (DirPos == BasePos)
+	{
+		mState = PLAYER_STATE_IDLE;
+		mAnimation->Choice("idle", 1, true);
+		IsMove = false;
+		return false;
+	}
+	else
+	{
+		mState = PLAYER_STATE_MOVE;
+		mAnimation->Choice("move", 1, true);
+		IsMove = true;
+		return true;
 	}
 }
 
@@ -181,8 +382,8 @@ void Player::PlayerAttackColliderUpdate()
 	Vector3 Look = mTransform->GetLocalPosition_Look();
 	Look *= 2;
 	Look.y = 1;
-	Look.z *= -1;
-	//AttackColliderObject->GetTransform()->Position = mTransform->Position + Look;
+	Look.z *= -1 * AttackDir;
+	AttackColliderObject->GetTransform()->Position = mTransform->Position + Look;
 }
 
 void Player::PlayerGroundCheck()

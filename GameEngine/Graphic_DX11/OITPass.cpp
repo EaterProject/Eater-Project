@@ -166,7 +166,7 @@ void OITPass::Release()
 
 void OITPass::SetResize(int width, int height)
 {
-	m_PieceLink_RB->OnResize(width * height * m_Multiple * 12);
+	m_PieceLink_RB->OnResize(width * height * m_Multiple * 16);
 	m_PieceLink_RB->SetNumElements(width * height * m_Multiple);
 
 	m_FirstOffset_RB->OnResize(width * height * m_Multiple);

@@ -28,12 +28,15 @@ protected:
 public:
 	AnimationController* AC;
 
+	CSliderCtrl AnimationBar_Slider;
 	CComboBox AnimationList;
 	CString AnimationName;
 	CEdit AnimationEndEdit;
 	CEdit AnimationStartEdit;
 	CEdit Animation_Speed_Edit;
 	CButton Loop_Check;
+	CEdit NowAnimationName_Edit;
+	CEdit NowAnimationFrame_Edit;
 
 	int Speed = 1;
 	bool Loop = true;

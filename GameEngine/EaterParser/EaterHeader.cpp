@@ -39,7 +39,7 @@ void EATER_CLOSE_CHANGE_FILE(std::string FileName, std::string OutPath, std::str
 
  void EATER_CHANGE_MAP(int NodeIndex, std::string key, std::string value)
  {
-	 if (value == "") { value = "NO"; }
+	 if (value == "") { value = "0"; }
 	 Parser->ChangeMap(NodeIndex, key, value);
  }
 

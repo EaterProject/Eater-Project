@@ -56,7 +56,7 @@ void AnimationController::Update()
 
 void AnimationController::SetSkin(GameObject* obj)
 {
-	SkinObject = obj;
+	SkinObject.push_back(obj);
 }
 
 void AnimationController::SetBoneList(std::vector<GameObject*>* m_ObjList)
@@ -89,8 +89,11 @@ void AnimationController::SetAnimation(Animation* animation)
 	mAnimationData = new AnimationData();
 
 	// 해당 Skin Mesh에 Animation Data 삽입..
-	SkinObject->OneMeshData->Animation_Data = mAnimationData;
-	SkinObject->OneMeshData->Animation_Buffer = mAnimation->m_AnimationBuffer;
+	for (auto& skin : SkinObject)
+	{
+		skin->OneMeshData->Animation_Data = mAnimationData;
+		skin->OneMeshData->Animation_Buffer = mAnimation->m_AnimationBuffer;
+	}
 
 	NowAnimationBuffer = mAnimation->m_AnimationBuffer;
 }
@@ -243,7 +246,6 @@ void AnimationController::SetFrame(int index)
 		mNextFrame = 0;
 	}
 
-	// 설정 당시 해당 프레임 진행시간 초기화..
 	mFrameTime = 0.0f;
 
 	// 애니메이션 오프셋 설정..

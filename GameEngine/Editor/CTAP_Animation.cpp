@@ -58,6 +58,9 @@ void CTAP_Animation::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EDIT4, AnimationStartEdit);
 	DDX_Control(pDX, IDC_EDIT5, Animation_Speed_Edit);
 	DDX_Control(pDX, IDC_CHECK1, Loop_Check);
+	DDX_Control(pDX, IDC_EDIT2, NowAnimationName_Edit);
+	DDX_Control(pDX, IDC_SLIDER1, AnimationBar_Slider);
+	DDX_Control(pDX, IDC_EDIT3, NowAnimationFrame_Edit);
 }
 
 BEGIN_MESSAGE_MAP(CTAP_Animation, CDialogEx)
@@ -92,17 +95,22 @@ void CTAP_Animation::OnCbnSelchangeCombo1()
 	AnimationName;
 	AnimationList.GetLBText(AnimationList.GetCurSel(), AnimationName);
 	AC->Choice(ChangeToString(AnimationName));
-	//AnimationEndEdit.SetWindowTextW(ChangeToString(AC->GetEndFrame() );
+	NowAnimationName_Edit.SetWindowTextW(AnimationName);
+	int End = AC->GetEndFrame();
+	AnimationEndEdit.SetWindowTextW(ChangeToCString(End));
+	AnimationBar_Slider.SetRange(0, End);
+	AnimationBar_Slider.SetPos(0);
 }
 
 
 void CTAP_Animation::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 {
-	//if (pScrollBar->GetDlgCtrlID() == Rotation_X_Slider.GetDlgCtrlID())
-	//{
-	//	ObjectTransform->Rotation.x = (float)Rotation_X_Slider.GetPos();
-	//	Rot_X.SetWindowTextW(ChangeToCString(ObjectTransform->Rotation.x));
-	//}
+	if (pScrollBar->GetDlgCtrlID() == AnimationBar_Slider.GetDlgCtrlID())
+	{
+		int FramePoint = AnimationBar_Slider.GetPos();
+		NowAnimationFrame_Edit.SetWindowTextW(ChangeToCString(FramePoint));
+		AC->SetFrame(FramePoint);
+	}
 
 	CDialogEx::OnHScroll(nSBCode, nPos, pScrollBar);
 }

@@ -54,7 +54,7 @@ private:
 	std::vector<Animator*> AnimatorList;
 
 	//스킨 게임 오브젝트
-	GameObject* SkinObject;
+	std::vector<GameObject*> SkinObject;
 
 	//한개의 모델에 들어있는 애니메이션 리스트
 	Animation* mAnimation;
