@@ -18,7 +18,7 @@ public:
 	void BakeConvertCubeMap(TextureBuffer* resource, float angle, float threshold, bool hdri, TextureBuffer* pResource);
 
 public:
-	void SaveConvertCubeMap(TextureBuffer* resource) override;
+	void SaveConvertCubeMap(TextureBuffer* resource, std::string SaveName) override;
 
 private:
 	void PreBakeBRDFMap();

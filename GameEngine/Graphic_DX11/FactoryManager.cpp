@@ -75,9 +75,9 @@ void FactoryManager::BakeConvertCubeMap(TextureBuffer* resource, float angle, fl
 	m_BakingFactory->BakeConvertCubeMap(resource, angle, threshold, hdri, *ppResource);
 }
 
-void FactoryManager::SaveConvertCubeMap(TextureBuffer* resource)
+void FactoryManager::SaveConvertCubeMap(TextureBuffer* resource, std::string SaveName)
 {
-	m_BakingFactory->SaveConvertCubeMap(resource);
+	m_BakingFactory->SaveConvertCubeMap(resource, SaveName);
 }
 
 void FactoryManager::CreateImg(std::string name, Hash_Code hash_code, std::string fileName)

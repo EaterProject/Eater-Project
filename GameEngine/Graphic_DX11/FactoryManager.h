@@ -30,7 +30,7 @@ public:
 	void BakeConvertCubeMap(TextureBuffer* resource, float angle, float threshold, bool hdri, TextureBuffer** ppResource) override;
 
 public:
-	void SaveConvertCubeMap(TextureBuffer* resource) override;
+	void SaveConvertCubeMap(TextureBuffer* resource, std::string SaveName) override;
 
 private:
 	void CreateImg(std::string name, Hash_Code hash_code, std::string fileName) override;

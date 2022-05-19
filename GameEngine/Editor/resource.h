@@ -175,7 +175,9 @@
 #define IDC_EDIT64                      1068
 #define IDC_SLIDER19                    1068
 #define IDC_CHECK12                     1069
+#define IDC_SLIDER21                    1069
 #define IDC_SLIDER20                    1070
+#define IDC_EDIT65                      1070
 #define IDC_CHECK14                     1073
 #define IDC_SLIDER22                    1074
 #define IDC_CHECK15                     1075

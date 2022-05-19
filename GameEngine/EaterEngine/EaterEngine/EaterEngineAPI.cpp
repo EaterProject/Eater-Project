@@ -144,14 +144,14 @@ void BakeAnimation()
 	gGameEngine->BakeAnimation();
 }
 
-void SaveConvertSkyLightMap(std::string mPath)
+void SaveConvertSkyLightMap(std::string mPath, std::string SaveName)
 {
-	gGameEngine->SaveConvertSkyLightMap(mPath);
+	gGameEngine->SaveConvertSkyLightMap(mPath, SaveName);
 }
 
-void SaveConvertSkyCubeMap(std::string mPath)
+void SaveConvertSkyCubeMap(std::string mPath, std::string SaveName)
 {
-	gGameEngine->SaveConvertSkyCubeMap(mPath);
+	gGameEngine->SaveConvertSkyCubeMap(mPath, SaveName);
 }
 
 void SetSkyCube(std::string mPath)

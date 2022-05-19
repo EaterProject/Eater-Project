@@ -210,7 +210,7 @@ void Graphic_DX11::BakeConvertCubeMap(TextureBuffer* resource, float angle, floa
 	m_FactoryManager->BakeConvertCubeMap(resource, angle, threshold, hdri, ppResource);
 }
 
-void Graphic_DX11::SaveConvertCubeMap(TextureBuffer* resource)
+void Graphic_DX11::SaveConvertCubeMap(TextureBuffer* resource, std::string SaveName)
 {
-	m_FactoryManager->SaveConvertCubeMap(resource);
+	m_FactoryManager->SaveConvertCubeMap(resource, SaveName);
 }

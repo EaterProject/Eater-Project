@@ -252,7 +252,7 @@ void TextureManager::BakeConvertSkyCubeMap(std::string& Path, float angle, float
 	m_Graphic->SetSkyCube(buffer);
 }
 
-void TextureManager::SaveConvertSkyLightMap(std::string& Path)
+void TextureManager::SaveConvertSkyLightMap(std::string& Path, std::string& SaveName)
 {
 	std::string Name = "SkyLight_Convert_" + Path;
 
@@ -264,10 +264,10 @@ void TextureManager::SaveConvertSkyLightMap(std::string& Path)
 		return;
 	}
 
-	m_Graphic->SaveConvertCubeMap(buffer);
+	m_Graphic->SaveConvertCubeMap(buffer, SaveName);
 }
 
-void TextureManager::SaveConvertSkyCubeMap(std::string& Path)
+void TextureManager::SaveConvertSkyCubeMap(std::string& Path, std::string& SaveName)
 {
 	std::string Name = "SkyCube_Convert_" + Path;
 
@@ -279,7 +279,7 @@ void TextureManager::SaveConvertSkyCubeMap(std::string& Path)
 		return;
 	}
 
-	m_Graphic->SaveConvertCubeMap(buffer);
+	m_Graphic->SaveConvertCubeMap(buffer, SaveName);
 }
 
 void TextureManager::Initialize(GraphicEngineManager* Graphic, CRITICAL_SECTION* _cs)
