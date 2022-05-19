@@ -58,8 +58,8 @@ extern "C" EATER_ENGINEDLL void BakeConvertSkyLightMap(std::string mPath, float 
 extern "C" EATER_ENGINEDLL void BakeAnimation();
 
 ///저장 관련
-extern "C" EATER_ENGINEDLL void SaveConvertSkyLightMap(std::string mPath);
-extern "C" EATER_ENGINEDLL void SaveConvertSkyCubeMap(std::string mPath);
+extern "C" EATER_ENGINEDLL void SaveConvertSkyLightMap(std::string mPath, std::string SaveName);
+extern "C" EATER_ENGINEDLL void SaveConvertSkyCubeMap(std::string mPath, std::string SaveName);
 
 ///맵 설정
 extern "C" EATER_ENGINEDLL void SetSkyCube(std::string mPath);

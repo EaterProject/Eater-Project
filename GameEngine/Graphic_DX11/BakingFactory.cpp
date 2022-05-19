@@ -480,9 +480,16 @@ void BakingFactory::BakeConvertCubeMap(TextureBuffer* resource, float angle, flo
 	RELEASE_COM(cubemapTex2D);
 }
 
-void BakingFactory::SaveConvertCubeMap(TextureBuffer* resource)
+void BakingFactory::SaveConvertCubeMap(TextureBuffer* resource, std::string SaveName)
 {
 	ID3D11ShaderResourceView* srv = (ID3D11ShaderResourceView*)resource->pTextureBuf;
 
-	g_Graphic->SaveTextureDDS(srv, std::string(resource->Name).c_str());
+	if (SaveName == "")
+	{
+		g_Graphic->SaveTextureDDS(srv, resource->Name.c_str());
+	}
+	else
+	{
+		g_Graphic->SaveTextureDDS(srv, SaveName.c_str());
+	}
 }

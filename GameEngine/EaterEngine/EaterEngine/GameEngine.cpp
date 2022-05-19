@@ -419,14 +419,14 @@ void GameEngine::BakeConvertSkyCubeMap(std::string& Path, float angle, float thr
 	mLoadManager->BakeConvertSkyCubeMap(Path, angle, threshold, hdri);
 }
 
-void GameEngine::SaveConvertSkyLightMap(std::string& Path)
+void GameEngine::SaveConvertSkyLightMap(std::string& Path, std::string& SaveName)
 {
-	mLoadManager->SaveConvertSkyLightMap(Path);
+	mLoadManager->SaveConvertSkyLightMap(Path, SaveName);
 }
 
-void GameEngine::SaveConvertSkyCubeMap(std::string& Path)
+void GameEngine::SaveConvertSkyCubeMap(std::string& Path, std::string& SaveName)
 {
-	mLoadManager->SaveConvertSkyCubeMap(Path);
+	mLoadManager->SaveConvertSkyCubeMap(Path, SaveName);
 }
 
 void GameEngine::SetSkyCube(std::string& Path)

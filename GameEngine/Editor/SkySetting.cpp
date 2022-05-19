@@ -111,7 +111,9 @@ void SkySetting::OnSkyCubeBakeButton()
 		return;
 	}
 
-	SaveConvertSkyCubeMap(SkyCubeName);
+	/// 임시코드
+	/// 저장 이름 추가하면 두번째 매개변수에 삽입
+	SaveConvertSkyCubeMap(SkyCubeName, "");
 }
 
 void SkySetting::OnSkyLightBakeButton()
@@ -124,7 +126,9 @@ void SkySetting::OnSkyLightBakeButton()
 		return;
 	}
 
-	SaveConvertSkyLightMap(SkyLightName);
+	/// 임시코드
+	/// 저장 이름 추가하면 두번째 매개변수에 삽입
+	SaveConvertSkyLightMap(SkyLightName, "");
 }
 
 

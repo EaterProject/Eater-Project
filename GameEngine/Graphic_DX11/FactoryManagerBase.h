@@ -37,7 +37,7 @@ public:
 	
 public:
 	// Save Graphic Resource..
-	virtual void SaveConvertCubeMap(TextureBuffer* resource) abstract;
+	virtual void SaveConvertCubeMap(TextureBuffer* resource, std::string SaveName) abstract;
 
 public:
 	template<typename T, Enable_Check<T> = NULL> void CreateImage(std::string path);
