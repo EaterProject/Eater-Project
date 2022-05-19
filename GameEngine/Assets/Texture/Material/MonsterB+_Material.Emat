@@ -1,10 +1,10 @@
 #EATERMAT
-@MaterialName MonsterA+_body.001
+@MaterialName MonsterB+_Material
 @Alpha 0
-@DiffuseMap 0
-@NormalMap MonsterA_Normal.png
+@DiffuseMap MonsterB_BaseColor.png
+@NormalMap 0
 @EmissiveMap 0
-@ORMMap monsterA_Emissive.png
+@ORMMap MonsterB_Normal.PNG
 @Emissive 0
 @Roughness 0
 @Metallic 0

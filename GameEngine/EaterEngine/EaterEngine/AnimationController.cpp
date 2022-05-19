@@ -223,6 +223,8 @@ void AnimationController::Pause()
 
 void AnimationController::SetFrame(int index)
 {
+	if (NowAnimation == nullptr) { return; }
+
 	// 현재 프레임의 총 진행 시간 설정..
 	mTime = index * NowAnimation->m_TicksPerFrame;
 
