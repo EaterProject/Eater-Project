@@ -15,5 +15,5 @@ public:
 	virtual void BakeConvertCubeMap(TextureBuffer* resource, float angle, float threshold, bool hdri, TextureBuffer* pResource) abstract;
 	
 public:
-	virtual void SaveConvertCubeMap(TextureBuffer* resource) abstract;
+	virtual void SaveConvertCubeMap(TextureBuffer* resource, std::string SaveName) abstract;
 };

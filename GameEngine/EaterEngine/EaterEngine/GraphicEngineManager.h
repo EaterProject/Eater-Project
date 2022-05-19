@@ -77,7 +77,7 @@ public:
 	void BakeSkyLightMap(TextureBuffer* skyLight, bool hdri, SkyLightBuffer** ppResource);
 	void BakeConvertCubeMap(TextureBuffer* resource, float angle, float threshold, bool hdri, TextureBuffer** ppResource);
 
-	void SaveConvertCubeMap(TextureBuffer* resource);
+	void SaveConvertCubeMap(TextureBuffer* resource, std::string SaveName);
 
 public:
 	void SetSkyCube(TextureBuffer* environment);

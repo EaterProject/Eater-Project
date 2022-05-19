@@ -57,7 +57,7 @@ public:
 	void BakeSkyLightMap(TextureBuffer* environment, bool hdri, SkyLightBuffer** ppResource) override;
 	void BakeConvertCubeMap(TextureBuffer* resource, float angle, float threshold, bool hdri, TextureBuffer** ppResource) override;
 
-	void SaveConvertCubeMap(TextureBuffer* resource) override;
+	void SaveConvertCubeMap(TextureBuffer* resource, std::string SaveName) override;
 
 private:
 	IFactoryManager* m_FactoryManager;

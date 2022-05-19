@@ -159,10 +159,14 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Export\GraphicEngine_API.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="GraphicEngine.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="GraphicEngine.cpp" />
+    <ClCompile Include="GraphicEngine_API.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

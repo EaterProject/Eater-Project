@@ -86,7 +86,7 @@ public:
 	virtual GRAPHIC_DX11_DLL void BakeSkyLightMap(TextureBuffer* environment, bool hdri, SkyLightBuffer** ppResource) abstract;
 	virtual GRAPHIC_DX11_DLL void BakeConvertCubeMap(TextureBuffer* resource, float angle, float threshold, bool hdri, TextureBuffer** ppResource) abstract;
 
-	virtual GRAPHIC_DX11_DLL void SaveConvertCubeMap(TextureBuffer* resource) abstract;
+	virtual GRAPHIC_DX11_DLL void SaveConvertCubeMap(TextureBuffer* resource, std::string SaveName) abstract;
 
 private:
 	static GraphicEngine* Graphic;

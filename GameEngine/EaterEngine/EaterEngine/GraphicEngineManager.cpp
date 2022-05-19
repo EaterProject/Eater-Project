@@ -150,9 +150,9 @@ void GraphicEngineManager::BakeConvertCubeMap(TextureBuffer* resource, float ang
 	GEngine->BakeConvertCubeMap(resource, angle, threshold, hdri, ppResource);
 }
 
-void GraphicEngineManager::SaveConvertCubeMap(TextureBuffer* resource)
+void GraphicEngineManager::SaveConvertCubeMap(TextureBuffer* resource, std::string SaveName)
 {
-	GEngine->SaveConvertCubeMap(resource);
+	GEngine->SaveConvertCubeMap(resource, SaveName);
 }
 
 void GraphicEngineManager::SetSkyCube(TextureBuffer* environment)
