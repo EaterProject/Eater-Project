@@ -49,7 +49,7 @@ void Player::Awake()
 	
 	//무기 오브젝트 가져오기
 	WeaponObject = FindGameObjectTag("Weapon");
-	WeaponObject->GetComponent<MeshFilter>()->SetModelName("player_Weapon");
+	WeaponObject->GetComponent<MeshFilter>()->SetModelName("player_weapon2");
 
 	//충돌 범위 가져오기
 	AttackColliderObject = FindGameObjectTag("PlayerCollider");
@@ -76,12 +76,9 @@ void Player::Start()
 	GameObject* Hand = gameobject->GetChildBone("hand.l");
 	GameObject* WeponObejct = FindGameObjectTag("Weapon");
 	//
-	Hand->GetTransform()->SetChild(WeponObejct->GetTransform());
-	Transform* WeaponTR = WeponObejct->GetTransform();
-	WeaponTR->SetParent(Hand->GetTransform());
-
-	WeaponTR->Rotation = { 90,180,90 };
-	WeaponTR->Position = { 0.25,0,0.1f};
+	Hand->ChoiceChild(WeponObejct);
+	WeponObejct->ChoiceParent(Hand);
+	WeaponTR = WeaponObject->GetTransform();
 }
 
 void Player::Update()
@@ -303,6 +300,8 @@ bool Player::PlayerEndFrameCheck()
 
 void Player::Player_Attack_01()
 {
+	WeaponTR->Position = { 0,-0.02f,0.1f };
+	WeaponTR->Rotation = { 8,19,-10 };
 	//망치를 살짝올리고 내려찍는 공격
 	if (PlayerEndFrameCheck() == true)
 	{
@@ -321,6 +320,8 @@ void Player::Player_Attack_01()
 void Player::Player_Attack_02()
 {
 	//망치를 뒤로 돌리고 크게 내려찍는 공격
+	WeaponTR->Position = { 0,-0.02f,0.1f };
+	WeaponTR->Rotation = { 186,31,0 };
 	if (PlayerEndFrameCheck() == true)
 	{
 		Player_Move_Check();
@@ -329,6 +330,8 @@ void Player::Player_Attack_02()
 
 void Player::Player_Skill_01()
 {
+	WeaponTR->Position = { 0,-0.02f,0.1f };
+	WeaponTR->Rotation = { 186,31,0 };
 	if (PlayerEndFrameCheck())
 	{
 		Player_Move_Check();
@@ -337,6 +340,8 @@ void Player::Player_Skill_01()
 
 void Player::Player_Skill_02()
 {
+	WeaponTR->Position = { 0,-0.02f,0.1f };
+	WeaponTR->Rotation = { 186,31,0 };
 	if (PlayerEndFrameCheck())
 	{
 		Player_Move_Check();
@@ -345,6 +350,8 @@ void Player::Player_Skill_02()
 
 void Player::Player_Skill_03()
 {
+	WeaponTR->Position = { 0,-0.02f,0.1f };
+	WeaponTR->Rotation = { 8,19,-10 };
 	if (PlayerEndFrameCheck())
 	{
 		Player_Move_Check();
@@ -353,6 +360,8 @@ void Player::Player_Skill_03()
 
 void Player::Player_Jump()
 {
+	WeaponTR->Position = { 0,-0.02f,0.1f };
+	WeaponTR->Rotation = { -22,33,2 };
 	if (PlayerEndFrameCheck() == true)
 	{
 		Player_Move_Check();
@@ -363,6 +372,8 @@ bool Player::Player_Move_Check()
 {
 	if (DirPos == BasePos)
 	{
+		WeaponTR->Position = { 0,-0.02f,0.1f };
+		WeaponTR->Rotation = { 186,31,0 };
 		mState = PLAYER_STATE_IDLE;
 		mAnimation->Choice("idle", 1, true);
 		IsMove = false;
@@ -370,7 +381,9 @@ bool Player::Player_Move_Check()
 	}
 	else
 	{
-		mState = PLAYER_STATE_MOVE;
+		WeaponTR->Position = { 0,-0.02f,0.1f };
+		WeaponTR->Rotation = { 0,21,-5 };
+		mState = PLAYER_STATE_MOVE; 
 		mAnimation->Choice("move", 1, true);
 		IsMove = true;
 		return true;

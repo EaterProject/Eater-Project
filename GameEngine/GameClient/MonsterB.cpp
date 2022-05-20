@@ -45,7 +45,7 @@ void MonsterB::Awake()
 void MonsterB::SetUp()
 {
 	//콜라이더 값 조정
-	mColider->SetCenter(0, 0.5, 0);
+	mColider->SetCenter(0, 0.25, 0);
 	mColider->SetSphereCollider(0.25f);
 	mColider->SetMaterial_Restitution(0);
 	mRigidbody->SetFreezeRotation(true, true, true);

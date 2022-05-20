@@ -141,6 +141,8 @@ void RightOption::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_TAB1, Component_TapList);
 	DDX_Control(pDX, IDC_COMBO1, Tag_Combo);
 	DDX_Control(pDX, IDC_EDIT1, AddTag_Edit);
+	DDX_Control(pDX, IDC_EDIT3, ParentName_Edit);
+	DDX_Control(pDX, IDC_EDIT6, ChildName_Eidt);
 }
 
 BEGIN_MESSAGE_MAP(RightOption, CDialogEx)
@@ -163,6 +165,9 @@ BEGIN_MESSAGE_MAP(RightOption, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON12, &RightOption::OnCreateBasicMaterial)
 	ON_BN_CLICKED(IDC_BUTTON9, &RightOption::OnCreatePrefap)
 	ON_BN_CLICKED(IDC_BUTTON26, &RightOption::OnOpenOption)
+	ON_BN_CLICKED(IDC_BUTTON11, &RightOption::OnBnClickedButton11)
+	ON_BN_CLICKED(IDC_BUTTON13, &RightOption::OnBnClickedButton13)
+	ON_BN_CLICKED(IDC_BUTTON27, &RightOption::OnBnClickedButton27)
 END_MESSAGE_MAP()
 
 RightOption* RightOption::GetThis()
@@ -324,6 +329,7 @@ void RightOption::ChickObjectTap(GameObject* Obj)
 		mTransform->SetGameObject(TR);
 		FrontCount++;
 	}
+
 	if (AC != nullptr)
 	{
 		Component_TapList.InsertItem(FrontCount, L"Animation");
@@ -397,7 +403,7 @@ void RightOption::OnChoice_Hirearchy_Item(GameObject* Obj)
 	ChickObjectTap(Obj);
 }
 
-GameObject* RightOption::FindGameObjectParent(HTREEITEM mItem)
+GameObject* RightOption::FindGameObjectParent(HTREEITEM mItem, bool FindParent)
 {
 	//클릭한 아이템이 부모가 있는 아이템이라면 Demo씬에서 부모안에 오브젝트를 찾아 반환
 	HTREEITEM Parent	= mItem;
@@ -423,7 +429,14 @@ GameObject* RightOption::FindGameObjectParent(HTREEITEM mItem)
 	}
 	else
 	{
-		Object = EditorToolScene::FindMesh(ChangeToString(MeshName), ChangeToString(ParentName));
+		if (FindParent == true)
+		{
+			Object = EditorToolScene::FindMeshParent(ChangeToString(MeshName), ChangeToString(ParentName));
+		}
+		else
+		{
+			Object = EditorToolScene::FindMeshChild(ChangeToString(MeshName), ChangeToString(ParentName));
+		}
 	}
 
 
@@ -517,23 +530,23 @@ void RightOption::OnClickTap(NMHDR* pNMHDR, LRESULT* pResult)
 
 	if (ComponentName == L"Transform")
 	{
-		mTransform->ShowWindow(SW_SHOW);
 		mAnimation->ShowWindow(SW_HIDE);
 		mMeshFilter->ShowWindow(SW_HIDE);
 		mPrticle->ShowWindow(SW_HIDE);
 		mLight->ShowWindow(SW_HIDE);
 		mRigidbody->ShowWindow(SW_HIDE);
 		mCollider->ShowWindow(SW_HIDE);
+		mTransform->ShowWindow(SW_SHOW);
 	}
 	else if (ComponentName == L"Animation")
 	{
 		mTransform->ShowWindow(SW_HIDE);
-		mAnimation->ShowWindow(SW_SHOW);
 		mMeshFilter->ShowWindow(SW_HIDE);
 		mPrticle->ShowWindow(SW_HIDE);
 		mLight->ShowWindow(SW_HIDE);
 		mRigidbody->ShowWindow(SW_HIDE);
 		mCollider->ShowWindow(SW_HIDE);
+		mAnimation->ShowWindow(SW_SHOW);
 	}
 	else if (ComponentName == L"MeshFilter")
 	{
@@ -705,4 +718,37 @@ void RightOption::OnCreatePrefap()
 void RightOption::OnOpenOption()
 {
 	mFileOption->ShowWindow(SW_SHOW);
+}
+
+
+void RightOption::OnBnClickedButton11()
+{
+	//부모 설정
+	ParentName = ChoiceHirearchyName;
+	ParentName_Edit.SetWindowTextW(ChangeToCString(ParentName));
+	ParentItem = HirearchyTree.GetSelectedItem();
+}
+
+
+void RightOption::OnBnClickedButton13()
+{
+	//자식 설정
+	ChildName = ChoiceHirearchyName;
+	ChildName_Eidt.SetWindowTextW(ChangeToCString(ChildName));
+	ChildItem = HirearchyTree.GetSelectedItem();
+}
+
+
+void RightOption::OnBnClickedButton27()
+{
+	//결합
+	//선택한 부모로 설정한 오브젝트와 자식오브젝트
+	GameObject* ParentObject	= FindGameObjectParent(ParentItem);
+	GameObject* ChildTopObject	= FindGameObjectParent(ChildItem);
+
+
+	ParentObject->ChoiceChild(ChildTopObject);
+	ChildTopObject->ChoiceParent(ParentObject);
+
+	int num = 0;
 }

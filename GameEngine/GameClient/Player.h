@@ -57,6 +57,7 @@ private:
 	Vector3 DirRot;			//회전
 	Vector3 PastDirRot;		//과거의 방향
 	Vector3 BasePos;		//(0,0,0)인 벡터
+	Vector3 WeaponOffsetRot;
 	Vector3 AttackStartRot;	//공격을 시작했을때의 방향
 	bool Attack_Rot;		//공격회전을 한번만 구하기위해
 
@@ -65,6 +66,7 @@ private:
 	AnimationController*	mAnimation;
 	MeshFilter*				mMeshFilter;
 	Transform*				mCameraTR;
+	Transform*				WeaponTR;
 	Collider*				mCollider;
 	Collider*				AttackCollider;
 

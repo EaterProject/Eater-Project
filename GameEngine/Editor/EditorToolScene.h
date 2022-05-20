@@ -48,7 +48,8 @@ public:
 public:
 	///Find
 	static GameObject* FindMesh(std::string MeshName);							//매쉬를 찾는다
-	static GameObject* FindMesh(std::string MeshName, std::string ParentName);	//메쉬의 자식오브젝트를찾는다
+	static GameObject* FindMeshChild(std::string MeshName, std::string ParentName);	//메쉬의 자식오브젝트를찾는다
+	static GameObject* FindMeshParent(std::string MeshName, std::string ParentName);	//메쉬의 자식오브젝트를찾는다
 	static std::string FindMeshName(std::string MeshName);						//매쉬의 같은이름이있으면 변경해서 가져온다
 	static GameObject* FindMainCamera();										//현재 메인 카메라를 가져온다
 	static std::map<std::string, GameObject*> ObjectList;
