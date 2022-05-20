@@ -48,7 +48,7 @@ private:
 
 	//«¡∑Œ¡ßº«
 	DirectX::SimpleMath::Matrix mProj;
-	DirectX::SimpleMath::Matrix mOrthProj;
+	DirectX::SimpleMath::Matrix mOrthoProj;
 
 	//∫‰
 	DirectX::SimpleMath::Matrix mView;

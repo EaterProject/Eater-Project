@@ -199,9 +199,6 @@
     <Filter Include="소스 파일\RenderPass\OIT">
       <UniqueIdentifier>{9c007080-6faf-49ad-b7e6-16170913b4c9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\RenderPass\Environment">
-      <UniqueIdentifier>{1f2868c2-31f0-4f27-9f9a-67378c5c245e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\RenderPass\PostProcess">
       <UniqueIdentifier>{355f4dff-ead4-4281-b107-e8d8811e2a9e}</UniqueIdentifier>
     </Filter>
@@ -270,6 +267,15 @@
     </Filter>
     <Filter Include="소스 파일\Graphic\API">
       <UniqueIdentifier>{af030aa3-e2f1-487a-bc86-30a1d1a778cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Shader\HLSL\UI">
+      <UniqueIdentifier>{61a52600-c445-46c0-a6f1-f69b8b1c5a34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\RenderPass\UI">
+      <UniqueIdentifier>{99f94876-e3b5-4b61-bf5a-ef268d473708}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\RenderPass\Sky">
+      <UniqueIdentifier>{1f2868c2-31f0-4f27-9f9a-67378c5c245e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -342,13 +348,13 @@
     <ClInclude Include="ToolKitDefine.h">
       <Filter>소스 파일\Define</Filter>
     </ClInclude>
-    <ClInclude Include="ShadowPass.h">
+    <ClInclude Include="Shadow_Pass.h">
       <Filter>소스 파일\RenderPass\Shadow</Filter>
     </ClInclude>
-    <ClInclude Include="LightPass.h">
+    <ClInclude Include="Light_Pass.h">
       <Filter>소스 파일\RenderPass\Light</Filter>
     </ClInclude>
-    <ClInclude Include="DeferredPass.h">
+    <ClInclude Include="Deferred_Pass.h">
       <Filter>소스 파일\RenderPass\Deferred</Filter>
     </ClInclude>
     <ClInclude Include="DepthStencil.h">
@@ -378,19 +384,19 @@
     <ClInclude Include="Export\Graphic_DX11_DLL.h">
       <Filter>소스 파일\Graphic\API</Filter>
     </ClInclude>
-    <ClInclude Include="SSAOPass.h">
+    <ClInclude Include="SSAO_Pass.h">
       <Filter>소스 파일\RenderPass\SSAO</Filter>
     </ClInclude>
     <ClInclude Include="GraphicView.h">
       <Filter>소스 파일\Resource\Graphic\GraphicView</Filter>
     </ClInclude>
-    <ClInclude Include="DebugPass.h">
+    <ClInclude Include="Debug_Pass.h">
       <Filter>소스 파일\RenderPass\Debug</Filter>
     </ClInclude>
-    <ClInclude Include="AlphaPass.h">
+    <ClInclude Include="Alpha_Pass.h">
       <Filter>소스 파일\RenderPass\Alpha</Filter>
     </ClInclude>
-    <ClInclude Include="OITPass.h">
+    <ClInclude Include="OIT_Pass.h">
       <Filter>소스 파일\RenderPass\OIT</Filter>
     </ClInclude>
     <ClInclude Include="DrawBuffer.h">
@@ -435,7 +441,7 @@
     <ClInclude Include="RenderTarget.h">
       <Filter>소스 파일\Resource\Graphic\GraphicStruct\RenderTarget</Filter>
     </ClInclude>
-    <ClInclude Include="FXAAPass.h">
+    <ClInclude Include="FXAA_Pass.h">
       <Filter>소스 파일\RenderPass\PostProcess\FXAA</Filter>
     </ClInclude>
     <ClInclude Include="RenderTargetViewDefine.h">
@@ -462,10 +468,10 @@
     <ClInclude Include="FactoryManagerBase.h">
       <Filter>소스 파일\Manager\Factory</Filter>
     </ClInclude>
-    <ClInclude Include="EnvironmentPass.h">
-      <Filter>소스 파일\RenderPass\Environment</Filter>
+    <ClInclude Include="Sky_Pass.h">
+      <Filter>소스 파일\RenderPass\Sky</Filter>
     </ClInclude>
-    <ClInclude Include="BloomPass.h">
+    <ClInclude Include="Bloom_Pass.h">
       <Filter>소스 파일\RenderPass\PostProcess\Bloom</Filter>
     </ClInclude>
     <ClInclude Include="GraphicResource.h">
@@ -474,7 +480,7 @@
     <ClInclude Include="ResourceBase.inl">
       <Filter>소스 파일\Resource\Base</Filter>
     </ClInclude>
-    <ClInclude Include="FogPass.h">
+    <ClInclude Include="Fog_Pass.h">
       <Filter>소스 파일\RenderPass\PostProcess\Fog</Filter>
     </ClInclude>
     <ClInclude Include="InstanceBufferDefine.h">
@@ -489,10 +495,10 @@
     <ClInclude Include="ConvertData.h">
       <Filter>소스 파일\Converter\RenderData</Filter>
     </ClInclude>
-    <ClInclude Include="PickingPass.h">
+    <ClInclude Include="Picking_Pass.h">
       <Filter>소스 파일\RenderPass\SubPass\Picking</Filter>
     </ClInclude>
-    <ClInclude Include="CullingPass.h">
+    <ClInclude Include="Culling_Pass.h">
       <Filter>소스 파일\RenderPass\SubPass\Culling</Filter>
     </ClInclude>
     <ClInclude Include="Patch_Chapters.h">
@@ -501,13 +507,13 @@
     <ClInclude Include="CullingData.h">
       <Filter>소스 파일\RenderPass\SubPass\Culling</Filter>
     </ClInclude>
-    <ClInclude Include="OutLinePass.h">
+    <ClInclude Include="OutLine_Pass.h">
       <Filter>소스 파일\RenderPass\SubPass\OutLine</Filter>
     </ClInclude>
-    <ClInclude Include="CombinePass.h">
+    <ClInclude Include="Combine_Pass.h">
       <Filter>소스 파일\RenderPass\PostProcess\Combine</Filter>
     </ClInclude>
-    <ClInclude Include="BlurPass.h">
+    <ClInclude Include="Blur_Pass.h">
       <Filter>소스 파일\RenderPass\PostProcess\Blur</Filter>
     </ClInclude>
     <ClInclude Include="Delegate.h">
@@ -515,6 +521,9 @@
     </ClInclude>
     <ClInclude Include="RenderDataConverterBase.h">
       <Filter>소스 파일\Converter</Filter>
+    </ClInclude>
+    <ClInclude Include="UI_Pass.h">
+      <Filter>소스 파일\RenderPass\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -551,13 +560,13 @@
     <ClCompile Include="Graphic_DX11.cpp">
       <Filter>소스 파일\Graphic</Filter>
     </ClCompile>
-    <ClCompile Include="ShadowPass.cpp">
+    <ClCompile Include="Shadow_Pass.cpp">
       <Filter>소스 파일\RenderPass\Shadow</Filter>
     </ClCompile>
-    <ClCompile Include="LightPass.cpp">
+    <ClCompile Include="Light_Pass.cpp">
       <Filter>소스 파일\RenderPass\Light</Filter>
     </ClCompile>
-    <ClCompile Include="DeferredPass.cpp">
+    <ClCompile Include="Deferred_Pass.cpp">
       <Filter>소스 파일\RenderPass\Deferred</Filter>
     </ClCompile>
     <ClCompile Include="DepthStencil.cpp">
@@ -575,19 +584,19 @@
     <ClCompile Include="GraphicEngineAPI.cpp">
       <Filter>소스 파일\Graphic\API</Filter>
     </ClCompile>
-    <ClCompile Include="SSAOPass.cpp">
+    <ClCompile Include="SSAO_Pass.cpp">
       <Filter>소스 파일\RenderPass\SSAO</Filter>
     </ClCompile>
     <ClCompile Include="GraphicView.cpp">
       <Filter>소스 파일\Resource\Graphic\GraphicView</Filter>
     </ClCompile>
-    <ClCompile Include="DebugPass.cpp">
+    <ClCompile Include="Debug_Pass.cpp">
       <Filter>소스 파일\RenderPass\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="AlphaPass.cpp">
+    <ClCompile Include="Alpha_Pass.cpp">
       <Filter>소스 파일\RenderPass\Alpha</Filter>
     </ClCompile>
-    <ClCompile Include="OITPass.cpp">
+    <ClCompile Include="OIT_Pass.cpp">
       <Filter>소스 파일\RenderPass\OIT</Filter>
     </ClCompile>
     <ClCompile Include="DrawBuffer.cpp">
@@ -596,7 +605,7 @@
     <ClCompile Include="RenderTarget.cpp">
       <Filter>소스 파일\Resource\Graphic\GraphicStruct\RenderTarget</Filter>
     </ClCompile>
-    <ClCompile Include="FXAAPass.cpp">
+    <ClCompile Include="FXAA_Pass.cpp">
       <Filter>소스 파일\RenderPass\PostProcess\FXAA</Filter>
     </ClCompile>
     <ClCompile Include="GeometryGenerator.cpp">
@@ -614,38 +623,41 @@
     <ClCompile Include="FactoryManager.cpp">
       <Filter>소스 파일\Manager\Factory</Filter>
     </ClCompile>
-    <ClCompile Include="EnvironmentPass.cpp">
-      <Filter>소스 파일\RenderPass\Environment</Filter>
+    <ClCompile Include="Sky_Pass.cpp">
+      <Filter>소스 파일\RenderPass\Sky</Filter>
     </ClCompile>
-    <ClCompile Include="BloomPass.cpp">
+    <ClCompile Include="Bloom_Pass.cpp">
       <Filter>소스 파일\RenderPass\PostProcess\Bloom</Filter>
     </ClCompile>
     <ClCompile Include="GraphicResource.cpp">
       <Filter>소스 파일\Resource\Graphic\GraphicResource</Filter>
     </ClCompile>
-    <ClCompile Include="FogPass.cpp">
+    <ClCompile Include="Fog_Pass.cpp">
       <Filter>소스 파일\RenderPass\PostProcess\Fog</Filter>
     </ClCompile>
     <ClCompile Include="RenderDataConverter.cpp">
       <Filter>소스 파일\Converter</Filter>
     </ClCompile>
-    <ClCompile Include="PickingPass.cpp">
+    <ClCompile Include="Picking_Pass.cpp">
       <Filter>소스 파일\RenderPass\SubPass\Picking</Filter>
     </ClCompile>
-    <ClCompile Include="CullingPass.cpp">
+    <ClCompile Include="Culling_Pass.cpp">
       <Filter>소스 파일\RenderPass\SubPass\Culling</Filter>
     </ClCompile>
-    <ClCompile Include="OutLinePass.cpp">
+    <ClCompile Include="OutLine_Pass.cpp">
       <Filter>소스 파일\RenderPass\SubPass\OutLine</Filter>
     </ClCompile>
-    <ClCompile Include="CombinePass.cpp">
+    <ClCompile Include="Combine_Pass.cpp">
       <Filter>소스 파일\RenderPass\PostProcess\Combine</Filter>
     </ClCompile>
-    <ClCompile Include="BlurPass.cpp">
+    <ClCompile Include="Blur_Pass.cpp">
       <Filter>소스 파일\RenderPass\PostProcess\Blur</Filter>
     </ClCompile>
     <ClCompile Include="Delegate.cpp">
       <Filter>소스 파일\Helper\Delegate</Filter>
+    </ClCompile>
+    <ClCompile Include="UI_Pass.cpp">
+      <Filter>소스 파일\RenderPass\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -798,6 +810,12 @@
     </FxCompile>
     <FxCompile Include="..\Assets\Shader\SkyBox_Convert_PS.hlsl">
       <Filter>소스 파일\Shader\HLSL\SkyBox</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Assets\Shader\UI_PS.hlsl">
+      <Filter>소스 파일\Shader\HLSL\UI</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Assets\Shader\UI_VS.hlsl">
+      <Filter>소스 파일\Shader\HLSL\UI</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>

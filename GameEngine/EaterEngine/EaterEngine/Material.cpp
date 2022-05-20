@@ -107,6 +107,11 @@ void Material::SetAddColor(DirectX::SimpleMath::Vector3 color)
 	m_MaterialData->Material_Property->AddColor = color;
 }
 
+void Material::SetEmissiveColor(DirectX::SimpleMath::Vector3 color)
+{
+	m_MaterialData->Material_Property->EmissiveColor = color;
+}
+
 void Material::SetEmissiveFactor(float emissiveFactor)
 {
 	m_MaterialData->Material_Property->EmissiveFactor = emissiveFactor;

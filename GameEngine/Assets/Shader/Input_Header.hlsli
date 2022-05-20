@@ -138,4 +138,17 @@ struct DebugTextureVertexOut
     float2 Tex : TEXCOORD;
 };
 
+// UI Vertex Shader Input & Output Data Struct
+struct UIVertexIn
+{
+    float3 PosL : POSITION;
+    float2 Tex : TEXCOORD;
+};
+
+struct UIVertexOut
+{
+    float4 PosH : SV_POSITION;
+    float2 Tex : TEXCOORD;
+};
+
 #endif

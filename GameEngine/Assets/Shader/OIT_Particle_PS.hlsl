@@ -37,10 +37,11 @@ void OIT_Particle_PS(ParticlePixelIn pin)
         startOffsetAddress, pixelCount, oldStartOffset);
     
     float strength = length(texColor);
+    float4 color = float4(texColor.rgb / strength, texColor.a);
     
     FLStaticNode node;
     node.Data.Strength = strength;
-    node.Data.Color = PackColorFromFloat4(texColor / strength);
+    node.Data.Color = PackColorFromFloat4(color);
     node.Data.Depth = pin.PosH.z;
     node.Next = oldStartOffset;
     

@@ -121,13 +121,14 @@ struct CB_Material : public cbMaterial
 {
 	DirectX::SimpleMath::Vector3 gAddColor = DirectX::SimpleMath::Vector3(0.5f, 0.5f, 0.5f);
 	UINT gOption = 0;
-	float gEmissiveFactor = 1.0f;
-	float gRoughnessFactor = 0.0f;
-	float gMetallicFactor = 0.0f;
-	float gLimLightFactor = 0.0f;
-		
+
 	DirectX::SimpleMath::Vector3 gLimLightColor;
 	float gLimLightWidth = 0.0f;
+
+	DirectX::SimpleMath::Vector3 gEmissiveColor;
+
+	float gRoughnessFactor = 0.0f;
+	float gMetallicFactor = 0.0f;
 };
 
 SHADER_CONSTANT_BUFFER(cbCamera)
@@ -253,6 +254,16 @@ SHADER_CONSTANT_BUFFER(cbCubeConvert)
 struct CB_CubeConvert : public cbCubeConvert
 {
 	float gThreshold;
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+//// UI Constant Buffer cbExternalData
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+SHADER_CONSTANT_BUFFER(cbUIObject)
+struct CB_UIObject : public cbUIObject
+{
+	DirectX::SimpleMath::Matrix gWorldViewProj;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////

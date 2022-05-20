@@ -190,6 +190,11 @@ void MeshFilter::SetAnimationName(std::string mAnimeName)
 	}
 }
 
+void MeshFilter::SetEmissiveColor(DirectX::SimpleMath::Vector3 color)
+{
+	m_Material->SetEmissiveColor(color);
+}
+
 void MeshFilter::SetEmissiveFactor(float emissiveFactor)
 {
 	m_Material->SetEmissiveFactor(emissiveFactor);
@@ -345,6 +350,9 @@ void MeshFilter::SetMaterial(std::string matName)
 			m_Material->Name = "Defalt";
 			m_Material->m_MaterialData->Name = "Defalt";
 			m_Material->Defalt = true;
+
+			// 기본 색상 설정..
+			//m_Material->SetAddColor(Vector3(1.0f, 1.0f, 1.0f));
 
 			// 변경된 Material 그래픽 동기화..
 			GraphicEngine::Get()->PushChangeInstance(gameobject->OneMeshData);
@@ -503,6 +511,9 @@ void MeshFilter::SetMaterialData(LoadMeshData* LoadMesh, MeshData* mMesh, GameOb
 		meshFilter->m_Material->Name = "Defalt";
 		meshFilter->m_Material->m_MaterialData->Name = "Defalt";
 		meshFilter->m_Material->Defalt = true;
+
+		// 기본 색상 설정..
+		//meshFilter->m_Material->SetAddColor(Vector3(1.0f, 1.0f, 1.0f));
 	}
 
 	// Render Material Data 설정..

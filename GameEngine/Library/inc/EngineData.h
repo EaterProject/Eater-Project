@@ -107,9 +107,12 @@ public:
 	bool LimLight = false;				// Lim Light
 
 	Vector3 AddColor = Vector3(0.0f, 0.0f, 0.0f);	// Add Color
-	float EmissiveFactor = 1.0f;		// Emissive 강도
+
 	float RoughnessFactor = 0.0f;		// Roughness 강도 (0 ~ 1)
 	float MetallicFactor = 0.0f;		// Metallic 강도 (0 ~ 1)
+
+	Vector3 EmissiveColor = Vector3(1.0f, 1.0f, 1.0f);	// Emissive Color
+	float EmissiveFactor = 1.0f;		// Emissive 강도
 
 	Vector3 LimLightColor = Vector3(0.0f, 0.0f, 0.0f);	// LimLight Color
 	float LimLightFactor = 0.0f;		// LimLight 강도
@@ -255,7 +258,7 @@ public:
 	Matrix CamInvView;	// Camera Inverse XY View Matrix
 	Matrix CamView;		// Camera View Matrix
 	Matrix CamProj;		// Camera Proj Matrix
-	Matrix CamOrthProj;	// Camera Orth Proj Matrix
+	Matrix CamOrthoProj;	// Camera Orth Proj Matrix
 	Matrix CamViewProj;	// Camera View Proj Matrix
 	Vector3 CamPos;		// Camera Pos
 	Vector3 CamLook;	// Camera Look

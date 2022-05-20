@@ -5,15 +5,16 @@
 
 cbuffer cbMaterial : register(b0)
 {
-    float3 gAddColor        : packoffset(c0);
+    float3 gAddColor        : packoffset(c0.x);
     uint gOption            : packoffset(c0.w);
-    float gEmissiveFactor   : packoffset(c1.x);
-    float gRoughnessFactor  : packoffset(c1.y);
-    float gMetallicFactor   : packoffset(c1.z);
-    float gLimLightFactor   : packoffset(c1.w);
+        
+    float3 gLimLightColor   : packoffset(c1.x);
+    float gLimLightWidth    : packoffset(c1.w);
     
-    float3 gLimLightColor   : packoffset(c2.x);
-    float gLimLightWidth    : packoffset(c2.w);
+    float3 gEmissiveColor   : packoffset(c2.x);
+    
+    float gRoughnessFactor  : packoffset(c2.w);
+    float gMetallicFactor   : packoffset(c3.x);
 };
 
 cbuffer cbCamera : register(b1)
@@ -48,8 +49,8 @@ MeshPixelOut Deferred_PBR_PS(MeshPixelIn pin)
     MeshPixelOut pout;
     
     float4 albedo       = float4(0.0f, 0.0f, 0.0f, 1.0f);
-    float4 emissive     = float4(0.0f, 0.0f, 0.0f, 1.0f);
-    float3 orm          = float3(0.0f, 0.0f, 0.0f);
+    float3 emissive     = float3(0.0f, 0.0f, 0.0f);
+    float2 rm           = float2(0.0f, 0.0f);
     
     float3 normalColor  = float3(0.0f, 0.0f, 0.0f);
     float3 normalW      = float3(0.0f, 0.0f, 0.0f);
@@ -57,31 +58,30 @@ MeshPixelOut Deferred_PBR_PS(MeshPixelIn pin)
     
 #ifdef TERRAIN_MESH
     float4 mask = pin.MaskColor;
-    orm = float3(0.0f,0.0f,0.0f);
     
     if (mask.r > 0.0f)
     {
         albedo.rgb += gDiffuseLayer1.Sample(gSamWrapAnisotropic, pin.Tex).rgb * mask.r;
         normalColor += gNormalLayer1.Sample(gSamWrapAnisotropic, pin.Tex).rgb * mask.r;
-        orm += gORMLayer1.Sample(gSamWrapLinear, pin.Tex).rgb * mask.r;
+        rm += gORMLayer1.Sample(gSamWrapLinear, pin.Tex).gb * mask.r;
     }
     if (mask.g > 0.0f)
     {
         albedo.rgb += gDiffuseLayer2.Sample(gSamWrapAnisotropic, pin.Tex).rgb * mask.g;
         normalColor += gNormalLayer2.Sample(gSamWrapAnisotropic, pin.Tex).rgb * mask.g;
-        orm += gORMLayer2.Sample(gSamWrapLinear, pin.Tex).rgb * mask.g;
+        rm += gORMLayer2.Sample(gSamWrapLinear, pin.Tex).gb * mask.g;
     }
     if (mask.b > 0.0f)
     {
         albedo.rgb += gDiffuseLayer3.Sample(gSamWrapAnisotropic, pin.Tex).rgb * mask.b;
         normalColor += gNormalLayer3.Sample(gSamWrapAnisotropic, pin.Tex).rgb * mask.b;
-        orm += gORMLayer3.Sample(gSamWrapLinear, pin.Tex).rgb * mask.b;
+        rm += gORMLayer3.Sample(gSamWrapLinear, pin.Tex).gb * mask.b;
     }
     if (mask.a > 0.0f)
     {
         albedo.rgb += gDiffuseLayer4.Sample(gSamWrapAnisotropic, pin.Tex).rgb * mask.a;
         normalColor += gNormalLayer4.Sample(gSamWrapAnisotropic, pin.Tex).rgb * mask.a;
-        orm += gORMLayer4.Sample(gSamWrapLinear, pin.Tex).rgb * mask.a;
+        rm += gORMLayer4.Sample(gSamWrapLinear, pin.Tex).gb * mask.a;
     }
     
     normalW = UnpackNormal(normalColor, pin.NormalW, pin.TangentW);
@@ -106,29 +106,26 @@ MeshPixelOut Deferred_PBR_PS(MeshPixelIn pin)
     }
     if (gOption & EMISSIVE_MAP)
     {
-        emissive.rgb += gEmissiveMap.Sample(gSamWrapLinear, pin.Tex).rgb * gEmissiveFactor;
+        emissive += gEmissiveMap.Sample(gSamWrapLinear, pin.Tex).rgb * gEmissiveColor;
     }
     if (gOption & ORM_MAP)
     {
-        orm += gORMMap.Sample(gSamWrapLinear, pin.Tex).rgb;
+        rm += gORMMap.Sample(gSamWrapLinear, pin.Tex).gb;
     }
     if (gOption & LIM_LIGHT)
     {
-        float rim = 1.0f - max(0, dot(normalW, normalize(gEyePos - pin.PosW)));
-        rim = smoothstep(1.0f - gLimLightWidth, 1.0f, rim) * gLimLightFactor;
-    
-        emissive.rgb += gLimLightColor * rim;
+        emissive += gLimLightColor * smoothstep(1.0f - gLimLightWidth, 1.0f, 1.0f - max(0, dot(normalW, normalize(gEyePos - pin.PosW))));
     }
 #endif
     
     albedo.rgb += gAddColor.rgb;
-    orm.g += gRoughnessFactor;
-    orm.b += gMetallicFactor;
+    rm.x += gRoughnessFactor;
+    rm.y += gMetallicFactor;
     
     pout.Albedo = albedo;
-    pout.Emissive = emissive;
-    pout.Normal = float4(normalW, saturate(orm.g));
-    pout.Position = float4(pin.PosW, saturate(orm.b));
+    pout.Emissive = float4(emissive, 1.0f);
+    pout.Normal = float4(normalW, saturate(rm.x));
+    pout.Position = float4(pin.PosW, saturate(rm.y));
     pout.NormalDepth = float4(normalV, pin.PosV.z);
     
     return pout;

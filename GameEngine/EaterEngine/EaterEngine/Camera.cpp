@@ -169,11 +169,11 @@ void Camera::CreateProj(int winsizeX, int WinSizeY)
 	mProj = DirectX::XMMatrixPerspectiveFovLH(mFovY, mAspect, mNearZ, mFarZ);
 
 	//직교 투영
-	mOrthProj = DirectX::XMMatrixOrthographicLH(mFovY, mAspect, mNearZ, mFarZ);
+	mOrthoProj = DirectX::XMMatrixOrthographicOffCenterLH(0.0f, mFovY, mAspect, 0.0f, mNearZ, mFarZ);
 
 	// Camera Data 재설정..
 	mCameraData->CamProj = mProj;
-	mCameraData->CamOrthProj = mOrthProj;
+	mCameraData->CamOrthoProj = mOrthoProj;
 
 	// Camera Frustum 설정..
 	BoundingFrustum::CreateFromMatrix(mCameraData->OriginFrustum, mProj);
