@@ -8,6 +8,7 @@ struct EATER_VERTEX_BASE;
 struct EATER_VERTEX_SKIN;
 struct EATER_VERTEX_POS;
 struct EATER_MATERIAL_DATA;
+struct EATER_ANIMATION_DATA;
 class EaterNode;
 class EaterList;
 class EaterParser
@@ -49,6 +50,12 @@ public:
 	void ChangeList(int NodeCount, std::string& ListName, int cx_index, int cy_index, std::string& ChangeData);
 	//변경된 값으로 저장한다
 	void ChangeDataSave(std::string& FileName, std::string& OutPath, std::string& FileType);
+
+public:
+	EATER_ANIMATION_DATA*	mAnimation_Data;
+	EATER_MATERIAL_DATA*	mMaterial_Data;
+	EATER_VERTEX_SKIN*		mVertex_Skin_Data;
+	EATER_VERTEX_BASE*		mVertex_Base_Data;
 public:
 	void ClearNode();
 private:
@@ -59,7 +66,6 @@ private:
 	const char LIST_TYPE	= '$';
 	const char END_TYPE		= '&';
 	const char SP_TYPE		= ' ';
-
 private:
 	bool ListStart = false;
 	int MaxWordCount = 0;

@@ -14,7 +14,8 @@ enum class CHANGE_TYPE
 {
 	TERRAIN,
 	COLLIDER,
-	NAVMESH
+	NAVMESH,
+	ANIMATION,
 };
 
 

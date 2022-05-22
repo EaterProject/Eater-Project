@@ -63,15 +63,14 @@ RightOption::~RightOption()
 BOOL RightOption::OnInitDialog()
 {
 	CDialog::OnInitDialog();
-	m_EditorManager = new EditorManager();
-	m_EditorManager->Initialize();
 
 	
 
-	mFileOption = DialogFactory::GetFactory()->GetFileOption();
-	mCam		= DialogFactory::GetFactory()->GetCamAnimation();
-	mMaterial	= DialogFactory::GetFactory()->GetCreateMaterial();
-	mSceneSetting = DialogFactory::GetFactory()->GetSceneSetting();
+	m_EditorManager = DialogFactory::GetFactory()->GetEditorManager();
+	mFileOption		= DialogFactory::GetFactory()->GetFileOption();
+	mCam			= DialogFactory::GetFactory()->GetCamAnimation();
+	mMaterial		= DialogFactory::GetFactory()->GetCreateMaterial();
+	mSceneSetting	= DialogFactory::GetFactory()->GetSceneSetting();
 
 	DialogFactory::GetFactory()->SetRightOption(this);
 	

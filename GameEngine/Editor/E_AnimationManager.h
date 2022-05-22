@@ -11,6 +11,7 @@ public:
 	~E_AnimationManager();
 
 	void ChangeEaterFile(ParserData::CModel* FBXMesh);
+	void ChangeEaterFile(std::string& FileName, std::string& Name);
 	void SetFileName(std::string& FileName);
 private:
 	std::string SaveFileName;

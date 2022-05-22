@@ -78,8 +78,11 @@ void EditorManager::ConvertData(std::string Path, std::string ChangeName, CHANGE
 		ParserData::CModel* Model = mFbx->OpenFile(Path);
 		mEater->Load_FBX_File_NavMeshBuffer(Path, Model, ChangeName);
 	}
+	else if (Option == CHANGE_TYPE::ANIMATION)
+	{
+		mEater->Load_Animation_File(Path,ChangeName);
+	}
 
-	
 }
 
 void EditorManager::OpenEaterFile(std::string Path,int Type)

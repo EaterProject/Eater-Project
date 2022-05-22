@@ -7,7 +7,9 @@
 #include "afxdialogex.h"
 #include "EditorData.h"
 #include "AnimationController.h"
-
+#include "GameObject.h"
+#include "DialogFactory.h"
+#include "EditorManager.h"
 
 // CTAP_2 대화 상자
 
@@ -44,6 +46,7 @@ void CTAP_Animation::SetGameObject(AnimationController* Data)
 		Data->Choice(NameData[0]);
 	}
 
+	
 	int EndFrame = AC->GetEndFrame();
 	AnimationEndEdit.SetWindowText(ChangeToCString(EndFrame));
 	AnimationStartEdit.SetWindowTextW(L"0");
@@ -61,6 +64,9 @@ void CTAP_Animation::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EDIT2, NowAnimationName_Edit);
 	DDX_Control(pDX, IDC_SLIDER1, AnimationBar_Slider);
 	DDX_Control(pDX, IDC_EDIT3, NowAnimationFrame_Edit);
+	DDX_Control(pDX, IDC_EDIT8, NowAnimationTime_Edit);
+	DDX_Control(pDX, IDC_EDIT6, EventTimeMin_Eidt);
+	DDX_Control(pDX, IDC_EDIT7, EventTimeMax_Eidt);
 }
 
 BEGIN_MESSAGE_MAP(CTAP_Animation, CDialogEx)
@@ -70,6 +76,9 @@ BEGIN_MESSAGE_MAP(CTAP_Animation, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON6, &CTAP_Animation::OnPauseButton)
 	ON_BN_CLICKED(IDC_BUTTON8, &CTAP_Animation::OnStopButton)
 	ON_BN_CLICKED(IDC_CHECK1, &CTAP_Animation::OnLoopCheck)
+	ON_BN_CLICKED(IDC_BUTTON1, &CTAP_Animation::OnMinFrameTime)
+	ON_BN_CLICKED(IDC_BUTTON2, &CTAP_Animation::OnMaxFrameTime)
+	ON_BN_CLICKED(IDC_BUTTON27, &CTAP_Animation::OnEventTimeSave)
 END_MESSAGE_MAP()
 
 BOOL CTAP_Animation::PreTranslateMessage(MSG* pMsg)
@@ -92,11 +101,12 @@ BOOL CTAP_Animation::PreTranslateMessage(MSG* pMsg)
 
 void CTAP_Animation::OnCbnSelchangeCombo1()
 {
-	AnimationName;
 	AnimationList.GetLBText(AnimationList.GetCurSel(), AnimationName);
 	AC->Choice(ChangeToString(AnimationName));
+	
 	NowAnimationName_Edit.SetWindowTextW(AnimationName);
 	int End = AC->GetEndFrame();
+	//float Time = AC->GetFrameTime();
 	AnimationEndEdit.SetWindowTextW(ChangeToCString(End));
 	AnimationBar_Slider.SetRange(0, End);
 	AnimationBar_Slider.SetPos(0);
@@ -110,6 +120,8 @@ void CTAP_Animation::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 		int FramePoint = AnimationBar_Slider.GetPos();
 		NowAnimationFrame_Edit.SetWindowTextW(ChangeToCString(FramePoint));
 		AC->SetFrame(FramePoint);
+		FrameTime = AC->GetFrameTime();
+		NowAnimationTime_Edit.SetWindowTextW(ChangeToCString(FrameTime));
 	}
 
 	CDialogEx::OnHScroll(nSBCode, nPos, pScrollBar);
@@ -138,4 +150,28 @@ void CTAP_Animation::OnLoopCheck()
 {
 	Loop ^= true;
 	AC->Choice(ChangeToString(AnimationName),Speed,Loop);
+}
+
+
+void CTAP_Animation::OnMinFrameTime()
+{
+	FrameMin_Time = FrameTime;
+	EventTimeMin_Eidt.SetWindowTextW(ChangeToCString(FrameTime));
+}
+
+void CTAP_Animation::OnMaxFrameTime()
+{
+	FrameMax_Time = FrameTime;
+	EventTimeMax_Eidt.SetWindowTextW(ChangeToCString(FrameTime));
+}
+
+
+void CTAP_Animation::OnEventTimeSave()
+{
+	std::string ObjectName		= AC->gameobject->Name;
+	std::string AnimationName	= AC->GetNowAnimationName();
+
+	std::string FileName	= "../Assets/Model/Animation/" + ObjectName + AnimationName + ".Eater";
+	EditorManager* mManager = DialogFactory::GetFactory()->GetEditorManager();
+	mManager->ConvertData(FileName, ObjectName+AnimationName,CHANGE_TYPE::ANIMATION);
 }

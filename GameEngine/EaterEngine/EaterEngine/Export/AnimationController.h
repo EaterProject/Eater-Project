@@ -36,7 +36,7 @@ public:
 
 	EATER_ENGINEDLL int GetNowFrame();	//선택한 애니메이션 프레임
 	EATER_ENGINEDLL int GetEndFrame();	//선택한 애니메이션 끝 프레임
-
+	EATER_ENGINEDLL float GetFrameTime();	//선택한 애니메이션 시간
 	EATER_ENGINEDLL int GetAnimationCount();
 	EATER_ENGINEDLL void GetAnimationList(std::vector<std::string>* NameList);
 	EATER_ENGINEDLL std::string GetNowAnimationName();

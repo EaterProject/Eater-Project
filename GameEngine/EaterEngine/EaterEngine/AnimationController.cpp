@@ -30,7 +30,7 @@ AnimationController::~AnimationController()
 
 void AnimationController::StartUpdate()
 {
-	ChangeAnime();
+	
 }
 
 void AnimationController::Update()
@@ -200,6 +200,7 @@ void AnimationController::Choice(std::string Name, float Speed, bool Loop)
 		NowAnimationName = Name;
 		mLoop	= Loop;
 		mSpeed	= Speed;
+		ChangeAnime();
 	}
 }
 
@@ -271,6 +272,11 @@ int AnimationController::GetEndFrame()
 	}
 
 	return NowAnimation->m_EndFrame - 1;
+}
+
+float AnimationController::GetFrameTime()
+{
+	return mTime;
 }
 
 int AnimationController::GetAnimationCount()

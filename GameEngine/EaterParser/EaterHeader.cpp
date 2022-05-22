@@ -88,6 +88,26 @@ void EATER_CLOSE_CHANGE_FILE(std::string FileName, std::string OutPath, std::str
 	 Parser->SetIndex(x, y, z);
  }
 
+ EATER_ANIMATION_DATA* EATER_GET_ANIMATION_DATA()
+ {
+	 return Parser->mAnimation_Data;
+ }
+
+ EATER_MATERIAL_DATA* EATER_GET_MATERIAL_DATA()
+ {
+	 return Parser->mMaterial_Data;
+ }
+
+ EATER_VERTEX_BASE* EATER_GET_VERTEX_BASE_DATA()
+ {
+	 return Parser->mVertex_Base_Data;
+ }
+
+ EATER_VERTEX_SKIN* EATER_GET_VERTEX_SKIN_DATA()
+ {
+	 return Parser->mVertex_Skin_Data;
+ }
+
  int EATER_GET_NODE_COUNT()
  {
 	 return Parser->GetNodeCount();

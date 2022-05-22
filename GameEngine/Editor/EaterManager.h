@@ -34,7 +34,9 @@ public:
 	void Load_FBX_File_MeshBuffer(std::string& Path, ParserData::CModel* FBXMesh, std::string ChangeFileName);
 	void Load_FBX_File_NavMeshBuffer(std::string& Path, ParserData::CModel* FBXMesh, std::string ChangeFileName);
 
+
 	void Load_GameObject_File(GameObject* Object, ObjectOption* mOption);
+	void Load_Animation_File(std::string& FileName, std::string& ChangeName);
 	void Create_Material(InstanceMaterial* m);
 
 	void CreateBaseObject();
@@ -52,10 +54,10 @@ private:
 	std::string AnimationName;
 
 	//FBX를 로드해서 Eater파일로 변환
-	E_MeshManager* mMeshManager;
+	E_MeshManager*		mMeshManager;
 	E_AnimationManager* mAnimationManager;
-	E_MaterialManager* mMaterialManager;
-	E_BufferManager* mBufferManager;
-	E_ChangeManager* mChangeManager;
+	E_MaterialManager*	mMaterialManager;
+	E_BufferManager*	mBufferManager;
+	E_ChangeManager*	mChangeManager;
 };
 
