@@ -30,7 +30,7 @@ AnimationController::~AnimationController()
 
 void AnimationController::StartUpdate()
 {
-	ChangeAnime();
+	
 }
 
 void AnimationController::Update()
@@ -56,7 +56,7 @@ void AnimationController::Update()
 
 void AnimationController::SetSkin(GameObject* obj)
 {
-	SkinObject = obj;
+	SkinObject.push_back(obj);
 }
 
 void AnimationController::SetBoneList(std::vector<GameObject*>* m_ObjList)
@@ -89,8 +89,11 @@ void AnimationController::SetAnimation(Animation* animation)
 	mAnimationData = new AnimationData();
 
 	// 해당 Skin Mesh에 Animation Data 삽입..
-	SkinObject->OneMeshData->Animation_Data = mAnimationData;
-	SkinObject->OneMeshData->Animation_Buffer = mAnimation->m_AnimationBuffer;
+	for (auto& skin : SkinObject)
+	{
+		skin->OneMeshData->Animation_Data = mAnimationData;
+		skin->OneMeshData->Animation_Buffer = mAnimation->m_AnimationBuffer;
+	}
 
 	NowAnimationBuffer = mAnimation->m_AnimationBuffer;
 }
@@ -197,6 +200,7 @@ void AnimationController::Choice(std::string Name, float Speed, bool Loop)
 		NowAnimationName = Name;
 		mLoop	= Loop;
 		mSpeed	= Speed;
+		ChangeAnime();
 	}
 }
 
@@ -223,6 +227,8 @@ void AnimationController::Pause()
 
 void AnimationController::SetFrame(int index)
 {
+	if (NowAnimation == nullptr) { return; }
+
 	// 현재 프레임의 총 진행 시간 설정..
 	mTime = index * NowAnimation->m_TicksPerFrame;
 
@@ -241,7 +247,6 @@ void AnimationController::SetFrame(int index)
 		mNextFrame = 0;
 	}
 
-	// 설정 당시 해당 프레임 진행시간 초기화..
 	mFrameTime = 0.0f;
 
 	// 애니메이션 오프셋 설정..
@@ -269,6 +274,11 @@ int AnimationController::GetEndFrame()
 	return NowAnimation->m_EndFrame - 1;
 }
 
+float AnimationController::GetFrameTime()
+{
+	return mTime;
+}
+
 int AnimationController::GetAnimationCount()
 {
 	if (mAnimation == nullptr)
@@ -294,4 +304,17 @@ void AnimationController::GetAnimationList(std::vector<std::string>* NameList)
 std::string AnimationController::GetNowAnimationName()
 {
 	return NowAnimationName;
+}
+
+bool AnimationController::EventCheck()
+{
+	float Time = GetFrameTime();
+	if (NowAnimation->m_Event_min <= Time && Time <= NowAnimation->m_Event_max)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }

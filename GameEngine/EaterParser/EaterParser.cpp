@@ -8,12 +8,18 @@
 
 EaterParser::EaterParser()
 {
-
+	mAnimation_Data		= new EATER_ANIMATION_DATA();
+	mMaterial_Data		= new EATER_MATERIAL_DATA();
+	mVertex_Skin_Data	= new EATER_VERTEX_SKIN();
+	mVertex_Base_Data	= new EATER_VERTEX_BASE();
 }
 
 EaterParser::~EaterParser()
 {
-
+	delete mAnimation_Data;
+	delete mMaterial_Data;
+	delete mVertex_Skin_Data;
+	delete mVertex_Base_Data;
 }
 
 void EaterParser::OPEN_FILE(std::string& Path)
@@ -374,7 +380,7 @@ void EaterParser::ChangeList(int NodeCount,std::string &ListName, int cx_index,i
 
 void EaterParser::ChangeDataSave(std::string& FileName, std::string& OutPath, std::string& FileType)
 {
-	//fclose(ReadFile);
+	fclose(ReadFile);
 
 	CREATE_FILE(FileName, OutPath, FileType);
 

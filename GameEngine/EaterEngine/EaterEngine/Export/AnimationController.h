@@ -34,12 +34,14 @@ public:
 	EATER_ENGINEDLL void Pause();	//중지
 	EATER_ENGINEDLL void SetFrame(int index);
 
-	EATER_ENGINEDLL int GetNowFrame();	//선택한 애니메이션 프레임
-	EATER_ENGINEDLL int GetEndFrame();	//선택한 애니메이션 끝 프레임
-
+	EATER_ENGINEDLL int GetNowFrame();					//선택한 애니메이션 프레임
+	EATER_ENGINEDLL int GetEndFrame();					//선택한 애니메이션 끝 프레임
+	EATER_ENGINEDLL float GetFrameTime();				//선택한 애니메이션 시간
 	EATER_ENGINEDLL int GetAnimationCount();
 	EATER_ENGINEDLL void GetAnimationList(std::vector<std::string>* NameList);
-	EATER_ENGINEDLL std::string GetNowAnimationName();
+	EATER_ENGINEDLL std::string GetNowAnimationName();	//현재 애니메이션의 이름
+	EATER_ENGINEDLL bool EventCheck();	//현재 애니메이션의 이름
+
 
 	void SetSkin(GameObject* obj);
 	void SetBoneList(std::vector<GameObject*>* mobjList);
@@ -54,7 +56,7 @@ private:
 	std::vector<Animator*> AnimatorList;
 
 	//스킨 게임 오브젝트
-	GameObject* SkinObject;
+	std::vector<GameObject*> SkinObject;
 
 	//한개의 모델에 들어있는 애니메이션 리스트
 	Animation* mAnimation;

@@ -419,6 +419,9 @@ void Eater_LoadMesh::LoadAnimation(int index, std::string& Name)
 	AniData->m_StartFrame		= (int)std::stof(EATER_GET_MAP(index, "StartFrame"));
 	AniData->m_EndFrame			= (int)std::stof(EATER_GET_MAP(index, "EndFrame"));
 
+	AniData->m_Event_min		= (float)std::stof(EATER_GET_MAP(index, "EventMin"));
+	AniData->m_Event_max		= (float)std::stof(EATER_GET_MAP(index, "EventMax"));
+
 	int BoneCount = std::stoi(EATER_GET_MAP(index, "BoneCount"));
 	for (int k = 0; k < BoneCount; k++)
 	{

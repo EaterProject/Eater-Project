@@ -86,6 +86,10 @@ namespace ParserData
 		int		m_StartFrame;
 		int		m_EndFrame;
 		int		m_Index;
+
+		//툴에서 지정한 이벤트 시간
+		float	m_Event_min;
+		float	m_Event_max;
 	};
 
 	class CIndexList

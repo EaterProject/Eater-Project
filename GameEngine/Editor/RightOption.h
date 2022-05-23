@@ -83,6 +83,11 @@ public:
 	CamAnimation*		mCam;
 	CreateMaterial*		mMaterial;
 public:
+	std::string ChildName;
+	std::string ParentName;
+	HTREEITEM ChildItem;
+	HTREEITEM ParentItem;
+
 	static void MouseDown();
 	void Create_Hirearchy_Item(GameObject* Obj, HTREEITEM TOP);
 	void Delete_Hirearchy_Item(HTREEITEM TOP);
@@ -91,7 +96,7 @@ public:
 	void ChickObjectTap(GameObject* Obj);
 	void OnChoice_Hirearchy_Item(GameObject* Obj);
 	//void ChickMaterial(CPoint point);
-	GameObject* FindGameObjectParent(HTREEITEM mItem);
+	GameObject* FindGameObjectParent(HTREEITEM mItem,bool FindParent = false);
 
 	static RightOption* GetThis();
 	static RightOption* thisPointer;
@@ -109,4 +114,9 @@ public:
 	afx_msg void OnCreateBasicMaterial();
 	afx_msg void OnCreatePrefap();
 	afx_msg void OnOpenOption();
+	afx_msg void OnBnClickedButton11();
+	afx_msg void OnBnClickedButton13();
+	afx_msg void OnBnClickedButton27();
+	CEdit ParentName_Edit;
+	CEdit ChildName_Eidt;
 };

@@ -46,17 +46,18 @@ void MonsterA::Awake()
 void MonsterA::SetUp()
 {
 	//콜라이더 값 조정
-	mColider->SetCenter(0, 0.5, 0);
+	mColider->SetCenter(0, 0.25f, 0);
 	mColider->SetSphereCollider(0.25f);
 	mColider->SetMaterial_Restitution(0);
 	mRigidbody->SetFreezeRotation(true, true, true);
 	mRigidbody->SetGravity(true);
 	mColider->CreatePhys();
 
-	//매쉬 생성
+	//매쉬 생성a
 	mMeshFilter->SetModelName("MonsterA+");
 	mMeshFilter->SetAnimationName("MonsterA+");
-	mAnimation->Choice("idle");
+	//mAnimation->Choice("idle");
+	mAnimation->Play();
 
 	//이동 위치
 	Vector3 Point = Mana->GetPoint(PointIndex, 1);
@@ -84,6 +85,14 @@ void MonsterA::Update()
 	Debug();
 }
 
+void MonsterA::OnTriggerStay(GameObject* Obj)
+{
+	if (Obj->GetTag() == 6 && Player::GetAttackState() == true)
+	{
+		mAnimation->Choice("die");
+	}
+}
+
 void MonsterA::Move()
 {
 	if (MoveStart == false)
@@ -95,7 +104,7 @@ void MonsterA::Move()
 	if (GetStopPoint() == false)
 	{
 		//목표지점의 도달하지 않았을때
-		mTransform->Slow_Y_Rotation(MovePoint, 100,true);
+		mTransform->Slow_Y_Rotation(MovePoint, 100,false);
 		mRigidbody->SetVelocity(DirPoint.x, DirPoint.y, DirPoint.z);
 	}
 	else

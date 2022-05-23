@@ -28,15 +28,24 @@ protected:
 public:
 	AnimationController* AC;
 
+	CSliderCtrl AnimationBar_Slider;
 	CComboBox AnimationList;
 	CString AnimationName;
 	CEdit AnimationEndEdit;
 	CEdit AnimationStartEdit;
 	CEdit Animation_Speed_Edit;
 	CButton Loop_Check;
+	CEdit NowAnimationName_Edit;
+	CEdit NowAnimationFrame_Edit;
+	CEdit NowAnimationTime_Edit;
+	CEdit EventTimeMin_Eidt;
+	CEdit EventTimeMax_Eidt;
 
 	int Speed = 1;
-	bool Loop = true;
+	bool  Loop = true;
+	float FrameTime		= 0;
+	float FrameMin_Time = 0;
+	float FrameMax_Time = 0;
 
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	afx_msg void OnCbnSelchangeCombo1();
@@ -45,4 +54,7 @@ public:
 	afx_msg void OnPauseButton();
 	afx_msg void OnStopButton();
 	afx_msg void OnLoopCheck();
+	afx_msg void OnMinFrameTime();
+	afx_msg void OnMaxFrameTime();
+	afx_msg void OnEventTimeSave();
 };

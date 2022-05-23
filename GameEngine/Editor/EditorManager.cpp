@@ -31,8 +31,6 @@ void EditorManager::Initialize()
 
 	//에셋폴더안에 필요한 폴더들을 미리 생성한다
 	CreateAssetsFile();
-
-	//mEater->Load_Eater_File("../Assets/Model/MeshBuffer/Player+_0.Emsh");
 }
 
 void EditorManager::ConvertData(std::string Path)
@@ -80,8 +78,11 @@ void EditorManager::ConvertData(std::string Path, std::string ChangeName, CHANGE
 		ParserData::CModel* Model = mFbx->OpenFile(Path);
 		mEater->Load_FBX_File_NavMeshBuffer(Path, Model, ChangeName);
 	}
+}
 
-	
+void EditorManager::ConvertAnimationData(std::string Path, std::string ChangeName, float min, float max)
+{
+	mEater->Load_Animation_File(Path, ChangeName, min, max);
 }
 
 void EditorManager::OpenEaterFile(std::string Path,int Type)
