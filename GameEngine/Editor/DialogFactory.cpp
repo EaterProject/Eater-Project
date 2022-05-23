@@ -12,6 +12,7 @@
 #include "CustomDialog.h"
 #include "SceneSetting.h"
 #include "SkySetting.h"
+#include "EditorManager.h"
 
 
 
@@ -76,7 +77,8 @@ void DialogFactory::Initialize()
 	mSkySetting->Create(IDD_SKY_SETTING);
 	mSkySetting->ShowWindow(SW_HIDE);
 
-
+	mEditorManager = new EditorManager();
+	mEditorManager->Initialize();
 
 	
 	mTransform	= new CTAP_Transform();

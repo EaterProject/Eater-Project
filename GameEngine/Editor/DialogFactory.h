@@ -1,6 +1,7 @@
 #pragma once
 #include "EditorDefine.h"
 
+class EditorManager;
 class Loading;
 class FileOption;
 class RightOption;
@@ -54,6 +55,7 @@ public:
 
 	GETTER(RightOption,		mRightOption_Dlog);
 	GETTER(AssetsDialog,	mAssets_Dlog);
+	GETTER(EditorManager,   mEditorManager)
 
 	///SET
 	SETTER(RightOption, mRightOption_Dlog);
@@ -86,6 +88,8 @@ private:
 	CTAP_MeshFilter*	mMeshFilter;	//MeshFiltet∏¶ ∫∏ø©¡Ÿ ≈«
 	CTAP_Particle*		mPrticle;		//MeshFiltet∏¶ ∫∏ø©¡Ÿ ≈«
 	CTAP_Light*			mLight;			//Light ∏¶ ∫∏ø©¡Ÿ ≈«
+private:
+	EditorManager*		mEditorManager;
 private:
 	void CustomDlgDelete(CustomDialog* Dlg);
 };

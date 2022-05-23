@@ -39,7 +39,7 @@ void EATER_CLOSE_CHANGE_FILE(std::string FileName, std::string OutPath, std::str
 
  void EATER_CHANGE_MAP(int NodeIndex, std::string key, std::string value)
  {
-	 if (value == "") { value = "NO"; }
+	 if (value == "") { value = "0"; }
 	 Parser->ChangeMap(NodeIndex, key, value);
  }
 
@@ -86,6 +86,26 @@ void EATER_CLOSE_CHANGE_FILE(std::string FileName, std::string OutPath, std::str
  void EATER_SET_INDEX(int& x, int& y, int& z)
  {
 	 Parser->SetIndex(x, y, z);
+ }
+
+ EATER_ANIMATION_DATA* EATER_GET_ANIMATION_DATA()
+ {
+	 return Parser->mAnimation_Data;
+ }
+
+ EATER_MATERIAL_DATA* EATER_GET_MATERIAL_DATA()
+ {
+	 return Parser->mMaterial_Data;
+ }
+
+ EATER_VERTEX_BASE* EATER_GET_VERTEX_BASE_DATA()
+ {
+	 return Parser->mVertex_Base_Data;
+ }
+
+ EATER_VERTEX_SKIN* EATER_GET_VERTEX_SKIN_DATA()
+ {
+	 return Parser->mVertex_Skin_Data;
  }
 
  int EATER_GET_NODE_COUNT()

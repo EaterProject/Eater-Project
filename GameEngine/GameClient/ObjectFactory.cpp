@@ -52,15 +52,31 @@ void ObjectFactory::Release()
 
 GameObject* ObjectFactory::CreatePlayer()
 {
-	//툴에서 만들어놓은 플레이어, 카메라를 가져옴
-	GameObject* PlayerObject = FindGameObjectTag("Player");
-	GameObject* PlayerMainCamera = InstanceCamera("Camera");
-	 
-	////클라이언트쪽 컨퍼넌트 Add
+	//플레이어와 카메라 오브젝트를 생성
+	GameObject* PlayerObject		= Instance();
+	GameObject* PlayerMainCamera	= InstanceCamera("Camera");
+	GameObject* PlayerCollider		= Instance();
+	GameObject* PlayerWeapon		= Instance();
+	
+	//플레이어 생성
+	PlayerObject->SetTag("Player");
 	PlayerObject->AddComponent<Player>();
-	PlayerMainCamera->AddComponent<Camera>();
-	PlayerMainCamera->GetComponent<Camera>()->ChoiceMainCam();
+	PlayerObject->AddComponent<MeshFilter>();
+	PlayerObject->AddComponent<AnimationController>();
+
+	//콜라이더 객체 생성
+	PlayerCollider->SetTag("PlayerCollider");
+	PlayerCollider->AddComponent<Collider>();
+	
+	//플레이어 무기 생성
+	PlayerWeapon->SetTag("Weapon");
+	PlayerWeapon->AddComponent<MeshFilter>();
+
+	//카메라 생성
+	Camera* Main = PlayerMainCamera->GetComponent<Camera>();
+	Main->ChoiceMainCam();
 	PlayerMainCamera->AddComponent<PlayerCamera>();
+
 	return PlayerObject;
 }
 

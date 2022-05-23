@@ -9,9 +9,11 @@ public:
 public:
 	void Create(ManaStone* mMana, int mCreatePointIndex);
 public:
-	void Awake();
-	void SetUp();
-	void Update();
+	void Awake()	override;
+	void SetUp()	override;
+	void Update()	override;
+	void OnTriggerStay(GameObject* Obj);
+
 
 	void Move();
 	void Attack();

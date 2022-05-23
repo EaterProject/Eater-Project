@@ -237,7 +237,7 @@ void Transform::Slow_Y_Rotation(Vector3 Dir, float RotationSpeed, bool Z_Front)
 	//도착 지점의 각도를 구한다 이떄 범위는 -180 ~ 180 이다
 	Vector3 N = Dir - Position;
 	N.Normalize();
-	float EndAngle = (-atan2(N.z, N.x) * 180 / 3.141592f);
+	float EndAngle = (-atan2(N.z, N.x) * 180.0f / 3.141592f);
 
 	//도착지점 범위를 변경해준다 우리 엔진과 맞추기 위해서 0~ 360
 	if (EndAngle <= 0) { EndAngle += 360; }
@@ -294,8 +294,8 @@ void Transform::Slow_Y_Rotation(Vector3 Dir, float RotationSpeed, bool Z_Front)
 	//위에도 말했지만 0도 의 위치때문에 한번더 검사를 해준다(0 ~ -90 여기 범위 판별을 위해)
 	if (EndAngle - 90 <= 0)
 	{
-		float Max = 360 + MaxAngle;
-		float Min = 360 + MinAngle;
+		float Max = 360.0f + MaxAngle;
+		float Min = 360.0f + MinAngle;
 		if (MyAngle <= Max && MyAngle >= Min)
 		{
 			RotationDir = 0.0f;

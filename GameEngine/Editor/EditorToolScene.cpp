@@ -213,11 +213,17 @@ GameObject* EditorToolScene::FindMesh(std::string MeshName)
 	return ObjectList[MeshName];
 }
 
-GameObject* EditorToolScene::FindMesh(std::string MeshName, std::string ParentName)
+GameObject* EditorToolScene::FindMeshChild(std::string MeshName, std::string ParentName)
 {
 	GameObject* Parent = FindMesh(ParentName);
 	GameObject* Child = Parent->GetChildObject(MeshName);
 	return Child;
+}
+
+GameObject* EditorToolScene::FindMeshParent(std::string MeshName, std::string ParentName)
+{
+	GameObject* Parent = FindMesh(ParentName);
+	return Parent;
 }
 
 std::string EditorToolScene::FindMeshName(std::string MeshName)

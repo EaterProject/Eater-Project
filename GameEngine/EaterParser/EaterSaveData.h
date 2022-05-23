@@ -119,3 +119,29 @@ struct EATER_SCENE_DATA
 {
 
 };
+
+struct EATER_ANIMATION_DATA
+{
+	float FrameTime;
+	float Local_Pos_X;
+	float Local_Pos_Y;
+	float Local_Pos_Z;
+
+	float Local_Rot_X;
+	float Local_Rot_Y;
+	float Local_Rot_Z;
+	float Local_Rot_W;
+
+	float Local_Scl_X;
+	float Local_Scl_Y;
+	float Local_Scl_Z;
+
+	float World_Pos_X;
+	float World_Pos_Y;
+	float World_Pos_Z;
+
+	float World_Rot_X;
+	float World_Rot_Y;
+	float World_Rot_Z;
+	float World_Rot_W;
+};

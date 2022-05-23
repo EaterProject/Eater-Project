@@ -63,12 +63,6 @@ GameEngine::GameEngine()
 	// Render Option 초기 설정..
 	mRenderOption = new RenderOption();
 
-#if defined(DEBUG) || defined(_DEBUG)
-	mRenderOption->DebugOption			= DEBUG_OPTION::DEBUG_RENDERTARGET | DEBUG_OPTION::DEBUG_MODE;
-#else
-	mRenderOption->DebugOption			= DEBUG_OPTION::DEBUG_MODE;
-#endif
-
 	mRenderOption->RenderingOption		= RENDER_OPTION::RENDER_SHADOW | RENDER_OPTION::RENDER_SSAO | RENDER_OPTION::RENDER_IBL | RENDER_OPTION::RENDER_FOG;
 	mRenderOption->PostProcessOption	= POSTPROCESS_OPTION::RENDER_BLOOM | POSTPROCESS_OPTION::RENDER_HDR | POSTPROCESS_OPTION::RENDER_FXAA;
 }

@@ -14,6 +14,7 @@ void InGame::Awake()
 
 	//SetSkyLight("Day");
 	SetSkyLight("HDRI_2_CubeMap");
+
 	//SetEnvironment("Day");
 	SetSkyCube("HDRI_2_CubeMap");
 

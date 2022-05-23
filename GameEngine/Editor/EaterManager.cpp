@@ -201,6 +201,11 @@ void EaterManager::Load_GameObject_File(GameObject* Object, ObjectOption* mOptio
 	//}
 }
 
+void EaterManager::Load_Animation_File(std::string& FileName,std::string& ChangeName, float& min, float& max)
+{
+	mAnimationManager->ChangeEaterFile(FileName, ChangeName,min,max);
+}
+
 void EaterManager::Create_Material(InstanceMaterial* m)
 {
 	mMaterialManager->Create(m);

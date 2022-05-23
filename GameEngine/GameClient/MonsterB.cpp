@@ -45,7 +45,7 @@ void MonsterB::Awake()
 void MonsterB::SetUp()
 {
 	//콜라이더 값 조정
-	mColider->SetCenter(0, 0.5, 0);
+	mColider->SetCenter(0, 0.25, 0);
 	mColider->SetSphereCollider(0.25f);
 	mColider->SetMaterial_Restitution(0);
 	mRigidbody->SetFreezeRotation(true, true, true);
@@ -55,7 +55,8 @@ void MonsterB::SetUp()
 	//매쉬 생성
 	mMeshFilter->SetModelName("MonsterB+");
 	mMeshFilter->SetAnimationName("MonsterB+");
-	mAnimation->Choice("idle");
+	//mAnimation->Choice("idle");
+	//mAnimation->Play();
 
 	//이동 위치
 	Vector3 Point = Mana->GetPoint(PointIndex, 1);
@@ -94,7 +95,7 @@ void MonsterB::Move()
 	if (GetStopPoint() == false)
 	{
 		//목표지점의 도달하지 않았을때
-		mTransform->Slow_Y_Rotation(MovePoint, 100, true);
+		mTransform->Slow_Y_Rotation(MovePoint, 100, false);
 		mRigidbody->SetVelocity(DirPoint.x, DirPoint.y, DirPoint.z);
 	}
 	else

@@ -115,7 +115,7 @@ void E_ChangeManager::Change_Material(int index, GameObject* Object)
 		//≈∏¿œ∏µ ª©¡‡æﬂ«‘ ....
 
 		EATER_CHANGE_MAP(index, "MaterialName", mMaterial);
-		EATER_CHANGE_MAP(index, "Alpha", "NO");
+		EATER_CHANGE_MAP(index, "Alpha", "0");
 		EATER_CHANGE_MAP(index, "DiffuseMap", mDiffuse);
 		EATER_CHANGE_MAP(index, "NormalMap", mNormal);
 		EATER_CHANGE_MAP(index, "EmissiveMap", mEmissive);
