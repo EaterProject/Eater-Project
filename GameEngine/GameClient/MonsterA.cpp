@@ -60,6 +60,7 @@ void MonsterA::SetUp()
 
 	//플레이어
 	mPlayer = FindGameObjectTag("Player");
+	mPlayerTR = mPlayer->GetTransform();
 
 	//이동 위치
 	Vector3 Point = Mana->GetPoint(PointIndex, 1);
@@ -82,6 +83,9 @@ void MonsterA::Update()
 	case (int)MONSTER_STATE::ATTACK:
 		Attack();
 		break;
+	case (int)MONSTER_STATE::CHASE:
+		Chase();
+		break;
 	}
 
 	Debug();
@@ -92,6 +96,7 @@ void MonsterA::OnTriggerStay(GameObject* Obj)
 	if (Obj->GetTag() == 6 && Player::GetAttackState() == true)
 	{
 		mAnimation->Choice("die");
+		gameobject->SetActive(false);
 	}
 }
 
@@ -130,6 +135,12 @@ void MonsterA::Attack()
 
 void MonsterA::Idle()
 {
+	if (mTransform->GetDistance(mPlayer->GetTransform()->Position) <= AttackDir)
+	{
+
+		return;
+	}
+
 	//기본 값 셋팅
 	if (IdleStart == false)
 	{
@@ -155,9 +166,15 @@ void MonsterA::Idle()
 	}
 }
 
+void MonsterA::Chase()
+{
+	mTransform->Slow_Y_Rotation(MovePoint, 100, false);
+	mRigidbody->SetVelocity(mPlayerTR->Position.x, DirPoint.y, mPlayerTR->Position.z);
+}
+
 void MonsterA::Debug()
 {
-	DebugDrawCircle(2.5f, mTransform->Position, Vector3(0, 0, 0), Vector3(1, 0, 0));
+	DebugDrawCircle(AttackDir, mTransform->Position, Vector3(0, 0, 0), Vector3(1, 0, 0));
 }
 
 

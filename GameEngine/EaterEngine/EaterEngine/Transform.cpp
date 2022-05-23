@@ -281,8 +281,8 @@ void Transform::Slow_Y_Rotation(Vector3 Dir, float RotationSpeed, bool Z_Front)
 
 	//오차범위를 설정한다 (float형은 == 비교연산자를 쓰면 안되기때문에 범위를 지정해준다)
 	//범위는 현재 위치에서 프레임당 이동하는 각도량 +,- 해준값
-	float MaxAngle = (EndAngle - 90) + RotationAngleSpeed;	//멈춰야하는 각도의 최대값
-	float MinAngle = (EndAngle - 90) - RotationAngleSpeed;	//멈춰야하는 각도의 최소값
+	float MaxAngle = (EndAngle - 90.0f) + RotationAngleSpeed + 5;	//멈춰야하는 각도의 최대값
+	float MinAngle = (EndAngle - 90.0f) - RotationAngleSpeed + 5;	//멈춰야하는 각도의 최소값
 	float MyAngle =  Rotation.y;				//현재 각도값
 
 	//회전 도착지점 을 설정한다

@@ -26,6 +26,7 @@ protected:
 	AnimationController*	mAnimation;
 	Collider*				mColider;
 	Rigidbody*				mRigidbody;
+	Transform*				mPlayerTR;
 protected:
 	Vector3 MovePoint;	//이동해야하는 지점
 	Vector3 DirPoint;	//이동지점의 방향벡터

@@ -17,10 +17,12 @@ public:
 	void Move();
 	void Attack();
 	void Idle();
+	void Chase();
 	void Debug();
 private:
 	ManaStone* Mana;
 	GameObject* mPlayer;
 	int PointIndex = 0;
+	float AttackDir = 2.5f;
 };
 
