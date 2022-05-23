@@ -103,3 +103,27 @@ PARSER_DLL DirectX::SimpleMath::Vector4 ImageParser::GetPixelColor(ParserData::I
 		break;
 	}
 }
+
+PARSER_DLL DirectX::SimpleMath::Vector4 ImageParser::GetPixelColor(ParserData::ImageData& img, int x, int y)
+{
+	switch (img.type)
+	{
+	case PIXEL_TYPE::FLOAT_TYPE:
+	case PIXEL_TYPE::HDR_TYPE:
+	{
+		const float* p = static_cast<float*>(img.imgColor) + (4 * (y * img.width + x));
+
+		return DirectX::SimpleMath::Vector4(p[0], p[1], p[2], p[3]);
+	}
+	break;
+	case PIXEL_TYPE::CHAR_TYPE:
+	{
+		const unsigned char* p = static_cast<unsigned char*>(img.imgColor) + (4 * (y * img.width + x));
+
+		return DirectX::SimpleMath::Vector4(p[0], p[1], p[2], p[3]);
+	}
+	break;
+	default:
+		break;
+	}
+}

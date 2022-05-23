@@ -16,9 +16,10 @@ RenderDataConverter::~RenderDataConverter()
 void RenderDataConverter::ConvertMeshData(MeshData* originData, RenderData* renderData)
 {
 	// Mesh Data 설정..
-	renderData->m_ObjectData = originData->Object_Data;
-	renderData->m_AnimationData = originData->Animation_Data;
-	renderData->m_ParticleData = originData->Particle_Data;
+	renderData->m_ObjectData		= originData->Object_Data;
+	renderData->m_AnimationData		= originData->Animation_Data;
+	renderData->m_UIData			= originData->UI_Data;
+	renderData->m_ParticleData		= originData->Particle_Data;
 
 	// ID 설정을 위한 Hash Color 생성..
 	// UINT 형식으로 찍을 것이기에 0번 인덱스는 비워둔다..

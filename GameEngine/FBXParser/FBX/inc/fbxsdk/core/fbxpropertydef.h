@@ -59,14 +59,14 @@ public:
         eMutedAll = eMutedMember0 | eMutedMember1 | eMutedMember2 | eMutedMember3,
 
 		//Private flags
-		eUIDisabled = 1 << 15,		//!< Private flag for dynamic UI in FBX plug-ins.
-		eUIGroup = 1 << 16,			//!< Private flag for dynamic UI in FBX plug-ins.
-		eUIBoolGroup = 1 << 17,		//!< Private flag for dynamic UI in FBX plug-ins.
-		eUIExpanded = 1 << 18,		//!< Private flag for dynamic UI in FBX plug-ins.
-		eUINoCaption = 1 << 19,		//!< Private flag for dynamic UI in FBX plug-ins.
-		eUIPanel = 1 << 20,			//!< Private flag for dynamic UI in FBX plug-ins.
-		eUILeftLabel = 1 << 21,		//!< Private flag for dynamic UI in FBX plug-ins.
-		eUIHidden = 1 << 22,		//!< Private flag for dynamic UI in FBX plug-ins.
+		eUIDisabled = 1 << 15,		//!< Private flag for dynamic RectTransform in FBX plug-ins.
+		eUIGroup = 1 << 16,			//!< Private flag for dynamic RectTransform in FBX plug-ins.
+		eUIBoolGroup = 1 << 17,		//!< Private flag for dynamic RectTransform in FBX plug-ins.
+		eUIExpanded = 1 << 18,		//!< Private flag for dynamic RectTransform in FBX plug-ins.
+		eUINoCaption = 1 << 19,		//!< Private flag for dynamic RectTransform in FBX plug-ins.
+		eUIPanel = 1 << 20,			//!< Private flag for dynamic RectTransform in FBX plug-ins.
+		eUILeftLabel = 1 << 21,		//!< Private flag for dynamic RectTransform in FBX plug-ins.
+		eUIHidden = 1 << 22,		//!< Private flag for dynamic RectTransform in FBX plug-ins.
 
 		eCtrlFlags = eStatic | eAnimatable | eAnimated | eImported | eUserDefined | eHidden | eNotSavable | eLockedAll | eMutedAll,
 		eUIFlags = eUIDisabled | eUIGroup | eUIBoolGroup | eUIExpanded | eUINoCaption | eUIPanel | eUILeftLabel | eUIHidden,

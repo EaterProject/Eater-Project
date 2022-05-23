@@ -18,6 +18,7 @@ public:
 	ObjectData*		m_ObjectData;
 	AnimationData*	m_AnimationData;
 	ParticleData*	m_ParticleData;
+	UIData*			m_UIData;
 };
 
 // 동일 Instance를 관리하기 위한 Instance Layer Class

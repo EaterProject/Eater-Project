@@ -74,6 +74,7 @@ typedef enum OBJECT_TYPE
 	TEXTURE,		//한개의 텍스쳐로된 오브젝트(페이스두개가 합쳐진 사각형 텍스쳐)
 	PARTICLE,		//파티클
 	PARTICLE_SYSTEM,//파티클 시스템
+	RectTransform,
 }OBJECT_TYPE;
 
 // Light Type

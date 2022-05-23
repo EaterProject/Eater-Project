@@ -202,6 +202,21 @@ public:
 	std::vector<MaterialBuffer*> Material_List;		// Material List
 };
 
+// RectTransform Data
+class UIData
+{
+public:
+	Vector2 TexScale;
+	Vector2 TexPos;
+
+	Vector4 ImageColor;
+
+	Matrix World;
+
+public:
+	TextureBuffer* Albedo = nullptr;				// DiffuseMap Texture
+};
+
 // Particle Data
 class OneParticle
 {
@@ -329,8 +344,9 @@ public:
 	AnimationBuffer* Animation_Buffer = nullptr;	// Animation Buffer
 
 	// 추가 데이터
-	AnimationData*	Animation_Data = nullptr;		// Animation Data
+	AnimationData*	Animation_Data	= nullptr;		// Animation Data
 	TerrainData*	Terrain_Data	= nullptr;		// Terrain Data
+	UIData*			UI_Data			= nullptr;		// RectTransform Data
 	ParticleData*	Particle_Data	= nullptr;		// Particle Data
 };
 

@@ -360,7 +360,7 @@ public:
 	* while the property handle object exists. 
 	*
 	* Soft minimums and maximums values are specifying a second set of limits that can be 
-	* used for UI objects such as sliders. FBX will handle them the same way it does
+	* used for RectTransform objects such as sliders. FBX will handle them the same way it does
 	* with the normal limits. */
 	//@{
 		/** Judge if this property has a minimum value.

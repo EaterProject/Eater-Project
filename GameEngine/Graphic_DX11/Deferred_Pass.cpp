@@ -218,7 +218,7 @@ void Deferred_Pass::BeginRender()
 
 void Deferred_Pass::RenderUpdate(const InstanceRenderBuffer* instance, const std::vector<RenderData*>& meshlist)
 {
-	m_RenderCount = (int)meshlist.size();
+	m_RenderCount = (UINT)meshlist.size();
 
 	if (m_RenderCount == 1)
 	{

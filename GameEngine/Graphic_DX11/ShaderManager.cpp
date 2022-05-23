@@ -150,7 +150,7 @@ void ShaderManager::CreateShader()
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "SkyBox_PS.hlsl", "SkyBox_PS", "SkyBox_PS_Option2", skyBox_macro2);	// HDR
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "SkyBox_PS.hlsl", "SkyBox_PS", "SkyBox_PS_Option3", skyBox_macro3);	// Fog + HDR
 
-	// UI Shader
+	// RectTransform Shader
 	LoadShader(SHADER_TYPE::VERTEX_SHADER, "UI_VS.hlsl", "UI_VS", "UI_VS");
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "UI_PS.hlsl", "UI_PS", "UI_PS");
 
@@ -338,7 +338,7 @@ void ShaderManager::AddConstantBufferUsage()
 	PushConstantBufferUsage<CB_CubeObject>(CBUFFER_USAGE::DYNAMIC);
 	PushConstantBufferUsage<CB_CubeConvert>(CBUFFER_USAGE::DYNAMIC);
 
-	// UI..
+	// RectTransform..
 	PushConstantBufferUsage<CB_UIObject>(CBUFFER_USAGE::DYNAMIC);
 
 	// IBL Baking..

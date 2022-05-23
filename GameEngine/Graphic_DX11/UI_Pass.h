@@ -14,7 +14,22 @@ public:
 
 	void ApplyOption() override;
 
-public:
+	void RenderUpdate(std::vector<RenderData*>& meshlist);
 
+private:
+	VertexShader* m_UI_VS;
+	PixelShader* m_UI_PS;
+
+	DrawBuffer* m_Screen_DB;
+
+	RenderTexture* m_Origin_RT;
+
+private:
+	ID3D11RenderTargetView* m_OutPut_RTV;
+
+private:
+	RenderData* m_RenderData;
+
+	UINT m_RenderCount;
 };
 

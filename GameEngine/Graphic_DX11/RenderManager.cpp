@@ -358,7 +358,7 @@ void RenderManager::Render()
 	PostProcessingRender();
 	GPU_END_EVENT_DEBUG_NAME();
 
-	// UI Render..
+	// RectTransform Render..
 	GPU_BEGIN_EVENT_DEBUG_NAME("UI Pass");
 	UIRender();
 	GPU_END_EVENT_DEBUG_NAME();
@@ -506,7 +506,7 @@ void RenderManager::PostProcessingRender()
 
 void RenderManager::UIRender()
 {
-
+	m_UI->RenderUpdate(m_UIRenderMeshList);
 }
 
 void RenderManager::DebugRender()
@@ -634,6 +634,9 @@ void RenderManager::ConvertPushInstance()
 		case OBJECT_TYPE::PARTICLE_SYSTEM:
 			PushTransparencyRenderData(convertRenderData);
 			break;
+		case OBJECT_TYPE::RectTransform:
+			PushUIRenderData(convertRenderData);
+			break;
 		default:
 			PushUnRenderData(convertRenderData);
 			break;
@@ -685,6 +688,9 @@ void RenderManager::ConvertChangeInstance()
 			break;
 		case OBJECT_TYPE::PARTICLE_SYSTEM:
 			ChangeTransparencyRenderData(originMeshData);
+			break;
+		case OBJECT_TYPE::RectTransform:
+			
 			break;
 		default:
 			ChangeUnRenderData(originMeshData);
@@ -738,6 +744,11 @@ void RenderManager::PushTransparencyRenderData(RenderData* renderData)
 
 	// 해당 Layer가 등록되어 있는지 확인..
 	FindInstanceLayer(m_TransparencyMeshList, instanceLayer);
+}
+
+void RenderManager::PushUIRenderData(RenderData* renderData)
+{
+	m_UIRenderMeshList.push_back(renderData);
 }
 
 void RenderManager::PushUnRenderData(RenderData* renderData)
@@ -819,6 +830,11 @@ void RenderManager::ChangeTransparencyRenderData(MeshData* meshData)
 
 	// 해당 Layer가 등록되어 있는지 확인..
 	FindInstanceLayer(m_TransparencyMeshList, layer);
+}
+
+void RenderManager::ChangeUIRenderData(RenderData* renderData)
+{
+
 }
 
 void RenderManager::ChangeUnRenderData(MeshData* meshData)

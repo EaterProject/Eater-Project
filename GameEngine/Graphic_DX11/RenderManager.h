@@ -86,12 +86,14 @@ private:
 	void ConvertPushInstance();									// 현재 프레임 진행중 추가된 Instance 변환..
 	void ConvertChangeInstance();								// 현재 프레임 진행중 변경된 Instance 변환..
 
-	void PushOpacityMeshData(RenderData* renderData);			// Opacity Mesh Render List 삽입..
-	void PushTransparencyRenderData(RenderData* renderData);	// Transparency Mesh Render List 삽입..
-	void PushUnRenderData(RenderData* renderData);				// Un Render List 삽입..
+	void PushOpacityMeshData(RenderData* renderData);			// Opacity Mesh Render Data 삽입..
+	void PushTransparencyRenderData(RenderData* renderData);	// Transparency Mesh Render Data 삽입..
+	void PushUIRenderData(RenderData* renderData);				// RectTransform Mesh Render Data 삽입..
+	void PushUnRenderData(RenderData* renderData);				// Un Render Data 삽입..
 
 	void ChangeOpacityMeshData(MeshData* meshData);				// Opacity Mesh Render Data 변환..
 	void ChangeTransparencyRenderData(MeshData* meshData);		// Transparency Mesh Render Data 변환..
+	void ChangeUIRenderData(RenderData* renderData);			// RectTransform Mesh Render Data 변환..
 	void ChangeUnRenderData(MeshData* meshData);				// Un Render Data 변환..
 
 	void DeleteOpacityMeshData(MeshData* meshData);				// Opacity Mesh Render Data 제거..
@@ -114,7 +116,7 @@ private:
 
 	std::vector<InstanceLayer*> m_OpacityMeshList;
 	std::vector<InstanceLayer*> m_TransparencyMeshList;
-	std::vector<RenderData*> m_UIMeshList;
+	std::vector<RenderData*> m_UIRenderMeshList;
 	std::vector<RenderData*> m_UnRenderMeshList;
 
 	std::vector<RenderPassBase*> m_RenderPassList;
