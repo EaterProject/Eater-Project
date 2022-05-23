@@ -5,7 +5,7 @@ public:
 	std::string m_Name;
 };
 
-// Game Engine 측 MaterialBuffer와 대응하는 DirectX 11 전용 Material Data Class
+// Game Engine 측 Material Buffer와 대응하는 DirectX 11 전용 Material Data Class
 class MaterialRenderBuffer : public RenderResource
 {
 public:
@@ -19,7 +19,7 @@ public:
 	ID3D11ShaderResourceView* m_ORM;
 };
 
-// Game Engine 측 MeshBuffer와 대응하는 DirectX 11 전용 Mesh Data Class
+// Game Engine 측 Mesh Buffer와 대응하는 DirectX 11 전용 Mesh Data Class
 class MeshRenderBuffer : public RenderResource
 {
 public:
@@ -35,7 +35,7 @@ public:
 	MeshProperty* m_MeshProperty;
 };
 
-// Game Engine 측 AnimationBuffer와 대응하는 DirectX 11 전용 Animation Data Class
+// Game Engine 측 Animation Buffer와 대응하는 DirectX 11 전용 Animation Data Class
 class AnimationRenderBuffer : public RenderResource
 {
 public:
@@ -47,12 +47,23 @@ public:
 	ID3D11ShaderResourceView* m_AnimationBuf;
 };
 
-// Game Engine 측 TerrainBuffer와 대응하는 DirectX 11 전용 Terrain Data Class
+// Game Engine 측 Terrain Buffer와 대응하는 DirectX 11 전용 Terrain Data Class
 class TerrainRenderBuffer : public RenderResource
 {
 public:
 	Matrix* m_Tex;
 	std::vector<MaterialRenderBuffer*> m_MaterialList;
+};
+
+// Game Engine 측 UI Buffer와 대응하는 DirectX 11 전용 UI Data Class
+class UIRenderBuffer : public RenderResource
+{
+public:
+	UINT m_BufferIndex;
+
+	UIProperty* m_UIProperty;
+
+	ID3D11ShaderResourceView* m_Albedo;
 };
 
 // Instance Layer를 관리하기 위한 Render Buffer Class

@@ -10,8 +10,6 @@
 #include "FBXManager.h"
 #include "TextureManager.h"
 #include "EATERManager.h"
-#include "MeshManager.h"
-#include "MaterialManager.h"
 #include "AnimationManager.h"
 #include "GraphicEngineAPI.h"
 #include "GraphicEngineManager.h"
@@ -47,9 +45,6 @@ void LoadManager::Initialize(GraphicEngineManager* graphic, CRITICAL_SECTION* _c
 {
 	g_CS = _cs;
 	mGraphicManager = graphic;
-
-	mMeshManager = new MeshManager();
-	mMaterialManager = new MaterialManager();
 
 	mAnimationManger = new AnimationManager();
 	mAnimationManger->Initialize(graphic, _cs);

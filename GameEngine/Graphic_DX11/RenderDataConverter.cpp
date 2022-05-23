@@ -18,7 +18,6 @@ void RenderDataConverter::ConvertMeshData(MeshData* originData, RenderData* rend
 	// Mesh Data 설정..
 	renderData->m_ObjectData		= originData->Object_Data;
 	renderData->m_AnimationData		= originData->Animation_Data;
-	renderData->m_UIData			= originData->UI_Data;
 	renderData->m_ParticleData		= originData->Particle_Data;
 
 	// ID 설정을 위한 Hash Color 생성..
@@ -45,9 +44,18 @@ void RenderDataConverter::ConvertMeshData(MeshData* originData, RenderData* rend
 			renderData->m_Terrain->m_MaterialList.push_back(layerMaterial);
 		}
 
-		m_LayerList.insert(std::make_pair((UINT)m_LayerList.size(), renderData->m_Terrain));
+		m_TerrainList.insert(std::make_pair((UINT)m_TerrainList.size(), renderData->m_Terrain));
 	}
 	break;
+	case OBJECT_TYPE::UI:
+	{
+		renderData->m_UI = new UIRenderBuffer();
+		renderData->m_UI->m_UIProperty = originData->UI_Buffer->UI_Property;
+		renderData->m_UI->m_Albedo = (ID3D11ShaderResourceView*)originData->UI_Buffer->Albedo;
+
+		m_UIList.insert(std::make_pair((UINT)m_UIList.size(), renderData->m_UI));
+	}
+		break;
 	default:
 		break;
 	}
@@ -334,7 +342,7 @@ void RenderDataConverter::DeleteMesh(UINT index)
 	RELEASE_COM(mesh->m_IndexBuf);
 	RELEASE_COM(mesh->m_VertexBuf);
 
-	// 해당 Instance Buffer 삭제..
+	// 해당 Mesh Buffer 삭제..
 	SAFE_DELETE(mesh);
 	m_MeshList.erase(index);
 
@@ -360,7 +368,7 @@ void RenderDataConverter::DeleteMaterial(UINT index)
 	//RELEASE_COM(material->m_Emissive);
 	//RELEASE_COM(material->m_ORM);
 	
-	// 해당 Instance Buffer 삭제..
+	// 해당 Material Buffer 삭제..
 	SAFE_DELETE(material);
 	m_MaterialList.erase(index);
 }
@@ -370,21 +378,40 @@ void RenderDataConverter::DeleteAnimation(UINT index)
 	// 해당 Index Mesh 체크..
 	std::unordered_map<UINT, AnimationRenderBuffer*>::iterator itor = m_AnimationList.find(index);
 
-	// 해당 Material이 없는데 지우려는 경우는 없어야한다..
+	// 해당 Animation이 없는데 지우려는 경우는 없어야한다..
 	assert(itor != m_AnimationList.end());
 
-	// 해당 Material 검색..
+	// 해당 Animation 검색..
 	AnimationRenderBuffer* animation = itor->second;
 
-	// 해당 Material 관련 Instance 삭제..
+	// 해당 Animation 관련 Instance 삭제..
 	CheckEmptyInstance(animation);
 
 	// 해당 Resource 제거..
 	RELEASE_COM(animation->m_AnimationBuf);
 
-	// 해당 Instance Buffer 삭제..
+	// 해당 Animation Buffer 삭제..
 	SAFE_DELETE(animation);
 	m_AnimationList.erase(index);
+}
+
+void RenderDataConverter::DeleteUI(UINT index)
+{
+	// 해당 Index Mesh 체크..
+	std::unordered_map<UINT, UIRenderBuffer*>::iterator itor = m_UIList.find(index);
+
+	// 해당 UI가 없는데 지우려는 경우는 없어야한다..
+	assert(itor != m_UIList.end());
+
+	// 해당 UI 검색..
+	UIRenderBuffer* ui = itor->second;
+
+	// 해당 Resource 제거..
+	//RELEASE_COM(ui->m_Albedo);
+
+	// 해당 UI Buffer 삭제..
+	SAFE_DELETE(ui);
+	m_UIList.erase(index);
 }
 
 size_t RenderDataConverter::FindMaxInstanceCount()

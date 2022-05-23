@@ -247,13 +247,15 @@ void RenderManager::PushChangeAnimation(AnimationBuffer* animation)
 
 void RenderManager::DeleteInstance(MeshData* instance)
 {
+	if (instance == nullptr) return;
+
 	// Object Type에 따른 Render Mesh Data 제거..
 	switch (instance->Object_Data->ObjType)
 	{
 	case OBJECT_TYPE::BASE:
 	case OBJECT_TYPE::SKINNING:
 	case OBJECT_TYPE::TERRAIN:
-		DeleteOpacityMeshData(instance);
+		DeleteOpacityRenderData(instance);
 		break;
 	case OBJECT_TYPE::PARTICLE_SYSTEM:
 		DeleteTransparencyRenderData(instance);
@@ -268,16 +270,22 @@ void RenderManager::DeleteInstance(MeshData* instance)
 
 void RenderManager::DeleteMesh(MeshBuffer* mesh)
 {
+	if (mesh == nullptr) return;
+
 	m_Converter->DeleteMesh(mesh->BufferIndex);
 }
 
 void RenderManager::DeleteMaterial(MaterialBuffer* material)
 {
+	if (material == nullptr) return;
+
 	m_Converter->DeleteMaterial(material->BufferIndex);
 }
 
 void RenderManager::DeleteAnimation(AnimationBuffer* animation)
 {
+	if (animation == nullptr) return;
+
 	m_Converter->DeleteAnimation(animation->BufferIndex);
 }
 
@@ -629,7 +637,7 @@ void RenderManager::ConvertPushInstance()
 		case OBJECT_TYPE::BASE:
 		case OBJECT_TYPE::SKINNING:
 		case OBJECT_TYPE::TERRAIN:
-			PushOpacityMeshData(convertRenderData);
+			PushOpacityRenderData(convertRenderData);
 			break;
 		case OBJECT_TYPE::PARTICLE_SYSTEM:
 			PushTransparencyRenderData(convertRenderData);
@@ -684,13 +692,13 @@ void RenderManager::ConvertChangeInstance()
 		case OBJECT_TYPE::BASE:
 		case OBJECT_TYPE::SKINNING:
 		case OBJECT_TYPE::TERRAIN:
-			ChangeOpacityMeshData(originMeshData);
+			ChangeOpacityRenderData(originMeshData);
 			break;
 		case OBJECT_TYPE::PARTICLE_SYSTEM:
 			ChangeTransparencyRenderData(originMeshData);
 			break;
 		case OBJECT_TYPE::UI:
-			
+			ChangeUIRenderData(originMeshData);
 			break;
 		default:
 			ChangeUnRenderData(originMeshData);
@@ -706,7 +714,7 @@ void RenderManager::ConvertChangeInstance()
 	CheckInstanceLayer(m_TransparencyMeshList);
 }
 
-void RenderManager::PushOpacityMeshData(RenderData* renderData)
+void RenderManager::PushOpacityRenderData(RenderData* renderData)
 {
 	// 그릴수 없는 상태인 경우 Layer에 삽입하지 않는다..
 	if (renderData->m_InstanceLayerIndex == -1) return;
@@ -756,7 +764,7 @@ void RenderManager::PushUnRenderData(RenderData* renderData)
 	m_UnRenderMeshList.push_back(renderData);
 }
 
-void RenderManager::ChangeOpacityMeshData(MeshData* meshData)
+void RenderManager::ChangeOpacityRenderData(MeshData* meshData)
 {
 	// Render Data 변환..
 	RenderData* convertRenderData = (RenderData*)meshData->Render_Data;
@@ -832,9 +840,13 @@ void RenderManager::ChangeTransparencyRenderData(MeshData* meshData)
 	FindInstanceLayer(m_TransparencyMeshList, layer);
 }
 
-void RenderManager::ChangeUIRenderData(RenderData* renderData)
+void RenderManager::ChangeUIRenderData(MeshData* meshData)
 {
+	// Render Data 변환..
+	RenderData* convertRenderData = (RenderData*)meshData->Render_Data;
 
+	// Render Data 재설정..
+	convertRenderData->m_UI->m_Albedo = (ID3D11ShaderResourceView*)meshData->UI_Buffer->Albedo;
 }
 
 void RenderManager::ChangeUnRenderData(MeshData* meshData)
@@ -842,7 +854,7 @@ void RenderManager::ChangeUnRenderData(MeshData* meshData)
 
 }
 
-void RenderManager::DeleteOpacityMeshData(MeshData* meshData)
+void RenderManager::DeleteOpacityRenderData(MeshData* meshData)
 {
 	// Render Data 변환..
 	RenderData* renderData = (RenderData*)meshData->Render_Data;
@@ -923,6 +935,36 @@ void RenderManager::DeleteTransparencyRenderData(MeshData* meshData)
 	CheckInstanceLayer(m_TransparencyMeshList);
 }
 
+void RenderManager::DeleteUIRenderData(MeshData* meshData)
+{
+	// Render Data 변환..
+	RenderData* renderData = (RenderData*)meshData->Render_Data;
+
+	// Render Data의 List 내에서의 Index..
+	int index = -1;
+
+	for (int i = 0; i < m_UIRenderMeshList.size(); i++)
+	{
+		// 해당 Render Data List Index 검색..
+		if (m_UIRenderMeshList[i] == renderData)
+		{
+			index = i;
+			break;
+		}
+	}
+
+	// Index가 검색이 안되면 안된다..
+	assert(index != -1);
+
+	UINT renderDataIndex = m_UIRenderMeshList[index]->m_ObjectData->ObjectIndex;
+
+	// 해당 Render Data 제거..
+	m_Converter->DeleteRenderData(renderDataIndex + 1);
+
+	// 해당 Instance List에서 제거...
+	m_UIRenderMeshList.erase(std::next(m_UIRenderMeshList.begin(), index));
+}
+
 void RenderManager::DeleteUnRenderData(MeshData* meshData)
 {
 	// Render Data 변환..
@@ -940,6 +982,9 @@ void RenderManager::DeleteUnRenderData(MeshData* meshData)
 			break;
 		}
 	}
+
+	// Index가 검색이 안되면 안된다..
+	assert(index != -1);
 
 	UINT renderDataIndex = m_UnRenderMeshList[index]->m_ObjectData->ObjectIndex;
 

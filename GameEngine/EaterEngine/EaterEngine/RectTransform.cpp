@@ -3,6 +3,10 @@
 
 #include "GameObject.h"
 #include "GameEngine.h"
+#include "LoadManager.h"
+#include "GraphicEngineAPI.h"
+
+#include "IndexManager.h"
 
 RectTransform::RectTransform()
 {
@@ -11,7 +15,9 @@ RectTransform::RectTransform()
 	Position		= { 0, 0 };
 	Rotation		= { 0, 0, 0 };
 	Scale			= { 1, 1 };
-	ImageFillAmount = { 1, 1 };
+
+	Position_Offset = { 0, 0 };
+	Scale_Offset	= { 1, 1 };
 
 	PositionXM		= DirectX::XMMatrixIdentity();
 	RotationXM		= DirectX::XMMatrixIdentity();
@@ -20,18 +26,22 @@ RectTransform::RectTransform()
 
 RectTransform::~RectTransform()
 {
-	gameobject->OneMeshData->UI_Data = nullptr;
+	gameobject->OneMeshData->UI_Buffer = nullptr;
 
+	delete m_UI->UI_Property;
 	delete m_UI;
 }
 
 void RectTransform::Start()
 {
-	m_UI = new UIData();
+	m_UI = new UIBuffer();
+	m_UI->UI_Property = new UIProperty();
+
+	IndexManager<UIBuffer>::PushResource(m_UI, &m_UI->BufferIndex);
 
 	gameobject->OneMeshData->Object_Data->ObjType = OBJECT_TYPE::UI;
 
-	gameobject->OneMeshData->UI_Data = m_UI;
+	gameobject->OneMeshData->UI_Buffer = m_UI;
 }
 
 void RectTransform::TransformUpdate()
@@ -92,7 +102,17 @@ void RectTransform::TransformUpdate()
 
 	// 최종 Matrix 설정..
 	WorldXM = ScaleXM * RotationXM * PositionXM;
-	m_UI->World = WorldXM;
+	m_UI->UI_Property->World = WorldXM;
+}
+
+void RectTransform::SetImage(std::string texture_name)
+{
+	TextureBuffer* newTexture = LoadManager::GetTexture(texture_name);
+
+	// Texture 변경..
+	m_UI->Albedo = newTexture;
+
+	//gameobject->OneMeshData
 }
 
 void RectTransform::SetImagePivot(RECT_PIVOT pivot_type)
@@ -109,25 +129,35 @@ void RectTransform::SetImageColor(DirectX::SimpleMath::Vector4 imagecolor)
 {
 	ImageColor = imagecolor;
 
-	m_UI->ImageColor = imagecolor;
+	m_UI->UI_Property->ImageColor = imagecolor;
 }
 
 void RectTransform::SetPosition(DirectX::SimpleMath::Vector2 pos)
 {
-	Position += pos;
+	Position = pos;
 }
 
 void RectTransform::SetRotation(DirectX::SimpleMath::Vector3 rot)
 {
-	Rotation += rot;
+	Rotation = rot;
 }
 
 void RectTransform::SetScale(DirectX::SimpleMath::Vector2 scale)
 {
-	Scale += scale;
+	Scale = scale;
 }
 
-void RectTransform::SetTexFill(DirectX::SimpleMath::Vector2 fillamount)
+void RectTransform::AddPosition(DirectX::SimpleMath::Vector2 pos)
 {
-	ImageFillAmount = fillamount;
+	Position += pos;
+}
+
+void RectTransform::AddRotation(DirectX::SimpleMath::Vector3 rot)
+{
+	Rotation += rot;
+}
+
+void RectTransform::AddScale(DirectX::SimpleMath::Vector2 scale)
+{
+	Scale += scale;
 }

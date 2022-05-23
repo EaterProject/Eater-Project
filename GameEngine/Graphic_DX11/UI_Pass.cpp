@@ -78,20 +78,20 @@ void UI_Pass::RenderUpdate(std::vector<RenderData*>& meshlist)
 
 	const Matrix& proj = g_GlobalData->MainCamera_Data->CamOrthoProj;
 
-	UIData* ui = nullptr;
+	UIRenderBuffer* ui = nullptr;
 	CB_UIObject objectBuf;
 
 	for (UINT i = 0; i < m_RenderCount; i++)
 	{
 		m_RenderData = meshlist[i];
 
-		ui = m_RenderData->m_UIData;
+		ui = m_RenderData->m_UI;
 
 		// 활성화 상태의 UI가 아니라면 그리지 않는다..
 		if (m_RenderData->m_ObjectData->IsActive == false) continue;
 
 		// Vertex Shader Update..
-		objectBuf.gWorldViewProj = ui->World * proj;
+		objectBuf.gWorldViewProj = ui->m_UIProperty->World * proj;
 		m_UI_VS->ConstantBufferUpdate(&objectBuf);
 
 		m_UI_VS->Update();

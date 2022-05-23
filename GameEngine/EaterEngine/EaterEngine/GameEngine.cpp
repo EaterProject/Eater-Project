@@ -7,7 +7,6 @@
 #include "SceneManager.h"
 #include "GraphicEngineManager.h"
 #include "TimeManager.h"
-#include "MaterialManager.h"
 #include "LightManager.h"
 #include "PhysManager.h"
 #include "NetworkManager.h"
