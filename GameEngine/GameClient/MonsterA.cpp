@@ -56,8 +56,10 @@ void MonsterA::SetUp()
 	//매쉬 생성a
 	mMeshFilter->SetModelName("MonsterA+");
 	mMeshFilter->SetAnimationName("MonsterA+");
-	//mAnimation->Choice("idle");
 	mAnimation->Play();
+
+	//플레이어
+	mPlayer = FindGameObjectTag("Player");
 
 	//이동 위치
 	Vector3 Point = Mana->GetPoint(PointIndex, 1);
@@ -134,7 +136,7 @@ void MonsterA::Idle()
 		mAnimation->Choice("idle");
 		PointNumber		= rand() % 5;
 		Idle_MaxTime	= (rand() % Idle_MaxTime_Max) + Idle_MaxTime_Min;
-		Vector3 Point = Mana->GetPoint(PointIndex, PointNumber);
+		Vector3 Point	= Mana->GetPoint(PointIndex, PointNumber);
 		SetMovePoint(Point.x, Point.y, Point.z);
 		IdleStart = true;
 	}

@@ -67,12 +67,6 @@
     <Filter Include="소스 파일\Manager\ObjectManager">
       <UniqueIdentifier>{e62a3675-adb9-4441-b8b8-c04df61aaf04}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Component\Drone\Healing">
-      <UniqueIdentifier>{c85efbbf-e82c-40da-890c-4a20e0ad1096}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Component\Drone\Attack">
-      <UniqueIdentifier>{294bb296-337e-4b09-a646-3bcb8360c980}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Component\Bullet">
       <UniqueIdentifier>{7a6ddbcc-d47a-48be-9937-5c89b4286dc9}</UniqueIdentifier>
     </Filter>
@@ -147,12 +141,6 @@
     <ClInclude Include="ClientObjectManager.h">
       <Filter>소스 파일\Manager\ObjectManager</Filter>
     </ClInclude>
-    <ClInclude Include="HealingDrone.h">
-      <Filter>소스 파일\Component\Drone\Healing</Filter>
-    </ClInclude>
-    <ClInclude Include="AttackDrone.h">
-      <Filter>소스 파일\Component\Drone\Attack</Filter>
-    </ClInclude>
     <ClInclude Include="Bullet.h">
       <Filter>소스 파일\Component\Bullet</Filter>
     </ClInclude>
@@ -164,6 +152,9 @@
     </ClInclude>
     <ClInclude Include="MonsterComponent.h">
       <Filter>소스 파일\Component\Base\MonsterComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Drone.h">
+      <Filter>소스 파일\Component\Drone</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -212,12 +203,6 @@
     <ClCompile Include="ClientObjectManager.cpp">
       <Filter>소스 파일\Manager\ObjectManager</Filter>
     </ClCompile>
-    <ClCompile Include="HealingDrone.cpp">
-      <Filter>소스 파일\Component\Drone\Healing</Filter>
-    </ClCompile>
-    <ClCompile Include="AttackDrone.cpp">
-      <Filter>소스 파일\Component\Drone\Attack</Filter>
-    </ClCompile>
     <ClCompile Include="Bullet.cpp">
       <Filter>소스 파일\Component\Bullet</Filter>
     </ClCompile>
@@ -226,6 +211,9 @@
     </ClCompile>
     <ClCompile Include="MonsterComponent.cpp">
       <Filter>소스 파일\Component\Base\MonsterComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="Drone.cpp">
+      <Filter>소스 파일\Component\Drone</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

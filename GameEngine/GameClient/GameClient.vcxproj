@@ -172,10 +172,9 @@
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="AttackDrone.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="ClientTypeOption.h" />
-    <ClInclude Include="HealingDrone.h" />
+    <ClInclude Include="Drone.h" />
     <ClInclude Include="GameLogic.h" />
     <ClInclude Include="Loading.h" />
     <ClInclude Include="framework.h" />
@@ -205,9 +204,8 @@
     <ClInclude Include="TestScene.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AttackDrone.cpp" />
     <ClCompile Include="Bullet.cpp" />
-    <ClCompile Include="HealingDrone.cpp" />
+    <ClCompile Include="Drone.cpp" />
     <ClCompile Include="GameLogic.cpp" />
     <ClCompile Include="Loading.cpp" />
     <ClCompile Include="GameClient.cpp" />

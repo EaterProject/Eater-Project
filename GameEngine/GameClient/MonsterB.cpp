@@ -55,8 +55,7 @@ void MonsterB::SetUp()
 	//매쉬 생성
 	mMeshFilter->SetModelName("MonsterB+");
 	mMeshFilter->SetAnimationName("MonsterB+");
-	//mAnimation->Choice("idle");
-	//mAnimation->Play();
+	mAnimation->Play();
 
 	//이동 위치
 	Vector3 Point = Mana->GetPoint(PointIndex, 1);

@@ -6,7 +6,7 @@ class ObjectFactory;
 class GameObject;
 class Transform;
 
-class HealingDrone;
+class Drone;
 class AttackDrone;
 class Bullet;
 class MonsterA;
@@ -47,7 +47,7 @@ private:
 	std::vector<Bullet*>			Bullet_List;
 	std::vector<Potal*>				Potal_List;
 	std::vector<GameObject*>		ManaPoint_List;
-	HealingDrone* DroneList;
+	Drone* DroneList;
 private:
 	const int CreateMonsterACount		= 0;		//몬스터A 생성할 카운터
 	const int CreateMonsterBCount		= 0;		//몬스터B 생성할 카운터
