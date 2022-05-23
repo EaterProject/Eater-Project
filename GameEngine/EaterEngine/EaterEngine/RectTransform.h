@@ -23,7 +23,7 @@ public:
 	EATER_ENGINEDLL void SetRotation(DirectX::SimpleMath::Vector3 rot);
 	EATER_ENGINEDLL void SetScale(DirectX::SimpleMath::Vector2 scale);
 
-	EATER_ENGINEDLL void SetTexPosition(DirectX::SimpleMath::Vector2 pos);
+	EATER_ENGINEDLL void SetTexFill(DirectX::SimpleMath::Vector2 fillamount);
 
 public:
 	//ÇÇ¹þ
@@ -34,7 +34,7 @@ public:
 	DirectX::SimpleMath::Vector4 ImageColor;
 
 	//Tex
-	DirectX::SimpleMath::Vector2 ImageTex;
+	DirectX::SimpleMath::Vector2 ImageFillAmount;
 
 	//À§Ä¡
 	DirectX::SimpleMath::Vector2 Position;

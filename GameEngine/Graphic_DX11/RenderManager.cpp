@@ -634,7 +634,7 @@ void RenderManager::ConvertPushInstance()
 		case OBJECT_TYPE::PARTICLE_SYSTEM:
 			PushTransparencyRenderData(convertRenderData);
 			break;
-		case OBJECT_TYPE::RectTransform:
+		case OBJECT_TYPE::UI:
 			PushUIRenderData(convertRenderData);
 			break;
 		default:
@@ -689,7 +689,7 @@ void RenderManager::ConvertChangeInstance()
 		case OBJECT_TYPE::PARTICLE_SYSTEM:
 			ChangeTransparencyRenderData(originMeshData);
 			break;
-		case OBJECT_TYPE::RectTransform:
+		case OBJECT_TYPE::UI:
 			
 			break;
 		default:

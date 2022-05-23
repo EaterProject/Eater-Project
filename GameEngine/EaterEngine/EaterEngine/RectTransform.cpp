@@ -4,12 +4,12 @@
 
 RectTransform::RectTransform()
 {
-	ImagePivot	= { 0, 0 };
-	ImageSize	= { 0, 0 };
-	Position	= { 0, 0 };
-	Rotation	= { 0, 0, 0 };
-	Scale		= { 1, 1 };
-	ImageTex	= { 0, 0};
+	ImagePivot		= { 0, 0 };
+	ImageSize		= { 0, 0 };
+	Position		= { 0, 0 };
+	Rotation		= { 0, 0, 0 };
+	Scale			= { 1, 1 };
+	ImageFillAmount = { 1, 1 };
 }
 
 RectTransform::~RectTransform()
@@ -22,6 +22,8 @@ RectTransform::~RectTransform()
 void RectTransform::Start()
 {
 	m_UI = new UIData();
+
+	gameobject->OneMeshData->Object_Data->ObjType = OBJECT_TYPE::UI;
 
 	gameobject->OneMeshData->UI_Data = m_UI;
 }
@@ -63,7 +65,7 @@ void RectTransform::SetScale(DirectX::SimpleMath::Vector2 scale)
 	Scale = scale;
 }
 
-void RectTransform::SetTexPosition(DirectX::SimpleMath::Vector2 pos)
+void RectTransform::SetTexFill(DirectX::SimpleMath::Vector2 fillamount)
 {
-
+	ImageFillAmount = fillamount;
 }
