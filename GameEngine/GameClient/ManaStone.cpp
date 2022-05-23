@@ -39,7 +39,6 @@ void ManaStone::Awake()
 void ManaStone::SetUp()
 {
 	mMeshFilter->SetModelName("mana");
-	
 }
 
 void ManaStone::Update()

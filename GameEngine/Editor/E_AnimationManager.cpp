@@ -74,14 +74,14 @@ void E_AnimationManager::ChangeEaterFile(ParserData::CModel* FBXMesh)
 	EditorToolScene::MeshLoad(LoadName);
 }
 
-void E_AnimationManager::ChangeEaterFile(std::string& FileName,std::string& Name)
+void E_AnimationManager::ChangeEaterFile(std::string& FileName,std::string& Name ,float min,float max)
 {
 	EATER_OPEN_READ_FILE(FileName);
 	std::string num = EATER_GET_NODE_NAME(0);
 	int NodeCount = EATER_GET_NODE_COUNT();
-	EATER_CHANGE_MAP(0, "EventMin", "1.5");
-	EATER_CHANGE_MAP(0, "EventMax", "2.5");
-	EATER_CLOSE_CHANGE_FILE(Name,"Assets/Model/Animation/");
+	EATER_CHANGE_MAP(0, "EventMin", std::to_string(min));
+	EATER_CHANGE_MAP(0, "EventMax", std::to_string(max));
+	EATER_CLOSE_CHANGE_FILE(Name,"../Assets/Model/Animation/");
 }
 
 

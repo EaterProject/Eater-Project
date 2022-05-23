@@ -32,18 +32,16 @@ public:
 	void Update() override;
 	
 	static Transform* GetPlayerTransform();
-	//static PLAYER_STATE GetState();
+	static bool GetAttackState();
 
 	void Healing(float HealingPower);
 private:
 	void PlayerKeyinput();				//플레이어 키인풋
 	void PlayerAttackColliderUpdate();	//플레이어 공격 Collider
 	void PlayerGroundCheck();			//플레이어 땅체크
-
 	void PlayerState_Attack();			//플레이어 공격 상태 일때
 	void PlayerState_Base();			//플레이어 기본 상태 일때
 	bool PlayerEndFrameCheck();			//플레이어 현재 애니메이션이 끝났는지 체크
-
 private:
 	void Player_Attack_01();			//기본공격 1
 	void Player_Attack_02();			//기본공격 2
@@ -76,12 +74,13 @@ private:
 private:
 	///State관련
 	unsigned int mState = 0x00000000;
-	int AttackKeyDownCount = 0;
-	float HP		= 100;
-	float Speed		= 10;
-	const float MaxSpeed = 10;
-	bool IsAttack	= false;
-	bool IsMove		= false;
+	int AttackKeyDownCount	= 0;
+	float HP				= 100;
+	float Speed				= 10;
+	const float MaxSpeed	= 10;
+	bool IsAttack			= false;
+	bool IsMove				= false;
+	static bool IsAttackTime;
 private:
 	///Animation 관련
 	std::string AnimationName;
@@ -91,22 +90,22 @@ private:
 private:
 	///Raycast 관련
 	PhysRayCast* RayCastHit;
-	const int Ray_Front = 0;
-	const int Ray_Back	= 1;
-	const int Ray_Right = 2;
-	const int Ray_Left	= 3;
-	const int Ray_Center= 4;
-	bool IsFrontRayCheck = false;
-	bool IsBackRayCheck = false;
-	bool IsRightRayCheck = false;
-	bool IsLeftRayCheck = false;
-	int HitCount = 0;
+	const int Ray_Front		= 0;
+	const int Ray_Back		= 1;
+	const int Ray_Right		= 2;
+	const int Ray_Left		= 3;
+	const int Ray_Center	= 4;
+	bool IsFrontRayCheck	= false;
+	bool IsBackRayCheck		= false;
+	bool IsRightRayCheck	= false;
+	bool IsLeftRayCheck		= false;
+	int HitCount			= 0;
 private:
-	float AttackDir		= 0.75f; //공격 거리
-	float AttackRange	= 0.25f;
-	const float Attack01_Dir = 0.75f;
-	const float Attack02_Dir = 0.75f;
-	const float Skill01_Dir = 0.75f;
-	const float Skill02_Dir = 0.75f;
-	const float Skill03_Dir = 0.75f;
+	float AttackDir				= 0.75f; //공격 거리
+	float AttackRange			= 1.0f;
+	const float Attack01_Dir	= 0.75f;
+	const float Attack02_Dir	= 0.75f;
+	const float Skill01_Dir		= 0.75f;
+	const float Skill02_Dir		= 0.75f;
+	const float Skill03_Dir		= 0.75f;
 };

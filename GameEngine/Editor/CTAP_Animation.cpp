@@ -173,5 +173,7 @@ void CTAP_Animation::OnEventTimeSave()
 
 	std::string FileName	= "../Assets/Model/Animation/" + ObjectName + AnimationName + ".Eater";
 	EditorManager* mManager = DialogFactory::GetFactory()->GetEditorManager();
-	mManager->ConvertData(FileName, ObjectName+AnimationName,CHANGE_TYPE::ANIMATION);
+	//mManager->ConvertData(FileName, ObjectName+AnimationName,CHANGE_TYPE::ANIMATION);
+	mManager->ConvertAnimationData(FileName, ObjectName + AnimationName, FrameMin_Time, FrameMax_Time);
+	AfxMessageBox(L"애니메이션 Min,Max 변환 완료");
 }

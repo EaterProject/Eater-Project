@@ -56,7 +56,7 @@ void MonsterA::SetUp()
 	//매쉬 생성a
 	mMeshFilter->SetModelName("MonsterA+");
 	mMeshFilter->SetAnimationName("MonsterA+");
-	mAnimation->Choice("idle");
+	//mAnimation->Choice("idle");
 	mAnimation->Play();
 
 	//이동 위치
@@ -83,6 +83,14 @@ void MonsterA::Update()
 	}
 
 	Debug();
+}
+
+void MonsterA::OnTriggerStay(GameObject* Obj)
+{
+	if (Obj->GetTag() == 6 && Player::GetAttackState() == true)
+	{
+		mAnimation->Choice("die");
+	}
 }
 
 void MonsterA::Move()

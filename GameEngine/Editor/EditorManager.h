@@ -29,6 +29,7 @@ public:
 	void Initialize();
 	void ConvertData(std::string Path);
 	void ConvertData(std::string Path,std::string ChangeName, CHANGE_TYPE Option);
+	void ConvertAnimationData(std::string Path, std::string ChangeName, float min, float max);
 	
 
 	void OpenEaterFile(std::string Path, int Type);

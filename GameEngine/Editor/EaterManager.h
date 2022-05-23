@@ -36,7 +36,7 @@ public:
 
 
 	void Load_GameObject_File(GameObject* Object, ObjectOption* mOption);
-	void Load_Animation_File(std::string& FileName, std::string& ChangeName);
+	void Load_Animation_File(std::string& FileName, std::string& ChangeName,float& min,float& max);
 	void Create_Material(InstanceMaterial* m);
 
 	void CreateBaseObject();

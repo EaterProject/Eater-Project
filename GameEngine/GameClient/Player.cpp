@@ -12,6 +12,7 @@
 #include "PlayerCamera.h"
 
 Transform* Player::mTransform = nullptr;
+bool	Player::IsAttackTime = false;
 //PLAYER_STATE Player::mState;
 
 #define LERP(prev, next, time) ((prev * (1.0f - time)) + (next * time))
@@ -64,9 +65,10 @@ void Player::SetUp()
 	mMeshFilter->SetAnimationName("Player+");
 	//AttackCollider 범위
 	AttackCollider->SetSphereCollider(AttackRange);
+	AttackCollider->SetTrigger(true);
 	//애니메이션 기본 
-	mAnimation->Choice("move", 1, true);
-	mAnimation->Play();
+	//mAnimation->Choice("move", 1, true);
+	//mAnimation->Play();
 
 }
 
@@ -108,6 +110,11 @@ void Player::Update()
 Transform* Player::GetPlayerTransform()
 {
 	return mTransform;
+}
+
+bool Player::GetAttackState()
+{
+	return IsAttackTime;
 }
 
 //PLAYER_STATE Player::GetState()
@@ -263,6 +270,7 @@ void Player::PlayerState_Attack()
 	//	Player_Skill_03();
 	//}
 	mAnimation->Choice(AnimationName, AnimationSpeed, false);
+	mAnimation->Play();
 	AnimationSpeed = 1;
 }
 
@@ -302,6 +310,16 @@ void Player::Player_Attack_01()
 {
 	WeaponTR->Position = { 0,-0.02f,0.1f };
 	WeaponTR->Rotation = { 8,19,-10 };
+	if (mAnimation->EventCheck() == true)
+	{
+		DebugDrawCircle(1, mTransform->Position, mTransform->Rotation,Vector3(0,1,0));
+		IsAttackTime = true;
+	}
+	else
+	{
+		IsAttackTime = false;
+	}
+
 	//망치를 살짝올리고 내려찍는 공격
 	if (PlayerEndFrameCheck() == true)
 	{
