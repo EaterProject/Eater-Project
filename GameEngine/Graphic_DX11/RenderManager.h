@@ -2,21 +2,22 @@
 #include "RenderManagerBase.h"
 
 class RenderPassBase;
-class ShadowPass;
-class DeferredPass;
-class LightPass;
-class EnvironmentPass;
-class SSAOPass;
-class AlphaPass;
-class OITPass;
-class FXAAPass;
-class BloomPass;
-class FogPass;
-class CullingPass;
-class PickingPass;
-class OutLinePass;
-class CombinePass;
-class DebugPass;
+class Shadow_Pass;
+class Deferred_Pass;
+class Light_Pass;
+class Sky_Pass;
+class UI_Pass;
+class SSAO_Pass;
+class Alpha_Pass;
+class OIT_Pass;
+class FXAA_Pass;
+class Bloom_Pass;
+class Fog_Pass;
+class Culling_Pass;
+class Picking_Pass;
+class OutLine_Pass;
+class Combine_Pass;
+class Debug_Pass;
 
 class RenderData;
 class InstanceLayer;
@@ -85,12 +86,14 @@ private:
 	void ConvertPushInstance();									// 현재 프레임 진행중 추가된 Instance 변환..
 	void ConvertChangeInstance();								// 현재 프레임 진행중 변경된 Instance 변환..
 
-	void PushOpacityMeshData(RenderData* renderData);			// Opacity Mesh Render List 삽입..
-	void PushTransparencyRenderData(RenderData* renderData);	// Transparency Mesh Render List 삽입..
-	void PushUnRenderData(RenderData* renderData);				// Un Render List 삽입..
+	void PushOpacityMeshData(RenderData* renderData);			// Opacity Mesh Render Data 삽입..
+	void PushTransparencyRenderData(RenderData* renderData);	// Transparency Mesh Render Data 삽입..
+	void PushUIRenderData(RenderData* renderData);				// RectTransform Mesh Render Data 삽입..
+	void PushUnRenderData(RenderData* renderData);				// Un Render Data 삽입..
 
 	void ChangeOpacityMeshData(MeshData* meshData);				// Opacity Mesh Render Data 변환..
 	void ChangeTransparencyRenderData(MeshData* meshData);		// Transparency Mesh Render Data 변환..
+	void ChangeUIRenderData(RenderData* renderData);			// RectTransform Mesh Render Data 변환..
 	void ChangeUnRenderData(MeshData* meshData);				// Un Render Data 변환..
 
 	void DeleteOpacityMeshData(MeshData* meshData);				// Opacity Mesh Render Data 제거..
@@ -113,6 +116,7 @@ private:
 
 	std::vector<InstanceLayer*> m_OpacityMeshList;
 	std::vector<InstanceLayer*> m_TransparencyMeshList;
+	std::vector<RenderData*> m_UIRenderMeshList;
 	std::vector<RenderData*> m_UnRenderMeshList;
 
 	std::vector<RenderPassBase*> m_RenderPassList;
@@ -127,19 +131,20 @@ private:
 	RenderOption* m_RenderOption;
 	RenderOption m_NowRenderOption;
 
-	DeferredPass*		m_Deferred;
-	LightPass*			m_Light;
-	EnvironmentPass*	m_Environment;
-	ShadowPass*			m_Shadow;
-	SSAOPass*			m_SSAO;
-	AlphaPass*			m_Alpha;
-	OITPass*			m_OIT;
-	FXAAPass*			m_FXAA;
-	BloomPass*			m_Bloom;
-	FogPass*			m_Fog;
-	CullingPass*		m_Culling;
-	PickingPass*		m_Picking;
-	OutLinePass*		m_OutLine;
-	CombinePass*		m_Combine;
-	DebugPass*			m_Debug;
+	Deferred_Pass*		m_Deferred;
+	Light_Pass*			m_Light;
+	Sky_Pass*			m_Sky;
+	UI_Pass*			m_UI;
+	Shadow_Pass*		m_Shadow;
+	SSAO_Pass*			m_SSAO;
+	Alpha_Pass*			m_Alpha;
+	OIT_Pass*			m_OIT;
+	FXAA_Pass*			m_FXAA;
+	Bloom_Pass*			m_Bloom;
+	Fog_Pass*			m_Fog;
+	Culling_Pass*		m_Culling;
+	Picking_Pass*		m_Picking;
+	OutLine_Pass*		m_OutLine;
+	Combine_Pass*		m_Combine;
+	Debug_Pass*			m_Debug;
 };

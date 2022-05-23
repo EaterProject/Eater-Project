@@ -50,7 +50,7 @@ public:
 	FbxIOPropInfo();
     ~FbxIOPropInfo();
 
-	void*			UIWidget;            // UI widget for showing the property
+	void*			UIWidget;            // RectTransform widget for showing the property
 	void*			cbValueChanged;      // call back when value changed
     void*			cbDirty;             // call back when value changed
     FbxStringList	labels;              // list of labels in many languages
@@ -85,7 +85,7 @@ private:
   * options. 
   * It is primarily used by FBX importers (FbxImporter) and FBX exporter (FbxExporter) 
   * when reading or writing data from or to a disk. 
-  * The FBX plugins of some Autodesk products expose a UI representing the content of those options
+  * The FBX plugins of some Autodesk products expose a RectTransform representing the content of those options
   * to let users see and choose options when an import or export operation is about to be done.
   * The tree of options is extensible.
   * 
@@ -180,7 +180,7 @@ private:
   * if(import_Group.IsValid()) // check if we have found the IOSN_IMPORT parent option
   * {
   *     // add a new group of options "myOptionGroup"
-  *		FbxProperty myOptionGrp = ios->AddPropertyGroup(import_Group, "myOptionGroup", FbxStringDT, "My Option Group UI Label");
+  *		FbxProperty myOptionGrp = ios->AddPropertyGroup(import_Group, "myOptionGroup", FbxStringDT, "My Option Group RectTransform Label");
   * }
   * \endcode
   *
@@ -190,7 +190,7 @@ private:
   * if(myOptionGrp.IsValid()) // check if we have found the "myOptionGroup"
   * {
   *     bool defaultValue = true;
-  *		FbxProperty myOption = ios->AddProperty(myOptionGrp, "myOptionName", FbxBoolDT, "My Option UI label" , &defaultValue, eFbxBool);
+  *		FbxProperty myOption = ios->AddProperty(myOptionGrp, "myOptionName", FbxBoolDT, "My Option RectTransform label" , &defaultValue, eFbxBool);
   * }
   * \endcode
   *
@@ -199,7 +199,7 @@ private:
   * FbxProperty myOption = ios->GetProperty( "Import|myOptionGroup|myOptionName" );
   * if(myOption.IsValid())
   * {
-  *		myOPtion.ModifyFlag(FbxPropertyFlags::eUIHidden, true);   // to make that option not visible to the UI
+  *		myOPtion.ModifyFlag(FbxPropertyFlags::eUIHidden, true);   // to make that option not visible to the RectTransform
   *		myOPtion.ModifyFlag(FbxPropertyFlags::eNotSavable, true); // to avoid the read/save of that option in XML file
   * }
   * \endcode
@@ -234,10 +234,10 @@ public:
 	  * \param pParentProperty
 	  * \param pName
 	  * \param pDataType
-	  * \param pLabel   (optional, used by the UI as widget label)
-	  * \param pVisible (used by the UI to show or not that property)
+	  * \param pLabel   (optional, used by the RectTransform as widget label)
+	  * \param pVisible (used by the RectTransform to show or not that property)
 	  * \param pSavable (to enable a read & write to an XML file)
-	  * \param pEnabled (used by the widget UI to show enabled or disabled)
+	  * \param pEnabled (used by the widget RectTransform to show enabled or disabled)
 	  * \return a new FbxProperty created
 	  */
 	FbxProperty AddPropertyGroup(const FbxProperty& pParentProperty, const char* pName, const FbxDataType& pDataType = FbxDataType(), 
@@ -247,11 +247,11 @@ public:
 	  * \param pParentProperty
 	  * \param pName
 	  * \param pDataType
-	  * \param pLabel      (optional, used by the UI as widget label)
+	  * \param pLabel      (optional, used by the RectTransform as widget label)
 	  * \param pValue
-	  * \param pVisible    (used by the UI to show or not that property)
+	  * \param pVisible    (used by the RectTransform to show or not that property)
 	  * \param pSavable    (to enable a read & write to an XML file)
-	  * \param pEnabled    (used by the widget UI to show enabled or disabled)
+	  * \param pEnabled    (used by the widget RectTransform to show enabled or disabled)
 	  * \return a new FbxProperty created
 	  */		  
 	FbxProperty AddProperty(const FbxProperty& pParentProperty, const char* pName, const FbxDataType& pDataType = FbxDataType(), 
@@ -262,13 +262,13 @@ public:
 		  * \param pParentProperty
 		  * \param pName
 		  * \param pDataType
-		  * \param pLabel     (optional, used by the UI as widget label)
+		  * \param pLabel     (optional, used by the RectTransform as widget label)
 		  * \param pValue
 		  * \param pMinValue
 		  * \param pMaxValue
-		  * \param pVisible   (used by the UI to show or not that property)
+		  * \param pVisible   (used by the RectTransform to show or not that property)
 		  * \param pSavable   (to enable a read & write to an XML file)
-		  * \param pEnabled   (used by the widget UI to show enabled or disabled)
+		  * \param pEnabled   (used by the widget RectTransform to show enabled or disabled)
 		  * \return a new FbxProperty created
 		  * \remarks Normally used with numeric properties Ex: integer, float, double, etc.
 		  */		  		  

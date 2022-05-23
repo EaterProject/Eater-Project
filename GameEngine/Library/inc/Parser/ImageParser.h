@@ -25,4 +25,5 @@ public:
 
 	static PARSER_DLL ParserData::ImageData LoadImagePixel(const char* fileName, unsigned int channels, PIXEL_TYPE pixelType);
 	static PARSER_DLL DirectX::SimpleMath::Vector4 GetPixelColor(ParserData::ImageData& img, float x, float y);
+	static PARSER_DLL DirectX::SimpleMath::Vector4 GetPixelColor(ParserData::ImageData& img, int x, int y);
 };

@@ -78,7 +78,7 @@ public:
         eInfoDescriptions,      //!<  To get the file description for a writer ex:"Autodesk FBX (*.fbx)".  
         eInfoVersions,          //!<  To get the file version for a writer ex: 7100.
 		eInfoCompatibleDesc,    //!<  To get the file compatible description for a writer.
-		eInfoUILabel,           //!<  To get the file UI label to show for a writer ex: file labels shown in "Open file dialog".
+		eInfoUILabel,           //!<  To get the file RectTransform label to show for a writer ex: file labels shown in "Open file dialog".
         eReserved1 = 0xFBFB,
     };
 	

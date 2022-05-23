@@ -74,4 +74,10 @@ struct DebugTexturePixelIn
     float2 Tex  : TEXCOORD;
 };
 
+// Debug Pixel Shader Input & Output Data Struct
+struct UIPixelIn
+{
+    float4 PosH : SV_POSITION;
+    float2 Tex : TEXCOORD;
+};
 #endif

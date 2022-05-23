@@ -37,7 +37,7 @@ public:
 public:
 	//OnResize 에서 실행될 함수
 	void SetSize(int Change_Width, int Change_Height);
-	void CreateProj(int winsizeX,int WinSizeY, bool ViewPoint = false);
+	void CreateProj(int winsizeX,int WinSizeY);
 	EATER_ENGINEDLL void SetCulling(bool cull);
 
 private:
@@ -48,6 +48,7 @@ private:
 
 	//프로젝션
 	DirectX::SimpleMath::Matrix mProj;
+	DirectX::SimpleMath::Matrix mOrthoProj;
 
 	//뷰
 	DirectX::SimpleMath::Matrix mView;

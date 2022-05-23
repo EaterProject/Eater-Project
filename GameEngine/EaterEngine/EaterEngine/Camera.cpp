@@ -142,7 +142,7 @@ DirectX::SimpleMath::Matrix Camera::GetView()
 	}
 }
 
-void Camera::CreateProj(int winsizeX, int WinSizeY, bool ViewPoint)
+void Camera::CreateProj(int winsizeX, int WinSizeY)
 {
 	///모르면 MSDN 참고 
 	///XMMatrixPerspectiveFovLH 함수 검색하면됨
@@ -165,19 +165,17 @@ void Camera::CreateProj(int winsizeX, int WinSizeY, bool ViewPoint)
 	float mNearWindowHeight = 2.0f * mNearZ * tanf(0.5f * mFovY);
 	float mFarWindowHeight = 2.0f * mFarZ * tanf(0.5f * mFovY);
 	
-	if (ViewPoint == false)
-	{
-		//원근 투영
-		mProj = DirectX::XMMatrixPerspectiveFovLH(mFovY, mAspect, mNearZ, mFarZ);
-	}
-	else
-	{
-		//직교 투영
-		mProj = DirectX::XMMatrixOrthographicLH(mFovY, mAspect, mNearZ, mFarZ);
-	}
+	//원근 투영
+	mProj = DirectX::XMMatrixPerspectiveFovLH(mFovY, mAspect, mNearZ, mFarZ);
+
+	//직교 투영
+	mOrthoProj = DirectX::XMMatrixOrthographicOffCenterLH(0.0f, mFovY, mAspect, 0.0f, mNearZ, mFarZ);
 
 	// Camera Data 재설정..
 	mCameraData->CamProj = mProj;
+	mCameraData->CamOrthoProj = mOrthoProj;
+
+	// Camera Frustum 설정..
 	BoundingFrustum::CreateFromMatrix(mCameraData->OriginFrustum, mProj);
 }
 

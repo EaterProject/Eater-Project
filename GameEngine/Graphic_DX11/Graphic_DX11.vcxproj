@@ -187,29 +187,29 @@ copy /Y "$(ProjectDir)GraphicDLL.h" "$(SolutionDir)Library\inc"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="AlphaPass.h" />
+    <ClInclude Include="Alpha_Pass.h" />
     <ClInclude Include="BakingFactory.h" />
     <ClInclude Include="BakingFactoryBase.h" />
     <ClInclude Include="BlendStateDefine.h" />
-    <ClInclude Include="BloomPass.h" />
-    <ClInclude Include="BlurPass.h" />
+    <ClInclude Include="Bloom_Pass.h" />
+    <ClInclude Include="Blur_Pass.h" />
     <ClInclude Include="ConvertData.h" />
     <ClInclude Include="CullingData.h" />
-    <ClInclude Include="CullingPass.h" />
+    <ClInclude Include="Culling_Pass.h" />
     <ClInclude Include="Delegate.h" />
     <ClInclude Include="DrawBuffer.h" />
     <ClInclude Include="DrawBufferDefine.h" />
-    <ClInclude Include="DebugPass.h" />
+    <ClInclude Include="Debug_Pass.h" />
     <ClInclude Include="DepthStencilStateDefine.h" />
     <ClInclude Include="DepthStencilViewDefine.h" />
-    <ClInclude Include="EnvironmentPass.h" />
-    <ClInclude Include="Export\GraphicDLL.h" />
+    <ClInclude Include="Sky_Pass.h" />
+    <ClInclude Include="Export\Graphic_DX11_DLL.h" />
     <ClInclude Include="Export\GraphicEngineAPI.h" />
     <ClInclude Include="FactoryManager.h" />
     <ClInclude Include="FactoryManagerBase.h" />
     <ClInclude Include="FactoryBase.h" />
-    <ClInclude Include="FogPass.h" />
-    <ClInclude Include="FXAAPass.h" />
+    <ClInclude Include="Fog_Pass.h" />
+    <ClInclude Include="FXAA_Pass.h" />
     <ClInclude Include="GeometryGenerator.h" />
     <ClInclude Include="GraphicResource.h" />
     <ClInclude Include="GraphicState.h" />
@@ -219,16 +219,16 @@ copy /Y "$(ProjectDir)GraphicDLL.h" "$(SolutionDir)Library\inc"</Command>
     <ClInclude Include="ComputeShader.h" />
     <ClInclude Include="ConstantBufferDefine.h" />
     <ClInclude Include="D3D11Graphic.h" />
-    <ClInclude Include="DeferredPass.h" />
+    <ClInclude Include="Deferred_Pass.h" />
     <ClInclude Include="DepthStencil.h" />
     <ClInclude Include="InstanceBufferDefine.h" />
     <ClInclude Include="RenderDataConverterBase.h" />
-    <ClInclude Include="LightPass.h" />
+    <ClInclude Include="Light_Pass.h" />
     <ClInclude Include="MathDefine.h" />
-    <ClInclude Include="OITPass.h" />
-    <ClInclude Include="OutLinePass.h" />
+    <ClInclude Include="OIT_Pass.h" />
+    <ClInclude Include="OutLine_Pass.h" />
     <ClInclude Include="Patch_Chapters.h" />
-    <ClInclude Include="PickingPass.h" />
+    <ClInclude Include="Picking_Pass.h" />
     <ClInclude Include="RasterizerStateDefine.h" />
     <ClInclude Include="RenderData.h" />
     <ClInclude Include="RenderDataConverter.h" />
@@ -259,10 +259,11 @@ copy /Y "$(ProjectDir)GraphicDLL.h" "$(SolutionDir)Library\inc"</Command>
     <ClInclude Include="ShaderResourceHashTable.h" />
     <ClInclude Include="ShaderResourceViewDefine.h" />
     <ClInclude Include="ShaderTypes.h" />
-    <ClInclude Include="ShadowPass.h" />
-    <ClInclude Include="SSAOPass.h" />
-    <ClInclude Include="CombinePass.h" />
+    <ClInclude Include="Shadow_Pass.h" />
+    <ClInclude Include="SSAO_Pass.h" />
+    <ClInclude Include="Combine_Pass.h" />
     <ClInclude Include="ToolKitDefine.h" />
+    <ClInclude Include="UI_Pass.h" />
     <ClInclude Include="UnorderedAccessViewDefine.h" />
     <ClInclude Include="VertexDefine.h" />
     <ClInclude Include="VertexShader.h" />
@@ -270,23 +271,23 @@ copy /Y "$(ProjectDir)GraphicDLL.h" "$(SolutionDir)Library\inc"</Command>
     <ClInclude Include="ResourceBase.inl" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AlphaPass.cpp" />
+    <ClCompile Include="Alpha_Pass.cpp" />
     <ClCompile Include="BakingFactory.cpp" />
-    <ClCompile Include="BloomPass.cpp" />
-    <ClCompile Include="BlurPass.cpp" />
-    <ClCompile Include="CullingPass.cpp" />
+    <ClCompile Include="Bloom_Pass.cpp" />
+    <ClCompile Include="Blur_Pass.cpp" />
+    <ClCompile Include="Culling_Pass.cpp" />
     <ClCompile Include="Delegate.cpp" />
     <ClCompile Include="DrawBuffer.cpp" />
     <ClCompile Include="ComputeShader.cpp" />
     <ClCompile Include="D3D11Graphic.cpp" />
-    <ClCompile Include="DebugPass.cpp" />
-    <ClCompile Include="DeferredPass.cpp" />
+    <ClCompile Include="Debug_Pass.cpp" />
+    <ClCompile Include="Deferred_Pass.cpp" />
     <ClCompile Include="DepthStencil.cpp" />
-    <ClCompile Include="EnvironmentPass.cpp" />
+    <ClCompile Include="Sky_Pass.cpp" />
     <ClCompile Include="FactoryManager.cpp" />
     <ClCompile Include="FactoryBase.cpp" />
-    <ClCompile Include="FogPass.cpp" />
-    <ClCompile Include="FXAAPass.cpp" />
+    <ClCompile Include="Fog_Pass.cpp" />
+    <ClCompile Include="FXAA_Pass.cpp" />
     <ClCompile Include="GeometryGenerator.cpp" />
     <ClCompile Include="GraphicEngineAPI.cpp" />
     <ClCompile Include="GraphicResource.cpp" />
@@ -294,10 +295,10 @@ copy /Y "$(ProjectDir)GraphicDLL.h" "$(SolutionDir)Library\inc"</Command>
     <ClCompile Include="GraphicView.cpp" />
     <ClCompile Include="Graphic_DX11.cpp" />
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="LightPass.cpp" />
-    <ClCompile Include="OITPass.cpp" />
-    <ClCompile Include="OutLinePass.cpp" />
-    <ClCompile Include="PickingPass.cpp" />
+    <ClCompile Include="Light_Pass.cpp" />
+    <ClCompile Include="OIT_Pass.cpp" />
+    <ClCompile Include="OutLine_Pass.cpp" />
+    <ClCompile Include="Picking_Pass.cpp" />
     <ClCompile Include="PixelShader.cpp" />
     <ClCompile Include="RenderDataConverter.cpp" />
     <ClCompile Include="RenderPassBase.cpp" />
@@ -309,9 +310,10 @@ copy /Y "$(ProjectDir)GraphicDLL.h" "$(SolutionDir)Library\inc"</Command>
     <ClCompile Include="ShaderManager.cpp" />
     <ClCompile Include="ShaderResourceHashTable.cpp" />
     <ClCompile Include="ShaderTypes.cpp" />
-    <ClCompile Include="ShadowPass.cpp" />
-    <ClCompile Include="SSAOPass.cpp" />
-    <ClCompile Include="CombinePass.cpp" />
+    <ClCompile Include="Shadow_Pass.cpp" />
+    <ClCompile Include="SSAO_Pass.cpp" />
+    <ClCompile Include="Combine_Pass.cpp" />
+    <ClCompile Include="UI_Pass.cpp" />
     <ClCompile Include="VertexShader.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -334,6 +336,14 @@ copy /Y "$(ProjectDir)GraphicDLL.h" "$(SolutionDir)Library\inc"</Command>
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">main</EntryPointName>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compute</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="..\Assets\Shader\UI_PS.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="..\Assets\Shader\UI_VS.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
     <FxCompile Include="..\Assets\Shader\Depth_SkinMesh_VS.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
@@ -396,10 +406,10 @@ copy /Y "$(ProjectDir)GraphicDLL.h" "$(SolutionDir)Library\inc"</Command>
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">main</EntryPointName>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
-      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">main</EntryPointName>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Deferred_PBR_PS</EntryPointName>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
-      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">main</EntryPointName>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Deferred_PBR_PS</EntryPointName>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>

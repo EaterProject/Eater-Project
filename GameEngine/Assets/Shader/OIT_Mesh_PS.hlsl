@@ -9,15 +9,16 @@
 
 cbuffer cbMaterial : register(b0)
 {
-    float3 gAddColor        : packoffset(c0);
+    float3 gAddColor        : packoffset(c0.x);
     uint gOption            : packoffset(c0.w);
-    float gEmissiveFactor   : packoffset(c1.x);
-    float gRoughnessFactor  : packoffset(c1.y);
-    float gMetallicFactor   : packoffset(c1.z);
-    float gLimLightFactor   : packoffset(c1.w);
+        
+    float3 gLimLightColor   : packoffset(c1.x);
+    float gLimLightWidth    : packoffset(c1.w);
     
-    float3 gLimLightColor   : packoffset(c2.x);
-    float gLimLightWidth    : packoffset(c2.w);
+    float3 gEmissiveColor   : packoffset(c2.x);
+    
+    float gRoughnessFactor  : packoffset(c2.w);
+    float gMetallicFactor   : packoffset(c3.x);
 };
 
 cbuffer cbLightSub : register(b1)
@@ -56,8 +57,8 @@ Texture2D gBRDFlut          : register(t7);
 void OIT_Mesh_PS(MeshPixelIn pin)
 {
     float4 albedo       = float4(0.0f, 0.0f, 0.0f, 1.0f);
-    float4 emissive     = float4(0.0f, 0.0f, 0.0f, 1.0f);
-    float3 orm          = float3(0.0f, 0.0f, 0.0f);
+    float3 emissive     = float3(0.0f, 0.0f, 0.0f);
+    float2 rm           = float2(0.0f, 0.0f);
 
     float3 normalColor  = float3(0.0f, 0.0f, 0.0f);
     float3 normal       = float3(0.0f, 0.0f, 0.0f);
@@ -81,24 +82,21 @@ void OIT_Mesh_PS(MeshPixelIn pin)
     }
     if (gOption & EMISSIVE_MAP)
     {
-        emissive.rgb += gEmissiveMap.Sample(gSamWrapLinear, pin.Tex).rgb * gEmissiveFactor;
+        emissive += gEmissiveMap.Sample(gSamWrapLinear, pin.Tex).rgb * gEmissiveColor;
     }
     if (gOption & ORM_MAP)
     {
-        orm += gORMMap.Sample(gSamWrapLinear, pin.Tex).rgb;
+        rm += gORMMap.Sample(gSamWrapLinear, pin.Tex).gb;
     }
     if (gOption & LIM_LIGHT)
     {
-        float rim = 1.0f - max(0, dot(normal, ViewDirection));
-        rim = smoothstep(1.0f - gLimLightWidth, 1.0f, rim) * gLimLightFactor;
-    
-        emissive.rgb += gLimLightColor * rim;
+        emissive += gLimLightColor * smoothstep(1.0f - gLimLightWidth, 1.0f, 1.0f - max(0, dot(normal, ViewDirection)));
     }
     
     albedo.rgb += gAddColor.rgb;
     
-    float roughness = saturate(gRoughnessFactor + orm.g);
-    float metallic = saturate(gMetallicFactor + orm.b);
+    float roughness = saturate(gRoughnessFactor + rm.x);
+    float metallic = saturate(gMetallicFactor + rm.y);
 
     // 현재 픽셀의 Shadow 값..
     float shadows = 1.0f;
@@ -112,16 +110,16 @@ void OIT_Mesh_PS(MeshPixelIn pin)
     // Gamma Correction
 	// Gamma Space -> Linear Space
     albedo.rgb = pow(albedo.rgb, 2.2f);
-    emissive.rgb = pow(emissive.rgb, 2.2f);
+    emissive = pow(emissive, 2.2f);
     
-    float4 litColor = float4(0.0f, 0.0f, 0.0f, albedo.a);
-    litColor.rgb += PBR_DirectionalLight(ViewDirection, normal, gDirLights[0],
+    float3 litColor = float3(0.0f, 0.0f, 0.0f);
+    litColor += PBR_DirectionalLight(ViewDirection, normal, gDirLights[0],
                                 albedo.rgb, 1.0f, roughness, metallic, shadows);
 
-    litColor.rgb += PBR_PointLight(ViewDirection, normal, gPointLights, gPointLightCount, pin.PosW,
+    litColor += PBR_PointLight(ViewDirection, normal, gPointLights, gPointLightCount, pin.PosW,
                                 albedo.rgb, 1.0f, roughness, metallic, shadows);
     
-    litColor.rgb += PBR_SpotLight(ViewDirection, normal, gSpotLights, gSpotLightCount, pin.PosW,
+    litColor += PBR_SpotLight(ViewDirection, normal, gSpotLights, gSpotLightCount, pin.PosW,
                                 albedo.rgb, 1.0f, roughness, metallic, shadows);
     
 #ifdef IBL
@@ -129,14 +127,14 @@ void OIT_Mesh_PS(MeshPixelIn pin)
     float3 prefilteredColor = gIBLPrefilter.SampleLevel(gSamClampLinear, reflect(-ViewDirection, normal), roughness * MAX_REF_LOD).rgb;
     float2 brdf = gBRDFlut.Sample(gSamClampLinear, float2(max(dot(normal, ViewDirection), 0.0f), roughness)).rg;
     
-    litColor.rgb += IBL_EnvironmentLight(ViewDirection, normal, irradiance, prefilteredColor, brdf,
+    litColor += IBL_EnvironmentLight(ViewDirection, normal, irradiance, prefilteredColor, brdf,
                                         albedo.rgb, 1.0f, roughness, metallic, gIBLFactor);
 #endif
 
-    litColor.rgb += emissive.rgb;
+    litColor += emissive;
     
 #ifdef FOG
-    litColor.rgb = Fog(litColor.rgb, pin.PosW);
+    litColor = Fog(litColor.rgb, pin.PosW);
 #endif
     
     uint pixelCount = gPieceLinkBuffer.IncrementCounter();
@@ -148,10 +146,11 @@ void OIT_Mesh_PS(MeshPixelIn pin)
         startOffsetAddress, pixelCount, oldStartOffset);
     
     float strength = length(litColor);
+    float4 color = float4(litColor / strength, albedo.a);
     
     FLStaticNode node;
     node.Data.Strength = strength;
-    node.Data.Color = PackColorFromFloat4(litColor / strength);
+    node.Data.Color = PackColorFromFloat4(color);
     node.Data.Depth = pin.PosH.z;
     node.Next = oldStartOffset;
     

@@ -51,6 +51,7 @@ public:
 	EATER_ENGINEDLL void SetEmissiveTextureName(std::string mTextureName);
 	EATER_ENGINEDLL void SetORMTextureName(std::string mTextureName);
 
+	EATER_ENGINEDLL void SetEmissiveColor(DirectX::SimpleMath::Vector3 color);
 	EATER_ENGINEDLL void SetEmissiveFactor(float emissiveFactor);
 	EATER_ENGINEDLL void SetRoughnessFactor(float roughnessFactor);
 	EATER_ENGINEDLL void SetMetallicFactor(float metallicFactor);

@@ -169,11 +169,23 @@
     <Filter Include="소스 파일\EngineAPI">
       <UniqueIdentifier>{f73757eb-5a6f-4d7b-9396-09c400c48563}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Component\Transform\Terrain">
-      <UniqueIdentifier>{93570656-4fcd-4816-b74b-d46c9fd72da6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Manager\GraphicManager">
       <UniqueIdentifier>{b223fce5-c4e2-428b-b257-6e662f5be63b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\UI">
+      <UniqueIdentifier>{1b579730-f28c-43e4-baa8-f38ab9abd6af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\Terrain">
+      <UniqueIdentifier>{93570656-4fcd-4816-b74b-d46c9fd72da6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\UI\Button">
+      <UniqueIdentifier>{26ca3b34-e28a-4ecc-92d3-7bcc1ac6c8cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\UI\Image">
+      <UniqueIdentifier>{4b56ed3a-fc26-4556-81c5-ef4ebf39218b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\UI\Transform">
+      <UniqueIdentifier>{c486eaca-d4a5-4bc7-b5c4-f0e944ddb389}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -250,7 +262,7 @@
       <Filter>소스 파일\Manager\PhysManager</Filter>
     </ClInclude>
     <ClInclude Include="Export\Terrain.h">
-      <Filter>소스 파일\Component\Transform\Terrain</Filter>
+      <Filter>소스 파일\Component\Terrain</Filter>
     </ClInclude>
     <ClInclude Include="Export\ComponentBase.h">
       <Filter>소스 파일\Component\ComponentBase</Filter>
@@ -351,6 +363,15 @@
     <ClInclude Include="Export\EaterEngineAPI.h">
       <Filter>소스 파일\EngineAPI</Filter>
     </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>소스 파일\Component\UI\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="Image.h">
+      <Filter>소스 파일\Component\UI\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="RectTransform.h">
+      <Filter>소스 파일\Component\UI\Transform</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -426,7 +447,7 @@
       <Filter>소스 파일\Component\Rigidbody</Filter>
     </ClCompile>
     <ClCompile Include="Terrain.cpp">
-      <Filter>소스 파일\Component\Transform\Terrain</Filter>
+      <Filter>소스 파일\Component\Terrain</Filter>
     </ClCompile>
     <ClCompile Include="NetworkManager.cpp">
       <Filter>소스 파일\Manager\NetworkManager</Filter>
@@ -505,6 +526,15 @@
     </ClCompile>
     <ClCompile Include="EaterEngineAPI.cpp">
       <Filter>소스 파일\EngineAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>소스 파일\Component\UI\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="Image.cpp">
+      <Filter>소스 파일\Component\UI\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="RectTransform.cpp">
+      <Filter>소스 파일\Component\UI\Transform</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

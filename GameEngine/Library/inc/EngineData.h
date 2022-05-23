@@ -107,9 +107,12 @@ public:
 	bool LimLight = false;				// Lim Light
 
 	Vector3 AddColor = Vector3(0.0f, 0.0f, 0.0f);	// Add Color
-	float EmissiveFactor = 1.0f;		// Emissive 강도
+
 	float RoughnessFactor = 0.0f;		// Roughness 강도 (0 ~ 1)
 	float MetallicFactor = 0.0f;		// Metallic 강도 (0 ~ 1)
+
+	Vector3 EmissiveColor = Vector3(1.0f, 1.0f, 1.0f);	// Emissive Color
+	float EmissiveFactor = 1.0f;		// Emissive 강도
 
 	Vector3 LimLightColor = Vector3(0.0f, 0.0f, 0.0f);	// LimLight Color
 	float LimLightFactor = 0.0f;		// LimLight 강도
@@ -199,6 +202,21 @@ public:
 	std::vector<MaterialBuffer*> Material_List;		// Material List
 };
 
+// RectTransform Data
+class UIData
+{
+public:
+	Vector2 TexScale;
+	Vector2 TexPos;
+
+	Vector4 ImageColor;
+
+	Matrix World;
+
+public:
+	TextureBuffer* Albedo = nullptr;				// DiffuseMap Texture
+};
+
 // Particle Data
 class OneParticle
 {
@@ -255,6 +273,7 @@ public:
 	Matrix CamInvView;	// Camera Inverse XY View Matrix
 	Matrix CamView;		// Camera View Matrix
 	Matrix CamProj;		// Camera Proj Matrix
+	Matrix CamOrthoProj;	// Camera Orth Proj Matrix
 	Matrix CamViewProj;	// Camera View Proj Matrix
 	Vector3 CamPos;		// Camera Pos
 	Vector3 CamLook;	// Camera Look
@@ -325,8 +344,9 @@ public:
 	AnimationBuffer* Animation_Buffer = nullptr;	// Animation Buffer
 
 	// 추가 데이터
-	AnimationData*	Animation_Data = nullptr;		// Animation Data
+	AnimationData*	Animation_Data	= nullptr;		// Animation Data
 	TerrainData*	Terrain_Data	= nullptr;		// Terrain Data
+	UIData*			UI_Data			= nullptr;		// RectTransform Data
 	ParticleData*	Particle_Data	= nullptr;		// Particle Data
 };
 

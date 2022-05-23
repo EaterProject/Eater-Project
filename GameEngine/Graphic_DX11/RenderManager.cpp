@@ -21,21 +21,22 @@
 #include "RenderData.h"
 
 #include "VertexDefine.h"
-#include "ShadowPass.h"
-#include "DeferredPass.h"
-#include "LightPass.h"
-#include "EnvironmentPass.h"
-#include "SSAOPass.h"
-#include "AlphaPass.h"
-#include "OITPass.h"
-#include "FXAAPass.h"
-#include "BloomPass.h"
-#include "CombinePass.h"
-#include "FogPass.h"
-#include "PickingPass.h"
-#include "CullingPass.h"
-#include "OutLinePass.h"
-#include "DebugPass.h"
+#include "Shadow_Pass.h"
+#include "Deferred_Pass.h"
+#include "Light_Pass.h"
+#include "Sky_Pass.h"
+#include "UI_Pass.h"
+#include "SSAO_Pass.h"
+#include "Alpha_Pass.h"
+#include "OIT_Pass.h"
+#include "FXAA_Pass.h"
+#include "Bloom_Pass.h"
+#include "Combine_Pass.h"
+#include "Fog_Pass.h"
+#include "Picking_Pass.h"
+#include "Culling_Pass.h"
+#include "OutLine_Pass.h"
+#include "Debug_Pass.h"
 
 
 #include <algorithm>
@@ -53,26 +54,28 @@ RenderManager::RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, I
 	m_Converter = converter;
 
 	// Render Pass 생성..
-	m_Deferred		= new DeferredPass();
-	m_Light			= new LightPass();
-	m_Environment	= new EnvironmentPass();
-	m_Shadow		= new ShadowPass();
-	m_SSAO			= new SSAOPass();
-	m_Alpha			= new AlphaPass();
-	m_OIT			= new OITPass();
-	m_FXAA			= new FXAAPass();
-	m_Bloom			= new BloomPass();
-	m_Fog			= new FogPass();
-	m_Culling		= new CullingPass();
-	m_Picking		= new PickingPass();
-	m_OutLine		= new OutLinePass();
-	m_Combine		= new CombinePass();
-	m_Debug			= new DebugPass();
+	m_Deferred		= new Deferred_Pass();
+	m_Light			= new Light_Pass();
+	m_Sky			= new Sky_Pass();
+	m_UI			= new UI_Pass();
+	m_Shadow		= new Shadow_Pass();
+	m_SSAO			= new SSAO_Pass();
+	m_Alpha			= new Alpha_Pass();
+	m_OIT			= new OIT_Pass();
+	m_FXAA			= new FXAA_Pass();
+	m_Bloom			= new Bloom_Pass();
+	m_Fog			= new Fog_Pass();
+	m_Culling		= new Culling_Pass();
+	m_Picking		= new Picking_Pass();
+	m_OutLine		= new OutLine_Pass();
+	m_Combine		= new Combine_Pass();
+	m_Debug			= new Debug_Pass();
 
 	// 설정을 위한 Render Pass List Up..
 	m_RenderPassList.push_back(m_Deferred);
 	m_RenderPassList.push_back(m_Light);
-	m_RenderPassList.push_back(m_Environment);
+	m_RenderPassList.push_back(m_Sky);
+	m_RenderPassList.push_back(m_UI);
 	m_RenderPassList.push_back(m_Shadow);
 	m_RenderPassList.push_back(m_SSAO);
 	m_RenderPassList.push_back(m_Alpha);
@@ -186,12 +189,12 @@ void RenderManager::SetGlobalData(GlobalData* globalData)
 
 void RenderManager::SetSkyCube(TextureBuffer* resource)
 {
-	m_Environment->SetSkyCubeResource(resource);
+	m_Sky->SetSkyCubeResource(resource);
 }
 
 void RenderManager::SetSkyLight(SkyLightBuffer* resource)
 {
-	m_Environment->SetSkyLightResource(resource);
+	m_Sky->SetSkyLightResource(resource);
 }
 
 void RenderManager::PushInstance(MeshData* instance)
@@ -355,6 +358,11 @@ void RenderManager::Render()
 	PostProcessingRender();
 	GPU_END_EVENT_DEBUG_NAME();
 
+	// RectTransform Render..
+	GPU_BEGIN_EVENT_DEBUG_NAME("UI Pass");
+	UIRender();
+	GPU_END_EVENT_DEBUG_NAME();
+
 	// Debug Render..
 	GPU_BEGIN_EVENT_DEBUG_NAME("Debug Pass");
 	DebugRender();
@@ -452,7 +460,7 @@ void RenderManager::LightRender()
 void RenderManager::EnvironmentRender()
 {
 	// Environment Map Render..
-	m_Environment->RenderUpdate();
+	m_Sky->RenderUpdate();
 }
 
 void RenderManager::AlphaRender()
@@ -498,7 +506,7 @@ void RenderManager::PostProcessingRender()
 
 void RenderManager::UIRender()
 {
-
+	m_UI->RenderUpdate(m_UIRenderMeshList);
 }
 
 void RenderManager::DebugRender()
@@ -626,6 +634,9 @@ void RenderManager::ConvertPushInstance()
 		case OBJECT_TYPE::PARTICLE_SYSTEM:
 			PushTransparencyRenderData(convertRenderData);
 			break;
+		case OBJECT_TYPE::UI:
+			PushUIRenderData(convertRenderData);
+			break;
 		default:
 			PushUnRenderData(convertRenderData);
 			break;
@@ -677,6 +688,9 @@ void RenderManager::ConvertChangeInstance()
 			break;
 		case OBJECT_TYPE::PARTICLE_SYSTEM:
 			ChangeTransparencyRenderData(originMeshData);
+			break;
+		case OBJECT_TYPE::UI:
+			
 			break;
 		default:
 			ChangeUnRenderData(originMeshData);
@@ -730,6 +744,11 @@ void RenderManager::PushTransparencyRenderData(RenderData* renderData)
 
 	// 해당 Layer가 등록되어 있는지 확인..
 	FindInstanceLayer(m_TransparencyMeshList, instanceLayer);
+}
+
+void RenderManager::PushUIRenderData(RenderData* renderData)
+{
+	m_UIRenderMeshList.push_back(renderData);
 }
 
 void RenderManager::PushUnRenderData(RenderData* renderData)
@@ -811,6 +830,11 @@ void RenderManager::ChangeTransparencyRenderData(MeshData* meshData)
 
 	// 해당 Layer가 등록되어 있는지 확인..
 	FindInstanceLayer(m_TransparencyMeshList, layer);
+}
+
+void RenderManager::ChangeUIRenderData(RenderData* renderData)
+{
+
 }
 
 void RenderManager::ChangeUnRenderData(MeshData* meshData)
