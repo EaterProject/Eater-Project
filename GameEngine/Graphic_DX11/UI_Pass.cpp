@@ -20,6 +20,7 @@
 #include "ShaderManagerBase.h"
 #include "ConstantBufferDefine.h"
 #include "ShaderResourceViewDefine.h"
+#include "DrawBufferDefine.h"
 
 UI_Pass::UI_Pass()
 {
@@ -40,6 +41,9 @@ void UI_Pass::Start(int width, int height)
 {
 	m_UI_VS = g_Shader->GetShader("UI_VS");
 	m_UI_PS = g_Shader->GetShader("UI_PS");
+
+	// Buffer ¼³Á¤..
+	m_Screen_DB = g_Resource->GetDrawBuffer<DB_Quad>();
 
 	// Graphic View..
 	m_OutPut_RTV = g_Resource->GetMainRenderTarget()->GetRTV()->Get();
@@ -64,6 +68,8 @@ void UI_Pass::ApplyOption()
 void UI_Pass::RenderUpdate(std::vector<RenderData*>& meshlist)
 {
 	m_RenderCount = (UINT)meshlist.size();
+
+	if (m_RenderCount == 0) return;
 
 	// Render State Update..
 	g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
