@@ -40,7 +40,8 @@ void TestScene::Awake()
 	//Load("../Assets/Model/Animation");
 	PROFILE_TIMER_END("Load Folder"); 
 
-	//BakeSkyLightMap("Day");
+	BakeSkyLightMap("SkyLight_HDRI", false);
+	BakeSkyLightMap("Day", false);
 	BakeSkyLightMap("Night", false);
 	BakeSkyLightMap("skybox1", false);
 	BakeSkyLightMap("TestSky", false);
@@ -51,10 +52,11 @@ void TestScene::Awake()
 
 	//CreateParticle(0,0,0);
 	//SetSkyLight("Day");
-	SetSkyLight("Night");
-	SetSkyCube("HDRI");
+	SetSkyLight("SkyLight_HDRI");
+	//SetSkyCube("Day");
+	SetSkyCube("SkyCube_HDRI");
 
-	Load("../Assets/Scene/test1.Scene");
+	Load("../Assets/Scene/test.Scene");
 }
 
 void TestScene::Update()
@@ -115,25 +117,25 @@ void TestScene::CreateMap()
 	//Object->GetTransform()->Position.x -= 10.0f;
 	//Object->GetTransform()->Position.y += 10.0f;
 
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("Sphere1");
-	Object->GetTransform()->Position.x -= 30.0f;
-
-	Object = Instance();
-	meshfilter = Object->AddComponent<MeshFilter>();
-	meshfilter->SetModelName("Sphere1");
-	Object->GetTransform()->Position.x -= 10.0f;
-
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("Sphere1");
-	Object->GetTransform()->Position.x += 10.0f;
-
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("Sphere1");
-	Object->GetTransform()->Position.x += 30.0f;
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("Sphere1");
+	//Object->GetTransform()->Position.x -= 30.0f;
+	//
+	//Object = Instance();
+	//meshfilter = Object->AddComponent<MeshFilter>();
+	//meshfilter->SetModelName("Sphere1");
+	//Object->GetTransform()->Position.x -= 10.0f;
+	//
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("Sphere1");
+	//Object->GetTransform()->Position.x += 10.0f;
+	//
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("Sphere1");
+	//Object->GetTransform()->Position.x += 30.0f;
 
 
 	//Object = Instance();
@@ -301,90 +303,55 @@ void TestScene::CreateParticle(float x, float y, float z)
 
 void TestScene::ChangeCubeMap()
 {
-	//if (GetKey(VK_UP))
-	//{
-	//	Cam2TR->Position.y += 0.5f;
-	//}
-	//if (GetKey(VK_DOWN))
-	//{
-	//	Cam2TR->Position.y -= 0.5f;
-	//}
-	//if (GetKey(VK_LEFT))
-	//{
-	//	Cam2TR->Position.x -= 0.5f;
-	//}
-	//if (GetKey(VK_RIGHT))
-	//{
-	//	Cam2TR->Position.x += 0.5f;
-	//}
-	//if (GetKey(VK_PRIOR))
-	//{
-	//	Cam2TR->Position.z += 0.5f;
-	//}
-	//if (GetKey(VK_NEXT))
-	//{
-	//	Cam2TR->Position.z -= 0.5f;
-	//}
 
+	//if (GetKeyUp('1'))
+	//{
+	//	meshfilter->SetMaterialPropertyBlock(true);
+	//	MaterialPropertyBlock* block = meshfilter->GetMaterialPropertyBlock();
+	//
+	//	if (up)
+	//	{
+	//		block->LimLightColor.x += 0.1f;
+	//	}
+	//	else
+	//	{
+	//		block->LimLightColor.x -= 0.1f;
+	//	}
+	//
+	//	if (block->LimLightColor.x > 1.0f)
+	//	{
+	//		block->LimLightColor.x = 1.0f;
+	//		up = false;
+	//	}
+	//	if (block->LimLightColor.x < 0.0f)
+	//	{
+	//		block->LimLightColor.x = 0.0f;
+	//		up = true;
+	//	}
+	//}
+	//if (GetKeyUp('2'))
+	//{
+	//	meshfilter->SetMaterialPropertyBlock(false);
+	//}
 	if (GetKeyUp('1'))
 	{
-		SetSkyLight("Night");
+		SetSkyLight("SkyLight_HDRI");
 	}
 	if (GetKeyUp('2'))
 	{
-		SetSkyLight("skybox1");
+		SetSkyLight("Day");
 	}
 	if (GetKeyUp('3'))
 	{
-		SetSkyLight("TestSky");
+		SetSkyLight("Night");
 	}
 	if (GetKeyUp('4'))
 	{
-		MaterialPropertyBlock* block = meshfilter->GetMaterialPropertyBlock();
-
-		if (up)
-		{
-			block->LimLightColor.x += 0.1f;
-		}
-		else
-		{
-			block->LimLightColor.x -= 0.1f;
-		}
-
-		if (block->LimLightColor.x > 1.0f)
-		{
-			block->LimLightColor.x = 1.0f;
-			up = false;
-		}
-		if (block->LimLightColor.x < 0.0f)
-		{
-			block->LimLightColor.x = 0.0f;
-			up = true;
-		}
+		SetSkyLight("skybox1");
 	}
 	if (GetKeyUp('5'))
 	{
-		meshfilter->SetMaterialPropertyBlock(true);
+		SetSkyLight("TestSky");
 	}
-	if (GetKeyUp('6'))
-	{
-		meshfilter->SetMaterialPropertyBlock(false);
-	}
-	if (GetKey('7'))
-	{
-		angle += 1.0f;
 
-		if (angle > 360.0f)
-		{
-			angle -= 360.0f;
-		}
-
-		BakeConvertSkyCubeMap("HDRI_2", angle, 100.0f, true);
-		BakeConvertSkyLightMap("HDRI_2", angle, 100.0f, true);
-	}
-	if (GetKeyUp('8'))
-	{
-		SaveConvertSkyLightMap("HDRI_2", "HDRI_2_Convert");
-		SaveConvertSkyCubeMap("HDRI_2", "HDRI_2_Convert");
-	}
 }

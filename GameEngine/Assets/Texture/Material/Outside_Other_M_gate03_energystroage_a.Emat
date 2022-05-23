@@ -1,0 +1,22 @@
+#EATERMAT
+@MaterialName Outside_Other_M_gate03_energystroage_a
+@Alpha 0
+@DiffuseMap gate03_energystorage_a_BaseColor.png
+@NormalMap gate03_energystorage_a_Normal.png
+@EmissiveMap 0
+@ORMMap gate03_energystorage_a_ORM.png
+@Emissive 0
+@Roughness 0
+@Metallic 0
+@Tileing_X 1
+@Tileing_Y 1
+@AddColor_R 0
+@AddColor_G 0
+@AddColor_B 0
+@AddColor_A 0
+@LimColor_R 0
+@LimColor_G 0
+@LimColor_B 0
+@LimFactor 0
+@LimWidth 0
+&
