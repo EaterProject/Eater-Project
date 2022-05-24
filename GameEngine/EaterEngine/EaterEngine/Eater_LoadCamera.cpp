@@ -43,11 +43,12 @@ void Eater_LoadCamera::LoadData(int index)
 	float ADD = 0.0f; //초기값
 	for (int i = 0; i < NodeCount -1; i++)
 	{
+		float Number = OneFrameAddCount;
 		Vector3 StartPos	= NodePosition[i];
 		Vector3 EndPos		= NodePosition[i + 1];
 
-		Vector3 StartRot	= NodePosition[i];
-		Vector3 EndRot		= NodePosition[i + 1];
+		Vector3 StartRot	= NodeRotation[i];
+		Vector3 EndRot		= NodeRotation[i + 1];
 
 		for (int j = 0; j < CamAnime->AddKeyCount; j++)
 		{
@@ -58,6 +59,7 @@ void Eater_LoadCamera::LoadData(int index)
 			CamAnime->Rotation.push_back(LerpRot);
 			ADD += OneFrameAddCount;
 		}
+		ADD = 0;
 	}
 	//파일 넣어주기
 	std::string FilePathName = CutStr(Path);

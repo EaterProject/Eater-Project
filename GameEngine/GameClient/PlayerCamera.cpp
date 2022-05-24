@@ -42,12 +42,12 @@ void PlayerCamera::SetUp()
 	ShowMouseCursor(MouseCursor);
 	MouseCursorClip(MouseCursor);
 	//SetMousePosCenter();
-
+	MainCam->ChoiceCameraAnimation("StartCam");
 }
 
 void PlayerCamera::StartUpdate()
 {
-	if (Userobject == nullptr) { return; }
+	if (MainCam->ChoiceCameraAnimationEnd() == false) { return; }
 
 	//마우스 위치를 가져온다
 	float MosSpeed = 50;

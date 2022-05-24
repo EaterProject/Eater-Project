@@ -11,6 +11,7 @@
 class Transform;
 class CameraData;
 class DebugBoxData;
+class CameraAnimation;
 
 class Camera : public Component
 {
@@ -24,6 +25,7 @@ public:
 	//현재카메라를 메인카메라로 변경시킨다
 	EATER_ENGINEDLL void ChoiceMainCam();
 	EATER_ENGINEDLL void ChoiceCameraAnimation(std::string Name);
+	EATER_ENGINEDLL bool ChoiceCameraAnimationEnd();
 	//EATER_ENGINEDLL void LookAt(GameObject* obj);
 	//EATER_ENGINEDLL void LookAt(Vector3 Pos);
 	// Camera Position
@@ -34,7 +36,6 @@ public:
 	DirectX::SimpleMath::Matrix GetProj();
 	//카메라의 데이터
 	CameraData* GetCameraData();
-
 public:
 	//OnResize 에서 실행될 함수
 	void SetSize(int Change_Width, int Change_Height);
@@ -42,6 +43,15 @@ public:
 	EATER_ENGINEDLL void SetCulling(bool cull);
 
 private:
+	//카메라 애니메이션 데이터
+	bool isAnimation = false;
+	CameraAnimation* mAnimation;
+	Camera*			 MainCamera;//메인 카메라를 잠시 저장하는 용도
+	float	NowAnimationFrame = 0;
+	int		NowFrameIndex;
+private:
+
+
 	Transform* tranform;
 
 	//프로젝션 행렬 생성하기

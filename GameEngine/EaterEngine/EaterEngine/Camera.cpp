@@ -63,6 +63,30 @@ void Camera::Awake()
 
 void Camera::Update()
 {
+	if (isAnimation == true)
+	{
+		NowAnimationFrame += GetDeltaTime();
+		if (NowAnimationFrame >= mAnimation->OneFrame)
+		{
+			NowAnimationFrame -= mAnimation->OneFrame;
+		}
+
+		
+		if (NowFrameIndex >= mAnimation->Position.size())
+		{
+			isAnimation = false;
+			NowFrameIndex = 0;
+			MainCamera->ChoiceMainCam();
+		}
+		else
+		{
+			gameobject->transform->Position = mAnimation->Position[NowFrameIndex];
+			gameobject->transform->Rotation = mAnimation->Rotation[NowFrameIndex];
+			NowFrameIndex++;
+		}
+	}
+
+
 	if (g_MainCam == nullptr)
 	{
 		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Camera ][ Update ] 지정된 메인 카메라가 없습니다.");
@@ -132,25 +156,15 @@ void Camera::ChoiceMainCam()
 
 void Camera::ChoiceCameraAnimation(std::string Name)
 {
-	CameraAnimation* Data = LoadManager::GetCamAnimation(Name);
-	float OneFrameTime = 0;
-	int NowIndex = 0;
+	mAnimation = LoadManager::GetCamAnimation(Name);
+	isAnimation = true;
+	MainCamera = g_MainCam;
+	ChoiceMainCam();
+}
 
-	Transform* mTransform = gameobject->GetTransform();
-	while (true)
-	{
-		if (NowIndex >= Data->Position.size())
-		{
-			break;
-		}
-
-		if (OneFrameTime >= Data->OneFrame)
-		{
-			NowIndex++;
-		}
-		mTransform->Position = Data->Position[NowIndex];
-		mTransform->Rotation = Data->Rotation[NowIndex];
-	}
+bool Camera::ChoiceCameraAnimationEnd()
+{
+	return (isAnimation == true) ? false : true ;
 }
 
 DirectX::SimpleMath::Matrix Camera::GetView()

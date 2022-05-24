@@ -31,9 +31,6 @@ void GameLogic::Initialize()
 	ObjectGM->Initialize(FactoryGM);
 
 	AddOccluder("Dome_program_0");
-
-
-
 }
 
 void GameLogic::Release()
@@ -44,9 +41,7 @@ void GameLogic::Release()
 
 void GameLogic::Update()
 {
-	GameObject* main = GetMainCamera();
-	Camera* MainCam = main->GetComponent<Camera>();
-	MainCam->ChoiceCameraAnimation("StartCam");
+	
 
 }
 

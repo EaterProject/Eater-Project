@@ -39,11 +39,11 @@ void ClientObjectManager::Initialize(ObjectFactory* Factory)
 	//포탈 태그가 붙어있는 오브젝트를 모두 가져와 리스트에 담아놓는다
 	FindGameObjectTags("ManaPoint", &ManaPoint_List);
 
-	CreateObjectMemorySize();
+	//CreateObjectMemorySize();
 
 	mFactory->CreatePlayer();
 
-	GameObject* obj = InstanceTerrain();
+	//GameObject* obj = InstanceTerrain();
 }
 
 void ClientObjectManager::Release()
