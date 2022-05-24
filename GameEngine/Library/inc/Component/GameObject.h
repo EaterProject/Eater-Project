@@ -62,6 +62,7 @@ public:
 	Component* GetDeleteComponent(int i);	//삭제할 컨퍼넌트를 가져옴
 	int GetComponentCount();				//오브젝트의 컨퍼넌트 갯수를 가져옴
 	void PushChildList(GameObject* obj);	//오브젝트를 자식 리스트에 넣어준다
+	void ChildActive(bool Active);
 
 	EATER_ENGINEDLL void PushChildMeshObject(GameObject* obj); //나의 자식으로 기본 게임오브젝트를 넣는다
 	EATER_ENGINEDLL void PushChildBoneObject(GameObject* obj); //나의 자식으로 기본 게임오브젝트를 넣는다

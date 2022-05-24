@@ -5,4 +5,5 @@ enum class MONSTER_STATE : int
 	ATTACK,	//공격
 	MOVE,	//이동
 	CHASE,	//추격
+	DEAD,	//죽음
 };

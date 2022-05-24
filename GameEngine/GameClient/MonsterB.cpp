@@ -143,6 +143,10 @@ void MonsterB::Idle()
 	}
 }
 
+void MonsterB::Dead()
+{
+}
+
 void MonsterB::Debug()
 {
 	DebugDrawCircle(2.5f, mTransform->Position, Vector3(0, 0, 0), Vector3(1, 0, 0));

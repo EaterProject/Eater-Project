@@ -14,15 +14,16 @@ public:
 	void Update()	override;
 	void OnTriggerStay(GameObject* Obj);
 
-	void Move();
-	void Attack();
-	void Idle();
+	void Move()		override;
+	void Attack()	override;
+	void Idle()		override;
+	void Dead()		override;
 	void Chase();
 	void Debug();
 private:
 	ManaStone* Mana;
 	GameObject* mPlayer;
 	int PointIndex = 0;
-	float AttackDir = 2.5f;
+	
 };
 

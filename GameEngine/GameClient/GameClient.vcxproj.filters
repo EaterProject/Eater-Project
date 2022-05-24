@@ -76,14 +76,14 @@
     <Filter Include="소스 파일\TypeOption">
       <UniqueIdentifier>{ef448e58-0b69-427d-ada2-231cf7bfb17c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Component\Base\MonsterComponent">
-      <UniqueIdentifier>{d97fd655-d15b-4404-a566-cc93a172992a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Component\Base\ClientComponent">
       <UniqueIdentifier>{06336456-8bf0-4919-abfa-d84e38d2593f}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\Component\Player">
       <UniqueIdentifier>{a59a5f89-b961-40e7-8282-6208957b9634}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\Monster\MonsterComponent">
+      <UniqueIdentifier>{d97fd655-d15b-4404-a566-cc93a172992a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -151,7 +151,7 @@
       <Filter>소스 파일\Component\Base\ClientComponent</Filter>
     </ClInclude>
     <ClInclude Include="MonsterComponent.h">
-      <Filter>소스 파일\Component\Base\MonsterComponent</Filter>
+      <Filter>소스 파일\Component\Monster\MonsterComponent</Filter>
     </ClInclude>
     <ClInclude Include="Drone.h">
       <Filter>소스 파일\Component\Drone</Filter>
@@ -210,7 +210,7 @@
       <Filter>소스 파일\Component\Base\ClientComponent</Filter>
     </ClCompile>
     <ClCompile Include="MonsterComponent.cpp">
-      <Filter>소스 파일\Component\Base\MonsterComponent</Filter>
+      <Filter>소스 파일\Component\Monster\MonsterComponent</Filter>
     </ClCompile>
     <ClCompile Include="Drone.cpp">
       <Filter>소스 파일\Component\Drone</Filter>
