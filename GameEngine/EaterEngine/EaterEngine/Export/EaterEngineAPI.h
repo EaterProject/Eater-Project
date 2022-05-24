@@ -30,6 +30,7 @@ extern "C" EATER_ENGINEDLL GameObject*	InstanceTerrain(std::string ObjName= "Gam
 extern "C" EATER_ENGINEDLL GameObject*	InstanceParticle(std::string ObjName= "GameObject");//파티클 오브젝트 생성
 extern "C" EATER_ENGINEDLL GameObject*	InstanceCamera(std::string ObjName= "GameObject");//오브젝트 생성
 extern "C" EATER_ENGINEDLL GameObject*	InstanceLight(std::string ObjName= "Light", LIGHT_TYPE type = LIGHT_TYPE::DIRECTION_LIGHT);//오브젝트 생성
+extern "C" EATER_ENGINEDLL GameObject*	InstanceUI(std::string ObjName= "UI");//오브젝트 생성
 
 ///게임 오브젝트 찾기
 extern "C" EATER_ENGINEDLL GameObject*	FindGameObjectTag(std::string TagName);

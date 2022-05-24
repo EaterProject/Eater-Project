@@ -7,5 +7,5 @@
 // Global Blend State
 ///////////////////////////////////////////////////////////////////////////////////////////
 
-BLEND_STATE(BS_Defalt)
-BLEND_STATE(BS_AlphaBlend)
+BLEND_STATE(BS_AlphaBlend_ALL)
+BLEND_STATE(BS_AlphaBlend_One)

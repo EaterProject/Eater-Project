@@ -363,15 +363,6 @@
     <ClInclude Include="Export\EaterEngineAPI.h">
       <Filter>소스 파일\EngineAPI</Filter>
     </ClInclude>
-    <ClInclude Include="Button.h">
-      <Filter>소스 파일\Component\UI\Button</Filter>
-    </ClInclude>
-    <ClInclude Include="Image.h">
-      <Filter>소스 파일\Component\UI\Image</Filter>
-    </ClInclude>
-    <ClInclude Include="RectTransform.h">
-      <Filter>소스 파일\Component\UI\Transform</Filter>
-    </ClInclude>
     <ClInclude Include="IndexManager.h">
       <Filter>소스 파일\Manager\IndexManager</Filter>
     </ClInclude>
@@ -383,6 +374,15 @@
     </ClInclude>
     <ClInclude Include="UIManager.h">
       <Filter>소스 파일\Manager\UIManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Export\Image.h">
+      <Filter>소스 파일\Component\UI\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="Export\Button.h">
+      <Filter>소스 파일\Component\UI\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="Export\RectTransform.h">
+      <Filter>소스 파일\Component\UI\Transform</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -50,10 +50,11 @@ void RenderDataConverter::ConvertMeshData(MeshData* originData, RenderData* rend
 	case OBJECT_TYPE::UI:
 	{
 		renderData->m_UI = new UIRenderBuffer();
+		renderData->m_UI->m_BufferIndex = originData->UI_Buffer->BufferIndex;
 		renderData->m_UI->m_UIProperty = originData->UI_Buffer->UI_Property;
-		renderData->m_UI->m_Albedo = (ID3D11ShaderResourceView*)originData->UI_Buffer->Albedo;
+		renderData->m_UI->m_Albedo = (originData->UI_Buffer->Albedo == nullptr) ? nullptr : (ID3D11ShaderResourceView*)originData->UI_Buffer->Albedo->pTextureBuf;
 
-		m_UIList.insert(std::make_pair((UINT)m_UIList.size(), renderData->m_UI));
+		m_UIList.insert(std::make_pair(originData->UI_Buffer->BufferIndex, renderData->m_UI));
 	}
 		break;
 	default:
@@ -362,12 +363,6 @@ void RenderDataConverter::DeleteMaterial(UINT index)
 	// 해당 Material 관련 Instance 삭제..
 	CheckEmptyInstance(material);
 
-	// 해당 Resource 제거..
-	//RELEASE_COM(material->m_Albedo);
-	//RELEASE_COM(material->m_Normal);
-	//RELEASE_COM(material->m_Emissive);
-	//RELEASE_COM(material->m_ORM);
-	
 	// 해당 Material Buffer 삭제..
 	SAFE_DELETE(material);
 	m_MaterialList.erase(index);
@@ -405,9 +400,6 @@ void RenderDataConverter::DeleteUI(UINT index)
 
 	// 해당 UI 검색..
 	UIRenderBuffer* ui = itor->second;
-
-	// 해당 Resource 제거..
-	//RELEASE_COM(ui->m_Albedo);
 
 	// 해당 UI Buffer 삭제..
 	SAFE_DELETE(ui);

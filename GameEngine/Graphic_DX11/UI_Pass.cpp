@@ -21,6 +21,7 @@
 #include "ConstantBufferDefine.h"
 #include "ShaderResourceViewDefine.h"
 #include "DrawBufferDefine.h"
+#include "BlendStateDefine.h"
 
 UI_Pass::UI_Pass()
 {
@@ -47,6 +48,9 @@ void UI_Pass::Start(int width, int height)
 
 	// Graphic View..
 	m_OutPut_RTV = g_Resource->GetMainRenderTarget()->GetRTV()->Get();
+
+	// Graphic State..
+	m_AlphaBlend_BS = g_Resource->GetBlendState<BS_AlphaBlend_One>()->Get();
 }
 
 void UI_Pass::OnResize(int width, int height)
@@ -67,13 +71,14 @@ void UI_Pass::ApplyOption()
 
 void UI_Pass::RenderUpdate(std::vector<RenderData*>& meshlist)
 {
-	
-
 	m_RenderCount = (UINT)meshlist.size();
 
 	if (m_RenderCount == 0) return;
 
 	// Render State Update..
+	g_Context->OMSetBlendState(m_AlphaBlend_BS, 0, 0xffffffff);
+	g_Context->OMSetRenderTargets(1, &m_OutPut_RTV, nullptr);
+
 	g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	g_Context->IASetVertexBuffers(0, 1, m_Screen_DB->VertexBuf->GetAddress(), &m_Screen_DB->Stride, &m_Screen_DB->Offset);
 	g_Context->IASetIndexBuffer(m_Screen_DB->IndexBuf->Get(), DXGI_FORMAT_R32_UINT, 0);
@@ -99,7 +104,7 @@ void UI_Pass::RenderUpdate(std::vector<RenderData*>& meshlist)
 		m_UI_VS->Update();
 
 		// Pixel Shader Update..
-		m_UI_PS->SetShaderResourceView<gDiffuseMap>(m_RenderData->m_Material->m_Albedo);
+		m_UI_PS->SetShaderResourceView<gDiffuseMap>(ui->m_Albedo);
 
 		m_UI_PS->Update();
 

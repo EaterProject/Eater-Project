@@ -1,5 +1,5 @@
-#include "EngineData.h"
 #include "RectTransform.h"
+#include "EngineData.h"
 
 #include "GameObject.h"
 #include "GameEngine.h"
@@ -30,34 +30,40 @@ void RectTransform::TransformUpdate()
 	switch (PivotType)
 	{
 	case PIVOT_LEFT_TOP:
+		Position_Offset.x = ImageSize.x * Scale.x;
+		Position_Offset.y = ImageSize.y * Scale.y;
 		break;
 	case PIVOT_LEFT_BOTTOM:
+		Position_Offset.x = ImageSize.x * Scale.x;
 		Position_Offset.y = GameEngine::WinSizeHeight - (ImageSize.y * Scale.y);
 		break;
 	case PIVOT_RIGHT_TOP:
 		Position_Offset.x = GameEngine::WinSizeWidth - (ImageSize.x * Scale.x);
+		Position_Offset.y = ImageSize.y * Scale.y;
 		break;
 	case PIVOT_RIGHT_BOTTOM:
 		Position_Offset.x = GameEngine::WinSizeWidth - (ImageSize.x * Scale.x);
 		Position_Offset.y = GameEngine::WinSizeHeight - (ImageSize.y * Scale.y);
 		break;
 	case PIVOT_MIDDLE_TOP:
-		Position_Offset.x = (GameEngine::WinSizeWidth - (ImageSize.x * Scale.x)) / 2.0f;
+		Position_Offset.x = GameEngine::WinSizeWidth * 0.5f;
+		Position_Offset.y = ImageSize.y * Scale.y;
 		break;
 	case PIVOT_MIDDLE_BOTTOM:
-		Position_Offset.x = (GameEngine::WinSizeWidth - (ImageSize.x * Scale.x)) / 2.0f;
+		Position_Offset.x = GameEngine::WinSizeWidth * 0.5f;
 		Position_Offset.y = GameEngine::WinSizeHeight - (ImageSize.y * Scale.y);
 		break;
 	case PIVOT_MIDDLE_LEFT:
-		Position_Offset.y = (GameEngine::WinSizeHeight - (ImageSize.y * Scale.y)) / 2.0f;
+		Position_Offset.x = ImageSize.x * Scale.x;
+		Position_Offset.y = GameEngine::WinSizeHeight * 0.5f;
 		break;
 	case PIVOT_MIDDLE_RIGHT:
 		Position_Offset.x = GameEngine::WinSizeWidth - (ImageSize.x * Scale.x);
-		Position_Offset.y = (GameEngine::WinSizeHeight - (ImageSize.y * Scale.y)) / 2.0f;
+		Position_Offset.y = GameEngine::WinSizeHeight * 0.5f;
 		break;
 	case PIVOT_MIDDLE_CENTER:
-		Position_Offset.x = (GameEngine::WinSizeWidth - (ImageSize.x * Scale.x)) / 2.0f;
-		Position_Offset.y = (GameEngine::WinSizeHeight - (ImageSize.y * Scale.y)) / 2.0f;
+		Position_Offset.x = GameEngine::WinSizeWidth * 0.5f;
+		Position_Offset.y = GameEngine::WinSizeHeight * 0.5f;
 		break;
 	default:
 		break;
@@ -75,11 +81,11 @@ void RectTransform::TransformUpdate()
 	DirectX::XMMATRIX _Y = DirectX::XMMatrixRotationY(radY);
 	DirectX::XMMATRIX _R = DirectX::XMMatrixRotationZ(radZ);
 
-	RotationXM = DirectX::XMMatrixRotationRollPitchYaw(radX, radY, radZ);
+	RotationXM = DirectX::XMMatrixRotationRollPitchYaw(radX, radY + XM_PI, radZ + XM_PI);
 
 	// Scale Matrix..
-	ScaleXM._11 = Scale.x;
-	ScaleXM._22 = Scale.y;
+	ScaleXM._11 = ImageSize.x * Scale.x;
+	ScaleXM._22 = ImageSize.y * Scale.y;
 
 	// 최종 Matrix 설정..
 	WorldXM = ScaleXM * RotationXM * PositionXM;
@@ -96,9 +102,22 @@ void RectTransform::SetImageSize(DirectX::SimpleMath::Vector2 imagesize)
 	ImageSize = imagesize;
 }
 
+void RectTransform::SetPosition(float x, float y)
+{
+	Position.x = x;
+	Position.y = y;
+}
+
 void RectTransform::SetPosition(DirectX::SimpleMath::Vector2 pos)
 {
 	Position = pos;
+}
+
+void RectTransform::SetRotation(float x, float y, float z)
+{
+	Rotation.x = x;
+	Rotation.y = y;
+	Rotation.z = z;
 }
 
 void RectTransform::SetRotation(DirectX::SimpleMath::Vector3 rot)
@@ -106,9 +125,21 @@ void RectTransform::SetRotation(DirectX::SimpleMath::Vector3 rot)
 	Rotation = rot;
 }
 
+void RectTransform::SetScale(float x, float y)
+{
+	Scale.x = x;
+	Scale.y = y;
+}
+
 void RectTransform::SetScale(DirectX::SimpleMath::Vector2 scale)
 {
 	Scale = scale;
+}
+
+void RectTransform::AddPosition(float x, float y)
+{
+	Position.x += x;
+	Position.y += y;
 }
 
 void RectTransform::AddPosition(DirectX::SimpleMath::Vector2 pos)
@@ -116,9 +147,22 @@ void RectTransform::AddPosition(DirectX::SimpleMath::Vector2 pos)
 	Position += pos;
 }
 
+void RectTransform::AddRotation(float x, float y, float z)
+{
+	Rotation.x += x;
+	Rotation.y += y;
+	Rotation.z += z;
+}
+
 void RectTransform::AddRotation(DirectX::SimpleMath::Vector3 rot)
 {
 	Rotation += rot;
+}
+
+void RectTransform::AddScale(float x, float y)
+{
+	Scale.x += x;
+	Scale.y += y;
 }
 
 void RectTransform::AddScale(DirectX::SimpleMath::Vector2 scale)

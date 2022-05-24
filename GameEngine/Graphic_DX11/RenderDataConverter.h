@@ -88,8 +88,6 @@ private:
 	std::queue<MaterialBuffer*>		m_ChangeMaterialList;					// Game Engine 측에서 현재 프레임에 변경한 Material Resource Queue..
 	std::queue<AnimationBuffer*>	m_PushAnimationList;					// Game Engine 측에서 현재 프레임에 생성한 Animation Resource Queue..
 	std::queue<AnimationBuffer*>	m_ChangeAnimationList;					// Game Engine 측에서 현재 프레임에 변경한 Animation Resource Queue..
-	std::queue<UIBuffer*>			m_PushUIList;							// Game Engine 측에서 현재 프레임에 생성한 Animation Resource Queue..
-	std::queue<UIBuffer*>			m_ChangeUIList;							// Game Engine 측에서 현재 프레임에 변경한 Animation Resource Queue..
 
 	std::unordered_map<UINT, MeshRenderBuffer*>			m_MeshList;			// 현재 등록 되어있는 Mesh Resource..
 	std::unordered_map<UINT, MaterialRenderBuffer*>		m_MaterialList;		// 현재 등록 되어있는 Material Resource..

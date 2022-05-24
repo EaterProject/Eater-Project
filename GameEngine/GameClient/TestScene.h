@@ -21,6 +21,7 @@ public:
 	void End() override;
 
 	void CreateMap();
+	void CreateUI();
 	void CreateParticle(float x, float y, float z);
 	void ChangeCubeMap();
 

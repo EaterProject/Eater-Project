@@ -68,7 +68,7 @@ void Image::SetTexture()
 	m_UI->Albedo = newTexture;
 
 	// 그래픽 연동..
-
+	GraphicEngine::Get()->PushChangeInstance(gameobject->OneMeshData);
 
 	// 이미지 크기 재설정..
 	m_Transform->SetImageSize(Vector2(m_UI->Albedo->Width, m_UI->Albedo->Height));

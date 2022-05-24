@@ -261,6 +261,9 @@ void RenderManager::DeleteInstance(MeshData* instance)
 		break;
 	case OBJECT_TYPE::PARTICLE:
 		break;
+	case OBJECT_TYPE::UI:
+		DeleteUIRenderData(instance);
+		break;
 	default:
 		DeleteUnRenderData(instance);
 		break;
@@ -838,10 +841,10 @@ void RenderManager::ChangeTransparencyRenderData(MeshData* meshData)
 void RenderManager::ChangeUIRenderData(MeshData* meshData)
 {
 	// Render Data 변환..
-	RenderData* convertRenderData = (RenderData*)meshData->Render_Data;
+	//RenderData* convertRenderData = (RenderData*)meshData->Render_Data;
 
 	// Render Data 재설정..
-	convertRenderData->m_UI->m_Albedo = (ID3D11ShaderResourceView*)meshData->UI_Buffer->Albedo;
+	//convertRenderData->m_UI->m_Albedo = (ID3D11ShaderResourceView*)meshData->UI_Buffer->Albedo;
 }
 
 void RenderManager::ChangeUnRenderData(MeshData* meshData)
@@ -955,6 +958,9 @@ void RenderManager::DeleteUIRenderData(MeshData* meshData)
 
 	// 해당 Render Data 제거..
 	m_Converter->DeleteRenderData(renderDataIndex + 1);
+
+	// 해당 UI Render Buffer 제거..
+	m_Converter->DeleteUI(renderData->m_UI->m_BufferIndex);
 
 	// 해당 Instance List에서 제거...
 	m_UIRenderMeshList.erase(std::next(m_UIRenderMeshList.begin(), index));

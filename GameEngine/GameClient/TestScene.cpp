@@ -18,6 +18,9 @@
 #include "Player.h"
 #include "ParticleSystem.h"
 #include "Collider.h"
+#include "Image.h"
+#include "Button.h"
+#include "RectTransform.h"
 #include "EngineData.h"
 
 #include "./Profiler/Profiler.h"
@@ -35,6 +38,7 @@ void TestScene::Awake()
 	//Load("../Assets/Texture/Particle");
 	//Load("../Assets/Texture/ModelTexture");
 	//Load("../Assets/Texture/Material");
+	Load("../Assets/Texture/UI");
 	//Load("../Assets/Model/MeshBuffer");
 	//Load("../Assets/Model/ModelData");
 	//Load("../Assets/Model/Animation");
@@ -48,7 +52,11 @@ void TestScene::Awake()
 
 	//AddOccluder("Dome_Occluder_0");
 
+
 	CreateMap();
+
+	CreateUI();
+
 
 	//CreateParticle(0,0,0);
 	//SetSkyLight("Day");
@@ -86,7 +94,6 @@ void TestScene::CreateMap()
 	MeshFilter* filter = nullptr;
 	Light* light = nullptr;
 
-	//InstanceCamera("sub");
 	//
 	//ParticleObj = Instance();
 	//ParticleObj->GetTransform()->Position.y += 50;
@@ -227,6 +234,80 @@ void TestScene::CreateMap()
 	mTerrain->SetLayerName("terrain_ground_D_BaseColor", "terrain_ground_D_Normal", "terrain_ground_D_ORM");
 	mTerrain->SetMeshName("Terrain");
 	mTerrain->SetTextureTiling(31.0f);
+}
+
+void TestScene::CreateUI()
+{
+	GameObject* ui_object = nullptr;
+	Image* ui_image = nullptr;
+	RectTransform* ui_rectTR = nullptr;
+
+	ui_object = InstanceUI("UI");
+	ui_image = ui_object->AddComponent<Image>();
+	ui_image->SetTexture("ingame_player_hp");
+
+	ui_rectTR = ui_object->GetComponent<RectTransform>();
+	ui_rectTR->SetImagePivot(RECT_PIVOT::PIVOT_LEFT_TOP);
+
+	ui_object = InstanceUI("UI");
+	ui_image = ui_object->AddComponent<Image>();
+	ui_image->SetTexture("ingame_player_hp_back");
+
+	ui_rectTR = ui_object->GetComponent<RectTransform>();
+	ui_rectTR->SetImagePivot(RECT_PIVOT::PIVOT_LEFT_BOTTOM);
+
+	ui_object = InstanceUI("UI");
+	ui_image = ui_object->AddComponent<Image>();
+	ui_image->SetTexture("ingame_player_hp_back");
+
+	ui_rectTR = ui_object->GetComponent<RectTransform>();
+	ui_rectTR->SetImagePivot(RECT_PIVOT::PIVOT_RIGHT_TOP);
+	ui_rectTR->AddPosition(-10.0f, 0.0f);
+	ui_rectTR->SetScale(0.5f, 0.5f);
+
+	ui_object = InstanceUI("UI");
+	ui_image = ui_object->AddComponent<Image>();
+	ui_image->SetTexture("ingame_player_hp_back");
+
+	ui_rectTR = ui_object->GetComponent<RectTransform>();
+	ui_rectTR->SetImagePivot(RECT_PIVOT::PIVOT_RIGHT_BOTTOM);
+	ui_rectTR->AddPosition(-10.0f, 0.0f);
+
+
+	ui_object = InstanceUI("UI");
+	ui_image = ui_object->AddComponent<Image>();
+	ui_image->SetTexture("ingame_minimap");
+
+	ui_rectTR = ui_object->GetComponent<RectTransform>();
+	ui_rectTR->SetImagePivot(RECT_PIVOT::PIVOT_MIDDLE_TOP);
+
+	ui_object = InstanceUI("UI");
+	ui_image = ui_object->AddComponent<Image>();
+	ui_image->SetTexture("ingame_minimap");
+
+	ui_rectTR = ui_object->GetComponent<RectTransform>();
+	ui_rectTR->SetImagePivot(RECT_PIVOT::PIVOT_MIDDLE_BOTTOM);
+
+	ui_object = InstanceUI("UI");
+	ui_image = ui_object->AddComponent<Image>();
+	ui_image->SetTexture("ingame_minimap");
+
+	ui_rectTR = ui_object->GetComponent<RectTransform>();
+	ui_rectTR->SetImagePivot(RECT_PIVOT::PIVOT_MIDDLE_LEFT);
+
+	ui_object = InstanceUI("UI");
+	ui_image = ui_object->AddComponent<Image>();
+	ui_image->SetTexture("ingame_minimap");
+
+	ui_rectTR = ui_object->GetComponent<RectTransform>();
+	ui_rectTR->SetImagePivot(RECT_PIVOT::PIVOT_MIDDLE_RIGHT);
+
+	ui_object = InstanceUI("UI");
+	ui_image = ui_object->AddComponent<Image>();
+	ui_image->SetTexture("ingame_minimap");
+
+	ui_rectTR = ui_object->GetComponent<RectTransform>();
+	ui_rectTR->SetImagePivot(RECT_PIVOT::PIVOT_MIDDLE_CENTER);
 }
 
 void TestScene::CreateParticle(float x, float y, float z)
