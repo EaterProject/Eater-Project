@@ -16,12 +16,12 @@
 #include "MonsterA.h"
 #include "MonsterB.h"
 #include "ClientComponent.h"
-#include "HealingDrone.h"
-#include "AttackDrone.h"
+#include "Drone.h"
 #include "Bullet.h"
 #include "Potal.h"
 #include "ClientObjectManager.h"
 #include "ManaStone.h"
+
 
 
 ObjectFactory::ObjectFactory()
@@ -57,6 +57,7 @@ GameObject* ObjectFactory::CreatePlayer()
 	GameObject* PlayerMainCamera	= InstanceCamera("Camera");
 	GameObject* PlayerCollider		= Instance();
 	GameObject* PlayerWeapon		= Instance();
+	GameObject* DroneObject			= Instance();
 	
 	//플레이어 생성
 	PlayerObject->SetTag("Player");
@@ -71,6 +72,9 @@ GameObject* ObjectFactory::CreatePlayer()
 	//플레이어 무기 생성
 	PlayerWeapon->SetTag("Weapon");
 	PlayerWeapon->AddComponent<MeshFilter>();
+
+	DroneObject->AddComponent<MeshFilter>();
+	DroneObject->AddComponent<Drone>();
 
 	//카메라 생성
 	Camera* Main = PlayerMainCamera->GetComponent<Camera>();

@@ -16,6 +16,7 @@ public:
 	virtual void Move()		= 0;
 	virtual void Attack()	= 0;
 	virtual void Idle()		= 0;
+	virtual void Dead()		= 0;
 	virtual void Debug()	= 0;
 
 	void SetMovePoint(float x, float y, float z);
@@ -26,9 +27,11 @@ protected:
 	AnimationController*	mAnimation;
 	Collider*				mColider;
 	Rigidbody*				mRigidbody;
+	Transform*				mPlayerTR;
 protected:
-	Vector3 MovePoint;	//이동해야하는 지점
-	Vector3 DirPoint;	//이동지점의 방향벡터
+	Vector3 MovePoint;		//이동해야하는 지점
+	Vector3 DirPoint;		//이동지점의 방향벡터
+	Vector3 ReturnPoint;	//추격후 돌아가야하는 위치
 protected:
 	int		State = 0;
 protected:
@@ -43,10 +46,19 @@ protected:
 	bool	AttackStart		= false;
 	bool	MoveStart		= false;
 protected:
-	float	HP			= 100;		//현재 체력
-	float	Speed		= 0.75f;	//이동 속도
-	float	AttackTime	= 0;		//현재 공격 시간
-	int		PointNumber = -1;
+	///Chase 상태 변수들
+	float		ChaseTime		= 0.0f; //추격하는 현재 시간
+	const float ChaseEndTime	= 5.0f;	//추격을  중지하는 시간 
+protected:
+	float AttackRange	= 2.5f;			//공격 거리
+	float ChaseRange	= 5.5f;			//추격거리
+protected:
+	float	HP			= 100;			//현재 체력
+	float	Speed		= 0.75f;		//이동 속도
+	float	AttackTime	= 0;			//현재 공격 시간
+	int		PointNumber = -1;			
+	const float IdleSpeed	= 0.75f;
+	const float ChaseSpeed	= 1.5f;
 };
 
 

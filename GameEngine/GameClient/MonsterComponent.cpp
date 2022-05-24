@@ -10,6 +10,7 @@ void MonsterComponent::SetMovePoint(float x, float y, float z)
 	MovePoint.x = x;
 	MovePoint.y = y;
 	MovePoint.z = z;
+	ReturnPoint = MovePoint;
 }
 
 bool MonsterComponent::GetStopPoint()

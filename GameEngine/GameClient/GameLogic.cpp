@@ -5,6 +5,7 @@
 #include "Transform.h"
 #include "ClientObjectManager.h"
 #include "ClientComponent.h"
+#include "Collider.h"
 
 GameLogic::GameLogic()
 {
@@ -28,7 +29,7 @@ void GameLogic::Initialize()
 	FactoryGM->Initialize(ObjectGM);
 	ObjectGM->Initialize(FactoryGM);
 
-	
+	AddOccluder("Dome_program_0");
 }
 
 void GameLogic::Release()
