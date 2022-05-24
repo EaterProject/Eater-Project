@@ -14,8 +14,7 @@
 #include "MonsterA.h"
 #include "MonsterB.h"
 #include "Potal.h"
-#include "HealingDrone.h"
-#include "AttackDrone.h"
+#include "Drone.h"
 #include "Bullet.h"
 
 

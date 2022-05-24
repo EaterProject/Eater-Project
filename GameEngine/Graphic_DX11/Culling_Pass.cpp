@@ -171,7 +171,9 @@ void Culling_Pass::RenderOccluders()
 
 void Culling_Pass::OcclusionCullingQuery()
 {
-	if (CullingRenderMeshList.empty() || g_GlobalData->OccluderList.empty()) return;
+	if (CullingRenderMeshList.empty()) return;
+
+	bool isCulling = g_GlobalData->OccluderList.empty();
 
 	CameraData* cam = g_GlobalData->MainCamera_Data;
 
@@ -195,6 +197,13 @@ void Culling_Pass::OcclusionCullingQuery()
 		// 활성화 되있는 Object만 Culling..
 		if (m_RenderData->m_ObjectData->IsActive == false) continue;
 
+		// 현재 오클루터 설정 상태..
+		if (isCulling == true)
+		{
+			m_RenderData->m_Draw = true;
+			continue;
+		}
+
 		// 해당 Collider Transform Update..
 		m_Sphere = m_RenderData->m_Mesh->m_MeshProperty->BoundSphere;
 		m_Sphere.Transform(m_Sphere, m_RenderData->m_ObjectData->World);
@@ -207,6 +216,9 @@ void Culling_Pass::OcclusionCullingQuery()
 
 		m_ColliderList[m_RenderCount++] = m_ColliderData;
 	}
+
+	// 현재 오클루터 설정 상태..
+	if (isCulling == true) return;
 
 	// Mapping SubResource Data..
 	D3D11_MAPPED_SUBRESOURCE mappedResource;

@@ -40,6 +40,12 @@ void GameObject::SetActive(bool active)
 	{
 		(*it)->Enabled = active;
 	}
+
+	for (int i = 0; i < ChildMeshList.size(); i++)
+	{
+		ChildMeshList[i]->SetActive(active);
+	}
+
 }
 
 void GameObject::SetDontDestroy(bool mDontDestroy)
@@ -307,6 +313,20 @@ void GameObject::PushPhysFunction(Component* con, unsigned int type)
 		break;
 	}
 
+}
+
+void GameObject::ChildActive(bool Active)
+{
+	IsActive = Active;
+	for (int i = 0; i < ChildMeshList.size(); i++)
+	{
+		ChildMeshList[i]->ChildActive(Active);
+	}
+
+	for (int i = 0; i < ChildBoneList.size(); i++)
+	{
+		ChildBoneList[i]->ChildActive(Active);
+	}
 }
 
 void GameObject::PlayPhysFunction(GameObject* Obj, unsigned int type)

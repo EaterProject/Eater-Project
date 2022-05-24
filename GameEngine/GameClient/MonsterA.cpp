@@ -56,8 +56,11 @@ void MonsterA::SetUp()
 	//매쉬 생성a
 	mMeshFilter->SetModelName("MonsterA+");
 	mMeshFilter->SetAnimationName("MonsterA+");
-	//mAnimation->Choice("idle");
 	mAnimation->Play();
+
+	//플레이어
+	mPlayer = FindGameObjectTag("Player");
+	mPlayerTR = mPlayer->GetTransform();
 
 	//이동 위치
 	Vector3 Point = Mana->GetPoint(PointIndex, 1);
@@ -69,6 +72,9 @@ void MonsterA::SetUp()
 
 void MonsterA::Update()
 {
+	if (HP <= 0) { State = (int)MONSTER_STATE::DEAD; }
+
+
 	switch (State)
 	{
 	case (int)MONSTER_STATE::IDLE:
@@ -80,6 +86,12 @@ void MonsterA::Update()
 	case (int)MONSTER_STATE::ATTACK:
 		Attack();
 		break;
+	case (int)MONSTER_STATE::CHASE:
+		Chase();
+		break;
+	case (int)MONSTER_STATE::DEAD:
+		Dead();
+		break;
 	}
 
 	Debug();
@@ -90,6 +102,7 @@ void MonsterA::OnTriggerStay(GameObject* Obj)
 	if (Obj->GetTag() == 6 && Player::GetAttackState() == true)
 	{
 		mAnimation->Choice("die");
+		HP -= 50;
 	}
 }
 
@@ -97,6 +110,7 @@ void MonsterA::Move()
 {
 	if (MoveStart == false)
 	{
+		//현재 목표지점을 저장
 		mAnimation->Choice("move");
 		MoveStart = true;
 	}
@@ -118,23 +132,35 @@ void MonsterA::Move()
 
 void MonsterA::Attack()
 {
+	mAnimation->Choice("attack");
+
+	if (mAnimation->GetNowFrame() >= mAnimation->GetEndFrame())
+	{
+		State = (int)MONSTER_STATE::CHASE;
+	}
+
 	if (AttackStart == false) 
 	{
-
-		
 		AttackStart = true;
 	}
 }
 
 void MonsterA::Idle()
 {
+	if (mTransform->GetDistance(mPlayer->GetTransform()->Position) <= ChaseRange)
+	{
+		State = (int)MONSTER_STATE::CHASE;
+		mAnimation->Choice("move");
+		return;
+	}
+
 	//기본 값 셋팅
 	if (IdleStart == false)
 	{
 		mAnimation->Choice("idle");
 		PointNumber		= rand() % 5;
 		Idle_MaxTime	= (rand() % Idle_MaxTime_Max) + Idle_MaxTime_Min;
-		Vector3 Point = Mana->GetPoint(PointIndex, PointNumber);
+		Vector3 Point	= Mana->GetPoint(PointIndex, PointNumber);
 		SetMovePoint(Point.x, Point.y, Point.z);
 		IdleStart = true;
 	}
@@ -147,15 +173,52 @@ void MonsterA::Idle()
 	else
 	{
 		//상태 변화 기본값 초기화
+		Speed = IdleSpeed;
 		State = (int)MONSTER_STATE::MOVE;
 		IdleStart	= false;
 		IdleTime	= 0;
 	}
 }
 
+void MonsterA::Dead()
+{
+	mAnimation->Choice("die");
+	if (mAnimation->GetNowFrame() >= mAnimation->GetEndFrame())
+	{
+		gameobject->SetActive(false);
+	}
+}
+
+void MonsterA::Chase()
+{
+	mAnimation->Choice("move");
+	ChaseTime += GetDeltaTime();
+
+	//추격시간이 길어지면 원래있던 위치로 돌아간다
+	if (ChaseTime >= ChaseEndTime)
+	{
+		ChaseTime -= ChaseEndTime;
+		State = (int)MONSTER_STATE::MOVE;
+	}
+	else
+	{
+		Speed = ChaseSpeed;
+		SetMovePoint(mPlayerTR->Position.x, mPlayerTR->Position.y, mPlayerTR->Position.z);
+		mTransform->Slow_Y_Rotation(MovePoint, 100, false);
+		mRigidbody->SetVelocity(DirPoint.x, DirPoint.y, DirPoint.z);
+	}
+
+	//공격 거리에 들어오면 공격을 한다
+	if (mTransform->GetDistance(mPlayer->GetTransform()->Position) <= AttackRange)
+	{
+		State = (int)MONSTER_STATE::ATTACK;
+	}
+}
+
 void MonsterA::Debug()
 {
-	DebugDrawCircle(2.5f, mTransform->Position, Vector3(0, 0, 0), Vector3(1, 0, 0));
+	DebugDrawCircle(ChaseRange, mTransform->Position, Vector3(0, 0, 0), Vector3(1, 0, 0));
+	DebugDrawCircle(AttackRange, mTransform->Position, Vector3(0, 0, 0), Vector3(0, 1, 0));
 }
 
 

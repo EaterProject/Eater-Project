@@ -9,14 +9,15 @@ public:
 public:
 	void Create(ManaStone* mMana, int mCreatePointIndex);
 public:
-	void Awake();
-	void SetUp();
-	void Update();
+	void Awake() override;
+	void SetUp() override;
+	void Update() override;
 
-	void Move();
-	void Attack();
-	void Idle();
-	void Debug();
+	void Move()		override;
+	void Attack()	override;
+	void Idle()		override;
+	void Dead()	    override;
+	void Debug()	override;
 private:
 	ManaStone* Mana;
 	int PointIndex = 0;

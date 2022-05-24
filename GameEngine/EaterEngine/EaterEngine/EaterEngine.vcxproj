@@ -184,19 +184,12 @@ copy /Y "$(TargetDir)*.lib" "$(SolutionDir)Library\lib"
     </Link>
     <PostBuildEvent>
       <Command>copy/Y "$(TargetDir)*.lib"   "$(SolutionDir)Library\lib"
-
 copy/Y "$(TargetDir)*.dll"   "$(SolutionDir)Library\lib"
 
-
 copy /Y "$(ProjectDir)Export\*.h" "$(SolutionDir)Library\inc\Component"
-
 copy /Y "$(ProjectDir)Network\inc\GameClientGameServerPacketDefine.h" "$(SolutionDir)Library\inc\Network"
-
 copy /Y "$(ProjectDir)Network\inc\PortIPDefine.h" "$(SolutionDir)Library\inc\Network"
-
-
 copy /Y "$(ProjectDir)Network\lib\Debug\*dll"  "$(TargetDir)"
-
 copy /Y "$(ProjectDir)Network\lib\Debug\*lib"  "$(TargetDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

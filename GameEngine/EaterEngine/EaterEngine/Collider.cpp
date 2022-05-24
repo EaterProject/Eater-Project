@@ -106,9 +106,7 @@ void Collider::SetMeshCollider(std::string MeshName)
 void Collider::SetTriangleCollider(std::string MeshName)
 {
 	PhysX_Delete_Actor(mPhysData);
-	delete mPhysData;
-	mPhysData = nullptr;
-
+	
 	mPhysData = PhysX_Create_Data();
 	PhysCollider::TriangleMeshData* Triangle = mPhysData->mCollider->CreateTriangle();
 	ColliderBuffer* data = LoadManager::GetColliderBuffer(MeshName);

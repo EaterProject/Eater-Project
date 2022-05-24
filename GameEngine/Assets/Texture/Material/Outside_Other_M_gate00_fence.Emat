@@ -2,7 +2,7 @@
 @MaterialName Outside_Other_M_gate00_fence
 @Alpha 0
 @DiffuseMap gate00_fence_BaseColor.png
-@NormalMap gate00_fixture_Normal.png
+@NormalMap gate00_fence_Normal.png
 @EmissiveMap 0
 @ORMMap gate00_fence_ORM.png
 @Emissive 0

@@ -1,6 +1,9 @@
 #include "EaterEngineAPI.h"
 #include "inGame.h"
 #include "GameLogic.h"
+#include "Material.h"
+#include "Terrain.h"
+#include "GameObject.h"
 
 void InGame::Awake()
 {
@@ -20,6 +23,15 @@ void InGame::Awake()
 
 	//로직매니저 초기화
 	Logic->Initialize();
+
+	GameObject* testobj = InstanceTerrain("Terrain");
+	Terrain* mTerrain = testobj->GetComponent<Terrain>();
+	mTerrain->SetLayerName("terrain_ground_A_BaseColor", "terrain_ground_A_Normal", "terrain_ground_A_ORM");
+	mTerrain->SetLayerName("terrain_ground_B_BaseColor", "terrain_ground_B_Normal", "terrain_ground_B_ORM");
+	mTerrain->SetLayerName("terrain_ground_C_BaseColor", "terrain_ground_C_Normal", "terrain_ground_C_ORM");
+	mTerrain->SetLayerName("terrain_ground_D_BaseColor", "terrain_ground_D_Normal", "terrain_ground_D_ORM");
+	mTerrain->SetMeshName("Terrain");
+	mTerrain->SetTextureTiling(31.0f);
 }
 
 void InGame::Update()

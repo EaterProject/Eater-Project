@@ -67,9 +67,7 @@ void Player::SetUp()
 	AttackCollider->SetSphereCollider(AttackRange);
 	AttackCollider->SetTrigger(true);
 	//애니메이션 기본 
-	//mAnimation->Choice("move", 1, true);
-	//mAnimation->Play();
-
+	mAnimation->Play();
 }
 
 void Player::Start()
@@ -116,11 +114,6 @@ bool Player::GetAttackState()
 {
 	return IsAttackTime;
 }
-
-//PLAYER_STATE Player::GetState()
-//{
-//	return mState;
-//}
 
 void Player::Healing(float HealingPower)
 {
@@ -406,6 +399,7 @@ bool Player::Player_Move_Check()
 		IsMove = true;
 		return true;
 	}
+	AttackKeyDownCount = 0;
 }
 
 void Player::PlayerAttackColliderUpdate()
