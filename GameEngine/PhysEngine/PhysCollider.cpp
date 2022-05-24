@@ -21,7 +21,7 @@ PhysCollider::~PhysCollider()
 	}
 }
 
-PhysCollider::TriangleMeshData::TriangleMeshData()
+TriangleMeshData::TriangleMeshData()
 {
 	Name			= "";
 	VertexList		= nullptr;
@@ -30,7 +30,7 @@ PhysCollider::TriangleMeshData::TriangleMeshData()
 	IndexListSize	= 0;
 }
 
-PhysCollider::TriangleMeshData::~TriangleMeshData()
+TriangleMeshData::~TriangleMeshData()
 {
 	if (VertexListSize != 0)
 	{
@@ -89,14 +89,30 @@ void PhysCollider::SetTrigger(bool Trigger)
 	isTrigger = Trigger;
 }
 
-PhysCollider::TriangleMeshData* PhysCollider::CreateTriangle()
+TriangleMeshData* PhysCollider::CreateTriangle(int indexSize, int VertexSize, UINT* IndexArray, Vector3* VertexList)
 {
 	TriangleData = new TriangleMeshData();
 	Shape_type = PhysCollider::TYPE::MESH;
+	TriangleData->VertexList = new Vector3[VertexSize];
+	TriangleData->CIndexList = new UINT[indexSize];
+	TriangleData->IndexListSize		= indexSize;
+	TriangleData->VertexListSize	= VertexSize;
+
+	for (int i = 0; i < indexSize; i++)
+	{
+		TriangleData->CIndexList[i] = IndexArray[i];
+	}
+
+	for (int i = 0; i < VertexSize; i++)
+	{
+		TriangleData->VertexList[i] = VertexList[i];
+	}
+
+
 	return TriangleData;
 }
 
-PhysCollider::TriangleMeshData* PhysCollider::CreateTerrain()
+TriangleMeshData* PhysCollider::CreateTerrain()
 {
 	TriangleData = new TriangleMeshData();
 	Shape_type = PhysCollider::TYPE::TERRAIN;
@@ -123,7 +139,7 @@ bool PhysCollider::GetTrigger()
 	return isTrigger;
 }
 
-PhysCollider::TriangleMeshData* PhysCollider::GetTriangleMesh()
+TriangleMeshData* PhysCollider::GetTriangleMesh()
 {
 	return TriangleData;
 }

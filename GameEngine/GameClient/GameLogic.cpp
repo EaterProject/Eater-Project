@@ -6,6 +6,7 @@
 #include "ClientObjectManager.h"
 #include "ClientComponent.h"
 #include "Collider.h"
+#include "Camera.h"
 
 GameLogic::GameLogic()
 {
@@ -30,6 +31,9 @@ void GameLogic::Initialize()
 	ObjectGM->Initialize(FactoryGM);
 
 	AddOccluder("Dome_program_0");
+
+
+
 }
 
 void GameLogic::Release()
@@ -40,6 +44,9 @@ void GameLogic::Release()
 
 void GameLogic::Update()
 {
+	GameObject* main = GetMainCamera();
+	Camera* MainCam = main->GetComponent<Camera>();
+	MainCam->ChoiceCameraAnimation("StartCam");
 
 }
 

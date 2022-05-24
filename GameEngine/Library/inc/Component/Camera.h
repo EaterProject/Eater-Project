@@ -23,6 +23,7 @@ public:
 
 	//현재카메라를 메인카메라로 변경시킨다
 	EATER_ENGINEDLL void ChoiceMainCam();
+	EATER_ENGINEDLL void ChoiceCameraAnimation(std::string Name);
 	//EATER_ENGINEDLL void LookAt(GameObject* obj);
 	//EATER_ENGINEDLL void LookAt(Vector3 Pos);
 	// Camera Position

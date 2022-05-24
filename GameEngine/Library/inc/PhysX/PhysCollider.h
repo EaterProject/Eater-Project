@@ -10,6 +10,21 @@ using namespace SimpleMath;
 ///콜라이더 정보들
 ///Center를 중심점을 시작 으로 Shape_Size 만큼 콜라이더를 생성해준다
 ///기본값으로 BoxCollider 와 각 축의 1사이즈로 생성한다
+/// 
+
+class PHYS_ENGINEDLL TriangleMeshData
+{
+public:
+	TriangleMeshData();
+	~TriangleMeshData();
+public:
+	std::string Name;
+	Vector3* VertexList = nullptr;
+	UINT* CIndexList = nullptr;
+	int VertexListSize = 0;
+	int IndexListSize = 0;
+};
+
 class  PhysCollider
 {
 public:
@@ -25,22 +40,9 @@ public:
 		TERRAIN,
 	};
 
-	class PHYS_ENGINEDLL TriangleMeshData
-	{
-	public:
-		TriangleMeshData();
-		~TriangleMeshData();
-	public:
-		std::string Name;
-		Vector3* VertexList = nullptr;
-		UINT* CIndexList		= nullptr;
-		int VertexListSize	= 0;
-		int IndexListSize	= 0;
-	};
-
 public:
 	///Create
-	PHYS_ENGINEDLL TriangleMeshData* CreateTriangle();
+	PHYS_ENGINEDLL TriangleMeshData* CreateTriangle(int indexSize, int VertexSize,UINT* IndexArray,Vector3* VertexList);
 	PHYS_ENGINEDLL TriangleMeshData* CreateTerrain();
 public:
 	///Set

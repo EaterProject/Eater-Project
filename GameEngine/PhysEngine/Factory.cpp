@@ -62,7 +62,7 @@ physx::PxShape* Factory::CreateShape(PhysMaterial* m, PhysCollider* c)
 		shape = CreateTriangleCollider(pMaterial, c);
 		break;
 	case PhysCollider::TYPE::TERRAIN:
-		shape = CreateHeightFieldCollider(pMaterial, c);
+		//shape = CreateHeightFieldCollider(pMaterial, c);
 		break;
 	}
 
@@ -226,7 +226,7 @@ void Factory::SetAxisLock(PxRigidDynamic* Actor, PhysData* Data)
 
 physx::PxShape* Factory::CreateTriangleCollider(physx::PxMaterial* m, PhysCollider* c)
 { 
-	PhysCollider::TriangleMeshData* Triangle = c->GetTriangleMesh();
+	TriangleMeshData* Triangle = c->GetTriangleMesh();
 	int IndexCount = (int)Triangle->IndexListSize;
 	int VertexCount = (int)Triangle->VertexListSize;
 
@@ -251,7 +251,7 @@ physx::PxShape* Factory::CreateTriangleCollider(physx::PxMaterial* m, PhysCollid
 
 physx::PxShape* Factory::CreateHeightFieldCollider(physx::PxMaterial* m, PhysCollider* c)
 {
-	PhysCollider::TriangleMeshData* Triangle = c->GetTriangleMesh();
+	TriangleMeshData* Triangle = c->GetTriangleMesh();
 	int IndexCount = (int)Triangle->IndexListSize;
 	int VertexCount = (int)Triangle->VertexListSize;
 

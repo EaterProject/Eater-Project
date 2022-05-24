@@ -8,6 +8,7 @@
 #include "DebugManager.h"
 #include "GlobalDataManager.h"
 #include "Profiler/Profiler.h"
+#include "LoadManager.h"
 
 using namespace DirectX;
 std::vector<Camera*> Camera::CamList;
@@ -127,6 +128,29 @@ void Camera::ChoiceMainCam()
 
 	//바뀐 카메라의 태그를 메인카메라로 변경
 	g_MainCam->gameobject->SetTag("MainCamera");
+}
+
+void Camera::ChoiceCameraAnimation(std::string Name)
+{
+	CameraAnimation* Data = LoadManager::GetCamAnimation(Name);
+	float OneFrameTime = 0;
+	int NowIndex = 0;
+
+	Transform* mTransform = gameobject->GetTransform();
+	while (true)
+	{
+		if (NowIndex >= Data->Position.size())
+		{
+			break;
+		}
+
+		if (OneFrameTime >= Data->OneFrame)
+		{
+			NowIndex++;
+		}
+		mTransform->Position = Data->Position[NowIndex];
+		mTransform->Rotation = Data->Rotation[NowIndex];
+	}
 }
 
 DirectX::SimpleMath::Matrix Camera::GetView()

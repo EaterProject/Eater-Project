@@ -58,12 +58,14 @@ GameObject* ObjectFactory::CreatePlayer()
 	GameObject* PlayerCollider		= Instance();
 	GameObject* PlayerWeapon		= Instance();
 	GameObject* DroneObject			= Instance();
+	GameObject* PlayerPoint			= FindGameObjectTag("PlayerPoint");
 	
 	//플레이어 생성
 	PlayerObject->SetTag("Player");
 	PlayerObject->AddComponent<Player>();
 	PlayerObject->AddComponent<MeshFilter>();
 	PlayerObject->AddComponent<AnimationController>();
+	PlayerObject->GetTransform()->Position = PlayerPoint->GetTransform()->Position;
 
 	//콜라이더 객체 생성
 	PlayerCollider->SetTag("PlayerCollider");

@@ -208,6 +208,7 @@ copy /Y "$(ProjectDir)Network\lib\Debug\*lib"  "$(TargetDir)"</Command>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MaxFilesInUnityFile>5</MaxFilesInUnityFile>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>MaxSpeed</Optimization>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -286,8 +287,6 @@ copy /Y "$(ProjectDir)Network\lib\Release\*lib"  "$(TargetDir)"</Command>
     <ClInclude Include="MaterialManager.h" />
     <ClInclude Include="FBXManager.h" />
     <ClInclude Include="MeshManager.h" />
-    <ClInclude Include="NavigationManager.h" />
-    <ClInclude Include="NavMesh.h" />
     <ClInclude Include="NetworkManager.h" />
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="LoadManager.h" />
@@ -326,8 +325,6 @@ copy /Y "$(ProjectDir)Network\lib\Release\*lib"  "$(TargetDir)"</Command>
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="MeshManager.cpp" />
-    <ClCompile Include="NavigationManager.cpp" />
-    <ClCompile Include="NavMesh.cpp" />
     <ClCompile Include="NetworkManager.cpp" />
     <ClCompile Include="GraphicEngineManager.cpp" />
     <ClCompile Include="KeyinputManager.cpp" />
