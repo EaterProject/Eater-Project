@@ -3,6 +3,7 @@
 #include "LoadManager.h"
 #include "GraphicEngineAPI.h"
 #include "IndexManager.h"
+#include "MaterialManager.h"
 
 #define SAFE_RELEASE(x) { if(x != nullptr){ x->Release(); delete x; x = nullptr; } }
 
@@ -19,7 +20,7 @@ Material::Material()
 	m_MaterialData->Material_Property->TexTM = DirectX::SimpleMath::Matrix::CreateScale(1.0f, 1.0f, 1.0f);
 
 	// Material 등록..
-	IndexManager<MaterialBuffer>::PushResource(m_MaterialData, &m_MaterialData->BufferIndex);
+	MaterialManager::SetIndex(&m_MaterialData->BufferIndex);
 
 	// Material Graphic 측 등록..
 	GraphicEngine::Get()->PushMaterial(m_MaterialData);
@@ -31,7 +32,7 @@ Material::~Material()
 	Release();
 
 	// Manager 내부에 있는 해당 Material Data 삭제..
-	IndexManager<MaterialBuffer>::DeleteResource(m_MaterialData->BufferIndex);
+	MaterialManager::DeleteIndex(m_MaterialData->BufferIndex);
 }
 
 void Material::SetTextureTiling(float scale_x, float scale_y)

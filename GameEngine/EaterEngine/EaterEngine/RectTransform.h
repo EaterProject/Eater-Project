@@ -2,8 +2,7 @@
 #include "EaterEngineDLL.h"
 #include "SimpleMath.h"
 #include "Component.h"
-
-class UIData;
+#include "TypeOptionHeader.h"
 
 class RectTransform : public Component
 {
@@ -12,14 +11,11 @@ public:
 	~RectTransform();
 
 public:
-	void Start() override;
 	void TransformUpdate() override;
 
 public:
-	EATER_ENGINEDLL void SetImage(std::string texture_name);
 	EATER_ENGINEDLL void SetImagePivot(RECT_PIVOT pivot_type);
 	EATER_ENGINEDLL void SetImageSize(DirectX::SimpleMath::Vector2 image_size);
-	EATER_ENGINEDLL void SetImageColor(DirectX::SimpleMath::Vector4 image_color);
 
 	EATER_ENGINEDLL void SetPosition(DirectX::SimpleMath::Vector2 pos);
 	EATER_ENGINEDLL void SetRotation(DirectX::SimpleMath::Vector3 rot);
@@ -53,7 +49,5 @@ private:
 	DirectX::SimpleMath::Matrix ScaleXM;
 
 	DirectX::SimpleMath::Matrix WorldXM;
-
-	UIBuffer* m_UI;
 };
 

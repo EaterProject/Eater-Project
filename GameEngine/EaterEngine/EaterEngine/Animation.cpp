@@ -15,7 +15,7 @@ Animation::Animation()
 	m_AnimationData->Name = "None";
 
 	// Animation 등록..
-	AnimationManager::PushAnimation(this);
+	AnimationManager::SetIndex(&m_AnimationBuffer->BufferIndex);
 
 	// Animation Graphic 측 등록..
 	GraphicEngine::Get()->PushAnimation(m_AnimationBuffer);
@@ -24,7 +24,7 @@ Animation::Animation()
 Animation::~Animation()
 {
 	// Manager 내부에 있는 해당 Animation Data 삭제..
-	AnimationManager::DeleteAnimation(m_AnimationBuffer->BufferIndex);
+	AnimationManager::DeleteIndex(m_AnimationBuffer->BufferIndex);
 }
 
 void Animation::BakeAnimation()

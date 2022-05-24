@@ -304,6 +304,44 @@ HRESULT D3D11Graphic::CreateSamplerState(D3D11_SAMPLER_DESC* ssDesc, ID3D11Sampl
 	return m_Device->CreateSamplerState(ssDesc, ss);
 }
 
+void D3D11Graphic::GetImageSize(std::string filePath, UINT* width, UINT* height)
+{
+	HRESULT result;
+	std::wstring wPath(filePath.begin(), filePath.end());
+
+	std::size_t Start = filePath.rfind('.') + 1;
+	std::size_t End = filePath.length() - Start;
+	std::string Type = filePath.substr(Start, End);
+
+	DirectX::TexMetadata tex;
+	DirectX::ScratchImage image;
+
+	// 확장자에 따른 텍스처 파일 로드 방식..
+	if (Type == "dds" || Type == "DDS")
+	{
+		result = DirectX::LoadFromDDSFile(wPath.c_str(), DirectX::DDS_FLAGS::DDS_FLAGS_NONE, &tex, image);
+	}
+	else if (Type == "hdr" || Type == "HDR")
+	{
+		result = DirectX::LoadFromHDRFile(wPath.c_str(), &tex, image);
+	}
+	else
+	{
+		result = DirectX::LoadFromWICFile(wPath.c_str(), DirectX::WIC_FLAGS::WIC_FLAGS_NONE, &tex, image);
+	}
+
+	if (FAILED(result))
+	{
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, result, "[ Graphic ][ Get ][ ImageSize ] '%s' FAILED!!", filePath.c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, result, "[ Graphic ][ Get ][ ImageSize ] '%s' FAILED!!", filePath.c_str());
+	}
+	else
+	{
+		*width = tex.width;
+		*height = tex.height;
+	}
+}
+
 Microsoft::WRL::ComPtr<ID3D11Device> D3D11Graphic::GetDevice()
 {
 	return m_Device;

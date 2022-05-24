@@ -14,6 +14,10 @@
 #include "GraphicEngineAPI.h"
 #include "GraphicEngineManager.h"
 #include "GameObject.h"
+
+#include "MeshManager.h"
+#include "MaterialManager.h"
+
 #include "Profiler/Profiler.h"
 
 

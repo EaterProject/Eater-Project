@@ -34,6 +34,9 @@ public:
 	virtual HRESULT CreateSamplerState(D3D11_SAMPLER_DESC* ssDesc, ID3D11SamplerState** ss) abstract;
 
 public:
+	virtual void GetImageSize(std::string filePath, UINT* width, UINT* height) abstract;
+
+public:
 	virtual Microsoft::WRL::ComPtr<ID3D11Device> GetDevice() abstract;
 	virtual Microsoft::WRL::ComPtr<ID3D11DeviceContext> GetContext() abstract;
 	virtual Microsoft::WRL::ComPtr<IDXGISwapChain> GetSwapChain() abstract;

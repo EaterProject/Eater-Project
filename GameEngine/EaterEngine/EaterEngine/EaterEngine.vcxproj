@@ -292,6 +292,8 @@ copy /Y "$(ProjectDir)Network\lib\Release\*lib"  "$(TargetDir)"</Command>
     <ClInclude Include="KeyinputManager.h" />
     <ClInclude Include="LightManager.h" />
     <ClInclude Include="FBXManager.h" />
+    <ClInclude Include="MaterialManager.h" />
+    <ClInclude Include="MeshManager.h" />
     <ClInclude Include="NavigationManager.h" />
     <ClInclude Include="NavMesh.h" />
     <ClInclude Include="NetworkManager.h" />
@@ -304,6 +306,7 @@ copy /Y "$(ProjectDir)Network\lib\Release\*lib"  "$(TargetDir)"</Command>
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="TimeManager.h" />
     <ClInclude Include="RectTransform.h" />
+    <ClInclude Include="UIManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
@@ -330,7 +333,10 @@ copy /Y "$(ProjectDir)Network\lib\Release\*lib"  "$(TargetDir)"</Command>
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="FBXManager.cpp" />
     <ClCompile Include="Image.cpp" />
+    <ClCompile Include="IndexManager.cpp" />
+    <ClCompile Include="MaterialManager.cpp" />
     <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="MeshManager.cpp" />
     <ClCompile Include="NavigationManager.cpp" />
     <ClCompile Include="NavMesh.cpp" />
     <ClCompile Include="NetworkManager.cpp" />
@@ -358,6 +364,7 @@ copy /Y "$(ProjectDir)Network\lib\Release\*lib"  "$(TargetDir)"</Command>
     <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="RectTransform.cpp" />
+    <ClCompile Include="UIManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

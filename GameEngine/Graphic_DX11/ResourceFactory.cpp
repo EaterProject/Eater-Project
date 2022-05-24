@@ -115,6 +115,9 @@ void GraphicResourceFactory::CreateTextureBuffer(std::string path, TextureBuffer
 		if((*ppResource) == nullptr) (*ppResource) = new TextureBuffer();
 		(*ppResource)->pTextureBuf = newTex;
 
+		// Texture Size ¼³Á¤..
+		g_Graphic->GetImageSize(path, &(*ppResource)->Width, &(*ppResource)->Height);
+
 		// Debug Name..
 		GPU_RESOURCE_DEBUG_NAME(newTex, texName.c_str());
 

@@ -175,14 +175,26 @@
     <Filter Include="소스 파일\Component\UI\Button">
       <UniqueIdentifier>{26ca3b34-e28a-4ecc-92d3-7bcc1ac6c8cb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Component\UI\Image">
-      <UniqueIdentifier>{4b56ed3a-fc26-4556-81c5-ef4ebf39218b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Component\UI\Transform">
       <UniqueIdentifier>{c486eaca-d4a5-4bc7-b5c4-f0e944ddb389}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\Manager\IndexManager">
       <UniqueIdentifier>{380e2ef9-cc43-45e5-aef1-2715818726d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\MeshManager">
+      <UniqueIdentifier>{e70c289b-b32f-4361-8427-2f9128bdc202}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\MaterialManager">
+      <UniqueIdentifier>{b15d0887-9220-4036-8ea6-512970bdf293}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\UIManager">
+      <UniqueIdentifier>{809c5897-5d48-40a4-b09c-c763a78fcdf0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Resource\UI">
+      <UniqueIdentifier>{93d5e485-a99d-438c-bf98-8b48f9a0051f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\UI\Image">
+      <UniqueIdentifier>{4b56ed3a-fc26-4556-81c5-ef4ebf39218b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -366,6 +378,15 @@
     <ClInclude Include="IndexManager.h">
       <Filter>소스 파일\Manager\IndexManager</Filter>
     </ClInclude>
+    <ClInclude Include="MaterialManager.h">
+      <Filter>소스 파일\Manager\MaterialManager</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshManager.h">
+      <Filter>소스 파일\Manager\MeshManager</Filter>
+    </ClInclude>
+    <ClInclude Include="UIManager.h">
+      <Filter>소스 파일\Manager\UIManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -523,6 +544,18 @@
     </ClCompile>
     <ClCompile Include="RectTransform.cpp">
       <Filter>소스 파일\Component\UI\Transform</Filter>
+    </ClCompile>
+    <ClCompile Include="MaterialManager.cpp">
+      <Filter>소스 파일\Manager\MaterialManager</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshManager.cpp">
+      <Filter>소스 파일\Manager\MeshManager</Filter>
+    </ClCompile>
+    <ClCompile Include="IndexManager.cpp">
+      <Filter>소스 파일\Manager\IndexManager</Filter>
+    </ClCompile>
+    <ClCompile Include="UIManager.cpp">
+      <Filter>소스 파일\Manager\UIManager</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

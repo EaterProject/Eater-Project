@@ -3,10 +3,6 @@
 
 #include "GameObject.h"
 #include "GameEngine.h"
-#include "LoadManager.h"
-#include "GraphicEngineAPI.h"
-
-#include "IndexManager.h"
 
 RectTransform::RectTransform()
 {
@@ -26,22 +22,7 @@ RectTransform::RectTransform()
 
 RectTransform::~RectTransform()
 {
-	gameobject->OneMeshData->UI_Buffer = nullptr;
 
-	delete m_UI->UI_Property;
-	delete m_UI;
-}
-
-void RectTransform::Start()
-{
-	m_UI = new UIBuffer();
-	m_UI->UI_Property = new UIProperty();
-
-	IndexManager<UIBuffer>::PushResource(m_UI, &m_UI->BufferIndex);
-
-	gameobject->OneMeshData->Object_Data->ObjType = OBJECT_TYPE::UI;
-
-	gameobject->OneMeshData->UI_Buffer = m_UI;
 }
 
 void RectTransform::TransformUpdate()
@@ -102,17 +83,7 @@ void RectTransform::TransformUpdate()
 
 	// 최종 Matrix 설정..
 	WorldXM = ScaleXM * RotationXM * PositionXM;
-	m_UI->UI_Property->World = WorldXM;
-}
-
-void RectTransform::SetImage(std::string texture_name)
-{
-	TextureBuffer* newTexture = LoadManager::GetTexture(texture_name);
-
-	// Texture 변경..
-	m_UI->Albedo = newTexture;
-
-	//gameobject->OneMeshData
+	gameobject->OneMeshData->UI_Buffer->UI_Property->World = WorldXM;
 }
 
 void RectTransform::SetImagePivot(RECT_PIVOT pivot_type)
@@ -123,13 +94,6 @@ void RectTransform::SetImagePivot(RECT_PIVOT pivot_type)
 void RectTransform::SetImageSize(DirectX::SimpleMath::Vector2 imagesize)
 {
 	ImageSize = imagesize;
-}
-
-void RectTransform::SetImageColor(DirectX::SimpleMath::Vector4 imagecolor)
-{
-	ImageColor = imagecolor;
-
-	m_UI->UI_Property->ImageColor = imagecolor;
 }
 
 void RectTransform::SetPosition(DirectX::SimpleMath::Vector2 pos)
