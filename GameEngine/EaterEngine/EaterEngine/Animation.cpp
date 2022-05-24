@@ -25,6 +25,9 @@ Animation::~Animation()
 {
 	// Manager 내부에 있는 해당 Animation Data 삭제..
 	AnimationManager::DeleteIndex(m_AnimationBuffer->BufferIndex);
+
+	// 해당 Resource 제거..
+	Release();
 }
 
 void Animation::BakeAnimation()

@@ -38,7 +38,6 @@
 #include "OutLine_Pass.h"
 #include "Debug_Pass.h"
 
-
 #include <algorithm>
 
 #include "./Profiler/Profiler.h"
@@ -303,8 +302,6 @@ void RenderManager::ConvertRenderData()
 
 void RenderManager::SelectRenderData()
 {
-	//PROFILE_TIMER_START(PROFILE_OUTPUT::VS_CODE, 60, "Culling");
-
 	GPU_BEGIN_EVENT_DEBUG_NAME("Culling Pass");
 	/// GPGPU Hierachical Z-Map Occlusion Culling..
 	m_Culling->RenderOccluders();
@@ -316,8 +313,6 @@ void RenderManager::SelectRenderData()
 	/// CPU Camera View Frustum Culling..
 	//m_Culling->FrustumCulling();
 	GPU_END_EVENT_DEBUG_NAME();
-
-	//PROFILE_TIMER_END("Culling");
 }
 
 void RenderManager::Render()
@@ -1031,6 +1026,13 @@ void RenderManager::FindInstanceLayer(std::vector<InstanceLayer*>& layerList, In
 
 	// 만약 Layer가 검색되지 않았다면 Layer List에 삽입..
 	layerList.push_back(layer);
+
+	std::sort(layerList.begin(), layerList.end(), [](InstanceLayer* layer1, InstanceLayer* layer2) {return layer1->m_MeshList[0]->m_ObjectData->ObjType < layer2->m_MeshList[0]->m_ObjectData->ObjType; });
+}
+
+bool RenderManager::SortLayer(InstanceLayer* layer1, InstanceLayer* layer2)
+{
+	return layer1->m_MeshList[0]->m_ObjectData->ObjType < layer2->m_MeshList[0]->m_ObjectData->ObjType;
 }
 
 bool RenderManager::SortDistance(RenderData* obj1, RenderData* obj2)

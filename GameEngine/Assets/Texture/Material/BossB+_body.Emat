@@ -1,10 +1,10 @@
 #EATERMAT
 @MaterialName BossB+_body
 @Alpha 0
-@DiffuseMap 0
+@DiffuseMap bossb_body_BaseColor.png
 @NormalMap bossb_body_Normal.png
-@EmissiveMap 0
-@ORMMap bossb_body_Emissive.png
+@EmissiveMap bossb_body_Emissive.png
+@ORMMap bossb_body_ ORM.png
 @Emissive 0
 @Roughness 0
 @Metallic 0

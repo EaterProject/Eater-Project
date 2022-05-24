@@ -1,5 +1,5 @@
 #EATERMAT
-@MaterialName Outside_Other_m_gate04_train
+@MaterialName Outside_Other_M_gate04_train
 @Alpha 0
 @DiffuseMap gate04_train_BaseColor.png
 @NormalMap gate04_train_Normal.png

@@ -1,8 +1,8 @@
 #EATERMAT
-@MaterialName Outside_Other_m_gate04_container_m
+@MaterialName Outside_Other_M_gate04_container_m
 @Alpha 0
 @DiffuseMap gate04_container_m_BaseColor.png
-@NormalMap 0
+@NormalMap gate04_container_m_Normal.png
 @EmissiveMap 0
 @ORMMap gate04_container_m_ORM.png
 @Emissive 0

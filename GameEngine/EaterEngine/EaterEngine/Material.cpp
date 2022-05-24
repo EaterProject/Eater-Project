@@ -28,11 +28,11 @@ Material::Material()
 
 Material::~Material()
 {
-	// 해당 Resource 제거..
-	Release();
-
 	// Manager 내부에 있는 해당 Material Data 삭제..
 	MaterialManager::DeleteIndex(m_MaterialData->BufferIndex);
+
+	// 해당 Resource 제거..
+	Release();
 }
 
 void Material::SetTextureTiling(float scale_x, float scale_y)

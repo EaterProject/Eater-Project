@@ -36,6 +36,7 @@ private:
 
 	MeshFilter* meshfilter;
 	bool up;
+	bool up1;
 
 	float angle = 0.0f;
 

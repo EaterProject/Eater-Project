@@ -56,7 +56,7 @@ void TestScene::Awake()
 	//SetSkyCube("Day");
 	SetSkyCube("SkyCube_HDRI");
 
-	Load("../Assets/Scene/test.Scene");
+	//Load("../Assets/Scene/test.Scene");
 }
 
 void TestScene::Update()
@@ -117,34 +117,49 @@ void TestScene::CreateMap()
 	//Object->GetTransform()->Position.x -= 10.0f;
 	//Object->GetTransform()->Position.y += 10.0f;
 
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("Sphere1");
-	//Object->GetTransform()->Position.x -= 30.0f;
-	//
-	//Object = Instance();
-	//meshfilter = Object->AddComponent<MeshFilter>();
-	//meshfilter->SetModelName("Sphere1");
-	//Object->GetTransform()->Position.x -= 10.0f;
-	//
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("Sphere1");
-	//Object->GetTransform()->Position.x += 10.0f;
-	//
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("Sphere1");
-	//Object->GetTransform()->Position.x += 30.0f;
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	filter->SetModelName("Sphere1");
+	Object->GetTransform()->Position.x -= 30.0f;
+
+	Object = Instance();
+	meshfilter = Object->AddComponent<MeshFilter>();
+	meshfilter->SetModelName("Sphere1");
+	Object->GetTransform()->Position.x -= 10.0f;
+
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	filter->SetModelName("Sphere1");
+	Object->GetTransform()->Position.x += 10.0f;
+
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	filter->SetModelName("Sphere1");
+	Object->GetTransform()->Position.x += 30.0f;
 
 
 	//Object = Instance();
 	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("bossb");
-	//filter->SetAnimationName("bossb");
-	//Object->GetTransform()->Position.z += 20;
+	//filter->SetModelName("BossB");
+	//filter->SetAnimationName("BossB");
+	//Object->GetTransform()->Position.x -= 30;
 	//AC = Object->AddComponent<AnimationController>();
-	//AC->Choice("idle");
+	//AC->Choice("weak");
+	//
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("BossB");
+	//filter->SetAnimationName("BossB");
+	//AC = Object->AddComponent<AnimationController>();
+	//AC->Choice("weak");
+	//
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("BossB");
+	//filter->SetAnimationName("BossB");
+	//Object->GetTransform()->Position.x += 30;
+	//AC = Object->AddComponent<AnimationController>();
+	//AC->Choice("weak");
 
 	//Object = Instance();
 	//filter = Object->AddComponent<MeshFilter>();
@@ -304,54 +319,81 @@ void TestScene::CreateParticle(float x, float y, float z)
 void TestScene::ChangeCubeMap()
 {
 
-	//if (GetKeyUp('1'))
-	//{
-	//	meshfilter->SetMaterialPropertyBlock(true);
-	//	MaterialPropertyBlock* block = meshfilter->GetMaterialPropertyBlock();
-	//
-	//	if (up)
-	//	{
-	//		block->LimLightColor.x += 0.1f;
-	//	}
-	//	else
-	//	{
-	//		block->LimLightColor.x -= 0.1f;
-	//	}
-	//
-	//	if (block->LimLightColor.x > 1.0f)
-	//	{
-	//		block->LimLightColor.x = 1.0f;
-	//		up = false;
-	//	}
-	//	if (block->LimLightColor.x < 0.0f)
-	//	{
-	//		block->LimLightColor.x = 0.0f;
-	//		up = true;
-	//	}
-	//}
-	//if (GetKeyUp('2'))
-	//{
-	//	meshfilter->SetMaterialPropertyBlock(false);
-	//}
-	if (GetKeyUp('1'))
+	if (GetKey('1'))
 	{
-		SetSkyLight("SkyLight_HDRI");
+		MaterialPropertyBlock* block = meshfilter->GetMaterialPropertyBlock();
+	
+		if (up)
+		{
+			block->LimLightColor.x += 0.005f;
+		}
+		else
+		{
+			block->LimLightColor.x -= 0.005f;
+		}
+	
+		if (block->LimLightColor.x > 1.0f)
+		{
+			block->LimLightColor.x = 1.0f;
+			up = false;
+		}
+		if (block->LimLightColor.x < 0.0f)
+		{
+			block->LimLightColor.x = 0.0f;
+			up = true;
+		}
 	}
 	if (GetKeyUp('2'))
 	{
-		SetSkyLight("Day");
+		meshfilter->SetMaterialPropertyBlock(true);
 	}
 	if (GetKeyUp('3'))
 	{
-		SetSkyLight("Night");
+		meshfilter->SetMaterialPropertyBlock(false);
 	}
-	if (GetKeyUp('4'))
+	if (GetKey('4'))
 	{
-		SetSkyLight("skybox1");
+		MaterialProperty* block = meshfilter->GetMaterialProperty();
+		
+		if (up)
+		{
+			block->LimLightColor.x += 0.005f;
+		}
+		else
+		{
+			block->LimLightColor.x -= 0.005f;
+		}
+
+		if (block->LimLightColor.x > 1.0f)
+		{
+			block->LimLightColor.x = 1.0f;
+			up = false;
+		}
+		if (block->LimLightColor.x < 0.0f)
+		{
+			block->LimLightColor.x = 0.0f;
+			up = true;
+		}
 	}
-	if (GetKeyUp('5'))
-	{
-		SetSkyLight("TestSky");
-	}
+	//if (GetKeyUp('1'))
+	//{
+	//	SetSkyLight("SkyLight_HDRI");
+	//}
+	//if (GetKeyUp('2'))
+	//{
+	//	SetSkyLight("Day");
+	//}
+	//if (GetKeyUp('3'))
+	//{
+	//	SetSkyLight("Night");
+	//}
+	//if (GetKeyUp('4'))
+	//{
+	//	SetSkyLight("skybox1");
+	//}
+	//if (GetKeyUp('5'))
+	//{
+	//	SetSkyLight("TestSky");
+	//}
 
 }

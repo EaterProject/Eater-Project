@@ -190,9 +190,6 @@
     <Filter Include="소스 파일\Manager\UIManager">
       <UniqueIdentifier>{809c5897-5d48-40a4-b09c-c763a78fcdf0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Resource\UI">
-      <UniqueIdentifier>{93d5e485-a99d-438c-bf98-8b48f9a0051f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Component\UI\Image">
       <UniqueIdentifier>{4b56ed3a-fc26-4556-81c5-ef4ebf39218b}</UniqueIdentifier>
     </Filter>

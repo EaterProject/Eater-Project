@@ -23,11 +23,11 @@ Mesh::Mesh()
 
 Mesh::~Mesh()
 {
-	// 해당 Resource 제거..
-	Release();
-
 	// Manager 내부에 있는 해당 Mesh Data 삭제..
 	MeshManager::DeleteIndex(m_MeshData->BufferIndex);
+
+	// 해당 Resource 제거..
+	Release();
 }
 
 void Mesh::Release()

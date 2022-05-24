@@ -34,15 +34,44 @@ void Image::Awake()
 	gameobject->OneMeshData->UI_Buffer = m_UI;
 }
 
-void Image::SetImage(std::string texture_name)
+void Image::Start()
 {
-	TextureBuffer* newTexture = LoadManager::GetTexture(texture_name);
+	//클라이언트쪽에서 텍스쳐의 이름을 넣고 모두 끝난상태
+	if (isLoad_Texture)
+	{
+		SetTexture();
+	}
+
+	//실행도중 텍스쳐를 바꿀수있게 모두 true
+	isLoad_Texture = true;
+}
+
+void Image::SetTexture(std::string texture_name)
+{
+	if (isLoad_Texture == false)
+	{
+		isLoad_Texture = true;
+		TextureName = texture_name;
+	}
+	else
+	{
+		TextureName = texture_name;
+		SetTexture();
+	}
+}
+
+void Image::SetTexture()
+{
+	TextureBuffer* newTexture = LoadManager::GetTexture(TextureName);
 
 	// Texture 변경..
 	m_UI->Albedo = newTexture;
 
 	// 그래픽 연동..
 
+
+	// 이미지 크기 재설정..
+	m_Transform->SetImageSize(Vector2(m_UI->Albedo->Width, m_UI->Albedo->Height));
 }
 
 void Image::SetImageColor(DirectX::SimpleMath::Vector4 image_color)
