@@ -902,7 +902,7 @@ $LocalTM 4 4
 @NodeName wirts_low.002
 @ParentName RootNode
 @MeshName Player+_0
-@MaterialName Defalt
+@MaterialName PlayerMat
 @TopNode YES
 $WorldTM 4 4
 1.000000 0.000000 0.000000 0.000000

@@ -104,6 +104,29 @@ void Eater_LoadScene::LoadData(std::string& FilePath)
 				EATER_GET_LIST(&Data, i);
 				 ObjectManager::AddTag(std::stoi(Data[0]), Data[1]);
 			}
+
+			RenderOption* mOption = GetRenderOptionData();
+			Find = EATER_GET_LIST_CHOICE(i, "OPTION");
+			std::vector<float> Data;
+			EATER_GET_LIST(&Data, i);
+			mOption->AO_Radius = Data[0];
+			mOption->AO_SurfaceEpsilon = Data[1];
+			mOption->AO_BlurCount = Data[2];
+			mOption->FOG_Color.x = Data[3];
+			mOption->FOG_Color.y = Data[4];
+			mOption->FOG_Color.z = Data[5];
+			mOption->FOG_MoveSpeed = Data[6];
+			mOption->FOG_StartDistance = Data[7];
+			mOption->FOG_DistanceOffset = Data[8];
+			mOption->FOG_DistanceValue = Data[9];
+			mOption->FOG_HeightOffset = Data[10];
+			mOption->FOG_HeightValue = Data[11];
+			mOption->SkyCube_Size = Data[12];
+			mOption->BLOOM_Threshold_Min = Data[13];
+			mOption->BLOOM_Threshold_Max = Data[14];
+			mOption->BLOOM_Factor = Data[15];
+			mOption->SkyLight_Factor = Data[16];
+			RenderSetting();
 		}
 	}
 	EATER_CLOSE_READ_FILE();

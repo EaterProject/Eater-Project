@@ -1,0 +1,22 @@
+#EATERMAT
+@MaterialName Dome_M_vendingMachine
+@Alpha 0
+@DiffuseMap Dome_VendingMachine_BaseColor.png
+@NormalMap Dome_VendingMachine_Normal.png
+@EmissiveMap Dome_VendingMachine_Emissive.png
+@ORMMap Dome_VendingMachine_ORM.png
+@Emissive 2
+@Roughness 0
+@Metallic 0
+@Tileing_X 1
+@Tileing_Y 1
+@AddColor_R 0
+@AddColor_G 0
+@AddColor_B 0
+@AddColor_A 0
+@LimColor_R 0
+@LimColor_G 0
+@LimColor_B 0
+@LimFactor 0
+@LimWidth 0
+&

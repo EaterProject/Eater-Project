@@ -29,8 +29,6 @@ void GameLogic::Initialize()
 	//오브젝트 관리 매니저
 	FactoryGM->Initialize(ObjectGM);
 	ObjectGM->Initialize(FactoryGM);
-
-	AddOccluder("Dome_program_0");
 }
 
 void GameLogic::Release()

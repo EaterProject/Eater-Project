@@ -42,7 +42,7 @@ void PlayerCamera::SetUp()
 	ShowMouseCursor(MouseCursor);
 	MouseCursorClip(MouseCursor);
 	//SetMousePosCenter();
-	//MainCam->ChoiceCameraAnimation("StartCam");
+	MainCam->ChoiceCameraAnimation("StartCam");
 }
 
 void PlayerCamera::StartUpdate()

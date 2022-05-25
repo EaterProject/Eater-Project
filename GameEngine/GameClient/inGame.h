@@ -12,4 +12,7 @@ public:
 	virtual void End();
 public:
 	GameLogic* Logic;
+
+	GameObject* DebugCam;
+	GameObject* MainCame;
 };
