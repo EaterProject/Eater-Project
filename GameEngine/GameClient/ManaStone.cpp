@@ -33,7 +33,7 @@ void ManaStone::Awake()
 
 	srand((unsigned int)time(NULL));
 
-	CreateMonster(5, 0);
+	CreateMonster(3, 0);
 }
 
 void ManaStone::SetUp()
@@ -142,8 +142,8 @@ void ManaStone::CreateMonsterRangePoint(int MonsterCount)
 void ManaStone::CreateMonsterA(int index)
 {
 	///몬스터 A를 생성
-	Vector3 Poistion = MonsterMovePoint[index] * 10;
-	MonsterA* Monster = ObjectFactory::CreateMonsterA(Poistion.x, 0, Poistion.z);
+	Vector3 Poistion = (MonsterMovePoint[index] * 10) + mTransform->Position ;
+	MonsterA* Monster = ObjectFactory::CreateMonsterA(Poistion.x, Poistion.y + 0.5f, Poistion.z);
 	Monster->Create(this, index);
 	MonsterA_List.push_back(Monster);
 }
@@ -151,8 +151,8 @@ void ManaStone::CreateMonsterA(int index)
 void ManaStone::CreateMonsterB(int index)
 {
 	///몬스터 B를 생성
-	Vector3 Poistion = MonsterMovePoint[index] * 10;
-	MonsterB* Monster = ObjectFactory::CreateMonsterB(Poistion.x, 0, Poistion.z);
+	Vector3 Poistion = (MonsterMovePoint[index] * 10) + mTransform->Position;
+	MonsterB* Monster = ObjectFactory::CreateMonsterB(Poistion.x, Poistion.y+0.5f, Poistion.z);
 	Monster->Create(this, index);
 	MonsterB_List.push_back(Monster);
 }

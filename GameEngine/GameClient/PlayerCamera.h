@@ -35,4 +35,5 @@ private:
 	float PastY;
 
 	bool MouseCursor;
+	
 };

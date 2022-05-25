@@ -4,6 +4,8 @@
 #include "Material.h"
 #include "Terrain.h"
 #include "GameObject.h"
+#include "Image.h"
+#include "RectTransform.h"
 
 void InGame::Awake()
 {
@@ -32,6 +34,99 @@ void InGame::Awake()
 	mTerrain->SetLayerName("terrain_ground_D_BaseColor", "terrain_ground_D_Normal", "terrain_ground_D_ORM");
 	mTerrain->SetMeshName("Terrain");
 	mTerrain->SetTextureTiling(31.0f);
+
+
+
+	GameObject* ui_object = nullptr;
+	Image* ui_image = nullptr;
+	RectTransform* ui_rectTR = nullptr;
+
+	ui_object = InstanceUI("UI");
+	ui_image = ui_object->AddComponent<Image>();
+	ui_image->SetTexture("ingame_minimap");
+	ui_rectTR = ui_object->GetComponent<RectTransform>();
+	ui_rectTR->SetImagePivot(RECT_PIVOT::PIVOT_RIGHT_TOP);
+	ui_rectTR->AddPosition(25.0f, 75.0f);
+	ui_rectTR->SetRotation(0.0f, 0.0f, -90.0f);
+	ui_rectTR->SetScale(0.5f, 0.5f);
+
+	ui_object = InstanceUI("UI");
+	ui_image = ui_object->AddComponent<Image>();
+	ui_image->SetTexture("ingame_combo");
+
+	ui_rectTR = ui_object->GetComponent<RectTransform>();
+	ui_rectTR->SetImagePivot(RECT_PIVOT::PIVOT_MIDDLE_RIGHT);
+	ui_rectTR->AddPosition(-25.0f, 0.0f);
+	ui_rectTR->SetScale(0.5f, 0.5f);
+
+	ui_object = InstanceUI("UI");
+	ui_image = ui_object->AddComponent<Image>();
+	ui_image->SetTexture("ingame_playercounter_1");
+
+	ui_rectTR = ui_object->GetComponent<RectTransform>();
+	ui_rectTR->SetImagePivot(RECT_PIVOT::PIVOT_MIDDLE_CENTER);
+	ui_rectTR->AddPosition(-50.0f, 0.0f);
+	ui_rectTR->SetScale(0.5f, 0.5f);
+
+	ui_object = InstanceUI("UI");
+	ui_image = ui_object->AddComponent<Image>();
+	ui_image->SetTexture("ingame_player_hp_back");
+
+	ui_rectTR = ui_object->GetComponent<RectTransform>();
+	ui_rectTR->SetImagePivot(RECT_PIVOT::PIVOT_LEFT_BOTTOM);
+	ui_rectTR->AddPosition(50.0f, -50.0f);
+	ui_rectTR->SetScale(0.5f, 0.5f);
+
+
+	ui_object = InstanceUI("UI");
+	ui_image = ui_object->AddComponent<Image>();
+	ui_image->SetTexture("ingame_player_hp");
+	ui_image->SetImageColor(255, 0, 0);
+	ui_rectTR = ui_object->GetComponent<RectTransform>();
+	ui_rectTR->SetImagePivot(RECT_PIVOT::PIVOT_LEFT_BOTTOM);
+	ui_rectTR->AddPosition(50.0f, -50.0f);
+	ui_rectTR->SetScale(0.5f, 0.5f);
+
+	ui_object = InstanceUI("UI");
+	ui_image = ui_object->AddComponent<Image>();
+	ui_image->SetTexture("ingame_switch");
+	ui_rectTR = ui_object->GetComponent<RectTransform>();
+	ui_rectTR->SetImagePivot(RECT_PIVOT::PIVOT_LEFT_BOTTOM);
+	ui_rectTR->AddPosition(50.0f, -150.0f);
+	ui_rectTR->SetScale(0.5f, 0.5f);
+
+	ui_object = InstanceUI("UI");
+	ui_image = ui_object->AddComponent<Image>();
+	ui_image->SetTexture("ingame_skill_rb");
+	ui_rectTR = ui_object->GetComponent<RectTransform>();
+	ui_rectTR->SetImagePivot(RECT_PIVOT::PIVOT_LEFT_BOTTOM);
+	ui_rectTR->AddPosition(400.0f, -50.0f);
+	ui_rectTR->SetScale(0.5f, 0.5f);
+
+	ui_object = InstanceUI("UI");
+	ui_image = ui_object->AddComponent<Image>();
+	ui_image->SetTexture("ingame_skill_rb");
+	ui_rectTR = ui_object->GetComponent<RectTransform>();
+	ui_rectTR->SetImagePivot(RECT_PIVOT::PIVOT_LEFT_BOTTOM);
+	ui_rectTR->AddPosition(400.0f, -50.0f);
+	ui_rectTR->SetScale(0.5f, 0.5f);
+
+	ui_object = InstanceUI("UI");
+	ui_image = ui_object->AddComponent<Image>();
+	ui_image->SetTexture("ingame_skill_space");
+	ui_rectTR = ui_object->GetComponent<RectTransform>();
+	ui_rectTR->SetImagePivot(RECT_PIVOT::PIVOT_LEFT_BOTTOM);
+	ui_rectTR->AddPosition(475.0f, -50.0f);
+	ui_rectTR->SetScale(0.5f, 0.5f);
+
+	ui_object = InstanceUI("UI");
+	ui_image = ui_object->AddComponent<Image>();
+	ui_image->SetTexture("ingame_skill_e");
+	ui_rectTR = ui_object->GetComponent<RectTransform>();
+	ui_rectTR->SetImagePivot(RECT_PIVOT::PIVOT_LEFT_BOTTOM);
+	ui_rectTR->AddPosition(550.0f, -50.0f);
+	ui_rectTR->SetScale(0.5f, 0.5f);
+
 }
 
 void InGame::Update()

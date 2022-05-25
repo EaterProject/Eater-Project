@@ -308,6 +308,7 @@ std::string AnimationController::GetNowAnimationName()
 
 bool AnimationController::EventCheck()
 {
+	if (NowAnimation == nullptr) { return false; }
 	float Time = GetFrameTime();
 	if (NowAnimation->m_Event_min <= Time && Time <= NowAnimation->m_Event_max)
 	{

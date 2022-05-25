@@ -205,7 +205,7 @@ void MonsterA::Chase()
 		Speed = ChaseSpeed;
 		SetMovePoint(mPlayerTR->Position.x, mPlayerTR->Position.y, mPlayerTR->Position.z);
 		mTransform->Slow_Y_Rotation(MovePoint, 100, false);
-		mRigidbody->SetVelocity(DirPoint.x, DirPoint.y, DirPoint.z);
+		mRigidbody->SetVelocity(DirPoint.x*2, DirPoint.y * 2, DirPoint.z * 2);
 	}
 
 	//공격 거리에 들어오면 공격을 한다
