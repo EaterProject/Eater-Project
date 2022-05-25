@@ -192,7 +192,7 @@ void Camera::CreateProj(int winsizeX, int WinSizeY)
 		0.5f, 0.5f, 0.0f, 1.0f);
 
 	//시야각
-	float mFovY	= 0.25f * 3.1415926535f;
+	float mFovY	= 0.3f * 3.1415926535f;
 	//뷰 공간 X:Y 가로세로비율
 	float mAspect = (float)winsizeX / (float)WinSizeY;
 	//근접평면 까지의 거리 0보다 커야됨

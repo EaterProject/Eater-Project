@@ -85,6 +85,9 @@
     <Filter Include="소스 파일\Component\Monster\MonsterComponent">
       <UniqueIdentifier>{d97fd655-d15b-4404-a566-cc93a172992a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Component\LoadImage">
+      <UniqueIdentifier>{236ba930-c59b-4d51-b177-6b6fe8114a8f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -156,6 +159,9 @@
     <ClInclude Include="Drone.h">
       <Filter>소스 파일\Component\Drone</Filter>
     </ClInclude>
+    <ClInclude Include="LoadImage.h">
+      <Filter>소스 파일\Component\LoadImage</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameClient.cpp">
@@ -214,6 +220,9 @@
     </ClCompile>
     <ClCompile Include="Drone.cpp">
       <Filter>소스 파일\Component\Drone</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadImage.cpp">
+      <Filter>소스 파일\Component\LoadImage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

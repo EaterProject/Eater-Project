@@ -128,7 +128,7 @@ void Light_Pass::RenderUpdate()
 	Matrix& texSpace = g_GlobalData->TexSpace;
 
 	g_Context->OMSetRenderTargets(1, &m_OutPut_RTV, nullptr);
-	g_Context->ClearRenderTargetView(m_OutPut_RTV, reinterpret_cast<const float*>(&DXColors::DeepDarkGray));
+	g_Context->ClearRenderTargetView(m_OutPut_RTV, reinterpret_cast<const float*>(&DXColors::NonBlack));
 	g_Context->RSSetViewports(1, m_Screen_VP);
 
 	CB_Light lightBuf;

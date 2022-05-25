@@ -77,9 +77,6 @@ void RectTransform::TransformUpdate()
 	float radX = Rotation.x * 3.141592f / 180.0f;
 	float radY = Rotation.y * 3.141592f / 180.0f;
 	float radZ = Rotation.z * 3.141592f / 180.0f;
-	DirectX::XMMATRIX _P = DirectX::XMMatrixRotationX(radX);
-	DirectX::XMMATRIX _Y = DirectX::XMMatrixRotationY(radY);
-	DirectX::XMMATRIX _R = DirectX::XMMatrixRotationZ(radZ);
 
 	RotationXM = DirectX::XMMatrixRotationRollPitchYaw(radX, radY + XM_PI, radZ + XM_PI);
 

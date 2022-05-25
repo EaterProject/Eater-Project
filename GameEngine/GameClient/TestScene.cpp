@@ -38,24 +38,24 @@ void TestScene::Awake()
 	//Load("../Assets/Texture/Particle");
 	//Load("../Assets/Texture/ModelTexture");
 	//Load("../Assets/Texture/Material");
-	Load("../Assets/Texture/UI");
+	//Load("../Assets/Texture/UI");
 	//Load("../Assets/Model/MeshBuffer");
 	//Load("../Assets/Model/ModelData");
 	//Load("../Assets/Model/Animation");
 	PROFILE_TIMER_END("Load Folder"); 
 
 	BakeSkyLightMap("SkyLight_HDRI", false);
-	BakeSkyLightMap("Day", false);
-	BakeSkyLightMap("Night", false);
-	BakeSkyLightMap("skybox1", false);
-	BakeSkyLightMap("TestSky", false);
+	//BakeSkyLightMap("Day", false);
+	//BakeSkyLightMap("Night", false);
+	//BakeSkyLightMap("skybox1", false);
+	//BakeSkyLightMap("TestSky", false);
 
 	//AddOccluder("Dome_Occluder_0");
 
 
 	CreateMap();
 
-	CreateUI();
+	//CreateUI();
 
 
 	//CreateParticle(0,0,0);
