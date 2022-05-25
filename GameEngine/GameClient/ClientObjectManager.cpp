@@ -43,7 +43,7 @@ void ClientObjectManager::Initialize(ObjectFactory* Factory)
 
 	mFactory->CreatePlayer();
 
-	GameObject* obj = InstanceTerrain();
+	//GameObject* obj = InstanceTerrain();
 }
 
 void ClientObjectManager::Release()

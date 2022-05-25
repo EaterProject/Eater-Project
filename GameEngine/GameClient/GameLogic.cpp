@@ -6,6 +6,7 @@
 #include "ClientObjectManager.h"
 #include "ClientComponent.h"
 #include "Collider.h"
+#include "Camera.h"
 
 GameLogic::GameLogic()
 {
@@ -40,6 +41,7 @@ void GameLogic::Release()
 
 void GameLogic::Update()
 {
+	
 
 }
 

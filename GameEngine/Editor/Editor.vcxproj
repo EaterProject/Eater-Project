@@ -180,6 +180,7 @@ copy /Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)" </Command>
       <AdditionalIncludeDirectories>$(SolutionDir)Library\inc\Component;$(SolutionDir)Library\inc\Graphic;$(SolutionDir)Library\inc\PhysX;$(SolutionDir)Library\inc\EATER;$(SolutionDir)Library\inc\YAML;$(SolutionDir)Library\inc\Parser;$(SolutionDir)Library\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>MaxSpeed</Optimization>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

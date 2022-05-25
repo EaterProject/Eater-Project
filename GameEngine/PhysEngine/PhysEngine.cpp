@@ -170,9 +170,10 @@ void PhysEngine::Delete_Actor(PhysData* data)
 	//한개의 엑터 삭제
 	if (data->ActorObj != nullptr)
 	{
-		PxRigidActor* rig = reinterpret_cast<PxRigidActor*>(data->ActorObj);
+		PxRigidStatic* rig = reinterpret_cast<PxRigidStatic*>(data->ActorObj);
 		rig->release();
 	}
+	delete data;
 }
 
 bool PhysEngine::RayCast(PhysRayCast* ray)

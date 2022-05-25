@@ -165,7 +165,6 @@ void Eater_LoadBuffer::LoadSkinBuffer(int index, ParserData::CMesh* mesh)
 void Eater_LoadBuffer::LoadPositionBuffer(int index, ColliderBuffer* mesh)
 {
 	//mesh->m_MeshType = MESH_TYPE::STATIC_MESH;
-	
 	const int VertexCount	= EATER_GET_LIST_CHOICE(index, "Vertex");
 	mesh->VertexArrayCount	= VertexCount;
 	mesh->VertexArray		= new Vector3[VertexCount];

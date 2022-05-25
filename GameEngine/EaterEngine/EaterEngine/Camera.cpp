@@ -8,6 +8,7 @@
 #include "DebugManager.h"
 #include "GlobalDataManager.h"
 #include "Profiler/Profiler.h"
+#include "LoadManager.h"
 
 using namespace DirectX;
 std::vector<Camera*> Camera::CamList;
@@ -62,6 +63,30 @@ void Camera::Awake()
 
 void Camera::Update()
 {
+	if (isAnimation == true)
+	{
+		NowAnimationFrame += GetDeltaTime();
+		if (NowAnimationFrame >= mAnimation->OneFrame)
+		{
+			NowAnimationFrame -= mAnimation->OneFrame;
+		}
+
+		
+		if (NowFrameIndex >= mAnimation->Position.size())
+		{
+			isAnimation = false;
+			NowFrameIndex = 0;
+			MainCamera->ChoiceMainCam();
+		}
+		else
+		{
+			gameobject->transform->Position = mAnimation->Position[NowFrameIndex];
+			gameobject->transform->Rotation = mAnimation->Rotation[NowFrameIndex];
+			NowFrameIndex++;
+		}
+	}
+
+
 	if (g_MainCam == nullptr)
 	{
 		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Camera ][ Update ] 지정된 메인 카메라가 없습니다.");
@@ -127,6 +152,19 @@ void Camera::ChoiceMainCam()
 
 	//바뀐 카메라의 태그를 메인카메라로 변경
 	g_MainCam->gameobject->SetTag("MainCamera");
+}
+
+void Camera::ChoiceCameraAnimation(std::string Name)
+{
+	mAnimation = LoadManager::GetCamAnimation(Name);
+	isAnimation = true;
+	MainCamera = g_MainCam;
+	ChoiceMainCam();
+}
+
+bool Camera::ChoiceCameraAnimationEnd()
+{
+	return (isAnimation == true) ? false : true ;
 }
 
 DirectX::SimpleMath::Matrix Camera::GetView()

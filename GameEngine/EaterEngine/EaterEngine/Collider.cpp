@@ -7,6 +7,7 @@
 #include "LoadManager.h"
 #include "GameObject.h"
 #include "DebugManager.h"
+#include "PhysCollider.h"
 
 Collider::Collider()
 {
@@ -107,20 +108,18 @@ void Collider::SetTriangleCollider(std::string MeshName)
 {
 	PhysX_Delete_Actor(mPhysData);
 	
-	mPhysData = PhysX_Create_Data();
-	PhysCollider::TriangleMeshData* Triangle = mPhysData->mCollider->CreateTriangle();
+	//버퍼에서 매쉬 가져오기
 	ColliderBuffer* data = LoadManager::GetColliderBuffer(MeshName);
+	int IndexSize	= data->IndexArrayCount;
+	int VertexSize	= data->VertexArrayCount;
 	if (data == nullptr) { return; }
-	
-	int IndexSize = data->IndexArrayCount;
-	int VertexSize = data->VertexArrayCount;
-	
-	//트라이앵글 셋팅
-	Triangle->Name				= MeshName;
-	Triangle->VertexList		= data->VertexArray;
-	Triangle->VertexListSize	= VertexSize;
-	Triangle->CIndexList		= data->IndexArray;
-	Triangle->IndexListSize		= IndexSize;
+
+	//생성
+	mPhysData = PhysX_Create_Data();
+
+	//트라이앵글 콜라이더 생성
+	TriangleMeshData* Triangle = mPhysData->mCollider->CreateTriangle(IndexSize,VertexSize, data->IndexArray, data->VertexArray);
+	Triangle->Name = MeshName;
 
 	isCreate = false;
 	CreatePhys();
