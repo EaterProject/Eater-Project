@@ -6,14 +6,25 @@
 #include "GameObject.h"
 #include "Image.h"
 #include "RectTransform.h"
+#include "Camera.h"
+#include "EngineData.h"
 
 void InGame::Awake()
 {
 	//게임 로직관리 매니저를 생성
 	Logic = new GameLogic();
 
+	RenderOption* option = GetRenderOptionData();
+	option->RenderingOption ^= RENDER_OPTION::RENDER_FOG;
+
+	RenderSetting();
+
+
 	//Tool에서 만들어놓은 씬을 로드
 	Load("../Assets/Scene/inGame.Scene");
+
+	// 오클루더 설정..
+	AddOccluder("Dome_program_0");
 
 	BakeSkyLightMap("SkyLight_HDRI", false);
 
@@ -65,7 +76,7 @@ void InGame::Awake()
 
 	ui_rectTR = ui_object->GetComponent<RectTransform>();
 	ui_rectTR->SetImagePivot(RECT_PIVOT::PIVOT_MIDDLE_CENTER);
-	ui_rectTR->AddPosition(-50.0f, 0.0f);
+	ui_rectTR->AddPosition(-75.0f, -25.0f);
 	ui_rectTR->SetScale(0.5f, 0.5f);
 
 	ui_object = InstanceUI("UI");
@@ -127,10 +138,24 @@ void InGame::Awake()
 	ui_rectTR->AddPosition(550.0f, -50.0f);
 	ui_rectTR->SetScale(0.5f, 0.5f);
 
+
+	DebugCam = GetDebugCamera();
+	MainCame = GetMainCamera();
 }
 
 void InGame::Update()
 {
+	if (GetKeyDown(VK_F10))
+	{
+		DebugCam->GetComponent<Camera>()->ChoiceMainCam();
+	}
+	if(GetKeyDown(VK_F11))
+	{
+		MainCame->GetComponent<Camera>()->ChoiceMainCam();
+	}
+
+
+
 	Logic->Update();
 }
 

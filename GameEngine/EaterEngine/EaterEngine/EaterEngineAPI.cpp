@@ -281,6 +281,11 @@ void AddOccluder(std::string mMeshName)
 	 return gGameEngine->GetMainCamera();
  }
 
+ GameObject* GetDebugCamera()
+ {
+	 return gGameEngine->DebugCame;
+ }
+
  /// 시간 관련
  float GetDeltaTime()
  {
