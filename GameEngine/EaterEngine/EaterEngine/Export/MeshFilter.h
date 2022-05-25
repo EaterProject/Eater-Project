@@ -28,6 +28,7 @@ class Transform;
 class Mesh;
 class Material;
 class MeshData;
+class MaterialProperty;
 class MaterialPropertyBlock;
 
 class  MeshFilter : public Component
@@ -66,6 +67,7 @@ public:
 	EATER_ENGINEDLL std::string GetORMTextureName();
 
 	EATER_ENGINEDLL Material* GetMaterial();
+	EATER_ENGINEDLL MaterialProperty* GetMaterialProperty();
 	EATER_ENGINEDLL MaterialPropertyBlock* GetMaterialPropertyBlock();
 
 public:

@@ -115,6 +115,9 @@ void GraphicResourceFactory::CreateTextureBuffer(std::string path, TextureBuffer
 		if((*ppResource) == nullptr) (*ppResource) = new TextureBuffer();
 		(*ppResource)->pTextureBuf = newTex;
 
+		// Texture Size 竺舛..
+		g_Graphic->GetImageSize(path, &(*ppResource)->Width, &(*ppResource)->Height);
+
 		// Debug Name..
 		GPU_RESOURCE_DEBUG_NAME(newTex, texName.c_str());
 
@@ -1903,6 +1906,28 @@ void GraphicResourceFactory::CreateDepthStencilStates()
 	CreateDepthStencilState(DSS_NoStencil::GetName(), DSS_NoStencil::GetHashCode(), &depthStencilDesc);
 
 	ZeroMemory(&depthStencilDesc, sizeof(depthStencilDesc));
+	depthStencilDesc.DepthEnable = false;
+	depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+	depthStencilDesc.DepthFunc = D3D11_COMPARISON_LESS;
+
+	depthStencilDesc.StencilEnable = true;
+	depthStencilDesc.StencilReadMask = 0xFF;
+	depthStencilDesc.StencilWriteMask = 0xFF;
+
+	depthStencilDesc.FrontFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
+	depthStencilDesc.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_INCR;
+	depthStencilDesc.FrontFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
+	depthStencilDesc.FrontFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
+
+	depthStencilDesc.BackFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
+	depthStencilDesc.BackFace.StencilDepthFailOp = D3D11_STENCIL_OP_DECR;
+	depthStencilDesc.BackFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
+	depthStencilDesc.BackFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
+
+	// NoDepth DepthStencilState 持失..
+	CreateDepthStencilState(DSS_NoDepth::GetName(), DSS_NoDepth::GetHashCode(), &depthStencilDesc);
+
+	ZeroMemory(&depthStencilDesc, sizeof(depthStencilDesc));
 	depthStencilDesc.DepthEnable = true;
 	depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
 	depthStencilDesc.DepthFunc = D3D11_COMPARISON_LESS;
@@ -2148,22 +2173,28 @@ void GraphicResourceFactory::CreateBlendStates()
 	blendDesc.RenderTarget[3].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 
 	// Blending First RenderTarget BlendState 持失..
-	CreateBlendState(BS_AlphaBlend::GetName(), BS_AlphaBlend::GetHashCode(), &blendDesc);
+	CreateBlendState(BS_AlphaBlend_ALL::GetName(), BS_AlphaBlend_ALL::GetHashCode(), &blendDesc);
 
 	ZeroMemory(&blendDesc, sizeof(blendDesc));
 	blendDesc.AlphaToCoverageEnable = false;
 	blendDesc.IndependentBlendEnable = false;
-	blendDesc.RenderTarget[0].BlendEnable = false;
-	blendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_ONE;
-	blendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_ZERO;
+	blendDesc.RenderTarget[0].BlendEnable = true;
+	//blendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_ONE;
+	//blendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_ZERO;
+	//blendDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+	//blendDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
+	//blendDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
+	//blendDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	blendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
+	blendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
 	blendDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
-	blendDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
-	blendDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
+	blendDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_INV_DEST_ALPHA;
+	blendDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ONE;
 	blendDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
 	blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 
 	// Blending First RenderTarget BlendState 持失..
-	CreateBlendState(BS_Defalt::GetName(), BS_Defalt::GetHashCode(), &blendDesc);
+	CreateBlendState(BS_AlphaBlend_One::GetName(), BS_AlphaBlend_One::GetHashCode(), &blendDesc);
 }
 
 void GraphicResourceFactory::CreateDepthStencilViews(int width, int height)

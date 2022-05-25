@@ -10,7 +10,7 @@ UIVertexOut UI_VS(UIVertexIn vin)
     UIVertexOut vout;
 
 	// Transform to homogeneous clip space.
-    vout.PosH = mul(gWorldViewProj, float4(vin.PosL, 1.0f));
+    vout.PosH = mul(gWorldViewProj, float4(vin.PosL, 1.0f)).xyww;
 
     vout.Tex = vin.Tex;
     

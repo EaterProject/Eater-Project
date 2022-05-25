@@ -37,8 +37,6 @@ class Animation;
 class CameraAnimation;
 
 class GraphicEngineManager;
-class MeshManager;
-class MaterialManager;
 class AnimationManager;
 
 class FBXManager;
@@ -137,8 +135,6 @@ private:
 	TextureManager*			mTexture;
 	EATERManager*			mEATER;
 
-	MeshManager*			mMeshManager;		// Mesh 包府 概聪历
-	MaterialManager*		mMaterialManager;	// Material 包府 概聪历
 	AnimationManager*		mAnimationManger;	// Animation 包府 概聪历
 
 	GraphicEngineManager*	mGraphicManager;	// Graphic 包府 概聪历

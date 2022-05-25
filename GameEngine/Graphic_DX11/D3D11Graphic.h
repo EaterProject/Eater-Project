@@ -37,6 +37,9 @@ public:
 	HRESULT CreateSamplerState(D3D11_SAMPLER_DESC* ssDesc, ID3D11SamplerState** ss) override;
 
 public:
+	void GetImageSize(std::string filePath, UINT* width, UINT* height) override;
+
+public:
 	Microsoft::WRL::ComPtr<ID3D11Device> GetDevice() override;
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext> GetContext() override;
 	Microsoft::WRL::ComPtr<IDXGISwapChain> GetSwapChain() override;

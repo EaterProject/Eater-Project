@@ -32,8 +32,10 @@ private:
 	void LoadFolder(std::string& Path);
 	void LoadFile(std::string& Path);
 	std::string CutFilePath(std::string& Path);
+
 private:
 	std::map<std::string, TextureBuffer*> TextureList;
+
 private:
 	bool isFolder;
 

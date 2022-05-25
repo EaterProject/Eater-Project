@@ -1,23 +1,12 @@
 #pragma once
-#include <windows.h>
-#include <vector>
-#include <unordered_map>
+#include "IndexManager.h"
 
 class Material;
-class MaterialManager
+
+class MaterialManager : public IndexManager
 {
 public:
 	MaterialManager();
 	~MaterialManager();
-
-public:
-	void Initialize();
-	void Release();
-
-	static void PushMaterial(Material* material);
-	static void DeleteMaterial(UINT index);
-
-private:
-	static std::vector<std::pair<UINT, bool>> g_IndexList;
-	static std::unordered_map<UINT, Material*> g_MaterialList;
 };
+

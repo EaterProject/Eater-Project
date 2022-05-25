@@ -17,6 +17,7 @@
 void Loading::Awake()
 {
 	Load("../Assets/Texture/Particle/particle_hotCloud.png");
+	Load("../Assets/Texture/UI");
 
 	ParticleObj = Instance();
 	obj = InstanceParticle("Particle12");
@@ -44,8 +45,8 @@ void Loading::Update()
 {
 	if (ThreadRun == false)
 	{
-		ChoiceScene("inGame");
-		//ChoiceScene("TestScene");
+		//ChoiceScene("inGame");
+		ChoiceScene("TestScene");
 	}
 }
 

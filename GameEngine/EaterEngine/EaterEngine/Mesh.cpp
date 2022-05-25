@@ -1,7 +1,8 @@
 #include "Mesh.h"
 #include "EngineData.h"
-#include "MeshManager.h"
 #include "GraphicEngineAPI.h"
+#include "IndexManager.h"
+#include "MeshManager.h"
 
 #define SAFE_RELEASE(x) { if(x != nullptr){ x->Release(); delete x; x = nullptr; } }
 
@@ -14,7 +15,7 @@ Mesh::Mesh()
 	m_MeshData->Mesh_Property = new MeshProperty();
 
 	// Mesh 등록..
-	MeshManager::PushMesh(this);
+	MeshManager::SetIndex(&m_MeshData->BufferIndex);
 
 	// Mesh Graphic 측 등록..
 	GraphicEngine::Get()->PushMesh(m_MeshData);
@@ -23,7 +24,10 @@ Mesh::Mesh()
 Mesh::~Mesh()
 {
 	// Manager 내부에 있는 해당 Mesh Data 삭제..
-	MeshManager::DeleteMesh(m_MeshData->BufferIndex);
+	MeshManager::DeleteIndex(m_MeshData->BufferIndex);
+
+	// 해당 Resource 제거..
+	Release();
 }
 
 void Mesh::Release()

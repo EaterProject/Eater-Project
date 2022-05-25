@@ -51,6 +51,9 @@ public:
 		pTextureBuf = nullptr;
 	};
 
+	UINT Width = 0;
+	UINT Height = 0;
+
 	void* pTextureBuf = nullptr;
 };
 

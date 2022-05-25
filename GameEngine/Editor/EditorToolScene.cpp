@@ -87,12 +87,12 @@ void EditorToolScene::End()
 void EditorToolScene::ThreadFunction()
 {
 	//BakeSkyLightMap("Day");
-	BakeSkyLightMap("HDRI_2_CubeMap", false);
+	BakeSkyLightMap("SkyLight_HDRI", false);
 
 	//SetSkyLight("Day");
-	SetSkyLight("HDRI_2_CubeMap");
+	SetSkyLight("SkyLight_HDRI");
 	//SetSkyCube("Day");
-	SetSkyCube("HDRI_2_CubeMap");
+	SetSkyCube("SkyCube_HDRI");
 }
 
 GameObject* EditorToolScene::Create_GameObject()

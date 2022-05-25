@@ -338,8 +338,9 @@ void ShaderManager::AddConstantBufferUsage()
 	PushConstantBufferUsage<CB_CubeObject>(CBUFFER_USAGE::DYNAMIC);
 	PushConstantBufferUsage<CB_CubeConvert>(CBUFFER_USAGE::DYNAMIC);
 
-	// RectTransform..
+	// UI..
 	PushConstantBufferUsage<CB_UIObject>(CBUFFER_USAGE::DYNAMIC);
+	PushConstantBufferUsage<CB_UIOption>(CBUFFER_USAGE::DYNAMIC);
 
 	// IBL Baking..
 	PushConstantBufferUsage<CB_ExternalData>(CBUFFER_USAGE::DYNAMIC);

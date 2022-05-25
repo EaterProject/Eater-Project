@@ -67,9 +67,6 @@
     <Filter Include="소스 파일\Manager\LightManager">
       <UniqueIdentifier>{660a8a07-22fd-441b-9e1d-b3385e883764}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Manager\MaterialManager">
-      <UniqueIdentifier>{97384cd9-9b0f-408f-bb40-d7e5ba516608}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Component\Light">
       <UniqueIdentifier>{94a42d33-37f6-4e8c-bc61-b51a98b6214a}</UniqueIdentifier>
     </Filter>
@@ -114,9 +111,6 @@
     </Filter>
     <Filter Include="소스 파일\Manager\LoadManager\EATER">
       <UniqueIdentifier>{3042ceed-9197-40f4-b480-b36b166ad20d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Manager\MeshManager">
-      <UniqueIdentifier>{24fc8def-cfa8-4a9c-9522-595351fae0cf}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\Resource">
       <UniqueIdentifier>{dc083899-344c-4b21-be3d-8715b4306d34}</UniqueIdentifier>
@@ -181,11 +175,23 @@
     <Filter Include="소스 파일\Component\UI\Button">
       <UniqueIdentifier>{26ca3b34-e28a-4ecc-92d3-7bcc1ac6c8cb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Component\UI\Image">
-      <UniqueIdentifier>{4b56ed3a-fc26-4556-81c5-ef4ebf39218b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Component\UI\Transform">
       <UniqueIdentifier>{c486eaca-d4a5-4bc7-b5c4-f0e944ddb389}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\IndexManager">
+      <UniqueIdentifier>{380e2ef9-cc43-45e5-aef1-2715818726d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\MeshManager">
+      <UniqueIdentifier>{e70c289b-b32f-4361-8427-2f9128bdc202}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\MaterialManager">
+      <UniqueIdentifier>{b15d0887-9220-4036-8ea6-512970bdf293}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\UIManager">
+      <UniqueIdentifier>{809c5897-5d48-40a4-b09c-c763a78fcdf0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\UI\Image">
+      <UniqueIdentifier>{4b56ed3a-fc26-4556-81c5-ef4ebf39218b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -239,9 +245,6 @@
     </ClInclude>
     <ClInclude Include="LightManager.h">
       <Filter>소스 파일\Manager\LightManager</Filter>
-    </ClInclude>
-    <ClInclude Include="MaterialManager.h">
-      <Filter>소스 파일\Manager\MaterialManager</Filter>
     </ClInclude>
     <ClInclude Include="Export\Light.h">
       <Filter>소스 파일\Component\Light</Filter>
@@ -306,9 +309,6 @@
     <ClInclude Include="Export\Material.h">
       <Filter>소스 파일\Resource\Material</Filter>
     </ClInclude>
-    <ClInclude Include="MeshManager.h">
-      <Filter>소스 파일\Manager\MeshManager</Filter>
-    </ClInclude>
     <ClInclude Include="Export\Mesh.h">
       <Filter>소스 파일\Resource\Mesh</Filter>
     </ClInclude>
@@ -363,13 +363,25 @@
     <ClInclude Include="Export\EaterEngineAPI.h">
       <Filter>소스 파일\EngineAPI</Filter>
     </ClInclude>
-    <ClInclude Include="Button.h">
-      <Filter>소스 파일\Component\UI\Button</Filter>
+    <ClInclude Include="IndexManager.h">
+      <Filter>소스 파일\Manager\IndexManager</Filter>
     </ClInclude>
-    <ClInclude Include="Image.h">
+    <ClInclude Include="MaterialManager.h">
+      <Filter>소스 파일\Manager\MaterialManager</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshManager.h">
+      <Filter>소스 파일\Manager\MeshManager</Filter>
+    </ClInclude>
+    <ClInclude Include="UIManager.h">
+      <Filter>소스 파일\Manager\UIManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Export\Image.h">
       <Filter>소스 파일\Component\UI\Image</Filter>
     </ClInclude>
-    <ClInclude Include="RectTransform.h">
+    <ClInclude Include="Export\Button.h">
+      <Filter>소스 파일\Component\UI\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="Export\RectTransform.h">
       <Filter>소스 파일\Component\UI\Transform</Filter>
     </ClInclude>
   </ItemGroup>
@@ -425,9 +437,6 @@
     <ClCompile Include="LightManager.cpp">
       <Filter>소스 파일\Manager\LightManager</Filter>
     </ClCompile>
-    <ClCompile Include="MaterialManager.cpp">
-      <Filter>소스 파일\Manager\MaterialManager</Filter>
-    </ClCompile>
     <ClCompile Include="Light.cpp">
       <Filter>소스 파일\Component\Light</Filter>
     </ClCompile>
@@ -482,9 +491,6 @@
     <ClCompile Include="FBXManager.cpp">
       <Filter>소스 파일\Manager\LoadManager\FBX</Filter>
     </ClCompile>
-    <ClCompile Include="MeshManager.cpp">
-      <Filter>소스 파일\Manager\MeshManager</Filter>
-    </ClCompile>
     <ClCompile Include="Mesh.cpp">
       <Filter>소스 파일\Resource\Mesh</Filter>
     </ClCompile>
@@ -535,6 +541,18 @@
     </ClCompile>
     <ClCompile Include="RectTransform.cpp">
       <Filter>소스 파일\Component\UI\Transform</Filter>
+    </ClCompile>
+    <ClCompile Include="MaterialManager.cpp">
+      <Filter>소스 파일\Manager\MaterialManager</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshManager.cpp">
+      <Filter>소스 파일\Manager\MeshManager</Filter>
+    </ClCompile>
+    <ClCompile Include="IndexManager.cpp">
+      <Filter>소스 파일\Manager\IndexManager</Filter>
+    </ClCompile>
+    <ClCompile Include="UIManager.cpp">
+      <Filter>소스 파일\Manager\UIManager</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

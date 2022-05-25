@@ -62,6 +62,7 @@ public:
 	GameObject* InstanceParticle(std::string ObjName = "Particle");
 	GameObject* InstanceCamera(std::string ObjName = "Camera");
 	GameObject* InstanceLight(std::string ObjName = "Light", LIGHT_TYPE type = LIGHT_TYPE::POINT_LIGHT);
+	GameObject* InstanceUI(std::string ObjName = "UI");
 
 	Material* InstanceMaterial(std::string matName = "Material");
 

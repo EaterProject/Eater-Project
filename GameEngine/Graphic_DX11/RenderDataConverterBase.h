@@ -12,6 +12,7 @@ class MeshRenderBuffer;
 class MaterialRenderBuffer;
 class AnimationRenderBuffer;
 class TerrainRenderBuffer;
+class UIRenderBuffer;
 class InstanceRenderBuffer;
 class InstanceLayer;
 
@@ -41,6 +42,7 @@ public:
 	virtual void DeleteMesh(UINT index) abstract;							// 해당 Mesh Resource 즉시 제거..
 	virtual void DeleteMaterial(UINT index) abstract;						// 해당 Material Resource 즉시 제거..
 	virtual void DeleteAnimation(UINT index) abstract;						// 해당 Animation Resource 즉시 제거..
+	virtual void DeleteUI(UINT index) abstract;								// 해당 UI Resource 즉시 제거..
 
 public:
 	virtual size_t FindMaxInstanceCount() abstract;							// 모든 Layer 내부의 Instance 개수 중 제일 큰 개수 반환..
