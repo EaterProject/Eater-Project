@@ -86,23 +86,25 @@ private:
 	void ConvertPushInstance();									// 현재 프레임 진행중 추가된 Instance 변환..
 	void ConvertChangeInstance();								// 현재 프레임 진행중 변경된 Instance 변환..
 
-	void PushOpacityMeshData(RenderData* renderData);			// Opacity Mesh Render Data 삽입..
+	void PushOpacityRenderData(RenderData* renderData);			// Opacity Mesh Render Data 삽입..
 	void PushTransparencyRenderData(RenderData* renderData);	// Transparency Mesh Render Data 삽입..
-	void PushUIRenderData(RenderData* renderData);				// RectTransform Mesh Render Data 삽입..
+	void PushUIRenderData(RenderData* renderData);				// UI Mesh Render Data 삽입..
 	void PushUnRenderData(RenderData* renderData);				// Un Render Data 삽입..
 
-	void ChangeOpacityMeshData(MeshData* meshData);				// Opacity Mesh Render Data 변환..
+	void ChangeOpacityRenderData(MeshData* meshData);			// Opacity Mesh Render Data 변환..
 	void ChangeTransparencyRenderData(MeshData* meshData);		// Transparency Mesh Render Data 변환..
-	void ChangeUIRenderData(RenderData* renderData);			// RectTransform Mesh Render Data 변환..
+	void ChangeUIRenderData(MeshData* meshData);				// UI Mesh Render Data 변환..
 	void ChangeUnRenderData(MeshData* meshData);				// Un Render Data 변환..
 
-	void DeleteOpacityMeshData(MeshData* meshData);				// Opacity Mesh Render Data 제거..
+	void DeleteOpacityRenderData(MeshData* meshData);			// Opacity Mesh Render Data 제거..
 	void DeleteTransparencyRenderData(MeshData* meshData);		// Transparency Mesh Render Data 제거..
+	void DeleteUIRenderData(MeshData* meshData);				// UI Mesh Render Data 제거..
 	void DeleteUnRenderData(MeshData* meshData);				// Un Render Data 제거..
 
 	void CheckInstanceLayer(std::vector<InstanceLayer*>& layerList);						// 비어있는 Insatnce Layer 검사 및 제거..
 	void FindInstanceLayer(std::vector<InstanceLayer*>& layerList, InstanceLayer* layer);	// 해당 Instance Layer 검색 및 추가..
 
+	bool SortLayer(InstanceLayer* layer1, InstanceLayer* layer2);
 	bool SortDistance(RenderData* obj1, RenderData* obj2);
 
 private:

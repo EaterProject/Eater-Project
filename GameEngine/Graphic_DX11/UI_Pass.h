@@ -25,6 +25,8 @@ private:
 	RenderTexture* m_Origin_RT;
 
 private:
+	ID3D11BlendState* m_AlphaBlend_BS;
+
 	ID3D11RenderTargetView* m_OutPut_RTV;
 
 private:

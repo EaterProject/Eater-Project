@@ -7,7 +7,6 @@
 #include "SceneManager.h"
 #include "GraphicEngineManager.h"
 #include "TimeManager.h"
-#include "MaterialManager.h"
 #include "LightManager.h"
 #include "PhysManager.h"
 #include "NetworkManager.h"
@@ -30,6 +29,7 @@
 #include "Terrain.h"
 #include "ParticleSystem.h"
 #include "CameraDebugKeyInput.h"
+#include "RectTransform.h"
 
 #include "Profiler/Profiler.h"
 
@@ -302,6 +302,14 @@ GameObject* GameEngine::InstanceLight(std::string ObjName, LIGHT_TYPE type)
 	}
 
 	return temp;
+}
+
+GameObject* GameEngine::InstanceUI(std::string ObjName /*= "UI"*/)
+{
+	GameObject* Obj = CreateInstance();
+	Obj->AddComponent<RectTransform>();
+
+	return Obj;
 }
 
 Material* GameEngine::InstanceMaterial(std::string matName /*= "Material"*/)

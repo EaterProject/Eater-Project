@@ -131,6 +131,8 @@ void Alpha_Pass::BeginRender()
 
 void Alpha_Pass::RenderUpdate(const InstanceRenderBuffer* instance, const RenderData* meshData)
 {
+	if (meshData->m_Draw == false) return;
+
 	const CameraData* cam = g_GlobalData->MainCamera_Data;
 	const ObjectData* obj = meshData->m_ObjectData;
 	const MeshRenderBuffer* mesh = instance->m_Mesh;

@@ -1,8 +1,9 @@
 #include "Material.h"
 #include "EngineData.h"
-#include "MaterialManager.h"
 #include "LoadManager.h"
 #include "GraphicEngineAPI.h"
+#include "IndexManager.h"
+#include "MaterialManager.h"
 
 #define SAFE_RELEASE(x) { if(x != nullptr){ x->Release(); delete x; x = nullptr; } }
 
@@ -19,7 +20,7 @@ Material::Material()
 	m_MaterialData->Material_Property->TexTM = DirectX::SimpleMath::Matrix::CreateScale(1.0f, 1.0f, 1.0f);
 
 	// Material 등록..
-	MaterialManager::PushMaterial(this);
+	MaterialManager::SetIndex(&m_MaterialData->BufferIndex);
 
 	// Material Graphic 측 등록..
 	GraphicEngine::Get()->PushMaterial(m_MaterialData);
@@ -28,7 +29,10 @@ Material::Material()
 Material::~Material()
 {
 	// Manager 내부에 있는 해당 Material Data 삭제..
-	MaterialManager::DeleteMaterial(m_MaterialData->BufferIndex);
+	MaterialManager::DeleteIndex(m_MaterialData->BufferIndex);
+
+	// 해당 Resource 제거..
+	Release();
 }
 
 void Material::SetTextureTiling(float scale_x, float scale_y)
@@ -45,11 +49,6 @@ void Material::SetDiffuseTexture(std::string diffuseName)
 	// Texture 변경..
 	m_MaterialData->Albedo = newTexture;
 
-	if (newTexture != nullptr)
-	{
-		m_MaterialData->Albedo->Name = diffuseName;
-	}
-
 	// Renderer Data 동기화..
 	GraphicEngine::Get()->PushChangeMaterial(m_MaterialData);
 }
@@ -60,11 +59,6 @@ void Material::SetNormalTexture(std::string noramlName)
 	
 	// Texture 변경..
 	m_MaterialData->Normal = newTexture;
-
-	if (newTexture != nullptr)
-	{
-		m_MaterialData->Normal->Name = noramlName;
-	}
 
 	// Renderer Data 동기화..
 	GraphicEngine::Get()->PushChangeMaterial(m_MaterialData);
@@ -77,11 +71,6 @@ void Material::SetEmissiveTexture(std::string emissiveName)
 	// Texture 변경..
 	m_MaterialData->Emissive = newTexture;
 
-	if (newTexture != nullptr)
-	{
-		m_MaterialData->Emissive->Name = emissiveName;
-	}
-
 	// Renderer Data 동기화..
 	GraphicEngine::Get()->PushChangeMaterial(m_MaterialData);
 }
@@ -92,11 +81,6 @@ void Material::SetORMTexture(std::string ormName)
 
 	// Texture 변경..
 	m_MaterialData->ORM = newTexture;
-
-	if (newTexture != nullptr)
-	{
-		m_MaterialData->ORM->Name = ormName;
-	}
 
 	// Renderer Data 동기화..
 	GraphicEngine::Get()->PushChangeMaterial(m_MaterialData);

@@ -13,12 +13,12 @@ public:
 	MeshRenderBuffer*		m_Mesh;				// 변환된 Mesh Data..
 	MaterialRenderBuffer*	m_Material;			// 변환된 Material Data..
 	TerrainRenderBuffer*	m_Terrain;			// 변환된 Terrain Data..
+	UIRenderBuffer*			m_UI;				// 변환된 UI Data..
 	AnimationRenderBuffer*	m_Animation;		// 변환된 Animation Data..
 
 	ObjectData*		m_ObjectData;
 	AnimationData*	m_AnimationData;
 	ParticleData*	m_ParticleData;
-	UIData*			m_UIData;
 };
 
 // 동일 Instance를 관리하기 위한 Instance Layer Class

@@ -207,7 +207,7 @@ void Camera::CreateProj(int winsizeX, int WinSizeY)
 	mProj = DirectX::XMMatrixPerspectiveFovLH(mFovY, mAspect, mNearZ, mFarZ);
 
 	//직교 투영
-	mOrthoProj = DirectX::XMMatrixOrthographicOffCenterLH(0.0f, mFovY, mAspect, 0.0f, mNearZ, mFarZ);
+	mOrthoProj = DirectX::XMMatrixOrthographicOffCenterLH(0.0f, winsizeX, WinSizeY, 0.0f, 0.0f, 1.0f);
 
 	// Camera Data 재설정..
 	mCameraData->CamProj = mProj;

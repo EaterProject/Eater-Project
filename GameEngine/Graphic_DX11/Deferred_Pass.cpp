@@ -137,7 +137,7 @@ void Deferred_Pass::Start(int width, int height)
 	// Graphic State 설정..
 	m_Defalt_DSS = g_Resource->GetDepthStencilState<DSS_Defalt>()->Get();
 	m_Solid_RS = g_Resource->GetRasterizerState<RS_Solid>()->Get();
-	m_AlphaBlend_BS = g_Resource->GetBlendState<BS_AlphaBlend>()->Get();
+	m_AlphaBlend_BS = g_Resource->GetBlendState<BS_AlphaBlend_ALL>()->Get();
 
 	// ViewPort 설정..
 	m_Screen_VP = g_Resource->GetViewPort<VP_FullScreen>()->Get();

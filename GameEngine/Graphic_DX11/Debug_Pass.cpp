@@ -83,7 +83,7 @@ void Debug_Pass::Start(int width, int height)
 	m_Icon_DB = g_Resource->GetDrawBuffer<DB_Quad>();
 
 	// Graphic State..
-	m_AlphaBlend_BS = g_Resource->GetBlendState<BS_AlphaBlend>()->Get();
+	m_AlphaBlend_BS = g_Resource->GetBlendState<BS_AlphaBlend_One>()->Get();
 
 	m_Solid_RS = g_Resource->GetRasterizerState<RS_Solid>()->Get();
 	m_Wire_RS = g_Resource->GetRasterizerState<RS_WireFrame>()->Get();

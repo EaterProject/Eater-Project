@@ -15,9 +15,6 @@ public:
 	friend class MeshManager;
 
 public:
-	//EATER_ENGINEDLL void SetLOD();
-
-public:
 	void Release();
 
 public:

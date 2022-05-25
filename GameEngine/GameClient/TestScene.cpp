@@ -18,6 +18,9 @@
 #include "Player.h"
 #include "ParticleSystem.h"
 #include "Collider.h"
+#include "Image.h"
+#include "Button.h"
+#include "RectTransform.h"
 #include "EngineData.h"
 
 #include "./Profiler/Profiler.h"
@@ -35,26 +38,33 @@ void TestScene::Awake()
 	//Load("../Assets/Texture/Particle");
 	//Load("../Assets/Texture/ModelTexture");
 	//Load("../Assets/Texture/Material");
+	Load("../Assets/Texture/UI");
 	//Load("../Assets/Model/MeshBuffer");
 	//Load("../Assets/Model/ModelData");
 	//Load("../Assets/Model/Animation");
 	PROFILE_TIMER_END("Load Folder"); 
 
-	//BakeSkyLightMap("Day");
+	BakeSkyLightMap("SkyLight_HDRI", false);
+	BakeSkyLightMap("Day", false);
 	BakeSkyLightMap("Night", false);
 	BakeSkyLightMap("skybox1", false);
 	BakeSkyLightMap("TestSky", false);
 
 	//AddOccluder("Dome_Occluder_0");
 
+
 	CreateMap();
+
+	CreateUI();
+
 
 	//CreateParticle(0,0,0);
 	//SetSkyLight("Day");
-	SetSkyLight("Night");
-	SetSkyCube("HDRI");
+	SetSkyLight("SkyLight_HDRI");
+	//SetSkyCube("Day");
+	SetSkyCube("SkyCube_HDRI");
 
-	Load("../Assets/Scene/test1.Scene");
+	//Load("../Assets/Scene/test.Scene");
 }
 
 void TestScene::Update()
@@ -84,7 +94,6 @@ void TestScene::CreateMap()
 	MeshFilter* filter = nullptr;
 	Light* light = nullptr;
 
-	//InstanceCamera("sub");
 	//
 	//ParticleObj = Instance();
 	//ParticleObj->GetTransform()->Position.y += 50;
@@ -138,11 +147,26 @@ void TestScene::CreateMap()
 
 	//Object = Instance();
 	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("bossb");
-	//filter->SetAnimationName("bossb");
-	//Object->GetTransform()->Position.z += 20;
+	//filter->SetModelName("BossB");
+	//filter->SetAnimationName("BossB");
+	//Object->GetTransform()->Position.x -= 30;
 	//AC = Object->AddComponent<AnimationController>();
-	//AC->Choice("idle");
+	//AC->Choice("weak");
+	//
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("BossB");
+	//filter->SetAnimationName("BossB");
+	//AC = Object->AddComponent<AnimationController>();
+	//AC->Choice("weak");
+	//
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("BossB");
+	//filter->SetAnimationName("BossB");
+	//Object->GetTransform()->Position.x += 30;
+	//AC = Object->AddComponent<AnimationController>();
+	//AC->Choice("weak");
 
 	//Object = Instance();
 	//filter = Object->AddComponent<MeshFilter>();
@@ -210,6 +234,167 @@ void TestScene::CreateMap()
 	mTerrain->SetLayerName("terrain_ground_D_BaseColor", "terrain_ground_D_Normal", "terrain_ground_D_ORM");
 	mTerrain->SetMeshName("Terrain");
 	mTerrain->SetTextureTiling(31.0f);
+}
+
+void TestScene::CreateUI()
+{
+	GameObject* ui_object = nullptr;
+	Image* ui_image = nullptr;
+	RectTransform* ui_rectTR = nullptr;
+
+	ui_object = InstanceUI("UI");
+	ui_image = ui_object->AddComponent<Image>();
+	ui_image->SetTexture("ingame_minimap");
+	ui_rectTR = ui_object->GetComponent<RectTransform>();
+	ui_rectTR->SetImagePivot(RECT_PIVOT::PIVOT_RIGHT_TOP);
+	ui_rectTR->AddPosition(25.0f, 75.0f);
+	ui_rectTR->SetRotation(0.0f, 0.0f, -90.0f);
+	ui_rectTR->SetScale(0.5f, 0.5f);
+
+	ui_object = InstanceUI("UI");
+	ui_image = ui_object->AddComponent<Image>();
+	ui_image->SetTexture("ingame_combo");
+
+	ui_rectTR = ui_object->GetComponent<RectTransform>();
+	ui_rectTR->SetImagePivot(RECT_PIVOT::PIVOT_MIDDLE_RIGHT);
+	ui_rectTR->AddPosition(-25.0f, 0.0f);
+	ui_rectTR->SetScale(0.5f, 0.5f);
+
+	ui_object = InstanceUI("UI");
+	ui_image = ui_object->AddComponent<Image>();
+	ui_image->SetTexture("ingame_playercounter_1");
+
+	ui_rectTR = ui_object->GetComponent<RectTransform>();
+	ui_rectTR->SetImagePivot(RECT_PIVOT::PIVOT_MIDDLE_CENTER);
+	ui_rectTR->AddPosition(-50.0f, 0.0f);
+	ui_rectTR->SetScale(0.5f, 0.5f);
+
+	ui_object = InstanceUI("UI");
+	ui_image = ui_object->AddComponent<Image>();
+	ui_image->SetTexture("ingame_player_hp_back");
+
+	ui_rectTR = ui_object->GetComponent<RectTransform>();
+	ui_rectTR->SetImagePivot(RECT_PIVOT::PIVOT_LEFT_BOTTOM);
+	ui_rectTR->AddPosition(50.0f, -50.0f);
+	ui_rectTR->SetScale(0.5f, 0.5f);
+
+
+	ui_object = InstanceUI("UI");
+	ui_image = ui_object->AddComponent<Image>();
+	ui_image->SetTexture("ingame_player_hp");
+	ui_image->SetImageColor(255, 0, 0);
+	ui_rectTR = ui_object->GetComponent<RectTransform>();
+	ui_rectTR->SetImagePivot(RECT_PIVOT::PIVOT_LEFT_BOTTOM);
+	ui_rectTR->AddPosition(50.0f, -50.0f);
+	ui_rectTR->SetScale(0.5f, 0.5f);
+
+	ui_object = InstanceUI("UI");
+	ui_image = ui_object->AddComponent<Image>();
+	ui_image->SetTexture("ingame_switch");
+	ui_rectTR = ui_object->GetComponent<RectTransform>();
+	ui_rectTR->SetImagePivot(RECT_PIVOT::PIVOT_LEFT_BOTTOM);
+	ui_rectTR->AddPosition(50.0f, -150.0f);
+	ui_rectTR->SetScale(0.5f, 0.5f);
+
+	ui_object = InstanceUI("UI");
+	ui_image = ui_object->AddComponent<Image>();
+	ui_image->SetTexture("ingame_skill_rb");
+	ui_rectTR = ui_object->GetComponent<RectTransform>();
+	ui_rectTR->SetImagePivot(RECT_PIVOT::PIVOT_LEFT_BOTTOM);
+	ui_rectTR->AddPosition(400.0f, -50.0f);
+	ui_rectTR->SetScale(0.5f, 0.5f);
+
+	ui_object = InstanceUI("UI");
+	ui_image = ui_object->AddComponent<Image>();
+	ui_image->SetTexture("ingame_skill_rb");
+	ui_rectTR = ui_object->GetComponent<RectTransform>();
+	ui_rectTR->SetImagePivot(RECT_PIVOT::PIVOT_LEFT_BOTTOM);
+	ui_rectTR->AddPosition(400.0f, -50.0f);
+	ui_rectTR->SetScale(0.5f, 0.5f);
+
+	ui_object = InstanceUI("UI");
+	ui_image = ui_object->AddComponent<Image>();
+	ui_image->SetTexture("ingame_skill_space");
+	ui_rectTR = ui_object->GetComponent<RectTransform>();
+	ui_rectTR->SetImagePivot(RECT_PIVOT::PIVOT_LEFT_BOTTOM);
+	ui_rectTR->AddPosition(475.0f, -50.0f);
+	ui_rectTR->SetScale(0.5f, 0.5f);
+
+	ui_object = InstanceUI("UI");
+	ui_image = ui_object->AddComponent<Image>();
+	ui_image->SetTexture("ingame_skill_e");
+	ui_rectTR = ui_object->GetComponent<RectTransform>();
+	ui_rectTR->SetImagePivot(RECT_PIVOT::PIVOT_LEFT_BOTTOM);
+	ui_rectTR->AddPosition(550.0f, -50.0f);
+	ui_rectTR->SetScale(0.5f, 0.5f);
+
+	//ui_object = InstanceUI("UI");
+	//ui_image = ui_object->AddComponent<Image>();
+	//ui_image->SetTexture("ingame_player_hp");
+	//
+	//ui_rectTR = ui_object->GetComponent<RectTransform>();
+	//ui_rectTR->SetImagePivot(RECT_PIVOT::PIVOT_LEFT_TOP);
+	//
+	//ui_object = InstanceUI("UI");
+	//ui_image = ui_object->AddComponent<Image>();
+	//ui_image->SetTexture("ingame_player_hp_back");
+	//
+	//ui_rectTR = ui_object->GetComponent<RectTransform>();
+	//ui_rectTR->SetImagePivot(RECT_PIVOT::PIVOT_LEFT_BOTTOM);
+	//
+	//ui_object = InstanceUI("UI");
+	//ui_image = ui_object->AddComponent<Image>();
+	//ui_image->SetTexture("ingame_player_hp_back");
+	//
+	//ui_rectTR = ui_object->GetComponent<RectTransform>();
+	//ui_rectTR->SetImagePivot(RECT_PIVOT::PIVOT_RIGHT_TOP);
+	//ui_rectTR->AddPosition(-10.0f, 0.0f);
+	//ui_rectTR->SetRotation(0.0f, 0.0f, 90.0f);
+	//ui_rectTR->SetScale(0.5f, 0.5f);
+	//
+	//ui_object = InstanceUI("UI");
+	//ui_image = ui_object->AddComponent<Image>();
+	//ui_image->SetTexture("ingame_player_hp_back");
+	//
+	//ui_rectTR = ui_object->GetComponent<RectTransform>();
+	//ui_rectTR->SetImagePivot(RECT_PIVOT::PIVOT_RIGHT_BOTTOM);
+	//ui_rectTR->AddPosition(-10.0f, 0.0f);
+	//
+	//
+	//ui_object = InstanceUI("UI");
+	//ui_image = ui_object->AddComponent<Image>();
+	//ui_image->SetTexture("ingame_minimap");
+	//
+	//ui_rectTR = ui_object->GetComponent<RectTransform>();
+	//ui_rectTR->SetImagePivot(RECT_PIVOT::PIVOT_MIDDLE_TOP);
+	//
+	//ui_object = InstanceUI("UI");
+	//ui_image = ui_object->AddComponent<Image>();
+	//ui_image->SetTexture("ingame_minimap");
+	//
+	//ui_rectTR = ui_object->GetComponent<RectTransform>();
+	//ui_rectTR->SetImagePivot(RECT_PIVOT::PIVOT_MIDDLE_BOTTOM);
+	//
+	//ui_object = InstanceUI("UI");
+	//ui_image = ui_object->AddComponent<Image>();
+	//ui_image->SetTexture("ingame_minimap");
+	//
+	//ui_rectTR = ui_object->GetComponent<RectTransform>();
+	//ui_rectTR->SetImagePivot(RECT_PIVOT::PIVOT_MIDDLE_LEFT);
+	//
+	//ui_object = InstanceUI("UI");
+	//ui_image = ui_object->AddComponent<Image>();
+	//ui_image->SetTexture("ingame_minimap");
+	//
+	//ui_rectTR = ui_object->GetComponent<RectTransform>();
+	//ui_rectTR->SetImagePivot(RECT_PIVOT::PIVOT_MIDDLE_RIGHT);
+	//
+	//ui_object = InstanceUI("UI");
+	//ui_image = ui_object->AddComponent<Image>();
+	//ui_image->SetTexture("ingame_minimap");
+	//
+	//ui_rectTR = ui_object->GetComponent<RectTransform>();
+	//ui_rectTR->SetImagePivot(RECT_PIVOT::PIVOT_MIDDLE_CENTER);
 }
 
 void TestScene::CreateParticle(float x, float y, float z)
@@ -301,54 +486,50 @@ void TestScene::CreateParticle(float x, float y, float z)
 
 void TestScene::ChangeCubeMap()
 {
-	//if (GetKey(VK_UP))
-	//{
-	//	Cam2TR->Position.y += 0.5f;
-	//}
-	//if (GetKey(VK_DOWN))
-	//{
-	//	Cam2TR->Position.y -= 0.5f;
-	//}
-	//if (GetKey(VK_LEFT))
-	//{
-	//	Cam2TR->Position.x -= 0.5f;
-	//}
-	//if (GetKey(VK_RIGHT))
-	//{
-	//	Cam2TR->Position.x += 0.5f;
-	//}
-	//if (GetKey(VK_PRIOR))
-	//{
-	//	Cam2TR->Position.z += 0.5f;
-	//}
-	//if (GetKey(VK_NEXT))
-	//{
-	//	Cam2TR->Position.z -= 0.5f;
-	//}
 
-	if (GetKeyUp('1'))
-	{
-		SetSkyLight("Night");
-	}
-	if (GetKeyUp('2'))
-	{
-		SetSkyLight("skybox1");
-	}
-	if (GetKeyUp('3'))
-	{
-		SetSkyLight("TestSky");
-	}
-	if (GetKeyUp('4'))
+	if (GetKey('1'))
 	{
 		MaterialPropertyBlock* block = meshfilter->GetMaterialPropertyBlock();
-
+	
 		if (up)
 		{
-			block->LimLightColor.x += 0.1f;
+			block->LimLightColor.x += 0.005f;
 		}
 		else
 		{
-			block->LimLightColor.x -= 0.1f;
+			block->LimLightColor.x -= 0.005f;
+		}
+	
+		if (block->LimLightColor.x > 1.0f)
+		{
+			block->LimLightColor.x = 1.0f;
+			up = false;
+		}
+		if (block->LimLightColor.x < 0.0f)
+		{
+			block->LimLightColor.x = 0.0f;
+			up = true;
+		}
+	}
+	if (GetKeyUp('2'))
+	{
+		meshfilter->SetMaterialPropertyBlock(true);
+	}
+	if (GetKeyUp('3'))
+	{
+		meshfilter->SetMaterialPropertyBlock(false);
+	}
+	if (GetKey('4'))
+	{
+		MaterialProperty* block = meshfilter->GetMaterialProperty();
+		
+		if (up)
+		{
+			block->LimLightColor.x += 0.005f;
+		}
+		else
+		{
+			block->LimLightColor.x -= 0.005f;
 		}
 
 		if (block->LimLightColor.x > 1.0f)
@@ -362,29 +543,25 @@ void TestScene::ChangeCubeMap()
 			up = true;
 		}
 	}
-	if (GetKeyUp('5'))
-	{
-		meshfilter->SetMaterialPropertyBlock(true);
-	}
-	if (GetKeyUp('6'))
-	{
-		meshfilter->SetMaterialPropertyBlock(false);
-	}
-	if (GetKey('7'))
-	{
-		angle += 1.0f;
+	//if (GetKeyUp('1'))
+	//{
+	//	SetSkyLight("SkyLight_HDRI");
+	//}
+	//if (GetKeyUp('2'))
+	//{
+	//	SetSkyLight("Day");
+	//}
+	//if (GetKeyUp('3'))
+	//{
+	//	SetSkyLight("Night");
+	//}
+	//if (GetKeyUp('4'))
+	//{
+	//	SetSkyLight("skybox1");
+	//}
+	//if (GetKeyUp('5'))
+	//{
+	//	SetSkyLight("TestSky");
+	//}
 
-		if (angle > 360.0f)
-		{
-			angle -= 360.0f;
-		}
-
-		BakeConvertSkyCubeMap("HDRI_2", angle, 100.0f, true);
-		BakeConvertSkyLightMap("HDRI_2", angle, 100.0f, true);
-	}
-	if (GetKeyUp('8'))
-	{
-		SaveConvertSkyLightMap("HDRI_2", "HDRI_2_Convert");
-		SaveConvertSkyCubeMap("HDRI_2", "HDRI_2_Convert");
-	}
 }

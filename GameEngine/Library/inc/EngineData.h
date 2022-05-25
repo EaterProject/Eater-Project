@@ -1,6 +1,7 @@
 #pragma once
 #include <map>
 #include <queue>
+#include <unordered_map>
 #include <functional>
 #include "ResourcesData.h"
 #include "ParserData.h"
@@ -202,8 +203,8 @@ public:
 	std::vector<MaterialBuffer*> Material_List;		// Material List
 };
 
-// RectTransform Data
-class UIData
+// UI Property
+class UIProperty
 {
 public:
 	Vector2 TexScale;
@@ -212,9 +213,17 @@ public:
 	Vector4 ImageColor;
 
 	Matrix World;
+};
 
+// UI Buffer
+class UIBuffer
+{
 public:
-	TextureBuffer* Albedo = nullptr;				// DiffuseMap Texture
+	UINT BufferIndex = 0;		// Mesh Buffer Index
+
+	TextureBuffer* Albedo = nullptr;			// DiffuseMap Texture
+
+	UIProperty* UI_Property = nullptr;			// UI Property
 };
 
 // Particle Data
@@ -339,14 +348,14 @@ public:
 
 	ObjectData*		Object_Data = nullptr;			// Object Data
 
-	MeshBuffer*		Mesh_Buffer = nullptr;			// Mesh Buffer
-	MaterialBuffer*	Material_Buffer	= nullptr;		// Material Buffer
-	AnimationBuffer* Animation_Buffer = nullptr;	// Animation Buffer
+	MeshBuffer*		 Mesh_Buffer		= nullptr;	// Mesh Buffer
+	MaterialBuffer*	 Material_Buffer	= nullptr;	// Material Buffer
+	AnimationBuffer* Animation_Buffer	= nullptr;	// Animation Buffer
+	UIBuffer*		 UI_Buffer			= nullptr;	// UI Buffer
 
 	// 추가 데이터
 	AnimationData*	Animation_Data	= nullptr;		// Animation Data
 	TerrainData*	Terrain_Data	= nullptr;		// Terrain Data
-	UIData*			UI_Data			= nullptr;		// RectTransform Data
 	ParticleData*	Particle_Data	= nullptr;		// Particle Data
 };
 

@@ -49,6 +49,7 @@ public:
 	void DeleteMesh(UINT index) override;							// 해당 Mesh Resource 즉시 제거..
 	void DeleteMaterial(UINT index) override;						// 해당 Material Resource 즉시 제거..
 	void DeleteAnimation(UINT index) override;						// 해당 Animation Resource 즉시 제거..
+	void DeleteUI(UINT index) override;								// 해당 UI Resource 즉시 제거..
 
 public:
 	size_t FindMaxInstanceCount() override;							// 모든 Layer 내부의 Instance 개수 중 제일 큰 개수 반환..
@@ -90,8 +91,9 @@ private:
 
 	std::unordered_map<UINT, MeshRenderBuffer*>			m_MeshList;			// 현재 등록 되어있는 Mesh Resource..
 	std::unordered_map<UINT, MaterialRenderBuffer*>		m_MaterialList;		// 현재 등록 되어있는 Material Resource..
+	std::unordered_map<UINT, TerrainRenderBuffer*>		m_TerrainList;		// 현재 등록 되어있는 Terrain Resource..
+	std::unordered_map<UINT, UIRenderBuffer*>			m_UIList;			// 현재 등록 되어있는 UI Resource..
 	std::unordered_map<UINT, AnimationRenderBuffer*>	m_AnimationList;	// 현재 등록 되어있는 Animation Resource..
-	std::unordered_map<UINT, TerrainRenderBuffer*>		m_LayerList;		// 현재 등록 되어있는 Terrain Resource..
 
 	std::unordered_map<UINT, RenderData*> m_RenderList;				// 현재 등록 되어있는 모든 Render Data..
 

@@ -263,6 +263,11 @@ Material* MeshFilter::GetMaterial()
 	return m_Material;
 }
 
+MaterialProperty* MeshFilter::GetMaterialProperty()
+{
+	return m_Material->m_MaterialData->Material_Property;
+}
+
 MaterialPropertyBlock* MeshFilter::GetMaterialPropertyBlock()
 {
 	return m_PropertyBlock;
