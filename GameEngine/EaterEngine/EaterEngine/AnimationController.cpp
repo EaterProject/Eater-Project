@@ -131,8 +131,8 @@ void AnimationController::AnimationFrameIndex()
 
 	if (mStop == false)
 	{
-		mTime += (mTimeManager->DeltaTime() * mPlayTime);
-		mFrameTime += (mTimeManager->DeltaTime() * mPlayTime) / NowAnimation->m_TicksPerFrame;
+		mTime += (mTimeManager->DeltaTime() * mSpeed);
+		mFrameTime += (mTimeManager->DeltaTime() * mSpeed) / NowAnimation->m_TicksPerFrame;
 
 		mNowFrame = (int)(mTime / NowAnimation->m_TicksPerFrame);
 

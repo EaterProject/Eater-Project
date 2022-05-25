@@ -18,7 +18,7 @@ PlayerCamera::PlayerCamera()
 	X_Radian = 0;
 	Y_Radian = 0;
 
-	CamOffSet = { 0,2.5f,0 };
+	CamOffSet = { 0,1.75f,0 };
 	MouseCursor = true;
 }
 
@@ -36,7 +36,7 @@ void PlayerCamera::SetUp()
 
 	PastX = GetMousePosX();
 	PastY = GetMousePosY();
-	mTransform->Position = { 0, 0 ,-10 };
+	mTransform->Position = { 0, 0 ,-2 };
 
 	//MouseCursor = GetTogle(VK_F10);
 	ShowMouseCursor(MouseCursor);
@@ -61,11 +61,11 @@ void PlayerCamera::StartUpdate()
 	X_Radian += x;
 	Y_Radian += y;
 	
-	if (Y_Radian >= 90) { Y_Radian = 90; }
-	if (Y_Radian <= 0) { Y_Radian = 0; }
+	if (Y_Radian >= 120) { Y_Radian = 120; }
+	if (Y_Radian <= -80) { Y_Radian = -80; }
 	
 	
-	float Dir = 8.f;
+	float Dir = 4.25f;
 	float MosControl = 250;
 	
 	//수평 방향으로의 X Y를 구한다

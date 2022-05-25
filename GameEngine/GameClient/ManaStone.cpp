@@ -33,7 +33,7 @@ void ManaStone::Awake()
 
 	srand((unsigned int)time(NULL));
 
-	CreateMonster(3, 0);
+	CreateMonster(1, 0);
 }
 
 void ManaStone::SetUp()

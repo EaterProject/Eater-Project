@@ -115,4 +115,6 @@ void UI_Pass::RenderUpdate(std::vector<RenderData*>& meshlist)
 
 		g_Context->DrawIndexed(m_Screen_DB->IndexCount, 0, 0);
 	}
+
+	g_Context->OMSetBlendState(0, 0, 0xffffffff);
 }

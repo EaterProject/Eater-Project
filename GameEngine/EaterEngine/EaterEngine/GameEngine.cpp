@@ -119,13 +119,13 @@ void GameEngine::Start()
 	mLoadManager->Start();
 
 	//카메라처음 생성 키인풋을 받을수있도록 컨퍼넌트 붙임
-	GameObject* obj = InstanceCamera("DebugCamera");
-	obj->AddComponent<CameraDebugKeyInput>();
-	obj->SetDontDestroy(true);
-	obj->transform->Position = {0,10,-25};
+	DebugCame = InstanceCamera("DebugCamera");
+	DebugCame->AddComponent<CameraDebugKeyInput>();
+	DebugCame->SetDontDestroy(true);
+	DebugCame->transform->Position = {0,10,-25};
 
 	//디렉션 라이트 생성
-	obj = InstanceLight("DirectionLight", LIGHT_TYPE::DIRECTION_LIGHT);
+	GameObject* obj = InstanceLight("DirectionLight", LIGHT_TYPE::DIRECTION_LIGHT);
 	obj->SetDontDestroy(true);
 }
 
@@ -279,12 +279,13 @@ GameObject* GameEngine::InstanceLight(std::string ObjName, LIGHT_TYPE type)
 
 	Light* light = temp->AddComponent<Light>();
 	light->SetType(type);
-
+	
 	// Light 별 초기값..
 	switch (type)
 	{
 	case DIRECTION_LIGHT:
-		Tr->Rotation = { -45.0f, 30.0f, 0.0f };
+		Tr->Rotation = { 224.0f, 91.0f, 0.0f };
+		light->SetPower(9);
 		break;
 	case POINT_LIGHT:
 		light->SetColor(1.0f, 1.0f, 0.0f);

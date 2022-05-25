@@ -44,7 +44,7 @@ void Drone::Update()
 	if (mTransform->GetDistance(mPlayerTR->Position) >= 3.0f) 
 	{
 		Vector3 DronePos = Vector3::Lerp(mTransform->Position, mPlayerTR->Position,GetDeltaTime());
-		DronePos.y = OffsetY;
+		DronePos.y = OffsetY + mPlayerTR->Position.y;
 		mTransform->Position = DronePos;
 	}
 

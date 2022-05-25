@@ -91,6 +91,7 @@ extern "C" EATER_ENGINEDLL GameObject* Picking(int x, int y);	//현재 윈도우 클릭
 
 ///카메라 관련
 extern "C" EATER_ENGINEDLL GameObject * GetMainCamera();	//현재 메인 카메라를 가져온다
+extern "C" EATER_ENGINEDLL GameObject * GetDebugCamera();	//현재 메인 카메라를 가져온다
 
 ///시간 관련
 extern "C" EATER_ENGINEDLL float GetDeltaTime();
