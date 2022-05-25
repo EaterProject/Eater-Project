@@ -161,10 +161,8 @@ void SSAO_Pass::RenderUpdate()
 	GPU_MARKER_DEBUG_NAME("SSAO Render");
 	g_Context->OMSetBlendState(0, 0, 0xffffffff);
 	g_Context->OMSetRenderTargets(1, &m_Ssao_RTV, 0);
-	//g_Context->OMSetDepthStencilState(nullptr, 0);
 	g_Context->ClearRenderTargetView(m_Ssao_RTV, reinterpret_cast<const float*>(&DXColors::Black));
 	g_Context->RSSetViewports(1, m_HalfScreen_VP);
-	//g_Context->RSSetState(m_Solid_RS);
 
 	CameraData* cam = g_GlobalData->MainCamera_Data;
 	Matrix& proj = cam->CamProj;
@@ -329,7 +327,7 @@ void SSAO_Pass::SetFrustumFarCorners(int width, int height)
 
 	float aspect = (float)width / (float)height;
 
-	float fovY = 0.25f * 3.1415926535f;
+	float fovY = 0.3f * 3.1415926535f;
 	float farZ = 4000.0f;
 	float halfHeight = farZ * tanf(0.5f * fovY);
 	float halfWidth = aspect * halfHeight;

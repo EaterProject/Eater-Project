@@ -956,11 +956,11 @@ void RenderManager::DeleteUIRenderData(MeshData* meshData)
 
 	UINT renderDataIndex = m_UIRenderMeshList[index]->m_ObjectData->ObjectIndex;
 
-	// 해당 Render Data 제거..
-	m_Converter->DeleteRenderData(renderDataIndex + 1);
-
 	// 해당 UI Render Buffer 제거..
 	m_Converter->DeleteUI(renderData->m_UI->m_BufferIndex);
+
+	// 해당 Render Data 제거..
+	m_Converter->DeleteRenderData(renderDataIndex + 1);
 
 	// 해당 Instance List에서 제거...
 	m_UIRenderMeshList.erase(std::next(m_UIRenderMeshList.begin(), index));

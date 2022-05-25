@@ -176,6 +176,7 @@ copy /Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)" </Command>
     <ClInclude Include="ClientTypeOption.h" />
     <ClInclude Include="Drone.h" />
     <ClInclude Include="GameLogic.h" />
+    <ClInclude Include="LoadImage.h" />
     <ClInclude Include="Loading.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GameClient.h" />
@@ -207,6 +208,7 @@ copy /Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)" </Command>
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Drone.cpp" />
     <ClCompile Include="GameLogic.cpp" />
+    <ClCompile Include="LoadImage.cpp" />
     <ClCompile Include="Loading.cpp" />
     <ClCompile Include="GameClient.cpp" />
     <ClCompile Include="GameManager.cpp" />

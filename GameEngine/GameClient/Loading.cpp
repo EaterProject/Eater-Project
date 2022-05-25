@@ -14,30 +14,20 @@
 #include "AnimationController.h"
 #include "Material.h"
 
+#include "LoadImage.h"
+
 void Loading::Awake()
 {
-	Load("../Assets/Texture/Particle/particle_hotCloud.png");
 	Load("../Assets/Texture/UI");
+	//Load("../Assets/Texture/Particle/particle_hotCloud.png");
 
-	ParticleObj = Instance();
-	obj = InstanceParticle("Particle12");
-	ParticleObj->ChoiceChild(obj);
-	particles = obj->GetComponent<ParticleSystem>();
-	particles->SetMeshName("Quad");
-	particles->SetRenderType(PARTICLE_RENDER_OPTION::VERTICAL_BILLBOARD);
-	particles->SetDiffuseName("particle_hotCloud");
-	particles->SetStartLifeTime(1.5f, 1.8f);
-	particles->SetStartScale(4.0f, 7.0f);
-	particles->SetStartRotation(-360, 360);
-	particles->SetStartColor(Vector4(255, 174, 73, 28), Vector4(255, 111, 53, 255));
-	particles->SetMaxParticles(60);
-	particles->SetRateOverTime(25.0f);
-	particles->SetShapeRadius(0.1875f);
-	particles->SetStartForce(Vector3(0, 5, 0));
-	particles->SetLifeTimeRotation(-15.0f, 15.0f);
-	particles->SetTextureTiling(8, 8);
-	particles->SetPlayTime(1, true);
-	particles->Play();
+	RenderOption* option = GetRenderOptionData();
+	option->RenderingOption ^= RENDER_OPTION::RENDER_FOG;
+
+	RenderSetting();
+
+	GameObject* Loading_UI = Instance("Loading_UI");
+	Loading_UI->AddComponent<LoadingImage>();
 }
 
 
