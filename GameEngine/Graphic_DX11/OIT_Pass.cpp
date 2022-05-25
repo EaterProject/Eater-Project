@@ -194,7 +194,7 @@ void OIT_Pass::BeginRender()
 
 void OIT_Pass::RenderUpdate()
 {
-	g_Context->ClearRenderTargetView(m_OutPut_RTV, reinterpret_cast<const float*>(&DXColors::DeepDarkGray));
+	g_Context->ClearRenderTargetView(m_OutPut_RTV, reinterpret_cast<const float*>(&DXColors::NonBlack));
 	g_Context->OMSetRenderTargets(1, &m_OutPut_RTV, nullptr);
 	g_Context->OMSetDepthStencilState(nullptr, 0);
 
