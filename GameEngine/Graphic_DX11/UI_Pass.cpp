@@ -87,6 +87,7 @@ void UI_Pass::RenderUpdate(std::vector<RenderData*>& meshlist)
 
 	UIRenderBuffer* ui = nullptr;
 	CB_UIObject objectBuf;
+	CB_UIOption optionBuf;
 
 	for (UINT i = 0; i < m_RenderCount; i++)
 	{
@@ -104,7 +105,11 @@ void UI_Pass::RenderUpdate(std::vector<RenderData*>& meshlist)
 		m_UI_VS->Update();
 
 		// Pixel Shader Update..
+		//optionBuf.gColor = ui->m_UIProperty->ImageColor;
+		//m_UI_PS->ConstantBufferUpdate(&optionBuf);
+
 		m_UI_PS->SetShaderResourceView<gDiffuseMap>(ui->m_Albedo);
+		
 
 		m_UI_PS->Update();
 

@@ -20,6 +20,7 @@ public:
 	EATER_ENGINEDLL void SetPosition(float x, float y);
 	EATER_ENGINEDLL void SetPosition(DirectX::SimpleMath::Vector2 pos);
 
+	EATER_ENGINEDLL void SetRotation(float angle);
 	EATER_ENGINEDLL void SetRotation(float x, float y, float z);
 	EATER_ENGINEDLL void SetRotation(DirectX::SimpleMath::Vector3 rot);
 

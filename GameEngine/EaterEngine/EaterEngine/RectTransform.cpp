@@ -125,6 +125,11 @@ void RectTransform::SetRotation(DirectX::SimpleMath::Vector3 rot)
 	Rotation = rot;
 }
 
+void RectTransform::SetRotation(float angle)
+{
+	Rotation.z = angle;
+}
+
 void RectTransform::SetScale(float x, float y)
 {
 	Scale.x = x;
