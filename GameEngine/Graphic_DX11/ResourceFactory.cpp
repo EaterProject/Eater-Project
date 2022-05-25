@@ -2009,7 +2009,7 @@ void GraphicResourceFactory::CreateRasterizerStates()
 	rasterizerDesc.DepthClipEnable = true;
 	rasterizerDesc.DepthBias = 100000;
 	rasterizerDesc.DepthBiasClamp = 0.0f;
-	rasterizerDesc.SlopeScaledDepthBias = 0.005f;
+	rasterizerDesc.SlopeScaledDepthBias = 1.0f;
 
 	// Depth RasterizerState 持失..
 	CreateRasterizerState(RS_Depth::GetName(), RS_Depth::GetHashCode(), &rasterizerDesc);
@@ -2134,8 +2134,8 @@ void GraphicResourceFactory::CreateSamplerStates()
 	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_BORDER;
 	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_BORDER;
 	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_BORDER;
-	samplerDesc.BorderColor[0] = samplerDesc.BorderColor[1] = samplerDesc.BorderColor[2] = samplerDesc.BorderColor[3] = 0.0f;
-	samplerDesc.ComparisonFunc = D3D11_COMPARISON_LESS;
+	samplerDesc.BorderColor[0] = { 1.0f };
+	samplerDesc.ComparisonFunc = D3D11_COMPARISON_LESS_EQUAL;
 	samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
 
 	// gShadowSam SamplerState 持失..

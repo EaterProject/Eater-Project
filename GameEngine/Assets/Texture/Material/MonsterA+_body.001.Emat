@@ -1,7 +1,7 @@
 #EATERMAT
-@ORMMap monsterA_ORM
-@Alpha 0
 @MaterialName MonsterA+_body.001
+@Alpha 0
+@ORMMap monsterA_ORM
 @LimColor_B 0.000000
 @DiffuseMap monsterA_BaseColor
 @NormalMap monsterA_Normal
@@ -11,10 +11,10 @@
 @Metallic 0.000000
 @Tileing_X 1
 @Tileing_Y 1
-@AddColor_R 0.505882
-@AddColor_G 0.501961
+@AddColor_R 0.000000
+@AddColor_G 0.000000
+@AddColor_B 0.000000
 @LimFactor 0.000000
-@AddColor_B 0.501961
 @AddColor_A 0
 @LimColor_R 0.000000
 @LimColor_G 0.000000

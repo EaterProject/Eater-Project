@@ -124,8 +124,8 @@ void OIT_Mesh_PS(MeshPixelIn pin)
     
 #ifdef IBL
     float3 irradiance = gIBLIrradiance.Sample(gSamClampLinear, normal).rgb;
-    float3 prefilteredColor = gIBLPrefilter.SampleLevel(gSamClampLinear, reflect(-ViewDirection, normal), roughness * MAX_REF_LOD).rgb;
-    float2 brdf = gBRDFlut.Sample(gSamClampLinear, float2(max(dot(normal, ViewDirection), 0.0f), roughness)).rg;
+    float3 prefilteredColor = gIBLPrefilter.SampleLevel(gSamClampLinear, reflect(-ViewDirection, normal), roughness * roughness * MAX_REF_LOD).rgb;
+    float2 brdf = gBRDFlut.Sample(gSamClampLinear, float2(max(dot(normal, ViewDirection), 0.0f), roughness * roughness)).rg;
     
     litColor += IBL_EnvironmentLight(ViewDirection, normal, irradiance, prefilteredColor, brdf,
                                         albedo.rgb, 1.0f, roughness, metallic, gIBLFactor);
