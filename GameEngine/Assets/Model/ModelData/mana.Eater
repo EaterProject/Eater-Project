@@ -1,6 +1,6 @@
 #STATIC
-@ParentName RootNode
 @NodeName mana.009
+@ParentName RootNode
 @MeshName mana_0
 @MaterialName mana_Material
 $WorldTM 4 4

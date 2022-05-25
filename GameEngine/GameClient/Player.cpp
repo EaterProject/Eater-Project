@@ -183,7 +183,6 @@ void Player::PlayerKeyinput()
 		{
 			 mState |= PLAYER_STATE_SKILL_01;
 		}
-	 	AttackKeyDownCount++;
 	}
 	else if (GetKeyDown('E'))
 	{
@@ -262,7 +261,7 @@ void Player::PlayerState_Attack()
 	//	AnimationName = "skill3";
 	//	Player_Skill_03();
 	//}
-	mAnimation->Choice(AnimationName, AnimationSpeed, false);
+	mAnimation->Choice(AnimationName, 1.5f, false);
 	mAnimation->Play();
 	AnimationSpeed = 1;
 }

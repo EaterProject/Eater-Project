@@ -1,10 +1,10 @@
 #EATERMAT
-@MaterialName mana_Material
+@ORMMap organic_mana3_ORM
 @Alpha 0
-@ORMMap organic_mana_ORM
+@MaterialName mana_Material
 @LimColor_B 0.000000
-@DiffuseMap organic_mana_BaseColor
-@NormalMap organic_mana_Normal
+@DiffuseMap organic_mana3_BaseColor
+@NormalMap organic_mana3_Normal
 @EmissiveMap 0
 @Emissive 0.000000
 @Roughness 0.000000
@@ -13,8 +13,8 @@
 @Tileing_Y 1
 @AddColor_R 0.000000
 @AddColor_G 0.000000
-@AddColor_B 0.000000
 @LimFactor 0.000000
+@AddColor_B 0.000000
 @AddColor_A 0
 @LimColor_R 0.000000
 @LimColor_G 0.000000
