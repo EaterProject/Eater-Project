@@ -131,12 +131,7 @@ ManaStone* ObjectFactory::CreateManaStone(float x, float y, float z)
 	GameObject* Object_ManaStone = Instance("ManaStone");
 	Object_ManaStone->AddComponent<MeshFilter>();
 	ManaStone* mMana = Object_ManaStone->AddComponent<ManaStone>();
-	
-
-
-
-	//mMana->MonsterList.push_back();
-
+	Object_ManaStone->GetTransform()->Position = { x,y,z };
 	return mMana;
 }
 
