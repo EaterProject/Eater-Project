@@ -1,5 +1,9 @@
-#include "SimpleMath.h"
-#include "RandomNumber.h"
+#pragma once
+//***************************************************************************************
+// 
+// Random Class ( int, float, vector2, vector3, vector4 )
+// 
+//***************************************************************************************
 
 std::default_random_engine RandomBase::g_RandomEngine;
 
@@ -55,15 +59,15 @@ void RandomVector3::Reset()
 DirectX::SimpleMath::Vector3 RandomVector3::GetRandomNumber()
 {
 	return DirectX::SimpleMath::Vector3(m_RandomGenerator_X(g_RandomEngine),
-										m_RandomGenerator_Y(g_RandomEngine),
-										m_RandomGenerator_Z(g_RandomEngine));
+		m_RandomGenerator_Y(g_RandomEngine),
+		m_RandomGenerator_Z(g_RandomEngine));
 }
 
 void RandomVector4::SetRange(DirectX::SimpleMath::Vector4 min, DirectX::SimpleMath::Vector4 max)
 {
 	Swap(min.x, max.x);
 	m_RandomGenerator_X = std::uniform_real_distribution<float>(min.x, max.x);
-	
+
 	Swap(min.y, max.y);
 	m_RandomGenerator_Y = std::uniform_real_distribution<float>(min.y, max.y);
 
@@ -85,7 +89,13 @@ void RandomVector4::Reset()
 DirectX::SimpleMath::Vector4 RandomVector4::GetRandomNumber()
 {
 	return DirectX::SimpleMath::Vector4(m_RandomGenerator_X(g_RandomEngine),
-										m_RandomGenerator_Y(g_RandomEngine),
-										m_RandomGenerator_Z(g_RandomEngine), 
-										m_RandomGenerator_W(g_RandomEngine));
+		m_RandomGenerator_Y(g_RandomEngine),
+		m_RandomGenerator_Z(g_RandomEngine),
+		m_RandomGenerator_W(g_RandomEngine));
 }
+
+//***************************************************************************************
+// 
+// Delegate Class
+// 
+//***************************************************************************************

@@ -1,5 +1,12 @@
 #pragma once
 #include <random>
+#include "SimpleMath.h"
+
+//***************************************************************************************
+// 
+// Random Class ( int, float, vector2, vector3, vector4 )
+// 
+//***************************************************************************************
 
 class RandomBase
 {
@@ -92,3 +99,13 @@ private:
 	std::uniform_real_distribution<float> m_RandomGenerator_Z;
 	std::uniform_real_distribution<float> m_RandomGenerator_W;
 };
+
+//***************************************************************************************
+// 
+// Delegate Class
+// 
+//***************************************************************************************
+
+
+
+#include "Utility.inl"
