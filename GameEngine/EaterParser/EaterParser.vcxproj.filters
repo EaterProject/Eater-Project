@@ -34,6 +34,21 @@
     <Filter Include="소스 파일\Data\Node">
       <UniqueIdentifier>{d0868268-2389-4e14-b4f9-a85b8bb8bdc9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\OutPutData\FM_VERTEX">
+      <UniqueIdentifier>{5b58b7a0-c49e-4019-878f-680d19e3bfb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\OutPutData\FM_MATERIAL">
+      <UniqueIdentifier>{e264a4a9-9c79-4694-9371-93505a5ca885}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\OutPutData\FM_DATA_INTERFACE">
+      <UniqueIdentifier>{812e9971-4d74-49d1-aa8c-7c27f5e93148}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\OutPutData\FM_ANIMATION">
+      <UniqueIdentifier>{4205e6fd-710c-4320-a3e3-461c932d107b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\OutPutData\FM_INDEX">
+      <UniqueIdentifier>{54711980-4bc9-453f-a96e-2ecc2807c623}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -42,7 +57,7 @@
     <ClInclude Include="EaterHeader.h">
       <Filter>소스 파일\EaterHeader</Filter>
     </ClInclude>
-    <ClInclude Include="EaterDLL.h">
+    <ClInclude Include="FormatDLL.h">
       <Filter>소스 파일\EaterDLL</Filter>
     </ClInclude>
     <ClInclude Include="EaterParser.h">
@@ -56,6 +71,21 @@
     </ClInclude>
     <ClInclude Include="EaterNode.h">
       <Filter>소스 파일\Data\Node</Filter>
+    </ClInclude>
+    <ClInclude Include="FM_VERTEX.h">
+      <Filter>소스 파일\OutPutData\FM_VERTEX</Filter>
+    </ClInclude>
+    <ClInclude Include="FM_INTERFACE.h">
+      <Filter>소스 파일\OutPutData\FM_DATA_INTERFACE</Filter>
+    </ClInclude>
+    <ClInclude Include="FM_ANIMATION.h">
+      <Filter>소스 파일\OutPutData\FM_ANIMATION</Filter>
+    </ClInclude>
+    <ClInclude Include="FM_INDEX.h">
+      <Filter>소스 파일\OutPutData\FM_INDEX</Filter>
+    </ClInclude>
+    <ClInclude Include="Export\FM_MATERIAL.h">
+      <Filter>소스 파일\OutPutData\FM_MATERIAL</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -73,6 +103,21 @@
     </ClCompile>
     <ClCompile Include="EaterNode.cpp">
       <Filter>소스 파일\Data\Node</Filter>
+    </ClCompile>
+    <ClCompile Include="FM_VERTEX.cpp">
+      <Filter>소스 파일\OutPutData\FM_VERTEX</Filter>
+    </ClCompile>
+    <ClCompile Include="FM_MATERIAL.cpp">
+      <Filter>소스 파일\OutPutData\FM_MATERIAL</Filter>
+    </ClCompile>
+    <ClCompile Include="FM_INTERFACE.cpp">
+      <Filter>소스 파일\OutPutData\FM_DATA_INTERFACE</Filter>
+    </ClCompile>
+    <ClCompile Include="FM_ANIMATION.cpp">
+      <Filter>소스 파일\OutPutData\FM_ANIMATION</Filter>
+    </ClCompile>
+    <ClCompile Include="FM_INDEX.cpp">
+      <Filter>소스 파일\OutPutData\FM_INDEX</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

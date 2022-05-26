@@ -134,24 +134,12 @@ void E_MaterialManager::CreateBase(std::string Filename)
 {
 	Filename += "_Material";
 	EATER_OPEN_WRITE_FILE(Filename, "../Assets/Texture/Material/", ".Emat");
-	EATER_SET_NODE("EATERMAT");
-	EATER_MATERIAL_DATA Data;
-	Data.MaterialName	= Filename;
-	Data.Alpha			= false;
-	Data.DiffuseMap		= false;
-	Data.NormalMap		= false;
-	Data.EmissiveMap	= false;
-	Data.ORMMap			= false;
-	Data.Emissive		= 0;
-	Data.Roughness		= 0;
-	Data.Metallic		= 0;
-	Data.Tileing_X		= 1;
-	Data.Tileing_Y		= 1;
-	Data.LimFactor		= 0;
-	Data.LimWidth		= 0;
-	Data.SetColor(0.0f, 0.0f, 0.0f);
-	Data.SetLimColor(0.0f, 0.0f, 0.0f);
-	EATER_SET_MATERIAL(Data);
+	FM_MATERIAL* m = GET_FORMAT_MATERIAL();
+	m->Name = "Base";
+	m->SetColor(1, 1, 1);
+	m->SetLimColor(1, 1, 1);
+	m->SetMaterial(0, 0, 0);
+	SET_SAVE_MATERIAL();
 	EATER_CLOSE_WRITE_FILE();
 }
 
