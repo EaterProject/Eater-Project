@@ -94,15 +94,26 @@ void EATER_CLOSE_CHANGE_FILE(std::string FileName, std::string OutPath, std::str
 	 Parser->SaveMaterial();
  }
 
- void SET_FORMAT_MATERIAL()
- {
-	 
-	 
- }
-
  FM_MATERIAL* GET_FORMAT_MATERIAL()
  {
+	 Parser->mMaterial_Data->ReSet();
 	 return Parser->mMaterial_Data;
+ }
+
+ FM_VERTEX* GET_FORMAT_VERTEX(FM_VERTEX_TYPE Type)
+ {
+	 Parser->mVertex_Data->Type = Type;
+	 return Parser->mVertex_Data;
+ }
+
+ FM_ANIMATION* GET_FORMAT_ANIMATION()
+ {
+	 return Parser->mAnimation_Data;
+ }
+
+ FM_INDEX* GET_FORMAT_INDEX()
+ {
+	 return  Parser->mIndex_Data;
  }
 
  //EATER_ANIMATION_DATA* EATER_GET_ANIMATION_DATA()

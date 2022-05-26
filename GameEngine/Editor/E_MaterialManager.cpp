@@ -24,66 +24,55 @@ void E_MaterialManager::ChangeEaterFile(ParserData::CModel* FBXMesh)
 
 		std::string ModelName = SaveFileName + "_" + OneMesh->m_MaterialData->m_MaterialName;
 		EATER_OPEN_WRITE_FILE(ModelName, "../Assets/Texture/Material/", ".Emat");
+		auto m = GET_FORMAT_MATERIAL();
 
-		EATER_SET_NODE("EATERMAT");
-		 
-		EATER_SET_MAP("MaterialName", ModelName);
-		EATER_SET_MAP("Alpha", std::to_string(OneMesh->m_MaterialData->m_Alpha));
+		m->Name = ModelName.c_str();
+		m->Alpha = OneMesh->m_MaterialData->m_Alpha;
 
 		if (OneMesh->m_MaterialData->m_DiffuseMap != nullptr)
 		{
-			EATER_SET_MAP("DiffuseMap", CutStr(OneMesh->m_MaterialData->m_DiffuseMap->m_BitMap));
+			m->DiffuseMap = OneMesh->m_MaterialData->m_DiffuseMap->m_BitMap.c_str();
 		}
 		else
 		{
-			EATER_SET_MAP("DiffuseMap", "0");
+			m->DiffuseMap = "0";
 		}
 
 		if (OneMesh->m_MaterialData->m_NormalMap != nullptr)
 		{
-			EATER_SET_MAP("NormalMap",  CutStr(OneMesh->m_MaterialData->m_NormalMap->m_BitMap));
+			m->NormalMap = OneMesh->m_MaterialData->m_NormalMap->m_BitMap.c_str();
 		}
 		else
 		{
-			EATER_SET_MAP("NormalMap", "0");
+			m->NormalMap = "0";
 		}
 
 		if (OneMesh->m_MaterialData->m_EmissiveMap != nullptr)
 		{
-			EATER_SET_MAP("EmissiveMap", CutStr(OneMesh->m_MaterialData->m_EmissiveMap->m_BitMap));
+			m->EmissiveMap = OneMesh->m_MaterialData->m_EmissiveMap->m_BitMap.c_str();
 		}
 		else
 		{
-			EATER_SET_MAP("EmissiveMap", "0");
+			m->EmissiveMap = "0";
 		}
 
 		if (OneMesh->m_MaterialData->m_ORMMap != nullptr)
 		{
-			EATER_SET_MAP("ORMMap", CutStr(OneMesh->m_MaterialData->m_ORMMap->m_BitMap));
+			m->ORMMap = OneMesh->m_MaterialData->m_ORMMap->m_BitMap.c_str();
 		}
 		else
 		{
-			EATER_SET_MAP("ORMMap", "0");
+			m->ORMMap = "0";
 		}
 
-		EATER_SET_MAP("Emissive", "0");
-		EATER_SET_MAP("Roughness", "0");
-		EATER_SET_MAP("Metallic", "0");
-
-		EATER_SET_MAP("Tileing_X", "1");
-		EATER_SET_MAP("Tileing_Y", "1");
-
-		EATER_SET_MAP("AddColor_R", "0");
-		EATER_SET_MAP("AddColor_G", "0");
-		EATER_SET_MAP("AddColor_B", "0");
-		EATER_SET_MAP("AddColor_A", "0");
-
-		EATER_SET_MAP("LimColor_R", "0");
-		EATER_SET_MAP("LimColor_G", "0");
-		EATER_SET_MAP("LimColor_B", "0");
-
-		EATER_SET_MAP("LimFactor", "0");
-		EATER_SET_MAP("LimWidth", "0");
+		m->SetMaterial(0, 0, 0);
+		m->Tileing_X = 1;
+		m->Tileing_Y = 1;
+		m->SetColor(0, 0, 0);
+		m->SetLimColor(0, 0, 0);
+		m->LimFactor = 0;
+		m->LimWidth = 0;
+		SET_SAVE_MATERIAL();
 
 		EATER_CLOSE_WRITE_FILE();
 
@@ -100,33 +89,22 @@ void E_MaterialManager::SetFileName(std::string& FileName)
 void E_MaterialManager::Create(InstanceMaterial* m)
 {
 	EATER_OPEN_WRITE_FILE(m->Name, "../Assets/Texture/Material/", ".Emat");
-	EATER_SET_NODE("EATERMAT");
+	auto mMaterial			=  GET_FORMAT_MATERIAL();
+	mMaterial->Name			= m->Name.c_str();
+	mMaterial->Alpha		= m->Alpha;
 
-	EATER_SET_MAP("MaterialName", m->Name);
-	EATER_SET_MAP("Alpha", std::to_string(m->Alpha));
-	EATER_SET_MAP("DiffuseMap", m->DiffuseMap);
-	EATER_SET_MAP("Nomal", m->NormalMap);
-	EATER_SET_MAP("EmissiveMap", m->EmissiveMap);
-	EATER_SET_MAP("ORMMap", m->ORMMap);
+	mMaterial->DiffuseMap	= m->DiffuseMap.c_str();
+	mMaterial->EmissiveMap	= m->EmissiveMap.c_str();
+	mMaterial->ORMMap		= m->ORMMap.c_str();
+	mMaterial->NormalMap	= m->NormalMap.c_str();
 
-	EATER_SET_MAP("Emissive", std::to_string(m->Emissive));
-	EATER_SET_MAP("Roughness", std::to_string(m->Roughness));
-	EATER_SET_MAP("Metallic", std::to_string(m->Metallic));
+	mMaterial->LimFactor	= m->LimFactor;
+	mMaterial->LimWidth		= m->LimWidth;
 
-	EATER_SET_MAP("Tileing_X", "1");
-	EATER_SET_MAP("Tileing_Y", "1");
+	mMaterial->SetColor(m->AddColorR, m->AddColorG, m->AddColorB);
+	mMaterial->SetLimColor(m->LimColorR, m->LimColorG, m->LimColorB);
+	mMaterial->SetMaterial(m->Emissive, m->Roughness, m->Metallic);
 
-	EATER_SET_MAP("AddColor_R", std::to_string(m->AddColorR));
-	EATER_SET_MAP("AddColor_G", std::to_string(m->AddColorG));
-	EATER_SET_MAP("AddColor_B", std::to_string(m->AddColorB));
-	EATER_SET_MAP("AddColor_A", std::to_string(1));
-
-	EATER_SET_MAP("LimColor_R", std::to_string(m->LimColorR));
-	EATER_SET_MAP("LimColor_G", std::to_string(m->LimColorG));
-	EATER_SET_MAP("LimColor_B", std::to_string(m->LimColorB));
-
-	EATER_SET_MAP("LimFactor", std::to_string(m->LimFactor));
-	EATER_SET_MAP("LimWidth", std::to_string(m->LimWidth));
 	EATER_CLOSE_WRITE_FILE();
 }
 
@@ -136,9 +114,6 @@ void E_MaterialManager::CreateBase(std::string Filename)
 	EATER_OPEN_WRITE_FILE(Filename, "../Assets/Texture/Material/", ".Emat");
 	FM_MATERIAL* m = GET_FORMAT_MATERIAL();
 	m->Name = "Base";
-	m->SetColor(1, 1, 1);
-	m->SetLimColor(1, 1, 1);
-	m->SetMaterial(0, 0, 0);
 	SET_SAVE_MATERIAL();
 	EATER_CLOSE_WRITE_FILE();
 }

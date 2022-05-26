@@ -54,9 +54,6 @@
     <ClInclude Include="framework.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="EaterHeader.h">
-      <Filter>소스 파일\EaterHeader</Filter>
-    </ClInclude>
     <ClInclude Include="FormatDLL.h">
       <Filter>소스 파일\EaterDLL</Filter>
     </ClInclude>
@@ -86,6 +83,9 @@
     </ClInclude>
     <ClInclude Include="Export\FM_MATERIAL.h">
       <Filter>소스 파일\OutPutData\FM_MATERIAL</Filter>
+    </ClInclude>
+    <ClInclude Include="Export\EaterHeader.h">
+      <Filter>소스 파일\EaterHeader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

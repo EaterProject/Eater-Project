@@ -2,23 +2,23 @@
 
 void FM_ANIMATION::SetLocalPos(int& x, int& y, int& z)
 {
-	Local_Pos_X = x;
-	Local_Pos_Y = y;
-	Local_Pos_Z = z;
+	Local_Pos_X = (float)x;
+	Local_Pos_Y = (float)y;
+	Local_Pos_Z = (float)z;
 }
 
 void FM_ANIMATION::SetLocalPos(int&& x, int&& y, int&& z)
 {
-	Local_Pos_X = x;
-	Local_Pos_Y = y;
-	Local_Pos_Z = z;
+	Local_Pos_X = (float)x;
+	Local_Pos_Y = (float)y;
+	Local_Pos_Z = (float)z;
 }
 
 void FM_ANIMATION::SetLocalPos(float& x, float& y, float& z)
 {
-	Local_Pos_X = (float)x;
-	Local_Pos_Y = (float)y;
-	Local_Pos_Z = (float)z;
+	Local_Pos_X = x;
+	Local_Pos_Y = y;
+	Local_Pos_Z = z;
 }
 
 void FM_ANIMATION::SetLocalPos(float&& x, float&& y, float&& z)

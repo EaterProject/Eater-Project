@@ -415,7 +415,7 @@ void EaterParser::ChangeDataSave(std::string& FileName, std::string& OutPath, st
 
 	CREATE_FILE(FileName, OutPath, FileType);
 
-	int NodeCount = mNodeList.size();
+	int NodeCount = (int)mNodeList.size();
 	for (int i = 0; i < NodeCount; i++)
 	{
 		std::string SetData = NODE_TYPE + mNodeList[i]->Name + LINE_TYPE;

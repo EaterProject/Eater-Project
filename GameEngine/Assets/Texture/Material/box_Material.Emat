@@ -10,12 +10,12 @@
 @Metallic 0.000000
 @Tileing_X 1.000000
 @Tileing_Y 1.000000
-@AddColor_R 1.000000
-@AddColor_G 1.000000
-@AddColor_B 1.000000
-@LimColor_R 1.000000
-@LimColor_G 1.000000
-@LimColor_B 1.000000
+@AddColor_R 0.000000
+@AddColor_G 0.000000
+@AddColor_B 0.000000
+@LimColor_R 0.000000
+@LimColor_G 0.000000
+@LimColor_B 0.000000
 @LimFactor 0.000000
 @LimWidth 0.000000
 &

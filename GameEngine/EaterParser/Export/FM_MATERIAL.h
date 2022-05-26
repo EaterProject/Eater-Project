@@ -6,7 +6,7 @@ public:
 	FM_MATERIAL() {};
 	~FM_MATERIAL() {};
 
-	char* Name;
+	const char* Name;
 	bool Alpha			= false;
 	const char* DiffuseMap	= "0";
 	const char* NormalMap	= "0";
@@ -44,5 +44,6 @@ public:
 	FORMAT_PARSER_DLL void SetMaterial(float&& _Emissive, float&& _Roughness, float&& _Metallic);
 	FORMAT_PARSER_DLL void SetMaterial(int& _Emissive, int& _Roughness, int& _Metallic);
 	FORMAT_PARSER_DLL void SetMaterial(int&& _Emissive, int&& _Roughness, int&& _Metallic);
+	FORMAT_PARSER_DLL void ReSet();
 };
 

@@ -118,10 +118,10 @@ void FM_VERTEX::SetBoneIndex(int& _1, int& _2, int& _3, int& _4)
 
 void FM_VERTEX::SetBoneIndex(int&& _1, int&& _2, int&& _3, int&& _4)
 {
-	BONE_INDEX[0] = (float)_1;
-	BONE_INDEX[1] = (float)_2;
-	BONE_INDEX[2] = (float)_3;
-	BONE_INDEX[3] = (float)_4;
+	BONE_INDEX[0] = _1;
+	BONE_INDEX[1] = _2;
+	BONE_INDEX[2] = _3;
+	BONE_INDEX[3] = _4;
 }
 
 void FM_VERTEX::SetBoneWeights(int& _1, int& _2, int& _3, int& _4)
@@ -134,10 +134,10 @@ void FM_VERTEX::SetBoneWeights(int& _1, int& _2, int& _3, int& _4)
 
 void FM_VERTEX::SetBoneWeights(int&& _1, int&& _2, int&& _3, int&& _4)
 {
-	BONE_WEIGHTS[0] = _1;
-	BONE_WEIGHTS[1] = _2;
-	BONE_WEIGHTS[2] = _3;
-	BONE_WEIGHTS[3] = _4;
+	BONE_WEIGHTS[0] = (float)_1;
+	BONE_WEIGHTS[1] = (float)_2;
+	BONE_WEIGHTS[2] = (float)_3;
+	BONE_WEIGHTS[3] = (float)_4;
 }
 
 void FM_VERTEX::SetBoneWeights(float& _1, float& _2, float& _3, float& _4)

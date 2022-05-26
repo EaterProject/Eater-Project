@@ -12,9 +12,6 @@ enum class FM_VERTEX_TYPE : int
 FORMAT_PARSER_DLL class FM_VERTEX
 {
 public:
-	FM_VERTEX() = default;
-	~FM_VERTEX() = default;
-
 	FM_VERTEX_TYPE Type = FM_VERTEX_TYPE::STATIC;
 	float POS_X = 0;
 	float POS_Y = 0;
