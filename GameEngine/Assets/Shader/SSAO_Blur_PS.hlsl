@@ -30,8 +30,8 @@ float4 SSAOBlur_PS(VertexIn pin) : SV_Target
     float4 color = gWeights[gBlurRadius] * gInputMap.Sample(gSamClampLinearPoint, pin.Tex);
     float totalWeight = gWeights[gBlurRadius];
 
-    //float4 centerNormalDepth = gNormalDepthRT.Sample(gSamBorderLinearPoint, pin.Tex);
-	//
+    float4 centerNormalDepth = gNormalDepthRT.Sample(gSamBorderLinearPoint, pin.Tex);
+	
     //if (dot(centerNormalDepth.xyz, centerNormalDepth.xyz) < 0.00001)
     //    return 1.0f;
 	
@@ -43,7 +43,7 @@ float4 SSAOBlur_PS(VertexIn pin) : SV_Target
 
 		float2 tex = pin.Tex + i * texOffset;
 
-        //float4 neighborNormalDepth = gNormalDepthRT.Sample(gSamBorderLinearPoint, tex);
+        float4 neighborNormalDepth = gNormalDepthRT.Sample(gSamBorderLinearPoint, tex);
 		
 		//
 		// If the center value and neighbor values differ too much (either in 
@@ -51,8 +51,8 @@ float4 SSAOBlur_PS(VertexIn pin) : SV_Target
 		// We discard such samples from the blur.
 		//
 
-        //if (dot(neighborNormalDepth.xyz, centerNormalDepth.xyz) >= 0.8f &&
-		//	abs(neighborNormalDepth.w - centerNormalDepth.w) <= 0.2f)
+        if (dot(neighborNormalDepth.xyz, centerNormalDepth.xyz) >= 0.8f &&
+			abs(neighborNormalDepth.w - centerNormalDepth.w) <= 0.2f)
 		{
 			float weight = gWeights[i + gBlurRadius];
 

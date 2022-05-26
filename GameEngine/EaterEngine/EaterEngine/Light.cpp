@@ -15,8 +15,8 @@ Light* Light::g_DirLight = nullptr;
 Light::Light()
 	:m_LightType(LIGHT_TYPE::NONE_LIGHT), m_Transform(nullptr)
 {
-	m_CenterPos = Vector3(0, 0, 0);
-	m_ShadowRadius = sqrtf(10.0f * 10.0f + 15.0f * 15.0f) * 10;
+	m_CenterPos = Vector3(0, -10, 0);
+	m_ShadowRadius = sqrtf(10.0f * 10.0f + 15.0f * 15.0f) * 4;
 }
 
 Light::~Light()
