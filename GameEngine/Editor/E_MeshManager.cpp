@@ -124,7 +124,6 @@ void E_MeshManager::SetDataName(ParserData::CMesh* mMesh)
 	{
 		EATER_SET_MAP("MaterialName", "NO");
 	}
-
 }
 
 void E_MeshManager::SetMatrix(ParserData::CMesh* mMesh)

@@ -4,6 +4,7 @@
 
 class DHSound;
 
+
 class EATERSOUND_DLL EaterSound
 {
 private:

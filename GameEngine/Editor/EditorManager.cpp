@@ -135,10 +135,21 @@ void EditorManager::CreateAssetsFile()
 void EditorManager::CreateBaseObject()
 {
 	mEater->CreateBaseObject();
+	bool isCopy = false;
+	CopyFile(_T("..\\Editor\\Export\\MeshBuffer\\Sphere_0.Emesh"), _T("..\\Assets\\Model\\MeshBuffer\\Sphere_0.Emesh"), false);
+	CopyFile(_T("..\\Editor\\Export\\MeshBuffer\\Grid_0.Emesh"), _T("..\\Assets\\Model\\MeshBuffer\\Grid_0.Emesh"), false);
+	CopyFile(_T("..\\Editor\\Export\\MeshBuffer\\Monkey_0.Emesh"), _T("..\\Assets\\Model\\MeshBuffer\\Monkey_0.Emesh"), false);
+	CopyFile(_T("..\\Editor\\Export\\MeshBuffer\\Cylinder_0.Emesh"), _T("..\\Assets\\Model\\MeshBuffer\\Cylinder_0.Emesh"), false);
 
 
+	CopyFile(_T("..\\Editor\\Export\\ModelData\\Sphere.Eater"), _T("..\\Assets\\Model\\ModelData\\Sphere.Eater"), false);
+	CopyFile(_T("..\\Editor\\Export\\ModelData\\Monkey.Eater"), _T("..\\Assets\\Model\\ModelData\\Monkey.Eater"), false);
+	CopyFile(_T("..\\Editor\\Export\\ModelData\\Grid.Eater"), _T("..\\Assets\\Model\\ModelData\\Grid.Eater"), false);
+	CopyFile(_T("..\\Editor\\Export\\ModelData\\Cylinder.Eater"), _T("..\\Assets\\Model\\ModelData\\Cylinder.Eater"), false);
 
-
-
+	CopyFile(_T("..\\Editor\\Export\\Material\\Sphere.Emat"), _T("..\\Assets\\Texture\\Material\\Sphere.Emat"), false);
+	CopyFile(_T("..\\Editor\\Export\\Material\\Monkey.Emat"), _T("..\\Assets\\Texture\\Material\\Monkey.Emat"), false);
+	CopyFile(_T("..\\Editor\\Export\\Material\\Grid.Emat"), _T("..\\Assets\\Texture\\Material\\Grid.Emat"), false);
+	CopyFile(_T("..\\Editor\\Export\\Material\\Cylinder.Emat"), _T("..\\Assets\\Texture\\Material\\Cylinder.Emat"), false);
 }
 

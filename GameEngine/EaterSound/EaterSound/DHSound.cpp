@@ -13,9 +13,16 @@ DHSound::~DHSound()
 
 void DHSound::Initialize()
 {
+	FMOD_RESULT       result;
+
 	// 시스템 생성 및 기본 세팅 ( CHANNEL_COUNT 만큼 채널 생성 )
 	FMOD::System_Create(&Sound_System);
-	Sound_System->init(CHANNEL_COUNT, FMOD_INIT_NORMAL, nullptr);
+	result = Sound_System->init(CHANNEL_COUNT, FMOD_INIT_NORMAL, NULL);
+	if (result != FMOD_OK)
+	{
+		int num = 0;
+	}
+
 	// 채널 그룹 미리 생성
 	Sound_System->createChannelGroup("SFX", &SFX_Group);
 	Sound_System->createChannelGroup("BGM", &BGM_Group);

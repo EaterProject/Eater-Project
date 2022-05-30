@@ -33,6 +33,9 @@ public:
 
 	static GameObject* Create_Box();							//Box 持失
 	static GameObject* Create_Sphere();							//Sphere 持失
+	static GameObject* Create_MonKey();							//Sphere 持失
+	static GameObject* Create_Grid();							//Sphere 持失
+	static GameObject* Create_Cylinder();						//Sphere 持失
 public:
 	///Load,Save,Delete
 	static void MeshLoad(std::string Path, UINT Option = 0);	//Object 稽球

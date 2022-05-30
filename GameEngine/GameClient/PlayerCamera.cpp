@@ -34,32 +34,55 @@ void PlayerCamera::SetUp()
 	MainCam = gameobject->GetComponent<Camera>();
 	mTransform = gameobject->GetTransform();
 
-	PastX = GetMousePosX();
-	PastY = GetMousePosY();
+	//PastX = GetMousePosX();
+	//PastY = GetMousePosY();
 	mTransform->Position = { 0, 0 ,-2 };
 
 	//MouseCursor = GetTogle(VK_F10);
-	ShowMouseCursor(MouseCursor);
-	MouseCursorClip(MouseCursor);
-	//SetMousePosCenter();
-	MainCam->ChoiceCameraAnimation("StartCam");
+	//ShowMouseCursor(MouseCursor);
+	//MouseCursorClip(MouseCursor);
+	//MainCam->ChoiceCameraAnimation("StartCam");
+	SetMousePosCenter();
+	PastX = 960;
+	PastY = 530;
+	NowX = 960;
+	NowY = 530;
 }
 
 void PlayerCamera::StartUpdate()
 {
-	if (MainCam->ChoiceCameraAnimationEnd() == false) { return; }
+	//if (MainCam->ChoiceCameraAnimationEnd() == false) { return; }
+	if (GetKeyDown(VK_ESCAPE))
+	{
+		if (MouseCursor == true)
+		{
+			MouseCursor = false;
+			ShowMouseCursor(true);
+		}
+		else
+		{
+			SetMousePosCenter();
+			MouseCursor = true;
+			ShowMouseCursor(false);
+			PastX = 960;
+			PastY = 530;
+		}
+	}
+	
+	if (MouseCursor == false) { return; }
 
 	//마우스 위치를 가져온다
 	float MosSpeed = 50;
-	NowX = -GetMousePosX();
+	
+	NowX = GetMousePosX();
 	NowY = GetMousePosY();
-	
+
 	//마우스의 이동량을 계산한다 
-	float x = (NowX - PastX);
-	float y = (NowY - PastY);
+	int x = (NowX - PastX);
+	int y = (NowY - PastY);
 	
-	X_Radian += x;
-	Y_Radian += y;
+	X_Radian += -x;
+	Y_Radian +=  y;
 	
 	if (Y_Radian >= 120) { Y_Radian = 120; }
 	if (Y_Radian <= -80) { Y_Radian = -80; }
@@ -92,18 +115,7 @@ void PlayerCamera::StartUpdate()
 	//카메라의 회전값
 	mTransform->Rotation.x = -(Y_Radian / MosControl) * 180 / 3.141592f;
 	mTransform->Rotation.y = (X_Radian / MosControl) * 180 / 3.141592f - 180.0f;
-	
-	
-	//키를 눌렀을때
-	if (GetKeyDown(VK_F10) == true)
-	{
-		MouseCursor = GetTogle(VK_F10);
-		ShowMouseCursor(MouseCursor);
-		MouseCursorClip(MouseCursor);
-	}
-	
-	//이전 프레임 마우스위치를 저장
-	PastX = NowX;
-	PastY = NowY;
+
+	SetMousePosCenter();
 }
 

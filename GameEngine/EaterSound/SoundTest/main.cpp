@@ -7,7 +7,7 @@ using namespace DirectX;
 int main()
 {
 	EaterSound* m_Sound = EaterSound::GetInstance();
-
+	
 	/// 일반 사운드 예시
 
 	// 파일경로 세팅
@@ -19,12 +19,12 @@ int main()
 	m_Sound->LoadSound(Sound_Category::SFX, "Siren", "SFX_Siren.wav", false);
 
 	// BGM 재생
-	//m_Sound->SoundPlay(Sound_Category::BGM, "Ending");
+	m_Sound->SoundPlay(Sound_Category::BGM, "Ending");
 	//m_Sound->SoundPlay(Sound_Category::SFX, "Siren");
 
 	/// 3D 사운드 예시
 
-	// 도플러 효과 설정
+	////도플러 효과 설정
 	m_Sound->Set3DDoppler(1.f, 2.f, 1.f);
 
 	// 3D 사운드 로드
@@ -56,7 +56,7 @@ int main()
 	while (true)
 	{
 		m_Sound->Update();
-
+	
 		// 포지션 감소
 		if (KeyIO::GetInstance()->Is_KeyDown_Keep('E'))
 		{
@@ -77,9 +77,9 @@ int main()
 		{
 			_Velocity_Obj.x += 0.001;
 		}
-
+	
 		printf("오브젝트 위치 : %.4f \t\t 오브젝트 속도 : %.4f\n", _Pos_Obj.x, _Velocity_Obj.x);
-
+	
 		// 소리재생 멈춤
 		if (KeyIO::GetInstance()->Is_KeyDown(VK_F1))
 		{

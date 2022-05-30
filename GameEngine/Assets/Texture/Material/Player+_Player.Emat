@@ -1,0 +1,21 @@
+#EATERMAT
+@ORMMap 0
+@Alpha 0
+@MaterialName Player+_Player
+@LimColor_B 0.000000
+@DiffuseMap 0
+@NormalMap 0
+@EmissiveMap 0
+@Emissive 0.000000
+@Roughness 0.000000
+@Metallic 0.000000
+@Tileing_X 1
+@Tileing_Y 1
+@AddColor_R 0.000000
+@AddColor_G 0.000000
+@LimFactor 0.000000
+@AddColor_B 0.000000
+@LimColor_R 0.000000
+@LimColor_G 0.000000
+@LimWidth 0.000000
+&

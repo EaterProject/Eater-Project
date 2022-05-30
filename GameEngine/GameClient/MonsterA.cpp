@@ -9,6 +9,7 @@
 #include "Player.h"
 #include "ManaStone.h"
 #include "ClientTypeOption.h"
+#include "PhysData.h"
 #include <time.h>
 
 MonsterA::MonsterA()
@@ -17,7 +18,7 @@ MonsterA::MonsterA()
 	mTransform	= nullptr;
 	mAnimation	= nullptr;
 	mColider	= nullptr;
-	mRigidbody	= nullptr;
+	mRay		= new PhysRayCast();
 }
 
 MonsterA::~MonsterA()
@@ -26,7 +27,7 @@ MonsterA::~MonsterA()
 	mTransform	= nullptr;
 	mAnimation	= nullptr;
 	mColider	= nullptr;
-	mRigidbody	= nullptr;
+	delete mRay;
 }
 
 void MonsterA::Create(ManaStone* mMana, int mCreatePointIndex)
@@ -41,7 +42,6 @@ void MonsterA::Awake()
 	mTransform	= gameobject->GetTransform();
 	mAnimation	= gameobject->GetComponent<AnimationController>();
 	mColider	= gameobject->GetComponent<Collider>();
-	mRigidbody  = gameobject->GetComponent<Rigidbody>();
 }
 void MonsterA::SetUp()
 {
@@ -49,8 +49,6 @@ void MonsterA::SetUp()
 	mColider->SetCenter(0, 0.25f, 0);
 	mColider->SetSphereCollider(0.25f);
 	mColider->SetMaterial_Restitution(0);
-	mRigidbody->SetFreezeRotation(true, true, true);
-	mRigidbody->SetGravity(true);
 	mColider->CreatePhys();
 
 	//매쉬 생성a
@@ -73,8 +71,15 @@ void MonsterA::SetUp()
 void MonsterA::Update()
 {
 	if (HP <= 0) { State = (int)MONSTER_STATE::DEAD; }
-
-
+	mRay->Direction = Vector3(0, -5, 0);
+	mRay->Origin = mTransform->Position;
+	mRay->Origin.y += 2;
+	mRay->MaxDistance = 10;
+	if (RayCast(mRay)) 
+	{
+		Pos_Y = mRay->Hit.HitPoint.y;
+	};
+	
 	switch (State)
 	{
 	case (int)MONSTER_STATE::IDLE:
@@ -118,8 +123,8 @@ void MonsterA::Move()
 	if (GetStopPoint() == false)
 	{
 		//목표지점의 도달하지 않았을때
-		mTransform->Slow_Y_Rotation(MovePoint, 100,false);
-		mRigidbody->SetVelocity(DirPoint.x, DirPoint.y, DirPoint.z);
+		mTransform->Slow_Y_Rotation(MovePoint, 100,true);
+		mTransform->SetTranlate(DirPoint.x * GetDeltaTime(), Pos_Y, DirPoint.z *GetDeltaTime());
 	}
 	else
 	{
@@ -132,7 +137,6 @@ void MonsterA::Move()
 
 void MonsterA::Attack()
 {
-	mAnimation->Choice("attack");
 
 	if (mAnimation->GetNowFrame() >= mAnimation->GetEndFrame())
 	{
@@ -141,6 +145,7 @@ void MonsterA::Attack()
 
 	if (AttackStart == false) 
 	{
+		mAnimation->Choice("attack");
 		AttackStart = true;
 	}
 }
@@ -150,7 +155,6 @@ void MonsterA::Idle()
 	if (mTransform->GetDistance(mPlayer->GetTransform()->Position) <= ChaseRange)
 	{
 		State = (int)MONSTER_STATE::CHASE;
-		mAnimation->Choice("move");
 		return;
 	}
 
@@ -192,9 +196,17 @@ void MonsterA::Dead()
 void MonsterA::Chase()
 {
 	mAnimation->Choice("move");
-	ChaseTime += GetDeltaTime();
+
+	//공격 거리에 들어오면 공격을 한다
+	if (mTransform->GetDistance(mPlayer->GetTransform()->Position) <= AttackRange)
+	{
+		mTransform->SetTranlate(0,0,0);
+		State = (int)MONSTER_STATE::ATTACK;
+		return;
+	}
 
 	//추격시간이 길어지면 원래있던 위치로 돌아간다
+	ChaseTime += GetDeltaTime();
 	if (ChaseTime >= ChaseEndTime)
 	{
 		ChaseTime -= ChaseEndTime;
@@ -205,14 +217,7 @@ void MonsterA::Chase()
 		Speed = ChaseSpeed;
 		SetMovePoint(mPlayerTR->Position.x, mPlayerTR->Position.y, mPlayerTR->Position.z);
 		mTransform->Slow_Y_Rotation(MovePoint, 100, false);
-		mRigidbody->SetVelocity(DirPoint.x, DirPoint.y, DirPoint.z);
-	}
-
-	//공격 거리에 들어오면 공격을 한다
-	if (mTransform->GetDistance(mPlayer->GetTransform()->Position) <= AttackRange)
-	{
-		mRigidbody->SetVelocity(0,0,0);
-		State = (int)MONSTER_STATE::ATTACK;
+		mTransform->SetTranlate(DirPoint.x * GetDeltaTime() , Pos_Y, DirPoint.z * GetDeltaTime());
 	}
 }
 

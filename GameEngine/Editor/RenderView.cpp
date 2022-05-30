@@ -70,6 +70,57 @@ void RenderView::Update()
 		WindowFocus(false);
 	}
 
+	//if (GetKeyDown(VK_RBUTTON))
+	//{
+	//	POINT p1, p2;
+	//	RECT rc;
+	//	GetClientRect(&rc);
+	//	p1.x = rc.left;
+	//	p1.y = rc.top;
+	//	p2.x = rc.right;
+	//	p2.y = rc.bottom;
+	//
+	//	ClientToScreen(&p1);
+	//	ClientToScreen(&p2);
+	//
+	//	rc.left = p1.x;
+	//	rc.top = p1.y;
+	//	rc.right = p2.x;
+	//	rc.bottom = p2.y;
+	//	ClipCursor(&rc);
+	//}
+	//
+	//if (GetKey(VK_RBUTTON))
+	//{
+	//	//중심 좌표를 이동시킨다
+	//
+	//	int X = MousePosX - GetMousePosX();
+	//	int Y = MousePosY - GetMousePosY();
+	//
+	//	if (X == 0)
+	//	{
+	//		//DebugPrint("X축 가만히");
+	//	}
+	//	else
+	//	{
+	//		DebugPrint("%d || %d", X, Y);
+	//		MousePosX = 300;
+	//		MousePosY = 300;
+	//		SetCursorPos(300, 300);
+	//	}
+	//}
+	//
+	//if (GetKeyUp(VK_RBUTTON))
+	//{
+	//	ClipCursor(nullptr);
+	//}
+
+	//POINT p;
+	//GetCursorPos(&p);
+
+
+	//DebugPrint("%d || %d", GetMousePosX(), GetMousePosY());
+
 	UpdateEngine();
 }
 
@@ -121,9 +172,13 @@ BOOL RenderView::PreTranslateMessage(MSG* pMsg)
 		}
 	}
 	break;
-	default:
-		break;
-	}
 
+	case VK_RBUTTON:
+	{
+		
+	}
+	break;
+	}
+	//ShowCursor(true);
 	return CView::PreTranslateMessage(pMsg);
 }

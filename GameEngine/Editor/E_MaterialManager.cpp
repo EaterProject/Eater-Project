@@ -64,7 +64,8 @@ void E_MaterialManager::ChangeEaterFile(ParserData::CModel* FBXMesh)
 		{
 			m->ORMMap = "0";
 		}
-
+		
+		
 		m->SetMaterial(0, 0, 0);
 		m->Tileing_X = 1;
 		m->Tileing_Y = 1;

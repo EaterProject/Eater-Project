@@ -106,7 +106,6 @@ MonsterA* ObjectFactory::CreateMonsterA(float x, float y, float z)
 	Object_Monster->AddComponent<MeshFilter>();
 	Object_Monster->AddComponent<AnimationController>();
 	Object_Monster->AddComponent<Collider>();
-	Object_Monster->AddComponent<Rigidbody>();
 
 	MonsterA* monster = Object_Monster->AddComponent<MonsterA>();
 	Object_Monster->GetTransform()->Position = { x,y,z };
@@ -119,7 +118,6 @@ MonsterB* ObjectFactory::CreateMonsterB(float x, float y, float z)
 	Object_Monster->AddComponent<MeshFilter>();
 	Object_Monster->AddComponent<AnimationController>();
 	Object_Monster->AddComponent<Collider>();
-	Object_Monster->AddComponent<Rigidbody>();
 	MonsterB* monster = Object_Monster->AddComponent<MonsterB>();
 	Object_Monster->SetTag(FindTagNumber("Monster"));
 	Object_Monster->GetTransform()->Position = { x,y,z };

@@ -143,7 +143,7 @@ void ManaStone::CreateMonsterA(int index)
 {
 	///몬스터 A를 생성
 	Vector3 Poistion = (MonsterMovePoint[index] * 10) + mTransform->Position ;
-	MonsterA* Monster = ObjectFactory::CreateMonsterA(Poistion.x, Poistion.y + 0.5f, Poistion.z);
+	MonsterA* Monster = ObjectFactory::CreateMonsterA(Poistion.x, mTransform->Position.y, Poistion.z);
 	Monster->Create(this, index);
 	MonsterA_List.push_back(Monster);
 }
@@ -152,7 +152,7 @@ void ManaStone::CreateMonsterB(int index)
 {
 	///몬스터 B를 생성
 	Vector3 Poistion = (MonsterMovePoint[index] * 10) + mTransform->Position;
-	MonsterB* Monster = ObjectFactory::CreateMonsterB(Poistion.x, Poistion.y+0.5f, Poistion.z);
+	MonsterB* Monster = ObjectFactory::CreateMonsterB(Poistion.x, Poistion.y, Poistion.z);
 	Monster->Create(this, index);
 	MonsterB_List.push_back(Monster);
 }

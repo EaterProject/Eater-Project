@@ -85,4 +85,11 @@ public:
 	CSliderCtrl LimLight_Width;
 	CEdit LimLight_Factor_Edit;
 	CEdit LimLight_Width_Edit;
+	CImageList ImgList_Folder;
+	afx_msg void OnAddColorCustom();
+	afx_msg void OnLimColorCustom();
+	afx_msg void OnBnClickedButton24();
+	afx_msg void OnBnClickedButton29();
+	afx_msg void OnBnClickedButton30();
+	afx_msg void OnBnClickedButton31();
 };

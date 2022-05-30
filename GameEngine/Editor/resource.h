@@ -103,10 +103,13 @@
 #define IDC_BUTTON24                    1028
 #define IDC_MFCSHELLLIST3               1029
 #define IDC_EDIT31                      1029
+#define IDC_BUTTON29                    1029
 #define IDC_LIST1                       1030
 #define IDC_EDIT32                      1030
+#define IDC_BUTTON30                    1030
 #define IDC_EDIT33                      1031
 #define IDC_BUTTON28                    1031
+#define IDC_BUTTON31                    1031
 #define IDC_EDIT34                      1032
 #define IDC_EDIT35                      1033
 #define IDC_COMBO1                      1034
@@ -200,14 +203,17 @@
 #define ID_32785                        32785
 #define ID_32786                        32786
 #define ID_32787                        32787
+#define ID_GAMEOBJECT_MONKEY            32788
+#define ID_GAMEOBJECT_CYLINDER          32789
+#define ID_GAMEOBJECT_GRID              32790
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        366
-#define _APS_NEXT_COMMAND_VALUE         32788
-#define _APS_NEXT_CONTROL_VALUE         1061
+#define _APS_NEXT_RESOURCE_VALUE        367
+#define _APS_NEXT_COMMAND_VALUE         32791
+#define _APS_NEXT_CONTROL_VALUE         1075
 #define _APS_NEXT_SYMED_VALUE           312
 #endif
 #endif

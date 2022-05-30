@@ -50,6 +50,9 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 	ON_COMMAND(ID_32783, &CMainFrame::SceneSaveFile)
 	ON_COMMAND(ID_32786, &CMainFrame::OnCreateBuildFile)
 	ON_COMMAND(ID_32787, &CMainFrame::OnSkySetting)
+	ON_COMMAND(ID_GAMEOBJECT_CYLINDER, &CMainFrame::OnGameobjectCylinder)
+	ON_COMMAND(ID_GAMEOBJECT_GRID, &CMainFrame::OnGameobjectGrid)
+	ON_COMMAND(ID_GAMEOBJECT_MONKEY, &CMainFrame::OnGameobjectMonkey)
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -326,8 +329,6 @@ void CMainFrame::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 	if (rect.left <= point.x && rect.right >= point.x &&
 		rect.top <= point.y && rect.bottom >= point.y)
 	{
-
-
 		CMenu popup;
 		CMenu* pMenu;
 		popup.LoadMenuW(IDR_CREATE_OBJECT);
@@ -399,7 +400,13 @@ void CMainFrame::OnGameobjectPoint()
 
 void CMainFrame::OnGameobjectSphere()
 {
-	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	RightOption* mRightOption = DialogFactory::GetFactory()->GetRightOption();
+	GameObject* Object = EditorToolScene::Create_Sphere();
+	CString Data;
+	Data = Object->Name.c_str();
+	HTREEITEM Top = mRightOption->HirearchyTree.InsertItem(Data);
+
+	mRightOption->Create_Hirearchy_Item(Object, Top);
 }
 
 
@@ -412,7 +419,6 @@ void CMainFrame::OnGameobjectBox()
 	HTREEITEM Top = mRightOption->HirearchyTree.InsertItem(Data);
 
 	mRightOption->Create_Hirearchy_Item(Object, Top);
-
 }
 
 
@@ -545,4 +551,40 @@ void CMainFrame::OnSkySetting()
 {
 	SkySetting* mSky = DialogFactory::GetFactory()->GetSkySetting();
 	mSky->ShowWindow(SW_SHOW);
+}
+
+
+void CMainFrame::OnGameobjectCylinder()
+{
+	RightOption* mRightOption = DialogFactory::GetFactory()->GetRightOption();
+	GameObject* Object = EditorToolScene::Create_Cylinder();
+	CString Data;
+	Data = Object->Name.c_str();
+	HTREEITEM Top = mRightOption->HirearchyTree.InsertItem(Data);
+
+	mRightOption->Create_Hirearchy_Item(Object, Top);
+}
+
+
+void CMainFrame::OnGameobjectGrid()
+{
+	RightOption* mRightOption = DialogFactory::GetFactory()->GetRightOption();
+	GameObject* Object = EditorToolScene::Create_Grid();
+	CString Data;
+	Data = Object->Name.c_str();
+	HTREEITEM Top = mRightOption->HirearchyTree.InsertItem(Data);
+
+	mRightOption->Create_Hirearchy_Item(Object, Top);
+}
+
+
+void CMainFrame::OnGameobjectMonkey()
+{
+	RightOption* mRightOption = DialogFactory::GetFactory()->GetRightOption();
+	GameObject* Object = EditorToolScene::Create_MonKey();
+	CString Data;
+	Data = Object->Name.c_str();
+	HTREEITEM Top = mRightOption->HirearchyTree.InsertItem(Data);
+
+	mRightOption->Create_Hirearchy_Item(Object, Top);
 }
