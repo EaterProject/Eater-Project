@@ -55,7 +55,10 @@ public:
 
 	GETTER(RightOption,		mRightOption_Dlog);
 	GETTER(AssetsDialog,	mAssets_Dlog);
-	GETTER(EditorManager,   mEditorManager)
+	GETTER(EditorManager,	mEditorManager);
+
+	GETTER(CColorDialog,	mColor);
+	GETTER(CFileDialog,		mFile);
 
 	///SET
 	SETTER(RightOption, mRightOption_Dlog);
@@ -75,6 +78,8 @@ private:
 	LoadTerrain*		mLoadTerrain;
 	LoadNavMesh*		mLoadNavMesh;
 	SkySetting*			mSkySetting;
+	CColorDialog*		mColor;
+	CFileDialog*		mFile;
 private:
 	//알아서 생성되는 다이얼로그
 	RightOption*	mRightOption_Dlog;	//View의 오른쪽 모든 정보들을 담당하는 다이얼 로그

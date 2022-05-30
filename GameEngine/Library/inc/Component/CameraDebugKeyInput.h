@@ -14,11 +14,15 @@ public:
 	virtual void Awake();
 private:
 	Transform* mTransform;
+	float mStartMousePosX;
+	float mStartMousePosY;
+
 	float mLastMousePosX;
 	float mLastMousePosY;
 	Camera* Cam;
 
 	float speed				= 10;
 	const float MaxSpeed	= 50;
+	int Count = 0;
 };
 

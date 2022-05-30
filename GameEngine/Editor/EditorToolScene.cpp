@@ -140,7 +140,46 @@ GameObject* EditorToolScene::Create_Box()
 
 GameObject* EditorToolScene::Create_Sphere()
 {
-	return nullptr;
+	GameObject* box = Instance("Sphere");
+	MeshFilter* mMeshFileter = box->AddComponent<MeshFilter>();
+	mMeshFileter->SetMeshName("Sphere_0");
+	mMeshFileter->SetModelName("Sphere");
+	box->Name = FindMeshName("Sphere");
+	ObjectList.insert({ box->Name,box });
+	return box;
+}
+
+GameObject* EditorToolScene::Create_MonKey()
+{
+	GameObject* box = Instance("Monkey");
+	MeshFilter* mMeshFileter = box->AddComponent<MeshFilter>();
+	mMeshFileter->SetMeshName("Monkey_0");
+	mMeshFileter->SetModelName("Monkey");
+	box->Name = FindMeshName("Monkey");
+	ObjectList.insert({ box->Name,box });
+	return box;
+}
+
+GameObject* EditorToolScene::Create_Grid()
+{
+	GameObject* box = Instance("Grid");
+	MeshFilter* mMeshFileter = box->AddComponent<MeshFilter>();
+	mMeshFileter->SetMeshName("Grid_0");
+	mMeshFileter->SetModelName("Grid");
+	box->Name = FindMeshName("Grid");
+	ObjectList.insert({ box->Name,box });
+	return box;
+}
+
+GameObject* EditorToolScene::Create_Cylinder()
+{
+	GameObject* box = Instance("Cylinder");
+	MeshFilter* mMeshFileter = box->AddComponent<MeshFilter>();
+	mMeshFileter->SetMeshName("Cylinder_0");
+	mMeshFileter->SetModelName("Cylinder");
+	box->Name = FindMeshName("Cylinder");
+	ObjectList.insert({ box->Name,box });
+	return box;
 }
 
 GameObject* EditorToolScene::CreateBaseObject(std::string ObjectName, std::string MeshName)

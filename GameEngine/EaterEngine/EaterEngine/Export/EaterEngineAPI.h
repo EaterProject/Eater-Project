@@ -78,8 +78,8 @@ extern "C" EATER_ENGINEDLL bool  GetKeyDown(byte number);		//키다운
 extern "C" EATER_ENGINEDLL bool  GetKeyUp(byte number);			//키업
 extern "C" EATER_ENGINEDLL bool  GetKey(byte number);			//키누르고있을때
 extern "C" EATER_ENGINEDLL bool  GetTogle(byte number);			//키 토글
-extern "C" EATER_ENGINEDLL float GetMousePosX();				//마우스 위치 X
-extern "C" EATER_ENGINEDLL float GetMousePosY();				//마우스 위치 Y
+extern "C" EATER_ENGINEDLL int GetMousePosX();				//마우스 위치 X
+extern "C" EATER_ENGINEDLL int GetMousePosY();				//마우스 위치 Y
 extern "C" EATER_ENGINEDLL void  SetMousePos(float x,float y);	//마우스 위치 Y
 extern "C" EATER_ENGINEDLL void  SetMousePosCenter();			//마우스 위치 Y
 extern "C" EATER_ENGINEDLL void ShowMouseCursor(bool Cursor);	//마우스 커서 보이기여부

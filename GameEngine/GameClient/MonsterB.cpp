@@ -16,7 +16,6 @@ MonsterB::MonsterB()
 	mTransform		= nullptr;
 	mAnimation		= nullptr;
 	mColider		= nullptr;
-	mRigidbody		= nullptr;
 }
 
 MonsterB::~MonsterB()
@@ -25,7 +24,6 @@ MonsterB::~MonsterB()
 	mTransform		= nullptr;
 	mAnimation		= nullptr;
 	mColider		= nullptr;
-	mRigidbody		= nullptr;
 }
 
 void MonsterB::Create(ManaStone* mMana, int mCreatePointIndex)
@@ -40,7 +38,6 @@ void MonsterB::Awake()
 	mTransform = gameobject->GetTransform();
 	mAnimation = gameobject->GetComponent<AnimationController>();
 	mColider = gameobject->GetComponent<Collider>();
-	mRigidbody = gameobject->GetComponent<Rigidbody>();
 }
 void MonsterB::SetUp()
 {
@@ -48,8 +45,6 @@ void MonsterB::SetUp()
 	mColider->SetCenter(0, 0.25, 0);
 	mColider->SetSphereCollider(0.25f);
 	mColider->SetMaterial_Restitution(0);
-	mRigidbody->SetFreezeRotation(true, true, true);
-	mRigidbody->SetGravity(true);
 	mColider->CreatePhys();
 
 	//매쉬 생성
@@ -95,7 +90,7 @@ void MonsterB::Move()
 	{
 		//목표지점의 도달하지 않았을때
 		mTransform->Slow_Y_Rotation(MovePoint, 100, false);
-		mRigidbody->SetVelocity(DirPoint.x, DirPoint.y, DirPoint.z);
+		mTransform->SetTranlate(DirPoint.x, DirPoint.y, DirPoint.z);
 	}
 	else
 	{

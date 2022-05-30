@@ -4,22 +4,27 @@
 #include "EaterList.h"
 #include <stdio.h>
 
+#include "FM_ANIMATION.h"
+#include "FM_INDEX.h"
+#include "FM_VERTEX.h"
+#include "FM_MATERIAL.h"
+
 #define _CRT_SECURE_NO_WARNINGS
 
 EaterParser::EaterParser()
 {
-	mAnimation_Data		= new EATER_ANIMATION_DATA();
-	mMaterial_Data		= new EATER_MATERIAL_DATA();
-	mVertex_Skin_Data	= new EATER_VERTEX_SKIN();
-	mVertex_Base_Data	= new EATER_VERTEX_BASE();
+	mIndex_Data			= new FM_INDEX();
+	mMaterial_Data		= new FM_MATERIAL();
+	mVertex_Data		= new FM_VERTEX();
+	mAnimation_Data		= new FM_ANIMATION();
 }
 
 EaterParser::~EaterParser()
 {
 	delete mAnimation_Data;
 	delete mMaterial_Data;
-	delete mVertex_Skin_Data;
-	delete mVertex_Base_Data;
+	delete mVertex_Data;
+	delete mIndex_Data;
 }
 
 void EaterParser::OPEN_FILE(std::string& Path)
@@ -318,6 +323,32 @@ void EaterParser::SetIndex(int& x, int& y, int& z)
 	fputs(SetData.c_str(), WriteFile);
 }
 
+void EaterParser::SaveMaterial()
+{
+	std::string SetData = "";
+	SetData += NODE_TYPE + std::string("EATERMAT") + LINE_TYPE;
+	SetData += MAP_TYPE + std::string("MaterialName") + SP_TYPE + mMaterial_Data->Name + LINE_TYPE;
+	SetData += MAP_TYPE + std::string("Alpha") + SP_TYPE + std::to_string(mMaterial_Data->Alpha) + LINE_TYPE;
+	SetData += MAP_TYPE + std::string("DiffuseMap") + SP_TYPE + mMaterial_Data->DiffuseMap + LINE_TYPE;
+	SetData += MAP_TYPE + std::string("NormalMap") + SP_TYPE + mMaterial_Data->NormalMap + LINE_TYPE;
+	SetData += MAP_TYPE + std::string("EmissiveMap") + SP_TYPE + mMaterial_Data->EmissiveMap + LINE_TYPE;
+	SetData += MAP_TYPE + std::string("ORMMap") + SP_TYPE + mMaterial_Data->ORMMap + LINE_TYPE;
+	SetData += MAP_TYPE + std::string("Emissive") + SP_TYPE + std::to_string(mMaterial_Data->Emissive) + LINE_TYPE;
+	SetData += MAP_TYPE + std::string("Roughness") + SP_TYPE + std::to_string(mMaterial_Data->Roughness) + LINE_TYPE;
+	SetData += MAP_TYPE + std::string("Metallic") + SP_TYPE + std::to_string(mMaterial_Data->Metallic) + LINE_TYPE;
+	SetData += MAP_TYPE + std::string("Tileing_X") + SP_TYPE + std::to_string(mMaterial_Data->Tileing_X) + LINE_TYPE;
+	SetData += MAP_TYPE + std::string("Tileing_Y") + SP_TYPE + std::to_string(mMaterial_Data->Tileing_Y) + LINE_TYPE;
+	SetData += MAP_TYPE + std::string("AddColor_R") + SP_TYPE + std::to_string(mMaterial_Data->AddColor_R) + LINE_TYPE;
+	SetData += MAP_TYPE + std::string("AddColor_G") + SP_TYPE + std::to_string(mMaterial_Data->AddColor_G) + LINE_TYPE;
+	SetData += MAP_TYPE + std::string("AddColor_B") + SP_TYPE + std::to_string(mMaterial_Data->AddColor_B) + LINE_TYPE;
+	SetData += MAP_TYPE + std::string("LimColor_R") + SP_TYPE + std::to_string(mMaterial_Data->LimColor_R) + LINE_TYPE;
+	SetData += MAP_TYPE + std::string("LimColor_G") + SP_TYPE + std::to_string(mMaterial_Data->LimColor_G) + LINE_TYPE;
+	SetData += MAP_TYPE + std::string("LimColor_B") + SP_TYPE + std::to_string(mMaterial_Data->LimColor_B) + LINE_TYPE;
+	SetData += MAP_TYPE + std::string("LimFactor") + SP_TYPE + std::to_string(mMaterial_Data->LimFactor) + LINE_TYPE;
+	SetData += MAP_TYPE + std::string("LimWidth") + SP_TYPE + std::to_string(mMaterial_Data->LimWidth) + LINE_TYPE;
+	fputs(SetData.c_str(), WriteFile);
+}
+
 int EaterParser::GetNodeCount()
 {
 	return (int)mNodeList.size();
@@ -384,7 +415,7 @@ void EaterParser::ChangeDataSave(std::string& FileName, std::string& OutPath, st
 
 	CREATE_FILE(FileName, OutPath, FileType);
 
-	int NodeCount = mNodeList.size();
+	int NodeCount = (int)mNodeList.size();
 	for (int i = 0; i < NodeCount; i++)
 	{
 		std::string SetData = NODE_TYPE + mNodeList[i]->Name + LINE_TYPE;

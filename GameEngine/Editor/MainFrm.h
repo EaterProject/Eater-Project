@@ -79,6 +79,9 @@ public:
 	afx_msg void SceneSaveFile();
 	afx_msg void OnCreateBuildFile();
 	afx_msg void OnSkySetting();
+	afx_msg void OnGameobjectCylinder();
+	afx_msg void OnGameobjectGrid();
+	afx_msg void OnGameobjectMonkey();
 };
 
 

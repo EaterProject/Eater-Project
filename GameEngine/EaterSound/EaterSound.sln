@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EaterSound", "EaterSound\EaterSound.vcxproj", "{951BDDB6-3E4D-455E-949B-0D06DE1376C2}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SoundTest", "SoundTest\SoundTest.vcxproj", "{D4857B59-678C-419B-88B0-FE513E8F5518}"
+	ProjectSection(ProjectDependencies) = postProject
+		{951BDDB6-3E4D-455E-949B-0D06DE1376C2} = {951BDDB6-3E4D-455E-949B-0D06DE1376C2}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

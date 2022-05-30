@@ -389,6 +389,7 @@ void RightOption::OnChoice_Hirearchy_Item(GameObject* Obj)
 	//컨퍼넌트를 초기화
 	Component_TapList.DeleteAllItems();
 
+	ChoiceObject = Obj;
 	//만약자식오브젝트를 눌렀다면 맨위 최상위부모를 가져온다
 	//ChoiceObject = FindGameObjectParent(ChoiceItem);
 
