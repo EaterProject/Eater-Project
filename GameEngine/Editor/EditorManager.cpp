@@ -109,6 +109,7 @@ void EditorManager::CreateAssetsFile()
 	std::filesystem::create_directory("../Assets/Model");
 	std::filesystem::create_directory("../Assets/Scene");
 	std::filesystem::create_directory("../Assets/Texture");
+	std::filesystem::create_directory("../Assets/Sound");
 
 	//Model 폴더 생성
 	std::filesystem::create_directory("../Assets/Model/Animation");
