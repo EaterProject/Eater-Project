@@ -43,7 +43,7 @@ float3 ApplyFog(float3 originalColor, float3 toEye, float noise)
     
 	// 높이 기반 안개 강도 설정..
     float heightValue = (pixelHeight * gFogHeightValue) - 0.1f;
-    float fogHeightFactor = pow(pow(2.0f, -heightValue), heightValue) * (1.0f - distanceOffset);
+    float fogHeightFactor = pow(2.0f, -(heightValue * heightValue * 0.1f)) * (1.0f - distanceOffset);
 
 	// 두 요소를 결합한 최종 요소..
     float fogFinalFactor = min(min(fogDistanceFactor * fogHeightFactor * noise, 1.0f) + min(distanceOffset * heightOffset, 1.0f) + 0.01f, 1.0f);
