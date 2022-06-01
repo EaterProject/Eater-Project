@@ -12,6 +12,7 @@
 #include "NetworkManager.h"
 #include "GlobalDataManager.h"
 #include "NavigationManager.h"
+#include "EaterSound.h"
 
 #include "ParserData.h"
 #include "EngineData.h"
@@ -49,6 +50,7 @@ GameEngine::GameEngine()
 	mTimeManager = nullptr;
 	mGraphicManager = nullptr;
 	mNetworkManager = nullptr;
+	mSoundManager = nullptr;
 	
 
 	//기본 윈도우 사이즈 설정
@@ -78,6 +80,7 @@ GameEngine::~GameEngine()
 	mTimeManager = nullptr;
 	mGraphicManager = nullptr;
 	mNetworkManager = nullptr;
+	mSoundManager = nullptr;
 }
 
 ///게임 엔진 관련
@@ -95,6 +98,7 @@ void GameEngine::Initialize(HWND Hwnd, bool mConsoleDebug)
 	mTimeManager		= new TimeManager();
 	mLightManager		= new LightManager();
 	mPhysManager		= new PhysManager();
+	mSoundManager		= EaterSound::GetInstance();
 	//mNavigationManager	= new NavigationManager();
 	//mNetworkManager		= new NetworkManager();
 
@@ -107,6 +111,7 @@ void GameEngine::Initialize(HWND Hwnd, bool mConsoleDebug)
 	mLoadManager->Initialize(mGraphicManager, &g_CS);
 	mTimeManager->Initialize();
 	mPhysManager->Initialize();
+
 	//mNavigationManager->Initialize();
 	//mNetworkManager->Initialize();
 
