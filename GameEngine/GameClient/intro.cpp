@@ -52,7 +52,7 @@ void intro::End()
 void intro::CreateTerrain()
 {
 	///ÅÍ·¹ÀÎ
-	testobj = InstanceTerrain("Terrain");
+	testobj = Instance_Terrain("Terrain");
 	Terrain* mTerrain = testobj->GetComponent<Terrain>();
 	mTerrain->SetLayerName("terrain_ground_A_BaseColor", "terrain_ground_A_Normal", "terrain_ground_A_ORM");
 	mTerrain->SetLayerName("terrain_ground_B_BaseColor", "terrain_ground_B_Normal", "terrain_ground_B_ORM");

@@ -54,7 +54,7 @@ GameObject* ObjectFactory::CreatePlayer()
 {
 	//플레이어와 카메라 오브젝트를 생성
 	GameObject* PlayerObject		= Instance();
-	GameObject* PlayerMainCamera	= InstanceCamera("Camera");
+	GameObject* PlayerMainCamera	= Instance_Camera("Camera");
 	GameObject* PlayerCollider		= Instance();
 	GameObject* PlayerWeapon		= Instance();
 	GameObject* DroneObject			= Instance();

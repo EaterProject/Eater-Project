@@ -1,7 +1,7 @@
 #pragma once
 
 #include "FormatDLL.h"
-FORMAT_PARSER_DLL class FM_INDEX
+class FORMAT_PARSER_DLL FM_INDEX
 {
 public:
 

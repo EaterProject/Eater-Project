@@ -69,23 +69,23 @@
     <ClInclude Include="EaterNode.h">
       <Filter>소스 파일\Data\Node</Filter>
     </ClInclude>
-    <ClInclude Include="FM_VERTEX.h">
-      <Filter>소스 파일\OutPutData\FM_VERTEX</Filter>
-    </ClInclude>
-    <ClInclude Include="FM_INTERFACE.h">
-      <Filter>소스 파일\OutPutData\FM_DATA_INTERFACE</Filter>
-    </ClInclude>
-    <ClInclude Include="FM_ANIMATION.h">
-      <Filter>소스 파일\OutPutData\FM_ANIMATION</Filter>
-    </ClInclude>
-    <ClInclude Include="FM_INDEX.h">
-      <Filter>소스 파일\OutPutData\FM_INDEX</Filter>
-    </ClInclude>
     <ClInclude Include="Export\FM_MATERIAL.h">
       <Filter>소스 파일\OutPutData\FM_MATERIAL</Filter>
     </ClInclude>
     <ClInclude Include="Export\EaterHeader.h">
       <Filter>소스 파일\EaterHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="Export\FM_INDEX.h">
+      <Filter>소스 파일\OutPutData\FM_INDEX</Filter>
+    </ClInclude>
+    <ClInclude Include="Export\FM_INTERFACE.h">
+      <Filter>소스 파일\OutPutData\FM_DATA_INTERFACE</Filter>
+    </ClInclude>
+    <ClInclude Include="Export\FM_VERTEX.h">
+      <Filter>소스 파일\OutPutData\FM_VERTEX</Filter>
+    </ClInclude>
+    <ClInclude Include="Export\FM_ANIMATION.h">
+      <Filter>소스 파일\OutPutData\FM_ANIMATION</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

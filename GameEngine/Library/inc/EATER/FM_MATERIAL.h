@@ -1,6 +1,6 @@
 #pragma once
 #include "FormatDLL.h"
-FORMAT_PARSER_DLL class FM_MATERIAL
+class FORMAT_PARSER_DLL FM_MATERIAL
 {
 public:
 	FM_MATERIAL() {};
@@ -32,18 +32,18 @@ public:
 	float LimWidth		= 0;
 
 
-	FORMAT_PARSER_DLL void SetColor(float& R, float& G, float& B);
-	FORMAT_PARSER_DLL void SetColor(float&& R, float&& G, float&& B);
-	FORMAT_PARSER_DLL void SetColor(int& R, int& G, int& B);
-	FORMAT_PARSER_DLL void SetColor(int&& R, int&& G, int&& B);
-	FORMAT_PARSER_DLL void SetLimColor(float& R, float& G, float& B);
-	FORMAT_PARSER_DLL void SetLimColor(float&& R, float&& G, float&& B);
-	FORMAT_PARSER_DLL void SetLimColor(int& R, int& G, int& B);
-	FORMAT_PARSER_DLL void SetLimColor(int&& R, int&& G, int&& B);
-	FORMAT_PARSER_DLL void SetMaterial(float& _Emissive, float& _Roughness, float& _Metallic);
-	FORMAT_PARSER_DLL void SetMaterial(float&& _Emissive, float&& _Roughness, float&& _Metallic);
-	FORMAT_PARSER_DLL void SetMaterial(int& _Emissive, int& _Roughness, int& _Metallic);
-	FORMAT_PARSER_DLL void SetMaterial(int&& _Emissive, int&& _Roughness, int&& _Metallic);
-	FORMAT_PARSER_DLL void ReSet();
+	void SetColor(float& R, float& G, float& B);
+	void SetColor(float&& R, float&& G, float&& B);
+	void SetColor(int& R, int& G, int& B);
+	void SetColor(int&& R, int&& G, int&& B);
+	void SetLimColor(float& R, float& G, float& B);
+	void SetLimColor(float&& R, float&& G, float&& B);
+	void SetLimColor(int& R, int& G, int& B);
+	void SetLimColor(int&& R, int&& G, int&& B);
+	void SetMaterial(float& _Emissive, float& _Roughness, float& _Metallic);
+	void SetMaterial(float&& _Emissive, float&& _Roughness, float&& _Metallic);
+	void SetMaterial(int& _Emissive, int& _Roughness, int& _Metallic);
+	void SetMaterial(int&& _Emissive, int&& _Roughness, int&& _Metallic);
+	void ReSet();
 };
 

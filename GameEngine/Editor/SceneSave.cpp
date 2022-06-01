@@ -154,6 +154,8 @@ void SceneSave::SceneOption()
 	EATER_SET_LIST(mOption->BLOOM_Threshold_Max);
 	EATER_SET_LIST(mOption->BLOOM_Factor);
 	EATER_SET_LIST(mOption->SkyLight_Factor,true);
+
+	EATER_SET_LIST_START("OPTION", 1, 17);
 }
 
 void SceneSave::SaveTransform(Transform* mTransform)
@@ -209,6 +211,8 @@ void SceneSave::SaveLight(Light* mLight)
 {
 	EATER_SET_LIST_START("Light", 1, 8);
 	LIGHT_TYPE mtype = mLight->GetType();
+	
+
 	switch (mtype)
 	{
 	case NONE_LIGHT:

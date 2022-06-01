@@ -362,6 +362,8 @@ void Eater_LoadScene::Load_Component_MeshFilter(int index, GameObject* Object)
 
 	if (mMeshFilter->m_Material != nullptr)
 	{
+		mMeshFilter->m_Material;
+
 		MaterialProperty* MP = mMeshFilter->m_Material->m_MaterialData->Material_Property;
 		MP->EmissiveFactor = std::stof(Data[3]);
 		MP->MetallicFactor = std::stof(Data[4]);
@@ -375,7 +377,7 @@ void Eater_LoadScene::Load_Component_MeshFilter(int index, GameObject* Object)
 		MP->LimLightColor.y = std::stof(Data[10]);
 		MP->LimLightColor.z = std::stof(Data[11]);
 
-		MP->LimLightFactor = std::stof(Data[12]);
-		MP->LimLightWidth = std::stof(Data[13]);
+		MP->LimLightFactor	= std::stof(Data[12]);
+		MP->LimLightWidth	= std::stof(Data[13]);
 	}
 }
