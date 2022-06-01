@@ -767,34 +767,43 @@ void RenderManager::ChangeOpacityRenderData(MeshData* meshData)
 	// Render Data 변환..
 	RenderData* convertRenderData = (RenderData*)meshData->Render_Data;
 
+	// 변경 전 Layer Index 저장..
+	UINT prev_LayerIndex = convertRenderData->m_InstanceLayerIndex;
+
 	// 현재 변경 전 Layer 검색..
-	InstanceLayer* layer = m_Converter->GetLayer(convertRenderData->m_InstanceLayerIndex);
+	InstanceLayer* layer = m_Converter->GetLayer(prev_LayerIndex);
 
-	// 해당 Layer가 존재한다면..
-	if (layer)
-	{
-		int index = -1;
-
-		for (int i = 0; i < layer->m_MeshList.size(); i++)
-		{
-			if (layer->m_MeshList[i] == convertRenderData)
-			{
-				index = i;
-				break;
-			}
-		}
-
-		assert(index != -1);
-
-		// 해당 Render Data List에서 제거..
-		layer->DeleteRenderData(index);
-	}
+	// 해당 Layer가 없을 경우는 없어야한다..
+	assert(layer != nullptr);
 
 	// Render Data 재설정..
 	m_Converter->ConvertRenderData(meshData, convertRenderData);
 
+	// Layer가 변동이 없을 경우 처리하지 않는다..
+	if (prev_LayerIndex == convertRenderData->m_InstanceIndex) return;
+
+	// 해당 Layer가 존재한다면..
+	int index = -1;
+
+	for (int i = 0; i < layer->m_MeshList.size(); i++)
+	{
+		if (layer->m_MeshList[i] == convertRenderData)
+		{
+			index = i;
+			break;
+		}
+	}
+
+	assert(index != -1);
+
+	// 해당 Render Data List에서 제거..
+	layer->DeleteRenderData(index);
+
 	// 재설정된 Layer 검색..
 	layer = m_Converter->GetLayer(convertRenderData->m_InstanceLayerIndex);
+
+	// 현재 Layer에 Instance 추가..
+	layer->PushRenderData(convertRenderData);
 
 	// 해당 Layer가 등록되어 있는지 확인..
 	if (layer->m_Instance->m_Material->m_MaterialProperty->Alpha)
@@ -812,9 +821,22 @@ void RenderManager::ChangeTransparencyRenderData(MeshData* meshData)
 	// Render Data 변환..
 	RenderData* convertRenderData = (RenderData*)meshData->Render_Data;
 
+	// 변경 전 Layer Index 저장..
+	UINT prev_LayerIndex = convertRenderData->m_InstanceLayerIndex;
+
 	// 현재 변경 전 Layer 검색..
 	InstanceLayer* layer = m_Converter->GetLayer(convertRenderData->m_InstanceLayerIndex);
 
+	// 해당 Layer가 없을 경우는 없어야한다..
+	assert(layer != nullptr);
+
+	// Render Data 재설정..
+	m_Converter->ConvertRenderData(meshData, convertRenderData);
+
+	// Layer가 변동이 없을 경우 처리하지 않는다..
+	if (prev_LayerIndex == convertRenderData->m_InstanceIndex) return;
+
+	// 해당 Layer가 존재한다면..
 	int index = -1;
 
 	for (int i = 0; i < layer->m_MeshList.size(); i++)
@@ -831,8 +853,11 @@ void RenderManager::ChangeTransparencyRenderData(MeshData* meshData)
 	// 해당 Render Data List에서 제거..
 	layer->DeleteRenderData(index);
 
-	// Render Data 재설정..
-	m_Converter->ConvertRenderData(meshData, convertRenderData);
+	// 재설정된 Layer 검색..
+	layer = m_Converter->GetLayer(convertRenderData->m_InstanceLayerIndex);
+
+	// 현재 Layer에 Instance 추가..
+	layer->PushRenderData(convertRenderData);
 
 	// 해당 Layer가 등록되어 있는지 확인..
 	FindInstanceLayer(m_TransparencyMeshList, layer);
@@ -1033,7 +1058,7 @@ void RenderManager::FindInstanceLayer(std::vector<InstanceLayer*>& layerList, In
 	// 만약 Layer가 검색되지 않았다면 Layer List에 삽입..
 	layerList.push_back(layer);
 
-	std::sort(layerList.begin(), layerList.end(), [](InstanceLayer* layer1, InstanceLayer* layer2) {return layer1->m_MeshList[0]->m_ObjectData->ObjType < layer2->m_MeshList[0]->m_ObjectData->ObjType; });
+	std::sort(layerList.begin(), layerList.end(), [](InstanceLayer* layer1, InstanceLayer* layer2) {return layer1->m_Instance->m_Type < layer2->m_Instance->m_Type; });
 }
 
 bool RenderManager::SortLayer(InstanceLayer* layer1, InstanceLayer* layer2)
