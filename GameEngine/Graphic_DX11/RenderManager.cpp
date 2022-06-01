@@ -866,10 +866,10 @@ void RenderManager::ChangeTransparencyRenderData(MeshData* meshData)
 void RenderManager::ChangeUIRenderData(MeshData* meshData)
 {
 	// Render Data 변환..
-	//RenderData* convertRenderData = (RenderData*)meshData->Render_Data;
+	RenderData* convertRenderData = (RenderData*)meshData->Render_Data;
 
 	// Render Data 재설정..
-	//convertRenderData->m_UI->m_Albedo = (ID3D11ShaderResourceView*)meshData->UI_Buffer->Albedo;
+	convertRenderData->m_UI->m_Albedo = (ID3D11ShaderResourceView*)meshData->UI_Buffer->Albedo;
 }
 
 void RenderManager::ChangeUnRenderData(MeshData* meshData)
