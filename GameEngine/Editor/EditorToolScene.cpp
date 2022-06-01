@@ -121,7 +121,7 @@ GameObject* EditorToolScene::Create_Object(std::string MeshName)
 
 GameObject* EditorToolScene::Create_Camera()
 {
-	GameObject* Cam = InstanceCamera("Camera");
+	GameObject* Cam = Instance_Camera("Camera");
 	Cam->Name = FindMeshName("Camera");
 	ObjectList.insert({ Cam->Name, Cam });
 	return Cam;
@@ -355,7 +355,7 @@ GameObject* EditorToolScene::Create_Terrain(std::string MeshPath, std::string ma
 	//터레인 생성
 	LoadTerrainMesh("../Assets/Model/TerrainModel/Terrain.fbx", "../Assets/Texture/Terrain/Terrain_RGB_1.png", "../Assets/Texture/Terrain/Terrain_RGB_2.png", SCALING);
 
-	GameObject* TerrainObect = InstanceTerrain("Terrain");
+	GameObject* TerrainObect = Instance_Terrain("Terrain");
 
 	Terrain* mTerrain = TerrainObect->GetComponent<Terrain>();
 	mTerrain->SetLayerName("terrain_ground_A_BaseColor", "terrain_ground_A_Normal", "terrain_ground_A_ORM");
@@ -382,7 +382,7 @@ GameObject* EditorToolScene::Create_Particle()
 {
 	std::string Name = FindMeshName("Particle");
 
-	GameObject* obj = InstanceParticle(Name);
+	GameObject* obj = Instance_Particle(Name);
 
 	ParticleSystem* particles = obj->GetComponent<ParticleSystem>();
 	particles->SetMeshName("Quad");

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "FormatDLL.h"
-FORMAT_PARSER_DLL class FM_ANIMATION
+class FORMAT_PARSER_DLL FM_ANIMATION
 {
 	float FrameTime;
 	float Local_Pos_X;

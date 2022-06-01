@@ -179,16 +179,16 @@ copy /Y "$(ProjectDir)Export\*.h" "$(SolutionDir)Library\inc\EATER"</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Export\EaterHeader.h" />
+    <ClInclude Include="Export\FM_ANIMATION.h" />
+    <ClInclude Include="Export\FM_INDEX.h" />
+    <ClInclude Include="Export\FM_INTERFACE.h" />
     <ClInclude Include="Export\FM_MATERIAL.h" />
-    <ClInclude Include="FM_ANIMATION.h" />
-    <ClInclude Include="FM_INDEX.h" />
+    <ClInclude Include="Export\FM_VERTEX.h" />
     <ClInclude Include="FormatDLL.h" />
     <ClInclude Include="EaterList.h" />
     <ClInclude Include="EaterNode.h" />
     <ClInclude Include="EaterParser.h" />
     <ClInclude Include="EaterSaveData.h" />
-    <ClInclude Include="FM_INTERFACE.h" />
-    <ClInclude Include="FM_VERTEX.h" />
     <ClInclude Include="framework.h" />
   </ItemGroup>
   <ItemGroup>

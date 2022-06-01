@@ -226,7 +226,7 @@ void TestScene::CreateMap()
 	//filter = Object->AddComponent<MeshFilter>();
 	//filter->SetModelName("Outside_Pebble");
 
-	testobj = InstanceTerrain("Terrain");
+	testobj = Instance_Terrain("Terrain");
 	Terrain* mTerrain = testobj->GetComponent<Terrain>();
 	mTerrain->SetLayerName("terrain_ground_A_BaseColor", "terrain_ground_A_Normal", "terrain_ground_A_ORM");
 	mTerrain->SetLayerName("terrain_ground_B_BaseColor", "terrain_ground_B_Normal", "terrain_ground_B_ORM");
@@ -401,7 +401,7 @@ void TestScene::CreateParticle(float x, float y, float z)
 {
 	ParticleObj = Instance();
 	ParticleObj->GetTransform()->Position = { -10.0f + x, 2.5f + y, -10.0f + z };
-	testobj = InstanceParticle("Particle1");
+	testobj = Instance_Particle("Particle1");
 	ParticleObj->ChoiceChild(testobj);
 	ParticleSystem* particles = testobj->GetComponent<ParticleSystem>();
 	particles->SetMeshName("Quad");
@@ -421,7 +421,7 @@ void TestScene::CreateParticle(float x, float y, float z)
 	particles->SetPlayTime(10.0f, true);
 	particles->Play();
 
-	testobj = InstanceParticle("Particle2");
+	testobj = Instance_Particle("Particle2");
 	ParticleObj->ChoiceChild(testobj);
 	particles = testobj->GetComponent<ParticleSystem>();
 	particles->SetMeshName("Quad");
@@ -443,7 +443,7 @@ void TestScene::CreateParticle(float x, float y, float z)
 
 	ParticleObj = Instance();
 	ParticleObj->GetTransform()->Position = { 10.0f + x, 2.5f + y, -10.0f + z };
-	testobj = InstanceParticle("Particle1");
+	testobj = Instance_Particle("Particle1");
 	ParticleObj->ChoiceChild(testobj);
 	particles = testobj->GetComponent<ParticleSystem>();
 	particles->SetMeshName("Quad");
@@ -463,7 +463,7 @@ void TestScene::CreateParticle(float x, float y, float z)
 	particles->SetPlayTime(10.0f, true);
 	particles->Play();
 
-	testobj = InstanceParticle("Particle2");
+	testobj = Instance_Particle("Particle2");
 	ParticleObj->ChoiceChild(testobj);
 	particles = testobj->GetComponent<ParticleSystem>();
 	particles->SetMeshName("Quad");
