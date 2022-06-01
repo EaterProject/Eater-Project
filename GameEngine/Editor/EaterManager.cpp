@@ -191,6 +191,7 @@ void EaterManager::Load_GameObject_File(GameObject* Object, ObjectOption* mOptio
 			mChangeManager->Change_Material(i, Object);
 		}
 	}
+	//EATER_CLOSE_CHANGE_FILE(MaterialName, "../Assets/Texture/Material/", ".Emat");
 
 	//if (AC != nullptr)
 	//{

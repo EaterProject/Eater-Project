@@ -225,12 +225,12 @@ void AddOccluder(std::string mMeshName)
 	return gGameEngine->GetTogle(number);
 }
 
- float GetMousePosX()
+ int GetMousePosX()
 {
 	return gGameEngine->GetMousePosX();
 }
 
- float GetMousePosY()
+int GetMousePosY()
 {
 	return gGameEngine->GetMousePosY();
 }

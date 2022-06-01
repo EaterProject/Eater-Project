@@ -15,6 +15,7 @@
 #include "Rigidbody.h"
 #include "PhysCollider.h"
 #include "ParticleSystem.h"
+#include "Material.h"
 
 using namespace std;
 Eater_LoadScene::Eater_LoadScene()
@@ -357,5 +358,24 @@ void Eater_LoadScene::Load_Component_MeshFilter(int index, GameObject* Object)
 	if (Data[2] != "NO")
 	{
 		mMeshFilter->SetMeshName(Data[2]);
+	}
+
+	if (mMeshFilter->m_Material != nullptr)
+	{
+		MaterialProperty* MP = mMeshFilter->m_Material->m_MaterialData->Material_Property;
+		MP->EmissiveFactor = std::stof(Data[3]);
+		MP->MetallicFactor = std::stof(Data[4]);
+		MP->RoughnessFactor = std::stof(Data[5]);
+
+		MP->AddColor.x = std::stof(Data[6]);
+		MP->AddColor.y = std::stof(Data[7]);
+		MP->AddColor.z = std::stof(Data[8]);
+	
+		MP->LimLightColor.x = std::stof(Data[9]);
+		MP->LimLightColor.y = std::stof(Data[10]);
+		MP->LimLightColor.z = std::stof(Data[11]);
+
+		MP->LimLightFactor = std::stof(Data[12]);
+		MP->LimLightWidth = std::stof(Data[13]);
 	}
 }

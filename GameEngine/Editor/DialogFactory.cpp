@@ -43,6 +43,7 @@ DialogFactory::~DialogFactory()
 
 void DialogFactory::Initialize()
 {
+
 	mLoading_Dlog = new Loading();
 	mLoading_Dlog->Create(IDD_LOADING);
 	mLoading_Dlog->ShowWindow(SW_HIDE);
@@ -77,6 +78,18 @@ void DialogFactory::Initialize()
 	mSkySetting->Create(IDD_SKY_SETTING);
 	mSkySetting->ShowWindow(SW_HIDE);
 
+	mColor	= new CColorDialog(RGB(0,0,0),CC_FULLOPEN);
+	mFile	= new CFileDialog(TRUE,NULL,NULL, OFN_ALLOWMULTISELECT);
+	char full[1024];
+	_fullpath(full, "../Assets/Texture", 1024);
+	
+	CString Cstr = L"";
+	Cstr = full;
+	LPCWSTR Name = Cstr;
+
+	mFile->m_ofn.lpstrInitialDir = Name;
+
+	
 	mEditorManager = new EditorManager();
 	mEditorManager->Initialize();
 

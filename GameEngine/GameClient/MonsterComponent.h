@@ -1,6 +1,6 @@
 #pragma once
 #include "Component.h"
-
+class PhysRayCast;
 class MeshFilter;
 class Transform;
 class AnimationController;
@@ -26,7 +26,6 @@ protected:
 	Transform*				mTransform;
 	AnimationController*	mAnimation;
 	Collider*				mColider;
-	Rigidbody*				mRigidbody;
 	Transform*				mPlayerTR;
 protected:
 	Vector3 MovePoint;		//이동해야하는 지점
@@ -59,6 +58,7 @@ protected:
 	int		PointNumber = -1;			
 	const float IdleSpeed	= 0.75f;
 	const float ChaseSpeed	= 1.5f;
+	PhysRayCast* mRay;
 };
 
 

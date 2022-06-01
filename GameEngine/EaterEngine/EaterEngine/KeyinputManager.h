@@ -20,6 +20,9 @@ public:
 	void Update();
 
 	void SetFocus(bool focus);
+	void SetMouseCenter();
+	void SetMousePos(int x, int y);
+	void ShowMouse(bool show);
 private:
 	//현재 눌린키상태
 	bool isCurrent[256];

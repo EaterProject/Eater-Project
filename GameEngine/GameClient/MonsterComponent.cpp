@@ -8,7 +8,7 @@ void MonsterComponent::SetMovePoint(float x, float y, float z)
 	DirPoint.Normalize();
 	DirPoint *= Speed;
 	MovePoint.x = x;
-	MovePoint.y = y;
+	MovePoint.y = 1;
 	MovePoint.z = z;
 	ReturnPoint = MovePoint;
 }

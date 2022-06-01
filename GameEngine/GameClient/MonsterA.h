@@ -24,6 +24,6 @@ private:
 	ManaStone* Mana;
 	GameObject* mPlayer;
 	int PointIndex = 0;
-	
+	float Pos_Y;
 };
 

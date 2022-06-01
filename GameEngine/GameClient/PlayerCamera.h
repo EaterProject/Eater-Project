@@ -29,10 +29,10 @@ private:
 
 	float X_Radian;
 	float Y_Radian;
-	float NowX;
-	float NowY;
-	float PastX;
-	float PastY;
+	int NowX;
+	int NowY;
+	int PastX;
+	int PastY;
 
 	bool MouseCursor;
 	

@@ -113,8 +113,8 @@ public:
 	bool  GetKeyUp(byte number);	//키업
 	bool  GetKey(byte number);		//키누르고있을때
 	bool  GetTogle(byte number);	//키 on/off
-	float GetMousePosX();			//마우스 위치 X
-	float GetMousePosY();			//마우스 위치 Y
+	int GetMousePosX();			//마우스 위치 X
+	int GetMousePosY();			//마우스 위치 Y
 	void  SetMousePos(float x,float y);
 	void  SetMousePosCenter();
 	void  ShowMouseCursor(bool Show);

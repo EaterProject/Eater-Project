@@ -3,12 +3,15 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include "EaterSaveData.h"
 
-struct EATER_VERTEX_BASE;
-struct EATER_VERTEX_SKIN;
-struct EATER_VERTEX_POS;
-struct EATER_MATERIAL_DATA;
-struct EATER_ANIMATION_DATA;
+class FM_VERTEX;
+class FM_MATERIAL;
+class FM_ANIMATION;
+class FM_INDEX;
+
+
+
 class EaterNode;
 class EaterList;
 class EaterParser
@@ -36,6 +39,8 @@ public:
 	void SetVertex(EATER_VERTEX_POS& Base);
 	void SetIndexStart(int IndexCount);
 	void SetIndex(int& x,int& y,int& z);
+
+	void SaveMaterial();
 public:
 	int GetNodeCount();
 	std::string& GetNodeName(int NodeCount);
@@ -52,10 +57,10 @@ public:
 	void ChangeDataSave(std::string& FileName, std::string& OutPath, std::string& FileType);
 
 public:
-	EATER_ANIMATION_DATA*	mAnimation_Data;
-	EATER_MATERIAL_DATA*	mMaterial_Data;
-	EATER_VERTEX_SKIN*		mVertex_Skin_Data;
-	EATER_VERTEX_BASE*		mVertex_Base_Data;
+	FM_INDEX*		mIndex_Data;
+	FM_MATERIAL*	mMaterial_Data;
+	FM_VERTEX*		mVertex_Data;
+	FM_ANIMATION*	mAnimation_Data;
 public:
 	void ClearNode();
 private:

@@ -1,9 +1,9 @@
 #pragma once
 
 #ifdef EATER_INTERFACE
-#define EATER_PARSER_DLL __declspec(dllexport)
+#define FORMAT_PARSER_DLL __declspec(dllexport)
 #else
-#define EATER_PARSER_DLL __declspec(dllimport)
+#define FORMAT_PARSER_DLL __declspec(dllimport)
 
 	#ifdef _DEBUG
 	#pragma comment(lib,"EaterParser_x64d")

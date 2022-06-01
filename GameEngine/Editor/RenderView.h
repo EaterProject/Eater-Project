@@ -28,6 +28,9 @@ public:
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	int SizeX;
 	int SizeY;
+
+	int MousePosX;
+	int MousePosY;
 	HWND hwnd;
 	afx_msg void OnClose();
 	afx_msg void OnNcDestroy();

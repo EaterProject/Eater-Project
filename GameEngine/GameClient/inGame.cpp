@@ -24,7 +24,7 @@ void InGame::Awake()
 	Load("../Assets/Scene/inGame.Scene");
 
 	// 오클루더 설정..
-	AddOccluder("Dome_program_0");
+	//AddOccluder("Dome_program_0");
 
 	BakeSkyLightMap("SkyLight_HDRI", false);
 
@@ -37,14 +37,14 @@ void InGame::Awake()
 	//로직매니저 초기화
 	Logic->Initialize();
 
-	GameObject* testobj = InstanceTerrain("Terrain");
-	Terrain* mTerrain = testobj->GetComponent<Terrain>();
-	mTerrain->SetLayerName("terrain_ground_A_BaseColor", "terrain_ground_A_Normal", "terrain_ground_A_ORM");
-	mTerrain->SetLayerName("terrain_ground_B_BaseColor", "terrain_ground_B_Normal", "terrain_ground_B_ORM");
-	mTerrain->SetLayerName("terrain_ground_C_BaseColor", "terrain_ground_C_Normal", "terrain_ground_C_ORM");
-	mTerrain->SetLayerName("terrain_ground_D_BaseColor", "terrain_ground_D_Normal", "terrain_ground_D_ORM");
-	mTerrain->SetMeshName("Terrain");
-	mTerrain->SetTextureTiling(31.0f);
+	//GameObject* testobj = InstanceTerrain("Terrain");
+	//Terrain* mTerrain = testobj->GetComponent<Terrain>();
+	//mTerrain->SetLayerName("terrain_ground_A_BaseColor", "terrain_ground_A_Normal", "terrain_ground_A_ORM");
+	//mTerrain->SetLayerName("terrain_ground_B_BaseColor", "terrain_ground_B_Normal", "terrain_ground_B_ORM");
+	//mTerrain->SetLayerName("terrain_ground_C_BaseColor", "terrain_ground_C_Normal", "terrain_ground_C_ORM");
+	//mTerrain->SetLayerName("terrain_ground_D_BaseColor", "terrain_ground_D_Normal", "terrain_ground_D_ORM");
+	//mTerrain->SetMeshName("Terrain");
+	//mTerrain->SetTextureTiling(31.0f);
 
 
 

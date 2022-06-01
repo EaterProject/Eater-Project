@@ -284,8 +284,7 @@ GameObject* GameEngine::InstanceLight(std::string ObjName, LIGHT_TYPE type)
 	switch (type)
 	{
 	case DIRECTION_LIGHT:
-		Tr->Rotation = { 224.0f, 91.0f, 0.0f };
-		light->SetPower(9);
+		light->SetPower(1);
 		break;
 	case POINT_LIGHT:
 		light->SetColor(1.0f, 1.0f, 0.0f);
@@ -478,31 +477,31 @@ bool GameEngine::GetTogle(byte number)
 	return mKeyManager->GetKeyToggle(number);
 }
 
-float GameEngine::GetMousePosX()
+int GameEngine::GetMousePosX()
 {
 	//마우스 위치 X좌표
-	return (float)mKeyManager->GetMousePos()->x;
+	return mKeyManager->GetMousePos()->x;
 }
 
-float GameEngine::GetMousePosY()
+int GameEngine::GetMousePosY()
 {
 	//마우스 위치 y좌표
-	return (float)mKeyManager->GetMousePos()->y;
+	return mKeyManager->GetMousePos()->y;
 }
 
 void GameEngine::SetMousePos(float x, float y)
 {
-
+	mKeyManager->SetMousePos(x, y);
 }
 
 void GameEngine::SetMousePosCenter()
 {
-
+	mKeyManager->SetMouseCenter();
 }
 
 void GameEngine::ShowMouseCursor(bool Show)
 {
-
+	mKeyManager->ShowMouse(Show);
 }
 
 void GameEngine::MouseCursorClip(bool Clip)

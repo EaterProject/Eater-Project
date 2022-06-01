@@ -4,6 +4,7 @@
 #include "KeyinputManager.h"
 #include "TimeManager.h"
 #include "Camera.h"
+#include "EaterEngineAPI.h"
 CameraDebugKeyInput::CameraDebugKeyInput()
 {
 	mTransform = nullptr;
@@ -31,6 +32,24 @@ void CameraDebugKeyInput::Update()
 	float delta = mTimeManager->DeltaTime();
 
 	if (Cam->g_MainCam != Cam) { return; }
+
+	if (mKeyInputManger->GetKeyDown(VK_RBUTTON))
+	{
+		//마우스 오른쪽버튼을 눌렀을때의 위치값을 저장
+		//mKeyInputManger->SetMouseCenter();
+		mLastMousePosX = GetMousePosX();
+		mLastMousePosY = GetMousePosY();
+		//마우스 사라지게
+		ShowCursor(false);
+	}
+
+	if (mKeyInputManger->GetKeyUp(VK_RBUTTON))
+	{
+		mLastMousePosX = GetMousePosX();
+		mLastMousePosY = GetMousePosY();
+		//마우스 나타나게
+		ShowCursor(true);
+	}
 
 	if (mKeyInputManger->GetKey(VK_RBUTTON))
 	{
@@ -73,32 +92,25 @@ void CameraDebugKeyInput::Update()
 			mTransform->SetLocalPosition(0, -(speed * delta), 0);
 		}
 
-		if (mKeyInputManger->GetKeyDown(VK_RBUTTON) == true)
-		{
-			mLastMousePosX = (float)mKeyInputManger->GetMousePos()->x;
-			mLastMousePosY = (float)mKeyInputManger->GetMousePos()->y;
-		}
-
-		if (mKeyInputManger->GetKeyUp(VK_RBUTTON) == true)
-		{
-			mLastMousePosX = (float)mKeyInputManger->GetMousePos()->x;
-			mLastMousePosY = (float)mKeyInputManger->GetMousePos()->y;
-		}
-
 		float RotSpeed = 5;
-		float x = (float)mKeyInputManger->GetMousePos()->x;
-		float y = (float)mKeyInputManger->GetMousePos()->y;
 
 		if (mKeyInputManger->GetKey(VK_RBUTTON) == true)
 		{
-			// Make each pixel correspond to a quarter of a degree.
-			float dx = DirectX::XMConvertToRadians(0.5f * static_cast<float>(x - mLastMousePosX));
-			float dy = DirectX::XMConvertToRadians(0.5f * static_cast<float>(y - mLastMousePosY));
+
+			float x = (float)mKeyInputManger->GetMousePos()->x;
+			float y = (float)mKeyInputManger->GetMousePos()->y;
+
+			float dx = DirectX::XMConvertToRadians(static_cast<float>(x - mLastMousePosX));
+			float dy = DirectX::XMConvertToRadians(static_cast<float>(y - mLastMousePosY));
 
 			mTransform->SetRotate(-dy * RotSpeed, -dx * RotSpeed, 0);
+			
+			SetCursorPos(mLastMousePosX, mLastMousePosY);
+			//mLastMousePosX = x;
+			//mLastMousePosY = y;
+			//GetMousePosX();
+			//GetMousePosX();
 		}
-		mLastMousePosX = x;
-		mLastMousePosY = y;
 	}
 }
 
