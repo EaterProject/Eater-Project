@@ -138,6 +138,7 @@ void Shadow_Pass::BeginRender()
 	// 깊이 버퍼, null Rendering 대상을 설정하면 색상 쓰기가 비활성화 된다..
 	g_Context->OMSetRenderTargets(0, nullptr, m_Shadow_DSV);
 	g_Context->ClearDepthStencilView(m_Shadow_DSV, D3D11_CLEAR_DEPTH, 1.0f, 0);
+	g_Context->OMSetDepthStencilState(nullptr, 0);
 	g_Context->RSSetState(m_Depth_RS);
 }
 

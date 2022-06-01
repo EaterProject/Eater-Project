@@ -294,7 +294,6 @@ copy /Y "$(ProjectDir)Network\lib\Release\*lib"  "$(TargetDir)"</Command>
     <ClInclude Include="LoadManager.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="PhysManager.h" />
-    <ClInclude Include="RandomNumber.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="TimeManager.h" />
@@ -344,7 +343,6 @@ copy /Y "$(ProjectDir)Network\lib\Release\*lib"  "$(TargetDir)"</Command>
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="PhysManager.cpp" />
-    <ClCompile Include="RandomNumber.cpp" />
     <ClCompile Include="Rigidbody.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />

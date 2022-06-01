@@ -8,7 +8,7 @@
 #include "TimeManager.h"
 #include "LoadManager.h"
 #include "MeshFilter.h"
-#include "RandomNumber.h"
+#include "Utility.h"
 
 ParticleSystem::ParticleSystem()
 {

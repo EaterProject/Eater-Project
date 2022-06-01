@@ -1,0 +1,22 @@
+#EATERMAT
+@ORMMap ORM_1
+@Alpha 0
+@MaterialName Sphere_2
+@LimColor_B 0.000000
+@DiffuseMap Albedo_1
+@NormalMap Normal_1
+@EmissiveMap NO
+@Emissive 0.000000
+@Roughness 0.000000
+@Metallic 0.000000
+@Tileing_X 1
+@Tileing_Y 1
+@AddColor_R 0.000000
+@AddColor_G 0.000000
+@LimFactor 0.000000
+@AddColor_B 0.000000
+@AddColor_A 0
+@LimColor_R 0.000000
+@LimColor_G 0.000000
+@LimWidth 0.000000
+&

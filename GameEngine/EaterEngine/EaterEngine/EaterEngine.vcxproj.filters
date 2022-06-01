@@ -91,9 +91,6 @@
     <Filter Include="소스 파일\Component\ParticleSystem">
       <UniqueIdentifier>{34f5274e-dca7-4388-a277-54196b70c414}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Component\ParticleSystem\Random">
-      <UniqueIdentifier>{04f988f9-8f5c-44d5-8b36-49bda11d6bc8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Component\ParticleSystem\Particle">
       <UniqueIdentifier>{b91230dd-71d3-4603-8dfd-b7303e033f0a}</UniqueIdentifier>
     </Filter>
@@ -333,9 +330,6 @@
     <ClInclude Include="Eater_LoadCamera.h">
       <Filter>소스 파일\Manager\LoadManager\EATER\EaterCamera</Filter>
     </ClInclude>
-    <ClInclude Include="RandomNumber.h">
-      <Filter>소스 파일\Component\ParticleSystem\Random</Filter>
-    </ClInclude>
     <ClInclude Include="Particle.h">
       <Filter>소스 파일\Component\ParticleSystem\Particle</Filter>
     </ClInclude>
@@ -463,9 +457,6 @@
     </ClCompile>
     <ClCompile Include="NetworkManagerComponent.cpp">
       <Filter>소스 파일\Component\Network\NetworkComponent</Filter>
-    </ClCompile>
-    <ClCompile Include="RandomNumber.cpp">
-      <Filter>소스 파일\Component\ParticleSystem\Random</Filter>
     </ClCompile>
     <ClCompile Include="CameraDebugKeyInput.cpp">
       <Filter>소스 파일\Component\Camera</Filter>
