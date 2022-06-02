@@ -13,6 +13,7 @@
 #include "SimpleMath.h"
 
 
+
 namespace ParserData
 {
 	class CModel;
@@ -39,6 +40,7 @@ class CameraAnimation;
 class GraphicEngineManager;
 class AnimationManager;
 
+class EaterSound;
 class FBXManager;
 class TextureManager;
 class EATERManager;
@@ -134,9 +136,9 @@ private:
 	FBXManager*				mFBX;
 	TextureManager*			mTexture;
 	EATERManager*			mEATER;
+	EaterSound*				mSound;
 
 	AnimationManager*		mAnimationManger;	// Animation 包府 概聪历
-
 	GraphicEngineManager*	mGraphicManager;	// Graphic 包府 概聪历
 
 	friend FBXManager;

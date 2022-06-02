@@ -48,7 +48,8 @@ void SceneSave::Scene_Save(std::string SaveFilePath, std::string SaveFileName)
 		MeshData*	OneMesh		= Object->OneMeshData;
 		Object->Name = Start_it->first;
 
-		//if (Start_it->first == "DebugCamera" || Start_it->first == "DirectionLight") { continue; }
+		if(Start_it->first == "DirectionLight") { continue; }
+		if(Start_it->first == "DebugCamera") { continue; }
 
 		//어떤 컨퍼넌트를 들어있는지 몰라서 모두 찾는다
 		Transform*	mTransform	= Object->GetComponent<Transform>();
@@ -155,7 +156,24 @@ void SceneSave::SceneOption()
 	EATER_SET_LIST(mOption->BLOOM_Factor);
 	EATER_SET_LIST(mOption->SkyLight_Factor,true);
 
-	EATER_SET_LIST_START("OPTION", 1, 17);
+	GameObject* Direction	= GetDirectionLight();
+	Light* mLight			= Direction->GetComponent<Light>();
+	Transform* mTransform	= Direction->GetTransform();
+
+	EATER_SET_LIST_START("Direction", 1, 10);
+	float Angle = mLight->GetAngle();
+	EATER_SET_LIST(mLight->GetAngle());
+	EATER_SET_LIST(mLight->GetAttenuate());
+	EATER_SET_LIST(mLight->GetRange());
+	EATER_SET_LIST(mLight->GetPower());
+	Vector3 Color = mLight->GetColor();
+	EATER_SET_LIST(Color.x);
+	EATER_SET_LIST(Color.y);
+	EATER_SET_LIST(Color.z);
+
+	EATER_SET_LIST(mTransform->Rotation.x);
+	EATER_SET_LIST(mTransform->Rotation.y);
+	EATER_SET_LIST(mTransform->Rotation.z,true);
 }
 
 void SceneSave::SaveTransform(Transform* mTransform)
@@ -212,21 +230,13 @@ void SceneSave::SaveLight(Light* mLight)
 	EATER_SET_LIST_START("Light", 1, 8);
 	LIGHT_TYPE mtype = mLight->GetType();
 	
-
-	switch (mtype)
+	if (mtype == LIGHT_TYPE::POINT_LIGHT)
 	{
-	case NONE_LIGHT:
-		EATER_SET_LIST("NONE");
-		break;
-	case DIRECTION_LIGHT:
-		EATER_SET_LIST("DIRECTION");
-		break;
-	case POINT_LIGHT:
 		EATER_SET_LIST("POINT");
-		break;
-	case SPOT_LIGHT:
+	}
+	else
+	{
 		EATER_SET_LIST("SPOT");
-		break;
 	}
 	float Angle = mLight->GetAngle();
 	EATER_SET_LIST(mLight->GetAngle());
@@ -236,7 +246,7 @@ void SceneSave::SaveLight(Light* mLight)
 	Vector3 Color = mLight->GetColor();
 	EATER_SET_LIST(Color.x);
 	EATER_SET_LIST(Color.y);
-	EATER_SET_LIST(Color.z,true);
+	EATER_SET_LIST(Color.z, true);
 }
 
 void SceneSave::SaveParticle(ParticleSystem* mParticleSystem)

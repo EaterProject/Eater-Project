@@ -64,14 +64,15 @@ public:
 	GameObject* InstanceCamera(std::string ObjName = "Camera");
 	GameObject* InstanceLight(std::string ObjName = "Light", LIGHT_TYPE type = LIGHT_TYPE::POINT_LIGHT);
 	GameObject* InstanceUI(std::string ObjName = "UI");
-
 	Material* InstanceMaterial(std::string matName = "Material");
-
+public:
+	///태그
 	GameObject* FindGameObjectTag(std::string& TagName);
 	void FindGameObjectTags(std::string& TagName,std::vector<GameObject*>* ObjectList);
 	int	 FindTagNumber(std::string& TagName);
 	GameObject* FindGameObjectName(std::string& ObjName);
-
+public:
+	///삭제
 	void Destroy(GameObject* obj);		//obj 삭제
 	void DestroyAll();
 public:
@@ -120,13 +121,30 @@ public:
 	void  SetMousePosCenter();
 	void  ShowMouseCursor(bool Show);
 	void  MouseCursorClip(bool Clip);
+public:
+	///사운드 관련
+	void Sound_Play_BGM(std::string& SoundName);
+	void Sound_Pause_BGM(bool Pause);
+	void Sound_VolumeUP_BGM();
+	void Sound_VolumeDown_BGM();
+	void Sound_FrequencyUp_BGM();
+	void Sound_FrequencyDown_BGM();
+	void Sound_PitchUp_BGM();
+	void Sound_PitchDown_BGM();
 
+
+
+	void Sound_Play_SFX(std::string& SoundName);
+
+public:
 	///윈도우 관련
 	void SetFocus(bool focus);
 	void* Picking(int x, int y);
 public:
 	///카메라 관련
 	GameObject* GetMainCamera();
+	GameObject* GetDebugCamera();
+	GameObject* GetDirectionLight();
 public:
 	///시간 관련
 	float GetdeltaTime();
@@ -140,7 +158,6 @@ public:
 	///Scene Setting
 	RenderOption* GetRenderOptionData();
 	void RenderSetting();
-	GameObject* DebugCame;
 private:
 	GameObject* CreateInstance();
 	Material* CreateMaterial();
@@ -164,5 +181,8 @@ private:
 	bool ConsoleDebug;
 private:
 	RenderOption* mRenderOption;
+
+	GameObject* DebugCamera;
+	GameObject* DirectionLight;
 };
 

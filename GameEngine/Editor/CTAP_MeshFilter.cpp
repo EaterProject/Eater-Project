@@ -360,6 +360,12 @@ LRESULT CTAP_MeshFilter::OnUserFun(WPARAM wParam, LPARAM lparam)
 		{
 			MaterialName_Edit.SetWindowTextW(strString);
 			mMeshFilter->SetMaterialName(FileName);
+
+			Material* m = mMeshFilter->GetMaterial();
+			Diffuse_Edit.SetWindowTextW(ChangeToCString(m->GetDiffuseName()));
+			Nomal_Eidt.SetWindowTextW(ChangeToCString(m->GetNormalName()));
+			Emissive_Edit.SetWindowTextW(ChangeToCString(m->GetEmissiveName()));
+			ORM_Edit.SetWindowTextW(ChangeToCString(m->GetORMName()));
 		}
 		else
 		{

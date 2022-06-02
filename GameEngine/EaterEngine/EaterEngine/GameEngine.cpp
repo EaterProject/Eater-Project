@@ -124,14 +124,14 @@ void GameEngine::Start()
 	mLoadManager->Start();
 
 	//카메라처음 생성 키인풋을 받을수있도록 컨퍼넌트 붙임
-	DebugCame = InstanceCamera("DebugCamera");
-	DebugCame->AddComponent<CameraDebugKeyInput>();
-	DebugCame->SetDontDestroy(true);
-	DebugCame->transform->Position = {0,10,-25};
+	DebugCamera = InstanceCamera("DebugCamera");
+	DebugCamera->AddComponent<CameraDebugKeyInput>();
+	DebugCamera->SetDontDestroy(true);
+	DebugCamera->transform->Position = {0,10,-25};
 
 	//디렉션 라이트 생성
-	GameObject* obj = InstanceLight("DirectionLight", LIGHT_TYPE::DIRECTION_LIGHT);
-	obj->SetDontDestroy(true);
+	DirectionLight = InstanceLight("DirectionLight", LIGHT_TYPE::DIRECTION_LIGHT);
+	DirectionLight->SetDontDestroy(true);
 }
 
 void GameEngine::Update()
@@ -514,6 +514,46 @@ void GameEngine::MouseCursorClip(bool Clip)
 
 }
 
+void GameEngine::Sound_Play_BGM(std::string& SoundName)
+{
+	mSoundManager->SoundPlay(Sound_Category::BGM, SoundName);
+}
+
+void GameEngine::Sound_Pause_BGM(bool Pause)
+{
+	mSoundManager->PauseSound(Sound_Category::BGM, Pause);
+}
+
+void GameEngine::Sound_VolumeUP_BGM()
+{
+	mSoundManager->VolumeUp(Sound_Category::BGM);
+}
+
+void GameEngine::Sound_VolumeDown_BGM()
+{
+	mSoundManager->VolumeDown(Sound_Category::BGM);
+}
+
+void GameEngine::Sound_FrequencyUp_BGM()
+{
+	mSoundManager->FrequencyUp(Sound_Category::BGM);
+}
+
+void GameEngine::Sound_FrequencyDown_BGM()
+{
+	mSoundManager->FrequencyDown(Sound_Category::BGM);
+}
+
+void GameEngine::Sound_PitchUp_BGM()
+{
+	mSoundManager->PitchUp(Sound_Category::BGM);
+}
+
+void GameEngine::Sound_PitchDown_BGM()
+{
+	mSoundManager->PitchDown(Sound_Category::BGM);
+}
+
 void GameEngine::SetFocus(bool focus)
 {
 	// 현재 Window Focus 상태에 따라 상태변화는 여기에서..
@@ -528,6 +568,16 @@ void* GameEngine::Picking(int x, int y)
 GameObject* GameEngine::GetMainCamera()
 {
 	return Camera::g_MainCam->gameobject;
+}
+
+GameObject* GameEngine::GetDebugCamera()
+{
+	return DebugCamera;
+}
+
+GameObject* GameEngine::GetDirectionLight()
+{
+	return DirectionLight;
 }
 
 float GameEngine::GetdeltaTime()
