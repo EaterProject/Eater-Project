@@ -178,9 +178,9 @@ void RightOption::MouseDown()
 {
 	if (GetKeyDown(VK_LBUTTON))
 	{
-		float X, Y;
-		X = GetMousePosX();
-		Y = GetMousePosY();
+		//float X, Y;
+		//X = GetMousePosX();
+		//Y = GetMousePosY();
 
 		//ChoiceObject = Picking(X,Y);
 
