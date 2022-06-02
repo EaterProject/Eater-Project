@@ -19,7 +19,6 @@
 void Loading::Awake()
 {
 	Load("../Assets/Texture/UI");
-	//Load("../Assets/Texture/Particle/particle_hotCloud.png");
 
 	RenderOption* option = GetRenderOptionData();
 	option->RenderingOption ^= RENDER_OPTION::RENDER_FOG;

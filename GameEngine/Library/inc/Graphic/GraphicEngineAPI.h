@@ -42,13 +42,16 @@ public:
 	virtual GRAPHIC_DX11_DLL void Initialize(HWND _hWnd, int screenWidth, int screenHeight, RenderOption* renderOption) abstract;
 	virtual GRAPHIC_DX11_DLL void OnReSize(int screenWidth, int screenHeight) abstract;				
 	virtual GRAPHIC_DX11_DLL void Release() abstract;
+
 	/// Graphic Data Setting Function..
 	virtual GRAPHIC_DX11_DLL void RenderSetting() abstract;
 	virtual GRAPHIC_DX11_DLL void RenderSetting(RenderOption* renderOption) abstract;
 	virtual GRAPHIC_DX11_DLL void SetGlobalData(GlobalData* globalData) abstract;
+
 public:
 	virtual GRAPHIC_DX11_DLL void SetSkyCube(TextureBuffer* resource) abstract;
 	virtual GRAPHIC_DX11_DLL void SetSkyLight(SkyLightBuffer* resource) abstract;
+
 public:
 	/// Render Mesh Data & Rendering Function..
 	virtual GRAPHIC_DX11_DLL void PushInstance(MeshData* instance) abstract;
@@ -82,7 +85,9 @@ public:
 	/// Graphic Resource Baking Function..
 	virtual GRAPHIC_DX11_DLL void BakeSkyLightMap(TextureBuffer* environment, bool hdri, SkyLightBuffer** ppResource) abstract;
 	virtual GRAPHIC_DX11_DLL void BakeConvertCubeMap(TextureBuffer* resource, float angle, float threshold, bool hdri, TextureBuffer** ppResource) abstract;
+
 	virtual GRAPHIC_DX11_DLL void SaveConvertCubeMap(TextureBuffer* resource, std::string SaveName) abstract;
+
 private:
 	static GraphicEngine* Graphic;
 };

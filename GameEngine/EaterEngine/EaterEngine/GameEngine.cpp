@@ -124,14 +124,14 @@ void GameEngine::Start()
 	mLoadManager->Start();
 
 	//카메라처음 생성 키인풋을 받을수있도록 컨퍼넌트 붙임
-	DebugCame = InstanceCamera("DebugCamera");
-	DebugCame->AddComponent<CameraDebugKeyInput>();
-	DebugCame->SetDontDestroy(true);
-	DebugCame->transform->Position = {0,10,-25};
+	DebugCamera = InstanceCamera("DebugCamera");
+	DebugCamera->AddComponent<CameraDebugKeyInput>();
+	DebugCamera->SetDontDestroy(true);
+	DebugCamera->transform->Position = {0,10,-25};
 
 	//디렉션 라이트 생성
-	GameObject* obj = InstanceLight("DirectionLight", LIGHT_TYPE::DIRECTION_LIGHT);
-	obj->SetDontDestroy(true);
+	DirectionLight = InstanceLight("DirectionLight", LIGHT_TYPE::DIRECTION_LIGHT);
+	DirectionLight->SetDontDestroy(true);
 }
 
 void GameEngine::Update()
@@ -528,6 +528,16 @@ void* GameEngine::Picking(int x, int y)
 GameObject* GameEngine::GetMainCamera()
 {
 	return Camera::g_MainCam->gameobject;
+}
+
+GameObject* GameEngine::GetDebugCamera()
+{
+	return DebugCamera;
+}
+
+GameObject* GameEngine::GetDirectionLight()
+{
+	return DirectionLight;
 }
 
 float GameEngine::GetdeltaTime()

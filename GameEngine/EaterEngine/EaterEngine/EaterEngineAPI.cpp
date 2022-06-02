@@ -283,7 +283,12 @@ int GetMousePosY()
 
  GameObject* GetDebugCamera()
  {
-	 return gGameEngine->DebugCame;
+	 return gGameEngine->GetDebugCamera();
+ }
+
+ GameObject* GetDirectionLight()
+ {
+	 return gGameEngine->GetDirectionLight();
  }
 
  /// 시간 관련

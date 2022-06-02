@@ -127,6 +127,8 @@ public:
 public:
 	///카메라 관련
 	GameObject* GetMainCamera();
+	GameObject* GetDebugCamera();
+	GameObject* GetDirectionLight();
 public:
 	///시간 관련
 	float GetdeltaTime();
@@ -140,7 +142,6 @@ public:
 	///Scene Setting
 	RenderOption* GetRenderOptionData();
 	void RenderSetting();
-	GameObject* DebugCame;
 private:
 	GameObject* CreateInstance();
 	Material* CreateMaterial();
@@ -164,5 +165,8 @@ private:
 	bool ConsoleDebug;
 private:
 	RenderOption* mRenderOption;
+
+	GameObject* DebugCamera;
+	GameObject* DirectionLight;
 };
 

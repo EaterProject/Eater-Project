@@ -46,6 +46,11 @@ void Eater_LoadScene::Load(std::string FilePath)
 			mCam = List_begin->second;
 			continue;
 		}
+		else if (List_begin->first == "DirectionLight")
+		{
+			mLight = List_begin->second;
+			continue;
+		}
 		Destroy(List_begin->second);
 	}
 	EditorToolScene::ObjectList.clear();
@@ -149,10 +154,30 @@ void Eater_LoadScene::Load(std::string FilePath)
 			mOption->BLOOM_Factor = Data[15];
 			mOption->SkyLight_Factor = Data[16];
 			RenderSetting();
+
+			GameObject* mDirection = GetDirectionLight();
+			Light*		mLight     = mDirection->GetComponent<Light>();
+			Transform* mTransform  = mDirection->GetTransform();
+			EATER_GET_LIST_CHOICE(i, "Direction");
+			EATER_GET_LIST(&Data, i);
+
+			mLight->SetAngle(Data[0]);
+			mLight->SetAttenuate((Data[1]));
+			mLight->SetRange((Data[2]));
+			mLight->SetPower((Data[3]));
+
+			float R, G, B;
+			R = (Data[4]);
+			G = (Data[5]);
+			B = (Data[6]);
+			mLight->SetColor(R, G, B);
+
+			mTransform->Rotation = { Data[7],Data[8] ,Data[9] };
 		}
 	}
 	EATER_CLOSE_READ_FILE();
 	EditorToolScene::ObjectList.insert({"DebugCamera", mCam});
+	EditorToolScene::ObjectList.insert({"DirectionLight", mLight});
 
 	//mCam->GetComponent<Camera>()->ChoiceMainCam();
 	//Destroy(mCam);
