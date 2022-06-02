@@ -514,6 +514,46 @@ void GameEngine::MouseCursorClip(bool Clip)
 
 }
 
+void GameEngine::Sound_Play_BGM(std::string& SoundName)
+{
+	mSoundManager->SoundPlay(Sound_Category::BGM, SoundName);
+}
+
+void GameEngine::Sound_Pause_BGM(bool Pause)
+{
+	mSoundManager->PauseSound(Sound_Category::BGM, Pause);
+}
+
+void GameEngine::Sound_VolumeUP_BGM()
+{
+	mSoundManager->VolumeUp(Sound_Category::BGM);
+}
+
+void GameEngine::Sound_VolumeDown_BGM()
+{
+	mSoundManager->VolumeDown(Sound_Category::BGM);
+}
+
+void GameEngine::Sound_FrequencyUp_BGM()
+{
+	mSoundManager->FrequencyUp(Sound_Category::BGM);
+}
+
+void GameEngine::Sound_FrequencyDown_BGM()
+{
+	mSoundManager->FrequencyDown(Sound_Category::BGM);
+}
+
+void GameEngine::Sound_PitchUp_BGM()
+{
+	mSoundManager->PitchUp(Sound_Category::BGM);
+}
+
+void GameEngine::Sound_PitchDown_BGM()
+{
+	mSoundManager->PitchDown(Sound_Category::BGM);
+}
+
 void GameEngine::SetFocus(bool focus)
 {
 	// 현재 Window Focus 상태에 따라 상태변화는 여기에서..

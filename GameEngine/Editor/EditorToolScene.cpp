@@ -50,12 +50,15 @@ void EditorToolScene::Awake()
 	Load("../Assets/Texture/Material");
 	Load("../Assets/Texture/Particle");
 	Load("../Assets/Texture/Environment");
+	Load("../Assets/Sound/BGM");
+	Load("../Assets/Sound/SFX");
 
 	Load("../Assets/Model/Animation");
 	Load("../Assets/Model/MeshBuffer");
 	Load("../Assets/Model/ModelData");
 	Load("../Assets/Model/Prefap");
 
+	
 	//기본 태그 설정
 	DebugCamObject = GetMainCamera();
 	TagList.insert({ 0, "Default" });

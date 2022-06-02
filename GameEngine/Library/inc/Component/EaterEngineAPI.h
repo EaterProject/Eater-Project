@@ -94,6 +94,10 @@ extern "C" EATER_ENGINEDLL GameObject * GetMainCamera();		//현재 메인 카메라를 �
 extern "C" EATER_ENGINEDLL GameObject * GetDebugCamera();		//현재 메인 카메라를 가져온다
 extern "C" EATER_ENGINEDLL GameObject * GetDirectionLight();	//현재 메인 카메라를 가져온다
 
+///사운드 관련
+extern "C" EATER_ENGINEDLL void Sound_Play_BGM(std::string Name);
+//extern "C" EATER_ENGINEDLL void Play_BGM_Sound(std::string&& Name);
+
 
 ///시간 관련
 extern "C" EATER_ENGINEDLL float GetDeltaTime();
