@@ -85,22 +85,29 @@ RenderManager::~RenderManager()
 template<typename T>
 void RenderManager::PushFunction(T* pass)
 {
+	///using ClassType = std::remove_reference<decltype(*ref)>::type;
+
+	// OnResize Override 함수 등록..
 	if (typeid(&RenderPassBase::OnResize).hash_code() != typeid(&T::OnResize).hash_code())
 	{
 		OnResizeFunction += std::bind_front(&T::OnResize, pass);
 	}
+	// InstanceResize Override 함수 등록..
 	if (typeid(&RenderPassBase::InstanceResize).hash_code() != typeid(&T::InstanceResize).hash_code())
 	{
 		InstanceResizeFunction += std::bind_front(&T::InstanceResize, pass);
 	}
+	// SetResize Override 함수 등록..
 	if (typeid(&RenderPassBase::SetResize).hash_code() != typeid(&T::SetResize).hash_code())
 	{
 		SetResizeFunction += std::bind_front(&T::SetResize, pass);
 	}
-	//if (typeid(&RenderPassBase::ApplyOption).hash_code() != typeid(&T::ApplyOption).hash_code())
-	//{
-	//	ApplyOptionFunction += std::bind_front(&T::ApplyOption, pass);
-	//}
+	// ApplyOption Override 함수 등록..
+	if (typeid(&RenderPassBase::ApplyOption).hash_code() != typeid(&T::ApplyOption).hash_code())
+	{
+		ApplyOptionFunction += std::bind_front(&T::ApplyOption, pass);
+	}
+	// PreUpdate Override 함수 등록..
 	if (typeid(&RenderPassBase::PreUpdate).hash_code() != typeid(&T::PreUpdate).hash_code())
 	{
 		PreUpdateFunction += std::bind_front(&T::PreUpdate, pass);
@@ -131,20 +138,12 @@ void RenderManager::Start(int width, int height)
 void RenderManager::OnResize(int width, int height)
 {
 	// Resource Resize Data 설정..
-	//for (RenderPassBase* renderPass : m_RenderPassList)
-	//{
-	//	renderPass->SetResize(width, height);
-	//}
 	SetResizeFunction(width, height);
 
 	// Resource Resize 실행..
 	RenderPassBase::g_Resource->OnResize(width, height);
 
 	// Resize Resource 동기화..
-	//for (RenderPassBase* renderPass : m_RenderPassList)
-	//{
-	//	renderPass->OnResize(width, height);
-	//}
 	OnResizeFunction(width, height);
 }
 
@@ -160,11 +159,7 @@ void RenderManager::Release()
 
 void RenderManager::PreUpdate()
 {
-	//for (RenderPassBase* renderPass : m_RenderPassList)
-	//{
-	//	renderPass->PreUpdate();
-	//}
-
+	// PreUpdate 함수 리스트 실행..
 	PreUpdateFunction();
 }
 
@@ -173,11 +168,7 @@ void RenderManager::InstanceResize()
 	size_t&& renderMaxCount = m_Converter->FindMaxInstanceCount();
 	size_t&& unRenderMaxCount = m_UnRenderMeshList.size();
 
-	//for (RenderPassBase* renderPass : m_RenderPassList)
-	//{
-	//	renderPass->InstanceResize(renderMaxCount, unRenderMaxCount);
-	//}
-
+	// Instance Resize 함수 리스트 실행..
 	InstanceResizeFunction(renderMaxCount, unRenderMaxCount);
 }
 
@@ -192,11 +183,10 @@ void RenderManager::RenderSetting(RenderOption* renderOption)
 
 void RenderManager::RenderSetting()
 {
-	for (RenderPassBase* renderPass : m_RenderPassList)
-	{
-		renderPass->ApplyOption();
-	}
+	// Apply Option 함수 리스트 실행..
+	ApplyOptionFunction();
 
+	// 현재 Render Option 저장..
 	m_NowRenderOption = *RenderPassBase::g_RenderOption;
 }
 

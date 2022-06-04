@@ -41,6 +41,7 @@ public:
 
 	virtual void InstanceResize(size_t& renderMaxCount, size_t& unRenderMaxCount) {}
 
+public:
 	virtual void SetResize(int width, int height) {}
 
 	virtual void ApplyOption() {}
