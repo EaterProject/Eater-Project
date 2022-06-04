@@ -3,6 +3,7 @@
 
 #include "GameObject.h"
 #include "GameEngine.h"
+#include "Utility.h"
 
 RectTransform::RectTransform()
 {
@@ -18,11 +19,16 @@ RectTransform::RectTransform()
 	PositionXM		= DirectX::XMMatrixIdentity();
 	RotationXM		= DirectX::XMMatrixIdentity();
 	ScaleXM			= DirectX::XMMatrixIdentity();
+
+	Screen_Size.x = GameEngine::WinSizeWidth;
+	Screen_Size.y = GameEngine::WinSizeHeight;
+
+	GameEngine::ResizeFunction += std::bind_front(&RectTransform::Resize, this);
 }
 
 RectTransform::~RectTransform()
 {
-
+	GameEngine::ResizeFunction -= std::bind_front(&RectTransform::Resize, this);
 }
 
 void RectTransform::TransformUpdate()
@@ -170,4 +176,19 @@ void RectTransform::AddScale(float x, float y)
 void RectTransform::AddScale(DirectX::SimpleMath::Vector2 scale)
 {
 	Scale += scale;
+}
+
+void RectTransform::Resize(int width, int height)
+{
+	float ratio_w = (float)width / Screen_Size.x;
+	float ratio_h = (float)height / Screen_Size.y;
+
+	Scale.x *= ratio_w;
+	Scale.y *= ratio_h;
+
+	Position.x *= ratio_w;
+	Position.y *= ratio_h;
+
+	Screen_Size.x = width;
+	Screen_Size.y = height;
 }

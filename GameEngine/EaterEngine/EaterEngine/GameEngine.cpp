@@ -36,6 +36,7 @@
 
 int GameEngine::WinSizeWidth	= 0;
 int GameEngine::WinSizeHeight	= 0;
+Eater::Delegate<int, int> GameEngine::ResizeFunction;
 
 GameEngine::GameEngine()
 {
@@ -195,6 +196,8 @@ void GameEngine::OnResize(int Change_Width, int Change_Height)
 	mGraphicManager->OnReSize(WinSizeWidth, WinSizeHeight);
 	Camera::g_MainCam->CreateProj(WinSizeWidth, WinSizeHeight);
 
+	//Resize 함수리스트 실행
+	ResizeFunction(Change_Width, Change_Height);
 
 	std::string Width = std::to_string(WinSizeWidth);
 	std::string Height = std::to_string(WinSizeHeight);;

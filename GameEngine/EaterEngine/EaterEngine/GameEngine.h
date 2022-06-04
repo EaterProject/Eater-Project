@@ -3,6 +3,7 @@
 #include <string>
 #include "EaterEngineDLL.h"
 #include "TypeOptionHeader.h"
+#include "Utility.h"
 
 /// <summary>
 /// 전체 게임 엔진을 총괄하는 게임엔진 클래스
@@ -54,8 +55,11 @@ public:
 	void Update();											//엔진 가동
 	void Finish();											//엔진 중지
 	void OnResize(int Change_Width, int Change_Height);		//리사이즈
+
 	static int WinSizeWidth;	//윈도우 사이즈 가로
 	static int WinSizeHeight;	//윈도우 사이즈 세로
+	static Eater::Delegate<int, int> ResizeFunction;
+
 public:
 	///오브젝트 관련(오브젝트 매니저)
 	GameObject* Instance(std::string ObjName = "GameObject");			//obj 생성 (빈 게임오브젝트)
@@ -159,6 +163,7 @@ private:
 	NetworkManager*			mNetworkManager;	// 네트워크 매니저
 	EaterSound*				mSoundManager;		// 사운드 매니저
 private:
+
 	///클라쪽에서 받아야 하는 데이터
 	HWND mHwnd; //핸들
 	bool ConsoleDebug;

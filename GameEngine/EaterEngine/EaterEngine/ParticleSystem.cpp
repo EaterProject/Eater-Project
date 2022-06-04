@@ -12,20 +12,20 @@
 
 ParticleSystem::ParticleSystem()
 {
-	m_SystemDesc = new PARTICLE_SHARE_DESC();
-	m_ParticleDesc = new PARTICLE_DESC();
+	m_SystemDesc				= new PARTICLE_SHARE_DESC();
+	m_ParticleDesc				= new PARTICLE_DESC();
 
-	m_ParticleData = new ParticleData();
+	m_ParticleData				= new ParticleData();
 
-	m_RandomLifeTime = new RandomFloat();
-	m_RandomStartColor = new RandomVector4();
-	m_RandomStartForce = new RandomVector3();
-	m_RandomStartPosition = new RandomVector3();
-	m_RandomStartSize = new RandomFloat();
-	m_RandomStartRotation = new RandomFloat();
+	m_RandomLifeTime			= new Eater::RandomFloat();
+	m_RandomStartColor			= new Eater::RandomVector4();
+	m_RandomStartForce			= new Eater::RandomVector3();
+	m_RandomStartPosition		= new Eater::RandomVector3();
+	m_RandomStartSize			= new Eater::RandomFloat();
+	m_RandomStartRotation		= new Eater::RandomFloat();
 
-	m_RandomLifeTimeForce = new RandomVector3();
-	m_RandomLifeTimeRotation = new RandomFloat();
+	m_RandomLifeTimeForce		= new Eater::RandomVector3();
+	m_RandomLifeTimeRotation	= new Eater::RandomFloat();
 
 	// 초기 강도 설정..
 	SetStrength(1.0f);

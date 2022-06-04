@@ -8,6 +8,7 @@
 #include "RenderManager.h"
 #include "FactoryManager.h"
 #include "RenderDataConverter.h"
+#include "Utility.h"
 #include "atlbase.h"
 
 Graphic_DX11::Graphic_DX11()

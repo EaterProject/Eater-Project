@@ -36,6 +36,9 @@ public:
 	EATER_ENGINEDLL void AddScale(float x, float y);
 	EATER_ENGINEDLL void AddScale(DirectX::SimpleMath::Vector2 scale);
 
+private:
+	void Resize(int width, int height);
+
 public:
 	//이미지 출력 위치
 	RECT_PIVOT PivotType;
@@ -52,6 +55,8 @@ public:
 	DirectX::SimpleMath::Vector2 Scale;
 
 private:
+	DirectX::SimpleMath::Vector2 Screen_Size;
+
 	DirectX::SimpleMath::Vector2 Position_Offset;
 	DirectX::SimpleMath::Vector2 Scale_Offset;
 

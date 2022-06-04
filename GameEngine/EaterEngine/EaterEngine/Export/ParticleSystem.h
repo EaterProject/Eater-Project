@@ -9,10 +9,14 @@ struct PARTICLE_DESC;
 class MeshFilter;
 class Particle;
 class ParticleData;
-class RandomInt;
-class RandomFloat;
-class RandomVector3;
-class RandomVector4;
+
+namespace Eater
+{
+	class RandomInt;
+	class RandomFloat;
+	class RandomVector3;
+	class RandomVector4;
+}
 
 template<typename T>
 struct Range
@@ -152,25 +156,25 @@ private:
 	float m_RateOverTime;		// 초당 출력할 파티클 개수
 	float m_RateOverTimeCount;	// 초당 출력할 파티클 개수
 
-	Range<Vector3>	m_StartForce;
-	Range<Vector4>	m_StartColor;
-	Range<float>	m_StartLifeTime;
-	Range<float>	m_StartScale;
-	Range<float>	m_StartRotation;
+	Range<Vector3>		m_StartForce;
+	Range<Vector4>		m_StartColor;
+	Range<float>		m_StartLifeTime;
+	Range<float>		m_StartScale;
+	Range<float>		m_StartRotation;
 
-	Range<Vector3>	m_LifeTimeForce;
-	Range<Vector4>	m_LifeTimeColor;
-	Range<float>	m_LifeTimeScale;
-	Range<float>	m_LifeTimeRotation;
-	Range<int>		m_Tiling;
+	Range<Vector3>		m_LifeTimeForce;
+	Range<Vector4>		m_LifeTimeColor;
+	Range<float>		m_LifeTimeScale;
+	Range<float>		m_LifeTimeRotation;
+	Range<int>			m_Tiling;
 
-	RandomFloat*	m_RandomLifeTime;
-	RandomVector4*	m_RandomStartColor;
-	RandomVector3*	m_RandomStartPosition;
-	RandomVector3*	m_RandomStartForce;
-	RandomVector3*	m_RandomLifeTimeForce;
+	Eater::RandomFloat*	m_RandomLifeTime;
+	Eater::RandomVector4*	m_RandomStartColor;
+	Eater::RandomVector3*	m_RandomStartPosition;
+	Eater::RandomVector3*	m_RandomStartForce;
+	Eater::RandomVector3*	m_RandomLifeTimeForce;
 
-	RandomFloat*	m_RandomStartSize;
-	RandomFloat*	m_RandomStartRotation;
-	RandomFloat*	m_RandomLifeTimeRotation;
+	Eater::RandomFloat*	m_RandomStartSize;
+	Eater::RandomFloat*	m_RandomStartRotation;
+	Eater::RandomFloat*	m_RandomLifeTimeRotation;
 };
