@@ -79,7 +79,7 @@ RenderManager::RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, I
 
 RenderManager::~RenderManager()
 {
-	
+
 }
 
 template<typename T>
@@ -878,7 +878,7 @@ void RenderManager::ChangeUIRenderData(MeshData* meshData)
 	RenderData* convertRenderData = (RenderData*)meshData->Render_Data;
 
 	// Render Data Àç¼³Á¤..
-	convertRenderData->m_UI->m_Albedo = (ID3D11ShaderResourceView*)meshData->UI_Buffer->Albedo->pTextureBuf;
+	convertRenderData->m_UI->m_Albedo = (meshData->UI_Buffer->Albedo == nullptr) ? nullptr : (ID3D11ShaderResourceView*)meshData->UI_Buffer->Albedo->pTextureBuf;
 }
 
 void RenderManager::ChangeUnRenderData(MeshData* meshData)

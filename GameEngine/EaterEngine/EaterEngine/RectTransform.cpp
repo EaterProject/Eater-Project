@@ -93,11 +93,26 @@ void RectTransform::TransformUpdate()
 	// 최종 Matrix 설정..
 	WorldXM = ScaleXM * RotationXM * PositionXM;
 	gameobject->OneMeshData->UI_Buffer->UI_Property->World = WorldXM;
+
+	// 최종 출력 범위 설정..
+	float half_width = ImageSize.x * Scale.x * 0.5f;
+	float half_height = ImageSize.y * Scale.y * 0.5f;
+
+	RectPosition.left	= PositionXM._41 - half_width;
+	RectPosition.top	= PositionXM._42 - half_height;
+	RectPosition.right	= PositionXM._41 + half_width;
+	RectPosition.bottom = PositionXM._42 + half_height;
 }
 
 void RectTransform::SetImagePivot(RECT_PIVOT pivot_type)
 {
 	PivotType = pivot_type;
+}
+
+void RectTransform::SetImageSize(float x, float y)
+{
+	ImageSize.x = x;
+	ImageSize.y = y;
 }
 
 void RectTransform::SetImageSize(DirectX::SimpleMath::Vector2 imagesize)
@@ -176,6 +191,11 @@ void RectTransform::AddScale(float x, float y)
 void RectTransform::AddScale(DirectX::SimpleMath::Vector2 scale)
 {
 	Scale += scale;
+}
+
+const RectPoint& RectTransform::GetRectPoint()
+{
+	return RectPosition;
 }
 
 void RectTransform::Resize(int width, int height)

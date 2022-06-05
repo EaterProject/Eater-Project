@@ -71,7 +71,14 @@ void Image::SetTexture()
 	GraphicEngine::Get()->PushChangeInstance(gameobject->OneMeshData);
 
 	// 이미지 크기 재설정..
-	m_Transform->SetImageSize(Vector2(m_UI->Albedo->Width, m_UI->Albedo->Height));
+	if (newTexture)
+	{
+		m_Transform->SetImageSize(m_UI->Albedo->Width, m_UI->Albedo->Height);
+	}
+	else
+	{
+		m_Transform->SetImageSize(0.0f, 0.0f);
+	}
 }
 
 void Image::SetImageColor(DirectX::SimpleMath::Vector4 image_color)
@@ -84,7 +91,6 @@ void Image::SetImageColor(float r, float g, float b)
 	m_UI->UI_Property->ImageColor.x = r / 255.0f;
 	m_UI->UI_Property->ImageColor.y = g / 255.0f;
 	m_UI->UI_Property->ImageColor.z = b / 255.0f;
-	m_UI->UI_Property->ImageColor.w = 1.0f;
 }
 
 void Image::SetImageColor(float r, float g, float b, float a)
@@ -93,4 +99,14 @@ void Image::SetImageColor(float r, float g, float b, float a)
 	m_UI->UI_Property->ImageColor.y = g / 255.0f;
 	m_UI->UI_Property->ImageColor.z = b / 255.0f;
 	m_UI->UI_Property->ImageColor.w = a / 255.0f;
+}
+
+DirectX::SimpleMath::Vector2 Image::GetImageSize()
+{
+	return DirectX::SimpleMath::Vector2(m_UI->Albedo->Width, m_UI->Albedo->Height);
+}
+
+DirectX::SimpleMath::Vector4 Image::GetImageColor()
+{
+	return m_UI->UI_Property->ImageColor;
 }

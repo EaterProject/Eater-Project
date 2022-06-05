@@ -179,29 +179,30 @@ namespace Eater
 	class Delegate
 	{
 	public:
-		//using Function = std::function<void(_Args...)>;
+		using Function = std::function<void(_Args...)>;
 
 	public:
-		void Push(std::function<void(_Args...)>&& _func);
-		void Pop(std::function<void(_Args...)>&& _func);
+		void Push(Function&& _func);		// Event Function 추가..
+		void Pop(Function&& _func);			// Event Function 제거..
+		void Reset();						// Event Function 초기화..
 
 	public:
-		void operator-=(std::function<void(_Args...)>&& _func);
-		void operator+=(std::function<void(_Args...)>&& _func);
-		void operator()(_Args... _types);
+		void operator+=(Function&& _func);	// Event Function 추가..
+		void operator-=(Function&& _func);	// Event Function 제거..
+		void operator()(_Args... _types);	// Event Function List 호출..
 
 	private:
-		std::vector<std::function<void(_Args...)>> pFunctionList;
+		std::vector<Function> pFunctionList;
 	};
 
 	template<typename ..._Args>
-	inline void Delegate<_Args...>::Push(std::function<void(_Args...)>&& _func)
+	inline void Delegate<_Args...>::Push(Function&& _func)
 	{
 		pFunctionList.push_back(_func);
 	}
 
 	template<typename ..._Args>
-	inline void Delegate<_Args...>::Pop(std::function<void(_Args...)>&& _func)
+	inline void Delegate<_Args...>::Pop(Function&& _func)
 	{
 		for (int index = 0; index < pFunctionList.size(); index++)
 		{
@@ -214,7 +215,19 @@ namespace Eater
 	}
 
 	template<typename ..._Args>
-	inline void Delegate<_Args...>::operator-=(std::function<void(_Args...)>&& _func)
+	inline void Delegate< _Args... >::Reset()
+	{
+		pFunctionList.clear();
+	}
+
+	template<typename ..._Args>
+	inline void Delegate<_Args...>::operator+=(Function&& _func)
+	{
+		pFunctionList.push_back(_func);
+	}
+
+	template<typename ..._Args>
+	inline void Delegate<_Args...>::operator-=(Function&& _func)
 	{
 		for (int index = 0; index < pFunctionList.size(); index++)
 		{
@@ -224,12 +237,6 @@ namespace Eater
 				break;
 			}
 		}
-	}
-
-	template<typename ..._Args>
-	inline void Delegate<_Args...>::operator+=(std::function<void(_Args...)>&& _func)
-	{
-		pFunctionList.push_back(_func);
 	}
 
 	template<typename ..._Args>

@@ -4,6 +4,14 @@
 #include "Component.h"
 #include "TypeOptionHeader.h"
 
+struct RectPoint
+{
+	float left;
+	float top;
+	float right;
+	float bottom;
+};
+
 class RectTransform : public Component
 {
 public:
@@ -15,6 +23,7 @@ public:
 
 public:
 	EATER_ENGINEDLL void SetImagePivot(RECT_PIVOT pivot_type);
+	EATER_ENGINEDLL void SetImageSize(float x, float y);
 	EATER_ENGINEDLL void SetImageSize(DirectX::SimpleMath::Vector2 image_size);
 
 	EATER_ENGINEDLL void SetPosition(float x, float y);
@@ -35,6 +44,9 @@ public:
 
 	EATER_ENGINEDLL void AddScale(float x, float y);
 	EATER_ENGINEDLL void AddScale(DirectX::SimpleMath::Vector2 scale);
+
+public:
+	EATER_ENGINEDLL const RectPoint& GetRectPoint();
 
 private:
 	void Resize(int width, int height);
@@ -65,5 +77,8 @@ private:
 	DirectX::SimpleMath::Matrix ScaleXM;
 
 	DirectX::SimpleMath::Matrix WorldXM;
+
+	//화면상의 출력 범위
+	RectPoint RectPosition;
 };
 
