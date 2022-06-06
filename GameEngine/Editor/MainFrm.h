@@ -44,9 +44,7 @@ public:
 	void CopyAssets();
 	bool CheckFolder(std::string& Path);
 
-	void CopyEditorFolder(std::string& Path,std::string& CopyPath);
 	void CopyEditorFile(std::string& Path, std::string& CopyPath);
-
 protected:  // 컨트롤 모음이 포함된 멤버입니다.
 	CToolBar        m_wndToolBar;
 	CStatusBar      m_wndStatusBar;

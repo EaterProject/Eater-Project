@@ -19,6 +19,7 @@
 #include "GameObject.h"
 #include "SceneSaveDialog.h"
 #include "SkySetting.h"
+#include "EditorManager.h"
 #include <string>
 #include <filesystem>
 #include <stdio.h>
@@ -297,15 +298,15 @@ void CMainFrame::OnSceneSetting()
 {
 	CRect rectParent;
 	CRect rect;
-
+	
 	((CMainFrame*)AfxGetMainWnd())->GetWindowRect(&rectParent);
 	SceneSetting* mScene = DialogFactory::GetFactory()->GetSceneSetting();
 	mScene->GetClientRect(rect);
-
-
+	
+	
 	float PosX = rectParent.left + (rectParent.right - rectParent.left) / 2 - rect.Width() / 2;
 	float PosY = rectParent.top + (rectParent.bottom - rectParent.top) / 2 - rect.Height() / 2;
-
+	
 	mScene->SetWindowPos(NULL, PosX, PosY, 0, 0, SWP_NOSIZE);
 	mScene->ShowWindow(SW_SHOW);
 	mScene->Setting();
@@ -367,7 +368,7 @@ void CMainFrame::OnCreateobjectCamera()
 void CMainFrame::OnCreateobjectParticle()
 {
 	RightOption* mRightOption = DialogFactory::GetFactory()->GetRightOption();
-	GameObject* Obj = EditorToolScene::Create_Particle();
+	GameObject* Obj = EditorToolScene::Create_BaseParticle();
 
 	CString Data;
 	Data = Obj->Name.c_str();

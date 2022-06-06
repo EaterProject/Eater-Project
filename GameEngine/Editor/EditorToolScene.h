@@ -28,8 +28,10 @@ public:
 	static GameObject* Create_Object(std::string MeshName);		//오브젝트 생성
 	static GameObject* Create_Terrain(std::string MeshPath, std::string mask01, std::string mask02);	//터레인 생성
 	static GameObject* Create_Light();							//라이트 생성
-	static GameObject* Create_Particle();						//파티클 생성
+	static GameObject* Create_BaseParticle();					//파티클 생성
 	static GameObject* Create_Camera();							//카메라 생성
+	static GameObject* Create_Particle(std::string Name);		//카메라 생성
+
 
 	static GameObject* Create_Box();							//Box 생성
 	static GameObject* Create_Sphere();							//Sphere 생성
@@ -48,6 +50,9 @@ public:
 public:
 	///Prefap
 	static void SavePrefap(std::string SaveFilePath, std::string SaveFileName, std::string ObjectName);
+public:
+	///Particle
+	static void LoadParticle(std::string SaveFilePath, std::string SaveFileName, std::string ObjectName);
 public:
 	///Find
 	static GameObject* FindMesh(std::string MeshName);							//매쉬를 찾는다

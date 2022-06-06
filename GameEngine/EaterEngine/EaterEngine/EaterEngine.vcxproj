@@ -244,6 +244,7 @@ copy /Y "$(ProjectDir)Network\lib\Release\*lib"  "$(TargetDir)"</Command>
     <ClInclude Include="..\..\Library\inc\TypeOptionHeader.h" />
     <ClInclude Include="Animation.h" />
     <ClInclude Include="AnimationManager.h" />
+    <ClInclude Include="Eater_LoadParticle.h" />
     <ClInclude Include="Export\Button.h" />
     <ClInclude Include="Export\Image.h" />
     <ClInclude Include="Export\RectTransform.h" />
@@ -306,6 +307,7 @@ copy /Y "$(ProjectDir)Network\lib\Release\*lib"  "$(TargetDir)"</Command>
     <ClCompile Include="Animator.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="CameraDebugKeyInput.cpp" />
+    <ClCompile Include="Eater_LoadParticle.cpp" />
     <ClCompile Include="GlobalDataManager.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Camera.cpp" />

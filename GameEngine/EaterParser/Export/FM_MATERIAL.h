@@ -1,18 +1,19 @@
 #pragma once
 #include "FormatDLL.h"
+#include <string>
 class FORMAT_PARSER_DLL FM_MATERIAL
 {
 public:
 	FM_MATERIAL() {};
 	~FM_MATERIAL() {};
 
-	const char* Name;
-	bool Alpha			= false;
-	const char* DiffuseMap	= "0";
-	const char* NormalMap	= "0";
-	const char* EmissiveMap	= "0";
-	const char* ORMMap		= "0";
+	std::string Name;
+	std::string DiffuseMap	= "0";
+	std::string NormalMap	= "0";
+	std::string EmissiveMap	= "0";
+	std::string ORMMap		= "0";
 
+	bool Alpha			= false;
 	float Emissive		= 0;
 	float Roughness		= 0;
 	float Metallic		= 0;

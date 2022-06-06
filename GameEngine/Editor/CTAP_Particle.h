@@ -32,53 +32,54 @@ public:
 	CComboBox RenderType_Combo;
 	ParticleSystem* mParticleSystem;
 
-	CEdit MaxCount_Edit;
-	CEdit DelayTime_Edit;
-	CEdit ShapeRadius_Edit;
-	CEdit TextureTiling_X_Edit , TextureTiling_Y_Edit;
-	CEdit ShapeRadius_X_Edit , ShapeRadius_Y_Edit , ShapeRadius_Z_Edit;
 	CEdit StartForce_X, StartForce_Y, StartForce_Z;
 	CEdit StartForce_X_R, StartForce_Y_R, StartForce_Z_R;
-	CEdit StartColor_min_R , StartColor_min_G, StartColor_min_B , StartColor_min_A;
-	CEdit StartColor_max_R, StartColor_max_G, StartColor_max_B, StartColor_max_A;
-	CEdit StartLifeTime , StartLifeTime_min , StartLifeTime_max;
-	CEdit StartScale, StartScale_min , StartScale_max;
-	CEdit StartRotation , StartRotation_min , StartRotation_max;
+
+	CEdit StartLifeTime_min,StartLifeTime_max;
+	CEdit StartScale_min,StartScale_max;
+	CEdit StartRotation_min,StartRotation_max;
 
 	CEdit LifeForce_X, LifeForce_Y, LifeForce_Z;
 	CEdit LifeForce_X_max, LifeForce_Y_max, LifeForce_Z_max;
-
-	CButton ShapeRadius_Check;
-	CButton StartForce_Check;
-	CButton StartColor_Check;
-	CButton StartLife_Check;
-	CButton StartScale_Check;
-	CButton StartRotation_Check;
-	CButton LifeForce_Check;
-	CEdit LifeRotation , LifeRotation_min , LifeRotation_max;
+	CEdit LifeRotation_min , LifeRotation_max;
 	
-	CButton LifeRotation_Check;
 	CEdit LifeScale_min;
 	CEdit LifeScale_max;
 	CComboBox LifeScale_Combo;
-
-	CEdit LifeColor_min_R;
-	CEdit LifeColor_min_G;
-	CEdit LifeColor_min_B;
-	CEdit LifeColor_min_A;
-	CEdit LifeColor_max_R;
-	CEdit LifeColor_max_G;
-	CEdit LifeColor_max_B;
-	CEdit LifeColor_max_A;
+	
 	CComboBox LifeColor_Combo;
-	CEdit RateOverTime_Edit;
 
-	afx_msg void OnStartColor_Button();
-	afx_msg void OnShapeRadius_Button();
-	afx_msg void OnStartForce_Button();
-	afx_msg void OnStartLifeTime_Check();
-	afx_msg void OnStartScale_Button();
-	afx_msg void OnStartRotationCheck();
-	afx_msg void OnLifeForceCheck();
-	afx_msg void OnBnClickedCheck8();
+	///시작 셋팅 변수
+	int MaxParticle;
+	float DelayTime;
+	float ShapeRadius_X;
+	float ShapeRadius_Y;
+	float ShapeRadius_Z;
+	int Tiling_X;
+	int Tiling_Y;
+	float RateOverTime;
+	CSliderCtrl Strength_Slider;
+	CString Strength_Str;
+
+
+	int StartColor_Min_Alpha;
+	int StartColor_Max_Alpha;
+	int LifeColor_Min_Alpha;
+	int LifeColor_Max_Alpha;
+
+	Vector4 StartColorMin = {0,0,0,255};
+	Vector4 StartColorMax = {0,0,0,255};
+	Vector4 LifeColorMin = {0,0,0,255};
+	Vector4 LifeColorMax = {0,0,0,255};
+	CMFCColorButton Custom_StartColor_Min_Button;
+	CMFCColorButton Custom_StartColor_Max_Button;
+	CMFCColorButton Custom_LifeColor_Min_Button;
+	CMFCColorButton Custom_LifeColor_Max_Button;
+	afx_msg void OnSaveFile();
+	afx_msg void OnCustom_StartColor_Min_Button();
+	afx_msg void OnCustom_StartColor_Max_Button();
+	afx_msg void OnCustom_LifeColor_Min_Button();
+	afx_msg void OnCustom_LifeColor_Max_Button();
+	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
+	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 };

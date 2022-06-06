@@ -14,7 +14,6 @@
 #include "FileOption.h"
 #include "LoadTerrain.h"
 #include "LoadNavMesh.h"
-#include "CreateMaterial.h"
 #include "DialogFactory.h"
 #include "SkySetting.h"
 #include <iostream>
@@ -392,12 +391,7 @@ void AssetsDialog::OnLButtonUp(UINT nFlags, CPoint point)
 		 mRightOption->ChickHirearchyDarg(point);
 		 mRightOption->ChickTapDrag(point);
 
-		 if (mRightOption->mMaterial->IsWindowVisible() == TRUE)
-		 {
-			mRightOption->mMaterial->CheckTexture(point);
-			return;
-		 }
-
+	
 		 SkySetting* mSkySetting = DialogFactory::GetFactory()->GetSkySetting();
 		 if (mSkySetting->IsWindowVisible() == TRUE)
 		 {

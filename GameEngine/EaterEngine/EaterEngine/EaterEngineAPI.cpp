@@ -53,9 +53,9 @@ void OnReSize(int X, int Y)
 	 return gGameEngine->InstanceTerrain(ObjName);
  }
 
- GameObject* Instance_Particle(std::string ObjName)
+ GameObject* Instance_Particle(std::string ObjName, std::string FileName)
  {
-	 return gGameEngine->InstanceParticle(ObjName);
+	 return gGameEngine->InstanceParticle(ObjName, FileName);
  }
 
  GameObject* Instance_Camera(std::string ObjName)
@@ -283,7 +283,57 @@ int GetMousePosY()
 
  GameObject* GetDebugCamera()
  {
-	 return gGameEngine->DebugCame;
+	 return gGameEngine->GetDebugCamera();
+ }
+
+ GameObject* GetDirectionLight()
+ {
+	 return gGameEngine->GetDirectionLight();
+ }
+
+ void Sound_Play_BGM(std::string Name)
+ {
+	 gGameEngine->Sound_Play_BGM(Name);
+ }
+
+ void Sound_Pause_BGM(bool Pause)
+ {
+	 gGameEngine->Sound_Pause_BGM(Pause);
+ }
+
+ void Sound_VolumeUP_BGM()
+ {
+	 gGameEngine->Sound_VolumeUP_BGM();
+ }
+
+ void Sound_VolumeDown_BGM()
+ {
+	 gGameEngine->Sound_VolumeDown_BGM();
+ }
+
+ void Sound_FrequencyUp_BGM()
+ {
+	 gGameEngine->Sound_FrequencyUp_BGM();
+ }
+
+ void Sound_FrequencyDown_BGM()
+ {
+	 gGameEngine->Sound_FrequencyDown_BGM();
+ }
+
+ void Sound_PitchUp_BGM()
+ {
+	 gGameEngine->Sound_PitchUp_BGM();
+ }
+
+ void Sound_PitchDown_BGM()
+ {
+	 gGameEngine->Sound_PitchDown_BGM();
+ }
+
+ void Sound_Play_BGM(std::string&& Name)
+ {
+	 gGameEngine->Sound_Play_BGM(Name);
  }
 
  /// 시간 관련

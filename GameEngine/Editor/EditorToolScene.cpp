@@ -50,12 +50,17 @@ void EditorToolScene::Awake()
 	Load("../Assets/Texture/Material");
 	Load("../Assets/Texture/Particle");
 	Load("../Assets/Texture/Environment");
+	Load("../Assets/Sound/BGM");
+	Load("../Assets/Sound/SFX");
 
 	Load("../Assets/Model/Animation");
 	Load("../Assets/Model/MeshBuffer");
 	Load("../Assets/Model/ModelData");
 	Load("../Assets/Model/Prefap");
+	Load("../Assets/Model/Particle");
 
+	
+	
 	//기본 태그 설정
 	DebugCamObject = GetMainCamera();
 	TagList.insert({ 0, "Default" });
@@ -97,8 +102,8 @@ void EditorToolScene::ThreadFunction()
 
 GameObject* EditorToolScene::Create_GameObject()
 {
-	GameObject* Object = Instance("None_GameObject");
-	Object->Name = FindMeshName("None_GameObject");
+	GameObject* Object	= Instance("None_GameObject");
+	Object->Name		= FindMeshName("None_GameObject");
 	ObjectList.insert({ Object->Name,Object });
 	return Object;
 }
@@ -125,6 +130,16 @@ GameObject* EditorToolScene::Create_Camera()
 	Cam->Name = FindMeshName("Camera");
 	ObjectList.insert({ Cam->Name, Cam });
 	return Cam;
+}
+
+GameObject* EditorToolScene::Create_Particle(std::string Name)
+{
+	GameObject* mParticle	= Instance_Particle("Particle",Name);
+	mParticle->Name			= FindMeshName(Name);
+
+	ObjectList.insert({ mParticle->Name, mParticle });
+
+	return mParticle;
 }
 
 GameObject* EditorToolScene::Create_Box()
@@ -245,6 +260,11 @@ void EditorToolScene::LoadScene(std::string LoadScenePath)
 void EditorToolScene::SavePrefap(std::string SaveFilePath, std::string SaveFileName, std::string ObjectName)
 {
 	mSaveManager->Prefap_Save(SaveFilePath, SaveFileName, FindMesh(ObjectName));
+}
+
+void EditorToolScene::LoadParticle(std::string SaveFilePath, std::string SaveFileName, std::string ObjectName)
+{
+	
 }
 
 GameObject* EditorToolScene::FindMesh(std::string MeshName)
@@ -378,7 +398,7 @@ GameObject* EditorToolScene::Create_Light()
 	return LightObject;
 }
 
-GameObject* EditorToolScene::Create_Particle()
+GameObject* EditorToolScene::Create_BaseParticle()
 {
 	std::string Name = FindMeshName("Particle");
 

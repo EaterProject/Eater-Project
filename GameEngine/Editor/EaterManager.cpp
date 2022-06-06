@@ -12,6 +12,7 @@
 #include "E_AnimationManager.h"
 #include "E_BufferManager.h"
 #include "E_ChangeManager.h"
+#include "E_ParticleManager.h"
 
 #include "EditorToolScene.h"
 #include "EditorData.h"
@@ -19,11 +20,12 @@
 
 EaterManager::EaterManager()
 {
-	mMeshManager = nullptr;
-	mAnimationManager = nullptr;
-	mMaterialManager = nullptr;
-	mBufferManager = nullptr;
-	mChangeManager = nullptr;
+	mMeshManager		= nullptr;
+	mAnimationManager	= nullptr;
+	mMaterialManager	= nullptr;
+	mBufferManager		= nullptr;
+	mChangeManager		= nullptr;
+	mParticleManager	= nullptr;
 }
 
 EaterManager::~EaterManager()
@@ -33,15 +35,20 @@ EaterManager::~EaterManager()
 	delete mMaterialManager;
 	delete mBufferManager;
 	delete mChangeManager;
+	delete mParticleManager;
 }
 
 void EaterManager::Initialize()
 {
-	mMeshManager = new E_MeshManager();
-	mAnimationManager = new E_AnimationManager();
-	mMaterialManager = new E_MaterialManager();
-	mBufferManager = new E_BufferManager();
-	mChangeManager = new E_ChangeManager();
+	mMeshManager		= new E_MeshManager();
+	mAnimationManager	= new E_AnimationManager();
+	mMaterialManager	= new E_MaterialManager();
+	mBufferManager		= new E_BufferManager();
+	mChangeManager		= new E_ChangeManager();
+	mParticleManager	= new E_ParticleManager();
+
+	mParticleManager->Initialize();
+
 }
 
 void EaterManager::CreateBaseObject()
@@ -54,18 +61,16 @@ void EaterManager::CreateBaseObject()
 
 std::string EaterManager::CutFileName(std::string FilePath)
 {
-	size_t start = FilePath.rfind("/") + 1;
-	size_t end = FilePath.rfind(".") - start;
+	size_t start	= FilePath.rfind("/") + 1;
+	size_t end		= FilePath.rfind(".") - start;
 	std::string FileType = FilePath.substr(start, end);
 
 	if (FileType.rfind('+') != std::string::npos)
 	{
-		isSkin = true;
-		SkinName = FileType.substr(0, FileType.rfind('+'));
-		AnimationName = FileType.substr(FileType.rfind('+'), FileType.length());
+		isSkin			= true;
+		SkinName		= FileType.substr(0, FileType.rfind('+'));
+		AnimationName	= FileType.substr(FileType.rfind('+'), FileType.length());
 	}
-
-
 	return FileType;
 }
 
@@ -132,12 +137,6 @@ void EaterManager::Load_FBX_File_MeshBuffer(std::string& Path, ParserData::CMode
 	mBufferManager->SetFileName(Path);
 	mBufferManager->ChangeEaterFile_Pos(FBXMesh, ChangeFileName);
 	//Demo::MeshLoad(FileName);
-}
-
-void EaterManager::Load_FBX_File_NavMeshBuffer(std::string& Path, ParserData::CModel* FBXMesh, std::string ChangeFileName)
-{
-	mBufferManager->SetFileName(Path);
-	mBufferManager->ChangeEaterFile_NavMEsh(FBXMesh, ChangeFileName);
 }
 
 void EaterManager::Load_GameObject_File(GameObject* Object, ObjectOption* mOption)
@@ -207,7 +206,19 @@ void EaterManager::Load_Animation_File(std::string& FileName,std::string& Change
 	mAnimationManager->ChangeEaterFile(FileName, ChangeName,min,max);
 }
 
-void EaterManager::Create_Material(InstanceMaterial* m)
+void EaterManager::Create_Material_File(GameObject* Object, std::string& FilePath)
+{
+	mMaterialManager->SetFileName(FilePath);
+	mMaterialManager->CreateEaterFile(Object);
+}
+
+void EaterManager::Create_Particle_File(GameObject* Object, std::string& FilePath)
+{
+	mParticleManager->SetFileName(FilePath);
+	mParticleManager->CreateEaterFile(Object);
+}
+
+void EaterManager::Create_Material_File(InstanceMaterial* m)
 {
 	mMaterialManager->Create(m);
 }

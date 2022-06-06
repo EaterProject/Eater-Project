@@ -12,7 +12,6 @@
 #include "EditorToolScene.h"
 #include "CamAnimation.h"
 #include "SceneSaveDialog.h"
-#include "CreateMaterial.h"
 #include "EaterEngineAPI.h"
 #include "TypeOptionHeader.h"
 #include "DialogFactory.h"
@@ -67,7 +66,6 @@ BEGIN_MESSAGE_MAP(FileOption, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON6, &FileOption::OnAddCollider)
 	ON_BN_CLICKED(IDC_BUTTON8, &FileOption::OnAddRigidbody)
 	ON_BN_CLICKED(IDC_BUTTON16, &FileOption::OnAddLight)
-	ON_BN_CLICKED(IDC_BUTTON7, &FileOption::OnCreateMaterial)
 END_MESSAGE_MAP()
 
 
@@ -112,7 +110,7 @@ void FileOption::OnCreateLight()
 
 void FileOption::OnCreateParticle()
 {
-	GameObject* Object = EditorToolScene::Create_Particle();
+	GameObject* Object = EditorToolScene::Create_BaseParticle();
 	mRightOption = DialogFactory::GetFactory()->GetRightOption();
 	HTREEITEM Top = mRightOption->HirearchyTree.InsertItem(ChangeToCString(Object->Name));
 	mRightOption->Create_Hirearchy_Item(Object, Top);
@@ -225,18 +223,4 @@ void FileOption::OnAddLight()
 	}
 }
 
-
-void FileOption::OnCreateMaterial()
-{
-	mMaterial->ShowWindow(SW_SHOW);
-
-	RECT MyDig;
-	RECT Temp;
-	this->GetWindowRect(&MyDig);
-
-	Temp= MyDig;
-	Temp.left = MyDig.right;
-	mMaterial->SetWindowPos(NULL, Temp.left, Temp.top, Temp.right, Temp.bottom, SWP_NOSIZE);
-	//mLoadNavMesh->MoveWindow(&NavMeshWindow);
-}
 

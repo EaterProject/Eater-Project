@@ -1,0 +1,70 @@
+[TIME] 04:10:51 [FILE] D3D11Graphic.cpp [FUNC] D3D11Graphic::CreateTextureBuffer [LINE] 210
+[ Graphic ][ Create ][ ShaderResourceView ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+[ERROR] 구성 요소를 찾을 수 없습니다.
+
+[TIME] 04:10:51 [FILE] TextureManager.cpp [FUNC] TextureManager::LoadTexture [LINE] 34
+[ Engine ][ Create ][ Texture Buffer ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+
+[TIME] 16:56:21 [FILE] D3D11Graphic.cpp [FUNC] D3D11Graphic::CreateTextureBuffer [LINE] 210
+[ Graphic ][ Create ][ ShaderResourceView ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+[ERROR] 구성 요소를 찾을 수 없습니다.
+
+[TIME] 16:56:21 [FILE] TextureManager.cpp [FUNC] TextureManager::LoadTexture [LINE] 34
+[ Engine ][ Create ][ Texture Buffer ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+
+[TIME] 19:00:15 [FILE] D3D11Graphic.cpp [FUNC] D3D11Graphic::CreateTextureBuffer [LINE] 210
+[ Graphic ][ Create ][ ShaderResourceView ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+[ERROR] 구성 요소를 찾을 수 없습니다.
+
+[TIME] 19:00:15 [FILE] TextureManager.cpp [FUNC] TextureManager::LoadTexture [LINE] 34
+[ Engine ][ Create ][ Texture Buffer ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+
+[TIME] 19:14:36 [FILE] D3D11Graphic.cpp [FUNC] D3D11Graphic::CreateTextureBuffer [LINE] 210
+[ Graphic ][ Create ][ ShaderResourceView ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+[ERROR] 구성 요소를 찾을 수 없습니다.
+
+[TIME] 19:14:36 [FILE] TextureManager.cpp [FUNC] TextureManager::LoadTexture [LINE] 34
+[ Engine ][ Create ][ Texture Buffer ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+
+[TIME] 19:17:49 [FILE] D3D11Graphic.cpp [FUNC] D3D11Graphic::CreateTextureBuffer [LINE] 210
+[ Graphic ][ Create ][ ShaderResourceView ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+[ERROR] 구성 요소를 찾을 수 없습니다.
+
+[TIME] 19:17:49 [FILE] TextureManager.cpp [FUNC] TextureManager::LoadTexture [LINE] 34
+[ Engine ][ Create ][ Texture Buffer ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+
+[TIME] 20:57:26 [FILE] D3D11Graphic.cpp [FUNC] D3D11Graphic::CreateTextureBuffer [LINE] 210
+[ Graphic ][ Create ][ ShaderResourceView ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+[ERROR] 구성 요소를 찾을 수 없습니다.
+
+[TIME] 20:57:26 [FILE] TextureManager.cpp [FUNC] TextureManager::LoadTexture [LINE] 34
+[ Engine ][ Create ][ Texture Buffer ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+
+[TIME] 21:11:14 [FILE] D3D11Graphic.cpp [FUNC] D3D11Graphic::CreateTextureBuffer [LINE] 210
+[ Graphic ][ Create ][ ShaderResourceView ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+[ERROR] 구성 요소를 찾을 수 없습니다.
+
+[TIME] 21:11:14 [FILE] TextureManager.cpp [FUNC] TextureManager::LoadTexture [LINE] 34
+[ Engine ][ Create ][ Texture Buffer ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+
+[TIME] 21:56:08 [FILE] D3D11Graphic.cpp [FUNC] D3D11Graphic::CreateTextureBuffer [LINE] 210
+[ Graphic ][ Create ][ ShaderResourceView ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+[ERROR] 구성 요소를 찾을 수 없습니다.
+
+[TIME] 21:56:08 [FILE] TextureManager.cpp [FUNC] TextureManager::LoadTexture [LINE] 34
+[ Engine ][ Create ][ Texture Buffer ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+
+[TIME] 22:16:13 [FILE] D3D11Graphic.cpp [FUNC] D3D11Graphic::CreateTextureBuffer [LINE] 210
+[ Graphic ][ Create ][ ShaderResourceView ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+[ERROR] 구성 요소를 찾을 수 없습니다.
+
+[TIME] 22:16:13 [FILE] TextureManager.cpp [FUNC] TextureManager::LoadTexture [LINE] 34
+[ Engine ][ Create ][ Texture Buffer ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+
+[TIME] 23:07:17 [FILE] D3D11Graphic.cpp [FUNC] D3D11Graphic::CreateTextureBuffer [LINE] 210
+[ Graphic ][ Create ][ ShaderResourceView ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+[ERROR] 구성 요소를 찾을 수 없습니다.
+
+[TIME] 23:07:17 [FILE] TextureManager.cpp [FUNC] TextureManager::LoadTexture [LINE] 34
+[ Engine ][ Create ][ Texture Buffer ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+

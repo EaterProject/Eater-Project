@@ -27,7 +27,7 @@ extern "C" EATER_ENGINEDLL void OnReSize(int X,int Y);				//윈도우 사이즈 재조정
 ///게임 오브젝트 생성
 extern "C" EATER_ENGINEDLL GameObject*	Instance(std::string ObjName= "GameObject");		//오브젝트 생성
 extern "C" EATER_ENGINEDLL GameObject*	Instance_Terrain(std::string ObjName= "GameObject");	//터레인 오브젝트 생성
-extern "C" EATER_ENGINEDLL GameObject*	Instance_Particle(std::string ObjName= "GameObject");//파티클 오브젝트 생성
+extern "C" EATER_ENGINEDLL GameObject*	Instance_Particle(std::string ObjName= "GameObject",std::string FileName = "Default");//파티클 오브젝트 생성
 extern "C" EATER_ENGINEDLL GameObject*	Instance_Camera(std::string ObjName= "GameObject");//오브젝트 생성
 extern "C" EATER_ENGINEDLL GameObject*	InstanceLight(std::string ObjName= "Light", LIGHT_TYPE type = LIGHT_TYPE::DIRECTION_LIGHT);//오브젝트 생성
 extern "C" EATER_ENGINEDLL GameObject*	InstanceUI(std::string ObjName= "UI");//오브젝트 생성
@@ -90,8 +90,28 @@ extern "C" EATER_ENGINEDLL void WindowFocus(bool focus);		//현재 윈도우 포커싱 �
 extern "C" EATER_ENGINEDLL GameObject* Picking(int x, int y);	//현재 윈도우 클릭 지점
 
 ///카메라 관련
-extern "C" EATER_ENGINEDLL GameObject * GetMainCamera();	//현재 메인 카메라를 가져온다
-extern "C" EATER_ENGINEDLL GameObject * GetDebugCamera();	//현재 메인 카메라를 가져온다
+extern "C" EATER_ENGINEDLL GameObject * GetMainCamera();		//현재 메인 카메라를 가져온다
+extern "C" EATER_ENGINEDLL GameObject * GetDebugCamera();		//현재 메인 카메라를 가져온다
+extern "C" EATER_ENGINEDLL GameObject * GetDirectionLight();	//현재 메인 카메라를 가져온다
+
+///사운드 관련
+extern "C" EATER_ENGINEDLL void Sound_Play_BGM(std::string Name);
+extern "C" EATER_ENGINEDLL void Sound_Pause_BGM(bool Pause);
+extern "C" EATER_ENGINEDLL void Sound_VolumeUP_BGM();
+extern "C" EATER_ENGINEDLL void Sound_VolumeDown_BGM();
+extern "C" EATER_ENGINEDLL void Sound_FrequencyUp_BGM();
+extern "C" EATER_ENGINEDLL void Sound_FrequencyDown_BGM();
+extern "C" EATER_ENGINEDLL void Sound_PitchUp_BGM();
+extern "C" EATER_ENGINEDLL void Sound_PitchDown_BGM();
+
+//void Sound_Play_BGM(std::string& SoundName);
+//void Sound_Pause_BGM(bool Pause);
+//void Sound_VolumeUP_BGM();
+//void Sound_VolumeDown_BGM();
+//void Sound_FrequencyUp_BGM();
+//void Sound_FrequencyDown_BGM();
+//void Sound_PitchUp_BGM();
+//void Sound_PitchDown_BGM();
 
 ///시간 관련
 extern "C" EATER_ENGINEDLL float GetDeltaTime();

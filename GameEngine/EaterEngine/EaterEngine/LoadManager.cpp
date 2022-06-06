@@ -17,7 +17,7 @@
 
 #include "MeshManager.h"
 #include "MaterialManager.h"
-
+#include "EaterSound.h"
 #include "Profiler/Profiler.h"
 
 
@@ -34,6 +34,7 @@ std::map<std::string, Animation*>			LoadManager::AnimationList;
 std::map<std::string, CameraAnimation*>		LoadManager::CamAnimationList;
 std::map<std::string, ColliderBuffer*>		LoadManager::ColliderBufferList;		
 std::map<std::string, GameObject*>			LoadManager::PrefapList;
+std::map<std::string, LoadParticleData*>	LoadManager::ParticleList;
 
 LoadManager::LoadManager()
 {
@@ -61,6 +62,8 @@ void LoadManager::Initialize(GraphicEngineManager* graphic, CRITICAL_SECTION* _c
 
 	mTexture = new TextureManager();
 	mTexture->Initialize(graphic, _cs);
+
+	mSound = EaterSound::GetInstance();
 }
 
 void LoadManager::Release()
@@ -342,6 +345,22 @@ AnimationBuffer* LoadManager::GetAnimationBuffer(std::string Path)
 	return nullptr;
 }
 
+LoadParticleData* LoadManager::GetParticle(std::string Path)
+{
+	std::map<std::string, LoadParticleData*>::iterator End_it	= ParticleList.end();
+	std::map<std::string, LoadParticleData*>::iterator Find_it  = ParticleList.find(Path);
+	if (End_it == Find_it)
+	{
+		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ ERROR ][ Engine ][ GetMesh ] '%s'가 없습니다.", Path.c_str());
+		return nullptr;
+	}
+	else
+	{
+		return Find_it->second;
+	}
+	return nullptr;
+}
+
 CameraAnimation* LoadManager::GetCamAnimation(std::string Path)
 {
 	std::map<std::string, CameraAnimation*>::iterator End_it = CamAnimationList.end();
@@ -490,7 +509,7 @@ void LoadManager::LoadFile(std::string& Path, UINT MODE)
 		//텍스쳐 로드
 		mTexture->LoadTexture(Path);
 	}
-	else if(Type == "fbx")
+	else if(Type == "fbx" || Type == "FBX")
 	{
 		//FBX로드
 		mFBX->Load(Path, MODE);
@@ -519,6 +538,32 @@ void LoadManager::LoadFile(std::string& Path, UINT MODE)
 	else if (Type == "Prefap")
 	{
 		mEATER->LoadPrefap(Path);
+	}
+	else if (Type == "mp3" || Type == "wav")
+	{
+		std::size_t Start		= Path.rfind('/') + 1;
+		std::size_t End			= Path.rfind('.') - Start;
+		std::string FileName	= Path.substr(Start, End);
+
+		Start	= 0;
+		End		= Path.rfind('/')+1;
+		std::string FilePath	= Path.substr(Start, End);
+
+
+		if (Path.rfind("BGM") == std::string::npos)
+		{
+			mSound->SetSoundFolderPath(Sound_Category::SFX, FilePath);
+			mSound->LoadSound(Sound_Category::SFX, FileName, FileName + "." + Type, false);
+		}
+		else
+		{
+			mSound->SetSoundFolderPath(Sound_Category::BGM, FilePath);
+			mSound->LoadSound(Sound_Category::BGM, FileName, FileName+"."+Type,true);
+		}
+	}
+	else if (Type == "Particle")
+	{
+		mEATER->LoadParticle(Path);
 	}
 }
 

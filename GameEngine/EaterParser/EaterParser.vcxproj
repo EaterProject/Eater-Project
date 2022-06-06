@@ -183,6 +183,7 @@ copy /Y "$(ProjectDir)Export\*.h" "$(SolutionDir)Library\inc\EATER"</Command>
     <ClInclude Include="Export\FM_INDEX.h" />
     <ClInclude Include="Export\FM_INTERFACE.h" />
     <ClInclude Include="Export\FM_MATERIAL.h" />
+    <ClInclude Include="Export\FM_PARTICLE.h" />
     <ClInclude Include="Export\FM_VERTEX.h" />
     <ClInclude Include="FormatDLL.h" />
     <ClInclude Include="EaterList.h" />
@@ -201,6 +202,7 @@ copy /Y "$(ProjectDir)Export\*.h" "$(SolutionDir)Library\inc\EATER"</Command>
     <ClCompile Include="FM_INDEX.cpp" />
     <ClCompile Include="FM_INTERFACE.cpp" />
     <ClCompile Include="FM_MATERIAL.cpp" />
+    <ClCompile Include="FM_PARTICLE.cpp" />
     <ClCompile Include="FM_VERTEX.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
