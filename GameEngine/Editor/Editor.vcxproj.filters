@@ -154,9 +154,6 @@
     <Filter Include="소스 파일\MFC\Dialog\Option">
       <UniqueIdentifier>{7bce9bd8-c754-4208-91e1-06581dee9867}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\MFC\Dialog\Option\Material">
-      <UniqueIdentifier>{41162ea8-57b7-4b4f-888e-f4c9c5868e23}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\MFC\Dialog\Option\Loading">
       <UniqueIdentifier>{d75bf0cc-b2b0-40a4-8468-23a3724434c1}</UniqueIdentifier>
     </Filter>
@@ -171,6 +168,12 @@
     </Filter>
     <Filter Include="소스 파일\MFC\Dialog\Option\SkySetting">
       <UniqueIdentifier>{b72025cf-5e8e-4a67-9c2a-c39b976ecda0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\Eater\EaterParticle">
+      <UniqueIdentifier>{8f6b5db4-b1d5-417f-a459-d852175ed2df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\Eater\EaterInterface">
+      <UniqueIdentifier>{375afa2a-81b6-4da0-b72a-c255d1dba0b6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -288,9 +291,6 @@
     <ClInclude Include="LoadNavMesh.h">
       <Filter>소스 파일\MFC\Dialog\Assets\ChangeDataType\LoadNavMesh</Filter>
     </ClInclude>
-    <ClInclude Include="CreateMaterial.h">
-      <Filter>소스 파일\MFC\Dialog\Option\Material</Filter>
-    </ClInclude>
     <ClInclude Include="AssetsDialog.h">
       <Filter>소스 파일\MFC\Dialog\Assets\AssetsDialog</Filter>
     </ClInclude>
@@ -308,6 +308,12 @@
     </ClInclude>
     <ClInclude Include="SkySetting.h">
       <Filter>소스 파일\MFC\Dialog\Option\SkySetting</Filter>
+    </ClInclude>
+    <ClInclude Include="E_ParticleManager.h">
+      <Filter>소스 파일\Manager\Eater\EaterParticle</Filter>
+    </ClInclude>
+    <ClInclude Include="E_interface.h">
+      <Filter>소스 파일\Manager\Eater\EaterInterface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -416,9 +422,6 @@
     <ClCompile Include="LoadNavMesh.cpp">
       <Filter>소스 파일\MFC\Dialog\Assets\ChangeDataType\LoadNavMesh</Filter>
     </ClCompile>
-    <ClCompile Include="CreateMaterial.cpp">
-      <Filter>소스 파일\MFC\Dialog\Option\Material</Filter>
-    </ClCompile>
     <ClCompile Include="AssetsDialog.cpp">
       <Filter>소스 파일\MFC\Dialog\Assets\AssetsDialog</Filter>
     </ClCompile>
@@ -433,6 +436,12 @@
     </ClCompile>
     <ClCompile Include="SkySetting.cpp">
       <Filter>소스 파일\MFC\Dialog\Option\SkySetting</Filter>
+    </ClCompile>
+    <ClCompile Include="E_ParticleManager.cpp">
+      <Filter>소스 파일\Manager\Eater\EaterParticle</Filter>
+    </ClCompile>
+    <ClCompile Include="E_Interface.cpp">
+      <Filter>소스 파일\Manager\Eater\EaterInterface</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

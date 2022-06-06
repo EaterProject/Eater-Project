@@ -7,6 +7,7 @@
 /// </summary>
 
 #include "EaterEngineDLL.h"
+#include "TypeOptionHeader.h"
 
 class TimeManager;
 class KeyinputManager;

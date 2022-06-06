@@ -35,6 +35,9 @@ public:
 	void OpenEaterFile(std::string Path, int Type);
 	void OpenEaterGameObject(GameObject* Object, ObjectOption* Option);
 	void CreateMaterialData(InstanceMaterial* m);
+
+	void CreateMaterialData(GameObject* Obj, std::string& FilePath);
+	void CreateParticleData(GameObject* Obj, std::string& FilePath);
 private:
 	void CreateAssetsFile();
 	void CreateBaseObject();

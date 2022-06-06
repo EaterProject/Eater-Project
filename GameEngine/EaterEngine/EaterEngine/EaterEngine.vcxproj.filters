@@ -187,6 +187,9 @@
     <Filter Include="소스 파일\Component\UI\Image">
       <UniqueIdentifier>{4b56ed3a-fc26-4556-81c5-ef4ebf39218b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Manager\LoadManager\EATER\EaterParticle">
+      <UniqueIdentifier>{e605382d-1908-4cb3-9486-19ab0093c004}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -369,6 +372,9 @@
     <ClInclude Include="Export\RectTransform.h">
       <Filter>소스 파일\Component\UI\Transform</Filter>
     </ClInclude>
+    <ClInclude Include="Eater_LoadParticle.h">
+      <Filter>소스 파일\Manager\LoadManager\EATER\EaterParticle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -529,6 +535,9 @@
     </ClCompile>
     <ClCompile Include="UIManager.cpp">
       <Filter>소스 파일\Manager\UIManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Eater_LoadParticle.cpp">
+      <Filter>소스 파일\Manager\LoadManager\EATER\EaterParticle</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

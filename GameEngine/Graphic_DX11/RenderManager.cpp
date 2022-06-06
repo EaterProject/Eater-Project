@@ -869,7 +869,7 @@ void RenderManager::ChangeUIRenderData(MeshData* meshData)
 	RenderData* convertRenderData = (RenderData*)meshData->Render_Data;
 
 	// Render Data Àç¼³Á¤..
-	convertRenderData->m_UI->m_Albedo = (ID3D11ShaderResourceView*)meshData->UI_Buffer->Albedo;
+	convertRenderData->m_UI->m_Albedo = (ID3D11ShaderResourceView*)meshData->UI_Buffer->Albedo->pTextureBuf;
 }
 
 void RenderManager::ChangeUnRenderData(MeshData* meshData)

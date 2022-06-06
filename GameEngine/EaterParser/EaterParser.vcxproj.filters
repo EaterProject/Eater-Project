@@ -49,6 +49,9 @@
     <Filter Include="소스 파일\OutPutData\FM_INDEX">
       <UniqueIdentifier>{54711980-4bc9-453f-a96e-2ecc2807c623}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\OutPutData\FM_PARTICLE">
+      <UniqueIdentifier>{02cbdc04-9db9-41a8-97fc-d50999436e26}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -87,6 +90,9 @@
     <ClInclude Include="Export\FM_ANIMATION.h">
       <Filter>소스 파일\OutPutData\FM_ANIMATION</Filter>
     </ClInclude>
+    <ClInclude Include="Export\FM_PARTICLE.h">
+      <Filter>소스 파일\OutPutData\FM_PARTICLE</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -118,6 +124,9 @@
     </ClCompile>
     <ClCompile Include="FM_INDEX.cpp">
       <Filter>소스 파일\OutPutData\FM_INDEX</Filter>
+    </ClCompile>
+    <ClCompile Include="FM_PARTICLE.cpp">
+      <Filter>소스 파일\OutPutData\FM_PARTICLE</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

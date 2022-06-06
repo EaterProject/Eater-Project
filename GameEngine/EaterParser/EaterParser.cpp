@@ -8,6 +8,7 @@
 #include "FM_INDEX.h"
 #include "FM_VERTEX.h"
 #include "FM_MATERIAL.h"
+#include "FM_PARTICLE.h"
 
 #define _CRT_SECURE_NO_WARNINGS
 
@@ -17,6 +18,7 @@ EaterParser::EaterParser()
 	mMaterial_Data		= new FM_MATERIAL();
 	mVertex_Data		= new FM_VERTEX();
 	mAnimation_Data		= new FM_ANIMATION();
+	mParticle_Data		= new FM_PARTICLE();
 }
 
 EaterParser::~EaterParser()
@@ -25,6 +27,7 @@ EaterParser::~EaterParser()
 	delete mMaterial_Data;
 	delete mVertex_Data;
 	delete mIndex_Data;
+	delete mParticle_Data;
 }
 
 void EaterParser::OPEN_FILE(std::string& Path)
@@ -325,14 +328,36 @@ void EaterParser::SetIndex(int& x, int& y, int& z)
 
 void EaterParser::SaveMaterial()
 {
+	//메테리얼 데이터를 저장
 	std::string SetData = "";
 	SetData += NODE_TYPE + std::string("EATERMAT") + LINE_TYPE;
 	SetData += MAP_TYPE + std::string("MaterialName") + SP_TYPE + mMaterial_Data->Name + LINE_TYPE;
 	SetData += MAP_TYPE + std::string("Alpha") + SP_TYPE + std::to_string(mMaterial_Data->Alpha) + LINE_TYPE;
-	SetData += MAP_TYPE + std::string("DiffuseMap") + SP_TYPE + mMaterial_Data->DiffuseMap + LINE_TYPE;
-	SetData += MAP_TYPE + std::string("NormalMap") + SP_TYPE + mMaterial_Data->NormalMap + LINE_TYPE;
-	SetData += MAP_TYPE + std::string("EmissiveMap") + SP_TYPE + mMaterial_Data->EmissiveMap + LINE_TYPE;
-	SetData += MAP_TYPE + std::string("ORMMap") + SP_TYPE + mMaterial_Data->ORMMap + LINE_TYPE;
+
+	if (mMaterial_Data->DiffuseMap == "")
+	{
+		SetData += MAP_TYPE + std::string("DiffuseMap") + SP_TYPE + std::string("0") + LINE_TYPE;
+	}
+	else{SetData += MAP_TYPE + std::string("DiffuseMap") + SP_TYPE + mMaterial_Data->DiffuseMap + LINE_TYPE;}
+
+	if (mMaterial_Data->NormalMap == "")
+	{
+		SetData += MAP_TYPE + std::string("NormalMap") + SP_TYPE + std::string("0") + LINE_TYPE;
+	}
+	else { SetData += MAP_TYPE + std::string("NormalMap") + SP_TYPE + mMaterial_Data->NormalMap + LINE_TYPE; }
+
+	if (mMaterial_Data->EmissiveMap == "")
+	{
+		SetData += MAP_TYPE + std::string("EmissiveMap") + SP_TYPE + std::string("0") + LINE_TYPE;
+	}
+	else { SetData += MAP_TYPE + std::string("EmissiveMap") + SP_TYPE + mMaterial_Data->EmissiveMap + LINE_TYPE; }
+
+	if (mMaterial_Data->ORMMap == "")
+	{
+		SetData += MAP_TYPE + std::string("ORMMap") + SP_TYPE + std::string("0") + LINE_TYPE;
+	}
+	else { SetData += MAP_TYPE + std::string("ORMMap") + SP_TYPE + mMaterial_Data->ORMMap + LINE_TYPE; }
+
 	SetData += MAP_TYPE + std::string("Emissive") + SP_TYPE + std::to_string(mMaterial_Data->Emissive) + LINE_TYPE;
 	SetData += MAP_TYPE + std::string("Roughness") + SP_TYPE + std::to_string(mMaterial_Data->Roughness) + LINE_TYPE;
 	SetData += MAP_TYPE + std::string("Metallic") + SP_TYPE + std::to_string(mMaterial_Data->Metallic) + LINE_TYPE;
@@ -346,6 +371,79 @@ void EaterParser::SaveMaterial()
 	SetData += MAP_TYPE + std::string("LimColor_B") + SP_TYPE + std::to_string(mMaterial_Data->LimColor_B) + LINE_TYPE;
 	SetData += MAP_TYPE + std::string("LimFactor") + SP_TYPE + std::to_string(mMaterial_Data->LimFactor) + LINE_TYPE;
 	SetData += MAP_TYPE + std::string("LimWidth") + SP_TYPE + std::to_string(mMaterial_Data->LimWidth) + LINE_TYPE;
+	fputs(SetData.c_str(), WriteFile);
+}
+
+void EaterParser::SaveParticle()
+{
+	//파티클 데이터를 저장
+	std::string SetData = "";
+	SetData += NODE_TYPE + std::string("EATER_PARTICLE") + LINE_TYPE;
+	SetData += MAP_TYPE + std::string("TextureName") + SP_TYPE + mParticle_Data->TextureName + LINE_TYPE;
+	SetData += MAP_TYPE + std::string("RenderType") + SP_TYPE + std::to_string(mParticle_Data->Particle_Render_Type) + LINE_TYPE;
+	SetData += MAP_TYPE + std::string("ColorType") + SP_TYPE + std::to_string(mParticle_Data->Particle_LifeTime_Color_Type) + LINE_TYPE;
+	SetData += MAP_TYPE + std::string("ScaleType") + SP_TYPE + std::to_string(mParticle_Data->Particle_LifeTime_Scale_Type) + LINE_TYPE;
+	SetData += MAP_TYPE + std::string("MaxParticle") + SP_TYPE + std::to_string(mParticle_Data->MaxParticle) + LINE_TYPE;
+	SetData += MAP_TYPE + std::string("DelayTime") + SP_TYPE + std::to_string(mParticle_Data->DelayTime) + LINE_TYPE;
+	SetData += MAP_TYPE + std::string("RateOverTime") + SP_TYPE + std::to_string(mParticle_Data->RateOverTime) + LINE_TYPE;
+	SetData += MAP_TYPE + std::string("Strength") + SP_TYPE + std::to_string(mParticle_Data->Strength) + LINE_TYPE;
+
+	//생성 범위
+	SetData += LIST_TYPE + std::string("Radius") + SP_TYPE + std::to_string(1) + SP_TYPE + std::to_string(3) + LINE_TYPE;
+	SetData += std::to_string(mParticle_Data->ShapeRadius_X) + SP_TYPE + std::to_string(mParticle_Data->ShapeRadius_Y) + SP_TYPE + std::to_string(mParticle_Data->ShapeRadius_Z) + LINE_TYPE;
+
+	//텍스쳐 타일링
+	SetData += LIST_TYPE + std::string("Tiling") + SP_TYPE + std::to_string(1) + SP_TYPE + std::to_string(2) + LINE_TYPE;
+	SetData += std::to_string(mParticle_Data->TextureTiling_X) + SP_TYPE + std::to_string(mParticle_Data->TextureTiling_Y)+ LINE_TYPE;
+	//시작 방향
+	SetData += LIST_TYPE + std::string("StartForce") + SP_TYPE + std::to_string(2) + SP_TYPE + std::to_string(3) + LINE_TYPE;
+	SetData += std::to_string(mParticle_Data->StartForce_Min_X) + SP_TYPE + std::to_string(mParticle_Data->StartForce_Min_Y) + SP_TYPE + std::to_string(mParticle_Data->StartForce_Min_Z) + LINE_TYPE;
+	SetData += std::to_string(mParticle_Data->StartForce_Max_X) + SP_TYPE + std::to_string(mParticle_Data->StartForce_Max_Y) + SP_TYPE + std::to_string(mParticle_Data->StartForce_Max_Z) + LINE_TYPE;
+	//시작 색깔
+	SetData += LIST_TYPE + std::string("StartColor") + SP_TYPE + std::to_string(2) + SP_TYPE + std::to_string(4) + LINE_TYPE;
+	SetData += std::to_string(mParticle_Data->StartColor_Min_R) + SP_TYPE;
+	SetData += std::to_string(mParticle_Data->StartColor_Min_G) + SP_TYPE;
+	SetData += std::to_string(mParticle_Data->StartColor_Min_B) + SP_TYPE;
+	SetData += std::to_string(mParticle_Data->StartColor_Min_A) + LINE_TYPE;
+	SetData += std::to_string(mParticle_Data->StartColor_Max_R) + SP_TYPE;
+	SetData += std::to_string(mParticle_Data->StartColor_Max_G) + SP_TYPE;
+	SetData += std::to_string(mParticle_Data->StartColor_Max_B) + SP_TYPE;
+	SetData += std::to_string(mParticle_Data->StartColor_Max_A) + LINE_TYPE;
+	//생성 시간
+	SetData += LIST_TYPE + std::string("StartLifeTime") + SP_TYPE + std::to_string(1) + SP_TYPE + std::to_string(2) + LINE_TYPE;
+	SetData += std::to_string(mParticle_Data->StartLifeTime_Min) + SP_TYPE+ std::to_string(mParticle_Data->StartLifeTime_Max) + LINE_TYPE;
+	//생성 크기
+	SetData += LIST_TYPE + std::string("StartScale") + SP_TYPE + std::to_string(1) + SP_TYPE + std::to_string(2) + LINE_TYPE;
+	SetData += std::to_string(mParticle_Data->StartScale_Min) + SP_TYPE + std::to_string(mParticle_Data->StartScale_Max) + LINE_TYPE;
+	//생성 회전
+	SetData += LIST_TYPE + std::string("StartRotation") + SP_TYPE + std::to_string(1) + SP_TYPE + std::to_string(2) + LINE_TYPE;
+	SetData += std::to_string(mParticle_Data->StartRotation_Min) + SP_TYPE + std::to_string(mParticle_Data->StartRotation_Max) + LINE_TYPE;
+	//생성 후 방향
+	SetData += LIST_TYPE + std::string("LifeForce") + SP_TYPE + std::to_string(2) + SP_TYPE + std::to_string(3) + LINE_TYPE;
+	SetData += std::to_string(mParticle_Data->LifeForce_Min_X) + SP_TYPE;
+	SetData += std::to_string(mParticle_Data->LifeForce_Min_Y) + SP_TYPE;
+	SetData += std::to_string(mParticle_Data->LifeForce_Min_Z) + LINE_TYPE;
+	SetData += std::to_string(mParticle_Data->LifeForce_Max_X) + SP_TYPE;
+	SetData += std::to_string(mParticle_Data->LifeForce_Max_Y) + SP_TYPE;
+	SetData += std::to_string(mParticle_Data->LifeForce_Max_Z) + LINE_TYPE;
+	//생성 후 색깔
+	SetData += LIST_TYPE + std::string("LifeColor") + SP_TYPE + std::to_string(2) + SP_TYPE + std::to_string(4) + LINE_TYPE;
+	SetData += std::to_string(mParticle_Data->LifeColor_Min_R) + SP_TYPE;
+	SetData += std::to_string(mParticle_Data->LifeColor_Min_G) + SP_TYPE;
+	SetData += std::to_string(mParticle_Data->LifeColor_Min_B) + SP_TYPE;
+	SetData += std::to_string(mParticle_Data->LifeColor_Min_A) + LINE_TYPE;
+	SetData += std::to_string(mParticle_Data->LifeColor_Max_R) + SP_TYPE;
+	SetData += std::to_string(mParticle_Data->LifeColor_Max_G) + SP_TYPE;
+	SetData += std::to_string(mParticle_Data->LifeColor_Max_B) + SP_TYPE;
+	SetData += std::to_string(mParticle_Data->LifeColor_Max_A) + LINE_TYPE;
+	//생성 후 크기
+	SetData += LIST_TYPE + std::string("LifeScale") + SP_TYPE + std::to_string(1) + SP_TYPE + std::to_string(2) + LINE_TYPE;
+	SetData += std::to_string(mParticle_Data->LifeScale_Min) + SP_TYPE;
+	SetData += std::to_string(mParticle_Data->LifeScale_Max) + LINE_TYPE;
+	//생성 후 회전
+	SetData += LIST_TYPE + std::string("LifeRotation") + SP_TYPE + std::to_string(1) + SP_TYPE + std::to_string(2) + LINE_TYPE;
+	SetData += std::to_string(mParticle_Data->LifeRotation_Min) + SP_TYPE;
+	SetData += std::to_string(mParticle_Data->LifeRotation_Max) + LINE_TYPE;
 	fputs(SetData.c_str(), WriteFile);
 }
 

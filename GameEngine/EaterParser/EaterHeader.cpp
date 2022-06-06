@@ -94,6 +94,11 @@ void EATER_CLOSE_CHANGE_FILE(std::string FileName, std::string OutPath, std::str
 	 Parser->SaveMaterial();
  }
 
+ void SET_SAVE_PARTICLE()
+ {
+	 Parser->SaveParticle();
+ }
+
  FM_MATERIAL* GET_FORMAT_MATERIAL()
  {
 	 Parser->mMaterial_Data->ReSet();
@@ -114,6 +119,11 @@ void EATER_CLOSE_CHANGE_FILE(std::string FileName, std::string OutPath, std::str
  FM_INDEX* GET_FORMAT_INDEX()
  {
 	 return  Parser->mIndex_Data;
+ }
+
+ FM_PARTICLE* GET_FORMAT_PARTICLE()
+ {
+	 return Parser->mParticle_Data;
  }
 
  //EATER_ANIMATION_DATA* EATER_GET_ANIMATION_DATA()

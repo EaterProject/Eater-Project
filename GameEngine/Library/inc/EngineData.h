@@ -422,6 +422,38 @@ public:
 	std::vector<LoadMeshData*> Child;		//자식 매쉬 리스트
 };
 
+class LoadParticleData
+{
+public:
+	LoadParticleData() = default;
+	~LoadParticleData() = default;
+public:
+	std::string TextrueName;
+	int		RenderType		= 0;
+	int		ColorType		= 0;
+	int		ScaleType		= 0;
+	int		MaxParticle		= 0;
+	float	DelayTime		= 0.0f;
+	float	RateOverTime	= 7.0f;
+	float	Strength		= 1.0f;
+	Vector3 Radius			= {0,0,0};
+	Vector2 Tiling			= { 0,0 };
+	Vector3 StartForce_Min	= {0,0,0};
+	Vector3 StartForce_Max	= {0,0,0};
+	Vector4 StartColor_Min	= { 0,0,0,0 };
+	Vector4 StartColor_Max	= { 0,0,0,0 };
+	Vector2 StartLifeTime	= { 0,0 };
+	Vector2 StartScale		= { 0,0 };
+	Vector2 StartRotation	= { 0,0 };
+	Vector3 LifeForce_Min	= {0,0,0};
+	Vector3 LifeForce_Max	= {0,0,0};
+	Vector4 LifeColor_Min	= { 0,0,0,0 };
+	Vector4 LifeColor_Max	= { 0,0,0,0 };
+	Vector2 LifeScale		= { 0,0 };
+	Vector2 LifeRotation	= { 0,0 };
+};
+ 
+
 /// <summary>
 /// 한개의 모델을 저장하는 단위
 /// 매쉬의 가장 최상위 오브젝트들만 보관하는 저장데이터

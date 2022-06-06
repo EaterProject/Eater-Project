@@ -66,7 +66,6 @@ public:
 	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 	afx_msg void OnEmissive_Button();
 	
-
 	CEdit AddColor_R;
 	CEdit AddColor_G;
 	CEdit AddColor_B;
@@ -74,7 +73,6 @@ public:
 	CSliderCtrl Add_G_Slider;
 	CSliderCtrl Add_B_Slider;
 	CEdit MaterialName_Edit;
-	afx_msg void OnMaterialName_Button();
 	CSliderCtrl LimLight_R;
 	CSliderCtrl LimLight_G;
 	CSliderCtrl LimLight_B;
@@ -86,10 +84,16 @@ public:
 	CEdit LimLight_Factor_Edit;
 	CEdit LimLight_Width_Edit;
 	CImageList ImgList_Folder;
-	afx_msg void OnAddColorCustom();
-	afx_msg void OnLimColorCustom();
+
+	CMFCColorButton Custom_AddColor_Button;
+	CMFCColorButton Custom_LimLightColor_Button;
+
+	afx_msg void OnMaterialName_Button();
 	afx_msg void OnBnClickedButton24();
 	afx_msg void OnBnClickedButton29();
 	afx_msg void OnBnClickedButton30();
 	afx_msg void OnBnClickedButton31();
+	afx_msg void OnCreateMaterial();
+	afx_msg void OnCustom_Color_Button();
+	afx_msg void OnCustom_LimLightColor_Button();
 };

@@ -11,6 +11,7 @@ class Eater_LoadBuffer;
 class Eater_LoadMaterial;
 class Eater_LoadMesh;
 class Eater_LoadScene;
+class Eater_LoadParticle;
 
 namespace ParserData
 {
@@ -30,6 +31,7 @@ public:
 	void LoadMesh(std::string& Path);
 	void LoadMaterial(std::string& Path);
 	void LoadPrefap(std::string& path);
+	void LoadParticle(std::string& path);
 private:
 	GraphicEngineManager* m_Graphic;
 	CRITICAL_SECTION* m_CriticalSection;
@@ -39,5 +41,6 @@ private:
 	Eater_LoadMaterial*		mEaterMaterial;
 	Eater_LoadMesh*			mEaterMesh;
 	Eater_LoadScene*		mEaterScene;
+	Eater_LoadParticle*		mEaterParticle;
 };
 

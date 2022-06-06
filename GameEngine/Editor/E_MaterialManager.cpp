@@ -3,6 +3,10 @@
 #include "EaterHeader.h"
 #include "EditorToolScene.h"
 #include "EaterSaveData.h"
+#include "MeshFilter.h"
+#include "GameObject.h"
+#include "EngineData.h"
+#include "Material.h"
 
 E_MaterialManager::E_MaterialManager()
 {
@@ -82,11 +86,6 @@ void E_MaterialManager::ChangeEaterFile(ParserData::CModel* FBXMesh)
 	}
 }
 
-void E_MaterialManager::SetFileName(std::string& FileName)
-{
-	SaveFileName = FileName;
-}
-
 void E_MaterialManager::Create(InstanceMaterial* m)
 {
 	EATER_OPEN_WRITE_FILE(m->Name, "../Assets/Texture/Material/", ".Emat");
@@ -125,4 +124,52 @@ std::string E_MaterialManager::CutStr(std::string& Path)
 	size_t end = Path.length() - start;
 	std::string FileType = Path.substr(start, end);
 	return FileType;
+}
+
+void E_MaterialManager::Initialize()
+{
+	
+}
+
+void E_MaterialManager::Release()
+{
+
+
+}
+
+void E_MaterialManager::CreateEaterFile(GameObject* Obj)
+{
+	MeshFilter* mMeshFilter = Obj->GetComponent<MeshFilter>();
+	EATER_OPEN_WRITE_FILE(FileName, FilePath, FileType);
+	FM_MATERIAL* mMaterial = GET_FORMAT_MATERIAL();
+	
+	Material*			m	= mMeshFilter->GetMaterial();
+	MaterialProperty*	mp	= m->m_MaterialData->Material_Property;
+
+	mMaterial->Name			= m->m_MaterialData->Name;
+	mMaterial->Alpha		= mp->Alpha;
+	mMaterial->DiffuseMap	= m->GetDiffuseName();
+	mMaterial->NormalMap	= m->GetNormalName();
+	mMaterial->EmissiveMap	= m->GetEmissiveName();
+	mMaterial->ORMMap		= m->GetORMName();
+	mMaterial->LimFactor	= mp->LimLightFactor;
+	mMaterial->LimWidth		= mp->LimLightWidth;
+	
+	mMaterial->SetColor(mp->AddColor.x, mp->AddColor.y, mp->AddColor.z);
+	mMaterial->SetLimColor(mp->LimLightColor.x, mp->LimLightColor.y, mp->LimLightColor.z);
+	mMaterial->SetMaterial(mp->EmissiveFactor, mp->RoughnessFactor, mp->MetallicFactor);
+	SET_SAVE_MATERIAL();
+	EATER_CLOSE_WRITE_FILE();
+}
+
+void E_MaterialManager::ChangeEaterFile(GameObject* Obj)
+{
+
+
+}
+
+void E_MaterialManager::LoadData()
+{
+
+
 }

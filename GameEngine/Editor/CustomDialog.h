@@ -3,15 +3,16 @@
 /// EATER Editor에서 기본으로 상속 받는 Custom다이얼로그 클래스
 
 
-#define FBX		0
-#define PNG		1
-#define EATER	2
-#define DDS		3
-#define SCENE	4
-#define PREFAB	5
-#define EMAT	6
-#define EMESH	7
-#define HDR	    8
+#define FBX		 0
+#define PNG		 1
+#define EATER	 2
+#define DDS		 3
+#define SCENE	 4
+#define PREFAB	 5
+#define EMAT	 6
+#define EMESH	 7
+#define HDR	     8
+#define PARTICLE 9
 
 
 class CustomDialog : public CDialogEx
@@ -48,6 +49,9 @@ protected:
 	int GetFileNameType(CString Name);
 	std::string CutStringFileType(std::string& FileName);
 	std::string CutStringFileType(CString& FileName);
+protected:
+	std::string ChangeFilePath(CString& FilePath);
+
 protected:
 	///기능
 	bool DropRect(RECT& rect);

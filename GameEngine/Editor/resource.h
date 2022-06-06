@@ -28,7 +28,6 @@
 #define IDD_TAP_RIGIDBODY               351
 #define IDD_LOAD_TERRAIN                353
 #define IDD_LOAD_NAVMESH                355
-#define IDD_CREATE_MATERIAL             357
 #define IDD_CUSTOM                      359
 #define IDD_SCENE_SETTING               361
 #define IDR_CREATE_OBJECT               363
@@ -185,7 +184,13 @@
 #define IDC_SLIDER22                    1074
 #define IDC_CHECK15                     1075
 #define IDC_SLIDER23                    1076
+#define IDC_BUTTON32                    1076
 #define IDC_SLIDER24                    1077
+#define IDC_MAX_PARTICLE                1081
+#define IDC_MFCCOLORBUTTON1             1082
+#define IDC_MFCCOLORBUTTON2             1083
+#define IDC_MFCCOLORBUTTON3             1084
+#define IDC_MFCCOLORBUTTON4             1085
 #define ID_32771                        32771
 #define ID_32772                        32772
 #define ID_SCENE_SETTING                32773
@@ -211,9 +216,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        367
+#define _APS_NEXT_RESOURCE_VALUE        369
 #define _APS_NEXT_COMMAND_VALUE         32791
-#define _APS_NEXT_CONTROL_VALUE         1075
+#define _APS_NEXT_CONTROL_VALUE         1083
 #define _APS_NEXT_SYMED_VALUE           312
 #endif
 #endif

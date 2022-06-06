@@ -34,6 +34,7 @@ std::map<std::string, Animation*>			LoadManager::AnimationList;
 std::map<std::string, CameraAnimation*>		LoadManager::CamAnimationList;
 std::map<std::string, ColliderBuffer*>		LoadManager::ColliderBufferList;		
 std::map<std::string, GameObject*>			LoadManager::PrefapList;
+std::map<std::string, LoadParticleData*>	LoadManager::ParticleList;
 
 LoadManager::LoadManager()
 {
@@ -344,6 +345,22 @@ AnimationBuffer* LoadManager::GetAnimationBuffer(std::string Path)
 	return nullptr;
 }
 
+LoadParticleData* LoadManager::GetParticle(std::string Path)
+{
+	std::map<std::string, LoadParticleData*>::iterator End_it	= ParticleList.end();
+	std::map<std::string, LoadParticleData*>::iterator Find_it  = ParticleList.find(Path);
+	if (End_it == Find_it)
+	{
+		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ ERROR ][ Engine ][ GetMesh ] '%s'가 없습니다.", Path.c_str());
+		return nullptr;
+	}
+	else
+	{
+		return Find_it->second;
+	}
+	return nullptr;
+}
+
 CameraAnimation* LoadManager::GetCamAnimation(std::string Path)
 {
 	std::map<std::string, CameraAnimation*>::iterator End_it = CamAnimationList.end();
@@ -543,6 +560,10 @@ void LoadManager::LoadFile(std::string& Path, UINT MODE)
 			mSound->SetSoundFolderPath(Sound_Category::BGM, FilePath);
 			mSound->LoadSound(Sound_Category::BGM, FileName, FileName+"."+Type,true);
 		}
+	}
+	else if (Type == "Particle")
+	{
+		mEATER->LoadParticle(Path);
 	}
 }
 

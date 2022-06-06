@@ -9,6 +9,7 @@ class FM_VERTEX;
 class FM_MATERIAL;
 class FM_ANIMATION;
 class FM_INDEX;
+class FM_PARTICLE;
 
 
 
@@ -41,6 +42,7 @@ public:
 	void SetIndex(int& x,int& y,int& z);
 
 	void SaveMaterial();
+	void SaveParticle();
 public:
 	int GetNodeCount();
 	std::string& GetNodeName(int NodeCount);
@@ -55,12 +57,12 @@ public:
 	void ChangeList(int NodeCount, std::string& ListName, int cx_index, int cy_index, std::string& ChangeData);
 	//변경된 값으로 저장한다
 	void ChangeDataSave(std::string& FileName, std::string& OutPath, std::string& FileType);
-
 public:
 	FM_INDEX*		mIndex_Data;
 	FM_MATERIAL*	mMaterial_Data;
 	FM_VERTEX*		mVertex_Data;
 	FM_ANIMATION*	mAnimation_Data;
+	FM_PARTICLE*	mParticle_Data;
 public:
 	void ClearNode();
 private:
