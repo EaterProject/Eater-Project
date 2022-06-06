@@ -12,14 +12,13 @@ public:
 	void Awake()	override;
 	void SetUp()	override;
 	void Update()	override;
-	void OnTriggerStay(GameObject* Obj);
+	//void OnTriggerStay(GameObject* Obj);
 
-	void Move()		override;
-	void Attack()	override;
-	void Idle()		override;
-	void Dead()		override;
-	void Chase();
-	void Debug();
+	//void Move()		override;
+	//void Attack()	override;
+	//void Idle()		override;
+	//void Dead()		override;
+	//void Chase()	override;
 private:
 	ManaStone* Mana;
 	GameObject* mPlayer;

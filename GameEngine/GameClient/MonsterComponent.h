@@ -1,5 +1,6 @@
 #pragma once
 #include "Component.h"
+#include <string>
 class PhysRayCast;
 class MeshFilter;
 class Transform;
@@ -9,41 +10,64 @@ class Rigidbody;
 class MonsterComponent : public Component
 {
 public:
-	MonsterComponent() = default;
-	virtual ~MonsterComponent() = default;
-
+	MonsterComponent();
+	virtual ~MonsterComponent();
 public:
-	virtual void Move()		= 0;
-	virtual void Attack()	= 0;
-	virtual void Idle()		= 0;
-	virtual void Dead()		= 0;
-	virtual void Debug()	= 0;
+	virtual void Awake() override;
+	virtual void SetUp() override;
+	virtual void Update() override;
+
+	virtual void Move();
+	virtual void Attack();
+	virtual void Idle();
+	virtual void Dead();
+	virtual void Chase();
+	virtual void Debug();
+
+	void SetSearchPoint(int Index, Vector3 Point);
+	bool GetStopPoint(int Index);
 
 	void SetMovePoint(float x, float y, float z);
-	bool GetStopPoint();
 protected:
 	MeshFilter*				mMeshFilter;
 	Transform*				mTransform;
 	AnimationController*	mAnimation;
 	Collider*				mColider;
 	Transform*				mPlayerTR;
+
+	void GroundCheck();
 protected:
+	Vector3 SearchPoint[5];
+
 	Vector3 MovePoint;		//이동해야하는 지점
 	Vector3 DirPoint;		//이동지점의 방향벡터
 	Vector3 ReturnPoint;	//추격후 돌아가야하는 위치
 protected:
-	int		State = 0;
+	int		MonsterState = 0;
+protected:
+	//처음 한번만 실행하기위한 변수들
+	bool IdleStart		= false;	//Idle	 상태 시작 변수
+	bool AttackStart	= false;	//Attack 상태 시작 변수
+	bool MoveStart		= false;	//Move   상태 시작 변수
+protected:
+	///애니메이션 이름 변수들
+	//이변수들은 SetUp이 실행하기전에 넣어줘야한다
+	std::string ModelName;
+	std::string AnimationName;
+
+	std::string Animation_Idel		= "idle";
+	std::string Animation_Attack	= "attack";
+	std::string Animation_Move		= "move";
+	std::string Animation_Die		= "die";
+	std::string Animation_hit		= "hit";
 protected:
 	///Idle 상태 변수들
-	bool		IdleStart			= false; //Idle 상태 시작 변수
-	float		IdleTime			= 0; //현재 대기시간
-	float		Idle_MaxTime		= 0; //최대값과 최소값을 설정한 최종 대기시간
-	const int	Idle_MaxTime_Max	= 5; //대기시간의 최대값
-	const int	Idle_MaxTime_Min	= 2; //대기시간의 최소값
+	float		IdleTime			= 0;		//현재 대기시간
+	float		Idle_MaxTime		= 0;		//최대값과 최소값을 설정한 최종 대기시간
+	const int	Idle_MaxTime_Max	= 5;		//대기시간의 최대값
+	const int	Idle_MaxTime_Min	= 2;		//대기시간의 최소값
 protected:
 	///Attack 상태 변수들
-	bool	AttackStart		= false;
-	bool	MoveStart		= false;
 protected:
 	///Chase 상태 변수들
 	float		ChaseTime		= 0.0f; //추격하는 현재 시간

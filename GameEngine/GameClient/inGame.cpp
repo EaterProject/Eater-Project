@@ -21,7 +21,7 @@ void InGame::Awake()
 
 
 	//Tool에서 만들어놓은 씬을 로드
-	Load("../Assets/Scene/inGame.Scene");
+	Load("../Assets/Scene/test.Scene");
 
 	// 오클루더 설정..
 	//AddOccluder("Dome_program_0");

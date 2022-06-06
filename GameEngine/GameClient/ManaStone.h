@@ -31,7 +31,8 @@ private:
 	void CreateMonsterRangePoint(int MonsterCount);
 
 
-	static std::vector<Vector3> MonsterMovePoint;
+	static std::vector<Vector3> MonsterMovePointDefault;
+	Vector3 MovePoint[5];
 	std::vector<MonsterA*> MonsterA_List;
 	std::vector<MonsterB*> MonsterB_List;
 
