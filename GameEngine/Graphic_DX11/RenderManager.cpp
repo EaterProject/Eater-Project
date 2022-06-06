@@ -79,7 +79,6 @@ RenderManager::RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, I
 
 RenderManager::~RenderManager()
 {
-
 }
 
 template<typename T>
@@ -90,27 +89,27 @@ void RenderManager::PushFunction(T* pass)
 	// OnResize Override 함수 등록..
 	if (typeid(&RenderPassBase::OnResize).hash_code() != typeid(&T::OnResize).hash_code())
 	{
-		OnResizeFunction += std::bind_front(&T::OnResize, pass);
+		OnResizeFunction += Eater::Bind(&T::OnResize, pass);
 	}
 	// InstanceResize Override 함수 등록..
 	if (typeid(&RenderPassBase::InstanceResize).hash_code() != typeid(&T::InstanceResize).hash_code())
 	{
-		InstanceResizeFunction += std::bind_front(&T::InstanceResize, pass);
+		InstanceResizeFunction += Eater::Bind(&T::InstanceResize, pass);
 	}
 	// SetResize Override 함수 등록..
 	if (typeid(&RenderPassBase::SetResize).hash_code() != typeid(&T::SetResize).hash_code())
 	{
-		SetResizeFunction += std::bind_front(&T::SetResize, pass);
+		SetResizeFunction += Eater::Bind(&T::SetResize, pass);
 	}
 	// ApplyOption Override 함수 등록..
 	if (typeid(&RenderPassBase::ApplyOption).hash_code() != typeid(&T::ApplyOption).hash_code())
 	{
-		ApplyOptionFunction += std::bind_front(&T::ApplyOption, pass);
+		ApplyOptionFunction += Eater::Bind(&T::ApplyOption, pass);
 	}
 	// PreUpdate Override 함수 등록..
 	if (typeid(&RenderPassBase::PreUpdate).hash_code() != typeid(&T::PreUpdate).hash_code())
 	{
-		PreUpdateFunction += std::bind_front(&T::PreUpdate, pass);
+		PreUpdateFunction += Eater::Bind(&T::PreUpdate, pass);
 	}
 }
 

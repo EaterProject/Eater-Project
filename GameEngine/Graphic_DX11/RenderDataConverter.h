@@ -110,6 +110,7 @@ inline void RenderDataConverter::ConvertPushResource(Origin* origin, std::unorde
 
 	// 秦寸 Index Resource 眉农..
 	auto itor = convertList.find(resourceIndex);
+
 	assert(itor == convertList.end());
 
 	// 货肺款 Resource Render Buffer 积己..

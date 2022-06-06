@@ -128,7 +128,7 @@ void OIT_Pass::Start(int width, int height)
 
 	ShaderResourceView* backGround = g_Resource->GetShaderResourceView<RT_OutPut1>();
 	
-	m_OITRender_PS->SetShaderResourceView<float>(m_PieceLink_RB->GetSRV()->Get());
+	m_OITRender_PS->SetShaderResourceView<gPieceLinkBuffer>(m_PieceLink_RB->GetSRV()->Get());
 	m_OITRender_PS->SetShaderResourceView<gFirstOffsetBuffer>(m_FirstOffset_RB->GetSRV()->Get());
 	m_OITRender_PS->SetShaderResourceView<gBackGround>(backGround->Get());
 }

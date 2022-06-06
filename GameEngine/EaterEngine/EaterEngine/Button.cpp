@@ -4,10 +4,6 @@
 #include "Image.h"
 #include "KeyinputManager.h"
 
-#define DEFALT_IMAGE
-#define ON_IMAGE
-#define CLICK_IMAGE
-
 Button::Button()
 {
 
@@ -58,5 +54,10 @@ void Button::PushOnClickEvent(std::function<void()>& eventFunc)
 void Button::PopOnClickEvent(std::function<void()>& eventFunc)
 {
 	m_OnClickEvent -= std::forward<std::function<void()>>(eventFunc);
+}
+
+void Button::ResetOnClickEvent()
+{
+	m_OnClickEvent.Reset();
 }
 

@@ -23,12 +23,12 @@ RectTransform::RectTransform()
 	Screen_Size.x = GameEngine::WinSizeWidth;
 	Screen_Size.y = GameEngine::WinSizeHeight;
 
-	GameEngine::ResizeFunction += std::bind_front(&RectTransform::Resize, this);
+	GameEngine::ResizeFunction += Eater::Bind(&RectTransform::Resize, this);
 }
 
 RectTransform::~RectTransform()
 {
-	GameEngine::ResizeFunction -= std::bind_front(&RectTransform::Resize, this);
+	GameEngine::ResizeFunction -= Eater::Bind(&RectTransform::Resize, this);
 }
 
 void RectTransform::TransformUpdate()

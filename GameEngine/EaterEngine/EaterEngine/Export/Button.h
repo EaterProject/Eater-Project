@@ -18,6 +18,7 @@ public:
 public:
 	EATER_ENGINEDLL void PushOnClickEvent(std::function<void()>& eventFunc);
 	EATER_ENGINEDLL void PopOnClickEvent(std::function<void()>& eventFunc);
+	EATER_ENGINEDLL void ResetOnClickEvent();
 
 private:
 	Eater::Delegate<> m_OnClickEvent;
