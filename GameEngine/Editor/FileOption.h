@@ -9,7 +9,6 @@
 class RightOption;
 class EditorManager;
 class SceneSaveDialog;
-class CreateMaterial;
 class RenderOption;
 
 class FileOption : public CustomDialog
@@ -30,7 +29,6 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 지원입니다.
 	RightOption*		mRightOption;
 	SceneSaveDialog*	mScene;
-	CreateMaterial*		mMaterial;
 	DECLARE_MESSAGE_MAP()
 public:
 	void Initialize(RightOption* mOption);
@@ -54,5 +52,4 @@ public:
 	afx_msg void OnAddCollider();
 	afx_msg void OnAddRigidbody();
 	afx_msg void OnAddLight();
-	afx_msg void OnCreateMaterial();
 };

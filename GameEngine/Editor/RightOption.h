@@ -18,7 +18,6 @@ class FileOption;
 class Loading;
 class EditorManager;
 class CamAnimation;
-class CreateMaterial;
 class SceneSetting;
 class RightOption : public CustomDialog
 {
@@ -81,7 +80,6 @@ public:
 	Loading*			mLoading;			//로딩 바
 	SceneSetting*		mSceneSetting;
 	CamAnimation*		mCam;
-	CreateMaterial*		mMaterial;
 public:
 	std::string ChildName;
 	std::string ParentName;
@@ -111,7 +109,6 @@ public:
 	afx_msg void OnAddTag_Button();
 	afx_msg void OnChoiceTag();
 	afx_msg void OnDeleteTagButton();
-	afx_msg void OnCreateBasicMaterial();
 	afx_msg void OnCreatePrefap();
 	afx_msg void OnOpenOption();
 	afx_msg void OnBnClickedButton11();

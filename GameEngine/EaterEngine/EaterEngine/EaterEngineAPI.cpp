@@ -53,9 +53,9 @@ void OnReSize(int X, int Y)
 	 return gGameEngine->InstanceTerrain(ObjName);
  }
 
- GameObject* Instance_Particle(std::string ObjName)
+ GameObject* Instance_Particle(std::string ObjName, std::string FileName)
  {
-	 return gGameEngine->InstanceParticle(ObjName);
+	 return gGameEngine->InstanceParticle(ObjName, FileName);
  }
 
  GameObject* Instance_Camera(std::string ObjName)

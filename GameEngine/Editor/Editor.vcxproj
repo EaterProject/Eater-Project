@@ -207,7 +207,6 @@ copy /Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)" </Command>
     <ClInclude Include="AssetsDialog.h" />
     <ClInclude Include="AssetView.h" />
     <ClInclude Include="CamAnimation.h" />
-    <ClInclude Include="CreateMaterial.h" />
     <ClInclude Include="CTAP_Collider.h" />
     <ClInclude Include="CTAP_Light.h" />
     <ClInclude Include="CTAP_Particle.h" />
@@ -217,12 +216,14 @@ copy /Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)" </Command>
     <ClInclude Include="CTAP_MeshFilter.h" />
     <ClInclude Include="CustomDialog.h" />
     <ClInclude Include="DialogFactory.h" />
+    <ClInclude Include="E_interface.h" />
     <ClInclude Include="EditorDefine.h" />
     <ClInclude Include="E_AnimationManager.h" />
     <ClInclude Include="E_BufferManager.h" />
     <ClInclude Include="E_ChangeManager.h" />
     <ClInclude Include="E_MaterialManager.h" />
     <ClInclude Include="E_MeshManager.h" />
+    <ClInclude Include="E_ParticleManager.h" />
     <ClInclude Include="Loading.h" />
     <ClInclude Include="LoadNavMesh.h" />
     <ClInclude Include="LoadTerrain.h" />
@@ -260,7 +261,6 @@ copy /Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)" </Command>
     <ClCompile Include="AssetsDialog.cpp" />
     <ClCompile Include="AssetView.cpp" />
     <ClCompile Include="CamAnimation.cpp" />
-    <ClCompile Include="CreateMaterial.cpp" />
     <ClCompile Include="CTAP_Collider.cpp" />
     <ClCompile Include="CTAP_Light.cpp" />
     <ClCompile Include="CTAP_Particle.cpp" />
@@ -270,12 +270,14 @@ copy /Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)" </Command>
     <ClCompile Include="CTAP_MeshFilter.cpp" />
     <ClCompile Include="CustomDialog.cpp" />
     <ClCompile Include="DialogFactory.cpp" />
+    <ClCompile Include="E_Interface.cpp" />
     <ClCompile Include="EditorData.cpp" />
     <ClCompile Include="E_AnimationManager.cpp" />
     <ClCompile Include="E_BufferManager.cpp" />
     <ClCompile Include="E_ChangeManager.cpp" />
     <ClCompile Include="E_MaterialManager.cpp" />
     <ClCompile Include="E_MeshManager.cpp" />
+    <ClCompile Include="E_ParticleManager.cpp" />
     <ClCompile Include="Loading.cpp" />
     <ClCompile Include="LoadNavMesh.cpp" />
     <ClCompile Include="LoadTerrain.cpp" />

@@ -18,6 +18,7 @@ EditorManager::~EditorManager()
 {
 	delete mYaml;
 	delete mFbx;
+	delete mEater;
 }
 
 void EditorManager::Initialize()
@@ -76,7 +77,6 @@ void EditorManager::ConvertData(std::string Path, std::string ChangeName, CHANGE
 	else if (Option == CHANGE_TYPE::NAVMESH)
 	{
 		ParserData::CModel* Model = mFbx->OpenFile(Path);
-		mEater->Load_FBX_File_NavMeshBuffer(Path, Model, ChangeName);
 	}
 }
 
@@ -97,7 +97,17 @@ void EditorManager::OpenEaterGameObject(GameObject* Object,ObjectOption* Option)
 
 void EditorManager::CreateMaterialData(InstanceMaterial* m)
 {
-	mEater->Create_Material(m);
+	mEater->Create_Material_File(m);
+}
+
+void EditorManager::CreateMaterialData(GameObject* Obj, std::string& FilePath)
+{
+	mEater->Create_Material_File(Obj, FilePath);
+}
+
+void EditorManager::CreateParticleData(GameObject* Obj, std::string& FilePath)
+{
+	mEater->Create_Particle_File(Obj, FilePath);
 }
 
 void EditorManager::CreateAssetsFile()

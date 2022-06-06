@@ -171,6 +171,10 @@ int CustomDialog::GetFileNameType(std::string Name)
 	{
 		Type = HDR;
 	}
+	else if (Name == "Particle")
+	{
+		Type = PARTICLE;
+	}
 	return Type;
 }
 
@@ -193,6 +197,20 @@ std::string CustomDialog::CutStringFileType(CString& FileName)
 	std::string File = ChangeToString(FileName);
 	Output = File.substr(0, File.rfind('.'));
 	return Output;
+}
+
+std::string CustomDialog::ChangeFilePath(CString& FilePath)
+{
+	std::string Path = ChangeToString(FilePath);
+
+	for (int i = 0; i < Path.size(); i++)
+	{
+		if (Path[i] == '\\')
+		{
+			Path[i] = '/';
+		}
+	}
+	return Path;
 }
 
 bool CustomDialog::DropRect(RECT& rect)

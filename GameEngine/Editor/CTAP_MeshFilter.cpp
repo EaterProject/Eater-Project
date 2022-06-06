@@ -7,6 +7,7 @@
 #include "MeshFilter.h"
 #include "EngineData.h"
 #include "Material.h"
+#include "EditorManager.h"
 #include "DialogFactory.h"
 
 
@@ -91,6 +92,9 @@ void CTAP_MeshFilter::SetGameObject(MeshFilter* ObjectMeshFilter)
 		AddColor_R.SetWindowTextW(ChangeToCString(AddColorR));
 		AddColor_G.SetWindowTextW(ChangeToCString(AddColorG));
 		AddColor_B.SetWindowTextW(ChangeToCString(AddColorB));
+		COLORREF mColor = RGB(Add.x, Add.y, Add.z);
+		Custom_LimLightColor_Button.SetFaceColor(mColor);
+
 
 		Vector4 Lim = mMaterial->m_MaterialData->Material_Property->LimLightColor;
 		LimLight_R.SetRange(0, 255);
@@ -103,6 +107,8 @@ void CTAP_MeshFilter::SetGameObject(MeshFilter* ObjectMeshFilter)
 		LimLight_R_Edit.SetWindowTextW(ChangeToCString(Lim.x));
 		LimLight_G_Edit.SetWindowTextW(ChangeToCString(Lim.y));
 		LimLight_B_Edit.SetWindowTextW(ChangeToCString(Lim.z));
+		mColor = RGB(Lim.x, Lim.y, Lim.z);
+		Custom_LimLightColor_Button.SetFaceColor(mColor);
 
 
 		float LimFactor = mMaterial->m_MaterialData->Material_Property->LimLightFactor * 10.0f;
@@ -258,6 +264,8 @@ void CTAP_MeshFilter::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_SLIDER5, LimLight_Width);
 	DDX_Control(pDX, IDC_EDIT18, LimLight_Factor_Edit);
 	DDX_Control(pDX, IDC_EDIT27, LimLight_Width_Edit);
+	DDX_Control(pDX, IDC_MFCCOLORBUTTON1, Custom_AddColor_Button);
+	DDX_Control(pDX, IDC_MFCCOLORBUTTON2, Custom_LimLightColor_Button);
 }
 
 BOOL CTAP_MeshFilter::OnInitDialog()
@@ -308,12 +316,13 @@ BEGIN_MESSAGE_MAP(CTAP_MeshFilter, CDialogEx)
 	ON_WM_HSCROLL()
 	ON_BN_CLICKED(IDC_BUTTON26, &CTAP_MeshFilter::OnEmissive_Button)
 	ON_BN_CLICKED(IDC_BUTTON5, &CTAP_MeshFilter::OnMaterialName_Button)
-	ON_BN_CLICKED(IDC_BUTTON22, &CTAP_MeshFilter::OnAddColorCustom)
-	ON_BN_CLICKED(IDC_BUTTON23, &CTAP_MeshFilter::OnLimColorCustom)
 	ON_BN_CLICKED(IDC_BUTTON24, &CTAP_MeshFilter::OnBnClickedButton24)
 	ON_BN_CLICKED(IDC_BUTTON29, &CTAP_MeshFilter::OnBnClickedButton29)
 	ON_BN_CLICKED(IDC_BUTTON30, &CTAP_MeshFilter::OnBnClickedButton30)
 	ON_BN_CLICKED(IDC_BUTTON31, &CTAP_MeshFilter::OnBnClickedButton31)
+	ON_BN_CLICKED(IDC_BUTTON32, &CTAP_MeshFilter::OnCreateMaterial)
+	ON_BN_CLICKED(IDC_MFCCOLORBUTTON1, &CTAP_MeshFilter::OnCustom_Color_Button)
+	ON_BN_CLICKED(IDC_MFCCOLORBUTTON2, &CTAP_MeshFilter::OnCustom_LimLightColor_Button)
 END_MESSAGE_MAP()
 
 LRESULT CTAP_MeshFilter::OnUserFun(WPARAM wParam, LPARAM lparam)
@@ -411,10 +420,17 @@ LRESULT CTAP_MeshFilter::OnUserFun(WPARAM wParam, LPARAM lparam)
 
 void CTAP_MeshFilter::OnDiffuse_Button()
 {
-	CFileDialog* mFile = DialogFactory::GetFactory()->GetCFileDialog();
-	if (mFile->DoModal() == IDOK)
+	CFileDialog mLoadFile(TRUE);
+	char full[_MAX_PATH];
+	_fullpath(full, "../Assets/Texture/ModelTexture", _MAX_PATH);
+	CString Temp;
+	Temp = full;
+	mLoadFile.m_ofn.lpstrInitialDir = Temp.GetBuffer();
+
+
+	if (mLoadFile.DoModal() == IDOK)
 	{
-		CString Name = mFile->GetFileName();
+		CString Name = mLoadFile.GetFileName();
 		std::string FileName = CutStringFileType(Name);
 		Diffuse_Edit.SetWindowTextW(ChangeToCString(FileName));
 		mMeshFilter->SetDiffuseTextureName(FileName);
@@ -423,10 +439,16 @@ void CTAP_MeshFilter::OnDiffuse_Button()
 
 void CTAP_MeshFilter::OnNomal_Button()
 {
-	CFileDialog* mFile = DialogFactory::GetFactory()->GetCFileDialog();
-	if (mFile->DoModal() == IDOK)
+	CFileDialog mLoadFile(TRUE);
+	char full[_MAX_PATH];
+	_fullpath(full, "../Assets/Texture/ModelTexture", _MAX_PATH);
+	CString Temp;
+	Temp = full;
+	mLoadFile.m_ofn.lpstrInitialDir = Temp.GetBuffer();
+
+	if (mLoadFile.DoModal() == IDOK)
 	{
-		CString Name = mFile->GetFileName();
+		CString Name = mLoadFile.GetFileName();
 		std::string FileName = CutStringFileType(Name);
 		Nomal_Eidt.SetWindowTextW(ChangeToCString(FileName));
 		mMeshFilter->SetNormalTextureName(FileName);
@@ -435,10 +457,16 @@ void CTAP_MeshFilter::OnNomal_Button()
 
 void CTAP_MeshFilter::OnEmissive_Button()
 {
-	CFileDialog* mFile = DialogFactory::GetFactory()->GetCFileDialog();
-	if (mFile->DoModal() == IDOK)
+	CFileDialog mLoadFile(TRUE);
+	char full[_MAX_PATH];
+	_fullpath(full, "../Assets/Texture/ModelTexture", _MAX_PATH);
+	CString Temp;
+	Temp = full;
+	mLoadFile.m_ofn.lpstrInitialDir = Temp.GetBuffer();
+
+	if (mLoadFile.DoModal() == IDOK)
 	{
-		CString Name = mFile->GetFileName();
+		CString Name = mLoadFile.GetFileName();
 		std::string FileName = CutStringFileType(Name);
 		EmissiveName_Edit.SetWindowTextW(ChangeToCString(FileName));
 		mMeshFilter->SetEmissiveTextureName(FileName);
@@ -446,10 +474,16 @@ void CTAP_MeshFilter::OnEmissive_Button()
 }
 void CTAP_MeshFilter::OnORM_Button()
 {
-	CFileDialog* mFile = DialogFactory::GetFactory()->GetCFileDialog();
-	if (mFile->DoModal() == IDOK)
+	CFileDialog mLoadFile(TRUE);
+	char full[_MAX_PATH];
+	_fullpath(full, "../Assets/Texture/ModelTexture", _MAX_PATH);
+	CString Temp;
+	Temp = full;
+	mLoadFile.m_ofn.lpstrInitialDir = Temp.GetBuffer();
+
+	if (mLoadFile.DoModal() == IDOK)
 	{
-		CString Name = mFile->GetFileName();
+		CString Name = mLoadFile.GetFileName();
 		std::string FileName = CutStringFileType(Name);
 		ORM_Edit.SetWindowTextW(ChangeToCString(FileName));
 		mMeshFilter->SetORMTextureName(FileName);
@@ -573,61 +607,10 @@ void CTAP_MeshFilter::OnMaterialName_Button()
 	
 }
 
-
-void CTAP_MeshFilter::OnAddColorCustom()
-{
-	CColorDialog* mColor = DialogFactory::GetFactory()->GetCColorDialog();
-	if (mColor->DoModal() == IDOK)
-	{
-		COLORREF mRGB =  mColor->GetColor();
-		float R = GetRValue(mRGB) / 255.0f;
-		float G = GetGValue(mRGB) / 255.0f;
-		float B = GetBValue(mRGB) / 255.0f;
-
-		AddColor_R.SetWindowTextW(ChangeToCString(R));
-		AddColor_G.SetWindowTextW(ChangeToCString(G));
-		AddColor_B.SetWindowTextW(ChangeToCString(B));
-
-		mMaterial->m_MaterialData->Material_Property->AddColor.x = R;
-		mMaterial->m_MaterialData->Material_Property->AddColor.y = G;
-		mMaterial->m_MaterialData->Material_Property->AddColor.z = B;
-
-		Add_R_Slider.SetPos(GetRValue(mRGB));
-		Add_G_Slider.SetPos(GetGValue(mRGB));
-		Add_B_Slider.SetPos(GetBValue(mRGB));
-	}
-}
-
-
-void CTAP_MeshFilter::OnLimColorCustom()
-{
-	CColorDialog* mColor = DialogFactory::GetFactory()->GetCColorDialog();
-	if (mColor->DoModal() == IDOK)
-	{
-		COLORREF mRGB = mColor->GetColor();
-		float R = GetRValue(mRGB) / 255.0f;
-		float G = GetGValue(mRGB) / 255.0f;
-		float B = GetBValue(mRGB) / 255.0f;
-
-		LimLight_R_Edit.SetWindowTextW(ChangeToCString(R));
-		LimLight_G_Edit.SetWindowTextW(ChangeToCString(G));
-		LimLight_B_Edit.SetWindowTextW(ChangeToCString(B));
-
-		mMaterial->m_MaterialData->Material_Property->LimLightColor.x = R;
-		mMaterial->m_MaterialData->Material_Property->LimLightColor.y = G;
-		mMaterial->m_MaterialData->Material_Property->LimLightColor.z = B;
-
-		LimLight_R.SetPos(GetRValue(mRGB));
-		LimLight_G.SetPos(GetGValue(mRGB));
-		LimLight_B.SetPos(GetBValue(mRGB));
-	}
-}
-
-
 void CTAP_MeshFilter::OnBnClickedButton24()
 {
 	Diffuse_Edit.SetWindowTextW(L"");
-	mMeshFilter->SetORMTextureName("");
+	mMeshFilter->SetDiffuseTextureName("");
 }
 
 
@@ -649,4 +632,63 @@ void CTAP_MeshFilter::OnBnClickedButton31()
 {
 	ORM_Edit.SetWindowTextW(L"");
 	mMeshFilter->SetORMTextureName("");
+}
+
+
+void CTAP_MeshFilter::OnCreateMaterial()
+{
+	EditorManager* mEater = DialogFactory::GetFactory()->GetEditorManager();
+	CFileDialog mSaveFile(FALSE, L"*.Emat", NULL, OFN_OVERWRITEPROMPT, L"Material(*.Emat)|*.Emat");
+	char full[_MAX_PATH];
+	_fullpath(full, "../Assets/Texture/Material", _MAX_PATH);
+	CString Temp;
+	Temp = full;
+	mSaveFile.m_ofn.lpstrInitialDir = Temp.GetBuffer();
+
+	if (mSaveFile.DoModal() == IDOK)
+	{
+		mEater->CreateMaterialData(mMeshFilter->gameobject, ChangeFilePath(mSaveFile.GetPathName()));
+	}
+}
+
+
+void CTAP_MeshFilter::OnCustom_Color_Button()
+{
+	COLORREF mRGB = Custom_AddColor_Button.GetColor();
+	float R = GetRValue(mRGB) / 255.0f;
+	float G = GetGValue(mRGB) / 255.0f;
+	float B = GetBValue(mRGB) / 255.0f;
+
+	AddColor_R.SetWindowTextW(ChangeToCString(R));
+	AddColor_G.SetWindowTextW(ChangeToCString(G));
+	AddColor_B.SetWindowTextW(ChangeToCString(B));
+
+	mMaterial->m_MaterialData->Material_Property->AddColor.x = R;
+	mMaterial->m_MaterialData->Material_Property->AddColor.y = G;
+	mMaterial->m_MaterialData->Material_Property->AddColor.z = B;
+
+	Add_R_Slider.SetPos(GetRValue(mRGB));
+	Add_G_Slider.SetPos(GetGValue(mRGB));
+	Add_B_Slider.SetPos(GetBValue(mRGB));
+}
+
+
+void CTAP_MeshFilter::OnCustom_LimLightColor_Button()
+{
+	COLORREF mRGB = Custom_LimLightColor_Button.GetColor();
+	float R = GetRValue(mRGB) / 255.0f;
+	float G = GetGValue(mRGB) / 255.0f;
+	float B = GetBValue(mRGB) / 255.0f;
+
+	LimLight_R_Edit.SetWindowTextW(ChangeToCString(R));
+	LimLight_G_Edit.SetWindowTextW(ChangeToCString(G));
+	LimLight_B_Edit.SetWindowTextW(ChangeToCString(B));
+
+	mMaterial->m_MaterialData->Material_Property->LimLightColor.x = R;
+	mMaterial->m_MaterialData->Material_Property->LimLightColor.y = G;
+	mMaterial->m_MaterialData->Material_Property->LimLightColor.z = B;
+
+	LimLight_R.SetPos(GetRValue(mRGB));
+	LimLight_G.SetPos(GetGValue(mRGB));
+	LimLight_B.SetPos(GetBValue(mRGB));
 }

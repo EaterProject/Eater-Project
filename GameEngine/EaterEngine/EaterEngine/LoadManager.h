@@ -26,6 +26,7 @@ class CameraAnimation;
 class ColliderBuffer;
 class ModelAnimationData;
 class ModelData;
+class LoadParticleData;
 
 class MeshBuffer;
 class TextureBuffer;
@@ -50,6 +51,7 @@ class Eater_LoadMaterial;
 class Eater_LoadMesh;
 class Eater_LoadCamera;
 class Eater_LoadScene;
+class Eater_LoadParticle;
 
 class LoadManager
 {
@@ -95,6 +97,7 @@ public:
 	static SkyLightBuffer*		GetSkyLight(std::string Path);			//환경맵 버퍼를 가져옴
 	static MeshBuffer*			GetMeshBuffer(std::string Path);		//메쉬 버퍼 데이터를 가져옴
 	static AnimationBuffer*		GetAnimationBuffer(std::string Path);	//애니메이션 버퍼 데이터를 가져옴
+	static LoadParticleData*	GetParticle(std::string Path);			//파티클 데이터를 가져온다
 
 	static Mesh*				GetMesh(std::string Path);				//메쉬를 가져옴
 	static Material*			GetMaterial(std::string Path);			//메테리얼을 가져옴
@@ -131,7 +134,7 @@ private:
 	static std::map<std::string, CameraAnimation*>		CamAnimationList;
 	static std::map<std::string, ColliderBuffer*>		ColliderBufferList;
 	static std::map<std::string, GameObject*>			PrefapList;
-
+	static std::map<std::string, LoadParticleData*>		ParticleList;
 private:
 	FBXManager*				mFBX;
 	TextureManager*			mTexture;
@@ -152,4 +155,5 @@ private:
 	friend Eater_LoadMaterial;
 	friend Eater_LoadMesh;
 	friend Eater_LoadCamera;
+	friend Eater_LoadParticle;
 };

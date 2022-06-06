@@ -17,7 +17,6 @@
 #include "FileOption.h"
 #include "EditorManager.h"
 #include "Loading.h"
-#include "CreateMaterial.h"
 
 #include <stack>
 #include "EaterEngineAPI.h"
@@ -57,7 +56,6 @@ RightOption::~RightOption()
 	mLight		= nullptr;
 	mFileOption = nullptr;
 	mCam		= nullptr;
-	mMaterial	= nullptr;
 }
 
 BOOL RightOption::OnInitDialog()
@@ -69,7 +67,6 @@ BOOL RightOption::OnInitDialog()
 	m_EditorManager = DialogFactory::GetFactory()->GetEditorManager();
 	mFileOption		= DialogFactory::GetFactory()->GetFileOption();
 	mCam			= DialogFactory::GetFactory()->GetCamAnimation();
-	mMaterial		= DialogFactory::GetFactory()->GetCreateMaterial();
 	mSceneSetting	= DialogFactory::GetFactory()->GetSceneSetting();
 
 	DialogFactory::GetFactory()->SetRightOption(this);
@@ -161,7 +158,6 @@ BEGIN_MESSAGE_MAP(RightOption, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON1, &RightOption::OnAddTag_Button)
 	ON_CBN_SELCHANGE(IDC_COMBO1, &RightOption::OnChoiceTag)
 	ON_BN_CLICKED(IDC_BUTTON2, &RightOption::OnDeleteTagButton)
-	ON_BN_CLICKED(IDC_BUTTON12, &RightOption::OnCreateBasicMaterial)
 	ON_BN_CLICKED(IDC_BUTTON9, &RightOption::OnCreatePrefap)
 	ON_BN_CLICKED(IDC_BUTTON26, &RightOption::OnOpenOption)
 	ON_BN_CLICKED(IDC_BUTTON11, &RightOption::OnBnClickedButton11)
@@ -300,6 +296,13 @@ void RightOption::ChickHirearchyDarg(CPoint point)
 				Tag_Combo.InsertString( Tag_Start_it->first, ChangeToCString(Tag_Start_it->second) );
 			}
 
+			break;
+		}
+		case PARTICLE:
+		{
+			Name = Name.substr(0, Name.rfind('.'));
+			GameObject* Object = EditorToolScene::Create_Particle(Name);
+			HTREEITEM TopParent = HirearchyTree.InsertItem(ChangeToCString(Object->Name));
 			break;
 		}
 		default:
@@ -701,13 +704,6 @@ void RightOption::OnDeleteTagButton()
 		AddTag_Edit.SetWindowTextW(L"");
 	}
 }
-
-
-void RightOption::OnCreateBasicMaterial()
-{
-	mMaterial->ShowWindow(SW_SHOW);
-}
-
 
 void RightOption::OnCreatePrefap()
 {

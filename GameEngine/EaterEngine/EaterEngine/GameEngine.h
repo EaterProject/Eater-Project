@@ -60,11 +60,11 @@ public:
 	///오브젝트 관련(오브젝트 매니저)
 	GameObject* Instance(std::string ObjName = "GameObject");			//obj 생성 (빈 게임오브젝트)
 	GameObject* InstanceTerrain(std::string ObjName = "Terrain");
-	GameObject* InstanceParticle(std::string ObjName = "Particle");
+	GameObject* InstanceParticle(std::string ObjName = "Particle",std::string FileName = "Default");
 	GameObject* InstanceCamera(std::string ObjName = "Camera");
 	GameObject* InstanceLight(std::string ObjName = "Light", LIGHT_TYPE type = LIGHT_TYPE::POINT_LIGHT);
 	GameObject* InstanceUI(std::string ObjName = "UI");
-	Material* InstanceMaterial(std::string matName = "Material");
+	Material*	InstanceMaterial(std::string matName = "Material");
 public:
 	///태그
 	GameObject* FindGameObjectTag(std::string& TagName);
@@ -134,7 +134,7 @@ public:
 
 
 
-	void Sound_Play_SFX(std::string& SoundName);
+	//void Sound_Play_SFX(std::string& SoundName);
 
 public:
 	///윈도우 관련

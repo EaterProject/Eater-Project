@@ -16,6 +16,7 @@
 #include "Eater_LoadMaterial.h"
 #include "Eater_LoadMesh.h"
 #include "Eater_LoadScene.h"
+#include "Eater_LoadParticle.h"
 
 EATERManager::EATERManager()
 {
@@ -30,8 +31,15 @@ EATERManager::EATERManager()
 
 EATERManager::~EATERManager()
 {
-	m_Graphic = nullptr;
-	m_CriticalSection = nullptr;
+	m_Graphic			= nullptr;
+	m_CriticalSection	= nullptr;
+
+
+	delete mEaterBuffer;
+	delete mEaterMaterial;
+	delete mEaterMesh;
+	delete mEaterScene;
+	delete mEaterParticle;
 }
 
 void EATERManager::Initialize(GraphicEngineManager* Graphic, CRITICAL_SECTION* _cs)
@@ -43,6 +51,7 @@ void EATERManager::Initialize(GraphicEngineManager* Graphic, CRITICAL_SECTION* _
 	mEaterMaterial	= new Eater_LoadMaterial();
 	mEaterMesh		= new Eater_LoadMesh();
 	mEaterScene		= new Eater_LoadScene();
+	mEaterParticle  = new Eater_LoadParticle();
 
 	mEaterMaterial->Initialize();
 	mEaterMesh->Initialize(Graphic, _cs);
@@ -77,6 +86,11 @@ void EATERManager::LoadMaterial(std::string& Path)
 void EATERManager::LoadPrefap(std::string& path)
 {
 	mEaterScene->LoadPrefap(path);
+}
+
+void EATERManager::LoadParticle(std::string& path)
+{
+	mEaterParticle->LoadData(path);
 }
 
 

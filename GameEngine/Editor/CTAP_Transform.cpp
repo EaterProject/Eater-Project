@@ -74,11 +74,6 @@ void CTAP_Transform::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_SLIDER3, Rotation_Z_Slider);
 }
 
-void CTAP_Transform::UpdateData(BOOL bSaveAndValidate)
-{
-	int num = 0;
-}
-
 void CTAP_Transform::SetGameObject(Transform* mTransform)
 {
 	ObjectTransform = mTransform;

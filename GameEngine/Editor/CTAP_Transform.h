@@ -22,7 +22,6 @@ public:
 protected:
 	virtual BOOL OnInitDialog();
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 지원입니다.
-	virtual void UpdateData(BOOL bSaveAndValidate /* = TRUE */);
 	DECLARE_MESSAGE_MAP()
 	
 public:

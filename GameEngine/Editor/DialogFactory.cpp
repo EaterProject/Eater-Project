@@ -4,7 +4,6 @@
 #include "Loading.h"
 #include "FileOption.h"
 #include "AssetsDialog.h"
-#include "CreateMaterial.h"
 #include "CamAnimation.h"
 #include "SceneSaveDialog.h"
 #include "LoadNavMesh.h"
@@ -48,10 +47,6 @@ void DialogFactory::Initialize()
 	mLoading_Dlog->Create(IDD_LOADING);
 	mLoading_Dlog->ShowWindow(SW_HIDE);
 
-	mMaterial_Dlog = new CreateMaterial();
-	mMaterial_Dlog->Create(IDD_CREATE_MATERIAL);
-	mMaterial_Dlog->ShowWindow(SW_HIDE);
-
 	mCamAnimation_Dlog = new CamAnimation();
 	mCamAnimation_Dlog->Create(IDD_CAM_ANIMATION);
 	mCamAnimation_Dlog->ShowWindow(SW_HIDE);
@@ -78,18 +73,8 @@ void DialogFactory::Initialize()
 	mSkySetting->Create(IDD_SKY_SETTING);
 	mSkySetting->ShowWindow(SW_HIDE);
 
-	mColor	= new CColorDialog(RGB(0,0,0),CC_FULLOPEN);
-	mFile	= new CFileDialog(TRUE,NULL,NULL, OFN_ALLOWMULTISELECT);
-	char full[1024];
-	_fullpath(full, "../Assets/Texture", 1024);
-	
-	CString Cstr = L"";
-	Cstr = full;
-	LPCWSTR Name = Cstr;
+	mColor		= new CColorDialog(RGB(0,0,0),CC_FULLOPEN);
 
-	mFile->m_ofn.lpstrInitialDir = Name;
-
-	
 	mEditorManager = new EditorManager();
 	mEditorManager->Initialize();
 
@@ -106,7 +91,6 @@ void DialogFactory::Initialize()
 void DialogFactory::Release()
 {
 	CustomDlgDelete(mLoading_Dlog);
-	CustomDlgDelete(mMaterial_Dlog);
 	CustomDlgDelete(mCamAnimation_Dlog);
 	CustomDlgDelete(mFileOption_Dlog);
 	CustomDlgDelete(mSceneSave);

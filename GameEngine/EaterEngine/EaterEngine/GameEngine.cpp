@@ -242,7 +242,7 @@ GameObject* GameEngine::InstanceTerrain(std::string ObjName)
 	return temp;
 }
 
-GameObject* GameEngine::InstanceParticle(std::string ObjName)
+GameObject* GameEngine::InstanceParticle(std::string ObjName, std::string FileName)
 {
 	PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Create ][ Particle ] %s", ObjName.c_str());
 	
@@ -252,9 +252,74 @@ GameObject* GameEngine::InstanceParticle(std::string ObjName)
 	//Transform
 	Transform* Tr = temp->AddComponent<Transform>();
 	temp->transform = Tr;
+	MeshFilter*		mMeshFilter = temp->AddComponent<MeshFilter>();
+	ParticleSystem* mParticle	= temp->AddComponent<ParticleSystem>();
 
-	temp->AddComponent<MeshFilter>();
-	temp->AddComponent<ParticleSystem>();
+	if (FileName != "Default")
+	{
+		LoadParticleData* Data = LoadManager::GetParticle(FileName);
+		mParticle->SetMeshName("Quad");
+		mParticle->SetDiffuseName(Data->TextrueName);
+		switch (Data->RenderType)
+		{
+		case 0 :
+			mParticle->SetRenderType(PARTICLE_RENDER_OPTION::BILLBOARD);
+			break;
+		case 1:
+			mParticle->SetRenderType(PARTICLE_RENDER_OPTION::VERTICAL_BILLBOARD);
+			break;
+		case 2:
+			mParticle->SetRenderType(PARTICLE_RENDER_OPTION::HORIZONTAL_BILLBOARD);
+			break;
+		}
+
+		switch (Data->ColorType)
+		{
+		case 0:
+			mParticle->SetLifeTimeColor(Data->LifeColor_Min, Data->LifeColor_Max, NONE);
+			break;
+		case 1:
+			mParticle->SetLifeTimeColor(Data->LifeColor_Min, Data->LifeColor_Max, UP);
+			break;
+		case 2:
+			mParticle->SetLifeTimeColor(Data->LifeColor_Min, Data->LifeColor_Max, DOWN);
+			break;
+		case 3:
+			mParticle->SetLifeTimeColor(Data->LifeColor_Min, Data->LifeColor_Max, UPDOWN);
+			break;
+		}
+
+		switch (Data->ScaleType)
+		{
+		case 0:
+			mParticle->SetLifeTimeScale(Data->LifeScale.x, Data->LifeScale.y, NONE);
+			break;
+		case 1:
+			mParticle->SetLifeTimeScale(Data->LifeScale.x, Data->LifeScale.y, UP);
+			break;
+		case 2:
+			mParticle->SetLifeTimeScale(Data->LifeScale.x, Data->LifeScale.y, DOWN);
+			break;
+		case 3:
+			mParticle->SetLifeTimeScale(Data->LifeScale.x, Data->LifeScale.y, UPDOWN);
+			break;
+		}
+
+		mParticle->SetMaxParticles(Data->MaxParticle);
+		mParticle->SetDelayTime(Data->DelayTime);
+		mParticle->SetRateOverTime(Data->RateOverTime);
+		mParticle->SetShapeRadius(Data->Radius.x, Data->Radius.y, Data->Radius.z);
+		mParticle->SetTextureTiling(Data->Tiling.x, Data->Tiling.y);
+		mParticle->SetStartForce(Data->StartForce_Min, Data->StartForce_Max);
+		mParticle->SetStartColor(Data->StartColor_Min, Data->StartColor_Max);
+		mParticle->SetStartLifeTime(Data->StartLifeTime.x, Data->StartLifeTime.y);
+		mParticle->SetStartScale(Data->StartScale.x, Data->StartScale.y);
+		mParticle->SetStartRotation(Data->StartRotation.x, Data->StartRotation.y);
+		mParticle->SetLifeTimeForce(Data->LifeForce_Min, Data->LifeForce_Max);
+		mParticle->SetLifeTimeRotation(Data->LifeRotation.x, Data->LifeRotation.y);
+		mParticle->SetPlayTime(1, true);
+		mParticle->Play();
+	}
 
 	return temp;
 }

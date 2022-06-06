@@ -43,7 +43,6 @@ public:
 	GETTER(Loading,			mLoading_Dlog);
 	GETTER(FileOption,		mFileOption_Dlog);
 	GETTER(CamAnimation,	mCamAnimation_Dlog);
-	GETTER(CreateMaterial,	mMaterial_Dlog);
 	GETTER(SceneSaveDialog, mSceneSave);
 	GETTER(CTAP_Transform,	mTransform);
 	GETTER(CTAP_Rigidbody,	mRigidbody);
@@ -58,7 +57,8 @@ public:
 	GETTER(EditorManager,	mEditorManager);
 
 	GETTER(CColorDialog,	mColor);
-	GETTER(CFileDialog,		mFile);
+	CFileDialog* GetSaveFileDlg(char* FilePath, CString Type);
+	CFileDialog* GetLoadFileDlg(char* FilePath, CString Type);
 
 	///SET
 	SETTER(RightOption, mRightOption_Dlog);
@@ -72,14 +72,12 @@ private:
 	SceneSetting*		mSceneSetting;
 	Loading*			mLoading_Dlog;		//로딩을 위한 다이얼로그
 	FileOption*			mFileOption_Dlog;	//
-	CreateMaterial*		mMaterial_Dlog;		//메테리얼 생성 다이얼 로그
 	CamAnimation*		mCamAnimation_Dlog;	//카메라 애니메이션 다이얼 로그
 	SceneSaveDialog*	mSceneSave;
 	LoadTerrain*		mLoadTerrain;
 	LoadNavMesh*		mLoadNavMesh;
 	SkySetting*			mSkySetting;
 	CColorDialog*		mColor;
-	CFileDialog*		mFile;
 private:
 	//알아서 생성되는 다이얼로그
 	RightOption*	mRightOption_Dlog;	//View의 오른쪽 모든 정보들을 담당하는 다이얼 로그
