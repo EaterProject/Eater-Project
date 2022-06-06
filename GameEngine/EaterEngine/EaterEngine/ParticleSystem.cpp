@@ -129,11 +129,15 @@ void ParticleSystem::DataUpdate()
 void ParticleSystem::SetMeshName(std::string meshName)
 {
 	m_ParticleMeshName = meshName;
+
+	DataUpdate();
 }
 
 void ParticleSystem::SetRenderType(PARTICLE_RENDER_OPTION renderType)
 {
 	m_ParticleData->RenderType = renderType;
+
+	DataUpdate();
 }
 
 void ParticleSystem::SetMaxParticles(int maxCount)
@@ -143,6 +147,8 @@ void ParticleSystem::SetMaxParticles(int maxCount)
 
 	// Particle »ý¼º..
 	AddParticle();
+
+	DataUpdate();
 }
 
 void ParticleSystem::SetDelayTime(float delay)
@@ -162,6 +168,8 @@ void ParticleSystem::SetStrength(float strength)
 	m_Strength = strength;
 
 	m_ParticleData->Particle_Strength = strength;
+
+	DataUpdate();
 }
 
 void ParticleSystem::SetShapeRadius(float radius)
@@ -169,6 +177,8 @@ void ParticleSystem::SetShapeRadius(float radius)
 	m_ParticleData->Area_Radius = Vector3(radius);
 
 	m_RandomStartPosition->SetRange(Vector3(-radius, -radius, -radius), Vector3(radius, radius, radius));
+
+	DataUpdate();
 }
 
 void ParticleSystem::SetShapeRadius(float x, float y, float z)
@@ -176,6 +186,8 @@ void ParticleSystem::SetShapeRadius(float x, float y, float z)
 	m_ParticleData->Area_Radius = Vector3(x, y, z);
 
 	m_RandomStartPosition->SetRange(Vector3(-x, -y, -z), Vector3(x, y, z));
+
+	DataUpdate();
 }
 
 void ParticleSystem::SetStartForce(Vector3 force)
@@ -270,6 +282,8 @@ void ParticleSystem::SetLifeTimeColor(Vector4 minColor, Vector4 maxColor, PARTIC
 
 	m_SystemDesc->LifeTimeMinColor = minColor / 255.0f;
 	m_SystemDesc->LifeTimeMaxColor = maxColor / 255.0f;
+
+	DataUpdate();
 }
 
 void ParticleSystem::SetLifeTimeScale(float minScale, float maxScale, PARTICLE_LIFETIME_OPTION option)
@@ -288,6 +302,8 @@ void ParticleSystem::SetLifeTimeScale(float minScale, float maxScale, PARTICLE_L
 		m_SystemDesc->LifeTimeMinScale = maxScale;
 		m_SystemDesc->LifeTimeMaxScale = minScale;
 	}
+
+	DataUpdate();
 }
 
 void ParticleSystem::SetLifeTimeRotation(float rot)
@@ -312,6 +328,8 @@ void ParticleSystem::SetTextureTiling(int count_x, int count_y)
 	m_SystemDesc->Tile_Width = count_x;
 	m_SystemDesc->Tile_Height = count_y;
 	m_SystemDesc->Total_Frame = count_x * count_y;
+
+	DataUpdate();
 }
 
 void ParticleSystem::SetPlayTime(float playTime, bool loop /*= false*/)

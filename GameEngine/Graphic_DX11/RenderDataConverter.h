@@ -131,6 +131,7 @@ inline void RenderDataConverter::ConvertChangeResource(Origin* origin, std::unor
 
 	// 해당 Index Resource 체크..
 	auto itor = convertList.find(resourceIndex);
+
 	assert(itor != convertList.end());
 
 	// Resource Render Buffer 재설정..
