@@ -55,8 +55,6 @@ void Transform::TransformUpdate()
 	UpdateLocalPosition();
 }
 
-
-
 DirectX::SimpleMath::Vector3 Transform::GetLocalPosition_UP()
 {
 	return Local_UP;
@@ -237,7 +235,15 @@ void Transform::Slow_Y_Rotation(Vector3 Dir, float RotationSpeed, bool Z_Front)
 	//도착 지점의 각도를 구한다 이떄 범위는 -180 ~ 180 이다
 	Vector3 N = Dir - Position;
 	N.Normalize();
-	float EndAngle = (-atan2(N.z, N.x) * 180.0f / 3.141592f);
+	float EndAngle = 0;
+	if (Z_Front == true)
+	{
+		EndAngle = (-atan2(N.z, N.x) * 180.0f / 3.141592f);
+	}
+	else
+	{
+		EndAngle = (-atan2(N.z, N.x) * 180.0f / 3.141592f);
+	}
 
 	//도착지점 범위를 변경해준다 우리 엔진과 맞추기 위해서 0~ 360
 	if (EndAngle <= 0) { EndAngle += 360; }

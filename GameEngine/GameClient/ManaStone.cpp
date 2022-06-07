@@ -36,7 +36,7 @@ void ManaStone::Awake()
 
 	srand((unsigned int)time(NULL));
 
-	CreateMonster(5, 0);
+	CreateMonster(3, 2);
 }
 
 void ManaStone::SetUp()
@@ -143,28 +143,28 @@ void ManaStone::CreateMonsterRangePoint(int MonsterCount)
 
 void ManaStone::CreateMonsterA(int index)
 {
-	static int Testindex = 0;
 	///몬스터 A를 생성
-	//Vector3 Pos = (MonsterMovePointDefault[index] * 10) + mTransform->Position ;
-	MonsterA* Monster;
+	MonsterA* Monster = ObjectFactory::CreateMonsterA(0,0,0);
 	//몬스터에게 추격할 포인트 5곳을 건내준다
 	for (int i = 0; i < 5; i++)
 	{
-		Vector3 Point = GetPoint(Testindex, i);
+		Vector3 Point = GetPoint(index, i);
 		Point.y = mTransform->Position.y;
-		Monster = ObjectFactory::CreateMonsterA(Point.x, mTransform->Position.y, Point.z);
 		Monster->SetSearchPoint(i, Point);
 	}
 	MonsterA_List.push_back(Monster);
-	index++;
 }
 
 void ManaStone::CreateMonsterB(int index)
 {
 	///몬스터 B를 생성
-	Vector3 Poistion = (MonsterMovePointDefault[index] * 10) + mTransform->Position;
-	MonsterB* Monster = ObjectFactory::CreateMonsterB(Poistion.x, Poistion.y, Poistion.z);
-	//Monster->Create(this, index);
+	MonsterB* Monster = ObjectFactory::CreateMonsterB(0, 0, 0);
+	for (int i = 0; i < 5; i++)
+	{
+		Vector3 Point = GetPoint(index, i);
+		Point.y = mTransform->Position.y;
+		Monster->SetSearchPoint(i, Point);
+	}
 	MonsterB_List.push_back(Monster);
 }
 

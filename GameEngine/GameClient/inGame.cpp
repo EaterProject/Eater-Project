@@ -21,21 +21,23 @@ void InGame::Awake()
 
 
 	//Tool에서 만들어놓은 씬을 로드
-	Load("../Assets/Scene/test.Scene");
+	Load("../Assets/Scene/inGame.Scene");
 
 	// 오클루더 설정..
 	//AddOccluder("Dome_program_0");
 
-	//BakeSkyLightMap("SkyLight_HDRI", false);
+	BakeSkyLightMap("SkyLight_HDRI", false);
 
 	//SetSkyLight("Day");
-	//SetSkyLight("SkyLight_HDRI");
+	SetSkyLight("SkyLight_HDRI");
 
 	//SetEnvironment("Day");
-	//SetSkyCube("SkyCube_HDRI");
+	SetSkyCube("SkyCube_HDRI");
 
 	//로직매니저 초기화
 	Logic->Initialize();
+
+	Sound_Play_BGM("InGame_InDoor");
 
 	//GameObject* testobj = InstanceTerrain("Terrain");
 	//Terrain* mTerrain = testobj->GetComponent<Terrain>();

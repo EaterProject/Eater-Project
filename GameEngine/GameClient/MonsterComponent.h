@@ -16,42 +16,44 @@ public:
 	virtual void Awake() override;
 	virtual void SetUp() override;
 	virtual void Update() override;
+	virtual void OnTriggerStay(GameObject* Obj) override;
 
 	virtual void Move();
 	virtual void Attack();
 	virtual void Idle();
 	virtual void Dead();
 	virtual void Chase();
+	virtual void Hit();
 	virtual void Debug();
 
 	void SetSearchPoint(int Index, Vector3 Point);
 	bool GetStopPoint(int Index);
 
 	void SetMovePoint(float x, float y, float z);
+	void GroundCheck();
 protected:
 	MeshFilter*				mMeshFilter;
 	Transform*				mTransform;
 	AnimationController*	mAnimation;
 	Collider*				mColider;
 	Transform*				mPlayerTR;
-
-	void GroundCheck();
 protected:
 	Vector3 SearchPoint[5];
-
 	Vector3 MovePoint;		//이동해야하는 지점
 	Vector3 DirPoint;		//이동지점의 방향벡터
 	Vector3 ReturnPoint;	//추격후 돌아가야하는 위치
 protected:
-	int		MonsterState = 0;
+	int		MonsterState	= 0;
+	bool	MonsterFront_Z	= false;
 protected:
 	//처음 한번만 실행하기위한 변수들
 	bool IdleStart		= false;	//Idle	 상태 시작 변수
 	bool AttackStart	= false;	//Attack 상태 시작 변수
 	bool MoveStart		= false;	//Move   상태 시작 변수
+	bool ChaseStart		= false;	//Chase  상태 시작 변수
+	bool HitStart		= false;    //Hit	 상태 시작 변수
 protected:
 	///애니메이션 이름 변수들
-	//이변수들은 SetUp이 실행하기전에 넣어줘야한다
 	std::string ModelName;
 	std::string AnimationName;
 
@@ -68,20 +70,26 @@ protected:
 	const int	Idle_MaxTime_Min	= 2;		//대기시간의 최소값
 protected:
 	///Attack 상태 변수들
+
+protected:
+	///Hit 상태 변수
+	float HitTime				= 0.0f;			//공격을 맞았을때 시간 재는용
+	float HitMaxTime			= 1.0f;			//공격을 맞았을때 최대 무적시간
 protected:
 	///Chase 상태 변수들
-	float		ChaseTime		= 0.0f; //추격하는 현재 시간
-	const float ChaseEndTime	= 5.0f;	//추격을  중지하는 시간 
+	float ChaseTime				= 0.0f;			//추격하는 현재 시간
+	float ChaseEndTime			= 5.0f;			//추격을  중지하는 시간 
 protected:
-	float AttackRange	= 2.5f;			//공격 거리
-	float ChaseRange	= 5.5f;			//추격거리
+	float AttackRange			= 2.5f;			//공격 거리
+	float ChaseRange			= 5.5f;			//추격 거리
 protected:
-	float	HP			= 100;			//현재 체력
-	float	Speed		= 0.75f;		//이동 속도
-	float	AttackTime	= 0;			//현재 공격 시간
-	int		PointNumber = -1;			
-	const float IdleSpeed	= 0.75f;
-	const float ChaseSpeed	= 1.5f;
+	float	HP					= 100;			//현재 체력
+	float	Speed				= 0.75f;		//이동 속도
+	float	AttackTime			= 0;			//현재 공격 시간
+	int		PointNumber			= -1;			
+	const float IdleSpeed		= 0.75f;
+	const float ChaseSpeed		= 1.5f;
+private:
 	PhysRayCast* mRay;
 };
 

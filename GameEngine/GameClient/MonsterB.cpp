@@ -1,141 +1,36 @@
 #include "MonsterB.h"
-#include "MeshFilter.h"
-#include "Transform.h"
-#include "GameObject.h"
-#include "AnimationController.h"
 #include "EaterEngineAPI.h"
-#include "Collider.h"
-#include "Rigidbody.h"
-#include "ClientTypeOption.h"
-#include "ManaStone.h"
-#include <time.h>
-
 MonsterB::MonsterB()
 {
-	mMeshFilter		= nullptr;
-	mTransform		= nullptr;
-	mAnimation		= nullptr;
-	mColider		= nullptr;
+	
 }
 
 MonsterB::~MonsterB()
 {
-	mMeshFilter		= nullptr;
-	mTransform		= nullptr;
-	mAnimation		= nullptr;
-	mColider		= nullptr;
+	
 }
 
 void MonsterB::Awake()
 {
-	mMeshFilter = gameobject->GetComponent<MeshFilter>();
-	mTransform	= gameobject->GetTransform();
-	mAnimation	= gameobject->GetComponent<AnimationController>();
-	mColider	= gameobject->GetComponent<Collider>();
+	MonsterComponent::Awake();
 }
 void MonsterB::SetUp()
 {
-	//콜라이더 값 조정
-	//mColider->SetCenter(0, 0.25, 0);
-	//mColider->SetSphereCollider(0.25f);
-	//mColider->CreatePhys();
-	//
-	////매쉬 생성
-	//mMeshFilter->SetModelName("MonsterB+");
-	//mMeshFilter->SetAnimationName("MonsterB+");
-	//mAnimation->Play();
-	//
-	////이동 위치
-	//Vector3 Point = Mana->GetPoint(PointIndex, 1);
-	//SetMovePoint(Point.x, Point.y, Point.z);
-	//
-	//srand((unsigned int)time(NULL));
-	//State = (int)MONSTER_STATE::IDLE;
+	///변경할 변수들을 이쪽에다 선언
+	/////////////////////////////////////////////
+	ModelName		= "MonsterB+";
+	AnimationName	= "MonsterB+";
+	MonsterFront_Z	= true;
+	/////////////////////////////////////////////
+	MonsterComponent::SetUp();
 }
 
 void MonsterB::Update()
 {
-	//switch (MonsterState)
-	//{
-	//case (int)MONSTER_STATE::IDLE:
-	//	Idle();
-	//	break;
-	//case (int)MONSTER_STATE::MOVE:
-	//	Move();
-	//	break;
-	//case (int)MONSTER_STATE::ATTACK:
-	//	Attack();
-	//	break;
-	//}
-	//
-	//Debug();
+	MonsterComponent::Update();
 }
 
-void MonsterB::Move()
+void MonsterB::OnTriggerStay(GameObject* Obj)
 {
-	//if (MoveStart == false)
-	//{
-	//	mAnimation->Choice("move");
-	//	MoveStart = true;
-	//}
-	//
-	//if (GetStopPoint() == false)
-	//{
-	//	//목표지점의 도달하지 않았을때
-	//	mTransform->Slow_Y_Rotation(MovePoint, 100, false);
-	//	mTransform->SetTranlate(DirPoint.x, DirPoint.y, DirPoint.z);
-	//}
-	//else
-	//{
-	//	//목표지점 도달 후 상태 변화
-	//	State = (int)MONSTER_STATE::IDLE;
-	//	PointNumber = -1;
-	//	MoveStart = false;
-	//}
-}
-
-void MonsterB::Attack()
-{
-	if (AttackStart == false)
-	{
-
-
-		AttackStart = true;
-	}
-}
-
-void MonsterB::Idle()
-{
-	//기본 값 셋팅
-	//if (IdleStart == false)
-	//{
-	//	mAnimation->Choice("idle");
-	//	PointNumber = rand() % 5;
-	//	Idle_MaxTime = (rand() % Idle_MaxTime_Max) + Idle_MaxTime_Min;
-	//	Vector3 Point = Mana->GetPoint(PointIndex, PointNumber);
-	//	SetMovePoint(Point.x, Point.y, Point.z);
-	//	IdleStart = true;
-	//}
-	//
-	//
-	//if (IdleTime <= Idle_MaxTime)
-	//{
-	//	IdleTime += GetDeltaTime();
-	//}
-	//else
-	//{
-	//	//상태 변화 기본값 초기화
-	//	State = (int)MONSTER_STATE::MOVE;
-	//	IdleStart = false;
-	//	IdleTime = 0;
-	//}
-}
-
-void MonsterB::Dead()
-{
-}
-
-void MonsterB::Debug()
-{
-	DebugDrawCircle(2.5f, mTransform->Position, Vector3(0, 0, 0), Vector3(1, 0, 0));
+	MonsterComponent::OnTriggerStay(Obj);
 }
