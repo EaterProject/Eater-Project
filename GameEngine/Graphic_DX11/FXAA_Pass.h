@@ -11,8 +11,6 @@ public:
 	void OnResize(int width, int height) override;
 	void Release() override;
 
-	void ApplyOption() override;
-
 	void RenderUpdate();
 
 private:

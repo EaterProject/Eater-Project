@@ -35,12 +35,13 @@ public:
 public:
 	virtual void Create(int width, int height) abstract;
 	virtual void Start(int width, int height) abstract;
-
-	virtual void OnResize(int width, int height) abstract;
 	virtual void Release() abstract;
+
+	virtual void OnResize(int width, int height) {};
 
 	virtual void InstanceResize(size_t& renderMaxCount, size_t& unRenderMaxCount) {}
 
+public:
 	virtual void SetResize(int width, int height) {}
 
 	virtual void ApplyOption() {}

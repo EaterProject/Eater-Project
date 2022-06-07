@@ -173,11 +173,6 @@ void OIT_Pass::SetResize(int width, int height)
 	m_FirstOffset_RB->SetNumElements(width * height);
 }
 
-void OIT_Pass::ApplyOption()
-{
-
-}
-
 void OIT_Pass::BeginRender()
 {
 	g_Context->RSSetState(m_NoCull_RS);

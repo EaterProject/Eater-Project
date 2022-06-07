@@ -94,7 +94,7 @@ float TimeManager::DeltaTime()const
 
 void TimeManager::ResetTime()
 {
-	mDeltaTime = 0;
+	mDeltaTime = 0.0001f;
 }
 
 void TimeManager::Reset()

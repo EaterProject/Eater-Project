@@ -5,41 +5,54 @@
 // 
 //***************************************************************************************
 
-std::default_random_engine RandomBase::g_RandomEngine;
+template<typename T>
+inline void Eater::RandomBase::Swap(T& minNum, T& maxNum)
+{
+	if (minNum != maxNum)
+	{
+		if (minNum > maxNum)
+		{
+			T temp = minNum;
+			minNum = maxNum;
+			maxNum = temp;
+		}
+	}
+}
 
-void RandomInt::SetRange(int min, int max)
+inline void Eater::RandomInt::SetRange(int min, int max)
 {
 	Swap(min, max);
 	m_RandomGenerator = std::uniform_int_distribution<int>(min, max);
 }
 
-void RandomInt::Reset()
+inline void Eater::RandomInt::Reset()
 {
 	m_RandomGenerator.reset();
 }
 
-int RandomInt::GetRandomNumber()
+inline int Eater::RandomInt::GetRandomNumber()
 {
 	return m_RandomGenerator(g_RandomEngine);
 }
 
-void RandomFloat::SetRange(float min, float max)
+inline void Eater::RandomFloat::SetRange(float min, float max)
 {
 	Swap(min, max);
 	m_RandomGenerator = std::uniform_real_distribution<float>(min, max);
 }
 
-void RandomFloat::Reset()
+inline void Eater::RandomFloat::Reset()
 {
 	m_RandomGenerator.reset();
+
 }
 
-float RandomFloat::GetRandomNumber()
+inline float Eater::RandomFloat::GetRandomNumber()
 {
 	return m_RandomGenerator(g_RandomEngine);
 }
 
-void RandomVector3::SetRange(DirectX::SimpleMath::Vector3 min, DirectX::SimpleMath::Vector3 max)
+inline void Eater::RandomVector3::SetRange(DirectX::SimpleMath::Vector3 min, DirectX::SimpleMath::Vector3 max)
 {
 	Swap(min.x, max.x);
 	m_RandomGenerator_X = std::uniform_real_distribution<float>(min.x, max.x);
@@ -49,21 +62,21 @@ void RandomVector3::SetRange(DirectX::SimpleMath::Vector3 min, DirectX::SimpleMa
 	m_RandomGenerator_Z = std::uniform_real_distribution<float>(min.z, max.z);
 }
 
-void RandomVector3::Reset()
+inline void Eater::RandomVector3::Reset()
 {
 	m_RandomGenerator_X.reset();
 	m_RandomGenerator_Y.reset();
 	m_RandomGenerator_Z.reset();
 }
 
-DirectX::SimpleMath::Vector3 RandomVector3::GetRandomNumber()
+inline DirectX::SimpleMath::Vector3 Eater::RandomVector3::GetRandomNumber()
 {
 	return DirectX::SimpleMath::Vector3(m_RandomGenerator_X(g_RandomEngine),
-		m_RandomGenerator_Y(g_RandomEngine),
-		m_RandomGenerator_Z(g_RandomEngine));
+										m_RandomGenerator_Y(g_RandomEngine),
+										m_RandomGenerator_Z(g_RandomEngine));
 }
 
-void RandomVector4::SetRange(DirectX::SimpleMath::Vector4 min, DirectX::SimpleMath::Vector4 max)
+inline void Eater::RandomVector4::SetRange(DirectX::SimpleMath::Vector4 min, DirectX::SimpleMath::Vector4 max)
 {
 	Swap(min.x, max.x);
 	m_RandomGenerator_X = std::uniform_real_distribution<float>(min.x, max.x);
@@ -78,7 +91,7 @@ void RandomVector4::SetRange(DirectX::SimpleMath::Vector4 min, DirectX::SimpleMa
 	m_RandomGenerator_W = std::uniform_real_distribution<float>(min.w, max.w);
 }
 
-void RandomVector4::Reset()
+inline void Eater::RandomVector4::Reset()
 {
 	m_RandomGenerator_X.reset();
 	m_RandomGenerator_Y.reset();
@@ -86,12 +99,12 @@ void RandomVector4::Reset()
 	m_RandomGenerator_W.reset();
 }
 
-DirectX::SimpleMath::Vector4 RandomVector4::GetRandomNumber()
+inline DirectX::SimpleMath::Vector4 Eater::RandomVector4::GetRandomNumber()
 {
 	return DirectX::SimpleMath::Vector4(m_RandomGenerator_X(g_RandomEngine),
-		m_RandomGenerator_Y(g_RandomEngine),
-		m_RandomGenerator_Z(g_RandomEngine),
-		m_RandomGenerator_W(g_RandomEngine));
+										m_RandomGenerator_Y(g_RandomEngine),
+										m_RandomGenerator_Z(g_RandomEngine),
+										m_RandomGenerator_W(g_RandomEngine));
 }
 
 //***************************************************************************************
@@ -99,3 +112,65 @@ DirectX::SimpleMath::Vector4 RandomVector4::GetRandomNumber()
 // Delegate Class
 // 
 //***************************************************************************************
+template<typename ..._Args>
+using Function = std::function<void(_Args...)>;
+
+template<typename ..._Args>
+inline void Eater::Delegate<_Args...>::Push(Function&& _func)
+{
+	pFunctionList.push_back(_func);
+}
+
+template<typename ..._Args>
+inline void Eater::Delegate<_Args...>::Pop(Function&& _func)
+{
+	for (int index = 0; index < pFunctionList.size(); index++)
+	{
+		if (pFunctionList[index].target_type() == _func.target_type())
+		{
+			pFunctionList.erase(std::next(pFunctionList.begin(), index));
+			break;
+		}
+	}
+}
+
+template<typename ..._Args>
+inline void Eater::Delegate< _Args... >::Reset()
+{
+	pFunctionList.clear();
+}
+
+template<typename ..._Args>
+inline void Eater::Delegate<_Args...>::operator+=(Function&& _func)
+{
+	pFunctionList.push_back(_func);
+}
+
+template<typename ..._Args>
+inline void Eater::Delegate<_Args...>::operator-=(Function&& _func)
+{
+	for (int index = 0; index < pFunctionList.size(); index++)
+	{
+		if (pFunctionList[index].target_type() == _func.target_type())
+		{
+			pFunctionList.erase(std::next(pFunctionList.begin(), index));
+			break;
+		}
+	}
+}
+
+template<typename ..._Args>
+inline void Eater::Delegate<_Args...>::operator=(Function&& _func)
+{
+	pFunctionList.clear();
+	pFunctionList.push_back(_func);
+}
+
+template<typename ..._Args>
+inline void Eater::Delegate<_Args...>::operator()(_Args... _types)
+{
+	for (auto& func : pFunctionList)
+	{
+		func(std::forward<_Args>(_types)...);
+	}
+}

@@ -5,6 +5,7 @@
 #include <windows.h>
 #include "EaterEngineDLL.h"
 #include "TypeOptionHeader.h"
+#include "Utility.h"
 
 namespace flatbuffers 
 {

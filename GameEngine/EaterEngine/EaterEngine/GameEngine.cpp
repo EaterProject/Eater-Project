@@ -12,6 +12,7 @@
 #include "NetworkManager.h"
 #include "GlobalDataManager.h"
 #include "NavigationManager.h"
+#include "MaterialManager.h"
 #include "EaterSound.h"
 
 #include "ParserData.h"
@@ -36,6 +37,7 @@
 
 int GameEngine::WinSizeWidth	= 0;
 int GameEngine::WinSizeHeight	= 0;
+Eater::Delegate<int, int> GameEngine::ResizeFunction;
 
 GameEngine::GameEngine()
 {
@@ -71,6 +73,8 @@ GameEngine::GameEngine()
 
 GameEngine::~GameEngine()
 {
+	MaterialManager::Release();
+
 	mLoadManager = nullptr;
 	mObjectManager = nullptr;
 	mSceneManager = nullptr;
@@ -195,6 +199,8 @@ void GameEngine::OnResize(int Change_Width, int Change_Height)
 	mGraphicManager->OnReSize(WinSizeWidth, WinSizeHeight);
 	Camera::g_MainCam->CreateProj(WinSizeWidth, WinSizeHeight);
 
+	//Resize 窃荐府胶飘 角青
+	ResizeFunction(Change_Width, Change_Height);
 
 	std::string Width = std::to_string(WinSizeWidth);
 	std::string Height = std::to_string(WinSizeHeight);;
@@ -354,6 +360,8 @@ GameObject* GameEngine::InstanceLight(std::string ObjName, LIGHT_TYPE type)
 	switch (type)
 	{
 	case DIRECTION_LIGHT:
+		Tr->Rotation.x = -30.0f;
+		Tr->Rotation.y = 10.0f;
 		light->SetPower(1);
 		break;
 	case POINT_LIGHT:
@@ -380,15 +388,6 @@ GameObject* GameEngine::InstanceUI(std::string ObjName /*= "UI"*/)
 	Obj->AddComponent<RectTransform>();
 
 	return Obj;
-}
-
-Material* GameEngine::InstanceMaterial(std::string matName /*= "Material"*/)
-{
-	PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Create ][ Material ] %s", matName.c_str());
-
-	Material* temp = CreateMaterial();
-
-	return temp;
 }
 
 GameObject* GameEngine::FindGameObjectTag(std::string& TagName)
@@ -689,13 +688,6 @@ GameObject* GameEngine::CreateInstance()
 	mGraphicManager->PushInstance(newObject->OneMeshData);
 
 	return newObject;
-}
-
-Material* GameEngine::CreateMaterial()
-{
-	// 货肺款 Material 积己..
-	Material* newMaterial = new Material();
-	return newMaterial;
 }
 
 void GameEngine::CreateObject()

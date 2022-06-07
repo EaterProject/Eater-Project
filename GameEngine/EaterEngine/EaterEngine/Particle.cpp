@@ -10,7 +10,6 @@
 
 #define LERP(prev, next, time) ((prev * (1.0f - time)) + (next * time))
 
-
 Particle::Particle()
 {
 }
@@ -40,11 +39,11 @@ void Particle::Update()
 {
 	if (m_Playing == false) return;
 
-	float dTime = mTimeManager->DeltaTime();
-
 	// 해당 파티클 업데이트..
 	if (m_LifeTime > 0.0f)
 	{
+		float dTime = mTimeManager->DeltaTime();
+
 		m_TexNowTime += dTime;
 		m_AniNowTime += dTime;
 		m_LifeTime -= dTime;
@@ -56,9 +55,9 @@ void Particle::Update()
 		{
 			m_TexFrame = m_NextFrame;
 
-			if (m_TexFrame > m_TexTotalFrame)
+			if (m_TexFrame >= m_TexTotalFrame)
 			{
-				m_TexNowFrame = m_TexTotalFrame;
+				m_TexNowFrame = m_TexTotalFrame - 1;
 			}
 			else
 			{
@@ -74,7 +73,7 @@ void Particle::Update()
 			}
 		}
 
-		m_NextFrame = (int)(m_AniNowTime / m_AniOneFrame);
+		m_NextFrame = (int)(m_AniNowTime / m_AniOneFrame) + 1;
 		
 		// Pos & Rot & Scale & Color Animation..
 		if (m_AniFrame != m_NextFrame)
@@ -87,10 +86,10 @@ void Particle::Update()
 			{
 				m_AniPrevFrame = 0;
 			}
-			if (m_AniNextFrame > m_AniTotalFrame)
+			if (m_AniNextFrame >= m_AniTotalFrame)
 			{
-				m_AniNextFrame = m_AniTotalFrame;
-				m_AniPrevFrame = m_AniTotalFrame;
+				m_AniNextFrame = m_AniTotalFrame - 1;
+				m_AniPrevFrame = m_AniTotalFrame - 1;
 			}
 
 			// Position Data 변경 및 설정..
@@ -311,6 +310,7 @@ void Particle::DataUpdate()
 	m_WidthCount = m_SystemDesc->Tile_Width;
 	m_HeightCount = m_SystemDesc->Tile_Height;
 
+	m_ParticleData->TexPos = Vector2(0.0f, 0.0f);
 	m_ParticleData->TexScale = Vector2(1.0f / m_SystemDesc->Tile_Width, 1.0f / m_SystemDesc->Tile_Height);
 }
 
@@ -321,7 +321,9 @@ void Particle::Reset()
 	m_Playing = false;
 	m_LifeTime = 0.0f;
 	m_TexNowTime = 0.0f;
+	m_TexFrame = 1;
 	m_AniNowTime = 0.0f;
+	m_AniFrame = 1;
 }
 
 void Particle::Release()

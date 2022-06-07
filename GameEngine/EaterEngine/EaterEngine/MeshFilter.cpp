@@ -13,6 +13,7 @@
 #include "EaterEngineAPI.h"
 #include "TextureManager.h"
 #include "GraphicEngineAPI.h"
+#include "MaterialManager.h"
 #include "Profiler/Profiler.h"
 
 MeshFilter::MeshFilter()
@@ -30,9 +31,9 @@ MeshFilter::~MeshFilter()
 {
 	delete m_PropertyBlock;
 
-	if (m_Material && m_Material->Defalt)
+	if (m_Material && m_Material->is_Default)
 	{
-		delete m_Material;
+		MaterialManager::DestroyDefaultMaterial(m_Material);
 	}
 }
 
@@ -210,6 +211,11 @@ void MeshFilter::SetMetallicFactor(float metallicFactor)
 	m_Material->SetMetallicFactor(metallicFactor);
 }
 
+void MeshFilter::SetSkyLightIndex(int skyLightIndex)
+{
+	m_Material->SetSkyLightIndex(skyLightIndex);
+}
+
 void MeshFilter::SetMaterialPropertyBlock(bool enable)
 {
 	// 활성화와 동시에 기존 Property Data 복사..
@@ -351,10 +357,7 @@ void MeshFilter::SetMaterial(std::string matName)
 		if (m_Material == nullptr)
 		{
 			// 새로운 Material 생성..
-			m_Material = new Material();
-			m_Material->Name = "Defalt";
-			m_Material->m_MaterialData->Name = "Defalt";
-			m_Material->Defalt = true;
+			m_Material = MaterialManager::CreateDefaultMaterial();
 
 			// 기본 색상 설정..
 			//m_Material->SetAddColor(Vector3(1.0f, 1.0f, 1.0f));
@@ -371,9 +374,9 @@ void MeshFilter::SetMaterial(std::string matName)
 	GraphicEngine::Get()->PushChangeInstance(gameobject->OneMeshData);
 
 	// 기본 Material이였다면 삭제..
-	if (material->Defalt == false && m_Material && m_Material->Defalt)
+	if (material->is_Default == false && m_Material && m_Material->is_Default)
 	{
-		delete m_Material;
+		MaterialManager::DestroyDefaultMaterial(m_Material);
 	}
 
 	// 해당 Material 설정..
@@ -512,13 +515,7 @@ void MeshFilter::SetMaterialData(LoadMeshData* LoadMesh, MeshData* mMesh, GameOb
 	else
 	{
 		// 새로운 Material 생성..
-		meshFilter->m_Material = new Material();
-		meshFilter->m_Material->Name = "Defalt";
-		meshFilter->m_Material->m_MaterialData->Name = "Defalt";
-		meshFilter->m_Material->Defalt = true;
-
-		// 기본 색상 설정..
-		//meshFilter->m_Material->SetAddColor(Vector3(1.0f, 1.0f, 1.0f));
+		meshFilter->m_Material = MaterialManager::CreateDefaultMaterial();
 	}
 
 	// Render Material Data 설정..

@@ -8,7 +8,7 @@
 #define SAFE_RELEASE(x) { if(x != nullptr){ x->Release(); delete x; x = nullptr; } }
 
 Material::Material()
-	:Defalt(false)
+	:is_Default(false)
 {
 	// Material Buffer 생성..
 	m_MaterialData = new MaterialBuffer();
@@ -111,6 +111,11 @@ void Material::SetMetallicFactor(float metallicFactor)
 	m_MaterialData->Material_Property->MetallicFactor = metallicFactor;
 }
 
+void Material::SetSkyLightIndex(int skyLightIndex)
+{
+	m_MaterialData->Material_Property->SkyLightIndex = skyLightIndex;
+}
+
 void Material::Release()
 {
 	// Graphic 내부에 있는 해당 Materail Buffer 삭제..
@@ -158,4 +163,14 @@ std::string Material::GetORMName()
 	}
 
 	return std::string();
+}
+
+bool Material::operator<(const Material& material) const
+{
+	if (m_MaterialData->BufferIndex != material.m_MaterialData->BufferIndex)
+	{
+		return m_MaterialData->BufferIndex < material.m_MaterialData->BufferIndex;
+	}
+
+	return false;
 }

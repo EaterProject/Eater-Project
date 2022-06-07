@@ -14,8 +14,6 @@ public:
 	
 	void Release() override;
 
-	void ApplyOption(UINT renderOption);
-
 public:
 	void BeginRender();
 	void RenderUpdate(const InstanceRenderBuffer* instance, const std::vector<RenderData*>& meshlist);

@@ -442,7 +442,6 @@ void CTAP_Particle::GetObjectData()
 	UpDateLifeSetting();
 
 	// 변한 데이터 업데이트..
-	mParticleSystem->DataUpdate();
 	UpdateData(FALSE);
 }
 

@@ -64,11 +64,6 @@ void UI_Pass::Release()
 
 }
 
-void UI_Pass::ApplyOption()
-{
-
-}
-
 void UI_Pass::RenderUpdate(std::vector<RenderData*>& meshlist)
 {
 	m_RenderCount = (UINT)meshlist.size();

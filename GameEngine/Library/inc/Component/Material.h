@@ -1,8 +1,8 @@
 #pragma once
 #include <string>
 #include "EaterEngineDLL.h"
+#include "EngineData.h"
 
-class MaterialBuffer;
 class MaterialManager;
 
 class Material
@@ -29,8 +29,7 @@ public:
 	EATER_ENGINEDLL void SetRoughnessFactor(float roughnessFactor);
 	EATER_ENGINEDLL void SetMetallicFactor(float metallicFactor);
 
-public:
-	void Release();
+	EATER_ENGINEDLL void SetSkyLightIndex(int skyLightIndex);
 
 public:
 	EATER_ENGINEDLL std::string GetDiffuseName();
@@ -39,7 +38,13 @@ public:
 	EATER_ENGINEDLL std::string GetORMName();
 
 public:
-	bool Defalt;
+	void Release();
+
+public:
+	bool operator<(const Material& material) const;
+
+public:
+	bool is_Default;
 	std::string Name;
 
 	MaterialBuffer* m_MaterialData;

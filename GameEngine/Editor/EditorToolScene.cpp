@@ -406,20 +406,22 @@ GameObject* EditorToolScene::Create_BaseParticle()
 
 	ParticleSystem* particles = obj->GetComponent<ParticleSystem>();
 	particles->SetMeshName("Quad");
-	particles->SetDiffuseName("particle_hotCloud");
 	particles->SetRenderType(PARTICLE_RENDER_OPTION::BILLBOARD);
-	particles->SetStartLifeTime(1.5f, 1.8f);
-	particles->SetStartScale(1.0f, 7.0f);
-	particles->SetStartRotation(-360, 360);
-	particles->SetStartColor(Vector4(255, 174, 73, 28), Vector4(255, 111, 53, 255));
+	particles->SetDiffuseName("particle_hotCloud");
 	particles->SetMaxParticles(60);
+	particles->SetDelayTime(0.0f);
 	particles->SetRateOverTime(25.0f);
-	particles->SetShapeRadius(0.1875f);
+	particles->SetShapeRadius(0.1875f, 0.1875f, 0.1875f);
+	particles->SetTextureTiling(8, 8);
 	particles->SetStartForce(Vector3(0, 5, 0));
+	particles->SetStartColor(Vector4(255, 174, 73, 255), Vector4(255, 111, 53, 255));
+	particles->SetStartLifeTime(1.5f, 1.8f);
+	particles->SetStartScale(0.5f, 0.5f);
+	particles->SetStartRotation(-360, 360);
+	particles->SetLifeTimeForce(Vector3(0, 0, 0));
 	particles->SetLifeTimeRotation(-15.0f, 15.0f);
 	particles->SetLifeTimeScale(1, 1, PARTICLE_LIFETIME_OPTION::NONE);
 	particles->SetLifeTimeColor(Vector4(255, 255, 255, 255), Vector4(255, 255, 255, 255), PARTICLE_LIFETIME_OPTION::NONE);
-	particles->SetTextureTiling(8, 8);
 	particles->SetPlayTime(1, true);
 	particles->Play();
 

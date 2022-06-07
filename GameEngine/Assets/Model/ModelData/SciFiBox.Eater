@@ -1,8 +1,8 @@
 #STATIC
-@NodeName SciFiBox
 @ParentName RootNode
+@NodeName SciFiBox
 @MeshName SciFiBox_0
-@MaterialName SciFiBox_Material.001
+@MaterialName Defalt
 $WorldTM 4 4
 1.000000 0.000000 0.000000 0.000000
 0.000000 -0.000000 1.000000 0.000000

@@ -1858,7 +1858,7 @@ void GraphicResourceFactory::CreateDepthStencilStates()
 	depthStencilDesc.BackFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
 	depthStencilDesc.BackFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
 
-	// Defalt DepthStencilState 持失..
+	// Default DepthStencilState 持失..
 	CreateDepthStencilState(DSS_Defalt::GetName(), DSS_Defalt::GetHashCode(), &depthStencilDesc);
 
 	ZeroMemory(&depthStencilDesc, sizeof(depthStencilDesc));
@@ -2221,20 +2221,20 @@ void GraphicResourceFactory::CreateDepthStencilViews(int width, int height)
 	descDSV.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
 	descDSV.Texture2D.MipSlice = 0;
 
-	// Defalt DepthStencilView 持失..
+	// Default DepthStencilView 持失..
 	CreateDepthStencil(DS_Defalt::GetName(), DS_Defalt::GetHashCode(), &texDesc, nullptr, &descDSV, nullptr);
 }
 
 void GraphicResourceFactory::CreateViewPorts(int width, int height)
 {
-	// Defalt ViewPort 持失..
+	// Default ViewPort 持失..
 	CreateViewPort(VP_FullScreen::GetName(), VP_FullScreen::GetHashCode(), 0.0f, 0.0f, 1.0f, 1.0f, (float)width, (float)height);
 	CreateViewPort(VP_HalfScreen::GetName(), VP_HalfScreen::GetHashCode(), 0.0f, 0.0f, 0.5f, 0.5f, (float)width, (float)height);
 }
 
 void GraphicResourceFactory::CreateInstanceBuffers()
 {
-	// Defalt Instance Buffer 持失..
+	// Default Instance Buffer 持失..
 	UINT instancMax = 500;
 
 	std::vector<VertexInput::MeshDepthInstance>		meshDepthInstance(instancMax);
