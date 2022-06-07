@@ -21,44 +21,20 @@ namespace Eater
 		static inline std::default_random_engine g_RandomEngine;
 
 		template<typename T>
-		static void Swap(T& minNum, T& maxNum);
+		static inline void Swap(T& minNum, T& maxNum);
 	};
-
-	template<typename T>
-	inline void RandomBase::Swap(T& minNum, T& maxNum)
-	{
-		if (minNum != maxNum)
-		{
-			if (minNum > maxNum)
-			{
-				T temp = minNum;
-				minNum = maxNum;
-				maxNum = temp;
-			}
-		}
-	}
 
 	class RandomInt : public RandomBase
 	{
 	public:
 		// 해당 난수 범위 초기화..
-		inline void SetRange(int min, int max)
-		{
-			Swap(min, max);
-			m_RandomGenerator = std::uniform_int_distribution<int>(min, max);
-		}
+		inline void SetRange(int min, int max);
 
 		// 해당 난수 캐시 초기화..
-		inline void Reset()
-		{
-			m_RandomGenerator.reset();
-		}
+		inline void Reset();
 
 		// 해당 범위 내의 난수 추출..
-		inline int GetRandomNumber()
-		{
-			return m_RandomGenerator(g_RandomEngine);
-		}
+		inline int GetRandomNumber();
 
 	private:
 		std::uniform_int_distribution<int> m_RandomGenerator;
@@ -68,23 +44,13 @@ namespace Eater
 	{
 	public:
 		// 해당 난수 범위 초기화..
-		inline void SetRange(float min, float max)
-		{
-			Swap(min, max);
-			m_RandomGenerator = std::uniform_real_distribution<float>(min, max);
-		}
+		inline void SetRange(float min, float max);
 
 		// 해당 난수 캐시 초기화..
-		inline void Reset()
-		{
-			m_RandomGenerator.reset();
-		}
+		inline void Reset();
 
 		// 해당 범위 내의 난수 추출..
-		inline float GetRandomNumber()
-		{
-			return m_RandomGenerator(g_RandomEngine);
-		}
+		inline float GetRandomNumber();
 
 	private:
 		std::uniform_real_distribution<float> m_RandomGenerator;
@@ -94,31 +60,13 @@ namespace Eater
 	{
 	public:
 		// 해당 난수 범위 초기화..
-		inline void SetRange(DirectX::SimpleMath::Vector3 min, DirectX::SimpleMath::Vector3 max)
-		{
-			Swap(min.x, max.x);
-			m_RandomGenerator_X = std::uniform_real_distribution<float>(min.x, max.x);
-			Swap(min.y, max.y);
-			m_RandomGenerator_Y = std::uniform_real_distribution<float>(min.y, max.y);
-			Swap(min.z, max.z);
-			m_RandomGenerator_Z = std::uniform_real_distribution<float>(min.z, max.z);
-		}
+		inline void SetRange(DirectX::SimpleMath::Vector3 min, DirectX::SimpleMath::Vector3 max);
 
 		// 해당 난수 캐시 초기화..
-		inline void Reset()
-		{
-			m_RandomGenerator_X.reset();
-			m_RandomGenerator_Y.reset();
-			m_RandomGenerator_Z.reset();
-		}
+		inline void Reset();
 
 		// 해당 범위 내의 난수 추출..
-		inline DirectX::SimpleMath::Vector3 GetRandomNumber()
-		{
-			return DirectX::SimpleMath::Vector3(m_RandomGenerator_X(g_RandomEngine),
-												m_RandomGenerator_Y(g_RandomEngine),
-												m_RandomGenerator_Z(g_RandomEngine));
-		}
+		inline DirectX::SimpleMath::Vector3 GetRandomNumber();
 
 	private:
 		std::uniform_real_distribution<float> m_RandomGenerator_X;
@@ -130,38 +78,13 @@ namespace Eater
 	{
 	public:
 		// 해당 난수 범위 초기화..
-		inline void SetRange(DirectX::SimpleMath::Vector4 min, DirectX::SimpleMath::Vector4 max)
-		{
-			Swap(min.x, max.x);
-			m_RandomGenerator_X = std::uniform_real_distribution<float>(min.x, max.x);
-
-			Swap(min.y, max.y);
-			m_RandomGenerator_Y = std::uniform_real_distribution<float>(min.y, max.y);
-
-			Swap(min.z, max.z);
-			m_RandomGenerator_Z = std::uniform_real_distribution<float>(min.z, max.z);
-
-			Swap(min.w, max.w);
-			m_RandomGenerator_W = std::uniform_real_distribution<float>(min.w, max.w);
-		}
+		inline void SetRange(DirectX::SimpleMath::Vector4 min, DirectX::SimpleMath::Vector4 max);
 
 		// 해당 난수 캐시 초기화..
-		inline void Reset()
-		{
-			m_RandomGenerator_X.reset();
-			m_RandomGenerator_Y.reset();
-			m_RandomGenerator_Z.reset();
-			m_RandomGenerator_W.reset();
-		}
+		inline void Reset();
 
 		// 해당 범위 내의 난수 추출..
-		inline DirectX::SimpleMath::Vector4 GetRandomNumber()
-		{
-			return DirectX::SimpleMath::Vector4(m_RandomGenerator_X(g_RandomEngine),
-												m_RandomGenerator_Y(g_RandomEngine),
-												m_RandomGenerator_Z(g_RandomEngine),
-												m_RandomGenerator_W(g_RandomEngine));
-		}
+		inline DirectX::SimpleMath::Vector4 GetRandomNumber();
 
 	private:
 		std::uniform_real_distribution<float> m_RandomGenerator_X;
@@ -182,71 +105,19 @@ namespace Eater
 		using Function = std::function<void(_Args...)>;
 
 	public:
-		void Push(Function&& _func);		// Event Function 추가..
-		void Pop(Function&& _func);			// Event Function 제거..
-		void Reset();						// Event Function 초기화..
+		inline void Push(Function&& _func);			// Event Function 추가..
+		inline void Pop(Function&& _func);			// Event Function 제거..
+		inline void Reset();						// Event Function 초기화..
 
 	public:
-		void operator+=(Function&& _func);	// Event Function 추가..
-		void operator-=(Function&& _func);	// Event Function 제거..
-		void operator()(_Args... _types);	// Event Function List 호출..
+		inline void operator+=(Function&& _func);	// Event Function 추가..
+		inline void operator-=(Function&& _func);	// Event Function 제거..
+		inline void operator =(Function&& _func);	// Event Function 초기화 후 추가..
+		inline void operator()(_Args... _types);	// Event Function List 호출..
 
 	private:
 		std::vector<Function> pFunctionList;
 	};
-
-	template<typename ..._Args>
-	inline void Delegate<_Args...>::Push(Function&& _func)
-	{
-		pFunctionList.push_back(_func);
-	}
-
-	template<typename ..._Args>
-	inline void Delegate<_Args...>::Pop(Function&& _func)
-	{
-		for (int index = 0; index < pFunctionList.size(); index++)
-		{
-			if (pFunctionList[index].target_type() == _func.target_type())
-			{
-				pFunctionList.erase(std::next(pFunctionList.begin(), index));
-				break;
-			}
-		}
-	}
-
-	template<typename ..._Args>
-	inline void Delegate< _Args... >::Reset()
-	{
-		pFunctionList.clear();
-	}
-
-	template<typename ..._Args>
-	inline void Delegate<_Args...>::operator+=(Function&& _func)
-	{
-		pFunctionList.push_back(_func);
-	}
-
-	template<typename ..._Args>
-	inline void Delegate<_Args...>::operator-=(Function&& _func)
-	{
-		for (int index = 0; index < pFunctionList.size(); index++)
-		{
-			if (pFunctionList[index].target_type() == _func.target_type())
-			{
-				pFunctionList.erase(std::next(pFunctionList.begin(), index));
-				break;
-			}
-		}
-	}
-
-	template<typename ..._Args>
-	inline void Delegate<_Args...>::operator()(_Args... _types)
-	{
-		for (auto& func : pFunctionList)
-		{
-			func(std::forward<_Args>(_types)...);
-		}
-	}
 
 	//***************************************************************************************
 	// 
@@ -261,7 +132,7 @@ namespace Eater
 	template<typename R, typename T, typename B, typename... Args, Base_Check<T, B> = NULL>
 	constexpr auto Bind(R(T::* f)(Args...), B* p)
 	{
-		return [p, f](Args... args) ->R { (static_cast<T*>(p)->*f)(args...); };
+		return [p, f](Args... args) ->R { return (static_cast<T*>(p)->*f)(args...); };
 	};
 
 	// 기본적인 Member Function을 Lambda Function으로 묶어주는 함수..
@@ -383,4 +254,6 @@ namespace Eater
 			// 호출
 			_delegate((int)value_1, (float)value_2, (User*)value_3);
 	*/
+
+#include "Utility.inl"
 }

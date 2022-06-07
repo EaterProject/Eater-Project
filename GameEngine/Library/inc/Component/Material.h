@@ -3,7 +3,6 @@
 #include "EaterEngineDLL.h"
 #include "EngineData.h"
 
-class MaterialBuffer;
 class MaterialManager;
 
 class Material
@@ -29,6 +28,8 @@ public:
 	EATER_ENGINEDLL void SetEmissiveFactor(float emissiveFactor);
 	EATER_ENGINEDLL void SetRoughnessFactor(float roughnessFactor);
 	EATER_ENGINEDLL void SetMetallicFactor(float metallicFactor);
+
+	EATER_ENGINEDLL void SetSkyLightIndex(int skyLightIndex);
 
 public:
 	EATER_ENGINEDLL std::string GetDiffuseName();

@@ -1,5 +1,6 @@
 #pragma once
 #include "EaterEngineDLL.h"
+#include "EngineData.h"
 #include "Component.h"
 #include <vector>
 
@@ -8,7 +9,6 @@ struct PARTICLE_DESC;
 
 class MeshFilter;
 class Particle;
-class ParticleData;
 
 namespace Eater
 {

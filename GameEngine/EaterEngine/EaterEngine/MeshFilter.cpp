@@ -211,6 +211,11 @@ void MeshFilter::SetMetallicFactor(float metallicFactor)
 	m_Material->SetMetallicFactor(metallicFactor);
 }
 
+void MeshFilter::SetSkyLightIndex(int skyLightIndex)
+{
+	m_Material->SetSkyLightIndex(skyLightIndex);
+}
+
 void MeshFilter::SetMaterialPropertyBlock(bool enable)
 {
 	// 활성화와 동시에 기존 Property Data 복사..

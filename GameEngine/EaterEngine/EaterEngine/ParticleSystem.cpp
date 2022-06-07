@@ -120,15 +120,11 @@ void ParticleSystem::Update()
 void ParticleSystem::SetMeshName(std::string meshName)
 {
 	m_ParticleMeshName = meshName;
-
-	DataUpdate();
 }
 
 void ParticleSystem::SetRenderType(PARTICLE_RENDER_OPTION renderType)
 {
 	m_ParticleData->RenderType = renderType;
-
-	DataUpdate();
 }
 
 void ParticleSystem::SetMaxParticles(int maxCount)
@@ -159,8 +155,6 @@ void ParticleSystem::SetStrength(float strength)
 	m_Strength = strength;
 
 	m_ParticleData->Particle_Strength = strength;
-
-	DataUpdate();
 }
 
 void ParticleSystem::SetShapeRadius(float radius)
@@ -168,8 +162,6 @@ void ParticleSystem::SetShapeRadius(float radius)
 	m_ParticleData->Area_Radius = Vector3(radius);
 
 	m_RandomStartPosition->SetRange(Vector3(-radius, -radius, -radius), Vector3(radius, radius, radius));
-
-	DataUpdate();
 }
 
 void ParticleSystem::SetShapeRadius(float x, float y, float z)
@@ -177,8 +169,6 @@ void ParticleSystem::SetShapeRadius(float x, float y, float z)
 	m_ParticleData->Area_Radius = Vector3(x, y, z);
 
 	m_RandomStartPosition->SetRange(Vector3(-x, -y, -z), Vector3(x, y, z));
-
-	DataUpdate();
 }
 
 void ParticleSystem::SetStartForce(Vector3 force)

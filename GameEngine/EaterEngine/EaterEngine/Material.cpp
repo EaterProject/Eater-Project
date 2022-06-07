@@ -111,6 +111,11 @@ void Material::SetMetallicFactor(float metallicFactor)
 	m_MaterialData->Material_Property->MetallicFactor = metallicFactor;
 }
 
+void Material::SetSkyLightIndex(int skyLightIndex)
+{
+	m_MaterialData->Material_Property->SkyLightIndex = skyLightIndex;
+}
+
 void Material::Release()
 {
 	// Graphic 내부에 있는 해당 Materail Buffer 삭제..

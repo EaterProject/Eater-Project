@@ -57,6 +57,8 @@ public:
 	EATER_ENGINEDLL void SetRoughnessFactor(float roughnessFactor);
 	EATER_ENGINEDLL void SetMetallicFactor(float metallicFactor);
 	
+	EATER_ENGINEDLL void SetSkyLightIndex(int skyLightIndex);
+
 	EATER_ENGINEDLL void SetMaterialPropertyBlock(bool enable);
 
 	EATER_ENGINEDLL std::string GetBufferName();
