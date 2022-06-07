@@ -12,6 +12,7 @@
 #include "NetworkManager.h"
 #include "GlobalDataManager.h"
 #include "NavigationManager.h"
+#include "MaterialManager.h"
 #include "EaterSound.h"
 
 #include "ParserData.h"
@@ -72,6 +73,8 @@ GameEngine::GameEngine()
 
 GameEngine::~GameEngine()
 {
+	MaterialManager::Release();
+
 	mLoadManager = nullptr;
 	mObjectManager = nullptr;
 	mSceneManager = nullptr;
@@ -385,15 +388,6 @@ GameObject* GameEngine::InstanceUI(std::string ObjName /*= "UI"*/)
 	return Obj;
 }
 
-Material* GameEngine::InstanceMaterial(std::string matName /*= "Material"*/)
-{
-	PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Create ][ Material ] %s", matName.c_str());
-
-	Material* temp = CreateMaterial();
-
-	return temp;
-}
-
 GameObject* GameEngine::FindGameObjectTag(std::string& TagName)
 {
 	return mObjectManager->FindGameObjectTag(TagName);
@@ -692,13 +686,6 @@ GameObject* GameEngine::CreateInstance()
 	mGraphicManager->PushInstance(newObject->OneMeshData);
 
 	return newObject;
-}
-
-Material* GameEngine::CreateMaterial()
-{
-	// 货肺款 Material 积己..
-	Material* newMaterial = new Material();
-	return newMaterial;
 }
 
 void GameEngine::CreateObject()

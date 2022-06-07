@@ -291,7 +291,6 @@ void Eater_LoadScene::Load_Component_Particle(int index, GameObject* Object)
 	mParticle->SetMeshName("Quad");
 	mParticle->SetPlayTime(1, true);
 	mParticle->Play();
-	mParticle->DataUpdate();
 }
 
 void Eater_LoadScene::Load_Component_Collider(int index, GameObject* Object)

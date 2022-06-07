@@ -68,7 +68,6 @@ public:
 	GameObject* InstanceCamera(std::string ObjName = "Camera");
 	GameObject* InstanceLight(std::string ObjName = "Light", LIGHT_TYPE type = LIGHT_TYPE::POINT_LIGHT);
 	GameObject* InstanceUI(std::string ObjName = "UI");
-	Material*	InstanceMaterial(std::string matName = "Material");
 public:
 	///태그
 	GameObject* FindGameObjectTag(std::string& TagName);
@@ -164,7 +163,6 @@ public:
 	void RenderSetting();
 private:
 	GameObject* CreateInstance();
-	Material* CreateMaterial();
 	void CreateObject();			//기본 생성 오브젝트
 	void RenderOptionCheck();
 private:

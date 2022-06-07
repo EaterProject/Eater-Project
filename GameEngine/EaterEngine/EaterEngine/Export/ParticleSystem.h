@@ -1,5 +1,6 @@
 #pragma once
 #include "EaterEngineDLL.h"
+#include "EngineData.h"
 #include "Component.h"
 #include <vector>
 
@@ -8,7 +9,6 @@ struct PARTICLE_DESC;
 
 class MeshFilter;
 class Particle;
-class ParticleData;
 
 namespace Eater
 {
@@ -51,9 +51,6 @@ public:
 	void SetUp() override;
 	void Start() override;
 	void Update() override;
-
-public:
-	EATER_ENGINEDLL void DataUpdate();
 
 public:
 	EATER_ENGINEDLL void SetMeshName(std::string meshName);								// 파티클 출력할 매쉬 타입
@@ -121,6 +118,8 @@ public:
 	void Release();
 
 private:
+	void DataUpdate();
+
 	void StartPlay();
 	void AddParticle();
 
