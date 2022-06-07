@@ -1,8 +1,8 @@
 #pragma once
 #include <string>
 #include "EaterEngineDLL.h"
+#include "EngineData.h"
 
-class MeshBuffer;
 class MeshManager;
 
 class Mesh

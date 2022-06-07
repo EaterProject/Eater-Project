@@ -103,9 +103,11 @@ public:
 class MaterialProperty
 {
 public:
-	bool Alpha = false;					// Alpha Mesh
+	bool Alpha = false;					// Alpha Material
 	bool OutLine = false;				// Out Line
 	bool LimLight = false;				// Lim Light
+
+	int SkyLightIndex = 0;				// SkyLight Index
 
 	Vector3 AddColor = Vector3(0.0f, 0.0f, 0.0f);	// Add Color
 

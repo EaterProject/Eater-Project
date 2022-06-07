@@ -25,6 +25,7 @@ typedef struct PARTICLE_DESC
 
 	float StartScale;
 	float StartRot;
+
 	Vector4 StartColor;
 	Vector3 StartForce;
 	Vector3 StartPos;

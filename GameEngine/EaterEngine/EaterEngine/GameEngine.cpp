@@ -360,6 +360,8 @@ GameObject* GameEngine::InstanceLight(std::string ObjName, LIGHT_TYPE type)
 	switch (type)
 	{
 	case DIRECTION_LIGHT:
+		Tr->Rotation.x = -30.0f;
+		Tr->Rotation.y = 10.0f;
 		light->SetPower(1);
 		break;
 	case POINT_LIGHT:
