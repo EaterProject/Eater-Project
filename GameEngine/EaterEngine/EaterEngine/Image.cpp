@@ -101,6 +101,11 @@ void Image::SetImageColor(float r, float g, float b, float a)
 	m_UI->UI_Property->ImageColor.w = a / 255.0f;
 }
 
+void Image::SetLayer(UINT order)
+{
+	m_UI->BufferLayer = order;
+}
+
 DirectX::SimpleMath::Vector2 Image::GetImageSize()
 {
 	return DirectX::SimpleMath::Vector2(m_UI->Albedo->Width, m_UI->Albedo->Height);

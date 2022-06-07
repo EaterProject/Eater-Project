@@ -60,6 +60,7 @@ class UIRenderBuffer : public RenderResource
 {
 public:
 	UINT m_BufferIndex;
+	UINT m_BufferLayer;
 
 	UIProperty* m_UIProperty;
 
@@ -77,13 +78,4 @@ public:
 	MeshRenderBuffer*		m_Mesh;			// Instance의 기준이 되는 Mesh Buffer..
 	MaterialRenderBuffer*	m_Material;		// Instance의 기준이 되는 Material Buffer..
 	AnimationRenderBuffer*	m_Animation;	// Instance의 기준이 되는 Animation Buffer..
-};
-
-// Render Pass 별 공유해야할 Scene Data Class..
-class RenderSceneData
-{
-public:
-	// Fog 관련..
-	float Fog_Timer = 0.0f;
-
 };

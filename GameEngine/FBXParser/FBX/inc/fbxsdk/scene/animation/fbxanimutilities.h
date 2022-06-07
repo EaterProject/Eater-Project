@@ -93,7 +93,7 @@ public:
         char*            GetTimeWarpName() const;
         CurveNodeIntfce  GetTimeWarp();
 
-        CurveNodeIntfce  GetLayer(int pId);
+        CurveNodeIntfce  GetInstanceLayer(int pId);
 
         int              GetCount();
         void*            GetHandle(unsigned int pId);

@@ -24,6 +24,7 @@
 #include "RenderData.h"
 
 Fog_Pass::Fog_Pass()
+	:m_FogTimer(0.0f)
 {
 
 }
@@ -69,16 +70,16 @@ void Fog_Pass::ApplyOption()
 
 void Fog_Pass::PreUpdate()
 {
-	g_RenderSceneData->Fog_Timer += g_GlobalData->Time * g_RenderOption->FOG_MoveSpeed;
+	m_FogTimer += g_GlobalData->Time * g_RenderOption->FOG_MoveSpeed;
 
-	if (g_RenderSceneData->Fog_Timer > 100.0f)
+	if (m_FogTimer > 100.0f)
 	{
-		g_RenderSceneData->Fog_Timer = 0.0f;
+		m_FogTimer = 0.0f;
 	}
 
 	CB_FogData fogDataBuf;
 	fogDataBuf.gEyePosW = g_GlobalData->MainCamera_Data->CamPos;
-	fogDataBuf.gTime = g_RenderSceneData->Fog_Timer;
+	fogDataBuf.gTime = m_FogTimer;
 
 	for (ShaderBase* shader : m_OptionShaderList)
 	{

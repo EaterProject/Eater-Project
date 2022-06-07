@@ -48,17 +48,10 @@ void LoadingImage::Awake()
 	ui_rectTR->SetPosition(0.0f, -150.0f);
 	ui_rectTR->SetScale(0.5f, 0.5f);
 
-	//ui_object = InstanceUI("Text_Blur_UI");
-	//Text_Blur_Image = ui_object->AddComponent<Image>();
-	//ui_rectTR = ui_object->GetComponent<RectTransform>();
-	//ui_rectTR->SetImagePivot(RECT_PIVOT::PIVOT_MIDDLE_CENTER);
-	//ui_rectTR->SetPosition(0.0f, 300.0f);
-
 	Icon_Image->SetTexture("Loading_Logo");
 	Loading_1_Image->SetTexture("Loading_Icon_01");
 	Loading_2_Image->SetTexture("Loading_Icon_02");
 	Text_Origin_Image->SetTexture("Loading_Text");
-	//Text_Blur_Image->SetTexture("ingame_player_hp_back");
 }
 
 void LoadingImage::Update()

@@ -24,8 +24,8 @@ public:
 	void FrustumCulling();
 
 public:
-	void PushCullingMesh(RenderData* meshData);
-	void DeleteCullingMesh(RenderData* meshData);
+	void PushCullingMesh(RenderData* renderData);
+	void PopCullingMesh(RenderData* renderData);
 	void CullingBufferCreate();
 
 private:
