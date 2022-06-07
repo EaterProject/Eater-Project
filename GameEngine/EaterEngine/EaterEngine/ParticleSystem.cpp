@@ -12,20 +12,20 @@
 
 ParticleSystem::ParticleSystem()
 {
-	m_SystemDesc = new PARTICLE_SHARE_DESC();
-	m_ParticleDesc = new PARTICLE_DESC();
+	m_SystemDesc				= new PARTICLE_SHARE_DESC();
+	m_ParticleDesc				= new PARTICLE_DESC();
 
-	m_ParticleData = new ParticleData();
+	m_ParticleData				= new ParticleData();
 
-	m_RandomLifeTime = new RandomFloat();
-	m_RandomStartColor = new RandomVector4();
-	m_RandomStartForce = new RandomVector3();
-	m_RandomStartPosition = new RandomVector3();
-	m_RandomStartSize = new RandomFloat();
-	m_RandomStartRotation = new RandomFloat();
+	m_RandomLifeTime			= new Eater::RandomFloat();
+	m_RandomStartColor			= new Eater::RandomVector4();
+	m_RandomStartForce			= new Eater::RandomVector3();
+	m_RandomStartPosition		= new Eater::RandomVector3();
+	m_RandomStartSize			= new Eater::RandomFloat();
+	m_RandomStartRotation		= new Eater::RandomFloat();
 
-	m_RandomLifeTimeForce = new RandomVector3();
-	m_RandomLifeTimeRotation = new RandomFloat();
+	m_RandomLifeTimeForce		= new Eater::RandomVector3();
+	m_RandomLifeTimeRotation	= new Eater::RandomFloat();
 
 	// 초기 강도 설정..
 	SetStrength(1.0f);
@@ -117,23 +117,18 @@ void ParticleSystem::Update()
 	}
 }
 
-void ParticleSystem::DataUpdate()
-{
-	// Data 변경시 호출하면 Particle Data Update..
-	for (Particle* particle : m_Particles)
-	{
-		particle->DataUpdate();
-	}
-}
-
 void ParticleSystem::SetMeshName(std::string meshName)
 {
 	m_ParticleMeshName = meshName;
+
+	DataUpdate();
 }
 
 void ParticleSystem::SetRenderType(PARTICLE_RENDER_OPTION renderType)
 {
 	m_ParticleData->RenderType = renderType;
+
+	DataUpdate();
 }
 
 void ParticleSystem::SetMaxParticles(int maxCount)
@@ -143,6 +138,8 @@ void ParticleSystem::SetMaxParticles(int maxCount)
 
 	// Particle 생성..
 	AddParticle();
+
+	DataUpdate();
 }
 
 void ParticleSystem::SetDelayTime(float delay)
@@ -162,6 +159,8 @@ void ParticleSystem::SetStrength(float strength)
 	m_Strength = strength;
 
 	m_ParticleData->Particle_Strength = strength;
+
+	DataUpdate();
 }
 
 void ParticleSystem::SetShapeRadius(float radius)
@@ -169,6 +168,8 @@ void ParticleSystem::SetShapeRadius(float radius)
 	m_ParticleData->Area_Radius = Vector3(radius);
 
 	m_RandomStartPosition->SetRange(Vector3(-radius, -radius, -radius), Vector3(radius, radius, radius));
+
+	DataUpdate();
 }
 
 void ParticleSystem::SetShapeRadius(float x, float y, float z)
@@ -176,6 +177,8 @@ void ParticleSystem::SetShapeRadius(float x, float y, float z)
 	m_ParticleData->Area_Radius = Vector3(x, y, z);
 
 	m_RandomStartPosition->SetRange(Vector3(-x, -y, -z), Vector3(x, y, z));
+
+	DataUpdate();
 }
 
 void ParticleSystem::SetStartForce(Vector3 force)
@@ -270,6 +273,8 @@ void ParticleSystem::SetLifeTimeColor(Vector4 minColor, Vector4 maxColor, PARTIC
 
 	m_SystemDesc->LifeTimeMinColor = minColor / 255.0f;
 	m_SystemDesc->LifeTimeMaxColor = maxColor / 255.0f;
+
+	DataUpdate();
 }
 
 void ParticleSystem::SetLifeTimeScale(float minScale, float maxScale, PARTICLE_LIFETIME_OPTION option)
@@ -288,6 +293,8 @@ void ParticleSystem::SetLifeTimeScale(float minScale, float maxScale, PARTICLE_L
 		m_SystemDesc->LifeTimeMinScale = maxScale;
 		m_SystemDesc->LifeTimeMaxScale = minScale;
 	}
+
+	DataUpdate();
 }
 
 void ParticleSystem::SetLifeTimeRotation(float rot)
@@ -312,6 +319,8 @@ void ParticleSystem::SetTextureTiling(int count_x, int count_y)
 	m_SystemDesc->Tile_Width = count_x;
 	m_SystemDesc->Tile_Height = count_y;
 	m_SystemDesc->Total_Frame = count_x * count_y;
+
+	DataUpdate();
 }
 
 void ParticleSystem::SetPlayTime(float playTime, bool loop /*= false*/)
@@ -465,6 +474,15 @@ std::string ParticleSystem::GetTextureName()
 		return m_MeshFilter->GetDiffuseTextureName();
 	}
 	return m_DiffuseName;
+}
+
+void ParticleSystem::DataUpdate()
+{
+	// Data 변경시 호출하면 Particle Data Update..
+	for (Particle* particle : m_Particles)
+	{
+		particle->DataUpdate();
+	}
 }
 
 void ParticleSystem::StartPlay()

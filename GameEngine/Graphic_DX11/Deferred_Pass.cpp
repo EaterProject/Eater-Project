@@ -191,11 +191,6 @@ void Deferred_Pass::Release()
 
 }
 
-void Deferred_Pass::ApplyOption(UINT renderOption)
-{
-
-}
-
 void Deferred_Pass::BeginRender()
 {
 	g_Context->OMSetRenderTargets(5, &m_RTV_List[0], m_Defalt_DSV);

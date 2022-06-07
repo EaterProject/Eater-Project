@@ -3,6 +3,7 @@
 
 #include "GameObject.h"
 #include "GameEngine.h"
+#include "Utility.h"
 
 RectTransform::RectTransform()
 {
@@ -18,11 +19,16 @@ RectTransform::RectTransform()
 	PositionXM		= DirectX::XMMatrixIdentity();
 	RotationXM		= DirectX::XMMatrixIdentity();
 	ScaleXM			= DirectX::XMMatrixIdentity();
+
+	Screen_Size.x = GameEngine::WinSizeWidth;
+	Screen_Size.y = GameEngine::WinSizeHeight;
+
+	GameEngine::ResizeFunction += Eater::Bind(&RectTransform::Resize, this);
 }
 
 RectTransform::~RectTransform()
 {
-
+	GameEngine::ResizeFunction -= Eater::Bind(&RectTransform::Resize, this);
 }
 
 void RectTransform::TransformUpdate()
@@ -87,11 +93,26 @@ void RectTransform::TransformUpdate()
 	// 최종 Matrix 설정..
 	WorldXM = ScaleXM * RotationXM * PositionXM;
 	gameobject->OneMeshData->UI_Buffer->UI_Property->World = WorldXM;
+
+	// 최종 출력 범위 설정..
+	float half_width = ImageSize.x * Scale.x * 0.5f;
+	float half_height = ImageSize.y * Scale.y * 0.5f;
+
+	RectPosition.left	= PositionXM._41 - half_width;
+	RectPosition.top	= PositionXM._42 - half_height;
+	RectPosition.right	= PositionXM._41 + half_width;
+	RectPosition.bottom = PositionXM._42 + half_height;
 }
 
 void RectTransform::SetImagePivot(RECT_PIVOT pivot_type)
 {
 	PivotType = pivot_type;
+}
+
+void RectTransform::SetImageSize(float x, float y)
+{
+	ImageSize.x = x;
+	ImageSize.y = y;
 }
 
 void RectTransform::SetImageSize(DirectX::SimpleMath::Vector2 imagesize)
@@ -170,4 +191,24 @@ void RectTransform::AddScale(float x, float y)
 void RectTransform::AddScale(DirectX::SimpleMath::Vector2 scale)
 {
 	Scale += scale;
+}
+
+const RectPoint& RectTransform::GetRectPoint()
+{
+	return RectPosition;
+}
+
+void RectTransform::Resize(int width, int height)
+{
+	float ratio_w = (float)width / Screen_Size.x;
+	float ratio_h = (float)height / Screen_Size.y;
+
+	Scale.x *= ratio_w;
+	Scale.y *= ratio_h;
+
+	Position.x *= ratio_w;
+	Position.y *= ratio_h;
+
+	Screen_Size.x = width;
+	Screen_Size.y = height;
 }

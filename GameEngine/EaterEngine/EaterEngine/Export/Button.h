@@ -1,7 +1,10 @@
 #pragma once
-#include "Image.h"
+#include "Component.h"
+#include "Utility.h"
 
-class Button : public Image
+class Image;
+class RectTransform;
+class Button : public Component
 {
 public:
 	EATER_ENGINEDLL Button();
@@ -9,8 +12,18 @@ public:
 
 public:
 	void Awake() override;
-	
-public:
+	void Start() override;
+	void Update() override;
 
+public:
+	EATER_ENGINEDLL void PushOnClickEvent(std::function<void()>& eventFunc);
+	EATER_ENGINEDLL void PopOnClickEvent(std::function<void()>& eventFunc);
+	EATER_ENGINEDLL void ResetOnClickEvent();
+
+private:
+	Eater::Delegate<> m_OnClickEvent;
+
+	Image* m_Image;
+	RectTransform* m_Transform;
 };
 

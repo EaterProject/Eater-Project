@@ -8,7 +8,7 @@
 #define SAFE_RELEASE(x) { if(x != nullptr){ x->Release(); delete x; x = nullptr; } }
 
 Material::Material()
-	:Defalt(false)
+	:is_Default(false)
 {
 	// Material Buffer »ý¼º..
 	m_MaterialData = new MaterialBuffer();
@@ -158,4 +158,14 @@ std::string Material::GetORMName()
 	}
 
 	return std::string();
+}
+
+bool Material::operator<(const Material& material) const
+{
+	if (m_MaterialData->BufferIndex != material.m_MaterialData->BufferIndex)
+	{
+		return m_MaterialData->BufferIndex < material.m_MaterialData->BufferIndex;
+	}
+
+	return false;
 }

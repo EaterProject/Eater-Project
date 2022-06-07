@@ -3,7 +3,7 @@
 
 namespace VertexInput
 {
-#pragma region Defalt CVertex Data Struct
+#pragma region Default CVertex Data Struct
 	struct MeshVertex
 	{
 		DirectX::SimpleMath::Vector3 Pos;
@@ -57,7 +57,7 @@ namespace VertexInput
 		DirectX::SimpleMath::Vector2 Tex;
 		DirectX::SimpleMath::Vector3 Normal;
 	};
-#pragma endregion Defalt CVertex Data Struct
+#pragma endregion Default CVertex Data Struct
 
 #pragma region Instance CVertex Data Struct
 	struct MeshDepthInstance

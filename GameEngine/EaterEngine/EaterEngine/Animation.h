@@ -1,9 +1,8 @@
 #pragma once
 #include <string>
 #include "EaterEngineDLL.h"
+#include "EngineData.h"
 
-class ModelAnimationData;
-class AnimationBuffer;
 class AnimationManager;
 
 class Animation

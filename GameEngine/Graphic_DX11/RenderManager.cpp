@@ -42,6 +42,12 @@
 
 #include "./Profiler/Profiler.h"
 
+
+#define CREATE_PASS(ClassName, MemberName) \
+MemberName = new ClassName;	\
+m_RenderPassList.push_back(MemberName);	\
+PushFunction(MemberName);	\
+
 RenderManager::RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, IGraphicResourceManager* resource, IShaderManager* shader, IRenderDataConverter* converter, RenderOption* renderOption)
 {
 	// Rendering Initialize..
@@ -53,45 +59,58 @@ RenderManager::RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, I
 	m_Converter = converter;
 
 	// Render Pass 생성..
-	m_Deferred		= new Deferred_Pass();
-	m_Light			= new Light_Pass();
-	m_Sky			= new Sky_Pass();
-	m_UI			= new UI_Pass();
-	m_Shadow		= new Shadow_Pass();
-	m_SSAO			= new SSAO_Pass();
-	m_Alpha			= new Alpha_Pass();
-	m_OIT			= new OIT_Pass();
-	m_FXAA			= new FXAA_Pass();
-	m_Bloom			= new Bloom_Pass();
-	m_Fog			= new Fog_Pass();
-	m_Culling		= new Culling_Pass();
-	m_Picking		= new Picking_Pass();
-	m_OutLine		= new OutLine_Pass();
-	m_Combine		= new Combine_Pass();
-	m_Debug			= new Debug_Pass();
-
-	// 설정을 위한 Render Pass List Up..
-	m_RenderPassList.push_back(m_Deferred);
-	m_RenderPassList.push_back(m_Light);
-	m_RenderPassList.push_back(m_Sky);
-	m_RenderPassList.push_back(m_UI);
-	m_RenderPassList.push_back(m_Shadow);
-	m_RenderPassList.push_back(m_SSAO);
-	m_RenderPassList.push_back(m_Alpha);
-	m_RenderPassList.push_back(m_OIT);
-	m_RenderPassList.push_back(m_FXAA);
-	m_RenderPassList.push_back(m_Bloom);
-	m_RenderPassList.push_back(m_Fog);
-	m_RenderPassList.push_back(m_Culling);
-	m_RenderPassList.push_back(m_Picking);
-	m_RenderPassList.push_back(m_OutLine);
-	m_RenderPassList.push_back(m_Combine);
-	m_RenderPassList.push_back(m_Debug);
+	CREATE_PASS(Deferred_Pass,	m_Deferred);
+	CREATE_PASS(Light_Pass,		m_Light);
+	CREATE_PASS(Sky_Pass,		m_Sky);
+	CREATE_PASS(UI_Pass,		m_UI);
+	CREATE_PASS(Shadow_Pass,	m_Shadow);
+	CREATE_PASS(SSAO_Pass,		m_SSAO);
+	CREATE_PASS(Alpha_Pass,		m_Alpha);
+	CREATE_PASS(OIT_Pass,		m_OIT);
+	CREATE_PASS(FXAA_Pass,		m_FXAA);
+	CREATE_PASS(Bloom_Pass,		m_Bloom);
+	CREATE_PASS(Fog_Pass,		m_Fog);
+	CREATE_PASS(Culling_Pass,	m_Culling);
+	CREATE_PASS(Picking_Pass,	m_Picking);
+	CREATE_PASS(OutLine_Pass,	m_OutLine);
+	CREATE_PASS(Combine_Pass,	m_Combine);
+	CREATE_PASS(Debug_Pass,		m_Debug);
 }
 
 RenderManager::~RenderManager()
 {
-	
+}
+
+template<typename T>
+void RenderManager::PushFunction(T* pass)
+{
+	///using ClassType = std::remove_reference<decltype(*ref)>::type;
+
+	// OnResize Override 함수 등록..
+	if (typeid(&RenderPassBase::OnResize).hash_code() != typeid(&T::OnResize).hash_code())
+	{
+		OnResizeFunction += Eater::Bind(&T::OnResize, pass);
+	}
+	// InstanceResize Override 함수 등록..
+	if (typeid(&RenderPassBase::InstanceResize).hash_code() != typeid(&T::InstanceResize).hash_code())
+	{
+		InstanceResizeFunction += Eater::Bind(&T::InstanceResize, pass);
+	}
+	// SetResize Override 함수 등록..
+	if (typeid(&RenderPassBase::SetResize).hash_code() != typeid(&T::SetResize).hash_code())
+	{
+		SetResizeFunction += Eater::Bind(&T::SetResize, pass);
+	}
+	// ApplyOption Override 함수 등록..
+	if (typeid(&RenderPassBase::ApplyOption).hash_code() != typeid(&T::ApplyOption).hash_code())
+	{
+		ApplyOptionFunction += Eater::Bind(&T::ApplyOption, pass);
+	}
+	// PreUpdate Override 함수 등록..
+	if (typeid(&RenderPassBase::PreUpdate).hash_code() != typeid(&T::PreUpdate).hash_code())
+	{
+		PreUpdateFunction += Eater::Bind(&T::PreUpdate, pass);
+	}
 }
 
 void RenderManager::Create(int width, int height)
@@ -118,19 +137,13 @@ void RenderManager::Start(int width, int height)
 void RenderManager::OnResize(int width, int height)
 {
 	// Resource Resize Data 설정..
-	for (RenderPassBase* renderPass : m_RenderPassList)
-	{
-		renderPass->SetResize(width, height);
-	}
+	SetResizeFunction(width, height);
 
 	// Resource Resize 실행..
 	RenderPassBase::g_Resource->OnResize(width, height);
 
 	// Resize Resource 동기화..
-	for (RenderPassBase* renderPass : m_RenderPassList)
-	{
-		renderPass->OnResize(width, height);
-	}
+	OnResizeFunction(width, height);
 }
 
 void RenderManager::Release()
@@ -145,10 +158,8 @@ void RenderManager::Release()
 
 void RenderManager::PreUpdate()
 {
-	for (RenderPassBase* renderPass : m_RenderPassList)
-	{
-		renderPass->PreUpdate();
-	}
+	// PreUpdate 함수 리스트 실행..
+	PreUpdateFunction();
 }
 
 void RenderManager::InstanceResize()
@@ -156,10 +167,8 @@ void RenderManager::InstanceResize()
 	size_t&& renderMaxCount = m_Converter->FindMaxInstanceCount();
 	size_t&& unRenderMaxCount = m_UnRenderMeshList.size();
 
-	for (RenderPassBase* renderPass : m_RenderPassList)
-	{
-		renderPass->InstanceResize(renderMaxCount, unRenderMaxCount);
-	}
+	// Instance Resize 함수 리스트 실행..
+	InstanceResizeFunction(renderMaxCount, unRenderMaxCount);
 }
 
 void RenderManager::RenderSetting(RenderOption* renderOption)
@@ -173,11 +182,10 @@ void RenderManager::RenderSetting(RenderOption* renderOption)
 
 void RenderManager::RenderSetting()
 {
-	for (RenderPassBase* renderPass : m_RenderPassList)
-	{
-		renderPass->ApplyOption();
-	}
+	// Apply Option 함수 리스트 실행..
+	ApplyOptionFunction();
 
+	// 현재 Render Option 저장..
 	m_NowRenderOption = *RenderPassBase::g_RenderOption;
 }
 
@@ -869,7 +877,7 @@ void RenderManager::ChangeUIRenderData(MeshData* meshData)
 	RenderData* convertRenderData = (RenderData*)meshData->Render_Data;
 
 	// Render Data 재설정..
-	convertRenderData->m_UI->m_Albedo = (ID3D11ShaderResourceView*)meshData->UI_Buffer->Albedo->pTextureBuf;
+	convertRenderData->m_UI->m_Albedo = (meshData->UI_Buffer->Albedo == nullptr) ? nullptr : (ID3D11ShaderResourceView*)meshData->UI_Buffer->Albedo->pTextureBuf;
 }
 
 void RenderManager::ChangeUnRenderData(MeshData* meshData)

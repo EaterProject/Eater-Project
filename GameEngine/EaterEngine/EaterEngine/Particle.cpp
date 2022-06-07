@@ -40,11 +40,11 @@ void Particle::Update()
 {
 	if (m_Playing == false) return;
 
-	float dTime = mTimeManager->DeltaTime();
-
 	// 해당 파티클 업데이트..
 	if (m_LifeTime > 0.0f)
 	{
+		float dTime = mTimeManager->DeltaTime();
+
 		m_TexNowTime += dTime;
 		m_AniNowTime += dTime;
 		m_LifeTime -= dTime;
@@ -74,7 +74,7 @@ void Particle::Update()
 			}
 		}
 
-		m_NextFrame = (int)(m_AniNowTime / m_AniOneFrame);
+		m_NextFrame = (int)(m_AniNowTime / m_AniOneFrame) + 1;
 		
 		// Pos & Rot & Scale & Color Animation..
 		if (m_AniFrame != m_NextFrame)

@@ -73,11 +73,6 @@ void FXAA_Pass::Release()
 
 }
 
-void FXAA_Pass::ApplyOption()
-{
-
-}
-
 void FXAA_Pass::RenderUpdate()
 {
 	//g_Context->RSSetState(0);

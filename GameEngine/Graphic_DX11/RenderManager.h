@@ -1,5 +1,6 @@
 #pragma once
 #include "RenderManagerBase.h"
+#include "Utility.h"
 
 class RenderPassBase;
 class Shadow_Pass;
@@ -83,6 +84,8 @@ private:
 	void EndRender();
 
 private:
+	template<typename T>
+	void PushFunction(T* pass);
 	void ConvertPushInstance();									// 현재 프레임 진행중 추가된 Instance 변환..
 	void ConvertChangeInstance();								// 현재 프레임 진행중 변경된 Instance 변환..
 
@@ -123,7 +126,11 @@ private:
 
 	std::vector<RenderPassBase*> m_RenderPassList;
 
-	std::vector<std::function<void()>> m_FuntionList;
+	Eater::Delegate<int, int> OnResizeFunction;
+	Eater::Delegate<size_t&, size_t&> InstanceResizeFunction;
+	Eater::Delegate<int, int> SetResizeFunction;
+	Eater::Delegate<> ApplyOptionFunction;
+	Eater::Delegate<> PreUpdateFunction;
 
 	InstanceLayer* m_InstanceLayer;
 	RenderData* m_RenderData;
