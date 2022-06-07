@@ -663,13 +663,16 @@ void CTAP_MeshFilter::OnCustom_Color_Button()
 	AddColor_G.SetWindowTextW(ChangeToCString(G));
 	AddColor_B.SetWindowTextW(ChangeToCString(B));
 
-	mMaterial->m_MaterialData->Material_Property->AddColor.x = R;
-	mMaterial->m_MaterialData->Material_Property->AddColor.y = G;
-	mMaterial->m_MaterialData->Material_Property->AddColor.z = B;
+	if (mMaterial->m_MaterialData != nullptr)
+	{
+		mMaterial->m_MaterialData->Material_Property->AddColor.x = R;
+		mMaterial->m_MaterialData->Material_Property->AddColor.y = G;
+		mMaterial->m_MaterialData->Material_Property->AddColor.z = B;
 
-	Add_R_Slider.SetPos(GetRValue(mRGB));
-	Add_G_Slider.SetPos(GetGValue(mRGB));
-	Add_B_Slider.SetPos(GetBValue(mRGB));
+		Add_R_Slider.SetPos(GetRValue(mRGB));
+		Add_G_Slider.SetPos(GetGValue(mRGB));
+		Add_B_Slider.SetPos(GetBValue(mRGB));
+	}
 }
 
 
@@ -684,11 +687,14 @@ void CTAP_MeshFilter::OnCustom_LimLightColor_Button()
 	LimLight_G_Edit.SetWindowTextW(ChangeToCString(G));
 	LimLight_B_Edit.SetWindowTextW(ChangeToCString(B));
 
-	mMaterial->m_MaterialData->Material_Property->LimLightColor.x = R;
-	mMaterial->m_MaterialData->Material_Property->LimLightColor.y = G;
-	mMaterial->m_MaterialData->Material_Property->LimLightColor.z = B;
+	if (mMaterial->m_MaterialData != nullptr)
+	{
+		mMaterial->m_MaterialData->Material_Property->LimLightColor.x = R;
+		mMaterial->m_MaterialData->Material_Property->LimLightColor.y = G;
+		mMaterial->m_MaterialData->Material_Property->LimLightColor.z = B;
 
-	LimLight_R.SetPos(GetRValue(mRGB));
-	LimLight_G.SetPos(GetGValue(mRGB));
-	LimLight_B.SetPos(GetBValue(mRGB));
+		LimLight_R.SetPos(GetRValue(mRGB));
+		LimLight_G.SetPos(GetGValue(mRGB));
+		LimLight_B.SetPos(GetBValue(mRGB));
+	}
 }

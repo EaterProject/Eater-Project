@@ -26,7 +26,7 @@ void E_MaterialManager::ChangeEaterFile(ParserData::CModel* FBXMesh)
 		ParserData::CMesh* OneMesh = FBXMesh->m_MeshList[i];
 		if (OneMesh->m_MaterialData == nullptr) { continue; }
 
-		std::string ModelName = SaveFileName + "_" + OneMesh->m_MaterialData->m_MaterialName;
+		std::string ModelName = FileName + "_" + OneMesh->m_MaterialData->m_MaterialName;
 		EATER_OPEN_WRITE_FILE(ModelName, "../Assets/Texture/Material/", ".Emat");
 		auto m = GET_FORMAT_MATERIAL();
 
