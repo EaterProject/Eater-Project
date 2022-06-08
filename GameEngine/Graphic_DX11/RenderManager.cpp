@@ -926,11 +926,12 @@ void RenderManager::DeleteOpacityRenderData(MeshData* meshData)
 		RenderPassBase::g_Picking = nullptr;
 	}
 
-	// 해당 Layer 검색..
-	InstanceLayer* layer = m_Converter->GetInstanceLayer(renderData->m_InstanceLayerIndex);
-
 	// Render Data의 List 내에서의 Index..
+	UINT layerIndex = renderData->m_InstanceLayerIndex;
 	UINT renderDataIndex = renderData->m_ObjectData->ObjectIndex;
+
+	// 해당 Layer 검색..
+	InstanceLayer* layer = m_Converter->GetInstanceLayer(layerIndex);
 
 	// 해당 Instance Layer에서 제거...
 	layer->PopRenderData(renderData);
@@ -947,7 +948,7 @@ void RenderManager::DeleteOpacityRenderData(MeshData* meshData)
 	// 현재 Layer가 비어있는 상태라면 Layer 제거..
 	if (layer->m_InstanceList.empty())
 	{
-		m_Converter->DeleteInstanceLayer(renderData->m_InstanceLayerIndex);
+		m_Converter->DeleteInstanceLayer(layerIndex);
 	}
 }
 
@@ -956,11 +957,12 @@ void RenderManager::DeleteTransparencyRenderData(MeshData* meshData)
 	// Render Data 변환..
 	RenderData* renderData = (RenderData*)meshData->Render_Data;
 
-	// 해당 Layer 검색..
-	InstanceLayer* layer = m_Converter->GetInstanceLayer(renderData->m_InstanceLayerIndex);
-
 	// Render Data의 List 내에서의 Index..
+	UINT layerIndex = renderData->m_InstanceLayerIndex;
 	UINT renderDataIndex = renderData->m_ObjectData->ObjectIndex;
+
+	// 해당 Layer 검색..
+	InstanceLayer* layer = m_Converter->GetInstanceLayer(layerIndex);
 
 	// 해당 Instance Layer에서 제거...
 	layer->PopRenderData(renderData);
@@ -974,7 +976,7 @@ void RenderManager::DeleteTransparencyRenderData(MeshData* meshData)
 	// 현재 Layer가 비어있는 상태라면 Layer 제거..
 	if (layer->m_InstanceList.empty())
 	{
-		m_Converter->DeleteInstanceLayer(renderData->m_UI->m_BufferLayer);
+		m_Converter->DeleteInstanceLayer(layerIndex);
 	}
 }
 
@@ -983,14 +985,16 @@ void RenderManager::DeleteUIRenderData(MeshData* meshData)
 	// Render Data 변환..
 	RenderData* renderData = (RenderData*)meshData->Render_Data;
 
-	// 해당 Layer 검색..
-	UILayer* layer = m_Converter->GetUILayer(renderData->m_UI->m_BufferLayer);
-
 	// Render Data의 List 내에서의 Index..
+	UINT layerIndex = renderData->m_UI->m_BufferLayer;
+	UINT bufferIndex = renderData->m_UI->m_BufferIndex;
 	UINT renderDataIndex = renderData->m_ObjectData->ObjectIndex;
 
+	// 해당 Layer 검색..
+	UILayer* layer = m_Converter->GetUILayer(layerIndex);
+
 	// 해당 UI Render Buffer 제거..
-	m_Converter->DeleteUI(renderData->m_UI->m_BufferIndex);
+	m_Converter->DeleteUI(bufferIndex);
 
 	// 해당 Layer에서 제거..
 	layer->PopRenderData(renderData);
@@ -1004,7 +1008,7 @@ void RenderManager::DeleteUIRenderData(MeshData* meshData)
 	// 현재 Layer가 비어있는 상태라면 Layer 제거..
 	if (layer->m_InstanceList.empty())
 	{
-		m_Converter->DeleteUILayer(renderData->m_UI->m_BufferLayer);
+		m_Converter->DeleteUILayer(layerIndex);
 	}
 }
 

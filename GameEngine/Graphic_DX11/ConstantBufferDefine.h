@@ -34,7 +34,6 @@ struct CB_StaticMesh : public cbStaticMesh
 	DirectX::SimpleMath::Matrix gInvWorld;
 	DirectX::SimpleMath::Matrix gView;
 	DirectX::SimpleMath::Matrix gProj;
-
 	DirectX::SimpleMath::Vector2 gTexScale;
 	DirectX::SimpleMath::Vector2 gTexPos;
 };
