@@ -26,7 +26,7 @@ void E_MaterialManager::ChangeEaterFile(ParserData::CModel* FBXMesh)
 		ParserData::CMesh* OneMesh = FBXMesh->m_MeshList[i];
 		if (OneMesh->m_MaterialData == nullptr) { continue; }
 
-		std::string ModelName = SaveFileName + "_" + OneMesh->m_MaterialData->m_MaterialName;
+		std::string ModelName = FileName + "_" + OneMesh->m_MaterialData->m_MaterialName;
 		EATER_OPEN_WRITE_FILE(ModelName, "../Assets/Texture/Material/", ".Emat");
 		auto m = GET_FORMAT_MATERIAL();
 
@@ -69,7 +69,7 @@ void E_MaterialManager::ChangeEaterFile(ParserData::CModel* FBXMesh)
 			m->ORMMap = "0";
 		}
 		
-		
+
 		m->SetMaterial(0, 0, 0);
 		m->Tileing_X = 1;
 		m->Tileing_Y = 1;
@@ -100,7 +100,7 @@ void E_MaterialManager::Create(InstanceMaterial* m)
 
 	mMaterial->LimFactor	= m->LimFactor;
 	mMaterial->LimWidth		= m->LimWidth;
-
+	mMaterial->SkyLightIndex = 0;
 	mMaterial->SetColor(m->AddColorR, m->AddColorG, m->AddColorB);
 	mMaterial->SetLimColor(m->LimColorR, m->LimColorG, m->LimColorB);
 	mMaterial->SetMaterial(m->Emissive, m->Roughness, m->Metallic);
@@ -154,6 +154,7 @@ void E_MaterialManager::CreateEaterFile(GameObject* Obj)
 	mMaterial->ORMMap		= m->GetORMName();
 	mMaterial->LimFactor	= mp->LimLightFactor;
 	mMaterial->LimWidth		= mp->LimLightWidth;
+	mMaterial->SkyLightIndex = 0;
 	
 	mMaterial->SetColor(mp->AddColor.x, mp->AddColor.y, mp->AddColor.z);
 	mMaterial->SetLimColor(mp->LimLightColor.x, mp->LimLightColor.y, mp->LimLightColor.z);

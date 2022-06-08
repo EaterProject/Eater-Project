@@ -42,19 +42,20 @@ void Eater_LoadMaterial::LoadData(std::string& Path)
 			std::string EmissiveName	= CutStr(EATER_GET_MAP(i, "EmissiveMap"));
 			std::string ORMName			= CutStr(EATER_GET_MAP(i, "ORMMap"));
 
-			Data->Albedo = LoadManager::GetTexture(DiffuseName);
-			Data->Normal = LoadManager::GetTexture(NormalName);
-			Data->Emissive = LoadManager::GetTexture(EmissiveName);
-			Data->ORM = LoadManager::GetTexture(ORMName);
+			Data->Albedo	= LoadManager::GetTexture(DiffuseName);
+			Data->Normal	= LoadManager::GetTexture(NormalName);
+			Data->Emissive	= LoadManager::GetTexture(EmissiveName);
+			Data->ORM		= LoadManager::GetTexture(ORMName);
 
 			if (Data->Albedo) Data->Albedo->Name = DiffuseName;
 			if (Data->Normal) Data->Normal->Name = NormalName;
 			if (Data->Emissive) Data->Emissive->Name = EmissiveName;
 			if (Data->ORM) Data->ORM->Name = ORMName;
 
-			Data->Material_Property->EmissiveFactor = std::stof(EATER_GET_MAP(i, "Emissive"));
-			Data->Material_Property->RoughnessFactor = std::stof(EATER_GET_MAP(i, "Roughness"));
-			Data->Material_Property->MetallicFactor = std::stof(EATER_GET_MAP(i, "Metallic"));
+			Data->Material_Property->EmissiveFactor		= std::stof(EATER_GET_MAP(i, "Emissive"));
+			Data->Material_Property->RoughnessFactor	= std::stof(EATER_GET_MAP(i, "Roughness"));
+			Data->Material_Property->MetallicFactor		= std::stof(EATER_GET_MAP(i, "Metallic"));
+			Data->Material_Property->SkyLightIndex		= std::stoi(EATER_GET_MAP(i, "SkyLightIndex"));
 
 			float Scale_X = std::stof(EATER_GET_MAP(i, "Tileing_X"));
 			float Scale_Y = std::stof(EATER_GET_MAP(i, "Tileing_Y"));

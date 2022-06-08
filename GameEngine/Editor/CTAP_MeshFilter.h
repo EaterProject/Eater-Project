@@ -96,4 +96,7 @@ public:
 	afx_msg void OnCreateMaterial();
 	afx_msg void OnCustom_Color_Button();
 	afx_msg void OnCustom_LimLightColor_Button();
+	int SkyLight_Index;
+	afx_msg void OnDeltaposSpin3(NMHDR* pNMHDR, LRESULT* pResult);
+	CSpinButtonCtrl SkyLight_Spin;
 };
