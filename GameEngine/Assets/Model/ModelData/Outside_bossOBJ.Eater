@@ -2,7 +2,7 @@
 @ParentName RootNode
 @NodeName bossb_cutighthouse01
 @MeshName Outside_bossOBJ_0
-@MaterialName Outside_bossOBJ_M_lighthouse
+@MaterialName Outside_bossOBJ_M_lighthouse_cut
 $WorldTM 4 4
 -0.009928 -0.000775 0.000910 0.000000
 0.000592 -0.009801 -0.001893 0.000000
@@ -17,7 +17,7 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName bossb_cutighthouse02
 @MeshName Outside_bossOBJ_0
-@MaterialName Outside_bossOBJ_M_lighthouse
+@MaterialName Outside_bossOBJ_M_lighthouse_cut
 $WorldTM 4 4
 0.007221 0.006915 -0.000213 0.000000
 0.006894 -0.007218 -0.000615 0.000000
@@ -182,7 +182,7 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName bossb_cutighthouse03
 @MeshName Outside_bossOBJ_0
-@MaterialName Outside_bossOBJ_M_lighthouse
+@MaterialName Outside_bossOBJ_M_lighthouse_cut
 $WorldTM 4 4
 -0.000125 -0.009471 -0.003208 0.000000
 -0.009977 -0.000096 0.000672 0.000000
@@ -347,7 +347,7 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName bossb_cutighthouse04
 @MeshName Outside_bossOBJ_0
-@MaterialName Outside_bossOBJ_M_lighthouse
+@MaterialName Outside_bossOBJ_M_lighthouse_cut
 $WorldTM 4 4
 0.007143 0.003657 0.005967 0.000000
 0.002773 0.006349 -0.007211 0.000000
@@ -512,7 +512,7 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName bossb_cutighthouse05
 @MeshName Outside_bossOBJ_0
-@MaterialName Outside_bossOBJ_M_lighthouse
+@MaterialName Outside_bossOBJ_M_lighthouse_cut
 $WorldTM 4 4
 0.006264 0.007014 -0.003400 0.000000
 -0.005958 0.007121 0.003714 0.000000

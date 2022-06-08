@@ -20,6 +20,7 @@ public:
 
 	float Tileing_X		= 1;
 	float Tileing_Y		= 1;
+	int	  SkyLightIndex = 0;
 
 	float AddColor_R	= 0;
 	float AddColor_G	= 0;

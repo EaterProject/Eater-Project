@@ -18,6 +18,7 @@ IMPLEMENT_DYNAMIC(CTAP_MeshFilter, CustomDialog)
 
 CTAP_MeshFilter::CTAP_MeshFilter(CWnd* pParent /*=nullptr*/)
 	: CustomDialog(IDD_TAP_MESHFILTER, pParent)
+	, SkyLight_Index(0)
 {
 
 }
@@ -119,6 +120,7 @@ void CTAP_MeshFilter::SetGameObject(MeshFilter* ObjectMeshFilter)
 		LimLight_Width.SetPos((int)LimWidth);
 		LimLight_Factor_Edit.SetWindowTextW(ChangeToCString(LimFactor / 10.0f));
 		LimLight_Width_Edit.SetWindowTextW(ChangeToCString(LimWidth / 10.0f));
+		SkyLight_Index = mMaterial->m_MaterialData->Material_Property->SkyLightIndex;
 	}
 	else
 	{
@@ -152,7 +154,9 @@ void CTAP_MeshFilter::SetGameObject(MeshFilter* ObjectMeshFilter)
 		LimLight_Width.SetPos(0);
 		LimLight_Factor_Edit.SetWindowTextW(L"0");
 		LimLight_Width_Edit.SetWindowTextW(L"0");
+		SkyLight_Index = 0;
 	}
+	UpdateData(FALSE);
 }
 
 void CTAP_MeshFilter::GetData(ObjectOption& Option)
@@ -266,6 +270,8 @@ void CTAP_MeshFilter::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EDIT27, LimLight_Width_Edit);
 	DDX_Control(pDX, IDC_MFCCOLORBUTTON1, Custom_AddColor_Button);
 	DDX_Control(pDX, IDC_MFCCOLORBUTTON2, Custom_LimLightColor_Button);
+	DDX_Text(pDX, IDC_EDIT28, SkyLight_Index);
+	DDX_Control(pDX, IDC_SPIN3, SkyLight_Spin);
 }
 
 BOOL CTAP_MeshFilter::OnInitDialog()
@@ -294,6 +300,8 @@ BOOL CTAP_MeshFilter::OnInitDialog()
 	LimLight_G_Edit.SetWindowTextW(L"0");
 	LimLight_B_Edit.SetWindowTextW(L"0");
 	
+	SkyLight_Spin.SetRange(-100,100);
+	SkyLight_Spin.SetPos(0);
 	return 0;
 }
 
@@ -323,6 +331,7 @@ BEGIN_MESSAGE_MAP(CTAP_MeshFilter, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON32, &CTAP_MeshFilter::OnCreateMaterial)
 	ON_BN_CLICKED(IDC_MFCCOLORBUTTON1, &CTAP_MeshFilter::OnCustom_Color_Button)
 	ON_BN_CLICKED(IDC_MFCCOLORBUTTON2, &CTAP_MeshFilter::OnCustom_LimLightColor_Button)
+	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN3, &CTAP_MeshFilter::OnDeltaposSpin3)
 END_MESSAGE_MAP()
 
 LRESULT CTAP_MeshFilter::OnUserFun(WPARAM wParam, LPARAM lparam)
@@ -697,4 +706,30 @@ void CTAP_MeshFilter::OnCustom_LimLightColor_Button()
 		LimLight_G.SetPos(GetGValue(mRGB));
 		LimLight_B.SetPos(GetBValue(mRGB));
 	}
+}
+
+
+void CTAP_MeshFilter::OnDeltaposSpin3(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+	if (pNMUpDown->iDelta > 0)
+	{
+		SkyLight_Index++;
+		if (mMaterial->m_MaterialData != nullptr)
+		{
+			mMaterial->m_MaterialData->Material_Property->SkyLightIndex = SkyLight_Index;
+		}
+	}
+	else
+	{
+		SkyLight_Index--;
+		if (mMaterial->m_MaterialData != nullptr)
+		{
+			mMaterial->m_MaterialData->Material_Property->SkyLightIndex = SkyLight_Index;
+		}
+	}
+	UpdateData(FALSE);
+	*pResult = 0;
 }

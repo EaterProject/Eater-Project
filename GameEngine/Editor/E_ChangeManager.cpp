@@ -112,6 +112,7 @@ void E_ChangeManager::Change_Material(int index, GameObject* Object)
 		float LimColor_B = mMaterialData->m_MaterialData->Material_Property->LimLightColor.z;
 		float LimFactor = mMaterialData->m_MaterialData->Material_Property->LimLightFactor;
 		float LimWidth = mMaterialData->m_MaterialData->Material_Property->LimLightWidth;
+		float SkyIndex = mMaterialData->m_MaterialData->Material_Property->SkyLightIndex;
 		//≈∏¿œ∏µ ª©¡‡æﬂ«‘ ....
 
 		EATER_CHANGE_MAP(index, "MaterialName", mMaterial);
@@ -127,6 +128,8 @@ void E_ChangeManager::Change_Material(int index, GameObject* Object)
 
 		EATER_CHANGE_MAP(index, "Tileing_X", "1");
 		EATER_CHANGE_MAP(index, "Tileing_Y", "1");
+
+		EATER_CHANGE_MAP(index, "SkyLightIndex", std::to_string(SkyIndex));
 
 		EATER_CHANGE_MAP(index, "AddColor_R", std::to_string(AddColor_R));
 		EATER_CHANGE_MAP(index, "AddColor_G", std::to_string(AddColor_G));
