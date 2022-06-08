@@ -15,6 +15,8 @@ cbuffer cbMaterial : register(b0)
     
     float gRoughnessFactor  : packoffset(c2.w);
     float gMetallicFactor   : packoffset(c3.x);
+    
+    uint gSkyLightIndex     : packoffset(c3.y);
 };
 
 cbuffer cbCamera : register(b1)
@@ -128,7 +130,7 @@ MeshPixelOut Deferred_PBR_PS(MeshPixelIn pin)
     rm.y += gMetallicFactor;
     
     pout.Albedo = albedo;
-    pout.Emissive = float4(emissive, 1.0f);
+    pout.Emissive = float4(emissive, gSkyLightIndex);
     pout.Normal = float4(normalW, saturate(rm.x));
     pout.Position = float4(pin.PosW, saturate(rm.y));
     pout.NormalDepth = float4(normalV, pin.PosV.z);

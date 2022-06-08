@@ -15,6 +15,8 @@ IMPLEMENT_DYNAMIC(SkySetting, CustomDialog)
 
 SkySetting::SkySetting(CWnd* pParent /*=nullptr*/)
 	: CustomDialog(IDD_SKY_SETTING, pParent)
+	, SkyCube_SaveName_Edit(_T(""))
+	, SkyLight_SaveName_Edit(_T(""))
 {
 
 }
@@ -44,6 +46,8 @@ void SkySetting::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_CHECK15, SkyLight_HDRI_Check);
 	DDX_Control(pDX, IDC_EDIT26, SkyCube_Map_Edit);
 	DDX_Control(pDX, IDC_EDIT28, SkyLight_Map_Edit);
+	DDX_Text(pDX, IDC_EDIT3, SkyCube_SaveName_Edit);
+	DDX_Text(pDX, IDC_EDIT4, SkyLight_SaveName_Edit);
 }
 
 void SkySetting::SetCheck(CString FileName)
@@ -103,32 +107,63 @@ void SkySetting::OnSkyCubeHDRI()
 
 void SkySetting::OnSkyCubeBakeButton()
 {
+	HWND hWndActive = ::GetForegroundWindow();
+
 	if (SkyCubeName.empty())
 	{
-		HWND hWndActive = ::GetForegroundWindow();
 		MessageBoxA(hWndActive, "텍스쳐가 없는뎅?", "Error", MB_OK);
 
 		return;
 	}
 
-	/// 임시코드
+	UpdateData(TRUE);
+
+	std::string name = ChangeToString(SkyCube_SaveName_Edit);
+
+	if (name.empty())
+	{
+		MessageBoxA(hWndActive, "이름이 없는뎅?", "Error", MB_OK);
+
+		return;
+	}
+
 	/// 저장 이름 추가하면 두번째 매개변수에 삽입
-	SaveConvertSkyCubeMap(SkyCubeName, "");
+	SaveConvertSkyCubeMap(SkyCubeName, name);
+
+	if (MessageBoxA(hWndActive, "저장 완료", "SkyCubeBake", MB_OK) == IDOK)
+	{
+		this->ShowWindow(SW_HIDE);
+	}
 }
 
 void SkySetting::OnSkyLightBakeButton()
 {
+	HWND hWndActive = ::GetForegroundWindow();
 	if (SkyLightName.empty())
 	{
-		HWND hWndActive = ::GetForegroundWindow();
 		MessageBoxA(hWndActive, "텍스쳐가 없는뎅?", "Error", MB_OK);
 
 		return;
 	}
 
-	/// 임시코드
+	UpdateData(TRUE);
+
+	std::string name = ChangeToString(SkyLight_SaveName_Edit);
+
+	if (name.empty())
+	{
+		MessageBoxA(hWndActive, "이름이 없는뎅?", "Error", MB_OK);
+
+		return;
+	}
+
 	/// 저장 이름 추가하면 두번째 매개변수에 삽입
-	SaveConvertSkyLightMap(SkyLightName, "");
+	SaveConvertSkyLightMap(SkyLightName, name);
+
+	if (MessageBoxA(hWndActive, "저장 완료", "SkyLightBake", MB_OK) == IDOK)
+	{
+		this->ShowWindow(SW_HIDE);
+	}
 }
 
 
@@ -225,11 +260,10 @@ BOOL SkySetting::OnInitDialog()
 	SkyLight_Angle_Edit.SetWindowTextW(L"0");
 	SkyLight_Factor_Edit.SetWindowTextW(L"1");
 
+
 	SkyLightAngle = 0.0f;
 	SkyLightThreshold = 100.0f;
 	SkyLightHDRI = false;
 
 	return TRUE; 
 }
-
-

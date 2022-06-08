@@ -107,7 +107,7 @@ public:
 	bool OutLine = false;				// Out Line
 	bool LimLight = false;				// Lim Light
 
-	int SkyLightIndex = 0;				// SkyLight Index
+	UINT SkyLightIndex = 0;				// SkyLight Index
 
 	Vector3 AddColor = Vector3(0.0f, 0.0f, 0.0f);	// Add Color
 

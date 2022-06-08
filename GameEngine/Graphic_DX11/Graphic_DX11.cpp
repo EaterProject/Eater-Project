@@ -90,9 +90,9 @@ void Graphic_DX11::SetSkyCube(TextureBuffer* resource)
 	m_RenderManager->SetSkyCube(resource);
 }
 
-void Graphic_DX11::SetSkyLight(SkyLightBuffer* resource)
+void Graphic_DX11::SetSkyLight(SkyLightBuffer* resource, UINT index)
 {
-	m_RenderManager->SetSkyLight(resource);
+	m_RenderManager->SetSkyLight(resource, index);
 }
 
 void Graphic_DX11::PushInstance(MeshData* instance)

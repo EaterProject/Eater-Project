@@ -199,9 +199,9 @@ void RenderManager::SetSkyCube(TextureBuffer* resource)
 	m_Sky->SetSkyCubeResource(resource);
 }
 
-void RenderManager::SetSkyLight(SkyLightBuffer* resource)
+void RenderManager::SetSkyLight(SkyLightBuffer* resource, UINT index)
 {
-	m_Sky->SetSkyLightResource(resource);
+	m_Sky->SetSkyLightResource(resource, index);
 }
 
 void RenderManager::PushInstance(MeshData* instance)

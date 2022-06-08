@@ -137,7 +137,7 @@ void TextureManager::BakeConvertSkyLightMap(std::string& Path, float angle, floa
 	}
 
 	// 변경한 SkyLight 적용..
-	m_Graphic->SetSkyLight(skyLight);
+	m_Graphic->SetSkyLight(skyLight, 0);
 }
 
 void TextureManager::BakeConvertSkyCubeMap(std::string& Path, float angle, float threshold, bool hdri)

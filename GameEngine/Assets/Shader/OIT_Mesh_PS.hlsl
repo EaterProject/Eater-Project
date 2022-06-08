@@ -19,6 +19,8 @@ cbuffer cbMaterial : register(b0)
     
     float gRoughnessFactor  : packoffset(c2.w);
     float gMetallicFactor   : packoffset(c3.x);
+    
+    uint gSkyLightIndex     : packoffset(c3.y);
 };
 
 cbuffer cbLightSub : register(b1)
@@ -49,9 +51,11 @@ Texture2D gORMMap           : register(t3);
 
 Texture2D gShadowMap        : register(t4);
 
-TextureCube gIBLIrradiance  : register(t5);
-TextureCube gIBLPrefilter   : register(t6);
-Texture2D gBRDFlut          : register(t7);
+Texture2D gBRDFlut          : register(t5);
+TextureCube gIrradiance_0   : register(t6);
+TextureCube gPrefilter_0    : register(t7);
+TextureCube gIrradiance_1   : register(t8);
+TextureCube gPrefilter_1    : register(t9);
 
 [earlydepthstencil]
 void OIT_Mesh_PS(MeshPixelIn pin)
@@ -112,7 +116,7 @@ void OIT_Mesh_PS(MeshPixelIn pin)
     albedo.rgb = pow(albedo.rgb, 2.2f);
     emissive = pow(emissive, 2.2f);
     
-    float3 litColor = float3(0.0f, 0.0f, 0.0f);
+    float3 litColor = emissive;
     litColor += PBR_DirectionalLight(ViewDirection, normal, gDirLights[0],
                                 albedo.rgb, 1.0f, roughness, metallic, shadows);
 
@@ -121,21 +125,39 @@ void OIT_Mesh_PS(MeshPixelIn pin)
     
     litColor += PBR_SpotLight(ViewDirection, normal, gSpotLights, gSpotLightCount, pin.PosW,
                                 albedo.rgb, 1.0f, roughness, metallic, shadows);
-    
+    switch (gSkyLightIndex)
+    {
+    case 0:
+    {
 #ifdef IBL
-    float3 irradiance = gIBLIrradiance.Sample(gSamClampLinear, normal).rgb;
-    float3 prefilteredColor = gIBLPrefilter.SampleLevel(gSamClampLinear, reflect(-ViewDirection, normal), roughness * roughness * MAX_REF_LOD).rgb;
-    float2 brdf = gBRDFlut.Sample(gSamClampLinear, float2(max(dot(normal, ViewDirection), 0.0f), roughness * roughness)).rg;
-    
-    litColor += IBL_EnvironmentLight(ViewDirection, normal, irradiance, prefilteredColor, brdf,
-                                        albedo.rgb, 1.0f, roughness, metallic, gIBLFactor);
+        float2 brdf = gBRDFlut.Sample(gSamClampLinear, float2(max(dot(normal, ViewDirection), 0.0f), roughness * roughness)).rg;
+        float3 irradiance = gIrradiance_0.Sample(gSamClampLinear, normal).rgb;
+        float3 prefilteredColor = gPrefilter_0.SampleLevel(gSamClampLinear, reflect(-ViewDirection, normal), roughness * roughness * MAX_REF_LOD).rgb;
+        
+        litColor += IBL_EnvironmentLight(ViewDirection, normal, irradiance, prefilteredColor, brdf,
+                                            albedo.rgb, 1.0f, roughness, metallic, gIBLFactor);
 #endif
-
-    litColor += emissive;
-    
+            
 #ifdef FOG
-    litColor = Fog(litColor.rgb, pin.PosW);
+        litColor = Fog(litColor.rgb, pin.PosW);
 #endif
+     }
+     break;
+     case 1:
+     {
+#ifdef IBL
+        float2 brdf = gBRDFlut.Sample(gSamClampLinear, float2(max(dot(normal, ViewDirection), 0.0f), roughness * roughness)).rg;
+        float3 irradiance = gIrradiance_1.Sample(gSamClampLinear, normal).rgb;
+        float3 prefilteredColor = gPrefilter_1.SampleLevel(gSamClampLinear, reflect(-ViewDirection, normal), roughness * roughness * MAX_REF_LOD).rgb;
+        
+        litColor += IBL_EnvironmentLight(ViewDirection, normal, irradiance, prefilteredColor, brdf,
+                                            albedo.rgb, 1.0f, roughness, metallic, gIBLFactor);
+#endif
+    }
+    break;
+    default:
+        break;
+    }
     
     uint pixelCount = gPieceLinkBuffer.IncrementCounter();
     

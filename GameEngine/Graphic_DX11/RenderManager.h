@@ -43,7 +43,7 @@ public:
 
 public:
 	void SetSkyCube(TextureBuffer* resource) override;
-	void SetSkyLight(SkyLightBuffer* resource) override;
+	void SetSkyLight(SkyLightBuffer* resource, UINT index) override;
 
 public:
 	void PushInstance(MeshData* instance) override;

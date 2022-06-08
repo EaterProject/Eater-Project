@@ -16,7 +16,7 @@ public:
 
 public:
 	void SetSkyCubeResource(TextureBuffer* resource);
-	void SetSkyLightResource(SkyLightBuffer* resource);
+	void SetSkyLightResource(SkyLightBuffer* resource, UINT index);
 
 	void RenderUpdate();
 

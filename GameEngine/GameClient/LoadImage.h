@@ -20,6 +20,8 @@ private:
 	Image* Loading_2_Image;
 	Image* Text_Origin_Image;
 
+	Image* Test_Image;
+
 	RectTransform* Loading_RectTR_2;
 
 	float Angle;

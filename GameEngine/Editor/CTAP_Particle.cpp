@@ -330,8 +330,8 @@ void CTAP_Particle::SetGameObject(ParticleSystem* ObjectParticleSystem)
 	auto mRateOverTime = mParticleSystem->GetRateOverTime();
 	RateOverTime = mRateOverTime;
 
-	Strength_Slider.SetPos((int)(mParticleSystem->GetStrength()*10.0f));
-	Strength_Str = ChangeToCString(mParticleSystem->GetStrength() * 10.0f);
+	Strength_Slider.SetPos((int)(mParticleSystem->GetStrength() * 10.0f));
+	Strength_Str = ChangeToCString(mParticleSystem->GetStrength());
 
 	//StartForce
 	auto StartForce = mParticleSystem->GetStartForce();

@@ -81,7 +81,7 @@ public:
 
 public:
 	void SetSkyCube(TextureBuffer* environment);
-	void SetSkyLight(SkyLightBuffer* skyLight);
+	void SetSkyLight(SkyLightBuffer* skyLight, UINT index);
 
 private:
 	GraphicEngine* GEngine;

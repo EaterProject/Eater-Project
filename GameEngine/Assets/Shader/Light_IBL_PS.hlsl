@@ -31,9 +31,11 @@ Texture2D gPositionRT       : register(t3);
 Texture2D gSsaoMap          : register(t4);
 Texture2D gShadowMap        : register(t5);
 
-TextureCube gIBLIrradiance  : register(t6);
-TextureCube gIBLPrefilter   : register(t7);
-Texture2D gBRDFlut          : register(t8);
+Texture2D gBRDFlut          : register(t6);
+TextureCube gIrradiance_0   : register(t7);
+TextureCube gPrefilter_0    : register(t8);
+TextureCube gIrradiance_1   : register(t9);
+TextureCube gPrefilter_1    : register(t10);
 
 float4 Light_IBL_PS(ScreenPixelIn pin) : SV_TARGET
 {
@@ -48,10 +50,11 @@ float4 Light_IBL_PS(ScreenPixelIn pin) : SV_TARGET
     float3 emissive = emissiveRT.rgb;
     float3 normal = normalRT.xyz;
     
+    uint sky = emissiveRT.w;
     float roughness = normalRT.w;
     float metallic = positionRT.w;
     
-    if (any(normal) == false)
+    if (albedoRT.a <= 0.0001f)
         discard;
     
 	// View Direction
@@ -78,7 +81,7 @@ float4 Light_IBL_PS(ScreenPixelIn pin) : SV_TARGET
     albedo = pow(albedo, 2.2f);
     emissive = pow(emissive, 2.2f);
     
-    float3 litColor = float3(0.0f, 0.0f, 0.0f);
+    float3 litColor = emissive;
     litColor += PBR_DirectionalLight(ViewDirection, normal, gDirLights[0],
                                 albedo, ao, roughness, metallic, shadows);
 
@@ -88,18 +91,35 @@ float4 Light_IBL_PS(ScreenPixelIn pin) : SV_TARGET
     litColor += PBR_SpotLight(ViewDirection, normal, gSpotLights, gSpotLightCount, positionRT.xyz,
                                 albedo, ao, roughness, metallic, shadows);
     
-    float3 irradiance = gIBLIrradiance.Sample(gSamClampLinear, normal).rgb;
-    float3 prefilteredColor = gIBLPrefilter.SampleLevel(gSamClampLinear, reflect(-ViewDirection, normal), roughness * roughness * MAX_REF_LOD).rgb;
     float2 brdf = gBRDFlut.Sample(gSamClampLinear, float2(max(dot(normal, ViewDirection), 0.0f), roughness * roughness)).rg;
-    
-    litColor += IBL_EnvironmentLight(ViewDirection, normal, irradiance, prefilteredColor, brdf, 
-                                        albedo, ao, roughness, metallic, gIBLFactor);
 
-    litColor += emissive;
-    
+    switch (sky)
+    {
+    case 0:
+    {
+        float3 irradiance = gIrradiance_0.Sample(gSamClampLinear, normal).rgb;
+        float3 prefilteredColor = gPrefilter_0.SampleLevel(gSamClampLinear, reflect(-ViewDirection, normal), roughness * roughness * MAX_REF_LOD).rgb;
+        
+        litColor += IBL_EnvironmentLight(ViewDirection, normal, irradiance, prefilteredColor, brdf,
+                                albedo, ao, roughness, metallic, gIBLFactor);
+                        
 #ifdef FOG
-    litColor = Fog(litColor, positionRT.xyz);
+        litColor = Fog(litColor, positionRT.xyz);
 #endif
-    
+    }
+    break;
+    case 1:
+    {
+        float3 irradiance = gIrradiance_1.Sample(gSamClampLinear, normal).rgb;
+        float3 prefilteredColor = gPrefilter_1.SampleLevel(gSamClampLinear, reflect(-ViewDirection, normal), roughness * roughness * MAX_REF_LOD).rgb;
+        
+        litColor += IBL_EnvironmentLight(ViewDirection, normal, irradiance, prefilteredColor, brdf,
+                                albedo, ao, roughness, metallic, gIBLFactor);
+    }
+    break;
+    default:
+        break;
+    }
+
     return float4(litColor, 1.0f);
 }
