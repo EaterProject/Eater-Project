@@ -28,15 +28,14 @@ public:
 
 	void SetSearchPoint(int Index, Vector3 Point);
 	bool GetStopPoint(int Index);
-
 	void SetMovePoint(float x, float y, float z);
-	void GroundCheck();
 protected:
 	MeshFilter*				mMeshFilter;
 	Transform*				mTransform;
 	AnimationController*	mAnimation;
 	Collider*				mColider;
 	Transform*				mPlayerTR;
+	Rigidbody*				mRigidbody;
 protected:
 	Vector3 SearchPoint[5];
 	Vector3 MovePoint;		//이동해야하는 지점

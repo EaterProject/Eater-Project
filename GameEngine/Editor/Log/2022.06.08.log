@@ -47,3 +47,10 @@
 [TIME] 11:37:01 [FILE] TextureManager.cpp [FUNC] TextureManager::LoadTexture [LINE] 34
 [ Engine ][ Create ][ Texture Buffer ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
 
+[TIME] 13:55:22 [FILE] D3D11Graphic.cpp [FUNC] D3D11Graphic::CreateTextureBuffer [LINE] 210
+[ Graphic ][ Create ][ ShaderResourceView ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+[ERROR] 구성 요소를 찾을 수 없습니다.
+
+[TIME] 13:55:22 [FILE] TextureManager.cpp [FUNC] TextureManager::LoadTexture [LINE] 34
+[ Engine ][ Create ][ Texture Buffer ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+

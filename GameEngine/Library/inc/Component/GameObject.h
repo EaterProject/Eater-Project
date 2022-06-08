@@ -10,12 +10,13 @@
 
 #define AWAKE				0x00000001
 #define START				0x00000010
-#define SETUP				0x10000000
-#define START_UPDATE		0x00000100
-#define Transform_UPDATE	0x00001000
-#define Physics_UPDATE		0x00010000
-#define UPDATE				0x00100000
-#define END_UPDATE			0x01000000
+#define SETUP				0x00000100
+#define START_UPDATE		0x00001000
+#define Transform_UPDATE	0x00010000
+#define Physics_UPDATE		0x00100000
+#define UPDATE				0x01000000
+#define END_UPDATE			0x10000000
+#define DEBUG_UPDATE		0x10000001
 
 #define PHYS_TRIIGER_ENTER	0x00000001
 #define PHYS_TRIIGER_STAY	0x00000010
@@ -93,6 +94,8 @@ private:
 	std::vector<Component*> ComponentList;
 	std::vector<GameObject*> ChildMeshList;
 	std::vector<GameObject*> ChildBoneList;
+
+	EATER_ENGINEDLL void PushStartComponentFunction(Component* con, unsigned int type);
 	EATER_ENGINEDLL void PushComponentFunction(Component* con, unsigned int type);
 	EATER_ENGINEDLL void PushPhysFunction(Component* con, unsigned int type);
 	
@@ -164,12 +167,16 @@ inline T* GameObject::AddComponent(typename std::enable_if<std::is_base_of<Compo
 		PushComponentFunction(mComponent, UPDATE);
 	}
 
-	//EndUpdate --- 마지막 업데이터
+	//EndUpdate --- 마지막 업데이트
 	if (typeid(&Component::EndUpdate).hash_code() != typeid(&T::EndUpdate).hash_code())
 	{
 		PushComponentFunction(mComponent, END_UPDATE);
 	}
 
+	if (typeid(&Component::Debug).hash_code() != typeid(&T::Debug).hash_code())
+	{
+		PushComponentFunction(mComponent, DEBUG_UPDATE);
+	}
 
 	///PhysX 충돌 체크 전용
 	if (typeid(&Component::OnTriggerEnter).hash_code() != typeid(&T::OnTriggerEnter).hash_code())
@@ -186,6 +193,8 @@ inline T* GameObject::AddComponent(typename std::enable_if<std::is_base_of<Compo
 	{
 		PushPhysFunction(mComponent, PHYS_TRIIGER_EXIT);
 	}
+
+
 	return mComponent;
 }
 

@@ -30,6 +30,11 @@ void MonsterB::Update()
 	MonsterComponent::Update();
 }
 
+void MonsterB::Debug()
+{
+	MonsterComponent::Debug();
+}
+
 void MonsterB::OnTriggerStay(GameObject* Obj)
 {
 	MonsterComponent::OnTriggerStay(Obj);

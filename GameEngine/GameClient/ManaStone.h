@@ -15,6 +15,7 @@ public:
 	void Awake() override;
 	void SetUp() override;
 	void Update() override;
+	void Debug() override;
 	
 	Vector3 GetPoint(int CreateRangeIndex, int MovePointIndex);
 	void CreateMonster(int MonsterACount, int MonsterBCount);
@@ -27,7 +28,6 @@ private:
 	void CreateMonsterB(int index);
 
 	Vector3 GetMonsterPoint(const Vector3& MyPosition, int MonsterPointIndex , float Range);
-	void Debug();
 	void CreateMonsterRangePoint(int MonsterCount);
 
 

@@ -33,7 +33,6 @@ public:
 	
 	static Transform* GetPlayerTransform();
 	static bool GetAttackState();
-
 	void Healing(float HealingPower);
 private:
 	void PlayerKeyinput();				//플레이어 키인풋
@@ -51,13 +50,13 @@ private:
 	void Player_Jump();					//점프
 	bool Player_Move_Check();			//기본 상태 체크
 private:
-	Vector3 DirPos;			//방향
-	Vector3 DirRot;			//회전
-	Vector3 PastDirRot;		//과거의 방향
-	Vector3 BasePos;		//(0,0,0)인 벡터
-	Vector3 WeaponOffsetRot;
-	Vector3 AttackStartRot;	//공격을 시작했을때의 방향
-	bool Attack_Rot;		//공격회전을 한번만 구하기위해
+	Vector3 DirPos;						//방향
+	Vector3 DirRot;						//회전
+	Vector3 PastDirRot;					//과거의 방향
+	Vector3 BasePos;					//(0,0,0)인 벡터
+	Vector3 WeaponOffsetRot;			//무기 충돌체 초기 오프셋
+	Vector3 AttackStartRot;				//공격을 시작했을때의 방향
+	bool Attack_Rot;					//공격회전을 한번만 구하기위해
 
 	//컨퍼넌트
 	static Transform*		mTransform;

@@ -31,5 +31,10 @@ void MonsterA::Update()
 	MonsterComponent::Update();
 }
 
+void MonsterA::Debug()
+{
+	MonsterComponent::Debug();
+}
+
 
 

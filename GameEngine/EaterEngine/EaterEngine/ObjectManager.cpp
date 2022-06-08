@@ -8,6 +8,7 @@
 #include "MeshFilter.h"
 #include "Light.h"
 #include "GraphicEngineAPI.h"
+#include "EaterEngineAPI.h"
 
 //함수포인터 리스트들
 Delegate_Map ObjectManager::AwakeFunction;
@@ -18,6 +19,7 @@ Delegate_Map ObjectManager::TransformUpdate;
 Delegate_Map ObjectManager::PhysicsUpdate;
 Delegate_Map ObjectManager::Update;
 Delegate_Map ObjectManager::EndUpdate;
+Delegate_Map ObjectManager::mDebugUpdate;
 
 //오브젝트 리스트
 std::vector<GameObject*>			ObjectManager::ObjectList;
@@ -141,7 +143,7 @@ void ObjectManager::AllDeleteObject()
 
 void ObjectManager::Initialize()
 {
-
+	Option = GetRenderOptionData();
 }
 
 void ObjectManager::PushAwake(Component* mComponent, int Order)
@@ -221,6 +223,23 @@ void ObjectManager::PushUpdate(Component* mComponent, int Order)
 	mComponent->FUNCTION_MASK |= UPDATE;
 
 	Update.Push(data);
+}
+
+void ObjectManager::PushDebugUpdate(Component* mComponent, int Order)
+{
+	ComponentFunctionData data;
+	//활성화 여부
+	data.Enabled = &mComponent->Enabled;
+	//함수 포인터
+	data.FunctionPointer = std::bind(&Component::Update, mComponent);
+	//컨퍼넌트 포인터
+	data.ComponentPointer = mComponent;
+	//컨퍼넌트 순서
+	data.OrderCount = Order;
+
+	mComponent->FUNCTION_MASK |= DEBUG_UPDATE;
+
+	mDebugUpdate.Push(data);
 }
 
 void ObjectManager::AddTag(int Key, std::string TagName)
@@ -343,6 +362,12 @@ void ObjectManager::PlayUpdate()
 	FunctionState = (int)FUNCTION_STATE::FUNCTION_END_UPDATE;
 	EndUpdate.Play();
 
+	//디버깅 옵션이 켜져있을때만 실행
+	if (Option->DebugOption & DEBUG_OPTION::DEBUG_MODE)
+	{
+		mDebugUpdate.Play();
+	}
+
 	//모든 업데이트가 끝나고 상태를 AWAKE로 변경해줌 
 	FunctionState = (int)FUNCTION_STATE::FUNCTION_AWAKE;
 }
@@ -357,6 +382,7 @@ void ObjectManager::ClearFunctionList()
 	PhysicsUpdate.Clear();
 	Update.Clear();
 	EndUpdate.Clear();
+	mDebugUpdate.Clear();
 }
 
 void ObjectManager::DeleteObject()
@@ -583,6 +609,11 @@ void ObjectManager::DontDestroyComponentSetting(Component* cpt)
 	{
 		PushEndUpdate(cpt, cpt->EndUpdate_Order);
 	}
+
+	if (cpt->FUNCTION_MASK & DEBUG_UPDATE)
+	{
+		PushEndUpdate(cpt, cpt->DebugUpdate_Order);
+	}
 }
 
 void ObjectManager::DeleteComponent(Component* cpt)
@@ -613,6 +644,10 @@ void ObjectManager::DeleteComponent(Component* cpt)
 		EndUpdate.Pop(cpt);
 	}
 
+	if (cpt->FUNCTION_MASK & DEBUG_UPDATE)
+	{
+		mDebugUpdate.Pop(cpt);
+	}
 
 	///진짜 컨퍼넌트 삭제
 	delete cpt;

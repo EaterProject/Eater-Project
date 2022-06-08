@@ -8,6 +8,7 @@
 #include "MeshFilter.h"
 #include "AnimationController.h"
 #include "Collider.h"
+#include "Rigidbody.h"
 #include "PhysData.h"
 
 MonsterComponent::MonsterComponent()
@@ -32,13 +33,15 @@ void MonsterComponent::Awake()
 	mMeshFilter = gameobject->GetComponent<MeshFilter>();
 	mAnimation	= gameobject->GetComponent<AnimationController>();
 	mColider	= gameobject->GetComponent<Collider>();
+	mRigidbody  = gameobject->GetComponent<Rigidbody>();
 }
 
 void MonsterComponent::SetUp()
 {
 	//Collider설정
-	mColider->SetCenter(0, 0.5f, 0);
+	mColider->SetCenter(0, 0.25f, 0);
 	mColider->SetSphereCollider(0.25f);
+	mRigidbody->SetFreezeRotation(true, true, true);
 
 	mMeshFilter->SetModelName(ModelName);
 	mMeshFilter->SetAnimationName(AnimationName);
@@ -77,9 +80,6 @@ void MonsterComponent::Update()
 		Dead();
 		break;
 	}
-
-	//땅체크 
-	GroundCheck();
 }
 
 void MonsterComponent::OnTriggerStay(GameObject* Obj)
@@ -105,10 +105,11 @@ void MonsterComponent::Move()
 	{
 		//목표지점의 도달하지 않았을때
 		mTransform->Slow_Y_Rotation(SearchPoint[PointNumber], 150, MonsterFront_Z);
-		mTransform->SetTranlate(DirPoint.x * GetDeltaTime(), 0, DirPoint.z *GetDeltaTime());
+		mRigidbody->SetVelocity(DirPoint.x, 0, DirPoint.z);
 	}
 	else
 	{
+		mRigidbody->SetVelocity(0, 0, 0);
 		//목표지점 도달 후 상태 변화
 		MonsterState	= (int)MONSTER_STATE::IDLE;
 		PointNumber		= -1;
@@ -225,19 +226,3 @@ bool MonsterComponent::GetStopPoint(int Index)
 		return false;
 	}
 }
-
-void MonsterComponent::GroundCheck()
-{
-	//아래 방향으로 Ray를 사용하여 땅체크
-	Vector3 RayStartPoint	= mTransform->Position;
-	RayStartPoint.y			= mTransform->Position.y+0.1f;
-	mRay->Origin			= RayStartPoint;
-	mRay->Direction			= { 0,-1,0 };
-	mRay->MaxDistance		= 10;
-	if (RayCast(mRay) == true)
-	{
-		mTransform->Position.y = mRay->Hit.HitPoint.y;
-	}
-}
-
-
