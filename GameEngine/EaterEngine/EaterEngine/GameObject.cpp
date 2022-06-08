@@ -266,23 +266,6 @@ Component* GameObject::GetComponent(int index)
 	return ComponentList[index];
 }
 
-void GameObject::PushStartComponentFunction(Component* con, unsigned int type)
-{
-	int State = ObjectManager::GetFunctionState();
-	switch (type)
-	{
-	case AWAKE:
-		ObjectManager::PushAwake(con, con->Awake_Order);
-		break;
-	case START:
-		ObjectManager::PushStart(con, con->Start_Order);
-		break;
-	case SETUP:
-		ObjectManager::PushSetUp(con, con->SetUp_Order);
-		break;
-	}
-}
-
 void GameObject::PushComponentFunction(Component* con, unsigned int type)
 {
 	int State = ObjectManager::GetFunctionState();

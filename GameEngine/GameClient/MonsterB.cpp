@@ -20,7 +20,6 @@ void MonsterB::SetUp()
 	/////////////////////////////////////////////
 	ModelName		= "MonsterB+";
 	AnimationName	= "MonsterB+";
-	MonsterFront_Z	= true;
 	/////////////////////////////////////////////
 	MonsterComponent::SetUp();
 }

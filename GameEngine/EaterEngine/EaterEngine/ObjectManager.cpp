@@ -9,6 +9,8 @@
 #include "Light.h"
 #include "GraphicEngineAPI.h"
 #include "EaterEngineAPI.h"
+#include "Utility.h"
+#include <time.h>
 
 //함수포인터 리스트들
 Delegate_Map ObjectManager::AwakeFunction;
@@ -152,7 +154,7 @@ void ObjectManager::PushAwake(Component* mComponent, int Order)
 	//활성화 여부
 	data.Enabled = &mComponent->Enabled;
 	//함수 포인터
-	data.FunctionPointer = std::bind(&Component::Awake, mComponent);
+	data.FunctionPointer = Eater::Bind(&Component::Awake, mComponent);
 	//컨퍼넌트 포인터
 	data.ComponentPointer = mComponent;
 	//컨퍼넌트 순서
@@ -168,7 +170,7 @@ void ObjectManager::PushStartUpdate(Component* mComponent, int Order)
 	//활성화 여부
 	data.Enabled = &mComponent->Enabled;
 	//함수 포인터
-	data.FunctionPointer = std::bind(&Component::StartUpdate, mComponent);
+	data.FunctionPointer = Eater::Bind(&Component::StartUpdate, mComponent);
 	//컨퍼넌트 포인터
 	data.ComponentPointer = mComponent;
 	//컨퍼넌트 순서
@@ -183,7 +185,7 @@ void ObjectManager::PushTransformUpdate(Component* mComponent, int Order)
 	//활성화 여부
 	data.Enabled = &mComponent->Enabled;
 	//함수 포인터
-	data.FunctionPointer = std::bind(&Component::TransformUpdate, mComponent);
+	data.FunctionPointer = Eater::Bind(&Component::TransformUpdate, mComponent);
 	//컨퍼넌트 포인터
 	data.ComponentPointer = mComponent;
 	//컨퍼넌트 순서
@@ -199,7 +201,7 @@ void ObjectManager::PushPhysicsUpdate(Component* mComponent, int Order)
 	//활성화 여부
 	data.Enabled = &mComponent->Enabled;
 	//함수 포인터
-	data.FunctionPointer = std::bind(&Component::PhysicsUpdate, mComponent);
+	data.FunctionPointer = Eater::Bind(&Component::PhysicsUpdate, mComponent);
 	//컨퍼넌트 포인터
 	data.ComponentPointer = mComponent;
 	//컨퍼넌트 순서
@@ -214,7 +216,7 @@ void ObjectManager::PushUpdate(Component* mComponent, int Order)
 	//활성화 여부
 	data.Enabled = &mComponent->Enabled;
 	//함수 포인터
-	data.FunctionPointer = std::bind(&Component::Update, mComponent);
+	data.FunctionPointer = Eater::Bind(&Component::Update, mComponent);
 	//컨퍼넌트 포인터
 	data.ComponentPointer = mComponent;
 	//컨퍼넌트 순서
@@ -231,7 +233,7 @@ void ObjectManager::PushDebugUpdate(Component* mComponent, int Order)
 	//활성화 여부
 	data.Enabled = &mComponent->Enabled;
 	//함수 포인터
-	data.FunctionPointer = std::bind(&Component::Update, mComponent);
+	data.FunctionPointer = Eater::Bind(&Component::Debug, mComponent);
 	//컨퍼넌트 포인터
 	data.ComponentPointer = mComponent;
 	//컨퍼넌트 순서

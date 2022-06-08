@@ -26,8 +26,9 @@ public:
 	virtual void Hit();
 	virtual void Debug();
 
+	void PlayerDistanceCheck();
 	void SetSearchPoint(int Index, Vector3 Point);
-	bool GetStopPoint(int Index);
+	bool GetStopPoint(const Vector3& Pos);
 	void SetMovePoint(float x, float y, float z);
 protected:
 	MeshFilter*				mMeshFilter;
@@ -44,6 +45,7 @@ protected:
 protected:
 	int		MonsterState	= 0;
 	bool	MonsterFront_Z	= false;
+	float	PlayerDistance  = 10;
 protected:
 	//처음 한번만 실행하기위한 변수들
 	bool IdleStart		= false;	//Idle	 상태 시작 변수
@@ -68,7 +70,7 @@ protected:
 	const int	Idle_MaxTime_Max	= 5;		//대기시간의 최대값
 	const int	Idle_MaxTime_Min	= 2;		//대기시간의 최소값
 protected:
-	///Attack 상태 변수들
+	///Attack 상태 변수
 
 protected:
 	///Hit 상태 변수

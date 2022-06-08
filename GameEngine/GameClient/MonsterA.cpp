@@ -21,7 +21,6 @@ void MonsterA::SetUp()
 	/////////////////////////////////////////////
 	ModelName		= "MonsterA+";
 	AnimationName	= "MonsterA+";
-	Speed			= 10;
 	/////////////////////////////////////////////
 	MonsterComponent::SetUp();
 }
