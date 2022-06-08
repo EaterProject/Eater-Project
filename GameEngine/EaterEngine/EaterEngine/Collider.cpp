@@ -33,7 +33,6 @@ void Collider::PhysicsUpdate()
 	if (mTransform->Position != mPhysData->WorldPosition)
 	{
 		mPhysData->SetWorldPosition(mTransform->Position.x, mTransform->Position.y, mTransform->Position.z);
-		mTransform->Position = mPhysData->WorldPosition;
 	}
 
 	//if (mTransform->Q_Rotation != mPhysData->Rotation)
@@ -58,8 +57,6 @@ void Collider::PhysicsUpdate()
 		//mTransform->Q_Rotation.w = mPhysData->Rotation.w;
 	}
 
-
-	
 	DebugCollider();
 	//충돌 함수 호출
 	FindPhysFunctionEnter(mPhysData, PHYS_TRIIGER_ENTER);

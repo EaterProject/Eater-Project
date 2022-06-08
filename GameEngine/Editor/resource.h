@@ -192,6 +192,7 @@
 #define IDC_MFCCOLORBUTTON3             1084
 #define IDC_RADIO1                      1084
 #define IDC_MFCCOLORBUTTON4             1085
+#define IDC_SPIN3                       1088
 #define ID_32771                        32771
 #define ID_32772                        32772
 #define ID_SCENE_SETTING                32773
@@ -219,7 +220,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        369
 #define _APS_NEXT_COMMAND_VALUE         32791
-#define _APS_NEXT_CONTROL_VALUE         1085
+#define _APS_NEXT_CONTROL_VALUE         1089
 #define _APS_NEXT_SYMED_VALUE           312
 #endif
 #endif

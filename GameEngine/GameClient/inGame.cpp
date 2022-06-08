@@ -37,6 +37,8 @@ void InGame::Awake()
 	//로직매니저 초기화
 	Logic->Initialize();
 
+	Sound_Play_BGM("InGame_InDoor");
+
 	//GameObject* testobj = InstanceTerrain("Terrain");
 	//Terrain* mTerrain = testobj->GetComponent<Terrain>();
 	//mTerrain->SetLayerName("terrain_ground_A_BaseColor", "terrain_ground_A_Normal", "terrain_ground_A_ORM");

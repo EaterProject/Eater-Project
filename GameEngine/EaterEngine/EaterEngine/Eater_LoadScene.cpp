@@ -78,7 +78,6 @@ void Eater_LoadScene::LoadData(std::string& FilePath)
 				Load_Component_Collider(i, Obj);
 			}
 
-
 			//Ä«¸Þ¶ó
 			Find = EATER_GET_LIST_CHOICE(i, "Camera");
 			if (Find != -1)
@@ -127,6 +126,23 @@ void Eater_LoadScene::LoadData(std::string& FilePath)
 			mOption->BLOOM_Factor = Data[15];
 			mOption->SkyLight_Factor = Data[16];
 			RenderSetting();
+
+			GameObject* Obj = GetDirectionLight();
+			Light* mLight = Obj->GetComponent<Light>();
+			EATER_GET_LIST_CHOICE(i, "Direction");
+			EATER_GET_LIST(&Data, i);
+
+			mLight->SetAngle(Data[0]);
+			mLight->SetAttenuate((Data[1]));
+			mLight->SetRange((Data[2]));
+			mLight->SetPower((Data[3]));
+
+			float R, G, B;
+			R = (Data[4]);
+			G = (Data[5]);
+			B = (Data[6]);
+			mLight->SetColor(R, G, B);
+			Obj->GetTransform()->Rotation = { Data[7],Data[8] ,Data[9] };
 		}
 	}
 	EATER_CLOSE_READ_FILE();

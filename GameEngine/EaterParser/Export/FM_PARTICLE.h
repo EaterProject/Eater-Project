@@ -25,7 +25,8 @@ public:
 	int TextureTiling_X;
 	int TextureTiling_Y;
 
-	float Strength = 1;
+	int	SkyLightIndex	= 0;
+	float	Strength	= 1;
 
 	///시작 후 방향에 대한 힘
 	float StartForce_Min_X;

@@ -363,6 +363,7 @@ void EaterParser::SaveMaterial()
 	SetData += MAP_TYPE + std::string("Metallic") + SP_TYPE + std::to_string(mMaterial_Data->Metallic) + LINE_TYPE;
 	SetData += MAP_TYPE + std::string("Tileing_X") + SP_TYPE + std::to_string(mMaterial_Data->Tileing_X) + LINE_TYPE;
 	SetData += MAP_TYPE + std::string("Tileing_Y") + SP_TYPE + std::to_string(mMaterial_Data->Tileing_Y) + LINE_TYPE;
+	SetData += MAP_TYPE + std::string("SkyLightIndex") + SP_TYPE + std::to_string(mMaterial_Data->SkyLightIndex) + LINE_TYPE;
 	SetData += MAP_TYPE + std::string("AddColor_R") + SP_TYPE + std::to_string(mMaterial_Data->AddColor_R) + LINE_TYPE;
 	SetData += MAP_TYPE + std::string("AddColor_G") + SP_TYPE + std::to_string(mMaterial_Data->AddColor_G) + LINE_TYPE;
 	SetData += MAP_TYPE + std::string("AddColor_B") + SP_TYPE + std::to_string(mMaterial_Data->AddColor_B) + LINE_TYPE;
