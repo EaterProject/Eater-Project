@@ -6,6 +6,7 @@
 #include "Image.h"
 
 LoadingImage::LoadingImage()
+	:Angle(0.0f), Alpha(0.0f), IsPlus(true)
 {
 
 }
@@ -48,26 +49,17 @@ void LoadingImage::Awake()
 	ui_rectTR->SetPosition(0.0f, -150.0f);
 	ui_rectTR->SetScale(0.5f, 0.5f);
 
-	ui_object = InstanceUI("Text_Origin_UI");
-	Test_Image = ui_object->AddComponent<Image>();
-	Test_Image->SetLayer(1);
-	ui_rectTR = ui_object->GetComponent<RectTransform>();
-	ui_rectTR->SetImagePivot(RECT_PIVOT::PIVOT_MIDDLE_CENTER);
-	ui_rectTR->SetScale(0.1f, 0.1f);
-
 	Icon_Image->SetTexture("Loading_Logo");
 	Loading_1_Image->SetTexture("Loading_Icon_01");
 	Loading_2_Image->SetTexture("Loading_Icon_02");
 	Text_Origin_Image->SetTexture("Loading_Text");
-	Test_Image->SetTexture("Black");
-
 }
 
 void LoadingImage::Update()
 {
 	float dTime = GetDeltaTime();
 
-	Angle += dTime * 100.0f;
+	Angle += 100.0f * dTime;
 
 	if (Angle >= 360.0f)
 	{
@@ -76,27 +68,26 @@ void LoadingImage::Update()
 
 	Loading_RectTR_2->SetRotation(Angle);
 
-	static float test_alpha = 0.0f;
-	static bool test_plus = true;
-
-	if (test_plus)
+	if (IsPlus)
 	{
-		test_alpha += 1.0f;
-		Test_Image->SetImageColor(255, 255, 255, test_alpha);
+		Alpha += 100.0f * dTime;
+		Text_Origin_Image->SetImageColor(255, 255, 255, Alpha);
 
-		if (test_alpha >= 255.0f)
+		if (Alpha >= 255.0f)
 		{
-			test_plus = false;
+			Alpha = 255.0f;
+			IsPlus = false;
 		}
 	}
 	else
 	{
-		test_alpha -= 1.0f;
-		Test_Image->SetImageColor(255, 255, 255, test_alpha);
+		Alpha -= 100.0f * dTime;
+		Text_Origin_Image->SetImageColor(255, 255, 255, Alpha);
 
-		if (test_alpha <= 255.0f)
+		if (Alpha <= 0.0f)
 		{
-			test_plus = true;
+			Alpha = 0.0f;
+			IsPlus = true;
 		}
 	}
 }

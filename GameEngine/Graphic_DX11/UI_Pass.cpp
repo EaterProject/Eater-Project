@@ -100,8 +100,8 @@ void UI_Pass::RenderUpdate(std::vector<RenderData*>& meshlist)
 		m_UI_VS->Update();
 
 		// Pixel Shader Update..
-		//optionBuf.gColor = ui->m_UIProperty->ImageColor;
-		//m_UI_PS->ConstantBufferUpdate(&optionBuf);
+		optionBuf.gColor = ui->m_UIProperty->ImageColor;
+		m_UI_PS->ConstantBufferUpdate(&optionBuf);
 
 		m_UI_PS->SetShaderResourceView<gDiffuseMap>(ui->m_Albedo);
 		

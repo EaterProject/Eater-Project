@@ -11,6 +11,7 @@ Image::Image()
 {
 	m_UI = new UIBuffer();
 	m_UI->UI_Property = new UIProperty();
+	m_UI->UI_Property->ImageColor = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
 
 	UIManager::SetIndex(&m_UI->BufferIndex);
 }
