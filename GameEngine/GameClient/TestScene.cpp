@@ -44,7 +44,8 @@ void TestScene::Awake()
 	//Load("../Assets/Model/Animation");
 	PROFILE_TIMER_END("Load Folder"); 
 
-	BakeSkyLightMap("SkyLight_HDRI", false);
+	BakeSkyLightMap("SkyLight_0", false);
+	BakeSkyLightMap("SkyLight_1", false);
 	//BakeSkyLightMap("Day", false);
 	//BakeSkyLightMap("Night", false);
 	//BakeSkyLightMap("skybox1", false);
@@ -59,10 +60,11 @@ void TestScene::Awake()
 
 
 	//CreateParticle(0,0,0);
-	//SetSkyLight("Day");
-	SetSkyLight("SkyLight_HDRI", 0);
-	//SetSkyCube("Day");
-	SetSkyCube("SkyCube_HDRI");
+
+	SetSkyLight("SkyLight_0", 0);
+	SetSkyLight("SkyLight_1", 1);
+
+	SetSkyCube("SkyCube");
 
 	//Load("../Assets/Scene/test.Scene");
 }

@@ -28,11 +28,13 @@ void InGame::Awake()
 
 	BakeSkyLightMap("SkyLight_HDRI", false);
 
-	//SetSkyLight("Day");
-	SetSkyLight("SkyLight_HDRI", 0);
+	BakeSkyLightMap("SkyLight_0", false);
+	BakeSkyLightMap("SkyLight_1", false);
 
-	//SetEnvironment("Day");
-	SetSkyCube("SkyCube_HDRI");
+	SetSkyLight("SkyLight_0", 0);
+	SetSkyLight("SkyLight_1", 1);
+
+	SetSkyCube("SkyCube");
 
 	//로직매니저 초기화
 	Logic->Initialize();

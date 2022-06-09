@@ -8,3 +8,10 @@ enum class MONSTER_STATE : int
 	CHASE,	//Ãß°Ý
 	DEAD,	//Á×À½
 };
+enum class MONSTER_COLOR : int
+{
+	RED,		//
+	GREEN,
+	YELLOW,
+	BLUE
+};

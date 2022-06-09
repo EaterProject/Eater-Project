@@ -505,12 +505,19 @@ void GameEngine::SetSkyCube(std::string& Path)
 {
 	TextureBuffer* environment = mLoadManager->GetTexture(Path);
 
+	if (environment == nullptr) return;
+
 	mGraphicManager->SetSkyCube(environment);
 }
 
 void GameEngine::SetSkyLight(std::string& Path, UINT index)
 {
 	SkyLightBuffer* skyLight = mLoadManager->GetSkyLight(Path);
+
+	if (skyLight == nullptr) return;
+
+	if (skyLight->Prefilter == nullptr) return;
+	if (skyLight->Irradiance == nullptr) return;
 
 	mGraphicManager->SetSkyLight(skyLight, index);
 }

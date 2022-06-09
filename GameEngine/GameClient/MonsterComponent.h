@@ -1,5 +1,6 @@
 #pragma once
 #include "Component.h"
+#include "ClientTypeOption.h"
 #include <string>
 class PhysRayCast;
 class MeshFilter;
@@ -7,6 +8,7 @@ class Transform;
 class AnimationController;
 class Collider;
 class Rigidbody;
+class MaterialPropertyBlock;
 class MonsterComponent : public Component
 {
 public:
@@ -30,8 +32,12 @@ public:
 	void SetSearchPoint(int Index, Vector3 Point);
 	bool GetStopPoint(const Vector3& Pos);
 	void SetMovePoint(float x, float y, float z);
+	void SetMonsterState(MONSTER_STATE State);
+	void SetLimLightColor(MONSTER_COLOR mColor);
+	void UpdateColor();
 protected:
 	MeshFilter*				mMeshFilter	= nullptr;
+	MeshFilter*				mSkinFilter = nullptr;
 	Transform*				mTransform	= nullptr;
 	AnimationController*	mAnimation	= nullptr;
 	Collider*				mColider	= nullptr;
@@ -63,9 +69,16 @@ protected:
 	std::string Animation_Move		= "move";
 	std::string Animation_Die		= "die";
 	std::string Animation_hit		= "hit";
+
+	float Animation_Idle_Speed		= 1.0f;		//애니메이션 재생 속도 (값이 높을 수록 빨라짐)
+	float Animation_Attack_Speed	= 0.8f;		//애니메이션 재생 속도 (값이 높을 수록 빨라짐)
+	float Animation_Move_Speed		= 0.8f;		//애니메이션 재생 속도 (값이 높을 수록 빨라짐)
+	float Animation_Die_Speed		= 1.0f;		//애니메이션 재생 속도 (값이 높을 수록 빨라짐)
+	float Animation_hit_Speed		= 0.5f;		//애니메이션 재생 속도 (값이 높을 수록 빨라짐)
+	float Animation_Chase_Speed		= 1.0f;		//애니메이션 재생 속도 (값이 높을 수록 빨라짐)
 protected:
 	///Idle 상태 변수들
-	float		IdleTime			= 0;		//현재 대기시간
+	float		IdleTime			= 0;		//현재 대기시간(건들면 안됨)
 	float		Idle_MaxTime		= 0;		//최대값과 최소값을 설정한 최종 대기시간
 	const int	Idle_MaxTime_Max	= 5;		//대기시간의 최대값
 	const int	Idle_MaxTime_Min	= 2;		//대기시간의 최소값
@@ -74,24 +87,35 @@ protected:
 
 protected:
 	///Hit 상태 변수
-	float HitTime				= 0.0f;			//공격을 맞았을때 시간 재는용
+	float HitTime				= 0.0f;			//공격을 맞았을때 시간 재는용(건들면 안됨)
 	float HitMaxTime			= 1.0f;			//공격을 맞았을때 최대 무적시간
 protected:
 	///Chase 상태 변수들
-	float ChaseTime				= 0.0f;			//추격하는 현재 시간
-	float ChaseEndTime			= 5.0f;			//추격을  중지하는 시간 
+	float ChaseTime				= 0.0f;			//추격하는 현재 시간(건들면 안됨)
+	float ChaseEndTime			= 10.0f;		//추격을  중지하는 시간 
 protected:
+	///사정거리
 	float AttackRange			= 2.5f;			//공격 거리
 	float ChaseRange			= 5.5f;			//추격 거리
 protected:
 	float	HP					= 100;			//현재 체력
 	float	Speed				= 0.75f;		//이동 속도
 	float	AttackTime			= 0;			//현재 공격 시간
-	int		PointNumber			= -1;			
-	const float IdleSpeed		= 0.75f;
-	const float ChaseSpeed		= 1.5f;
+	float	RotationSpeed		= 200;			//몬스터 회전하는 속도
+	int		PointNumber			= -1;			//몬스터 이동 포인터 인덱스
+	int		ComboCount			= 0;			//현재 콤보 카운터
+	int		ComboCountMax		= 5;			//현재 콤보 카운터 변환
+	float	IdleSpeed			= 0.75f;		//대기 상태의 이동 속도
+	float	ChaseSpeed			= 1.5f;			//추격 상태의 이동 속도
 private:
-	PhysRayCast* mRay = new PhysRayCast();
+	Vector3 NowLimLightColor	= { 1,0,0 };	//건들면 안됨
+	float	NowLimLightFactor	= 5.0f;			//건들면 안됨
+	float	NowLimLightWidth	= 0.9f;			//건들면 안됨
+	bool	NowUpdateColor		= false;		//건들면 안됨
+	MONSTER_COLOR	ComboColor  = MONSTER_COLOR::RED;
+private:
+	PhysRayCast* mRay;
+	MaterialPropertyBlock* MPB;
 };
 
 
