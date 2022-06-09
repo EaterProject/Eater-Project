@@ -3,6 +3,7 @@
 #include "EaterEngineAPI.h"
 #include "ClientTypeOption.h"
 
+
 //Component
 #include "Transform.h"
 #include "MeshFilter.h"
@@ -13,13 +14,7 @@
 
 MonsterComponent::MonsterComponent()
 {
-	mMeshFilter = nullptr;
-	mTransform	= nullptr;
-	mAnimation	= nullptr; 
-	mColider	= nullptr;
-	mPlayerTR	= nullptr;
 
-	mRay = new PhysRayCast();
 }
 
 MonsterComponent::~MonsterComponent()

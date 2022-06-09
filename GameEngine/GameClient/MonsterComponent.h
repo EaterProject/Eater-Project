@@ -31,12 +31,12 @@ public:
 	bool GetStopPoint(const Vector3& Pos);
 	void SetMovePoint(float x, float y, float z);
 protected:
-	MeshFilter*				mMeshFilter;
-	Transform*				mTransform;
-	AnimationController*	mAnimation;
-	Collider*				mColider;
-	Transform*				mPlayerTR;
-	Rigidbody*				mRigidbody;
+	MeshFilter*				mMeshFilter	= nullptr;
+	Transform*				mTransform	= nullptr;
+	AnimationController*	mAnimation	= nullptr;
+	Collider*				mColider	= nullptr;
+	Transform*				mPlayerTR	= nullptr;
+	Rigidbody*				mRigidbody	= nullptr;
 protected:
 	Vector3 SearchPoint[5];
 	Vector3 MovePoint;		//이동해야하는 지점
@@ -91,7 +91,7 @@ protected:
 	const float IdleSpeed		= 0.75f;
 	const float ChaseSpeed		= 1.5f;
 private:
-	PhysRayCast* mRay;
+	PhysRayCast* mRay = new PhysRayCast();
 };
 
 
