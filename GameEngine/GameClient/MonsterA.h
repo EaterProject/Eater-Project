@@ -9,6 +9,7 @@ public:
 	void Awake()	override;
 	void SetUp()	override;
 	void Update()	override;
+	void Debug()	override;
 private:
 };
 

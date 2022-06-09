@@ -3,22 +3,18 @@
 #include "EaterEngineAPI.h"
 #include "ClientTypeOption.h"
 
+
 //Component
 #include "Transform.h"
 #include "MeshFilter.h"
 #include "AnimationController.h"
 #include "Collider.h"
+#include "Rigidbody.h"
 #include "PhysData.h"
 
 MonsterComponent::MonsterComponent()
 {
-	mMeshFilter = nullptr;
-	mTransform	= nullptr;
-	mAnimation	= nullptr; 
-	mColider	= nullptr;
-	mPlayerTR	= nullptr;
 
-	mRay = new PhysRayCast();
 }
 
 MonsterComponent::~MonsterComponent()
@@ -32,13 +28,15 @@ void MonsterComponent::Awake()
 	mMeshFilter = gameobject->GetComponent<MeshFilter>();
 	mAnimation	= gameobject->GetComponent<AnimationController>();
 	mColider	= gameobject->GetComponent<Collider>();
+	mRigidbody  = gameobject->GetComponent<Rigidbody>();
 }
 
 void MonsterComponent::SetUp()
 {
 	//Collider설정
-	mColider->SetCenter(0, 0.5f, 0);
+	mColider->SetCenter(0, 0.25f, 0);
 	mColider->SetSphereCollider(0.25f);
+	mRigidbody->SetFreezeRotation(true, true, true);
 
 	mMeshFilter->SetModelName(ModelName);
 	mMeshFilter->SetAnimationName(AnimationName);
@@ -56,12 +54,16 @@ void MonsterComponent::SetUp()
 
 void MonsterComponent::Update()
 {
+	
+
 	switch (MonsterState)
 	{
 	case (int)MONSTER_STATE::IDLE:
+		PlayerDistanceCheck();
 		Idle();
 		break;
 	case (int)MONSTER_STATE::MOVE:
+		PlayerDistanceCheck();
 		Move();
 		break;
 	case (int)MONSTER_STATE::ATTACK:
@@ -77,17 +79,14 @@ void MonsterComponent::Update()
 		Dead();
 		break;
 	}
-
-	//땅체크 
-	GroundCheck();
 }
 
 void MonsterComponent::OnTriggerStay(GameObject* Obj)
 {
 	if (HitStart == false)
 	{
-		MonsterState = (int)MONSTER_STATE::HIT;
-		HitStart	 = true;
+		//MonsterState = (int)MONSTER_STATE::HIT;
+		//HitStart	 = true;
 	}
 }
 
@@ -101,24 +100,30 @@ void MonsterComponent::Move()
 		MoveStart = true;
 	}
 	
-	if (GetStopPoint(PointNumber) == false)
+	if (GetStopPoint(SearchPoint[PointNumber]) == false)
 	{
 		//목표지점의 도달하지 않았을때
 		mTransform->Slow_Y_Rotation(SearchPoint[PointNumber], 150, MonsterFront_Z);
-		mTransform->SetTranlate(DirPoint.x * GetDeltaTime(), 0, DirPoint.z *GetDeltaTime());
+		mRigidbody->SetVelocity(DirPoint.x, 0, DirPoint.z);
 	}
 	else
 	{
 		//목표지점 도달 후 상태 변화
+		mRigidbody->SetVelocity(0, 0, 0);
 		MonsterState	= (int)MONSTER_STATE::IDLE;
-		PointNumber		= -1;
 		MoveStart		= false;
 	}
 }
 
 void MonsterComponent::Attack()
 {
+	if (AttackStart == false)
+	{
+		mAnimation->Choice(Animation_Attack);
+		AttackStart = true;
+	}
 
+	AttackTime += GetDeltaTime();
 
 }
 
@@ -147,6 +152,7 @@ void MonsterComponent::Idle()
 	{
 		//대기시간이 지났다면 Move상태로 변경
 		Speed			= IdleSpeed;
+		mRigidbody->SetVelocity(0, 0, 0);
 		MonsterState	= (int)MONSTER_STATE::MOVE;
 		IdleStart		= false;
 		IdleTime		= 0;
@@ -162,9 +168,40 @@ void MonsterComponent::Dead()
 
 void MonsterComponent::Chase()
 {
+	if (ChaseStart == false)
+	{
+		mAnimation->Choice(Animation_Move);
+		ChaseStart = true;
+	}
 
-
-
+	ChaseTime += GetDeltaTime();
+	if (AttackRange > PlayerDistance)
+	{
+		//공격범위에 들어왔을경우 공격 상태로 변경
+		mRigidbody->SetVelocity(0, 0, 0);
+		MonsterState = (int)MONSTER_STATE::ATTACK;
+		ChaseStart	 = false;
+	}
+	else
+	{
+		//추격시간 계산
+		if (ChaseTime >= ChaseEndTime) 
+		{
+			//추격시간을 넘었다면 원래 상태로 돌아간다
+			SetMovePoint(SearchPoint[PointNumber].x, 0, SearchPoint[PointNumber].z);
+			mRigidbody->SetVelocity(0, 0, 0);
+			MonsterState = (int)MONSTER_STATE::MOVE;
+			ChaseStart = false;
+			ChaseTime = 0;
+		}
+		else
+		{
+			//계속 추격
+			SetMovePoint(mPlayerTR->Position.x, 0, mPlayerTR->Position.z);
+			mTransform->Slow_Y_Rotation(mPlayerTR->Position, 150, MonsterFront_Z);
+			mRigidbody->SetVelocity(DirPoint.x, 0, DirPoint.z);
+		}
+	}
 }
 
 void MonsterComponent::Hit()
@@ -189,8 +226,17 @@ void MonsterComponent::Hit()
 
 void MonsterComponent::Debug()
 {
-	DebugDrawCircle(ChaseRange, mTransform->Position, Vector3(0, 0, 0), Vector3(1, 0, 0));
-	DebugDrawCircle(AttackRange, mTransform->Position, Vector3(0, 0, 0), Vector3(0, 1, 0));
+	DebugDrawCircle(ChaseRange, mTransform->Position  + Vector3(0, 0.25f, 0), Vector3(0, 0, 0), Vector3(1, 0, 0));
+	DebugDrawCircle(AttackRange, mTransform->Position + Vector3(0, 0.25f, 0), Vector3(0, 0, 0), Vector3(0, 1, 0));
+}
+
+void MonsterComponent::PlayerDistanceCheck()
+{
+	 PlayerDistance = mTransform->GetDistance(mPlayerTR->Position);
+	 if (ChaseRange > PlayerDistance)
+	 {
+		 MonsterState = (int)MONSTER_STATE::CHASE;
+	 }
 }
 
 void MonsterComponent::SetSearchPoint(int Index, Vector3 Point)
@@ -200,22 +246,23 @@ void MonsterComponent::SetSearchPoint(int Index, Vector3 Point)
  
 void MonsterComponent::SetMovePoint(float x, float y, float z)
 {
-	DirPoint = (gameobject->GetTransform()->Position - Vector3(x, y, z)) * -1;
+	DirPoint = (Vector3(x, y, z) - mTransform->Position);
 	DirPoint.Normalize();
 	DirPoint *= Speed;
+
 	MovePoint.x = x;
 	MovePoint.y = 0;
 	MovePoint.z = z;
 	ReturnPoint = MovePoint;
 }
 
-bool MonsterComponent::GetStopPoint(int Index)
+bool MonsterComponent::GetStopPoint(const Vector3& Pos)
 {
 	Transform* mTransform = gameobject->GetTransform();
-	if (mTransform->Position.x > (SearchPoint[Index].x - 0.1f) &&
-		mTransform->Position.x < (SearchPoint[Index].x + 0.1f) &&
-		mTransform->Position.z > (SearchPoint[Index].z - 0.1f) &&
-		mTransform->Position.z < (SearchPoint[Index].z + 0.1f))
+	if (mTransform->Position.x > (Pos.x - 0.25f) &&
+		mTransform->Position.x < (Pos.x + 0.25f) &&
+		mTransform->Position.z > (Pos.z - 0.25f) &&
+		mTransform->Position.z < (Pos.z + 0.25f))
 	{
 		return true;
 
@@ -225,19 +272,3 @@ bool MonsterComponent::GetStopPoint(int Index)
 		return false;
 	}
 }
-
-void MonsterComponent::GroundCheck()
-{
-	//아래 방향으로 Ray를 사용하여 땅체크
-	Vector3 RayStartPoint	= mTransform->Position;
-	RayStartPoint.y			= mTransform->Position.y+0.1f;
-	mRay->Origin			= RayStartPoint;
-	mRay->Direction			= { 0,-1,0 };
-	mRay->MaxDistance		= 10;
-	if (RayCast(mRay) == true)
-	{
-		mTransform->Position.y = mRay->Hit.HitPoint.y;
-	}
-}
-
-

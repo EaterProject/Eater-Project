@@ -20,7 +20,6 @@ void MonsterB::SetUp()
 	/////////////////////////////////////////////
 	ModelName		= "MonsterB+";
 	AnimationName	= "MonsterB+";
-	MonsterFront_Z	= true;
 	/////////////////////////////////////////////
 	MonsterComponent::SetUp();
 }
@@ -28,6 +27,11 @@ void MonsterB::SetUp()
 void MonsterB::Update()
 {
 	MonsterComponent::Update();
+}
+
+void MonsterB::Debug()
+{
+	MonsterComponent::Debug();
 }
 
 void MonsterB::OnTriggerStay(GameObject* Obj)
