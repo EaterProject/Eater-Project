@@ -27,7 +27,8 @@ public:
 
 public:
 	void ConvertMeshData(MeshData* originData, RenderData* renderData) override;	// Mesh Data -> Render Data 변환..
-	void ConvertRenderData(MeshData* originData, RenderData* renderData) override;	// Mesh Data -> Render Data 변환..
+	void ConvertInstanceData(MeshData* originData, RenderData* renderData) override;	// Mesh Data -> Render Data 변환..
+	void ConvertUIData(MeshData* originData, RenderData* renderData) override;	// Mesh Data -> Render Data 변환..
 	
 	void ResourceUpdate() override;		// 현재 프레임에 생성 & 삽입 Resource Update..
 
@@ -51,6 +52,9 @@ public:
 	void DeleteAnimation(UINT index) override;						// 해당 Animation Resource 즉시 제거..
 	void DeleteUI(UINT index) override;								// 해당 UI Resource 즉시 제거..
 
+	void DeleteInstanceLayer(UINT index) override;					// 해당 Instance Layer 즉시 제거..
+	void DeleteUILayer(UINT index) override;						// 해당 UI Layer 즉시 제거..
+
 public:
 	size_t FindMaxInstanceCount() override;							// 모든 Layer 내부의 Instance 개수 중 제일 큰 개수 반환..
 
@@ -59,8 +63,9 @@ public:
 	MeshRenderBuffer* GetMesh(int index) override;					// Mesh Resource 고유 Index로 검색..
 	MaterialRenderBuffer* GetMaterial(int index) override;			// Material Resource 고유 Index로 검색..
 	AnimationRenderBuffer* GetAnimation(int index) override;		// Animation Resource 고유 Index로 검색..
-	InstanceRenderBuffer* GetInstance(int index) override;			// Instance Resource 고유 Index로 검색..
-	InstanceLayer* GetLayer(int index) override;					// Layer Resource 고유 Index로 검색..
+	InstanceRenderBuffer* GetInstance(int index) override;			// Instance Layer Resource 고유 Index로 검색..
+	InstanceLayer* GetInstanceLayer(int index) override;			// Instance Layer Resource 고유 Index로 검색..
+	UILayer* GetUILayer(int index) override;						// UI Layer Resource 고유 Index로 검색..
 
 private:
 	void ConvertPushResource();			// 현재 프레임에 생성된 Resource Update..
@@ -75,11 +80,12 @@ private:
 	template<typename Origin, typename Convert>
 	void ConvertResource(Origin* origin, Convert* convert);
 
-	void RegisterInstance(RenderData* renderData, MeshRenderBuffer* mesh, MaterialRenderBuffer* material, AnimationRenderBuffer* animation);		// Mesh & Material Resource 기준 Instance 검색 및 등록..
-	
-	void CheckEmptyInstance(MeshRenderBuffer* mesh);			// Mesh Resource 삭제시 관련된 Instance 삭제..
-	void CheckEmptyInstance(MaterialRenderBuffer* material);	// Material Resource 삭제시 관련된 Instance 삭제..
-	void CheckEmptyInstance(AnimationRenderBuffer* animation);	// Animation Resource 삭제시 관련된 Instance 삭제..
+	void RegisterInstanceLayer(RenderData* renderData, MeshRenderBuffer* mesh, MaterialRenderBuffer* material, AnimationRenderBuffer* animation);		// Mesh & Material Resource 기준 Instance 검색 및 등록..
+	void RegisterUILayer(RenderData* renderData, UIRenderBuffer* ui);
+
+	void DeleteResourceLayer(MeshRenderBuffer* mesh);			// Mesh Resource 삭제시 관련된 Layer 삭제..
+	void DeleteResourceLayer(MaterialRenderBuffer* material);	// Material Resource 삭제시 관련된 Layer 삭제..
+	void DeleteResourceLayer(AnimationRenderBuffer* animation);	// Animation Resource 삭제시 관련된 Layer 삭제..
 
 private:
 	std::queue<MeshBuffer*>			m_PushMeshList;							// Game Engine 측에서 현재 프레임에 생성한 Mesh Resource Queue..
@@ -94,12 +100,14 @@ private:
 	std::unordered_map<UINT, TerrainRenderBuffer*>		m_TerrainList;		// 현재 등록 되어있는 Terrain Resource..
 	std::unordered_map<UINT, UIRenderBuffer*>			m_UIList;			// 현재 등록 되어있는 UI Resource..
 	std::unordered_map<UINT, AnimationRenderBuffer*>	m_AnimationList;	// 현재 등록 되어있는 Animation Resource..
+	std::unordered_map<UINT, InstanceRenderBuffer*>		m_InstanceList;		// 현재 등록 되어있는 Instance Resource..
 
 	std::unordered_map<UINT, RenderData*> m_RenderList;				// 현재 등록 되어있는 모든 Render Data..
 
-	std::vector<std::pair<UINT, bool>> m_InstanceIndexList;			// Instance Index 관리를 위한 List..
-	std::unordered_map<UINT, InstanceRenderBuffer*> m_InstanceList;	// 현재 등록 되어있는 Instance Resource..
+	std::vector<std::pair<UINT, bool>> m_InstanceLayerIndexList;	// Instance Layer Index 관리를 위한 List..
+
 	std::unordered_map<UINT, InstanceLayer*> m_InstanceLayerList;	// Instance Resource를 공유하는 Mesh List Layer..
+	std::unordered_map<UINT, UILayer*> m_UILayerList;				// UI Layer Order에 따른 UI List Layer..
 };
 
 template<typename Origin, typename Convert>

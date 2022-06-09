@@ -76,6 +76,9 @@
     <Filter Include="소스 파일\Component\Animator">
       <UniqueIdentifier>{5d4d878e-6e04-41e7-a1e6-ee77e43803d7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Component\Rigidbody">
+      <UniqueIdentifier>{d2678508-d693-4487-b08e-f8610a35fc5f}</UniqueIdentifier>
+    </Filter>
     <Filter Include="소스 파일\Delegate">
       <UniqueIdentifier>{2acc9f63-4775-495f-ac9b-67423609cfca}</UniqueIdentifier>
     </Filter>
@@ -187,9 +190,6 @@
     <Filter Include="소스 파일\Manager\LoadManager\EATER\EaterParticle">
       <UniqueIdentifier>{e605382d-1908-4cb3-9486-19ab0093c004}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Component\ParticleSystem\Rigidbody">
-      <UniqueIdentifier>{d2678508-d693-4487-b08e-f8610a35fc5f}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -271,7 +271,7 @@
       <Filter>소스 파일\Component\ComponentBase</Filter>
     </ClInclude>
     <ClInclude Include="Export\Rigidbody.h">
-      <Filter>소스 파일\Component\ParticleSystem\Rigidbody</Filter>
+      <Filter>소스 파일\Component\Rigidbody</Filter>
     </ClInclude>
     <ClInclude Include="Export\ParticleSystem.h">
       <Filter>소스 파일\Component\ParticleSystem</Filter>
@@ -376,7 +376,7 @@
       <Filter>소스 파일\Manager\LoadManager\EATER\EaterParticle</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Library\inc\Utility.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>소스 파일\Data</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -447,7 +447,7 @@
       <Filter>소스 파일\Manager\PhysManager</Filter>
     </ClCompile>
     <ClCompile Include="Rigidbody.cpp">
-      <Filter>소스 파일\Component\ParticleSystem\Rigidbody</Filter>
+      <Filter>소스 파일\Component\Rigidbody</Filter>
     </ClCompile>
     <ClCompile Include="Terrain.cpp">
       <Filter>소스 파일\Component\Terrain</Filter>

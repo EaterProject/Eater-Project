@@ -15,6 +15,8 @@ cbuffer cbMaterial : register(b0)
     
     float gRoughnessFactor  : packoffset(c2.w);
     float gMetallicFactor   : packoffset(c3.x);
+    
+    uint gSkyLightIndex     : packoffset(c3.y);
 };
 
 cbuffer cbCamera : register(b1)
@@ -58,30 +60,35 @@ MeshPixelOut Deferred_PBR_PS(MeshPixelIn pin)
     
 #ifdef TERRAIN_MESH
     float4 mask = pin.MaskColor;
+    float2 tex;
     
     if (mask.r > 0.0f)
     {
-        albedo.rgb += gDiffuseLayer1.Sample(gSamWrapAnisotropic, pin.Tex).rgb * mask.r;
-        normalColor += gNormalLayer1.Sample(gSamWrapAnisotropic, pin.Tex).rgb * mask.r;
-        rm += gORMLayer1.Sample(gSamWrapLinear, pin.Tex).gb * mask.r;
+        tex = pin.Tex * 1.5f;
+        albedo.rgb += gDiffuseLayer1.Sample(gSamWrapAnisotropic, tex).rgb * mask.r;
+        normalColor += gNormalLayer1.Sample(gSamWrapAnisotropic, tex).rgb * mask.r;
+        rm += gORMLayer1.Sample(gSamWrapLinear, tex).gb * mask.r;
     }
     if (mask.g > 0.0f)
     {
-        albedo.rgb += gDiffuseLayer2.Sample(gSamWrapAnisotropic, pin.Tex).rgb * mask.g;
-        normalColor += gNormalLayer2.Sample(gSamWrapAnisotropic, pin.Tex).rgb * mask.g;
-        rm += gORMLayer2.Sample(gSamWrapLinear, pin.Tex).gb * mask.g;
+        tex = pin.Tex * 5.0f;
+        albedo.rgb += gDiffuseLayer2.Sample(gSamWrapAnisotropic, tex).rgb * mask.g;
+        normalColor += gNormalLayer2.Sample(gSamWrapAnisotropic, tex).rgb * mask.g;
+        rm += gORMLayer2.Sample(gSamWrapLinear, tex).gb * mask.g;
     }
     if (mask.b > 0.0f)
     {
-        albedo.rgb += gDiffuseLayer3.Sample(gSamWrapAnisotropic, pin.Tex).rgb * mask.b;
-        normalColor += gNormalLayer3.Sample(gSamWrapAnisotropic, pin.Tex).rgb * mask.b;
-        rm += gORMLayer3.Sample(gSamWrapLinear, pin.Tex).gb * mask.b;
+        tex = pin.Tex * 6.0f;
+        albedo.rgb += gDiffuseLayer3.Sample(gSamWrapAnisotropic, tex).rgb * mask.b;
+        normalColor += gNormalLayer3.Sample(gSamWrapAnisotropic, tex).rgb * mask.b;
+        rm += gORMLayer3.Sample(gSamWrapLinear, tex).gb * mask.b;
     }
     if (mask.a > 0.0f)
     {
-        albedo.rgb += gDiffuseLayer4.Sample(gSamWrapAnisotropic, pin.Tex).rgb * mask.a;
-        normalColor += gNormalLayer4.Sample(gSamWrapAnisotropic, pin.Tex).rgb * mask.a;
-        rm += gORMLayer4.Sample(gSamWrapLinear, pin.Tex).gb * mask.a;
+        tex = pin.Tex * 3.0f;
+        albedo.rgb += gDiffuseLayer4.Sample(gSamWrapAnisotropic, tex).rgb * mask.a;
+        normalColor += gNormalLayer4.Sample(gSamWrapAnisotropic, tex).rgb * mask.a;
+        rm += gORMLayer4.Sample(gSamWrapLinear, tex).gb * mask.a;
     }
     
     normalW = UnpackNormal(normalColor, pin.NormalW, pin.TangentW);
@@ -123,7 +130,7 @@ MeshPixelOut Deferred_PBR_PS(MeshPixelIn pin)
     rm.y += gMetallicFactor;
     
     pout.Albedo = albedo;
-    pout.Emissive = float4(emissive, 1.0f);
+    pout.Emissive = float4(emissive, gSkyLightIndex);
     pout.Normal = float4(normalW, saturate(rm.x));
     pout.Position = float4(pin.PosW, saturate(rm.y));
     pout.NormalDepth = float4(normalV, pin.PosV.z);

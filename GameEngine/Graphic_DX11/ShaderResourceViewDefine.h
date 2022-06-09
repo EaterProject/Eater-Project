@@ -73,8 +73,10 @@ SHADER_RESOURCE_VIEW(gBackGround)
 // IBL ShaderResourceView Resource
 ///////////////////////////////////////////////////////////////////////////////////////////
 
-SHADER_RESOURCE_VIEW(gIBLIrradiance)
-SHADER_RESOURCE_VIEW(gIBLPrefilter)
+SHADER_RESOURCE_VIEW(gIrradiance_0)
+SHADER_RESOURCE_VIEW(gIrradiance_1)
+SHADER_RESOURCE_VIEW(gPrefilter_0)
+SHADER_RESOURCE_VIEW(gPrefilter_1)
 SHADER_RESOURCE_VIEW(gBRDFlut)
 
 ///////////////////////////////////////////////////////////////////////////////////////////

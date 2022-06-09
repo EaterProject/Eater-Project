@@ -14,7 +14,6 @@ IGraphicResourceManager* RenderPassBase::g_Resource = nullptr;
 IShaderManager* RenderPassBase::g_Shader = nullptr;
 GlobalData* RenderPassBase::g_GlobalData = nullptr;
 RenderOption* RenderPassBase::g_RenderOption = nullptr;
-RenderSceneData* RenderPassBase::g_RenderSceneData = nullptr;
 RenderData* RenderPassBase::g_Picking = nullptr;
 
 void RenderPassBase::PushShader(const char* shaderName)
@@ -35,8 +34,6 @@ void RenderPassBase::Initialize(Microsoft::WRL::ComPtr<ID3D11Device> device, Mic
 	g_Shader = shaderManager;
 
 	g_RenderOption = renderOption;
-
-	g_RenderSceneData = new RenderSceneData();
 }
 
 void RenderPassBase::GraphicReset()

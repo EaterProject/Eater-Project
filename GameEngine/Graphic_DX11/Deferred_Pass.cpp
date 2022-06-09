@@ -292,6 +292,7 @@ void Deferred_Pass::RenderUpdate(const InstanceRenderBuffer* instance, const std
 			materialBuf.gEmissiveColor = matSub->EmissiveColor * matSub->EmissiveFactor;
 			materialBuf.gLimLightColor = matSub->LimLightColor * matSub->LimLightFactor;
 			materialBuf.gLimLightWidth = matSub->LimLightWidth;
+			materialBuf.gSkyLightIndex = matSub->SkyLightIndex;
 
 			CB_Camera cameraBuf;
 			cameraBuf.gEyePos = cam->CamPos;
@@ -412,6 +413,7 @@ void Deferred_Pass::RenderUpdate(const InstanceRenderBuffer* instance, const std
 			materialBuf.gEmissiveColor = matSub->EmissiveColor * matSub->EmissiveFactor;
 			materialBuf.gLimLightColor = matSub->LimLightColor * matSub->LimLightFactor;
 			materialBuf.gLimLightWidth = matSub->LimLightWidth;
+			materialBuf.gSkyLightIndex = matSub->SkyLightIndex;
 
 			CB_Camera cameraBuf;
 			cameraBuf.gEyePos = cam->CamPos;
@@ -520,6 +522,7 @@ void Deferred_Pass::RenderUpdate(const InstanceRenderBuffer* instance, const Ren
 		materialBuf.gEmissiveColor = matSub->EmissiveColor * matSub->EmissiveFactor;
 		materialBuf.gLimLightColor = matSub->LimLightColor * matSub->LimLightFactor;
 		materialBuf.gLimLightWidth = matSub->LimLightWidth;
+		materialBuf.gSkyLightIndex = matSub->SkyLightIndex;
 
 		CB_Camera cameraBuf;
 		cameraBuf.gEyePos = cam->CamPos;
@@ -637,6 +640,7 @@ void Deferred_Pass::RenderUpdate(const InstanceRenderBuffer* instance, const Ren
 		materialBuf.gEmissiveColor = matSub->EmissiveColor * matSub->EmissiveFactor;
 		materialBuf.gLimLightColor = matSub->LimLightColor * matSub->LimLightFactor;
 		materialBuf.gLimLightWidth = matSub->LimLightWidth;
+		materialBuf.gSkyLightIndex = matSub->SkyLightIndex;
 
 		CB_Camera cameraBuf;
 		cameraBuf.gEyePos = cam->CamPos;

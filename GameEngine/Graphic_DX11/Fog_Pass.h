@@ -21,6 +21,9 @@ private:
 	void SetShaderConstantBuffer();
 
 private:
+	float m_FogTimer;
+
+private:
 	DrawBuffer* m_Screen_DB;
 	
 	VertexShader* m_Screen_VS;

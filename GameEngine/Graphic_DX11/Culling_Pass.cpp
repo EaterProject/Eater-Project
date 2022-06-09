@@ -314,17 +314,17 @@ void Culling_Pass::FrustumCulling()
 	}
 }
 
-void Culling_Pass::PushCullingMesh(RenderData* meshData)
+void Culling_Pass::PushCullingMesh(RenderData* renderData)
 {
-	CullingRenderMeshList.push_back(meshData);
+	CullingRenderMeshList.push_back(renderData);
 }
 
-void Culling_Pass::DeleteCullingMesh(RenderData* meshData)
+void Culling_Pass::PopCullingMesh(RenderData* renderData)
 {
 	// 해당 Render Data와 동일한 Mesh 제거..
 	for (int index = 0; index < CullingRenderMeshList.size(); index++)
 	{
-		if (CullingRenderMeshList[index] == meshData)
+		if (CullingRenderMeshList[index] == renderData)
 		{
 			CullingRenderMeshList.erase(std::next(CullingRenderMeshList.begin(), index));
 			break;

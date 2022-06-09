@@ -164,9 +164,9 @@ void SetSkyCube(std::string mPath)
 	gGameEngine->SetSkyCube(mPath);
 }
 
-void SetSkyLight(std::string mPath)
+void SetSkyLight(std::string mPath, UINT index)
 {
-	gGameEngine->SetSkyLight(mPath);
+	gGameEngine->SetSkyLight(mPath, index);
 }
 
 ModelData* GetLoadMeshData(std::string mPath)

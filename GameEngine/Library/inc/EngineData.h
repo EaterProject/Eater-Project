@@ -107,7 +107,7 @@ public:
 	bool OutLine = false;				// Out Line
 	bool LimLight = false;				// Lim Light
 
-	int SkyLightIndex = 0;				// SkyLight Index
+	UINT SkyLightIndex = 0;				// SkyLight Index
 
 	Vector3 AddColor = Vector3(0.0f, 0.0f, 0.0f);	// Add Color
 
@@ -211,10 +211,11 @@ public:
 class UIProperty
 {
 public:
-	Vector2 TexScale;
-	Vector2 TexPos;
+	
+	Vector2 TexScale;		// UI Texture Offset Scale
+	Vector2 TexPos;			// UI Texture Offset Position
 
-	Vector4 ImageColor;
+	Vector4 ImageColor;		// UI Color
 
 	Matrix World;
 };
@@ -223,11 +224,12 @@ public:
 class UIBuffer
 {
 public:
-	UINT BufferIndex = 0;		// Mesh Buffer Index
+	UINT BufferIndex = 0;				// UI Buffer Index
+	UINT BufferLayer = 0;				// UI Buffer Layer Order
 
-	TextureBuffer* Albedo = nullptr;			// DiffuseMap Texture
+	TextureBuffer* Albedo = nullptr;	// DiffuseMap Texture
 
-	UIProperty* UI_Property = nullptr;			// UI Property
+	UIProperty* UI_Property = nullptr;	// UI Property
 };
 
 // Particle Data

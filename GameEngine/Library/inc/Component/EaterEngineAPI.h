@@ -65,7 +65,7 @@ extern "C" EATER_ENGINEDLL void SaveConvertSkyCubeMap(std::string mPath, std::st
 
 ///맵 설정
 extern "C" EATER_ENGINEDLL void SetSkyCube(std::string mPath);
-extern "C" EATER_ENGINEDLL void SetSkyLight(std::string mPath);
+extern "C" EATER_ENGINEDLL void SetSkyLight(std::string mPath, UINT index);
 extern "C" EATER_ENGINEDLL int GetLoadMeshCount();		//로드된 메쉬 카운터
 extern "C" EATER_ENGINEDLL int GetLoadTextureCount();	//로드된 텍스쳐 카운터
 extern "C" EATER_ENGINEDLL int GetLoadAnimationCount();	//로드된 애니메이션 카운터

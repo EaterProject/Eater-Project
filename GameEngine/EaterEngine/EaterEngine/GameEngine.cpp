@@ -311,6 +311,7 @@ GameObject* GameEngine::InstanceParticle(std::string ObjName, std::string FileNa
 			break;
 		}
 
+		mParticle->SetStrength(Data->Strength);
 		mParticle->SetMaxParticles(Data->MaxParticle);
 		mParticle->SetDelayTime(Data->DelayTime);
 		mParticle->SetRateOverTime(Data->RateOverTime);
@@ -507,11 +508,11 @@ void GameEngine::SetSkyCube(std::string& Path)
 	mGraphicManager->SetSkyCube(environment);
 }
 
-void GameEngine::SetSkyLight(std::string& Path)
+void GameEngine::SetSkyLight(std::string& Path, UINT index)
 {
 	SkyLightBuffer* skyLight = mLoadManager->GetSkyLight(Path);
 
-	mGraphicManager->SetSkyLight(skyLight);
+	mGraphicManager->SetSkyLight(skyLight, index);
 }
 
 void GameEngine::AddOccluder(std::string mMeshName)

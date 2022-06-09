@@ -50,7 +50,7 @@ public:
 
 public:
 	virtual GRAPHIC_DX11_DLL void SetSkyCube(TextureBuffer* resource) abstract;
-	virtual GRAPHIC_DX11_DLL void SetSkyLight(SkyLightBuffer* resource) abstract;
+	virtual GRAPHIC_DX11_DLL void SetSkyLight(SkyLightBuffer* resource, UINT index) abstract;
 
 public:
 	/// Render Mesh Data & Rendering Function..

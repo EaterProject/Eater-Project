@@ -82,6 +82,6 @@ public:
 	afx_msg void OnCustom_LifeColor_Max_Button();
 	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
-	afx_msg void OnLifeScaleOption();
-	afx_msg void OnLifeColorOption();
+	afx_msg void OnLifeColor_Option();
+	afx_msg void OnLifeScale_Option();
 };

@@ -43,7 +43,7 @@ void E_ParticleManager::CreateEaterFile(GameObject* Obj)
 	ParticleSystem* mParticleSystem = Obj->GetComponent<ParticleSystem>();
 	FM_PARTICLE* Data = GET_FORMAT_PARTICLE();
 	Data->Particle_Render_Type			= (int)mParticleSystem->GetRenderType();
-	Data->Particle_LifeTime_Scale_Type	= (int)mParticleSystem->GetRenderType();
+	Data->Particle_LifeTime_Scale_Type	= (int)mParticleSystem->GetLifeTimeScaleOption();
 	Data->Particle_LifeTime_Color_Type	= (int)mParticleSystem->GetLifeTimeColorOption();
 
 	Data->TextureName = mParticleSystem->GetTextureName();
