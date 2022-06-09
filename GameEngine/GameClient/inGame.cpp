@@ -8,6 +8,9 @@
 #include "RectTransform.h"
 #include "Camera.h"
 #include "EngineData.h"
+#include "RectTransform.h"
+#include "Image.h"
+#include "Button.h"
 
 void InGame::Awake()
 {
@@ -139,7 +142,15 @@ void InGame::Awake()
 	//ui_rectTR->SetImagePivot(RECT_PIVOT::PIVOT_LEFT_BOTTOM);
 	//ui_rectTR->AddPosition(550.0f, -50.0f);
 	//ui_rectTR->SetScale(0.5f, 0.5f);
+	
 
+	GameObject* Test_Button = InstanceUI("Test_Button");
+	RectTransform* tr = Test_Button->GetComponent<RectTransform>();
+	tr->SetImagePivot(RECT_PIVOT::PIVOT_MIDDLE_CENTER);
+	tr->SetScale(0.5f, 0.5f);
+	Image* img = Test_Button->AddComponent<Image>();
+	img->SetTexture("Loading_Logo");
+	Test_Button->AddComponent<Button>();
 
 	DebugCam = GetDebugCamera();
 	MainCame = GetMainCamera();

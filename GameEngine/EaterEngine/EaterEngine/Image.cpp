@@ -82,6 +82,11 @@ void Image::SetTexture()
 	}
 }
 
+void Image::SetImageColor(DirectX::SimpleMath::Vector3 image_color)
+{
+	m_UI->UI_Property->ImageColor = Vector4(image_color.x, image_color.y, image_color.z, 1.0f);
+}
+
 void Image::SetImageColor(DirectX::SimpleMath::Vector4 image_color)
 {
 	m_UI->UI_Property->ImageColor = image_color;
@@ -89,18 +94,19 @@ void Image::SetImageColor(DirectX::SimpleMath::Vector4 image_color)
 
 void Image::SetImageColor(float r, float g, float b)
 {
-	m_UI->UI_Property->ImageColor.x = r / 255.0f;
-	m_UI->UI_Property->ImageColor.y = g / 255.0f;
-	m_UI->UI_Property->ImageColor.z = b / 255.0f;
+	m_UI->UI_Property->ImageColor.x = r;
+	m_UI->UI_Property->ImageColor.y = g;
+	m_UI->UI_Property->ImageColor.z = b;
 }
 
 void Image::SetImageColor(float r, float g, float b, float a)
 {
-	m_UI->UI_Property->ImageColor.x = r / 255.0f;
-	m_UI->UI_Property->ImageColor.y = g / 255.0f;
-	m_UI->UI_Property->ImageColor.z = b / 255.0f;
-	m_UI->UI_Property->ImageColor.w = a / 255.0f;
+	m_UI->UI_Property->ImageColor.x = r;
+	m_UI->UI_Property->ImageColor.y = g;
+	m_UI->UI_Property->ImageColor.z = b;
+	m_UI->UI_Property->ImageColor.w = a;
 }
+
 
 void Image::SetLayer(UINT order)
 {

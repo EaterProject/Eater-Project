@@ -155,9 +155,6 @@ void GameEngine::Update()
 
 	//컨퍼넌트 업데이트 끝
 
-	// 현재 랜더링 옵션 설정..
-	RenderOptionCheck();
-
 	//랜더큐 넘겨줌
 	EnterCriticalSection(&g_CS);
 	mGraphicManager->Render();
@@ -505,6 +502,8 @@ void GameEngine::SetSkyCube(std::string& Path)
 {
 	TextureBuffer* environment = mLoadManager->GetTexture(Path);
 
+	if (environment == nullptr) return;
+
 	mGraphicManager->SetSkyCube(environment);
 }
 
@@ -512,12 +511,19 @@ void GameEngine::SetSkyLight(std::string& Path, UINT index)
 {
 	SkyLightBuffer* skyLight = mLoadManager->GetSkyLight(Path);
 
+	if (skyLight == nullptr) return;
+
+	if (skyLight->Prefilter == nullptr) return;
+	if (skyLight->Irradiance == nullptr) return;
+
 	mGraphicManager->SetSkyLight(skyLight, index);
 }
 
 void GameEngine::AddOccluder(std::string mMeshName)
 {
 	MeshBuffer* mesh = mLoadManager->GetMeshBuffer(mMeshName);
+
+	if (mesh == nullptr) return;
 
 	mGraphicManager->AddOccluder(mesh);
 }
@@ -695,63 +701,4 @@ void GameEngine::CreateObject()
 {
 	GameObject* light = Instance();
 	light->AddComponent<Light>()->SetType(LIGHT_TYPE::DIRECTION_LIGHT);
-}
-
-void GameEngine::RenderOptionCheck()
-{
-	bool change = false;
-
-	if (mKeyManager->GetKeyUp(VK_F1))
-	{
-		// Debug On/Off
-		mRenderOption->DebugOption ^= DEBUG_OPTION::DEBUG_MODE;
-		change = true;
-	}
-	if (mKeyManager->GetKeyUp(VK_F2))
-	{
-		// Shadow On/Off
-		mRenderOption->DebugOption ^= DEBUG_OPTION::DEBUG_RENDERTARGET;
-		change = true;
-	}
-	if (mKeyManager->GetKeyUp(VK_F3))
-	{
-		// SSAO On/Off
-		mRenderOption->RenderingOption ^= RENDER_OPTION::RENDER_SSAO;
-		change = true;
-	}
-	if (mKeyManager->GetKeyUp(VK_F4))
-	{
-		// IBL On/Off
-		mRenderOption->RenderingOption ^= RENDER_OPTION::RENDER_IBL;
-		change = true;
-	}
-	if (mKeyManager->GetKeyUp(VK_F5))
-	{
-		// Fog On/Off
-		mRenderOption->RenderingOption ^= RENDER_OPTION::RENDER_FOG;
-		change = true;
-	}
-	if (mKeyManager->GetKeyUp(VK_F6))
-	{
-		// Bloom On/Off
-		mRenderOption->PostProcessOption ^= POSTPROCESS_OPTION::RENDER_BLOOM;
-		change = true;
-	}
-	if (mKeyManager->GetKeyUp(VK_F7))
-	{
-		// HDR On/Off
-		mRenderOption->PostProcessOption ^= POSTPROCESS_OPTION::RENDER_HDR;
-		change = true;
-	}
-	if (mKeyManager->GetKeyUp(VK_F8))
-	{
-		// FXAA On/Off
-		mRenderOption->PostProcessOption ^= POSTPROCESS_OPTION::RENDER_FXAA;
-		change = true;
-	}
-
-	if (change)
-	{
-		mGraphicManager->RenderSetting();
-	}
 }

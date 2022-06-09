@@ -148,7 +148,7 @@ void CTAP_Light::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 		float G =(float)Color_G_Slider.GetPos();
 		float B =(float)Color_B_Slider.GetPos();
 
-		mLight->SetColor(R/255, G / 255, B / 255);
+		mLight->SetColor(R / 255.0f, G / 255.0f, B / 255.0f);
 	
 		Color_R.SetWindowTextW(ChangeToCString(R));
 		Color_G.SetWindowTextW(ChangeToCString(G));
@@ -160,7 +160,7 @@ void CTAP_Light::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 		float G = (float)Color_G_Slider.GetPos();
 		float B = (float)Color_B_Slider.GetPos();
 
-		mLight->SetColor(R / 255, G / 255, B / 255);
+		mLight->SetColor(R / 255.0f, G / 255.0f, B / 255.0f);
 
 		Color_R.SetWindowTextW(ChangeToCString(R));
 		Color_G.SetWindowTextW(ChangeToCString(G));
@@ -172,7 +172,7 @@ void CTAP_Light::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 		float G = (float)Color_G_Slider.GetPos();
 		float B = (float)Color_B_Slider.GetPos();
 
-		mLight->SetColor(R / 255, G / 255, B / 255);
+		mLight->SetColor(R / 255.0f, G / 255.0f, B / 255.0f);
 
 		Color_R.SetWindowTextW(ChangeToCString(R));
 		Color_G.SetWindowTextW(ChangeToCString(G));
