@@ -27,6 +27,12 @@ void Button::Start()
 
 void Button::Update()
 {
+	// 버튼 위에 있을때
+	// 버튼 위에 있다가 나갔을때
+	// 버튼 누르는 중 일때
+	// 버튼 눌렀을때
+	// 버튼 뗏을때
+
 	const RectPoint& rect_point = m_Transform->GetRectPoint();
 	const LPPOINT& mouse_point = mKeyInputManger->GetMousePos();
 

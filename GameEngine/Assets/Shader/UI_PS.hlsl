@@ -10,5 +10,5 @@ cbuffer cbUIOption
 
 float4 UI_PS(UIPixelIn pin) : SV_TARGET
 {
-    return gDiffuseMap.Sample(gSamBorderLinear, pin.Tex);
+    return gDiffuseMap.Sample(gSamBorderLinear, pin.Tex) * gColor;
 }

@@ -108,7 +108,7 @@ public:
 public:
 	///텍스쳐 설정 관련
 	void SetSkyCube(std::string& Path);
-	void SetSkyLight(std::string& Path);
+	void SetSkyLight(std::string& Path, UINT index);
 
 	///충돌체크 관련
 	void AddOccluder(std::string mMeshName);

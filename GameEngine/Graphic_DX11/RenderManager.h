@@ -22,6 +22,7 @@ class Debug_Pass;
 
 class RenderData;
 class InstanceLayer;
+class UILayer;
 
 class RenderManager : public IRenderManager
 {
@@ -42,7 +43,7 @@ public:
 
 public:
 	void SetSkyCube(TextureBuffer* resource) override;
-	void SetSkyLight(SkyLightBuffer* resource) override;
+	void SetSkyLight(SkyLightBuffer* resource, UINT index) override;
 
 public:
 	void PushInstance(MeshData* instance) override;
@@ -104,10 +105,12 @@ private:
 	void DeleteUIRenderData(MeshData* meshData);				// UI Mesh Render Data 제거..
 	void DeleteUnRenderData(MeshData* meshData);				// Un Render Data 제거..
 
-	void CheckInstanceLayer(std::vector<InstanceLayer*>& layerList);						// 비어있는 Insatnce Layer 검사 및 제거..
-	void FindInstanceLayer(std::vector<InstanceLayer*>& layerList, InstanceLayer* layer);	// 해당 Instance Layer 검색 및 추가..
+	template<typename Layer>
+	void CheckEmptyLayer(std::vector<Layer*>& layerList);				// 비어있는 Layer 검사 및 제거..
+	
+	template<typename Layer>
+	void FindLayer(std::vector<Layer*>& layerList, Layer* layer);	// 해당 Layer 검색 및 추가..
 
-	bool SortLayer(InstanceLayer* layer1, InstanceLayer* layer2);
 	bool SortDistance(RenderData* obj1, RenderData* obj2);
 
 private:
@@ -121,7 +124,7 @@ private:
 
 	std::vector<InstanceLayer*> m_OpacityMeshList;
 	std::vector<InstanceLayer*> m_TransparencyMeshList;
-	std::vector<RenderData*> m_UIRenderMeshList;
+	std::vector<UILayer*> m_UIRenderMeshList;
 	std::vector<RenderData*> m_UnRenderMeshList;
 
 	std::vector<RenderPassBase*> m_RenderPassList;
@@ -133,6 +136,7 @@ private:
 	Eater::Delegate<> PreUpdateFunction;
 
 	InstanceLayer* m_InstanceLayer;
+	UILayer* m_UILayer;
 	RenderData* m_RenderData;
 
 	IRenderDataConverter* m_Converter;
@@ -157,3 +161,12 @@ private:
 	Combine_Pass*		m_Combine;
 	Debug_Pass*			m_Debug;
 };
+
+template<typename Layer>
+inline void RenderManager::FindLayer(std::vector<Layer*>& layerList, Layer* layer) {}
+
+template<>
+inline void RenderManager::FindLayer(std::vector<InstanceLayer*>& layerList, InstanceLayer* layer);
+
+template<>
+inline void RenderManager::FindLayer(std::vector<UILayer*>& layerList, UILayer* layer);

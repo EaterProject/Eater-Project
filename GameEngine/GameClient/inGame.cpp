@@ -29,7 +29,7 @@ void InGame::Awake()
 	BakeSkyLightMap("SkyLight_HDRI", false);
 
 	//SetSkyLight("Day");
-	SetSkyLight("SkyLight_HDRI");
+	SetSkyLight("SkyLight_HDRI", 0);
 
 	//SetEnvironment("Day");
 	SetSkyCube("SkyCube_HDRI");

@@ -8,7 +8,6 @@ interface IGraphicResourceManager;
 class ShaderBase;
 
 class RenderOption;
-class RenderSceneData;
 
 class GlobalData;
 class RenderData;
@@ -72,7 +71,6 @@ protected:
 	static GlobalData* g_GlobalData;
 
 	static RenderOption* g_RenderOption;
-	static RenderSceneData* g_RenderSceneData;
 
 	static RenderData* g_Picking;
 

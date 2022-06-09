@@ -160,7 +160,7 @@ void GraphicEngineManager::SetSkyCube(TextureBuffer* environment)
 	GEngine->SetSkyCube(environment);
 }
 
-void GraphicEngineManager::SetSkyLight(SkyLightBuffer* skyLight)
+void GraphicEngineManager::SetSkyLight(SkyLightBuffer* skyLight, UINT index)
 {
-	GEngine->SetSkyLight(skyLight);
+	GEngine->SetSkyLight(skyLight, index);
 }

@@ -60,7 +60,7 @@ void TestScene::Awake()
 
 	//CreateParticle(0,0,0);
 	//SetSkyLight("Day");
-	SetSkyLight("SkyLight_HDRI");
+	SetSkyLight("SkyLight_HDRI", 0);
 	//SetSkyCube("Day");
 	SetSkyCube("SkyCube_HDRI");
 

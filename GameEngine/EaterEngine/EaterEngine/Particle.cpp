@@ -86,9 +86,9 @@ void Particle::Update()
 			{
 				m_AniPrevFrame = 0;
 			}
-			if (m_AniNextFrame >= m_AniTotalFrame)
+			if (m_AniNextFrame > m_AniTotalFrame)
 			{
-				m_AniNextFrame = m_AniTotalFrame - 1;
+				m_AniNextFrame = m_AniTotalFrame;
 				m_AniPrevFrame = m_AniTotalFrame - 1;
 			}
 

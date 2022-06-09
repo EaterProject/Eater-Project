@@ -375,6 +375,9 @@
     <ClInclude Include="Eater_LoadParticle.h">
       <Filter>소스 파일\Manager\LoadManager\EATER\EaterParticle</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Library\inc\Utility.h">
+      <Filter>소스 파일\Data</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">

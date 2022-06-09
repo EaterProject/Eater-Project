@@ -34,7 +34,6 @@ struct CB_StaticMesh : public cbStaticMesh
 	DirectX::SimpleMath::Matrix gInvWorld;
 	DirectX::SimpleMath::Matrix gView;
 	DirectX::SimpleMath::Matrix gProj;
-
 	DirectX::SimpleMath::Vector2 gTexScale;
 	DirectX::SimpleMath::Vector2 gTexPos;
 };
@@ -129,6 +128,8 @@ struct CB_Material : public cbMaterial
 
 	float gRoughnessFactor = 0.0f;
 	float gMetallicFactor = 0.0f;
+
+	UINT gSkyLightIndex = 0;
 };
 
 SHADER_CONSTANT_BUFFER(cbCamera)

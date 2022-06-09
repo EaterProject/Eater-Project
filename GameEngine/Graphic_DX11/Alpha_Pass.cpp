@@ -164,6 +164,7 @@ void Alpha_Pass::RenderUpdate(const InstanceRenderBuffer* instance, const Render
 		materialBuf.gEmissiveColor = matSub->EmissiveColor * matSub->EmissiveFactor;
 		materialBuf.gLimLightColor = matSub->LimLightColor * matSub->LimLightFactor;
 		materialBuf.gLimLightWidth = matSub->LimLightWidth;
+		materialBuf.gSkyLightIndex = matSub->SkyLightIndex;
 
 		CameraData* cam = g_GlobalData->MainCamera_Data;
 
@@ -367,6 +368,7 @@ void Alpha_Pass::RenderUpdate(const InstanceRenderBuffer* instance, const std::v
 			materialBuf.gEmissiveColor = matSub->EmissiveColor * matSub->EmissiveFactor;
 			materialBuf.gLimLightColor = matSub->LimLightColor * matSub->LimLightFactor;
 			materialBuf.gLimLightWidth = matSub->LimLightWidth;
+			materialBuf.gSkyLightIndex = matSub->SkyLightIndex;
 
 			CameraData* cam = g_GlobalData->MainCamera_Data;
 

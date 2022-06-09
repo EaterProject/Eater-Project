@@ -484,7 +484,7 @@ void BakingFactory::SaveConvertCubeMap(TextureBuffer* resource, std::string Save
 {
 	ID3D11ShaderResourceView* srv = (ID3D11ShaderResourceView*)resource->pTextureBuf;
 
-	if (SaveName == "")
+	if (SaveName.empty())
 	{
 		g_Graphic->SaveTextureDDS(srv, resource->Name.c_str());
 	}

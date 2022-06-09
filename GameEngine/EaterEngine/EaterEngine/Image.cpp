@@ -11,6 +11,7 @@ Image::Image()
 {
 	m_UI = new UIBuffer();
 	m_UI->UI_Property = new UIProperty();
+	m_UI->UI_Property->ImageColor = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
 
 	UIManager::SetIndex(&m_UI->BufferIndex);
 }
@@ -99,6 +100,11 @@ void Image::SetImageColor(float r, float g, float b, float a)
 	m_UI->UI_Property->ImageColor.y = g / 255.0f;
 	m_UI->UI_Property->ImageColor.z = b / 255.0f;
 	m_UI->UI_Property->ImageColor.w = a / 255.0f;
+}
+
+void Image::SetLayer(UINT order)
+{
+	m_UI->BufferLayer = order;
 }
 
 DirectX::SimpleMath::Vector2 Image::GetImageSize()

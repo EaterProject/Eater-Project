@@ -46,6 +46,10 @@ public:
 	CEdit SkyLight_Angle_Edit;
 	CButton SkyLight_HDRI_Check;
 
+	CEdit SkyCube_Map_Edit;
+	CEdit SkyLight_Map_Edit;
+
+
 	std::string SkyCubeName;
 	float SkyCubeAngle;
 	float SkyCubeThreshold;
@@ -56,12 +60,13 @@ public:
 	float SkyLightThreshold;
 	bool SkyLightHDRI;
 
+	CString SkyCube_SaveName_Edit;
+	CString SkyLight_SaveName_Edit;
+	
 	afx_msg void OnSkyCubeHDRI();
 	afx_msg void OnSkyCubeBakeButton();
 	afx_msg void OnSkyLightBakeButton();
 	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 	virtual BOOL OnInitDialog();
 	afx_msg void OnSkyLightHDRI();
-	CEdit SkyCube_Map_Edit;
-	CEdit SkyLight_Map_Edit;
 };

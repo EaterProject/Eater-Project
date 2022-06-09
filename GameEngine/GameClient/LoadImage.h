@@ -19,10 +19,12 @@ private:
 	Image* Loading_1_Image;
 	Image* Loading_2_Image;
 	Image* Text_Origin_Image;
-	Image* Text_Blur_Image;
 
 	RectTransform* Loading_RectTR_2;
 
 	float Angle;
+
+	float Alpha;
+	bool IsPlus;
 };
 

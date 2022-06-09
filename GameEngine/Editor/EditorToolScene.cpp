@@ -92,12 +92,15 @@ void EditorToolScene::End()
 void EditorToolScene::ThreadFunction()
 {
 	//BakeSkyLightMap("Day");
-	BakeSkyLightMap("SkyLight_HDRI", false);
+	BakeSkyLightMap("SkyLight_0", false);
+	BakeSkyLightMap("SkyLight_1", false);
 
 	//SetSkyLight("Day");
-	SetSkyLight("SkyLight_HDRI");
+	SetSkyLight("SkyLight_0", 0);
+	SetSkyLight("SkyLight_1", 1);
+	//SetSkyLight("SkyLight_HDRI", 1);
 	//SetSkyCube("Day");
-	SetSkyCube("SkyCube_HDRI");
+	SetSkyCube("SkyCube");
 }
 
 GameObject* EditorToolScene::Create_GameObject()

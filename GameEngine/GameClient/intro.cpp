@@ -34,7 +34,7 @@ void intro::Awake()
 	Cam->ChoiceMainCam();
 
 	BakeSkyLightMap("Night", false);
-	SetSkyLight("Night");
+	SetSkyLight("Night", 0);
 
 	SetSkyCube("Night");
 }

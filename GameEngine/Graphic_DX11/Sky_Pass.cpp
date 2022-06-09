@@ -114,7 +114,7 @@ void Sky_Pass::SetSkyCubeResource(TextureBuffer* resource)
 	}
 }
 
-void Sky_Pass::SetSkyLightResource(SkyLightBuffer* resource)
+void Sky_Pass::SetSkyLightResource(SkyLightBuffer* resource, UINT index)
 {
 	// IBL Shader Resource ¼³Á¤..
 	ID3D11ShaderResourceView* brdflut = g_Resource->GetShaderResourceView<gBRDFlut>()->Get();
@@ -123,11 +123,22 @@ void Sky_Pass::SetSkyLightResource(SkyLightBuffer* resource)
 
 	for (ShaderBase* shader : m_OptionShaderList)
 	{
-		//shader->SetShaderResourceView<gSkyCube>(skycube);
-
 		shader->SetShaderResourceView<gBRDFlut>(brdflut);
-		shader->SetShaderResourceView<gIBLPrefilter>(prefilter);
-		shader->SetShaderResourceView<gIBLIrradiance>(irradiance);
+
+		switch (index)
+		{
+		case 0:
+			shader->SetShaderResourceView<gPrefilter_0>(prefilter);
+			shader->SetShaderResourceView<gIrradiance_0>(irradiance);
+			break;
+		case 1:
+			shader->SetShaderResourceView<gPrefilter_1>(prefilter);
+			shader->SetShaderResourceView<gIrradiance_1>(irradiance);
+			break;
+		default:
+			break;
+		}
+
 	}
 }
 
