@@ -289,6 +289,8 @@ BEGIN_MESSAGE_MAP(CTAP_Particle, CDialogEx)
 	ON_BN_CLICKED(IDC_MFCCOLORBUTTON3, &CTAP_Particle::OnCustom_LifeColor_Min_Button)
 	ON_BN_CLICKED(IDC_MFCCOLORBUTTON4, &CTAP_Particle::OnCustom_LifeColor_Max_Button)
 	ON_WM_ERASEBKGND()
+	ON_CBN_SELCHANGE(IDC_COMBO4, &CTAP_Particle::OnLifeColor_Option)
+	ON_CBN_SELCHANGE(IDC_COMBO3, &CTAP_Particle::OnLifeScale_Option)
 END_MESSAGE_MAP()
 
 
@@ -584,4 +586,51 @@ BOOL CTAP_Particle::OnEraseBkgnd(CDC* pDC)
 	pDC->FillSolidRect(rect, RGB(0, 255, 0));
 
 	return CustomDialog::OnEraseBkgnd(pDC);
+}
+
+
+void CTAP_Particle::OnLifeColor_Option()
+{
+	int Choice = LifeColor_Combo.GetCurSel();
+	switch (Choice)
+	{
+	case 0:
+		mParticleSystem->SetLifeTimeColor(LifeColorMin, LifeColorMax, PARTICLE_LIFETIME_OPTION::NONE);
+		break;
+	case 1:
+		mParticleSystem->SetLifeTimeColor(LifeColorMin, LifeColorMax, PARTICLE_LIFETIME_OPTION::UP);
+		break;
+	case 2:
+		mParticleSystem->SetLifeTimeColor(LifeColorMin, LifeColorMax, PARTICLE_LIFETIME_OPTION::DOWN);
+		break;
+	case 3:
+		mParticleSystem->SetLifeTimeColor(LifeColorMin, LifeColorMax, PARTICLE_LIFETIME_OPTION::UPDOWN);
+		break;
+	}
+}
+
+
+void CTAP_Particle::OnLifeScale_Option()
+{
+	CString NumberX, NumberY;
+	int Choice;
+	LifeScale_min.GetWindowTextW(NumberX);
+	LifeScale_max.GetWindowTextW(NumberY);
+	Choice = LifeScale_Combo.GetCurSel();
+	switch (Choice)
+	{
+	case 0:
+		mParticleSystem->SetLifeTimeScale(ChangeToFloat(NumberX), ChangeToFloat(NumberY), PARTICLE_LIFETIME_OPTION::NONE);
+		break;
+	case 1:
+		mParticleSystem->SetLifeTimeScale(ChangeToFloat(NumberX), ChangeToFloat(NumberY), PARTICLE_LIFETIME_OPTION::UP);
+		break;
+	case 2:
+		mParticleSystem->SetLifeTimeScale(ChangeToFloat(NumberX), ChangeToFloat(NumberY), PARTICLE_LIFETIME_OPTION::DOWN);
+		break;
+	case 3:
+		mParticleSystem->SetLifeTimeScale(ChangeToFloat(NumberX), ChangeToFloat(NumberY), PARTICLE_LIFETIME_OPTION::UPDOWN);
+		break;
+	}
+
 }
