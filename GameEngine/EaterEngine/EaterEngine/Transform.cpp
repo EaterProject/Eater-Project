@@ -236,14 +236,8 @@ void Transform::Slow_Y_Rotation(Vector3 Dir, float RotationSpeed, bool Z_Front)
 	Vector3 N = Dir - Position;
 	N.Normalize();
 	float EndAngle = 0;
-	if (Z_Front == true)
-	{
-		EndAngle = (-atan2(N.z, N.x) * 180.0f / 3.141592f);
-	}
-	else
-	{
-		EndAngle = (-atan2(N.z, N.x) * 180.0f / 3.141592f);
-	}
+
+	EndAngle = (-atan2(N.z, N.x) * 180.0f / 3.141592f);
 
 	//도착지점 범위를 변경해준다 우리 엔진과 맞추기 위해서 0~ 360
 	if (EndAngle <= 0) { EndAngle += 360; }
@@ -259,10 +253,10 @@ void Transform::Slow_Y_Rotation(Vector3 Dir, float RotationSpeed, bool Z_Front)
 		NowAngle = Rotation.y + 180;
 	}
 	//현재 각도에서 도착지점까지 이동하려고 할때 오른쪽회전,왼쪽회전여부를 판별하기위한 Angle
-	float DirAngle = NowAngle - (EndAngle + 90);
+	float DirAngle = NowAngle - (EndAngle + 90.0f);
 
 	//회전 스피드
-	float RotationAngleSpeed = RotationSpeed * mTimeManager->DeltaTime();
+	float RotationAngleSpeed =  mTimeManager->DeltaTime() * RotationSpeed;
 
 	//나온각도가 음수냐 양수냐 판별
 	float RotationDir = 0;
@@ -276,7 +270,7 @@ void Transform::Slow_Y_Rotation(Vector3 Dir, float RotationSpeed, bool Z_Front)
 	}
 
 	//여기서 한번더 판별해준다 360도를 넘어가면 값이 변경되는것을 해결하기위해
-	if (fabs(DirAngle) >= 180) { RotationDir *= -1; }
+	if (fabs(DirAngle) >= 180) { RotationDir *= -1.0f; }
 
 
 	/*
@@ -287,8 +281,14 @@ void Transform::Slow_Y_Rotation(Vector3 Dir, float RotationSpeed, bool Z_Front)
 
 	//오차범위를 설정한다 (float형은 == 비교연산자를 쓰면 안되기때문에 범위를 지정해준다)
 	//범위는 현재 위치에서 프레임당 이동하는 각도량 +,- 해준값
-	float MaxAngle = (EndAngle - 90.0f) + RotationAngleSpeed + 5;	//멈춰야하는 각도의 최대값
-	float MinAngle = (EndAngle - 90.0f) - RotationAngleSpeed + 5;	//멈춰야하는 각도의 최소값
+	float MaxAngle = (EndAngle - 90.0f) + (RotationAngleSpeed + 1.0f);	//멈춰야하는 각도의 최대값
+	float MinAngle = (EndAngle - 90.0f) - (RotationAngleSpeed + 1.0f);	//멈춰야하는 각도의 최소값
+
+	if (MinAngle >= MaxAngle)
+	{
+		int a = 0;
+	}
+
 	float MyAngle =  Rotation.y;				//현재 각도값
 
 	//회전 도착지점 을 설정한다

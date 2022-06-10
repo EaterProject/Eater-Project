@@ -13,15 +13,13 @@
 #include "Rigidbody.h"
 #include "PhysData.h"
 
-MonsterComponent::MonsterComponent():
-	mRay(new PhysRayCast)
+MonsterComponent::MonsterComponent()
 {
 
 }
 
 MonsterComponent::~MonsterComponent()
 {
-	delete mRay;
 }
 
 void MonsterComponent::Awake()
@@ -36,15 +34,14 @@ void MonsterComponent::Awake()
 void MonsterComponent::SetUp()
 {
 	//Collider설정
-	mColider->SetCenter(0, 0.25f, 0);
-	mColider->SetSphereCollider(0.25f);
+	mColider->SetSphereCollider(0.5f);
+	mColider->SetCenter(0, 0.5f, 0);
+	mColider->SetMaterial_Restitution(0);
 	mRigidbody->SetFreezeRotation(true, true, true);
 
 	mMeshFilter->SetModelName(ModelName);
 	mMeshFilter->SetAnimationName(AnimationName);
 	mAnimation->Play();
-
-	
 
 	//플레이어 위치 설정
 	mPlayerTR = FindGameObjectTag("Player")->GetTransform();
@@ -54,31 +51,42 @@ void MonsterComponent::SetUp()
 
 	PointNumber = rand() % 5;
 	mTransform->Position = SearchPoint[PointNumber];
+
+	float Scale = NowHitMonsterScale + NowHitMonsterScale_F;
+	mTransform->Scale = { Scale,Scale,Scale };
 }
 
 void MonsterComponent::Update()
 {
-	PlayerDistanceCheck();
-	UpdateColor();
-
 	switch (MonsterState)
 	{
 	case (int)MONSTER_STATE::IDLE:
+		PlayerDistanceCheck();
+		UpdateColor();
 		Idle();
 		break;
 	case (int)MONSTER_STATE::MOVE:
+		PlayerDistanceCheck();
+		UpdateColor();
 		Move();
 		break;
 	case (int)MONSTER_STATE::ATTACK:
+		PlayerDistanceCheck();
+		UpdateColor();
 		Attack();
 		break;
 	case (int)MONSTER_STATE::CHASE:
+		PlayerDistanceCheck();
+		UpdateColor();
 		Chase();
 		break;
 	case (int)MONSTER_STATE::HIT:
+		PlayerDistanceCheck();
+		UpdateColor();
 		Hit();
 		break;
 	case (int)MONSTER_STATE::DEAD:
+		UpdateColor();
 		Dead();
 		break;
 	}
@@ -86,20 +94,19 @@ void MonsterComponent::Update()
 
 void MonsterComponent::OnTriggerStay(GameObject* Obj)
 {
+	//플레이어 충돌체와 충돌했을때
 	if (HitStart == false)
 	{
+		//플레이어가 공격 상태일때
 		if (Player::GetAttackState() == true)
 		{
-			mSkinFilter = gameobject->GetChildMesh(0)->GetComponent<MeshFilter>();
-			mSkinFilter->SetMaterialPropertyBlock(true);
-			MPB = mSkinFilter->GetMaterialPropertyBlock();
-			MPB->LimLightColor = NowLimLightColor;
-			MPB->LimLightFactor = NowLimLightFactor;
-			MPB->LimLightWidth = NowLimLightWidth;
-			SetLimLightColor(MONSTER_COLOR::RED);
-
-			MonsterState = (int)MONSTER_STATE::HIT;
+			//색을 바꾸는 함수포인터를 넣고 상태변화
+			HitFunction = std::bind(&MonsterComponent::SetLimLightColor, this);
+			SetMonsterState(MONSTER_STATE::HIT);
+			
+			HP -= 20;
 			HitStart	 = true;
+			Sound_Play_SFX(Sound_Hit);
 		}
 	}
 }
@@ -120,6 +127,16 @@ void MonsterComponent::Move()
 		MoveStart = true;
 	}
 	
+	if (MoveSoundTime >= MoveSoundTimeMax)
+	{
+		MoveSoundTime = 0;
+		Sound_Play_SFX(Sound_move);
+	}
+	else
+	{
+		MoveSoundTime += GetDeltaTime();
+	}
+
 	if (GetStopPoint(SearchPoint[PointNumber]) == false)
 	{
 		//목표지점의 도달하지 않았을때
@@ -186,9 +203,18 @@ void MonsterComponent::Idle()
 
 void MonsterComponent::Dead()
 {
+	if(DeadStart == false)
+	{
+		mAnimation->Choice(Animation_Die, Animation_hit_Speed);
+		DeadStart = true;
+	}
 
-
-
+	float End = mAnimation->GetEndFrame();
+	float Now = mAnimation->GetNowFrame();
+	if (Now >= End)
+	{
+		gameobject->SetActive(false);
+	}
 }
 
 void MonsterComponent::Chase()
@@ -228,22 +254,22 @@ void MonsterComponent::Chase()
 
 void MonsterComponent::Hit()
 {
-
+	//공격 당했을때
 	if (HP > 0)
 	{
 		mAnimation->Choice(Animation_hit, Animation_hit_Speed);
-		HitTime += GetDeltaTime();
-
-		if (HitTime >= HitMaxTime)
+		float End = mAnimation->GetEndFrame();
+		float Now = mAnimation->GetNowFrame();
+		if (Now >= End)
 		{
 			HitStart = false;
-			HitTime = 0;
+			SetMonsterState(MONSTER_STATE::CHASE);
 		}
 	}
 	else
 	{
 		mAnimation->Choice(Animation_Die);
-		MonsterState = (int)MONSTER_STATE::DEAD;
+		SetMonsterState(MONSTER_STATE::DEAD);
 	}
 }
 
@@ -287,54 +313,68 @@ void MonsterComponent::SetMonsterState(MONSTER_STATE State)
 	AttackStart = false;		//Attack 상태 시작 변수
 	MoveStart	= false;		//Move   상태 시작 변수
 	ChaseStart	= false;		//Chase  상태 시작 변수
-	//HitStart	= false;		//Hit	 상태 시작 변수
 
 	//타임 변수들도 초기화
 	IdleTime	= 0;
 	HitTime		= 0;
 	AttackTime	= 0;
 
-	//속력 제로
+	//속력 리셋
 	mRigidbody->SetVelocity(0, 0, 0);
 }
 
-void MonsterComponent::SetLimLightColor(MONSTER_COLOR mColor)
+void MonsterComponent::SetLimLightColor()
 {
-	switch (mColor)
+	if (HitFXStart == false)
 	{
-	case MONSTER_COLOR::RED:
-		NowLimLightColor = { 1,0,0 };
-		break;
-	case MONSTER_COLOR::GREEN:
-		NowLimLightColor = { 0,1,0 };
-		break;
-	case MONSTER_COLOR::YELLOW:
-		NowLimLightColor = { 1,1,0 };
-		break;
-	case MONSTER_COLOR::BLUE:
-		NowLimLightColor = { 0,0,1 };
-		break;
+		//스킨 오브젝트 가져오기
+		if (mSkinFilter == nullptr){mSkinFilter = gameobject->GetChildMesh(0)->GetComponent<MeshFilter>();}
+
+		//메테리얼 블록 가져오기
+		mSkinFilter->SetMaterialPropertyBlock(true);
+		MPB = mSkinFilter->GetMaterialPropertyBlock();
+		//림 라이트 시작 설정 설정
+		MPB->LimLightColor	= NowLimLightColor;
+		MPB->LimLightFactor = NowLimLightFactor;
+		MPB->LimLightWidth	= NowLimLightWidth;
+		//몬스터 크기 설정
+		float Scale = NowHitMonsterScale + NowHitMonsterScale_F;
+		mTransform->Scale = { Scale,Scale,Scale };
+
+		HitFXStart = true;
 	}
 
-	NowUpdateColor = true;
+	//시간에 따라 림라이트 효과가 줄어든다
+	if (MPB->LimLightFactor <= 0)
+	{
+		float Scale = NowHitMonsterScale + NowHitMonsterScale_F;
+		mTransform->Scale.x = Scale;
+		mTransform->Scale.y = Scale;
+		mTransform->Scale.z = Scale;
+		HitFunction = nullptr;
+		HitFXStart  = false;
+		mSkinFilter->SetMaterialPropertyBlock(false);
+	}
+	else
+	{
+		float DTime = GetDeltaTime();
+		mTransform->Scale.x -= DTime * NowHitMonsterScale_F;
+		mTransform->Scale.y -= DTime * NowHitMonsterScale_F;
+		mTransform->Scale.z -= DTime * NowHitMonsterScale_F; 
+		MPB->LimLightFactor -= DTime * NowLimLightFactor;
+	}
 }
 
 void MonsterComponent::UpdateColor()
 {
-	if (NowUpdateColor == false) { return; }
-
-	if (NowLimLightFactor <= 0)
+	if (HitFunction != nullptr)
 	{
-		NowLimLightFactor = 0;
-		NowUpdateColor = false;
+		HitFunction();
 	}
 	else
 	{
-
-		NowLimLightFactor -= GetDeltaTime();
+		return;
 	}
-
-
 }
 
 bool MonsterComponent::GetStopPoint(const Vector3& Pos)

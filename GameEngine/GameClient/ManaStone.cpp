@@ -149,7 +149,7 @@ void ManaStone::CreateMonsterA(int index)
 	for (int i = 0; i < 5; i++)
 	{
 		Vector3 Point = GetPoint(index, i);
-		Point.y = mTransform->Position.y;
+		Point.y = mTransform->Position.y+1;
 		Monster->SetSearchPoint(i, Point);
 	}
 	MonsterA_List.push_back(Monster);

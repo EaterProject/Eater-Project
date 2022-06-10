@@ -49,7 +49,7 @@ void Drone::Update()
 	}
 
 	//LookAt
-	mTransform->Slow_Y_Rotation(mPlayerTR->Position,50,true);
+	mTransform->Slow_Y_Rotation(mPlayerTR->Position,100,true);
 }
 
 

@@ -135,10 +135,14 @@ public:
 	void Sound_PitchUp_BGM();
 	void Sound_PitchDown_BGM();
 
-
-
-	//void Sound_Play_SFX(std::string& SoundName);
-
+	void Sound_Play_SFX(std::string& SoundName);
+	void Sound_Pause_SFX(bool Pause);
+	void Sound_VolumeUP_SFX();
+	void Sound_VolumeDown_SFX();
+	void Sound_FrequencyUp_SFX();
+	void Sound_FrequencyDown_SFX();
+	void Sound_PitchUp_SFX();
+	void Sound_PitchDown_SFX();
 public:
 	///윈도우 관련
 	void SetFocus(bool focus);
