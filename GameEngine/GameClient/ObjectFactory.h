@@ -20,6 +20,7 @@ class Bullet;
 class ManaStone;
 class ClientObjectManager;
 class Potal;
+class FontImage;
 
 class ObjectFactory
 {
@@ -35,6 +36,8 @@ public:
 	static MonsterA*		CreateMonsterA(float x, float y, float z);		//몬스터 객체를 생성
 	static MonsterB*		CreateMonsterB(float x, float y, float z);		//몬스터 객체를 생성
 	static ManaStone*		CreateManaStone(float x, float y, float z);		//마나석 객체를 생성
+
+	static FontImage*		CreateFontImage(float x, float y);
 private:
 	//게임상에 한개만 존재하는 오브젝트를 따로 보관
 	GameObject* PlayerObject;

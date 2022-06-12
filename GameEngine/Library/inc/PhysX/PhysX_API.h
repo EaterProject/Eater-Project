@@ -5,6 +5,13 @@
 #include "PhysScene.h"
 #include "PhysMaterial.h"
 #include "PhysCollider.h"
+#include "PhysRay.h"
+
+
+//#include "Phys_Collider_Box.h"
+//#include "Phys_Collider_Capsule.h"
+//#include "Phys_Collider_Sphere.h"
+#include "Phys_Collider_Triangle.h"
 
 
 ///ENGINE 积己
@@ -36,3 +43,6 @@ extern "C"	PHYS_ENGINEDLL void PhysX_Delete_Actor(PhysData* data);
 ///RayCast
 //面倒 咯何 馆券
 extern "C"	PHYS_ENGINEDLL bool PhysX_RayCast(PhysRayCast* ray);
+
+extern "C" PHYS_ENGINEDLL Phys_Collider_Triangle* CreateCollider_Triangle();
+

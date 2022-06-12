@@ -118,11 +118,11 @@ void TestScene::CreateMap()
 	//particles->SetPlayTime(1, false);
 	//particles->Play();
 
-	//Object = InstanceLight("Light", LIGHT_TYPE::POINT_LIGHT);
+	//Object = Instance_Light("Light", LIGHT_TYPE::POINT_LIGHT);
 	//Object->GetTransform()->Position.x += 10.0f;
 	//Object->GetTransform()->Position.y += 10.0f;
 	//
-	//Object = InstanceLight("Light", LIGHT_TYPE::SPOT_LIGHT);
+	//Object = Instance_Light("Light", LIGHT_TYPE::SPOT_LIGHT);
 	//Object->GetTransform()->Position.x -= 10.0f;
 	//Object->GetTransform()->Position.y += 10.0f;
 
@@ -244,7 +244,7 @@ void TestScene::CreateUI()
 	Image* ui_image = nullptr;
 	RectTransform* ui_rectTR = nullptr;
 
-	ui_object = InstanceUI("UI");
+	ui_object = Instance_UI("UI");
 	ui_image = ui_object->AddComponent<Image>();
 	ui_image->SetTexture("ingame_minimap");
 	ui_rectTR = ui_object->GetComponent<RectTransform>();
@@ -253,7 +253,7 @@ void TestScene::CreateUI()
 	ui_rectTR->SetRotation(0.0f, 0.0f, -90.0f);
 	ui_rectTR->SetScale(0.5f, 0.5f);
 
-	ui_object = InstanceUI("UI");
+	ui_object = Instance_UI("UI");
 	ui_image = ui_object->AddComponent<Image>();
 	ui_image->SetTexture("ingame_combo");
 
@@ -262,7 +262,7 @@ void TestScene::CreateUI()
 	ui_rectTR->AddPosition(-25.0f, 0.0f);
 	ui_rectTR->SetScale(0.5f, 0.5f);
 
-	ui_object = InstanceUI("UI");
+	ui_object = Instance_UI("UI");
 	ui_image = ui_object->AddComponent<Image>();
 	ui_image->SetTexture("ingame_playercounter_1");
 
@@ -271,7 +271,7 @@ void TestScene::CreateUI()
 	ui_rectTR->AddPosition(-50.0f, 0.0f);
 	ui_rectTR->SetScale(0.5f, 0.5f);
 
-	ui_object = InstanceUI("UI");
+	ui_object = Instance_UI("UI");
 	ui_image = ui_object->AddComponent<Image>();
 	ui_image->SetTexture("ingame_player_hp_back");
 
@@ -281,7 +281,7 @@ void TestScene::CreateUI()
 	ui_rectTR->SetScale(0.5f, 0.5f);
 
 
-	ui_object = InstanceUI("UI");
+	ui_object = Instance_UI("UI");
 	ui_image = ui_object->AddComponent<Image>();
 	ui_image->SetTexture("ingame_player_hp");
 	ui_image->SetImageColor(255, 0, 0);
@@ -290,7 +290,7 @@ void TestScene::CreateUI()
 	ui_rectTR->AddPosition(50.0f, -50.0f);
 	ui_rectTR->SetScale(0.5f, 0.5f);
 
-	ui_object = InstanceUI("UI");
+	ui_object = Instance_UI("UI");
 	ui_image = ui_object->AddComponent<Image>();
 	ui_image->SetTexture("ingame_switch");
 	ui_rectTR = ui_object->GetComponent<RectTransform>();
@@ -298,7 +298,7 @@ void TestScene::CreateUI()
 	ui_rectTR->AddPosition(50.0f, -150.0f);
 	ui_rectTR->SetScale(0.5f, 0.5f);
 
-	ui_object = InstanceUI("UI");
+	ui_object = Instance_UI("UI");
 	ui_image = ui_object->AddComponent<Image>();
 	ui_image->SetTexture("ingame_skill_rb");
 	ui_rectTR = ui_object->GetComponent<RectTransform>();
@@ -306,7 +306,7 @@ void TestScene::CreateUI()
 	ui_rectTR->AddPosition(400.0f, -50.0f);
 	ui_rectTR->SetScale(0.5f, 0.5f);
 
-	ui_object = InstanceUI("UI");
+	ui_object = Instance_UI("UI");
 	ui_image = ui_object->AddComponent<Image>();
 	ui_image->SetTexture("ingame_skill_rb");
 	ui_rectTR = ui_object->GetComponent<RectTransform>();
@@ -314,7 +314,7 @@ void TestScene::CreateUI()
 	ui_rectTR->AddPosition(400.0f, -50.0f);
 	ui_rectTR->SetScale(0.5f, 0.5f);
 
-	ui_object = InstanceUI("UI");
+	ui_object = Instance_UI("UI");
 	ui_image = ui_object->AddComponent<Image>();
 	ui_image->SetTexture("ingame_skill_space");
 	ui_rectTR = ui_object->GetComponent<RectTransform>();
@@ -322,7 +322,7 @@ void TestScene::CreateUI()
 	ui_rectTR->AddPosition(475.0f, -50.0f);
 	ui_rectTR->SetScale(0.5f, 0.5f);
 
-	ui_object = InstanceUI("UI");
+	ui_object = Instance_UI("UI");
 	ui_image = ui_object->AddComponent<Image>();
 	ui_image->SetTexture("ingame_skill_e");
 	ui_rectTR = ui_object->GetComponent<RectTransform>();
@@ -330,21 +330,21 @@ void TestScene::CreateUI()
 	ui_rectTR->AddPosition(550.0f, -50.0f);
 	ui_rectTR->SetScale(0.5f, 0.5f);
 
-	//ui_object = InstanceUI("UI");
+	//ui_object = Instance_UI("UI");
 	//ui_image = ui_object->AddComponent<Image>();
 	//ui_image->SetTexture("ingame_player_hp");
 	//
 	//ui_rectTR = ui_object->GetComponent<RectTransform>();
 	//ui_rectTR->SetImagePivot(RECT_PIVOT::PIVOT_LEFT_TOP);
 	//
-	//ui_object = InstanceUI("UI");
+	//ui_object = Instance_UI("UI");
 	//ui_image = ui_object->AddComponent<Image>();
 	//ui_image->SetTexture("ingame_player_hp_back");
 	//
 	//ui_rectTR = ui_object->GetComponent<RectTransform>();
 	//ui_rectTR->SetImagePivot(RECT_PIVOT::PIVOT_LEFT_BOTTOM);
 	//
-	//ui_object = InstanceUI("UI");
+	//ui_object = Instance_UI("UI");
 	//ui_image = ui_object->AddComponent<Image>();
 	//ui_image->SetTexture("ingame_player_hp_back");
 	//
@@ -354,7 +354,7 @@ void TestScene::CreateUI()
 	//ui_rectTR->SetRotation(0.0f, 0.0f, 90.0f);
 	//ui_rectTR->SetScale(0.5f, 0.5f);
 	//
-	//ui_object = InstanceUI("UI");
+	//ui_object = Instance_UI("UI");
 	//ui_image = ui_object->AddComponent<Image>();
 	//ui_image->SetTexture("ingame_player_hp_back");
 	//
@@ -363,35 +363,35 @@ void TestScene::CreateUI()
 	//ui_rectTR->AddPosition(-10.0f, 0.0f);
 	//
 	//
-	//ui_object = InstanceUI("UI");
+	//ui_object = Instance_UI("UI");
 	//ui_image = ui_object->AddComponent<Image>();
 	//ui_image->SetTexture("ingame_minimap");
 	//
 	//ui_rectTR = ui_object->GetComponent<RectTransform>();
 	//ui_rectTR->SetImagePivot(RECT_PIVOT::PIVOT_MIDDLE_TOP);
 	//
-	//ui_object = InstanceUI("UI");
+	//ui_object = Instance_UI("UI");
 	//ui_image = ui_object->AddComponent<Image>();
 	//ui_image->SetTexture("ingame_minimap");
 	//
 	//ui_rectTR = ui_object->GetComponent<RectTransform>();
 	//ui_rectTR->SetImagePivot(RECT_PIVOT::PIVOT_MIDDLE_BOTTOM);
 	//
-	//ui_object = InstanceUI("UI");
+	//ui_object = Instance_UI("UI");
 	//ui_image = ui_object->AddComponent<Image>();
 	//ui_image->SetTexture("ingame_minimap");
 	//
 	//ui_rectTR = ui_object->GetComponent<RectTransform>();
 	//ui_rectTR->SetImagePivot(RECT_PIVOT::PIVOT_MIDDLE_LEFT);
 	//
-	//ui_object = InstanceUI("UI");
+	//ui_object = Instance_UI("UI");
 	//ui_image = ui_object->AddComponent<Image>();
 	//ui_image->SetTexture("ingame_minimap");
 	//
 	//ui_rectTR = ui_object->GetComponent<RectTransform>();
 	//ui_rectTR->SetImagePivot(RECT_PIVOT::PIVOT_MIDDLE_RIGHT);
 	//
-	//ui_object = InstanceUI("UI");
+	//ui_object = Instance_UI("UI");
 	//ui_image = ui_object->AddComponent<Image>();
 	//ui_image->SetTexture("ingame_minimap");
 	//

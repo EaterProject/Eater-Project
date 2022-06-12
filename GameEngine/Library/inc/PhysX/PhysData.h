@@ -27,6 +27,12 @@ Static 객체
 	고정된 물체를 의미한다
 */
 
+class Phys_Collider_Capsule;
+class Phys_Collider_Sphere;
+class Phys_Collider_Triangle;
+class Phys_Collider_Box;
+
+
 ///하나의 강체를 만드는 구조체 무슨내용인지 보고싶으면 아래쪽에 설명
 ///사용하지 않는 값은 그냥 디폴트값으로 놔두면된다
 class  PHYS_ENGINEDLL PhysData
@@ -36,12 +42,9 @@ public:
 	 ~PhysData();
 	 void* EaterObj = nullptr;
 
-	//월드 위치
-	Vector3 WorldPosition;
-	//회전
-	Vector4 Rotation;
-	//이객체의 무게 중심점
-	Vector3 CenterPoint;
+	Vector3 WorldPosition;	//위치
+	Vector4 Rotation;		//회전
+	Vector3 CenterPoint;	//중심점
 	//월드상의 위치
 	 void SetWorldPosition(float x, float y, float z);
 	 void SetLocalPosition(float x, float y, float z);
@@ -51,6 +54,7 @@ public:
 	 void SetRotate(float x, float y, float z);
 	 void AddForce(float x, float y, float z);
 	 void SetVelocity(float x, float y, float z);
+	 void SetTrigger(bool mTrigger);
 public:
 	 Vector3 GetVelocity();
 	 bool GetTriggerEnter();
@@ -130,25 +134,6 @@ struct FilterGroup
 		eWall = (1 << 0),
 		ePlayer = (1 << 0),
 	};
-};
-
-class PHYS_ENGINEDLL PhysRayCast
-{
-public:
-	struct RaycastHit
-	{
-		int HitCount;					//충돌한 오브젝트 개수
-		Vector3 HitPoint = {0,0,0};		//충돌 위치
-		int FaceIndex = 0;				//충돌한 오브젝트의 face인덱슨
-	};
-
-	PhysRayCast();
-	~PhysRayCast();
-	Vector3 Origin;			//쏘기시작한 위치
-	Vector3 Direction;		//쏘는 방향
-	float MaxDistance;		//최대 거리
-
-	RaycastHit Hit;
 };
 
 

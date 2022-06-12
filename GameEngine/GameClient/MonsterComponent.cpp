@@ -106,6 +106,7 @@ void MonsterComponent::OnTriggerStay(GameObject* Obj)
 			
 			HP -= 20;
 			HitStart	 = true;
+			//사운드 출력
 			Sound_Play_SFX(Sound_Hit);
 		}
 	}
@@ -196,7 +197,7 @@ void MonsterComponent::Idle()
 	else
 	{
 		//대기시간이 지났다면 Move상태로 변경
-		Speed			= IdleSpeed;
+		//Speed			= IdleSpeed;
 		SetMonsterState(MONSTER_STATE::MOVE);
 	}
 }

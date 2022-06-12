@@ -2,12 +2,20 @@
 #include "PxPhysicsAPI.h"
 #include "PhysData.h"
 
+#include "Phys_Collider_Box.h"
+#include "Phys_Collider_Capsule.h"
+#include "Phys_Collider_Sphere.h"
+#include "Phys_Collider_Triangle.h"
+
+#include "BaseData.h"
+
 
 using namespace physx;
 Factory::Factory()
 {
-	m_Phys = nullptr;
-	m_Scene = nullptr;
+	m_Phys		= nullptr;
+	m_Scene		= nullptr;
+	m_Cooking	= nullptr;
 }
 
 Factory::~Factory()
@@ -39,7 +47,7 @@ physx::PxShapeFlags Factory::CreateShapeFlag(bool isTrigger)
 	return shapeFlags;
 }
 
-physx::PxShape* Factory::CreateShape(PhysMaterial* m, PhysCollider* c)
+physx::PxShape* Factory::CreateShape(PhysMaterial* m, PhysCollider* c, bool isTrigger)
 {
 	///재질을 지정해준다
 	PxMaterial* pMaterial = CreateMaterial(m);
@@ -50,16 +58,16 @@ physx::PxShape* Factory::CreateShape(PhysMaterial* m, PhysCollider* c)
 	switch (c->GetType())
 	{
 	case PhysCollider::TYPE::BOX:
-		shape = CreateBoxCollider(pMaterial, c);
+		shape = CreateBoxCollider(pMaterial, c->GetBoxCollider(),isTrigger);
 		break;
 	case PhysCollider::TYPE::SPHERE:
-		shape = CreateSphereCollider(pMaterial, c);
+		shape = CreateSphereCollider(pMaterial, c->GetSphereCollider(), isTrigger);
 		break;
 	case PhysCollider::TYPE::CAPSULE:
-		shape = CreateCapsuleCollider(pMaterial, c);
+		shape = CreateCapsuleCollider(pMaterial, c->GetCapsuleCollider(), isTrigger);
 		break;
 	case PhysCollider::TYPE::MESH:
-		shape = CreateTriangleCollider(pMaterial, c);
+		shape = CreateTriangleCollider(pMaterial, c->GetTriangleCollider());
 		break;
 	case PhysCollider::TYPE::TERRAIN:
 		//shape = CreateHeightFieldCollider(pMaterial, c);
@@ -75,10 +83,11 @@ physx::PxShape* Factory::CreateShape(PhysMaterial* m, PhysCollider* c)
 	return shape;
 }
 
-PxShape* Factory::CreateBoxCollider(physx::PxMaterial* m, PhysCollider* c)
+PxShape* Factory::CreateBoxCollider(physx::PxMaterial* m, Phys_Collider_Box* c, bool isTrigger)
 {
-	PxBoxGeometry Geometry	= PxBoxGeometry(PxReal(c->GetSize().x), PxReal(c->GetSize().y), PxReal(c->GetSize().z));
-	PxShape* shape			= m_Phys->createShape(Geometry, *m, false , CreateShapeFlag(c->GetTrigger()));
+	Phys_Base_Vector3&& Size = c->GetSize();
+	PxBoxGeometry Geometry	= PxBoxGeometry(PxReal(Size.x), PxReal(Size.y), PxReal(Size.z));
+	PxShape* shape			= m_Phys->createShape(Geometry, *m, false , CreateShapeFlag(isTrigger));
 	return shape;
 }
 
@@ -94,17 +103,17 @@ PxMaterial* Factory::CreateMaterial(PhysMaterial* m)
 	}
 }
 
-physx::PxShape* Factory::CreateSphereCollider(physx::PxMaterial* m, PhysCollider* c)
+physx::PxShape* Factory::CreateSphereCollider(physx::PxMaterial* m, Phys_Collider_Sphere* c ,bool isTrigger)
 {
-	PxSphereGeometry temp = PxSphereGeometry(PxReal(c->GetSize().x));
-	PxShape* shape = m_Phys->createShape(temp, *m, false, CreateShapeFlag(c->GetTrigger()));
+	PxSphereGeometry temp = PxSphereGeometry(PxReal(c->Radius));
+	PxShape* shape = m_Phys->createShape(temp, *m, false, CreateShapeFlag(isTrigger));
 	return shape;
 }
 
-physx::PxShape* Factory::CreateCapsuleCollider(physx::PxMaterial* m, PhysCollider* c)
+physx::PxShape* Factory::CreateCapsuleCollider(physx::PxMaterial* m, Phys_Collider_Capsule* c, bool isTrigger)
 {
-	PxCapsuleGeometry temp = PxCapsuleGeometry(PxReal(c->GetSize().x), PxReal(c->GetSize().y));
-	PxShape* shape = m_Phys->createShape(temp, *m);
+	PxCapsuleGeometry temp = PxCapsuleGeometry(c->Radius,c->Helght);
+	PxShape* shape = m_Phys->createShape(temp, *m, false, CreateShapeFlag(isTrigger));
 	return shape;
 }
 
@@ -165,7 +174,7 @@ void Factory::CreateActoer(PhysData* data)
 	PxQuat Rot				= PxQuat(data->Rotation.x, data->Rotation.y, data->Rotation.z, data->Rotation.w);
 	PxTransform  mTransform = PxTransform(Pos,Rot);
 
-	PxShape* shape = CreateShape(mMaterial, mCollider);
+	PxShape* shape = CreateShape(mMaterial, mCollider,data->isTrigger);
 
 	///로컬 포지션을 지정
 	shape->setLocalPose(PxTransform(data->CenterPoint.x, data->CenterPoint.y, data->CenterPoint.z));
@@ -224,22 +233,18 @@ void Factory::SetAxisLock(PxRigidDynamic* Actor, PhysData* Data)
 	Actor->setRigidDynamicLockFlags(Flag);
 }
 
-physx::PxShape* Factory::CreateTriangleCollider(physx::PxMaterial* m, PhysCollider* c)
+physx::PxShape* Factory::CreateTriangleCollider(physx::PxMaterial* m, Phys_Collider_Triangle* c)
 { 
-	TriangleMeshData* Triangle = c->GetTriangleMesh();
-	int IndexCount = (int)Triangle->IndexListSize;
-	int VertexCount = (int)Triangle->VertexListSize;
-
 	PxTriangleMeshDesc meshDesc;
-	///버텍스 관련 데이터
-	meshDesc.points.count		= Triangle->VertexListSize;
-	meshDesc.points.stride		= sizeof(DirectX::SimpleMath::Vector3);
-	meshDesc.points.data		= Triangle->VertexList;
+	//버텍스 관련 데이터
+	meshDesc.points.count		= c->GetVertexCount();
+	meshDesc.points.stride		= sizeof(Phys_Base_Vector3);
+	meshDesc.points.data		= c->GetVertexList();
 
-	///페이스 관련 데이터
-	meshDesc.triangles.count	= Triangle->IndexListSize / 3;
-	meshDesc.triangles.stride	= 3 * sizeof(UINT);
-	meshDesc.triangles.data		= Triangle->CIndexList;
+	//페이스 관련 데이터
+	meshDesc.triangles.count	= c->GetIndexCount() / 3;
+	meshDesc.triangles.stride	= 3 * sizeof(unsigned int);
+	meshDesc.triangles.data		= c->GetIndexList();
 
 	PxTriangleMesh* triMesh = m_Cooking->createTriangleMesh(meshDesc, m_Phys->getPhysicsInsertionCallback());
 	PxTriangleMeshGeometry geom;
@@ -249,23 +254,7 @@ physx::PxShape* Factory::CreateTriangleCollider(physx::PxMaterial* m, PhysCollid
 	return shape;
 }
 
-physx::PxShape* Factory::CreateHeightFieldCollider(physx::PxMaterial* m, PhysCollider* c)
-{
-	TriangleMeshData* Triangle = c->GetTriangleMesh();
-	int IndexCount = (int)Triangle->IndexListSize;
-	int VertexCount = (int)Triangle->VertexListSize;
 
-	
-	PxHeightFieldDesc HeightDesc;
-	HeightDesc.setToDefault();
-
-	//PxHeightFieldGeometry(HeightDesc);
-
-	//m_Cooking->createHeightField(HeightDesc);
-
-
-	return nullptr;
-}
 
 
 

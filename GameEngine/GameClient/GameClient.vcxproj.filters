@@ -85,8 +85,14 @@
     <Filter Include="소스 파일\Component\Monster\MonsterComponent">
       <UniqueIdentifier>{d97fd655-d15b-4404-a566-cc93a172992a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Component\LoadImage">
+    <Filter Include="소스 파일\Component\UI">
+      <UniqueIdentifier>{8c5b7598-a1fa-483e-9595-8f249e9d8965}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\UI\LoadImage">
       <UniqueIdentifier>{236ba930-c59b-4d51-b177-6b6fe8114a8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\UI\FontImage">
+      <UniqueIdentifier>{f64e7cd8-7c14-46d3-ab7d-34b4dadab74e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -160,7 +166,10 @@
       <Filter>소스 파일\Component\Drone</Filter>
     </ClInclude>
     <ClInclude Include="LoadImage.h">
-      <Filter>소스 파일\Component\LoadImage</Filter>
+      <Filter>소스 파일\Component\UI\LoadImage</Filter>
+    </ClInclude>
+    <ClInclude Include="FontImage.h">
+      <Filter>소스 파일\Component\UI\FontImage</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -222,7 +231,10 @@
       <Filter>소스 파일\Component\Drone</Filter>
     </ClCompile>
     <ClCompile Include="LoadImage.cpp">
-      <Filter>소스 파일\Component\LoadImage</Filter>
+      <Filter>소스 파일\Component\UI\LoadImage</Filter>
+    </ClCompile>
+    <ClCompile Include="FontImage.cpp">
+      <Filter>소스 파일\Component\UI\FontImage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

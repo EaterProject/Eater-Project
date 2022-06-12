@@ -66,8 +66,8 @@ public:
 	GameObject* InstanceTerrain(std::string ObjName = "Terrain");
 	GameObject* InstanceParticle(std::string ObjName = "Particle",std::string FileName = "Default");
 	GameObject* InstanceCamera(std::string ObjName = "Camera");
-	GameObject* InstanceLight(std::string ObjName = "Light", LIGHT_TYPE type = LIGHT_TYPE::POINT_LIGHT);
-	GameObject* InstanceUI(std::string ObjName = "UI");
+	GameObject* Instance_Light(std::string ObjName = "Light", LIGHT_TYPE type = LIGHT_TYPE::POINT_LIGHT);
+	GameObject* Instance_UI(std::string ObjName = "UI");
 public:
 	///еб╠в
 	GameObject* FindGameObjectTag(std::string& TagName);

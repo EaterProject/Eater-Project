@@ -15,8 +15,13 @@ namespace physx
 class PhysData;
 class PhysMaterial;
 class PhysCollider;
+class TriangleMeshData;
 
-struct TriangleMeshData;
+class Phys_Collider_Capsule;
+class Phys_Collider_Sphere;
+class Phys_Collider_Triangle;
+class Phys_Collider_Box;
+
 
 class Factory
 {
@@ -29,14 +34,13 @@ public:
 private:
 	///Shape 셋팅
 	physx::PxShapeFlags CreateShapeFlag(bool isTrigger);
-	physx::PxShape*		CreateShape(PhysMaterial* m,PhysCollider* c);
+	physx::PxShape*		CreateShape(PhysMaterial* m, PhysCollider* c, bool isTrigger);
 private:
 	///콜라이더 생성
-	physx::PxShape*		CreateBoxCollider(physx::PxMaterial* m, PhysCollider* c);
-	physx::PxShape*		CreateSphereCollider(physx::PxMaterial* m, PhysCollider* c);
-	physx::PxShape*		CreateCapsuleCollider(physx::PxMaterial* m, PhysCollider* c);
-	physx::PxShape*		CreateTriangleCollider(physx::PxMaterial* m , PhysCollider* c);
-	physx::PxShape*		CreateHeightFieldCollider(physx::PxMaterial* m , PhysCollider* c);
+	physx::PxShape*		CreateBoxCollider(physx::PxMaterial* m, Phys_Collider_Box* c, bool isTrigger);
+	physx::PxShape*		CreateSphereCollider(physx::PxMaterial* m, Phys_Collider_Sphere* c, bool isTrigger);
+	physx::PxShape*		CreateCapsuleCollider(physx::PxMaterial* m, Phys_Collider_Capsule* c, bool isTrigger);
+	physx::PxShape*		CreateTriangleCollider(physx::PxMaterial* m , Phys_Collider_Triangle* c);
 private:
 	///재질 생성
 	physx::PxMaterial*	CreateMaterial(PhysMaterial* m);
@@ -45,7 +49,6 @@ private:
 	void CreateDinamicActor(PhysData* Data, physx::PxShape* shape, physx::PxTransform* Tr);
 	void CreateStaticActor(PhysData* Data, physx::PxShape* shape, physx::PxTransform* Tr);
 private:
-	void CreateTriangleBuffer(PhysData* data, physx::PxVec3* mVertex, physx::PxU32* mIndex);
 	void SetAxisLock(physx::PxRigidDynamic* Actor, PhysData* Data);
 private:
 	physx::PxPhysics*	m_Phys;

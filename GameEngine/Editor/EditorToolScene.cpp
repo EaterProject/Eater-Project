@@ -392,7 +392,7 @@ GameObject* EditorToolScene::Create_Terrain(std::string MeshPath, std::string ma
 
 GameObject* EditorToolScene::Create_Light()
 {
-	GameObject* LightObject = InstanceLight("Light", LIGHT_TYPE::SPOT_LIGHT);
+	GameObject* LightObject = Instance_Light("Light", LIGHT_TYPE::SPOT_LIGHT);
 	LightObject->Name = FindMeshName(LightObject->Name);
 	ObjectList.insert({ LightObject->Name, LightObject });
 	return LightObject;

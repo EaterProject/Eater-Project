@@ -12,6 +12,7 @@ class Bullet;
 class MonsterA;
 class MonsterB;
 class Potal;
+class FontImage;
 
 enum class  CLIENT_OBJECT_TYPE
 {
@@ -35,6 +36,8 @@ public:
 	//MonsterA* GetMonsterA();
 	//MonsterB* GetMonsterB();
 	Transform* GetPlayerTransform();
+
+	static void SetCombo(int Number);
 private:
 	void CreateObjectMemorySize();	//필요한 오브젝트들 미리 생성
 	void OnActivePotal(bool isActive,int index = -1);
@@ -47,7 +50,8 @@ private:
 	std::vector<Bullet*>			Bullet_List;
 	std::vector<Potal*>				Potal_List;
 	std::vector<GameObject*>		ManaPoint_List;
-	Drone* DroneList;
+	Drone*		DroneList;
+	static FontImage* mFontImage;
 private:
 	const int CreateMonsterACount		= 0;		//몬스터A 생성할 카운터
 	const int CreateMonsterBCount		= 0;		//몬스터B 생성할 카운터

@@ -36,7 +36,8 @@ void Terrain::SetUp()
 	//초기화 값을 넣어준다
 	if (TerrainColliderName != "" && mCollider != nullptr)
 	{
-		mCollider->SetMeshCollider(TerrainColliderName);
+		mCollider->SetTriangleCollider(TerrainColliderName);
+	
 	}
 
 	if (TerrainMeshName != "" && mMeshFilter != nullptr)

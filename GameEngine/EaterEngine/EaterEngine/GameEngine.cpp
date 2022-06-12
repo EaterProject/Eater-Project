@@ -134,7 +134,7 @@ void GameEngine::Start()
 	DebugCamera->transform->Position = {0,10,-25};
 
 	//디렉션 라이트 생성
-	DirectionLight = InstanceLight("DirectionLight", LIGHT_TYPE::DIRECTION_LIGHT);
+	DirectionLight = Instance_Light("DirectionLight", LIGHT_TYPE::DIRECTION_LIGHT);
 	DirectionLight->SetDontDestroy(true);
 }
 
@@ -345,7 +345,7 @@ GameObject* GameEngine::InstanceCamera(std::string ObjName)
 	return Obj;
 }
 
-GameObject* GameEngine::InstanceLight(std::string ObjName, LIGHT_TYPE type)
+GameObject* GameEngine::Instance_Light(std::string ObjName, LIGHT_TYPE type)
 {
 	PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Create ][ Light ] %s", ObjName.c_str());
 	
@@ -384,7 +384,7 @@ GameObject* GameEngine::InstanceLight(std::string ObjName, LIGHT_TYPE type)
 	return temp;
 }
 
-GameObject* GameEngine::InstanceUI(std::string ObjName /*= "UI"*/)
+GameObject* GameEngine::Instance_UI(std::string ObjName /*= "UI"*/)
 {
 	GameObject* Obj = CreateInstance();
 	Obj->AddComponent<RectTransform>();

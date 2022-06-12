@@ -21,6 +21,7 @@
 #include "Potal.h"
 #include "ClientObjectManager.h"
 #include "ManaStone.h"
+#include "FontImage.h"
 
 
 
@@ -133,6 +134,12 @@ ManaStone* ObjectFactory::CreateManaStone(float x, float y, float z)
 	ManaStone* mMana = Object_ManaStone->AddComponent<ManaStone>();
 	Object_ManaStone->GetTransform()->Position = { x,y,z };
 	return mMana;
+}
+
+FontImage* ObjectFactory::CreateFontImage(float x, float y)
+{
+	GameObject* Object_FontImage = Instance();
+	return Object_FontImage->AddComponent<FontImage>();
 }
 
 

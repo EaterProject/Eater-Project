@@ -116,8 +116,6 @@ protected:
 	int		PointNumber			= -1;			//몬스터 이동 포인터 인덱스
 	int		ComboCount			= 0;			//현재 콤보 카운터
 	int		ComboCountMax		= 5;			//현재 콤보 카운터 변환
-	float	IdleSpeed			= 0.75f;		//대기 상태의 이동 속도
-	float	ChaseSpeed			= 1.5f;			//추격 상태의 이동 속도
 protected:
 	Vector3 NowLimLightColor	= { 1,0,0 };	//건들면 안됨
 	float	NowHitMonsterScale_F = 0.25f;		//맞았을때 커지는 스케일값 소수점

@@ -53,4 +53,5 @@ public:
 	afx_msg void OnCreatePhyCollider();
 	afx_msg void OnCbnSelchangeCombo1();
 	CEdit TriangleType_Edit;
+	afx_msg void OnBnClickedMfcbutton1();
 };

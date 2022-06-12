@@ -16,8 +16,9 @@
 #include "Potal.h"
 #include "Drone.h"
 #include "Bullet.h"
+#include "FontImage.h"
 
-
+FontImage* ClientObjectManager::mFontImage;
 ClientObjectManager::ClientObjectManager()
 {
 	mFactory		= nullptr;
@@ -43,7 +44,9 @@ void ClientObjectManager::Initialize(ObjectFactory* Factory)
 
 	mFactory->CreatePlayer();
 
-	//GameObject* obj = InstanceTerrain();
+	mFontImage = mFactory->CreateFontImage(0, 0);
+
+	
 }
 
 void ClientObjectManager::Release()
@@ -72,7 +75,10 @@ Transform* ClientObjectManager::GetPlayerTransform()
 	return PlayerObject->GetTransform();
 }
 
-
+void ClientObjectManager::SetCombo(int Number)
+{
+	mFontImage->SetCombo(Number);
+}
 
 void ClientObjectManager::CreateObjectMemorySize()
 {

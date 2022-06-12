@@ -21,28 +21,28 @@ void LoadingImage::Awake()
 	GameObject* ui_object = nullptr;
 	RectTransform* ui_rectTR = nullptr;
 
-	ui_object = InstanceUI("Icon_UI");
+	ui_object = Instance_UI("Icon_UI");
 	Icon_Image = ui_object->AddComponent<Image>();
 	ui_rectTR = ui_object->GetComponent<RectTransform>();
 	ui_rectTR->SetImagePivot(RECT_PIVOT::PIVOT_MIDDLE_CENTER);
 	ui_rectTR->SetPosition(0.0f, -100.0f);
 	ui_rectTR->SetScale(0.5f, 0.5f);
 
-	ui_object = InstanceUI("Loading_1_UI");
+	ui_object = Instance_UI("Loading_1_UI");
 	Loading_1_Image = ui_object->AddComponent<Image>();
 	ui_rectTR = ui_object->GetComponent<RectTransform>();
 	ui_rectTR->SetImagePivot(RECT_PIVOT::PIVOT_MIDDLE_BOTTOM);
 	ui_rectTR->SetPosition(0.0f, -200.0f);
 	ui_rectTR->SetScale(0.5f, 0.5f);
 
-	ui_object = InstanceUI("Loading_2_UI");
+	ui_object = Instance_UI("Loading_2_UI");
 	Loading_2_Image = ui_object->AddComponent<Image>();
 	Loading_RectTR_2 = ui_object->GetComponent<RectTransform>();
 	Loading_RectTR_2->SetImagePivot(RECT_PIVOT::PIVOT_MIDDLE_BOTTOM);
 	Loading_RectTR_2->SetPosition(0.0f, -200.0f);
 	Loading_RectTR_2->SetScale(0.5f, 0.5f);
 
-	ui_object = InstanceUI("Text_Origin_UI");
+	ui_object = Instance_UI("Text_Origin_UI");
 	Text_Origin_Image = ui_object->AddComponent<Image>();
 	ui_rectTR = ui_object->GetComponent<RectTransform>();
 	ui_rectTR->SetImagePivot(RECT_PIVOT::PIVOT_MIDDLE_BOTTOM);

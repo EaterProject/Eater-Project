@@ -6,7 +6,9 @@
 #include "EaterEngineAPI.h"
 #include "Camera.h"
 #include "Collider.h"
+
 #include "PhysData.h"
+#include "PhysRay.h"
 
 
 #include "PlayerCamera.h"
@@ -186,7 +188,6 @@ void Player::PlayerKeyinput()
 	}
 	else if (GetKeyDown('E'))
 	{
-		AttackKeyDownCount++;
 		mState |= PLAYER_STATE_SKILL_02;
 	}
 	else if (GetKeyDown('Q'))
@@ -231,9 +232,9 @@ void Player::PlayerState_Attack()
 {
 	IsAttack = true;
 	IsMove = false;
-	/// <summary>
+
 	/// 플레이어 공격상태일때 들어옵니다
-	/// </summary>
+
 	Speed = 0;
 	if (mState & PLAYER_STATE_ATTACK_01)
 	{
@@ -304,7 +305,6 @@ void Player::Player_Attack_01()
 	WeaponTR->Rotation = { 8,19,-10 };
 	if (mAnimation->EventCheck() == true)
 	{
-		DebugDrawCircle(1, mTransform->Position, mTransform->Rotation,Vector3(0,1,0));
 		IsAttackTime = true;
 	}
 	else
@@ -436,6 +436,7 @@ void Player::PlayerGroundCheck()
 		RayStartPoint.y = mTransform->Position.y + 2;
 
 		//Ray 값 조정
+		RayCastHit[i];
 		RayCastHit[i].Origin		= RayStartPoint;
 		RayCastHit[i].Direction		= {0,-1,0};
 		RayCastHit[i].MaxDistance	= 10;

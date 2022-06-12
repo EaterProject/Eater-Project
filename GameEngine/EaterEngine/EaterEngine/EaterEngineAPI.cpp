@@ -63,14 +63,14 @@ void OnReSize(int X, int Y)
 	 return gGameEngine->InstanceCamera(ObjName);
  }
 
- GameObject* InstanceLight(std::string ObjName, LIGHT_TYPE type)
+ GameObject* Instance_Light(std::string ObjName, LIGHT_TYPE type)
  {
-	 return gGameEngine->InstanceLight(ObjName, type);
+	 return gGameEngine->Instance_Light(ObjName, type);
  }
 
- GameObject* InstanceUI(std::string ObjName)
+ GameObject* Instance_UI(std::string ObjName)
  {
-	 return gGameEngine->InstanceUI(ObjName);
+	 return gGameEngine->Instance_UI(ObjName);
  }
 
  GameObject* FindGameObjectTag(std::string TagName)

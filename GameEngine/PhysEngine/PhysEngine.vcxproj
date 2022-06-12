@@ -130,7 +130,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir)inc\pxshared\include;$(ProjectDir)inc\source\foundation\include;$(ProjectDir)inc\source\physxextensions\src;$(ProjectDir)inc\include;$(SolutionDir)Library\inc</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)inc\pxshared\include;$(ProjectDir)inc\source\foundation\include;$(ProjectDir)inc\source\physxextensions\src;$(ProjectDir)inc\include;$(SolutionDir)Library\inc;$(ProjectDir)Export</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -142,24 +142,9 @@
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy/Y "$(TargetDir)*.lib"   "$(SolutionDir)Library\lib"
-
-copy/Y "$(TargetDir)*.dll"   "$(SolutionDir)Library\lib"
-
-copy/Y "$(ProectDir)lib\*dll" "$(TargetDir)"
-
-
-copy /Y "$(ProjectDir)PhysEngineDLL.h" "$(SolutionDir)Library\inc\PhysX"
-
-copy /Y "$(ProjectDir)PhysX_API.h" "$(SolutionDir)Library\inc\PhysX"
-
-copy /Y "$(ProjectDir)PhysData.h" "$(SolutionDir)Library\inc\PhysX"
-
-copy /Y "$(ProjectDir)PhysCollider.h" "$(SolutionDir)Library\inc\PhysX"
-
-
-copy /Y "$(ProjectDir)PhysMaterial.h" "$(SolutionDir)Library\inc\PhysX"
-copy /Y "$(ProjectDir)PhysScene.h" "$(SolutionDir)Library\inc\PhysX"</Command>
+      <Command>copy/Y "$(ProjectDir)lib\*.lib" "$(SolutionDir)Library\lib"
+copy/Y "$(ProjectDir)lib\*.dll" "$(SolutionDir)Library\lib"
+copy /Y "$(ProjectDir)Export\*.h" "$(SolutionDir)Library\inc\PhysX"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -172,7 +157,7 @@ copy /Y "$(ProjectDir)PhysScene.h" "$(SolutionDir)Library\inc\PhysX"</Command>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir)inc\pxshared\include;$(ProjectDir)inc\source\foundation\include;$(ProjectDir)inc\source\physxextensions\src;$(ProjectDir)inc\include;$(SolutionDir)Library\inc</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)inc\pxshared\include;$(ProjectDir)inc\source\foundation\include;$(ProjectDir)inc\source\physxextensions\src;$(ProjectDir)inc\include;$(SolutionDir)Library\inc;$(ProjectDir)Export</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <Optimization>MaxSpeed</Optimization>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -187,38 +172,29 @@ copy /Y "$(ProjectDir)PhysScene.h" "$(SolutionDir)Library\inc\PhysX"</Command>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy/Y "$(TargetDir)*.lib"   "$(SolutionDir)Library\lib"
-
-copy/Y "$(TargetDir)*.dll"   "$(SolutionDir)Library\lib"
-
-copy/Y "$(ProectDir)lib\*dll" "$(TargetDir)"
-
-
-copy /Y "$(ProjectDir)PhysEngineDLL.h" "$(SolutionDir)Library\inc\PhysX"
-
-copy /Y "$(ProjectDir)PhysX_API.h" "$(SolutionDir)Library\inc\PhysX"
-
-copy /Y "$(ProjectDir)PhysData.h" "$(SolutionDir)Library\inc\PhysX"
-
-copy /Y "$(ProjectDir)PhysCollider.h" "$(SolutionDir)Library\inc\PhysX"
-
-
-copy /Y "$(ProjectDir)PhysMaterial.h" "$(SolutionDir)Library\inc\PhysX"
-copy /Y "$(ProjectDir)PhysScene.h" "$(SolutionDir)Library\inc\PhysX"</Command>
+      <Command>copy/Y "$(ProjectDir)lib\*.lib" "$(SolutionDir)Library\lib"
+copy/Y "$(ProjectDir)lib\*.dll" "$(SolutionDir)Library\lib"
+copy /Y "$(ProjectDir)Export\*.h" "$(SolutionDir)Library\inc\PhysX"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="BaseEventCallBack.h" />
-    <ClInclude Include="PhysCollider.h" />
-    <ClInclude Include="PhysData.h" />
+    <ClInclude Include="Export\BaseData.h" />
+    <ClInclude Include="Export\PhysCollider.h" />
+    <ClInclude Include="Export\PhysData.h" />
+    <ClInclude Include="Export\PhysMaterial.h" />
+    <ClInclude Include="Export\PhysRay.h" />
+    <ClInclude Include="Export\PhysScene.h" />
+    <ClInclude Include="Export\PhysX_API.h" />
+    <ClInclude Include="Export\Phys_Collider_Box.h" />
+    <ClInclude Include="Export\Phys_Collider_Capsule.h" />
+    <ClInclude Include="Export\Phys_Collider_Interface.h" />
+    <ClInclude Include="Export\Phys_Collider_Sphere.h" />
+    <ClInclude Include="Export\Phys_Collider_Triangle.h" />
     <ClInclude Include="Factory.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="PhysEngine.h" />
     <ClInclude Include="PhysEngineDLL.h" />
-    <ClInclude Include="PhysMaterial.h" />
-    <ClInclude Include="PhysRay.h" />
-    <ClInclude Include="PhysScene.h" />
-    <ClInclude Include="PhysX_API.h" />
     <ClInclude Include="RaycastManager.h" />
   </ItemGroup>
   <ItemGroup>
@@ -232,6 +208,11 @@ copy /Y "$(ProjectDir)PhysScene.h" "$(SolutionDir)Library\inc\PhysX"</Command>
     <ClCompile Include="PhysRay.cpp" />
     <ClCompile Include="PhysScene.cpp" />
     <ClCompile Include="PhysX_API.cpp" />
+    <ClCompile Include="Phys_Collider_Box.cpp" />
+    <ClCompile Include="Phys_Collider_Capsule.cpp" />
+    <ClCompile Include="Phys_Collider_Interface.cpp" />
+    <ClCompile Include="Phys_Collider_Sphere.cpp" />
+    <ClCompile Include="Phys_Collider_Triangle.cpp" />
     <ClCompile Include="RaycastManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

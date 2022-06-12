@@ -57,14 +57,46 @@ void Collider::PhysicsUpdate()
 		//mTransform->Q_Rotation.w = mPhysData->Rotation.w;
 	}
 
-	DebugCollider();
 	//충돌 함수 호출
 	FindPhysFunctionEnter(mPhysData, PHYS_TRIIGER_ENTER);
 	FindPhysFunctionStay(mPhysData, PHYS_TRIIGER_STAY);
 	FindPhysFunctionExit(mPhysData, PHYS_TRIIGER_EXIT);
 }
 
+void Collider::Debug()
+{
+	Vector3 Pos = gameobject->transform->Position + mPhysData->CenterPoint;
+	Vector4 Rot = mPhysData->Rotation;
+	Vector3 Scl = mPhysData->mCollider->GetSize();
 
+	switch (mPhysData->mCollider->GetType())
+	{
+	case PhysCollider::TYPE::BOX:
+	{
+		if (mPhysData->isDinamic == false)
+		{
+			DebugManager::DebugDrawBox(Scl, Rot, Pos + mPhysData->CenterPoint, Vector3(1, 0, 0));
+		}
+		else
+		{
+			DebugManager::DebugDrawBox(Scl, gameobject->transform->Q_Rotation, Pos + mPhysData->CenterPoint, Vector3(1, 0, 0));
+		}
+	}
+	break;
+	case PhysCollider::TYPE::SPHERE:
+	{
+		if (mPhysData->isDinamic == false)
+		{
+			DebugManager::DebugDrawSphere(Scl.x, Pos + mPhysData->CenterPoint, Vector3(1, 0, 0));
+		}
+		else
+		{
+			DebugManager::DebugDrawSphere(Scl.x, Pos + mPhysData->CenterPoint, Vector3(1, 0, 0));
+		}
+	}
+	break;
+	}
+}
 
 void Collider::SetBoxCollider(float Size_x, float Size_y, float Size_z)
 {
@@ -86,24 +118,10 @@ void Collider::SetCapsuleCollider(float Radius, float Height)
 	mPhysData->mCollider->SetCapsuleCollider(Radius,Height);
 }
 
-void Collider::SetMeshCollider(std::string MeshName)
-{
-	//PhysCollider::TriangleMeshData* Triangle = mColliderData->CreateTriangle();
-	//ModelData* data = LoadManager::GetMesh(MeshName);
-	//
-	//int IndexSize = data->TopMeshList[0]->m_OriginIndexListCount;
-	//int VertexSize = data->TopMeshList[0]->m_OriginVertexListCount;
-	//
-	//Triangle->VertexList = data->TopMeshList[0]->m_OriginVertexList;
-	//Triangle->VertexListSize = VertexSize;
-	//
-	//Triangle->IndexList = data->TopMeshList[0]->m_OriginIndexList;
-	//Triangle->IndexListSize = IndexSize;
-}
-
 void Collider::SetTriangleCollider(std::string MeshName)
 {
 	PhysX_Delete_Actor(mPhysData);
+	TriangleName = MeshName;
 	
 	//버퍼에서 매쉬 가져오기
 	ColliderBuffer* data = LoadManager::GetColliderBuffer(MeshName);
@@ -113,10 +131,8 @@ void Collider::SetTriangleCollider(std::string MeshName)
 
 	//생성
 	mPhysData = PhysX_Create_Data();
-
-	//트라이앵글 콜라이더 생성
-	TriangleMeshData* Triangle = mPhysData->mCollider->CreateTriangle(IndexSize,VertexSize, data->IndexArray, data->VertexArray);
-	Triangle->Name = MeshName;
+	
+	mPhysData->mCollider->CreateTriangle(IndexSize, VertexSize, data->IndexArray, data->VertexArray);
 
 	isCreate = false;
 	CreatePhys();
@@ -124,7 +140,7 @@ void Collider::SetTriangleCollider(std::string MeshName)
 
 void Collider::SetTrigger(bool trigger)
 {
-	mPhysData->mCollider->SetTrigger(trigger);
+	mPhysData->SetTrigger(trigger);
 }
 
 void Collider::SetMaterial_Static(float Static)
@@ -145,41 +161,6 @@ void Collider::SetMaterial_Restitution(float Restitution)
 PhysCollider* Collider::GetCollider()
 {
 	return mPhysData->mCollider;
-}
-
-void Collider::DebugCollider()
-{
-	Vector3 Pos = gameobject->transform->Position + mPhysData->CenterPoint;
-	Vector4 Rot = mPhysData->Rotation;
-	Vector3 Scl = mPhysData->mCollider->GetSize();
-
-	switch (mPhysData->mCollider->GetType())
-	{
-	case PhysCollider::TYPE::BOX:
-	{
-		if (mPhysData->isDinamic == false)
-		{
-			DebugManager::DebugDrawBox(Scl, Rot, Pos + mPhysData->CenterPoint, Vector3(1, 0, 0));
-		}
-		else
-		{
-			DebugManager::DebugDrawBox(Scl, gameobject->transform->Q_Rotation, Pos + mPhysData->CenterPoint, Vector3(1, 0, 0));
-		}
-	}
-		break;
-	case PhysCollider::TYPE::SPHERE:
-	{
-		if (mPhysData->isDinamic == false)
-		{
-			DebugManager::DebugDrawSphere(Scl.x, Pos + mPhysData->CenterPoint, Vector3(1, 0, 0));
-		}
-		else
-		{
-			DebugManager::DebugDrawSphere(Scl.x, Pos + mPhysData->CenterPoint, Vector3(1, 0, 0));
-		}
-	}
-		break;
-	}
 }
 
 void Collider::FindPhysFunctionEnter(PhysData* Data, unsigned int Type)
@@ -293,8 +274,8 @@ bool Collider::CreatePhys()
 		Quaternion Q_Rot = SimpleMath::Quaternion::CreateFromRotationMatrix(CreateXMRot4x4());
 		Transform* mTransform = gameobject->GetTransform();
 		mPhysData->SetWorldPosition(mTransform->Position.x, mTransform->Position.y, mTransform->Position.z);
-		mPhysData->Rotation = Q_Rot;
-		mTransform->Q_Rotation = Q_Rot;
+		mPhysData->Rotation		= Q_Rot;
+		mTransform->Q_Rotation	= Q_Rot;
 		PhysX_Create_Actor(mPhysData);
 		isCreate = true;
 		return true;
@@ -303,6 +284,11 @@ bool Collider::CreatePhys()
 	{
 		return false;
 	}
+}
+
+ std::string Collider::GetTriangleName()
+{
+	 return TriangleName;
 }
 
 float Collider::GetMaterial_Static()
@@ -333,21 +319,6 @@ bool Collider::GetTriggerStay()
 bool Collider::GetTriggerExit()
 {
 	return mPhysData->GetTriggerExit();
-}
-
-
-
-GameObject* Collider::GetTriggerObject()
-{
-	//if (mPhysData->TriggerList[0] != nullptr)
-	//{
-	//	return reinterpret_cast<GameObject*>(mPhysData->TriggerList[0]->EaterObj);
-	//}
-	//else 
-	//{
-	//	return nullptr;
-	//}
-	return nullptr;
 }
 
 void Collider::SetCenter(float x, float y, float z)

@@ -125,6 +125,7 @@ BEGIN_MESSAGE_MAP(CTAP_Collider, CDialogEx)
 	ON_WM_HSCROLL()
 	ON_BN_CLICKED(IDC_BUTTON1, &CTAP_Collider::OnCreatePhyCollider)
 	ON_CBN_SELCHANGE(IDC_COMBO1, &CTAP_Collider::OnCbnSelchangeCombo1)
+	ON_BN_CLICKED(IDC_MFCBUTTON1, &CTAP_Collider::OnBnClickedMfcbutton1)
 END_MESSAGE_MAP()
 
 
@@ -260,8 +261,7 @@ void CTAP_Collider::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 
 void CTAP_Collider::OnCreatePhyCollider()
 {
-	UpdateObject();
-	mCollider->CreatePhys();
+	
 }
 
 
@@ -318,4 +318,11 @@ void CTAP_Collider::OnCbnSelchangeCombo1()
 		ColliderType_Combo.SetCurSel(3);
 		break;
 	}
+}
+
+
+void CTAP_Collider::OnBnClickedMfcbutton1()
+{
+	UpdateObject();
+	mCollider->CreatePhys();
 }
