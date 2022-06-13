@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "EngineData.h"
 #include "EaterEngineAPI.h"
+#include "MessageManager.h"
 
 
 //Component
@@ -100,6 +101,7 @@ void MonsterComponent::OnTriggerStay(GameObject* Obj)
 		//플레이어가 공격 상태일때
 		if (Player::GetAttackState() == true)
 		{
+			MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_ATTACK_OK);
 			//색을 바꾸는 함수포인터를 넣고 상태변화
 			HitFunction = std::bind(&MonsterComponent::SetLimLightColor, this);
 			SetMonsterState(MONSTER_STATE::HIT);
@@ -131,7 +133,7 @@ void MonsterComponent::Move()
 	if (MoveSoundTime >= MoveSoundTimeMax)
 	{
 		MoveSoundTime = 0;
-		Sound_Play_SFX(Sound_move);
+		//Sound_Play_SFX(Sound_move);
 	}
 	else
 	{

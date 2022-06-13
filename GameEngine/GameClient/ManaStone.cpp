@@ -7,6 +7,7 @@
 #include <time.h>
 #include "MonsterA.h"
 #include "MonsterB.h"
+#include "MessageManager.h"
 
 std::vector<Vector3> ManaStone::MonsterMovePointDefault;
 ManaStone::ManaStone()
@@ -36,7 +37,7 @@ void ManaStone::Awake()
 
 	srand((unsigned int)time(NULL));
 
-	CreateMonster(0, 1);
+	CreateMonster(1, 1);
 }
 
 void ManaStone::SetUp()
@@ -144,7 +145,8 @@ void ManaStone::CreateMonsterRangePoint(int MonsterCount)
 void ManaStone::CreateMonsterA(int index)
 {
 	///몬스터 A를 생성
-	MonsterA* Monster = ObjectFactory::CreateMonsterA(0,0,0);
+	GameObject* Object = MessageManager::GetGM()->CREATE_MESSAGE(TARGET_MONSTER_A);
+	MonsterA* Monster = Object->GetComponent<MonsterA>();
 	//몬스터에게 추격할 포인트 5곳을 건내준다
 	for (int i = 0; i < 5; i++)
 	{
@@ -158,7 +160,8 @@ void ManaStone::CreateMonsterA(int index)
 void ManaStone::CreateMonsterB(int index)
 {
 	///몬스터 B를 생성
-	MonsterB* Monster = ObjectFactory::CreateMonsterB(0, 0, 0);
+	GameObject* Object	= MessageManager::GetGM()->CREATE_MESSAGE(TARGET_MONSTER_B);
+	MonsterB* Monster	= Object->GetComponent<MonsterB>();
 	for (int i = 0; i < 5; i++)
 	{
 		Vector3 Point = GetPoint(index, i);

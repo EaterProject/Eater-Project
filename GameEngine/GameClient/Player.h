@@ -31,8 +31,11 @@ public:
 	void Start()	 override;
 	void Update() override;
 	
+	void SetMessageRECV(int Type, void* Data);
+
 	static Transform* GetPlayerTransform();
 	static bool GetAttackState();
+	static void PlayerComboUp();
 	void Healing(float HealingPower);
 private:
 	void PlayerKeyinput();				//플레이어 키인풋
@@ -74,12 +77,15 @@ private:
 	///State관련
 	unsigned int mState = 0x00000000;
 	int AttackKeyDownCount	= 0;
+	int ChangeCount			= 0;
 	float HP				= 100;
 	float Speed				= 10;
 	const float MaxSpeed	= 10;
 	bool IsAttack			= false;
 	bool IsMove				= false;
 	static bool IsAttackTime;
+	int	ComboCount;
+	float		ComboTime	= 0.0f;
 private:
 	///Animation 관련
 	std::string AnimationName;

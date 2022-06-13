@@ -8,7 +8,7 @@
 class GameObject;
 class ObjectFactory;
 class MonsterBase;
-class ClientObjectManager;
+class MessageManager;
 
 class GameLogic
 {
@@ -19,10 +19,9 @@ public:
 public:
 	void Initialize();
 	void Release();
-	void Update();
 private:
 	ObjectFactory*			FactoryGM;	//오브젝트 생성 클래스
-	ClientObjectManager*	ObjectGM;	//오브젝트 관리 클래스
+	MessageManager*	ObjectGM;	//오브젝트 관리 클래스
 private:
 };
 

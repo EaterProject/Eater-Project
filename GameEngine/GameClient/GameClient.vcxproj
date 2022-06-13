@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -173,7 +173,9 @@ copy /Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)" </Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="ClientStruct.h" />
     <ClInclude Include="ClientTypeOption.h" />
+    <ClInclude Include="ComboFont.h" />
     <ClInclude Include="Drone.h" />
     <ClInclude Include="FontImage.h" />
     <ClInclude Include="GameLogic.h" />
@@ -195,11 +197,11 @@ copy /Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)" </Command>
     <ClInclude Include="MonsterA.h" />
     <ClInclude Include="MonsterB.h" />
     <ClInclude Include="ClientComponent.h" />
-    <ClInclude Include="ClientObjectManager.h" />
+    <ClInclude Include="MessageManager.h" />
     <ClInclude Include="MonsterComponent.h" />
     <ClInclude Include="ObjectFactory.h" />
     <ClInclude Include="PlayerCamera.h" />
-    <ClInclude Include="Potal.h" />
+    <ClInclude Include="PlayerStateImage.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Player.h" />
@@ -207,6 +209,7 @@ copy /Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)" </Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="ComboFont.cpp" />
     <ClCompile Include="Drone.cpp" />
     <ClCompile Include="FontImage.cpp" />
     <ClCompile Include="GameLogic.cpp" />
@@ -227,12 +230,12 @@ copy /Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)" </Command>
     <ClCompile Include="MonsterA.cpp" />
     <ClCompile Include="MonsterB.cpp" />
     <ClCompile Include="ClientComponent.cpp" />
-    <ClCompile Include="ClientObjectManager.cpp" />
+    <ClCompile Include="MessageManager.cpp" />
     <ClCompile Include="MonsterComponent.cpp" />
     <ClCompile Include="ObjectFactory.cpp" />
     <ClCompile Include="PlayerCamera.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="Potal.cpp" />
+    <ClCompile Include="PlayerStateImage.cpp" />
     <ClCompile Include="TestScene.cpp" />
   </ItemGroup>
   <ItemGroup>

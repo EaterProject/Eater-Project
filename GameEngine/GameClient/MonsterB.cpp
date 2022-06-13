@@ -2,7 +2,6 @@
 #include "EaterEngineAPI.h"
 #include "Transform.h"
 #include "Collider.h"
-#include "ClientObjectManager.h"
 MonsterB::MonsterB()
 {
 	
@@ -39,30 +38,6 @@ void MonsterB::SetUp()
 
 void MonsterB::Update()
 {
-	if (GetKeyDown(VK_NUMPAD0))
-	{
-		ClientObjectManager::SetCombo(10);
-	}
-
-	if (GetKeyDown(VK_NUMPAD1))
-	{
-		ClientObjectManager::SetCombo(20);
-	}
-
-	if (GetKeyDown(VK_NUMPAD2))
-	{
-		ClientObjectManager::SetCombo(1);
-	}
-
-	if (GetKeyDown(VK_NUMPAD3))
-	{
-		ClientObjectManager::SetCombo(9);
-	}
-	if (GetKeyDown(VK_NUMPAD4))
-	{
-		ClientObjectManager::SetCombo(48);
-	}
-
 	MonsterComponent::Update();
 }
 

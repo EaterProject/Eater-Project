@@ -9,6 +9,8 @@
 
 #include "PhysData.h"
 #include "PhysRay.h"
+#include "MessageManager.h"
+#include "ClientTypeOption.h"
 
 
 #include "PlayerCamera.h"
@@ -18,6 +20,7 @@ bool	Player::IsAttackTime = false;
 //PLAYER_STATE Player::mState;
 
 #define LERP(prev, next, time) ((prev * (1.0f - time)) + (next * time))
+int Player::ComboCount;
 Player::Player()
 {
 	mAnimation	= nullptr;
@@ -107,6 +110,21 @@ void Player::Update()
 	DirPos = { 0,0,0 };
 }
 
+void Player::SetMessageRECV(int Type, void* Data)
+{
+	switch (Type)
+	{
+	case MESSAGE_PLAYER_HIT:
+		break;
+	case MESSAGE_PLAYER_HILL:
+		break;
+	case MESSAGE_PLAYER_ATTACK_OK:
+		ComboCount++;
+		MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL,MESSAGE_GLOBAL_COMBO,&ComboCount);
+		break;
+	}
+}
+
 Transform* Player::GetPlayerTransform()
 {
 	return mTransform;
@@ -192,7 +210,8 @@ void Player::PlayerKeyinput()
 	}
 	else if (GetKeyDown('Q'))
 	{
-		//mState |= PLAYER_STATE_SKILL_03;
+		ChangeCount++;
+		//MessageManager::SetChangeCount(ChangeCount);
 	}
 	else if (GetKeyDown(VK_SPACE))
 	{

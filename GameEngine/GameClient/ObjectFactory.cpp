@@ -18,10 +18,11 @@
 #include "ClientComponent.h"
 #include "Drone.h"
 #include "Bullet.h"
-#include "Potal.h"
-#include "ClientObjectManager.h"
+#include "MessageManager.h"
 #include "ManaStone.h"
 #include "FontImage.h"
+#include "ComboFont.h"
+#include "PlayerStateImage.h"
 
 
 
@@ -29,26 +30,18 @@ ObjectFactory::ObjectFactory()
 {
 	PlayerObject		= nullptr;
 	PlayerMainCamera	= nullptr;
-	mOBJ_GM				= nullptr;
 }
 
 ObjectFactory::~ObjectFactory()
 {
 	PlayerObject = nullptr;
 	PlayerMainCamera = nullptr;
-	mOBJ_GM = nullptr;
-}
-
-void ObjectFactory::Initialize(ClientObjectManager* mGM)
-{
-	mOBJ_GM = mGM;
 }
 
 void ObjectFactory::Release()
 {
 	PlayerObject		= nullptr;
 	PlayerMainCamera	= nullptr;
-	mOBJ_GM				= nullptr;
 }
 
 GameObject* ObjectFactory::CreatePlayer()
@@ -87,7 +80,7 @@ GameObject* ObjectFactory::CreatePlayer()
 	return PlayerObject;
 }
 
-Bullet* ObjectFactory::CreateBullet(float x, float y, float z)
+GameObject* ObjectFactory::CreateBullet()
 {
 	GameObject* DroneBullet = Instance("Bullet");
 	MeshFilter* mMeshFilter = DroneBullet->AddComponent<MeshFilter>();
@@ -95,13 +88,12 @@ Bullet* ObjectFactory::CreateBullet(float x, float y, float z)
 	Bullet*		mBullet		= DroneBullet->AddComponent<Bullet>();
 
 	mBullet->isLife = false;
-	DroneBullet->GetTransform()->Position = { x,y,z };
 	DroneBullet->SetTag(FindTagNumber("Bullet"));
 	DroneBullet->Name = "Bullet";
-	return mBullet;
+	return DroneBullet;
 }
 
-MonsterA* ObjectFactory::CreateMonsterA(float x, float y, float z)
+GameObject* ObjectFactory::CreateMonsterA()
 {
 	GameObject* Object_Monster = Instance("MonsterA");
 	Object_Monster->AddComponent<MeshFilter>();
@@ -110,11 +102,12 @@ MonsterA* ObjectFactory::CreateMonsterA(float x, float y, float z)
 	Object_Monster->AddComponent<Rigidbody>();
 
 	MonsterA* monster = Object_Monster->AddComponent<MonsterA>();
-	Object_Monster->GetTransform()->Position = { x,y,z };
-	return monster;
+
+	//MonsterA_List.push_back(monster);
+	return Object_Monster;
 }
 
-MonsterB* ObjectFactory::CreateMonsterB(float x, float y, float z)
+GameObject* ObjectFactory::CreateMonsterB()
 {
 	GameObject* Object_Monster = Instance("MonsterB");
 	Object_Monster->AddComponent<MeshFilter>();
@@ -123,23 +116,37 @@ MonsterB* ObjectFactory::CreateMonsterB(float x, float y, float z)
 	Object_Monster->AddComponent<Rigidbody>();
 
 	MonsterB* monster = Object_Monster->AddComponent<MonsterB>();
-	Object_Monster->GetTransform()->Position = { x,y,z };
-	return monster;
+	return Object_Monster;
 }
 
-ManaStone* ObjectFactory::CreateManaStone(float x, float y, float z)
+GameObject* ObjectFactory::CreateManaStone()
 {
-	GameObject* Object_ManaStone = Instance("ManaStone");
-	Object_ManaStone->AddComponent<MeshFilter>();
-	ManaStone* mMana = Object_ManaStone->AddComponent<ManaStone>();
-	Object_ManaStone->GetTransform()->Position = { x,y,z };
-	return mMana;
+	int ManaCount = ManaPoint_List.size();
+	for (int i = 0; i < ManaCount; i++)
+	{
+		Vector3 point = ManaPoint_List[i]->GetTransform()->Position;
+		
+
+		GameObject* Object_ManaStone = Instance("ManaStone");
+		Object_ManaStone->AddComponent<MeshFilter>();
+		ManaStone* mMana = Object_ManaStone->AddComponent<ManaStone>();
+		Object_ManaStone->GetTransform()->Position = point;
+	}
+	return nullptr;
 }
 
-FontImage* ObjectFactory::CreateFontImage(float x, float y)
+GameObject* ObjectFactory::CreateFontImage()
 {
 	GameObject* Object_FontImage = Instance();
-	return Object_FontImage->AddComponent<FontImage>();
+	Object_FontImage->AddComponent<ComboFont>();
+	return Object_FontImage;
+}
+
+GameObject* ObjectFactory::CreatePlayerState()
+{
+	GameObject* Object_PlayerState = Instance();
+	Object_PlayerState->AddComponent<PlayerStateImage>();
+	return Object_PlayerState;
 }
 
 

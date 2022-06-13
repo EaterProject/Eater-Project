@@ -18,9 +18,11 @@ class AttackDrone;
 class HealingDrone;
 class Bullet;
 class ManaStone;
-class ClientObjectManager;
+class MessageManager;
 class Potal;
 class FontImage;
+class ComboFont;
+class PlayerStateImage;
 
 class ObjectFactory
 {
@@ -28,20 +30,25 @@ public:
 	ObjectFactory();
 	~ObjectFactory();
 public:
-	void Initialize(ClientObjectManager* mGM);
 	void Release();
 		
-	static GameObject*		CreatePlayer();									//플레이어 객체를 생성
-	static Bullet*			CreateBullet(float x, float y, float z);		//총알 객체를 생성
-	static MonsterA*		CreateMonsterA(float x, float y, float z);		//몬스터 객체를 생성
-	static MonsterB*		CreateMonsterB(float x, float y, float z);		//몬스터 객체를 생성
-	static ManaStone*		CreateManaStone(float x, float y, float z);		//마나석 객체를 생성
-
-	static FontImage*		CreateFontImage(float x, float y);
+	GameObject* CreatePlayer();			//플레이어 객체를 생성
+	GameObject* CreateBullet();			//총알 객체를 생성
+	GameObject* CreateMonsterA();		//몬스터 객체를 생성
+	GameObject* CreateMonsterB();		//몬스터 객체를 생성
+	GameObject* CreateManaStone();		//마나석 객체를 생성
+	GameObject* CreateFontImage();		//폰트 이미지 생성
+	GameObject* CreatePlayerState();	//플레이어 스테이트 UI생성
 private:
 	//게임상에 한개만 존재하는 오브젝트를 따로 보관
 	GameObject* PlayerObject;
 	GameObject* PlayerMainCamera;
-	ClientObjectManager* mOBJ_GM;
+
+	std::vector<GameObject*> ManaPoint_List;
+	std::vector<MonsterA*> MonsterA_List;
+	std::vector<MonsterB*> MonsterB_List;
+	ComboFont* mComboFont;
+
+	friend MessageManager;
 };
 

@@ -94,6 +94,21 @@
     <Filter Include="소스 파일\Component\UI\FontImage">
       <UniqueIdentifier>{f64e7cd8-7c14-46d3-ab7d-34b4dadab74e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Component\UI\FontImage\BaseFontImage">
+      <UniqueIdentifier>{54b0a762-a9d1-4bb4-9b8e-2ceb5ab862df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\UI\FontImage\ComboFont">
+      <UniqueIdentifier>{fbdcbcc1-80fe-4ecd-bc19-079018b90f31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\UI\HitImage">
+      <UniqueIdentifier>{6022dfec-21fe-4ade-a63f-eb00c3f4a359}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\UI\PlayerStateImage">
+      <UniqueIdentifier>{76e326f4-5fdf-459d-b162-35543b4e94ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\UI\MoneyImage">
+      <UniqueIdentifier>{1013de66-d95f-464b-bafd-98437ec3682c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -141,13 +156,10 @@
     <ClInclude Include="ObjectFactory.h">
       <Filter>소스 파일\Manager\ObjectFactory</Filter>
     </ClInclude>
-    <ClInclude Include="Potal.h">
-      <Filter>소스 파일\Component\Potal</Filter>
-    </ClInclude>
     <ClInclude Include="MonsterB.h">
       <Filter>소스 파일\Component\Monster\MonsterB</Filter>
     </ClInclude>
-    <ClInclude Include="ClientObjectManager.h">
+    <ClInclude Include="MessageManager.h">
       <Filter>소스 파일\Manager\ObjectManager</Filter>
     </ClInclude>
     <ClInclude Include="Bullet.h">
@@ -169,7 +181,16 @@
       <Filter>소스 파일\Component\UI\LoadImage</Filter>
     </ClInclude>
     <ClInclude Include="FontImage.h">
-      <Filter>소스 파일\Component\UI\FontImage</Filter>
+      <Filter>소스 파일\Component\UI\FontImage\BaseFontImage</Filter>
+    </ClInclude>
+    <ClInclude Include="ComboFont.h">
+      <Filter>소스 파일\Component\UI\FontImage\ComboFont</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerStateImage.h">
+      <Filter>소스 파일\Component\UI\PlayerStateImage</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientStruct.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -209,13 +230,10 @@
     <ClCompile Include="ObjectFactory.cpp">
       <Filter>소스 파일\Manager\ObjectFactory</Filter>
     </ClCompile>
-    <ClCompile Include="Potal.cpp">
-      <Filter>소스 파일\Component\Potal</Filter>
-    </ClCompile>
     <ClCompile Include="MonsterB.cpp">
       <Filter>소스 파일\Component\Monster\MonsterB</Filter>
     </ClCompile>
-    <ClCompile Include="ClientObjectManager.cpp">
+    <ClCompile Include="MessageManager.cpp">
       <Filter>소스 파일\Manager\ObjectManager</Filter>
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
@@ -234,7 +252,13 @@
       <Filter>소스 파일\Component\UI\LoadImage</Filter>
     </ClCompile>
     <ClCompile Include="FontImage.cpp">
-      <Filter>소스 파일\Component\UI\FontImage</Filter>
+      <Filter>소스 파일\Component\UI\FontImage\BaseFontImage</Filter>
+    </ClCompile>
+    <ClCompile Include="ComboFont.cpp">
+      <Filter>소스 파일\Component\UI\FontImage\ComboFont</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerStateImage.cpp">
+      <Filter>소스 파일\Component\UI\PlayerStateImage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
