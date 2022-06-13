@@ -64,9 +64,6 @@
     <Filter Include="소스 파일\Component\Drone">
       <UniqueIdentifier>{5d3595c4-893a-419c-8e60-e3f398ffc25a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Manager\ObjectManager">
-      <UniqueIdentifier>{e62a3675-adb9-4441-b8b8-c04df61aaf04}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Component\Bullet">
       <UniqueIdentifier>{7a6ddbcc-d47a-48be-9937-5c89b4286dc9}</UniqueIdentifier>
     </Filter>
@@ -108,6 +105,9 @@
     </Filter>
     <Filter Include="소스 파일\Component\UI\MoneyImage">
       <UniqueIdentifier>{1013de66-d95f-464b-bafd-98437ec3682c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\MessageManager">
+      <UniqueIdentifier>{e62a3675-adb9-4441-b8b8-c04df61aaf04}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -160,7 +160,7 @@
       <Filter>소스 파일\Component\Monster\MonsterB</Filter>
     </ClInclude>
     <ClInclude Include="MessageManager.h">
-      <Filter>소스 파일\Manager\ObjectManager</Filter>
+      <Filter>소스 파일\Manager\MessageManager</Filter>
     </ClInclude>
     <ClInclude Include="Bullet.h">
       <Filter>소스 파일\Component\Bullet</Filter>
@@ -234,7 +234,7 @@
       <Filter>소스 파일\Component\Monster\MonsterB</Filter>
     </ClCompile>
     <ClCompile Include="MessageManager.cpp">
-      <Filter>소스 파일\Manager\ObjectManager</Filter>
+      <Filter>소스 파일\Manager\MessageManager</Filter>
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
       <Filter>소스 파일\Component\Bullet</Filter>

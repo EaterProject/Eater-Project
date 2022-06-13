@@ -112,6 +112,25 @@ void PlayerStateImage::Awake()
 	RT->SetPosition(PosX + OffsetX, PosY + 100);
 	RT->SetScale(0.35f, 0.35f);
 	RT->SetImagePivot(PIVOT_MIDDLE_LEFT);
+
+
+	Object = Instance_UI();
+	ChangePlayerColor = Object->AddComponent<Image>();
+	ChangePlayerColor->SetTexture("ingame_playercounter_1");
+	RT = Object->GetComponent<RectTransform>();
+	RT->SetPosition(PosX -100, 0);
+	RT->SetScale(0.35f, 0.35f);
+	RT->SetImagePivot(PIVOT_MIDDLE_CENTER);
+
+
+	Object = Instance_UI();
+	HitBackGround = Object->AddComponent<Image>();
+	HitBackGround->SetTexture("PlayerDamage_01");
+	HitBackGround->SetImageColor(255, 0, 0, 0);
+	RT = Object->GetComponent<RectTransform>();
+	RT->SetPosition(0, 0);
+	RT->SetScale(0.5,0.5f);
+	RT->SetImagePivot(PIVOT_MIDDLE_CENTER);
 }
 
 void PlayerStateImage::Start()
@@ -122,12 +141,45 @@ void PlayerStateImage::Start()
 	mFont[HPCountMax_Index]->SetFontNumber(150);
 }
 
+void PlayerStateImage::Update()
+{
+	if (isHit == true)
+	{
+		Alpha -= ( 100.0f *  GetDeltaTime());
+
+		if (Alpha <= 0)
+		{
+			isHit = false;
+		}
+	}
+}
+
 void PlayerStateImage::SetHP(int Number)
 {
+	Alpha = 255;
 	mFont[HPCount_Index]->SetFontNumber(Number);
+	HitBackGround->SetImageColor(255, 0, 0, Alpha);
+	isHit = true;
 }
 
 void PlayerStateImage::SetChangeCount(int Number)
 {
+	int mColorCount = Number % 4;
+	switch (mColorCount)
+	{
+	case 0:
+		ChangePlayerColor->SetTexture("ingame_playercounter_1");
+		break;
+	case 1:
+		ChangePlayerColor->SetTexture("ingame_playercounter_2");
+		break;
+	case 2:
+		ChangePlayerColor->SetTexture("ingame_playercounter_1");
+		break;
+	case 3:
+		ChangePlayerColor->SetTexture("ingame_playercounter_2");
+		break;
+	}
+
 	mFont[ColorCount_Index]->SetFontNumber(Number);
 }

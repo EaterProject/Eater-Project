@@ -140,11 +140,15 @@ void MessageManager::SEND_GLOBAL_Message(int MessageType, void* Data)
 	switch (MessageType)
 	{
 	case MESSAGE_GLOBAL_COMBO:
-		mFontImage->SetComboNumber(reinterpret_cast<int>(Data));
+		mFontImage->SetComboNumber(*(reinterpret_cast<int*>(Data)));
 		break;
-	case 1:
+	case MESSAGE_GLOBAL_HP:
+	{
+		mPlayerState->SetHP(*(reinterpret_cast<int*>(Data)));
+	}
 		break;
-	case 2:
+	case MESSAGE_GLOBAL_CHANGE:
+		mPlayerState->SetChangeCount(*(reinterpret_cast<int*>(Data)));
 		break;
 	case 3:
 		break;

@@ -35,7 +35,6 @@ public:
 
 	static Transform* GetPlayerTransform();
 	static bool GetAttackState();
-	static void PlayerComboUp();
 	void Healing(float HealingPower);
 private:
 	void PlayerKeyinput();				//플레이어 키인풋
@@ -78,7 +77,7 @@ private:
 	unsigned int mState = 0x00000000;
 	int AttackKeyDownCount	= 0;
 	int ChangeCount			= 0;
-	float HP				= 100;
+	int HP					= 100;
 	float Speed				= 10;
 	const float MaxSpeed	= 10;
 	bool IsAttack			= false;

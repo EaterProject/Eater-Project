@@ -12,6 +12,7 @@ public:
 
 	void Awake() override;
 	void Start() override;
+	void Update() override;
 
 	void SetHP(int Number);
 	void SetChangeCount(int Number);
@@ -26,6 +27,11 @@ private:
 	Image* Skill_02;
 	Image* Skill_03;
 
+	Image* ChangePlayerColor;
+	Image* HitBackGround;
+
+	bool isHit  = false;
+	float Alpha = 0;
 
 	float PosX = 0;
 	float PosY = 350;

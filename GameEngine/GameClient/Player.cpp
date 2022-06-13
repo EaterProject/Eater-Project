@@ -20,7 +20,6 @@ bool	Player::IsAttackTime = false;
 //PLAYER_STATE Player::mState;
 
 #define LERP(prev, next, time) ((prev * (1.0f - time)) + (next * time))
-int Player::ComboCount;
 Player::Player()
 {
 	mAnimation	= nullptr;
@@ -115,6 +114,8 @@ void Player::SetMessageRECV(int Type, void* Data)
 	switch (Type)
 	{
 	case MESSAGE_PLAYER_HIT:
+		HP -=  *(reinterpret_cast<int*>(Data));
+		MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_HP, &HP);
 		break;
 	case MESSAGE_PLAYER_HILL:
 		break;
@@ -211,7 +212,9 @@ void Player::PlayerKeyinput()
 	else if (GetKeyDown('Q'))
 	{
 		ChangeCount++;
-		//MessageManager::SetChangeCount(ChangeCount);
+		if (ChangeCount > 14){ChangeCount = 0;}
+		MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_CHANGE, &ChangeCount);
+		Sound_Play_SFX("ChangeEmagin");
 	}
 	else if (GetKeyDown(VK_SPACE))
 	{

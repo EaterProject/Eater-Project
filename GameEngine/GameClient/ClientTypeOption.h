@@ -17,7 +17,9 @@
 #define MESSAGE_PLAYER_ATTACK_OK 2	//플레이어 공격이 성공하였다
 
 //Combo Message
-#define MESSAGE_GLOBAL_COMBO 0
+#define MESSAGE_GLOBAL_COMBO  0
+#define MESSAGE_GLOBAL_HP     1
+#define MESSAGE_GLOBAL_CHANGE 2
 
 
 

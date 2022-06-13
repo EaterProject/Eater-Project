@@ -160,6 +160,12 @@ void MonsterComponent::Attack()
 		AttackStart = true;
 	}
 
+	if (mAnimation->EventCheck() == true)
+	{
+		int Damage = 10;
+		MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_HIT, &Damage);
+	}
+
 	//공격 범위에 나갔을떄 다시 추격 상태로
 	if (AttackRange < PlayerDistance)
 	{
