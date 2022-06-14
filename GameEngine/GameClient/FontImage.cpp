@@ -17,7 +17,7 @@ FontImage::~FontImage()
 void FontImage::SetFontNumber(int Number)
 {
 	FontUpdte		= true;
-
+	FontAlpha = 255;
 	Com_Rect[0]->SetScale(FontOriginalSize, FontOriginalSize);
 	Com_Rect[1]->SetScale(FontOriginalSize, FontOriginalSize);
 	Com_Rect[2]->SetScale(FontOriginalSize, FontOriginalSize);
@@ -114,6 +114,7 @@ void FontImage::Setting(int mPosX, int mPosY, std::string mFontName, float SizeX
 		Com_Rect[i]->SetPosition(PosX + (OffsetX * i), PosY);
 		std::string Name = mFontName + std::to_string(i);
 		Com_Image[i]->SetTexture(Name);
+		Com_Image[i]->SetImageColor(255, 255, 255);
 	}
 }
 

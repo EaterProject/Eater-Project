@@ -11,7 +11,7 @@
 
 Collider::Collider()
 {
-	mPhysData		= PhysX_Create_Data();
+	mPhysData = PhysX_Create_Data();
 }
 
 Collider::~Collider()

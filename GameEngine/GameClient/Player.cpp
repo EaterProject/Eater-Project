@@ -96,6 +96,9 @@ void Player::Update()
 	//공격 충돌체의 위치를 설정
 	PlayerAttackColliderUpdate();
 
+	//플레이어 공격당했을때 무적시간
+	PlayerHitTimeCheck();
+
 	//공격상태일때 아닐떄를 먼저 체크
 	if (mState & (PLAYER_STATE_ATTACK_01 | PLAYER_STATE_ATTACK_02 | PLAYER_STATE_SKILL_01 | PLAYER_STATE_SKILL_02))
 	{
@@ -111,11 +114,14 @@ void Player::Update()
 
 void Player::SetMessageRECV(int Type, void* Data)
 {
+	//다른 객체에게 메세지를 받는다 받은 메세지는 
+	//UI쪽으로 다시 보내줌
+
 	switch (Type)
 	{
 	case MESSAGE_PLAYER_HIT:
-		HP -=  *(reinterpret_cast<int*>(Data));
-		MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_HP, &HP);
+		//HP -=  *(reinterpret_cast<int*>(Data));
+		Player_Hit(*(reinterpret_cast<int*>(Data)));
 		break;
 	case MESSAGE_PLAYER_HILL:
 		break;
@@ -213,7 +219,7 @@ void Player::PlayerKeyinput()
 	{
 		ChangeCount++;
 		if (ChangeCount > 14){ChangeCount = 0;}
-		MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_CHANGE, &ChangeCount);
+		MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_EMAGIN_NOW, &ChangeCount);
 		Sound_Play_SFX("ChangeEmagin");
 	}
 	else if (GetKeyDown(VK_SPACE))
@@ -223,10 +229,8 @@ void Player::PlayerKeyinput()
 
 	//이번프레임에 이동해야하는 방향
 	DirPos.Normalize();
-
-	
-
 	DirRot.Normalize();
+
 	if (IsAttack == false)
 	{
 		mTransform->Slow_Y_Rotation(DirRot + mTransform->Position, 450);
@@ -321,6 +325,17 @@ bool Player::PlayerEndFrameCheck()
 	}
 }
 
+void Player::PlayerHitTimeCheck()
+{
+	if (IsHit == false) { return; }
+	HitTime += GetDeltaTime();
+	if (HitTime >= 0.5f)
+	{
+		IsHit = false;
+		HitTime = 0;
+	}
+}
+
 void Player::Player_Attack_01()
 {
 	WeaponTR->Position = { 0,-0.02f,0.1f };
@@ -397,6 +412,23 @@ void Player::Player_Jump()
 	if (PlayerEndFrameCheck() == true)
 	{
 		Player_Move_Check();
+	}
+}
+
+void Player::Player_Hit(int HitPower)
+{
+	if (IsHit == true){return;}
+
+	IsHit = true;
+	HP -= HitPower;
+	if (HP <= 0)
+	{
+		//죽었을때
+		HP = 0;
+	}
+	else
+	{
+		MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_HP_NOW, &HP);
 	}
 }
 

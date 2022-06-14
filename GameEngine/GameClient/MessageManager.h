@@ -15,7 +15,8 @@ class MonsterA;
 class MonsterB;
 class FontImage;
 class ComboFont;
-class PlayerStateImage;
+class UICanvas;
+class GateDoor;
 enum class  CLIENT_OBJECT_TYPE
 {
 	MONATER_A,
@@ -45,12 +46,14 @@ private:
 	void SEND_UI_Message(int MessageType, void* Data);
 	void SEND_BOSS_Message(int MessageType, void* Data);
 	void SEND_GLOBAL_Message(int MessageType, void* Data);
+	void SEND_GATE_Message(int MessageType, void* Data);
 private:
 	std::vector<GameObject*>		ManaPoint_List;
 
+	GateDoor*			mGate = nullptr;
 	Player*				mPlayer			= nullptr;
 	ComboFont*			mFontImage		= nullptr;
-	PlayerStateImage*	mPlayerState	= nullptr;
+	UICanvas*			mCanvas			= nullptr;
 private:
 	ObjectFactory* mFactory;
 

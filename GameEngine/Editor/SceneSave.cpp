@@ -193,30 +193,30 @@ void SceneSave::SaveTransform(Transform* mTransform)
 void SceneSave::SaveMeshFilter(MeshFilter* mMeshFilter)
 {
 	//매쉬필터 데이터를 저장
-	EATER_SET_LIST_START("MeshFilter",1,14);
+	EATER_SET_LIST_START("MeshFilter",1,3);
 	EATER_SET_LIST(mMeshFilter->GetModelName());
 	EATER_SET_LIST(mMeshFilter->GetMaterialName());
 	EATER_SET_LIST(mMeshFilter->GetBufferName());
 
-	if (mMeshFilter->m_Material != nullptr)
-	{
-		MaterialProperty* MP = mMeshFilter->m_Material->m_MaterialData->Material_Property;
-
-		EATER_SET_LIST(MP->EmissiveFactor);
-		EATER_SET_LIST(MP->MetallicFactor);
-		EATER_SET_LIST(MP->RoughnessFactor);
-
-		EATER_SET_LIST(MP->AddColor.x);
-		EATER_SET_LIST(MP->AddColor.y);
-		EATER_SET_LIST(MP->AddColor.z);
-
-		EATER_SET_LIST(MP->LimLightColor.x);
-		EATER_SET_LIST(MP->LimLightColor.y);
-		EATER_SET_LIST(MP->LimLightColor.z);
-
-		EATER_SET_LIST(MP->LimLightFactor);
-		EATER_SET_LIST(MP->LimLightWidth,true);
-	}
+	//if (mMeshFilter->m_Material != nullptr)
+	//{
+	//	MaterialProperty* MP = mMeshFilter->m_Material->m_MaterialData->Material_Property;
+	//
+	//	EATER_SET_LIST(MP->EmissiveFactor);
+	//	EATER_SET_LIST(MP->MetallicFactor);
+	//	EATER_SET_LIST(MP->RoughnessFactor);
+	//
+	//	EATER_SET_LIST(MP->AddColor.x);
+	//	EATER_SET_LIST(MP->AddColor.y);
+	//	EATER_SET_LIST(MP->AddColor.z);
+	//
+	//	EATER_SET_LIST(MP->LimLightColor.x);
+	//	EATER_SET_LIST(MP->LimLightColor.y);
+	//	EATER_SET_LIST(MP->LimLightColor.z);
+	//
+	//	EATER_SET_LIST(MP->LimLightFactor);
+	//	EATER_SET_LIST(MP->LimLightWidth,true);
+	//}
 }
 
 void SceneSave::SaveAnimation(AnimationController* AC)

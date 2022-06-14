@@ -15,13 +15,13 @@ class GameLogic
 public:
 	GameLogic();
 	~GameLogic();
-
 public:
 	void Initialize();
 	void Release();
+	void Update();
 private:
 	ObjectFactory*			FactoryGM;	//오브젝트 생성 클래스
-	MessageManager*	ObjectGM;	//오브젝트 관리 클래스
+	MessageManager*			ObjectGM;	//오브젝트 관리 클래스
 private:
 };
 

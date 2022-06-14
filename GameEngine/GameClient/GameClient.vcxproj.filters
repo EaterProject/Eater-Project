@@ -100,14 +100,17 @@
     <Filter Include="소스 파일\Component\UI\HitImage">
       <UniqueIdentifier>{6022dfec-21fe-4ade-a63f-eb00c3f4a359}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Component\UI\PlayerStateImage">
-      <UniqueIdentifier>{76e326f4-5fdf-459d-b162-35543b4e94ed}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Component\UI\MoneyImage">
       <UniqueIdentifier>{1013de66-d95f-464b-bafd-98437ec3682c}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\Manager\MessageManager">
       <UniqueIdentifier>{e62a3675-adb9-4441-b8b8-c04df61aaf04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\UI\UICanvas">
+      <UniqueIdentifier>{76e326f4-5fdf-459d-b162-35543b4e94ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\GateDoor">
+      <UniqueIdentifier>{0b391002-d1ca-4d51-a6ba-defb0595181b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -186,11 +189,14 @@
     <ClInclude Include="ComboFont.h">
       <Filter>소스 파일\Component\UI\FontImage\ComboFont</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerStateImage.h">
-      <Filter>소스 파일\Component\UI\PlayerStateImage</Filter>
+    <ClInclude Include="UICanvas.h">
+      <Filter>소스 파일\Component\UI\UICanvas</Filter>
     </ClInclude>
     <ClInclude Include="ClientStruct.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="GateDoor.h">
+      <Filter>소스 파일\Component\GateDoor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -257,8 +263,11 @@
     <ClCompile Include="ComboFont.cpp">
       <Filter>소스 파일\Component\UI\FontImage\ComboFont</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerStateImage.cpp">
-      <Filter>소스 파일\Component\UI\PlayerStateImage</Filter>
+    <ClCompile Include="UICanvas.cpp">
+      <Filter>소스 파일\Component\UI\UICanvas</Filter>
+    </ClCompile>
+    <ClCompile Include="GateDoor.cpp">
+      <Filter>소스 파일\Component\GateDoor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

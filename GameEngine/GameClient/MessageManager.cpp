@@ -17,7 +17,8 @@
 #include "Drone.h"
 #include "Bullet.h"
 #include "ComboFont.h"
-#include "PlayerStateImage.h"
+#include "UICanvas.h"
+#include "GateDoor.h"
 
 
 MessageManager* MessageManager::instance = nullptr;
@@ -58,13 +59,10 @@ void MessageManager::Initialize(ObjectFactory* Factory)
 	////UI 만들기
 	GameObject* Object = nullptr;
 
-	//폰트 이미지 생성
-	Object			= mFactory->CreateFontImage();
-	mFontImage		= Object->GetComponent<ComboFont>();
 
 	//플레이어 상태 UI 생성
-	Object			= mFactory->CreatePlayerState();
-	mPlayerState	= Object->GetComponent<PlayerStateImage>();
+	Object			= mFactory->CreateUICanvas();
+	mCanvas			= Object->GetComponent<UICanvas>();
 
 	//플레이어 생성
 	Object			= mFactory->CreatePlayer();
@@ -72,6 +70,8 @@ void MessageManager::Initialize(ObjectFactory* Factory)
 
 	//마나석 생성
 	Object			= mFactory->CreateManaStone();
+	
+	CREATE_MESSAGE(TARGET_GATE_MANAGER);
 }
 
 void MessageManager::Release()
@@ -94,17 +94,23 @@ void MessageManager::SEND_Message(int Target, int MessageType, void* Data)
 	case TARGET_GLOBAL:	//글로벌 메세지를 보낸다
 		SEND_GLOBAL_Message(MessageType, Data);
 		break;
+	case TARGET_GATE_MANAGER:	//글로벌 메세지를 보낸다
+		SEND_GATE_Message(MessageType, Data);
+		break;
 	}
 }
 
 GameObject* MessageManager::CREATE_MESSAGE(int CREATE_TYPE)
 {
 	///Factory 클래스에 생성 메세지를 보낸다
+	GameObject* Object = nullptr;
 
 	switch (CREATE_TYPE)
 	{
 	case TARGET_PLAYER:	//플레이어에게 메세지를 보낸다
-		return mFactory->CreatePlayer();
+		Object	= mFactory->CreatePlayer();
+		mPlayer = Object->GetComponent<Player>();
+		return Object;
 	case TARGET_BOSS:	//보스에게 메세지를 보낸다
 		break;
 	case TARGET_MANA:
@@ -113,8 +119,15 @@ GameObject* MessageManager::CREATE_MESSAGE(int CREATE_TYPE)
 		return mFactory->CreateMonsterA();
 	case TARGET_MONSTER_B:
 		return mFactory->CreateMonsterB();
+	case TARGET_GATE_IN:
+		return mFactory->CreateGate_In();
+	case TARGET_GATE_OUT:
+		return mFactory->CreateGate_Out();
+	case TARGET_GATE_MANAGER:
+		Object = mFactory->CreateGate_Manager();
+		mGate = Object->GetComponent<GateDoor>();
+		return Object;
 	}
-
 	return nullptr;
 }
 
@@ -140,23 +153,34 @@ void MessageManager::SEND_GLOBAL_Message(int MessageType, void* Data)
 	switch (MessageType)
 	{
 	case MESSAGE_GLOBAL_COMBO:
-		mFontImage->SetComboNumber(*(reinterpret_cast<int*>(Data)));
+		mCanvas->Set_Combo_Now(*(reinterpret_cast<int*>(Data)));
 		break;
-	case MESSAGE_GLOBAL_HP:
+	case MESSAGE_GLOBAL_HP_NOW:
+		mCanvas->Set_HP_Now(*(reinterpret_cast<int*>(Data)));
+		break;
+	case MESSAGE_GLOBAL_HP_MAX:
+		mCanvas->Set_HP_Max(*(reinterpret_cast<int*>(Data)));
+		break;
+	case MESSAGE_GLOBAL_EMAGIN_NOW:
+		mCanvas->Set_Emagin_Now(*(reinterpret_cast<int*>(Data)));
+		break;
+	case MESSAGE_GLOBAL_EMAGIN_MAX:
+		mCanvas->Set_Emagin_Max(*(reinterpret_cast<int*>(Data)));
+		break;
+	}
+}
+
+void MessageManager::SEND_GATE_Message(int MessageType, void* Data)
+{
+	switch (MessageType)
 	{
-		mPlayerState->SetHP(*(reinterpret_cast<int*>(Data)));
+	case MESSAGE_GATE_OPEN:
+		mGate->SetOpen(*reinterpret_cast<int*>(Data));
+		break;
+	case MESSAGE_GATE_CLOSE:
+		mGate->SetClose(*reinterpret_cast<int*>(Data));
+		break;
 	}
-		break;
-	case MESSAGE_GLOBAL_CHANGE:
-		mPlayerState->SetChangeCount(*(reinterpret_cast<int*>(Data)));
-		break;
-	case 3:
-		break;
-
-	}
-
-
-
 }
 
 

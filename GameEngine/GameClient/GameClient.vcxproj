@@ -179,6 +179,7 @@ copy /Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)" </Command>
     <ClInclude Include="Drone.h" />
     <ClInclude Include="FontImage.h" />
     <ClInclude Include="GameLogic.h" />
+    <ClInclude Include="GateDoor.h" />
     <ClInclude Include="LoadImage.h" />
     <ClInclude Include="Loading.h" />
     <ClInclude Include="framework.h" />
@@ -201,7 +202,7 @@ copy /Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)" </Command>
     <ClInclude Include="MonsterComponent.h" />
     <ClInclude Include="ObjectFactory.h" />
     <ClInclude Include="PlayerCamera.h" />
-    <ClInclude Include="PlayerStateImage.h" />
+    <ClInclude Include="UICanvas.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Player.h" />
@@ -213,6 +214,7 @@ copy /Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)" </Command>
     <ClCompile Include="Drone.cpp" />
     <ClCompile Include="FontImage.cpp" />
     <ClCompile Include="GameLogic.cpp" />
+    <ClCompile Include="GateDoor.cpp" />
     <ClCompile Include="LoadImage.cpp" />
     <ClCompile Include="Loading.cpp" />
     <ClCompile Include="GameClient.cpp" />
@@ -235,7 +237,7 @@ copy /Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)" </Command>
     <ClCompile Include="ObjectFactory.cpp" />
     <ClCompile Include="PlayerCamera.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="PlayerStateImage.cpp" />
+    <ClCompile Include="UICanvas.cpp" />
     <ClCompile Include="TestScene.cpp" />
   </ItemGroup>
   <ItemGroup>

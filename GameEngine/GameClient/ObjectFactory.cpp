@@ -22,7 +22,8 @@
 #include "ManaStone.h"
 #include "FontImage.h"
 #include "ComboFont.h"
-#include "PlayerStateImage.h"
+#include "UICanvas.h"
+#include "GateDoor.h"
 
 
 
@@ -142,11 +143,34 @@ GameObject* ObjectFactory::CreateFontImage()
 	return Object_FontImage;
 }
 
-GameObject* ObjectFactory::CreatePlayerState()
+GameObject* ObjectFactory::CreateUICanvas()
 {
 	GameObject* Object_PlayerState = Instance();
-	Object_PlayerState->AddComponent<PlayerStateImage>();
+	Object_PlayerState->AddComponent<UICanvas>();
 	return Object_PlayerState;
+}
+
+GameObject* ObjectFactory::CreateGate_In()
+{
+	GameObject* Object = Instance();
+	MeshFilter* mMeshFilter = Object->AddComponent<MeshFilter>();
+	mMeshFilter->SetModelName("Dome_GateDoor_IN");
+	return Object;
+}
+
+GameObject* ObjectFactory::CreateGate_Out()
+{
+	GameObject* Object = Instance();
+	MeshFilter* mMeshFilter = Object->AddComponent<MeshFilter>();
+	mMeshFilter->SetModelName("Dome_GateDoor_OUT");
+	return Object;
+}
+
+GameObject* ObjectFactory::CreateGate_Manager()
+{
+	GameObject* Object = Instance();
+	Object->AddComponent<GateDoor>();
+	return Object;
 }
 
 

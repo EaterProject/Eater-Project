@@ -12,7 +12,7 @@ public:
 
 	void SetFontNumber(int Number);
 	void SetSize(float x, float Y);
-	void UpdateFontAnimation();
+	virtual void UpdateFontAnimation();
 	void Setting(int mPosX,int mPosY, std::string mFontName,float SizeX = 0.5f,float SizeY = 0.5f,float NumberOffset = 60 ,RECT_PIVOT pivot = RECT_PIVOT::PIVOT_MIDDLE_CENTER);
 	void FontAnimation(float MinSize, float MaxSize);
 protected:
@@ -27,6 +27,9 @@ protected:
 	float FontSizeUPTime	= 0.1f;
 	float FontSizeUPTimeMin	= 0.1f;
 	float FontSizeUPTimeMax = 0.5f;
+
+	float FontAlpha		= 255;
+	float FontIdleTime	= 0;
 
 	const int COMBO_01		= 0;
 	const int COMBO_02		= 1;

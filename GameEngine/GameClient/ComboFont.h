@@ -14,7 +14,7 @@ public:
 
 	void Awake() override;
 	void Start() override;
-	void TransformUpdate() override;
+	void UpdateFontAnimation();
 
 	GameObject*		UI_Obj[3];
 	Image*			UI_Image[3];

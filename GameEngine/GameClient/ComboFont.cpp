@@ -17,6 +17,13 @@ ComboFont::~ComboFont()
 
 void ComboFont::SetComboNumber(int Number)
 {
+	FontIdleTime = 0;
+	FontAlpha = 255;
+	for (int i = 0; i < 3; i++)
+	{
+		Com_Image[i]->SetImageColor(255, 255, 255, FontAlpha);
+		UI_Image[i]->SetImageColor(255, 255, 255, FontAlpha);
+	}
 	SetFontNumber(Number);
 }
 
@@ -56,7 +63,44 @@ void ComboFont::Start()
 	SetFontNumber(0);
 }
 
-void ComboFont::TransformUpdate()
+void ComboFont::UpdateFontAnimation()
 {
-	UpdateFontAnimation();
+	if (FontUpdte == true)
+	{
+		FontSizeUPTime += GetDeltaTime() * 3.0f;
+		if (FontSizeUPTime >= FontSizeUPTimeMax)
+		{
+			Com_Rect[0]->SetScale(FontSizeUPTimeMax, FontSizeUPTimeMax);
+			Com_Rect[1]->SetScale(FontSizeUPTimeMax, FontSizeUPTimeMax);
+			Com_Rect[2]->SetScale(FontSizeUPTimeMax, FontSizeUPTimeMax);
+			FontSizeUPTime = FontSizeUPTimeMin;
+			FontUpdte = false;
+		}
+		else
+		{
+			Com_Rect[0]->SetScale(FontSizeUPTime, FontSizeUPTime);
+			Com_Rect[1]->SetScale(FontSizeUPTime, FontSizeUPTime);
+			Com_Rect[2]->SetScale(FontSizeUPTime, FontSizeUPTime);
+		}
+	}
+	else
+	{
+		if (FontIdleTime >= 5)
+		{
+			if (FontAlpha > 0)
+			{
+				FontAlpha -= GetDeltaTime() * 255;
+				for (int i = 0; i < 3; i++)
+				{
+					Com_Image[i]->SetImageColor(255, 255, 255, FontAlpha);
+					UI_Image[i]->SetImageColor(255, 255, 255, FontAlpha);
+				}
+			}
+		}
+		else
+		{
+			FontIdleTime += GetDeltaTime();
+		}
+
+	}
 }
