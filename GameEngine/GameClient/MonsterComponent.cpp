@@ -259,6 +259,13 @@ void MonsterComponent::Chase()
 			mRigidbody->SetVelocity(DirPoint.x, 0, DirPoint.z);
 		}
 	}
+
+	MONSTER_EMAGIN Data;
+	Data.R = 0;
+	Data.G = 255;
+	Data.B = 0;
+	Data.HP = HP;
+	MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_MONSTER_UI_ON, &Data);
 }
 
 void MonsterComponent::Hit()

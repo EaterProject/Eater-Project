@@ -17,6 +17,7 @@ class FontImage;
 class ComboFont;
 class UICanvas;
 class GateDoor;
+class Boss;
 enum class  CLIENT_OBJECT_TYPE
 {
 	MONATER_A,
@@ -45,12 +46,12 @@ private:
 	void SEND_Player_Message(int MessageType,void* Data);
 	void SEND_UI_Message(int MessageType, void* Data);
 	void SEND_BOSS_Message(int MessageType, void* Data);
-	void SEND_GLOBAL_Message(int MessageType, void* Data);
 	void SEND_GATE_Message(int MessageType, void* Data);
 private:
 	std::vector<GameObject*>		ManaPoint_List;
 
-	GateDoor*			mGate = nullptr;
+	Boss*				mBoss			= nullptr;
+	GateDoor*			mGate			= nullptr;
 	Player*				mPlayer			= nullptr;
 	ComboFont*			mFontImage		= nullptr;
 	UICanvas*			mCanvas			= nullptr;

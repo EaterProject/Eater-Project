@@ -124,7 +124,7 @@ protected:
 	float	NowLimLightWidth	= 0.9f;			//°Çµé¸é ¾ÈµÊ
 	bool	NowUpdateColor		= false;		//°Çµé¸é ¾ÈµÊ
 	MONSTER_COLOR	ComboColor  = MONSTER_COLOR::RED;
-private:
+protected:
 	MaterialPropertyBlock* MPB  = nullptr;
 	std::function<void()> HitFunction;
 };

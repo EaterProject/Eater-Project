@@ -1,22 +1,22 @@
 #EATERMAT
 @MaterialName BossB+_body
 @Alpha 0
-@DiffuseMap 0
-@NormalMap bossb_body_Normal.png
-@EmissiveMap 0
-@ORMMap bossb_body_Emissive.png
-@Emissive 0.000000
+@ORMMap bossb_low_body_OcclusionRoughnessMetallic
+@LimColor_B 0.000000
+@DiffuseMap bossb_BaseColor
+@NormalMap bossb_Normal
+@EmissiveMap bossb_Emissive
+@Emissive 3.000000
+@SkyLightIndex 0.000000
 @Roughness 0.000000
 @Metallic 0.000000
-@Tileing_X 1.000000
-@Tileing_Y 1.000000
-@SkyLightIndex 0
+@Tileing_X 1
+@Tileing_Y 1
 @AddColor_R 0.000000
 @AddColor_G 0.000000
 @AddColor_B 0.000000
+@LimFactor 0.000000
 @LimColor_R 0.000000
 @LimColor_G 0.000000
-@LimColor_B 0.000000
-@LimFactor 0.000000
 @LimWidth 0.000000
 &

@@ -1,6 +1,7 @@
 #pragma once
 #include <Component.h>
 class GameObject;
+class Transform;
 class GateDoor : public Component
 {
 public:
@@ -19,13 +20,13 @@ private:
 
 	GameObject* Door[6] = { nullptr };
 
-	bool IS_OPEN;
-	bool IS_CLOSE;
+	bool IS_OPEN = false;
+	bool IS_CLOSE = false;
 
 
-	GameObject* UP_Front;
-	GameObject* UP_Back;
-	GameObject* Down_Front;
-	GameObject* Down_Back;
+	float OpenTime = 0.0f;
+	float CloseTime = 0.0f;
+
+	Transform* DoorTR[4] = { nullptr };
 };
 

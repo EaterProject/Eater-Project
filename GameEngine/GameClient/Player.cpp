@@ -120,14 +120,13 @@ void Player::SetMessageRECV(int Type, void* Data)
 	switch (Type)
 	{
 	case MESSAGE_PLAYER_HIT:
-		//HP -=  *(reinterpret_cast<int*>(Data));
 		Player_Hit(*(reinterpret_cast<int*>(Data)));
 		break;
 	case MESSAGE_PLAYER_HILL:
 		break;
 	case MESSAGE_PLAYER_ATTACK_OK:
 		ComboCount++;
-		MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL,MESSAGE_GLOBAL_COMBO,&ComboCount);
+		MessageManager::GetGM()->SEND_Message(TARGET_UI,MESSAGE_UI_COMBO,&ComboCount);
 		break;
 	}
 }
@@ -219,7 +218,7 @@ void Player::PlayerKeyinput()
 	{
 		ChangeCount++;
 		if (ChangeCount > 14){ChangeCount = 0;}
-		MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_EMAGIN_NOW, &ChangeCount);
+		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_EMAGIN_NOW, &ChangeCount);
 		Sound_Play_SFX("ChangeEmagin");
 	}
 	else if (GetKeyDown(VK_SPACE))
@@ -428,7 +427,7 @@ void Player::Player_Hit(int HitPower)
 	}
 	else
 	{
-		MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_HP_NOW, &HP);
+		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_HP_NOW, &HP);
 	}
 }
 

@@ -196,7 +196,7 @@ void SceneSave::SaveMeshFilter(MeshFilter* mMeshFilter)
 	EATER_SET_LIST_START("MeshFilter",1,3);
 	EATER_SET_LIST(mMeshFilter->GetModelName());
 	EATER_SET_LIST(mMeshFilter->GetMaterialName());
-	EATER_SET_LIST(mMeshFilter->GetBufferName());
+	EATER_SET_LIST(mMeshFilter->GetBufferName(),true);
 
 	//if (mMeshFilter->m_Material != nullptr)
 	//{

@@ -672,7 +672,7 @@ void CTAP_MeshFilter::OnCustom_Color_Button()
 	AddColor_G.SetWindowTextW(ChangeToCString(G));
 	AddColor_B.SetWindowTextW(ChangeToCString(B));
 
-	if (mMaterial->m_MaterialData != nullptr)
+	if (mMaterial != nullptr && mMaterial->m_MaterialData != nullptr)
 	{
 		mMaterial->m_MaterialData->Material_Property->AddColor.x = R;
 		mMaterial->m_MaterialData->Material_Property->AddColor.y = G;

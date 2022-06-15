@@ -169,6 +169,7 @@ void EaterManager::Load_GameObject_File(GameObject* Object, ObjectOption* mOptio
 		else if (NodeName == "SKIN")
 		{
 			mChangeManager->Change_Skin(i, Object);
+			break;
 		}
 		else if (NodeName == "BONE")
 		{

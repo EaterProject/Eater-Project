@@ -19,7 +19,7 @@
 #include "ComboFont.h"
 #include "UICanvas.h"
 #include "GateDoor.h"
-
+#include "Boss.h"
 
 MessageManager* MessageManager::instance = nullptr;
 MessageManager::MessageManager()
@@ -72,6 +72,8 @@ void MessageManager::Initialize(ObjectFactory* Factory)
 	Object			= mFactory->CreateManaStone();
 	
 	CREATE_MESSAGE(TARGET_GATE_MANAGER);
+
+	CREATE_MESSAGE(TARGET_BOSS);
 }
 
 void MessageManager::Release()
@@ -91,8 +93,8 @@ void MessageManager::SEND_Message(int Target, int MessageType, void* Data)
 	case TARGET_BOSS:	//보스에게 메세지를 보낸다
 		SEND_BOSS_Message(MessageType, Data);
 		break;
-	case TARGET_GLOBAL:	//글로벌 메세지를 보낸다
-		SEND_GLOBAL_Message(MessageType, Data);
+	case TARGET_UI:	//글로벌 메세지를 보낸다
+		SEND_UI_Message(MessageType, Data);
 		break;
 	case TARGET_GATE_MANAGER:	//글로벌 메세지를 보낸다
 		SEND_GATE_Message(MessageType, Data);
@@ -112,7 +114,9 @@ GameObject* MessageManager::CREATE_MESSAGE(int CREATE_TYPE)
 		mPlayer = Object->GetComponent<Player>();
 		return Object;
 	case TARGET_BOSS:	//보스에게 메세지를 보낸다
-		break;
+		Object = mFactory->CreateBoss();
+		mBoss = Object->GetComponent<Boss>();
+		return Object;
 	case TARGET_MANA:
 		return mFactory->CreateManaStone();
 	case TARGET_MONSTER_A:
@@ -136,36 +140,33 @@ void MessageManager::SEND_Player_Message(int MessageType, void* Data)
 	mPlayer->SetMessageRECV(MessageType, Data);
 }
 
-void MessageManager::SEND_UI_Message(int MessageType, void* Data)
-{
-
-
-}
-
 void MessageManager::SEND_BOSS_Message(int MessageType, void* Data)
 {
 
 
 }
 
-void MessageManager::SEND_GLOBAL_Message(int MessageType, void* Data)
+void MessageManager::SEND_UI_Message(int MessageType, void* Data)
 {
 	switch (MessageType)
 	{
-	case MESSAGE_GLOBAL_COMBO:
+	case MESSAGE_UI_COMBO:
 		mCanvas->Set_Combo_Now(*(reinterpret_cast<int*>(Data)));
 		break;
-	case MESSAGE_GLOBAL_HP_NOW:
+	case MESSAGE_UI_HP_NOW:
 		mCanvas->Set_HP_Now(*(reinterpret_cast<int*>(Data)));
 		break;
-	case MESSAGE_GLOBAL_HP_MAX:
+	case MESSAGE_UI_HP_MAX:
 		mCanvas->Set_HP_Max(*(reinterpret_cast<int*>(Data)));
 		break;
-	case MESSAGE_GLOBAL_EMAGIN_NOW:
+	case MESSAGE_UI_EMAGIN_NOW:
 		mCanvas->Set_Emagin_Now(*(reinterpret_cast<int*>(Data)));
 		break;
-	case MESSAGE_GLOBAL_EMAGIN_MAX:
+	case MESSAGE_UI_EMAGIN_MAX:
 		mCanvas->Set_Emagin_Max(*(reinterpret_cast<int*>(Data)));
+		break;
+	case MESSAGE_UI_MONSTER_UI_ON:
+		mCanvas->Set_Monster_EMAGINE(Data);
 		break;
 	}
 }

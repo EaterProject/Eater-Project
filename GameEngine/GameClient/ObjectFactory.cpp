@@ -24,6 +24,7 @@
 #include "ComboFont.h"
 #include "UICanvas.h"
 #include "GateDoor.h"
+#include "Boss.h"
 
 
 
@@ -148,6 +149,17 @@ GameObject* ObjectFactory::CreateUICanvas()
 	GameObject* Object_PlayerState = Instance();
 	Object_PlayerState->AddComponent<UICanvas>();
 	return Object_PlayerState;
+}
+
+GameObject* ObjectFactory::CreateBoss()
+{
+	GameObject* Object_Boss = Instance();
+	Object_Boss->AddComponent<Boss>();
+	Object_Boss->AddComponent<MeshFilter>();
+	Object_Boss->AddComponent<AnimationController>();
+	Object_Boss->AddComponent<Collider>();
+	Object_Boss->AddComponent<Rigidbody>();
+	return Object_Boss;
 }
 
 GameObject* ObjectFactory::CreateGate_In()

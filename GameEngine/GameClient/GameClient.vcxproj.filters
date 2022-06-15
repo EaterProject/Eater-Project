@@ -112,6 +112,9 @@
     <Filter Include="소스 파일\Component\GateDoor">
       <UniqueIdentifier>{0b391002-d1ca-4d51-a6ba-defb0595181b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Component\Monster\Boss">
+      <UniqueIdentifier>{00baef76-481b-48a2-8c44-d3426396cee0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -192,11 +195,11 @@
     <ClInclude Include="UICanvas.h">
       <Filter>소스 파일\Component\UI\UICanvas</Filter>
     </ClInclude>
-    <ClInclude Include="ClientStruct.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="GateDoor.h">
       <Filter>소스 파일\Component\GateDoor</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss.h">
+      <Filter>소스 파일\Component\Monster\Boss</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -268,6 +271,9 @@
     </ClCompile>
     <ClCompile Include="GateDoor.cpp">
       <Filter>소스 파일\Component\GateDoor</Filter>
+    </ClCompile>
+    <ClCompile Include="Boss.cpp">
+      <Filter>소스 파일\Component\Monster\Boss</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

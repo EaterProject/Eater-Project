@@ -1,4 +1,5 @@
 #include "UICanvas.h"
+#include "ClientTypeOption.h"
 #include "FontImage.h"
 #include "RectTransform.h"
 #include "Image.h"
@@ -24,6 +25,7 @@ void UICanvas::Awake()
 	Create_HP_UI();
 	Create_Skill_UI();
 	Create_Effect_UI();
+	Create_Monster_UI();
 }
 
 void UICanvas::Start()
@@ -32,6 +34,7 @@ void UICanvas::Start()
 	mFont[Font_Emagin_Max]->SetFontNumber(14);
 	mFont[Font_HP_Now]->SetFontNumber(150);
 	mFont[Font_HP_Max]->SetFontNumber(150);
+	mFont[Font_Monster_Emagin]->SetFontNumber(7);
 }
 
 void UICanvas::Update()
@@ -83,6 +86,15 @@ void UICanvas::Set_Emagin_Now(int Number)
 void UICanvas::Set_Emagin_Max(int Number)
 {
 	mFont[Font_Emagin_Max]->SetFontNumber(Number);
+}
+
+void UICanvas::Set_Monster_EMAGINE(void* Emagin)
+{
+	MONSTER_EMAGIN* mEmagin = reinterpret_cast<MONSTER_EMAGIN*>(Emagin);
+
+	mFont[Font_Monster_Emagin]->SetFontNumber(mEmagin->ComboCount);
+	Images[Image_Monster_Emagin_Front]->SetImageColor(mEmagin->R, mEmagin->G, mEmagin->B, 255);
+	Images[Image_Monster_HP_Front];
 }
 
 void UICanvas::Create_Combo_UI()
@@ -246,6 +258,47 @@ void UICanvas::Create_Effect_UI()
 	Rect->SetPosition(0, 0);
 	Rect->SetScale(0.5,0.5f);
 	Rect->SetImagePivot(PIVOT_MIDDLE_CENTER);
+}
+
+void UICanvas::Create_Monster_UI()
+{
+	//폰트 하나
+	//체력바 하나
+	//이미지 두개
+	GameObject* Object	= nullptr;
+	RectTransform* Rect = nullptr;
+
+	Object = Instance_UI();
+	Images[Image_Monster_HP_Front] = Object->AddComponent<Image>();
+	Images[Image_Monster_HP_Front]->SetTexture("Monster_HP");
+	Images[Image_Monster_HP_Front]->SetImageColor(255, 255, 255, 255);
+	Rect = Object->GetComponent<RectTransform>();
+	Rect->SetPosition(0, -400);
+	Rect->SetScale(1, 1);
+	Rect->SetImagePivot(PIVOT_MIDDLE_CENTER);
+
+	Object = Instance_UI();
+	Images[Image_Monster_Emagin_Back] = Object->AddComponent<Image>();
+	Images[Image_Monster_Emagin_Back]->SetTexture("Monster_Emagin_Back");
+	Images[Image_Monster_Emagin_Back]->SetImageColor(255, 255, 255, 255);
+	Rect = Object->GetComponent<RectTransform>();
+	Rect->SetPosition(-100,-400);
+	Rect->SetScale(0.5, 0.5f);
+	Rect->SetImagePivot(PIVOT_MIDDLE_CENTER);
+
+	Object = Instance_UI();
+	Images[Image_Monster_Emagin_Front] = Object->AddComponent<Image>();
+	Images[Image_Monster_Emagin_Front]->SetTexture("Monster_Emagin_Front");
+	Images[Image_Monster_Emagin_Front]->SetImageColor(255, 0, 0, 255);
+	Rect = Object->GetComponent<RectTransform>();
+	Rect->SetPosition(-100, -400);
+	Rect->SetScale(0.5, 0.5f);
+	Rect->SetImagePivot(PIVOT_MIDDLE_CENTER);
+
+
+	Object = Instance();
+	mFont[Font_Monster_Emagin] = Object->AddComponent<FontImage>();
+	mFont[Font_Monster_Emagin]->Setting(-110, -400, "number_", 0.2f, 0.2f, 15, PIVOT_MIDDLE_CENTER);
 }
 
 void UICanvas::Update_Hit_Check()

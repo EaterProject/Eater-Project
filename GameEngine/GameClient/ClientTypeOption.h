@@ -15,25 +15,28 @@
 #define TARGET_GATE_OUT 11
 #define TARGET_GATE_MANAGER 12
 
-
 //Player Message
 #define MESSAGE_PLAYER_HIT    0		//플레이어가 맞았다
 #define MESSAGE_PLAYER_HILL   1		//플레이어 에게 힐을 준다
 #define MESSAGE_PLAYER_ATTACK_OK 2	//플레이어 공격이 성공하였다
 
-
 //Gate Message
-#define MESSAGE_GATE_OPEN  0
-#define MESSAGE_GATE_CLOSE 1
+#define MESSAGE_GATE_OPEN  0		//게이트 열기
+#define MESSAGE_GATE_CLOSE 1		//게이트 닫기
+#define MESSAGE_GATE_UNLOCK 2		//게이트 잠금 풀기
 
-//Combo Message
-#define MESSAGE_GLOBAL_COMBO 0
-#define MESSAGE_GLOBAL_HP_NOW 1
-#define MESSAGE_GLOBAL_HP_MAX 2
-#define MESSAGE_GLOBAL_EMAGIN_NOW 3
-#define MESSAGE_GLOBAL_EMAGIN_MAX 4
+//UI Message
+#define MESSAGE_UI_COMBO 0			//콤보 폰트 값
+#define MESSAGE_UI_HP_NOW 1			//체력 현재 폰트 값
+#define MESSAGE_UI_HP_MAX 2			//체력 최대 폰트 값
+#define MESSAGE_UI_EMAGIN_NOW 3		//이메진 현재 폰트 값
+#define MESSAGE_UI_EMAGIN_MAX 4		//이메진 최대 폰트 값
+#define MESSAGE_UI_MONSTER_UI_ON 5	//몬스터 UI를 보여준다
 
-
+//Camera Message
+#define MESSAGE_CAMERA_START_GAME 0	//게임이 시작되었을때
+#define MESSAGE_CAMERA_START_BOSS 1	//보스가 생성되었을때
+#define MESSAGE_CAMERA_END_BOSS 2	//보스가 죽었을때
 
 enum class MONSTER_STATE : int
 {
@@ -50,5 +53,13 @@ enum class MONSTER_COLOR : int
 	GREEN,
 	YELLOW,
 	BLUE
+};
+struct MONSTER_EMAGIN
+{
+	float R = 255.f;
+	float G = 255.f;
+	float B = 255.f;
+	int ComboCount = 7;
+	int HP;
 };
 

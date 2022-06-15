@@ -5,6 +5,7 @@ class Image;
 class RectTransform;
 class FontImage;
 class ComboFont;
+class MONSTER_EMAGIN;
 class UICanvas :public Component
 {
 public:
@@ -20,6 +21,7 @@ public:
 	void Set_HP_Max(int Number);
 	void Set_Emagin_Now(int Number);
 	void Set_Emagin_Max(int Number);
+	void Set_Monster_EMAGINE(void* Emagin);
 private:
 	//생성 함수
 	void Create_Combo_UI();
@@ -28,12 +30,14 @@ private:
 	void Create_Emagin_Color_UI();
 	void Create_Emagin_UI();
 	void Create_Effect_UI();
+	void Create_Monster_UI();
+
 
 	void Update_Hit_Check();	//알파값 처리
 	void Update_Combo_Check();	//크기 처리
 
-	Image*		Images[11]	= { nullptr };
-	FontImage*	mFont[4]	= { nullptr };
+	Image*		Images[14]	= { nullptr };
+	FontImage*	mFont[5]	= { nullptr };
 	ComboFont*	mCombo		= nullptr;
 	
 	bool isHit  = false;
@@ -48,6 +52,7 @@ private:
 	const int Font_Emagin_Max		= 1;
 	const int Font_HP_Now			= 2;
 	const int Font_HP_Max			= 3;
+	const int Font_Monster_Emagin	= 4;
 
 	//이미지 HP 관련
 	const int Image_Space_Index		= 0;
@@ -67,5 +72,10 @@ private:
 
 	//이미지 스킬 관련
 	const int Image_PlayerHit_Effect  = 10;
+
+	const int Image_Monster_Emagin_Back	= 11;
+	const int Image_Monster_Emagin_Front= 12;
+	const int Image_Monster_HP_Front	= 13;
+
 };
 

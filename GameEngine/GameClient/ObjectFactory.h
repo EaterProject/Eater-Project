@@ -39,6 +39,7 @@ public:
 	GameObject* CreateManaStone();		//마나석 객체를 생성
 	GameObject* CreateFontImage();		//폰트 이미지 생성
 	GameObject* CreateUICanvas();	//플레이어 스테이트 UI생성
+	GameObject* CreateBoss();
 	GameObject* CreateGate_In();
 	GameObject* CreateGate_Out();
 	GameObject* CreateGate_Manager();
