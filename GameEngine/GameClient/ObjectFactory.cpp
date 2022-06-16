@@ -25,34 +25,31 @@
 #include "UICanvas.h"
 #include "GateDoor.h"
 #include "Boss.h"
+#include "CameraManager.h"
 
 
 
 ObjectFactory::ObjectFactory()
 {
-	PlayerObject		= nullptr;
-	PlayerMainCamera	= nullptr;
+
 }
 
 ObjectFactory::~ObjectFactory()
 {
-	PlayerObject = nullptr;
-	PlayerMainCamera = nullptr;
+
 }
 
 void ObjectFactory::Release()
 {
-	PlayerObject		= nullptr;
-	PlayerMainCamera	= nullptr;
+
 }
 
 GameObject* ObjectFactory::CreatePlayer()
 {
 	//플레이어와 카메라 오브젝트를 생성
 	GameObject* PlayerObject		= Instance();
-	GameObject* PlayerMainCamera	= Instance_Camera("Camera");
+	
 	GameObject* PlayerCollider		= Instance();
-	GameObject* PlayerWeapon		= Instance();
 	GameObject* DroneObject			= Instance();
 	GameObject* PlayerPoint			= FindGameObjectTag("PlayerPoint");
 	
@@ -67,17 +64,8 @@ GameObject* ObjectFactory::CreatePlayer()
 	PlayerCollider->SetTag("PlayerCollider");
 	PlayerCollider->AddComponent<Collider>();
 	
-	//플레이어 무기 생성
-	PlayerWeapon->SetTag("Weapon");
-	PlayerWeapon->AddComponent<MeshFilter>();
-
 	DroneObject->AddComponent<MeshFilter>();
 	DroneObject->AddComponent<Drone>();
-
-	//카메라 생성
-	Camera* Main = PlayerMainCamera->GetComponent<Camera>();
-	Main->ChoiceMainCam();
-	PlayerMainCamera->AddComponent<PlayerCamera>();
 
 	return PlayerObject;
 }
@@ -104,8 +92,6 @@ GameObject* ObjectFactory::CreateMonsterA()
 	Object_Monster->AddComponent<Rigidbody>();
 
 	MonsterA* monster = Object_Monster->AddComponent<MonsterA>();
-
-	//MonsterA_List.push_back(monster);
 	return Object_Monster;
 }
 
@@ -133,6 +119,19 @@ GameObject* ObjectFactory::CreateManaStone()
 		Object_ManaStone->AddComponent<MeshFilter>();
 		ManaStone* mMana = Object_ManaStone->AddComponent<ManaStone>();
 		Object_ManaStone->GetTransform()->Position = point;
+
+		switch (i)
+		{
+		case 0:
+			mMana->SetMonsterCount(5, 0);
+			break;
+		case 1:
+			mMana->SetMonsterCount(4, 1);
+			break;
+		case 2:
+			mMana->SetMonsterCount(3, 2);
+			break;
+		}
 	}
 	return nullptr;
 }
@@ -182,6 +181,13 @@ GameObject* ObjectFactory::CreateGate_Manager()
 {
 	GameObject* Object = Instance();
 	Object->AddComponent<GateDoor>();
+	return Object;
+}
+
+GameObject* ObjectFactory::CreateCameraManager()
+{
+	GameObject* Object = Instance_Camera();
+	Object->AddComponent<CameraManager>();
 	return Object;
 }
 

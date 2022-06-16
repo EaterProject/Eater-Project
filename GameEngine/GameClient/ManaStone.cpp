@@ -37,17 +37,23 @@ void ManaStone::Awake()
 
 	srand((unsigned int)time(NULL));
 
-	CreateMonster(1, 1);
+	CreateMonster(MonsterACount, MonsterBCount);
 }
 
 void ManaStone::SetUp()
 {
-	mMeshFilter->SetModelName("mana");
+	mMeshFilter->SetModelName("Mana");
 }
 
 void ManaStone::Update()
 {
 	Debug();
+}
+
+void ManaStone::SetMonsterCount(int MonsterA, int MonsterB)
+{
+	MonsterACount = MonsterA;
+	MonsterBCount = MonsterB;
 }
 
 Vector3 ManaStone::GetPoint(int CreateRangeIndex, int MovePointIndex)

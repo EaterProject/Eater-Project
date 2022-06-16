@@ -97,12 +97,6 @@
     <Filter Include="소스 파일\Component\UI\FontImage\ComboFont">
       <UniqueIdentifier>{fbdcbcc1-80fe-4ecd-bc19-079018b90f31}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Component\UI\HitImage">
-      <UniqueIdentifier>{6022dfec-21fe-4ade-a63f-eb00c3f4a359}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Component\UI\MoneyImage">
-      <UniqueIdentifier>{1013de66-d95f-464b-bafd-98437ec3682c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Manager\MessageManager">
       <UniqueIdentifier>{e62a3675-adb9-4441-b8b8-c04df61aaf04}</UniqueIdentifier>
     </Filter>
@@ -114,6 +108,9 @@
     </Filter>
     <Filter Include="소스 파일\Component\Monster\Boss">
       <UniqueIdentifier>{00baef76-481b-48a2-8c44-d3426396cee0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\CameraManager">
+      <UniqueIdentifier>{14794eaa-4f0a-49a8-abf6-5b791041d916}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -201,6 +198,9 @@
     <ClInclude Include="Boss.h">
       <Filter>소스 파일\Component\Monster\Boss</Filter>
     </ClInclude>
+    <ClInclude Include="CameraManager.h">
+      <Filter>소스 파일\Manager\CameraManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameClient.cpp">
@@ -274,6 +274,9 @@
     </ClCompile>
     <ClCompile Include="Boss.cpp">
       <Filter>소스 파일\Component\Monster\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraManager.cpp">
+      <Filter>소스 파일\Manager\CameraManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

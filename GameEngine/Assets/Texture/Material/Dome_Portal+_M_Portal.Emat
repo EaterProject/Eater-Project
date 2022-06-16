@@ -1,0 +1,22 @@
+#EATERMAT
+@ORMMap Dome_Portal_Emissive
+@Alpha 0
+@MaterialName Dome_Portal+_M_Portal
+@LimColor_B 0.000000
+@DiffuseMap Dome_Portal_BaseColor
+@NormalMap Dome_Portal_Normal
+@EmissiveMap Dome_Portal_Emissive
+@SkyLightIndex 0.000000
+@Emissive 0.000000
+@Roughness 0.000000
+@Metallic 0.000000
+@Tileing_X 1
+@Tileing_Y 1
+@AddColor_R 0.000000
+@AddColor_G 0.000000
+@LimFactor 0.000000
+@AddColor_B 0.000000
+@LimColor_R 0.000000
+@LimColor_G 0.000000
+@LimWidth 0.000000
+&

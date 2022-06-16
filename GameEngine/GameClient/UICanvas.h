@@ -22,6 +22,7 @@ public:
 	void Set_Emagin_Now(int Number);
 	void Set_Emagin_Max(int Number);
 	void Set_Monster_EMAGINE(void* Emagin);
+	void Set_ALLRender(bool Render);
 private:
 	//생성 함수
 	void Create_Combo_UI();

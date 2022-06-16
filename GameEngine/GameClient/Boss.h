@@ -11,7 +11,8 @@ public:
 	void Update() override;
 	void Debug() override;
 	void OnTriggerStay(GameObject* Obj) override;
-
+	void SetLimLightColor();
+	void Hit();
 public:
 	
 

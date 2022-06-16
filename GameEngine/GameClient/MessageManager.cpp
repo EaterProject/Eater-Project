@@ -8,6 +8,7 @@
 #include "Camera.h"
 #include "Transform.h"
 #include "ClientTypeOption.h"
+#include <string>
 
 //클라이언트 컨퍼넌트
 #include "PlayerCamera.h"
@@ -20,6 +21,8 @@
 #include "UICanvas.h"
 #include "GateDoor.h"
 #include "Boss.h"
+#include "CameraManager.h"
+#include "ManaStone.h"
 
 MessageManager* MessageManager::instance = nullptr;
 MessageManager::MessageManager()
@@ -56,23 +59,15 @@ void MessageManager::Initialize(ObjectFactory* Factory)
 	//포탈 태그가 붙어있는 오브젝트를 모두 가져와 리스트에 담아놓는다
 	FindGameObjectTags("ManaPoint", &mFactory->ManaPoint_List);
 	
-	////UI 만들기
-	GameObject* Object = nullptr;
-
-
-	//플레이어 상태 UI 생성
-	Object			= mFactory->CreateUICanvas();
-	mCanvas			= Object->GetComponent<UICanvas>();
 
 	//플레이어 생성
-	Object			= mFactory->CreatePlayer();
-	mPlayer			= Object->GetComponent<Player>();
-
-	//마나석 생성
-	Object			= mFactory->CreateManaStone();
-	
+	CREATE_MESSAGE(TARGET_CAMERA_MANAGER);
 	CREATE_MESSAGE(TARGET_GATE_MANAGER);
+	CREATE_MESSAGE(TARGET_UI);
+	CREATE_MESSAGE(TARGET_PLAYER);
 
+
+	CREATE_MESSAGE(TARGET_MANA);
 	CREATE_MESSAGE(TARGET_BOSS);
 }
 
@@ -98,6 +93,12 @@ void MessageManager::SEND_Message(int Target, int MessageType, void* Data)
 		break;
 	case TARGET_GATE_MANAGER:	//글로벌 메세지를 보낸다
 		SEND_GATE_Message(MessageType, Data);
+		break;
+	case TARGET_CAMERA_MANAGER:
+		SEND_CAMERA_Message(MessageType, Data);
+		break;
+	case TARGET_GLOBAL:
+		SEND_GLOBAL_Message(MessageType, Data);
 		break;
 	}
 }
@@ -128,26 +129,44 @@ GameObject* MessageManager::CREATE_MESSAGE(int CREATE_TYPE)
 	case TARGET_GATE_OUT:
 		return mFactory->CreateGate_Out();
 	case TARGET_GATE_MANAGER:
-		Object = mFactory->CreateGate_Manager();
-		mGate = Object->GetComponent<GateDoor>();
+		Object	= mFactory->CreateGate_Manager();
+		mGate	= Object->GetComponent<GateDoor>();
+		return Object;
+	case TARGET_CAMERA_MANAGER:
+		Object = mFactory->CreateCameraManager();
+		mCameraManager = Object->GetComponent<CameraManager>();
+		return Object;
+	case TARGET_UI:
+		Object = mFactory->CreateUICanvas();
+		mCanvas = Object->GetComponent<UICanvas>();
 		return Object;
 	}
+
+	return nullptr;
+}
+
+GameObject* MessageManager::GET_MESSAGE(int GET_TYPE)
+{
+	
 	return nullptr;
 }
 
 void MessageManager::SEND_Player_Message(int MessageType, void* Data)
 {
+	///Boss 메세지 모음
 	mPlayer->SetMessageRECV(MessageType, Data);
 }
 
 void MessageManager::SEND_BOSS_Message(int MessageType, void* Data)
 {
-
+	///Boss 메세지 모음
 
 }
 
 void MessageManager::SEND_UI_Message(int MessageType, void* Data)
 {
+	///UI 메세지 모음
+
 	switch (MessageType)
 	{
 	case MESSAGE_UI_COMBO:
@@ -168,11 +187,16 @@ void MessageManager::SEND_UI_Message(int MessageType, void* Data)
 	case MESSAGE_UI_MONSTER_UI_ON:
 		mCanvas->Set_Monster_EMAGINE(Data);
 		break;
+	case MESSAGE_UI_RENDER:
+		mCanvas->Set_ALLRender(*(reinterpret_cast<int*>(Data)));
+		break;
 	}
 }
 
 void MessageManager::SEND_GATE_Message(int MessageType, void* Data)
 {
+	///게이트 메세지 모음
+
 	switch (MessageType)
 	{
 	case MESSAGE_GATE_OPEN:
@@ -182,6 +206,43 @@ void MessageManager::SEND_GATE_Message(int MessageType, void* Data)
 		mGate->SetClose(*reinterpret_cast<int*>(Data));
 		break;
 	}
+}
+
+void MessageManager::SEND_CAMERA_Message(int MessageType, void* Data)
+{
+	///카메라 메세지 모음
+
+	switch (MessageType)
+	{
+	case MESSAGE_CAMERA_CINEMATIC_GAME_START:
+	case MESSAGE_CAMERA_CINEMATIC_GAME_END:
+	case MESSAGE_CAMERA_CINEMATIC_BOSS_START:
+	case MESSAGE_CAMERA_CINEMATIC_BOSS_END:
+		mCameraManager->SetCinematic(MessageType,*(reinterpret_cast<std::string*>(Data)));
+		break;
+	case MESSAGE_CAMERA_CHANGE_DEBUG:
+	case MESSAGE_CAMERA_CHANGE_PLAYER:
+		mCameraManager->Change(MessageType);
+		break;
+	}
+}
+
+void MessageManager::SEND_GLOBAL_Message(int MessageType, void* Data)
+{
+	switch (MessageType)
+	{
+	case MESSAGE_GLOBAL_GAMESTART:	//게임 시작
+		//CREATE_MESSAGE(TARGET_UI);
+		//CREATE_MESSAGE(TARGET_PLAYER);
+		//SEND_Message(TARGET_CAMERA_MANAGER, MESSAGE_CAMERA_CHANGE_PLAYER);
+		break;
+	case MESSAGE_GLOBAL_GAMEEND:	//게임 종료
+		break;
+	}
+
+
+
+
 }
 
 

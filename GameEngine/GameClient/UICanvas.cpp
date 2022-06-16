@@ -97,6 +97,26 @@ void UICanvas::Set_Monster_EMAGINE(void* Emagin)
 	Images[Image_Monster_HP_Front];
 }
 
+void UICanvas::Set_ALLRender(bool Render)
+{
+	if (Render == true)
+	{
+		//모든 이미지 On
+		for (int i = 0; i < 14; i++)
+		{
+
+		}
+	}
+	else
+	{
+		//모든 이미지 On
+		for (int i = 0; i < 14; i++)
+		{
+
+		}
+	}
+}
+
 void UICanvas::Create_Combo_UI()
 {
 	GameObject* Object = Instance();
@@ -316,5 +336,8 @@ void UICanvas::Update_Hit_Check()
 
 void UICanvas::Update_Combo_Check()
 {
-	mCombo->UpdateFontAnimation();
+	if (mCombo != nullptr)
+	{
+		mCombo->UpdateFontAnimation();
+	}
 }

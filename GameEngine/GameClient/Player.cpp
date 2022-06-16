@@ -53,18 +53,20 @@ void Player::Awake()
 	mAnimation	= gameobject->GetComponent<AnimationController>();
 	
 	//무기 오브젝트 가져오기
-	WeaponObject = FindGameObjectTag("Weapon");
-	WeaponObject->GetComponent<MeshFilter>()->SetModelName("player_weapon2");
+	WeaponObject = Instance();
+	WeaponObject->AddComponent<MeshFilter>()->SetModelName("player_weapon2");
 
 	//충돌 범위 가져오기
 	AttackColliderObject = FindGameObjectTag("PlayerCollider");
 	AttackCollider = AttackColliderObject->GetComponent<Collider>();
+
+	IsCreate = true;
 }
 
 void Player::SetUp()
 {
 	//Player 컨퍼넌트값 넣어주기
-	mCameraTR = GetMainCamera()->GetTransform();
+	mCameraTR = FindGameObjectTag("PlayerCamera")->GetTransform();
 	mMeshFilter->SetModelName("Player+");
 	mMeshFilter->SetAnimationName("Player+");
 	//AttackCollider 범위
@@ -78,15 +80,16 @@ void Player::Start()
 {
 	//무기와 손을 연결
 	GameObject* Hand = gameobject->GetChildBone("hand.l");
-	GameObject* WeponObejct = FindGameObjectTag("Weapon");
 	//
-	Hand->ChoiceChild(WeponObejct);
-	WeponObejct->ChoiceParent(Hand);
+	Hand->ChoiceChild(WeaponObject);
+	WeaponObject->ChoiceParent(Hand);
 	WeaponTR = WeaponObject->GetTransform();
 }
 
 void Player::Update()
 {
+	if (IsCreate == false) { return; }
+
 	//플레이어 땅 체크
 	PlayerGroundCheck();
 
@@ -378,6 +381,17 @@ void Player::Player_Skill_01()
 {
 	WeaponTR->Position = { 0,-0.02f,0.1f };
 	WeaponTR->Rotation = { 186,31,0 };
+
+	if (mAnimation->EventCheck() == true)
+	{
+		IsAttackTime = true;
+	}
+	else
+	{
+		IsAttackTime = false;
+	}
+
+
 	if (PlayerEndFrameCheck())
 	{
 		Player_Move_Check();
@@ -388,6 +402,16 @@ void Player::Player_Skill_02()
 {
 	WeaponTR->Position = { 0,-0.02f,0.1f };
 	WeaponTR->Rotation = { 186,31,0 };
+
+	if (mAnimation->EventCheck() == true)
+	{
+		IsAttackTime = true;
+	}
+	else
+	{
+		IsAttackTime = false;
+	}
+
 	if (PlayerEndFrameCheck())
 	{
 		Player_Move_Check();
@@ -398,6 +422,17 @@ void Player::Player_Skill_03()
 {
 	WeaponTR->Position = { 0,-0.02f,0.1f };
 	WeaponTR->Rotation = { 8,19,-10 };
+
+	if (mAnimation->EventCheck() == true)
+	{
+		IsAttackTime = true;
+	}
+	else
+	{
+		IsAttackTime = false;
+	}
+
+
 	if (PlayerEndFrameCheck())
 	{
 		Player_Move_Check();

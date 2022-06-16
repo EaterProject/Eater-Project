@@ -85,6 +85,7 @@ private:
 	bool IsAttack			= false;
 	bool IsMove				= false;
 	bool IsHit				= false;
+	bool IsCreate			= false;
 	static bool IsAttackTime;
 	int	ComboCount;
 	float		ComboTime	= 0.0f;

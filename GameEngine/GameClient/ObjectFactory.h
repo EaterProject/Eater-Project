@@ -38,21 +38,15 @@ public:
 	GameObject* CreateMonsterB();		//몬스터 객체를 생성
 	GameObject* CreateManaStone();		//마나석 객체를 생성
 	GameObject* CreateFontImage();		//폰트 이미지 생성
-	GameObject* CreateUICanvas();	//플레이어 스테이트 UI생성
-	GameObject* CreateBoss();
-	GameObject* CreateGate_In();
-	GameObject* CreateGate_Out();
-	GameObject* CreateGate_Manager();
+	GameObject* CreateUICanvas();		//플레이어 스테이트 UI생성
+	GameObject* CreateBoss();			//보스 객체 생성
+	GameObject* CreateGate_In();		//게이트 객체 생성
+	GameObject* CreateGate_Out();		//게이트 객체 생성
+	GameObject* CreateGate_Manager();	//게이트 매니저 생성
+	GameObject* CreateCameraManager();	//카메라 매니저 생성
 private:
 	//게임상에 한개만 존재하는 오브젝트를 따로 보관
-	GameObject* PlayerObject;
-	GameObject* PlayerMainCamera;
-
 	std::vector<GameObject*> ManaPoint_List;
-	std::vector<MonsterA*> MonsterA_List;
-	std::vector<MonsterB*> MonsterB_List;
-	ComboFont* mComboFont;
-
 	friend MessageManager;
 };
 
