@@ -1,6 +1,7 @@
 #include "RaycastManager.h"
 #include "PxPhysicsAPI.h"
 #include "PhysData.h"
+#include "PhysRay.h"
 
 RaycastManager::RaycastManager()
 {

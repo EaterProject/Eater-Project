@@ -83,6 +83,11 @@ void PhysData::SetVelocity(float x, float y, float z)
 	isVelocity = true;
 }
 
+void PhysData::SetTrigger(bool mTrigger)
+{
+	isTrigger = mTrigger;
+}
+
 Vector3 PhysData::GetVelocity()
 {
 	return PhysX_Velocity;
@@ -182,14 +187,4 @@ void PhysData::PushTriggerExit_Data(PhysData* Data)
 
 
 
-PhysRayCast::PhysRayCast()
-{
 
-
-}
-
-PhysRayCast::~PhysRayCast()
-{
-
-
-}

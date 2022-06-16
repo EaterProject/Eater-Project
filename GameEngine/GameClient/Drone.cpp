@@ -29,6 +29,7 @@ void Drone::Awake()
 
 	mTransform			= gameobject->GetTransform();
 	mMeshFilter			= gameobject->GetComponent<MeshFilter>();
+	IsCreate = true;
 }
 
 void Drone::SetUp()
@@ -41,6 +42,8 @@ void Drone::SetUp()
 
 void Drone::Update()
 {	
+	if (IsCreate == false) { return; }
+
 	if (mTransform->GetDistance(mPlayerTR->Position) >= 3.0f) 
 	{
 		Vector3 DronePos = Vector3::Lerp(mTransform->Position, mPlayerTR->Position,GetDeltaTime());
@@ -49,7 +52,7 @@ void Drone::Update()
 	}
 
 	//LookAt
-	mTransform->Slow_Y_Rotation(mPlayerTR->Position,50,true);
+	mTransform->Slow_Y_Rotation(mPlayerTR->Position,100,true);
 }
 
 

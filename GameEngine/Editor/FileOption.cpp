@@ -203,7 +203,8 @@ void FileOption::OnAddCollider()
 {
 	if (ChoiceObject != nullptr)
 	{
-		ChoiceObject->AddComponent<Collider>();
+		Collider* Col = ChoiceObject->AddComponent<Collider>();
+		Col->SetBoxCollider(1, 1, 1);
 	}
 }
 

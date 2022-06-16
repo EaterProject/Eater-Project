@@ -91,15 +91,12 @@ void EditorToolScene::End()
 
 void EditorToolScene::ThreadFunction()
 {
-	//BakeSkyLightMap("Day");
 	BakeSkyLightMap("SkyLight_0", false);
 	BakeSkyLightMap("SkyLight_1", false);
 
-	//SetSkyLight("Day");
 	SetSkyLight("SkyLight_0", 0);
 	SetSkyLight("SkyLight_1", 1);
-	//SetSkyLight("SkyLight_HDRI", 1);
-	//SetSkyCube("Day");
+
 	SetSkyCube("SkyCube");
 }
 
@@ -395,7 +392,7 @@ GameObject* EditorToolScene::Create_Terrain(std::string MeshPath, std::string ma
 
 GameObject* EditorToolScene::Create_Light()
 {
-	GameObject* LightObject = InstanceLight("Light", LIGHT_TYPE::SPOT_LIGHT);
+	GameObject* LightObject = Instance_Light("Light", LIGHT_TYPE::SPOT_LIGHT);
 	LightObject->Name = FindMeshName(LightObject->Name);
 	ObjectList.insert({ LightObject->Name, LightObject });
 	return LightObject;

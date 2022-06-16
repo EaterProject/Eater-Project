@@ -134,7 +134,7 @@ void GameEngine::Start()
 	DebugCamera->transform->Position = {0,10,-25};
 
 	//디렉션 라이트 생성
-	DirectionLight = InstanceLight("DirectionLight", LIGHT_TYPE::DIRECTION_LIGHT);
+	DirectionLight = Instance_Light("DirectionLight", LIGHT_TYPE::DIRECTION_LIGHT);
 	DirectionLight->SetDontDestroy(true);
 }
 
@@ -148,6 +148,7 @@ void GameEngine::Update()
 	mPhysManager->Update(mTimeManager->DeltaTime());
 	mSceneManager->Update();
 	mObjectManager->PlayUpdate();
+	mSoundManager->Update();
 	//mNavigationManager->Update();
 
 	// 모든 업데이트가 일어난 후 데이터 세팅..
@@ -344,7 +345,7 @@ GameObject* GameEngine::InstanceCamera(std::string ObjName)
 	return Obj;
 }
 
-GameObject* GameEngine::InstanceLight(std::string ObjName, LIGHT_TYPE type)
+GameObject* GameEngine::Instance_Light(std::string ObjName, LIGHT_TYPE type)
 {
 	PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Create ][ Light ] %s", ObjName.c_str());
 	
@@ -383,7 +384,7 @@ GameObject* GameEngine::InstanceLight(std::string ObjName, LIGHT_TYPE type)
 	return temp;
 }
 
-GameObject* GameEngine::InstanceUI(std::string ObjName /*= "UI"*/)
+GameObject* GameEngine::Instance_UI(std::string ObjName /*= "UI"*/)
 {
 	GameObject* Obj = CreateInstance();
 	Obj->AddComponent<RectTransform>();
@@ -505,12 +506,19 @@ void GameEngine::SetSkyCube(std::string& Path)
 {
 	TextureBuffer* environment = mLoadManager->GetTexture(Path);
 
+	if (environment == nullptr) return;
+
 	mGraphicManager->SetSkyCube(environment);
 }
 
 void GameEngine::SetSkyLight(std::string& Path, UINT index)
 {
 	SkyLightBuffer* skyLight = mLoadManager->GetSkyLight(Path);
+
+	if (skyLight == nullptr) return;
+
+	if (skyLight->Prefilter == nullptr) return;
+	if (skyLight->Irradiance == nullptr) return;
 
 	mGraphicManager->SetSkyLight(skyLight, index);
 }
@@ -617,6 +625,46 @@ void GameEngine::Sound_PitchUp_BGM()
 void GameEngine::Sound_PitchDown_BGM()
 {
 	mSoundManager->PitchDown(Sound_Category::BGM);
+}
+
+void GameEngine::Sound_Play_SFX(std::string& SoundName)
+{
+	mSoundManager->SoundPlay(Sound_Category::SFX, SoundName);
+}
+
+void GameEngine::Sound_Pause_SFX(bool Pause)
+{
+	mSoundManager->PauseSound(Sound_Category::SFX, Pause);
+}
+
+void GameEngine::Sound_VolumeUP_SFX()
+{
+	mSoundManager->VolumeUp(Sound_Category::SFX);
+}
+
+void GameEngine::Sound_VolumeDown_SFX()
+{
+	mSoundManager->VolumeDown(Sound_Category::SFX);
+}
+
+void GameEngine::Sound_FrequencyUp_SFX()
+{
+	mSoundManager->FrequencyUp(Sound_Category::SFX);
+}
+
+void GameEngine::Sound_FrequencyDown_SFX()
+{
+	mSoundManager->FrequencyDown(Sound_Category::SFX);
+}
+
+void GameEngine::Sound_PitchUp_SFX()
+{
+	mSoundManager->PitchUp(Sound_Category::SFX);
+}
+
+void GameEngine::Sound_PitchDown_SFX()
+{
+	mSoundManager->PitchDown(Sound_Category::SFX);
 }
 
 void GameEngine::SetFocus(bool focus)
