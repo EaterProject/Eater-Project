@@ -193,16 +193,16 @@ void Debug_Pass::RenderUpdate(const RenderData* meshData)
 		//
 		//object.gWorldViewProj = Matrix::CreateScale(box.Extents) * Matrix::CreateTranslation(box.Center) * viewproj;
 		//
-		//m_DebugVS->ConstantBufferUpdate(&object);
-		//m_DebugVS->Update();
+		//m_Debug_VS->ConstantBufferUpdate(&object);
+		//m_Debug_VS->Update();
 		//
 		//option.gColor = Vector3(1.0f, 1.0f, 0.0f);
 		//
-		//m_DebugColorPS->ConstantBufferUpdate(&option);
-		//m_DebugColorPS->Update();
+		//m_DebugColor_PS->ConstantBufferUpdate(&option);
+		//m_DebugColor_PS->Update();
 		//
 		//BufferUpdate(DEBUG_TYPE::DEBUG_BOX);
-		//g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+		//g_Context->DrawIndexed(m_Debug_DB->IndexCount, 0, 0);
 
 		/// Bounding Sphere Draw..
 		//g_Context->RSSetState(m_Wire_RS);
@@ -234,17 +234,17 @@ void Debug_Pass::RenderUpdate(const RenderData* meshData)
 		//
 		//object.gWorldViewProj = viewproj;
 		//
-		//m_DebugVS->ConstantBufferUpdate(&object);
-		//m_DebugVS->Update();
+		//m_Debug_VS->ConstantBufferUpdate(&object);
+		//m_Debug_VS->Update();
 		//
-		//m_DebugColorPS->ConstantBufferUpdate(&option);
-		//m_DebugColorPS->Update();
+		//m_DebugColor_PS->ConstantBufferUpdate(&option);
+		//m_DebugColor_PS->Update();
 		//
 		//// Ray Buffer Update
 		//SetRay(ray.RayStart, ray.RayEnd);
 		//
 		//BufferUpdate(DEBUG_TYPE::DEBUG_RAY);
-		//g_Context->DrawIndexed(m_DebugBuffer->IndexCount, 0, 0);
+		//g_Context->DrawIndexed(m_Debug_DB->IndexCount, 0, 0);
 	}
 		break;
 	case OBJECT_TYPE::BONE:

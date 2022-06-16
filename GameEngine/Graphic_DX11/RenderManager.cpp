@@ -432,7 +432,7 @@ void* RenderManager::PickingRender(int x, int y)
 
 void RenderManager::ShadowRender()
 {
-	if (m_NowRenderOption.RenderingOption & RENDER_SHADOW)
+	if (m_NowRenderOption.RenderingOption & RENDER_OPTION::RENDER_SHADOW)
 	{
 		m_Shadow->BeginRender();
 
@@ -459,7 +459,7 @@ void RenderManager::DeferredRender()
 
 void RenderManager::SSAORender()
 {
-	if (m_NowRenderOption.RenderingOption & RENDER_SSAO)
+	if (m_NowRenderOption.RenderingOption & RENDER_OPTION::RENDER_SSAO)
 	{
 		m_SSAO->RenderUpdate();
 	}
@@ -496,7 +496,7 @@ void RenderManager::AlphaRender()
 void RenderManager::PostProcessingRender()
 {
 	GPU_BEGIN_EVENT_DEBUG_NAME("Bloom Pass");
-	if (m_NowRenderOption.PostProcessOption & RENDER_BLOOM)
+	if (m_NowRenderOption.PostProcessOption & POSTPROCESS_OPTION::RENDER_BLOOM)
 	{
 		m_Bloom->RenderUpdate();
 	}
@@ -511,7 +511,7 @@ void RenderManager::PostProcessingRender()
 	GPU_END_EVENT_DEBUG_NAME();
 
 	GPU_BEGIN_EVENT_DEBUG_NAME("FXAA Pass");
-	if (m_NowRenderOption.PostProcessOption & RENDER_FXAA)
+	if (m_NowRenderOption.PostProcessOption & POSTPROCESS_OPTION::RENDER_FXAA)
 	{
 		m_FXAA->RenderUpdate();
 	}
@@ -530,7 +530,7 @@ void RenderManager::UIRender()
 
 void RenderManager::DebugRender()
 {
-	if (m_NowRenderOption.DebugOption & DEBUG_MODE)
+	if (m_NowRenderOption.DebugOption & DEBUG_OPTION::DEBUG_MODE)
 	{
 		GPU_MARKER_DEBUG_NAME("Object Debug");
 		m_Debug->BeginRender();

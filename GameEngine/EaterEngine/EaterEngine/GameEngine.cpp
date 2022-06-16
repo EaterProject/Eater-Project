@@ -14,6 +14,7 @@
 #include "NavigationManager.h"
 #include "MaterialManager.h"
 #include "EaterSound.h"
+#include "DebugManager.h"
 
 #include "ParserData.h"
 #include "EngineData.h"
@@ -32,12 +33,15 @@
 #include "ParticleSystem.h"
 #include "CameraDebugKeyInput.h"
 #include "RectTransform.h"
+#include "Image.h"
+#include "Slider.h"
 
 #include "Profiler/Profiler.h"
 
 int GameEngine::WinSizeWidth	= 0;
 int GameEngine::WinSizeHeight	= 0;
 Eater::Delegate<int, int> GameEngine::ResizeFunction;
+Eater::Delegate<RenderOption*> GameEngine::RenderOptionFunction;
 
 GameEngine::GameEngine()
 {
@@ -108,6 +112,7 @@ void GameEngine::Initialize(HWND Hwnd, bool mConsoleDebug)
 
 	//매니저들 초기화
 	GlobalDataManager::Initialize();
+	DebugManager::Initialize();
 	mGraphicManager->Initialize(Hwnd, WinSizeWidth, WinSizeHeight, mRenderOption);
 	mKeyManager->Initialize(mHwnd);
 	mObjectManager->Initialize();
@@ -384,6 +389,28 @@ GameObject* GameEngine::InstanceUI(std::string ObjName /*= "UI"*/)
 {
 	GameObject* Obj = CreateInstance();
 	Obj->AddComponent<RectTransform>();
+
+	return Obj;
+}
+
+GameObject* GameEngine::InstanceImage(std::string ObjName /*= "Image"*/)
+{
+	GameObject* Obj = InstanceUI();
+	Obj->AddComponent<Image>();
+
+	return Obj;
+}
+
+GameObject* GameEngine::InstanceSlider(std::string ObjName /*= "Slider"*/)
+{
+	GameObject* Obj = CreateInstance();
+	Slider* slider  = Obj->AddComponent<Slider>();
+
+	GameObject* Back_Img = InstanceImage();
+	slider->SetBackGroundImage(Back_Img->GetComponent<Image>());
+
+	GameObject* Fill_Img = InstanceImage();
+	slider->SetFillImage(Fill_Img->GetComponent<Image>());
 
 	return Obj;
 }
@@ -684,6 +711,9 @@ RenderOption* GameEngine::GetRenderOptionData()
 void GameEngine::RenderSetting()
 {
 	mGraphicManager->RenderSetting();
+
+	// RenderOption Function List 실행..
+	RenderOptionFunction(mRenderOption);
 }
 
 GameObject* GameEngine::CreateInstance()

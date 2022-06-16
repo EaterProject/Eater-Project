@@ -31,6 +31,23 @@ typedef enum DEBUG_OPTION : UINT
 	DEBUG_MODE		   = 0x00000010,
 }DEBUG_OPTION;
 
+// UI Type
+typedef enum UI_TYPE
+{
+	UI_DEFAULT,
+	UI_FILL,
+	UI_FILL_REVERSE
+}UI_TYPE;
+
+// Fill Type
+typedef enum FILL_TYPE
+{
+	FILL_UP,
+	FILL_DOWN,
+	FILL_LEFT,
+	FILL_RIGHT,
+}FILL_TYPE;
+
 // Rect Pivot Option
 typedef enum RECT_PIVOT
 {
@@ -43,6 +60,7 @@ typedef enum RECT_PIVOT
 	PIVOT_MIDDLE_LEFT,
 	PIVOT_MIDDLE_RIGHT,
 	PIVOT_MIDDLE_CENTER,
+	PIVOT_MESH,
 }RECT_PIVOT;
 
 // Particle Animation Option

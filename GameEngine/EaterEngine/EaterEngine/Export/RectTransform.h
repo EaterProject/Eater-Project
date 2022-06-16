@@ -22,12 +22,14 @@ public:
 	void TransformUpdate() override;
 
 public:
-	EATER_ENGINEDLL void SetImagePivot(RECT_PIVOT pivot_type);
 	EATER_ENGINEDLL void SetImageSize(float x, float y);
 	EATER_ENGINEDLL void SetImageSize(DirectX::SimpleMath::Vector2 image_size);
 
+	EATER_ENGINEDLL void SetPivot(RECT_PIVOT pivot_type);
 	EATER_ENGINEDLL void SetPosition(float x, float y);
 	EATER_ENGINEDLL void SetPosition(DirectX::SimpleMath::Vector2 pos);
+	EATER_ENGINEDLL void SetPosition3D(float x, float y, float z);
+	EATER_ENGINEDLL void SetPosition3D(DirectX::SimpleMath::Vector3 pos);
 
 	EATER_ENGINEDLL void SetRotation(float angle);
 	EATER_ENGINEDLL void SetRotation(float x, float y, float z);

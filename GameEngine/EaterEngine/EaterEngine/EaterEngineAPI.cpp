@@ -73,6 +73,16 @@ void OnReSize(int X, int Y)
 	 return gGameEngine->InstanceUI(ObjName);
  }
 
+ GameObject* InstanceImage(std::string ObjName/*= "Image"*/)
+ {
+	 return gGameEngine->InstanceImage(ObjName);
+ }
+
+ GameObject* InstanceSlider(std::string ObjName)
+ {
+	 return gGameEngine->InstanceSlider(ObjName);
+ }
+
  GameObject* FindGameObjectTag(std::string TagName)
  {
 	 return gGameEngine->FindGameObjectTag(TagName);

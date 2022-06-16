@@ -42,7 +42,6 @@ class GameEngine
 private:
 	CRITICAL_SECTION g_CS;
 
-
 public:
 	GameEngine();
 	~GameEngine();
@@ -59,6 +58,7 @@ public:
 	static int WinSizeWidth;	//윈도우 사이즈 가로
 	static int WinSizeHeight;	//윈도우 사이즈 세로
 	static Eater::Delegate<int, int> ResizeFunction;
+	static Eater::Delegate<RenderOption*> RenderOptionFunction;
 
 public:
 	///오브젝트 관련(오브젝트 매니저)
@@ -68,6 +68,8 @@ public:
 	GameObject* InstanceCamera(std::string ObjName = "Camera");
 	GameObject* InstanceLight(std::string ObjName = "Light", LIGHT_TYPE type = LIGHT_TYPE::POINT_LIGHT);
 	GameObject* InstanceUI(std::string ObjName = "UI");
+	GameObject* InstanceImage(std::string ObjName = "Image");
+	GameObject* InstanceSlider(std::string ObjName = "Slider");
 public:
 	///태그
 	GameObject* FindGameObjectTag(std::string& TagName);

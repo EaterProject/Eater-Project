@@ -20,11 +20,13 @@ public:
 	EATER_ENGINEDLL void SetImageColor(DirectX::SimpleMath::Vector4 image_color);
 	EATER_ENGINEDLL void SetImageColor(float r, float g, float b);
 	EATER_ENGINEDLL void SetImageColor(float r, float g, float b, float a);
+	EATER_ENGINEDLL void SetFillRange(FILL_TYPE type, float range);
 	EATER_ENGINEDLL void SetLayer(UINT order);
 
 public:
 	EATER_ENGINEDLL DirectX::SimpleMath::Vector2 GetImageSize();
 	EATER_ENGINEDLL DirectX::SimpleMath::Vector4 GetImageColor();
+	EATER_ENGINEDLL UINT GetLayer();
 
 private:
 	void SetTexture();

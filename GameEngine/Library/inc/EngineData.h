@@ -211,9 +211,11 @@ public:
 class UIProperty
 {
 public:
+	UI_TYPE UI_Option;	// UI Option
 	
 	Vector2 TexScale;		// UI Texture Offset Scale
 	Vector2 TexPos;			// UI Texture Offset Position
+	Vector2 TexFill;		// UI Texture Fill Range
 
 	Vector4 ImageColor;		// UI Color
 

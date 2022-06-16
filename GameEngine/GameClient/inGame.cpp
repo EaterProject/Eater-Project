@@ -19,6 +19,7 @@ void InGame::Awake()
 
 	RenderOption* option = GetRenderOptionData();
 	option->RenderingOption ^= RENDER_OPTION::RENDER_FOG;
+	option->DebugOption ^= DEBUG_OPTION::DEBUG_MODE;
 
 	RenderSetting();
 
@@ -146,7 +147,7 @@ void InGame::Awake()
 
 	GameObject* Test_Button = InstanceUI("Test_Button");
 	RectTransform* tr = Test_Button->GetComponent<RectTransform>();
-	tr->SetImagePivot(RECT_PIVOT::PIVOT_MIDDLE_CENTER);
+	tr->SetPivot(RECT_PIVOT::PIVOT_MIDDLE_CENTER);
 	tr->SetScale(0.5f, 0.5f);
 	Image* img = Test_Button->AddComponent<Image>();
 	img->SetTexture("Loading_Logo");
