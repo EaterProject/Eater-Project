@@ -42,6 +42,7 @@ class GameEngine
 private:
 	CRITICAL_SECTION g_CS;
 
+
 public:
 	GameEngine();
 	~GameEngine();
@@ -58,7 +59,6 @@ public:
 	static int WinSizeWidth;	//윈도우 사이즈 가로
 	static int WinSizeHeight;	//윈도우 사이즈 세로
 	static Eater::Delegate<int, int> ResizeFunction;
-	static Eater::Delegate<RenderOption*> RenderOptionFunction;
 
 public:
 	///오브젝트 관련(오브젝트 매니저)
@@ -66,10 +66,8 @@ public:
 	GameObject* InstanceTerrain(std::string ObjName = "Terrain");
 	GameObject* InstanceParticle(std::string ObjName = "Particle",std::string FileName = "Default");
 	GameObject* InstanceCamera(std::string ObjName = "Camera");
-	GameObject* InstanceLight(std::string ObjName = "Light", LIGHT_TYPE type = LIGHT_TYPE::POINT_LIGHT);
-	GameObject* InstanceUI(std::string ObjName = "UI");
-	GameObject* InstanceImage(std::string ObjName = "Image");
-	GameObject* InstanceSlider(std::string ObjName = "Slider");
+	GameObject* Instance_Light(std::string ObjName = "Light", LIGHT_TYPE type = LIGHT_TYPE::POINT_LIGHT);
+	GameObject* Instance_UI(std::string ObjName = "UI");
 public:
 	///태그
 	GameObject* FindGameObjectTag(std::string& TagName);
@@ -137,10 +135,14 @@ public:
 	void Sound_PitchUp_BGM();
 	void Sound_PitchDown_BGM();
 
-
-
-	//void Sound_Play_SFX(std::string& SoundName);
-
+	void Sound_Play_SFX(std::string& SoundName);
+	void Sound_Pause_SFX(bool Pause);
+	void Sound_VolumeUP_SFX();
+	void Sound_VolumeDown_SFX();
+	void Sound_FrequencyUp_SFX();
+	void Sound_FrequencyDown_SFX();
+	void Sound_PitchUp_SFX();
+	void Sound_PitchDown_SFX();
 public:
 	///윈도우 관련
 	void SetFocus(bool focus);
@@ -166,6 +168,7 @@ public:
 private:
 	GameObject* CreateInstance();
 	void CreateObject();			//기본 생성 오브젝트
+	void RenderOptionCheck();
 private:
 	///각종 매니저들
 	ObjectManager*			mObjectManager;		// 오브젝트 관리 매니저

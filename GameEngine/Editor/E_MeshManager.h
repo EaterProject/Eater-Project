@@ -30,5 +30,6 @@ private:
 private:
 	std::string SaveFileName;
 	std::vector<int> MeshIndexList;
+	bool BoneOffsetSave = false;
 };
 

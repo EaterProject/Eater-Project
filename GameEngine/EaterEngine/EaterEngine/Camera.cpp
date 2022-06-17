@@ -63,28 +63,28 @@ void Camera::Awake()
 
 void Camera::Update()
 {
-	//if (isAnimation == true)
-	//{
-	//	NowAnimationFrame += GetDeltaTime();
-	//	if (NowAnimationFrame >= mAnimation->OneFrame)
-	//	{
-	//		NowAnimationFrame -= mAnimation->OneFrame;
-	//	}
-	//
-	//	
-	//	if (NowFrameIndex >= mAnimation->Position.size())
-	//	{
-	//		isAnimation = false;
-	//		NowFrameIndex = 0;
-	//		MainCamera->ChoiceMainCam();
-	//	}
-	//	else
-	//	{
-	//		gameobject->transform->Position = mAnimation->Position[NowFrameIndex];
-	//		gameobject->transform->Rotation = mAnimation->Rotation[NowFrameIndex];
-	//		NowFrameIndex++;
-	//	}
-	//}
+	if (isAnimation == true)
+	{
+		NowAnimationFrame += GetDeltaTime();
+		if (NowAnimationFrame >= mAnimation->OneFrame)
+		{
+			NowAnimationFrame -= 0;
+		}
+
+
+		if (NowFrameIndex >= mAnimation->Position.size())
+		{
+			isAnimation = false;
+			NowFrameIndex = 0;
+			//MainCamera->ChoiceMainCam();
+		}
+		else
+		{
+			gameobject->transform->Position = mAnimation->Position[NowFrameIndex];
+			gameobject->transform->Rotation = mAnimation->Rotation[NowFrameIndex];
+			NowFrameIndex++;
+		}
+	}
 
 
 	if (g_MainCam == nullptr)

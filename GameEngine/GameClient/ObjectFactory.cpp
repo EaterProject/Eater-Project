@@ -18,45 +18,38 @@
 #include "ClientComponent.h"
 #include "Drone.h"
 #include "Bullet.h"
-#include "Potal.h"
-#include "ClientObjectManager.h"
+#include "MessageManager.h"
 #include "ManaStone.h"
+#include "FontImage.h"
+#include "ComboFont.h"
+#include "UICanvas.h"
+#include "GateDoor.h"
+#include "Boss.h"
+#include "CameraManager.h"
 
 
 
 ObjectFactory::ObjectFactory()
 {
-	PlayerObject		= nullptr;
-	PlayerMainCamera	= nullptr;
-	mOBJ_GM				= nullptr;
+
 }
 
 ObjectFactory::~ObjectFactory()
 {
-	PlayerObject = nullptr;
-	PlayerMainCamera = nullptr;
-	mOBJ_GM = nullptr;
-}
 
-void ObjectFactory::Initialize(ClientObjectManager* mGM)
-{
-	mOBJ_GM = mGM;
 }
 
 void ObjectFactory::Release()
 {
-	PlayerObject		= nullptr;
-	PlayerMainCamera	= nullptr;
-	mOBJ_GM				= nullptr;
+
 }
 
 GameObject* ObjectFactory::CreatePlayer()
 {
 	//플레이어와 카메라 오브젝트를 생성
 	GameObject* PlayerObject		= Instance();
-	GameObject* PlayerMainCamera	= Instance_Camera("Camera");
+	
 	GameObject* PlayerCollider		= Instance();
-	GameObject* PlayerWeapon		= Instance();
 	GameObject* DroneObject			= Instance();
 	GameObject* PlayerPoint			= FindGameObjectTag("PlayerPoint");
 	
@@ -71,22 +64,13 @@ GameObject* ObjectFactory::CreatePlayer()
 	PlayerCollider->SetTag("PlayerCollider");
 	PlayerCollider->AddComponent<Collider>();
 	
-	//플레이어 무기 생성
-	PlayerWeapon->SetTag("Weapon");
-	PlayerWeapon->AddComponent<MeshFilter>();
-
 	DroneObject->AddComponent<MeshFilter>();
 	DroneObject->AddComponent<Drone>();
-
-	//카메라 생성
-	Camera* Main = PlayerMainCamera->GetComponent<Camera>();
-	Main->ChoiceMainCam();
-	PlayerMainCamera->AddComponent<PlayerCamera>();
 
 	return PlayerObject;
 }
 
-Bullet* ObjectFactory::CreateBullet(float x, float y, float z)
+GameObject* ObjectFactory::CreateBullet()
 {
 	GameObject* DroneBullet = Instance("Bullet");
 	MeshFilter* mMeshFilter = DroneBullet->AddComponent<MeshFilter>();
@@ -94,43 +78,117 @@ Bullet* ObjectFactory::CreateBullet(float x, float y, float z)
 	Bullet*		mBullet		= DroneBullet->AddComponent<Bullet>();
 
 	mBullet->isLife = false;
-	DroneBullet->GetTransform()->Position = { x,y,z };
 	DroneBullet->SetTag(FindTagNumber("Bullet"));
 	DroneBullet->Name = "Bullet";
-	return mBullet;
+	return DroneBullet;
 }
 
-MonsterA* ObjectFactory::CreateMonsterA(float x, float y, float z)
+GameObject* ObjectFactory::CreateMonsterA()
 {
 	GameObject* Object_Monster = Instance("MonsterA");
 	Object_Monster->AddComponent<MeshFilter>();
 	Object_Monster->AddComponent<AnimationController>();
 	Object_Monster->AddComponent<Collider>();
+	Object_Monster->AddComponent<Rigidbody>();
 
 	MonsterA* monster = Object_Monster->AddComponent<MonsterA>();
-	Object_Monster->GetTransform()->Position = { x,y,z };
-	return monster;
+	return Object_Monster;
 }
 
-MonsterB* ObjectFactory::CreateMonsterB(float x, float y, float z)
+GameObject* ObjectFactory::CreateMonsterB()
 {
 	GameObject* Object_Monster = Instance("MonsterB");
 	Object_Monster->AddComponent<MeshFilter>();
 	Object_Monster->AddComponent<AnimationController>();
 	Object_Monster->AddComponent<Collider>();
+	Object_Monster->AddComponent<Rigidbody>();
 
 	MonsterB* monster = Object_Monster->AddComponent<MonsterB>();
-	Object_Monster->GetTransform()->Position = { x,y,z };
-	return monster;
+	return Object_Monster;
 }
 
-ManaStone* ObjectFactory::CreateManaStone(float x, float y, float z)
+GameObject* ObjectFactory::CreateManaStone()
 {
-	GameObject* Object_ManaStone = Instance("ManaStone");
-	Object_ManaStone->AddComponent<MeshFilter>();
-	ManaStone* mMana = Object_ManaStone->AddComponent<ManaStone>();
-	Object_ManaStone->GetTransform()->Position = { x,y,z };
-	return mMana;
+	int ManaCount = ManaPoint_List.size();
+	for (int i = 0; i < ManaCount; i++)
+	{
+		Vector3 point = ManaPoint_List[i]->GetTransform()->Position;
+		
+
+		GameObject* Object_ManaStone = Instance("ManaStone");
+		Object_ManaStone->AddComponent<MeshFilter>();
+		ManaStone* mMana = Object_ManaStone->AddComponent<ManaStone>();
+		Object_ManaStone->GetTransform()->Position = point;
+
+		switch (i)
+		{
+		case 0:
+			mMana->SetMonsterCount(5, 0);
+			break;
+		case 1:
+			mMana->SetMonsterCount(4, 1);
+			break;
+		case 2:
+			mMana->SetMonsterCount(3, 2);
+			break;
+		}
+	}
+	return nullptr;
+}
+
+GameObject* ObjectFactory::CreateFontImage()
+{
+	GameObject* Object_FontImage = Instance();
+	Object_FontImage->AddComponent<ComboFont>();
+	return Object_FontImage;
+}
+
+GameObject* ObjectFactory::CreateUICanvas()
+{
+	GameObject* Object_PlayerState = Instance();
+	Object_PlayerState->AddComponent<UICanvas>();
+	return Object_PlayerState;
+}
+
+GameObject* ObjectFactory::CreateBoss()
+{
+	GameObject* Object_Boss = Instance();
+	Object_Boss->AddComponent<Boss>();
+	Object_Boss->AddComponent<MeshFilter>();
+	Object_Boss->AddComponent<AnimationController>();
+	Object_Boss->AddComponent<Collider>();
+	Object_Boss->AddComponent<Rigidbody>();
+	return Object_Boss;
+}
+
+GameObject* ObjectFactory::CreateGate_In()
+{
+	GameObject* Object = Instance();
+	MeshFilter* mMeshFilter = Object->AddComponent<MeshFilter>();
+	mMeshFilter->SetModelName("Dome_GateDoor_IN");
+	return Object;
+}
+
+GameObject* ObjectFactory::CreateGate_Out()
+{
+	GameObject* Object = Instance();
+	MeshFilter* mMeshFilter = Object->AddComponent<MeshFilter>();
+	mMeshFilter->SetModelName("Dome_GateDoor_OUT");
+	return Object;
+}
+
+GameObject* ObjectFactory::CreateGate_Manager()
+{
+	GameObject* Object = Instance();
+	Object->AddComponent<GateDoor>();
+	return Object;
+}
+
+GameObject* ObjectFactory::CreateCameraManager()
+{
+	GameObject* Object = Instance_Camera();
+	Object->AddComponent<CameraManager>();
+	return Object;
 }
 
 

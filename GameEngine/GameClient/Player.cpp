@@ -6,7 +6,11 @@
 #include "EaterEngineAPI.h"
 #include "Camera.h"
 #include "Collider.h"
+
 #include "PhysData.h"
+#include "PhysRay.h"
+#include "MessageManager.h"
+#include "ClientTypeOption.h"
 
 
 #include "PlayerCamera.h"
@@ -49,18 +53,20 @@ void Player::Awake()
 	mAnimation	= gameobject->GetComponent<AnimationController>();
 	
 	//무기 오브젝트 가져오기
-	WeaponObject = FindGameObjectTag("Weapon");
-	WeaponObject->GetComponent<MeshFilter>()->SetModelName("player_weapon2");
+	WeaponObject = Instance();
+	WeaponObject->AddComponent<MeshFilter>()->SetModelName("player_weapon2");
 
 	//충돌 범위 가져오기
 	AttackColliderObject = FindGameObjectTag("PlayerCollider");
 	AttackCollider = AttackColliderObject->GetComponent<Collider>();
+
+	IsCreate = true;
 }
 
 void Player::SetUp()
 {
 	//Player 컨퍼넌트값 넣어주기
-	mCameraTR = GetMainCamera()->GetTransform();
+	mCameraTR = FindGameObjectTag("PlayerCamera")->GetTransform();
 	mMeshFilter->SetModelName("Player+");
 	mMeshFilter->SetAnimationName("Player+");
 	//AttackCollider 범위
@@ -74,15 +80,16 @@ void Player::Start()
 {
 	//무기와 손을 연결
 	GameObject* Hand = gameobject->GetChildBone("hand.l");
-	GameObject* WeponObejct = FindGameObjectTag("Weapon");
 	//
-	Hand->ChoiceChild(WeponObejct);
-	WeponObejct->ChoiceParent(Hand);
+	Hand->ChoiceChild(WeaponObject);
+	WeaponObject->ChoiceParent(Hand);
 	WeaponTR = WeaponObject->GetTransform();
 }
 
 void Player::Update()
 {
+	if (IsCreate == false) { return; }
+
 	//플레이어 땅 체크
 	PlayerGroundCheck();
 
@@ -91,6 +98,9 @@ void Player::Update()
 
 	//공격 충돌체의 위치를 설정
 	PlayerAttackColliderUpdate();
+
+	//플레이어 공격당했을때 무적시간
+	PlayerHitTimeCheck();
 
 	//공격상태일때 아닐떄를 먼저 체크
 	if (mState & (PLAYER_STATE_ATTACK_01 | PLAYER_STATE_ATTACK_02 | PLAYER_STATE_SKILL_01 | PLAYER_STATE_SKILL_02))
@@ -103,6 +113,25 @@ void Player::Update()
 	}
 
 	DirPos = { 0,0,0 };
+}
+
+void Player::SetMessageRECV(int Type, void* Data)
+{
+	//다른 객체에게 메세지를 받는다 받은 메세지는 
+	//UI쪽으로 다시 보내줌
+
+	switch (Type)
+	{
+	case MESSAGE_PLAYER_HIT:
+		Player_Hit(*(reinterpret_cast<int*>(Data)));
+		break;
+	case MESSAGE_PLAYER_HILL:
+		break;
+	case MESSAGE_PLAYER_ATTACK_OK:
+		ComboCount++;
+		MessageManager::GetGM()->SEND_Message(TARGET_UI,MESSAGE_UI_COMBO,&ComboCount);
+		break;
+	}
 }
 
 Transform* Player::GetPlayerTransform()
@@ -186,12 +215,14 @@ void Player::PlayerKeyinput()
 	}
 	else if (GetKeyDown('E'))
 	{
-		AttackKeyDownCount++;
 		mState |= PLAYER_STATE_SKILL_02;
 	}
 	else if (GetKeyDown('Q'))
 	{
-		//mState |= PLAYER_STATE_SKILL_03;
+		ChangeCount++;
+		if (ChangeCount > 14){ChangeCount = 0;}
+		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_EMAGIN_NOW, &ChangeCount);
+		Sound_Play_SFX("ChangeEmagin");
 	}
 	else if (GetKeyDown(VK_SPACE))
 	{
@@ -200,10 +231,8 @@ void Player::PlayerKeyinput()
 
 	//이번프레임에 이동해야하는 방향
 	DirPos.Normalize();
-
-	
-
 	DirRot.Normalize();
+
 	if (IsAttack == false)
 	{
 		mTransform->Slow_Y_Rotation(DirRot + mTransform->Position, 450);
@@ -231,9 +260,9 @@ void Player::PlayerState_Attack()
 {
 	IsAttack = true;
 	IsMove = false;
-	/// <summary>
+
 	/// 플레이어 공격상태일때 들어옵니다
-	/// </summary>
+
 	Speed = 0;
 	if (mState & PLAYER_STATE_ATTACK_01)
 	{
@@ -298,13 +327,23 @@ bool Player::PlayerEndFrameCheck()
 	}
 }
 
+void Player::PlayerHitTimeCheck()
+{
+	if (IsHit == false) { return; }
+	HitTime += GetDeltaTime();
+	if (HitTime >= 0.5f)
+	{
+		IsHit = false;
+		HitTime = 0;
+	}
+}
+
 void Player::Player_Attack_01()
 {
 	WeaponTR->Position = { 0,-0.02f,0.1f };
 	WeaponTR->Rotation = { 8,19,-10 };
 	if (mAnimation->EventCheck() == true)
 	{
-		DebugDrawCircle(1, mTransform->Position, mTransform->Rotation,Vector3(0,1,0));
 		IsAttackTime = true;
 	}
 	else
@@ -342,6 +381,17 @@ void Player::Player_Skill_01()
 {
 	WeaponTR->Position = { 0,-0.02f,0.1f };
 	WeaponTR->Rotation = { 186,31,0 };
+
+	if (mAnimation->EventCheck() == true)
+	{
+		IsAttackTime = true;
+	}
+	else
+	{
+		IsAttackTime = false;
+	}
+
+
 	if (PlayerEndFrameCheck())
 	{
 		Player_Move_Check();
@@ -352,6 +402,16 @@ void Player::Player_Skill_02()
 {
 	WeaponTR->Position = { 0,-0.02f,0.1f };
 	WeaponTR->Rotation = { 186,31,0 };
+
+	if (mAnimation->EventCheck() == true)
+	{
+		IsAttackTime = true;
+	}
+	else
+	{
+		IsAttackTime = false;
+	}
+
 	if (PlayerEndFrameCheck())
 	{
 		Player_Move_Check();
@@ -362,6 +422,17 @@ void Player::Player_Skill_03()
 {
 	WeaponTR->Position = { 0,-0.02f,0.1f };
 	WeaponTR->Rotation = { 8,19,-10 };
+
+	if (mAnimation->EventCheck() == true)
+	{
+		IsAttackTime = true;
+	}
+	else
+	{
+		IsAttackTime = false;
+	}
+
+
 	if (PlayerEndFrameCheck())
 	{
 		Player_Move_Check();
@@ -375,6 +446,23 @@ void Player::Player_Jump()
 	if (PlayerEndFrameCheck() == true)
 	{
 		Player_Move_Check();
+	}
+}
+
+void Player::Player_Hit(int HitPower)
+{
+	if (IsHit == true){return;}
+
+	IsHit = true;
+	HP -= HitPower;
+	if (HP <= 0)
+	{
+		//죽었을때
+		HP = 0;
+	}
+	else
+	{
+		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_HP_NOW, &HP);
 	}
 }
 
@@ -436,6 +524,7 @@ void Player::PlayerGroundCheck()
 		RayStartPoint.y = mTransform->Position.y + 2;
 
 		//Ray 값 조정
+		RayCastHit[i];
 		RayCastHit[i].Origin		= RayStartPoint;
 		RayCastHit[i].Direction		= {0,-1,0};
 		RayCastHit[i].MaxDistance	= 10;

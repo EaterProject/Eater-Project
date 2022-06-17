@@ -53,7 +53,7 @@ void E_ChangeManager::Change_Skin(int index, GameObject* Object)
 	std::string ParentName = EATER_GET_MAP(index, "ParentName");
 	std::string NodeName = EATER_GET_MAP(index, "NodeName");
 	std::string ObjectOriginalName = GetOriginalName(Object->Name);
-	if (ParentName == "RootNode")
+	if (ParentName == "RootNode" && Object->Name == NodeName)
 	{
 		MeshFilter* MF = Object->GetComponent<MeshFilter>();
 		Transform* TR = Object->GetComponent<Transform>();
@@ -332,10 +332,11 @@ void E_ChangeManager::Change_Name(int Nodeindex, MeshFilter* MF)
 	std::string BufferName		= MF->GetBufferName();
 	std::string MaterialName	= MF->GetMaterialName();
 	std::string ModelName		= MF->GetModelName();
+	std::string NodeName		= MF->gameobject->Name;
 
 	//파일에서 읽은 이름과 현재 오브젝트의 메테리얼이름이같다면
 	//현재 메테리얼의 이름으로 변경해준다
-	if (BufferName != CMeshName && BufferName != "")
+	if (BufferName != "")
 	{
 		EATER_CHANGE_MAP(Nodeindex, "MeshName", BufferName);
 	}
@@ -344,6 +345,7 @@ void E_ChangeManager::Change_Name(int Nodeindex, MeshFilter* MF)
 	{
 		EATER_CHANGE_MAP(Nodeindex, "MaterialName", MaterialName);
 	}
+	EATER_CHANGE_MAP(Nodeindex, "NodeName", NodeName);
 }
 
 

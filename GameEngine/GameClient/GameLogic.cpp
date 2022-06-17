@@ -1,12 +1,8 @@
 #include "GameLogic.h"
 #include "EaterEngineAPI.h"
 #include "ObjectFactory.h"
-#include "GameObject.h"
-#include "Transform.h"
-#include "ClientObjectManager.h"
-#include "ClientComponent.h"
-#include "Collider.h"
-#include "Camera.h"
+#include "MessageManager.h"
+
 
 GameLogic::GameLogic()
 {
@@ -17,18 +13,13 @@ GameLogic::GameLogic()
 GameLogic::~GameLogic()
 {
 	delete FactoryGM;
-	delete ObjectGM;
 }
 
 void GameLogic::Initialize()
 {
 	//매니저 생성
 	FactoryGM	= new ObjectFactory();
-	ObjectGM	= new ClientObjectManager();
-
-	//오브젝트 관리 매니저
-	FactoryGM->Initialize(ObjectGM);
-	ObjectGM->Initialize(FactoryGM);
+	MessageManager::GetGM()->Initialize(FactoryGM);
 }
 
 void GameLogic::Release()
@@ -39,7 +30,33 @@ void GameLogic::Release()
 
 void GameLogic::Update()
 {
-	
+	if (GetKeyDown(VK_F5))
+	{
+		int num = 0;
+		MessageManager::GetGM()->SEND_Message(TARGET_GATE_MANAGER, MESSAGE_GATE_OPEN,&num);
+	}
+	if (GetKeyDown(VK_F6))
+	{
+		int num = 0;
+		MessageManager::GetGM()->SEND_Message(TARGET_GATE_MANAGER, MESSAGE_GATE_CLOSE, &num);
+	}
 
+	if (GetKeyDown(VK_F7))
+	{
+		std::string Name = "StartCameraAnim";
+		MessageManager::GetGM()->SEND_Message(TARGET_CAMERA_MANAGER, MESSAGE_CAMERA_CINEMATIC_GAME_START, &Name);
+	}
+
+
+	if (GetKeyDown(VK_NUMPAD0))
+	{
+		MessageManager::GetGM()->SEND_Message(TARGET_CAMERA_MANAGER, MESSAGE_CAMERA_CHANGE_PLAYER);
+	}
+
+	if (GetKeyDown(VK_NUMPAD1))
+	{
+		MessageManager::GetGM()->SEND_Message(TARGET_CAMERA_MANAGER, MESSAGE_CAMERA_CHANGE_DEBUG);
+	}
 }
+
 

@@ -61,7 +61,10 @@ void Eater_LoadMesh::LoadData(std::string& Path)
 			LoadMeshData* Data = LoadSkinMesh(i);
 			SaveData->TopSkinList.push_back(Data);
 			Data->ModelName = SaveName;
-			SaveData->BoneOffsetList = std::move(Data->BoneTMList);
+			if (SaveData->BoneOffsetList.size() == 0)
+			{
+				SaveData->BoneOffsetList = std::move(Data->BoneTMList);
+			}
 		}
 		else if (NodeName == "TERRAIN")
 		{
@@ -215,10 +218,10 @@ void Eater_LoadMesh::LoadTM(int Index, LoadMeshData* model)
 
 void Eater_LoadMesh::LoadBoneOffset(int index, LoadMeshData* model)
 {
+	if (model->BoneTMList.size() >= 1) { return; }
 	int BoneOffsetCount = EATER_GET_LIST_CHOICE(index, "BoneOffset");
-
+	if (BoneOffsetCount == -1) { return; }
 	model->BoneTMList.resize(BoneOffsetCount);
-
 	for (int i = 0; i < BoneOffsetCount; i++)
 	{
 		std::vector<float> Data;

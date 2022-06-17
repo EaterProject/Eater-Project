@@ -609,7 +609,6 @@ void CTAP_Particle::OnLifeColor_Option()
 	}
 }
 
-
 void CTAP_Particle::OnLifeScale_Option()
 {
 	CString NumberX, NumberY;

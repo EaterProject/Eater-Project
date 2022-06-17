@@ -349,8 +349,8 @@ void Eater_LoadScene::Load_Component_Animation(int index, GameObject* Object)
 	std::vector<std::string> Data;
 	EATER_GET_LIST(&Data, 0);
 	MF->SetAnimationName(MF->GetModelName());
-	AC->Choice(Data[0]);
-	AC->Play();
+	//AC->Choice(Data[0]);
+	//AC->Play();
 }
 
 void Eater_LoadScene::Load_Component_Transform(int index, GameObject* Object)

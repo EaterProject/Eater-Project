@@ -23,8 +23,8 @@ private:
 	Player*		mPlayerComponent;
 	MeshFilter* mMeshFilter;
 private:
-private:
 	const float DistanceOffset	= 4.0f; //플레이어 거리 오프셋
 	const float OffsetY			= 1.5f;	//드론위치 오프셋
+	bool IsCreate = false;
 };
 

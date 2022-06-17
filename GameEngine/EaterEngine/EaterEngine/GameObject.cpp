@@ -295,6 +295,9 @@ void GameObject::PushComponentFunction(Component* con, unsigned int type)
 	case END_UPDATE:
 		ObjectManager::PushEndUpdate(con, con->EndUpdate_Order);
 		break;
+	case DEBUG_UPDATE:
+		ObjectManager::PushDebugUpdate(con, con->DebugUpdate_Order);
+		break;
 	}
 }
 

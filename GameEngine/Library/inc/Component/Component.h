@@ -54,6 +54,8 @@ protected:
 	virtual void Update() {};
 	//마지막 업데이트
 	virtual void EndUpdate() {};
+	//디버깅 업데이트
+	virtual void Debug() {};
 
 	//충돌 체크용 오버라이딩 함수들
 	virtual void OnTriggerEnter(GameObject* Obj) {};
@@ -79,6 +81,7 @@ protected:
 	unsigned int PhysicsUpdate_Order	= FUNCTION_ORDER_CENTER;
 	unsigned int DefaultUpdate_Order	= FUNCTION_ORDER_CENTER;
 	unsigned int EndUpdate_Order		= FUNCTION_ORDER_CENTER;
+	unsigned int DebugUpdate_Order		= FUNCTION_ORDER_CENTER;
 private:
 	//게임 오브젝트 안에 컨퍼넌트를 찾을때 이값으로 찾아옴
 	size_t ComponentType;

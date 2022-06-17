@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -172,10 +172,15 @@ copy /Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)" </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Boss.h" />
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="CameraManager.h" />
     <ClInclude Include="ClientTypeOption.h" />
+    <ClInclude Include="ComboFont.h" />
     <ClInclude Include="Drone.h" />
+    <ClInclude Include="FontImage.h" />
     <ClInclude Include="GameLogic.h" />
+    <ClInclude Include="GateDoor.h" />
     <ClInclude Include="LoadImage.h" />
     <ClInclude Include="Loading.h" />
     <ClInclude Include="framework.h" />
@@ -194,20 +199,25 @@ copy /Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)" </Command>
     <ClInclude Include="MonsterA.h" />
     <ClInclude Include="MonsterB.h" />
     <ClInclude Include="ClientComponent.h" />
-    <ClInclude Include="ClientObjectManager.h" />
+    <ClInclude Include="MessageManager.h" />
     <ClInclude Include="MonsterComponent.h" />
     <ClInclude Include="ObjectFactory.h" />
     <ClInclude Include="PlayerCamera.h" />
-    <ClInclude Include="Potal.h" />
+    <ClInclude Include="UICanvas.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="TestScene.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Boss.cpp" />
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="CameraManager.cpp" />
+    <ClCompile Include="ComboFont.cpp" />
     <ClCompile Include="Drone.cpp" />
+    <ClCompile Include="FontImage.cpp" />
     <ClCompile Include="GameLogic.cpp" />
+    <ClCompile Include="GateDoor.cpp" />
     <ClCompile Include="LoadImage.cpp" />
     <ClCompile Include="Loading.cpp" />
     <ClCompile Include="GameClient.cpp" />
@@ -225,12 +235,12 @@ copy /Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)" </Command>
     <ClCompile Include="MonsterA.cpp" />
     <ClCompile Include="MonsterB.cpp" />
     <ClCompile Include="ClientComponent.cpp" />
-    <ClCompile Include="ClientObjectManager.cpp" />
+    <ClCompile Include="MessageManager.cpp" />
     <ClCompile Include="MonsterComponent.cpp" />
     <ClCompile Include="ObjectFactory.cpp" />
     <ClCompile Include="PlayerCamera.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="Potal.cpp" />
+    <ClCompile Include="UICanvas.cpp" />
     <ClCompile Include="TestScene.cpp" />
   </ItemGroup>
   <ItemGroup>

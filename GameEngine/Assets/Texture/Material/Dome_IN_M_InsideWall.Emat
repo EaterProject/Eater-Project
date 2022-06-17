@@ -3,7 +3,7 @@
 @Alpha 0
 @DiffuseMap Dome_InsideWall_BaseColor.png
 @NormalMap Dome_InsideWall_Normal.png
-@EmissiveMap Dome_InsideWall_Emissive.png
+@EmissiveMap 0
 @ORMMap Dome_InsideWall_ORM.png
 @Emissive 0.000000
 @Roughness 0.000000

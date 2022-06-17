@@ -1,5 +1,10 @@
 #include "PhysX_API.h"
 #include "PhysEngine.h"
+#include "Phys_Collider_Box.h"
+#include "Phys_Collider_Capsule.h"
+#include "Phys_Collider_Sphere.h"
+#include "Phys_Collider_Triangle.h"
+
 
 PhysEngine* Engine = nullptr;
 void PhysX_Initialize(int ThreadCount, bool OnDebug)
@@ -57,4 +62,11 @@ void PhysX_Delete_Actor(PhysData* data)
 {
 	 return Engine->RayCast(ray);
 }
+
+ Phys_Collider_Triangle* CreateCollider_Triangle()
+ {
+	 Phys_Collider_Triangle* Triangle = new Phys_Collider_Triangle();
+	 Triangle->Initialize();
+	 return Triangle;
+ }
 

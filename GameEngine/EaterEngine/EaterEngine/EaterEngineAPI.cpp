@@ -63,14 +63,14 @@ void OnReSize(int X, int Y)
 	 return gGameEngine->InstanceCamera(ObjName);
  }
 
- GameObject* InstanceLight(std::string ObjName, LIGHT_TYPE type)
+ GameObject* Instance_Light(std::string ObjName, LIGHT_TYPE type)
  {
-	 return gGameEngine->InstanceLight(ObjName, type);
+	 return gGameEngine->Instance_Light(ObjName, type);
  }
 
- GameObject* InstanceUI(std::string ObjName)
+ GameObject* Instance_UI(std::string ObjName)
  {
-	 return gGameEngine->InstanceUI(ObjName);
+	 return gGameEngine->Instance_UI(ObjName);
  }
 
  GameObject* InstanceImage(std::string ObjName/*= "Image"*/)
@@ -301,7 +301,12 @@ int GetMousePosY()
 	 return gGameEngine->GetDirectionLight();
  }
 
- void Sound_Play_BGM(std::string Name)
+ void Sound_Play_BGM(std::string& Name)
+ {
+	 gGameEngine->Sound_Play_BGM(Name);
+ }
+
+ void Sound_Play_BGM(std::string&& Name)
  {
 	 gGameEngine->Sound_Play_BGM(Name);
  }
@@ -341,7 +346,52 @@ int GetMousePosY()
 	 gGameEngine->Sound_PitchDown_BGM();
  }
 
- void Sound_Play_BGM(std::string&& Name)
+ void Sound_Play_SFX(std::string& SoundName)
+ {
+	 gGameEngine->Sound_Play_SFX(SoundName);
+ }
+
+ void Sound_Play_SFX(std::string&& SoundName)
+ {
+	 gGameEngine->Sound_Play_SFX(SoundName);
+ }
+
+ void Sound_Pause_SFX(bool Pause)
+ {
+	 gGameEngine->Sound_Pause_SFX(Pause);
+ }
+
+ void Sound_VolumeUP_SFX()
+ {
+	 gGameEngine->Sound_VolumeUP_SFX();
+ }
+
+ void Sound_VolumeDown_SFX()
+ {
+	 gGameEngine->Sound_VolumeDown_SFX();
+ }
+
+ void Sound_FrequencyUp_SFX()
+ {
+	 gGameEngine->Sound_FrequencyUp_SFX();
+ }
+
+ void Sound_FrequencyDown_SFX()
+ {
+	 gGameEngine->Sound_FrequencyDown_SFX();
+ }
+
+ void Sound_PitchUp_SFX()
+ {
+	 gGameEngine->Sound_PitchUp_SFX();
+ }
+
+ void Sound_PitchDown_SFX()
+ {
+	 gGameEngine->Sound_PitchDown_SFX();
+ }
+
+ void Sound_Play_BGM(std::string Name)
  {
 	 gGameEngine->Sound_Play_BGM(Name);
  }

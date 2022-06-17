@@ -64,9 +64,6 @@
     <Filter Include="소스 파일\Component\Drone">
       <UniqueIdentifier>{5d3595c4-893a-419c-8e60-e3f398ffc25a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Manager\ObjectManager">
-      <UniqueIdentifier>{e62a3675-adb9-4441-b8b8-c04df61aaf04}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Component\Bullet">
       <UniqueIdentifier>{7a6ddbcc-d47a-48be-9937-5c89b4286dc9}</UniqueIdentifier>
     </Filter>
@@ -85,8 +82,35 @@
     <Filter Include="소스 파일\Component\Monster\MonsterComponent">
       <UniqueIdentifier>{d97fd655-d15b-4404-a566-cc93a172992a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Component\LoadImage">
+    <Filter Include="소스 파일\Component\UI">
+      <UniqueIdentifier>{8c5b7598-a1fa-483e-9595-8f249e9d8965}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\UI\LoadImage">
       <UniqueIdentifier>{236ba930-c59b-4d51-b177-6b6fe8114a8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\UI\FontImage">
+      <UniqueIdentifier>{f64e7cd8-7c14-46d3-ab7d-34b4dadab74e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\UI\FontImage\BaseFontImage">
+      <UniqueIdentifier>{54b0a762-a9d1-4bb4-9b8e-2ceb5ab862df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\UI\FontImage\ComboFont">
+      <UniqueIdentifier>{fbdcbcc1-80fe-4ecd-bc19-079018b90f31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\MessageManager">
+      <UniqueIdentifier>{e62a3675-adb9-4441-b8b8-c04df61aaf04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\UI\UICanvas">
+      <UniqueIdentifier>{76e326f4-5fdf-459d-b162-35543b4e94ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\GateDoor">
+      <UniqueIdentifier>{0b391002-d1ca-4d51-a6ba-defb0595181b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\Monster\Boss">
+      <UniqueIdentifier>{00baef76-481b-48a2-8c44-d3426396cee0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\CameraManager">
+      <UniqueIdentifier>{14794eaa-4f0a-49a8-abf6-5b791041d916}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -135,14 +159,11 @@
     <ClInclude Include="ObjectFactory.h">
       <Filter>소스 파일\Manager\ObjectFactory</Filter>
     </ClInclude>
-    <ClInclude Include="Potal.h">
-      <Filter>소스 파일\Component\Potal</Filter>
-    </ClInclude>
     <ClInclude Include="MonsterB.h">
       <Filter>소스 파일\Component\Monster\MonsterB</Filter>
     </ClInclude>
-    <ClInclude Include="ClientObjectManager.h">
-      <Filter>소스 파일\Manager\ObjectManager</Filter>
+    <ClInclude Include="MessageManager.h">
+      <Filter>소스 파일\Manager\MessageManager</Filter>
     </ClInclude>
     <ClInclude Include="Bullet.h">
       <Filter>소스 파일\Component\Bullet</Filter>
@@ -160,7 +181,25 @@
       <Filter>소스 파일\Component\Drone</Filter>
     </ClInclude>
     <ClInclude Include="LoadImage.h">
-      <Filter>소스 파일\Component\LoadImage</Filter>
+      <Filter>소스 파일\Component\UI\LoadImage</Filter>
+    </ClInclude>
+    <ClInclude Include="FontImage.h">
+      <Filter>소스 파일\Component\UI\FontImage\BaseFontImage</Filter>
+    </ClInclude>
+    <ClInclude Include="ComboFont.h">
+      <Filter>소스 파일\Component\UI\FontImage\ComboFont</Filter>
+    </ClInclude>
+    <ClInclude Include="UICanvas.h">
+      <Filter>소스 파일\Component\UI\UICanvas</Filter>
+    </ClInclude>
+    <ClInclude Include="GateDoor.h">
+      <Filter>소스 파일\Component\GateDoor</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss.h">
+      <Filter>소스 파일\Component\Monster\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraManager.h">
+      <Filter>소스 파일\Manager\CameraManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -200,14 +239,11 @@
     <ClCompile Include="ObjectFactory.cpp">
       <Filter>소스 파일\Manager\ObjectFactory</Filter>
     </ClCompile>
-    <ClCompile Include="Potal.cpp">
-      <Filter>소스 파일\Component\Potal</Filter>
-    </ClCompile>
     <ClCompile Include="MonsterB.cpp">
       <Filter>소스 파일\Component\Monster\MonsterB</Filter>
     </ClCompile>
-    <ClCompile Include="ClientObjectManager.cpp">
-      <Filter>소스 파일\Manager\ObjectManager</Filter>
+    <ClCompile Include="MessageManager.cpp">
+      <Filter>소스 파일\Manager\MessageManager</Filter>
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
       <Filter>소스 파일\Component\Bullet</Filter>
@@ -222,7 +258,25 @@
       <Filter>소스 파일\Component\Drone</Filter>
     </ClCompile>
     <ClCompile Include="LoadImage.cpp">
-      <Filter>소스 파일\Component\LoadImage</Filter>
+      <Filter>소스 파일\Component\UI\LoadImage</Filter>
+    </ClCompile>
+    <ClCompile Include="FontImage.cpp">
+      <Filter>소스 파일\Component\UI\FontImage\BaseFontImage</Filter>
+    </ClCompile>
+    <ClCompile Include="ComboFont.cpp">
+      <Filter>소스 파일\Component\UI\FontImage\ComboFont</Filter>
+    </ClCompile>
+    <ClCompile Include="UICanvas.cpp">
+      <Filter>소스 파일\Component\UI\UICanvas</Filter>
+    </ClCompile>
+    <ClCompile Include="GateDoor.cpp">
+      <Filter>소스 파일\Component\GateDoor</Filter>
+    </ClCompile>
+    <ClCompile Include="Boss.cpp">
+      <Filter>소스 파일\Component\Monster\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraManager.cpp">
+      <Filter>소스 파일\Manager\CameraManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

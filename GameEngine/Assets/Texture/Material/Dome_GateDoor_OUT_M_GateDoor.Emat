@@ -3,7 +3,7 @@
 @Alpha 0
 @DiffuseMap Dome_GateDoor_BaseColor.png
 @NormalMap Dome_GateDoor_Normal.png
-@EmissiveMap Dome_GateDoor_Emissive.png
+@EmissiveMap 0
 @ORMMap Dome_GateDoor_ORM.png
 @Emissive 0.000000
 @Roughness 0.000000

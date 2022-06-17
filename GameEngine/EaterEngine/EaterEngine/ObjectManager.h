@@ -42,6 +42,7 @@ public:
 	static void PushPhysicsUpdate(Component* obj, int Order);
 	static void PushEndUpdate(Component* obj, int Order);
 	static void PushUpdate(Component* obj, int Order);
+	static void PushDebugUpdate(Component* obj, int Order);
 
 	static void AddTag(int Key,std::string TagName);
 	static int FindTag(std::string TagName);
@@ -92,11 +93,13 @@ private:
 	static Delegate_Map PhysicsUpdate;		//물리 행동 업데이트
 	static Delegate_Map Update;				//디폴트  중간단계의 시작되는 업데이트
 	static Delegate_Map EndUpdate;			//가장 마지막에 실행되는 업데이트
+	static Delegate_Map mDebugUpdate;		//가장 마지막에 실행되는 업데이트
 
 	/// 현재 어떤 함수포인터가 돌아가는중인지 체크하는 State
 	static int FunctionState;
 	//컨퍼넌트 를넣으면 해당 함수포인터에 넣었던 포인터를 삭제시켜줌
 	void DeleteComponent(Component* cpt);
 private:
+	RenderOption* Option;
 	friend class GameObject;
 };

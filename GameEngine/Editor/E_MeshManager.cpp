@@ -32,6 +32,7 @@ void E_MeshManager::ChangeEaterFile(ParserData::CModel* FBXMesh)
 			break;
 		}
 	}
+	BoneOffsetSave = false;
 }
 
 void E_MeshManager::SetFileName(std::string& FileName)
@@ -100,7 +101,11 @@ void E_MeshManager::ChangeEaterFile_Skin(ParserData::CMesh* OneMesh)
 			EATER_SET_MAP("TopNode", "NO");
 		}
 		SetMatrix(OneMesh);
-		SetBoneOffset(OneMesh);
+
+		if (BoneOffsetSave == false)
+		{
+			SetBoneOffset(OneMesh);
+		}
 	}
 }
 
@@ -199,6 +204,7 @@ void E_MeshManager::SetBoneOffset(ParserData::CMesh* mMesh)
 		EATER_SET_LIST(Data->_43);
 		EATER_SET_LIST(Data->_44, true);
 	}
+	BoneOffsetSave = true;
 }
 
 std::string E_MeshManager::CutFileName(std::string FilePath)

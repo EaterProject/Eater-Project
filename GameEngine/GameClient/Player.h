@@ -31,9 +31,10 @@ public:
 	void Start()	 override;
 	void Update() override;
 	
+	void SetMessageRECV(int Type, void* Data);
+
 	static Transform* GetPlayerTransform();
 	static bool GetAttackState();
-
 	void Healing(float HealingPower);
 private:
 	void PlayerKeyinput();				//플레이어 키인풋
@@ -42,6 +43,7 @@ private:
 	void PlayerState_Attack();			//플레이어 공격 상태 일때
 	void PlayerState_Base();			//플레이어 기본 상태 일때
 	bool PlayerEndFrameCheck();			//플레이어 현재 애니메이션이 끝났는지 체크
+	void PlayerHitTimeCheck();
 private:
 	void Player_Attack_01();			//기본공격 1
 	void Player_Attack_02();			//기본공격 2
@@ -49,15 +51,16 @@ private:
 	void Player_Skill_02();				//스킬 2
 	void Player_Skill_03();				//스킬 3
 	void Player_Jump();					//점프
+	void Player_Hit(int HitPower);
 	bool Player_Move_Check();			//기본 상태 체크
 private:
-	Vector3 DirPos;			//방향
-	Vector3 DirRot;			//회전
-	Vector3 PastDirRot;		//과거의 방향
-	Vector3 BasePos;		//(0,0,0)인 벡터
-	Vector3 WeaponOffsetRot;
-	Vector3 AttackStartRot;	//공격을 시작했을때의 방향
-	bool Attack_Rot;		//공격회전을 한번만 구하기위해
+	Vector3 DirPos;						//방향
+	Vector3 DirRot;						//회전
+	Vector3 PastDirRot;					//과거의 방향
+	Vector3 BasePos;					//(0,0,0)인 벡터
+	Vector3 WeaponOffsetRot;			//무기 충돌체 초기 오프셋
+	Vector3 AttackStartRot;				//공격을 시작했을때의 방향
+	bool Attack_Rot;					//공격회전을 한번만 구하기위해
 
 	//컨퍼넌트
 	static Transform*		mTransform;
@@ -75,12 +78,18 @@ private:
 	///State관련
 	unsigned int mState = 0x00000000;
 	int AttackKeyDownCount	= 0;
-	float HP				= 100;
+	int ChangeCount			= 0;
+	int HP					= 100;
 	float Speed				= 10;
 	const float MaxSpeed	= 10;
 	bool IsAttack			= false;
 	bool IsMove				= false;
+	bool IsHit				= false;
+	bool IsCreate			= false;
 	static bool IsAttackTime;
+	int	ComboCount;
+	float		ComboTime	= 0.0f;
+	float		HitTime		= 0.0f;
 private:
 	///Animation 관련
 	std::string AnimationName;
