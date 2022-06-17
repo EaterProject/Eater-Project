@@ -51,6 +51,7 @@ typedef enum FILL_TYPE
 // Rect Pivot Option
 typedef enum RECT_PIVOT
 {
+	PIVOT_NONE,
 	PIVOT_LEFT_TOP,
 	PIVOT_LEFT_BOTTOM,
 	PIVOT_RIGHT_TOP,
@@ -60,7 +61,6 @@ typedef enum RECT_PIVOT
 	PIVOT_MIDDLE_LEFT,
 	PIVOT_MIDDLE_RIGHT,
 	PIVOT_MIDDLE_CENTER,
-	PIVOT_MESH,
 }RECT_PIVOT;
 
 // Particle Animation Option

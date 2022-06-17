@@ -1,6 +1,7 @@
 #include "RectTransform.h"
 #include "EngineData.h"
 
+#include "GlobalDataManager.h"
 #include "GameObject.h"
 #include "GameEngine.h"
 #include "Utility.h"
@@ -22,7 +23,7 @@ RectTransform::RectTransform()
 
 	Screen_Size.x = GameEngine::WinSizeWidth;
 	Screen_Size.y = GameEngine::WinSizeHeight;
-
+	
 	GameEngine::ResizeFunction += Eater::Bind(&RectTransform::Resize, this);
 }
 
@@ -35,6 +36,10 @@ void RectTransform::TransformUpdate()
 {
 	switch (PivotType)
 	{
+	case PIVOT_NONE:
+		Position_Offset.x = 0;
+		Position_Offset.y = 0;
+		break;
 	case PIVOT_LEFT_TOP:
 		Position_Offset.x = ImageSize.x * Scale.x;
 		Position_Offset.y = ImageSize.y * Scale.y;
@@ -70,10 +75,6 @@ void RectTransform::TransformUpdate()
 	case PIVOT_MIDDLE_CENTER:
 		Position_Offset.x = Screen_Size.x * 0.5f;
 		Position_Offset.y = Screen_Size.y * 0.5f;
-		break;
-	case PIVOT_MESH:
-		Position_Offset.x = 0;
-		Position_Offset.y = 0;
 		break;
 	default:
 		break;
@@ -137,7 +138,13 @@ void RectTransform::SetPosition(DirectX::SimpleMath::Vector2 pos)
 
 void RectTransform::SetPosition3D(float x, float y, float z)
 {
+	Vector3 pos(x, y, z);
 
+	Matrix& view = GlobalDataManager::g_GlobalData->MainCamera_Data->CamView;
+
+	pos.x = pos.x * view._11 + pos.x * view._21 + pos.x * view._31 + pos.x * view._41;
+	pos.y = pos.y * view._12 + pos.y * view._22 + pos.y * view._32 + pos.y * view._42;
+	pos.z = pos.z * view._13 + pos.z * view._23 + pos.z * view._33 + pos.z * view._43;
 }
 
 void RectTransform::SetPosition3D(DirectX::SimpleMath::Vector3 pos)
