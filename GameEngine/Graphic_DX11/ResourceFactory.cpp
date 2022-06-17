@@ -1547,8 +1547,8 @@ void GraphicResourceFactory::CreateLoadBuffer<VertexInput::TerrainVertex>(Parser
 		vertices[i].Tangent = mesh->m_VertexList[i]->m_Tanget;
 
 		// ╟╪┤ч Pixel Mask Color..
-		int originWidth = (int)abs(mesh->m_VertexList[i]->m_Pos.x + 1);
-		int originHeight = (int)abs(mesh->m_VertexList[i]->m_Pos.z + 3);
+		int originWidth = (int)abs(mesh->m_VertexList[i]->m_Pos.x);
+		int originHeight = (int)abs(mesh->m_VertexList[i]->m_Pos.z);
 		int width, height;
 		// бр бр бр
 		// бр бс бр

@@ -99,7 +99,7 @@ void ManaStone::CreateMonster(int MonsterACount, int MonsterBCount)
 void ManaStone::Debug()
 {
 	Vector3 Point = mTransform->Position;
-	Point.y = 0.25f;
+	Point.y = 2.0f;
 	DebugDrawCircle(10, Point, Vector3(0, 0, 0), Vector3(1, 0, 0));
 
 	//디버깅을 그린다
@@ -110,7 +110,7 @@ void ManaStone::Debug()
 
 		//나의 생성위치에서의 5방향의 꼭지점 그방향으로의 범위값을 곱함
 		Vector3 MonsterPoint = GetMonsterPoint(mTransform->Position, i, Range *0.5);
-		MonsterPoint.y = 0.25f;
+		MonsterPoint.y = 2.0f;
 		DebugDrawLine(Point, MonsterPoint, Vector3(0, 0, 1));
 		DebugDrawCircle(Range * 0.25f, MonsterPoint, Vector3(0, 0, 0), Vector3(0, 0, 1));
 
@@ -119,7 +119,7 @@ void ManaStone::Debug()
 		for (int j = 0; j < 5; j++)
 		{
 			Vector3 Point = GetMonsterPoint(MonsterPoint, j, Range * 0.25f);
-			Point.y = 0.25f;
+			Point.y = 2.0f;
 			DebugDrawCircle(0.25f, Point, Vector3(0, 0, 0), Vector3(0, 1, 0));
 		}
 	}

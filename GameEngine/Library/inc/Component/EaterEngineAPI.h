@@ -23,7 +23,8 @@ class RenderOption;
 extern "C" EATER_ENGINEDLL void EngineInitialize(HWND _g_hWnd,bool ON_DEBUG);	//GameEngine 시작
 extern "C" EATER_ENGINEDLL void EndEngine();						//GameEngine 종료
 extern "C" EATER_ENGINEDLL void UpdateEngine();						//GameEngine 업데이트
-extern "C" EATER_ENGINEDLL void OnReSize(int X,int Y);				//윈도우 사이즈 재조정	
+extern "C" EATER_ENGINEDLL void OnReSize(int X,int Y);				//윈도우 사이즈 재조정
+extern "C" EATER_ENGINEDLL void GetWindowSize(int* X,int *Y);
 
 ///게임 오브젝트 생성
 extern "C" EATER_ENGINEDLL GameObject*	Instance(std::string ObjName= "GameObject");		//오브젝트 생성
@@ -79,8 +80,8 @@ extern "C" EATER_ENGINEDLL bool  GetKeyDown(byte number);		//키다운
 extern "C" EATER_ENGINEDLL bool  GetKeyUp(byte number);			//키업
 extern "C" EATER_ENGINEDLL bool  GetKey(byte number);			//키누르고있을때
 extern "C" EATER_ENGINEDLL bool  GetTogle(byte number);			//키 토글
-extern "C" EATER_ENGINEDLL int GetMousePosX();				//마우스 위치 X
-extern "C" EATER_ENGINEDLL int GetMousePosY();				//마우스 위치 Y
+extern "C" EATER_ENGINEDLL int	GetMousePosX();					//마우스 위치 X
+extern "C" EATER_ENGINEDLL int	GetMousePosY();					//마우스 위치 Y
 extern "C" EATER_ENGINEDLL void  SetMousePos(float x,float y);	//마우스 위치 Y
 extern "C" EATER_ENGINEDLL void  SetMousePosCenter();			//마우스 위치 Y
 extern "C" EATER_ENGINEDLL void ShowMouseCursor(bool Cursor);	//마우스 커서 보이기여부

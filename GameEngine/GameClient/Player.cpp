@@ -54,7 +54,7 @@ void Player::Awake()
 	
 	//무기 오브젝트 가져오기
 	WeaponObject = Instance();
-	WeaponObject->AddComponent<MeshFilter>()->SetModelName("player_weapon2");
+	WeaponObject->AddComponent<MeshFilter>()->SetModelName("player_Weapon");
 
 	//충돌 범위 가져오기
 	AttackColliderObject = FindGameObjectTag("PlayerCollider");
@@ -371,6 +371,16 @@ void Player::Player_Attack_02()
 	//망치를 뒤로 돌리고 크게 내려찍는 공격
 	WeaponTR->Position = { 0,-0.02f,0.1f };
 	WeaponTR->Rotation = { 186,31,0 };
+
+	if (mAnimation->EventCheck() == true)
+	{
+		IsAttackTime = true;
+	}
+	else
+	{
+		IsAttackTime = false;
+	}
+
 	if (PlayerEndFrameCheck() == true)
 	{
 		Player_Move_Check();

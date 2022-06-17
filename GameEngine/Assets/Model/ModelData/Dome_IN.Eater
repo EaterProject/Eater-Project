@@ -1,6 +1,6 @@
 #STATIC
+@ParentName RootNode
 @NodeName Balcony_A_low
-@ParentName RootNode
 @MeshName Dome_IN_0
 @MaterialName Dome_IN_M_SideFloor_A
 $WorldTM 4 4
@@ -14,8 +14,8 @@ $LocalTM 4 4
 0.587785 0.000000 0.809017 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Balcony_A_low.001
-@ParentName RootNode
 @MeshName Dome_IN_0
 @MaterialName Dome_IN_M_SideFloor_A
 $WorldTM 4 4
@@ -29,8 +29,8 @@ $LocalTM 4 4
 -0.587785 0.000000 0.809017 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Bridge_low
-@ParentName RootNode
 @MeshName Dome_IN_1
 @MaterialName Dome_IN_M_InsideBridge
 $WorldTM 4 4
@@ -44,8 +44,8 @@ $LocalTM 4 4
 -0.809017 0.000000 0.587785 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Bridge_low.001
-@ParentName RootNode
 @MeshName Dome_IN_1
 @MaterialName Dome_IN_M_InsideBridge
 $WorldTM 4 4
@@ -59,8 +59,8 @@ $LocalTM 4 4
 -0.809017 0.000000 -0.587785 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Bridge_low.002
-@ParentName RootNode
 @MeshName Dome_IN_1
 @MaterialName Dome_IN_M_InsideBridge
 $WorldTM 4 4
@@ -74,8 +74,8 @@ $LocalTM 4 4
 0.309017 0.000000 -0.951057 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Bridge_low.003
-@ParentName RootNode
 @MeshName Dome_IN_1
 @MaterialName Dome_IN_M_InsideBridge
 $WorldTM 4 4
@@ -89,8 +89,8 @@ $LocalTM 4 4
 0.809017 0.000000 0.587785 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
-@NodeName Ceiling_low.001
 @ParentName RootNode
+@NodeName Ceiling_low.001
 @MeshName Dome_IN_2
 @MaterialName Dome_IN_M_Ceiling
 $WorldTM 4 4
@@ -104,8 +104,8 @@ $LocalTM 4 4
 0.000000 0.000000 0.975519 0.000000
 0.000000 25.205553 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Ceiling_low.002
-@ParentName RootNode
 @MeshName Dome_IN_3
 @MaterialName Dome_IN_M_CeilingHolder
 $WorldTM 4 4
@@ -119,8 +119,8 @@ $LocalTM 4 4
 -0.934525 0.000000 0.303646 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Ceiling_low.004
-@ParentName RootNode
 @MeshName Dome_IN_3
 @MaterialName Dome_IN_M_CeilingHolder
 $WorldTM 4 4
@@ -134,8 +134,8 @@ $LocalTM 4 4
 -0.577568 0.000000 -0.794955 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Ceiling_low.005
-@ParentName RootNode
 @MeshName Dome_IN_3
 @MaterialName Dome_IN_M_CeilingHolder
 $WorldTM 4 4
@@ -149,8 +149,8 @@ $LocalTM 4 4
 0.934525 0.000000 0.303646 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Ceiling_low.006
-@ParentName RootNode
 @MeshName Dome_IN_3
 @MaterialName Dome_IN_M_CeilingHolder
 $WorldTM 4 4
@@ -164,8 +164,8 @@ $LocalTM 4 4
 0.577568 0.000000 -0.794955 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Ceiling_low.007
-@ParentName RootNode
 @MeshName Dome_IN_3
 @MaterialName Dome_IN_M_CeilingHolder
 $WorldTM 4 4
@@ -179,8 +179,8 @@ $LocalTM 4 4
 0.000000 0.000000 0.982618 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
-@NodeName Balcony_A_low.002
 @ParentName RootNode
+@NodeName Balcony_A_low.002
 @MeshName Dome_IN_0
 @MaterialName Dome_IN_M_SideFloor_A
 $WorldTM 4 4
@@ -194,8 +194,8 @@ $LocalTM 4 4
 -0.951056 0.000000 -0.309017 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
-@NodeName CenterA_low
 @ParentName RootNode
+@NodeName CenterA_low
 @MeshName Dome_IN_4
 @MaterialName Dome_IN_M_CenterFloorSide
 $WorldTM 4 4
@@ -209,8 +209,8 @@ $LocalTM 4 4
 0.000000 0.000000 1.000000 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
-@NodeName CenterGlass_low
 @ParentName RootNode
+@NodeName CenterGlass_low
 @MeshName Dome_IN_5
 @MaterialName Dome_IN_M_CenterGlass
 $WorldTM 4 4
@@ -224,8 +224,8 @@ $LocalTM 4 4
 0.000000 0.000000 1.000000 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
-@NodeName Cube.004
 @ParentName RootNode
+@NodeName Cube.004
 @MeshName Dome_IN_6
 @MaterialName Dome_IN_M_InsideWall
 $WorldTM 4 4
@@ -239,8 +239,8 @@ $LocalTM 4 4
 -0.587785 0.000000 0.809017 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Cube.005
-@ParentName RootNode
 @MeshName Dome_IN_7
 @MaterialName Dome_IN_M_CeilingPillar
 $WorldTM 4 4
@@ -254,8 +254,8 @@ $LocalTM 4 4
 0.587785 0.000000 0.809017 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Cube.006
-@ParentName RootNode
 @MeshName Dome_IN_7
 @MaterialName Dome_IN_M_CeilingPillar
 $WorldTM 4 4
@@ -269,8 +269,8 @@ $LocalTM 4 4
 0.951057 0.000000 0.309017 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Cube.007
-@ParentName RootNode
 @MeshName Dome_IN_7
 @MaterialName Dome_IN_M_CeilingPillar
 $WorldTM 4 4
@@ -284,8 +284,8 @@ $LocalTM 4 4
 0.951056 0.000000 -0.309017 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Cube.008
-@ParentName RootNode
 @MeshName Dome_IN_7
 @MaterialName Dome_IN_M_CeilingPillar
 $WorldTM 4 4
@@ -299,8 +299,8 @@ $LocalTM 4 4
 0.587785 0.000000 -0.809017 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Cube.009
-@ParentName RootNode
 @MeshName Dome_IN_7
 @MaterialName Dome_IN_M_CeilingPillar
 $WorldTM 4 4
@@ -314,8 +314,8 @@ $LocalTM 4 4
 0.000000 0.000000 1.000000 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Cube.010
-@ParentName RootNode
 @MeshName Dome_IN_7
 @MaterialName Dome_IN_M_CeilingPillar
 $WorldTM 4 4
@@ -329,8 +329,8 @@ $LocalTM 4 4
 -0.587785 0.000000 0.809017 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Cube.011
-@ParentName RootNode
 @MeshName Dome_IN_7
 @MaterialName Dome_IN_M_CeilingPillar
 $WorldTM 4 4
@@ -344,8 +344,8 @@ $LocalTM 4 4
 -0.951056 0.000000 -0.309017 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
-@NodeName Balcony_A_low.003
 @ParentName RootNode
+@NodeName Balcony_A_low.003
 @MeshName Dome_IN_0
 @MaterialName Dome_IN_M_SideFloor_A
 $WorldTM 4 4
@@ -359,8 +359,8 @@ $LocalTM 4 4
 0.587785 0.000000 -0.809017 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Cube.012
-@ParentName RootNode
 @MeshName Dome_IN_7
 @MaterialName Dome_IN_M_CeilingPillar
 $WorldTM 4 4
@@ -374,8 +374,8 @@ $LocalTM 4 4
 -0.587785 0.000000 -0.809017 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Cube.013
-@ParentName RootNode
 @MeshName Dome_IN_7
 @MaterialName Dome_IN_M_CeilingPillar
 $WorldTM 4 4
@@ -389,8 +389,8 @@ $LocalTM 4 4
 0.000000 0.000000 -1.000000 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Cube.014
-@ParentName RootNode
 @MeshName Dome_IN_6
 @MaterialName Dome_IN_M_InsideWall
 $WorldTM 4 4
@@ -404,8 +404,8 @@ $LocalTM 4 4
 0.000000 0.000000 1.000000 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Cube.015
-@ParentName RootNode
 @MeshName Dome_IN_6
 @MaterialName Dome_IN_M_InsideWall
 $WorldTM 4 4
@@ -419,8 +419,8 @@ $LocalTM 4 4
 -0.951057 0.000000 0.309017 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Cube.016
-@ParentName RootNode
 @MeshName Dome_IN_6
 @MaterialName Dome_IN_M_InsideWall
 $WorldTM 4 4
@@ -434,8 +434,8 @@ $LocalTM 4 4
 -0.951056 0.000000 -0.309017 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Cube.017
-@ParentName RootNode
 @MeshName Dome_IN_6
 @MaterialName Dome_IN_M_InsideWall
 $WorldTM 4 4
@@ -449,8 +449,8 @@ $LocalTM 4 4
 -0.587785 0.000000 -0.809017 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Cube.018
-@ParentName RootNode
 @MeshName Dome_IN_6
 @MaterialName Dome_IN_M_InsideWall
 $WorldTM 4 4
@@ -464,8 +464,8 @@ $LocalTM 4 4
 0.000000 0.000000 -1.000000 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Cube.019
-@ParentName RootNode
 @MeshName Dome_IN_6
 @MaterialName Dome_IN_M_InsideWall
 $WorldTM 4 4
@@ -479,8 +479,8 @@ $LocalTM 4 4
 0.587785 0.000000 0.809017 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Cube.020
-@ParentName RootNode
 @MeshName Dome_IN_6
 @MaterialName Dome_IN_M_InsideWall
 $WorldTM 4 4
@@ -494,8 +494,8 @@ $LocalTM 4 4
 0.951057 0.000000 0.309017 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Cube.021
-@ParentName RootNode
 @MeshName Dome_IN_6
 @MaterialName Dome_IN_M_InsideWall
 $WorldTM 4 4
@@ -509,8 +509,8 @@ $LocalTM 4 4
 0.951056 0.000000 -0.309017 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
-@NodeName Balcony_B_low
 @ParentName RootNode
+@NodeName Balcony_B_low
 @MeshName Dome_IN_8
 @MaterialName Dome_IN_M_SideFloor_B
 $WorldTM 4 4
@@ -524,8 +524,8 @@ $LocalTM 4 4
 0.951057 0.000000 0.309017 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
-@NodeName Cube.022
 @ParentName RootNode
+@NodeName Cube.022
 @MeshName Dome_IN_6
 @MaterialName Dome_IN_M_InsideWall
 $WorldTM 4 4
@@ -539,8 +539,8 @@ $LocalTM 4 4
 0.587785 0.000000 -0.809017 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
-@NodeName Cube.023
 @ParentName RootNode
+@NodeName Cube.023
 @MeshName Dome_IN_9
 @MaterialName Dome_IN_M_InsideWall
 $WorldTM 4 4
@@ -554,8 +554,8 @@ $LocalTM 4 4
 0.000000 0.000000 1.000000 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Cube.024
-@ParentName RootNode
 @MeshName Dome_IN_10
 @MaterialName Dome_IN_M_CenterMachineHinge
 $WorldTM 4 4
@@ -569,8 +569,8 @@ $LocalTM 4 4
 -0.951057 0.000000 0.309017 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Cube.025
-@ParentName RootNode
 @MeshName Dome_IN_10
 @MaterialName Dome_IN_M_CenterMachineHinge
 $WorldTM 4 4
@@ -584,8 +584,8 @@ $LocalTM 4 4
 -0.587785 0.000000 -0.809017 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Cube.026
-@ParentName RootNode
 @MeshName Dome_IN_10
 @MaterialName Dome_IN_M_CenterMachineHinge
 $WorldTM 4 4
@@ -599,8 +599,8 @@ $LocalTM 4 4
 0.951057 0.000000 0.309017 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Cube.027
-@ParentName RootNode
 @MeshName Dome_IN_10
 @MaterialName Dome_IN_M_CenterMachineHinge
 $WorldTM 4 4
@@ -614,8 +614,8 @@ $LocalTM 4 4
 0.587785 0.000000 -0.809017 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
-@NodeName Cube.028
 @ParentName RootNode
+@NodeName Cube.028
 @MeshName Dome_IN_11
 @MaterialName Dome_IN_M_VendingFloor
 $WorldTM 4 4
@@ -629,8 +629,8 @@ $LocalTM 4 4
 0.000000 0.000000 -1.000000 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Cube.029
-@ParentName RootNode
 @MeshName Dome_IN_12
 @MaterialName Dome_IN_M_BottomFloor
 $WorldTM 4 4
@@ -644,8 +644,8 @@ $LocalTM 4 4
 0.000000 0.000000 1.000000 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Cube.030
-@ParentName RootNode
 @MeshName Dome_IN_12
 @MaterialName Dome_IN_M_BottomFloor
 $WorldTM 4 4
@@ -659,8 +659,8 @@ $LocalTM 4 4
 -0.587785 0.000000 0.809017 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Cube.031
-@ParentName RootNode
 @MeshName Dome_IN_12
 @MaterialName Dome_IN_M_BottomFloor
 $WorldTM 4 4
@@ -674,8 +674,8 @@ $LocalTM 4 4
 -0.951057 0.000000 0.309017 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Balcony_B_low.001
-@ParentName RootNode
 @MeshName Dome_IN_8
 @MaterialName Dome_IN_M_SideFloor_B
 $WorldTM 4 4
@@ -689,8 +689,8 @@ $LocalTM 4 4
 0.951056 0.000000 -0.309017 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Cube.032
-@ParentName RootNode
 @MeshName Dome_IN_12
 @MaterialName Dome_IN_M_BottomFloor
 $WorldTM 4 4
@@ -704,8 +704,8 @@ $LocalTM 4 4
 -0.587785 0.000000 -0.809017 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Cube.033
-@ParentName RootNode
 @MeshName Dome_IN_12
 @MaterialName Dome_IN_M_BottomFloor
 $WorldTM 4 4
@@ -719,8 +719,8 @@ $LocalTM 4 4
 -0.951056 0.000000 -0.309017 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Cube.034
-@ParentName RootNode
 @MeshName Dome_IN_12
 @MaterialName Dome_IN_M_BottomFloor
 $WorldTM 4 4
@@ -734,8 +734,8 @@ $LocalTM 4 4
 0.587785 0.000000 0.809017 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Cube.035
-@ParentName RootNode
 @MeshName Dome_IN_12
 @MaterialName Dome_IN_M_BottomFloor
 $WorldTM 4 4
@@ -749,8 +749,8 @@ $LocalTM 4 4
 0.951057 0.000000 0.309017 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Cube.036
-@ParentName RootNode
 @MeshName Dome_IN_12
 @MaterialName Dome_IN_M_BottomFloor
 $WorldTM 4 4
@@ -764,8 +764,8 @@ $LocalTM 4 4
 0.951056 0.000000 -0.309017 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Cube.037
-@ParentName RootNode
 @MeshName Dome_IN_12
 @MaterialName Dome_IN_M_BottomFloor
 $WorldTM 4 4
@@ -779,8 +779,8 @@ $LocalTM 4 4
 0.587785 0.000000 -0.809017 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Cube.038
-@ParentName RootNode
 @MeshName Dome_IN_12
 @MaterialName Dome_IN_M_BottomFloor
 $WorldTM 4 4
@@ -794,8 +794,8 @@ $LocalTM 4 4
 0.000000 0.000000 -1.000000 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Cube.039
-@ParentName RootNode
 @MeshName Dome_IN_12
 @MaterialName Dome_IN_M_BottomFloor
 $WorldTM 4 4
@@ -809,8 +809,8 @@ $LocalTM 4 4
 0.309290 0.000000 0.950968 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Cube.040
-@ParentName RootNode
 @MeshName Dome_IN_12
 @MaterialName Dome_IN_M_BottomFloor
 $WorldTM 4 4
@@ -824,8 +824,8 @@ $LocalTM 4 4
 -0.308744 0.000000 0.951145 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Cube.041
-@ParentName RootNode
 @MeshName Dome_IN_12
 @MaterialName Dome_IN_M_BottomFloor
 $WorldTM 4 4
@@ -839,8 +839,8 @@ $LocalTM 4 4
 -0.808848 0.000000 0.588017 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Balcony_B_low.002
-@ParentName RootNode
 @MeshName Dome_IN_8
 @MaterialName Dome_IN_M_SideFloor_B
 $WorldTM 4 4
@@ -854,8 +854,8 @@ $LocalTM 4 4
 0.000000 0.000000 1.000000 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Cube.042
-@ParentName RootNode
 @MeshName Dome_IN_12
 @MaterialName Dome_IN_M_BottomFloor
 $WorldTM 4 4
@@ -869,8 +869,8 @@ $LocalTM 4 4
 -0.809186 0.000000 -0.587553 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Cube.043
-@ParentName RootNode
 @MeshName Dome_IN_12
 @MaterialName Dome_IN_M_BottomFloor
 $WorldTM 4 4
@@ -884,8 +884,8 @@ $LocalTM 4 4
 -1.000000 0.000000 0.000287 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Cube.044
-@ParentName RootNode
 @MeshName Dome_IN_12
 @MaterialName Dome_IN_M_BottomFloor
 $WorldTM 4 4
@@ -899,8 +899,8 @@ $LocalTM 4 4
 0.809186 0.000000 0.587553 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Cube.046
-@ParentName RootNode
 @MeshName Dome_IN_12
 @MaterialName Dome_IN_M_BottomFloor
 $WorldTM 4 4
@@ -914,8 +914,8 @@ $LocalTM 4 4
 1.000000 0.000000 -0.000287 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Cube.047
-@ParentName RootNode
 @MeshName Dome_IN_12
 @MaterialName Dome_IN_M_BottomFloor
 $WorldTM 4 4
@@ -929,8 +929,8 @@ $LocalTM 4 4
 0.808848 0.000000 -0.588018 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Cube.058
-@ParentName RootNode
 @MeshName Dome_IN_12
 @MaterialName Dome_IN_M_BottomFloor
 $WorldTM 4 4
@@ -944,8 +944,8 @@ $LocalTM 4 4
 0.308744 0.000000 -0.951145 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Cube.059
-@ParentName RootNode
 @MeshName Dome_IN_12
 @MaterialName Dome_IN_M_BottomFloor
 $WorldTM 4 4
@@ -959,8 +959,8 @@ $LocalTM 4 4
 -0.309283 0.000000 -0.950970 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Cube.060
-@ParentName RootNode
 @MeshName Dome_IN_13
 @MaterialName Dome_IN_M_BottomFloor
 $WorldTM 4 4
@@ -974,8 +974,8 @@ $LocalTM 4 4
 0.000000 0.000000 1.000000 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Cube.061
-@ParentName RootNode
 @MeshName Dome_IN_13
 @MaterialName Dome_IN_M_BottomFloor
 $WorldTM 4 4
@@ -989,8 +989,8 @@ $LocalTM 4 4
 -1.000000 0.000000 0.000000 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Cube.062
-@ParentName RootNode
 @MeshName Dome_IN_13
 @MaterialName Dome_IN_M_BottomFloor
 $WorldTM 4 4
@@ -1004,8 +1004,8 @@ $LocalTM 4 4
 0.000000 0.000000 -1.000000 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
-@NodeName Balcony_B_low.003
 @ParentName RootNode
+@NodeName Balcony_B_low.003
 @MeshName Dome_IN_8
 @MaterialName Dome_IN_M_SideFloor_B
 $WorldTM 4 4
@@ -1019,8 +1019,8 @@ $LocalTM 4 4
 -0.951057 0.000000 0.309017 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
-@NodeName Cube.063
 @ParentName RootNode
+@NodeName Cube.063
 @MeshName Dome_IN_13
 @MaterialName Dome_IN_M_BottomFloor
 $WorldTM 4 4
@@ -1034,8 +1034,8 @@ $LocalTM 4 4
 1.000000 0.000000 0.000000 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
-@NodeName Cube.074
 @ParentName RootNode
+@NodeName Cube.074
 @MeshName Dome_IN_7
 @MaterialName Dome_IN_M_CeilingPillar
 $WorldTM 4 4
@@ -1049,8 +1049,8 @@ $LocalTM 4 4
 -0.951057 0.000000 0.309017 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
-@NodeName Cube.134
 @ParentName RootNode
+@NodeName Cube.134
 @MeshName Dome_IN_10
 @MaterialName Dome_IN_M_CenterMachineHinge
 $WorldTM 4 4
@@ -1064,8 +1064,8 @@ $LocalTM 4 4
 0.000000 0.000000 1.000000 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
-@NodeName Cube.447
 @ParentName RootNode
+@NodeName Cube.447
 @MeshName Dome_IN_11
 @MaterialName Dome_IN_M_VendingFloor
 $WorldTM 4 4
@@ -1079,8 +1079,8 @@ $LocalTM 4 4
 0.000000 0.000000 1.000000 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
-@NodeName Screw.147
 @ParentName RootNode
+@NodeName Screw.147
 @MeshName Dome_IN_14
 @MaterialName Dome_IN_M_CenterMachine
 $WorldTM 4 4
@@ -1094,8 +1094,8 @@ $LocalTM 4 4
 0.000000 0.000000 1.000000 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
-@NodeName Screw.318
 @ParentName RootNode
+@NodeName Screw.318
 @MeshName Dome_IN_15
 @MaterialName Dome_IN_M_CenterFloor
 $WorldTM 4 4
@@ -1109,8 +1109,8 @@ $LocalTM 4 4
 0.000000 0.000000 1.000000 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
-@NodeName mana_tree
 @ParentName RootNode
+@NodeName mana_tree
 @MeshName Dome_IN_16
 @MaterialName Dome_IN_M_mana_tree
 $WorldTM 4 4
@@ -1124,8 +1124,8 @@ $LocalTM 4 4
 0.009499 0.000000 -0.000137 0.000000
 0.000124 -1.478476 0.000051 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Screw.002
-@ParentName RootNode
 @MeshName Dome_IN_17
 @MaterialName Dome_IN_M_GateRound
 $WorldTM 4 4
@@ -1139,8 +1139,8 @@ $LocalTM 4 4
 1.184060 0.000000 -1.629716 0.000000
 -0.000002 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Screw.009
-@ParentName RootNode
 @MeshName Dome_IN_17
 @MaterialName Dome_IN_M_GateRound
 $WorldTM 4 4
@@ -1154,8 +1154,8 @@ $LocalTM 4 4
 -1.915847 0.000000 -0.622496 0.000000
 -0.000002 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName Screw.010
-@ParentName RootNode
 @MeshName Dome_IN_17
 @MaterialName Dome_IN_M_GateRound
 $WorldTM 4 4
@@ -1169,8 +1169,8 @@ $LocalTM 4 4
 -1.184059 0.000000 1.629717 0.000000
 -0.000002 0.000000 0.000000 1.000000
 #STATIC
-@NodeName Balcony_B_low.004
 @ParentName RootNode
+@NodeName Balcony_B_low.004
 @MeshName Dome_IN_8
 @MaterialName Dome_IN_M_SideFloor_B
 $WorldTM 4 4
@@ -1184,8 +1184,8 @@ $LocalTM 4 4
 -0.587785 0.000000 -0.809017 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
-@NodeName Screw.011
 @ParentName RootNode
+@NodeName Screw.011
 @MeshName Dome_IN_17
 @MaterialName Dome_IN_M_GateRound
 $WorldTM 4 4
@@ -1199,8 +1199,8 @@ $LocalTM 4 4
 1.184059 0.000000 1.629717 0.000000
 -0.000002 0.000000 0.000000 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName LOW
-@ParentName RootNode
 @MeshName Dome_IN_18
 @MaterialName Dome_IN_M_VendingMachine
 $WorldTM 4 4
@@ -1214,8 +1214,8 @@ $LocalTM 4 4
 0.000000 0.000000 1.000000 0.000000
 16.554941 -0.050815 1.231858 1.000000
 #STATIC
+@ParentName RootNode
 @NodeName LOW.001
-@ParentName RootNode
 @MeshName Dome_IN_18
 @MaterialName Dome_IN_M_VendingMachine
 $WorldTM 4 4
@@ -1229,8 +1229,8 @@ $LocalTM 4 4
 0.000000 0.000000 1.000000 0.000000
 16.554941 -0.050815 -1.170326 1.000000
 #STATIC
-@NodeName Balcony_B_low.005
 @ParentName RootNode
+@NodeName Balcony_B_low.005
 @MeshName Dome_IN_8
 @MaterialName Dome_IN_M_SideFloor_B
 $WorldTM 4 4

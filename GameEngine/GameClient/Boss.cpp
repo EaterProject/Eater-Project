@@ -40,7 +40,8 @@ void Boss::SetUp()
 	mMeshFilter->SetModelName(ModelName);
 	mMeshFilter->SetAnimationName(AnimationName);
 
-	mTransform->Position = { 16.5f,0.5f,53.5f };
+	mTransform->Position = { -44.0f,6.0f,62.0f };
+	mTransform->Scale = { 1.5f,1.5f ,1.5f };
 
 	HP = 100000;
 }
