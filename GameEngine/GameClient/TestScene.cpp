@@ -18,6 +18,7 @@
 #include "Player.h"
 #include "ParticleSystem.h"
 #include "Collider.h"
+#include "RectTransform.h"
 #include "Image.h"
 #include "Button.h"
 #include "RectTransform.h"
@@ -56,7 +57,7 @@ void TestScene::Awake()
 
 	CreateMap();
 
-	//CreateUI();
+	CreateUI();
 
 
 	//CreateParticle(0,0,0);
@@ -66,7 +67,7 @@ void TestScene::Awake()
 
 	SetSkyCube("SkyCube");
 
-	//Load("../Assets/Scene/test.Scene");
+	//Load("../Assets/Scene/inGame.Scene");
 }
 
 void TestScene::Update()
@@ -76,8 +77,6 @@ void TestScene::Update()
 	//static int renderCount = 0;
 	//PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "Update Count %d", renderCount++);
 	//PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "Update Count %d", renderCount++);
-
-	
 
 	ChangeCubeMap();
 	//DebugDrawLine(Vector3(0.0f, 0.0f, 0.0f), Vector3(0.0f, 50.0f, 0.0f), Vector4(1.0f, 0.0f, 0.0f, 1.0f));
@@ -125,27 +124,6 @@ void TestScene::CreateMap()
 	//Object = Instance_Light("Light", LIGHT_TYPE::SPOT_LIGHT);
 	//Object->GetTransform()->Position.x -= 10.0f;
 	//Object->GetTransform()->Position.y += 10.0f;
-
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("Sphere1");
-	Object->GetTransform()->Position.x -= 30.0f;
-
-	Object = Instance();
-	meshfilter = Object->AddComponent<MeshFilter>();
-	meshfilter->SetModelName("Sphere1");
-	Object->GetTransform()->Position.x -= 10.0f;
-
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("Sphere1");
-	Object->GetTransform()->Position.x += 10.0f;
-
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
-	filter->SetModelName("Sphere1");
-	Object->GetTransform()->Position.x += 30.0f;
-
 
 	//Object = Instance();
 	//filter = Object->AddComponent<MeshFilter>();
@@ -228,6 +206,63 @@ void TestScene::CreateMap()
 	//filter = Object->AddComponent<MeshFilter>();
 	//filter->SetModelName("Outside_Pebble");
 
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	filter->SetModelName("BossB+");
+	filter->SetAnimationName("BossB+");
+	Object->GetTransform()->Position = {-44, 6, 62};
+	Object->GetTransform()->Scale = { 1.5f, 1.5f, 1.5f };
+	AC = Object->AddComponent<AnimationController>();
+	ACList.push_back(AC);
+	TRList.push_back(Object->GetTransform());
+
+	Object = Instance_Image();
+	IMG = Object->GetComponent<Image>();
+	IMG->SetTexture("ingame_player_hp");
+	IMG->SetColor(255, 0, 0);
+	RTR = Object->GetComponent<RectTransform>();
+	RTR->SetPivot(PIVOT_TYPE::PIVOT_OBJECT);
+	RTR->SetPositionObject(TRList[0], Vector3(0.0f, 6.0f, 0.0f));
+	RTRList.push_back(RTR);
+
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("MonsterA+");
+	//filter->SetAnimationName("MonsterA+");
+	//Object->GetTransform()->Position = { 15, 0, 62 };
+	//Object->GetTransform()->Scale = { 1.2f, 1.2f, 1.2f };
+	//AC = Object->AddComponent<AnimationController>();
+	//ACList.push_back(AC);
+	//TRList.push_back(Object->GetTransform());
+	//
+	//Object = Instance_Image();
+	//IMG = Object->GetComponent<Image>();
+	//IMG->SetTexture("ingame_player_hp");
+	//IMG->SetColor(255, 0, 0);
+	//RTR = Object->GetComponent<RectTransform>();
+	//RTR->SetPivot(PIVOT_TYPE::PIVOT_OBJECT);
+	//RTR->SetPositionObject(TRList[1], Vector3(0.0f, 2.0f, 0.0f));
+	//RTRList.push_back(RTR);
+	//
+	//Object = Instance();
+	//filter = Object->AddComponent<MeshFilter>();
+	//filter->SetModelName("MonsterB+");
+	//filter->SetAnimationName("MonsterB+");
+	//Object->GetTransform()->Position = { 23, 1, 56 };
+	//Object->GetTransform()->Scale = { 3.0f, 3.0f, 3.0f };
+	//AC = Object->AddComponent<AnimationController>();
+	//ACList.push_back(AC);
+	//TRList.push_back(Object->GetTransform());
+	//
+	//Object = Instance_Image();
+	//IMG = Object->GetComponent<Image>();
+	//IMG->SetTexture("ingame_player_hp");
+	//IMG->SetColor(255, 0, 0);
+	//RTR = Object->GetComponent<RectTransform>();
+	//RTR->SetPivot(PIVOT_TYPE::PIVOT_OBJECT);
+	//RTR->SetPositionObject(TRList[2], Vector3(0.0f, 2.5f, 0.0f));
+	//RTRList.push_back(RTR);
+
 	testobj = Instance_Terrain("Terrain");
 	Terrain* mTerrain = testobj->GetComponent<Terrain>();
 	mTerrain->SetLayerName("terrain_ground_A_BaseColor", "terrain_ground_A_Normal", "terrain_ground_A_ORM");
@@ -248,108 +283,97 @@ void TestScene::CreateUI()
 	ui_image = ui_object->AddComponent<Image>();
 	ui_image->SetTexture("ingame_minimap");
 	ui_rectTR = ui_object->GetComponent<RectTransform>();
-	ui_rectTR->SetPivot(RECT_PIVOT::PIVOT_RIGHT_TOP);
+	ui_rectTR->SetPivot(PIVOT_TYPE::PIVOT_RIGHT_TOP);
 	ui_rectTR->AddPosition(25.0f, 75.0f);
 	ui_rectTR->SetRotation(0.0f, 0.0f, -90.0f);
-	ui_rectTR->SetScale(0.5f, 0.5f);
 
 	ui_object = Instance_UI("UI");
 	ui_image = ui_object->AddComponent<Image>();
 	ui_image->SetTexture("ingame_combo");
 
 	ui_rectTR = ui_object->GetComponent<RectTransform>();
-	ui_rectTR->SetPivot(RECT_PIVOT::PIVOT_MIDDLE_RIGHT);
+	ui_rectTR->SetPivot(PIVOT_TYPE::PIVOT_MIDDLE_RIGHT);
 	ui_rectTR->AddPosition(-25.0f, 0.0f);
-	ui_rectTR->SetScale(0.5f, 0.5f);
 
 	ui_object = Instance_UI("UI");
 	ui_image = ui_object->AddComponent<Image>();
 	ui_image->SetTexture("ingame_playercounter_1");
 
 	ui_rectTR = ui_object->GetComponent<RectTransform>();
-	ui_rectTR->SetPivot(RECT_PIVOT::PIVOT_MIDDLE_CENTER);
+	ui_rectTR->SetPivot(PIVOT_TYPE::PIVOT_MIDDLE_CENTER);
 	ui_rectTR->AddPosition(-50.0f, 0.0f);
-	ui_rectTR->SetScale(0.5f, 0.5f);
 
 	ui_object = Instance_UI("UI");
 	ui_image = ui_object->AddComponent<Image>();
 	ui_image->SetTexture("ingame_player_hp_back");
 
 	ui_rectTR = ui_object->GetComponent<RectTransform>();
-	ui_rectTR->SetPivot(RECT_PIVOT::PIVOT_LEFT_BOTTOM);
+	ui_rectTR->SetPivot(PIVOT_TYPE::PIVOT_LEFT_BOTTOM);
 	ui_rectTR->AddPosition(50.0f, -50.0f);
-	ui_rectTR->SetScale(0.5f, 0.5f);
-
 
 	ui_object = Instance_UI("UI");
 	ui_image = ui_object->AddComponent<Image>();
 	ui_image->SetTexture("ingame_player_hp");
-	ui_image->SetImageColor(255, 0, 0);
+	ui_image->SetColor(255, 0, 0);
 	ui_rectTR = ui_object->GetComponent<RectTransform>();
-	ui_rectTR->SetPivot(RECT_PIVOT::PIVOT_LEFT_BOTTOM);
+	ui_rectTR->SetPivot(PIVOT_TYPE::PIVOT_LEFT_BOTTOM);
 	ui_rectTR->AddPosition(50.0f, -50.0f);
-	ui_rectTR->SetScale(0.5f, 0.5f);
 
 	ui_object = Instance_UI("UI");
 	ui_image = ui_object->AddComponent<Image>();
 	ui_image->SetTexture("ingame_switch");
 	ui_rectTR = ui_object->GetComponent<RectTransform>();
-	ui_rectTR->SetPivot(RECT_PIVOT::PIVOT_LEFT_BOTTOM);
+	ui_rectTR->SetPivot(PIVOT_TYPE::PIVOT_LEFT_BOTTOM);
 	ui_rectTR->AddPosition(50.0f, -150.0f);
-	ui_rectTR->SetScale(0.5f, 0.5f);
 
 	ui_object = Instance_UI("UI");
 	ui_image = ui_object->AddComponent<Image>();
 	ui_image->SetTexture("ingame_skill_rb");
 	ui_rectTR = ui_object->GetComponent<RectTransform>();
-	ui_rectTR->SetPivot(RECT_PIVOT::PIVOT_LEFT_BOTTOM);
+	ui_rectTR->SetPivot(PIVOT_TYPE::PIVOT_LEFT_BOTTOM);
 	ui_rectTR->AddPosition(400.0f, -50.0f);
-	ui_rectTR->SetScale(0.5f, 0.5f);
 
 	ui_object = Instance_UI("UI");
 	ui_image = ui_object->AddComponent<Image>();
 	ui_image->SetTexture("ingame_skill_rb");
 	ui_rectTR = ui_object->GetComponent<RectTransform>();
-	ui_rectTR->SetPivot(RECT_PIVOT::PIVOT_LEFT_BOTTOM);
+	ui_rectTR->SetPivot(PIVOT_TYPE::PIVOT_LEFT_BOTTOM);
 	ui_rectTR->AddPosition(400.0f, -50.0f);
-	ui_rectTR->SetScale(0.5f, 0.5f);
 
 	ui_object = Instance_UI("UI");
 	ui_image = ui_object->AddComponent<Image>();
 	ui_image->SetTexture("ingame_skill_space");
 	ui_rectTR = ui_object->GetComponent<RectTransform>();
-	ui_rectTR->SetPivot(RECT_PIVOT::PIVOT_LEFT_BOTTOM);
+	ui_rectTR->SetPivot(PIVOT_TYPE::PIVOT_LEFT_BOTTOM);
 	ui_rectTR->AddPosition(475.0f, -50.0f);
-	ui_rectTR->SetScale(0.5f, 0.5f);
 
 	ui_object = Instance_UI("UI");
 	ui_image = ui_object->AddComponent<Image>();
 	ui_image->SetTexture("ingame_skill_e");
 	ui_rectTR = ui_object->GetComponent<RectTransform>();
-	ui_rectTR->SetPivot(RECT_PIVOT::PIVOT_LEFT_BOTTOM);
+	ui_rectTR->SetPivot(PIVOT_TYPE::PIVOT_LEFT_BOTTOM);
 	ui_rectTR->AddPosition(550.0f, -50.0f);
-	ui_rectTR->SetScale(0.5f, 0.5f);
 
 	//ui_object = Instance_UI("UI");
 	//ui_image = ui_object->AddComponent<Image>();
 	//ui_image->SetTexture("ingame_player_hp");
 	//
 	//ui_rectTR = ui_object->GetComponent<RectTransform>();
-	//ui_rectTR->SetPivot(RECT_PIVOT::PIVOT_LEFT_TOP);
+	//ui_rectTR->SetPivot(PIVOT_TYPE::PIVOT_LEFT_TOP);
 	//
 	//ui_object = Instance_UI("UI");
 	//ui_image = ui_object->AddComponent<Image>();
 	//ui_image->SetTexture("ingame_player_hp_back");
 	//
 	//ui_rectTR = ui_object->GetComponent<RectTransform>();
-	//ui_rectTR->SetPivot(RECT_PIVOT::PIVOT_LEFT_BOTTOM);
+	//ui_rectTR->SetPivot(PIVOT_TYPE::PIVOT_LEFT_BOTTOM);
 	//
 	//ui_object = Instance_UI("UI");
 	//ui_image = ui_object->AddComponent<Image>();
 	//ui_image->SetTexture("ingame_player_hp_back");
 	//
 	//ui_rectTR = ui_object->GetComponent<RectTransform>();
-	//ui_rectTR->SetPivot(RECT_PIVOT::PIVOT_RIGHT_TOP);
+	//ui_rectTR->SetPivot(PIVOT_TYPE::PIVOT_RIGHT_TOP);
 	//ui_rectTR->AddPosition(-10.0f, 0.0f);
 	//ui_rectTR->SetRotation(0.0f, 0.0f, 90.0f);
 	//ui_rectTR->SetScale(0.5f, 0.5f);
@@ -359,7 +383,7 @@ void TestScene::CreateUI()
 	//ui_image->SetTexture("ingame_player_hp_back");
 	//
 	//ui_rectTR = ui_object->GetComponent<RectTransform>();
-	//ui_rectTR->SetPivot(RECT_PIVOT::PIVOT_RIGHT_BOTTOM);
+	//ui_rectTR->SetPivot(PIVOT_TYPE::PIVOT_RIGHT_BOTTOM);
 	//ui_rectTR->AddPosition(-10.0f, 0.0f);
 	//
 	//
@@ -368,35 +392,35 @@ void TestScene::CreateUI()
 	//ui_image->SetTexture("ingame_minimap");
 	//
 	//ui_rectTR = ui_object->GetComponent<RectTransform>();
-	//ui_rectTR->SetPivot(RECT_PIVOT::PIVOT_MIDDLE_TOP);
+	//ui_rectTR->SetPivot(PIVOT_TYPE::PIVOT_MIDDLE_TOP);
 	//
 	//ui_object = Instance_UI("UI");
 	//ui_image = ui_object->AddComponent<Image>();
 	//ui_image->SetTexture("ingame_minimap");
 	//
 	//ui_rectTR = ui_object->GetComponent<RectTransform>();
-	//ui_rectTR->SetPivot(RECT_PIVOT::PIVOT_MIDDLE_BOTTOM);
+	//ui_rectTR->SetPivot(PIVOT_TYPE::PIVOT_MIDDLE_BOTTOM);
 	//
 	//ui_object = Instance_UI("UI");
 	//ui_image = ui_object->AddComponent<Image>();
 	//ui_image->SetTexture("ingame_minimap");
 	//
 	//ui_rectTR = ui_object->GetComponent<RectTransform>();
-	//ui_rectTR->SetPivot(RECT_PIVOT::PIVOT_MIDDLE_LEFT);
+	//ui_rectTR->SetPivot(PIVOT_TYPE::PIVOT_MIDDLE_LEFT);
 	//
 	//ui_object = Instance_UI("UI");
 	//ui_image = ui_object->AddComponent<Image>();
 	//ui_image->SetTexture("ingame_minimap");
 	//
 	//ui_rectTR = ui_object->GetComponent<RectTransform>();
-	//ui_rectTR->SetPivot(RECT_PIVOT::PIVOT_MIDDLE_RIGHT);
+	//ui_rectTR->SetPivot(PIVOT_TYPE::PIVOT_MIDDLE_RIGHT);
 	//
 	//ui_object = Instance_UI("UI");
 	//ui_image = ui_object->AddComponent<Image>();
 	//ui_image->SetTexture("ingame_minimap");
 	//
 	//ui_rectTR = ui_object->GetComponent<RectTransform>();
-	//ui_rectTR->SetPivot(RECT_PIVOT::PIVOT_MIDDLE_CENTER);
+	//ui_rectTR->SetPivot(PIVOT_TYPE::PIVOT_MIDDLE_CENTER);
 }
 
 void TestScene::CreateParticle(float x, float y, float z)
@@ -491,26 +515,10 @@ void TestScene::ChangeCubeMap()
 
 	if (GetKey('1'))
 	{
-		MaterialPropertyBlock* block = meshfilter->GetMaterialPropertyBlock();
-	
-		if (up)
+		for (int i = 0; i < ACList.size(); i++)
 		{
-			block->LimLightColor.x += 0.005f;
-		}
-		else
-		{
-			block->LimLightColor.x -= 0.005f;
-		}
-	
-		if (block->LimLightColor.x > 1.0f)
-		{
-			block->LimLightColor.x = 1.0f;
-			up = false;
-		}
-		if (block->LimLightColor.x < 0.0f)
-		{
-			block->LimLightColor.x = 0.0f;
-			up = true;
+			ACList[i]->Choice("idle");
+			ACList[i]->Play();
 		}
 	}
 	if (GetKeyUp('2'))

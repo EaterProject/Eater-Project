@@ -16,10 +16,10 @@ public:
 
 public:
 	EATER_ENGINEDLL void SetTexture(std::string texture_name);
-	EATER_ENGINEDLL void SetImageColor(DirectX::SimpleMath::Vector3 image_color);
-	EATER_ENGINEDLL void SetImageColor(DirectX::SimpleMath::Vector4 image_color);
-	EATER_ENGINEDLL void SetImageColor(float r, float g, float b);
-	EATER_ENGINEDLL void SetImageColor(float r, float g, float b, float a);
+	EATER_ENGINEDLL void SetColor(DirectX::SimpleMath::Vector3 image_color);
+	EATER_ENGINEDLL void SetColor(DirectX::SimpleMath::Vector4 image_color);
+	EATER_ENGINEDLL void SetColor(float r, float g, float b);
+	EATER_ENGINEDLL void SetColor(float r, float g, float b, float a);
 	EATER_ENGINEDLL void SetFillRange(FILL_TYPE type, float range);
 	EATER_ENGINEDLL void SetLayer(UINT order);
 

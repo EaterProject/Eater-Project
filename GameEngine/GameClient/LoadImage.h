@@ -21,9 +21,6 @@ private:
 	Image* Loading_2_Image;
 	Image* Text_Origin_Image;
 
-	Image* Test_Slider_Back;
-	Image* Test_Slider_Fill;
-
 	Slider* Test_Slider;
 
 	RectTransform* Loading_RectTR_2;

@@ -28,6 +28,10 @@ public:
 	EATER_ENGINEDLL bool ChoiceCameraAnimationEnd();
 	//EATER_ENGINEDLL void LookAt(GameObject* obj);
 	//EATER_ENGINEDLL void LookAt(Vector3 Pos);
+	
+	DirectX::SimpleMath::Vector2 WorldToScreen(float x, float y, float z);
+	DirectX::SimpleMath::Vector2 WorldToScreen(DirectX::SimpleMath::Vector3 world);
+
 	// Camera Position
 	DirectX::SimpleMath::Vector3 GetPos();
 	//현재 카메라의 뷰행렬

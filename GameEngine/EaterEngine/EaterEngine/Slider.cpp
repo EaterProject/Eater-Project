@@ -62,7 +62,7 @@ void Slider::SetValueRange(float min, float max)
 	}
 }
 
-void Slider::SetPivot(RECT_PIVOT pivot_type)
+void Slider::SetPivot(PIVOT_TYPE pivot_type)
 {
 	m_Pivot = pivot_type;
 
@@ -194,7 +194,7 @@ void Slider::SetBackGroundColor(float r, float g, float b, float a)
 
 void Slider::SetBackGroundColor()
 {
-	if (m_BackImage) m_BackImage->SetImageColor(m_BackColor);
+	if (m_BackImage) m_BackImage->SetColor(m_BackColor);
 }
 
 void Slider::SetFillColor(DirectX::SimpleMath::Vector4 image_color)
@@ -227,7 +227,7 @@ void Slider::SetFillColor(float r, float g, float b, float a)
 
 void Slider::SetFillColor()
 {
-	if (m_FillImage) m_FillImage->SetImageColor(m_FillColor);
+	if (m_FillImage) m_FillImage->SetColor(m_FillColor);
 }
 
 void Slider::SetFillRange(FILL_TYPE fill_type, float range)

@@ -394,23 +394,23 @@ GameObject* GameEngine::Instance_UI(std::string ObjName /*= "UI"*/)
 	return Obj;
 }
 
-GameObject* GameEngine::InstanceImage(std::string ObjName /*= "Image"*/)
+GameObject* GameEngine::Instance_Image(std::string ObjName /*= "Image"*/)
 {
-	GameObject* Obj = InstanceUI();
+	GameObject* Obj = Instance_UI();
 	Obj->AddComponent<Image>();
 
 	return Obj;
 }
 
-GameObject* GameEngine::InstanceSlider(std::string ObjName /*= "Slider"*/)
+GameObject* GameEngine::Instance_Slider(std::string ObjName /*= "Slider"*/)
 {
 	GameObject* Obj = CreateInstance();
 	Slider* slider  = Obj->AddComponent<Slider>();
 
-	GameObject* Back_Img = InstanceImage();
+	GameObject* Back_Img = Instance_Image();
 	slider->SetBackGroundImage(Back_Img->GetComponent<Image>());
 
-	GameObject* Fill_Img = InstanceImage();
+	GameObject* Fill_Img = Instance_Image();
 	slider->SetFillImage(Fill_Img->GetComponent<Image>());
 
 	return Obj;

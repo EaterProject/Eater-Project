@@ -17,7 +17,7 @@ public:
 public:
 	EATER_ENGINEDLL void SetValueRange(float min, float max);
 
-	EATER_ENGINEDLL void SetPivot(RECT_PIVOT pivot_type);
+	EATER_ENGINEDLL void SetPivot(PIVOT_TYPE pivot_type);
 	EATER_ENGINEDLL void SetPosition(DirectX::SimpleMath::Vector2 pos);
 	EATER_ENGINEDLL void SetPosition(float x, float y);
 
@@ -47,7 +47,7 @@ private:
 
 	bool m_Start;
 
-	RECT_PIVOT m_Pivot;
+	PIVOT_TYPE m_Pivot;
 	Vector2 m_Position;
 	Vector4 m_BackColor;
 	Vector4 m_FillColor;
