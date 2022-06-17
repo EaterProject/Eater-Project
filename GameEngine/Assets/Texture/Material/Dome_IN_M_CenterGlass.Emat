@@ -1,7 +1,7 @@
 #EATERMAT
 @MaterialName Dome_IN_M_CenterGlass
 @Alpha 0
-@DiffuseMap Dome_CenterGlass_BaseColor.png
+@DiffuseMap Dome_centerGlass_BaseColor.png
 @NormalMap Dome_CenterGlass_Normal.png
 @EmissiveMap Dome_CenterGlass_Emissive.png
 @ORMMap Dome_CenterGlass_ORM.png

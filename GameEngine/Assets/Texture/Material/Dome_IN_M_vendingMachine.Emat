@@ -1,5 +1,5 @@
 #EATERMAT
-@MaterialName Dome_IN_M_vendingMachine
+@MaterialName Dome_IN_M_VendingMachine
 @Alpha 0
 @DiffuseMap Dome_VendingMachine_BaseColor.png
 @NormalMap Dome_VendingMachine_Normal.png

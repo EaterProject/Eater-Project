@@ -1,0 +1,22 @@
+#EATERMAT
+@MaterialName Dome_GateDoor_IN_M_GateDoor
+@Alpha 0
+@DiffuseMap Dome_GateDoor_BaseColor.png
+@NormalMap Dome_GateDoor_Normal.png
+@EmissiveMap Dome_GateDoor_Emissive.png
+@ORMMap Dome_GateDoor_ORM.png
+@Emissive 0.000000
+@Roughness 0.000000
+@Metallic 0.000000
+@Tileing_X 1.000000
+@Tileing_Y 1.000000
+@SkyLightIndex 0
+@AddColor_R 0.000000
+@AddColor_G 0.000000
+@AddColor_B 0.000000
+@LimColor_R 0.000000
+@LimColor_G 0.000000
+@LimColor_B 0.000000
+@LimFactor 0.000000
+@LimWidth 0.000000
+&
