@@ -1,6 +1,8 @@
 #ifndef OIT_HEADER
 #define OIT_HEADER
 
+#define MAX_SORTED_PIXELS 4
+
 cbuffer cbOitFrame
 {
     uint gFrameWidth;

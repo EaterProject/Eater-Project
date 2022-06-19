@@ -24,6 +24,8 @@ private:
 private:
 	VertexShader* m_OITRender_VS;
 	PixelShader* m_OITRender_PS;
+	ComputeShader* m_OITRender_CS;
+
 	PixelShader* m_OITMesh_PS;
 	PixelShader* m_OITParticle_PS;
 

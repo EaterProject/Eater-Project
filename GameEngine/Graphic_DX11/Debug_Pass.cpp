@@ -125,7 +125,7 @@ void Debug_Pass::Start(int width, int height)
 	m_Bloom_RT = g_Resource->GetShaderResourceView<RT_Bloom_Brightx4_2>()->Get();
 
 	m_ShadowMap = g_Resource->GetShaderResourceView<DS_Shadow>()->Get();
-	m_SSAOMap = g_Resource->GetShaderResourceView<RT_SSAO_Blur>()->Get();
+	m_SSAOMap = g_Resource->GetShaderResourceView<RT_SSAO_Main>()->Get();
 }
 
 void Debug_Pass::OnResize(int width, int height)
@@ -143,7 +143,7 @@ void Debug_Pass::OnResize(int width, int height)
 	m_Bloom_RT = g_Resource->GetShaderResourceView<RT_Bloom_Brightx4_2>()->Get();
 
 	m_ShadowMap = g_Resource->GetShaderResourceView<DS_Shadow>()->Get();
-	m_SSAOMap = g_Resource->GetShaderResourceView<RT_SSAO_Blur>()->Get();
+	m_SSAOMap = g_Resource->GetShaderResourceView<RT_SSAO_Main>()->Get();
 }
 
 void Debug_Pass::Release()

@@ -3,6 +3,7 @@
 #include "ShaderBase.h"
 #include "VertexShader.h"
 #include "PixelShader.h"
+#include "ComputeShader.h"
 #include "GraphicState.h"
 #include "GraphicView.h"
 #include "GraphicResource.h"
@@ -96,7 +97,8 @@ void OIT_Pass::Start(int width, int height)
 
 	// Shader 설정..
 	m_OITRender_VS = g_Shader->GetShader("Screen_VS");
-	m_OITRender_PS = g_Shader->GetShader("OIT_PS");
+	m_OITRender_PS = g_Shader->GetShader("OIT_Blend_PS");
+	m_OITRender_CS = g_Shader->GetShader("OIT_Blend_CS");
 
 	// Buffer 설정..
 	m_Screen_DB = g_Resource->GetDrawBuffer<DB_Quad>();
@@ -201,7 +203,6 @@ void OIT_Pass::RenderUpdate()
 	g_Context->IASetIndexBuffer(m_Screen_DB->IndexBuf->Get(), DXGI_FORMAT_R32_UINT, 0);
 
 	g_Context->DrawIndexed(m_Screen_DB->IndexCount, 0, 0);
-
 }
 
 void OIT_Pass::SetShaderList()

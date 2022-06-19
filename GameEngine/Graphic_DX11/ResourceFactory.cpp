@@ -1186,7 +1186,7 @@ void GraphicResourceFactory::CreateTextureRenderTarget(UINT width, UINT height)
 	srvDesc.Format = texDesc.Format;
 	srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
 	srvDesc.Texture2D.MostDetailedMip = 0;
-	srvDesc.Texture2D.MipLevels = 1;
+	srvDesc.Texture2D.MipLevels = -1;
 
 	CreateRenderTexture(RT_OutPut1::GetName(), RT_OutPut1::GetHashCode(), &texDesc, nullptr, &rtvDesc, &srvDesc, nullptr);
 	CreateRenderTexture(RT_OutPut2::GetName(), RT_OutPut2::GetHashCode(), &texDesc, nullptr, &rtvDesc, &srvDesc, nullptr);

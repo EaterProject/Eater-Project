@@ -30,6 +30,7 @@
 #include "Alpha_Pass.h"
 #include "OIT_Pass.h"
 #include "FXAA_Pass.h"
+#include "Blur_Pass.h"
 #include "Bloom_Pass.h"
 #include "Combine_Pass.h"
 #include "Fog_Pass.h"
@@ -68,6 +69,7 @@ RenderManager::RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, I
 	CREATE_PASS(Alpha_Pass,		m_Alpha);
 	CREATE_PASS(OIT_Pass,		m_OIT);
 	CREATE_PASS(FXAA_Pass,		m_FXAA);
+	CREATE_PASS(Blur_Pass,		m_Blur);
 	CREATE_PASS(Bloom_Pass,		m_Bloom);
 	CREATE_PASS(Fog_Pass,		m_Fog);
 	CREATE_PASS(Culling_Pass,	m_Culling);
@@ -510,12 +512,15 @@ void RenderManager::PostProcessingRender()
 	m_Combine->RenderUpdate();
 	GPU_END_EVENT_DEBUG_NAME();
 
+	//m_Blur->RenderUpdate(m_Combine->GetRT(), 2);
+
 	GPU_BEGIN_EVENT_DEBUG_NAME("FXAA Pass");
 	if (m_NowRenderOption.PostProcessOption & POSTPROCESS_OPTION::RENDER_FXAA)
 	{
 		m_FXAA->RenderUpdate();
 	}
 	GPU_END_EVENT_DEBUG_NAME();
+
 }
 
 void RenderManager::UIRender()

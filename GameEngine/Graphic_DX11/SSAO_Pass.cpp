@@ -3,6 +3,7 @@
 #include "ShaderBase.h"
 #include "VertexShader.h"
 #include "PixelShader.h"
+#include "ComputeShader.h"
 #include "GraphicState.h"
 #include "GraphicView.h"
 #include "GraphicResource.h"
@@ -19,6 +20,7 @@
 #include "ResourceManagerBase.h"
 #include "ShaderManagerBase.h"
 #include "ShaderResourceViewDefine.h"
+#include "UnorderedAccessViewDefine.h"
 #include "DepthStencilStateDefine.h"
 #include "DepthStencilViewDefine.h"
 #include "RasterizerStateDefine.h"
@@ -55,22 +57,41 @@ void SSAO_Pass::Create(int width, int height)
 	texDesc.SampleDesc.Count = 1;
 	texDesc.SampleDesc.Quality = 0;
 	texDesc.Usage = D3D11_USAGE_DEFAULT;
-	texDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET;
+	texDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS;
 	texDesc.CPUAccessFlags = 0;
 	texDesc.MiscFlags = 0;
 
+	D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc;
+	srvDesc.Format = texDesc.Format;
+	srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+	srvDesc.Texture2D.MostDetailedMip = 0;
+	srvDesc.Texture2D.MipLevels = -1;
+
+	D3D11_UNORDERED_ACCESS_VIEW_DESC uavDesc;
+	uavDesc.Format = texDesc.Format;
+	uavDesc.ViewDimension = D3D11_UAV_DIMENSION_TEXTURE2D;
+	uavDesc.Texture2D.MipSlice = 0;
+
 	// RenderTarget 생성..
-	g_Factory->CreateRenderTexture<RT_SSAO_Main>(&texDesc, nullptr, nullptr, nullptr, nullptr);
-	g_Factory->CreateRenderTexture<RT_SSAO_Blur>(&texDesc, nullptr, nullptr, nullptr, nullptr);
+	g_Factory->CreateRenderTexture<RT_SSAO_Main>(&texDesc, nullptr, nullptr, &srvDesc, &uavDesc);
+	g_Factory->CreateRenderTexture<RT_SSAO_Blur>(&texDesc, nullptr, nullptr, &srvDesc, &uavDesc);
 }
 
 void SSAO_Pass::Start(int width, int height)
 {
+	m_Width = width / 2;
+	m_Height = height / 2;
+
+	m_NumGroupsX = (UINT)ceilf(m_Width / 256.0f);
+	m_NumGroupsY = (UINT)ceilf(m_Height / 256.0f);
+
 	// Shader 설정..
 	m_Ssao_VS = g_Shader->GetShader("SSAO_VS");
 	m_Ssao_PS = g_Shader->GetShader("SSAO_PS");
 	m_Blur_VS = g_Shader->GetShader("Screen_VS");
 	m_Blur_PS = g_Shader->GetShader("SSAOBlur_PS");
+	m_BlurHorizon_CS = g_Shader->GetShader("Blur_Horizon_CS");
+	m_BlurVertical_CS = g_Shader->GetShader("Blur_Vertical_CS");
 
 	// Buffer 설정..
 	m_Ssao_DB = g_Resource->GetDrawBuffer<DB_SSAO>();
@@ -87,8 +108,10 @@ void SSAO_Pass::Start(int width, int height)
 
 	m_Ssao_RTV = m_Ssao_RT->GetRTV()->Get();
 	m_Ssao_SRV = m_Ssao_RT->GetSRV()->Get();
+	m_Ssao_UAV = m_Ssao_RT->GetUAV()->Get();
 	m_SsaoBlur_RTV = m_SsaoBlur_RT->GetRTV()->Get();
 	m_SsaoBlur_SRV = m_SsaoBlur_RT->GetSRV()->Get();
+	m_SsaoBlur_UAV = m_SsaoBlur_RT->GetUAV()->Get();
 
 	// OffsetVector 설정..
 	SetOffsetVectors();
@@ -114,14 +137,22 @@ void SSAO_Pass::Start(int width, int height)
 
 void SSAO_Pass::OnResize(int width, int height)
 {
+	m_Width = width / 2;
+	m_Height = height / 2;
+
+	m_NumGroupsX = (UINT)ceilf(m_Width / 256.0f);
+	m_NumGroupsY = (UINT)ceilf(m_Height / 256.0f);
+
 	// Frustum 재설정..
 	SetFrustumFarCorners(width, height);
 
 	// RenderTarget Resource 재설정..
 	m_Ssao_RTV = m_Ssao_RT->GetRTV()->Get();
 	m_Ssao_SRV = m_Ssao_RT->GetSRV()->Get();
+	m_Ssao_UAV = m_Ssao_RT->GetUAV()->Get();
 	m_SsaoBlur_RTV = m_SsaoBlur_RT->GetRTV()->Get();
 	m_SsaoBlur_SRV = m_SsaoBlur_RT->GetSRV()->Get();
+	m_SsaoBlur_UAV = m_SsaoBlur_RT->GetUAV()->Get();
 
 	// Constant Buffer Update..
 	CB_BlurTexel blurTexelBuf;
@@ -184,11 +215,25 @@ void SSAO_Pass::RenderUpdate()
 
 	g_Context->DrawIndexed(m_Ssao_DB->IndexCount, 0, 0);
 
+	if (GetAsyncKeyState('1'))
+	{
+		m_Blur_CS ^= true;
+	}
+
 	// SSAO Blur Render Update..
-	BlurRender();
+	//BlurRender_PS();
+	//BlurRender_CS();
+	if (m_Blur_CS)
+	{
+		BlurRender_CS();
+	}
+	else
+	{
+		BlurRender_PS();
+	}
 }
 
-void SSAO_Pass::BlurRender()
+void SSAO_Pass::BlurRender_PS()
 {
 	GPU_MARKER_DEBUG_NAME("SSAO Blur");
 	
@@ -234,6 +279,40 @@ void SSAO_Pass::BlurRender()
 		g_Context->IASetIndexBuffer(m_Ssao_DB->IndexBuf->Get(), DXGI_FORMAT_R16_UINT, 0);
 
 		g_Context->DrawIndexed(m_Ssao_DB->IndexCount, 0, 0);
+	}
+}
+
+void SSAO_Pass::BlurRender_CS()
+{
+	g_Context->OMSetRenderTargets(0, nullptr, nullptr);
+
+	for (UINT i = 0; i < m_BlurCount; i++)
+	{
+		// HORIZONTAL blur pass.
+		m_BlurHorizon_CS->SetShaderResourceView<gInputMap>(m_Ssao_SRV);
+		m_BlurHorizon_CS->SetUnorderedAccessView<gOutputUAV>(m_SsaoBlur_UAV);
+
+		m_BlurHorizon_CS->Update();
+
+		// How many groups do we need to dispatch to cover a row of pixels, where each
+		// group covers 256 pixels (the 256 is defined in the CS).
+		g_Context->Dispatch(m_NumGroupsX, m_Height, 1);
+
+		g_Context->CSSetShaderResources(0, 1, &m_NullSRV);
+		g_Context->CSSetUnorderedAccessViews(0, 1, &m_NullUAV, nullptr);
+
+		// VERTICAL blur pass.
+		m_BlurVertical_CS->SetShaderResourceView<gInputMap>(m_SsaoBlur_SRV);
+		m_BlurVertical_CS->SetUnorderedAccessView<gOutputUAV>(m_Ssao_UAV);
+
+		m_BlurVertical_CS->Update();
+
+		// How many groups do we need to dispatch to cover a column of pixels, where each
+		// group covers 256 pixels  (the 256 is defined in the CS).
+		g_Context->Dispatch(m_Width, m_NumGroupsY, 1);
+
+		g_Context->CSSetShaderResources(0, 1, &m_NullSRV);
+		g_Context->CSSetUnorderedAccessViews(0, 1, &m_NullUAV, nullptr);
 	}
 }
 

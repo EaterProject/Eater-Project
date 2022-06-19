@@ -1,0 +1,167 @@
+[TIME] 16:44:48 [FILE] D3D11Graphic.cpp [FUNC] D3D11Graphic::CreateTextureBuffer [LINE] 210
+[ Graphic ][ Create ][ ShaderResourceView ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+[ERROR] 구성 요소를 찾을 수 없습니다.
+
+[TIME] 16:44:48 [FILE] TextureManager.cpp [FUNC] TextureManager::LoadTexture [LINE] 34
+[ Engine ][ Create ][ Texture Buffer ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+
+[TIME] 16:46:51 [FILE] D3D11Graphic.cpp [FUNC] D3D11Graphic::CreateTextureBuffer [LINE] 210
+[ Graphic ][ Create ][ ShaderResourceView ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+[ERROR] 구성 요소를 찾을 수 없습니다.
+
+[TIME] 16:46:51 [FILE] TextureManager.cpp [FUNC] TextureManager::LoadTexture [LINE] 34
+[ Engine ][ Create ][ Texture Buffer ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+
+[TIME] 16:47:28 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
+[ Engine ][ Bake ][ SkyLight Buffer ] 'SkyLight_HDRI' Texture가 로드되지 않았습니다!!
+
+[TIME] 16:50:53 [FILE] D3D11Graphic.cpp [FUNC] D3D11Graphic::CreateTextureBuffer [LINE] 210
+[ Graphic ][ Create ][ ShaderResourceView ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+[ERROR] 구성 요소를 찾을 수 없습니다.
+
+[TIME] 16:50:53 [FILE] TextureManager.cpp [FUNC] TextureManager::LoadTexture [LINE] 34
+[ Engine ][ Create ][ Texture Buffer ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+
+[TIME] 16:51:30 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
+[ Engine ][ Bake ][ SkyLight Buffer ] 'SkyLight_HDRI' Texture가 로드되지 않았습니다!!
+
+[TIME] 16:53:28 [FILE] D3D11Graphic.cpp [FUNC] D3D11Graphic::CreateTextureBuffer [LINE] 210
+[ Graphic ][ Create ][ ShaderResourceView ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+[ERROR] 구성 요소를 찾을 수 없습니다.
+
+[TIME] 16:53:28 [FILE] TextureManager.cpp [FUNC] TextureManager::LoadTexture [LINE] 34
+[ Engine ][ Create ][ Texture Buffer ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+
+[TIME] 16:54:04 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
+[ Engine ][ Bake ][ SkyLight Buffer ] 'SkyLight_HDRI' Texture가 로드되지 않았습니다!!
+
+[TIME] 16:56:29 [FILE] D3D11Graphic.cpp [FUNC] D3D11Graphic::CreateTextureBuffer [LINE] 210
+[ Graphic ][ Create ][ ShaderResourceView ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+[ERROR] 구성 요소를 찾을 수 없습니다.
+
+[TIME] 16:56:29 [FILE] TextureManager.cpp [FUNC] TextureManager::LoadTexture [LINE] 34
+[ Engine ][ Create ][ Texture Buffer ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+
+[TIME] 16:57:05 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
+[ Engine ][ Bake ][ SkyLight Buffer ] 'SkyLight_HDRI' Texture가 로드되지 않았습니다!!
+
+[TIME] 16:59:36 [FILE] D3D11Graphic.cpp [FUNC] D3D11Graphic::CreateTextureBuffer [LINE] 210
+[ Graphic ][ Create ][ ShaderResourceView ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+[ERROR] 구성 요소를 찾을 수 없습니다.
+
+[TIME] 16:59:36 [FILE] TextureManager.cpp [FUNC] TextureManager::LoadTexture [LINE] 34
+[ Engine ][ Create ][ Texture Buffer ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+
+[TIME] 17:00:13 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
+[ Engine ][ Bake ][ SkyLight Buffer ] 'SkyLight_HDRI' Texture가 로드되지 않았습니다!!
+
+[TIME] 17:04:30 [FILE] D3D11Graphic.cpp [FUNC] D3D11Graphic::CreateTextureBuffer [LINE] 210
+[ Graphic ][ Create ][ ShaderResourceView ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+[ERROR] 구성 요소를 찾을 수 없습니다.
+
+[TIME] 17:04:30 [FILE] TextureManager.cpp [FUNC] TextureManager::LoadTexture [LINE] 34
+[ Engine ][ Create ][ Texture Buffer ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+
+[TIME] 17:05:07 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
+[ Engine ][ Bake ][ SkyLight Buffer ] 'SkyLight_HDRI' Texture가 로드되지 않았습니다!!
+
+[TIME] 17:21:17 [FILE] D3D11Graphic.cpp [FUNC] D3D11Graphic::CreateTextureBuffer [LINE] 210
+[ Graphic ][ Create ][ ShaderResourceView ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+[ERROR] 구성 요소를 찾을 수 없습니다.
+
+[TIME] 17:21:17 [FILE] TextureManager.cpp [FUNC] TextureManager::LoadTexture [LINE] 34
+[ Engine ][ Create ][ Texture Buffer ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+
+[TIME] 17:21:54 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
+[ Engine ][ Bake ][ SkyLight Buffer ] 'SkyLight_HDRI' Texture가 로드되지 않았습니다!!
+
+[TIME] 17:24:16 [FILE] D3D11Graphic.cpp [FUNC] D3D11Graphic::CreateTextureBuffer [LINE] 210
+[ Graphic ][ Create ][ ShaderResourceView ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+[ERROR] 구성 요소를 찾을 수 없습니다.
+
+[TIME] 17:24:16 [FILE] TextureManager.cpp [FUNC] TextureManager::LoadTexture [LINE] 34
+[ Engine ][ Create ][ Texture Buffer ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+
+[TIME] 17:24:53 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
+[ Engine ][ Bake ][ SkyLight Buffer ] 'SkyLight_HDRI' Texture가 로드되지 않았습니다!!
+
+[TIME] 17:29:06 [FILE] D3D11Graphic.cpp [FUNC] D3D11Graphic::CreateTextureBuffer [LINE] 210
+[ Graphic ][ Create ][ ShaderResourceView ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+[ERROR] 구성 요소를 찾을 수 없습니다.
+
+[TIME] 17:29:06 [FILE] TextureManager.cpp [FUNC] TextureManager::LoadTexture [LINE] 34
+[ Engine ][ Create ][ Texture Buffer ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+
+[TIME] 17:29:42 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
+[ Engine ][ Bake ][ SkyLight Buffer ] 'SkyLight_HDRI' Texture가 로드되지 않았습니다!!
+
+[TIME] 17:42:18 [FILE] D3D11Graphic.cpp [FUNC] D3D11Graphic::CreateTextureBuffer [LINE] 210
+[ Graphic ][ Create ][ ShaderResourceView ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+[ERROR] 구성 요소를 찾을 수 없습니다.
+
+[TIME] 17:42:18 [FILE] TextureManager.cpp [FUNC] TextureManager::LoadTexture [LINE] 34
+[ Engine ][ Create ][ Texture Buffer ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+
+[TIME] 17:42:54 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
+[ Engine ][ Bake ][ SkyLight Buffer ] 'SkyLight_HDRI' Texture가 로드되지 않았습니다!!
+
+[TIME] 17:48:12 [FILE] D3D11Graphic.cpp [FUNC] D3D11Graphic::CreateTextureBuffer [LINE] 210
+[ Graphic ][ Create ][ ShaderResourceView ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+[ERROR] 구성 요소를 찾을 수 없습니다.
+
+[TIME] 17:48:12 [FILE] TextureManager.cpp [FUNC] TextureManager::LoadTexture [LINE] 34
+[ Engine ][ Create ][ Texture Buffer ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+
+[TIME] 17:48:48 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
+[ Engine ][ Bake ][ SkyLight Buffer ] 'SkyLight_HDRI' Texture가 로드되지 않았습니다!!
+
+[TIME] 17:51:58 [FILE] D3D11Graphic.cpp [FUNC] D3D11Graphic::CreateTextureBuffer [LINE] 210
+[ Graphic ][ Create ][ ShaderResourceView ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+[ERROR] 구성 요소를 찾을 수 없습니다.
+
+[TIME] 17:51:58 [FILE] TextureManager.cpp [FUNC] TextureManager::LoadTexture [LINE] 34
+[ Engine ][ Create ][ Texture Buffer ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+
+[TIME] 17:52:34 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
+[ Engine ][ Bake ][ SkyLight Buffer ] 'SkyLight_HDRI' Texture가 로드되지 않았습니다!!
+
+[TIME] 17:56:03 [FILE] D3D11Graphic.cpp [FUNC] D3D11Graphic::CreateTextureBuffer [LINE] 210
+[ Graphic ][ Create ][ ShaderResourceView ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+[ERROR] 구성 요소를 찾을 수 없습니다.
+
+[TIME] 17:56:03 [FILE] TextureManager.cpp [FUNC] TextureManager::LoadTexture [LINE] 34
+[ Engine ][ Create ][ Texture Buffer ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+
+[TIME] 17:56:39 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
+[ Engine ][ Bake ][ SkyLight Buffer ] 'SkyLight_HDRI' Texture가 로드되지 않았습니다!!
+
+[TIME] 17:57:58 [FILE] D3D11Graphic.cpp [FUNC] D3D11Graphic::CreateTextureBuffer [LINE] 210
+[ Graphic ][ Create ][ ShaderResourceView ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+[ERROR] 구성 요소를 찾을 수 없습니다.
+
+[TIME] 17:57:58 [FILE] TextureManager.cpp [FUNC] TextureManager::LoadTexture [LINE] 34
+[ Engine ][ Create ][ Texture Buffer ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+
+[TIME] 17:58:34 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
+[ Engine ][ Bake ][ SkyLight Buffer ] 'SkyLight_HDRI' Texture가 로드되지 않았습니다!!
+
+[TIME] 17:59:49 [FILE] D3D11Graphic.cpp [FUNC] D3D11Graphic::CreateTextureBuffer [LINE] 210
+[ Graphic ][ Create ][ ShaderResourceView ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+[ERROR] 구성 요소를 찾을 수 없습니다.
+
+[TIME] 17:59:49 [FILE] TextureManager.cpp [FUNC] TextureManager::LoadTexture [LINE] 34
+[ Engine ][ Create ][ Texture Buffer ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+
+[TIME] 18:00:25 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
+[ Engine ][ Bake ][ SkyLight Buffer ] 'SkyLight_HDRI' Texture가 로드되지 않았습니다!!
+
+[TIME] 18:02:38 [FILE] D3D11Graphic.cpp [FUNC] D3D11Graphic::CreateTextureBuffer [LINE] 210
+[ Graphic ][ Create ][ ShaderResourceView ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+[ERROR] 구성 요소를 찾을 수 없습니다.
+
+[TIME] 18:02:38 [FILE] TextureManager.cpp [FUNC] TextureManager::LoadTexture [LINE] 34
+[ Engine ][ Create ][ Texture Buffer ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
+
+[TIME] 18:03:15 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
+[ Engine ][ Bake ][ SkyLight Buffer ] 'SkyLight_HDRI' Texture가 로드되지 않았습니다!!
+

@@ -118,7 +118,8 @@ void ShaderManager::CreateShader()
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "OIT_Mesh_PS.hlsl", "OIT_Mesh_PS", "OIT_Mesh_PS_Option6", alpha_macro6);				// IBL + Fog
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "OIT_Mesh_PS.hlsl", "OIT_Mesh_PS", "OIT_Mesh_PS_Option7", alpha_macro7);				// Shadow + IBL + Fog
 
-	LoadShader(SHADER_TYPE::PIXEL_SHADER, "OIT_Blend_PS.hlsl", "OIT_PS", "OIT_PS");
+	LoadShader(SHADER_TYPE::COMPUTE_SHADER, "OIT_Blend_CS.hlsl", "OIT_Blend_CS", "OIT_Blend_CS");
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "OIT_Blend_PS.hlsl", "OIT_Blend_PS", "OIT_Blend_PS");
 
 	// Shadow Shader
 	LoadShader(SHADER_TYPE::VERTEX_SHADER, "Shadow_StaticMesh_VS.hlsl", "Shadow_StaticMesh_VS", "Shadow_StaticMesh_VS");
