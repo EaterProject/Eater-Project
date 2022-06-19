@@ -398,6 +398,11 @@ int GetMousePosY()
 	 return gGameEngine->GetdeltaTime();
  }
 
+  void SetSlowDeltaTime(float mSlow)
+ {
+	  gGameEngine;
+ }
+
  bool RayCast(PhysRayCast* ray)
  {
 	 return PhysManager::RayCast(ray);

@@ -36,6 +36,8 @@ public:
 	void SetMonsterState(MONSTER_STATE State);
 	void SetLimLightColor();
 	void UpdateColor();
+	void SetState(MONSTER_STATE mState);
+	bool FirstState();
 protected:
 	MeshFilter*				mMeshFilter	= nullptr;
 	MeshFilter*				mSkinFilter = nullptr;
@@ -54,12 +56,12 @@ protected:
 	bool	MonsterFront_Z	= false;
 	float	PlayerDistance  = 10;
 protected:
+	std::string ANIMATION_NAME[6];
+	std::string SOUND_NAME[6];
+	bool		STATE[6];
+	float		ANIMATION_TIME[6];
+
 	//처음 한번만 실행하기위한 변수들
-	bool DeadStart		= false;	//Dead	 상태 시작 변수
-	bool IdleStart		= false;	//Idle	 상태 시작 변수
-	bool AttackStart	= false;	//Attack 상태 시작 변수
-	bool MoveStart		= false;	//Move   상태 시작 변수
-	bool ChaseStart		= false;	//Chase  상태 시작 변수
 	bool HitStart		= false;    //Hit	 상태 시작 변수
 	bool HitFXStart		= false;	//Hit FX 상태 시작 변수
 protected:
@@ -67,22 +69,10 @@ protected:
 	std::string ModelName;
 	std::string AnimationName;
 
-	std::string Animation_Idel		= "idle";
-	std::string Animation_Attack	= "attack";
-	std::string Animation_Move		= "move";
-	std::string Animation_Die		= "die";
-	std::string Animation_hit		= "hit";
-
 	std::string Sound_Hit			= "Monster_Hit";
 	std::string Sound_move;
 	std::string Sound_Attack;
 
-	float Animation_Idle_Speed		= 0.75f;	//애니메이션 재생 속도 (값이 높을 수록 빨라짐)
-	float Animation_Attack_Speed	= 0.8f;		//애니메이션 재생 속도 (값이 높을 수록 빨라짐)
-	float Animation_Move_Speed		= 0.8f;		//애니메이션 재생 속도 (값이 높을 수록 빨라짐)
-	float Animation_Die_Speed		= 0.25f;	//애니메이션 재생 속도 (값이 높을 수록 빨라짐)
-	float Animation_hit_Speed		= 0.5f;		//애니메이션 재생 속도 (값이 높을 수록 빨라짐)
-	float Animation_Chase_Speed		= 1.0f;		//애니메이션 재생 속도 (값이 높을 수록 빨라짐)
 protected:
 	///Move 상태 변수들
 	float MoveSoundTime				= 0;
@@ -127,6 +117,7 @@ protected:
 protected:
 	MaterialPropertyBlock* MPB  = nullptr;
 	std::function<void()> HitFunction;
+
 };
 
 

@@ -110,7 +110,7 @@ GameObject* ObjectFactory::CreateMonsterB()
 GameObject* ObjectFactory::CreateManaStone()
 {
 	int ManaCount = ManaPoint_List.size();
-	for (int i = 0; i < ManaCount; i++)
+	for (int i = 0; i < 1; i++)
 	{
 		Vector3 point = ManaPoint_List[i]->GetTransform()->Position;
 		
@@ -188,6 +188,13 @@ GameObject* ObjectFactory::CreateCameraManager()
 {
 	GameObject* Object = Instance_Camera();
 	Object->AddComponent<CameraManager>();
+	return Object;
+}
+
+GameObject* ObjectFactory::CreateBossWeapon()
+{
+	GameObject* Object = Instance();
+	Object->AddComponent<MeshFilter>();
 	return Object;
 }
 

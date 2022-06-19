@@ -155,6 +155,7 @@ public:
 public:
 	///시간 관련
 	float GetdeltaTime();
+	void  SetSlowTime(float mTime);
 public:
 	///네트워크 관련
 	void SetNetworkManager(NetworkManagerComponent* Manager);

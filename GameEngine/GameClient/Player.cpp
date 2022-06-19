@@ -267,30 +267,28 @@ void Player::PlayerState_Attack()
 	if (mState & PLAYER_STATE_ATTACK_01)
 	{
 		AnimationName = "attack1";
+		mAnimation->Choice(AnimationName, Animation_Attack01_Speed, false);
 		Player_Attack_01();
 	}
 	else if (mState & PLAYER_STATE_ATTACK_02)
 	{
 		AnimationName = "attack2";
+		mAnimation->Choice(AnimationName,Animation_Attack02_Speed, false);
 		Player_Attack_02();
 	}
 	else if (mState & PLAYER_STATE_SKILL_01)
 	{
 		AnimationName = "skill1";
+		mAnimation->Choice(AnimationName, Animation_Skill01_Speed, false);
 		Player_Skill_01();
 	}
 	else if (mState & PLAYER_STATE_SKILL_02)
 	{
 		AnimationName = "skill2";
+		mAnimation->Choice(AnimationName, Animation_Skill02_Speed, false);
 		AnimationSpeed = 2;
 		Player_Skill_02();
 	}
-	//else
-	//{
-	//	AnimationName = "skill3";
-	//	Player_Skill_03();
-	//}
-	mAnimation->Choice(AnimationName, 1.5f, false);
 	mAnimation->Play();
 	AnimationSpeed = 1;
 }
@@ -304,7 +302,7 @@ void Player::PlayerState_Base()
 	Speed = MaxSpeed;
 	if (mState & PLAYER_STATE_JUMP)
 	{
-		mAnimation->Choice("evade", 1, true);
+		mAnimation->Choice("evade", Animation_Jump_Speed, true);
 		Player_Jump();
 	}
 	else
@@ -483,7 +481,7 @@ bool Player::Player_Move_Check()
 		WeaponTR->Position = { 0,-0.02f,0.1f };
 		WeaponTR->Rotation = { 186,31,0 };
 		mState = PLAYER_STATE_IDLE;
-		mAnimation->Choice("idle", 1, true);
+		mAnimation->Choice("idle", Animation_Idle_Speed, true);
 		IsMove = false;
 		return false;
 	}
@@ -492,7 +490,7 @@ bool Player::Player_Move_Check()
 		WeaponTR->Position = { 0,-0.02f,0.1f };
 		WeaponTR->Rotation = { 0,21,-5 };
 		mState = PLAYER_STATE_MOVE; 
-		mAnimation->Choice("move", 1, true);
+		mAnimation->Choice("move", Animation_Move_Speed, true);
 		IsMove = true;
 		return true;
 	}

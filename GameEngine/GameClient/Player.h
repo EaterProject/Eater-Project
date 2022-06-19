@@ -96,6 +96,14 @@ private:
 	int AnimationSpeed	= 5;
 	int AttackEndFrame	= 0;
 	int NowFrame		= 0;
+
+	float Animation_Idle_Speed		= 1.5f;
+	float Animation_Move_Speed		= 1.0f;
+	float Animation_Attack01_Speed	= 1.5f;
+	float Animation_Attack02_Speed	= 1.5f;
+	float Animation_Skill01_Speed	= 1.5f;
+	float Animation_Skill02_Speed	= 1.5f;
+	float Animation_Jump_Speed		= 1.5f;
 private:
 	///Raycast ฐüทร
 	PhysRayCast* RayCastHit;

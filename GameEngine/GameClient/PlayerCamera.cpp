@@ -63,8 +63,6 @@ void PlayerCamera::Update()
 		}
 		else
 		{
-			//SetMousePos(PastX, PastY);
-			//SetMousePosCenter();
 			MouseCursor = true;
 			ShowMouseCursor(false);
 		}
@@ -75,12 +73,12 @@ void PlayerCamera::Update()
 	NowY = GetMousePosY();
 
 	//마우스 위치를 가져온다
-	float MosSpeed = 500;
+	float MosSpeed = 50;
 
 	float Dir = 4.25f;
 	float MosControl = 250;
-	X_Radian += -(NowX - 960);
-	Y_Radian += (NowY - 540);
+	X_Radian += -(NowX - 960) *DTime * MosSpeed;
+	Y_Radian +=  (NowY - 540) *DTime * MosSpeed;
 
 	if (Y_Radian >= 120) { Y_Radian = 120; }
 	if (Y_Radian <= -80) { Y_Radian = -80; }

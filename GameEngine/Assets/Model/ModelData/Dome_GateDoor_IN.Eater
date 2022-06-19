@@ -1,6 +1,6 @@
 #STATIC
-@NodeName Screw.019
 @ParentName RootNode
+@NodeName Screw.019
 @MeshName Dome_GateDoor_IN_0
 @MaterialName Dome_GateDoor_IN_M_GateDoor
 $WorldTM 4 4
@@ -14,8 +14,8 @@ $LocalTM 4 4
 0.000000 0.000000 1.000000 0.000000
 29.500000 0.250000 -0.000001 1.000000
 #STATIC
-@NodeName Cube.004
 @ParentName RootNode
+@NodeName Cube.004
 @MeshName Dome_GateDoor_IN_1
 @MaterialName Dome_GateDoor_IN_M_GateDoor
 $WorldTM 4 4

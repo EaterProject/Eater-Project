@@ -140,6 +140,8 @@ GameObject* MessageManager::CREATE_MESSAGE(int CREATE_TYPE)
 		Object = mFactory->CreateUICanvas();
 		mCanvas = Object->GetComponent<UICanvas>();
 		return Object;
+	case TARGET_BOSS_WEAPON:
+		return mFactory->CreateBossWeapon();
 	}
 
 	return nullptr;

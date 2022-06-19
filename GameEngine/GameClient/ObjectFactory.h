@@ -44,6 +44,7 @@ public:
 	GameObject* CreateGate_Out();		//게이트 객체 생성
 	GameObject* CreateGate_Manager();	//게이트 매니저 생성
 	GameObject* CreateCameraManager();	//카메라 매니저 생성
+	GameObject* CreateBossWeapon();		//보스 무기 생성
 private:
 	//게임상에 한개만 존재하는 오브젝트를 따로 보관
 	std::vector<GameObject*> ManaPoint_List;

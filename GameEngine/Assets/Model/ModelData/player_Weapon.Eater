@@ -1,6 +1,6 @@
 #STATIC
-@NodeName weapon
 @ParentName RootNode
+@NodeName weapon
 @MeshName player_Weapon_0
 @MaterialName player_Weapon_weapon
 $WorldTM 4 4

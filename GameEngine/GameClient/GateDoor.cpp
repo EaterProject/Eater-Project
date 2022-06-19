@@ -69,7 +69,7 @@ void GateDoor::Update()
 {
 	if (IS_OPEN == true)
 	{
-		OpenTime = GetDeltaTime();
+		OpenTime = GetDeltaTime()*4.0f;
 		if (DoorTR[0] != nullptr && DoorTR[2] != nullptr)
 		{
 			DoorTR[0]->Position.y += OpenTime;

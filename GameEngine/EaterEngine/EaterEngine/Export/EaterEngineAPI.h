@@ -118,6 +118,7 @@ extern "C" EATER_ENGINEDLL void Sound_PitchDown_SFX();
 
 ///시간 관련
 extern "C" EATER_ENGINEDLL float GetDeltaTime();
+extern "C" EATER_ENGINEDLL void SetSlowDeltaTime(float mSlow);
 
 ///물리 관련
 extern "C" EATER_ENGINEDLL bool RayCast(PhysRayCast* ray);
