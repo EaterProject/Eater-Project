@@ -16,10 +16,11 @@ public:
 
 	void BeginRender();
 	void RenderUpdate();
+	void RenderUpdate_CS();
 
 private:
 	void SetShaderList();
-	void SetShaderConstantBuffer(UINT width);
+	void SetShaderConstantBuffer(UINT width, UINT height);
 
 private:
 	VertexShader* m_OITRender_VS;
@@ -48,9 +49,17 @@ private:
 
 	ID3D11UnorderedAccessView* m_UAV_List[2];
 
+	ID3D11ShaderResourceView* m_NullSRV = nullptr;
+	ID3D11UnorderedAccessView* m_NullUAV = nullptr;
 private:
+	UINT m_NumGroupsX;
+	UINT m_NumGroupsY;
+
 	UINT m_Multiple;
 	UINT m_MagicValue;
 	UINT m_InitCounts[2];
+
+public:
+	bool CS = true;
 };
 

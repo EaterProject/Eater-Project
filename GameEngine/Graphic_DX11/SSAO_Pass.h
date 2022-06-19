@@ -65,6 +65,4 @@ private:
 	ID3D11RasterizerState* m_Solid_RS;
 
 	D3D11_VIEWPORT* m_HalfScreen_VP;
-
-	bool m_Blur_CS = true;
 };

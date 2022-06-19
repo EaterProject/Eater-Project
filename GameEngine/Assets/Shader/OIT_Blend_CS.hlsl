@@ -9,7 +9,7 @@ RWTexture2D<float4> gOutputUAV : register(u0);
 
 static FragmentData gSortedPixels[MAX_SORTED_PIXELS];
 
-[numthreads(16, 16, 4)]
+[numthreads(1, 1, 1)]
 void OIT_Blend_CS(uint3 groupThreadID : SV_GroupThreadID, uint3 dispatchID : SV_DispatchThreadID)
 {
     int2 vPos = int2(dispatchID.x, dispatchID.y);

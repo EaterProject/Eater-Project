@@ -215,22 +215,9 @@ void SSAO_Pass::RenderUpdate()
 
 	g_Context->DrawIndexed(m_Ssao_DB->IndexCount, 0, 0);
 
-	if (GetAsyncKeyState('1'))
-	{
-		m_Blur_CS ^= true;
-	}
-
 	// SSAO Blur Render Update..
 	//BlurRender_PS();
-	//BlurRender_CS();
-	if (m_Blur_CS)
-	{
-		BlurRender_CS();
-	}
-	else
-	{
-		BlurRender_PS();
-	}
+	BlurRender_CS();
 }
 
 void SSAO_Pass::BlurRender_PS()
