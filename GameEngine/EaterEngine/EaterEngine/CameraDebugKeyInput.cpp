@@ -106,10 +106,6 @@ void CameraDebugKeyInput::Update()
 			mTransform->SetRotate(-dy * RotSpeed, -dx * RotSpeed, 0);
 			
 			SetCursorPos(mLastMousePosX, mLastMousePosY);
-			//mLastMousePosX = x;
-			//mLastMousePosY = y;
-			//GetMousePosX();
-			//GetMousePosX();
 		}
 	}
 }

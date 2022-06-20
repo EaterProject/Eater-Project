@@ -32,14 +32,20 @@ void UpdateEngine()
 
 void OnReSize(int X, int Y)
 {
-	GameEngine::WinSizeWidth = X;
-	GameEngine::WinSizeHeight = Y;
+	GameEngine::WinSizeWidth	= X;
+	GameEngine::WinSizeHeight	= Y;
 
 	//처음 시작 상태가 아닐때
 	if (gGameEngine != nullptr)
 	{
 		gGameEngine->OnResize(X, Y);
 	}
+}
+
+void GetWindowSize(int* X, int* Y)
+{
+	*X = GameEngine::WinSizeWidth;
+	*Y = GameEngine::WinSizeHeight;
 }
 
 ///오브젝트 관련
@@ -400,6 +406,11 @@ int GetMousePosY()
  float GetDeltaTime()
  {
 	 return gGameEngine->GetdeltaTime();
+ }
+
+  void SetSlowDeltaTime(float mSlow)
+ {
+	  gGameEngine;
  }
 
  bool RayCast(PhysRayCast* ray)

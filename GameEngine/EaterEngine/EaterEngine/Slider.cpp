@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "Image.h"
 #include "RectTransform.h"
+#include "Transform.h"
 
 Slider::Slider()
 	:m_MinValue(0.0f), m_MaxValue(1.0f), m_Value(1.0f), m_Start(false)
@@ -114,6 +115,76 @@ void Slider::SetPosition()
 {
 	if (m_BackTransform) m_BackTransform->SetPosition(m_Position);
 	if (m_FillTransform) m_FillTransform->SetPosition(m_Position);
+}
+
+void Slider::SetPositionObject(GameObject* object, DirectX::SimpleMath::Vector3 offset)
+{
+	m_TargetObject = object->GetComponent<Transform>();
+	m_Position3D_Offset = offset;
+
+	if (m_Start == false)
+	{
+		StartFunction += Eater::Bind(static_cast<void(Slider::*)(void)>(&Slider::SetPositionObject), this);
+	}
+	else
+	{
+		SetPositionObject();
+	}
+}
+
+void Slider::SetPositionObject(Transform* object, DirectX::SimpleMath::Vector3 offset)
+{
+	m_TargetObject = object;
+	m_Position3D_Offset = offset;
+
+	if (m_Start == false)
+	{
+		StartFunction += Eater::Bind(static_cast<void(Slider::*)(void)>(&Slider::SetPositionObject), this);
+	}
+	else
+	{
+		SetPositionObject();
+	}
+}
+
+void Slider::SetPositionObject()
+{
+	if (m_BackTransform) m_BackTransform->SetPositionObject(m_TargetObject, m_Position3D_Offset);
+	if (m_FillTransform) m_FillTransform->SetPositionObject(m_TargetObject, m_Position3D_Offset);
+}
+
+void Slider::SetPosition3D(float x, float y, float z)
+{
+	m_Position3D = { x,y,z };
+
+	if (m_Start == false)
+	{
+		StartFunction += Eater::Bind(static_cast<void(Slider::*)(void)>(&Slider::SetPosition3D), this);
+	}
+	else
+	{
+		SetPosition3D();
+	}
+}
+
+void Slider::SetPosition3D(DirectX::SimpleMath::Vector3 pos)
+{
+	m_Position3D = pos;
+	
+	if (m_Start == false)
+	{
+		StartFunction += Eater::Bind(static_cast<void(Slider::*)(void)>(&Slider::SetPosition3D), this);
+	}
+	else
+	{
+		SetPosition3D();
+	}
+}
+
+void Slider::SetPosition3D()
+{
+	if (m_BackTransform) m_BackTransform->SetPosition3D(m_Position3D);
+	if (m_FillTransform) m_FillTransform->SetPosition3D(m_Position3D);
 }
 
 void Slider::SetBackGroundImage(Image* img)

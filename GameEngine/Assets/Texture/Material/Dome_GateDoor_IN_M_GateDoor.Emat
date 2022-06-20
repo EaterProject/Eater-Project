@@ -1,26 +1,22 @@
 #EATERMAT
-<<<<<<<< HEAD:GameEngine/Assets/Texture/Material/Dome_IN_M_vendingMachine.Emat
-@MaterialName Dome_IN_M_VendingMachine
-========
-@MaterialName Dome_GateDoor_IN_M_GateDoor
->>>>>>>> main:GameEngine/Assets/Texture/Material/Dome_GateDoor_IN_M_GateDoor.Emat
+@ORMMap Dome_GateDoor_ORM
 @Alpha 0
-@DiffuseMap Dome_GateDoor_BaseColor.png
-@NormalMap Dome_GateDoor_Normal.png
-@EmissiveMap 0
-@ORMMap Dome_GateDoor_ORM.png
-@Emissive 0.000000
+@MaterialName Dome_GateDoor_IN_M_GateDoor
+@LimColor_B 0.000000
+@DiffuseMap Dome_GateDoor_BaseColor
+@NormalMap Dome_GateDoor_Normal
+@EmissiveMap Dome_GateDoor_Emissive
+@SkyLightIndex 0.000000
+@Emissive 1.600000
 @Roughness 0.000000
 @Metallic 0.000000
-@Tileing_X 1.000000
-@Tileing_Y 1.000000
-@SkyLightIndex 0
+@Tileing_X 1
+@Tileing_Y 1
 @AddColor_R 0.000000
 @AddColor_G 0.000000
+@LimFactor 0.000000
 @AddColor_B 0.000000
 @LimColor_R 0.000000
 @LimColor_G 0.000000
-@LimColor_B 0.000000
-@LimFactor 0.000000
 @LimWidth 0.000000
 &

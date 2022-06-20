@@ -9,9 +9,10 @@ public:
 	CameraDebugKeyInput();
 	~CameraDebugKeyInput();
 
-	virtual void Update();
-	virtual void Start();
-	virtual void Awake();
+	void Update() override;
+	void Start() override;
+	void Awake() override;
+
 private:
 	Transform* mTransform;
 	float mStartMousePosX;

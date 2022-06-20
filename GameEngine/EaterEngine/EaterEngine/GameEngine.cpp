@@ -724,6 +724,11 @@ float GameEngine::GetdeltaTime()
 	return mTimeManager->DeltaTime();
 }
 
+void GameEngine::SetSlowTime(float mTime)
+{
+	mTimeManager->SlowTime(mTime);
+}
+
 void GameEngine::SetNetworkManager(NetworkManagerComponent* Manager)
 {
 	mNetworkManager->SetClientNetworkManager(Manager);

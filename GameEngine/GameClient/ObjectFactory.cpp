@@ -17,7 +17,6 @@
 #include "MonsterB.h"
 #include "ClientComponent.h"
 #include "Drone.h"
-#include "Bullet.h"
 #include "MessageManager.h"
 #include "ManaStone.h"
 #include "FontImage.h"
@@ -26,6 +25,7 @@
 #include "GateDoor.h"
 #include "Boss.h"
 #include "CameraManager.h"
+#include "BossWeapon.h"
 
 
 
@@ -70,19 +70,6 @@ GameObject* ObjectFactory::CreatePlayer()
 	return PlayerObject;
 }
 
-GameObject* ObjectFactory::CreateBullet()
-{
-	GameObject* DroneBullet = Instance("Bullet");
-	MeshFilter* mMeshFilter = DroneBullet->AddComponent<MeshFilter>();
-	Collider*	mCollider	= DroneBullet->AddComponent<Collider>();
-	Bullet*		mBullet		= DroneBullet->AddComponent<Bullet>();
-
-	mBullet->isLife = false;
-	DroneBullet->SetTag(FindTagNumber("Bullet"));
-	DroneBullet->Name = "Bullet";
-	return DroneBullet;
-}
-
 GameObject* ObjectFactory::CreateMonsterA()
 {
 	GameObject* Object_Monster = Instance("MonsterA");
@@ -110,7 +97,7 @@ GameObject* ObjectFactory::CreateMonsterB()
 GameObject* ObjectFactory::CreateManaStone()
 {
 	int ManaCount = ManaPoint_List.size();
-	for (int i = 0; i < ManaCount; i++)
+	for (int i = 0; i < 1; i++)
 	{
 		Vector3 point = ManaPoint_List[i]->GetTransform()->Position;
 		
@@ -188,6 +175,14 @@ GameObject* ObjectFactory::CreateCameraManager()
 {
 	GameObject* Object = Instance_Camera();
 	Object->AddComponent<CameraManager>();
+	return Object;
+}
+
+GameObject* ObjectFactory::CreateBossWeapon()
+{
+	GameObject* Object = Instance();
+	Object->AddComponent<MeshFilter>();
+	Object->AddComponent<BossWeapon>();
 	return Object;
 }
 

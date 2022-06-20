@@ -89,7 +89,7 @@ float TimeManager::TotalTime()const
 
 float TimeManager::DeltaTime()const
 {
-	return (float)mDeltaTime;
+	return (float)mDeltaTime * mSlow;
 }
 
 void TimeManager::ResetTime()
@@ -167,4 +167,9 @@ void TimeManager::Tick()
 	{
 		mDeltaTime = 0.0;
 	}
+}
+
+void TimeManager::SlowTime(float mTime)
+{
+	mSlow = mTime;
 }

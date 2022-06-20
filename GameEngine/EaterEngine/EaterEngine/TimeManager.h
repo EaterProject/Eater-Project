@@ -22,7 +22,7 @@ public:
 	void Start(); // Call when unpaused.
 	void Stop();  // Call when paused.
 	void Tick();  // Call every frame.
-
+	void SlowTime(float mTime);
 private:
 	double mSecondsPerCount;
 	double mDeltaTime;
@@ -33,8 +33,9 @@ private:
 	__int64 mPrevTime;
 	__int64 mCurrTime;
 
-	bool mStopped;
 
+	float mSlow = 1.0f;
+	bool mStopped;
 	float debugTime = 0;
 };
 

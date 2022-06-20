@@ -13,9 +13,9 @@ public:
 	PlayerCamera();
 	~PlayerCamera();
 
-	void SetUp();
-	void StartUpdate();
-
+	void SetUp() override;
+	void Update() override;
+	void Debug() override;
 private:
 	GameObject* Userobject;
 	Camera*		MainCam;

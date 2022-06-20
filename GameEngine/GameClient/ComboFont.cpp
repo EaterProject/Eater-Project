@@ -30,7 +30,7 @@ void ComboFont::SetComboNumber(int Number)
 void ComboFont::Awake()
 {
 	Setting(500, 0, "combo_");
-	FontAnimation(0.1, 0.5f);
+	FontAnimation(0.2, 1.0f);
 
 	//콤보 이미지를 추가
 	UI_Obj[0]	= Instance_UI();

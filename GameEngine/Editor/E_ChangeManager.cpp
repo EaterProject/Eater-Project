@@ -53,7 +53,7 @@ void E_ChangeManager::Change_Skin(int index, GameObject* Object)
 	std::string ParentName = EATER_GET_MAP(index, "ParentName");
 	std::string NodeName = EATER_GET_MAP(index, "NodeName");
 	std::string ObjectOriginalName = GetOriginalName(Object->Name);
-	if (ParentName == "RootNode" && Object->Name == NodeName)
+	if (ParentName == "RootNode" && ObjectOriginalName == NodeName)
 	{
 		MeshFilter* MF = Object->GetComponent<MeshFilter>();
 		Transform* TR = Object->GetComponent<Transform>();

@@ -16,7 +16,6 @@ class MonsterA;
 class MonsterB;
 class AttackDrone;
 class HealingDrone;
-class Bullet;
 class ManaStone;
 class MessageManager;
 class Potal;
@@ -33,7 +32,6 @@ public:
 	void Release();
 		
 	GameObject* CreatePlayer();			//플레이어 객체를 생성
-	GameObject* CreateBullet();			//총알 객체를 생성
 	GameObject* CreateMonsterA();		//몬스터 객체를 생성
 	GameObject* CreateMonsterB();		//몬스터 객체를 생성
 	GameObject* CreateManaStone();		//마나석 객체를 생성
@@ -44,6 +42,7 @@ public:
 	GameObject* CreateGate_Out();		//게이트 객체 생성
 	GameObject* CreateGate_Manager();	//게이트 매니저 생성
 	GameObject* CreateCameraManager();	//카메라 매니저 생성
+	GameObject* CreateBossWeapon();		//보스 무기 생성
 private:
 	//게임상에 한개만 존재하는 오브젝트를 따로 보관
 	std::vector<GameObject*> ManaPoint_List;

@@ -16,11 +16,30 @@
 
 MonsterComponent::MonsterComponent()
 {
+	ANIMATION_NAME[(int)MONSTER_STATE::IDLE]	= "idle";
+	ANIMATION_NAME[(int)MONSTER_STATE::ATTACK]	= "attack";
+	ANIMATION_NAME[(int)MONSTER_STATE::HIT]		= "hit";
+	ANIMATION_NAME[(int)MONSTER_STATE::MOVE]	= "move";
+	ANIMATION_NAME[(int)MONSTER_STATE::CHASE]	= "move";
+	ANIMATION_NAME[(int)MONSTER_STATE::DEAD]	= "die";
 
-}
+	ANIMATION_TIME[(int)MONSTER_STATE::IDLE]	= 0.75f;
+	ANIMATION_TIME[(int)MONSTER_STATE::ATTACK]	= 0.8f;
+	ANIMATION_TIME[(int)MONSTER_STATE::HIT]		= 0.5f;
+	ANIMATION_TIME[(int)MONSTER_STATE::MOVE]	= 0.75f;
+	ANIMATION_TIME[(int)MONSTER_STATE::CHASE]	= 1.0f;
+	ANIMATION_TIME[(int)MONSTER_STATE::DEAD]	= 0.75f;
+
+	SOUND_NAME[(int)MONSTER_STATE::HIT] = "Monster_Hit";
+
+	for (int i = 0; i < 6; i++){ STATE[i] = false;}
+
+	MonsterState = (int)MONSTER_STATE::IDLE;
+}	
 
 MonsterComponent::~MonsterComponent()
 {
+
 }
 
 void MonsterComponent::Awake()
@@ -38,7 +57,9 @@ void MonsterComponent::SetUp()
 	mColider->SetSphereCollider(0.5f);
 	mColider->SetCenter(0, 0.5f, 0);
 	mColider->SetMaterial_Restitution(0);
+	mColider->SetMaterial_Static(1);
 	mRigidbody->SetFreezeRotation(true, true, true);
+	mRigidbody->SetVelocity(0, 0, 0);
 
 	mMeshFilter->SetModelName(ModelName);
 	mMeshFilter->SetAnimationName(AnimationName);
@@ -91,6 +112,9 @@ void MonsterComponent::Update()
 		Dead();
 		break;
 	}
+
+	mAnimation->Choice(ANIMATION_NAME[MonsterState], ANIMATION_TIME[MonsterState]);
+	mAnimation->Play();
 }
 
 void MonsterComponent::OnTriggerStay(GameObject* Obj)
@@ -106,10 +130,21 @@ void MonsterComponent::OnTriggerStay(GameObject* Obj)
 			HitFunction = std::bind(&MonsterComponent::SetLimLightColor, this);
 			SetMonsterState(MONSTER_STATE::HIT);
 			
-			HP -= 20;
+			HP			-= 20;
 			HitStart	 = true;
 			//사운드 출력
 			Sound_Play_SFX(Sound_Hit);
+		}
+	}
+	else
+	{
+		if (Player::GetAttackState() == false)
+		{
+			//플레이어 상태가 공격상태가 아닐떄
+			if (Player::GetAttackState() == false)
+			{
+				HitStart = false;
+			}
 		}
 	}
 }
@@ -122,14 +157,7 @@ void MonsterComponent::Move()
 		SetMonsterState(MONSTER_STATE::CHASE);
 	}
 
-	//처음 한번 만 실행
-	if (MoveStart == false)
-	{
-		//현재 목표지점을 저장
-		mAnimation->Choice(Animation_Move,Animation_Move_Speed);
-		MoveStart = true;
-	}
-	
+
 	if (MoveSoundTime >= MoveSoundTimeMax)
 	{
 		MoveSoundTime = 0;
@@ -154,12 +182,6 @@ void MonsterComponent::Move()
 
 void MonsterComponent::Attack()
 {
-	if (AttackStart == false)
-	{
-		mAnimation->Choice(Animation_Attack, Animation_Attack_Speed);
-		AttackStart = true;
-	}
-
 	if (mAnimation->EventCheck() == true)
 	{
 		int Damage = 10;
@@ -184,17 +206,13 @@ void MonsterComponent::Idle()
 	}
 
 	//처음 한번 만 실행
-	if (IdleStart == false)
+	if (FirstState() == false)
 	{
-		//애니메이션 설정
-		mAnimation->Choice(Animation_Idel,Animation_Idle_Speed);
 		//이동 해야하는 넘버 설정
 		PointNumber		= rand() % 5;
 		//몇초까지 Idle상태로 있을것인지 설정
 		Idle_MaxTime	= (rand() % Idle_MaxTime_Max) + Idle_MaxTime_Min;
-
 		SetMovePoint(SearchPoint[PointNumber].x, 0, SearchPoint[PointNumber].z);
-		IdleStart = true;
 	}
 
 	//대기시간이 지났는지 않지났는지 체크
@@ -205,19 +223,12 @@ void MonsterComponent::Idle()
 	else
 	{
 		//대기시간이 지났다면 Move상태로 변경
-		//Speed			= IdleSpeed;
 		SetMonsterState(MONSTER_STATE::MOVE);
 	}
 }
 
 void MonsterComponent::Dead()
 {
-	if(DeadStart == false)
-	{
-		mAnimation->Choice(Animation_Die, Animation_hit_Speed);
-		DeadStart = true;
-	}
-
 	float End = mAnimation->GetEndFrame();
 	float Now = mAnimation->GetNowFrame();
 	if (Now >= End)
@@ -228,12 +239,6 @@ void MonsterComponent::Dead()
 
 void MonsterComponent::Chase()
 {
-	if (ChaseStart == false)
-	{
-		mAnimation->Choice(Animation_Move, Animation_Chase_Speed);
-		ChaseStart = true;
-	}
-
 	ChaseTime += GetDeltaTime();
 	if (AttackRange > PlayerDistance)
 	{
@@ -259,7 +264,6 @@ void MonsterComponent::Chase()
 			mRigidbody->SetVelocity(DirPoint.x, 0, DirPoint.z);
 		}
 	}
-
 	MONSTER_EMAGIN Data;
 	Data.R = 0;
 	Data.G = 255;
@@ -273,7 +277,6 @@ void MonsterComponent::Hit()
 	//공격 당했을때
 	if (HP > 0)
 	{
-		mAnimation->Choice(Animation_hit, Animation_hit_Speed);
 		float End = mAnimation->GetEndFrame();
 		float Now = mAnimation->GetNowFrame();
 		if (Now >= End)
@@ -284,7 +287,6 @@ void MonsterComponent::Hit()
 	}
 	else
 	{
-		mAnimation->Choice(Animation_Die);
 		SetMonsterState(MONSTER_STATE::DEAD);
 	}
 }
@@ -323,12 +325,7 @@ void MonsterComponent::SetMonsterState(MONSTER_STATE State)
 {
 	//몬스터의 상태를 변경한다
 	MonsterState = (int)State;
-
-	//모든 상태를 false로 변경
-	IdleStart	= false;		//Idle	 상태 시작 변수
-	AttackStart = false;		//Attack 상태 시작 변수
-	MoveStart	= false;		//Move   상태 시작 변수
-	ChaseStart	= false;		//Chase  상태 시작 변수
+	STATE[(int)State] = false;
 
 	//타임 변수들도 초기화
 	IdleTime	= 0;
@@ -390,6 +387,28 @@ void MonsterComponent::UpdateColor()
 	else
 	{
 		return;
+	}
+}
+
+void MonsterComponent::SetState(MONSTER_STATE mState)
+{
+	//상태를 넣어준다
+	STATE[(int)mState] = false;
+	MonsterState = (int)mState;
+}
+
+bool MonsterComponent::FirstState()
+{
+	//현재 상태로 처음 들어왔을때를 체크
+	if (STATE[MonsterState] == false)
+	{
+		STATE[MonsterState] = true;
+		return false;
+	}
+	else
+	{
+		STATE[MonsterState] = false;
+		return true;
 	}
 }
 
