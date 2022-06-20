@@ -17,10 +17,6 @@ void InGame::Awake()
 	//Tool에서 만들어놓은 씬을 로드
 	Load("../Assets/Scene/inGame.Scene");
 
-	RenderOption* option = GetRenderOptionData();
-	option->RenderingOption ^= RENDER_OPTION::RENDER_SHADOW;
-	RenderSetting();
-
 	// 오클루더 설정..
 	//AddOccluder("Dome_program_0");
 	

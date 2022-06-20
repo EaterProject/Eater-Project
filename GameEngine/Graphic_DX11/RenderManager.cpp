@@ -491,19 +491,7 @@ void RenderManager::AlphaRender()
 	}
 
 	GPU_BEGIN_EVENT_DEBUG_NAME("OIT Pass");
-	if (GetAsyncKeyState('1'))
-	{
-		m_OIT->CS ^= true;
-	}
-
-	if (m_OIT->CS)
-	{
-		m_OIT->RenderUpdate_CS();
-	}
-	else
-	{
-		m_OIT->RenderUpdate();
-	}
+	m_OIT->RenderUpdate();
 	GPU_END_EVENT_DEBUG_NAME();
 }
 
