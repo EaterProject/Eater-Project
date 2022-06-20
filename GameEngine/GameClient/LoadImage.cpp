@@ -50,7 +50,9 @@ void LoadingImage::Awake()
 	//GameObject* obj = Instance_Slider();
 	//Test_Slider = obj->GetComponent<Slider>();
 	//Test_Slider->SetValueRange(0.0f, 255.0f);
-	//Test_Slider->SetPivot(PIVOT_TYPE::PIVOT_LEFT_BOTTOM);
+	//Test_Slider->SetPivot(PIVOT_TYPE::PIVOT_OBJECT);
+	//Test_Slider->SetPositionObject(°´Ã¼, °´Ã¼ ¿ÀÇÁ¼Â);
+	//Test_Slider->SetPosition3D(À§Ä¡);
 	//Test_Slider->SetPosition(50.0f, -50.0f);
 	//Test_Slider->SetBackGroundColor(0.0f, 255.0f, 0.0f, 255.0f);
 	//Test_Slider->SetFillColor(255.0f, 0.0f, 0.0f, 255.0f);

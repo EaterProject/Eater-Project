@@ -134,7 +134,7 @@ void UICanvas::Create_HP_UI()
 	//HP 폰트
 	Object = Instance();
 	mFont[Font_HP_Now] = Object->AddComponent<FontImage>();
-	mFont[Font_HP_Now]->Setting(PosX + OffsetX, PosY + 50, "number_", 0.2f, 0.2f, 15, PIVOT_MIDDLE_LEFT);
+	mFont[Font_HP_Now]->Setting(PosX + OffsetX, PosY + 50, "number_", 0.4f, 0.4f, 15, PIVOT_MIDDLE_LEFT);
 
 	Object = Instance_UI();
 	Images[Image_HP_Space] = Object->AddComponent<Image>();
@@ -142,14 +142,14 @@ void UICanvas::Create_HP_UI()
 	Rect = Object->GetComponent<RectTransform>();
 	OffsetX += 70;
 	Rect->SetPosition(PosX + OffsetX, PosY + 50);
-	Rect->SetScale(0.75f, 0.75f);
+	Rect->SetScale(1.5f, 1.5f);
 	Rect->SetPivot(PIVOT_MIDDLE_LEFT);
 	
 	//HP 폰트 맥스
 	Object = Instance();
 	OffsetX += 10;
 	mFont[Font_HP_Max] = Object->AddComponent<FontImage>();
-	mFont[Font_HP_Max]->Setting(PosX + OffsetX, PosY + 50, "number_", 0.2f, 0.2f, 15, PIVOT_MIDDLE_LEFT);
+	mFont[Font_HP_Max]->Setting(PosX + OffsetX, PosY + 50, "number_", 0.4f, 0.4f, 15, PIVOT_MIDDLE_LEFT);
 
 	OffsetX = 50;
 	Object = Instance_UI();
@@ -157,7 +157,7 @@ void UICanvas::Create_HP_UI()
 	Images[Image_HP_Slider]->SetTexture("ingame_player_hp");
 	Rect = Object->GetComponent<RectTransform>();
 	Rect->SetPosition(PosX + OffsetX, PosY + 100);
-	Rect->SetScale(0.75f, 0.75f);
+	Rect->SetScale(1.5f, 1.5f);
 	Rect->SetPivot(PIVOT_MIDDLE_LEFT);
 }
 
@@ -175,7 +175,7 @@ void UICanvas::Create_Skill_UI()
 	Rect = Object->GetComponent<RectTransform>();
 	OffsetX += 60;
 	Rect->SetPosition(PosX + OffsetX, PosY + 100);
-	Rect->SetScale(0.35f, 0.35f);
+	Rect->SetScale(0.65f, 0.65f);
 	Rect->SetPivot(PIVOT_MIDDLE_LEFT);
 	
 	Object = Instance_UI();
@@ -184,7 +184,7 @@ void UICanvas::Create_Skill_UI()
 	Rect = Object->GetComponent<RectTransform>();
 	OffsetX += 60;
 	Rect->SetPosition(PosX + OffsetX, PosY + 100);
-	Rect->SetScale(0.35f, 0.35f);
+	Rect->SetScale(0.65f, 0.65f);
 	Rect->SetPivot(PIVOT_MIDDLE_LEFT);
 	
 	Object = Instance_UI();
@@ -193,7 +193,7 @@ void UICanvas::Create_Skill_UI()
 	Rect = Object->GetComponent<RectTransform>();
 	OffsetX += 60;
 	Rect->SetPosition(PosX + OffsetX, PosY + 100);
-	Rect->SetScale(0.35f, 0.35f);
+	Rect->SetScale(0.65f, 0.65f);
 	Rect->SetPivot(PIVOT_MIDDLE_LEFT);
 }
 
@@ -210,7 +210,7 @@ void UICanvas::Create_Emagin_Color_UI()
 	Images[Image_Emagin_Back]->SetColor(255, 255, 255, 255);
 	Rect = Object->GetComponent<RectTransform>();
 	Rect->SetPosition(-200, 0);
-	Rect->SetScale(0.5, 0.5f);
+	Rect->SetScale(1,1);
 	Rect->SetPivot(PIVOT_MIDDLE_CENTER);
 
 	Object = Instance_UI();
@@ -219,7 +219,7 @@ void UICanvas::Create_Emagin_Color_UI()
 	Images[Image_Emagin_Front]->SetColor(255, 255, 255, 255);
 	Rect = Object->GetComponent<RectTransform>();
 	Rect->SetPosition(-200, 0);
-	Rect->SetScale(0.5, 0.5f);
+	Rect->SetScale(1, 1);
 	Rect->SetPivot(PIVOT_MIDDLE_CENTER);
 }
 
@@ -238,14 +238,14 @@ void UICanvas::Create_Emagin_UI()
 	Images[Image_Emagin_Change]->SetTexture("ingame_switch");
 	Rect = Object->GetComponent<RectTransform>();
 	Rect->SetPosition(OffsetX, PosY);
-	Rect->SetScale(0.5f, 0.5f);
+	Rect->SetScale(1, 1);
 	Rect->SetPivot(PIVOT_MIDDLE_LEFT);
 
 	//이메진 Now Count
 	Object = Instance();
 	OffsetX += 75;
 	mFont[Font_Emagin_Now] = Object->AddComponent<FontImage>();
-	mFont[Font_Emagin_Now]->Setting(PosX + OffsetX, PosY + 0, "number_", 0.4f, 0.4f, 30, PIVOT_MIDDLE_LEFT);
+	mFont[Font_Emagin_Now]->Setting(PosX + OffsetX, PosY + 0, "number_", 0.8f, 0.8f, 30, PIVOT_MIDDLE_LEFT);
 	
 	//이메진 카운터 스페이스
 	Object = Instance_UI();
@@ -254,14 +254,14 @@ void UICanvas::Create_Emagin_UI()
 	Rect = Object->GetComponent<RectTransform>();
 	OffsetX += 60;
 	Rect->SetPosition(PosX + OffsetX, PosY + 10);
-	Rect->SetScale(0.35f, 0.35f);
+	Rect->SetScale(0.7f, 0.7f);
 	Rect->SetPivot(PIVOT_MIDDLE_LEFT);
 	
 	//이메진 Max Count
 	Object = Instance();
 	OffsetX += 10;
 	mFont[Font_Emagin_Max] = Object->AddComponent<FontImage>();
-	mFont[Font_Emagin_Max]->Setting(PosX + OffsetX, PosY + 7, "number_", 0.35f, 0.35f, 20, PIVOT_MIDDLE_LEFT);
+	mFont[Font_Emagin_Max]->Setting(PosX + OffsetX, PosY + 7, "number_", 0.7f, 0.7f, 20, PIVOT_MIDDLE_LEFT);
 }
 
 void UICanvas::Create_Effect_UI()
@@ -276,7 +276,7 @@ void UICanvas::Create_Effect_UI()
 	Images[Image_PlayerHit_Effect]->SetColor(255, 0, 0, 0);
 	Rect = Object->GetComponent<RectTransform>();
 	Rect->SetPosition(0, 0);
-	Rect->SetScale(0.5,0.5f);
+	Rect->SetScale(1,1);
 	Rect->SetPivot(PIVOT_MIDDLE_CENTER);
 }
 
@@ -303,7 +303,7 @@ void UICanvas::Create_Monster_UI()
 	Images[Image_Monster_Emagin_Back]->SetColor(255, 255, 255, 255);
 	Rect = Object->GetComponent<RectTransform>();
 	Rect->SetPosition(-100,-400);
-	Rect->SetScale(0.5, 0.5f);
+	Rect->SetScale(1, 1);
 	Rect->SetPivot(PIVOT_MIDDLE_CENTER);
 
 	Object = Instance_UI();
@@ -312,13 +312,13 @@ void UICanvas::Create_Monster_UI()
 	Images[Image_Monster_Emagin_Front]->SetColor(255, 0, 0, 255);
 	Rect = Object->GetComponent<RectTransform>();
 	Rect->SetPosition(-100, -400);
-	Rect->SetScale(0.5, 0.5f);
+	Rect->SetScale(1, 1);
 	Rect->SetPivot(PIVOT_MIDDLE_CENTER);
 
 
 	Object = Instance();
 	mFont[Font_Monster_Emagin] = Object->AddComponent<FontImage>();
-	mFont[Font_Monster_Emagin]->Setting(-110, -400, "number_", 0.2f, 0.2f, 15, PIVOT_MIDDLE_CENTER);
+	mFont[Font_Monster_Emagin]->Setting(-110, -400, "number_", 0.4f, 0.4f, 15, PIVOT_MIDDLE_CENTER);
 }
 
 void UICanvas::Update_Hit_Check()

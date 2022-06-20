@@ -3,6 +3,8 @@
 #include "Utility.h"
 
 class Image;
+class GameObject;
+class Transform;
 class RectTransform;
 
 class Slider : public Component
@@ -18,8 +20,14 @@ public:
 	EATER_ENGINEDLL void SetValueRange(float min, float max);
 
 	EATER_ENGINEDLL void SetPivot(PIVOT_TYPE pivot_type);
+
 	EATER_ENGINEDLL void SetPosition(DirectX::SimpleMath::Vector2 pos);
 	EATER_ENGINEDLL void SetPosition(float x, float y);
+
+	EATER_ENGINEDLL void SetPositionObject(GameObject* object, DirectX::SimpleMath::Vector3 offset);
+	EATER_ENGINEDLL void SetPositionObject(Transform* object, DirectX::SimpleMath::Vector3 offset);
+	EATER_ENGINEDLL void SetPosition3D(float x, float y, float z);
+	EATER_ENGINEDLL void SetPosition3D(DirectX::SimpleMath::Vector3 pos);
 
 	EATER_ENGINEDLL void SetBackGroundImage(Image* img);
 	EATER_ENGINEDLL void SetFillImage(Image* img);
@@ -36,6 +44,8 @@ public:
 private:
 	void SetPivot();
 	void SetPosition();
+	void SetPositionObject();
+	void SetPosition3D();
 	void SetBackGroundTexture();
 	void SetFillTexture();
 	void SetBackGroundColor();
@@ -47,8 +57,13 @@ private:
 
 	bool m_Start;
 
+	Transform* m_TargetObject;
+
 	PIVOT_TYPE m_Pivot;
 	Vector2 m_Position;
+	Vector3 m_Position3D;
+	Vector3 m_Position3D_Offset;
+
 	Vector4 m_BackColor;
 	Vector4 m_FillColor;
 

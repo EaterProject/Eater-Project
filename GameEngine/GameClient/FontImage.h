@@ -25,8 +25,8 @@ protected:
 	float FontOriginalSize  = 0.0f;
 
 	float FontSizeUPTime	= 0.1f;
-	float FontSizeUPTimeMin	= 0.1f;
-	float FontSizeUPTimeMax = 1.0f;
+	float FontSizeUPTimeMin	= 0.2f;
+	float FontSizeUPTimeMax = 2.0f;
 
 	float FontAlpha		= 255;
 	float FontIdleTime	= 0;
