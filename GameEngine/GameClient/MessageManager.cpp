@@ -16,7 +16,6 @@
 #include "MonsterA.h"
 #include "MonsterB.h"
 #include "Drone.h"
-#include "Bullet.h"
 #include "ComboFont.h"
 #include "UICanvas.h"
 #include "GateDoor.h"
@@ -65,8 +64,6 @@ void MessageManager::Initialize(ObjectFactory* Factory)
 	CREATE_MESSAGE(TARGET_GATE_MANAGER);
 	CREATE_MESSAGE(TARGET_UI);
 	CREATE_MESSAGE(TARGET_PLAYER);
-
-
 	CREATE_MESSAGE(TARGET_MANA);
 	CREATE_MESSAGE(TARGET_BOSS);
 }

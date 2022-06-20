@@ -64,9 +64,6 @@
     <Filter Include="소스 파일\Component\Drone">
       <UniqueIdentifier>{5d3595c4-893a-419c-8e60-e3f398ffc25a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Component\Bullet">
-      <UniqueIdentifier>{7a6ddbcc-d47a-48be-9937-5c89b4286dc9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Component\Base">
       <UniqueIdentifier>{89b60ef9-7572-4bbd-855d-364826a1bc4e}</UniqueIdentifier>
     </Filter>
@@ -111,6 +108,12 @@
     </Filter>
     <Filter Include="소스 파일\Manager\CameraManager">
       <UniqueIdentifier>{14794eaa-4f0a-49a8-abf6-5b791041d916}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\Monster\Boss\BossWeapon">
+      <UniqueIdentifier>{9d992c63-22a9-4dc7-84bd-8947d7b3bee2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\Monster\Boss\Boss">
+      <UniqueIdentifier>{29e0a40c-3d04-41f9-891e-c90fb3935b1d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -165,9 +168,6 @@
     <ClInclude Include="MessageManager.h">
       <Filter>소스 파일\Manager\MessageManager</Filter>
     </ClInclude>
-    <ClInclude Include="Bullet.h">
-      <Filter>소스 파일\Component\Bullet</Filter>
-    </ClInclude>
     <ClInclude Include="ClientTypeOption.h">
       <Filter>소스 파일\TypeOption</Filter>
     </ClInclude>
@@ -200,6 +200,9 @@
     </ClInclude>
     <ClInclude Include="CameraManager.h">
       <Filter>소스 파일\Manager\CameraManager</Filter>
+    </ClInclude>
+    <ClInclude Include="BossWeapon.h">
+      <Filter>소스 파일\Component\Monster\Boss\BossWeapon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -245,9 +248,6 @@
     <ClCompile Include="MessageManager.cpp">
       <Filter>소스 파일\Manager\MessageManager</Filter>
     </ClCompile>
-    <ClCompile Include="Bullet.cpp">
-      <Filter>소스 파일\Component\Bullet</Filter>
-    </ClCompile>
     <ClCompile Include="ClientComponent.cpp">
       <Filter>소스 파일\Component\Base\ClientComponent</Filter>
     </ClCompile>
@@ -277,6 +277,9 @@
     </ClCompile>
     <ClCompile Include="CameraManager.cpp">
       <Filter>소스 파일\Manager\CameraManager</Filter>
+    </ClCompile>
+    <ClCompile Include="BossWeapon.cpp">
+      <Filter>소스 파일\Component\Monster\Boss\BossWeapon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

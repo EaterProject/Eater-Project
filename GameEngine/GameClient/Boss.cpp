@@ -77,6 +77,7 @@ void Boss::SetUp()
 	mColider->SetMaterial_Restitution(0);
 	mColider->SetMaterial_Dynamic(0);
 	mRigidbody->SetFreezeRotation(true, true, true);
+	mRigidbody->SetGravity(false);
 
 	mMeshFilter->SetModelName("BossB+");
 	mMeshFilter->SetAnimationName("BossB+");

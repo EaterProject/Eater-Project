@@ -16,7 +16,6 @@ class MonsterA;
 class MonsterB;
 class AttackDrone;
 class HealingDrone;
-class Bullet;
 class ManaStone;
 class MessageManager;
 class Potal;
@@ -33,7 +32,6 @@ public:
 	void Release();
 		
 	GameObject* CreatePlayer();			//플레이어 객체를 생성
-	GameObject* CreateBullet();			//총알 객체를 생성
 	GameObject* CreateMonsterA();		//몬스터 객체를 생성
 	GameObject* CreateMonsterB();		//몬스터 객체를 생성
 	GameObject* CreateManaStone();		//마나석 객체를 생성

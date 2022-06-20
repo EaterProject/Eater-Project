@@ -17,7 +17,6 @@
 #include "MonsterB.h"
 #include "ClientComponent.h"
 #include "Drone.h"
-#include "Bullet.h"
 #include "MessageManager.h"
 #include "ManaStone.h"
 #include "FontImage.h"
@@ -26,6 +25,7 @@
 #include "GateDoor.h"
 #include "Boss.h"
 #include "CameraManager.h"
+#include "BossWeapon.h"
 
 
 
@@ -68,19 +68,6 @@ GameObject* ObjectFactory::CreatePlayer()
 	DroneObject->AddComponent<Drone>();
 
 	return PlayerObject;
-}
-
-GameObject* ObjectFactory::CreateBullet()
-{
-	GameObject* DroneBullet = Instance("Bullet");
-	MeshFilter* mMeshFilter = DroneBullet->AddComponent<MeshFilter>();
-	Collider*	mCollider	= DroneBullet->AddComponent<Collider>();
-	Bullet*		mBullet		= DroneBullet->AddComponent<Bullet>();
-
-	mBullet->isLife = false;
-	DroneBullet->SetTag(FindTagNumber("Bullet"));
-	DroneBullet->Name = "Bullet";
-	return DroneBullet;
 }
 
 GameObject* ObjectFactory::CreateMonsterA()
@@ -195,6 +182,7 @@ GameObject* ObjectFactory::CreateBossWeapon()
 {
 	GameObject* Object = Instance();
 	Object->AddComponent<MeshFilter>();
+	Object->AddComponent<BossWeapon>();
 	return Object;
 }
 

@@ -1,5 +1,5 @@
 #STATIC
-@NodeName TestSphere
+@NodeName Sphere_0
 @ParentName RootNode
 @MeshName Sphere_0
 @MaterialName Sphere

@@ -173,7 +173,7 @@ copy /Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)" </Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Boss.h" />
-    <ClInclude Include="Bullet.h" />
+    <ClInclude Include="BossWeapon.h" />
     <ClInclude Include="CameraManager.h" />
     <ClInclude Include="ClientTypeOption.h" />
     <ClInclude Include="ComboFont.h" />
@@ -211,7 +211,7 @@ copy /Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)" </Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Boss.cpp" />
-    <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="BossWeapon.cpp" />
     <ClCompile Include="CameraManager.cpp" />
     <ClCompile Include="ComboFont.cpp" />
     <ClCompile Include="Drone.cpp" />
