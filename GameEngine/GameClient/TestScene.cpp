@@ -32,7 +32,7 @@ void TestScene::Awake()
 	
 	//Load("../Assets/Texture/Particle/particle_hotCloud.png");
 
-	PROFILE_TIMER_START(PROFILE_OUTPUT::CONSOLE, 1, "Load Folder");
+	PROFILE_TIMER_START(PROFILE_OUTPUT::VS_CODE, 1, "Load Folder");
 	//Load("../Assets/Texture/Terrain");
 	//Load("../Assets/Texture/Environment");
 	//Load("../Assets/Texture/Bake");

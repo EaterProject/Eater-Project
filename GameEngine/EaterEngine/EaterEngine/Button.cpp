@@ -33,7 +33,7 @@ void Button::Update()
 	const RectPoint& rect_point = m_Transform->GetRectPoint();
 	const LPPOINT& mouse_point = mKeyInputManger->GetClientMousePos();
 
-	//PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "Mouse Point : %d, %d", mouse_point->x, mouse_point->y);
+	//PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "Mouse Point : %d, %d", mouse_point->x, mouse_point->y);
 
 	if (rect_point.left < mouse_point->x && rect_point.right > mouse_point->x)
 	{
@@ -47,7 +47,7 @@ void Button::Update()
 				// 등록된 이벤트 실행..
 				m_InButtonEvent();
 
-				PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "State : OUT_BUTTON -> IN_BUTTON");
+				//PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "State : OUT_BUTTON -> IN_BUTTON");
 			}
 
 			if (mKeyInputManger->GetKey(VK_LBUTTON))
@@ -62,7 +62,7 @@ void Button::Update()
 					// 등록된 이벤트 실행..
 					m_PressDownButtonEvent();
 
-					PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "State : DOWN_BUTTON -> PRESS_DOWN_BUTTON");
+					//PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "State : DOWN_BUTTON -> PRESS_DOWN_BUTTON");
 				}
 					break;
 				case Button::IN_BUTTON:
@@ -73,7 +73,7 @@ void Button::Update()
 					// 등록된 이벤트 실행..
 					m_DownButtonEvent();
 
-					PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "State : UP_BUTTON -> DOWN_BUTTON");
+					//PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "State : UP_BUTTON -> DOWN_BUTTON");
 				}
 					break;
 				case Button::PRESS_DOWN_BUTTON:
@@ -81,7 +81,7 @@ void Button::Update()
 					// 등록된 이벤트 실행..
 					m_PressDownButtonEvent();
 
-					PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "State : PRESS_DOWN_BUTTON -> PRESS_DOWN_BUTTON");
+					//PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "State : PRESS_DOWN_BUTTON -> PRESS_DOWN_BUTTON");
 				}
 					break;
 				default:
@@ -100,7 +100,7 @@ void Button::Update()
 					// 등록된 이벤트 실행..
 					m_UpButtonEvent();
 
-					PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "State : DOWN_BUTTON -> UP_BUTTON");
+					//PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "State : DOWN_BUTTON -> UP_BUTTON");
 				}
 				break;
 				case Button::PRESS_DOWN_BUTTON:
@@ -110,7 +110,7 @@ void Button::Update()
 					// 등록된 이벤트 실행..
 					m_UpButtonEvent();
 
-					PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "State : PRESS_DOWN_BUTTON -> UP_BUTTON");
+					//PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "State : PRESS_DOWN_BUTTON -> UP_BUTTON");
 				}
 				break;
 				default:
@@ -182,7 +182,7 @@ void Button::PopEvent(std::function<void()>& eventFunc, State type)
 		m_UpButtonEvent -= eventFunc;
 		break;
 	case Button::PRESS_DOWN_BUTTON:
-		m_PressDownButtonEvent -= std::forward<std::function<void()>>(eventFunc);
+		m_PressDownButtonEvent -= eventFunc;
 		break;
 	default:
 		break;

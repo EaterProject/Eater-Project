@@ -93,8 +93,8 @@ void OIT_Pass::Create(int width, int height)
 
 void OIT_Pass::Start(int width, int height)
 {
-	m_NumGroupsX = (UINT)ceilf(width / 32.0f);
-	m_NumGroupsY = (UINT)ceilf(height / 32.0f);
+	m_NumGroupsX = (UINT)ceilf(width / 1.0f);
+	m_NumGroupsY = (UINT)ceilf(height / 1.0f);
 
 	// OIT Shader List Up..
 	SetShaderList();
@@ -146,8 +146,8 @@ void OIT_Pass::Start(int width, int height)
 
 void OIT_Pass::OnResize(int width, int height)
 {
-	m_NumGroupsX = (UINT)ceilf(width / 32.0f);
-	m_NumGroupsY = (UINT)ceilf(height / 32.0f);
+	m_NumGroupsX = (UINT)ceilf(width / 1.0f);
+	m_NumGroupsY = (UINT)ceilf(height / 1.0f);
 
 	// 현재 RenderTarget 재설정..
 	m_OutPut_RTV = m_OutPut_RT->GetRTV()->Get();

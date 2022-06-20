@@ -23,6 +23,6 @@
 enum class PROFILE_OUTPUT
 {
 	LOG_FILE,	// Log File 출력
-	CONSOLE,	// Console 출력
+	//CONSOLE,	// Console 출력
 	VS_CODE		// Visual Studio Code 출력
 };

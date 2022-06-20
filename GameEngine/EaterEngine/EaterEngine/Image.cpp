@@ -7,6 +7,7 @@
 #include "GraphicEngineAPI.h"
 
 Image::Image()
+	:TextureIndex(-1)
 {
 	m_UI = new UIBuffer();
 	m_UI->UI_Property = new UIProperty();
@@ -64,22 +65,75 @@ void Image::SetTexture(std::string texture_name)
 
 void Image::SetTexture()
 {
-	TextureBuffer* newTexture = LoadManager::GetTexture(TextureName);
+	// 해당 이름의 해쉬코드..
+	size_t hash_number = std::hash<std::string>()(TextureName);
+
+	// 현재 인덱스와 동일할 경우..
+	if (hash_number == TextureIndex) return;
+
+	auto itor = TextureList.find(hash_number);
+
+	TextureBuffer* nowTexture = nullptr;
+
+	// 해당 인덱스의 텍스쳐가 없는 경우..
+	if (itor == TextureList.end())
+	{
+		nowTexture = LoadManager::GetTexture(TextureName);
+
+		// 해당 텍스쳐가 없는 경우..
+		if (nowTexture == nullptr) return;
+
+		TextureList.insert(std::pair<size_t, TextureBuffer*>(hash_number, nowTexture));
+	}
+	else
+	{
+		nowTexture = itor->second;
+	}
+
+	// 현재 텍스쳐 인덱스 변경..
+	TextureIndex = hash_number;
 
 	// Texture 변경..
-	m_UI->Albedo = newTexture;
+	m_UI->Albedo = nowTexture;
 
 	// 그래픽 연동..
 	GraphicEngine::Get()->PushChangeInstance(gameobject->OneMeshData);
 
 	// 이미지 크기 재설정..
-	if (newTexture)
+	m_Transform->SetImageSize(m_UI->Albedo->Width, m_UI->Albedo->Height);
+}
+
+void Image::PushTextureList(std::string texture_name)
+{
+	size_t hash_number = std::hash<std::string>()(texture_name);
+
+	auto itor = TextureList.find(hash_number);
+
+	if (itor == TextureList.end())
 	{
-		m_Transform->SetImageSize(m_UI->Albedo->Width, m_UI->Albedo->Height);
+		TextureBuffer* newTexture = LoadManager::GetTexture(texture_name);
+
+		TextureList.insert(std::pair<size_t, TextureBuffer*>(hash_number, newTexture));
 	}
 	else
 	{
-		m_Transform->SetImageSize(0.0f, 0.0f);
+
+	}
+}
+
+void Image::PopTextureList(std::string texture_name)
+{
+	size_t hash_number = std::hash<std::string>()(texture_name);
+	
+	auto itor = TextureList.find(hash_number);
+
+	if (itor != TextureList.end())
+	{
+		TextureList.erase(hash_number);
+	}
+	else
+	{
+
 	}
 }
 

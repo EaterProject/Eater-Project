@@ -158,7 +158,9 @@ copy /Y "$(ProjectDir)GraphicDLL.h" "$(SolutionDir)Library\inc"</Command>
       <AdditionalLibraryDirectories>$(SolutionDir)Library\lib</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>copy/Y "$(ProjectDir)Export\*.h"   "$(SolutionDir)Library\inc\Graphic"</Command>
+      <Command>copy/Y "$(ProjectDir)Export\*.h"   "$(SolutionDir)Library\inc\Graphic"
+copy/Y "$(TargetPath)"      "..\\Library\lib"
+copy/Y "$(OutDir)$(TargetName).lib"      "..\\Library\lib"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -183,7 +185,9 @@ copy /Y "$(ProjectDir)GraphicDLL.h" "$(SolutionDir)Library\inc"</Command>
       <AdditionalLibraryDirectories>$(SolutionDir)Library\lib</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>copy/Y "$(ProjectDir)Export\*.h"   "$(SolutionDir)Library\inc\Graphic"</Command>
+      <Command>copy/Y "$(ProjectDir)Export\*.h"   "$(SolutionDir)Library\inc\Graphic"
+copy/Y "$(TargetPath)"      "..\\Library\lib"
+copy/Y "$(OutDir)$(TargetName).lib"      "..\\Library\lib"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

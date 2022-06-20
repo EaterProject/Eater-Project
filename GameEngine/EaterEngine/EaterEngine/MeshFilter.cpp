@@ -366,7 +366,6 @@ void MeshFilter::SetMaterial(std::string matName)
 			GraphicEngine::Get()->PushChangeInstance(gameobject->OneMeshData);
 		}
 
-		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ MeshFilter ][ SetMaterial ] '%s' FAILED!!", matName.c_str());
 		return;
 	}
 

@@ -481,7 +481,7 @@ int GetMousePosY()
 
 	 va_end(args);
 
-	 PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, cBuf);
+	 PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, cBuf);
 
 	 delete[] cBuf;
  }

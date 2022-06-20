@@ -12,8 +12,7 @@ static FragmentData gSortedPixels[MAX_SORTED_PIXELS];
 [numthreads(1, 1, 1)]
 void OIT_Blend_CS(uint3 groupThreadID : SV_GroupThreadID, uint3 dispatchID : SV_DispatchThreadID)
 {
-    int2 vPos = int2(dispatchID.x, dispatchID.y);
-    int startOffsetAddress = 4 * (gFrameWidth * vPos.y + vPos.x);
+    int startOffsetAddress = 4 * (gFrameWidth * dispatchID.y + dispatchID.x);
     int numPixels = 0;
     uint offset = gFirstOffsetBuffer.Load(startOffsetAddress);
     
@@ -46,7 +45,7 @@ void OIT_Blend_CS(uint3 groupThreadID : SV_GroupThreadID, uint3 dispatchID : SV_
         }
     }
 
-    float4 currColor = gBackGround.Load(int3(vPos.xy, 0));
+    float4 currColor = gBackGround.Load(int3(dispatchID.xy, 0));
 
     FragmentData data;
     
@@ -58,5 +57,5 @@ void OIT_Blend_CS(uint3 groupThreadID : SV_GroupThreadID, uint3 dispatchID : SV_
         currColor.xyz = lerp(currColor.xyz, pixelColor.xyz * data.Strength, pixelColor.w);
     }
     
-    gOutputUAV[vPos.xy] = currColor;
+    gOutputUAV[dispatchID.xy] = currColor;
 }

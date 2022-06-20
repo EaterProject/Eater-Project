@@ -7,13 +7,14 @@ typedef enum PARSING_OPTION : UINT
 	ORIGIN_ONLY		= 0x00000100	// FBX Parser Parsing Only Origin Vertex (Collision Àü¿ë)
 }PARSING_OPTION;
 
-// Lighting Option
+// Render Option
 typedef enum RENDER_OPTION : UINT
 {
 	RENDER_SHADOW	= 0x00000001,
 	RENDER_SSAO		= 0x00000010,
 	RENDER_IBL		= 0x00000100,
 	RENDER_FOG		= 0x00001000,
+	RENDER_UI		= 0x00010000,
 }RENDER_OPTION;
 
 // PostProcess Option

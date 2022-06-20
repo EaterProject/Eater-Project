@@ -47,10 +47,11 @@ float4 OIT_Blend_PS(ScreenPixelIn pin) : SV_Target
     
     SortPixelInPlace(numPixels);
     
-    float4 currColor = gBackGround.Load(int3(pin.PosH.xy, 0));
+    float4 currColor = gBackGround.Load(int3(vPos.xy, 0));
 
     FragmentData data;
     
+	[unroll]
     for (int i = 0; i < numPixels; ++i)
     {
         data = gSortedPixels[i];
