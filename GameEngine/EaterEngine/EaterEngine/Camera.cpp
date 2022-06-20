@@ -10,6 +10,8 @@
 #include "Profiler/Profiler.h"
 #include "LoadManager.h"
 
+#include "Profiler/Profiler.h"
+
 using namespace DirectX;
 std::vector<Camera*> Camera::CamList;
 Camera* Camera::g_MainCam = nullptr;
@@ -165,6 +167,32 @@ void Camera::ChoiceCameraAnimation(std::string Name)
 bool Camera::ChoiceCameraAnimationEnd()
 {
 	return (isAnimation == true) ? false : true ;
+}
+
+DirectX::SimpleMath::Vector2 Camera::WorldToScreen(float x, float y, float z)
+{
+	Vector4 world_pos = { x, y, z, 1.0f };
+	Vector4 screen_pos = Vector4::Transform(world_pos, mCameraData->CamViewProj);
+
+	if (screen_pos.z < 0.0f)
+	{
+		return Vector2(-1.0f, -1.0f);
+	}
+
+	return Vector2((screen_pos.x / screen_pos.w) * 0.5f + 0.5f, (-screen_pos.y / screen_pos.w) * 0.5f + 0.5f);
+}
+
+DirectX::SimpleMath::Vector2 Camera::WorldToScreen(DirectX::SimpleMath::Vector3 world)
+{
+	Vector4 world_pos = { world.x, world.y, world.z, 1.0f };
+	Vector4 screen_pos = Vector4::Transform(world_pos, mCameraData->CamViewProj);
+
+	if (screen_pos.z < 0.0f)
+	{
+		return Vector2(-1.0f, -1.0f);
+	}
+
+	return Vector2((screen_pos.x / screen_pos.w) * 0.5f + 0.5f, (-screen_pos.y / screen_pos.w) * 0.5f + 0.5f);
 }
 
 DirectX::SimpleMath::Matrix Camera::GetView()

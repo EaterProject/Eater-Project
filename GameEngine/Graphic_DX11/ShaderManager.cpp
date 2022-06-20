@@ -118,7 +118,8 @@ void ShaderManager::CreateShader()
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "OIT_Mesh_PS.hlsl", "OIT_Mesh_PS", "OIT_Mesh_PS_Option6", alpha_macro6);				// IBL + Fog
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "OIT_Mesh_PS.hlsl", "OIT_Mesh_PS", "OIT_Mesh_PS_Option7", alpha_macro7);				// Shadow + IBL + Fog
 
-	LoadShader(SHADER_TYPE::PIXEL_SHADER, "OIT_Blend_PS.hlsl", "OIT_PS", "OIT_PS");
+	LoadShader(SHADER_TYPE::COMPUTE_SHADER, "OIT_Blend_CS.hlsl", "OIT_Blend_CS", "OIT_Blend_CS");
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "OIT_Blend_PS.hlsl", "OIT_Blend_PS", "OIT_Blend_PS");
 
 	// Shadow Shader
 	LoadShader(SHADER_TYPE::VERTEX_SHADER, "Shadow_StaticMesh_VS.hlsl", "Shadow_StaticMesh_VS", "Shadow_StaticMesh_VS");
@@ -153,6 +154,8 @@ void ShaderManager::CreateShader()
 	// RectTransform Shader
 	LoadShader(SHADER_TYPE::VERTEX_SHADER, "UI_VS.hlsl", "UI_VS", "UI_VS");
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "UI_PS.hlsl", "UI_PS", "UI_PS");
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "UI_PS.hlsl", "UI_Fill_PS", "UI_Fill_PS");
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "UI_PS.hlsl", "UI_Fill_Reverse_PS", "UI_Fill_Reverse_PS");
 
 	// IBL Shader
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "IBL_Convolution_PS.hlsl", "IBL_Convolution_PS", "IBL_Convolution_PS");
@@ -341,6 +344,7 @@ void ShaderManager::AddConstantBufferUsage()
 	// UI..
 	PushConstantBufferUsage<CB_UIObject>(CBUFFER_USAGE::DYNAMIC);
 	PushConstantBufferUsage<CB_UIOption>(CBUFFER_USAGE::DYNAMIC);
+	PushConstantBufferUsage<CB_UIFill>(CBUFFER_USAGE::DYNAMIC);
 
 	// IBL Baking..
 	PushConstantBufferUsage<CB_ExternalData>(CBUFFER_USAGE::DYNAMIC);

@@ -3,13 +3,32 @@
 
 StructuredBuffer<FLStaticNode> gPieceLinkBuffer : register(t0);
 ByteAddressBuffer gFirstOffsetBuffer : register(t1);
+
 Texture2D gBackGround : register(t2);
+RWTexture2D<float4> gOutputUAV : register(u0);
 
 static FragmentData gSortedPixels[MAX_SORTED_PIXELS];
 
-void SortPixelInPlace(int numPixels)
+[numthreads(1, 1, 1)]
+void OIT_Blend_CS(uint3 groupThreadID : SV_GroupThreadID, uint3 dispatchID : SV_DispatchThreadID)
 {
+    int2 vPos = int2(dispatchID.x, dispatchID.y);
+    int startOffsetAddress = 4 * (gFrameWidth * vPos.y + vPos.x);
+    int numPixels = 0;
+    uint offset = gFirstOffsetBuffer.Load(startOffsetAddress);
+    
+    FLStaticNode element;
+    
+    while (offset != 0xFFFFFFFF)
+    {
+        element = gPieceLinkBuffer[offset];
+        gSortedPixels[numPixels++] = element.Data;
+        offset = (numPixels >= MAX_SORTED_PIXELS) ?
+            0xFFFFFFFF : element.Next;
+    }
+    
     FragmentData temp;
+    
     for (int i = 1; i < numPixels; ++i)
     {
         for (int j = i - 1; j >= 0; --j)
@@ -26,38 +45,18 @@ void SortPixelInPlace(int numPixels)
             }
         }
     }
-}
 
-float4 OIT_Blend_PS(ScreenPixelIn pin) : SV_Target
-{
-    uint2 vPos = (uint2) pin.PosH.xy;
-    int startOffsetAddress = 4 * (gFrameWidth * vPos.y + vPos.x);
-    int numPixels = 0;
-    uint offset = gFirstOffsetBuffer.Load(startOffsetAddress);
-    
-    FLStaticNode element;
-    
-    while (offset != 0xFFFFFFFF)
-    {
-        element = gPieceLinkBuffer[offset];
-        gSortedPixels[numPixels++] = element.Data;
-        offset = (numPixels >= MAX_SORTED_PIXELS) ?
-            0xFFFFFFFF : element.Next;
-    }
-    
-    SortPixelInPlace(numPixels);
-    
-    float4 currColor = gBackGround.Load(int3(pin.PosH.xy, 0));
+    float4 currColor = gBackGround.Load(int3(vPos.xy, 0));
 
     FragmentData data;
     
-    for (int i = 0; i < numPixels; ++i)
+	[unroll]
+    for (int l = 0; l < numPixels; ++l)
     {
-        data = gSortedPixels[i];
+        data = gSortedPixels[l];
         float4 pixelColor = UnpackColorFromUInt(data.Color);
         currColor.xyz = lerp(currColor.xyz, pixelColor.xyz * data.Strength, pixelColor.w);
     }
     
-    return currColor;
+    gOutputUAV[vPos.xy] = currColor;
 }
-

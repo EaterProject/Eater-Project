@@ -2,6 +2,7 @@
 #include "Component.h"
 
 class Image;
+class Slider;
 class RectTransform;
 
 class LoadingImage : public Component
@@ -19,6 +20,8 @@ private:
 	Image* Loading_1_Image;
 	Image* Loading_2_Image;
 	Image* Text_Origin_Image;
+
+	Slider* Test_Slider;
 
 	RectTransform* Loading_RectTR_2;
 

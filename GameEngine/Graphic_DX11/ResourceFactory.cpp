@@ -1173,7 +1173,7 @@ void GraphicResourceFactory::CreateTextureRenderTarget(UINT width, UINT height)
 	texDesc.SampleDesc.Quality = 0;
 	texDesc.Format = DXGI_FORMAT_R16G16B16A16_FLOAT;
 	texDesc.Usage = D3D11_USAGE_DEFAULT;
-	texDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
+	texDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS;
 	texDesc.CPUAccessFlags = 0;
 	texDesc.MiscFlags = 0;
 
@@ -1186,11 +1186,16 @@ void GraphicResourceFactory::CreateTextureRenderTarget(UINT width, UINT height)
 	srvDesc.Format = texDesc.Format;
 	srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
 	srvDesc.Texture2D.MostDetailedMip = 0;
-	srvDesc.Texture2D.MipLevels = 1;
+	srvDesc.Texture2D.MipLevels = -1;
 
-	CreateRenderTexture(RT_OutPut1::GetName(), RT_OutPut1::GetHashCode(), &texDesc, nullptr, &rtvDesc, &srvDesc, nullptr);
-	CreateRenderTexture(RT_OutPut2::GetName(), RT_OutPut2::GetHashCode(), &texDesc, nullptr, &rtvDesc, &srvDesc, nullptr);
-	CreateRenderTexture(RT_OutPut3::GetName(), RT_OutPut3::GetHashCode(), &texDesc, nullptr, &rtvDesc, &srvDesc, nullptr);
+	D3D11_UNORDERED_ACCESS_VIEW_DESC uavDesc;
+	uavDesc.Format = texDesc.Format;
+	uavDesc.ViewDimension = D3D11_UAV_DIMENSION_TEXTURE2D;
+	uavDesc.Texture2D.MipSlice = 0;
+
+	CreateRenderTexture(RT_OutPut1::GetName(), RT_OutPut1::GetHashCode(), &texDesc, nullptr, &rtvDesc, &srvDesc, &uavDesc);
+	CreateRenderTexture(RT_OutPut2::GetName(), RT_OutPut2::GetHashCode(), &texDesc, nullptr, &rtvDesc, &srvDesc, &uavDesc);
+	CreateRenderTexture(RT_OutPut3::GetName(), RT_OutPut3::GetHashCode(), &texDesc, nullptr, &rtvDesc, &srvDesc, &uavDesc);
 }
 
 template<>

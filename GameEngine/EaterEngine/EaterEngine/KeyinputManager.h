@@ -15,6 +15,7 @@ public:
 	//누를때 true 면 false 로 false 면 true로 
 	bool GetKeyToggle(byte _keyNum);
 	const LPPOINT GetMousePos();
+	const LPPOINT GetClientMousePos();
 
 	void Initialize(HWND hwnd);
 	void Update();
@@ -39,7 +40,8 @@ private:
 	//한번누르면 true 다시한번누르면 false
 	bool isToggle[256];
 
-	POINT CursorPos;
+	POINT ScreenCursorPos;
+	POINT ClientCursorPos;
 	HWND hwnd;
 
 	bool isFocus;

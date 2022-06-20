@@ -84,13 +84,19 @@ void KeyinputManager::KeyUpDate()
 
 void KeyinputManager::UpdataMouseCursor()
 {
-	GetCursorPos(&CursorPos);
-	//ScreenToClient(hwnd, &CursorPos);
+	GetCursorPos(&ScreenCursorPos);
+	GetCursorPos(&ClientCursorPos);
+	ScreenToClient(hwnd, &ClientCursorPos);
 }
 
 const LPPOINT KeyinputManager::GetMousePos()
 {
-	return &CursorPos;
+	return &ScreenCursorPos;
+}
+
+const LPPOINT KeyinputManager::GetClientMousePos()
+{
+	return &ClientCursorPos;
 }
 
 void KeyinputManager::Initialize(HWND mhwnd)

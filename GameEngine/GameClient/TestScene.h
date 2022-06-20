@@ -8,6 +8,8 @@ class Rigidbody;
 class AnimationController;
 class ParticleSystem;
 class Camera;
+class Image;
+class RectTransform;
 
 class TestScene : public Scene
 {
@@ -42,6 +44,11 @@ private:
 	float angle = 0.0f;
 
 	AnimationController* AC;
+	Image* IMG;
+	RectTransform* RTR;
+	std::vector<Image*> IMGList;
+	std::vector<Transform*> TRList;
+	std::vector<RectTransform*> RTRList;
 	std::vector<AnimationController*> ACList;
 };
 

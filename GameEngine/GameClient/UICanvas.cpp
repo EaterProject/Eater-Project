@@ -52,7 +52,7 @@ void UICanvas::Set_HP_Now(int Number)
 {
 	Alpha = 255;
 	mFont[Font_HP_Now]->SetFontNumber(Number);
-	Images[Image_PlayerHit_Effect]->SetImageColor(255, 0, 0, Alpha);
+	Images[Image_PlayerHit_Effect]->SetColor(255, 0, 0, Alpha);
 	isHit = true;
 }
 
@@ -67,16 +67,16 @@ void UICanvas::Set_Emagin_Now(int Number)
 	switch (Count)
 	{
 	case 0:
-		Images[Image_Emagin_Front]->SetImageColor(255, 0, 0, 200);
+		Images[Image_Emagin_Front]->SetColor(255, 0, 0, 200);
 		break;
 	case 1:
-		Images[Image_Emagin_Front]->SetImageColor(0, 255, 0, 200);
+		Images[Image_Emagin_Front]->SetColor(0, 255, 0, 200);
 		break;
 	case 2:
-		Images[Image_Emagin_Front]->SetImageColor(0, 0, 255, 200);
+		Images[Image_Emagin_Front]->SetColor(0, 0, 255, 200);
 		break;
 	case 3:
-		Images[Image_Emagin_Front]->SetImageColor(255, 255, 0, 200);
+		Images[Image_Emagin_Front]->SetColor(255, 255, 0, 200);
 		break;
 	}
 
@@ -93,7 +93,7 @@ void UICanvas::Set_Monster_EMAGINE(void* Emagin)
 	MONSTER_EMAGIN* mEmagin = reinterpret_cast<MONSTER_EMAGIN*>(Emagin);
 
 	mFont[Font_Monster_Emagin]->SetFontNumber(mEmagin->ComboCount);
-	Images[Image_Monster_Emagin_Front]->SetImageColor(mEmagin->R, mEmagin->G, mEmagin->B, 255);
+	Images[Image_Monster_Emagin_Front]->SetColor(mEmagin->R, mEmagin->G, mEmagin->B, 255);
 	Images[Image_Monster_HP_Front];
 }
 
@@ -143,7 +143,7 @@ void UICanvas::Create_HP_UI()
 	OffsetX += 70;
 	Rect->SetPosition(PosX + OffsetX, PosY + 50);
 	Rect->SetScale(0.75f, 0.75f);
-	Rect->SetImagePivot(PIVOT_MIDDLE_LEFT);
+	Rect->SetPivot(PIVOT_MIDDLE_LEFT);
 	
 	//HP 폰트 맥스
 	Object = Instance();
@@ -158,7 +158,7 @@ void UICanvas::Create_HP_UI()
 	Rect = Object->GetComponent<RectTransform>();
 	Rect->SetPosition(PosX + OffsetX, PosY + 100);
 	Rect->SetScale(0.75f, 0.75f);
-	Rect->SetImagePivot(PIVOT_MIDDLE_LEFT);
+	Rect->SetPivot(PIVOT_MIDDLE_LEFT);
 }
 
 void UICanvas::Create_Skill_UI()
@@ -176,7 +176,7 @@ void UICanvas::Create_Skill_UI()
 	OffsetX += 60;
 	Rect->SetPosition(PosX + OffsetX, PosY + 100);
 	Rect->SetScale(0.35f, 0.35f);
-	Rect->SetImagePivot(PIVOT_MIDDLE_LEFT);
+	Rect->SetPivot(PIVOT_MIDDLE_LEFT);
 	
 	Object = Instance_UI();
 	Images[Image_Skill_E] = Object->AddComponent<Image>();
@@ -185,7 +185,7 @@ void UICanvas::Create_Skill_UI()
 	OffsetX += 60;
 	Rect->SetPosition(PosX + OffsetX, PosY + 100);
 	Rect->SetScale(0.35f, 0.35f);
-	Rect->SetImagePivot(PIVOT_MIDDLE_LEFT);
+	Rect->SetPivot(PIVOT_MIDDLE_LEFT);
 	
 	Object = Instance_UI();
 	Images[Image_Skill_Right] = Object->AddComponent<Image>();
@@ -194,7 +194,7 @@ void UICanvas::Create_Skill_UI()
 	OffsetX += 60;
 	Rect->SetPosition(PosX + OffsetX, PosY + 100);
 	Rect->SetScale(0.35f, 0.35f);
-	Rect->SetImagePivot(PIVOT_MIDDLE_LEFT);
+	Rect->SetPivot(PIVOT_MIDDLE_LEFT);
 }
 
 void UICanvas::Create_Emagin_Color_UI()
@@ -207,20 +207,20 @@ void UICanvas::Create_Emagin_Color_UI()
 	Object = Instance_UI();
 	Images[Image_Emagin_Back] = Object->AddComponent<Image>();
 	Images[Image_Emagin_Back]->SetTexture("Emagin_Back");
-	Images[Image_Emagin_Back]->SetImageColor(255, 255, 255, 255);
+	Images[Image_Emagin_Back]->SetColor(255, 255, 255, 255);
 	Rect = Object->GetComponent<RectTransform>();
 	Rect->SetPosition(-200, 0);
 	Rect->SetScale(0.5, 0.5f);
-	Rect->SetImagePivot(PIVOT_MIDDLE_CENTER);
+	Rect->SetPivot(PIVOT_MIDDLE_CENTER);
 
 	Object = Instance_UI();
 	Images[Image_Emagin_Front] = Object->AddComponent<Image>();
 	Images[Image_Emagin_Front]->SetTexture("Emagin_Front");
-	Images[Image_Emagin_Front]->SetImageColor(255, 255, 255, 255);
+	Images[Image_Emagin_Front]->SetColor(255, 255, 255, 255);
 	Rect = Object->GetComponent<RectTransform>();
 	Rect->SetPosition(-200, 0);
 	Rect->SetScale(0.5, 0.5f);
-	Rect->SetImagePivot(PIVOT_MIDDLE_CENTER);
+	Rect->SetPivot(PIVOT_MIDDLE_CENTER);
 }
 
 void UICanvas::Create_Emagin_UI()
@@ -239,7 +239,7 @@ void UICanvas::Create_Emagin_UI()
 	Rect = Object->GetComponent<RectTransform>();
 	Rect->SetPosition(OffsetX, PosY);
 	Rect->SetScale(0.5f, 0.5f);
-	Rect->SetImagePivot(PIVOT_MIDDLE_LEFT);
+	Rect->SetPivot(PIVOT_MIDDLE_LEFT);
 
 	//이메진 Now Count
 	Object = Instance();
@@ -255,7 +255,7 @@ void UICanvas::Create_Emagin_UI()
 	OffsetX += 60;
 	Rect->SetPosition(PosX + OffsetX, PosY + 10);
 	Rect->SetScale(0.35f, 0.35f);
-	Rect->SetImagePivot(PIVOT_MIDDLE_LEFT);
+	Rect->SetPivot(PIVOT_MIDDLE_LEFT);
 	
 	//이메진 Max Count
 	Object = Instance();
@@ -273,11 +273,11 @@ void UICanvas::Create_Effect_UI()
 	Object = Instance_UI();
 	Images[Image_PlayerHit_Effect] = Object->AddComponent<Image>();
 	Images[Image_PlayerHit_Effect]->SetTexture("PlayerDamage_01");
-	Images[Image_PlayerHit_Effect]->SetImageColor(255, 0, 0, 0);
+	Images[Image_PlayerHit_Effect]->SetColor(255, 0, 0, 0);
 	Rect = Object->GetComponent<RectTransform>();
 	Rect->SetPosition(0, 0);
 	Rect->SetScale(0.5,0.5f);
-	Rect->SetImagePivot(PIVOT_MIDDLE_CENTER);
+	Rect->SetPivot(PIVOT_MIDDLE_CENTER);
 }
 
 void UICanvas::Create_Monster_UI()
@@ -291,29 +291,29 @@ void UICanvas::Create_Monster_UI()
 	Object = Instance_UI();
 	Images[Image_Monster_HP_Front] = Object->AddComponent<Image>();
 	Images[Image_Monster_HP_Front]->SetTexture("Monster_HP");
-	Images[Image_Monster_HP_Front]->SetImageColor(255, 255, 255, 255);
+	Images[Image_Monster_HP_Front]->SetColor(255, 255, 255, 255);
 	Rect = Object->GetComponent<RectTransform>();
 	Rect->SetPosition(0, -400);
 	Rect->SetScale(1, 1);
-	Rect->SetImagePivot(PIVOT_MIDDLE_CENTER);
+	Rect->SetPivot(PIVOT_MIDDLE_CENTER);
 
 	Object = Instance_UI();
 	Images[Image_Monster_Emagin_Back] = Object->AddComponent<Image>();
 	Images[Image_Monster_Emagin_Back]->SetTexture("Monster_Emagin_Back");
-	Images[Image_Monster_Emagin_Back]->SetImageColor(255, 255, 255, 255);
+	Images[Image_Monster_Emagin_Back]->SetColor(255, 255, 255, 255);
 	Rect = Object->GetComponent<RectTransform>();
 	Rect->SetPosition(-100,-400);
 	Rect->SetScale(0.5, 0.5f);
-	Rect->SetImagePivot(PIVOT_MIDDLE_CENTER);
+	Rect->SetPivot(PIVOT_MIDDLE_CENTER);
 
 	Object = Instance_UI();
 	Images[Image_Monster_Emagin_Front] = Object->AddComponent<Image>();
 	Images[Image_Monster_Emagin_Front]->SetTexture("Monster_Emagin_Front");
-	Images[Image_Monster_Emagin_Front]->SetImageColor(255, 0, 0, 255);
+	Images[Image_Monster_Emagin_Front]->SetColor(255, 0, 0, 255);
 	Rect = Object->GetComponent<RectTransform>();
 	Rect->SetPosition(-100, -400);
 	Rect->SetScale(0.5, 0.5f);
-	Rect->SetImagePivot(PIVOT_MIDDLE_CENTER);
+	Rect->SetPivot(PIVOT_MIDDLE_CENTER);
 
 
 	Object = Instance();
@@ -327,7 +327,7 @@ void UICanvas::Update_Hit_Check()
 
 	float DTime = GetDeltaTime();
 	Alpha -= (100.0f * DTime);
-	Images[Image_PlayerHit_Effect]->SetImageColor(255, 0, 0, Alpha);
+	Images[Image_PlayerHit_Effect]->SetColor(255, 0, 0, Alpha);
 	if (Alpha <= 0)
 	{
 		isHit = false;

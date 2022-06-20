@@ -12,6 +12,8 @@ struct RectPoint
 	float bottom;
 };
 
+class Transform;
+
 class RectTransform : public Component
 {
 public:
@@ -22,12 +24,17 @@ public:
 	void TransformUpdate() override;
 
 public:
-	EATER_ENGINEDLL void SetImagePivot(RECT_PIVOT pivot_type);
 	EATER_ENGINEDLL void SetImageSize(float x, float y);
 	EATER_ENGINEDLL void SetImageSize(DirectX::SimpleMath::Vector2 image_size);
 
+	EATER_ENGINEDLL void SetPivot(PIVOT_TYPE pivot_type);
 	EATER_ENGINEDLL void SetPosition(float x, float y);
 	EATER_ENGINEDLL void SetPosition(DirectX::SimpleMath::Vector2 pos);
+
+	EATER_ENGINEDLL void SetPositionObject(GameObject* object, DirectX::SimpleMath::Vector3 offset);
+	EATER_ENGINEDLL void SetPositionObject(Transform* object, DirectX::SimpleMath::Vector3 offset);
+	EATER_ENGINEDLL void SetPosition3D(float x, float y, float z);
+	EATER_ENGINEDLL void SetPosition3D(DirectX::SimpleMath::Vector3 pos);
 
 	EATER_ENGINEDLL void SetRotation(float angle);
 	EATER_ENGINEDLL void SetRotation(float x, float y, float z);
@@ -53,7 +60,7 @@ private:
 
 public:
 	//이미지 출력 위치
-	RECT_PIVOT PivotType;
+	PIVOT_TYPE PivotType;
 	//이미지 크기
 	DirectX::SimpleMath::Vector2 ImageSize;
 	//이미지 색상
@@ -80,5 +87,9 @@ private:
 
 	//화면상의 출력 범위
 	RectPoint RectPosition;
+
+	//3D Object
+	Transform* Transform3D;
+	DirectX::SimpleMath::Vector3 Position3D_Offset;
 };
 

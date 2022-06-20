@@ -817,6 +817,9 @@
     <FxCompile Include="..\Assets\Shader\UI_VS.hlsl">
       <Filter>소스 파일\Shader\HLSL\UI</Filter>
     </FxCompile>
+    <FxCompile Include="..\Assets\Shader\OIT_Blend_CS.hlsl">
+      <Filter>소스 파일\Shader\HLSL\Render\OIT</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Assets\Shader\Conversion_Header.hlsli">

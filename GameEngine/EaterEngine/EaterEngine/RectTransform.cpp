@@ -1,20 +1,24 @@
 #include "RectTransform.h"
 #include "EngineData.h"
 
+#include "GlobalDataManager.h"
 #include "GameObject.h"
 #include "GameEngine.h"
 #include "Utility.h"
+#include "Camera.h"
+#include "GameObject.h"
+#include "Transform.h"
 
 RectTransform::RectTransform()
 {
-	PivotType		= RECT_PIVOT::PIVOT_MIDDLE_CENTER;
-	ImageSize		= { 0, 0 };
-	Position		= { 0, 0 };
-	Rotation		= { 0, 0, 0 };
-	Scale			= { 1, 1 };
+	PivotType		= PIVOT_TYPE::PIVOT_MIDDLE_CENTER;
+	ImageSize		= { 0.0f, 0.0f };
+	Position		= { 0.0f, 0.0f };
+	Rotation		= { 0.0f, 0.0f, 0.0f };
+	Scale			= { 0.5f, 0.5f };
 
-	Position_Offset = { 0, 0 };
-	Scale_Offset	= { 1, 1 };
+	Position_Offset = { 0.0f, 0.0f };
+	Scale_Offset	= { 1.0f, 1.0f };
 
 	PositionXM		= DirectX::XMMatrixIdentity();
 	RotationXM		= DirectX::XMMatrixIdentity();
@@ -22,7 +26,7 @@ RectTransform::RectTransform()
 
 	Screen_Size.x = GameEngine::WinSizeWidth;
 	Screen_Size.y = GameEngine::WinSizeHeight;
-
+	
 	GameEngine::ResizeFunction += Eater::Bind(&RectTransform::Resize, this);
 }
 
@@ -35,41 +39,44 @@ void RectTransform::TransformUpdate()
 {
 	switch (PivotType)
 	{
-	case PIVOT_LEFT_TOP:
+	case PIVOT_TYPE::PIVOT_LEFT_TOP:
 		Position_Offset.x = ImageSize.x * Scale.x;
 		Position_Offset.y = ImageSize.y * Scale.y;
 		break;
-	case PIVOT_LEFT_BOTTOM:
+	case PIVOT_TYPE::PIVOT_LEFT_BOTTOM:
 		Position_Offset.x = ImageSize.x * Scale.x;
-		Position_Offset.y = GameEngine::WinSizeHeight - (ImageSize.y * Scale.y);
+		Position_Offset.y = Screen_Size.y - (ImageSize.y * Scale.y);
 		break;
-	case PIVOT_RIGHT_TOP:
-		Position_Offset.x = GameEngine::WinSizeWidth - (ImageSize.x * Scale.x);
+	case PIVOT_TYPE::PIVOT_RIGHT_TOP:
+		Position_Offset.x = Screen_Size.x - (ImageSize.x * Scale.x);
 		Position_Offset.y = ImageSize.y * Scale.y;
 		break;
-	case PIVOT_RIGHT_BOTTOM:
-		Position_Offset.x = GameEngine::WinSizeWidth - (ImageSize.x * Scale.x);
-		Position_Offset.y = GameEngine::WinSizeHeight - (ImageSize.y * Scale.y);
+	case PIVOT_TYPE::PIVOT_RIGHT_BOTTOM:
+		Position_Offset.x = Screen_Size.x - (ImageSize.x * Scale.x);
+		Position_Offset.y = Screen_Size.y - (ImageSize.y * Scale.y);
 		break;
-	case PIVOT_MIDDLE_TOP:
-		Position_Offset.x = GameEngine::WinSizeWidth * 0.5f;
+	case PIVOT_TYPE::PIVOT_MIDDLE_TOP:
+		Position_Offset.x = Screen_Size.x * 0.5f;
 		Position_Offset.y = ImageSize.y * Scale.y;
 		break;
-	case PIVOT_MIDDLE_BOTTOM:
-		Position_Offset.x = GameEngine::WinSizeWidth * 0.5f;
-		Position_Offset.y = GameEngine::WinSizeHeight - (ImageSize.y * Scale.y);
+	case PIVOT_TYPE::PIVOT_MIDDLE_BOTTOM:
+		Position_Offset.x = Screen_Size.x * 0.5f;
+		Position_Offset.y = Screen_Size.y - (ImageSize.y * Scale.y);
 		break;
-	case PIVOT_MIDDLE_LEFT:
+	case PIVOT_TYPE::PIVOT_MIDDLE_LEFT:
 		Position_Offset.x = ImageSize.x * Scale.x;
-		Position_Offset.y = GameEngine::WinSizeHeight * 0.5f;
+		Position_Offset.y = Screen_Size.y * 0.5f;
 		break;
-	case PIVOT_MIDDLE_RIGHT:
-		Position_Offset.x = GameEngine::WinSizeWidth - (ImageSize.x * Scale.x);
-		Position_Offset.y = GameEngine::WinSizeHeight * 0.5f;
+	case PIVOT_TYPE::PIVOT_MIDDLE_RIGHT:
+		Position_Offset.x = Screen_Size.x - (ImageSize.x * Scale.x);
+		Position_Offset.y = Screen_Size.y * 0.5f;
 		break;
-	case PIVOT_MIDDLE_CENTER:
-		Position_Offset.x = GameEngine::WinSizeWidth * 0.5f;
-		Position_Offset.y = GameEngine::WinSizeHeight * 0.5f;
+	case PIVOT_TYPE::PIVOT_MIDDLE_CENTER:
+		Position_Offset.x = Screen_Size.x * 0.5f;
+		Position_Offset.y = Screen_Size.y * 0.5f;
+		break;
+	case PIVOT_TYPE::PIVOT_OBJECT:
+		Position = Screen_Size * Camera::g_MainCam->WorldToScreen(Transform3D->Position + Position3D_Offset);
 		break;
 	default:
 		break;
@@ -104,11 +111,6 @@ void RectTransform::TransformUpdate()
 	RectPosition.bottom = PositionXM._42 + half_height;
 }
 
-void RectTransform::SetImagePivot(RECT_PIVOT pivot_type)
-{
-	PivotType = pivot_type;
-}
-
 void RectTransform::SetImageSize(float x, float y)
 {
 	ImageSize.x = x;
@@ -120,6 +122,11 @@ void RectTransform::SetImageSize(DirectX::SimpleMath::Vector2 imagesize)
 	ImageSize = imagesize;
 }
 
+void RectTransform::SetPivot(PIVOT_TYPE pivot_type)
+{
+	PivotType = pivot_type;
+}
+
 void RectTransform::SetPosition(float x, float y)
 {
 	Position.x = x;
@@ -129,6 +136,34 @@ void RectTransform::SetPosition(float x, float y)
 void RectTransform::SetPosition(DirectX::SimpleMath::Vector2 pos)
 {
 	Position = pos;
+}
+
+void RectTransform::SetPositionObject(GameObject* object, DirectX::SimpleMath::Vector3 offset)
+{
+	Transform3D = object->GetTransform();
+	Position3D_Offset = offset;
+}
+
+void RectTransform::SetPositionObject(Transform* object, DirectX::SimpleMath::Vector3 offset)
+{
+	Transform3D = object;
+	Position3D_Offset = offset;
+}
+
+void RectTransform::SetPosition3D(float x, float y, float z)
+{
+	Vector2 screen_pos = Camera::g_MainCam->WorldToScreen(x, y, z);
+
+	Position.x = screen_pos.x * Screen_Size.x;
+	Position.y = screen_pos.y * Screen_Size.y;
+}
+
+void RectTransform::SetPosition3D(DirectX::SimpleMath::Vector3 pos)
+{
+	Vector2 screen_pos = Camera::g_MainCam->WorldToScreen(pos);
+
+	Position.x = screen_pos.x * Screen_Size.x;
+	Position.y = screen_pos.y * Screen_Size.y;
 }
 
 void RectTransform::SetRotation(float x, float y, float z)
@@ -150,13 +185,14 @@ void RectTransform::SetRotation(float angle)
 
 void RectTransform::SetScale(float x, float y)
 {
-	Scale.x = x;
-	Scale.y = y;
+	Scale.x = x * 0.5f;
+	Scale.y = y * 0.5f;
 }
 
 void RectTransform::SetScale(DirectX::SimpleMath::Vector2 scale)
 {
-	Scale = scale;
+	Scale.x = scale.x * 0.5f;
+	Scale.y = scale.y * 0.5f;
 }
 
 void RectTransform::AddPosition(float x, float y)

@@ -59,6 +59,7 @@ public:
 	static int WinSizeWidth;	//윈도우 사이즈 가로
 	static int WinSizeHeight;	//윈도우 사이즈 세로
 	static Eater::Delegate<int, int> ResizeFunction;
+	static Eater::Delegate<RenderOption*> RenderOptionFunction;
 
 public:
 	///오브젝트 관련(오브젝트 매니저)
@@ -68,20 +69,26 @@ public:
 	GameObject* InstanceCamera(std::string ObjName = "Camera");
 	GameObject* Instance_Light(std::string ObjName = "Light", LIGHT_TYPE type = LIGHT_TYPE::POINT_LIGHT);
 	GameObject* Instance_UI(std::string ObjName = "UI");
+	GameObject* Instance_Image(std::string ObjName = "Image");
+	GameObject* Instance_Slider(std::string ObjName = "Slider");
+
 public:
 	///태그
 	GameObject* FindGameObjectTag(std::string& TagName);
 	void FindGameObjectTags(std::string& TagName,std::vector<GameObject*>* ObjectList);
 	int	 FindTagNumber(std::string& TagName);
 	GameObject* FindGameObjectName(std::string& ObjName);
+
 public:
 	///삭제
 	void Destroy(GameObject* obj);		//obj 삭제
 	void DestroyAll();
+
 public:
 	///스크린 관련
 	void PushScene(Scene* mScene, std::string name);	//씬 생성		
 	void ChoiceScene(std::string name);					//씬 선택
+
 public:
 	///로드 관련 
 	void Load(std::string& Path, UINT MODE);
@@ -93,6 +100,7 @@ public:
 	int	 LoadBufferCount();
 	int  LoadMaterialCount();
 	ModelData* GetLoadMeshData(std::string& Path);
+
 public:
 	///베이크 관련
 	void BakeSkyLightMap(std::string& Path, bool hdri);
@@ -112,6 +120,7 @@ public:
 
 	///충돌체크 관련
 	void AddOccluder(std::string mMeshName);
+
 public:
 	///키관련 
 	bool  GetKeyDown(byte number);	//키다운
@@ -124,6 +133,7 @@ public:
 	void  SetMousePosCenter();
 	void  ShowMouseCursor(bool Show);
 	void  MouseCursorClip(bool Clip);
+
 public:
 	///사운드 관련
 	void Sound_Play_BGM(std::string& SoundName);
@@ -143,15 +153,18 @@ public:
 	void Sound_FrequencyDown_SFX();
 	void Sound_PitchUp_SFX();
 	void Sound_PitchDown_SFX();
+
 public:
 	///윈도우 관련
 	void SetFocus(bool focus);
 	void* Picking(int x, int y);
+
 public:
 	///카메라 관련
 	GameObject* GetMainCamera();
 	GameObject* GetDebugCamera();
 	GameObject* GetDirectionLight();
+
 public:
 	///시간 관련
 	float GetdeltaTime();
@@ -162,14 +175,16 @@ public:
 	void NETWORK_SEND(flatbuffers::FlatBufferBuilder* Builder, int Type);
 	void NETWORK_LOADING_COMPLETE(unsigned int Number);
 	void NETWORK_CONNECT(int ServerPort, std::string  Local_Connect_IP);
+
 public:
 	///Scene Setting
 	RenderOption* GetRenderOptionData();
 	void RenderSetting();
+
 private:
 	GameObject* CreateInstance();
 	void CreateObject();			//기본 생성 오브젝트
-	void RenderOptionCheck();
+
 private:
 	///각종 매니저들
 	ObjectManager*			mObjectManager;		// 오브젝트 관리 매니저
@@ -183,7 +198,6 @@ private:
 	NetworkManager*			mNetworkManager;	// 네트워크 매니저
 	EaterSound*				mSoundManager;		// 사운드 매니저
 private:
-
 	///클라쪽에서 받아야 하는 데이터
 	HWND mHwnd; //핸들
 	bool ConsoleDebug;

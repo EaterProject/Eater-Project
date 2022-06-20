@@ -30,6 +30,7 @@ public:
 	void Update() override;
 
 public:
+	EATER_ENGINEDLL void SetColor(DirectX::SimpleMath::Vector3 color);	// All Light 전용 Light 색상
 	EATER_ENGINEDLL void SetColor(float r, float g, float b);	// All Light 전용 Light 색상
 
 	EATER_ENGINEDLL void SetAngle(float angle);					// Spot Light 전용 Half Angle 값

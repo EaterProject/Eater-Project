@@ -249,6 +249,7 @@ copy /Y "$(ProjectDir)Network\lib\Release\*lib"  "$(TargetDir)"</Command>
     <ClInclude Include="Export\Button.h" />
     <ClInclude Include="Export\Image.h" />
     <ClInclude Include="Export\RectTransform.h" />
+    <ClInclude Include="Export\Slider.h" />
     <ClInclude Include="GlobalDataManager.h" />
     <ClInclude Include="ComponentHeader.h" />
     <ClInclude Include="DebugManager.h" />
@@ -350,6 +351,7 @@ copy /Y "$(ProjectDir)Network\lib\Release\*lib"  "$(TargetDir)"</Command>
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SkinningFilter.cpp" />
+    <ClCompile Include="Slider.cpp" />
     <ClCompile Include="Terrain.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="TimeManager.cpp" />

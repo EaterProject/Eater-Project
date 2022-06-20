@@ -91,7 +91,7 @@ void FontImage::UpdateFontAnimation()
 	}
 }
 
-void FontImage::Setting(int mPosX, int mPosY, std::string mFontName, float SizeX, float SizeY,float NumberOffset, RECT_PIVOT pivot)
+void FontImage::Setting(int mPosX, int mPosY, std::string mFontName, float SizeX, float SizeY,float NumberOffset, PIVOT_TYPE pivot)
 {
 	PosX		= mPosX;
 	PosY		= mPosY;
@@ -107,14 +107,14 @@ void FontImage::Setting(int mPosX, int mPosY, std::string mFontName, float SizeX
 		Com_Image[i] = ImageObject[i]->GetComponent<Image>();
 		Com_Rect[i] = ImageObject[i]->GetComponent<RectTransform>();
 
-		Com_Rect[i]->SetImagePivot(pivot);
+		Com_Rect[i]->SetPivot(pivot);
 
 		FontOriginalSize = SizeX;
 		Com_Rect[i]->SetScale(SizeX, SizeY);
 		Com_Rect[i]->SetPosition(PosX + (OffsetX * i), PosY);
 		std::string Name = mFontName + std::to_string(i);
 		Com_Image[i]->SetTexture(Name);
-		Com_Image[i]->SetImageColor(255, 255, 255);
+		Com_Image[i]->SetColor(255, 255, 255);
 	}
 }
 
