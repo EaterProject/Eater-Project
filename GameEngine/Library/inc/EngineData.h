@@ -105,7 +105,6 @@ class MaterialProperty
 public:
 	bool Alpha = false;					// Alpha Material
 	bool OutLine = false;				// Out Line
-	bool LimLight = false;				// Lim Light
 
 	UINT SkyLightIndex = 0;				// SkyLight Index
 
@@ -157,8 +156,6 @@ public:
 	TextureBuffer* Normal = nullptr;				// NormalMap Texture
 	TextureBuffer* Emissive = nullptr;				// Emissive Texture
 	TextureBuffer* ORM = nullptr;					// AO(R) + Roughness(G) + Metallic(B) Texture
-
-
 };
 
 // Environment Buffer
@@ -307,6 +304,8 @@ public:
 	std::string Name;								//오브젝트 이름
 
 	bool IsActive = true;							//오브젝트 활성화 여부
+	bool IsStatic = false;							//정적 오브젝트 여부
+	bool IsShadow = true;							//그림자 여부
 
 	void* Object;									//Grahpic 전용 GameObject
 
@@ -320,6 +319,7 @@ public:
 
 	bool IsMaterialBlock = false;
 	MaterialPropertyBlock* Material_Block;
+
 public:
 	static Vector4 HashToColor(int hash)
 	{
