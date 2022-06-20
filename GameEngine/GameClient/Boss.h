@@ -9,6 +9,8 @@ class Transform;
 class Collider;
 class Rigidbody;
 class PhysRayCast;
+class BossWeapon;
+class BossFriend;
 class Boss :public Component
 {
 public:
@@ -29,9 +31,9 @@ private:
 	Transform*		mPlayerTR		= nullptr;
 	Rigidbody*		mRigidbody		= nullptr;
 private:
-	std::string ANIMATION_NAME[15];	//애니메이션 이름
-	float ANIMATION_TIME[15];		//애니메이션 시간
-	bool  STATE_START[15];			//상태 시작 여부
+	std::string ANIMATION_NAME[16];	//애니메이션 이름
+	float ANIMATION_TIME[16];		//애니메이션 시간
+	bool  STATE_START[16];			//상태 시작 여부
 private:
 	//상태에 대한 함수들
 	void Boss_Idle();
@@ -48,29 +50,40 @@ private:
 	void Boss_Chase_Attack_Play();
 	void Boss_Rendom_Attack_Ready();
 	void Boss_Rendom_Attack_Play();
+	void Boss_Rendom_Attack_End();
 	void Boss_Hit();
 private:
 	void	SetState(BOSS_STATE State);	//상태를 변환
 	bool	FirstState();				//현재 상태가 처음인지 체크
 	float	PlayerDistanceCheck();		//플레이어의 거리를 체크
 	void	CreateSkillPoint();			//스킬 쏘는 위치를 생성
+	void	GroundCheck();
 private:
 	bool	IsHit			= false;
 	bool	IsSkill			= false;
+	bool	IsRight			= false;
+	bool	IsShooting		= false;
 
 	int		mState			= 0;		//보스의 상태
+	int		FriendIndex		= -1;
+
 	float	AttackRange		= 3.5f;		//근접 공격 범위
-	float	FightRange		= 15.0f;	//보스와 싸울 수 있는 거리
+	float	FightRange		= 30.0f;	//보스와 싸울 수 있는 거리
 	float	SkillRange		= 10.0f;	//보스의 스킬 거리
 	float	PlayerDistance	= 0.0f;		//플레이어의 거리
 	float	HP				= 100;		//보스 체력
-	float	RendomSkillReadyTime		= 0.0f;
-	float	RendomSkillReadyTimeMax		= 10.0f;
-	float	RendomSkillPlayTime			= 0.0f;
-	float	RendomSkillPlayTimeMax		= 10.0f;
+	float	PositionY		= 6.0f;
 
+	float	RendomSkillReadyTime		= 0.0f;
+	float	RendomSkillReadyTimeMax		= 5.0f;
+	float	RendomSkillPlayTime			= 0.0f;
+	float	RendomSkillPlayTimeMax		= 5.0f;
+
+	Vector3 StartPoint;
 	Vector3	SkillPoint[5];
-	GameObject* Weapon[5];
 	PhysRayCast* mRay;
+
+	BossWeapon* Weapon[5];
+	BossFriend* Friend;
 };
 

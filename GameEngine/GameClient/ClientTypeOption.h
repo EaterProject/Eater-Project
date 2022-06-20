@@ -17,6 +17,7 @@
 #define TARGET_GLOBAL 13
 #define TARGET_PLAYER_CAMERA 14
 #define TARGET_BOSS_WEAPON 15
+#define TARGET_BOSS_FRIEND 16
 
 //Player Message
 #define MESSAGE_PLAYER_HIT    0		//플레이어가 맞았다
@@ -78,6 +79,7 @@ enum class BOSS_STATE : int
 	TELEPORT_START		= 12,	//보스 순간이동 
 	CREATE_FRIEND		= 13,	//분신 소환
 	HIT					= 14,	//맞았을떄
+	RENDOM_ATTACK_END   = 15,	//
 };
 
 enum class MONSTER_COLOR : int

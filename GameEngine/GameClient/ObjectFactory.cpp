@@ -26,6 +26,7 @@
 #include "Boss.h"
 #include "CameraManager.h"
 #include "BossWeapon.h"
+#include "BossFriend.h"
 
 
 
@@ -183,6 +184,15 @@ GameObject* ObjectFactory::CreateBossWeapon()
 	GameObject* Object = Instance();
 	Object->AddComponent<MeshFilter>();
 	Object->AddComponent<BossWeapon>();
+	return Object;
+}
+
+GameObject* ObjectFactory::CreateBossFriend()
+{
+	GameObject* Object = Instance();
+	Object->AddComponent<MeshFilter>();
+	Object->AddComponent<BossFriend>();
+	Object->AddComponent<AnimationController>();
 	return Object;
 }
 

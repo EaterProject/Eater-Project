@@ -139,6 +139,8 @@ GameObject* MessageManager::CREATE_MESSAGE(int CREATE_TYPE)
 		return Object;
 	case TARGET_BOSS_WEAPON:
 		return mFactory->CreateBossWeapon();
+	case TARGET_BOSS_FRIEND:
+		return mFactory->CreateBossFriend();
 	}
 
 	return nullptr;

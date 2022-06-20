@@ -115,6 +115,9 @@
     <Filter Include="소스 파일\Component\Monster\Boss\Boss">
       <UniqueIdentifier>{29e0a40c-3d04-41f9-891e-c90fb3935b1d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Component\Monster\Boss\BossFriend">
+      <UniqueIdentifier>{4040c390-0112-4eda-9e64-01e308264590}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -195,14 +198,17 @@
     <ClInclude Include="GateDoor.h">
       <Filter>소스 파일\Component\GateDoor</Filter>
     </ClInclude>
-    <ClInclude Include="Boss.h">
-      <Filter>소스 파일\Component\Monster\Boss</Filter>
-    </ClInclude>
     <ClInclude Include="CameraManager.h">
       <Filter>소스 파일\Manager\CameraManager</Filter>
     </ClInclude>
     <ClInclude Include="BossWeapon.h">
       <Filter>소스 파일\Component\Monster\Boss\BossWeapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss.h">
+      <Filter>소스 파일\Component\Monster\Boss\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="BossFriend.h">
+      <Filter>소스 파일\Component\Monster\Boss\BossFriend</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -272,14 +278,17 @@
     <ClCompile Include="GateDoor.cpp">
       <Filter>소스 파일\Component\GateDoor</Filter>
     </ClCompile>
-    <ClCompile Include="Boss.cpp">
-      <Filter>소스 파일\Component\Monster\Boss</Filter>
-    </ClCompile>
     <ClCompile Include="CameraManager.cpp">
       <Filter>소스 파일\Manager\CameraManager</Filter>
     </ClCompile>
     <ClCompile Include="BossWeapon.cpp">
       <Filter>소스 파일\Component\Monster\Boss\BossWeapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Boss.cpp">
+      <Filter>소스 파일\Component\Monster\Boss\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="BossFriend.cpp">
+      <Filter>소스 파일\Component\Monster\Boss\BossFriend</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

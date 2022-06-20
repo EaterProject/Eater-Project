@@ -28,7 +28,6 @@ void Loading::Awake()
 	Loading_UI->AddComponent<LoadingImage>();
 }
 
-
 void Loading::Update()
 {
 	if (ThreadRun == false)
@@ -55,7 +54,6 @@ void Loading::ThreadFunction()
 	Load("../Assets/Model/MeshBuffer");
 	Load("../Assets/Model/ModelData");
 	Load("../Assets/Sound");
-
 
 	LoadTerrainMesh("../Assets/Model/TerrainModel/Terrain.fbx", "../Assets/Texture/Terrain/Terrain_RGB_1.png", "../Assets/Texture/Terrain/Terrain_RGB_2.png", SCALING);
 }
