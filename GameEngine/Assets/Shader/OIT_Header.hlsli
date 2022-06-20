@@ -1,9 +1,12 @@
 #ifndef OIT_HEADER
 #define OIT_HEADER
 
+#define MAX_SORTED_PIXELS 20
+
 cbuffer cbOitFrame
 {
     uint gFrameWidth;
+    uint gFrameHeight;
 }
 
 struct FragmentData

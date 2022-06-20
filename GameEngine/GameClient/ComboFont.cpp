@@ -21,8 +21,8 @@ void ComboFont::SetComboNumber(int Number)
 	FontAlpha = 255;
 	for (int i = 0; i < 3; i++)
 	{
-		Com_Image[i]->SetImageColor(255, 255, 255, FontAlpha);
-		UI_Image[i]->SetImageColor(255, 255, 255, FontAlpha);
+		Com_Image[i]->SetColor(255, 255, 255, FontAlpha);
+		UI_Image[i]->SetColor(255, 255, 255, FontAlpha);
 	}
 	SetFontNumber(Number);
 }
@@ -38,7 +38,6 @@ void ComboFont::Awake()
 	UI_Rect[0]	= UI_Obj[0]->GetComponent<RectTransform>();
 	UI_Image[0]->SetTexture("combo_title");
 	UI_Rect[0]->SetPosition(PosX + 240, PosY + 20);
-	UI_Rect[0]->SetScale(0.5f, 0.5f);
 
 	//슬라이더
 	UI_Obj[1]	= Instance_UI();
@@ -46,7 +45,6 @@ void ComboFont::Awake()
 	UI_Rect[1]  = UI_Obj[1]->GetComponent<RectTransform>();
 	UI_Image[1]->SetTexture("combo_Silder");
 	UI_Rect[1]->SetPosition(PosX + 150, PosY + 70);
-	UI_Rect[1]->SetScale(0.5f, 0.5f);
 
 	//슬라이더 Back
 	UI_Obj[2]	= Instance_UI();
@@ -54,8 +52,6 @@ void ComboFont::Awake()
 	UI_Rect[2]	= UI_Obj[2]->GetComponent<RectTransform>();
 	UI_Image[2]->SetTexture("combo_Silder_Back");
 	UI_Rect[2]->SetPosition(PosX + 150, PosY + 70);
-	UI_Rect[2]->SetScale(0.5f, 0.5f);
-
 }
 
 void ComboFont::Start()
@@ -92,8 +88,8 @@ void ComboFont::UpdateFontAnimation()
 				FontAlpha -= GetDeltaTime() * 255;
 				for (int i = 0; i < 3; i++)
 				{
-					Com_Image[i]->SetImageColor(255, 255, 255, FontAlpha);
-					UI_Image[i]->SetImageColor(255, 255, 255, FontAlpha);
+					Com_Image[i]->SetColor(255, 255, 255, FontAlpha);
+					UI_Image[i]->SetColor(255, 255, 255, FontAlpha);
 				}
 			}
 		}

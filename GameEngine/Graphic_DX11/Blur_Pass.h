@@ -13,15 +13,17 @@ public:
 
 	void Release() override;
 
-	void RenderUpdate(RenderTarget* input, RenderTarget* output);
+	void RenderUpdate(RenderTexture* input, RenderTexture* output, UINT count);
+	void RenderUpdate(RenderTexture* input, UINT count);
 
 private:
 	ComputeShader* m_BlurHorizon_CS;
 	ComputeShader* m_BlurVertical_CS;
 
-private:
-	ID3D11RasterizerState* m_Solid_RS;
+	RenderTexture* m_Blur_RT;
 
+	ID3D11ShaderResourceView* m_NullSRV = nullptr;
+	ID3D11UnorderedAccessView* m_NullUAV = nullptr;
 
 private:
 	UINT m_Width;

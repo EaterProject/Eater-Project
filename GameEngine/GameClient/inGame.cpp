@@ -13,16 +13,10 @@ void InGame::Awake()
 {
 	//게임 로직관리 매니저를 생성
 	Logic = new GameLogic();
-	
-	RenderOption* option = GetRenderOptionData();
-	option->RenderingOption ^= RENDER_OPTION::RENDER_FOG;
-	
-	RenderSetting();
-	
-	
+
 	//Tool에서 만들어놓은 씬을 로드
 	Load("../Assets/Scene/inGame.Scene");
-	
+
 	// 오클루더 설정..
 	//AddOccluder("Dome_program_0");
 	

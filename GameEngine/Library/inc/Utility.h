@@ -110,9 +110,11 @@ namespace Eater
 		inline void Reset();						// Event Function 초기화..
 
 	public:
-		inline void operator+=(Function&& _func);	// Event Function 추가..
-		inline void operator-=(Function&& _func);	// Event Function 제거..
-		inline void operator =(Function&& _func);	// Event Function 초기화 후 추가..
+		inline void operator+=(const Function& _func);	// Event Function 추가..
+		inline void operator+=(const Function&& _func);	// Event Function 추가..
+		inline void operator-=(const Function& _func);	// Event Function 제거..
+		inline void operator-=(const Function&& _func);	// Event Function 제거..
+		inline void operator =(const Function& _func);	// Event Function 초기화 후 추가..
 		inline void operator()(_Args... _types);	// Event Function List 호출..
 
 	private:

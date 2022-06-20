@@ -88,6 +88,24 @@ void Light::Update()
 	m_PrevLook = m_NowLook;
 }
 
+void Light::SetColor(DirectX::SimpleMath::Vector3 color)
+{
+	switch (m_LightType)
+	{
+	case DIRECTION_LIGHT:
+		m_DirectionLight->Diffuse = color;
+		break;
+	case POINT_LIGHT:
+		m_PointLight->Diffuse = color;
+		break;
+	case SPOT_LIGHT:
+		m_SpotLight->Diffuse = color;
+		break;
+	default:
+		break;
+	}
+}
+
 void Light::SetColor(float r, float g, float b)
 {
 	switch (m_LightType)

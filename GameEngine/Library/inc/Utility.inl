@@ -141,13 +141,19 @@ inline void Eater::Delegate< _Args... >::Reset()
 }
 
 template<typename ..._Args>
-inline void Eater::Delegate<_Args...>::operator+=(Function&& _func)
+inline void Eater::Delegate<_Args...>::operator+=(const Function& _func)
 {
 	pFunctionList.push_back(_func);
 }
 
 template<typename ..._Args>
-inline void Eater::Delegate<_Args...>::operator-=(Function&& _func)
+inline void Eater::Delegate<_Args...>::operator+=(const Function&& _func)
+{
+	pFunctionList.push_back(_func);
+}
+
+template<typename ..._Args>
+inline void Eater::Delegate<_Args...>::operator-=(const Function& _func)
 {
 	for (int index = 0; index < pFunctionList.size(); index++)
 	{
@@ -160,7 +166,20 @@ inline void Eater::Delegate<_Args...>::operator-=(Function&& _func)
 }
 
 template<typename ..._Args>
-inline void Eater::Delegate<_Args...>::operator=(Function&& _func)
+inline void Eater::Delegate<_Args...>::operator-=(const Function&& _func)
+{
+	for (int index = 0; index < pFunctionList.size(); index++)
+	{
+		if (pFunctionList[index].target_type() == _func.target_type())
+		{
+			pFunctionList.erase(std::next(pFunctionList.begin(), index));
+			break;
+		}
+	}
+}
+
+template<typename ..._Args>
+inline void Eater::Delegate<_Args...>::operator=(const Function& _func)
 {
 	pFunctionList.clear();
 	pFunctionList.push_back(_func);

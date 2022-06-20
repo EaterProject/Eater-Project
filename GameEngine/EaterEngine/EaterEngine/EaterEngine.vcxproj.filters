@@ -190,6 +190,9 @@
     <Filter Include="소스 파일\Manager\LoadManager\EATER\EaterParticle">
       <UniqueIdentifier>{e605382d-1908-4cb3-9486-19ab0093c004}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Component\UI\Slider">
+      <UniqueIdentifier>{f5ca50f1-56f3-4db9-be32-2473fbae3a8e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -378,6 +381,9 @@
     <ClInclude Include="..\..\Library\inc\Utility.h">
       <Filter>소스 파일\Data</Filter>
     </ClInclude>
+    <ClInclude Include="Export\Slider.h">
+      <Filter>소스 파일\Component\UI\Slider</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -541,6 +547,9 @@
     </ClCompile>
     <ClCompile Include="Eater_LoadParticle.cpp">
       <Filter>소스 파일\Manager\LoadManager\EATER\EaterParticle</Filter>
+    </ClCompile>
+    <ClCompile Include="Slider.cpp">
+      <Filter>소스 파일\Component\UI\Slider</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -16,7 +16,8 @@ public:
 
 public:
 	void RenderUpdate();
-	void BlurRender();
+	void BlurRender_PS();
+	void BlurRender_CS();
 
 private:
 	void SetOffsetVectors();
@@ -32,6 +33,8 @@ private:
 	PixelShader* m_Ssao_PS;
 	VertexShader* m_Blur_VS;
 	PixelShader* m_Blur_PS;
+	ComputeShader* m_BlurHorizon_CS;
+	ComputeShader* m_BlurVertical_CS;
 
 	DrawBuffer* m_Ssao_DB;
 
@@ -40,12 +43,24 @@ private:
 
 	UINT m_BlurCount;
 
+	UINT m_Width;
+	UINT m_Height;
+
+	UINT m_NumGroupsX;
+	UINT m_NumGroupsY;
+
 private:
 	ID3D11RenderTargetView* m_Ssao_RTV;
 	ID3D11RenderTargetView* m_SsaoBlur_RTV;
 
 	ID3D11ShaderResourceView* m_Ssao_SRV;
 	ID3D11ShaderResourceView* m_SsaoBlur_SRV;
+
+	ID3D11UnorderedAccessView* m_Ssao_UAV;
+	ID3D11UnorderedAccessView* m_SsaoBlur_UAV;
+
+	ID3D11ShaderResourceView* m_NullSRV = nullptr;
+	ID3D11UnorderedAccessView* m_NullUAV = nullptr;
 
 	ID3D11RasterizerState* m_Solid_RS;
 

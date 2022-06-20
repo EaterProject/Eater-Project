@@ -12,6 +12,7 @@ class SSAO_Pass;
 class Alpha_Pass;
 class OIT_Pass;
 class FXAA_Pass;
+class Blur_Pass;
 class Bloom_Pass;
 class Fog_Pass;
 class Culling_Pass;
@@ -153,6 +154,7 @@ private:
 	Alpha_Pass*			m_Alpha;
 	OIT_Pass*			m_OIT;
 	FXAA_Pass*			m_FXAA;
+	Blur_Pass*			m_Blur;
 	Bloom_Pass*			m_Bloom;
 	Fog_Pass*			m_Fog;
 	Culling_Pass*		m_Culling;

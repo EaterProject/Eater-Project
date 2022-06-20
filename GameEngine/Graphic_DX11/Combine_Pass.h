@@ -15,6 +15,9 @@ public:
 
 	void RenderUpdate();
 
+public:
+	RenderTexture* GetRT() { return m_OutPut_RT; }
+
 private:
 	void SetShaderList();
 	void SetShaderResourceView();

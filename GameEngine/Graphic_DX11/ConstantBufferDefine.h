@@ -228,6 +228,7 @@ SHADER_CONSTANT_BUFFER(cbOitFrame)
 struct CB_OitFrame : public cbOitFrame
 {
 	UINT gFrameWidth;
+	UINT gFrameHeight;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -272,6 +273,13 @@ struct CB_UIOption : public cbUIOption
 {
 	DirectX::SimpleMath::Vector4 gColor;
 };
+
+SHADER_CONSTANT_BUFFER(cbUIFill)
+struct CB_UIFill : public cbUIFill
+{
+	DirectX::SimpleMath::Vector2 gFill;
+};
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 //// IBL Constant Buffer cbExternalData

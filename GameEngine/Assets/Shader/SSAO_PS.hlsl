@@ -76,10 +76,7 @@ float4 SSAO_PS(VertexIn pin) : SV_Target
 	// the fullscreen quad we drew are already in uv-space.
     float4 normalDepth = gNormalDepthRT.Sample(gSamBorderLinearPoint, pin.Tex);
     float3 n = normalDepth.xyz;
-	
-    if (dot(n, n) < 0.00001)
-        return 1.0f;
-	
+
     float pz = normalDepth.w;
 
 	//

@@ -1,5 +1,9 @@
 #EATERMAT
+<<<<<<<< HEAD:GameEngine/Assets/Texture/Material/Dome_IN_M_vendingMachine.Emat
+@MaterialName Dome_IN_M_VendingMachine
+========
 @MaterialName Dome_GateDoor_IN_M_GateDoor
+>>>>>>>> main:GameEngine/Assets/Texture/Material/Dome_GateDoor_IN_M_GateDoor.Emat
 @Alpha 0
 @DiffuseMap Dome_GateDoor_BaseColor.png
 @NormalMap Dome_GateDoor_Normal.png

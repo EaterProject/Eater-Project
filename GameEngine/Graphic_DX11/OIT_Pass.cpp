@@ -3,6 +3,7 @@
 #include "ShaderBase.h"
 #include "VertexShader.h"
 #include "PixelShader.h"
+#include "ComputeShader.h"
 #include "GraphicState.h"
 #include "GraphicView.h"
 #include "GraphicResource.h"
@@ -17,6 +18,7 @@
 #include "FactoryManagerBase.h"
 #include "ResourceManagerBase.h"
 #include "ShaderManagerBase.h"
+#include "UnorderedAccessViewDefine.h"
 #include "ConstantBufferDefine.h"
 #include "DepthStencilViewDefine.h"
 #include "DepthStencilStateDefine.h"
@@ -29,7 +31,7 @@
 
 OIT_Pass::OIT_Pass()
 {
-	m_Multiple = 4;
+	m_Multiple = 20;
 	m_MagicValue = 0xffffffff;
 	m_InitCounts[0] = 0;
 	m_InitCounts[1] = 0;
@@ -91,12 +93,16 @@ void OIT_Pass::Create(int width, int height)
 
 void OIT_Pass::Start(int width, int height)
 {
+	m_NumGroupsX = (UINT)ceilf(width / 32.0f);
+	m_NumGroupsY = (UINT)ceilf(height / 32.0f);
+
 	// OIT Shader List Up..
 	SetShaderList();
 
 	// Shader 설정..
 	m_OITRender_VS = g_Shader->GetShader("Screen_VS");
-	m_OITRender_PS = g_Shader->GetShader("OIT_PS");
+	m_OITRender_PS = g_Shader->GetShader("OIT_Blend_PS");
+	m_OITRender_CS = g_Shader->GetShader("OIT_Blend_CS");
 
 	// Buffer 설정..
 	m_Screen_DB = g_Resource->GetDrawBuffer<DB_Quad>();
@@ -124,17 +130,25 @@ void OIT_Pass::Start(int width, int height)
 	m_NoCull_RS = g_Resource->GetRasterizerState<RS_NoCull>()->Get();
 
 	// Shader Resource 설정..
-	SetShaderConstantBuffer(width);
+	SetShaderConstantBuffer(width, height);
 
 	ShaderResourceView* backGround = g_Resource->GetShaderResourceView<RT_OutPut1>();
 	
 	m_OITRender_PS->SetShaderResourceView<gPieceLinkBuffer>(m_PieceLink_RB->GetSRV()->Get());
 	m_OITRender_PS->SetShaderResourceView<gFirstOffsetBuffer>(m_FirstOffset_RB->GetSRV()->Get());
 	m_OITRender_PS->SetShaderResourceView<gBackGround>(backGround->Get());
+
+	m_OITRender_CS->SetShaderResourceView<gPieceLinkBuffer>(m_PieceLink_RB->GetSRV()->Get());
+	m_OITRender_CS->SetShaderResourceView<gFirstOffsetBuffer>(m_FirstOffset_RB->GetSRV()->Get());
+	m_OITRender_CS->SetShaderResourceView<gBackGround>(backGround->Get());
+	m_OITRender_CS->SetUnorderedAccessView<gOutputUAV>(m_OutPut_RT->GetUAV()->Get());
 }
 
 void OIT_Pass::OnResize(int width, int height)
 {
+	m_NumGroupsX = (UINT)ceilf(width / 32.0f);
+	m_NumGroupsY = (UINT)ceilf(height / 32.0f);
+
 	// 현재 RenderTarget 재설정..
 	m_OutPut_RTV = m_OutPut_RT->GetRTV()->Get();
 
@@ -150,13 +164,18 @@ void OIT_Pass::OnResize(int width, int height)
 	m_Defalt_DSV = g_Resource->GetDepthStencilView<DS_Defalt>()->Get();
 
 	// Shader Resource 설정..
-	SetShaderConstantBuffer(width);
+	SetShaderConstantBuffer(width, height);
 
 	ShaderResourceView* backGround = g_Resource->GetShaderResourceView<RT_OutPut1>();
 
 	m_OITRender_PS->SetShaderResourceView<gPieceLinkBuffer>(m_PieceLink_RB->GetSRV()->Get());
 	m_OITRender_PS->SetShaderResourceView<gFirstOffsetBuffer>(m_FirstOffset_RB->GetSRV()->Get());
 	m_OITRender_PS->SetShaderResourceView<gBackGround>(backGround->Get());
+
+	m_OITRender_CS->SetShaderResourceView<gPieceLinkBuffer>(m_PieceLink_RB->GetSRV()->Get());
+	m_OITRender_CS->SetShaderResourceView<gFirstOffsetBuffer>(m_FirstOffset_RB->GetSRV()->Get());
+	m_OITRender_CS->SetShaderResourceView<gBackGround>(backGround->Get());
+	m_OITRender_CS->SetUnorderedAccessView<gOutputUAV>(m_OutPut_RT->GetUAV()->Get());
 }
 
 void OIT_Pass::Release()
@@ -201,12 +220,21 @@ void OIT_Pass::RenderUpdate()
 	g_Context->IASetIndexBuffer(m_Screen_DB->IndexBuf->Get(), DXGI_FORMAT_R32_UINT, 0);
 
 	g_Context->DrawIndexed(m_Screen_DB->IndexCount, 0, 0);
+}
 
+void OIT_Pass::RenderUpdate_CS()
+{
+	m_OITRender_CS->Update();
+
+	g_Context->Dispatch(m_NumGroupsX, m_NumGroupsY, 1);
+
+	g_Context->CSSetUnorderedAccessViews(0, 1, &m_NullUAV, nullptr);
 }
 
 void OIT_Pass::SetShaderList()
 {
-	PushShader("OIT_PS");
+	PushShader("OIT_Blend_PS");
+	PushShader("OIT_Blend_CS");
 
 	PushShader("OIT_Particle_PS_Option0");
 	PushShader("OIT_Particle_PS_Option1");
@@ -221,10 +249,11 @@ void OIT_Pass::SetShaderList()
 	PushShader("OIT_Mesh_PS_Option7");
 }
 
-void OIT_Pass::SetShaderConstantBuffer(UINT width)
+void OIT_Pass::SetShaderConstantBuffer(UINT width, UINT height)
 {
 	CB_OitFrame oitBuf;
 	oitBuf.gFrameWidth = width;
+	oitBuf.gFrameHeight = height;
 
 	for (ShaderBase* shader : m_OptionShaderList)
 	{

@@ -14,6 +14,7 @@
 #include "NavigationManager.h"
 #include "MaterialManager.h"
 #include "EaterSound.h"
+#include "DebugManager.h"
 
 #include "ParserData.h"
 #include "EngineData.h"
@@ -32,12 +33,15 @@
 #include "ParticleSystem.h"
 #include "CameraDebugKeyInput.h"
 #include "RectTransform.h"
+#include "Image.h"
+#include "Slider.h"
 
 #include "Profiler/Profiler.h"
 
 int GameEngine::WinSizeWidth	= 0;
 int GameEngine::WinSizeHeight	= 0;
 Eater::Delegate<int, int> GameEngine::ResizeFunction;
+Eater::Delegate<RenderOption*> GameEngine::RenderOptionFunction;
 
 GameEngine::GameEngine()
 {
@@ -108,6 +112,7 @@ void GameEngine::Initialize(HWND Hwnd, bool mConsoleDebug)
 
 	//매니저들 초기화
 	GlobalDataManager::Initialize();
+	DebugManager::Initialize();
 	mGraphicManager->Initialize(Hwnd, WinSizeWidth, WinSizeHeight, mRenderOption);
 	mKeyManager->Initialize(mHwnd);
 	mObjectManager->Initialize();
@@ -155,9 +160,6 @@ void GameEngine::Update()
 	GlobalDataManager::Update(mTimeManager->DeltaTime());
 
 	//컨퍼넌트 업데이트 끝
-
-	// 현재 랜더링 옵션 설정..
-	RenderOptionCheck();
 
 	//랜더큐 넘겨줌
 	EnterCriticalSection(&g_CS);
@@ -392,6 +394,28 @@ GameObject* GameEngine::Instance_UI(std::string ObjName /*= "UI"*/)
 	return Obj;
 }
 
+GameObject* GameEngine::Instance_Image(std::string ObjName /*= "Image"*/)
+{
+	GameObject* Obj = Instance_UI();
+	Obj->AddComponent<Image>();
+
+	return Obj;
+}
+
+GameObject* GameEngine::Instance_Slider(std::string ObjName /*= "Slider"*/)
+{
+	GameObject* Obj = CreateInstance();
+	Slider* slider  = Obj->AddComponent<Slider>();
+
+	GameObject* Back_Img = Instance_Image();
+	slider->SetBackGroundImage(Back_Img->GetComponent<Image>());
+
+	GameObject* Fill_Img = Instance_Image();
+	slider->SetFillImage(Fill_Img->GetComponent<Image>());
+
+	return Obj;
+}
+
 GameObject* GameEngine::FindGameObjectTag(std::string& TagName)
 {
 	return mObjectManager->FindGameObjectTag(TagName);
@@ -526,6 +550,8 @@ void GameEngine::SetSkyLight(std::string& Path, UINT index)
 void GameEngine::AddOccluder(std::string mMeshName)
 {
 	MeshBuffer* mesh = mLoadManager->GetMeshBuffer(mMeshName);
+
+	if (mesh == nullptr) return;
 
 	mGraphicManager->AddOccluder(mesh);
 }
@@ -726,6 +752,9 @@ RenderOption* GameEngine::GetRenderOptionData()
 void GameEngine::RenderSetting()
 {
 	mGraphicManager->RenderSetting();
+
+	// RenderOption Function List 실행..
+	RenderOptionFunction(mRenderOption);
 }
 
 GameObject* GameEngine::CreateInstance()
@@ -743,63 +772,4 @@ void GameEngine::CreateObject()
 {
 	GameObject* light = Instance();
 	light->AddComponent<Light>()->SetType(LIGHT_TYPE::DIRECTION_LIGHT);
-}
-
-void GameEngine::RenderOptionCheck()
-{
-	bool change = false;
-
-	if (mKeyManager->GetKeyUp(VK_F1))
-	{
-		// Debug On/Off
-		mRenderOption->DebugOption ^= DEBUG_OPTION::DEBUG_MODE;
-		change = true;
-	}
-	if (mKeyManager->GetKeyUp(VK_F2))
-	{
-		// Shadow On/Off
-		mRenderOption->DebugOption ^= DEBUG_OPTION::DEBUG_RENDERTARGET;
-		change = true;
-	}
-	if (mKeyManager->GetKeyUp(VK_F3))
-	{
-		// SSAO On/Off
-		mRenderOption->RenderingOption ^= RENDER_OPTION::RENDER_SSAO;
-		change = true;
-	}
-	if (mKeyManager->GetKeyUp(VK_F4))
-	{
-		// IBL On/Off
-		mRenderOption->RenderingOption ^= RENDER_OPTION::RENDER_IBL;
-		change = true;
-	}
-	if (mKeyManager->GetKeyUp(VK_F5))
-	{
-		// Fog On/Off
-		mRenderOption->RenderingOption ^= RENDER_OPTION::RENDER_FOG;
-		change = true;
-	}
-	if (mKeyManager->GetKeyUp(VK_F6))
-	{
-		// Bloom On/Off
-		mRenderOption->PostProcessOption ^= POSTPROCESS_OPTION::RENDER_BLOOM;
-		change = true;
-	}
-	if (mKeyManager->GetKeyUp(VK_F7))
-	{
-		// HDR On/Off
-		mRenderOption->PostProcessOption ^= POSTPROCESS_OPTION::RENDER_HDR;
-		change = true;
-	}
-	if (mKeyManager->GetKeyUp(VK_F8))
-	{
-		// FXAA On/Off
-		mRenderOption->PostProcessOption ^= POSTPROCESS_OPTION::RENDER_FXAA;
-		change = true;
-	}
-
-	if (change)
-	{
-		mGraphicManager->RenderSetting();
-	}
 }

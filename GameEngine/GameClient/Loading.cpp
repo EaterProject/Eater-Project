@@ -13,7 +13,6 @@
 #include "EngineData.h"
 #include "AnimationController.h"
 #include "Material.h"
-
 #include "LoadImage.h"
 
 void Loading::Awake()

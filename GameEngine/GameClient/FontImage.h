@@ -13,7 +13,7 @@ public:
 	void SetFontNumber(int Number);
 	void SetSize(float x, float Y);
 	virtual void UpdateFontAnimation();
-	void Setting(int mPosX,int mPosY, std::string mFontName,float SizeX = 0.5f,float SizeY = 0.5f,float NumberOffset = 60 ,RECT_PIVOT pivot = RECT_PIVOT::PIVOT_MIDDLE_CENTER);
+	void Setting(int mPosX,int mPosY, std::string mFontName,float SizeX = 0.5f,float SizeY = 0.5f,float NumberOffset = 60 ,PIVOT_TYPE pivot = PIVOT_TYPE::PIVOT_MIDDLE_CENTER);
 	void FontAnimation(float MinSize, float MaxSize);
 protected:
 	GameObject*		ImageObject[3];
@@ -26,7 +26,7 @@ protected:
 
 	float FontSizeUPTime	= 0.1f;
 	float FontSizeUPTimeMin	= 0.1f;
-	float FontSizeUPTimeMax = 0.5f;
+	float FontSizeUPTimeMax = 1.0f;
 
 	float FontAlpha		= 255;
 	float FontIdleTime	= 0;

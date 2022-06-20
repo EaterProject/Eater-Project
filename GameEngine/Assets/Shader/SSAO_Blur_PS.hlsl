@@ -31,10 +31,7 @@ float4 SSAOBlur_PS(VertexIn pin) : SV_Target
     float totalWeight = gWeights[gBlurRadius];
 
     float4 centerNormalDepth = gNormalDepthRT.Sample(gSamBorderLinearPoint, pin.Tex);
-	
-    //if (dot(centerNormalDepth.xyz, centerNormalDepth.xyz) < 0.00001)
-    //    return 1.0f;
-	
+
 	for (float i = -gBlurRadius; i <= gBlurRadius; ++i)
 	{
 		// We already added in the center weight.

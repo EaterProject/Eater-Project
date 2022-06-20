@@ -17,6 +17,8 @@ public:
 private:
 	VertexShader* m_UI_VS;
 	PixelShader* m_UI_PS;
+	PixelShader* m_UI_Fill_PS;
+	PixelShader* m_UI_Fill_Reverse_PS;
 
 	DrawBuffer* m_Screen_DB;
 
