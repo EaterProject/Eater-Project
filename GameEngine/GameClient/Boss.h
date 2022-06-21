@@ -1,6 +1,7 @@
 #pragma once
 #include "Component.h"
 #include "ClientTypeOption.h"
+#include "ColorSetting.h"
 #include <string>
 
 class AnimationController;
@@ -11,6 +12,7 @@ class Rigidbody;
 class PhysRayCast;
 class BossWeapon;
 class BossFriend;
+class MaterialPropertyBlock;
 class Boss :public Component
 {
 public:
@@ -19,6 +21,8 @@ public:
 
 	void Awake() override;
 	void SetUp() override;
+	void Start() override;
+
 	void Update() override;
 	void Debug() override;
 	void OnTriggerStay(GameObject* Obj) override;
@@ -65,14 +69,14 @@ private:
 	bool	IsShooting		= false;
 
 	int		mState			= 0;		//보스의 상태
-	int		FriendIndex		= -1;
+	int		FriendIndex		= -1;		//보스의 위치 인덱스
 
 	float	AttackRange		= 3.5f;		//근접 공격 범위
 	float	FightRange		= 30.0f;	//보스와 싸울 수 있는 거리
 	float	SkillRange		= 10.0f;	//보스의 스킬 거리
 	float	PlayerDistance	= 0.0f;		//플레이어의 거리
 	float	HP				= 100;		//보스 체력
-	float	PositionY		= 6.0f;
+	float	PositionY		= 6.0f;		//보스 Y축 오프셋
 
 	float	RendomSkillReadyTime		= 0.0f;
 	float	RendomSkillReadyTimeMax		= 5.0f;
@@ -85,5 +89,8 @@ private:
 
 	BossWeapon* Weapon[5];
 	BossFriend* Friend;
+	MeshFilter* ChildeMeshFilter[7];
+
+	ColorSetting mColor;
 };
 

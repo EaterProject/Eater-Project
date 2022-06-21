@@ -17,10 +17,11 @@ public:
 	void Reset();
 	bool ShootingReady();
 private:
+	void RandomUpdate();
 	
 	MeshFilter* mMeshFilter = nullptr;
 	Transform*	mTransform	= nullptr;
-	float Speed			= 10.0f;
+	float Speed			= 20.0f;
 	bool IsShooting		= false;
 	bool IsSizeUpdate	= false;
 	bool IsReady		= false;

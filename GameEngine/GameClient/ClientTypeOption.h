@@ -73,8 +73,8 @@ enum class BOSS_STATE : int
 	CLOSER_ATTACK_R		= 6,	//근접 공격 오른쪽
 	CHASE_ATTACK_READY	= 7,	//추적 발사체 준비
 	CHASE_ATTACK_PLAY	= 8,	//추적 발사체 발사
-	RENDOM_ATTACK_READY	= 9,	//장판형 발사체 준비
-	RENDOM_ATTACK_PLAY	= 10,	//장판형 발사체 발사
+	RANDOM_ATTACK_READY	= 9,	//장판형 발사체 준비
+	RANDOM_ATTACK_PLAY	= 10,	//장판형 발사체 발사
 	TELEPORT_READY		= 11,	//보스 순간이동 준비
 	TELEPORT_START		= 12,	//보스 순간이동 
 	CREATE_FRIEND		= 13,	//분신 소환

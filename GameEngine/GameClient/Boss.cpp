@@ -4,6 +4,7 @@
 #include "EngineData.h"
 #include "MessageManager.h"
 #include "PhysRay.h"
+#include "EngineData.h"
 
 //component
 #include "GameObject.h"
@@ -25,11 +26,11 @@ Boss::Boss()
 	ANIMATION_NAME[(int)BOSS_STATE::DEAD]					= "die";
 	ANIMATION_NAME[(int)BOSS_STATE::CLOSER_ATTACK_L]		= "attack5L";
 	ANIMATION_NAME[(int)BOSS_STATE::CLOSER_ATTACK_R]		= "attack5R";
-	ANIMATION_NAME[(int)BOSS_STATE::CHASE_ATTACK_READY]		= "attack1_1";
-	ANIMATION_NAME[(int)BOSS_STATE::CHASE_ATTACK_PLAY]		= "attack1_2";
-	ANIMATION_NAME[(int)BOSS_STATE::RENDOM_ATTACK_READY]	= "attack4_1";
-	ANIMATION_NAME[(int)BOSS_STATE::RENDOM_ATTACK_PLAY]		= "attack4_2";
-	ANIMATION_NAME[(int)BOSS_STATE::RENDOM_ATTACK_END]		= "recovery_1";
+	ANIMATION_NAME[(int)BOSS_STATE::CHASE_ATTACK_READY]		= "recovery_1";
+	ANIMATION_NAME[(int)BOSS_STATE::CHASE_ATTACK_PLAY]		= "recovery_2";
+	ANIMATION_NAME[(int)BOSS_STATE::RANDOM_ATTACK_READY]	= "attack4_1";
+	ANIMATION_NAME[(int)BOSS_STATE::RANDOM_ATTACK_PLAY]		= "attack4_2";
+	ANIMATION_NAME[(int)BOSS_STATE::RENDOM_ATTACK_END]		= "attack5L";
 	ANIMATION_NAME[(int)BOSS_STATE::TELEPORT_READY]			= "attack2_1";
 	ANIMATION_NAME[(int)BOSS_STATE::TELEPORT_START]			= "attack2_2";
 	ANIMATION_NAME[(int)BOSS_STATE::CREATE_FRIEND]			= "attack3";
@@ -42,14 +43,14 @@ Boss::Boss()
 	ANIMATION_TIME[(int)BOSS_STATE::DEAD]					= 1.0f;
 	ANIMATION_TIME[(int)BOSS_STATE::CLOSER_ATTACK_L]		= 1.0f;
 	ANIMATION_TIME[(int)BOSS_STATE::CLOSER_ATTACK_R]		= 1.0f;
-	ANIMATION_TIME[(int)BOSS_STATE::CHASE_ATTACK_READY]		= 1.0f;
+	ANIMATION_TIME[(int)BOSS_STATE::CHASE_ATTACK_READY]		= 0.5f;
 	ANIMATION_TIME[(int)BOSS_STATE::CHASE_ATTACK_PLAY]		= 1.0f;
-	ANIMATION_TIME[(int)BOSS_STATE::RENDOM_ATTACK_READY]	= 0.5f;
-	ANIMATION_TIME[(int)BOSS_STATE::RENDOM_ATTACK_PLAY]		= 1.0f;
+	ANIMATION_TIME[(int)BOSS_STATE::RANDOM_ATTACK_READY]	= 0.5f;
+	ANIMATION_TIME[(int)BOSS_STATE::RANDOM_ATTACK_PLAY]		= 1.0f;
 	ANIMATION_TIME[(int)BOSS_STATE::TELEPORT_READY]			= 1.0f;
 	ANIMATION_TIME[(int)BOSS_STATE::TELEPORT_START]			= 1.0f;
 	ANIMATION_TIME[(int)BOSS_STATE::CREATE_FRIEND]			= 1.0f;
-	ANIMATION_TIME[(int)BOSS_STATE::RENDOM_ATTACK_END]		= 0.5f;
+	ANIMATION_TIME[(int)BOSS_STATE::RENDOM_ATTACK_END]		= 0.8f;
 
 	mRay = new PhysRayCast();
 
@@ -108,10 +109,16 @@ void Boss::SetUp()
 	CreateSkillPoint();
 }
 
+void Boss::Start()
+{
+	mColor.Setting(this->gameobject);
+
+	mColor.SetLimlightSetting(1.0f, 0.0f, 0.0f, 1.0f, 1.0f);
+	mColor.SetEmissiveSetting(1.0f, 0.0f, 0.0f, 1.0f, 1.0f);
+}
+
 void Boss::Update()
 {
-	
-
 
 	switch (mState)
 	{
@@ -151,10 +158,10 @@ void Boss::Update()
 	case (int)BOSS_STATE::CHASE_ATTACK_PLAY:	//추격 발사체 공격
 		Boss_Chase_Attack_Play();
 		break;
-	case (int)BOSS_STATE::RENDOM_ATTACK_READY:	//장판형 발사체 시작
+	case (int)BOSS_STATE::RANDOM_ATTACK_READY:	//장판형 발사체 시작
 		Boss_Rendom_Attack_Ready();
 		break;
-	case (int)BOSS_STATE::RENDOM_ATTACK_PLAY:	//장판형 발사체 공격
+	case (int)BOSS_STATE::RANDOM_ATTACK_PLAY:	//장판형 발사체 공격
 		Boss_Rendom_Attack_Play();
 		break;
 	case (int)BOSS_STATE::HIT:	//장판형 발사체 공격
@@ -189,6 +196,7 @@ void Boss::OnTriggerStay(GameObject* Obj)
 		{
 			HP -= 10;
 			MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_ATTACK_OK);
+			SetState(BOSS_STATE::GROGGY_START);
 			Sound_Play_SFX("Monster_Hit");
 			IsHit = true;
 		}
@@ -248,12 +256,17 @@ void Boss::Boss_Idle()
 
 	if (GetKeyDown(VK_NUMPAD8))
 	{
-		SetState(BOSS_STATE::RENDOM_ATTACK_READY);
+		SetState(BOSS_STATE::RANDOM_ATTACK_READY);
 	}
 
 	if (GetKeyDown(VK_NUMPAD9))
 	{
 		SetState(BOSS_STATE::CREATE_FRIEND);
+	}
+
+	if (GetKeyDown(VK_NUMPAD4))
+	{
+		SetState(BOSS_STATE::CHASE_ATTACK_READY);
 	}
 }
 
@@ -270,39 +283,40 @@ void Boss::Boss_DEAD()
 
 void Boss::Boss_Groggy_Start()
 {
-
-
-
-
-
+	int End = mAnimation->GetEndFrame();
+	int Now = mAnimation->GetNowFrame();
+	if (Now >= End)
+	{
+		SetState(BOSS_STATE::GROGGY_PLAY);
+	}
 }
 
 void Boss::Boss_Groggy_Play()
 {
-
-
-
-
-
-
-
-
+	int End = mAnimation->GetEndFrame();
+	int Now = mAnimation->GetNowFrame();
+	if (Now >= End)
+	{
+		SetState(BOSS_STATE::GROGGY_END);
+	}
 }
 
 void Boss::Boss_Groggy_End()
 {
-
-
-
-
-
+	int End = mAnimation->GetEndFrame();
+	int Now = mAnimation->GetNowFrame();
+	if (Now >= End)
+	{
+		SetState(BOSS_STATE::IDLE);
+	}
 }
 
 void Boss::Boss_Teleport_Ready()
 {
 	if (mTransform->Scale.x > 0.0f)
 	{
-		mTransform->Scale.x -= GetDeltaTime()*5;
+		float mDTime = GetDeltaTime();
+		mTransform->Scale.x -= mDTime * 10;
 	}
 	else
 	{
@@ -325,7 +339,8 @@ void Boss::Boss_Teleport_Start()
 
 	if (mTransform->Scale.x < 1.5f)
 	{
-		mTransform->Scale.x += GetDeltaTime() * 5;
+		float mDTime = GetDeltaTime();
+		mTransform->Scale.x += mDTime * 10;
 	}
 	else
 	{
@@ -368,6 +383,7 @@ void Boss::Boss_Closer_Attack_L()
 	//왼쪽 근접 공격
 	int End = mAnimation->GetEndFrame();
 	int Now = mAnimation->GetNowFrame();
+
 	if (Now >= End)
 	{
 		SetState(BOSS_STATE::IDLE);
@@ -389,18 +405,60 @@ void Boss::Boss_Closer_Attack_R()
 
 void Boss::Boss_Chase_Attack_Ready()
 {
-
-
-
-
-
+	int End = mAnimation->GetEndFrame();
+	int Now = mAnimation->GetNowFrame();
+	if (Now >= End)
+	{
+		SetState(BOSS_STATE::CHASE_ATTACK_PLAY);
+	}
+	mTransform->Slow_Y_Rotation(mPlayerTR->Position, 150, false);
 }
 
 void Boss::Boss_Chase_Attack_Play()
 {
+	static int WeaponIndex = 0;
+	mTransform->Slow_Y_Rotation(mPlayerTR->Position, 150, false);
+	if (IsShooting == false)
+	{
+		Vector3 Look = mTransform->GetLocalPosition_Look();
+		Look.z *= -1;
 
+		Vector3 Start;
+		Start = mTransform->Position + (Look * 3);
+		Start.y += 3.0f;
 
+		Weapon[WeaponIndex]->SetShootingPoistion(Start, mPlayerTR->Position);
 
+		IsShooting = true;
+	}
+
+	if (IsShooting == true)
+	{
+		if (Weapon[WeaponIndex]->ShootingReady() == true)
+		{
+			WeaponIndex++;
+			IsShooting = false;
+		}
+	}
+
+	if (WeaponIndex >= 5)
+	{
+		if (RendomSkillPlayTime >= RendomSkillPlayTimeMax)
+		{
+			SetState(BOSS_STATE::IDLE);
+			RendomSkillPlayTime = 0;
+			WeaponIndex = 0;
+			IsShooting = false;
+			for (int i = 0; i < 5; i++)
+			{
+				Weapon[i]->Reset();
+			}
+		}
+		else
+		{
+			RendomSkillPlayTime += GetDeltaTime();
+		}
+	}
 }
 
 void Boss::Boss_Rendom_Attack_Ready()
@@ -411,7 +469,7 @@ void Boss::Boss_Rendom_Attack_Ready()
 	int Now = mAnimation->GetNowFrame();
 	if (Now >= End)
 	{
-		SetState(BOSS_STATE::RENDOM_ATTACK_PLAY);
+		SetState(BOSS_STATE::RANDOM_ATTACK_PLAY);
 	}
 	else
 	{
@@ -460,12 +518,17 @@ void Boss::Boss_Rendom_Attack_End()
 {
 	int End = mAnimation->GetEndFrame();
 	int NOW = mAnimation->GetNowFrame();
-	if (NOW >= End)
+
+	if (mAnimation->EventCheck() == true)
 	{
 		for (int i = 0; i < 5; i++)
 		{
 			Weapon[i]->Reset();
 		}
+	}
+
+	if (NOW >= End)
+	{
 		SetState(BOSS_STATE::IDLE);
 	}
 }

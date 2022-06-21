@@ -37,24 +37,24 @@ void BossWeapon::Update()
 			mTransform->Scale.y = 1.0f;
 			mTransform->Scale.z = 1.0f;
 			IsSizeUpdate = false;
-			IsShooting	= true;
-			IsReady		= true;
+			IsShooting = true;
+			IsReady = true;
 		}
 		else
 		{
 			float DTime = GetDeltaTime();
-			mTransform->Scale.x += DTime;
-			mTransform->Scale.y += DTime;
-			mTransform->Scale.z += DTime;
+			mTransform->Scale.x += DTime * 2;
+			mTransform->Scale.y += DTime * 2;
+			mTransform->Scale.z += DTime * 2;
 			IsReady = false;
 		}
 	}
 	else if (IsShooting == true)
 	{
-	
-		if (mTransform->Position.x  >= End_Shooting_Pos.x -0.1f && mTransform->Position.x <= End_Shooting_Pos.x + 0.1f &&
-			mTransform->Position.y >= End_Shooting_Pos.y - 0.1f && mTransform->Position.y <= End_Shooting_Pos.y + 0.1f &&
-			mTransform->Position.z >= End_Shooting_Pos.z - 0.1f && mTransform->Position.z <= End_Shooting_Pos.z + 0.1f)
+
+		if (mTransform->Position.x >= End_Shooting_Pos.x - 0.25f && mTransform->Position.x <= End_Shooting_Pos.x + 0.25f &&
+			mTransform->Position.y >= End_Shooting_Pos.y - 0.25f && mTransform->Position.y <= End_Shooting_Pos.y + 0.25f &&
+			mTransform->Position.z >= End_Shooting_Pos.z - 0.25f && mTransform->Position.z <= End_Shooting_Pos.z + 0.25f)
 		{
 			IsStart = false;
 		}
@@ -102,4 +102,12 @@ void BossWeapon::Reset()
 bool BossWeapon::ShootingReady()
 {
 	return IsReady;
+}
+
+void BossWeapon::RandomUpdate()
+{
+
+
+
+
 }
