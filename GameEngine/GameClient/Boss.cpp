@@ -88,8 +88,8 @@ void Boss::SetUp()
 	mState = (int)BOSS_STATE::IDLE;
 
 	//위치값 설정
-	mTransform->Position	= { -44.0f,6.0f,62.0f };
-	mTransform->Scale		= { 1.5f,1.5f,1.5f};
+	mTransform->SetTranlate(-44.0f, 6.0f, 62.0f);
+	mTransform->SetScale(1.5f, 1.5f, 1.5f);
 
 	//스킬 포인트의 위치를 생성한다
 	CreateSkillPoint();
@@ -99,8 +99,8 @@ void Boss::SetUp()
 		Weapon[i] = MessageManager::GetGM()->CREATE_MESSAGE(TARGET_BOSS_WEAPON);
 		Weapon[i]->GetComponent<MeshFilter>()->SetModelName("Sphere");
 		Transform* mTransform =	Weapon[i]->GetTransform();
-		mTransform->Position	= { -44.0f,6.0f,62.0f };
-		mTransform->Scale		= { 1,1,1 };
+		mTransform->SetTranlate(-44.0f, 6.0f, 62.0f);
+		mTransform->SetScale(1.0f, 1.0f, 1.0f);
 	}
 }
 
@@ -161,8 +161,9 @@ void Boss::Update()
 
 void Boss::Debug()
 {
-	DebugDrawCircle(AttackRange, mTransform->Position + Vector3(0, 1, 0), Vector3(0, 0, 0), Vector3(0, 1, 0));
-	DebugDrawCircle(FightRange, mTransform->Position + Vector3(0, 1, 0), Vector3(0, 0, 0), Vector3(1, 0, 0));
+	Vector3 position = mTransform->GetPosition();
+	DebugDrawCircle(AttackRange, position + Vector3(0, 1, 0), Vector3(0, 0, 0), Vector3(0, 1, 0));
+	DebugDrawCircle(FightRange, position + Vector3(0, 1, 0), Vector3(0, 0, 0), Vector3(1, 0, 0));
 	for(int i = 0; i < 5;i++)
 	{
 		DebugDrawCircle(1.5f, SkillPoint[i] + Vector3(0, 0.25f, 0), Vector3(0, 0, 0), Vector3(0, 1, 0));
@@ -200,13 +201,13 @@ void Boss::Boss_Idle()
 	if (PlayerDistance < AttackRange)
 	{
 		//근접 공격이 가능한 상태
-		mTransform->Slow_Y_Rotation(mPlayerTR->Position, 150, false);
+		mTransform->Slow_Y_Rotation(mPlayerTR->GetPosition(), 150, false);
 		SetState(BOSS_STATE::CLOSER_ATTACK_L);
 	}
 	else if(PlayerDistance < FightRange && PlayerDistance > AttackRange)
 	{
 		//전투가 가능한 상태
-		mTransform->Slow_Y_Rotation(mPlayerTR->Position, 150, false);
+		mTransform->Slow_Y_Rotation(mPlayerTR->GetPosition(), 150, false);
 	}
 
 	if (GetKeyDown(VK_SPACE))
@@ -291,7 +292,7 @@ void Boss::Boss_Closer_Attack_L()
 	{
 		SetState(BOSS_STATE::IDLE);
 	}
-	mTransform->Slow_Y_Rotation(mPlayerTR->Position, 150, false);
+	mTransform->Slow_Y_Rotation(mPlayerTR->GetPosition(), 150, false);
 }
 
 void Boss::Boss_Closer_Attack_R()
@@ -303,7 +304,7 @@ void Boss::Boss_Closer_Attack_R()
 	{
 		SetState(BOSS_STATE::IDLE);
 	}
-	mTransform->Slow_Y_Rotation(mPlayerTR->Position, 150, false);
+	mTransform->Slow_Y_Rotation(mPlayerTR->GetPosition(), 150, false);
 }
 
 void Boss::Boss_Chase_Attack_Ready()
@@ -327,12 +328,12 @@ void Boss::Boss_Rendom_Attack_Ready()
 	int End = mAnimation->GetEndFrame();
 	int Now = mAnimation->GetNowFrame();
 	if (Now >= End) { SetState(BOSS_STATE::RENDOM_ATTACK_PLAY); }
-	else { mTransform->Position.y += GetDeltaTime(); }
+	else { mTransform->AddTranlate(0.0f, GetDeltaTime(), 0.0f); }
 }
 
 void Boss::Boss_Rendom_Attack_Play()
 {
-	mTransform->Position.y;
+
 
 
 }
@@ -367,14 +368,14 @@ bool Boss::FirstState()
 
 float Boss::PlayerDistanceCheck()
 {
-	PlayerDistance = mTransform->GetDistance(mPlayerTR->Position);
+	PlayerDistance = mTransform->GetDistance(mPlayerTR->GetPosition());
 	return PlayerDistance;
 }
 
 void Boss::CreateSkillPoint()
 {
 	float Angle = 360 / 5;
-	float NowAngle = mTransform->Rotation.y;
+	float NowAngle = mTransform->GetRotation().y;
 	for (int i = 0; i < 5; i++)
 	{
 		NowAngle += Angle;
@@ -382,9 +383,10 @@ void Boss::CreateSkillPoint()
 		float y = sin(NowAngle * (3.141592f / 180));
 
 		Vector3 EndPoint = Vector3(0, 0, 0);
-		EndPoint.x += (X * SkillRange) + mTransform->Position.x;
-		EndPoint.y += mTransform->Position.y + 2;
-		EndPoint.z += (y * SkillRange) + mTransform->Position.z;
+		Vector3 position = mTransform->GetPosition();
+		EndPoint.x += (X * SkillRange) + position.x;
+		EndPoint.y += position.y + 2;
+		EndPoint.z += (y * SkillRange) + position.z;
 
 		//Ray를 쏜다
 		mRay->Direction = { 0,-1,0 };

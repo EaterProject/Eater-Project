@@ -31,7 +31,7 @@
 
 OIT_Pass::OIT_Pass()
 {
-	m_Multiple = 20;
+	m_Multiple = 10;
 	m_MagicValue = 0xffffffff;
 	m_InitCounts[0] = 0;
 	m_InitCounts[1] = 0;
@@ -93,16 +93,12 @@ void OIT_Pass::Create(int width, int height)
 
 void OIT_Pass::Start(int width, int height)
 {
-	m_NumGroupsX = (UINT)ceilf(width / 1.0f);
-	m_NumGroupsY = (UINT)ceilf(height / 1.0f);
-
 	// OIT Shader List Up..
 	SetShaderList();
 
 	// Shader 설정..
 	m_OITRender_VS = g_Shader->GetShader("Screen_VS");
 	m_OITRender_PS = g_Shader->GetShader("OIT_Blend_PS");
-	m_OITRender_CS = g_Shader->GetShader("OIT_Blend_CS");
 
 	// Buffer 설정..
 	m_Screen_DB = g_Resource->GetDrawBuffer<DB_Quad>();
@@ -137,18 +133,10 @@ void OIT_Pass::Start(int width, int height)
 	m_OITRender_PS->SetShaderResourceView<gPieceLinkBuffer>(m_PieceLink_RB->GetSRV()->Get());
 	m_OITRender_PS->SetShaderResourceView<gFirstOffsetBuffer>(m_FirstOffset_RB->GetSRV()->Get());
 	m_OITRender_PS->SetShaderResourceView<gBackGround>(backGround->Get());
-
-	m_OITRender_CS->SetShaderResourceView<gPieceLinkBuffer>(m_PieceLink_RB->GetSRV()->Get());
-	m_OITRender_CS->SetShaderResourceView<gFirstOffsetBuffer>(m_FirstOffset_RB->GetSRV()->Get());
-	m_OITRender_CS->SetShaderResourceView<gBackGround>(backGround->Get());
-	m_OITRender_CS->SetUnorderedAccessView<gOutputUAV>(m_OutPut_RT->GetUAV()->Get());
 }
 
 void OIT_Pass::OnResize(int width, int height)
 {
-	m_NumGroupsX = (UINT)ceilf(width / 1.0f);
-	m_NumGroupsY = (UINT)ceilf(height / 1.0f);
-
 	// 현재 RenderTarget 재설정..
 	m_OutPut_RTV = m_OutPut_RT->GetRTV()->Get();
 
@@ -171,11 +159,6 @@ void OIT_Pass::OnResize(int width, int height)
 	m_OITRender_PS->SetShaderResourceView<gPieceLinkBuffer>(m_PieceLink_RB->GetSRV()->Get());
 	m_OITRender_PS->SetShaderResourceView<gFirstOffsetBuffer>(m_FirstOffset_RB->GetSRV()->Get());
 	m_OITRender_PS->SetShaderResourceView<gBackGround>(backGround->Get());
-
-	m_OITRender_CS->SetShaderResourceView<gPieceLinkBuffer>(m_PieceLink_RB->GetSRV()->Get());
-	m_OITRender_CS->SetShaderResourceView<gFirstOffsetBuffer>(m_FirstOffset_RB->GetSRV()->Get());
-	m_OITRender_CS->SetShaderResourceView<gBackGround>(backGround->Get());
-	m_OITRender_CS->SetUnorderedAccessView<gOutputUAV>(m_OutPut_RT->GetUAV()->Get());
 }
 
 void OIT_Pass::Release()
@@ -210,7 +193,7 @@ void OIT_Pass::RenderUpdate()
 {
 	g_Context->ClearRenderTargetView(m_OutPut_RTV, reinterpret_cast<const float*>(&DXColors::NonBlack));
 	g_Context->OMSetRenderTargets(1, &m_OutPut_RTV, nullptr);
-	g_Context->OMSetDepthStencilState(nullptr, 0);
+	//g_Context->OMSetDepthStencilState(nullptr, 0);
 
 	m_OITRender_VS->Update();
 	m_OITRender_PS->Update();
@@ -222,19 +205,9 @@ void OIT_Pass::RenderUpdate()
 	g_Context->DrawIndexed(m_Screen_DB->IndexCount, 0, 0);
 }
 
-void OIT_Pass::RenderUpdate_CS()
-{
-	m_OITRender_CS->Update();
-
-	g_Context->Dispatch(m_NumGroupsX, m_NumGroupsY, 1);
-
-	g_Context->CSSetUnorderedAccessViews(0, 1, &m_NullUAV, nullptr);
-}
-
 void OIT_Pass::SetShaderList()
 {
 	PushShader("OIT_Blend_PS");
-	PushShader("OIT_Blend_CS");
 
 	PushShader("OIT_Particle_PS_Option0");
 	PushShader("OIT_Particle_PS_Option1");
@@ -253,7 +226,6 @@ void OIT_Pass::SetShaderConstantBuffer(UINT width, UINT height)
 {
 	CB_OitFrame oitBuf;
 	oitBuf.gFrameWidth = width;
-	oitBuf.gFrameHeight = height;
 
 	for (ShaderBase* shader : m_OptionShaderList)
 	{

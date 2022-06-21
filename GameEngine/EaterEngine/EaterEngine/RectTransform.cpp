@@ -76,7 +76,7 @@ void RectTransform::TransformUpdate()
 		Position_Offset.y = Screen_Size.y * 0.5f;
 		break;
 	case PIVOT_TYPE::PIVOT_OBJECT:
-		Position = Screen_Size * Camera::g_MainCam->WorldToScreen(Transform3D->Position + Position3D_Offset);
+		Position = Screen_Size * Camera::g_MainCam->WorldToScreen(Transform3D->GetPosition() + Position3D_Offset);
 		break;
 	default:
 		break;

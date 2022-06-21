@@ -101,8 +101,8 @@ private:
 	float m_StartRot;
 	float m_OneRot;
 	float m_PrevRot;
-	float m_NowRot;
 	float m_NextRot;
+	DirectX::SimpleMath::Vector3 m_NowRot = Vector3(0.0f, 0.0f, 0.0f);
 
 	DirectX::SimpleMath::Vector3 m_StartPos;
 	DirectX::SimpleMath::Vector3 m_OnePos;

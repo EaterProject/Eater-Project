@@ -59,7 +59,7 @@ void ManaStone::SetMonsterCount(int MonsterA, int MonsterB)
 Vector3 ManaStone::GetPoint(int CreateRangeIndex, int MovePointIndex)
 {
 	//나의 생성위치에서의 5방향의 꼭지점 그방향으로의 범위값을 곱함
-	Vector3 MonsterPoint = GetMonsterPoint(mTransform->Position, CreateRangeIndex, Range * 0.5f);
+	Vector3 MonsterPoint = GetMonsterPoint(mTransform->GetPosition(), CreateRangeIndex, Range * 0.5f);
 	return GetMonsterPoint(MonsterPoint, MovePointIndex, Range * 0.25f);
 }
 
@@ -98,7 +98,7 @@ void ManaStone::CreateMonster(int MonsterACount, int MonsterBCount)
 
 void ManaStone::Debug()
 {
-	Vector3 Point = mTransform->Position;
+	Vector3 Point = mTransform->GetPosition();
 	Point.y = 2.0f;
 	DebugDrawCircle(10, Point, Vector3(0, 0, 0), Vector3(1, 0, 0));
 
@@ -109,7 +109,7 @@ void ManaStone::Debug()
 		float DebugHeight = 0;		//디버깅 높이
 
 		//나의 생성위치에서의 5방향의 꼭지점 그방향으로의 범위값을 곱함
-		Vector3 MonsterPoint = GetMonsterPoint(mTransform->Position, i, Range *0.5);
+		Vector3 MonsterPoint = GetMonsterPoint(mTransform->GetPosition(), i, Range *0.5);
 		MonsterPoint.y = 2.0f;
 		DebugDrawLine(Point, MonsterPoint, Vector3(0, 0, 1));
 		DebugDrawCircle(Range * 0.25f, MonsterPoint, Vector3(0, 0, 0), Vector3(0, 0, 1));
@@ -157,7 +157,7 @@ void ManaStone::CreateMonsterA(int index)
 	for (int i = 0; i < 5; i++)
 	{
 		Vector3 Point = GetPoint(index, i);
-		Point.y = mTransform->Position.y+1;
+		Point.y = mTransform->GetPosition().y+1;
 		Monster->SetSearchPoint(i, Point);
 	}
 	MonsterA_List.push_back(Monster);
@@ -171,7 +171,7 @@ void ManaStone::CreateMonsterB(int index)
 	for (int i = 0; i < 5; i++)
 	{
 		Vector3 Point = GetPoint(index, i);
-		Point.y = mTransform->Position.y;
+		Point.y = mTransform->GetPosition().y;
 		Monster->SetSearchPoint(i, Point);
 	}
 	MonsterB_List.push_back(Monster);

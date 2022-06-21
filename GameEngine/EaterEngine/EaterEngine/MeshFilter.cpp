@@ -525,8 +525,8 @@ void MeshFilter::SetMatrixData(LoadMeshData* LoadMesh, MeshData* mMesh, GameObje
 {
 	Transform* mTransform = Object->GetTransform();
 
-	mTransform->Load_Local = LoadMesh->LocalTM;
-	mTransform->Load_World = LoadMesh->WorldTM;
+	mTransform->SetLoadLocal(LoadMesh->LocalTM);
+	mTransform->SetLoadWorld(LoadMesh->WorldTM);
 }
 
 void MeshFilter::SetMeshData(LoadMeshData* LoadMesh, MeshData* mMesh, GameObject* obj)

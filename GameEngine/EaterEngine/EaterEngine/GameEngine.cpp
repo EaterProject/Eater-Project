@@ -136,7 +136,7 @@ void GameEngine::Start()
 	DebugCamera = InstanceCamera("DebugCamera");
 	DebugCamera->AddComponent<CameraDebugKeyInput>();
 	DebugCamera->SetDontDestroy(true);
-	DebugCamera->transform->Position = {0,10,-25};
+	DebugCamera->transform->SetTranlate(0.0f, 10.0f, -25.0f);
 
 	//디렉션 라이트 생성
 	DirectionLight = Instance_Light("DirectionLight", LIGHT_TYPE::DIRECTION_LIGHT);
@@ -342,8 +342,7 @@ GameObject* GameEngine::InstanceCamera(std::string ObjName)
 	Obj->transform = Obj->AddComponent<Transform>();
 	Obj->AddComponent<Camera>();
 	Obj->Name = ObjName;
-	Obj->transform->Position.z = -40.0f;
-	Obj->transform->Position.y = 5.0f;
+	Obj->transform->SetTranlate(0.0f, 5.0f, -40.0f);
 	return Obj;
 }
 
@@ -364,8 +363,7 @@ GameObject* GameEngine::Instance_Light(std::string ObjName, LIGHT_TYPE type)
 	switch (type)
 	{
 	case DIRECTION_LIGHT:
-		Tr->Rotation.x = -30.0f;
-		Tr->Rotation.y = 10.0f;
+		Tr->SetRotate(-30.0f, 10.0f, 0.0f);
 		light->SetPower(1);
 		break;
 	case POINT_LIGHT:
@@ -373,7 +371,7 @@ GameObject* GameEngine::Instance_Light(std::string ObjName, LIGHT_TYPE type)
 		light->SetPower(100.0f);
 		break;
 	case SPOT_LIGHT:
-		Tr->Rotation.x = -90.0f;
+		Tr->SetRotate(-90.0f, 0.0f, 0.0f);
 		light->SetColor(1.0f, 1.0f, 0.0f);
 		light->SetPower(100.0f);
 		light->SetAttenuate(0.5f);

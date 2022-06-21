@@ -64,32 +64,32 @@ void CameraDebugKeyInput::Update()
 
 		if (mKeyInputManger->GetKey('D'))
 		{
-			mTransform->SetLocalPosition((speed * delta), 0, 0);
+			mTransform->AddLocalPosition((speed * delta), 0, 0);
 		}
 
 		if (mKeyInputManger->GetKey('A'))
 		{
-			mTransform->SetLocalPosition(-(speed * delta), 0, 0);
+			mTransform->AddLocalPosition(-(speed * delta), 0, 0);
 		}
 
 		if (mKeyInputManger->GetKey('W'))
 		{
-			mTransform->SetLocalPosition(0, 0, (speed * delta));
+			mTransform->AddLocalPosition(0, 0, (speed * delta));
 		}
 
 		if (mKeyInputManger->GetKey('S'))
 		{
-			mTransform->SetLocalPosition(0, 0, -(speed * delta));
+			mTransform->AddLocalPosition(0, 0, -(speed * delta));
 		}
 
 		if (mKeyInputManger->GetKey('Q'))
 		{
-			mTransform->SetLocalPosition(0, (speed * delta), 0);
+			mTransform->AddLocalPosition(0, (speed * delta), 0);
 		}
 
 		if (mKeyInputManger->GetKey('E'))
 		{
-			mTransform->SetLocalPosition(0, -(speed * delta), 0);
+			mTransform->AddLocalPosition(0, -(speed * delta), 0);
 		}
 
 		float RotSpeed = 5;
@@ -103,7 +103,7 @@ void CameraDebugKeyInput::Update()
 			float dx = DirectX::XMConvertToRadians(static_cast<float>(x - mLastMousePosX));
 			float dy = DirectX::XMConvertToRadians(static_cast<float>(y - mLastMousePosY));
 
-			mTransform->SetRotate(-dy * RotSpeed, -dx * RotSpeed, 0);
+			mTransform->AddRotate(-dy * RotSpeed, -dx * RotSpeed, 0);
 			
 			SetCursorPos(mLastMousePosX, mLastMousePosY);
 		}

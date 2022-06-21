@@ -77,15 +77,20 @@ void CTAP_Transform::DoDataExchange(CDataExchange* pDX)
 void CTAP_Transform::SetGameObject(Transform* mTransform)
 {
 	ObjectTransform = mTransform;
-	Pos_X.SetWindowTextW(ChangeToCString(mTransform->Position.x));
-	Pos_Y.SetWindowTextW(ChangeToCString(mTransform->Position.y));
-	Pos_Z.SetWindowTextW(ChangeToCString(mTransform->Position.z));
-	Rot_X.SetWindowTextW(ChangeToCString(mTransform->Rotation.x));
-	Rot_Y.SetWindowTextW(ChangeToCString(mTransform->Rotation.y));
-	Rot_Z.SetWindowTextW(ChangeToCString(mTransform->Rotation.z));
-	Scl_X.SetWindowTextW(ChangeToCString(mTransform->Scale.x));
-	Scl_Y.SetWindowTextW(ChangeToCString(mTransform->Scale.y));
-	Scl_Z.SetWindowTextW(ChangeToCString(mTransform->Scale.z));
+	Vector3 position = mTransform->GetPosition();
+	Pos_X.SetWindowTextW(ChangeToCString(position.x));
+	Pos_Y.SetWindowTextW(ChangeToCString(position.y));
+	Pos_Z.SetWindowTextW(ChangeToCString(position.z));
+
+	Vector3 rotation = mTransform->GetRotation();
+	Rot_X.SetWindowTextW(ChangeToCString(rotation.x));
+	Rot_Y.SetWindowTextW(ChangeToCString(rotation.y));
+	Rot_Z.SetWindowTextW(ChangeToCString(rotation.z));
+
+	Vector3 scale = mTransform->GetScale();
+	Scl_X.SetWindowTextW(ChangeToCString(scale.x));
+	Scl_Y.SetWindowTextW(ChangeToCString(scale.y));
+	Scl_Z.SetWindowTextW(ChangeToCString(scale.z));
 
 	//Rotation_X_Slider.SetPos((int)mTransform->Rotation.x);
 	//Rotation_Y_Slider.SetPos((int)mTransform->Rotation.y);
@@ -110,7 +115,7 @@ void CTAP_Transform::UpdateGameObject()
 	Pos.x = ChangeToFloat(Cx);
 	Pos.y = ChangeToFloat(Cy);
 	Pos.z = ChangeToFloat(Cz);
-	ObjectTransform->Position = { Pos.x,Pos.y,Pos.z };
+	ObjectTransform->SetTranlate(Pos);;
 
 	Rot_X.GetWindowTextW(Cx);
 	Rot_Y.GetWindowTextW(Cy);
@@ -121,7 +126,7 @@ void CTAP_Transform::UpdateGameObject()
 	Rotation_X_Slider.SetPos((int)Rot.x);
 	Rotation_Y_Slider.SetPos((int)Rot.y);
 	Rotation_Z_Slider.SetPos((int)Rot.z);
-	ObjectTransform->Rotation = { Rot.x,Rot.y,Rot.z };
+	ObjectTransform->SetRotate(Rot);
 
 	Scl_X.GetWindowTextW(Cx);
 	Scl_Y.GetWindowTextW(Cy);
@@ -129,7 +134,7 @@ void CTAP_Transform::UpdateGameObject()
 	Scl.x = ChangeToFloat(Cx);
 	Scl.y = ChangeToFloat(Cy);
 	Scl.z = ChangeToFloat(Cz);
-	ObjectTransform->Scale = { Scl.x,Scl.y,Scl.z };
+	ObjectTransform->SetScale(Scl);
 }
 
 void CTAP_Transform::GetData(ObjectOption& Obj)
@@ -147,7 +152,7 @@ void CTAP_Transform::GetData(ObjectOption& Obj)
 	Pos.x = ChangeToFloat(Cx);
 	Pos.y = ChangeToFloat(Cy);
 	Pos.z = ChangeToFloat(Cz);
-	ObjectTransform->Position = { Pos.x,Pos.y,Pos.z };
+	ObjectTransform->SetTranlate(Pos);
 
 	Rot_X.GetWindowTextW(Cx);
 	Rot_Y.GetWindowTextW(Cy);
@@ -158,7 +163,7 @@ void CTAP_Transform::GetData(ObjectOption& Obj)
 	Rotation_X_Slider.SetPos((int)Rot.x);
 	Rotation_Y_Slider.SetPos((int)Rot.y);
 	Rotation_Z_Slider.SetPos((int)Rot.z);
-	ObjectTransform->Rotation = { Rot.x,Rot.y,Rot.z };
+	ObjectTransform->SetRotate(Rot);
 
 	Scl_X.GetWindowTextW(Cx);
 	Scl_Y.GetWindowTextW(Cy);
@@ -166,7 +171,7 @@ void CTAP_Transform::GetData(ObjectOption& Obj)
 	Scl.x = ChangeToFloat(Cx);
 	Scl.y = ChangeToFloat(Cy);
 	Scl.z = ChangeToFloat(Cz);
-	ObjectTransform->Scale = { Scl.x,Scl.y,Scl.z };
+	ObjectTransform->SetScale(Scl);
 
 	Obj.Position	= Pos;
 	Obj.Rotation	= Rot;
@@ -187,9 +192,9 @@ void CTAP_Transform::Reset()
 	Scl_Y.SetWindowTextW(_T("1.00"));
 	Scl_Z.SetWindowTextW(_T("1.00"));
 
-	ObjectTransform->Position	= { 0,0,0 };
-	ObjectTransform->Rotation	= { 0,0,0 };
-	ObjectTransform->Scale		= { 1,1,1 };
+	ObjectTransform->SetTranlate(0.0f, 0.0f, 0.0f);
+	ObjectTransform->SetRotate(0.0f, 0.0f, 0.0f);
+	ObjectTransform->SetScale(1.0f);
 }
 
 
@@ -209,7 +214,7 @@ BOOL CTAP_Transform::PreTranslateMessage(MSG* pMsg)
 	}
 	else
 	{
-		ObjectTransform->SetTranlate(0, 0, 0);
+		ObjectTransform->AddTranlate(0, 0, 0);
 	}
 
 	return CDialogEx::PreTranslateMessage(pMsg);
@@ -217,78 +222,82 @@ BOOL CTAP_Transform::PreTranslateMessage(MSG* pMsg)
 
 void CTAP_Transform::OnAllScaleDown_Button()
 {
-	ObjectTransform->Scale = {0.01f,0.01f ,0.01f };
-	Scl_X.SetWindowTextW(ChangeToCString(ObjectTransform->Scale.x));
-	Scl_Y.SetWindowTextW(ChangeToCString(ObjectTransform->Scale.y));
-	Scl_Z.SetWindowTextW(ChangeToCString(ObjectTransform->Scale.z));
+	ObjectTransform->SetScale(0.01f);
+	Vector3 scale = ObjectTransform->GetScale();
+	Scl_X.SetWindowTextW(ChangeToCString(scale.x));
+	Scl_Y.SetWindowTextW(ChangeToCString(scale.y));
+	Scl_Z.SetWindowTextW(ChangeToCString(scale.z));
 }
 
 
 void CTAP_Transform::OnAllScaleReset_Button()
 {
-	ObjectTransform->Scale = { 1.00,1.00 ,1.00 };
-	Scl_X.SetWindowTextW(ChangeToCString(ObjectTransform->Scale.x));
-	Scl_Y.SetWindowTextW(ChangeToCString(ObjectTransform->Scale.y));
-	Scl_Z.SetWindowTextW(ChangeToCString(ObjectTransform->Scale.z));
+	ObjectTransform->SetScale(1.0f);
+	Vector3 scale = ObjectTransform->GetScale();
+	Scl_X.SetWindowTextW(ChangeToCString(scale.x));
+	Scl_Y.SetWindowTextW(ChangeToCString(scale.y));
+	Scl_Z.SetWindowTextW(ChangeToCString(scale.z));
 }
 
 
 void CTAP_Transform::OnAllScaleUp_Button()
 {
-	ObjectTransform->Scale = { 100,100 ,100 };
-	Scl_X.SetWindowTextW(ChangeToCString(ObjectTransform->Scale.x));
-	Scl_Y.SetWindowTextW(ChangeToCString(ObjectTransform->Scale.y));
-	Scl_Z.SetWindowTextW(ChangeToCString(ObjectTransform->Scale.z));
+	ObjectTransform->SetScale(100.0f);
+	Vector3 scale = ObjectTransform->GetScale();
+	Scl_X.SetWindowTextW(ChangeToCString(scale.x));
+	Scl_Y.SetWindowTextW(ChangeToCString(scale.y));
+	Scl_Z.SetWindowTextW(ChangeToCString(scale.z));
 }
 
 void CTAP_Transform::OnResetRot_Button()
 {
-	ObjectTransform->Rotation = { 0,0,0 };
-	Rot_X.SetWindowTextW(ChangeToCString(ObjectTransform->Rotation.x));
-	Rot_Y.SetWindowTextW(ChangeToCString(ObjectTransform->Rotation.y));
-	Rot_Z.SetWindowTextW(ChangeToCString(ObjectTransform->Rotation.z));
+	ObjectTransform->SetRotate(0.0f, 0.0f, 0.0f);
+	Vector3 rotation = ObjectTransform->GetRotation();
+	Rot_X.SetWindowTextW(ChangeToCString(rotation.x));
+	Rot_Y.SetWindowTextW(ChangeToCString(rotation.y));
+	Rot_Z.SetWindowTextW(ChangeToCString(rotation.z));
 }
 
 
 void CTAP_Transform::OnUpPosition_Y_Button()
 {
-	ObjectTransform->Position.y += 1;
-	Pos_Y.SetWindowTextW(ChangeToCString(ObjectTransform->Position.y));
+	ObjectTransform->AddTranlate(0.0f, 1.0f, 0.0f);
+	Pos_Y.SetWindowTextW(ChangeToCString(ObjectTransform->GetPosition().y));
 }
 
 
 void CTAP_Transform::OnDownPosition_Y_Button()
 {
-	ObjectTransform->Position.y -= 1;
-	Pos_Y.SetWindowTextW(ChangeToCString(ObjectTransform->Position.y));
+	ObjectTransform->AddTranlate(0.0f, -1.0f, 0.0f);
+	Pos_Y.SetWindowTextW(ChangeToCString(ObjectTransform->GetPosition().y));
 }
 
 
 void CTAP_Transform::OnUpPosition_Z_Button()
 {
-	ObjectTransform->Position.z += 1;
-	Pos_Z.SetWindowTextW(ChangeToCString(ObjectTransform->Position.z));
+	ObjectTransform->AddTranlate(0.0f, 0.0f, 1.0f);
+	Pos_Z.SetWindowTextW(ChangeToCString(ObjectTransform->GetPosition().z));
 }
 
 
 void CTAP_Transform::OnDownPosition_Z_Button()
 {
-	ObjectTransform->Position.z -= 1;
-	Pos_Z.SetWindowTextW(ChangeToCString(ObjectTransform->Position.z));
+	ObjectTransform->AddTranlate(0.0f, 0.0f, -1.0f);
+	Pos_Z.SetWindowTextW(ChangeToCString(ObjectTransform->GetPosition().z));
 }
 
 
 void CTAP_Transform::OnUpPosition_X_Button()
 {
-	ObjectTransform->Position.x += 1;
-	Pos_X.SetWindowTextW(ChangeToCString(ObjectTransform->Position.x));
+	ObjectTransform->AddTranlate(1.0f, 0.0f, 0.0f);
+	Pos_X.SetWindowTextW(ChangeToCString(ObjectTransform->GetPosition().x));
 }
 
 
 void CTAP_Transform::OnDownPosition_X_Button()
 {
-	ObjectTransform->Position.x -= 1;
-	Pos_X.SetWindowTextW(ChangeToCString(ObjectTransform->Position.x));
+	ObjectTransform->AddTranlate(-1.0f, 0.0f, 0.0f);
+	Pos_X.SetWindowTextW(ChangeToCString(ObjectTransform->GetPosition().x));
 }
 
 
@@ -300,20 +309,23 @@ void CTAP_Transform::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 	CString SilderText;
 	if (pScrollBar->GetDlgCtrlID() == Rotation_X_Slider.GetDlgCtrlID()) 
 	{
-		ObjectTransform->Rotation.x = (float)Rotation_X_Slider.GetPos();
-		Rot_X.SetWindowTextW(ChangeToCString(ObjectTransform->Rotation.x));
+		Vector3 rotation = ObjectTransform->GetRotation();
+		ObjectTransform->SetRotate((float)Rotation_X_Slider.GetPos(), rotation.y, rotation.z);
+		Rot_X.SetWindowTextW(ChangeToCString(ObjectTransform->GetRotation().x));
 	}
 
 	if (pScrollBar->GetDlgCtrlID() == Rotation_Y_Slider.GetDlgCtrlID())
 	{
-		ObjectTransform->Rotation.y = (float)Rotation_Y_Slider.GetPos();
-		Rot_Y.SetWindowTextW(ChangeToCString(ObjectTransform->Rotation.y));
+		Vector3 rotation = ObjectTransform->GetRotation();
+		ObjectTransform->SetRotate(rotation.x, (float)Rotation_Y_Slider.GetPos(), rotation.z);
+		Rot_Y.SetWindowTextW(ChangeToCString(ObjectTransform->GetRotation().y));
 	}
 
 	if (pScrollBar->GetDlgCtrlID() == Rotation_Z_Slider.GetDlgCtrlID())
 	{
-		ObjectTransform->Rotation.z = (float)Rotation_Z_Slider.GetPos();
-		Rot_Z.SetWindowTextW(ChangeToCString(ObjectTransform->Rotation.z));
+		Vector3 rotation = ObjectTransform->GetRotation();
+		ObjectTransform->SetRotate(rotation.x, rotation.y, (float)Rotation_Z_Slider.GetPos());
+		Rot_Z.SetWindowTextW(ChangeToCString(ObjectTransform->GetRotation().z));
 	}
 
 	CDialogEx::OnHScroll(nSBCode, nPos, pScrollBar);
@@ -322,32 +334,37 @@ void CTAP_Transform::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 
 void CTAP_Transform::OnBnClickedButton2()
 {
-	ObjectTransform->Rotation.x = 0;
+	Vector3 rotation = ObjectTransform->GetRotation();
+	ObjectTransform->SetRotate(0.0f, rotation.y, rotation.z);
 	Rotation_X_Slider.SetPos(0);
-	Rot_X.SetWindowTextW(ChangeToCString(ObjectTransform->Rotation.x));
+	Rot_X.SetWindowTextW(ChangeToCString(ObjectTransform->GetRotation().x));
 }
 
 
 void CTAP_Transform::OnBnClickedButton13()
 {
-	ObjectTransform->Rotation.y = 0;
+	Vector3 rotation = ObjectTransform->GetRotation();
+	ObjectTransform->SetRotate(rotation.x, 0.0f, rotation.z);
 	Rotation_Y_Slider.SetPos(0);
-	Rot_Y.SetWindowTextW(ChangeToCString(ObjectTransform->Rotation.y));
+	Rot_Y.SetWindowTextW(ChangeToCString(ObjectTransform->GetRotation().y));
 }
 
 
 void CTAP_Transform::OnBnClickedButton25()
 {
-	ObjectTransform->Rotation.z = 0;
+	Vector3 rotation = ObjectTransform->GetRotation();
+	ObjectTransform->SetRotate(rotation.x, rotation.y, 0.0f);
 	Rotation_Z_Slider.SetPos(0);
-	Rot_Z.SetWindowTextW(ChangeToCString(ObjectTransform->Rotation.z));
+	Rot_Z.SetWindowTextW(ChangeToCString(ObjectTransform->GetRotation().z));
 }
 
 
 void CTAP_Transform::OnBnClickedButton23()
 {
-	ObjectTransform->Position = {0,0,0};
-	Pos_X.SetWindowTextW(ChangeToCString(ObjectTransform->Position.x));
-	Pos_Y.SetWindowTextW(ChangeToCString(ObjectTransform->Position.y));
-	Pos_Z.SetWindowTextW(ChangeToCString(ObjectTransform->Position.z));
+	ObjectTransform->SetTranlate(0.0f, 0.0f, 0.0f);
+
+	Vector3 position = ObjectTransform->GetPosition();
+	Pos_X.SetWindowTextW(ChangeToCString(position.x));
+	Pos_Y.SetWindowTextW(ChangeToCString(position.y));
+	Pos_Z.SetWindowTextW(ChangeToCString(position.z));
 }
