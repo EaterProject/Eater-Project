@@ -14,6 +14,7 @@ public:
 
 public:
 	void PreBakeShadowMap(std::string fileName) override;
+	void BakeLookUpTable3D(std::string fileName) override;
 	void BakeSkyLightMap(TextureBuffer* resource, bool hdri, SkyLightBuffer* pResource) override;
 	void BakeConvertCubeMap(TextureBuffer* resource, float angle, float threshold, bool hdri, TextureBuffer* pResource);
 

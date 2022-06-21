@@ -11,6 +11,7 @@ public:
 
 public:
 	virtual void PreBakeShadowMap(std::string fileName) abstract;
+	virtual void BakeLookUpTable3D(std::string fileName) abstract;
 	virtual void BakeSkyLightMap(TextureBuffer* resource, bool hdri, SkyLightBuffer* pResource) abstract;
 	virtual void BakeConvertCubeMap(TextureBuffer* resource, float angle, float threshold, bool hdri, TextureBuffer* pResource) abstract;
 	

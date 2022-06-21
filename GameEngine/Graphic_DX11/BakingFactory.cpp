@@ -54,6 +54,11 @@ void BakingFactory::PreBakeShadowMap(std::string fileName)
 	g_Graphic->CaptureTextureDDS(fileName.c_str());
 }
 
+void BakingFactory::BakeLookUpTable3D(std::string fileName)
+{
+
+}
+
 void BakingFactory::PreBakeBRDFMap()
 {
 	// 货肺款 Resource Pointer 积己..

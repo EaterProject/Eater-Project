@@ -518,7 +518,6 @@ void RenderManager::PostProcessingRender()
 		m_FXAA->RenderUpdate();
 	}
 	GPU_END_EVENT_DEBUG_NAME();
-
 }
 
 void RenderManager::UIRender()
