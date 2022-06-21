@@ -154,19 +154,17 @@ void Particle::Update()
 		if (m_AniType & POSITION_ANI)
 		{
 			m_NowPos = Vector3::Lerp(m_PrevPos, m_NextPos, m_OneTickFrame);
-			gameobject->transform->Position = m_NowPos;
+			m_Transform->SetTranlate(m_NowPos);
 		}
 		if (m_AniType & ROTATION_ANI)
 		{
-			m_NowRot = LERP(m_PrevRot, m_NextRot, m_OneTickFrame);
-			gameobject->transform->Rotation.z = m_NowRot;
+			m_NowRot.z = LERP(m_PrevRot, m_NextRot, m_OneTickFrame);
+			m_Transform->SetRotate(m_NowRot);
 		}
 		if (m_AniType & SCALE_ANI)
 		{
 			m_NowScale = LERP(m_PrevScale, m_NextScale, m_OneTickFrame);
-			gameobject->transform->Scale.x = m_NowScale;
-			gameobject->transform->Scale.y = m_NowScale;
-			gameobject->transform->Scale.z = m_NowScale;
+			m_Transform->SetScale(m_NowScale);
 		}
 	}
 	else
@@ -263,22 +261,22 @@ void Particle::SetPlay(const PARTICLE_DESC* particleDesc)
 	}
 
 	m_NextScale = m_PrevScale + m_OneScale;
-	gameobject->transform->Scale.x = m_PrevScale;
-	gameobject->transform->Scale.y = m_PrevScale;
+	m_Transform->SetScale(m_PrevScale);
 
 	// 파티클 회전 설정..
 	m_StartRot = particleDesc->StartRot;
 	m_OneRot = particleDesc->LifeRot / (float)m_AniTotalFrame;
 	m_PrevRot = m_StartRot;
 	m_NextRot = m_PrevRot + m_OneRot;
-	gameobject->transform->Rotation.z = m_PrevRot;
+	m_NowRot.z = m_PrevRot;
+	m_Transform->SetRotate(m_NowRot);
 
 	// 파티클 위치 설정..
 	m_StartPos = particleDesc->StartPos;
 	m_OnePos = (particleDesc->StartForce + particleDesc->LifeForce) / (float)m_AniTotalFrame;
 	m_PrevPos = m_StartPos;
 	m_NextPos = m_PrevPos + m_OnePos;
-	gameobject->transform->Position = m_PrevPos;
+	m_Transform->SetTranlate(m_PrevPos);
 
 	// Animation Type 설정..
 	if (m_OneColor != XMVectorZero())	m_AniType |= COLOR_ANI;

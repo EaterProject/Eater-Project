@@ -512,8 +512,6 @@ void RenderManager::PostProcessingRender()
 	m_Combine->RenderUpdate();
 	GPU_END_EVENT_DEBUG_NAME();
 
-	//m_Blur->RenderUpdate(m_Combine->GetRT(), 2);
-
 	GPU_BEGIN_EVENT_DEBUG_NAME("FXAA Pass");
 	if (m_NowRenderOption.PostProcessOption & POSTPROCESS_OPTION::RENDER_FXAA)
 	{

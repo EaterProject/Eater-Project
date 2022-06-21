@@ -100,4 +100,5 @@ void LoadingImage::Update()
 			IsPlus = true;
 		}
 	}
+
 }

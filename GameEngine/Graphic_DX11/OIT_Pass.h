@@ -25,7 +25,6 @@ private:
 private:
 	VertexShader* m_OITRender_VS;
 	PixelShader* m_OITRender_PS;
-	ComputeShader* m_OITRender_CS;
 
 	PixelShader* m_OITMesh_PS;
 	PixelShader* m_OITParticle_PS;
@@ -51,15 +50,10 @@ private:
 
 	ID3D11ShaderResourceView* m_NullSRV = nullptr;
 	ID3D11UnorderedAccessView* m_NullUAV = nullptr;
-private:
-	UINT m_NumGroupsX;
-	UINT m_NumGroupsY;
 
+private:
 	UINT m_Multiple;
 	UINT m_MagicValue;
 	UINT m_InitCounts[2];
-
-public:
-	bool CS = true;
 };
 

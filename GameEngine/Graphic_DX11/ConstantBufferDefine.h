@@ -228,7 +228,6 @@ SHADER_CONSTANT_BUFFER(cbOitFrame)
 struct CB_OitFrame : public cbOitFrame
 {
 	UINT gFrameWidth;
-	UINT gFrameHeight;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////

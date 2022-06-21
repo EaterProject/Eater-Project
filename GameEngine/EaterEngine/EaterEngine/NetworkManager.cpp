@@ -120,13 +120,13 @@ void NetworkManager::C2S_LOADING_COMPLETE(unsigned int Number)
 void NetworkManager::C2S_CONNECT(int ServerPort,std::string  Local_Connect_IP)
 {
 	/// 서버에 연결 요청을 한다
-	PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "(네트워크 연결)");
+	PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "(네트워크 연결)");
 
 	while (!mDHNetWork->Connect(ServerPort, Local_Connect_IP))
 	{
-		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "CONNECT 연결요청중...");
+		PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "CONNECT 연결요청중...");
 	};
 
 	///연결완료
-	PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "CONNECT 연결완료...");
+	PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "CONNECT 연결완료...");
 }

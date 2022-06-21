@@ -160,6 +160,8 @@ void Shadow_Pass::RenderUpdate(const InstanceRenderBuffer* instance, const std::
 	{
 	case OBJECT_TYPE::BASE:
 	{
+		ObjectData* object = nullptr;
+		
 		int loopCount = 0;
 		int renderCount = 0;
 		int nowCount = 0;
@@ -175,10 +177,16 @@ void Shadow_Pass::RenderUpdate(const InstanceRenderBuffer* instance, const std::
 			// Instance Update..
 			for (int i = 0; i < nowCount; i++)
 			{
-				if (meshlist[i]->m_Draw == false) continue;
+				m_RenderData = meshlist[i + renderCount];
+				
+				if (m_RenderData->m_Draw == false) continue;
+
+				object = m_RenderData->m_ObjectData;
+
+				if (object->IsShadow == false) continue;
 
 				// ÇØ´ç Instance Data »ðÀÔ..
-				m_MeshData.World = meshlist[i + renderCount]->m_ObjectData->World;
+				m_MeshData.World = object->World;
 
 				m_MeshInstance[m_InstanceCount++] = m_MeshData;
 			}
@@ -238,6 +246,9 @@ void Shadow_Pass::RenderUpdate(const InstanceRenderBuffer* instance, const std::
 				if (m_RenderData->m_Draw == false) continue;
 
 				object = m_RenderData->m_ObjectData;
+
+				if (object->IsShadow == false) continue;
+
 				animation = m_RenderData->m_AnimationData;
 
 				// ÇØ´ç Instance Data »ðÀÔ..

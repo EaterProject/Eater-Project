@@ -42,6 +42,9 @@ public:
 	std::string Name;													//이름
 public:
 	EATER_ENGINEDLL void SetActive(bool active);						//모든 컨퍼넌트 기능중지 여부
+	EATER_ENGINEDLL void SetStatic(bool active);						//오브젝트 정적 여부
+	EATER_ENGINEDLL void SetShadow(bool active);						//오브젝트 그림자 여부
+	EATER_ENGINEDLL void SetCull(bool active);							//오브젝트 컬링 여부
 	EATER_ENGINEDLL void SetDontDestroy(bool DontDestroy);				//씬이 넘어갈때 삭제여부
 	EATER_ENGINEDLL bool SetTag(std::string TagName);					//태그를 지정한다
 	EATER_ENGINEDLL bool SetTag(int TagNumber);							//태그를 지정한다

@@ -171,23 +171,29 @@ void SceneSave::SceneOption()
 	EATER_SET_LIST(Color.y);
 	EATER_SET_LIST(Color.z);
 
-	EATER_SET_LIST(mTransform->Rotation.x);
-	EATER_SET_LIST(mTransform->Rotation.y);
-	EATER_SET_LIST(mTransform->Rotation.z,true);
+	Vector3 rotation = mTransform->GetRotation();
+	EATER_SET_LIST(rotation.x);
+	EATER_SET_LIST(rotation.y);
+	EATER_SET_LIST(rotation.z,true);
 }
 
 void SceneSave::SaveTransform(Transform* mTransform)
 {
 	EATER_SET_LIST_START("Transform", 1, 9);
-	EATER_SET_LIST(mTransform->Position.x);
-	EATER_SET_LIST(mTransform->Position.y);
-	EATER_SET_LIST(mTransform->Position.z);
-	EATER_SET_LIST(mTransform->Rotation.x);
-	EATER_SET_LIST(mTransform->Rotation.y);
-	EATER_SET_LIST(mTransform->Rotation.z);
-	EATER_SET_LIST(mTransform->Scale.x);
-	EATER_SET_LIST(mTransform->Scale.y);
-	EATER_SET_LIST(mTransform->Scale.z, true);
+	Vector3 position = mTransform->GetPosition();
+	EATER_SET_LIST(position.x);
+	EATER_SET_LIST(position.y);
+	EATER_SET_LIST(position.z);
+
+	Vector3 rotation = mTransform->GetRotation();
+	EATER_SET_LIST(rotation.x);
+	EATER_SET_LIST(rotation.y);
+	EATER_SET_LIST(rotation.z);
+
+	Vector3 scale = mTransform->GetScale();
+	EATER_SET_LIST(scale.x);
+	EATER_SET_LIST(scale.y);
+	EATER_SET_LIST(scale.z, true);
 }
 
 void SceneSave::SaveMeshFilter(MeshFilter* mMeshFilter)

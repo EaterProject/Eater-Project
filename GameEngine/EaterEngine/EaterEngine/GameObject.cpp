@@ -48,6 +48,21 @@ void GameObject::SetActive(bool active)
 
 }
 
+void GameObject::SetStatic(bool active)
+{
+	OneMeshData->Object_Data->IsStatic = active;
+}
+
+void GameObject::SetShadow(bool active)
+{
+	OneMeshData->Object_Data->IsShadow = active;
+}
+
+void GameObject::SetCull(bool active)
+{
+	OneMeshData->Object_Data->IsCull = active;
+}
+
 void GameObject::SetDontDestroy(bool mDontDestroy)
 {
 	DontDestroy = mDontDestroy;

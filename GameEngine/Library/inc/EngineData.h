@@ -290,7 +290,6 @@ public:
 	Matrix CamOrthoProj;	// Camera Orth Proj Matrix
 	Matrix CamViewProj;	// Camera View Proj Matrix
 	Vector3 CamPos;		// Camera Pos
-	Vector3 CamLook;	// Camera Look
 
 	BoundingFrustum BoundFrustum;	// Bounding Frustum
 	BoundingFrustum OriginFrustum;	// Bounding Frustum
@@ -306,6 +305,7 @@ public:
 	bool IsActive = true;							//오브젝트 활성화 여부
 	bool IsStatic = false;							//정적 오브젝트 여부
 	bool IsShadow = true;							//그림자 여부
+	bool IsCull = true;								//컬링 여부
 
 	void* Object;									//Grahpic 전용 GameObject
 

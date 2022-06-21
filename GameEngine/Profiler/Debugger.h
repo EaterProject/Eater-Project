@@ -72,5 +72,5 @@ private:
 	std::map<Hash, TIME_DESC> m_Timer;
 
 	static LOG_DESC g_Log;
-	static HANDLE g_Console;
+	//static HANDLE g_Console;
 };

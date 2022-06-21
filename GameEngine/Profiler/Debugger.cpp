@@ -19,7 +19,7 @@ const std::string Debugger::TOKEN::Tab	 = "\t";
 const std::string Debugger::TOKEN::Space = " ";
 
 LOG_DESC Debugger::g_Log;
-HANDLE Debugger::g_Console;
+//HANDLE Debugger::g_Console;
 
 Debugger::Debugger()
 {
@@ -29,9 +29,9 @@ Debugger::Debugger()
 void Debugger::Create()
 {
 #if defined(DEBUG) || defined(_DEBUG)
-	AllocConsole();
-	system("cls");
-	g_Console = GetStdHandle(STD_OUTPUT_HANDLE);
+	//AllocConsole();
+	//system("cls");
+	//g_Console = GetStdHandle(STD_OUTPUT_HANDLE);
 #endif
 
 	if ((_waccess(_T("./Log"), 0)) == -1) //여기에 LOG폴더가 없으면...
@@ -187,17 +187,17 @@ void Debugger::Log(PROFILE_OUTPUT& outputType, HRESULT result, const char* fileI
 		fputs(output.c_str(), g_Log.LogFile);
 	}
 		break;
-	case PROFILE_OUTPUT::CONSOLE:
-	{
-#if defined(DEBUG) || defined(_DEBUG)
-		std::string output = message;
-		output += errMessage;
-		output += TOKEN::Enter;
-
-		WriteFile(g_Console, output.c_str(), (DWORD)(output.size()), NULL, NULL);
-#endif
-	}
-	break;
+//	case PROFILE_OUTPUT::CONSOLE:
+//	{
+//#if defined(DEBUG) || defined(_DEBUG)
+//		std::string output = message;
+//		output += errMessage;
+//		output += TOKEN::Enter;
+//
+//		WriteFile(g_Console, output.c_str(), (DWORD)(output.size()), NULL, NULL);
+//#endif
+//	}
+//	break;
 	case PROFILE_OUTPUT::VS_CODE:
 	{
 		std::string output;

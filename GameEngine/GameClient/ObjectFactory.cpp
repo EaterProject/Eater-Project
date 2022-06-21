@@ -58,7 +58,9 @@ GameObject* ObjectFactory::CreatePlayer()
 	PlayerObject->AddComponent<Player>();
 	PlayerObject->AddComponent<MeshFilter>();
 	PlayerObject->AddComponent<AnimationController>();
-	PlayerObject->GetTransform()->Position = PlayerPoint->GetTransform()->Position;
+
+	Vector3 position = PlayerPoint->GetTransform()->GetPosition();
+	PlayerObject->GetTransform()->SetTranlate(position);
 
 	//콜라이더 객체 생성
 	PlayerCollider->SetTag("PlayerCollider");
@@ -99,13 +101,13 @@ GameObject* ObjectFactory::CreateManaStone()
 	int ManaCount = ManaPoint_List.size();
 	for (int i = 0; i < 1; i++)
 	{
-		Vector3 point = ManaPoint_List[i]->GetTransform()->Position;
+		Vector3 point = ManaPoint_List[i]->GetTransform()->GetPosition();
 		
 
 		GameObject* Object_ManaStone = Instance("ManaStone");
 		Object_ManaStone->AddComponent<MeshFilter>();
 		ManaStone* mMana = Object_ManaStone->AddComponent<ManaStone>();
-		Object_ManaStone->GetTransform()->Position = point;
+		Object_ManaStone->GetTransform()->SetTranlate(point);
 
 		switch (i)
 		{

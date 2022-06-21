@@ -136,7 +136,7 @@ void GameEngine::Start()
 	DebugCamera = InstanceCamera("DebugCamera");
 	DebugCamera->AddComponent<CameraDebugKeyInput>();
 	DebugCamera->SetDontDestroy(true);
-	DebugCamera->transform->Position = {0,10,-25};
+	DebugCamera->transform->SetTranlate(0.0f, 10.0f, -25.0f);
 
 	//디렉션 라이트 생성
 	DirectionLight = Instance_Light("DirectionLight", LIGHT_TYPE::DIRECTION_LIGHT);
@@ -193,7 +193,7 @@ void GameEngine::OnResize(int Change_Width, int Change_Height)
 	if (Change_Width == 0 || Change_Height == 0) return;
 	if (mGraphicManager == nullptr) return;
 
-	PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Resize ][ OnResize ] %d / %d", WinSizeWidth, WinSizeHeight);
+	PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "[ Engine ][ Resize ][ OnResize ] %d / %d", WinSizeWidth, WinSizeHeight);
 
 	//카메라의 변화할 사이즈를 넣어준다
 	Camera::g_MainCam->SetSize(WinSizeWidth, WinSizeHeight);
@@ -213,7 +213,7 @@ void GameEngine::OnResize(int Change_Width, int Change_Height)
 ///오브젝트 생성 삭제
 GameObject* GameEngine::Instance(std::string ObjName)
 {
-	PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Create ][ GameObject ] %s", ObjName.c_str());
+	PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "[ Engine ][ Create ][ GameObject ] %s", ObjName.c_str());
 
 	//오브젝트 생성
 	GameObject* temp = CreateInstance();
@@ -235,7 +235,7 @@ GameObject* GameEngine::Instance(std::string ObjName)
 
 GameObject* GameEngine::InstanceTerrain(std::string ObjName)
 {
-	PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Create ][ Terrain ] %s", ObjName.c_str());
+	PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "[ Engine ][ Create ][ Terrain ] %s", ObjName.c_str());
 
 	GameObject* temp = CreateInstance();
 	temp->Name = ObjName;
@@ -253,7 +253,7 @@ GameObject* GameEngine::InstanceTerrain(std::string ObjName)
 
 GameObject* GameEngine::InstanceParticle(std::string ObjName, std::string FileName)
 {
-	PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Create ][ Particle ] %s", ObjName.c_str());
+	PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "[ Engine ][ Create ][ Particle ] %s", ObjName.c_str());
 	
 	GameObject* temp = CreateInstance();
 	temp->Name = ObjName;
@@ -336,20 +336,19 @@ GameObject* GameEngine::InstanceParticle(std::string ObjName, std::string FileNa
 
 GameObject* GameEngine::InstanceCamera(std::string ObjName)
 {
-	PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Create ][ Camera ] %s", ObjName.c_str());
+	PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "[ Engine ][ Create ][ Camera ] %s", ObjName.c_str());
 	
 	GameObject* Obj	= CreateInstance();
 	Obj->transform = Obj->AddComponent<Transform>();
 	Obj->AddComponent<Camera>();
 	Obj->Name = ObjName;
-	Obj->transform->Position.z = -40.0f;
-	Obj->transform->Position.y = 5.0f;
+	Obj->transform->SetTranlate(0.0f, 5.0f, -40.0f);
 	return Obj;
 }
 
 GameObject* GameEngine::Instance_Light(std::string ObjName, LIGHT_TYPE type)
 {
-	PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Create ][ Light ] %s", ObjName.c_str());
+	PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "[ Engine ][ Create ][ Light ] %s", ObjName.c_str());
 	
 	GameObject* temp = CreateInstance();
 	temp->Name = ObjName;
@@ -364,8 +363,7 @@ GameObject* GameEngine::Instance_Light(std::string ObjName, LIGHT_TYPE type)
 	switch (type)
 	{
 	case DIRECTION_LIGHT:
-		Tr->Rotation.x = -30.0f;
-		Tr->Rotation.y = 10.0f;
+		Tr->SetRotate(-30.0f, 10.0f, 0.0f);
 		light->SetPower(1);
 		break;
 	case POINT_LIGHT:
@@ -373,7 +371,7 @@ GameObject* GameEngine::Instance_Light(std::string ObjName, LIGHT_TYPE type)
 		light->SetPower(100.0f);
 		break;
 	case SPOT_LIGHT:
-		Tr->Rotation.x = -90.0f;
+		Tr->SetRotate(-90.0f, 0.0f, 0.0f);
 		light->SetColor(1.0f, 1.0f, 0.0f);
 		light->SetPower(100.0f);
 		light->SetAttenuate(0.5f);
@@ -454,7 +452,7 @@ void GameEngine::PushScene(Scene* mScene, std::string name)
 
 void GameEngine::ChoiceScene(std::string name)
 {
-	PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Choice ][ Scene ] %s", name.c_str());
+	PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "[ Engine ][ Choice ][ Scene ] %s", name.c_str());
 
 	//씬 선택이 되면 씬자체의 Awack와 Start 함수 실행 그리고나서 컨퍼넌트의 Awack와 Start 도 실행 
 	mSceneManager->ChoiceScene(name);

@@ -36,6 +36,7 @@ void Transform::Start()
 	//물리충돌된 좌표를 받는다
 	mRigidbody	= gameobject->GetComponent<Rigidbody>();
 	mCollider	= gameobject->GetComponent<Collider>();
+
 	if (mRigidbody != nullptr)
 	{
 		isRigid = true;
@@ -45,14 +46,19 @@ void Transform::Start()
 
 	}
 
+	// 최초 위치값 설정..
+	UpdateTransform();
 }
 
 void Transform::TransformUpdate()
 {
 	//월드 좌표들을 기반으로 월드 행렬을 구한다
-	UpdateWorldXM();
+	if (IsUpdate)
+	{
+		UpdateTransform();
 
-	UpdateLocalPosition();
+		IsUpdate = false;
+	}
 }
 
 DirectX::SimpleMath::Vector3 Transform::GetLocalPosition_UP()
@@ -106,21 +112,34 @@ void Transform::LookAt_Y(Vector3 Pos)
 
 void Transform::SetLocalPosition(float X, float Y, float Z)
 {
+	IsUpdate = true;
+
+	Position =
+	{
+		(Local_Right.x * X) + (Local_UP.x * Y) + (Local_Look.x * Z),
+		(Local_Right.y * X) + (Local_UP.y * Y) + (Local_Look.y * Z),
+		(Local_Right.z * X) + (Local_UP.z * Y) + (Local_Look.z * Z)
+	};
+}
+
+void Transform::AddLocalPosition(float X, float Y, float Z)
+{
+	IsUpdate = true;
+
 	Position =
 	{
 		Position.x + (Local_Right.x * X),
 		Position.y + (Local_Right.y * X),
 		Position.z + (Local_Right.z * X)
 	};
-	
+
 	Position =
 	{
 		Position.x + (Local_UP.x * Y),
 		Position.y + (Local_UP.y * Y),
 		Position.z + (Local_UP.z * Y)
 	};
-	
-	
+
 	Position =
 	{
 		Position.x + (Local_Look.x * Z),
@@ -129,46 +148,348 @@ void Transform::SetLocalPosition(float X, float Y, float Z)
 	};
 }
 
+void Transform::SetTranlate_X(float pos)
+{
+	IsUpdate = true;
+
+	Position.x = pos;
+}
+
+void Transform::SetTranlate_Y(float pos)
+{
+	IsUpdate = true;
+
+	Position.y = pos;
+}
+
+void Transform::SetTranlate_Z(float pos)
+{
+	IsUpdate = true;
+
+	Position.z = pos;
+}
+
 void Transform::SetTranlate(float X, float Y, float Z)
 {
+	IsUpdate = true;
+	
+	Position.x = X;
+	Position.y = Y;
+	Position.z = Z;
+}
+
+void Transform::SetTranlate(DirectX::SimpleMath::Vector3& mPos)
+{
+	IsUpdate = true;
+	
+	Position.x = mPos.x;
+	Position.y = mPos.y;
+	Position.z = mPos.z;
+}
+
+void Transform::SetTranlate(DirectX::SimpleMath::Vector3&& mPos)
+{
+	IsUpdate = true;
+
+	Position.x = mPos.x;
+	Position.y = mPos.y;
+	Position.z = mPos.z;
+}
+
+void Transform::AddTranlate_X(float pos)
+{
+	IsUpdate = true;
+
+	Position.x += pos;
+}
+
+void Transform::AddTranlate_Y(float pos)
+{
+	IsUpdate = true;
+
+	Position.y += pos;
+}
+
+void Transform::AddTranlate_Z(float pos)
+{
+	IsUpdate = true;
+
+	Position.z += pos;
+}
+
+void Transform::AddTranlate(float X, float Y, float Z)
+{
+	IsUpdate = true;
+	
 	Position.x += X;
 	Position.y += Y;
 	Position.z += Z;
 }
 
-void Transform::SetTranlate(DirectX::SimpleMath::Vector3 mPos)
+void Transform::AddTranlate(DirectX::SimpleMath::Vector3& mPos)
 {
+	IsUpdate = true;
+	
 	Position.x += mPos.x;
 	Position.y += mPos.y;
 	Position.z += mPos.z;
 }
 
+void Transform::AddTranlate(DirectX::SimpleMath::Vector3&& mPos)
+{
+	IsUpdate = true;
+
+	Position.x += mPos.x;
+	Position.y += mPos.y;
+	Position.z += mPos.z;
+}
+
+void Transform::SetRotate_X(float rot)
+{
+	IsUpdate = true;
+
+	Rotation.x = rot;
+}
+
+void Transform::SetRotate_Y(float rot)
+{
+	IsUpdate = true;
+
+	Rotation.y = rot;
+}
+
+void Transform::SetRotate_Z(float rot)
+{
+	IsUpdate = true;
+
+	Rotation.z = rot;
+}
+
 void Transform::SetRotate(float X, float Y, float Z)
 {
+	IsUpdate = true;
+	
+	Rotation.x = X;
+	Rotation.y = Y;
+	Rotation.z = Z;
+}
+
+void Transform::SetRotate(DirectX::SimpleMath::Vector3& mRot)
+{
+	IsUpdate = true;
+	
+	Rotation.x = mRot.x;
+	Rotation.y = mRot.y;
+	Rotation.z = mRot.z;
+}
+
+void Transform::SetRotate(DirectX::SimpleMath::Vector3&& mRot)
+{
+	IsUpdate = true;
+
+	Rotation.x = mRot.x;
+	Rotation.y = mRot.y;
+	Rotation.z = mRot.z;
+}
+
+void Transform::SetRotate(DirectX::SimpleMath::Quaternion& mRot)
+{
+	IsUpdate = true;
+	
+	Q_Rotation = mRot;
+}
+
+void Transform::SetRotate(DirectX::SimpleMath::Quaternion&& mRot)
+{
+	IsUpdate = true;
+
+	Q_Rotation = mRot;
+}
+
+void Transform::AddRotate_X(float rot)
+{
+	IsUpdate = true;
+
+	Rotation.x += rot;
+}
+
+void Transform::AddRotate_Y(float rot)
+{
+	IsUpdate = true;
+
+	Rotation.y += rot;
+}
+
+void Transform::AddRotate_Z(float rot)
+{
+	IsUpdate = true;
+
+	Rotation.z += rot;
+}
+
+void Transform::AddRotate(float X, float Y, float Z)
+{
+	IsUpdate = true;
+	
 	Rotation.x += X;
 	Rotation.y += Y;
 	Rotation.z += Z;
 }
 
-void Transform::SetRotate(DirectX::SimpleMath::Vector3 mRot)
+void Transform::AddRotate(DirectX::SimpleMath::Vector3& mRot)
 {
+	IsUpdate = true;
+	
 	Rotation.x += mRot.x;
 	Rotation.y += mRot.y;
 	Rotation.z += mRot.z;
 }
 
+void Transform::AddRotate(DirectX::SimpleMath::Vector3&& mRot)
+{
+	IsUpdate = true;
+
+	Rotation.x += mRot.x;
+	Rotation.y += mRot.y;
+	Rotation.z += mRot.z;
+}
+
+void Transform::AddRotate(DirectX::SimpleMath::Quaternion& mRot)
+{
+	IsUpdate = true;
+	
+	Q_Rotation += mRot;
+}
+
+void Transform::AddRotate(DirectX::SimpleMath::Quaternion&& mRot)
+{
+	IsUpdate = true;
+
+	Q_Rotation += mRot;
+}
+
+void Transform::SetScale_X(float scale)
+{
+	IsUpdate = true;
+
+	Scale.x = scale;
+}
+
+void Transform::SetScale_Y(float scale)
+{
+	IsUpdate = true;
+
+	Scale.y = scale;
+}
+
+void Transform::SetScale_Z(float scale)
+{
+	IsUpdate = true;
+
+	Scale.z = scale;
+}
+
 void Transform::SetScale(float X, float Y, float Z)
 {
+	IsUpdate = true;
+
+	Scale.x = X;
+	Scale.y = Y;
+	Scale.z = Z;
+}
+
+void Transform::SetScale(DirectX::SimpleMath::Vector3& mScl)
+{
+	IsUpdate = true;
+	
+	Scale.x = mScl.x;
+	Scale.y = mScl.y;
+	Scale.z = mScl.z;
+}
+
+void Transform::SetScale(float scale)
+{
+	IsUpdate = true;
+
+	Scale.x = scale;
+	Scale.y = scale;
+	Scale.z = scale;
+}
+
+void Transform::AddScale_X(float scale)
+{
+	IsUpdate = true;
+
+	Scale.x += scale;
+}
+
+void Transform::AddScale_Y(float scale)
+{
+	IsUpdate = true;
+
+	Scale.y += scale;
+}
+
+void Transform::AddScale_Z(float scale)
+{
+	IsUpdate = true;
+
+	Scale.z += scale;
+}
+
+void Transform::AddScale(float X, float Y, float Z)
+{
+	IsUpdate = true;
+
 	Scale.x += X;
 	Scale.y += Y;
 	Scale.z += Z;
 }
 
-void Transform::SetScale(DirectX::SimpleMath::Vector3 mScl)
+void Transform::AddScale(DirectX::SimpleMath::Vector3& mScl)
 {
+	IsUpdate = true;
+	
 	Scale.x += mScl.x;
 	Scale.y += mScl.y;
 	Scale.z += mScl.z;
+}
+
+void Transform::AddScale(float scale)
+{
+	IsUpdate = true;
+
+	Scale.x += scale;
+	Scale.y += scale;
+	Scale.z += scale;
+}
+
+void Transform::SetLoadLocal(DirectX::SimpleMath::Matrix& Local)
+{
+	IsUpdate = true;
+
+	Load_Local = Local;
+}
+
+void Transform::SetLoadLocal(DirectX::SimpleMath::Matrix&& Local)
+{
+	IsUpdate = true;
+
+	Load_Local = Local;
+}
+
+void Transform::SetLoadWorld(DirectX::SimpleMath::Matrix& World)
+{
+	IsUpdate = true;
+
+	Load_World = World;
+}
+
+void Transform::SetLoadWorld(DirectX::SimpleMath::Matrix&& World)
+{
+	IsUpdate = true;
+
+	Load_World = World;
 }
 
 DirectX::SimpleMath::Matrix Transform::GetPositionXM()
@@ -196,22 +517,41 @@ DirectX::SimpleMath::Matrix* Transform::GetLocal()
 	return &Load_Local;
 }
 
-void Transform::SetLocalUpdate(bool isUpdate)
+DirectX::SimpleMath::Vector3 Transform::GetPosition()
 {
-	LocalUpdate = isUpdate;
+	return Position;
+}
+
+DirectX::SimpleMath::Vector3 Transform::GetRotation()
+{
+	return Rotation;
+}
+
+DirectX::SimpleMath::Quaternion Transform::GetRotation_Q()
+{
+	return Q_Rotation;
+}
+
+DirectX::SimpleMath::Vector3 Transform::GetScale()
+{
+	return Scale;
 }
 
 void Transform::SetChild(Transform* mChild)
 {
+	IsUpdate = true;
+
 	ChildList.push_back(mChild);
 }
 
 void Transform::SetParent(Transform* mParent)
 {
+	IsUpdate = true;
+
 	Parent = mParent;
 }
 
-void Transform::Child_Local_Updata()
+void Transform::Child_Local_Update()
 {
 	if (Parent == nullptr)
 	{
@@ -225,7 +565,7 @@ void Transform::Child_Local_Updata()
 
 	for (int i = 0; i < ChildList.size(); i++) 
 	{
-		ChildList[i]->Child_Local_Updata();
+		ChildList[i]->Child_Local_Update();
 	}
 }
 
@@ -311,7 +651,7 @@ void Transform::Slow_Y_Rotation(Vector3 Dir, float RotationSpeed, bool Z_Front)
 	//이렇게 계산된 값으로 각도를 이동
 	if (Dir != Vector3(0, 0, 0))
 	{
-		SetRotate(0, RotationDir * RotationAngleSpeed, 0);
+		AddRotate(0, RotationDir * RotationAngleSpeed, 0);
 	}
 
 	//현재 각도는 0 ~ 360 범위 밖으로 나가지못하게 변경
@@ -372,7 +712,7 @@ DirectX::SimpleMath::Matrix Transform::CreateXMScl4x4()
 	return Scale_4x4;
 }
 
-void Transform::UpdateWorldXM()
+void Transform::UpdateTransform()
 {
 	PositionXM	= CreateXMPos4x4();
 	ScaleXM		= CreateXMScl4x4();
@@ -395,21 +735,26 @@ void Transform::UpdateWorldXM()
 	}
 	else
 	{
-		World_M = Load_Local*  Master;
+		World_M = Load_Local * Master;
+	}
+
+	for (int i = 0; i < ChildList.size(); i++)
+	{
+		ChildList[i]->UpdateTransform();
+		ChildList[i]->IsUpdate = false;
 	}
 
 	// Object Matrix 연동..
 	gameobject->OneMeshData->Object_Data->World = World_M;
 	gameobject->OneMeshData->Object_Data->InvWorld = MathHelper::InverseTranspose(World_M);
-}
 
-void Transform::UpdateLocalPosition()
-{
+	/// 로컬 업데이트..
 	//월드 행렬 구하기
 	DirectX::XMVECTOR det = DirectX::XMMatrixDeterminant(World_M);
+
 	//로컬좌표를 구하기위해 월드의 역행렬을 구함
 	DirectX::SimpleMath::Matrix A_Master4x4 = DirectX::XMMatrixInverse(&det, World_M);
-	
+
 	//각각의 값을 넣어준다
 	Local_Right.x = A_Master4x4._11;
 	Local_Right.y = A_Master4x4._12;
@@ -423,7 +768,6 @@ void Transform::UpdateLocalPosition()
 	Local_Look.y = A_Master4x4._32;
 	Local_Look.z = A_Master4x4._33;
 }
-
 
 
 

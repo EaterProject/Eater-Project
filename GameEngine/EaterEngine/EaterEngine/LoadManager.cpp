@@ -134,12 +134,12 @@ void LoadManager::Load(std::string& Path, UINT MODE)
 	//파일,폴더 구분
 	if (CheckFolder(Path) == true)
 	{
-		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Load ][ Folder ] %s", Path.c_str());
+		PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "[ Engine ][ Load ][ Folder ] %s", Path.c_str());
 		LoadFolder(Path, MODE);
 	}
 	else
 	{
-		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Load ][ File ] %s", Path.c_str());
+		PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "[ Engine ][ Load ][ File ] %s", Path.c_str());
 		LoadFile(Path, MODE);
 	}
 }
@@ -219,7 +219,7 @@ TextureBuffer* LoadManager::GetTexture(std::string Path)
 
 	if (End_it == Find_it)
 	{
-		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ ERROR ][ Engine ][ GetTexture ] '%s'가 없습니다.", Path.c_str());
+		PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "[ ERROR ][ Engine ][ GetTexture ] '%s'가 없습니다.", Path.c_str());
 		return nullptr;
 	}
 	else
@@ -235,7 +235,7 @@ SkyLightBuffer* LoadManager::GetSkyLight(std::string Path)
 
 	if (End_it == Find_it)
 	{
-		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ ERROR ][ Engine ][ GetSkyLight ] '%s'가 없습니다.", Path.c_str());
+		PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "[ ERROR ][ Engine ][ GetSkyLight ] '%s'가 없습니다.", Path.c_str());
 		return nullptr;
 	}
 	else
@@ -251,7 +251,7 @@ Material* LoadManager::GetMaterial(std::string Path)
 
 	if (End_it == Find_it)
 	{
-		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ ERROR ][ Engine ][ GetMaterial ] '%s'가 없습니다.", Path.c_str());
+		PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "[ ERROR ][ Engine ][ GetMaterial ] '%s'가 없습니다.", Path.c_str());
 		return nullptr;
 	}
 	else
@@ -267,7 +267,7 @@ Animation* LoadManager::GetAnimation(std::string Path)
 
 	if (End_it == Find_it)
 	{
-		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ ERROR ][ Engine ][ GetMaterial ] '%s'가 없습니다.", Path.c_str());
+		PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "[ ERROR ][ Engine ][ GetMaterial ] '%s'가 없습니다.", Path.c_str());
 		return nullptr;
 	}
 	else
@@ -298,7 +298,7 @@ Mesh* LoadManager::GetMesh(std::string Path)
 
 	if (End_it == Find_it)
 	{
-		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ ERROR ][ Engine ][ GetMesh ] '%s'가 없습니다.", Path.c_str());
+		PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "[ ERROR ][ Engine ][ GetMesh ] '%s'가 없습니다.", Path.c_str());
 		return nullptr;
 	}
 	else
@@ -316,7 +316,7 @@ MeshBuffer* LoadManager::GetMeshBuffer(std::string Path)
 
 	if (End_it == Find_it)
 	{
-		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ ERROR ][ Engine ][ GetMesh ] '%s'가 없습니다.", Path.c_str());
+		PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "[ ERROR ][ Engine ][ GetMesh ] '%s'가 없습니다.", Path.c_str());
 		return nullptr;
 	}
 	else
@@ -334,7 +334,7 @@ AnimationBuffer* LoadManager::GetAnimationBuffer(std::string Path)
 
 	if (End_it == Find_it)
 	{
-		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ ERROR ][ Engine ][ GetMesh ] '%s'가 없습니다.", Path.c_str());
+		PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "[ ERROR ][ Engine ][ GetMesh ] '%s'가 없습니다.", Path.c_str());
 		return nullptr;
 	}
 	else
@@ -351,7 +351,7 @@ LoadParticleData* LoadManager::GetParticle(std::string Path)
 	std::map<std::string, LoadParticleData*>::iterator Find_it  = ParticleList.find(Path);
 	if (End_it == Find_it)
 	{
-		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ ERROR ][ Engine ][ GetMesh ] '%s'가 없습니다.", Path.c_str());
+		PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "[ ERROR ][ Engine ][ GetMesh ] '%s'가 없습니다.", Path.c_str());
 		return nullptr;
 	}
 	else
@@ -367,7 +367,7 @@ CameraAnimation* LoadManager::GetCamAnimation(std::string Path)
 	std::map<std::string, CameraAnimation*>::iterator Find_it = CamAnimationList.find(Path);
 	if (End_it == Find_it)
 	{
-		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ ERROR ][ Engine ][ GetCamAnimation ] '%s'가 없습니다.", Path.c_str());
+		PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "[ ERROR ][ Engine ][ GetCamAnimation ] '%s'가 없습니다.", Path.c_str());
 		return nullptr;
 	}
 	else
@@ -383,7 +383,7 @@ ColliderBuffer* LoadManager::GetColliderBuffer(std::string Path)
 
 	if (End_it == Find_it)
 	{
-		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ ERROR ][ Engine ][ GetCollider ] '%s'가 없습니다.", Path.c_str());
+		PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "[ ERROR ][ Engine ][ GetCollider ] '%s'가 없습니다.", Path.c_str());
 		return nullptr;
 	}
 	else
@@ -403,7 +403,7 @@ ModelAnimationData* LoadManager::GetAnimationData(std::string Path)
 	std::map<std::string, Animation*>::iterator Find_it = AnimationList.find(Path);
 	if (End_it == Find_it)
 	{
-		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ ERROR ][ Engine ][ GetAnimation ] '%s'가 없습니다.", Path.c_str());
+		PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "[ ERROR ][ Engine ][ GetAnimation ] '%s'가 없습니다.", Path.c_str());
 		return nullptr;
 	}
 	else
@@ -418,7 +418,7 @@ bool LoadManager::FindModel(std::string Name)
 	std::map<std::string, ModelData*>::iterator Find_it = ModelDataList.find(Name);
 	if (End_it == Find_it)
 	{
-		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ ERROR ][ Engine ][ FindModel ] '%s'가 없습니다.", Name.c_str());
+		PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "[ ERROR ][ Engine ][ FindModel ] '%s'가 없습니다.", Name.c_str());
 		return false;
 	}
 	else
@@ -433,7 +433,7 @@ bool LoadManager::FindTexture(std::string Name)
 	std::map<std::string, TextureBuffer*>::iterator Find_it = TextureList.find(Name);
 	if (End_it == Find_it)
 	{
-		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ ERROR ][ Engine ][ FindTexture ] '%s'가 없습니다.", Name.c_str());
+		PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "[ ERROR ][ Engine ][ FindTexture ] '%s'가 없습니다.", Name.c_str());
 		return false;
 	}
 	else
@@ -449,7 +449,7 @@ void LoadManager::DeleteTexture(std::string Path)
 
 	if (End_it == Find_it)
 	{
-		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ ERROR ][ Engine ][ DeleteTexture ] '%s'가 없습니다.", Path.c_str());
+		PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "[ ERROR ][ Engine ][ DeleteTexture ] '%s'가 없습니다.", Path.c_str());
 	}
 	else
 	{
@@ -468,7 +468,7 @@ void LoadManager::DeleteSkyLight(std::string Path)
 
 	if (End_it == Find_it)
 	{
-		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ ERROR ][ Engine ][ DeleteSkyLight ] '%s'가 없습니다.", Path.c_str());
+		PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "[ ERROR ][ Engine ][ DeleteSkyLight ] '%s'가 없습니다.", Path.c_str());
 	}
 	else
 	{
@@ -589,7 +589,7 @@ void LoadManager::LoadFolder(std::string& Path, UINT MODE)
 			std::size_t Swap = Path.rfind('\\');
 			Path[Swap] = '/';
 
-			PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Load ][ Folder ] %s", Path.c_str());
+			PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "[ Engine ][ Load ][ Folder ] %s", Path.c_str());
 			LoadFolder(Path, MODE);
 		}
 		else
@@ -598,7 +598,7 @@ void LoadManager::LoadFolder(std::string& Path, UINT MODE)
 			std::size_t Swap = Path.rfind('\\');
 			Path[Swap] = '/';
 
-			PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Load ][ File ] %s", Path.c_str());
+			PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "[ Engine ][ Load ][ File ] %s", Path.c_str());
 			LoadFile(Path, MODE);
 		}
 		itr++;
