@@ -112,9 +112,8 @@ void Boss::SetUp()
 void Boss::Start()
 {
 	mColor.Setting(this->gameobject);
-
-	mColor.SetLimlightSetting(1.0f, 0.0f, 0.0f, 1.0f, 1.0f);
-	mColor.SetEmissiveSetting(1.0f, 0.0f, 0.0f, 1.0f, 1.0f);
+	//mColor.SetLimlightSetting(1.0f, 0.0f, 0.0f, 1.0f, 1.0f);
+	mColor.SetEmissiveSetting(ColorSetting::COLOR_TYPE::RED, 100.0f);
 }
 
 void Boss::Update()
