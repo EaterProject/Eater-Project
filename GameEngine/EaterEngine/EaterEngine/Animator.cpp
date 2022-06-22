@@ -48,7 +48,7 @@ void Animator::Play(int prevIndex, int nextIndex, float time, bool Loop)
 		XM_ROT = DirectX::XMMatrixRotationQuaternion(nowRot);
 		XM_POS = DirectX::XMMatrixTranslation(nowPos.x, nowPos.y, nowPos.z);
 		
-		transfrom->Load_Local = XM_SCL * XM_ROT * XM_POS;
+		transfrom->SetLoadLocal(XM_SCL * XM_ROT * XM_POS);
 	}
 }
 

@@ -233,15 +233,17 @@ void Player::PlayerKeyinput()
 	DirPos.Normalize();
 	DirRot.Normalize();
 
+	Vector3 position = mTransform->GetPosition();
+
 	if (IsAttack == false)
 	{
-		mTransform->Slow_Y_Rotation(DirRot + mTransform->Position, 450);
+
+		mTransform->Slow_Y_Rotation(DirRot + position, 450);
 
 		//공격중이 아니고 회전값이 있을경우
 		if (DirPos != Vector3(0, 0, 0))
 		{
-			Vector3 MyPos = DirPos + mTransform->Position;
-			mTransform->SetTranlate(DirPos * Speed * GetDeltaTime());
+			mTransform->AddTranlate(DirPos * Speed * GetDeltaTime());
 		}
 		Attack_Rot = false;
 	}
@@ -252,7 +254,7 @@ void Player::PlayerKeyinput()
 			AttackStartRot = mCameraTR->GetLocalPosition_Look();
 			Attack_Rot = true;
 		}
-		mTransform->Slow_Y_Rotation(AttackStartRot + mTransform->Position, 450);
+		mTransform->Slow_Y_Rotation(AttackStartRot + position, 450);
 	}
 }
 
@@ -338,8 +340,9 @@ void Player::PlayerHitTimeCheck()
 
 void Player::Player_Attack_01()
 {
-	WeaponTR->Position = { 0,-0.02f,0.1f };
-	WeaponTR->Rotation = { 8,19,-10 };
+	WeaponTR->SetTranlate(0.0f, -0.02f, 0.1f);
+	WeaponTR->SetRotate(8.0f, 19.0f, -10.0f);
+
 	if (mAnimation->EventCheck() == true)
 	{
 		IsAttackTime = true;
@@ -367,8 +370,8 @@ void Player::Player_Attack_01()
 void Player::Player_Attack_02()
 {
 	//망치를 뒤로 돌리고 크게 내려찍는 공격
-	WeaponTR->Position = { 0,-0.02f,0.1f };
-	WeaponTR->Rotation = { 186,31,0 };
+	WeaponTR->SetTranlate(0.0f, -0.02f, 0.1f);
+	WeaponTR->SetRotate(186.0f, 31.0f, 0.0f);
 
 	if (mAnimation->EventCheck() == true)
 	{
@@ -387,8 +390,8 @@ void Player::Player_Attack_02()
 
 void Player::Player_Skill_01()
 {
-	WeaponTR->Position = { 0,-0.02f,0.1f };
-	WeaponTR->Rotation = { 186,31,0 };
+	WeaponTR->SetTranlate(0.0f, -0.02f, 0.1f);
+	WeaponTR->SetRotate(186.0f, 31.0f, 0.0f);
 
 	if (mAnimation->EventCheck() == true)
 	{
@@ -408,8 +411,8 @@ void Player::Player_Skill_01()
 
 void Player::Player_Skill_02()
 {
-	WeaponTR->Position = { 0,-0.02f,0.1f };
-	WeaponTR->Rotation = { 186,31,0 };
+	WeaponTR->SetTranlate(0.0f, -0.02f, 0.1f);
+	WeaponTR->SetRotate(186.0f, 31.0f, 0.0f);
 
 	if (mAnimation->EventCheck() == true)
 	{
@@ -428,8 +431,8 @@ void Player::Player_Skill_02()
 
 void Player::Player_Skill_03()
 {
-	WeaponTR->Position = { 0,-0.02f,0.1f };
-	WeaponTR->Rotation = { 8,19,-10 };
+	WeaponTR->SetTranlate(0.0f, -0.02f, 0.1f);
+	WeaponTR->SetRotate(8.0f, 19.0f, -10.0f);
 
 	if (mAnimation->EventCheck() == true)
 	{
@@ -449,8 +452,9 @@ void Player::Player_Skill_03()
 
 void Player::Player_Jump()
 {
-	WeaponTR->Position = { 0,-0.02f,0.1f };
-	WeaponTR->Rotation = { -22,33,2 };
+	WeaponTR->SetTranlate(0.0f, -0.02f, 0.1f);
+	WeaponTR->SetRotate(-22.0f, 33.0f, 2.0f);
+
 	if (PlayerEndFrameCheck() == true)
 	{
 		Player_Move_Check();
@@ -478,8 +482,9 @@ bool Player::Player_Move_Check()
 {
 	if (DirPos == BasePos)
 	{
-		WeaponTR->Position = { 0,-0.02f,0.1f };
-		WeaponTR->Rotation = { 186,31,0 };
+		WeaponTR->SetTranlate(0.0f, -0.02f, 0.1f);
+		WeaponTR->SetRotate(186.0f, 31.0f, 0.0f);
+
 		mState = PLAYER_STATE_IDLE;
 		mAnimation->Choice("idle", Animation_Idle_Speed, true);
 		IsMove = false;
@@ -487,8 +492,9 @@ bool Player::Player_Move_Check()
 	}
 	else
 	{
-		WeaponTR->Position = { 0,-0.02f,0.1f };
-		WeaponTR->Rotation = { 0,21,-5 };
+		WeaponTR->SetTranlate(0.0f, -0.02f, 0.1f);
+		WeaponTR->SetRotate(0.0f, 21.0f, -5.0f);
+
 		mState = PLAYER_STATE_MOVE; 
 		mAnimation->Choice("move", Animation_Move_Speed, true);
 		IsMove = true;
@@ -503,33 +509,34 @@ void Player::PlayerAttackColliderUpdate()
 	Look *= 2;
 	Look.y = 1;
 	Look.z *= -1 * AttackDir;
-	AttackColliderObject->GetTransform()->Position = mTransform->Position + Look;
+	AttackColliderObject->GetTransform()->AddTranlate(Look);
 }
 
 void Player::PlayerGroundCheck()
 {
 	Vector3 RayStartPoint;
+	Vector3 position = mTransform->GetPosition();
 	for (int i = 0; i < 5; i++)
 	{
 		switch (i)
 		{
 		case 0: //Front
-			RayStartPoint = mTransform->Position + mCameraTR->GetLocalPosition_Look();
+			RayStartPoint = position + mCameraTR->GetLocalPosition_Look();
 			break;
 		case 1: //Back
-			RayStartPoint = mTransform->Position + (mCameraTR->GetLocalPosition_Look() * -1);
+			RayStartPoint = position + (mCameraTR->GetLocalPosition_Look() * -1);
 			break;
 		case 2: //Right
-			RayStartPoint = mTransform->Position + mCameraTR->GetLocalPosition_Right();
+			RayStartPoint = position + mCameraTR->GetLocalPosition_Right();
 			break; 
 		case 3: //Left
-			RayStartPoint = mTransform->Position + (mCameraTR->GetLocalPosition_Right() * -1);
+			RayStartPoint = position + (mCameraTR->GetLocalPosition_Right() * -1);
 			break;
 		case 4: //Center
-			RayStartPoint = mTransform->Position;
+			RayStartPoint = position;
 			break;
 		}
-		RayStartPoint.y = mTransform->Position.y + 2;
+		RayStartPoint.y = position.y + 2;
 
 		//Ray 값 조정
 		RayCastHit[i];
@@ -553,7 +560,7 @@ void Player::PlayerGroundCheck()
 			IsLeftRayCheck = isHit;
 			break;
 		case 4:
-			mTransform->Position.y = RayCastHit[i].Hit.HitPoint.y;
+			mTransform->SetTranlate_Y(RayCastHit[i].Hit.HitPoint.y);
 			break;
 		}
 	}

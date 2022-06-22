@@ -32,7 +32,7 @@ void TestScene::Awake()
 	
 	//Load("../Assets/Texture/Particle/particle_hotCloud.png");
 
-	PROFILE_TIMER_START(PROFILE_OUTPUT::CONSOLE, 1, "Load Folder");
+	PROFILE_TIMER_START(PROFILE_OUTPUT::VS_CODE, 1, "Load Folder");
 	//Load("../Assets/Texture/Terrain");
 	//Load("../Assets/Texture/Environment");
 	//Load("../Assets/Texture/Bake");
@@ -210,8 +210,8 @@ void TestScene::CreateMap()
 	filter = Object->AddComponent<MeshFilter>();
 	filter->SetModelName("BossB+");
 	filter->SetAnimationName("BossB+");
-	Object->GetTransform()->Position = {-44, 6, 62};
-	Object->GetTransform()->Scale = { 1.5f, 1.5f, 1.5f };
+	Object->GetTransform()->SetTranlate(-44.0f, 6.0f, 62.0f);
+	Object->GetTransform()->SetScale(1.5f);
 	AC = Object->AddComponent<AnimationController>();
 	ACList.push_back(AC);
 	TRList.push_back(Object->GetTransform());
@@ -426,7 +426,7 @@ void TestScene::CreateUI()
 void TestScene::CreateParticle(float x, float y, float z)
 {
 	ParticleObj = Instance();
-	ParticleObj->GetTransform()->Position = { -10.0f + x, 2.5f + y, -10.0f + z };
+	ParticleObj->GetTransform()->SetTranlate(-10.0f + x, 2.5f + y, -10.0f + z);
 	testobj = Instance_Particle("Particle1");
 	ParticleObj->ChoiceChild(testobj);
 	ParticleSystem* particles = testobj->GetComponent<ParticleSystem>();
@@ -468,7 +468,7 @@ void TestScene::CreateParticle(float x, float y, float z)
 	particles->Play(true);
 
 	ParticleObj = Instance();
-	ParticleObj->GetTransform()->Position = { 10.0f + x, 2.5f + y, -10.0f + z };
+	ParticleObj->GetTransform()->SetTranlate(10.0f + x, 2.5f + y, -10.0f + z);
 	testobj = Instance_Particle("Particle1");
 	ParticleObj->ChoiceChild(testobj);
 	particles = testobj->GetComponent<ParticleSystem>();

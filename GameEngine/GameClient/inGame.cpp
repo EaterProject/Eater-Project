@@ -19,7 +19,7 @@ void InGame::Awake()
 	Load("../Assets/Scene/inGame.Scene");
 
 	// 오클루더 설정..
-	//AddOccluder("Dome_program_0");
+	AddOccluder("Dome_program_0");
 	
 	BakeSkyLightMap("SkyLight_HDRI", false);
 	

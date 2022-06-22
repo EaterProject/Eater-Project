@@ -172,7 +172,7 @@ void Eater_LoadScene::Load(std::string FilePath)
 			B = (Data[6]);
 			mLight->SetColor(R, G, B);
 
-			mTransform->Rotation = { Data[7],Data[8] ,Data[9] };
+			mTransform->SetRotate(Data[7], Data[8], Data[9]);
 		}
 	}
 	EATER_CLOSE_READ_FILE();
@@ -359,9 +359,9 @@ void Eater_LoadScene::Load_Component_Transform(int index, GameObject* Object)
 	EATER_GET_LIST_CHOICE(index, "Transform");
 	std::vector<float> Data;
 	EATER_GET_LIST(&Data, 0);
-	mTransform->Position	= { Data[0],Data[1] ,Data[2] };
-	mTransform->Rotation	= { Data[3],Data[4] ,Data[5] };
-	mTransform->Scale		= { Data[6],Data[7] ,Data[8] };
+	mTransform->SetTranlate(Data[0], Data[1], Data[2]);
+	mTransform->SetRotate(Data[3], Data[4], Data[5]);
+	mTransform->SetScale(Data[6], Data[7], Data[8]);
 }
 
 void Eater_LoadScene::Load_Component_MeshFilter(int index, GameObject* Object)

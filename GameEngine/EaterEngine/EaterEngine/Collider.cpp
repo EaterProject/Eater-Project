@@ -30,9 +30,11 @@ void Collider::PhysicsUpdate()
 {
 	if (mPhysData == nullptr) { return; }
 
-	if (mTransform->Position != mPhysData->WorldPosition)
+	Vector3 position = mTransform->GetPosition();
+
+	if (position != mPhysData->WorldPosition)
 	{
-		mPhysData->SetWorldPosition(mTransform->Position.x, mTransform->Position.y, mTransform->Position.z);
+		mPhysData->SetWorldPosition(position.x, position.y, position.z);
 	}
 
 	//if (mTransform->Q_Rotation != mPhysData->Rotation)
@@ -47,9 +49,7 @@ void Collider::PhysicsUpdate()
 		float CenterY = mPhysData->CenterPoint.y;
 		float CenterZ = mPhysData->CenterPoint.z;
 
-		mTransform->Position.x = mPhysData->WorldPosition.x;
-		mTransform->Position.y = mPhysData->WorldPosition.y;
-		mTransform->Position.z = mPhysData->WorldPosition.z;
+		mTransform->SetTranlate(mPhysData->WorldPosition);
 
 		//mTransform->Q_Rotation.x = mPhysData->Rotation.x;
 		//mTransform->Q_Rotation.y = mPhysData->Rotation.y;
@@ -65,7 +65,7 @@ void Collider::PhysicsUpdate()
 
 void Collider::Debug()
 {
-	Vector3 Pos = gameobject->transform->Position + mPhysData->CenterPoint;
+	Vector3 Pos = mTransform->GetPosition() + mPhysData->CenterPoint;
 	Vector4 Rot = mPhysData->Rotation;
 	Vector3 Scl = mPhysData->mCollider->GetSize();
 
@@ -79,7 +79,7 @@ void Collider::Debug()
 		}
 		else
 		{
-			DebugManager::DebugDrawBox(Scl, gameobject->transform->Q_Rotation, Pos + mPhysData->CenterPoint, Vector3(1, 0, 0));
+			DebugManager::DebugDrawBox(Scl, mTransform->GetRotation_Q(), Pos + mPhysData->CenterPoint, Vector3(1, 0, 0));
 		}
 	}
 	break;
@@ -256,8 +256,8 @@ bool Collider::CreatePhys()
 {
 	if (isCreate == false)
 	{
-		mPhysData->WorldPosition	= gameobject->transform->Position;
-		Vector3 Rot					= gameobject->transform->Rotation;
+		mPhysData->WorldPosition	= gameobject->transform->GetPosition();
+		Vector3 Rot					= gameobject->transform->GetRotation();
 
 		Rigidbody* mRigidbody = gameobject->GetComponent<Rigidbody>();
 		if (mRigidbody != nullptr)
@@ -273,10 +273,14 @@ bool Collider::CreatePhys()
 		
 		Quaternion Q_Rot = SimpleMath::Quaternion::CreateFromRotationMatrix(CreateXMRot4x4());
 		Transform* mTransform = gameobject->GetTransform();
-		mPhysData->SetWorldPosition(mTransform->Position.x, mTransform->Position.y, mTransform->Position.z);
+		Vector3 position = mTransform->GetPosition();
+
+		mPhysData->SetWorldPosition(position.x, position.y, position.z);
 		mPhysData->Rotation		= Q_Rot;
-		mTransform->Q_Rotation	= Q_Rot;
+		mTransform->SetRotate(Q_Rot);
+
 		PhysX_Create_Actor(mPhysData);
+
 		isCreate = true;
 		return true;
 	}
@@ -328,9 +332,11 @@ void Collider::SetCenter(float x, float y, float z)
 
 DirectX::SimpleMath::Matrix Collider::CreateXMRot4x4()
 {
-	float radX = gameobject->transform->Rotation.x * 3.141592f / 180;
-	float radY = gameobject->transform->Rotation.y * 3.141592f / 180;
-	float radZ = gameobject->transform->Rotation.z * 3.141592f / 180;
+	DirectX::SimpleMath::Vector3 rot = gameobject->transform->GetRotation();
+
+	float radX = rot.x * 3.141592f / 180;
+	float radY = rot.y * 3.141592f / 180;
+	float radZ = rot.z * 3.141592f / 180;
 	DirectX::XMMATRIX _P = DirectX::XMMatrixRotationX(radX);
 	DirectX::XMMATRIX _Y = DirectX::XMMatrixRotationY(radY);
 	DirectX::XMMATRIX _R = DirectX::XMMatrixRotationZ(radZ);

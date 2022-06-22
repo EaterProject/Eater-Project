@@ -36,7 +36,7 @@ void PlayerCamera::SetUp()
 
 	//PastX = GetMousePosX();
 	//PastY = GetMousePosY();
-	mTransform->Position = { 0, 0 ,-2 };
+	mTransform->SetTranlate(0.0f, 0.0f, -2.0f);
 
 	//MouseCursor = GetTogle(VK_F10);
 	//ShowMouseCursor(MouseCursor);
@@ -94,7 +94,7 @@ void PlayerCamera::Update()
 	//타겟의 위치를 가져온다
 	if (Userobject != nullptr)
 	{
-		Vector3 TargetPos = Userobject->GetTransform()->Position;
+		Vector3 TargetPos = Userobject->GetTransform()->GetPosition();
 
 		//최종 카메라의 위치를 계산
 		float X = (Horizontal_X * X_Z_Ratio);
@@ -102,13 +102,11 @@ void PlayerCamera::Update()
 		float Z = Horizontal_Z * X_Z_Ratio;
 
 		//카메라의 위치값
-		mTransform->Position.x = (X + TargetPos.x + CamOffSet.x);
-		mTransform->Position.y = (Y + TargetPos.y + CamOffSet.y);
-		mTransform->Position.z = (Z + TargetPos.z + CamOffSet.z);
-
+		mTransform->SetTranlate(X + TargetPos.x + CamOffSet.x, Y + TargetPos.y + CamOffSet.y, Z + TargetPos.z + CamOffSet.z);
+		
 		//카메라의 회전값
-		mTransform->Rotation.x = -(Y_Radian / MosControl) * 180 / 3.141592f;
-		mTransform->Rotation.y = (X_Radian / MosControl) * 180 / 3.141592f - 180.0f;
+		Vector3 rotation = mTransform->GetRotation();
+		mTransform->SetRotate(-(Y_Radian / MosControl) * 180 / 3.141592f, (X_Radian / MosControl) * 180 / 3.141592f - 180.0f, rotation.z);
 	}
 
 	//현재 윈도우 사이즈를 가져옴
@@ -117,7 +115,7 @@ void PlayerCamera::Update()
 
 void PlayerCamera::Debug()
 {
-	DebugPrint("X : %.2f", mTransform->Rotation.x);
-	DebugPrint("Y : %.2f", mTransform->Rotation.y);
+	DebugPrint("X : %.2f", mTransform->GetRotation().x);
+	DebugPrint("Y : %.2f", mTransform->GetRotation().y);
 }
 

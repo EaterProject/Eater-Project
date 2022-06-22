@@ -72,10 +72,10 @@ void MonsterComponent::SetUp()
 	MonsterState = (int)MONSTER_STATE::IDLE;
 
 	PointNumber = rand() % 5;
-	mTransform->Position = SearchPoint[PointNumber];
+	mTransform->SetTranlate(SearchPoint[PointNumber]);
 
 	float Scale = NowHitMonsterScale + NowHitMonsterScale_F;
-	mTransform->Scale = { Scale,Scale,Scale };
+	mTransform->SetScale(Scale, Scale, Scale);
 }
 
 void MonsterComponent::Update()
@@ -194,7 +194,7 @@ void MonsterComponent::Attack()
 		SetMonsterState(MONSTER_STATE::CHASE);
 	}
 
-	mTransform->Slow_Y_Rotation(mPlayerTR->Position, RotationSpeed, MonsterFront_Z);
+	mTransform->Slow_Y_Rotation(mPlayerTR->GetPosition(), RotationSpeed, MonsterFront_Z);
 }
 
 void MonsterComponent::Idle()
@@ -259,8 +259,9 @@ void MonsterComponent::Chase()
 		else
 		{
 			//계속 추격
-			SetMovePoint(mPlayerTR->Position.x, 0, mPlayerTR->Position.z);
-			mTransform->Slow_Y_Rotation(mPlayerTR->Position, 150, MonsterFront_Z);
+			Vector3 position = mPlayerTR->GetPosition();
+			SetMovePoint(position.x, 0, position.z);
+			mTransform->Slow_Y_Rotation(position, 150, MonsterFront_Z);
 			mRigidbody->SetVelocity(DirPoint.x, 0, DirPoint.z);
 		}
 	}
@@ -293,13 +294,13 @@ void MonsterComponent::Hit()
 
 void MonsterComponent::Debug()
 {
-	DebugDrawCircle(ChaseRange, mTransform->Position  + Vector3(0, 0.25f, 0), Vector3(0, 0, 0), Vector3(1, 0, 0));
-	DebugDrawCircle(AttackRange, mTransform->Position + Vector3(0, 0.25f, 0), Vector3(0, 0, 0), Vector3(0, 1, 0));
+	DebugDrawCircle(ChaseRange, mTransform->GetPosition() + Vector3(0, 0.25f, 0), Vector3(0, 0, 0), Vector3(1, 0, 0));
+	DebugDrawCircle(AttackRange, mTransform->GetPosition() + Vector3(0, 0.25f, 0), Vector3(0, 0, 0), Vector3(0, 1, 0));
 }
 
 void MonsterComponent::PlayerDistanceCheck()
 {
-	PlayerDistance = mTransform->GetDistance(mPlayerTR->Position);
+	PlayerDistance = mTransform->GetDistance(mPlayerTR->GetPosition());
 }
 
 void MonsterComponent::SetSearchPoint(int Index, Vector3 Point)
@@ -310,7 +311,7 @@ void MonsterComponent::SetSearchPoint(int Index, Vector3 Point)
 void MonsterComponent::SetMovePoint(float x, float y, float z)
 {
 	//방향값을 설정
-	DirPoint = (Vector3(x, y, z) - mTransform->Position);
+	DirPoint = (Vector3(x, y, z) - mTransform->GetPosition());
 	DirPoint.Normalize();
 	DirPoint *= Speed;
 
@@ -352,7 +353,7 @@ void MonsterComponent::SetLimLightColor()
 		MPB->LimLightWidth	= NowLimLightWidth;
 		//몬스터 크기 설정
 		float Scale = NowHitMonsterScale + NowHitMonsterScale_F;
-		mTransform->Scale = { Scale,Scale,Scale };
+		mTransform->SetScale(Scale, Scale, Scale);
 
 		HitFXStart = true;
 	}
@@ -361,9 +362,7 @@ void MonsterComponent::SetLimLightColor()
 	if (MPB->LimLightFactor <= 0)
 	{
 		float Scale = NowHitMonsterScale + NowHitMonsterScale_F;
-		mTransform->Scale.x = Scale;
-		mTransform->Scale.y = Scale;
-		mTransform->Scale.z = Scale;
+		mTransform->SetScale(Scale, Scale, Scale);
 		HitFunction = nullptr;
 		HitFXStart  = false;
 		mSkinFilter->SetMaterialPropertyBlock(false);
@@ -371,9 +370,7 @@ void MonsterComponent::SetLimLightColor()
 	else
 	{
 		float DTime = GetDeltaTime();
-		mTransform->Scale.x -= DTime * NowHitMonsterScale_F;
-		mTransform->Scale.y -= DTime * NowHitMonsterScale_F;
-		mTransform->Scale.z -= DTime * NowHitMonsterScale_F; 
+		mTransform->AddScale(-DTime * NowHitMonsterScale_F);
 		MPB->LimLightFactor -= DTime * NowLimLightFactor;
 	}
 }
@@ -415,10 +412,11 @@ bool MonsterComponent::FirstState()
 bool MonsterComponent::GetStopPoint(const Vector3& Pos)
 {
 	Transform* mTransform = gameobject->GetTransform();
-	if (mTransform->Position.x > (Pos.x - 0.25f) &&
-		mTransform->Position.x < (Pos.x + 0.25f) &&
-		mTransform->Position.z > (Pos.z - 0.25f) &&
-		mTransform->Position.z < (Pos.z + 0.25f))
+	Vector3 position = mTransform->GetPosition();
+	if (position.x > (Pos.x - 0.25f) &&
+		position.x < (Pos.x + 0.25f) &&
+		position.z > (Pos.z - 0.25f) &&
+		position.z < (Pos.z + 0.25f))
 	{
 		return true;
 

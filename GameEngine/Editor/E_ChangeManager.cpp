@@ -161,24 +161,27 @@ void E_ChangeManager::Change_Animation(int index, GameObject* Object)
 void E_ChangeManager::Change_LocalTM(int Nodeindex, Transform* TR)
 {
 	DirectX::SimpleMath::Matrix Position_4x4;
+	Vector3 position = TR->GetPosition();
 	Position_4x4._11 = 1;				Position_4x4._12 = 0;			Position_4x4._13 = 0;			Position_4x4._14 = 0;
 	Position_4x4._21 = 0;				Position_4x4._22 = 1;			Position_4x4._23 = 0;			Position_4x4._24 = 0;
 	Position_4x4._31 = 0;				Position_4x4._32 = 0;			Position_4x4._33 = 1;			Position_4x4._34 = 0;
-	Position_4x4._41 = TR->Position.x;		Position_4x4._42 = TR->Position.y;	Position_4x4._43 = TR->Position.z;	Position_4x4._44 = 1;
+	Position_4x4._41 = position.x;		Position_4x4._42 = position.y;	Position_4x4._43 = position.z;	Position_4x4._44 = 1;
 
-	float radX = TR->Rotation.x * 3.141592f / 180;
-	float radY = TR->Rotation.y * 3.141592f / 180;
-	float radZ = TR->Rotation.z * 3.141592f / 180;
+	Vector3 rotation = TR->GetRotation();
+	float radX = rotation.x * 3.141592f / 180;
+	float radY = rotation.y * 3.141592f / 180;
+	float radZ = rotation.z * 3.141592f / 180;
 	DirectX::XMMATRIX _P = DirectX::XMMatrixRotationX(radX);
 	DirectX::XMMATRIX _Y = DirectX::XMMatrixRotationY(radY);
 	DirectX::XMMATRIX _R = DirectX::XMMatrixRotationZ(radZ);
 	DirectX::XMMATRIX Rotation_4x4 = _R * _Y * _P;
 
 	DirectX::SimpleMath::Matrix Scale_4x4;
-	Scale_4x4._11 = TR->Scale.x;	Scale_4x4._12 = 0;				Scale_4x4._13 = 0;				Scale_4x4._14 = 0;
-	Scale_4x4._21 = 0;				Scale_4x4._22 = TR->Scale.y;	Scale_4x4._23 = 0;				Scale_4x4._24 = 0;
-	Scale_4x4._31 = 0;				Scale_4x4._32 = 0;				Scale_4x4._33 = TR->Scale.z;	Scale_4x4._34 = 0;
-	Scale_4x4._41 = 0;				Scale_4x4._42 = 0;				Scale_4x4._43 = 0;				Scale_4x4._44 = 1;
+	Vector3 scale = TR->GetScale();
+	Scale_4x4._11 = scale.x;	Scale_4x4._12 = 0;			Scale_4x4._13 = 0;			Scale_4x4._14 = 0;
+	Scale_4x4._21 = 0;			Scale_4x4._22 = scale.y;	Scale_4x4._23 = 0;			Scale_4x4._24 = 0;
+	Scale_4x4._31 = 0;			Scale_4x4._32 = 0;			Scale_4x4._33 = scale.z;	Scale_4x4._34 = 0;
+	Scale_4x4._41 = 0;			Scale_4x4._42 = 0;			Scale_4x4._43 = 0;			Scale_4x4._44 = 1;
 
 	Matrix ChangeTM = Scale_4x4 * Rotation_4x4 * Position_4x4;
 
@@ -243,24 +246,27 @@ void E_ChangeManager::Change_LocalTM(int Nodeindex, Transform* TR)
 void E_ChangeManager::Change_WorldTM(int Nodeindex, Transform* TR)
 {
 	DirectX::SimpleMath::Matrix Position_4x4;
+	Vector3 position = TR->GetPosition();
 	Position_4x4._11 = 1;				Position_4x4._12 = 0;			Position_4x4._13 = 0;			Position_4x4._14 = 0;
 	Position_4x4._21 = 0;				Position_4x4._22 = 1;			Position_4x4._23 = 0;			Position_4x4._24 = 0;
 	Position_4x4._31 = 0;				Position_4x4._32 = 0;			Position_4x4._33 = 1;			Position_4x4._34 = 0;
-	Position_4x4._41 = TR->Position.x;		Position_4x4._42 = TR->Position.y;	Position_4x4._43 = TR->Position.z;	Position_4x4._44 = 1;
+	Position_4x4._41 = position.x;		Position_4x4._42 = position.y;	Position_4x4._43 = position.z;	Position_4x4._44 = 1;
 
-	float radX = TR->Rotation.x * 3.141592f / 180;
-	float radY = TR->Rotation.y * 3.141592f / 180;
-	float radZ = TR->Rotation.z * 3.141592f / 180;
+	Vector3 rotation = TR->GetRotation();
+	float radX = rotation.x * 3.141592f / 180;
+	float radY = rotation.y * 3.141592f / 180;
+	float radZ = rotation.z * 3.141592f / 180;
 	DirectX::XMMATRIX _P = DirectX::XMMatrixRotationX(radX);
 	DirectX::XMMATRIX _Y = DirectX::XMMatrixRotationY(radY);
 	DirectX::XMMATRIX _R = DirectX::XMMatrixRotationZ(radZ);
 	DirectX::XMMATRIX Rotation_4x4 = _R * _Y * _P;
 
 	DirectX::SimpleMath::Matrix Scale_4x4;
-	Scale_4x4._11 = TR->Scale.x;	Scale_4x4._12 = 0;				Scale_4x4._13 = 0;				Scale_4x4._14 = 0;
-	Scale_4x4._21 = 0;				Scale_4x4._22 = TR->Scale.y;	Scale_4x4._23 = 0;				Scale_4x4._24 = 0;
-	Scale_4x4._31 = 0;				Scale_4x4._32 = 0;				Scale_4x4._33 = TR->Scale.z;	Scale_4x4._34 = 0;
-	Scale_4x4._41 = 0;				Scale_4x4._42 = 0;				Scale_4x4._43 = 0;				Scale_4x4._44 = 1;
+	Vector3 scale = TR->GetScale();
+	Scale_4x4._11 = scale.x;	Scale_4x4._12 = 0;			Scale_4x4._13 = 0;			Scale_4x4._14 = 0;
+	Scale_4x4._21 = 0;			Scale_4x4._22 = scale.y;	Scale_4x4._23 = 0;			Scale_4x4._24 = 0;
+	Scale_4x4._31 = 0;			Scale_4x4._32 = 0;			Scale_4x4._33 = scale.z;	Scale_4x4._34 = 0;
+	Scale_4x4._41 = 0;			Scale_4x4._42 = 0;			Scale_4x4._43 = 0;			Scale_4x4._44 = 1;
 
 	Matrix ChangeTM = Scale_4x4 * Rotation_4x4 * Position_4x4;
 

@@ -1,5 +1,7 @@
 #pragma once
+#include <unordered_map>
 #include "Component.h"
+#include "EngineData.h"
 
 class UIBuffer;
 class RectTransform;
@@ -16,10 +18,14 @@ public:
 
 public:
 	EATER_ENGINEDLL void SetTexture(std::string texture_name);
+	EATER_ENGINEDLL void PushTextureList(std::string texture_name);
+	EATER_ENGINEDLL void PopTextureList(std::string texture_name);
+
 	EATER_ENGINEDLL void SetColor(DirectX::SimpleMath::Vector3 image_color);
 	EATER_ENGINEDLL void SetColor(DirectX::SimpleMath::Vector4 image_color);
 	EATER_ENGINEDLL void SetColor(float r, float g, float b);
 	EATER_ENGINEDLL void SetColor(float r, float g, float b, float a);
+
 	EATER_ENGINEDLL void SetFillRange(FILL_TYPE type, float range);
 	EATER_ENGINEDLL void SetLayer(UINT order);
 public:
@@ -32,9 +38,11 @@ private:
 
 private:
 	bool isLoad_Texture;		//텍스쳐 로드여부
+	size_t TextureIndex;
 
 	std::string TextureName;	//로드한 텍스쳐 이름
 
+	std::unordered_map<size_t, TextureBuffer*> TextureList;
 private:
 	UIBuffer* m_UI;
 	RectTransform* m_Transform;

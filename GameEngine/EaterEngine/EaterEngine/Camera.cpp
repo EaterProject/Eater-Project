@@ -82,8 +82,8 @@ void Camera::Update()
 		}
 		else
 		{
-			gameobject->transform->Position = mAnimation->Position[NowFrameIndex];
-			gameobject->transform->Rotation = mAnimation->Rotation[NowFrameIndex];
+			tranform->SetTranlate(mAnimation->Position[NowFrameIndex]);
+			tranform->SetRotate(mAnimation->Rotation[NowFrameIndex]);
 			NowFrameIndex++;
 		}
 	}
@@ -91,7 +91,7 @@ void Camera::Update()
 
 	if (g_MainCam == nullptr)
 	{
-		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Camera ][ Update ] 지정된 메인 카메라가 없습니다.");
+		PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "[ Engine ][ Camera ][ Update ] 지정된 메인 카메라가 없습니다.");
 	}
 
 	CreateView();
@@ -99,8 +99,8 @@ void Camera::Update()
 	if (this != g_MainCam)
 	{
 		Transform* TR = gameobject->GetTransform();
-		DebugManager::DebugDrawBox(TR->Scale, TR->Rotation, TR->Position, Vector3(0, 1, 0));
-		DebugManager::DebugDrawLine(TR->Position, TR->GetLocalPosition_Look(), Vector3(1,1,0));
+		DebugManager::DebugDrawBox(TR->GetScale(), TR->GetRotation(), TR->GetPosition(), Vector3(0, 1, 0));
+		DebugManager::DebugDrawLine(TR->GetPosition(), TR->GetLocalPosition_Look(), Vector3(1,1,0));
 	}
 }
 
@@ -108,7 +108,7 @@ DirectX::SimpleMath::Matrix Camera::GetProj()
 {
 	if (g_MainCam == nullptr)
 	{
-		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Camera ][ GetProj ] 지정된 메인 카메라가 없습니다.");
+		PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "[ Engine ][ Camera ][ GetProj ] 지정된 메인 카메라가 없습니다.");
 		return Matrix();
 	}
 	else
@@ -126,12 +126,12 @@ DirectX::SimpleMath::Vector3 Camera::GetPos()
 {
 	if (g_MainCam == nullptr)
 	{
-		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Camera ][ GetPos ] 지정된 메인 카메라가 없습니다.");
+		PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "[ Engine ][ Camera ][ GetPos ] 지정된 메인 카메라가 없습니다.");
 		return Vector3();
 	}
 	else
 	{
-		return tranform->Position;
+		return tranform->GetPosition();
 	}
 }
 
@@ -199,7 +199,7 @@ DirectX::SimpleMath::Matrix Camera::GetView()
 {
 	if (g_MainCam == nullptr)
 	{
-		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ Camera ][ GetView ] 지정된 메인 카메라가 없습니다.");
+		PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "[ Engine ][ Camera ][ GetView ] 지정된 메인 카메라가 없습니다.");
 		return Matrix();
 	}
 	else
@@ -252,15 +252,14 @@ void Camera::SetCulling(bool cull)
 
 void Camera::CreateView()
 {
-	DirectX::XMFLOAT3 r_ = gameobject->GetTransform()->GetLocalPosition_Right();
-	DirectX::XMFLOAT3 u_ = gameobject->GetTransform()->GetLocalPosition_UP();
-	DirectX::XMFLOAT3 l_ = gameobject->GetTransform()->GetLocalPosition_Look();
+	Vector3 R = tranform->GetLocalPosition_Right();
+	Vector3 U = tranform->GetLocalPosition_UP();
+	Vector3 L = tranform->GetLocalPosition_Look();
+	Vector3 P = tranform->GetPosition();
 
-
-	DirectX::XMVECTOR R = XMLoadFloat3(&r_);
-	DirectX::XMVECTOR U = XMLoadFloat3(&u_);
-	DirectX::XMVECTOR L = XMLoadFloat3(&l_);
-	DirectX::XMVECTOR P = XMLoadFloat3(&tranform->Position);
+	mView._11 = R.x;	mView._12 = U.x;	mView._13 = L.x; mView._14 = 0;
+	mView._21 = R.y;	mView._22 = U.y;	mView._23 = L.y; mView._24 = 0;
+	mView._31 = R.z;	mView._32 = U.z;	mView._33 = L.z; mView._34 = 0;
 
 	L = XMVector3Normalize(L);
 	U = XMVector3Normalize(XMVector3Cross(L, R));
@@ -270,18 +269,13 @@ void Camera::CreateView()
 	float y = DirectX::XMVectorGetX(DirectX::XMVector3Dot(P, U));
 	float z = DirectX::XMVectorGetX(DirectX::XMVector3Dot(P, L));
 
-	mView._11 = r_.x;	mView._12 = u_.x;	mView._13 = l_.x; mView._14 = 0;
-	mView._21 = r_.y;	mView._22 = u_.y;	mView._23 = l_.y; mView._24 = 0;
-	mView._31 = r_.z;	mView._32 = u_.z;	mView._33 = l_.z; mView._34 = 0;
 	mView._41 = -x;		mView._42 = -y;		mView._43 = -z;	  mView._44 = 1;
 
 	// Camera Data Update..
 	mCameraData->CamView = mView;
 	mCameraData->CamInvView = mView.Invert();
 	mCameraData->CamViewProj = mView * mProj;
-	mCameraData->CamPos = tranform->Position;
-	mCameraData->CamLook = l_;
-	mCameraData->CamLook.Normalize();
+	mCameraData->CamPos = tranform->GetPosition();
 	mCameraData->OriginFrustum.Transform(mCameraData->BoundFrustum, mCameraData->CamInvView);
 }
 

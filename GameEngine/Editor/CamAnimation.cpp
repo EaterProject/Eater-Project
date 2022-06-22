@@ -141,13 +141,16 @@ void CamAnimation::OnAddKey()
 
 	KeyNode Node;
 	Node.Time = (float)NowSliderPos;
-	Node.PosX = MainCamTR->Position.x;
-	Node.PosY = MainCamTR->Position.y;
-	Node.PosZ = MainCamTR->Position.z;
 
-	Node.RotX = MainCamTR->Rotation.x;
-	Node.RotY = MainCamTR->Rotation.y;
-	Node.RotZ = MainCamTR->Rotation.z;
+	Vector3 position = MainCamTR->GetPosition();
+	Node.PosX = position.x;
+	Node.PosY = position.y;
+	Node.PosZ = position.z;
+
+	Vector3 rotation = MainCamTR->GetRotation();
+	Node.RotX = rotation.x;
+	Node.RotY = rotation.y;
+	Node.RotZ = rotation.z;
 
 	
 	mListCtrl.InsertItem(0, ChangeToCString((int)KeyList.size()));
@@ -223,16 +226,16 @@ void CamAnimation::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 	{
 		NowSliderPos = CamAnime_slider.GetPos();
 		NowTime_Eidt.SetWindowTextW(ChangeToCString(NowSliderPos));
-		MainCam->GetTransform()->Position = { AddKeyList[NowSliderPos].PosX,AddKeyList[NowSliderPos].PosY ,AddKeyList[NowSliderPos].PosZ};
-		MainCam->GetTransform()->Rotation = { AddKeyList[NowSliderPos].RotX,AddKeyList[NowSliderPos].RotY ,AddKeyList[NowSliderPos].RotZ };
+		MainCam->GetTransform()->SetTranlate(AddKeyList[NowSliderPos].PosX, AddKeyList[NowSliderPos].PosY, AddKeyList[NowSliderPos].PosZ);
+		MainCam->GetTransform()->SetRotate(AddKeyList[NowSliderPos].RotX, AddKeyList[NowSliderPos].RotY, AddKeyList[NowSliderPos].RotZ);
 	}
 
 	if (pScrollBar->GetDlgCtrlID() == Original_Slider.GetDlgCtrlID())
 	{
 		OriginalSliderPos = Original_Slider.GetPos();
 		Original_Edit.SetWindowTextW(ChangeToCString(OriginalSliderPos));
-		MainCam->GetTransform()->Position = { KeyList[OriginalSliderPos].PosX,KeyList[OriginalSliderPos].PosY ,KeyList[OriginalSliderPos].PosZ };
-		MainCam->GetTransform()->Rotation = { KeyList[OriginalSliderPos].RotX,KeyList[OriginalSliderPos].RotY ,KeyList[OriginalSliderPos].RotZ };
+		MainCam->GetTransform()->SetTranlate(KeyList[OriginalSliderPos].PosX, KeyList[OriginalSliderPos].PosY, KeyList[OriginalSliderPos].PosZ);
+		MainCam->GetTransform()->SetRotate(KeyList[OriginalSliderPos].RotX, KeyList[OriginalSliderPos].RotY, KeyList[OriginalSliderPos].RotZ);
 	}
 
 	CDialogEx::OnHScroll(nSBCode, nPos, pScrollBar);
@@ -261,13 +264,16 @@ void CamAnimation::OnBnChangeKey()
 	{
 		AddItem(i,KeyList[i]);
 	}
-	KeyList[OriginalSliderPos].PosX = MainCamTR->Position.x;
-	KeyList[OriginalSliderPos].PosY = MainCamTR->Position.y;
-	KeyList[OriginalSliderPos].PosZ = MainCamTR->Position.z;
 
-	KeyList[OriginalSliderPos].RotX = MainCamTR->Rotation.x;
-	KeyList[OriginalSliderPos].RotY = MainCamTR->Rotation.y;
-	KeyList[OriginalSliderPos].RotZ = MainCamTR->Rotation.z;
+	Vector3 position = MainCamTR->GetPosition();
+	KeyList[OriginalSliderPos].PosX = position.x;
+	KeyList[OriginalSliderPos].PosY = position.y;
+	KeyList[OriginalSliderPos].PosZ = position.z;
+
+	Vector3 rotation = MainCamTR->GetRotation();
+	KeyList[OriginalSliderPos].RotX = rotation.x;
+	KeyList[OriginalSliderPos].RotY = rotation.y;
+	KeyList[OriginalSliderPos].RotZ = rotation.z;
 
 	AfxMessageBox(L"변경완료");
 }
@@ -288,8 +294,8 @@ void CamAnimation::OnTimer(UINT_PTR nIDEvent)
 		{
 			NowTime_Eidt.SetWindowTextW(ChangeToCString(PlayIndex));
 			CamAnime_slider.SetPos(PlayIndex);
-			MainCam->GetTransform()->Position = { AddKeyList[PlayIndex].PosX,AddKeyList[PlayIndex].PosY ,AddKeyList[PlayIndex].PosZ };
-			MainCam->GetTransform()->Rotation = { AddKeyList[PlayIndex].RotX,AddKeyList[PlayIndex].RotY ,AddKeyList[PlayIndex].RotZ };
+			MainCam->GetTransform()->SetTranlate(AddKeyList[PlayIndex].PosX, AddKeyList[PlayIndex].PosY, AddKeyList[PlayIndex].PosZ);
+			MainCam->GetTransform()->SetRotate(AddKeyList[PlayIndex].RotX, AddKeyList[PlayIndex].RotY, AddKeyList[PlayIndex].RotZ);
 			PlayIndex++;
 		}
 	}

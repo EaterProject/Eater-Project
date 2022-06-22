@@ -41,7 +41,7 @@ void Light::Start()
 	switch (m_LightType)
 	{
 	case DIRECTION_LIGHT:
-		m_Transform->Position.y = 100.0f;
+		m_Transform->SetTranlate(0.0f, 100.0f, 0.0f);
 		break;
 	case POINT_LIGHT:
 		break;
@@ -68,10 +68,10 @@ void Light::Update()
 		m_DirectionLight->Direction = m_NowLook;
 		break;
 	case POINT_LIGHT:
-		m_PointLight->Position = m_Transform->Position;
+		m_PointLight->Position = m_Transform->GetPosition();
 		break;
 	case SPOT_LIGHT:
-		m_SpotLight->Position = m_Transform->Position;
+		m_SpotLight->Position = m_Transform->GetPosition();
 		m_SpotLight->Direction = m_NowLook;
 		break;
 	default:

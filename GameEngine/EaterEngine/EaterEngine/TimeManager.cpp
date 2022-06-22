@@ -47,7 +47,6 @@ void TimeManager::Update()
 
 	if (debugTime >= 5) 
 	{
-		PROFILE_LOG(PROFILE_OUTPUT::CONSOLE, "[ Engine ][ FPS ] %.1f fps", _FPS);
 		PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "[ Engine ][ FPS ] %.1f fps", _FPS);
 		debugTime = 0;
 	}
