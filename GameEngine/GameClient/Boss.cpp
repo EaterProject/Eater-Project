@@ -635,7 +635,6 @@ void Boss::CreateSkillPoint()
 		RayCast(mRay);
 		EndPoint.y = mRay->Hit.HitPoint.y;
 		SkillPoint[i] = EndPoint;
-		//Weapon[i]->SetPosition(SkillPoint[i]);
 	}
 }
 

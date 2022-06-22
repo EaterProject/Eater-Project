@@ -78,6 +78,11 @@ void MonsterComponent::SetUp()
 	mTransform->SetScale(Scale, Scale, Scale);
 }
 
+void MonsterComponent::Start()
+{
+	mColor.Setting(this->gameobject);
+}
+
 void MonsterComponent::Update()
 {
 	switch (MonsterState)
@@ -125,15 +130,28 @@ void MonsterComponent::OnTriggerStay(GameObject* Obj)
 		//플레이어가 공격 상태일때
 		if (Player::GetAttackState() == true)
 		{
+			if (MonsterState == (int)MONSTER_STATE::DEAD) { return; }
+
 			MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_ATTACK_OK);
 			//색을 바꾸는 함수포인터를 넣고 상태변화
-			HitFunction = std::bind(&MonsterComponent::SetLimLightColor, this);
 			SetMonsterState(MONSTER_STATE::HIT);
 			
 			HP			-= 20;
 			HitStart	 = true;
+
+			MONSTER_EMAGIN Data;
+			Data.R = 255;
+			Data.G = 0;
+			Data.B = 0;
+			Data.HP = HP;
+			Data.ComboCount = ComboCount;
+			Data.Object = this->gameobject;
+			MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_MONSTER_UI_UPDATE, &Data);
+			mColor.SetLimlightSetting(1, 0, 0, 5, 1);
+			mColor.SetLimlightSettingMax(0, 0, 0, 1, 1);
 			//사운드 출력
 			Sound_Play_SFX(Sound_Hit);
+			//MessageManager::GetGM()->SEND_Message(TARGET_UI,MESSAGE_UI_MONSTERUI);
 		}
 	}
 	else
@@ -234,23 +252,15 @@ void MonsterComponent::Dead()
 	if (Now >= End)
 	{
 		gameobject->SetActive(false);
+		MONSTER_EMAGIN Data;
+		Data.Object = this->gameobject;
+		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_MONSTER_UI_OFF, &Data);
+		IsUI_ON = false;
 	}
 }
 
 void MonsterComponent::Chase()
 {
-	if (FirstState() == true)
-	{
-		MONSTER_EMAGIN Data;
-		Data.R = 255;
-		Data.G = 0;
-		Data.B = 0;
-		Data.HP = HP;
-		Data.ComboCount = ComboCount;
-		Data.Object = this->gameobject;
-		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_MONSTER_UI_ON, &Data);
-	}
-
 	ChaseTime += GetDeltaTime();
 	if (AttackRange > PlayerDistance)
 	{
@@ -286,6 +296,7 @@ void MonsterComponent::Hit()
 	{
 		float End = mAnimation->GetEndFrame();
 		float Now = mAnimation->GetNowFrame();
+		mColor.Update(1);
 		if (Now >= End)
 		{
 			HitStart = false;
@@ -307,6 +318,28 @@ void MonsterComponent::Debug()
 void MonsterComponent::PlayerDistanceCheck()
 {
 	PlayerDistance = mTransform->GetDistance(mPlayerTR->GetPosition());
+
+	
+	if (PlayerDistance <= ChaseRange && IsUI_ON == false) 
+	{
+		MONSTER_EMAGIN Data;
+		Data.R = 255;
+		Data.G = 0;
+		Data.B = 0;
+		Data.HP = HP;
+		Data.ComboCount = ComboCount;
+		Data.Object = this->gameobject;
+		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_MONSTER_UI_ON, &Data);
+		IsUI_ON		= true;
+	}
+
+	if (PlayerDistance >= ChaseRange && IsUI_ON == true)
+	{
+		MONSTER_EMAGIN Data;
+		Data.Object = this->gameobject;
+		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_MONSTER_UI_OFF, &Data);
+		IsUI_ON		= false;
+	}
 }
 
 void MonsterComponent::SetSearchPoint(int Index, Vector3 Point)
@@ -343,44 +376,6 @@ void MonsterComponent::SetMonsterState(MONSTER_STATE State)
 	mRigidbody->SetVelocity(0, 0, 0);
 }
 
-void MonsterComponent::SetLimLightColor()
-{
-	if (HitFXStart == false)
-	{
-		//스킨 오브젝트 가져오기
-		if (mSkinFilter == nullptr){mSkinFilter = gameobject->GetChildMesh(0)->GetComponent<MeshFilter>();}
-
-		//메테리얼 블록 가져오기
-		mSkinFilter->SetMaterialPropertyBlock(true);
-		MPB = mSkinFilter->GetMaterialPropertyBlock();
-		//림 라이트 시작 설정 설정
-		MPB->LimLightColor	= NowLimLightColor;
-		MPB->LimLightFactor = NowLimLightFactor;
-		MPB->LimLightWidth	= NowLimLightWidth;
-		//몬스터 크기 설정
-		float Scale = NowHitMonsterScale + NowHitMonsterScale_F;
-		mTransform->SetScale(Scale, Scale, Scale);
-
-		HitFXStart = true;
-	}
-
-	//시간에 따라 림라이트 효과가 줄어든다
-	if (MPB->LimLightFactor <= 0)
-	{
-		float Scale = NowHitMonsterScale + NowHitMonsterScale_F;
-		mTransform->SetScale(Scale, Scale, Scale);
-		HitFunction = nullptr;
-		HitFXStart  = false;
-		mSkinFilter->SetMaterialPropertyBlock(false);
-	}
-	else
-	{
-		float DTime = GetDeltaTime();
-		mTransform->AddScale(-DTime * NowHitMonsterScale_F);
-		MPB->LimLightFactor -= DTime * NowLimLightFactor;
-	}
-}
-
 void MonsterComponent::UpdateColor()
 {
 	if (HitFunction != nullptr)
@@ -406,12 +401,12 @@ bool MonsterComponent::FirstState()
 	if (STATE[MonsterState] == false)
 	{
 		STATE[MonsterState] = true;
+		return true;
 	}
 	else
 	{
-		STATE[MonsterState] = false;
+		return false;
 	}
-		return STATE[MonsterState];
 }
 
 bool MonsterComponent::GetStopPoint(const Vector3& Pos)

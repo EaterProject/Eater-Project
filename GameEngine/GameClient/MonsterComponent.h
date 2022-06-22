@@ -1,6 +1,7 @@
 #pragma once
 #include "Component.h"
 #include "ClientTypeOption.h"
+#include "ColorSetting.h"
 #include <string>
 #include <functional>
 class PhysRayCast;
@@ -18,6 +19,7 @@ public:
 public:
 	virtual void Awake() override;
 	virtual void SetUp() override;
+	virtual void Start() override;
 	virtual void Update() override;
 	virtual void OnTriggerStay(GameObject* Obj) override;
 
@@ -34,7 +36,6 @@ public:
 	bool GetStopPoint(const Vector3& Pos);
 	void SetMovePoint(float x, float y, float z);
 	void SetMonsterState(MONSTER_STATE State);
-	void SetLimLightColor();
 	void UpdateColor();
 	void SetState(MONSTER_STATE mState);
 	bool FirstState();
@@ -73,6 +74,8 @@ protected:
 	std::string Sound_move;
 	std::string Sound_Attack;
 
+	bool IsUI_ON = false;
+	bool IsUI_OFF = false;
 protected:
 	///Move 상태 변수들
 	float MoveSoundTime				= 0;
@@ -112,9 +115,10 @@ protected:
 	float	NowLimLightFactor	= 2.0f;			//건들면 안됨
 	float	NowLimLightWidth	= 0.9f;			//건들면 안됨
 	bool	NowUpdateColor		= false;		//건들면 안됨
-	MONSTER_COLOR	ComboColor  = MONSTER_COLOR::RED;
 protected:
-	MaterialPropertyBlock* MPB  = nullptr;
+	ColorSetting	mColor;
+
+
 	std::function<void()> HitFunction;
 
 };

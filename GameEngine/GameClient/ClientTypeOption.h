@@ -30,14 +30,16 @@
 #define MESSAGE_GATE_UNLOCK 2		//게이트 잠금 풀기		//인자 값 : int
 
 //UI Message
-#define MESSAGE_UI_COMBO 0			//콤보 폰트 값			//인자 값 : int
-#define MESSAGE_UI_HP_NOW 1			//체력 현재 폰트 값		//인자 값 : int
-#define MESSAGE_UI_HP_MAX 2			//체력 최대 폰트 값		//인자 값 : int
-#define MESSAGE_UI_EMAGIN_NOW 3		//이메진 현재 폰트 값		//인자 값 : int
-#define MESSAGE_UI_EMAGIN_MAX 4		//이메진 최대 폰트 값		//인자 값 : int
-#define MESSAGE_UI_MONSTER_UI_ON 5	//몬스터 UI를 보여준다	//인자 값 : MONSTER_EMAGIN 구조체
-#define MESSAGE_UI_RENDER 6			//모든 UI 렌더링 여부		//인자 값 : bool
-#define MESSAGE_UI_MONSTERUI 7		//몬스터 UI
+#define MESSAGE_UI_COMBO 0				//콤보 폰트 값			//인자 값 : int
+#define MESSAGE_UI_HP_NOW 1				//체력 현재 폰트 값		//인자 값 : int
+#define MESSAGE_UI_HP_MAX 2				//체력 최대 폰트 값		//인자 값 : int
+#define MESSAGE_UI_EMAGIN_NOW 3			//이메진 현재 폰트 값		//인자 값 : int
+#define MESSAGE_UI_EMAGIN_MAX 4			//이메진 최대 폰트 값		//인자 값 : int
+#define MESSAGE_UI_MONSTER_UI_ON 5		//몬스터 UI를 켠다		//인자 값 : MONSTER_EMAGIN 구조체
+#define MESSAGE_UI_MONSTER_UI_OFF 6		//몬스터 UI를 끈다		//인자 값 : MONSTER_EMAGIN 구조체
+#define MESSAGE_UI_MONSTER_UI_UPDATE 7	//몬스터 UI를 업데이트	//인자 값 : MONSTER_EMAGIN 구조체
+
+#define MESSAGE_UI_RENDER 8			//모든 UI 렌더링 여부		//인자 값 : bool
 
 //Camera Message
 #define MESSAGE_CAMERA_CINEMATIC_GAME_START 0				//시네마틱 실행

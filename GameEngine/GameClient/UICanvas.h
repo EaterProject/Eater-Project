@@ -23,8 +23,15 @@ public:
 	void Set_HP_Max(int Number);
 	void Set_Emagin_Now(int Number);
 	void Set_Emagin_Max(int Number);
-	void Set_Monster_EMAGINE(void* Emagin);
+
+	
+	void Set_Monster_UI_ON(void* Emagin);		//몬스터 UI를 켠다
+	void Set_Monster_UI_OFF(void* Emagin);		//몬스터 UI를 끈다
+	void Set_Monster_UI_SET_DATA(void* Emagin);	//몬스터 데이터를 넘긴다
+
 	void Set_ALLRender(bool Render);
+
+	
 private:
 	//생성 함수
 	void Create_Combo_UI();
@@ -38,6 +45,9 @@ private:
 
 	void Update_Hit_Check();	//알파값 처리
 	void Update_Combo_Check();	//크기 처리
+	
+	int GetActiveMonsterUI();
+	bool UseCheck(GameObject* Obj);
 
 	RectTransform*	RT[15]		= { nullptr };
 	Image*			Images[15]	= { nullptr };
@@ -52,6 +62,8 @@ private:
 	RectTransform*	MonsterTR_Front[5]		= { nullptr };
 	Slider*			MonsterSlider[5]		= { nullptr };
 	ImageFont*		MonsterFont[5]			= { nullptr };
+	GameObject*		MonsterObject[5]		= { nullptr };
+	bool			MonsterActiveUI[5]		= { false };
 
 	bool isHit  = false;
 	float Alpha = 0;
