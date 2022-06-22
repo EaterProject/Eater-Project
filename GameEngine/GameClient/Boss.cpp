@@ -101,9 +101,9 @@ void Boss::SetUp()
 	mState = (int)BOSS_STATE::IDLE;
 
 	//위치값 설정
-	mTransform->Position	= { -44.0f,6.0f,62.0f };
+	mTransform->SetPosition(-44.0f, 6.0f, 62.0f);
 	StartPoint = { -44.0f,6.0f,62.0f };
-	mTransform->Scale		= { 1.5f,1.5f,1.5f};
+	mTransform->SetScale(1.5f, 1.5f, 1.5f);
 
 	//스킬 포인트의 위치를 생성한다
 	CreateSkillPoint();
@@ -112,8 +112,8 @@ void Boss::SetUp()
 void Boss::Start()
 {
 	mColor.Setting(this->gameobject);
-	//mColor.SetLimlightSetting(1.0f, 0.0f, 0.0f, 1.0f, 1.0f);
-	mColor.SetEmissiveSetting(ColorSetting::COLOR_TYPE::RED, 100.0f);
+	mColor.SetLimlightSetting(1.0f, 1.0f, 1.0f, 1.0f, 1.0f);
+	mColor.SetEmissiveSetting(ColorSetting::COLOR_TYPE::RED, 10.0f);
 }
 
 void Boss::Update()
@@ -177,8 +177,8 @@ void Boss::Update()
 
 void Boss::Debug()
 {
-	DebugDrawCircle(AttackRange, mTransform->Position + Vector3(0, 1, 0), Vector3(0, 0, 0), Vector3(0, 1, 0));
-	DebugDrawCircle(FightRange, mTransform->Position + Vector3(0, 1, 0), Vector3(0, 0, 0), Vector3(1, 0, 0));
+	DebugDrawCircle(AttackRange, mTransform->GetPosition() + Vector3(0, 1, 0), Vector3(0, 0, 0), Vector3(0, 1, 0));
+	DebugDrawCircle(FightRange, mTransform->GetPosition() + Vector3(0, 1, 0), Vector3(0, 0, 0), Vector3(1, 0, 0));
 	for(int i = 0; i < 5;i++)
 	{
 		DebugDrawCircle(1.5f, SkillPoint[i] + Vector3(0, 0.25f, 0), Vector3(0, 0, 0), Vector3(0, 1, 0));
@@ -219,7 +219,7 @@ void Boss::Boss_Idle()
 	if (PlayerDistance < AttackRange)
 	{
 		//근접 공격이 가능한 상태
-		mTransform->Slow_Y_Rotation(mPlayerTR->Position, 150, false);
+		mTransform->Slow_Y_Rotation(mPlayerTR->GetPosition(), 150, false);
 		if (IsRight == false)
 		{
 			SetState(BOSS_STATE::CLOSER_ATTACK_L);
@@ -234,17 +234,17 @@ void Boss::Boss_Idle()
 	else if(PlayerDistance < FightRange && PlayerDistance > AttackRange)
 	{
 		//전투가 가능한 상태
-		mTransform->Slow_Y_Rotation(mPlayerTR->Position, 150, false);
+		mTransform->Slow_Y_Rotation(mPlayerTR->GetPosition(), 150, false);
 	}
 
 
-	if (mTransform->Position.y > PositionY)
+	if (mTransform->GetPosition().y > PositionY)
 	{
-		mTransform->Position.y -= GetDeltaTime();
+		mTransform->AddPosition_Y(-GetDeltaTime());
 	}
 	else
 	{
-		mTransform->Position.y = PositionY;
+		mTransform->SetPosition_Y(PositionY);
 	}
 
 
@@ -312,14 +312,25 @@ void Boss::Boss_Groggy_End()
 
 void Boss::Boss_Teleport_Ready()
 {
-	if (mTransform->Scale.x > 0.0f)
+	if (FirstState() == true)
 	{
-		float mDTime = GetDeltaTime();
-		mTransform->Scale.x -= mDTime * 10;
+		mColor.SetLimlightSetting(1,1,1, 1, 10);
+		mColor.SetLimlightSettingMax(1, 1, 1, 50, 10);
 	}
 	else
 	{
-		mTransform->Scale.x = 0.0f;
+		mColor.Update(10);
+	}
+
+
+	if (mTransform->GetScale().x > 0.0f)
+	{
+		float mDTime = GetDeltaTime();
+		mTransform->AddScale_X(-GetDeltaTime() * 10);
+	}
+	else
+	{
+		mTransform->SetScale_X(0.0f);
 		Friend->gameobject->SetActive(false);
 		SetState(BOSS_STATE::TELEPORT_START);
 	}
@@ -327,24 +338,37 @@ void Boss::Boss_Teleport_Ready()
 
 void Boss::Boss_Teleport_Start()
 {
-	if (FriendIndex == -1)
+	if (FirstState() == true)
 	{
-		mTransform->Position = StartPoint;
+		mColor.SetLimlightSetting(1, 1, 1, 50, 10);
+		mColor.SetLimlightSettingMax(1, 1, 1, 1, 10);
 	}
 	else
 	{
-		mTransform->Position = SkillPoint[FriendIndex];
+		mColor.Update(10);
 	}
 
-	if (mTransform->Scale.x < 1.5f)
+
+	if (FriendIndex == -1)
 	{
-		float mDTime = GetDeltaTime();
-		mTransform->Scale.x += mDTime * 10;
+		mTransform->SetPosition(StartPoint);
 	}
 	else
 	{
-		mTransform->Scale.x = 1.5f;
+		mTransform->SetPosition(SkillPoint[FriendIndex]);
+	}
+
+	if (mTransform->GetScale().x < 1.5f)
+	{
+		float mDTime = GetDeltaTime();
+		mTransform->AddScale_X(mDTime*10);
+	}
+	else
+	{
+		mTransform->SetScale_X(1.5f);
 		SetState(BOSS_STATE::IDLE);
+
+		mColor.Default();
 	}
 }
 
@@ -359,8 +383,6 @@ void Boss::Boss_Create()
 		float	Max = 0;
 		int		Index = 0;
 		//스킬 포인트 위치를 새롭게 구한다
-		CreateSkillPoint();
-
 		for (int i = 0; i < 5; i++)
 		{
 			int Dir = mPlayerTR->GetDistance(SkillPoint[i]);
@@ -387,7 +409,7 @@ void Boss::Boss_Closer_Attack_L()
 	{
 		SetState(BOSS_STATE::IDLE);
 	}
-	mTransform->Slow_Y_Rotation(mPlayerTR->Position, 150, false);
+	mTransform->Slow_Y_Rotation(mPlayerTR->GetPosition(), 150, false);
 }
 
 void Boss::Boss_Closer_Attack_R()
@@ -399,7 +421,7 @@ void Boss::Boss_Closer_Attack_R()
 	{
 		SetState(BOSS_STATE::IDLE);
 	}
-	mTransform->Slow_Y_Rotation(mPlayerTR->Position, 150, false);
+	mTransform->Slow_Y_Rotation(mPlayerTR->GetPosition(), 150, false);
 }
 
 void Boss::Boss_Chase_Attack_Ready()
@@ -410,23 +432,24 @@ void Boss::Boss_Chase_Attack_Ready()
 	{
 		SetState(BOSS_STATE::CHASE_ATTACK_PLAY);
 	}
-	mTransform->Slow_Y_Rotation(mPlayerTR->Position, 150, false);
+	mTransform->Slow_Y_Rotation(mPlayerTR->GetPosition(), 150, false);
 }
 
 void Boss::Boss_Chase_Attack_Play()
 {
 	static int WeaponIndex = 0;
-	mTransform->Slow_Y_Rotation(mPlayerTR->Position, 150, false);
+	mTransform->Slow_Y_Rotation(mPlayerTR->GetPosition(), 150, false);
 	if (IsShooting == false)
 	{
 		Vector3 Look = mTransform->GetLocalPosition_Look();
 		Look.z *= -1;
 
 		Vector3 Start;
-		Start = mTransform->Position + (Look * 3);
+		
+		Start = mTransform->GetPosition() + (Look * 3);
 		Start.y += 3.0f;
 
-		Weapon[WeaponIndex]->SetShootingPoistion(Start, mPlayerTR->Position);
+		Weapon[WeaponIndex]->SetShootingPoistion(Start, mPlayerTR->GetPosition());
 
 		IsShooting = true;
 	}
@@ -462,8 +485,19 @@ void Boss::Boss_Chase_Attack_Play()
 
 void Boss::Boss_Rendom_Attack_Ready()
 {
-	mTransform->Position.x = StartPoint.x;
-	mTransform->Position.z = StartPoint.z;
+	if (FirstState() == true)
+	{
+		mColor.SetLimlightSetting(1, 1, 1, 1, 1);
+		mColor.SetLimlightSettingMax(1, 0, 0, 6, 1);
+	}
+	else
+	{
+		mColor.Update(0.5f);
+	}
+
+
+	mTransform->SetPosition_X(StartPoint.x);
+	mTransform->SetPosition_Z(StartPoint.z);
 	int End = mAnimation->GetEndFrame();
 	int Now = mAnimation->GetNowFrame();
 	if (Now >= End)
@@ -472,7 +506,7 @@ void Boss::Boss_Rendom_Attack_Ready()
 	}
 	else
 	{
-		mTransform->Position.y += GetDeltaTime();
+		mTransform->AddPosition_Y(GetDeltaTime());
 	}
 }
 
@@ -482,7 +516,7 @@ void Boss::Boss_Rendom_Attack_Play()
 
 	if (IsShooting == false)
 	{
-		Vector3 Start = mTransform->Position;
+		Vector3 Start = mTransform->GetPosition();
 		Start.y += 7.0f;
 		Weapon[WeaponIndex]->SetShootingPoistion(Start, SkillPoint[WeaponIndex]);
 		IsShooting = true;
@@ -515,6 +549,17 @@ void Boss::Boss_Rendom_Attack_Play()
 
 void Boss::Boss_Rendom_Attack_End()
 {
+	if (FirstState() == true)
+	{
+		mColor.SetLimlightSetting(1, 0, 0, 6, 1);
+		mColor.SetLimlightSettingMax(1, 1, 1, 1, 1);
+	}
+	else
+	{
+		mColor.Update(0.5);
+	}
+
+
 	int End = mAnimation->GetEndFrame();
 	int NOW = mAnimation->GetNowFrame();
 
@@ -562,14 +607,14 @@ bool Boss::FirstState()
 
 float Boss::PlayerDistanceCheck()
 {
-	PlayerDistance = mTransform->GetDistance(mPlayerTR->Position);
+	PlayerDistance = mTransform->GetDistance(mPlayerTR->GetPosition());
 	return PlayerDistance;
 }
 
 void Boss::CreateSkillPoint()
 {
 	float Angle = 360 / 5;
-	float NowAngle = mTransform->Rotation.y;
+	float NowAngle = mTransform->GetRotation().y;
 	for (int i = 0; i < 5; i++)
 	{
 		NowAngle += Angle;
@@ -599,7 +644,7 @@ void Boss::GroundCheck()
 	//Ray를 쏜다
 	mRay->Direction = { 0,-1,0 };
 	mRay->MaxDistance = 10;
-	mRay->Origin = mTransform->Position;
+	mRay->Origin = mTransform->GetPosition();
 	mRay->Origin.y += 0.2f;
 	//충돌된 곳에Y축만 가져온다
 	RayCast(mRay);

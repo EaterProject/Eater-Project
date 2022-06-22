@@ -49,7 +49,7 @@ void Collider::PhysicsUpdate()
 		float CenterY = mPhysData->CenterPoint.y;
 		float CenterZ = mPhysData->CenterPoint.z;
 
-		mTransform->SetTranlate(mPhysData->WorldPosition);
+		mTransform->SetPosition(mPhysData->WorldPosition);
 
 		//mTransform->Q_Rotation.x = mPhysData->Rotation.x;
 		//mTransform->Q_Rotation.y = mPhysData->Rotation.y;

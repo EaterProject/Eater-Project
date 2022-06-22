@@ -15,6 +15,7 @@ public:
 		RED,
 		GREEN,
 		BLUE,
+		WHITE
 	};
 
 
@@ -22,38 +23,42 @@ public:
 
 	void SetLimlightSetting(float R, float G, float B, float mFactor, float  mWidth);
 	void SetLimlightSetting(COLOR_TYPE Type, float mFactor, float mWidth);
+	void SetLimlightSettingMax(float R, float G, float B, float mFactor, float  mWidth);
+	void SetLimlightSettingMax(COLOR_TYPE Type, float mFactor, float mWidth);
+
+
+
+
 
 	void SetEmissiveSetting(float R, float G, float B, float mFactor);
 	void SetEmissiveSetting(COLOR_TYPE Type, float mFactor);
 
-
-	void SetLimlightColor(float R, float G, float B);
-	void SetLimlightColorMax(float R, float G, float B);
-
-	void SetLimlightFactor(float mFactor);
-	void SetLimlightFactorMax(float mFactor);
-
-	void SetLimlightWidth(float mWidth);
-	void SetLimlightWidthMax(float mWidth);
+	void Update(float Speed);
+	void Default();
+private:
 
 	void LimLightUpdate();
 	void EmissiveUpdate();
-	void Update();
-	void Default();
-private:
 	std::vector<MeshFilter*> MeshFilterList;
 	std::vector<GameObject*> GameObjectList;
 	std::vector<MaterialPropertyBlock*> MPBList;
 
 	float LimColor[5]		= { 1.0f };
-	float LimColorNow[5]	= { 1.0f };
+	float LimColorMax[5]	= { 1.0f };
 
 	float EmissiveColor[4]		= { 1.0f };
-	float EmissiveColorNow[4]	= { 1.0f };
+	float EmissiveColorMax[4]	= { 1.0f };
 
-	float DTime_R = 0.0f;
-	float DTime_G = 0.0f;
-	float DTime_B = 0.0f;
+	int LimColorValue[5];		//증가 감소 측정
+	int LImColorOneFrame[5];	//한프레임 증가량
+	bool IsLimLightColor_Setting	= false;
+	bool IsLimLightColorMax_Setting = false;
+	bool IsTypeSetting				= false;
+
+
+	const int TYPE_UP	= 0;	//값이 증가
+	const int TYPE_DOWN = 1;	//값이 감소
+	const int TYPE_NONE = 2;	//값이 변화량 없음
 
 	bool IsUpDate = false;
 	bool IsSetting = false;

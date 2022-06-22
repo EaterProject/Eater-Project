@@ -248,6 +248,7 @@ copy /Y "$(ProjectDir)Network\lib\Release\*lib"  "$(TargetDir)"</Command>
     <ClInclude Include="Eater_LoadParticle.h" />
     <ClInclude Include="Export\Button.h" />
     <ClInclude Include="Export\Image.h" />
+    <ClInclude Include="Export\ImageFont.h" />
     <ClInclude Include="Export\RectTransform.h" />
     <ClInclude Include="Export\Slider.h" />
     <ClInclude Include="GlobalDataManager.h" />
@@ -310,6 +311,7 @@ copy /Y "$(ProjectDir)Network\lib\Release\*lib"  "$(TargetDir)"</Command>
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="CameraDebugKeyInput.cpp" />
     <ClCompile Include="Eater_LoadParticle.cpp" />
+    <ClCompile Include="ImageFont.cpp" />
     <ClCompile Include="GlobalDataManager.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Camera.cpp" />

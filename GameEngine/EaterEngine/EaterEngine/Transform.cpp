@@ -24,6 +24,9 @@ Transform::Transform()
 
 	LocalUpdate = false;
 	isRigid		= false;
+
+	SetUp_Order = FUNCTION_ORDER_LAST;
+	Start_Order = FUNCTION_ORDER_LAST;
 }
 
 Transform::~Transform()
@@ -148,28 +151,28 @@ void Transform::AddLocalPosition(float X, float Y, float Z)
 	};
 }
 
-void Transform::SetTranlate_X(float pos)
+void Transform::SetPosition_X(float pos)
 {
 	IsUpdate = true;
 
 	Position.x = pos;
 }
 
-void Transform::SetTranlate_Y(float pos)
+void Transform::SetPosition_Y(float pos)
 {
 	IsUpdate = true;
 
 	Position.y = pos;
 }
 
-void Transform::SetTranlate_Z(float pos)
+void Transform::SetPosition_Z(float pos)
 {
 	IsUpdate = true;
 
 	Position.z = pos;
 }
 
-void Transform::SetTranlate(float X, float Y, float Z)
+void Transform::SetPosition(float X, float Y, float Z)
 {
 	IsUpdate = true;
 	
@@ -178,7 +181,7 @@ void Transform::SetTranlate(float X, float Y, float Z)
 	Position.z = Z;
 }
 
-void Transform::SetTranlate(DirectX::SimpleMath::Vector3& mPos)
+void Transform::SetPosition(DirectX::SimpleMath::Vector3& mPos)
 {
 	IsUpdate = true;
 	
@@ -187,7 +190,7 @@ void Transform::SetTranlate(DirectX::SimpleMath::Vector3& mPos)
 	Position.z = mPos.z;
 }
 
-void Transform::SetTranlate(DirectX::SimpleMath::Vector3&& mPos)
+void Transform::SetPosition(DirectX::SimpleMath::Vector3&& mPos)
 {
 	IsUpdate = true;
 
@@ -196,28 +199,28 @@ void Transform::SetTranlate(DirectX::SimpleMath::Vector3&& mPos)
 	Position.z = mPos.z;
 }
 
-void Transform::AddTranlate_X(float pos)
+void Transform::AddPosition_X(float pos)
 {
 	IsUpdate = true;
 
 	Position.x += pos;
 }
 
-void Transform::AddTranlate_Y(float pos)
+void Transform::AddPosition_Y(float pos)
 {
 	IsUpdate = true;
 
 	Position.y += pos;
 }
 
-void Transform::AddTranlate_Z(float pos)
+void Transform::AddPosition_Z(float pos)
 {
 	IsUpdate = true;
 
 	Position.z += pos;
 }
 
-void Transform::AddTranlate(float X, float Y, float Z)
+void Transform::AddPosition(float X, float Y, float Z)
 {
 	IsUpdate = true;
 	
@@ -226,7 +229,7 @@ void Transform::AddTranlate(float X, float Y, float Z)
 	Position.z += Z;
 }
 
-void Transform::AddTranlate(DirectX::SimpleMath::Vector3& mPos)
+void Transform::AddPosition(DirectX::SimpleMath::Vector3& mPos)
 {
 	IsUpdate = true;
 	
@@ -235,7 +238,7 @@ void Transform::AddTranlate(DirectX::SimpleMath::Vector3& mPos)
 	Position.z += mPos.z;
 }
 
-void Transform::AddTranlate(DirectX::SimpleMath::Vector3&& mPos)
+void Transform::AddPosition(DirectX::SimpleMath::Vector3&& mPos)
 {
 	IsUpdate = true;
 

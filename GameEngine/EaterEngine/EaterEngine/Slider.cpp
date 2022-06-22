@@ -313,6 +313,7 @@ void Slider::SetFillRange(FILL_TYPE fill_type, float range)
 	}
 
 	// 설정된 비율의 범위 설정..
+	m_FillType = fill_type;
 	m_FillRange = range * m_Value;
 
 	if (m_Start == false)

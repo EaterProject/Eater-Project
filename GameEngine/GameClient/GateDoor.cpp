@@ -72,23 +72,23 @@ void GateDoor::Update()
 		OpenTime = GetDeltaTime()*4.0f;
 		if (DoorTR[0] != nullptr && DoorTR[2] != nullptr)
 		{
-			DoorTR[0]->AddTranlate_Y(OpenTime);
-			DoorTR[2]->AddTranlate_Y(OpenTime);
+			DoorTR[0]->AddPosition_Y(OpenTime);
+			DoorTR[2]->AddPosition_Y(OpenTime);
 		}
 
 		if (DoorTR[1] != nullptr && DoorTR[3] != nullptr)
 		{
-			DoorTR[1]->AddTranlate_Y(-OpenTime);
-			DoorTR[3]->AddTranlate_Y(-OpenTime);
+			DoorTR[1]->AddPosition_Y(-OpenTime);
+			DoorTR[3]->AddPosition_Y(-OpenTime);
 		}
 
 		if (DoorTR[0]->GetPosition().y >= 4.0f)
 		{
-			DoorTR[0]->AddTranlate_Y(-OpenTime);
-			DoorTR[2]->AddTranlate_Y(-OpenTime);
+			DoorTR[0]->AddPosition_Y(-OpenTime);
+			DoorTR[2]->AddPosition_Y(-OpenTime);
 
-			DoorTR[1]->AddTranlate_Y(OpenTime);
-			DoorTR[3]->AddTranlate_Y(OpenTime);
+			DoorTR[1]->AddPosition_Y(OpenTime);
+			DoorTR[3]->AddPosition_Y(OpenTime);
 
 			OpenTime = 0.0f;
 			IS_OPEN = false;
@@ -99,22 +99,22 @@ void GateDoor::Update()
 		OpenTime = GetDeltaTime();
 		if (DoorTR[0] != nullptr && DoorTR[2] != nullptr)
 		{
-			DoorTR[0]->AddTranlate_Y(-OpenTime);
-			DoorTR[2]->AddTranlate_Y(-OpenTime);
+			DoorTR[0]->AddPosition_Y(-OpenTime);
+			DoorTR[2]->AddPosition_Y(-OpenTime);
 		}
 
 		if (DoorTR[1] != nullptr && DoorTR[3] != nullptr)
 		{
-			DoorTR[1]->AddTranlate_Y(OpenTime);
-			DoorTR[3]->AddTranlate_Y(OpenTime);
+			DoorTR[1]->AddPosition_Y(OpenTime);
+			DoorTR[3]->AddPosition_Y(OpenTime);
 		}
 
 		if (DoorTR[0]->GetPosition().y <= 0.0f)
 		{
-			DoorTR[0]->SetTranlate_Y(0.0f);
-			DoorTR[2]->SetTranlate_Y(0.0f);
-			DoorTR[1]->SetTranlate_Y(0.0f);
-			DoorTR[3]->SetTranlate_Y(0.0f);
+			DoorTR[0]->SetPosition_Y(0.0f);
+			DoorTR[2]->SetPosition_Y(0.0f);
+			DoorTR[1]->SetPosition_Y(0.0f);
+			DoorTR[3]->SetPosition_Y(0.0f);
 			OpenTime = 0.0f;
 			IS_CLOSE = false;
 		}

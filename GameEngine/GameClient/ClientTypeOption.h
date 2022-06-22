@@ -37,6 +37,7 @@
 #define MESSAGE_UI_EMAGIN_MAX 4		//이메진 최대 폰트 값		//인자 값 : int
 #define MESSAGE_UI_MONSTER_UI_ON 5	//몬스터 UI를 보여준다	//인자 값 : MONSTER_EMAGIN 구조체
 #define MESSAGE_UI_RENDER 6			//모든 UI 렌더링 여부		//인자 값 : bool
+#define MESSAGE_UI_MONSTERUI 7		//몬스터 UI
 
 //Camera Message
 #define MESSAGE_CAMERA_CINEMATIC_GAME_START 0				//시네마틱 실행
@@ -96,5 +97,6 @@ struct MONSTER_EMAGIN
 	float B = 255.f;
 	int ComboCount = 7;
 	int HP;
+	void* Object;
 };
 

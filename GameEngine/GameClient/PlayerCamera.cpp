@@ -36,7 +36,7 @@ void PlayerCamera::SetUp()
 
 	//PastX = GetMousePosX();
 	//PastY = GetMousePosY();
-	mTransform->SetTranlate(0.0f, 0.0f, -2.0f);
+	mTransform->SetPosition(0.0f, 0.0f, -2.0f);
 
 	//MouseCursor = GetTogle(VK_F10);
 	//ShowMouseCursor(MouseCursor);
@@ -102,7 +102,7 @@ void PlayerCamera::Update()
 		float Z = Horizontal_Z * X_Z_Ratio;
 
 		//카메라의 위치값
-		mTransform->SetTranlate(X + TargetPos.x + CamOffSet.x, Y + TargetPos.y + CamOffSet.y, Z + TargetPos.z + CamOffSet.z);
+		mTransform->SetPosition(X + TargetPos.x + CamOffSet.x, Y + TargetPos.y + CamOffSet.y, Z + TargetPos.z + CamOffSet.z);
 		
 		//카메라의 회전값
 		Vector3 rotation = mTransform->GetRotation();

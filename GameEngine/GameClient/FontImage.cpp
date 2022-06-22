@@ -93,10 +93,10 @@ void FontImage::UpdateFontAnimation()
 
 void FontImage::Setting(int mPosX, int mPosY, std::string mFontName, float SizeX, float SizeY,float NumberOffset, PIVOT_TYPE pivot)
 {
-	PosX		= mPosX;
-	PosY		= mPosY;
-	OffsetX		= NumberOffset;
-	FontName	= mFontName;
+	PosX = mPosX;
+	PosY = mPosY;
+	OffsetX = NumberOffset;
+	FontName = mFontName;
 
 	FontUpdte = true;
 	for (int i = 0; i < 3; i++)

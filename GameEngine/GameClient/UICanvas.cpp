@@ -6,6 +6,8 @@
 #include "EaterEngineAPI.h"
 #include "GameObject.h"
 #include "ComboFont.h"
+#include "Slider.h"
+#include "ImageFont.h";
 UICanvas::UICanvas()
 {
 	
@@ -34,7 +36,7 @@ void UICanvas::Start()
 	mFont[Font_Emagin_Max]->SetFontNumber(14);
 	mFont[Font_HP_Now]->SetFontNumber(150);
 	mFont[Font_HP_Max]->SetFontNumber(150);
-	mFont[Font_Monster_Emagin]->SetFontNumber(7);
+	//mFont[Font_Monster_Emagin]->SetFontNumber(7);
 }
 
 void UICanvas::Update()
@@ -91,10 +93,34 @@ void UICanvas::Set_Emagin_Max(int Number)
 void UICanvas::Set_Monster_EMAGINE(void* Emagin)
 {
 	MONSTER_EMAGIN* mEmagin = reinterpret_cast<MONSTER_EMAGIN*>(Emagin);
+	GameObject* Object = reinterpret_cast<GameObject*>(mEmagin->Object);
 
-	mFont[Font_Monster_Emagin]->SetFontNumber(mEmagin->ComboCount);
-	Images[Image_Monster_Emagin_Front]->SetColor(mEmagin->R, mEmagin->G, mEmagin->B, 255);
-	Images[Image_Monster_HP_Front];
+	MonSterTR_Back[0]->SetPivot(PIVOT_OBJECT);
+	MonSterTR_Back[0]->SetPositionObject(Object, Vector3(0.0, 2.0f, 0.0f));
+	MonSterTR_Back[0]->SetPosition(-60, 0);
+
+	MonsterTR_Front[0]->SetPivot(PIVOT_OBJECT);
+	MonsterTR_Front[0]->SetPositionObject(Object, Vector3(0.0, 2.0f, 0.0f));
+	MonsterTR_Front[0]->SetPosition(-60, 0);
+
+	//색 설정
+	Monster_Emagin_Front[0]->SetColor(mEmagin->R, mEmagin->G, mEmagin->B, 255);
+	
+	MonsterSlider[0]->SetValueRange(0, 100);
+	MonsterSlider[0]->SetFillRange(FILL_LEFT, mEmagin->HP);
+	MonsterSlider[0]->SetPivot(PIVOT_OBJECT);
+	MonsterSlider[0]->SetPositionObject(Object, Vector3(0.0, 2.0f, 0.0f));
+
+	//MonsterFont[0]->SetFontNumber(7);
+
+	MonsterFont[0]->SetPivot(PIVOT_OBJECT);
+	MonsterFont[0]->SetPositionObject(Object, Vector3(0.0, 2.0f, 0.0f));
+	MonsterFont[0]->SetFontNumber(mEmagin->ComboCount);
+
+	//레이어 설정
+	Monster_Emagin_Back[0]->SetLayer(1);
+	Monster_Emagin_Front[0]->SetLayer(1);
+	MonsterFont[0]->SetLayer(2);
 }
 
 void UICanvas::Set_ALLRender(bool Render)
@@ -288,37 +314,37 @@ void UICanvas::Create_Monster_UI()
 	GameObject* Object	= nullptr;
 	RectTransform* Rect = nullptr;
 
+	//몬스터 체력바 
+	Object = Instance_Slider();
+	MonsterSlider[0] = Object->GetComponent<Slider>();
+	MonsterSlider[0]->SetBackGroundTexture("Monster_HP_Back");
+	MonsterSlider[0]->SetFillTexture("Monster_HP_Front");
+
+	//몬스터 이메진 뒤 이미지
 	Object = Instance_UI();
-	Images[Image_Monster_HP_Front] = Object->AddComponent<Image>();
-	Images[Image_Monster_HP_Front]->SetTexture("Monster_HP");
-	Images[Image_Monster_HP_Front]->SetColor(255, 255, 255, 255);
-	Rect = Object->GetComponent<RectTransform>();
-	Rect->SetPosition(0, -400);
-	Rect->SetScale(1, 1);
-	Rect->SetPivot(PIVOT_MIDDLE_CENTER);
+	Monster_Emagin_Back[0] = Object->AddComponent<Image>();
+	Monster_Emagin_Back[0]->SetTexture("Monster_Emagin_Back");
+	Monster_Emagin_Back[0]->SetColor(255, 255, 255, 255);
+	MonSterTR_Back[0] = Object->GetComponent<RectTransform>();
 
+	//몬스터 이메진 앞 이미지
 	Object = Instance_UI();
-	Images[Image_Monster_Emagin_Back] = Object->AddComponent<Image>();
-	Images[Image_Monster_Emagin_Back]->SetTexture("Monster_Emagin_Back");
-	Images[Image_Monster_Emagin_Back]->SetColor(255, 255, 255, 255);
-	Rect = Object->GetComponent<RectTransform>();
-	Rect->SetPosition(-100,-400);
-	Rect->SetScale(1, 1);
-	Rect->SetPivot(PIVOT_MIDDLE_CENTER);
+	Monster_Emagin_Front[0] = Object->AddComponent<Image>();
+	Monster_Emagin_Front[0]->SetTexture("Monster_Emagin_Front");
+	Monster_Emagin_Front[0]->SetColor(255, 255, 255, 255);
+	MonsterTR_Front[0] = Object->GetComponent<RectTransform>();
 
-	Object = Instance_UI();
-	Images[Image_Monster_Emagin_Front] = Object->AddComponent<Image>();
-	Images[Image_Monster_Emagin_Front]->SetTexture("Monster_Emagin_Front");
-	Images[Image_Monster_Emagin_Front]->SetColor(255, 0, 0, 255);
-	Rect = Object->GetComponent<RectTransform>();
-	Rect->SetPosition(-100, -400);
-	Rect->SetScale(1, 1);
-	Rect->SetPivot(PIVOT_MIDDLE_CENTER);
-
-
-	Object = Instance();
-	mFont[Font_Monster_Emagin] = Object->AddComponent<FontImage>();
-	mFont[Font_Monster_Emagin]->Setting(-110, -400, "number_", 0.4f, 0.4f, 15, PIVOT_MIDDLE_CENTER);
+	Object = Instance_ImageFont();
+	MonsterFont[0] = Object->GetComponent<ImageFont>();
+	MonsterFont[0]->SetTexture("number_");
+	MonsterFont[0]->SetFontCount(1);
+	MonsterFont[0]->SetOffset(25);
+	MonsterFont[0]->SetScale(0.5f, 0.5f);
+	MonsterFont[0]->SetPosition(-60, 0);
+	//몬스터 콤보 카운터 폰트
+	//Object = Instance();
+	//MonsterFont[0] = Object->AddComponent<FontImage>();
+	//MonsterFont[0]->Setting(0, 0, "number_", 0.4f, 0.4f, 15, PIVOT_TYPE::PIVOT_OBJECT);
 }
 
 void UICanvas::Update_Hit_Check()

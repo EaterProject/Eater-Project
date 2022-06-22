@@ -1,5 +1,6 @@
 #pragma once
 #include <Component.h>
+#include "ColorSetting.h"
 class MeshFilter;
 class Transform;
 class BossWeapon :public Component
@@ -30,5 +31,7 @@ private:
 	Vector3 Start_Shooting_Pos;
 	Vector3 End_Shooting_Pos;
 	Vector3 ShootingNormalize;
+
+	ColorSetting mColor;
 };
 

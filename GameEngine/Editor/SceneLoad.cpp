@@ -359,7 +359,7 @@ void Eater_LoadScene::Load_Component_Transform(int index, GameObject* Object)
 	EATER_GET_LIST_CHOICE(index, "Transform");
 	std::vector<float> Data;
 	EATER_GET_LIST(&Data, 0);
-	mTransform->SetTranlate(Data[0], Data[1], Data[2]);
+	mTransform->SetPosition(Data[0], Data[1], Data[2]);
 	mTransform->SetRotate(Data[3], Data[4], Data[5]);
 	mTransform->SetScale(Data[6], Data[7], Data[8]);
 }

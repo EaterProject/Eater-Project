@@ -20,7 +20,7 @@ void BossFriend::Awake()
 	mTransform	= gameobject->GetTransform();
 	mMeshFilter = gameobject->GetComponent<MeshFilter>();
 	mAnimation	= gameobject->GetComponent<AnimationController>();
-	mTransform->Scale = { 1.5f,1.5f ,1.5f };
+	mTransform->SetScale(1.5f, 1.5f, 1.5f);
 }
 
 void BossFriend::SetUp()
@@ -32,7 +32,7 @@ void BossFriend::SetUp()
 
 void BossFriend::Update()
 {
-	mTransform->Slow_Y_Rotation(Player::GetPlayerTransform()->Position, 150);
+	mTransform->Slow_Y_Rotation(Player::GetPlayerTransform()->GetPosition(), 150);
 	//mAnimation->Choice("idle");
 	//mAnimation->Play();
 }
@@ -40,11 +40,11 @@ void BossFriend::Update()
 void BossFriend::SetPosition(Vector3 Pos)
 {
 	gameobject->SetActive(true);
-	mTransform->Position = Pos;
+	mTransform->SetPosition(Pos);
 }
 
 void BossFriend::SetPosition(float x, float y, float z)
 {
 	gameobject->SetActive(true);
-	mTransform->Position = {x,y,z};
+	mTransform->SetPosition(x, y, z);
 }

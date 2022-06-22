@@ -37,7 +37,7 @@ void Drone::SetUp()
 	mMeshFilter->SetModelName("drone");
 	Vector3 DronePos = Vector3::Lerp(mTransform->GetPosition(), mPlayerTR->GetPosition(), GetDeltaTime());
 	DronePos.y = OffsetY;
-	mTransform->SetTranlate(DronePos);
+	mTransform->SetPosition(DronePos);
 }
 
 void Drone::Update()
@@ -50,7 +50,7 @@ void Drone::Update()
 	{
 		Vector3 DronePos = Vector3::Lerp(mTransform->GetPosition(), position, GetDeltaTime());
 		DronePos.y = OffsetY + position.y;
-		mTransform->SetTranlate(DronePos);
+		mTransform->SetPosition(DronePos);
 	}
 
 	//LookAt

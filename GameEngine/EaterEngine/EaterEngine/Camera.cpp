@@ -82,7 +82,7 @@ void Camera::Update()
 		}
 		else
 		{
-			tranform->SetTranlate(mAnimation->Position[NowFrameIndex]);
+			tranform->SetPosition(mAnimation->Position[NowFrameIndex]);
 			tranform->SetRotate(mAnimation->Rotation[NowFrameIndex]);
 			NowFrameIndex++;
 		}
@@ -148,6 +148,8 @@ void Camera::ChoiceMainCam()
 
 	// Main Camera 지정..
 	g_MainCam = this;
+
+	CreateProj(GameEngine::WinSizeWidth, GameEngine::WinSizeHeight);
 
 	// Main Camera Data 변경..
 	GlobalDataManager::g_GlobalData->MainCamera_Data = g_MainCam->mCameraData;

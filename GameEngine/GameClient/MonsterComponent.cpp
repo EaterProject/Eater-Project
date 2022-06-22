@@ -25,7 +25,7 @@ MonsterComponent::MonsterComponent()
 
 	ANIMATION_TIME[(int)MONSTER_STATE::IDLE]	= 0.75f;
 	ANIMATION_TIME[(int)MONSTER_STATE::ATTACK]	= 0.8f;
-	ANIMATION_TIME[(int)MONSTER_STATE::HIT]		= 0.5f;
+	ANIMATION_TIME[(int)MONSTER_STATE::HIT]		= 1.0f;
 	ANIMATION_TIME[(int)MONSTER_STATE::MOVE]	= 0.75f;
 	ANIMATION_TIME[(int)MONSTER_STATE::CHASE]	= 1.0f;
 	ANIMATION_TIME[(int)MONSTER_STATE::DEAD]	= 0.75f;
@@ -72,7 +72,7 @@ void MonsterComponent::SetUp()
 	MonsterState = (int)MONSTER_STATE::IDLE;
 
 	PointNumber = rand() % 5;
-	mTransform->SetTranlate(SearchPoint[PointNumber]);
+	mTransform->SetPosition(SearchPoint[PointNumber]);
 
 	float Scale = NowHitMonsterScale + NowHitMonsterScale_F;
 	mTransform->SetScale(Scale, Scale, Scale);
@@ -239,6 +239,18 @@ void MonsterComponent::Dead()
 
 void MonsterComponent::Chase()
 {
+	if (FirstState() == true)
+	{
+		MONSTER_EMAGIN Data;
+		Data.R = 255;
+		Data.G = 0;
+		Data.B = 0;
+		Data.HP = HP;
+		Data.ComboCount = ComboCount;
+		Data.Object = this->gameobject;
+		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_MONSTER_UI_ON, &Data);
+	}
+
 	ChaseTime += GetDeltaTime();
 	if (AttackRange > PlayerDistance)
 	{
@@ -265,12 +277,6 @@ void MonsterComponent::Chase()
 			mRigidbody->SetVelocity(DirPoint.x, 0, DirPoint.z);
 		}
 	}
-	MONSTER_EMAGIN Data;
-	Data.R = 0;
-	Data.G = 255;
-	Data.B = 0;
-	Data.HP = HP;
-	MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_MONSTER_UI_ON, &Data);
 }
 
 void MonsterComponent::Hit()
@@ -400,13 +406,12 @@ bool MonsterComponent::FirstState()
 	if (STATE[MonsterState] == false)
 	{
 		STATE[MonsterState] = true;
-		return false;
 	}
 	else
 	{
 		STATE[MonsterState] = false;
-		return true;
 	}
+		return STATE[MonsterState];
 }
 
 bool MonsterComponent::GetStopPoint(const Vector3& Pos)
