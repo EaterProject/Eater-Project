@@ -188,7 +188,7 @@ void Combine_Pass::SetColorGradingFactor(float factor)
 	CB_DrawFinal drawFinalBuf;
 	drawFinalBuf.gBloomFactor = g_RenderOption->BLOOM_Factor;
 	drawFinalBuf.gBaseLUTFactor = m_ColorGradingFactor;
-	drawFinalBuf.gBlendLUTFactor = 1.0 - m_ColorGradingFactor;
+	drawFinalBuf.gBlendLUTFactor = 1.0f - m_ColorGradingFactor;
 
 	m_Combine_PS->ConstantBufferUpdate(&drawFinalBuf);
 }
@@ -222,7 +222,7 @@ void Combine_Pass::SetConstantBuffer()
 	CB_DrawFinal drawFinalBuf;
 	drawFinalBuf.gBloomFactor = g_RenderOption->BLOOM_Factor;
 	drawFinalBuf.gBaseLUTFactor = m_ColorGradingFactor;
-	drawFinalBuf.gBlendLUTFactor = 1.0 - m_ColorGradingFactor;
+	drawFinalBuf.gBlendLUTFactor = 1.0f - m_ColorGradingFactor;
 
 	for (ShaderBase* shader : m_OptionShaderList)
 	{
