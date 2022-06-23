@@ -139,6 +139,8 @@ GameObject* MessageManager::CREATE_MESSAGE(int CREATE_TYPE)
 		return Object;
 	case TARGET_BOSS_WEAPON:
 		return mFactory->CreateBossWeapon();
+	case TARGET_BOSS_FRIEND:
+		return mFactory->CreateBossFriend();
 	}
 
 	return nullptr;
@@ -184,7 +186,13 @@ void MessageManager::SEND_UI_Message(int MessageType, void* Data)
 		mCanvas->Set_Emagin_Max(*(reinterpret_cast<int*>(Data)));
 		break;
 	case MESSAGE_UI_MONSTER_UI_ON:
-		mCanvas->Set_Monster_EMAGINE(Data);
+		mCanvas->Set_Monster_UI_ON(Data);
+		break;
+	case MESSAGE_UI_MONSTER_UI_OFF:
+		mCanvas->Set_Monster_UI_OFF(Data);
+		break;
+	case MESSAGE_UI_MONSTER_UI_UPDATE:
+		mCanvas->Set_Monster_UI_SET_DATA(Data);
 		break;
 	case MESSAGE_UI_RENDER:
 		mCanvas->Set_ALLRender(*(reinterpret_cast<int*>(Data)));

@@ -115,7 +115,7 @@ void CTAP_Transform::UpdateGameObject()
 	Pos.x = ChangeToFloat(Cx);
 	Pos.y = ChangeToFloat(Cy);
 	Pos.z = ChangeToFloat(Cz);
-	ObjectTransform->SetTranlate(Pos);;
+	ObjectTransform->SetPosition(Pos);;
 
 	Rot_X.GetWindowTextW(Cx);
 	Rot_Y.GetWindowTextW(Cy);
@@ -152,7 +152,7 @@ void CTAP_Transform::GetData(ObjectOption& Obj)
 	Pos.x = ChangeToFloat(Cx);
 	Pos.y = ChangeToFloat(Cy);
 	Pos.z = ChangeToFloat(Cz);
-	ObjectTransform->SetTranlate(Pos);
+	ObjectTransform->SetPosition(Pos);
 
 	Rot_X.GetWindowTextW(Cx);
 	Rot_Y.GetWindowTextW(Cy);
@@ -192,7 +192,7 @@ void CTAP_Transform::Reset()
 	Scl_Y.SetWindowTextW(_T("1.00"));
 	Scl_Z.SetWindowTextW(_T("1.00"));
 
-	ObjectTransform->SetTranlate(0.0f, 0.0f, 0.0f);
+	ObjectTransform->SetPosition(0.0f, 0.0f, 0.0f);
 	ObjectTransform->SetRotate(0.0f, 0.0f, 0.0f);
 	ObjectTransform->SetScale(1.0f);
 }
@@ -214,7 +214,7 @@ BOOL CTAP_Transform::PreTranslateMessage(MSG* pMsg)
 	}
 	else
 	{
-		ObjectTransform->AddTranlate(0, 0, 0);
+		ObjectTransform->AddPosition(0, 0, 0);
 	}
 
 	return CDialogEx::PreTranslateMessage(pMsg);
@@ -261,42 +261,42 @@ void CTAP_Transform::OnResetRot_Button()
 
 void CTAP_Transform::OnUpPosition_Y_Button()
 {
-	ObjectTransform->AddTranlate(0.0f, 1.0f, 0.0f);
+	ObjectTransform->AddPosition(0.0f, 1.0f, 0.0f);
 	Pos_Y.SetWindowTextW(ChangeToCString(ObjectTransform->GetPosition().y));
 }
 
 
 void CTAP_Transform::OnDownPosition_Y_Button()
 {
-	ObjectTransform->AddTranlate(0.0f, -1.0f, 0.0f);
+	ObjectTransform->AddPosition(0.0f, -1.0f, 0.0f);
 	Pos_Y.SetWindowTextW(ChangeToCString(ObjectTransform->GetPosition().y));
 }
 
 
 void CTAP_Transform::OnUpPosition_Z_Button()
 {
-	ObjectTransform->AddTranlate(0.0f, 0.0f, 1.0f);
+	ObjectTransform->AddPosition(0.0f, 0.0f, 1.0f);
 	Pos_Z.SetWindowTextW(ChangeToCString(ObjectTransform->GetPosition().z));
 }
 
 
 void CTAP_Transform::OnDownPosition_Z_Button()
 {
-	ObjectTransform->AddTranlate(0.0f, 0.0f, -1.0f);
+	ObjectTransform->AddPosition(0.0f, 0.0f, -1.0f);
 	Pos_Z.SetWindowTextW(ChangeToCString(ObjectTransform->GetPosition().z));
 }
 
 
 void CTAP_Transform::OnUpPosition_X_Button()
 {
-	ObjectTransform->AddTranlate(1.0f, 0.0f, 0.0f);
+	ObjectTransform->AddPosition(1.0f, 0.0f, 0.0f);
 	Pos_X.SetWindowTextW(ChangeToCString(ObjectTransform->GetPosition().x));
 }
 
 
 void CTAP_Transform::OnDownPosition_X_Button()
 {
-	ObjectTransform->AddTranlate(-1.0f, 0.0f, 0.0f);
+	ObjectTransform->AddPosition(-1.0f, 0.0f, 0.0f);
 	Pos_X.SetWindowTextW(ChangeToCString(ObjectTransform->GetPosition().x));
 }
 
@@ -361,7 +361,7 @@ void CTAP_Transform::OnBnClickedButton25()
 
 void CTAP_Transform::OnBnClickedButton23()
 {
-	ObjectTransform->SetTranlate(0.0f, 0.0f, 0.0f);
+	ObjectTransform->SetPosition(0.0f, 0.0f, 0.0f);
 
 	Vector3 position = ObjectTransform->GetPosition();
 	Pos_X.SetWindowTextW(ChangeToCString(position.x));

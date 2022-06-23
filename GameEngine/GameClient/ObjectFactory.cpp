@@ -26,6 +26,7 @@
 #include "Boss.h"
 #include "CameraManager.h"
 #include "BossWeapon.h"
+#include "BossFriend.h"
 
 
 
@@ -60,7 +61,7 @@ GameObject* ObjectFactory::CreatePlayer()
 	PlayerObject->AddComponent<AnimationController>();
 
 	Vector3 position = PlayerPoint->GetTransform()->GetPosition();
-	PlayerObject->GetTransform()->SetTranlate(position);
+	PlayerObject->GetTransform()->SetPosition(position);
 
 	//콜라이더 객체 생성
 	PlayerCollider->SetTag("PlayerCollider");
@@ -107,12 +108,12 @@ GameObject* ObjectFactory::CreateManaStone()
 		GameObject* Object_ManaStone = Instance("ManaStone");
 		Object_ManaStone->AddComponent<MeshFilter>();
 		ManaStone* mMana = Object_ManaStone->AddComponent<ManaStone>();
-		Object_ManaStone->GetTransform()->SetTranlate(point);
+		Object_ManaStone->GetTransform()->SetPosition(point);
 
 		switch (i)
 		{
 		case 0:
-			mMana->SetMonsterCount(5, 0);
+			mMana->SetMonsterCount(4, 1);
 			break;
 		case 1:
 			mMana->SetMonsterCount(4, 1);
@@ -185,6 +186,15 @@ GameObject* ObjectFactory::CreateBossWeapon()
 	GameObject* Object = Instance();
 	Object->AddComponent<MeshFilter>();
 	Object->AddComponent<BossWeapon>();
+	return Object;
+}
+
+GameObject* ObjectFactory::CreateBossFriend()
+{
+	GameObject* Object = Instance();
+	Object->AddComponent<MeshFilter>();
+	Object->AddComponent<BossFriend>();
+	Object->AddComponent<AnimationController>();
 	return Object;
 }
 

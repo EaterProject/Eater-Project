@@ -84,6 +84,10 @@ void Player::Start()
 	Hand->ChoiceChild(WeaponObject);
 	WeaponObject->ChoiceParent(Hand);
 	WeaponTR = WeaponObject->GetTransform();
+
+	mColor.Setting(this->gameobject);
+	mColor.SetLimlightSetting(MeshFilterSetting::COLOR_TYPE::RED, 1, 1);
+	MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_EMAGIN_NOW, &ChangeCount);
 }
 
 void Player::Update()
@@ -222,6 +226,15 @@ void Player::PlayerKeyinput()
 		ChangeCount++;
 		if (ChangeCount > 14){ChangeCount = 0;}
 		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_EMAGIN_NOW, &ChangeCount);
+
+		if((ChangeCount % 2) == 0)
+		{
+			mColor.SetLimlightSetting(MeshFilterSetting::COLOR_TYPE::RED, 1, 1);
+		}
+		else
+		{
+			mColor.SetLimlightSetting(MeshFilterSetting::COLOR_TYPE::BLUE, 1, 1);
+		}
 		Sound_Play_SFX("ChangeEmagin");
 	}
 	else if (GetKeyDown(VK_SPACE))
@@ -243,7 +256,7 @@ void Player::PlayerKeyinput()
 		//공격중이 아니고 회전값이 있을경우
 		if (DirPos != Vector3(0, 0, 0))
 		{
-			mTransform->AddTranlate(DirPos * Speed * GetDeltaTime());
+			mTransform->AddPosition(DirPos * Speed * GetDeltaTime());
 		}
 		Attack_Rot = false;
 	}
@@ -340,7 +353,7 @@ void Player::PlayerHitTimeCheck()
 
 void Player::Player_Attack_01()
 {
-	WeaponTR->SetTranlate(0.0f, -0.02f, 0.1f);
+	WeaponTR->SetPosition(0.0f, -0.02f, 0.1f);
 	WeaponTR->SetRotate(8.0f, 19.0f, -10.0f);
 
 	if (mAnimation->EventCheck() == true)
@@ -370,7 +383,7 @@ void Player::Player_Attack_01()
 void Player::Player_Attack_02()
 {
 	//망치를 뒤로 돌리고 크게 내려찍는 공격
-	WeaponTR->SetTranlate(0.0f, -0.02f, 0.1f);
+	WeaponTR->SetPosition(0.0f, -0.02f, 0.1f);
 	WeaponTR->SetRotate(186.0f, 31.0f, 0.0f);
 
 	if (mAnimation->EventCheck() == true)
@@ -390,7 +403,7 @@ void Player::Player_Attack_02()
 
 void Player::Player_Skill_01()
 {
-	WeaponTR->SetTranlate(0.0f, -0.02f, 0.1f);
+	WeaponTR->SetPosition(0.0f, -0.02f, 0.1f);
 	WeaponTR->SetRotate(186.0f, 31.0f, 0.0f);
 
 	if (mAnimation->EventCheck() == true)
@@ -411,7 +424,7 @@ void Player::Player_Skill_01()
 
 void Player::Player_Skill_02()
 {
-	WeaponTR->SetTranlate(0.0f, -0.02f, 0.1f);
+	WeaponTR->SetPosition(0.0f, -0.02f, 0.1f);
 	WeaponTR->SetRotate(186.0f, 31.0f, 0.0f);
 
 	if (mAnimation->EventCheck() == true)
@@ -431,7 +444,7 @@ void Player::Player_Skill_02()
 
 void Player::Player_Skill_03()
 {
-	WeaponTR->SetTranlate(0.0f, -0.02f, 0.1f);
+	WeaponTR->SetPosition(0.0f, -0.02f, 0.1f);
 	WeaponTR->SetRotate(8.0f, 19.0f, -10.0f);
 
 	if (mAnimation->EventCheck() == true)
@@ -452,7 +465,7 @@ void Player::Player_Skill_03()
 
 void Player::Player_Jump()
 {
-	WeaponTR->SetTranlate(0.0f, -0.02f, 0.1f);
+	WeaponTR->SetPosition(0.0f, -0.02f, 0.1f);
 	WeaponTR->SetRotate(-22.0f, 33.0f, 2.0f);
 
 	if (PlayerEndFrameCheck() == true)
@@ -482,7 +495,7 @@ bool Player::Player_Move_Check()
 {
 	if (DirPos == BasePos)
 	{
-		WeaponTR->SetTranlate(0.0f, -0.02f, 0.1f);
+		WeaponTR->SetPosition(0.0f, -0.02f, 0.1f);
 		WeaponTR->SetRotate(186.0f, 31.0f, 0.0f);
 
 		mState = PLAYER_STATE_IDLE;
@@ -492,7 +505,7 @@ bool Player::Player_Move_Check()
 	}
 	else
 	{
-		WeaponTR->SetTranlate(0.0f, -0.02f, 0.1f);
+		WeaponTR->SetPosition(0.0f, -0.02f, 0.1f);
 		WeaponTR->SetRotate(0.0f, 21.0f, -5.0f);
 
 		mState = PLAYER_STATE_MOVE; 
@@ -509,7 +522,7 @@ void Player::PlayerAttackColliderUpdate()
 	Look *= 2;
 	Look.y = 1;
 	Look.z *= -1 * AttackDir;
-	AttackColliderObject->GetTransform()->AddTranlate(Look);
+	AttackColliderObject->GetTransform()->SetPosition(mTransform->GetPosition() + Look);
 }
 
 void Player::PlayerGroundCheck()
@@ -536,7 +549,7 @@ void Player::PlayerGroundCheck()
 			RayStartPoint = position;
 			break;
 		}
-		RayStartPoint.y = position.y + 2;
+		RayStartPoint.y = position.y + 0.5f;
 
 		//Ray 값 조정
 		RayCastHit[i];
@@ -560,7 +573,7 @@ void Player::PlayerGroundCheck()
 			IsLeftRayCheck = isHit;
 			break;
 		case 4:
-			mTransform->SetTranlate_Y(RayCastHit[i].Hit.HitPoint.y);
+			mTransform->SetPosition_Y(RayCastHit[i].Hit.HitPoint.y);
 			break;
 		}
 	}

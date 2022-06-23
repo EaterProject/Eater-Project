@@ -210,7 +210,7 @@ void TestScene::CreateMap()
 	filter = Object->AddComponent<MeshFilter>();
 	filter->SetModelName("BossB+");
 	filter->SetAnimationName("BossB+");
-	Object->GetTransform()->SetTranlate(-44.0f, 6.0f, 62.0f);
+	Object->GetTransform()->SetPosition(-44.0f, 6.0f, 62.0f);
 	Object->GetTransform()->SetScale(1.5f);
 	AC = Object->AddComponent<AnimationController>();
 	ACList.push_back(AC);
@@ -220,6 +220,7 @@ void TestScene::CreateMap()
 	IMG = Object->GetComponent<Image>();
 	IMG->SetTexture("ingame_player_hp");
 	IMG->SetColor(255, 0, 0);
+
 	RTR = Object->GetComponent<RectTransform>();
 	RTR->SetPivot(PIVOT_TYPE::PIVOT_OBJECT);
 	RTR->SetPositionObject(TRList[0], Vector3(0.0f, 6.0f, 0.0f));
@@ -426,7 +427,7 @@ void TestScene::CreateUI()
 void TestScene::CreateParticle(float x, float y, float z)
 {
 	ParticleObj = Instance();
-	ParticleObj->GetTransform()->SetTranlate(-10.0f + x, 2.5f + y, -10.0f + z);
+	ParticleObj->GetTransform()->SetPosition(-10.0f + x, 2.5f + y, -10.0f + z);
 	testobj = Instance_Particle("Particle1");
 	ParticleObj->ChoiceChild(testobj);
 	ParticleSystem* particles = testobj->GetComponent<ParticleSystem>();
@@ -468,7 +469,7 @@ void TestScene::CreateParticle(float x, float y, float z)
 	particles->Play(true);
 
 	ParticleObj = Instance();
-	ParticleObj->GetTransform()->SetTranlate(10.0f + x, 2.5f + y, -10.0f + z);
+	ParticleObj->GetTransform()->SetPosition(10.0f + x, 2.5f + y, -10.0f + z);
 	testobj = Instance_Particle("Particle1");
 	ParticleObj->ChoiceChild(testobj);
 	particles = testobj->GetComponent<ParticleSystem>();

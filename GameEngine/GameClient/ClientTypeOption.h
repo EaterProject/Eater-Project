@@ -17,6 +17,7 @@
 #define TARGET_GLOBAL 13
 #define TARGET_PLAYER_CAMERA 14
 #define TARGET_BOSS_WEAPON 15
+#define TARGET_BOSS_FRIEND 16
 
 //Player Message
 #define MESSAGE_PLAYER_HIT    0		//플레이어가 맞았다
@@ -29,13 +30,16 @@
 #define MESSAGE_GATE_UNLOCK 2		//게이트 잠금 풀기		//인자 값 : int
 
 //UI Message
-#define MESSAGE_UI_COMBO 0			//콤보 폰트 값			//인자 값 : int
-#define MESSAGE_UI_HP_NOW 1			//체력 현재 폰트 값		//인자 값 : int
-#define MESSAGE_UI_HP_MAX 2			//체력 최대 폰트 값		//인자 값 : int
-#define MESSAGE_UI_EMAGIN_NOW 3		//이메진 현재 폰트 값		//인자 값 : int
-#define MESSAGE_UI_EMAGIN_MAX 4		//이메진 최대 폰트 값		//인자 값 : int
-#define MESSAGE_UI_MONSTER_UI_ON 5	//몬스터 UI를 보여준다	//인자 값 : MONSTER_EMAGIN 구조체
-#define MESSAGE_UI_RENDER 6			//모든 UI 렌더링 여부		//인자 값 : bool
+#define MESSAGE_UI_COMBO 0				//콤보 폰트 값			//인자 값 : int
+#define MESSAGE_UI_HP_NOW 1				//체력 현재 폰트 값		//인자 값 : int
+#define MESSAGE_UI_HP_MAX 2				//체력 최대 폰트 값		//인자 값 : int
+#define MESSAGE_UI_EMAGIN_NOW 3			//이메진 현재 폰트 값		//인자 값 : int
+#define MESSAGE_UI_EMAGIN_MAX 4			//이메진 최대 폰트 값		//인자 값 : int
+#define MESSAGE_UI_MONSTER_UI_ON 5		//몬스터 UI를 켠다		//인자 값 : MONSTER_EMAGIN 구조체
+#define MESSAGE_UI_MONSTER_UI_OFF 6		//몬스터 UI를 끈다		//인자 값 : MONSTER_EMAGIN 구조체
+#define MESSAGE_UI_MONSTER_UI_UPDATE 7	//몬스터 UI를 업데이트	//인자 값 : MONSTER_EMAGIN 구조체
+
+#define MESSAGE_UI_RENDER 8			//모든 UI 렌더링 여부		//인자 값 : bool
 
 //Camera Message
 #define MESSAGE_CAMERA_CINEMATIC_GAME_START 0				//시네마틱 실행
@@ -49,6 +53,11 @@
 #define MESSAGE_GLOBAL_GAMESTART 0							//게임이 시작되었다
 #define MESSAGE_GLOBAL_GAMEEND	1							//게임이 종료되었다
 
+
+#define MONSTER_COLOR_RED 0
+#define MONSTER_COLOR_BLUE 1
+#define MONSTER_TYPE_A 0
+#define MONSTER_TYPE_B 1
 
 enum class MONSTER_STATE : int
 {
@@ -72,12 +81,13 @@ enum class BOSS_STATE : int
 	CLOSER_ATTACK_R		= 6,	//근접 공격 오른쪽
 	CHASE_ATTACK_READY	= 7,	//추적 발사체 준비
 	CHASE_ATTACK_PLAY	= 8,	//추적 발사체 발사
-	RENDOM_ATTACK_READY	= 9,	//장판형 발사체 준비
-	RENDOM_ATTACK_PLAY	= 10,	//장판형 발사체 발사
+	RANDOM_ATTACK_READY	= 9,	//장판형 발사체 준비
+	RANDOM_ATTACK_PLAY	= 10,	//장판형 발사체 발사
 	TELEPORT_READY		= 11,	//보스 순간이동 준비
 	TELEPORT_START		= 12,	//보스 순간이동 
 	CREATE_FRIEND		= 13,	//분신 소환
 	HIT					= 14,	//맞았을떄
+	RENDOM_ATTACK_END   = 15,	//
 };
 
 enum class MONSTER_COLOR : int
@@ -94,5 +104,7 @@ struct MONSTER_EMAGIN
 	float B = 255.f;
 	int ComboCount = 7;
 	int HP;
+	int Type;
+	void* Object;
 };
 

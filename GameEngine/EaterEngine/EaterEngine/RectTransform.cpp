@@ -11,22 +11,26 @@
 
 RectTransform::RectTransform()
 {
-	PivotType		= PIVOT_TYPE::PIVOT_MIDDLE_CENTER;
-	ImageSize		= { 0.0f, 0.0f };
-	Position		= { 0.0f, 0.0f };
-	Rotation		= { 0.0f, 0.0f, 0.0f };
-	Scale			= { 0.5f, 0.5f };
+	PivotType = PIVOT_TYPE::PIVOT_MIDDLE_CENTER;
+	ImageSize = { 0.0f, 0.0f };
+	Position = { 0.0f, 0.0f };
+	Rotation = { 0.0f, 0.0f, 0.0f };
+	Scale = { 0.5f, 0.5f };
 
 	Position_Offset = { 0.0f, 0.0f };
-	Scale_Offset	= { 1.0f, 1.0f };
+	Scale_Offset = { 1.0f, 1.0f };
 
-	PositionXM		= DirectX::XMMatrixIdentity();
-	RotationXM		= DirectX::XMMatrixIdentity();
-	ScaleXM			= DirectX::XMMatrixIdentity();
+	PositionXM = DirectX::XMMatrixIdentity();
+	RotationXM = DirectX::XMMatrixIdentity();
+	ScaleXM = DirectX::XMMatrixIdentity();
 
-	Screen_Size.x = GameEngine::WinSizeWidth;
-	Screen_Size.y = GameEngine::WinSizeHeight;
-	
+	Screen_Ratio = { 1.0f, 1.0f };
+	Screen_Resize.x = GameEngine::WinSizeWidth;
+	Screen_Resize.y = GameEngine::WinSizeHeight;
+
+	Screen_Origin.x = GameEngine::WinSizeWidth;
+	Screen_Origin.y = GameEngine::WinSizeHeight;
+
 	GameEngine::ResizeFunction += Eater::Bind(&RectTransform::Resize, this);
 }
 
@@ -45,38 +49,38 @@ void RectTransform::TransformUpdate()
 		break;
 	case PIVOT_TYPE::PIVOT_LEFT_BOTTOM:
 		Position_Offset.x = ImageSize.x * Scale.x;
-		Position_Offset.y = Screen_Size.y - (ImageSize.y * Scale.y);
+		Position_Offset.y = Screen_Resize.y - (ImageSize.y * Scale.y);
 		break;
 	case PIVOT_TYPE::PIVOT_RIGHT_TOP:
-		Position_Offset.x = Screen_Size.x - (ImageSize.x * Scale.x);
+		Position_Offset.x = Screen_Resize.x - (ImageSize.x * Scale.x);
 		Position_Offset.y = ImageSize.y * Scale.y;
 		break;
 	case PIVOT_TYPE::PIVOT_RIGHT_BOTTOM:
-		Position_Offset.x = Screen_Size.x - (ImageSize.x * Scale.x);
-		Position_Offset.y = Screen_Size.y - (ImageSize.y * Scale.y);
+		Position_Offset.x = Screen_Resize.x - (ImageSize.x * Scale.x);
+		Position_Offset.y = Screen_Resize.y - (ImageSize.y * Scale.y);
 		break;
 	case PIVOT_TYPE::PIVOT_MIDDLE_TOP:
-		Position_Offset.x = Screen_Size.x * 0.5f;
+		Position_Offset.x = Screen_Resize.x * 0.5f;
 		Position_Offset.y = ImageSize.y * Scale.y;
 		break;
 	case PIVOT_TYPE::PIVOT_MIDDLE_BOTTOM:
-		Position_Offset.x = Screen_Size.x * 0.5f;
-		Position_Offset.y = Screen_Size.y - (ImageSize.y * Scale.y);
+		Position_Offset.x = Screen_Resize.x * 0.5f;
+		Position_Offset.y = Screen_Resize.y - (ImageSize.y * Scale.y);
 		break;
 	case PIVOT_TYPE::PIVOT_MIDDLE_LEFT:
 		Position_Offset.x = ImageSize.x * Scale.x;
-		Position_Offset.y = Screen_Size.y * 0.5f;
+		Position_Offset.y = Screen_Resize.y * 0.5f;
 		break;
 	case PIVOT_TYPE::PIVOT_MIDDLE_RIGHT:
-		Position_Offset.x = Screen_Size.x - (ImageSize.x * Scale.x);
-		Position_Offset.y = Screen_Size.y * 0.5f;
+		Position_Offset.x = Screen_Resize.x - (ImageSize.x * Scale.x);
+		Position_Offset.y = Screen_Resize.y * 0.5f;
 		break;
 	case PIVOT_TYPE::PIVOT_MIDDLE_CENTER:
-		Position_Offset.x = Screen_Size.x * 0.5f;
-		Position_Offset.y = Screen_Size.y * 0.5f;
+		Position_Offset.x = Screen_Resize.x * 0.5f;
+		Position_Offset.y = Screen_Resize.y * 0.5f;
 		break;
 	case PIVOT_TYPE::PIVOT_OBJECT:
-		Position = Screen_Size * Camera::g_MainCam->WorldToScreen(Transform3D->GetPosition() + Position3D_Offset);
+		Position_Offset = Screen_Resize * Camera::g_MainCam->WorldToScreen(Transform3D->GetPosition() + Position3D_Offset);
 		break;
 	default:
 		break;
@@ -105,9 +109,9 @@ void RectTransform::TransformUpdate()
 	float half_width = ImageSize.x * Scale.x * 0.5f;
 	float half_height = ImageSize.y * Scale.y * 0.5f;
 
-	RectPosition.left	= PositionXM._41 - half_width;
-	RectPosition.top	= PositionXM._42 - half_height;
-	RectPosition.right	= PositionXM._41 + half_width;
+	RectPosition.left = PositionXM._41 - half_width;
+	RectPosition.top = PositionXM._42 - half_height;
+	RectPosition.right = PositionXM._41 + half_width;
 	RectPosition.bottom = PositionXM._42 + half_height;
 }
 
@@ -129,13 +133,13 @@ void RectTransform::SetPivot(PIVOT_TYPE pivot_type)
 
 void RectTransform::SetPosition(float x, float y)
 {
-	Position.x = x;
-	Position.y = y;
+	Position.x =  Screen_Ratio.x * x;
+	Position.y =  Screen_Ratio.y * y;
 }
 
 void RectTransform::SetPosition(DirectX::SimpleMath::Vector2 pos)
 {
-	Position = pos;
+	Position = Screen_Ratio * pos;
 }
 
 void RectTransform::SetPositionObject(GameObject* object, DirectX::SimpleMath::Vector3 offset)
@@ -154,16 +158,16 @@ void RectTransform::SetPosition3D(float x, float y, float z)
 {
 	Vector2 screen_pos = Camera::g_MainCam->WorldToScreen(x, y, z);
 
-	Position.x = screen_pos.x * Screen_Size.x;
-	Position.y = screen_pos.y * Screen_Size.y;
+	Position.x = screen_pos.x * Screen_Resize.x;
+	Position.y = screen_pos.y * Screen_Resize.y;
 }
 
 void RectTransform::SetPosition3D(DirectX::SimpleMath::Vector3 pos)
 {
 	Vector2 screen_pos = Camera::g_MainCam->WorldToScreen(pos);
 
-	Position.x = screen_pos.x * Screen_Size.x;
-	Position.y = screen_pos.y * Screen_Size.y;
+	Position.x = screen_pos.x * Screen_Resize.x;
+	Position.y = screen_pos.y * Screen_Resize.y;
 }
 
 void RectTransform::SetRotation(float x, float y, float z)
@@ -185,25 +189,25 @@ void RectTransform::SetRotation(float angle)
 
 void RectTransform::SetScale(float x, float y)
 {
-	Scale.x = x * 0.5f;
-	Scale.y = y * 0.5f;
+	Scale.x = Screen_Ratio.x * x * 0.5f;
+	Scale.y = Screen_Ratio.y * y * 0.5f;
 }
 
 void RectTransform::SetScale(DirectX::SimpleMath::Vector2 scale)
 {
-	Scale.x = scale.x * 0.5f;
-	Scale.y = scale.y * 0.5f;
+	Scale.x = Screen_Ratio.x * scale.x * 0.5f;
+	Scale.y = Screen_Ratio.y * scale.y * 0.5f;
 }
 
 void RectTransform::AddPosition(float x, float y)
 {
-	Position.x += x;
-	Position.y += y;
+	Position.x += Screen_Ratio.x * x;
+	Position.y += Screen_Ratio.y * y;
 }
 
 void RectTransform::AddPosition(DirectX::SimpleMath::Vector2 pos)
 {
-	Position += pos;
+	Position += Screen_Ratio * pos;
 }
 
 void RectTransform::AddRotation(float x, float y, float z)
@@ -220,13 +224,13 @@ void RectTransform::AddRotation(DirectX::SimpleMath::Vector3 rot)
 
 void RectTransform::AddScale(float x, float y)
 {
-	Scale.x += x;
-	Scale.y += y;
+	Scale.x += Screen_Ratio.x * x * 0.5f;
+	Scale.y += Screen_Ratio.y * y * 0.5f;
 }
 
 void RectTransform::AddScale(DirectX::SimpleMath::Vector2 scale)
 {
-	Scale += scale;
+	Scale += Screen_Ratio * scale * 0.5f;
 }
 
 const RectPoint& RectTransform::GetRectPoint()
@@ -236,15 +240,18 @@ const RectPoint& RectTransform::GetRectPoint()
 
 void RectTransform::Resize(int width, int height)
 {
-	float ratio_w = (float)width / Screen_Size.x;
-	float ratio_h = (float)height / Screen_Size.y;
+	float ratio_x = (float)width / Screen_Resize.x;
+	float ratio_y = (float)height / Screen_Resize.y;
 
-	Scale.x *= ratio_w;
-	Scale.y *= ratio_h;
+	Screen_Ratio.x = (float)width / Screen_Origin.x;
+	Screen_Ratio.y = (float)height / Screen_Origin.y;
 
-	Position.x *= ratio_w;
-	Position.y *= ratio_h;
+	Scale.x *= ratio_x;
+	Scale.y *= ratio_y;
 
-	Screen_Size.x = width;
-	Screen_Size.y = height;
+	Position.x *= ratio_x;
+	Position.y *= ratio_y;
+
+	Screen_Resize.x = width;
+	Screen_Resize.y = height;
 }

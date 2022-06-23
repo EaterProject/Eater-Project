@@ -74,7 +74,9 @@ public:
 	DirectX::SimpleMath::Vector2 Scale;
 
 private:
-	DirectX::SimpleMath::Vector2 Screen_Size;
+	DirectX::SimpleMath::Vector2 Screen_Resize;
+	DirectX::SimpleMath::Vector2 Screen_Origin;
+	DirectX::SimpleMath::Vector2 Screen_Ratio;
 
 	DirectX::SimpleMath::Vector2 Position_Offset;
 	DirectX::SimpleMath::Vector2 Scale_Offset;

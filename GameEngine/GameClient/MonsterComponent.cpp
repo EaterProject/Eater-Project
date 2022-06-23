@@ -25,7 +25,7 @@ MonsterComponent::MonsterComponent()
 
 	ANIMATION_TIME[(int)MONSTER_STATE::IDLE]	= 0.75f;
 	ANIMATION_TIME[(int)MONSTER_STATE::ATTACK]	= 0.8f;
-	ANIMATION_TIME[(int)MONSTER_STATE::HIT]		= 0.5f;
+	ANIMATION_TIME[(int)MONSTER_STATE::HIT]		= 1.0f;
 	ANIMATION_TIME[(int)MONSTER_STATE::MOVE]	= 0.75f;
 	ANIMATION_TIME[(int)MONSTER_STATE::CHASE]	= 1.0f;
 	ANIMATION_TIME[(int)MONSTER_STATE::DEAD]	= 0.75f;
@@ -72,10 +72,29 @@ void MonsterComponent::SetUp()
 	MonsterState = (int)MONSTER_STATE::IDLE;
 
 	PointNumber = rand() % 5;
-	mTransform->SetTranlate(SearchPoint[PointNumber]);
+	mTransform->SetPosition(SearchPoint[PointNumber]);
 
-	float Scale = NowHitMonsterScale + NowHitMonsterScale_F;
-	mTransform->SetScale(Scale, Scale, Scale);
+	mTransform->SetScale(MonsterScale, MonsterScale, MonsterScale);
+}
+
+void MonsterComponent::Start()
+{
+	mMF_Setting.Setting(this->gameobject);
+	GetRandomColor();
+	if (MonsterColor == MONSTER_COLOR_RED)
+	{
+		mMF_Setting.SetLimlightSetting(MeshFilterSetting::COLOR_TYPE::RED, 1,1);
+		mMF_Setting.SetLimlightSettingMax(MeshFilterSetting::COLOR_TYPE::RED, 1,1);
+		mMF_Setting.SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED, 100);
+		mMF_Setting.SetEmissiveSettingMax(MeshFilterSetting::COLOR_TYPE::RED, 100);
+	}
+	else
+	{
+		mMF_Setting.SetLimlightSetting(MeshFilterSetting::COLOR_TYPE::BLUE, 1, 1);
+		mMF_Setting.SetLimlightSettingMax(MeshFilterSetting::COLOR_TYPE::BLUE, 1, 1);
+		mMF_Setting.SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::BLUE, 100);
+		mMF_Setting.SetEmissiveSettingMax(MeshFilterSetting::COLOR_TYPE::BLUE, 100);
+	}
 }
 
 void MonsterComponent::Update()
@@ -125,14 +144,16 @@ void MonsterComponent::OnTriggerStay(GameObject* Obj)
 		//플레이어가 공격 상태일때
 		if (Player::GetAttackState() == true)
 		{
+			if (MonsterState == (int)MONSTER_STATE::DEAD) { return; }
+
 			MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_ATTACK_OK);
 			//색을 바꾸는 함수포인터를 넣고 상태변화
-			HitFunction = std::bind(&MonsterComponent::SetLimLightColor, this);
 			SetMonsterState(MONSTER_STATE::HIT);
 			
 			HP			-= 20;
 			HitStart	 = true;
-			//사운드 출력
+
+			SetMonsterColor();
 			Sound_Play_SFX(Sound_Hit);
 		}
 	}
@@ -234,7 +255,12 @@ void MonsterComponent::Dead()
 	if (Now >= End)
 	{
 		gameobject->SetActive(false);
+		MONSTER_EMAGIN Data;
+		Data.Object = this->gameobject;
+		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_MONSTER_UI_OFF, &Data);
+		IsUI_ON = false;
 	}
+	mMF_Setting.LimLightUpdate(1);
 }
 
 void MonsterComponent::Chase()
@@ -265,12 +291,6 @@ void MonsterComponent::Chase()
 			mRigidbody->SetVelocity(DirPoint.x, 0, DirPoint.z);
 		}
 	}
-	MONSTER_EMAGIN Data;
-	Data.R = 0;
-	Data.G = 255;
-	Data.B = 0;
-	Data.HP = HP;
-	MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_MONSTER_UI_ON, &Data);
 }
 
 void MonsterComponent::Hit()
@@ -280,6 +300,7 @@ void MonsterComponent::Hit()
 	{
 		float End = mAnimation->GetEndFrame();
 		float Now = mAnimation->GetNowFrame();
+		mMF_Setting.LimLightUpdate(1);
 		if (Now >= End)
 		{
 			HitStart = false;
@@ -301,6 +322,42 @@ void MonsterComponent::Debug()
 void MonsterComponent::PlayerDistanceCheck()
 {
 	PlayerDistance = mTransform->GetDistance(mPlayerTR->GetPosition());
+
+	
+	if (PlayerDistance <= ChaseRange && IsUI_ON == false) 
+	{
+		MONSTER_EMAGIN Data;
+		if (MonsterColor == MONSTER_COLOR_RED)
+		{
+			Data.R = 255;
+			Data.G = 0;
+			Data.B = 0;
+			Data.HP = HP;
+			Data.ComboCount = ComboCount;
+			Data.Object = this->gameobject;
+			MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_MONSTER_UI_ON, &Data);
+		}
+		else
+		{
+			Data.R = 0;
+			Data.G = 0;
+			Data.B = 255;
+			Data.HP = HP;
+			Data.Type = MONSTER_TYPE_A;
+			Data.ComboCount = ComboCount;
+			Data.Object = this->gameobject;
+			MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_MONSTER_UI_ON, &Data);
+		}
+		IsUI_ON		= true;
+	}
+
+	if (PlayerDistance >= ChaseRange && IsUI_ON == true)
+	{
+		MONSTER_EMAGIN Data;
+		Data.Object = this->gameobject;
+		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_MONSTER_UI_OFF, &Data);
+		IsUI_ON		= false;
+	}
 }
 
 void MonsterComponent::SetSearchPoint(int Index, Vector3 Point)
@@ -337,44 +394,6 @@ void MonsterComponent::SetMonsterState(MONSTER_STATE State)
 	mRigidbody->SetVelocity(0, 0, 0);
 }
 
-void MonsterComponent::SetLimLightColor()
-{
-	if (HitFXStart == false)
-	{
-		//스킨 오브젝트 가져오기
-		if (mSkinFilter == nullptr){mSkinFilter = gameobject->GetChildMesh(0)->GetComponent<MeshFilter>();}
-
-		//메테리얼 블록 가져오기
-		mSkinFilter->SetMaterialPropertyBlock(true);
-		MPB = mSkinFilter->GetMaterialPropertyBlock();
-		//림 라이트 시작 설정 설정
-		MPB->LimLightColor	= NowLimLightColor;
-		MPB->LimLightFactor = NowLimLightFactor;
-		MPB->LimLightWidth	= NowLimLightWidth;
-		//몬스터 크기 설정
-		float Scale = NowHitMonsterScale + NowHitMonsterScale_F;
-		mTransform->SetScale(Scale, Scale, Scale);
-
-		HitFXStart = true;
-	}
-
-	//시간에 따라 림라이트 효과가 줄어든다
-	if (MPB->LimLightFactor <= 0)
-	{
-		float Scale = NowHitMonsterScale + NowHitMonsterScale_F;
-		mTransform->SetScale(Scale, Scale, Scale);
-		HitFunction = nullptr;
-		HitFXStart  = false;
-		mSkinFilter->SetMaterialPropertyBlock(false);
-	}
-	else
-	{
-		float DTime = GetDeltaTime();
-		mTransform->AddScale(-DTime * NowHitMonsterScale_F);
-		MPB->LimLightFactor -= DTime * NowLimLightFactor;
-	}
-}
-
 void MonsterComponent::UpdateColor()
 {
 	if (HitFunction != nullptr)
@@ -400,12 +419,50 @@ bool MonsterComponent::FirstState()
 	if (STATE[MonsterState] == false)
 	{
 		STATE[MonsterState] = true;
-		return false;
+		return true;
 	}
 	else
 	{
-		STATE[MonsterState] = false;
-		return true;
+		return false;
+	}
+}
+
+void MonsterComponent::GetRandomColor()
+{
+	MonsterColor = rand() % 2;
+}
+
+void MonsterComponent::SetMonsterColor()
+{
+	if (MonsterColor == MONSTER_COLOR_RED)
+	{
+		MONSTER_EMAGIN Data;
+		Data.R = 255;
+		Data.G = 0;
+		Data.B = 0;
+		Data.HP = HP;
+		Data.Type = MonsterType;
+		Data.ComboCount = ComboCount;
+		Data.Object = this->gameobject;
+		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_MONSTER_UI_UPDATE, &Data);
+
+		mMF_Setting.SetLimlightSetting(1, 0, 0, 5, 1);
+		mMF_Setting.SetLimlightSettingMax(0, 0, 0, 1, 1);
+	}
+	else
+	{
+		MONSTER_EMAGIN Data;
+		Data.R = 0;
+		Data.G = 0;
+		Data.B = 255;
+		Data.HP = HP;
+		Data.Type = MonsterType;
+		Data.ComboCount = ComboCount;
+		Data.Object = this->gameobject;
+		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_MONSTER_UI_UPDATE, &Data);
+
+		mMF_Setting.SetLimlightSetting(0, 0, 1, 5, 1);
+		mMF_Setting.SetLimlightSettingMax(0, 0, 0, 1, 1);
 	}
 }
 

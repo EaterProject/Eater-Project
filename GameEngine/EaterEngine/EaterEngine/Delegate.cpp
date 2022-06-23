@@ -121,11 +121,11 @@ void Delegate_Map::PlayOnce()
 			}
 
 			//활성화조건이 아닌경우
-			if (*((*temp)[Index].Enabled) == false)
-			{
-				Index++;
-				continue;
-			}
+			//if (*((*temp)[Index].Enabled) == false)
+			//{
+			//	Index++;
+			//	continue;
+			//}
 
 			//함수 실행
 			(*temp)[Index].FunctionPointer();

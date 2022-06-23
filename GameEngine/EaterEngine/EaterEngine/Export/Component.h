@@ -72,8 +72,8 @@ protected:
 	const int FUNCTION_ORDER_LAST		= 4;
 	
 	unsigned int Awake_Order			= FUNCTION_ORDER_CENTER;
-	unsigned int Start_Order			= FUNCTION_ORDER_CENTER;
 	unsigned int SetUp_Order			= FUNCTION_ORDER_CENTER;
+	unsigned int Start_Order			= FUNCTION_ORDER_CENTER;
 
 
 	unsigned int StartUpdate_Order		= FUNCTION_ORDER_CENTER;

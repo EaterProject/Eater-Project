@@ -41,7 +41,7 @@ void Light::Start()
 	switch (m_LightType)
 	{
 	case DIRECTION_LIGHT:
-		m_Transform->SetTranlate(0.0f, 100.0f, 0.0f);
+		m_Transform->SetPosition(0.0f, 100.0f, 0.0f);
 		break;
 	case POINT_LIGHT:
 		break;

@@ -100,12 +100,12 @@ void CTAP_Light::SetGameObject(Light* TempLight)
 	float Angle		= mLight->GetAngle();
 	float Range		= mLight->GetRange();
 	float Power		= mLight->GetPower();
-	Vector3 mColor	= mLight->GetColor();
+	Vector3 mMF_Setting	= mLight->GetColor();
 	float mAttenuate = mLight->GetAttenuate();
 
-	Color_R_Slider.SetPos((int)(mColor.x*255));
-	Color_G_Slider.SetPos((int)(mColor.y*255));
-	Color_B_Slider.SetPos((int)(mColor.z*255));
+	Color_R_Slider.SetPos((int)(mMF_Setting.x*255));
+	Color_G_Slider.SetPos((int)(mMF_Setting.y*255));
+	Color_B_Slider.SetPos((int)(mMF_Setting.z*255));
 	Attenuate_Slider.SetPos((int)(mAttenuate*0.01));
 
 	float OriginalAngle = Angle * 180 / 3.141592f;
@@ -113,9 +113,9 @@ void CTAP_Light::SetGameObject(Light* TempLight)
 	Range_Slider.SetPos((int)Range);
 	Power_Slider.SetPos((int)Power);
 
-	Color_R.SetWindowTextW(ChangeToCString(mColor.x * 255));
-	Color_G.SetWindowTextW(ChangeToCString(mColor.y * 255));
-	Color_B.SetWindowTextW(ChangeToCString(mColor.z * 255));
+	Color_R.SetWindowTextW(ChangeToCString(mMF_Setting.x * 255));
+	Color_G.SetWindowTextW(ChangeToCString(mMF_Setting.y * 255));
+	Color_B.SetWindowTextW(ChangeToCString(mMF_Setting.z * 255));
 
 	Angle_Edit.SetWindowTextW(ChangeToCString(OriginalAngle));
 	Range_Edit.SetWindowTextW(ChangeToCString(Range));

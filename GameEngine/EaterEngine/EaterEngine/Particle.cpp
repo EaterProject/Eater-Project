@@ -154,7 +154,7 @@ void Particle::Update()
 		if (m_AniType & POSITION_ANI)
 		{
 			m_NowPos = Vector3::Lerp(m_PrevPos, m_NextPos, m_OneTickFrame);
-			m_Transform->SetTranlate(m_NowPos);
+			m_Transform->SetPosition(m_NowPos);
 		}
 		if (m_AniType & ROTATION_ANI)
 		{
@@ -276,7 +276,7 @@ void Particle::SetPlay(const PARTICLE_DESC* particleDesc)
 	m_OnePos = (particleDesc->StartForce + particleDesc->LifeForce) / (float)m_AniTotalFrame;
 	m_PrevPos = m_StartPos;
 	m_NextPos = m_PrevPos + m_OnePos;
-	m_Transform->SetTranlate(m_PrevPos);
+	m_Transform->SetPosition(m_PrevPos);
 
 	// Animation Type ¼³Á¤..
 	if (m_OneColor != XMVectorZero())	m_AniType |= COLOR_ANI;

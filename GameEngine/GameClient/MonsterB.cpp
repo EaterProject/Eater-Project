@@ -26,8 +26,8 @@ void MonsterB::SetUp()
 	
 	//맞았을떄 줄어드는 값
 	Speed = 1.5f;
-	NowHitMonsterScale		= 3.0f;
-	NowHitMonsterScale_F	= 0.1f;
+	MonsterScale = 3.0f;
+	MonsterType = MONSTER_TYPE_B;
 
 	//사운드
 	Sound_Attack = "Monster_B_Attack";

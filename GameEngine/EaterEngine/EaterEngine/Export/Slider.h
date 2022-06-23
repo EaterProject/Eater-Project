@@ -17,6 +17,7 @@ public:
 	void Awake() override;
 
 public:
+	EATER_ENGINEDLL void SetActive(bool enable);
 	EATER_ENGINEDLL void SetValueRange(float min, float max);
 
 	EATER_ENGINEDLL void SetPivot(PIVOT_TYPE pivot_type);
@@ -84,4 +85,3 @@ private:
 	RectTransform* m_BackTransform;
 	RectTransform* m_FillTransform;
 };
-
