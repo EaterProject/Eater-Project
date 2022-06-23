@@ -725,6 +725,14 @@ void CTAP_MeshFilter::OnDeltaposSpin3(NMHDR* pNMHDR, LRESULT* pResult)
 	else
 	{
 		SkyLight_Index--;
+
+		// 인덱스가 음수일경우 보정..
+		if (SkyLight_Index < 0)
+		{
+			SkyLight_Spin.SetPos(0);
+			SkyLight_Index = 0;
+		}
+
 		if (mMaterial->m_MaterialData != nullptr)
 		{
 			mMaterial->m_MaterialData->Material_Property->SkyLightIndex = SkyLight_Index;

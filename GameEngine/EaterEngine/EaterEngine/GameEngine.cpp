@@ -368,7 +368,7 @@ GameObject* GameEngine::Instance_Light(std::string ObjName, LIGHT_TYPE type)
 	{
 	case DIRECTION_LIGHT:
 		Tr->SetRotate(-30.0f, 10.0f, 0.0f);
-		light->SetPower(1);
+		light->SetPower(9.0f);
 		break;
 	case POINT_LIGHT:
 		light->SetColor(1.0f, 1.0f, 0.0f);

@@ -349,6 +349,7 @@ void SkySetting::OnDeltaposSpin3(NMHDR* pNMHDR, LRESULT* pResult)
 	{
 		SkyLightIndex--;
 
+		// 인덱스가 음수일경우 보정..
 		if (SkyLightIndex < 0)
 		{
 			SkyLight_Spin.SetPos(0);
