@@ -138,8 +138,8 @@
       <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <PreBuildEvent>
-      <Command>copy /Y "$(SolutionDir)Library\lib\*.dll" "$(TargetDir)" 
-copy /Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)" </Command>
+      <Command>copy/Y "$(SolutionDir)Library\lib\*.dll" "$(TargetDir)"
+copy/Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -199,8 +199,8 @@ copy /Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)" </Command>
       <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <PreBuildEvent>
-      <Command>copy /Y "$(SolutionDir)Library\lib\*.dll" "$(TargetDir)" 
-copy /Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)" </Command>
+      <Command>copy/Y "$(SolutionDir)Library\lib\*.dll" "$(TargetDir)"
+copy/Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
