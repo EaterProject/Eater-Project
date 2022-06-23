@@ -398,7 +398,7 @@ public:
             , mParent(0)
             , mLeftChild(0)
             , mRightChild(0)
-            , mColor(eRed)
+            , mMF_Setting(eRed)
             , mBlackDepth(0)
         {
         }
@@ -408,7 +408,7 @@ public:
             , mParent(0)
             , mLeftChild(0)
             , mRightChild(0)
-            , mColor(pRecordType.mColor)
+            , mMF_Setting(pRecordType.mMF_Setting)
             , mBlackDepth(pRecordType.mBlackDepth)
         {
         }
@@ -420,7 +420,7 @@ public:
         RecordType* mParent;
         RecordType* mLeftChild;
         RecordType* mRightChild;
-        unsigned int mColor:2;
+        unsigned int mMF_Setting:2;
         unsigned int mBlackDepth:30;
     };
 
@@ -836,9 +836,9 @@ protected:
 
             if (lNode->mParent == 0)
             {
-                lNode->mColor = RecordType::eBlack;
+                lNode->mMF_Setting = RecordType::eBlack;
             }
-            else if (lNode->mParent->mColor == RecordType::eRed)
+            else if (lNode->mParent->mMF_Setting == RecordType::eRed)
             {
                 RecordType* lUncle = 0;
 
@@ -858,11 +858,11 @@ protected:
 
                 if ((lNode->mParent != NULL) && (lNode->mParent->mParent != NULL))
                 {
-                    if (lUncle && lUncle->mColor == RecordType::eRed)
+                    if (lUncle && lUncle->mMF_Setting == RecordType::eRed)
                     {
-                        lNode->mParent->mColor = RecordType::eBlack;
-                        lUncle->mColor = RecordType::eBlack;
-                        lNode->mParent->mParent->mColor = RecordType::eRed;
+                        lNode->mParent->mMF_Setting = RecordType::eBlack;
+                        lUncle->mMF_Setting = RecordType::eBlack;
+                        lNode->mParent->mParent->mMF_Setting = RecordType::eRed;
                         lNode = lNode->mParent->mParent;
 
                         lDone = false;
@@ -882,8 +882,8 @@ protected:
                             lNode = lNode->mRightChild;
                         }
 
-                        lNode->mParent->mColor = RecordType::eBlack;
-                        lNode->mParent->mParent->mColor = RecordType::eRed;
+                        lNode->mParent->mMF_Setting = RecordType::eBlack;
+                        lNode->mParent->mParent->mMF_Setting = RecordType::eRed;
                         if ((lNode == lNode->mParent->mLeftChild) &&
                             (lNode->mParent == lNode->mParent->mParent->mLeftChild))
                         {
@@ -898,7 +898,7 @@ protected:
             }
         }
 
-        mRoot->mColor = RecordType::eBlack;
+        mRoot->mMF_Setting = RecordType::eBlack;
     }
 
     inline void LeftRotate(RecordType* pNode)
@@ -1027,7 +1027,7 @@ protected:
                     mRoot = 0;
                 }
 
-                if (pNode->mColor == RecordType::eBlack)
+                if (pNode->mMF_Setting == RecordType::eBlack)
                 {
                     FixNodesAfterRemoval(pNode->mParent, 0);
                 }
@@ -1058,7 +1058,7 @@ protected:
                     pNode->mRightChild->mParent = 0;
                 }
 
-                if (pNode->mColor == RecordType::eBlack)
+                if (pNode->mMF_Setting == RecordType::eBlack)
                 {
                     FixNodesAfterRemoval(pNode->mRightChild->mParent, pNode->mRightChild);
                 }
@@ -1092,7 +1092,7 @@ protected:
                     pNode->mLeftChild->mParent = 0;
                 }
 
-                if (pNode->mColor == RecordType::eBlack)
+                if (pNode->mMF_Setting == RecordType::eBlack)
                 {
                     FixNodesAfterRemoval(pNode->mLeftChild->mParent, pNode->mLeftChild);
                 }
@@ -1102,7 +1102,7 @@ protected:
                 RecordType* lMinRightNode = pNode->mRightChild->Minimum();
                 RemoveNode(lMinRightNode);
 
-                lMinRightNode->mColor = pNode->mColor;
+                lMinRightNode->mMF_Setting = pNode->mMF_Setting;
                 ReplaceNode(pNode, lMinRightNode);
             }
         }
@@ -1164,7 +1164,7 @@ protected:
 
     inline bool IsBlack(const RecordType* pNode)
     {
-        return ((pNode == 0) || (pNode->mColor == RecordType::eBlack));
+        return ((pNode == 0) || (pNode->mMF_Setting == RecordType::eBlack));
     }
 
     inline void FixNodesAfterRemoval(RecordType* pParent, RecordType* pNode)
@@ -1179,7 +1179,7 @@ protected:
 
             if (!IsBlack(lNode))
             {
-                lNode->mColor = RecordType::eBlack;
+                lNode->mMF_Setting = RecordType::eBlack;
             }
             else if (lParent != NULL)
             {
@@ -1187,8 +1187,8 @@ protected:
 
                 if (!IsBlack(lSibling))
                 {
-                    lParent->mColor = RecordType::eRed;
-                    lSibling->mColor = RecordType::eBlack;
+                    lParent->mMF_Setting = RecordType::eRed;
+                    lSibling->mMF_Setting = RecordType::eBlack;
                     if (lNode == lParent->mLeftChild)
                     {
                         LeftRotate(lParent);
@@ -1210,7 +1210,7 @@ protected:
                     IsBlack(lSibling->mLeftChild) &&
                     IsBlack(lSibling->mRightChild))
                 {
-                    lSibling->mColor = RecordType::eRed;
+                    lSibling->mMF_Setting = RecordType::eRed;
                     lNode = lParent;
                     lParent = lParent->mParent;
                     lDone = false;
@@ -1224,9 +1224,9 @@ protected:
                     {
                         if (lSibling)
                         {
-                            lSibling->mColor = RecordType::eRed;
+                            lSibling->mMF_Setting = RecordType::eRed;
                         }
-                        lParent->mColor = RecordType::eBlack;
+                        lParent->mMF_Setting = RecordType::eBlack;
                     }
                     else if( lSibling != 0 )
                     {
@@ -1235,8 +1235,8 @@ protected:
                             !IsBlack(lSibling->mLeftChild) &&
                             IsBlack(lSibling->mRightChild))
                         {
-                            lSibling->mColor = RecordType::eRed;
-                            lSibling->mLeftChild->mColor = RecordType::eBlack;
+                            lSibling->mMF_Setting = RecordType::eRed;
+                            lSibling->mLeftChild->mMF_Setting = RecordType::eBlack;
                             RightRotate(lSibling);
                         }
                         else if ((lNode == lParent->mRightChild) &&
@@ -1244,8 +1244,8 @@ protected:
                                  IsBlack(lSibling->mLeftChild) &&
                                  !IsBlack(lSibling->mRightChild))
                         {
-                            lSibling->mColor = RecordType::eRed;
-                            lSibling->mRightChild->mColor = RecordType::eBlack;
+                            lSibling->mMF_Setting = RecordType::eRed;
+                            lSibling->mRightChild->mMF_Setting = RecordType::eBlack;
                             LeftRotate(lSibling);
                         }
 
@@ -1258,13 +1258,13 @@ protected:
 
 						if( lSibling != 0 && lParent != 0 )
 						{
-							lSibling->mColor = lParent->mColor;
-							lParent->mColor = RecordType::eBlack;
+							lSibling->mMF_Setting = lParent->mMF_Setting;
+							lParent->mMF_Setting = RecordType::eBlack;
 							if (lNode == lParent->mLeftChild)
 							{
 								if (lSibling->mRightChild)
 								{
-									lSibling->mRightChild->mColor = RecordType::eBlack;
+									lSibling->mRightChild->mMF_Setting = RecordType::eBlack;
 								}
 								LeftRotate(lParent);
 							}
@@ -1272,7 +1272,7 @@ protected:
 							{
 								if (lSibling->mLeftChild)
 								{
-									lSibling->mLeftChild->mColor = RecordType::eBlack;
+									lSibling->mLeftChild->mMF_Setting = RecordType::eBlack;
 								}
 								RightRotate(lParent);
 							}
@@ -1284,7 +1284,7 @@ protected:
 
         if (mRoot)
         {
-            mRoot->mColor = RecordType::eBlack;
+            mRoot->mMF_Setting = RecordType::eBlack;
         }
     }
 

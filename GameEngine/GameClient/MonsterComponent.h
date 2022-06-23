@@ -1,6 +1,7 @@
 #pragma once
 #include "Component.h"
 #include "ClientTypeOption.h"
+#include "MeshFilterSetting.h"
 #include <string>
 #include <functional>
 class PhysRayCast;
@@ -9,7 +10,6 @@ class Transform;
 class AnimationController;
 class Collider;
 class Rigidbody;
-class MaterialPropertyBlock;
 class MonsterComponent : public Component
 {
 public:
@@ -18,6 +18,7 @@ public:
 public:
 	virtual void Awake() override;
 	virtual void SetUp() override;
+	virtual void Start() override;
 	virtual void Update() override;
 	virtual void OnTriggerStay(GameObject* Obj) override;
 
@@ -34,7 +35,6 @@ public:
 	bool GetStopPoint(const Vector3& Pos);
 	void SetMovePoint(float x, float y, float z);
 	void SetMonsterState(MONSTER_STATE State);
-	void SetLimLightColor();
 	void UpdateColor();
 	void SetState(MONSTER_STATE mState);
 	bool FirstState();
@@ -73,6 +73,8 @@ protected:
 	std::string Sound_move;
 	std::string Sound_Attack;
 
+	bool IsUI_ON = false;
+	bool IsUI_OFF = false;
 protected:
 	///Move 상태 변수들
 	float MoveSoundTime				= 0;
@@ -104,18 +106,15 @@ protected:
 	float	AttackTime			= 0;			//현재 공격 시간
 	float	RotationSpeed		= 200;			//몬스터 회전하는 속도
 	int		PointNumber			= -1;			//몬스터 이동 포인터 인덱스
-	int		ComboCount			= 0;			//현재 콤보 카운터
-	int		ComboCountMax		= 5;			//현재 콤보 카운터 변환
+	int		ComboCount			= 6;			//현재 콤보 카운터
+	int		MonsterScale		= 1.0f;			
+	int		MonsterType			= 0;
 protected:
-	Vector3 NowLimLightColor	= { 1,0,0 };	//건들면 안됨
-	float	NowHitMonsterScale_F = 0.25f;		//맞았을때 커지는 스케일값 소수점
-	float	NowHitMonsterScale   = 1.0f;		//맞았을때 커지는 스케일값 소수점
-	float	NowLimLightFactor	= 2.0f;			//건들면 안됨
-	float	NowLimLightWidth	= 0.9f;			//건들면 안됨
-	bool	NowUpdateColor		= false;		//건들면 안됨
-	MONSTER_COLOR	ComboColor  = MONSTER_COLOR::RED;
+	void GetRandomColor();
+	void SetMonsterColor();
+	int		MonsterColor		= 0;			//건들면 안됨
 protected:
-	MaterialPropertyBlock* MPB  = nullptr;
+	MeshFilterSetting	mMF_Setting;
 	std::function<void()> HitFunction;
 
 };

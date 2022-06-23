@@ -35,6 +35,7 @@
 #include "RectTransform.h"
 #include "Image.h"
 #include "Slider.h"
+#include "ImageFont.h"
 
 #include "Profiler/Profiler.h"
 
@@ -139,7 +140,7 @@ void GameEngine::Start()
 	DebugCamera = InstanceCamera("DebugCamera");
 	DebugCamera->AddComponent<CameraDebugKeyInput>();
 	DebugCamera->SetDontDestroy(true);
-	DebugCamera->transform->SetTranlate(0.0f, 10.0f, -25.0f);
+	DebugCamera->transform->SetPosition(0.0f, 10.0f, -25.0f);
 
 	//디렉션 라이트 생성
 	DirectionLight = Instance_Light("DirectionLight", LIGHT_TYPE::DIRECTION_LIGHT);
@@ -345,7 +346,7 @@ GameObject* GameEngine::InstanceCamera(std::string ObjName)
 	Obj->transform = Obj->AddComponent<Transform>();
 	Obj->AddComponent<Camera>();
 	Obj->Name = ObjName;
-	Obj->transform->SetTranlate(0.0f, 5.0f, -40.0f);
+	Obj->transform->SetPosition(0.0f, 5.0f, -40.0f);
 	return Obj;
 }
 
@@ -414,6 +415,13 @@ GameObject* GameEngine::Instance_Slider(std::string ObjName /*= "Slider"*/)
 	GameObject* Fill_Img = Instance_Image();
 	slider->SetFillImage(Fill_Img->GetComponent<Image>());
 
+	return Obj;
+}
+
+GameObject* GameEngine::Instance_ImageFont(std::string ObjName)
+{
+	GameObject* Obj = CreateInstance();
+	Obj->AddComponent<ImageFont>();
 	return Obj;
 }
 

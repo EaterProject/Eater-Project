@@ -107,7 +107,7 @@ void Slider::SetPosition(DirectX::SimpleMath::Vector2 pos)
 
 void Slider::SetPosition(float x, float y)
 {
-	m_Position = {x, y};
+	m_Position = { x, y };
 
 	if (m_Start == false)
 	{
@@ -178,7 +178,7 @@ void Slider::SetPosition3D(float x, float y, float z)
 void Slider::SetPosition3D(DirectX::SimpleMath::Vector3 pos)
 {
 	m_Position3D = pos;
-	
+
 	if (m_Start == false)
 	{
 		StartFunction += Eater::Bind(static_cast<void(Slider::*)(void)>(&Slider::SetPosition3D), this);
@@ -227,7 +227,7 @@ void Slider::SetBackGroundTexture()
 void Slider::SetFillTexture(std::string texture_name)
 {
 	m_FillTextureName = texture_name;
-	
+
 	if (m_Start == false)
 	{
 		StartFunction += Eater::Bind(static_cast<void(Slider::*)(void)>(&Slider::SetFillTexture), this);
@@ -259,7 +259,7 @@ void Slider::SetBackGroundColor(DirectX::SimpleMath::Vector4 image_color)
 
 void Slider::SetBackGroundColor(float r, float g, float b, float a)
 {
-	m_BackColor = {r, g, b, a};
+	m_BackColor = { r, g, b, a };
 
 	if (m_Start == false)
 	{
@@ -321,6 +321,7 @@ void Slider::SetFillRange(FILL_TYPE fill_type, float range)
 	}
 
 	// 설정된 비율의 범위 설정..
+	m_FillType = fill_type;
 	m_FillRange = range * m_Value;
 
 	if (m_Start == false)

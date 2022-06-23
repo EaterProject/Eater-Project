@@ -35,6 +35,7 @@ extern "C" EATER_ENGINEDLL GameObject*	Instance_Light(std::string ObjName= "Ligh
 extern "C" EATER_ENGINEDLL GameObject*	Instance_UI(std::string ObjName= "UI");//오브젝트 생성
 extern "C" EATER_ENGINEDLL GameObject*	Instance_Image(std::string ObjName= "Image");//오브젝트 생성
 extern "C" EATER_ENGINEDLL GameObject*	Instance_Slider(std::string ObjName= "Slider");//오브젝트 생성
+extern "C" EATER_ENGINEDLL GameObject*	Instance_ImageFont(std::string ObjName= "Font");//오브젝트 생성
 
 ///게임 오브젝트 찾기
 extern "C" EATER_ENGINEDLL GameObject*	FindGameObjectTag(std::string TagName);

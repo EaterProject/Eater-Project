@@ -30,7 +30,7 @@
 void TestScene::Awake()
 {
 	LoadTerrainMesh("../Assets/Model/TerrainModel/Terrain.fbx", "../Assets/Texture/Terrain/Terrain_RGB_1.png", "../Assets/Texture/Terrain/Terrain_RGB_2.png", SCALING);
-	
+
 	//Load("../Assets/Texture/Particle/particle_hotCloud.png");
 
 	PROFILE_TIMER_START(PROFILE_OUTPUT::VS_CODE, 1, "Load Folder");
@@ -44,7 +44,7 @@ void TestScene::Awake()
 	//Load("../Assets/Model/MeshBuffer");
 	//Load("../Assets/Model/ModelData");
 	//Load("../Assets/Model/Animation");
-	PROFILE_TIMER_END("Load Folder"); 
+	PROFILE_TIMER_END("Load Folder");
 
 	BakeSkyLightMap("SkyLight_0", false);
 	BakeSkyLightMap("SkyLight_1", false);
@@ -80,14 +80,14 @@ void TestScene::Awake()
 void TestScene::Update()
 {
 	//PROFILE_TIMER_START(PROFILE_OUTPUT::CONSOLE, "Update", 60);
-	
+
 	//static int renderCount = 0;
 	//PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "Update Count %d", renderCount++);
 	//PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "Update Count %d", renderCount++);
 
 	ChangeCubeMap();
 	//DebugDrawLine(Vector3(0.0f, 0.0f, 0.0f), Vector3(0.0f, 50.0f, 0.0f), Vector4(1.0f, 0.0f, 0.0f, 1.0f));
-	
+
 	//PROFILE_TIMER_END("Update");
 }
 
@@ -163,7 +163,7 @@ void TestScene::CreateMap()
 	//Object->GetTransform()->Position.z += 20;
 	//AC = Object->AddComponent<AnimationController>();
 	//AC->Choice("attack");
-	
+
 	//Object = Instance();
 	//filter = Object->AddComponent<MeshFilter>();
 	//filter->SetModelName("MonsterA");
@@ -172,7 +172,7 @@ void TestScene::CreateMap()
 	//Object->GetTransform()->Position.z -= 20;
 	//AC = Object->AddComponent<AnimationController>();
 	//AC->Choice("die");
-	
+
 	//Object = Instance();
 	//filter = Object->AddComponent<MeshFilter>();
 	//filter->SetModelName("MonsterA");
@@ -181,7 +181,7 @@ void TestScene::CreateMap()
 	//Object->GetTransform()->Position.z -= 20;
 	//AC = Object->AddComponent<AnimationController>();
 	//AC->Choice("idle");
-	
+
 	//Object = Instance();
 	//filter = Object->AddComponent<MeshFilter>();
 	//filter->SetModelName("Dome_Occluder");
@@ -226,7 +226,7 @@ void TestScene::CreateMap()
 	filter = boss->AddComponent<MeshFilter>();
 	filter->SetModelName("BossB+");
 	filter->SetAnimationName("BossB+");
-	boss->GetTransform()->SetTranlate(-44.0f, 6.0f, 62.0f);
+	boss->GetTransform()->SetPosition(-44.0f, 6.0f, 62.0f);
 	boss->GetTransform()->SetScale(1.5f);
 	AC = boss->AddComponent<AnimationController>();
 	ACList.push_back(AC);
@@ -267,7 +267,7 @@ void TestScene::CreateMap()
 	filter = Object->AddComponent<MeshFilter>();
 	filter->SetModelName("MonsterA+");
 	filter->SetAnimationName("MonsterA+");
-	Object->GetTransform()->SetTranlate(15, 0, 62);
+	Object->GetTransform()->SetPosition(15, 0, 62);
 	Object->GetTransform()->SetScale(1.2f, 1.2f, 1.2f);
 	AC = Object->AddComponent<AnimationController>();
 	ACList.push_back(AC);
@@ -295,7 +295,7 @@ void TestScene::CreateMap()
 	filter = Object->AddComponent<MeshFilter>();
 	filter->SetModelName("MonsterB+");
 	filter->SetAnimationName("MonsterB+");
-	Object->GetTransform()->SetTranlate(23, 1, 56);
+	Object->GetTransform()->SetPosition(23, 1, 56);
 	Object->GetTransform()->SetScale(3.0f, 3.0f, 3.0f);
 	AC = Object->AddComponent<AnimationController>();
 	ACList.push_back(AC);
@@ -482,7 +482,7 @@ void TestScene::CreateUI()
 void TestScene::CreateParticle(float x, float y, float z)
 {
 	ParticleObj = Instance();
-	ParticleObj->GetTransform()->SetTranlate(-10.0f + x, 2.5f + y, -10.0f + z);
+	ParticleObj->GetTransform()->SetPosition(-10.0f + x, 2.5f + y, -10.0f + z);
 	testobj = Instance_Particle("Particle1");
 	ParticleObj->ChoiceChild(testobj);
 	ParticleSystem* particles = testobj->GetComponent<ParticleSystem>();
@@ -524,7 +524,7 @@ void TestScene::CreateParticle(float x, float y, float z)
 	particles->Play(true);
 
 	ParticleObj = Instance();
-	ParticleObj->GetTransform()->SetTranlate(10.0f + x, 2.5f + y, -10.0f + z);
+	ParticleObj->GetTransform()->SetPosition(10.0f + x, 2.5f + y, -10.0f + z);
 	testobj = Instance_Particle("Particle1");
 	ParticleObj->ChoiceChild(testobj);
 	particles = testobj->GetComponent<ParticleSystem>();
@@ -596,7 +596,7 @@ void TestScene::ChangeCubeMap()
 	if (GetKey('4'))
 	{
 		MaterialProperty* block = meshfilter->GetMaterialProperty();
-		
+
 		if (up)
 		{
 			block->LimLightColor.x += 0.005f;
@@ -621,28 +621,28 @@ void TestScene::ChangeCubeMap()
 	{
 		for (int i = 0; i < TRList.size(); i++)
 		{
-			TRList[i]->AddTranlate_X(-dTime * 50.0f);
+			TRList[i]->AddPosition_X(-dTime * 50.0f);
 		}
 	}
 	if (GetKey(VK_RIGHT))
 	{
 		for (int i = 0; i < TRList.size(); i++)
 		{
-			TRList[i]->AddTranlate_X(dTime * 50.0f);
+			TRList[i]->AddPosition_X(dTime * 50.0f);
 		}
 	}
 	if (GetKey(VK_UP))
 	{
 		for (int i = 0; i < TRList.size(); i++)
 		{
-			TRList[i]->AddTranlate_Z(dTime * 50.0f);
+			TRList[i]->AddPosition_Z(dTime * 50.0f);
 		}
 	}
 	if (GetKey(VK_DOWN))
 	{
 		for (int i = 0; i < TRList.size(); i++)
 		{
-			TRList[i]->AddTranlate_Z(-dTime * 50.0f);
+			TRList[i]->AddPosition_Z(-dTime * 50.0f);
 		}
 	}
 	if (GetKey('Q'))

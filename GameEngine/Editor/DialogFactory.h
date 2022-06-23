@@ -56,7 +56,7 @@ public:
 	GETTER(AssetsDialog,	mAssets_Dlog);
 	GETTER(EditorManager,	mEditorManager);
 
-	GETTER(CColorDialog,	mColor);
+	GETTER(CColorDialog,	mMF_Setting);
 	CFileDialog* GetSaveFileDlg(char* FilePath, CString Type);
 	CFileDialog* GetLoadFileDlg(char* FilePath, CString Type);
 
@@ -77,7 +77,7 @@ private:
 	LoadTerrain*		mLoadTerrain;
 	LoadNavMesh*		mLoadNavMesh;
 	SkySetting*			mSkySetting;
-	CColorDialog*		mColor;
+	CColorDialog*		mMF_Setting;
 private:
 	//알아서 생성되는 다이얼로그
 	RightOption*	mRightOption_Dlog;	//View의 오른쪽 모든 정보들을 담당하는 다이얼 로그

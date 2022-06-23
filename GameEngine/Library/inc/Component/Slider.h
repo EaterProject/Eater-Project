@@ -85,4 +85,3 @@ private:
 	RectTransform* m_BackTransform;
 	RectTransform* m_FillTransform;
 };
-

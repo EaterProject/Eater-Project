@@ -38,19 +38,19 @@ public:
 	EATER_ENGINEDLL void AddLocalPosition(float X, float Y, float Z);
 
 	//현재 위치값을 변경해줌
-	EATER_ENGINEDLL void SetTranlate_X(float pos);
-	EATER_ENGINEDLL void SetTranlate_Y(float pos);
-	EATER_ENGINEDLL void SetTranlate_Z(float pos);
-	EATER_ENGINEDLL void SetTranlate(float X, float Y, float Z);
-	EATER_ENGINEDLL void SetTranlate(DirectX::SimpleMath::Vector3& mPos);
-	EATER_ENGINEDLL void SetTranlate(DirectX::SimpleMath::Vector3&& mPos);
+	EATER_ENGINEDLL void SetPosition_X(float pos);
+	EATER_ENGINEDLL void SetPosition_Y(float pos);
+	EATER_ENGINEDLL void SetPosition_Z(float pos);
+	EATER_ENGINEDLL void SetPosition(float X, float Y, float Z);
+	EATER_ENGINEDLL void SetPosition(DirectX::SimpleMath::Vector3& mPos);
+	EATER_ENGINEDLL void SetPosition(DirectX::SimpleMath::Vector3&& mPos);
 	//현재 위치값에 값을 더해줌
-	EATER_ENGINEDLL void AddTranlate_X(float pos);
-	EATER_ENGINEDLL void AddTranlate_Y(float pos);
-	EATER_ENGINEDLL void AddTranlate_Z(float pos);
-	EATER_ENGINEDLL void AddTranlate(float X, float Y, float Z);
-	EATER_ENGINEDLL void AddTranlate(DirectX::SimpleMath::Vector3& mPos);
-	EATER_ENGINEDLL void AddTranlate(DirectX::SimpleMath::Vector3&& mPos);
+	EATER_ENGINEDLL void AddPosition_X(float pos);
+	EATER_ENGINEDLL void AddPosition_Y(float pos);
+	EATER_ENGINEDLL void AddPosition_Z(float pos);
+	EATER_ENGINEDLL void AddPosition(float X, float Y, float Z);
+	EATER_ENGINEDLL void AddPosition(DirectX::SimpleMath::Vector3& mPos);
+	EATER_ENGINEDLL void AddPosition(DirectX::SimpleMath::Vector3&& mPos);
 
 	//현재 회전값을 변경해줌
 	EATER_ENGINEDLL void SetRotate_X(float rot);

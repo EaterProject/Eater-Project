@@ -70,6 +70,7 @@ public:
 	GameObject* Instance_UI(std::string ObjName = "UI");
 	GameObject* Instance_Image(std::string ObjName = "Image");
 	GameObject* Instance_Slider(std::string ObjName = "Slider");
+	GameObject* Instance_ImageFont(std::string ObjName = "Font");
 
 public:
 	///еб╠в
