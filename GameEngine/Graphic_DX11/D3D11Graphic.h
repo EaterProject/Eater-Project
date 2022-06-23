@@ -15,6 +15,8 @@ public:
 	HRESULT SaveTextureDDS(ID3D11Resource* resource, const char* fileName) override;
 	HRESULT SaveTextureDDS(ID3D11DepthStencilView* resource, const char* fileName) override;
 	HRESULT SaveTextureDDS(ID3D11ShaderResourceView* resource, const char* fileName) override;
+	HRESULT SaveVolumeTextureDDS(ID3D11ShaderResourceView* resource, const char* saveName, UINT pixelSize, void** ppResource) override;
+	HRESULT SaveVolumeTextureDDS(const char* fileName, const char* saveName, UINT pixelSize) override;
 	HRESULT CaptureTextureDDS(const char* fileName) override;
 
 public:

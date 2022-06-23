@@ -4,6 +4,7 @@
 
 class Image;
 class RectTransform;
+struct RectPoint;
 
 class Button : public Component
 {
@@ -43,5 +44,6 @@ private:
 
 	Image* m_Image;
 	RectTransform* m_Transform;
+	RectPoint* m_Rect;
 };
 

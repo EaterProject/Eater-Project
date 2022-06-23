@@ -78,10 +78,14 @@ public:
 	void BakeConvertCubeMap(TextureBuffer* resource, float angle, float threshold, bool hdri, TextureBuffer** ppResource);
 
 	void SaveConvertCubeMap(TextureBuffer* resource, std::string SaveName);
+	void SaveSpriteToVolumeTexture(TextureBuffer* resource, std::string saveName, UINT pixelSize, TextureBuffer** ppResource);
+	void SaveSpriteToVolumeTexture(std::string fileName, std::string saveName, UINT pixelSize);
 
 public:
 	void SetSkyCube(TextureBuffer* environment);
 	void SetSkyLight(SkyLightBuffer* skyLight, UINT index);
+	void SetColorGradingBaseTexture(TextureBuffer* lut_resource);
+	void SetColorGradingBlendTexture(TextureBuffer* lut_resource);
 
 private:
 	GraphicEngine* GEngine;

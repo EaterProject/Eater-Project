@@ -75,8 +75,6 @@ void FXAA_Pass::Release()
 
 void FXAA_Pass::RenderUpdate()
 {
-	//g_Context->RSSetState(0);
-	//g_Context->OMSetBlendState(0, 0, 0xffffffff);
 	g_Context->OMSetRenderTargets(1, &m_OutPut_RTV, nullptr);
 
 	g_Context->ClearRenderTargetView(m_OutPut_RTV, reinterpret_cast<const float*>(&DXColors::NonBlack));

@@ -206,6 +206,21 @@ void RenderManager::SetSkyLight(SkyLightBuffer* resource, UINT index)
 	m_Sky->SetSkyLightResource(resource, index);
 }
 
+void RenderManager::SetColorGradingBaseTexture(TextureBuffer* lut_resource)
+{
+	m_Combine->SetColorGradingBaseTexture(lut_resource);
+}
+
+void RenderManager::SetColorGradingBlendTexture(TextureBuffer* lut_resource)
+{
+	m_Combine->SetColorGradingBlendTexture(lut_resource);
+}
+
+void RenderManager::SetColorGradingFactor(float factor)
+{
+	m_Combine->SetColorGradingFactor(factor);
+}
+
 void RenderManager::PushInstance(MeshData* instance)
 {
 	// 현재 비어있는 상태이므로 추후 설정을 위해 Mesh Data 삽입..
@@ -498,7 +513,7 @@ void RenderManager::AlphaRender()
 void RenderManager::PostProcessingRender()
 {
 	GPU_BEGIN_EVENT_DEBUG_NAME("Bloom Pass");
-	if (m_NowRenderOption.PostProcessOption & POSTPROCESS_OPTION::RENDER_BLOOM)
+	if (m_NowRenderOption.PostProcessOption & POSTPROCESS_OPTION::POSTPROCESS_BLOOM)
 	{
 		m_Bloom->RenderUpdate();
 	}
@@ -513,12 +528,11 @@ void RenderManager::PostProcessingRender()
 	GPU_END_EVENT_DEBUG_NAME();
 
 	GPU_BEGIN_EVENT_DEBUG_NAME("FXAA Pass");
-	if (m_NowRenderOption.PostProcessOption & POSTPROCESS_OPTION::RENDER_FXAA)
+	if (m_NowRenderOption.PostProcessOption & POSTPROCESS_OPTION::POSTPROCESS_FXAA)
 	{
 		m_FXAA->RenderUpdate();
 	}
 	GPU_END_EVENT_DEBUG_NAME();
-
 }
 
 void RenderManager::UIRender()

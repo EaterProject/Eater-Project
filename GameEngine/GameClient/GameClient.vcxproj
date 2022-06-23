@@ -138,8 +138,8 @@
       <AdditionalLibraryDirectories>$(SolutionDir)Library\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PreBuildEvent>
-      <Command>copy /Y "$(SolutionDir)Library\lib\*.dll" "$(TargetDir)" 
-copy /Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)" </Command>
+      <Command>copy/Y "$(SolutionDir)Library\lib\*.dll" "$(TargetDir)"
+copy/Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)"</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
@@ -167,8 +167,8 @@ copy /Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)" </Command>
       <AdditionalLibraryDirectories>$(SolutionDir)Library\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PreBuildEvent>
-      <Command>copy /Y "$(SolutionDir)Library\lib\*.dll" "$(TargetDir)" 
-copy /Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)" </Command>
+      <Command>copy/Y "$(SolutionDir)Library\lib\*.dll" "$(TargetDir)"
+copy/Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

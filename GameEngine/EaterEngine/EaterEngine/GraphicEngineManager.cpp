@@ -155,6 +155,16 @@ void GraphicEngineManager::SaveConvertCubeMap(TextureBuffer* resource, std::stri
 	GEngine->SaveConvertCubeMap(resource, SaveName);
 }
 
+void GraphicEngineManager::SaveSpriteToVolumeTexture(TextureBuffer* resource, std::string saveName, UINT pixelSize, TextureBuffer** ppResource)
+{
+	GEngine->SaveSpriteToVolumeTexture(resource, saveName, pixelSize, ppResource);
+}
+
+void GraphicEngineManager::SaveSpriteToVolumeTexture(std::string fileName, std::string saveName, UINT pixelSize)
+{
+	GEngine->SaveSpriteToVolumeTexture(fileName, saveName, pixelSize);
+}
+
 void GraphicEngineManager::SetSkyCube(TextureBuffer* environment)
 {
 	GEngine->SetSkyCube(environment);
@@ -163,4 +173,14 @@ void GraphicEngineManager::SetSkyCube(TextureBuffer* environment)
 void GraphicEngineManager::SetSkyLight(SkyLightBuffer* skyLight, UINT index)
 {
 	GEngine->SetSkyLight(skyLight, index);
+}
+
+void GraphicEngineManager::SetColorGradingBaseTexture(TextureBuffer* lut_resource)
+{
+	GEngine->SetColorGradingBaseTexture(lut_resource);
+}
+
+void GraphicEngineManager::SetColorGradingBlendTexture(TextureBuffer* lut_resource)
+{
+	GEngine->SetColorGradingBlendTexture(lut_resource);
 }

@@ -95,6 +95,16 @@ void Graphic_DX11::SetSkyLight(SkyLightBuffer* resource, UINT index)
 	m_RenderManager->SetSkyLight(resource, index);
 }
 
+void Graphic_DX11::SetColorGradingBaseTexture(TextureBuffer* lut_resource)
+{
+	m_RenderManager->SetColorGradingBaseTexture(lut_resource);
+}
+
+void Graphic_DX11::SetColorGradingBlendTexture(TextureBuffer* lut_resource)
+{
+	m_RenderManager->SetColorGradingBlendTexture(lut_resource);
+}
+
 void Graphic_DX11::PushInstance(MeshData* instance)
 {
 	m_RenderManager->PushInstance(instance);
@@ -214,4 +224,14 @@ void Graphic_DX11::BakeConvertCubeMap(TextureBuffer* resource, float angle, floa
 void Graphic_DX11::SaveConvertCubeMap(TextureBuffer* resource, std::string SaveName)
 {
 	m_FactoryManager->SaveConvertCubeMap(resource, SaveName);
+}
+
+void Graphic_DX11::SaveSpriteToVolumeTexture(TextureBuffer* resource, std::string saveName, UINT pixelSize, TextureBuffer** ppResource)
+{
+	m_FactoryManager->SaveSpriteToVolumeTexture(resource, saveName, pixelSize, ppResource);
+}
+
+void Graphic_DX11::SaveSpriteToVolumeTexture(std::string fileName, std::string saveName, UINT pixelSize)
+{
+	m_FactoryManager->SaveSpriteToVolumeTexture(fileName, saveName, pixelSize);
 }

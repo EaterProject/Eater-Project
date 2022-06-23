@@ -39,9 +39,8 @@ class RenderOption;
 
 class GameEngine
 {
-private:
-	CRITICAL_SECTION g_CS;
-
+public:
+	static CRITICAL_SECTION g_CS;
 
 public:
 	GameEngine();
@@ -107,17 +106,20 @@ public:
 	void BakeSkyLightMap(std::string& Path, bool hdri);
 	void BakeAnimation();
 	
-	void BakeConvertSkyLightMap(std::string& Path, float angle, float threshold, bool hdri);
+	void BakeConvertSkyLightMap(std::string& Path, float angle, float threshold, bool hdri, UINT index);
 	void BakeConvertSkyCubeMap(std::string& Path, float angle, float threshold, bool hdri);
 
 	///저장 관련
 	void SaveConvertSkyLightMap(std::string& Path, std::string& SaveName);
 	void SaveConvertSkyCubeMap(std::string& Path, std::string& SaveName);
+	void SaveSpriteToVolumeTexture_LUT(std::string& fileName, std::string& saveName, UINT pixelSize);
 
 public:
 	///텍스쳐 설정 관련
 	void SetSkyCube(std::string& Path);
 	void SetSkyLight(std::string& Path, UINT index);
+	void SetColorGradingBaseTexture(std::string& Path);
+	void SetColorGradingBlendTexture(std::string& Path);
 
 	///충돌체크 관련
 	void AddOccluder(std::string mMeshName);

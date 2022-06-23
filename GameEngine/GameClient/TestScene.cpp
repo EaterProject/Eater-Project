@@ -22,6 +22,7 @@
 #include "Image.h"
 #include "Button.h"
 #include "RectTransform.h"
+#include "Slider.h"
 #include "EngineData.h"
 
 #include "./Profiler/Profiler.h"
@@ -29,7 +30,7 @@
 void TestScene::Awake()
 {
 	LoadTerrainMesh("../Assets/Model/TerrainModel/Terrain.fbx", "../Assets/Texture/Terrain/Terrain_RGB_1.png", "../Assets/Texture/Terrain/Terrain_RGB_2.png", SCALING);
-	
+
 	//Load("../Assets/Texture/Particle/particle_hotCloud.png");
 
 	PROFILE_TIMER_START(PROFILE_OUTPUT::VS_CODE, 1, "Load Folder");
@@ -43,7 +44,7 @@ void TestScene::Awake()
 	//Load("../Assets/Model/MeshBuffer");
 	//Load("../Assets/Model/ModelData");
 	//Load("../Assets/Model/Animation");
-	PROFILE_TIMER_END("Load Folder"); 
+	PROFILE_TIMER_END("Load Folder");
 
 	BakeSkyLightMap("SkyLight_0", false);
 	BakeSkyLightMap("SkyLight_1", false);
@@ -67,20 +68,26 @@ void TestScene::Awake()
 
 	SetSkyCube("SkyCube");
 
-	//Load("../Assets/Scene/inGame.Scene");
+	Load("../Assets/Scene/TestScene.Scene");
+
+	RenderOption* option = GetRenderOptionData();
+	//option->RenderingOption ^= RENDER_OPTION::RENDER_FOG;
+	option->RenderingOption ^= RENDER_OPTION::RENDER_SHADOW;
+	RenderSetting();
+
 }
 
 void TestScene::Update()
 {
 	//PROFILE_TIMER_START(PROFILE_OUTPUT::CONSOLE, "Update", 60);
-	
+
 	//static int renderCount = 0;
 	//PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "Update Count %d", renderCount++);
 	//PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "Update Count %d", renderCount++);
 
 	ChangeCubeMap();
 	//DebugDrawLine(Vector3(0.0f, 0.0f, 0.0f), Vector3(0.0f, 50.0f, 0.0f), Vector4(1.0f, 0.0f, 0.0f, 1.0f));
-	
+
 	//PROFILE_TIMER_END("Update");
 }
 
@@ -94,6 +101,7 @@ void TestScene::CreateMap()
 	Transform* Tr = nullptr;
 	MeshFilter* filter = nullptr;
 	Light* light = nullptr;
+	Slider* slider = nullptr;
 
 	//
 	//ParticleObj = Instance();
@@ -155,7 +163,7 @@ void TestScene::CreateMap()
 	//Object->GetTransform()->Position.z += 20;
 	//AC = Object->AddComponent<AnimationController>();
 	//AC->Choice("attack");
-	
+
 	//Object = Instance();
 	//filter = Object->AddComponent<MeshFilter>();
 	//filter->SetModelName("MonsterA");
@@ -164,7 +172,7 @@ void TestScene::CreateMap()
 	//Object->GetTransform()->Position.z -= 20;
 	//AC = Object->AddComponent<AnimationController>();
 	//AC->Choice("die");
-	
+
 	//Object = Instance();
 	//filter = Object->AddComponent<MeshFilter>();
 	//filter->SetModelName("MonsterA");
@@ -173,7 +181,7 @@ void TestScene::CreateMap()
 	//Object->GetTransform()->Position.z -= 20;
 	//AC = Object->AddComponent<AnimationController>();
 	//AC->Choice("idle");
-	
+
 	//Object = Instance();
 	//filter = Object->AddComponent<MeshFilter>();
 	//filter->SetModelName("Dome_Occluder");
@@ -206,63 +214,110 @@ void TestScene::CreateMap()
 	//filter = Object->AddComponent<MeshFilter>();
 	//filter->SetModelName("Outside_Pebble");
 
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
+	GameObject* minimap = Instance_Image("UI");
+	IMG = minimap->GetComponent<Image>();
+	IMG->SetTexture("ingame_minimap");
+	RTR = minimap->GetComponent<RectTransform>();
+	RTR->SetPivot(PIVOT_TYPE::PIVOT_RIGHT_TOP);
+	RTR->AddPosition(-25.0f, -25.0f);
+	//RTR->SetRotation(0.0f, 0.0f, 180.0f);
+
+	GameObject* boss = Instance();
+	filter = boss->AddComponent<MeshFilter>();
 	filter->SetModelName("BossB+");
 	filter->SetAnimationName("BossB+");
-	Object->GetTransform()->SetPosition(-44.0f, 6.0f, 62.0f);
-	Object->GetTransform()->SetScale(1.5f);
+	boss->GetTransform()->SetPosition(-44.0f, 6.0f, 62.0f);
+	boss->GetTransform()->SetScale(1.5f);
+	AC = boss->AddComponent<AnimationController>();
+	ACList.push_back(AC);
+	TRList.push_back(boss->GetTransform());
+
+	GameObject* obj = Instance_Image();
+	IMG = obj->GetComponent<Image>();
+	IMG->SetTexture("Minimap_Player");
+	RTR = obj->GetComponent<RectTransform>();
+	RTR->SetPivot(PIVOT_TYPE::PIVOT_IMAGE);
+	RTR->SetPositionObject(boss, Vector3(0.0f, 0.0f, 0.0f));
+	RTR->SetTargetImage(minimap, ROTATE_ANGLE::ROTATE_90);
+	RTR->SetTargetRotation(true);
+	RTR->SetTargetRatio(186.0f, 186.0f);
+
+	//Object = Instance_Slider();
+	//slider = Object->GetComponent<Slider>();
+	//slider->SetBackGroundTexture("ingame_player_hp_back");
+	//slider->SetFillTexture("ingame_player_hp");
+	//slider->SetPivot(PIVOT_TYPE::PIVOT_OBJECT);
+	//slider->SetFillColor(255, 0, 0, 0);
+	//slider->SetPositionObject(TRList[0], Vector3(0.0f, 6.0f, 0.0f));
+	//SliderList.push_back(slider);
+	//
+	Object = Instance_Image();
+	IMG = Object->GetComponent<Image>();
+	IMG->SetTexture("Emagin_Front");
+	IMG->SetColor(0, 255, 0);
+	IMG->SetLayer(1);
+	RTR = Object->GetComponent<RectTransform>();
+	RTR->SetPivot(PIVOT_TYPE::PIVOT_OBJECT);
+	//RTR->SetPosition(-120.0f, 0.0f);
+	RTR->SetScale(0.5f, 0.5f);
+	RTR->SetPositionObject(TRList[0], Vector3(0.0f, 6.0f, 0.0f));
+
+
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	filter->SetModelName("MonsterA+");
+	filter->SetAnimationName("MonsterA+");
+	Object->GetTransform()->SetPosition(15, 0, 62);
+	Object->GetTransform()->SetScale(1.2f, 1.2f, 1.2f);
 	AC = Object->AddComponent<AnimationController>();
 	ACList.push_back(AC);
 	TRList.push_back(Object->GetTransform());
 
-	Object = Instance_Image();
-	IMG = Object->GetComponent<Image>();
-	IMG->SetTexture("ingame_player_hp");
-	IMG->SetColor(255, 0, 0);
-
-	RTR = Object->GetComponent<RectTransform>();
-	RTR->SetPivot(PIVOT_TYPE::PIVOT_OBJECT);
-	RTR->SetPositionObject(TRList[0], Vector3(0.0f, 6.0f, 0.0f));
-	RTRList.push_back(RTR);
-
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("MonsterA+");
-	//filter->SetAnimationName("MonsterA+");
-	//Object->GetTransform()->Position = { 15, 0, 62 };
-	//Object->GetTransform()->Scale = { 1.2f, 1.2f, 1.2f };
-	//AC = Object->AddComponent<AnimationController>();
-	//ACList.push_back(AC);
-	//TRList.push_back(Object->GetTransform());
+	//Object = Instance_Slider();
+	//slider = Object->GetComponent<Slider>();
+	//slider->SetBackGroundTexture("ingame_player_hp_back");
+	//slider->SetFillTexture("ingame_player_hp");
+	//slider->SetPivot(PIVOT_TYPE::PIVOT_OBJECT);
+	//slider->SetFillColor(255, 0, 0, 0);
+	//slider->SetPositionObject(TRList[1], Vector3(0.0f, 2.0f, 0.0f));
+	//SliderList.push_back(slider);
 	//
 	//Object = Instance_Image();
 	//IMG = Object->GetComponent<Image>();
-	//IMG->SetTexture("ingame_player_hp");
-	//IMG->SetColor(255, 0, 0);
+	//IMG->SetTexture("Emagin_Front");
+	//IMG->SetColor(0, 255, 0);
 	//RTR = Object->GetComponent<RectTransform>();
 	//RTR->SetPivot(PIVOT_TYPE::PIVOT_OBJECT);
+	//RTR->SetPosition(-120.0f, 0.0f);
 	//RTR->SetPositionObject(TRList[1], Vector3(0.0f, 2.0f, 0.0f));
-	//RTRList.push_back(RTR);
-	//
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("MonsterB+");
-	//filter->SetAnimationName("MonsterB+");
-	//Object->GetTransform()->Position = { 23, 1, 56 };
-	//Object->GetTransform()->Scale = { 3.0f, 3.0f, 3.0f };
-	//AC = Object->AddComponent<AnimationController>();
-	//ACList.push_back(AC);
-	//TRList.push_back(Object->GetTransform());
+
+	Object = Instance();
+	filter = Object->AddComponent<MeshFilter>();
+	filter->SetModelName("MonsterB+");
+	filter->SetAnimationName("MonsterB+");
+	Object->GetTransform()->SetPosition(23, 1, 56);
+	Object->GetTransform()->SetScale(3.0f, 3.0f, 3.0f);
+	AC = Object->AddComponent<AnimationController>();
+	ACList.push_back(AC);
+	TRList.push_back(Object->GetTransform());
+
+	//Object = Instance_Slider();
+	//slider = Object->GetComponent<Slider>();
+	//slider->SetBackGroundTexture("ingame_player_hp_back");
+	//slider->SetFillTexture("ingame_player_hp");
+	//slider->SetPivot(PIVOT_TYPE::PIVOT_OBJECT);
+	//slider->SetFillColor(255, 0, 0, 0);
+	//slider->SetPositionObject(TRList[2], Vector3(0.0f, 2.5f, 0.0f));
+	//SliderList.push_back(slider);
 	//
 	//Object = Instance_Image();
 	//IMG = Object->GetComponent<Image>();
-	//IMG->SetTexture("ingame_player_hp");
-	//IMG->SetColor(255, 0, 0);
+	//IMG->SetTexture("Emagin_Front");
+	//IMG->SetColor(0, 255, 0);
 	//RTR = Object->GetComponent<RectTransform>();
 	//RTR->SetPivot(PIVOT_TYPE::PIVOT_OBJECT);
+	//RTR->SetPosition(-120.0f, 0.0f);
 	//RTR->SetPositionObject(TRList[2], Vector3(0.0f, 2.5f, 0.0f));
-	//RTRList.push_back(RTR);
 
 	testobj = Instance_Terrain("Terrain");
 	Terrain* mTerrain = testobj->GetComponent<Terrain>();
@@ -280,13 +335,13 @@ void TestScene::CreateUI()
 	Image* ui_image = nullptr;
 	RectTransform* ui_rectTR = nullptr;
 
-	ui_object = Instance_UI("UI");
-	ui_image = ui_object->AddComponent<Image>();
-	ui_image->SetTexture("ingame_minimap");
-	ui_rectTR = ui_object->GetComponent<RectTransform>();
-	ui_rectTR->SetPivot(PIVOT_TYPE::PIVOT_RIGHT_TOP);
-	ui_rectTR->AddPosition(25.0f, 75.0f);
-	ui_rectTR->SetRotation(0.0f, 0.0f, -90.0f);
+	//ui_object = Instance_UI("UI");
+	//ui_image = ui_object->AddComponent<Image>();
+	//ui_image->SetTexture("ingame_minimap");
+	//ui_rectTR = ui_object->GetComponent<RectTransform>();
+	//ui_rectTR->SetPivot(PIVOT_TYPE::PIVOT_RIGHT_TOP);
+	//ui_rectTR->AddPosition(25.0f, 75.0f);
+	//ui_rectTR->SetRotation(0.0f, 0.0f, -90.0f);
 
 	ui_object = Instance_UI("UI");
 	ui_image = ui_object->AddComponent<Image>();
@@ -514,6 +569,8 @@ void TestScene::CreateParticle(float x, float y, float z)
 void TestScene::ChangeCubeMap()
 {
 
+	float dTime = GetDeltaTime();
+
 	if (GetKey('1'))
 	{
 		for (int i = 0; i < ACList.size(); i++)
@@ -524,16 +581,22 @@ void TestScene::ChangeCubeMap()
 	}
 	if (GetKeyUp('2'))
 	{
-		meshfilter->SetMaterialPropertyBlock(true);
+		for (int i = 0; i < SliderList.size(); i++)
+		{
+			SliderList[i]->SetActive(true);
+		}
 	}
 	if (GetKeyUp('3'))
 	{
-		meshfilter->SetMaterialPropertyBlock(false);
+		for (int i = 0; i < SliderList.size(); i++)
+		{
+			SliderList[i]->SetActive(false);
+		}
 	}
 	if (GetKey('4'))
 	{
 		MaterialProperty* block = meshfilter->GetMaterialProperty();
-		
+
 		if (up)
 		{
 			block->LimLightColor.x += 0.005f;
@@ -554,6 +617,49 @@ void TestScene::ChangeCubeMap()
 			up = true;
 		}
 	}
+	if (GetKey(VK_LEFT))
+	{
+		for (int i = 0; i < TRList.size(); i++)
+		{
+			TRList[i]->AddPosition_X(-dTime * 50.0f);
+		}
+	}
+	if (GetKey(VK_RIGHT))
+	{
+		for (int i = 0; i < TRList.size(); i++)
+		{
+			TRList[i]->AddPosition_X(dTime * 50.0f);
+		}
+	}
+	if (GetKey(VK_UP))
+	{
+		for (int i = 0; i < TRList.size(); i++)
+		{
+			TRList[i]->AddPosition_Z(dTime * 50.0f);
+		}
+	}
+	if (GetKey(VK_DOWN))
+	{
+		for (int i = 0; i < TRList.size(); i++)
+		{
+			TRList[i]->AddPosition_Z(-dTime * 50.0f);
+		}
+	}
+	if (GetKey('Q'))
+	{
+		for (int i = 0; i < TRList.size(); i++)
+		{
+			TRList[i]->AddRotate_Y(-dTime * 50.0f);
+		}
+	}
+	if (GetKey('E'))
+	{
+		for (int i = 0; i < TRList.size(); i++)
+		{
+			TRList[i]->AddRotate_Y(dTime * 50.0f);
+		}
+	}
+
 	//if (GetKeyUp('1'))
 	//{
 	//	SetSkyLight("SkyLight_HDRI");

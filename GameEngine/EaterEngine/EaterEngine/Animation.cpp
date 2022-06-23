@@ -1,6 +1,7 @@
 #include "Animation.h"
 #include "EngineData.h"
 #include "AnimationManager.h"
+#include "GameEngine.h"
 #include "GraphicEngineAPI.h"
 
 #define SAFE_RELEASE(x) { if(x != nullptr){ x->Release(); delete x; x = nullptr; } }
@@ -18,7 +19,9 @@ Animation::Animation()
 	AnimationManager::SetIndex(&m_AnimationBuffer->BufferIndex);
 
 	// Animation Graphic 측 등록..
+	EnterCriticalSection(&GameEngine::g_CS);
 	GraphicEngine::Get()->PushAnimation(m_AnimationBuffer);
+	LeaveCriticalSection(&GameEngine::g_CS); 
 }
 
 Animation::~Animation()
@@ -38,7 +41,9 @@ void Animation::BakeAnimation()
 void Animation::Release()
 {
 	// Graphic 내부에 있는 해당 Animation Buffer 삭제..
+	EnterCriticalSection(&GameEngine::g_CS);
 	GraphicEngine::Get()->DeleteAnimation(m_AnimationBuffer);
+	LeaveCriticalSection(&GameEngine::g_CS); 
 
 	// 해당 Animation Data 해제..
 	SAFE_DELETE(m_AnimationBuffer);

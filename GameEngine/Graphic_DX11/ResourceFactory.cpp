@@ -154,7 +154,7 @@ void GraphicResourceFactory::CreateAnimationBuffer(ModelData* model, ModelAnimat
 	const std::vector<Matrix>& offsetList = model->BoneOffsetList;
 
 	UINT struct_size = sizeof(XMFLOAT3X4);
-	UINT row_offset = offsetList.size();
+	UINT row_offset = (UINT)offsetList.size();
 	UINT column_offset = 0;
 	UINT total_offset = 0;
 	UINT max_offset = 0;

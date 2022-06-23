@@ -422,1658 +422,737 @@
 [TIME] 13:52:31 [FILE] LoadManager.cpp [FUNC] LoadManager::GetSkyLight [LINE] 238
 [ ERROR ][ Engine ][ GetSkyLight ] 'SkyLight_1'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_GateDoor_BaseColor'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_GateDoor_Normal'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_GateDoor_Emissive'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_GateDoor_ORM'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_GateDoor_BaseColor'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_GateDoor_Normal'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_GateDoor_Emissive'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_GateDoor_ORM'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_BottomFloor_BaseColor'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_BottomFloor_Normal'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_BottomFloor_ORM'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_Ceiling_BaseColor'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_Ceiling_Normal'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_Ceiling_ORM'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_CeilingHolder_BaseColor'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_CeilingHolder_Normal'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_CeilingHolder_ORM'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_CeilingPillar_BaseColor'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_CeilingPillar_Normal'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_CeilingPillar_ORM'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterFloor_BaseColor'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterFloor_Normal'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterFloor_Emissive'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterFloor_ORM'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterFloorSide_BaseColor'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterFloorSide_Normal'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterFloorSide_ORM'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterGlass_Emissive'가 없습니다.
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
+[ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterGlass_BaseColor'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterGlass_Normal'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterGlass_Emissive'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterGlass_ORM'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterMachine_BaseColor'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterMachine_Normal'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterMachine_Emissive'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterMachine_ORM'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterMachineHinge_BaseColor'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterMachineHinge_Normal'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterMachineHinge_ORM'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_GateRound_BaseColor'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_GateRound_Normal'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_GateRound_ORM'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_InsideBridge_BaseColor'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_InsideBridge_Normal'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_InsideBridge_ORM'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_InsideWall_BaseColor'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_InsideWall_Normal'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_InsideWall_ORM'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'organic_manatree_BaseColor'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'organic_manatree_Normal'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'organic_manatree_ORM'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_SideFloor_A_BaseColor'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_SideFloor_A_Normal'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_SideFloor_A_ORM'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_SideFloor_B_BaseColor'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_SideFloor_B_Normal'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_SideFloor_B_ORM'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_VendingFloor_BaseColor'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_VendingFloor_Normal'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_VendingFloor_ORM'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_VendingMachine_BaseColor'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_VendingMachine_Normal'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_VendingMachine_Emissive'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_VendingMachine_ORM'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_Ceiling_BaseColor'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_Ceiling_Normal'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_Ceiling_ORM'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_Pillar_BaseColor'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_Pillar_Normal'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_Pillar_ORM'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_GateRound_BaseColor'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_GateRound_Normal'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_GateRound_ORM'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_Wall_BaseColor'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_Wall_Normal'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_Wall_ORM'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_UpperWall_BaseColor'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_UpperWall_Normal'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_UpperWall_ORM'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_Portal_BaseColor'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_Portal_Normal'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_Portal_Emissive'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_Portal_Emissive'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_Portal_BaseColor'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_Portal_Normal'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_Portal_Emissive'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Dome_Portal_ORM'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Player_BaseColor'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Player_Normal'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Player_Emissive'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:03:44 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 22:47:09 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:03:44 [FILE] D3D11Graphic.cpp [FUNC] D3D11Graphic::CreateTextureBuffer [LINE] 210
-[ Graphic ][ Create ][ ShaderResourceView ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
-[ERROR] 구성 요소를 찾을 수 없습니다.
-
-[TIME] 16:03:44 [FILE] TextureManager.cpp [FUNC] TextureManager::LoadTexture [LINE] 34
-[ Engine ][ Create ][ Texture Buffer ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
-
-[TIME] 16:04:11 [FILE] LoadManager.cpp [FUNC] LoadManager::GetSkyLight [LINE] 238
+[TIME] 22:47:31 [FILE] LoadManager.cpp [FUNC] LoadManager::GetSkyLight [LINE] 243
 [ ERROR ][ Engine ][ GetSkyLight ] 'SkyLight_0'가 없습니다.
 
-[TIME] 16:04:11 [FILE] LoadManager.cpp [FUNC] LoadManager::GetSkyLight [LINE] 238
+[TIME] 22:47:31 [FILE] LoadManager.cpp [FUNC] LoadManager::GetSkyLight [LINE] 243
 [ ERROR ][ Engine ][ GetSkyLight ] 'SkyLight_1'가 없습니다.
 
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_GateDoor_BaseColor'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_GateDoor_Normal'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_GateDoor_Emissive'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_GateDoor_ORM'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_GateDoor_BaseColor'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_GateDoor_Normal'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_GateDoor_Emissive'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_GateDoor_ORM'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_BottomFloor_BaseColor'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_BottomFloor_Normal'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_BottomFloor_ORM'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_Ceiling_BaseColor'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_Ceiling_Normal'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_Ceiling_ORM'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_CeilingHolder_BaseColor'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_CeilingHolder_Normal'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_CeilingHolder_ORM'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_CeilingPillar_BaseColor'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_CeilingPillar_Normal'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_CeilingPillar_ORM'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterFloor_BaseColor'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterFloor_Normal'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterFloor_Emissive'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterFloor_ORM'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterFloorSide_BaseColor'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterFloorSide_Normal'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterFloorSide_ORM'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterGlass_Emissive'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterGlass_Normal'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterGlass_Emissive'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterGlass_ORM'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterMachine_BaseColor'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterMachine_Normal'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterMachine_Emissive'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterMachine_ORM'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterMachineHinge_BaseColor'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterMachineHinge_Normal'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterMachineHinge_ORM'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_GateRound_BaseColor'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_GateRound_Normal'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_GateRound_ORM'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_InsideBridge_BaseColor'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_InsideBridge_Normal'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_InsideBridge_ORM'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_InsideWall_BaseColor'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_InsideWall_Normal'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_InsideWall_ORM'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'organic_manatree_BaseColor'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'organic_manatree_Normal'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'organic_manatree_ORM'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_SideFloor_A_BaseColor'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_SideFloor_A_Normal'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_SideFloor_A_ORM'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_SideFloor_B_BaseColor'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_SideFloor_B_Normal'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_SideFloor_B_ORM'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_VendingFloor_BaseColor'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_VendingFloor_Normal'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_VendingFloor_ORM'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_VendingMachine_BaseColor'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_VendingMachine_Normal'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_VendingMachine_Emissive'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_VendingMachine_ORM'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_Ceiling_BaseColor'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_Ceiling_Normal'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_Ceiling_ORM'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_Pillar_BaseColor'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_Pillar_Normal'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_Pillar_ORM'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_GateRound_BaseColor'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_GateRound_Normal'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_GateRound_ORM'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_Wall_BaseColor'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_Wall_Normal'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_Wall_ORM'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_UpperWall_BaseColor'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_UpperWall_Normal'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_UpperWall_ORM'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_Portal_BaseColor'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_Portal_Normal'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_Portal_Emissive'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_Portal_Emissive'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_Portal_BaseColor'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_Portal_Normal'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_Portal_Emissive'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_Portal_ORM'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Player_BaseColor'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Player_Normal'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Player_Emissive'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:18:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:18:14 [FILE] D3D11Graphic.cpp [FUNC] D3D11Graphic::CreateTextureBuffer [LINE] 210
-[ Graphic ][ Create ][ ShaderResourceView ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
-[ERROR] 구성 요소를 찾을 수 없습니다.
-
-[TIME] 16:18:14 [FILE] TextureManager.cpp [FUNC] TextureManager::LoadTexture [LINE] 34
-[ Engine ][ Create ][ Texture Buffer ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
-
-[TIME] 16:18:40 [FILE] LoadManager.cpp [FUNC] LoadManager::GetSkyLight [LINE] 238
-[ ERROR ][ Engine ][ GetSkyLight ] 'SkyLight_0'가 없습니다.
-
-[TIME] 16:18:40 [FILE] LoadManager.cpp [FUNC] LoadManager::GetSkyLight [LINE] 238
-[ ERROR ][ Engine ][ GetSkyLight ] 'SkyLight_1'가 없습니다.
-
-[TIME] 16:27:58 [FILE] LoadManager.cpp [FUNC] LoadManager::GetMesh [LINE] 301
+[TIME] 22:47:57 [FILE] LoadManager.cpp [FUNC] LoadManager::GetMesh [LINE] 306
 [ ERROR ][ Engine ][ GetMesh ] 'NO '가 없습니다.
 
-[TIME] 16:27:58 [FILE] LoadManager.cpp [FUNC] LoadManager::GetMesh [LINE] 301
+[TIME] 22:47:57 [FILE] LoadManager.cpp [FUNC] LoadManager::GetMesh [LINE] 306
 [ ERROR ][ Engine ][ GetMesh ] '_0'가 없습니다.
 
-[TIME] 16:27:58 [FILE] LoadManager.cpp [FUNC] LoadManager::GetMaterial [LINE] 254
+[TIME] 22:47:57 [FILE] LoadManager.cpp [FUNC] LoadManager::GetMaterial [LINE] 259
 [ ERROR ][ Engine ][ GetMaterial ] 'Defalt_0'가 없습니다.
 
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:13:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:13:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:13:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:13:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:13:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:13:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:13:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:13:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:13:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_GateDoor_BaseColor'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_GateDoor_Normal'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_GateDoor_Emissive'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_GateDoor_ORM'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_GateDoor_BaseColor'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_GateDoor_Normal'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_GateDoor_Emissive'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_GateDoor_ORM'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_BottomFloor_BaseColor'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_BottomFloor_Normal'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:13:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_BottomFloor_ORM'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_Ceiling_BaseColor'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_Ceiling_Normal'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:13:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_Ceiling_ORM'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_CeilingHolder_BaseColor'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_CeilingHolder_Normal'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:13:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_CeilingHolder_ORM'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_CeilingPillar_BaseColor'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_CeilingPillar_Normal'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:13:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_CeilingPillar_ORM'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterFloor_BaseColor'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterFloor_Normal'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterFloor_Emissive'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterFloor_ORM'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterFloorSide_BaseColor'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterFloorSide_Normal'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:13:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterFloorSide_ORM'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterGlass_Emissive'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterGlass_Normal'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterGlass_Emissive'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterGlass_ORM'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterMachine_BaseColor'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterMachine_Normal'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterMachine_Emissive'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterMachine_ORM'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterMachineHinge_BaseColor'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterMachineHinge_Normal'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:13:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_CenterMachineHinge_ORM'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_GateRound_BaseColor'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_GateRound_Normal'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:13:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_GateRound_ORM'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_InsideBridge_BaseColor'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_InsideBridge_Normal'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:13:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_InsideBridge_ORM'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_InsideWall_BaseColor'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_InsideWall_Normal'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:13:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_InsideWall_ORM'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'organic_manatree_BaseColor'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'organic_manatree_Normal'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:13:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'organic_manatree_ORM'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_SideFloor_A_BaseColor'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_SideFloor_A_Normal'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:13:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_SideFloor_A_ORM'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_SideFloor_B_BaseColor'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_SideFloor_B_Normal'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:13:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_SideFloor_B_ORM'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_VendingFloor_BaseColor'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_VendingFloor_Normal'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_VendingFloor_ORM'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_VendingMachine_BaseColor'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_VendingMachine_Normal'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_VendingMachine_Emissive'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_VendingMachine_ORM'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_Ceiling_BaseColor'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_Ceiling_Normal'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_Ceiling_ORM'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_Pillar_BaseColor'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_Pillar_Normal'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_Pillar_ORM'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_GateRound_BaseColor'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_GateRound_Normal'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_GateRound_ORM'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_Wall_BaseColor'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_Wall_Normal'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_Wall_ORM'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_UpperWall_BaseColor'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_UpperWall_Normal'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_UpperWall_ORM'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_Portal_BaseColor'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_Portal_Normal'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_Portal_Emissive'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_Portal_Emissive'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_Portal_BaseColor'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_Portal_Normal'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_Portal_Emissive'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'Dome_Portal_ORM'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:13:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Player_BaseColor'가 없습니다.
 
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:13:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Player_Normal'가 없습니다.
 
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:13:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:13:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Player_Emissive'가 없습니다.
 
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:13:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:13:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:13:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:13:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:13:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:13:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:13:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:53:22 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:13:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 16:53:22 [FILE] D3D11Graphic.cpp [FUNC] D3D11Graphic::CreateTextureBuffer [LINE] 210
-[ Graphic ][ Create ][ ShaderResourceView ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
-[ERROR] 구성 요소를 찾을 수 없습니다.
-
-[TIME] 16:53:22 [FILE] TextureManager.cpp [FUNC] TextureManager::LoadTexture [LINE] 34
-[ Engine ][ Create ][ Texture Buffer ] '../Assets/Texture/Particle/Glow_Particle.png' FAILED!!
-
-[TIME] 16:53:48 [FILE] LoadManager.cpp [FUNC] LoadManager::GetSkyLight [LINE] 238
+[TIME] 23:13:51 [FILE] LoadManager.cpp [FUNC] LoadManager::GetSkyLight [LINE] 243
 [ ERROR ][ Engine ][ GetSkyLight ] 'SkyLight_0'가 없습니다.
 
-[TIME] 16:53:48 [FILE] LoadManager.cpp [FUNC] LoadManager::GetSkyLight [LINE] 238
+[TIME] 23:13:51 [FILE] LoadManager.cpp [FUNC] LoadManager::GetSkyLight [LINE] 243
 [ ERROR ][ Engine ][ GetSkyLight ] 'SkyLight_1'가 없습니다.
 
-[TIME] 16:58:10 [FILE] LoadManager.cpp [FUNC] LoadManager::GetMesh [LINE] 301
-[ ERROR ][ Engine ][ GetMesh ] 'NO '가 없습니다.
-
-[TIME] 16:58:10 [FILE] LoadManager.cpp [FUNC] LoadManager::GetMesh [LINE] 301
-[ ERROR ][ Engine ][ GetMesh ] '_0'가 없습니다.
-
-[TIME] 16:58:10 [FILE] LoadManager.cpp [FUNC] LoadManager::GetMaterial [LINE] 254
-[ ERROR ][ Engine ][ GetMaterial ] 'Defalt_0'가 없습니다.
-
-[TIME] 17:00:43 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 17:00:43 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 17:00:43 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 17:00:43 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 17:00:43 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 17:00:43 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 17:00:43 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 17:00:43 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 17:00:43 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 17:00:43 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 17:00:43 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 17:00:43 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 17:00:43 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 17:00:43 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 17:00:43 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 17:00:43 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 17:00:43 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 17:00:43 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 17:00:43 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'organic_manatree_BaseColor'가 없습니다.
-
-[TIME] 17:00:43 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'organic_manatree_Normal'가 없습니다.
-
-[TIME] 17:00:43 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 17:00:43 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'organic_manatree_ORM'가 없습니다.
-
-[TIME] 17:00:43 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 17:00:43 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 17:00:43 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 17:00:43 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 17:00:43 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 17:00:43 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 17:00:43 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 17:00:43 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 17:00:43 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:15:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:15:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:15:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:15:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:15:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:15:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'gate00_etcsign_low_uv_checker_material_uv_grid_512x512_Normal'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
-
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] 'gate04_tank_low_uv_checker_material_uv_grid_512x512_Normal'가 없습니다.
 
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:15:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:15:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:15:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:15:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:15:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:15:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:15:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:15:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:15:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:15:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:15:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:15:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:15:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:15:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:15:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:15:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Player_BaseColor'가 없습니다.
 
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:15:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Player_Normal'가 없습니다.
 
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:15:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:15:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] 'Player_Emissive'가 없습니다.
 
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
+[TIME] 23:15:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
 [ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
 
-[TIME] 18:05:14 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 222
-[ ERROR ][ Engine ][ GetTexture ] '0'
+[TIME] 23:15:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
+[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
+
+[TIME] 23:15:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
+[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
+
+[TIME] 23:15:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
+[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
+
+[TIME] 23:15:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
+[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
+
+[TIME] 23:15:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
+[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
+
+[TIME] 23:15:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
+[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
+
+[TIME] 23:15:34 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
+[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
+
+[TIME] 23:15:52 [FILE] LoadManager.cpp [FUNC] LoadManager::GetSkyLight [LINE] 243
+[ ERROR ][ Engine ][ GetSkyLight ] 'SkyLight_0'가 없습니다.
+
+[TIME] 23:15:52 [FILE] LoadManager.cpp [FUNC] LoadManager::GetSkyLight [LINE] 243
+[ ERROR ][ Engine ][ GetSkyLight ] 'SkyLight_1'가 없습니다.
+
+[TIME] 23:15:57 [FILE] LoadManager.cpp [FUNC] LoadManager::GetMesh [LINE] 306
+[ ERROR ][ Engine ][ GetMesh ] '_0'가 없습니다.
+
+[TIME] 23:15:57 [FILE] LoadManager.cpp [FUNC] LoadManager::GetMaterial [LINE] 259
+[ ERROR ][ Engine ][ GetMaterial ] ''가 없습니다.
+
+[TIME] 23:17:37 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
+[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
+
+[TIME] 23:17:37 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
+[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
+
+[TIME] 23:17:37 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
+[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
+
+[TIME] 23:17:37 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
+[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
+
+[TIME] 23:17:37 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
+[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
+
+[TIME] 23:17:37 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
+[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
+
+[TIME] 23:17:37 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
+[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
+
+[TIME] 23:17:37 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
+[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
+
+[TIME] 23:17:37 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
+[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
+
+[TIME] 23:17:37 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
+[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
+
+[TIME] 23:17:37 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
+[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
+
+[TIME] 23:17:37 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
+[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
+
+[TIME] 23:17:37 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
+[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
+
+[TIME] 23:17:37 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
+[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
+
+[TIME] 23:17:37 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
+[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
+
+[TIME] 23:17:37 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
+[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
+
+[TIME] 23:17:37 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
+[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
+
+[TIME] 23:17:37 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
+[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
+
+[TIME] 23:17:37 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
+[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
+
+[TIME] 23:17:37 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
+[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
+
+[TIME] 23:17:37 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
+[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
+
+[TIME] 23:17:37 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
+[ ERROR ][ Engine ][ GetTexture ] 'Player_BaseColor'가 없습니다.
+
+[TIME] 23:17:37 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
+[ ERROR ][ Engine ][ GetTexture ] 'Player_Normal'가 없습니다.
+
+[TIME] 23:17:37 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
+[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
+
+[TIME] 23:17:37 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
+[ ERROR ][ Engine ][ GetTexture ] 'Player_Emissive'가 없습니다.
+
+[TIME] 23:17:37 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
+[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
+
+[TIME] 23:17:37 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
+[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
+
+[TIME] 23:17:37 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
+[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
+
+[TIME] 23:17:37 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
+[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
+
+[TIME] 23:17:37 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
+[ ERROR ][ Engine ][ GetTexture ] '0'가 없습니다.
+
+[TIME] 23:17:37 [FILE] LoadManager.cpp [FUNC] LoadManager::GetTexture [LINE] 227
+[ ERROR ][ Eng

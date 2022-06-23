@@ -20,12 +20,13 @@ public:
 public:
 	void BakeSkyLightMap(std::string& Path, bool hdri);
 
-	void BakeConvertSkyLightMap(std::string& Path, float angle, float threshold, bool hdri);
+	void BakeConvertSkyLightMap(std::string& Path, float angle, float threshold, bool hdri, UINT index);
 	void BakeConvertSkyCubeMap(std::string& Path, float angle, float threshold, bool hdri);
 	
 public:
 	void SaveConvertSkyLightMap(std::string& Path, std::string& SaveName);
 	void SaveConvertSkyCubeMap(std::string& Path, std::string& SaveName);
+	void SaveSpriteToVolumeTexture_LUT(std::string fileName, std::string saveName, UINT pixelSize);
 
 private:
 	bool CheckFolder(std::string& Path);

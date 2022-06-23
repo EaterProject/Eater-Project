@@ -1,7 +1,7 @@
 #ifndef OIT_HEADER
 #define OIT_HEADER
 
-#define MAX_SORTED_PIXELS 20
+#define MAX_SORTED_PIXELS 16
 
 cbuffer cbOitFrame
 {

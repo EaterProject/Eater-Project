@@ -16,4 +16,6 @@ public:
 	
 public:
 	virtual void SaveConvertCubeMap(TextureBuffer* resource, std::string SaveName) abstract;
+	virtual void SaveSpriteToVolumeTexture(TextureBuffer* resource, std::string saveName, UINT pixelSize, TextureBuffer* pResource) abstract;
+	virtual void SaveSpriteToVolumeTexture(std::string fileName, std::string saveName, UINT pixelSize) abstract;
 };
