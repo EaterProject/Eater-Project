@@ -38,6 +38,8 @@ public:
 public:
 	// Save Graphic Resource..
 	virtual void SaveConvertCubeMap(TextureBuffer* resource, std::string SaveName) abstract;
+	virtual void SaveSpriteToVolumeTexture(TextureBuffer* resource, std::string saveName, UINT pixelSize, TextureBuffer** ppResource) abstract;
+	virtual void SaveSpriteToVolumeTexture(std::string fileName, std::string saveName, UINT pixelSize) abstract;
 
 public:
 	template<typename T, Enable_Check<T> = NULL> void CreateImage(std::string path);

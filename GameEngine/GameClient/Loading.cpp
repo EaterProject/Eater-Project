@@ -21,7 +21,6 @@ void Loading::Awake()
 
 	RenderOption* option = GetRenderOptionData();
 	option->RenderingOption ^= RENDER_OPTION::RENDER_FOG;
-
 	RenderSetting();
 
 	GameObject* Loading_UI = Instance("Loading_UI");
@@ -33,8 +32,8 @@ void Loading::Update()
 {
 	if (ThreadRun == false)
 	{
-		ChoiceScene("inGame");
-		//ChoiceScene("TestScene");
+		//ChoiceScene("inGame");
+		ChoiceScene("TestScene");
 	}
 }
 

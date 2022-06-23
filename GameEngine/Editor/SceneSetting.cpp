@@ -49,6 +49,7 @@ BOOL SceneSetting::OnInitDialog()
 	BLOOM_Check.SetCheck(true);
 	FXAA_Check.SetCheck(true);
 	HDR_Check.SetCheck(true);
+	ColorGrading_Check.SetCheck(true);
 
 	//데이터 초기화
 	SSAO_DataSetting();
@@ -108,6 +109,7 @@ void SceneSetting::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_CHECK12, RenderTarget_Check);
 	DDX_Control(pDX, IDC_SLIDER20, Bloom_Threshold_Max_Slider);
 	DDX_Control(pDX, IDC_EDIT24, Bloom_Threshold_Max_Edit);
+	DDX_Control(pDX, IDC_CHECK13, ColorGrading_Check);
 }
 
 void SceneSetting::SSAO_DataSetting()
@@ -380,7 +382,8 @@ BEGIN_MESSAGE_MAP(SceneSetting, CDialogEx)
 	ON_BN_CLICKED(IDC_CHECK9, &SceneSetting::OnIBL_Button)
 	ON_BN_CLICKED(IDC_CHECK5, &SceneSetting::OnBloom_Button)
 	ON_BN_CLICKED(IDC_CHECK10, &SceneSetting::OnFXAA_Button)
-	ON_BN_CLICKED(IDC_CHECK12, &SceneSetting::OnBnClickedCheck12)
+	ON_BN_CLICKED(IDC_CHECK12, &SceneSetting::OnRenderTarget_Button)
+	ON_BN_CLICKED(IDC_CHECK13, &SceneSetting::OnColorGrading_Button)
 END_MESSAGE_MAP()
 
 
@@ -413,7 +416,7 @@ void SceneSetting::OnDebugButton()
 void SceneSetting::OnHDR_Button()
 {
 	RenderOption* Option = GetRenderOptionData();
-	Option->PostProcessOption ^= POSTPROCESS_OPTION::RENDER_HDR;
+	Option->PostProcessOption ^= POSTPROCESS_OPTION::POSTPROCESS_HDR;
 	RenderSetting();
 }
 
@@ -453,7 +456,7 @@ void SceneSetting::OnIBL_Button()
 void SceneSetting::OnBloom_Button()
 {
 	RenderOption* Option = GetRenderOptionData();
-	Option->PostProcessOption ^= POSTPROCESS_OPTION::RENDER_BLOOM;
+	Option->PostProcessOption ^= POSTPROCESS_OPTION::POSTPROCESS_BLOOM;
 	RenderSetting();
 }
 
@@ -461,19 +464,24 @@ void SceneSetting::OnBloom_Button()
 void SceneSetting::OnFXAA_Button()
 {
 	RenderOption* Option = GetRenderOptionData();
-	Option->PostProcessOption ^= POSTPROCESS_OPTION::RENDER_FXAA;
+	Option->PostProcessOption ^= POSTPROCESS_OPTION::POSTPROCESS_FXAA;
 	RenderSetting();
 }
 
 
-void SceneSetting::OnBnClickedCheck12()
+void SceneSetting::OnRenderTarget_Button()
 {
 	RenderOption* Option = GetRenderOptionData();
 	Option->DebugOption ^= DEBUG_OPTION::DEBUG_RENDERTARGET;
 	RenderSetting();
 }
 
-
+void SceneSetting::OnColorGrading_Button()
+{
+	RenderOption* Option = GetRenderOptionData();
+	Option->PostProcessOption ^= POSTPROCESS_OPTION::POSTPROCESS_COLORGRADING;
+	RenderSetting();
+}
 
 BOOL SceneSetting::PreTranslateMessage(MSG* pMsg)
 {
@@ -481,4 +489,3 @@ BOOL SceneSetting::PreTranslateMessage(MSG* pMsg)
 	mTooltip.RelayEvent(pMsg);
 	return CustomDialog::PreTranslateMessage(pMsg);
 }
-

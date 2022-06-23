@@ -110,6 +110,7 @@
 #define IDC_BUTTON28                    1031
 #define IDC_BUTTON31                    1031
 #define IDC_EDIT34                      1032
+#define IDC_BUTTON33                    1032
 #define IDC_EDIT35                      1033
 #define IDC_COMBO1                      1034
 #define IDC_EDIT36                      1035
@@ -168,6 +169,7 @@
 #define IDC_SLIDER14                    1063
 #define IDC_EDIT56                      1064
 #define IDC_SLIDER15                    1064
+#define IDC_CHECK13                     1064
 #define IDC_EDIT57                      1065
 #define IDC_SLIDER16                    1065
 #define IDC_EDIT58                      1066
@@ -186,6 +188,7 @@
 #define IDC_SLIDER23                    1076
 #define IDC_BUTTON32                    1076
 #define IDC_SLIDER24                    1077
+#define IDC_CHECK16                     1078
 #define IDC_MAX_PARTICLE                1081
 #define IDC_MFCCOLORBUTTON1             1082
 #define IDC_MFCCOLORBUTTON2             1083

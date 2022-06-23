@@ -311,8 +311,10 @@ struct CB_BloomBlurOrder : public cbBloomBlurOrder
 SHADER_CONSTANT_BUFFER(cbDrawFinal)
 struct CB_DrawFinal : public cbDrawFinal
 {
-	DirectX::SimpleMath::Vector3 gOutLineColor;
 	float gBloomFactor;
+	float gBaseLUTFactor;
+	float gBlendLUTFactor;
+	float gPad;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////

@@ -1,5 +1,6 @@
 #include "Mesh.h"
 #include "EngineData.h"
+#include "GameEngine.h"
 #include "GraphicEngineAPI.h"
 #include "IndexManager.h"
 #include "MeshManager.h"
@@ -18,7 +19,9 @@ Mesh::Mesh()
 	MeshManager::SetIndex(&m_MeshData->BufferIndex);
 
 	// Mesh Graphic 측 등록..
+	EnterCriticalSection(&GameEngine::g_CS);
 	GraphicEngine::Get()->PushMesh(m_MeshData);
+	LeaveCriticalSection(&GameEngine::g_CS);
 }
 
 Mesh::~Mesh()
@@ -33,7 +36,9 @@ Mesh::~Mesh()
 void Mesh::Release()
 {
 	// Graphic 내부에 있는 해당 Mesh Buffer 삭제..
+	EnterCriticalSection(&GameEngine::g_CS);
 	GraphicEngine::Get()->DeleteMesh(m_MeshData);
+	LeaveCriticalSection(&GameEngine::g_CS); 
 
 	// 해당 Mesh Data 해제..
 	SAFE_DELETE(m_MeshData);

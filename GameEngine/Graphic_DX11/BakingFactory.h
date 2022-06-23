@@ -14,12 +14,13 @@ public:
 
 public:
 	void PreBakeShadowMap(std::string fileName) override;
-	void BakeLookUpTable3D(std::string fileName) override;
 	void BakeSkyLightMap(TextureBuffer* resource, bool hdri, SkyLightBuffer* pResource) override;
 	void BakeConvertCubeMap(TextureBuffer* resource, float angle, float threshold, bool hdri, TextureBuffer* pResource);
 
 public:
 	void SaveConvertCubeMap(TextureBuffer* resource, std::string SaveName) override;
+	void SaveSpriteToVolumeTexture(TextureBuffer* resource, std::string saveName, UINT pixelSize, TextureBuffer* pResource) override;
+	void SaveSpriteToVolumeTexture(std::string fileName, std::string saveName, UINT pixelSize) override;
 
 private:
 	void PreBakeBRDFMap();

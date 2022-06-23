@@ -54,11 +54,6 @@ void BakingFactory::PreBakeShadowMap(std::string fileName)
 	g_Graphic->CaptureTextureDDS(fileName.c_str());
 }
 
-void BakingFactory::BakeLookUpTable3D(std::string fileName)
-{
-
-}
-
 void BakingFactory::PreBakeBRDFMap()
 {
 	// 货肺款 Resource Pointer 积己..
@@ -487,14 +482,40 @@ void BakingFactory::BakeConvertCubeMap(TextureBuffer* resource, float angle, flo
 
 void BakingFactory::SaveConvertCubeMap(TextureBuffer* resource, std::string SaveName)
 {
-	ID3D11ShaderResourceView* srv = (ID3D11ShaderResourceView*)resource->pTextureBuf;
-
 	if (SaveName.empty())
 	{
-		g_Graphic->SaveTextureDDS(srv, resource->Name.c_str());
+		SaveName = resource->Name;
 	}
-	else
+
+	std::string savePath = "../Assets/Texture/Bake/" + std::string(SaveName) + ".dds";
+	
+	ID3D11ShaderResourceView* srv = (ID3D11ShaderResourceView*)resource->pTextureBuf;
+
+	g_Graphic->SaveTextureDDS(srv, savePath.c_str());
+}
+
+void BakingFactory::SaveSpriteToVolumeTexture(TextureBuffer* resource, std::string saveName, UINT pixelSize, TextureBuffer* pResource)
+{
+	if (saveName.empty())
 	{
-		g_Graphic->SaveTextureDDS(srv, SaveName.c_str());
+		saveName = resource->Name;
 	}
+
+	std::string savePath = "../Assets/Texture/Bake/" + std::string(saveName) + ".dds";
+
+	ID3D11ShaderResourceView* srv = (ID3D11ShaderResourceView*)resource->pTextureBuf;
+
+	g_Graphic->SaveVolumeTextureDDS(srv, savePath.c_str(), pixelSize, &pResource->pTextureBuf);
+}
+
+void BakingFactory::SaveSpriteToVolumeTexture(std::string fileName, std::string saveName, UINT pixelSize)
+{
+	if (saveName.empty())
+	{
+		saveName = "VolumeTexture";
+	}
+
+	std::string savePath = "../Assets/Texture/Bake/" + std::string(saveName) + ".dds";
+
+	g_Graphic->SaveVolumeTextureDDS(fileName.c_str(), savePath.c_str(), pixelSize);
 }

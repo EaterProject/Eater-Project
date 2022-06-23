@@ -155,9 +155,9 @@ void BakeConvertSkyCubeMap(std::string mPath, float angle, float threshold, bool
 	gGameEngine->BakeConvertSkyCubeMap(mPath, angle, threshold, hdri);
 }
 
-void BakeConvertSkyLightMap(std::string mPath, float angle, float threshold, bool hdri)
+void BakeConvertSkyLightMap(std::string mPath, float angle, float threshold, bool hdri, UINT index)
 {
-	gGameEngine->BakeConvertSkyLightMap(mPath, angle, threshold, hdri);
+	gGameEngine->BakeConvertSkyLightMap(mPath, angle, threshold, hdri, index);
 }
 
 void BakeAnimation()
@@ -175,6 +175,11 @@ void SaveConvertSkyCubeMap(std::string mPath, std::string SaveName)
 	gGameEngine->SaveConvertSkyCubeMap(mPath, SaveName);
 }
 
+void SaveSpriteToVolumeTexture_LUT(std::string fileName, std::string saveName, UINT pixelSize)
+{
+	gGameEngine->SaveSpriteToVolumeTexture_LUT(fileName, saveName, pixelSize);
+}
+
 void SetSkyCube(std::string mPath)
 {
 	gGameEngine->SetSkyCube(mPath);
@@ -183,6 +188,16 @@ void SetSkyCube(std::string mPath)
 void SetSkyLight(std::string mPath, UINT index)
 {
 	gGameEngine->SetSkyLight(mPath, index);
+}
+
+void SetColorGradingBaseTexture(std::string mPath)
+{
+	gGameEngine->SetColorGradingBaseTexture(mPath);
+}
+
+void SetColorGradingBlendTexture(std::string mPath)
+{
+	gGameEngine->SetColorGradingBlendTexture(mPath);
 }
 
 ModelData* GetLoadMeshData(std::string mPath)

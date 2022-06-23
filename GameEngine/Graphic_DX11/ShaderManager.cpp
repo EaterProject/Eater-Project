@@ -174,21 +174,21 @@ void ShaderManager::CreateShader()
 	// Tone Map Shader Macro
 	D3D_SHADER_MACRO combine_macro1[] = { {"BLOOM"}, {NULL, NULL} };
 	D3D_SHADER_MACRO combine_macro2[] = { {"HDR"}, {NULL, NULL} };
-	D3D_SHADER_MACRO combine_macro3[] = { {"OUT_LINE"}, {NULL, NULL} };
+	D3D_SHADER_MACRO combine_macro3[] = { {"COLOR_GRADING"}, {NULL, NULL} };
 	D3D_SHADER_MACRO combine_macro4[] = { {"BLOOM"}, {"HDR"}, {NULL, NULL} };
-	D3D_SHADER_MACRO combine_macro5[] = { {"BLOOM"}, {"OUT_LINE"}, {NULL, NULL} };
-	D3D_SHADER_MACRO combine_macro6[] = { {"HDR"}, {"OUT_LINE"}, {NULL, NULL} };
-	D3D_SHADER_MACRO combine_macro7[] = { {"BLOOM"}, {"HDR"}, {"OUT_LINE"}, {NULL, NULL} };
+	D3D_SHADER_MACRO combine_macro5[] = { {"BLOOM"}, {"COLOR_GRADING"}, {NULL, NULL} };
+	D3D_SHADER_MACRO combine_macro6[] = { {"HDR"}, {"COLOR_GRADING"}, {NULL, NULL} };
+	D3D_SHADER_MACRO combine_macro7[] = { {"BLOOM"}, {"HDR"}, {"COLOR_GRADING"}, {NULL, NULL} };
 
 	// Combine Shader
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Combine_PS.hlsl", "Combine_PS", "Combine_PS_Option0");					// None
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Combine_PS.hlsl", "Combine_PS", "Combine_PS_Option1", combine_macro1);	// Bloom
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Combine_PS.hlsl", "Combine_PS", "Combine_PS_Option2", combine_macro2);	// HDR
-	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Combine_PS.hlsl", "Combine_PS", "Combine_PS_Option3", combine_macro3);	// OutLine
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Combine_PS.hlsl", "Combine_PS", "Combine_PS_Option3", combine_macro3);	// Color Grading
 	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Combine_PS.hlsl", "Combine_PS", "Combine_PS_Option4", combine_macro4);	// Bloom + HDR
-	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Combine_PS.hlsl", "Combine_PS", "Combine_PS_Option5", combine_macro5);	// Bloom + OutLine
-	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Combine_PS.hlsl", "Combine_PS", "Combine_PS_Option6", combine_macro6);	// HDR + OutLine
-	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Combine_PS.hlsl", "Combine_PS", "Combine_PS_Option7", combine_macro7);	// Bloom + HDR + OutLine
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Combine_PS.hlsl", "Combine_PS", "Combine_PS_Option5", combine_macro5);	// Bloom + Color Grading
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Combine_PS.hlsl", "Combine_PS", "Combine_PS_Option6", combine_macro6);	// HDR + Color Grading
+	LoadShader(SHADER_TYPE::PIXEL_SHADER, "Combine_PS.hlsl", "Combine_PS", "Combine_PS_Option7", combine_macro7);	// Bloom + HDR + Color Grading
 	 
 	// Picking ID Shader
 	LoadShader(SHADER_TYPE::VERTEX_SHADER, "ID_StaticMesh_VS.hlsl", "ID_StaticMesh_VS", "ID_StaticMesh_VS");

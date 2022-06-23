@@ -46,6 +46,7 @@ public:
 	CButton IBL_Check;
 	CButton BLOOM_Check;
 	CButton FXAA_Check;
+	CButton ColorGrading_Check;
 
 	///SSAO
 	CSliderCtrl SSAO_Radius_Slider;
@@ -97,6 +98,6 @@ public:
 	afx_msg void OnIBL_Button();
 	afx_msg void OnBloom_Button();
 	afx_msg void OnFXAA_Button();
-	afx_msg void OnBnClickedCheck12();
-
+	afx_msg void OnRenderTarget_Button();
+	afx_msg void OnColorGrading_Button();
 };

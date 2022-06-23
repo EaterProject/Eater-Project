@@ -1,6 +1,7 @@
 #include "Material.h"
 #include "EngineData.h"
 #include "LoadManager.h"
+#include "GameEngine.h"
 #include "GraphicEngineAPI.h"
 #include "IndexManager.h"
 #include "MaterialManager.h"
@@ -23,7 +24,9 @@ Material::Material()
 	MaterialManager::SetIndex(&m_MaterialData->BufferIndex);
 
 	// Material Graphic 측 등록..
+	EnterCriticalSection(&GameEngine::g_CS);
 	GraphicEngine::Get()->PushMaterial(m_MaterialData);
+	LeaveCriticalSection(&GameEngine::g_CS); 
 }
 
 Material::~Material()
@@ -119,7 +122,9 @@ void Material::SetSkyLightIndex(int skyLightIndex)
 void Material::Release()
 {
 	// Graphic 내부에 있는 해당 Materail Buffer 삭제..
+	EnterCriticalSection(&GameEngine::g_CS);
 	GraphicEngine::Get()->DeleteMaterial(m_MaterialData);
+	LeaveCriticalSection(&GameEngine::g_CS); 
 
 	// 해당 Material Data 해제..
 	SAFE_DELETE(m_MaterialData);

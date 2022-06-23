@@ -111,8 +111,9 @@ SHADER_RESOURCE_VIEW(gColliderBuffer)
 // ColorGrading ShaderResourceView Resource
 ///////////////////////////////////////////////////////////////////////////////////////////
 
-SHADER_RESOURCE_VIEW(gFirstLUT)
-SHADER_RESOURCE_VIEW(gSecondLUT)
+SHADER_RESOURCE_VIEW(gDefalutLUT)
+SHADER_RESOURCE_VIEW(gBaseLUT)
+SHADER_RESOURCE_VIEW(gBlendLUT)
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 // OutLine ShaderResourceView Resource

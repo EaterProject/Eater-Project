@@ -26,18 +26,18 @@ void Button::Start()
 {
 	m_Image = gameobject->GetComponent<Image>();
 	m_Transform = gameobject->GetComponent<RectTransform>();
+	m_Rect = m_Transform->GetRectPoint();
 }
 
 void Button::Update()
 {
-	const RectPoint& rect_point = m_Transform->GetRectPoint();
 	const LPPOINT& mouse_point = mKeyInputManger->GetClientMousePos();
 
 	//PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "Mouse Point : %d, %d", mouse_point->x, mouse_point->y);
 
-	if (rect_point.left < mouse_point->x && rect_point.right > mouse_point->x)
+	if (m_Rect->left < mouse_point->x && m_Rect->right > mouse_point->x)
 	{
-		if (rect_point.top < mouse_point->y && rect_point.bottom > mouse_point->y)
+		if (m_Rect->top < mouse_point->y && m_Rect->bottom > mouse_point->y)
 		{
 			// 마우스가 버튼 위에 있는 경우..
 			if (m_State == OUT_BUTTON)

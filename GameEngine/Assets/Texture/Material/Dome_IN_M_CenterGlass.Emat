@@ -1,6 +1,6 @@
 #EATERMAT
 @MaterialName Dome_IN_M_CenterGlass
-@Alpha 0
+@Alpha 1
 @ORMMap Dome_CenterGlass_ORM
 @LimColor_B 0.000000
 @DiffuseMap Dome_CenterGlass_BaseColor

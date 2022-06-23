@@ -46,9 +46,13 @@ public:
 	CEdit SkyLight_Angle_Edit;
 	CButton SkyLight_HDRI_Check;
 
+	CButton ColorGrading_Volume_Check;
+
 	CEdit SkyCube_Map_Edit;
 	CEdit SkyLight_Map_Edit;
+	CEdit ColorGrading_Map_Edit;
 
+	CSpinButtonCtrl SkyLight_Spin;
 
 	std::string SkyCubeName;
 	float SkyCubeAngle;
@@ -59,14 +63,22 @@ public:
 	float SkyLightAngle;
 	float SkyLightThreshold;
 	bool SkyLightHDRI;
+	int SkyLightIndex;
+
+	std::string ColorGradingName;
+	bool ColorGradingVolume;
 
 	CString SkyCube_SaveName_Edit;
 	CString SkyLight_SaveName_Edit;
+	CString ColorGrading_SaveName_Edit;
 	
 	afx_msg void OnSkyCubeHDRI();
 	afx_msg void OnSkyCubeBakeButton();
 	afx_msg void OnSkyLightBakeButton();
+	afx_msg void OnColorGradingBakeButton();
 	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 	virtual BOOL OnInitDialog();
 	afx_msg void OnSkyLightHDRI();
+	afx_msg void OnColorGradingVolume();
+	afx_msg void OnDeltaposSpin3(NMHDR* pNMHDR, LRESULT* pResult);
 };

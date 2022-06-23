@@ -73,7 +73,7 @@ void TextureManager::BakeSkyLightMap(std::string& Path, bool hdri)
 	}
 }
 
-void TextureManager::BakeConvertSkyLightMap(std::string& Path, float angle, float threshold, bool hdri)
+void TextureManager::BakeConvertSkyLightMap(std::string& Path, float angle, float threshold, bool hdri, UINT index)
 {
 	TextureBuffer* cubeMap = LoadManager::GetTexture(Path);
 	
@@ -137,7 +137,7 @@ void TextureManager::BakeConvertSkyLightMap(std::string& Path, float angle, floa
 	}
 
 	// 변경한 SkyLight 적용..
-	m_Graphic->SetSkyLight(skyLight, 0);
+	m_Graphic->SetSkyLight(skyLight, index);
 }
 
 void TextureManager::BakeConvertSkyCubeMap(std::string& Path, float angle, float threshold, bool hdri)
@@ -209,6 +209,44 @@ void TextureManager::SaveConvertSkyCubeMap(std::string& Path, std::string& SaveN
 	}
 
 	m_Graphic->SaveConvertCubeMap(buffer, SaveName);
+}
+
+void TextureManager::SaveSpriteToVolumeTexture_LUT(std::string fileName, std::string saveName, UINT pixelSize)
+{
+	TextureBuffer* image = LoadManager::GetTexture(fileName);
+
+	if (image == nullptr)
+	{
+		PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "[ Engine ][ Save ][ Save Sprite To VolumeTexture ] '%s' FAILED!!", fileName.c_str());
+		return;
+	}
+
+	std::string Name = "VolumeTexture_Convert_" + fileName;
+
+	TextureBuffer* buffer = LoadManager::GetTexture(Name);
+
+	// 생성된 Convert Texture가 있다면 제거..
+	if (buffer)
+	{
+		LoadManager::DeleteTexture(Name);
+		buffer = nullptr;
+	}
+
+	m_Graphic->SaveSpriteToVolumeTexture(image, saveName, pixelSize, &buffer);
+
+	if (buffer == nullptr)
+	{
+		PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "[ Engine ][ Save ][ Sprite To VolumeTexture Buffer ] '%s' FAILED!!", fileName.c_str());
+		return;
+	}
+	else
+	{
+		buffer->Name = Name;
+		LoadManager::TextureList.insert({ Name, buffer });
+	}
+
+	// 변경한 LUT Texture 적용..
+	m_Graphic->SetColorGradingBaseTexture(buffer);
 }
 
 void TextureManager::Initialize(GraphicEngineManager* Graphic, CRITICAL_SECTION* _cs)

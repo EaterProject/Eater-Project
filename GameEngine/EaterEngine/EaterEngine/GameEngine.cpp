@@ -38,8 +38,11 @@
 
 #include "Profiler/Profiler.h"
 
+CRITICAL_SECTION GameEngine::g_CS;
+
 int GameEngine::WinSizeWidth	= 0;
 int GameEngine::WinSizeHeight	= 0;
+
 Eater::Delegate<int, int> GameEngine::ResizeFunction;
 Eater::Delegate<RenderOption*> GameEngine::RenderOptionFunction;
 
@@ -72,7 +75,7 @@ GameEngine::GameEngine()
 	mRenderOption = new RenderOption();
 
 	mRenderOption->RenderingOption		= RENDER_OPTION::RENDER_SHADOW | RENDER_OPTION::RENDER_SSAO | RENDER_OPTION::RENDER_IBL | RENDER_OPTION::RENDER_FOG;
-	mRenderOption->PostProcessOption	= POSTPROCESS_OPTION::RENDER_BLOOM | POSTPROCESS_OPTION::RENDER_HDR | POSTPROCESS_OPTION::RENDER_FXAA;
+	mRenderOption->PostProcessOption	= POSTPROCESS_OPTION::POSTPROCESS_BLOOM | POSTPROCESS_OPTION::POSTPROCESS_HDR | POSTPROCESS_OPTION::POSTPROCESS_COLORGRADING | POSTPROCESS_OPTION::POSTPROCESS_FXAA;
 }
 
 GameEngine::~GameEngine()
@@ -504,9 +507,9 @@ void GameEngine::BakeAnimation()
 	mLoadManager->BakeAnimation();
 }
 
-void GameEngine::BakeConvertSkyLightMap(std::string& Path, float angle, float threshold, bool hdri)
+void GameEngine::BakeConvertSkyLightMap(std::string& Path, float angle, float threshold, bool hdri, UINT index)
 {
-	mLoadManager->BakeConvertSkyLightMap(Path, angle, threshold, hdri);
+	mLoadManager->BakeConvertSkyLightMap(Path, angle, threshold, hdri, index);
 }
 
 void GameEngine::BakeConvertSkyCubeMap(std::string& Path, float angle, float threshold, bool hdri)
@@ -522,6 +525,11 @@ void GameEngine::SaveConvertSkyLightMap(std::string& Path, std::string& SaveName
 void GameEngine::SaveConvertSkyCubeMap(std::string& Path, std::string& SaveName)
 {
 	mLoadManager->SaveConvertSkyCubeMap(Path, SaveName);
+}
+
+void GameEngine::SaveSpriteToVolumeTexture_LUT(std::string& fileName, std::string& saveName, UINT pixelSize)
+{
+	mLoadManager->SaveSpriteToVolumeTexture_LUT(fileName, saveName, pixelSize);
 }
 
 void GameEngine::SetSkyCube(std::string& Path)
@@ -543,6 +551,20 @@ void GameEngine::SetSkyLight(std::string& Path, UINT index)
 	if (skyLight->Irradiance == nullptr) return;
 
 	mGraphicManager->SetSkyLight(skyLight, index);
+}
+
+void GameEngine::SetColorGradingBaseTexture(std::string& Path)
+{
+	TextureBuffer* lut = mLoadManager->GetTexture(Path);
+
+	mGraphicManager->SetColorGradingBaseTexture(lut);
+}
+
+void GameEngine::SetColorGradingBlendTexture(std::string& Path)
+{
+	TextureBuffer* lut = mLoadManager->GetTexture(Path);
+
+	mGraphicManager->SetColorGradingBlendTexture(lut);
 }
 
 void GameEngine::AddOccluder(std::string mMeshName)

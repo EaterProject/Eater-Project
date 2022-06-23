@@ -51,6 +51,9 @@ public:
 public:
 	virtual GRAPHIC_DX11_DLL void SetSkyCube(TextureBuffer* resource) abstract;
 	virtual GRAPHIC_DX11_DLL void SetSkyLight(SkyLightBuffer* resource, UINT index) abstract;
+	virtual GRAPHIC_DX11_DLL void SetColorGradingBaseTexture(TextureBuffer* lut_resource) abstract;
+	virtual GRAPHIC_DX11_DLL void SetColorGradingBlendTexture(TextureBuffer* lut_resource) abstract;
+	//virtual GRAPHIC_DX11_DLL void SetColorGradingFactor(float factor) abstract;
 
 public:
 	/// Render Mesh Data & Rendering Function..
@@ -87,6 +90,8 @@ public:
 	virtual GRAPHIC_DX11_DLL void BakeConvertCubeMap(TextureBuffer* resource, float angle, float threshold, bool hdri, TextureBuffer** ppResource) abstract;
 
 	virtual GRAPHIC_DX11_DLL void SaveConvertCubeMap(TextureBuffer* resource, std::string SaveName) abstract;
+	virtual GRAPHIC_DX11_DLL void SaveSpriteToVolumeTexture(TextureBuffer* resource, std::string saveName, UINT pixelSize, TextureBuffer** ppResource) abstract;
+	virtual GRAPHIC_DX11_DLL void SaveSpriteToVolumeTexture(std::string fileName, std::string saveName, UINT pixelSize) abstract;
 
 private:
 	static GraphicEngine* Graphic;

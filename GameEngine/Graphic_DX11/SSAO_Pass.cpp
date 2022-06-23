@@ -226,7 +226,7 @@ void SSAO_Pass::BlurRender_PS()
 	
 	CB_BlurOrder blurOrderBuf;
 
-	for (int i = 0; i < m_BlurCount; i++)
+	for (UINT i = 0; i < m_BlurCount; i++)
 	{
 		// Vertex Shader Update..
 		m_Blur_VS->Update();
