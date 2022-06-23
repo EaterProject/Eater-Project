@@ -10,6 +10,8 @@ struct RectPoint
 	float top;
 	float right;
 	float bottom;
+	Vector2 size;
+	Vector2 center;
 };
 
 class Transform;
@@ -31,11 +33,19 @@ public:
 	EATER_ENGINEDLL void SetPosition(float x, float y);
 	EATER_ENGINEDLL void SetPosition(DirectX::SimpleMath::Vector2 pos);
 
+	// Object & Image Pivot 전용
 	EATER_ENGINEDLL void SetPositionObject(GameObject* object, DirectX::SimpleMath::Vector3 offset);
 	EATER_ENGINEDLL void SetPositionObject(Transform* object, DirectX::SimpleMath::Vector3 offset);
 	EATER_ENGINEDLL void SetPosition3D(float x, float y, float z);
 	EATER_ENGINEDLL void SetPosition3D(DirectX::SimpleMath::Vector3 pos);
 
+	// Image Pivot 전용
+	EATER_ENGINEDLL void SetTargetImage(GameObject* object, ROTATE_ANGLE rotate_angle = ROTATE_ANGLE::ROTATE_0);
+	EATER_ENGINEDLL void SetTargetImage(RectTransform* object, ROTATE_ANGLE rotate_angle = ROTATE_ANGLE::ROTATE_0);
+	EATER_ENGINEDLL void SetTargetRotation(bool enable);
+	EATER_ENGINEDLL void SetTargetRatio(float x, float y);
+	EATER_ENGINEDLL void SetTargetRatio(DirectX::SimpleMath::Vector2 ratio);
+	
 	EATER_ENGINEDLL void SetRotation(float angle);
 	EATER_ENGINEDLL void SetRotation(float x, float y, float z);
 	EATER_ENGINEDLL void SetRotation(DirectX::SimpleMath::Vector3 rot);
@@ -53,10 +63,13 @@ public:
 	EATER_ENGINEDLL void AddScale(DirectX::SimpleMath::Vector2 scale);
 
 public:
-	EATER_ENGINEDLL const RectPoint& GetRectPoint();
+	EATER_ENGINEDLL RectPoint* GetRectPoint();
 
 private:
 	void Resize(int width, int height);
+
+private:
+	void SetPositionOffset();
 
 public:
 	//이미지 출력 위치
@@ -90,8 +103,18 @@ private:
 	//화면상의 출력 범위
 	RectPoint RectPosition;
 
-	//3D Object
+	//3D Object Pivot
 	Transform* Transform3D;
 	DirectX::SimpleMath::Vector3 Position3D_Offset;
+
+	// Image Pivot
+	RectPoint* TargetRectPosition;
+	ROTATE_ANGLE RotateAngle;
+
+	bool RotateImage;
+	float Rotate_Offset;
+
+	DirectX::SimpleMath::Vector2 Target_Ratio;
+	DirectX::SimpleMath::Vector2 Position2D;
 };
 

@@ -381,7 +381,7 @@ void Picking_Pass::NoneMeshRenderUpdate(const std::vector<RenderData*>& meshlist
 	const Matrix& viewproj = g_GlobalData->MainCamera_Data->CamViewProj;
 
 	// Instance Update..
-	for (int i = 0; i < m_RenderCount; i++)
+	for (UINT i = 0; i < m_RenderCount; i++)
 	{
 		m_RenderData = meshlist[i];
 

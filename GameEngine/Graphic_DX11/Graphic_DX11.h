@@ -25,6 +25,8 @@ public:
 public:
 	void SetSkyCube(TextureBuffer* resource) override;
 	void SetSkyLight(SkyLightBuffer* resource, UINT index) override;
+	void SetColorGradingBaseTexture(TextureBuffer* lut_resource) override;
+	void SetColorGradingBlendTexture(TextureBuffer* lut_resource) override;
 
 public:
 	void PushInstance(MeshData* instance) override;
@@ -58,6 +60,8 @@ public:
 	void BakeConvertCubeMap(TextureBuffer* resource, float angle, float threshold, bool hdri, TextureBuffer** ppResource) override;
 
 	void SaveConvertCubeMap(TextureBuffer* resource, std::string SaveName) override;
+	void SaveSpriteToVolumeTexture(TextureBuffer* resource, std::string saveName, UINT pixelSize, TextureBuffer** ppResource) override;
+	void SaveSpriteToVolumeTexture(std::string fileName, std::string saveName, UINT pixelSize) override;
 
 private:
 	IFactoryManager* m_FactoryManager;

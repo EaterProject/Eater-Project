@@ -9,6 +9,7 @@ class AnimationController;
 class ParticleSystem;
 class Camera;
 class Image;
+class Slider;
 class RectTransform;
 
 class TestScene : public Scene
@@ -46,9 +47,10 @@ private:
 	AnimationController* AC;
 	Image* IMG;
 	RectTransform* RTR;
+
+	std::vector<Slider*> SliderList;
 	std::vector<Image*> IMGList;
 	std::vector<Transform*> TRList;
-	std::vector<RectTransform*> RTRList;
 	std::vector<AnimationController*> ACList;
 };
 

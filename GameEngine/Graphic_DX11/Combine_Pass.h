@@ -15,10 +15,19 @@ public:
 
 	void RenderUpdate();
 
+public:
+	void SetColorGradingDefaultTexture();
+	void SetColorGradingBaseTexture(TextureBuffer* lut_resource);
+	void SetColorGradingBlendTexture(TextureBuffer* lut_resource);
+	void SetColorGradingFactor(float factor);
+
 private:
 	void SetShaderList();
 	void SetShaderResourceView();
 	void SetConstantBuffer();
+
+public:
+	float m_ColorGradingFactor = 1.0f;
 
 private:
 	VertexShader* m_Screen_VS;
@@ -30,6 +39,9 @@ private:
 	RenderTexture* m_Bloom_RT;
 	RenderTexture* m_OutLine_RT;
 	RenderTexture* m_OutPut_RT;
+
+private:
+	ID3D11ShaderResourceView* m_Default_LUT;
 
 private:
 	ID3D11RenderTargetView* m_OutPut_RTV;

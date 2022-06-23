@@ -139,7 +139,7 @@ BOOL CTAP_Particle::OnInitDialog()
 	
 	LifeColor_Combo.SetCurSel(0);
 	
-	Strength_Slider.SetRange(1, 100);
+	Strength_Slider.SetRange(1, 1000);
 	Strength_Slider.SetPos(1);
 	return 0;
 }
@@ -570,7 +570,7 @@ void CTAP_Particle::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 	if (pScrollBar->GetDlgCtrlID() == Strength_Slider.GetDlgCtrlID())
 	{
 		float Pos = (float)Strength_Slider.GetPos();
-		mParticleSystem->SetStrength(Pos*0.1f);
+		mParticleSystem->SetStrength(Pos * 0.1f);
 		Strength_Str = ChangeToCString(Pos * 0.1f);
 		UpdateData(FALSE);
 	}

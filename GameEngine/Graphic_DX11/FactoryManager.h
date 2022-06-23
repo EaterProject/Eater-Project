@@ -31,6 +31,8 @@ public:
 
 public:
 	void SaveConvertCubeMap(TextureBuffer* resource, std::string SaveName) override;
+	void SaveSpriteToVolumeTexture(TextureBuffer* resource, std::string saveName, UINT pixelSize, TextureBuffer** ppResource) override;
+	void SaveSpriteToVolumeTexture(std::string fileName, std::string saveName, UINT pixelSize) override;
 
 private:
 	void CreateImg(std::string name, Hash_Code hash_code, std::string fileName) override;

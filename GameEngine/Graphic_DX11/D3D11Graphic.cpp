@@ -72,8 +72,6 @@ void D3D11Graphic::Initialize(HWND hwnd, int screenWidth, int screenHeight)
 		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, result, "[ Graphic ][ Create ][ Device ] FAILED!!");
 		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, result, "[ Graphic ][ Create ][ Device ] FAILED!!");
 	}
-
-	
 }
 
 void D3D11Graphic::Release()
@@ -84,12 +82,12 @@ void D3D11Graphic::Release()
 HRESULT D3D11Graphic::SaveTextureDDS(ID3D11Resource* resource, const char* fileName)
 {
 	HRESULT result;
-	std::string name = fileName;
-	name = "../Assets/Texture/Bake/" + name + ".dds";
+
+	std::string name(fileName);
 
 	DirectX::ScratchImage image;
 	result = DirectX::CaptureTexture(m_Device.Get(), m_DeviceContext.Get(), resource, image);
-
+	
 	if (SUCCEEDED(result))
 	{
 		result = DirectX::SaveToDDSFile(image.GetImages(), image.GetImageCount(), image.GetMetadata(), DirectX::DDS_FLAGS_NONE, std::wstring(name.begin(), name.end()).c_str());
@@ -120,6 +118,197 @@ HRESULT D3D11Graphic::SaveTextureDDS(ID3D11ShaderResourceView* resource, const c
 	resource->GetResource(&textureResource);
 	
 	return SaveTextureDDS(textureResource, fileName);
+}
+
+HRESULT D3D11Graphic::SaveVolumeTextureDDS(ID3D11ShaderResourceView* resource, const char* saveName, UINT pixelSize, void** ppResource)
+{
+	HRESULT result;
+
+	ID3D11Resource* image_resource = nullptr;
+	resource->GetResource(&image_resource);
+
+	DirectX::ScratchImage scrimage_source;
+	result = DirectX::CaptureTexture(m_Device.Get(), m_DeviceContext.Get(), image_resource, scrimage_source);
+
+	if (FAILED(result))
+	{
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, result, "[ Graphic ][ Save ][ VolumeTexture DDS ] '%s' FAILED!!", saveName);
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, result, "[ Graphic ][ Save ][ VolumeTexture DDS ] '%s' FAILED!!", saveName);
+
+		return result;
+	}
+
+	const DirectX::Image* image_source = scrimage_source.GetImages();
+	DirectX::TexMetadata image_data = scrimage_source.GetMetadata();
+
+	DirectX::Rect rect;
+	rect.y = 0;
+	rect.h = pixelSize;
+	rect.w = pixelSize;
+
+	std::vector<DirectX::Image>			image_result(pixelSize);
+	std::vector<DirectX::ScratchImage>	scrimage_result(pixelSize);
+
+	for (UINT i = 0; i < pixelSize; i++)
+	{
+		rect.x = pixelSize * i;
+
+		image_data.width = pixelSize;
+		image_data.height = pixelSize;
+		image_data.mipLevels = 1;
+
+		result = scrimage_result[i].Initialize(image_data);
+
+		result = DirectX::CopyRectangle(*image_source, rect, *scrimage_result[i].GetImages(), DirectX::TEX_FILTER_FLAGS::TEX_FILTER_DEFAULT, 0, 0);
+
+		if (FAILED(result))
+		{
+			PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, result, "[ Graphic ][ Save ][ VolumeTexture DDS ] '%s' FAILED!!", saveName);
+			PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, result, "[ Graphic ][ Save ][ VolumeTexture DDS ] '%s' FAILED!!", saveName);
+
+			return result;
+		}
+
+		image_result[i] = *scrimage_result[i].GetImages();
+	}
+
+	DirectX::TexMetadata tex;
+	tex.format = image_source->format;
+	tex.width = pixelSize;
+	tex.height = pixelSize;
+	tex.depth = pixelSize;
+	tex.arraySize = 1;
+	tex.mipLevels = 1;
+	tex.miscFlags = 0;
+	tex.miscFlags2 = 0;
+	tex.dimension = DirectX::TEX_DIMENSION::TEX_DIMENSION_TEXTURE3D;
+
+	std::string savePath(saveName);
+	std::wstring w_savePath(savePath.begin(), savePath.end());
+
+	result = DirectX::SaveToDDSFile(&image_result[0], pixelSize, tex, DirectX::DDS_FLAGS::DDS_FLAGS_NONE, w_savePath.c_str());
+
+	if (FAILED(result))
+	{
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, result, "[ Graphic ][ Save ][ VolumeTexture DDS ] '%s' FAILED!!", saveName);
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, result, "[ Graphic ][ Save ][ VolumeTexture DDS ] '%s' FAILED!!", saveName);
+
+		return result;
+	}
+
+	if (ppResource)
+	{
+		DirectX::ScratchImage scrimage;
+		result = scrimage.Initialize3DFromImages(&image_result[0], pixelSize);
+
+		if (FAILED(result))
+		{
+			PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, result, "[ Graphic ][ Save ][ VolumeTexture DDS ] '%s' FAILED!!", saveName);
+			PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, result, "[ Graphic ][ Save ][ VolumeTexture DDS ] '%s' FAILED!!", saveName);
+
+			return result;
+		}
+
+		ID3D11ShaderResourceView* pSRV = nullptr;
+		result = DirectX::CreateShaderResourceView(m_Device.Get(), scrimage.GetImages(), pixelSize, tex, &pSRV);
+
+		if (FAILED(result))
+		{
+			PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, result, "[ Graphic ][ Save ][ VolumeTexture DDS ] '%s' FAILED!!", saveName);
+			PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, result, "[ Graphic ][ Save ][ VolumeTexture DDS ] '%s' FAILED!!", saveName);
+
+			return result;
+		}
+
+		// 해당 리소스 삽입..
+		*ppResource = pSRV;
+	}
+
+	return result;
+}
+
+HRESULT D3D11Graphic::SaveVolumeTextureDDS(const char* fileName, const char* saveName, UINT pixelSize)
+{
+	HRESULT result;
+	std::string filePath(fileName);
+	std::wstring w_filePath(filePath.begin(), filePath.end());
+
+	std::size_t Start = filePath.rfind('.') + 1;
+	std::size_t End = filePath.length() - Start;
+	std::string Type = filePath.substr(Start, End);
+
+	DirectX::ScratchImage scrimage_source;
+
+	// 확장자에 따른 텍스처 파일 로드 방식..
+	if (Type == "dds" || Type == "DDS")
+	{
+		result = DirectX::LoadFromDDSFile(w_filePath.c_str(), DirectX::DDS_FLAGS::DDS_FLAGS_NONE, nullptr, scrimage_source);
+	}
+	else
+	{
+		result = DirectX::LoadFromWICFile(w_filePath.c_str(), DirectX::WIC_FLAGS::WIC_FLAGS_NONE, nullptr, scrimage_source);
+	}
+
+	if (FAILED(result))
+	{
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, result, "[ Graphic ][ Save ][ SaveVolumeTextureDDS ] '%s' FAILED!!", filePath.c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, result, "[ Graphic ][ Save ][ SaveVolumeTextureDDS ] '%s' FAILED!!", filePath.c_str());
+		return result;
+	}
+
+	const DirectX::Image* image_source = scrimage_source.GetImages();
+	DirectX::TexMetadata image_data = scrimage_source.GetMetadata();
+
+	DirectX::Rect rect;
+	rect.y = 0;
+	rect.h = pixelSize;
+	rect.w = pixelSize;
+
+	std::vector<DirectX::Image>			image_result(pixelSize);
+	std::vector<DirectX::ScratchImage>	scrimage_result(pixelSize);
+
+	for (UINT i = 0; i < pixelSize; i++)
+	{
+		rect.x = pixelSize * i;
+
+		image_data.width = pixelSize;
+		image_data.height = pixelSize;
+
+		scrimage_result[i].Initialize(image_data);
+
+		result = DirectX::CopyRectangle(*image_source, rect, *scrimage_result[i].GetImages(), DirectX::TEX_FILTER_FLAGS::TEX_FILTER_DEFAULT, 0, 0);
+
+		if (FAILED(result))
+		{
+			PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, result, "[ Graphic ][ Save ][ SaveVolumeTextureDDS ] '%s' FAILED!!", filePath.c_str());
+			PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, result, "[ Graphic ][ Save ][ SaveVolumeTextureDDS ] '%s' FAILED!!", filePath.c_str());
+			return result;
+		}
+
+		image_result[i] = *scrimage_result[i].GetImages();
+	}
+
+	DirectX::TexMetadata tex;
+	tex.format = image_source->format;
+	tex.width = pixelSize;
+	tex.height = pixelSize;
+	tex.depth = pixelSize;
+	tex.arraySize = 1;
+	tex.mipLevels = 1;
+	tex.miscFlags = 0;
+	tex.dimension = DirectX::TEX_DIMENSION::TEX_DIMENSION_TEXTURE3D;
+
+	std::string savePath(saveName);
+	std::wstring w_savePath(savePath.begin(), savePath.end());
+	result = DirectX::SaveToDDSFile(&image_result[0], 16, tex, DirectX::DDS_FLAGS::DDS_FLAGS_NONE, w_savePath.c_str());
+
+	if (FAILED(result))
+	{
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, result, "[ Graphic ][ Save ][ SaveVolumeTextureDDS ] '%s' FAILED!!", filePath.c_str());
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, result, "[ Graphic ][ Save ][ SaveVolumeTextureDDS ] '%s' FAILED!!", filePath.c_str());
+	}
+
+	return result;
 }
 
 HRESULT D3D11Graphic::CaptureTextureDDS(const char* fileName)
@@ -337,8 +526,8 @@ void D3D11Graphic::GetImageSize(std::string filePath, UINT* width, UINT* height)
 	}
 	else
 	{
-		*width = tex.width;
-		*height = tex.height;
+		*width = (UINT)tex.width;
+		*height = (UINT)tex.height;
 	}
 }
 

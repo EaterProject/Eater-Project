@@ -336,7 +336,7 @@ void ParticleSystem::Play(bool loop)
 	m_NowDelayTime = m_DelayTime;
 
 	// 지연시간이 설정되지 않았다면 실행 즉시 파티클 한개 출력..
-	if (m_DelayTime == 0.0f) StartPlay();
+	//if (m_DelayTime == 0.0f) StartPlay();
 }
 
 void ParticleSystem::Stop()

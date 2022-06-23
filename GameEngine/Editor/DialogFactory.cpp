@@ -15,13 +15,13 @@
 
 
 
-#include "CTAP_Animation.h";
-#include "CTAP_Collider.h";
-#include "CTAP_Light.h";
-#include "CTAP_MeshFilter.h";
-#include "CTAP_Particle.h";
-#include "CTAP_Rigidbody.h";
-#include "CTAP_Transform.h";
+#include "CTAP_Animation.h"
+#include "CTAP_Collider.h"
+#include "CTAP_Light.h"
+#include "CTAP_MeshFilter.h"
+#include "CTAP_Particle.h"
+#include "CTAP_Rigidbody.h"
+#include "CTAP_Transform.h"
 
 
 DialogFactory* DialogFactory::instance = nullptr;

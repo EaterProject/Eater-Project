@@ -69,6 +69,11 @@ void FactoryManager::BakeSkyLightMap(TextureBuffer* skyLight, bool hdri, SkyLigh
 
 void FactoryManager::BakeConvertCubeMap(TextureBuffer* resource, float angle, float threshold, bool hdri, TextureBuffer** ppResource)
 {
+	if (resource == nullptr) return;
+
+	if (resource->pTextureBuf == nullptr) return;
+
+
 	// 货肺款 Texture Buffer 积己..
 	if (*ppResource == nullptr) (*ppResource) = new TextureBuffer();
 
@@ -77,7 +82,29 @@ void FactoryManager::BakeConvertCubeMap(TextureBuffer* resource, float angle, fl
 
 void FactoryManager::SaveConvertCubeMap(TextureBuffer* resource, std::string SaveName)
 {
+	if (resource == nullptr) return;
+
+	if (resource->pTextureBuf == nullptr) return;
+
+
 	m_BakingFactory->SaveConvertCubeMap(resource, SaveName);
+}
+
+void FactoryManager::SaveSpriteToVolumeTexture(TextureBuffer* resource, std::string saveName, UINT pixelSize, TextureBuffer** ppResource)
+{
+	if (resource == nullptr) return;
+
+	if (resource->pTextureBuf == nullptr) return;
+
+	// 货肺款 Texture Buffer 积己..
+	if (*ppResource == nullptr) (*ppResource) = new TextureBuffer();
+
+	m_BakingFactory->SaveSpriteToVolumeTexture(resource, saveName, pixelSize, *ppResource);
+}
+
+void FactoryManager::SaveSpriteToVolumeTexture(std::string fileName, std::string saveName, UINT pixelSize)
+{
+	m_BakingFactory->SaveSpriteToVolumeTexture(fileName, saveName, pixelSize);
 }
 
 void FactoryManager::CreateImg(std::string name, Hash_Code hash_code, std::string fileName)

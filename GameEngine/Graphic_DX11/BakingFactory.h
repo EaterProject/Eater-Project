@@ -19,6 +19,8 @@ public:
 
 public:
 	void SaveConvertCubeMap(TextureBuffer* resource, std::string SaveName) override;
+	void SaveSpriteToVolumeTexture(TextureBuffer* resource, std::string saveName, UINT pixelSize, TextureBuffer* pResource) override;
+	void SaveSpriteToVolumeTexture(std::string fileName, std::string saveName, UINT pixelSize) override;
 
 private:
 	void PreBakeBRDFMap();

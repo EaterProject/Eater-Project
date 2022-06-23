@@ -45,6 +45,9 @@ public:
 public:
 	void SetSkyCube(TextureBuffer* resource) override;
 	void SetSkyLight(SkyLightBuffer* resource, UINT index) override;
+	void SetColorGradingBaseTexture(TextureBuffer* lut_resource) override;
+	void SetColorGradingBlendTexture(TextureBuffer* lut_resource) override;
+	void SetColorGradingFactor(float factor) override;
 
 public:
 	void PushInstance(MeshData* instance) override;

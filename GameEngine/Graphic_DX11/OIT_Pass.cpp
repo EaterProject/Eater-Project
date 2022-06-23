@@ -31,7 +31,7 @@
 
 OIT_Pass::OIT_Pass()
 {
-	m_Multiple = 10;
+	m_Multiple = 16;
 	m_MagicValue = 0xffffffff;
 	m_InitCounts[0] = 0;
 	m_InitCounts[1] = 0;
