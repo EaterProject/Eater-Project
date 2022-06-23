@@ -90,9 +90,21 @@ enum class BOSS_STATE : int
 	RENDOM_ATTACK_END   = 15,	//
 };
 
+enum class PLAYER_STATE : int
+{
+	IDLE		= 0,
+	ATTACK_01	= 1,
+	ATTACK_02	= 2,
+	SKILL_01	= 3,
+	SKILL_02	= 4,
+	JUMP		= 5,
+	MOVE		= 6,
+	DEAD		= 7
+};
+
 enum class MONSTER_COLOR : int
 {
-	RED,		//
+	RED,		
 	GREEN,
 	YELLOW,
 	BLUE

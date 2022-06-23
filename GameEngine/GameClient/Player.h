@@ -55,6 +55,9 @@ private:
 	void Player_Hit(int HitPower);
 	bool Player_Move_Check();			//기본 상태 체크
 private:
+	std::string ANIMATION_NAME[8]	= { "", };
+	float		ANIMATION_SPEED[8]	= { 0.0f };
+
 	Vector3 DirPos;						//방향
 	Vector3 DirRot;						//회전
 	Vector3 PastDirRot;					//과거의 방향
@@ -89,23 +92,16 @@ private:
 	bool IsCreate			= false;
 	static bool IsAttackTime;
 	int	ComboCount;
+	float		Test = 0.0f;
 	float		ComboTime	= 0.0f;
 	float		HitTime		= 0.0f;
-	MeshFilterSetting		mColor;
+	MeshFilterSetting		mPlayerColor;
+	MeshFilterSetting		mWeaponColor;
 private:
 	///Animation 관련
-	std::string AnimationName;
 	int AnimationSpeed	= 5;
 	int AttackEndFrame	= 0;
 	int NowFrame		= 0;
-
-	float Animation_Idle_Speed		= 1.5f;
-	float Animation_Move_Speed		= 1.0f;
-	float Animation_Attack01_Speed	= 1.5f;
-	float Animation_Attack02_Speed	= 1.5f;
-	float Animation_Skill01_Speed	= 1.5f;
-	float Animation_Skill02_Speed	= 1.5f;
-	float Animation_Jump_Speed		= 1.5f;
 private:
 	///Raycast 관련
 	PhysRayCast* RayCastHit;

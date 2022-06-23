@@ -45,7 +45,6 @@ void GameObject::SetActive(bool active)
 	{
 		ChildMeshList[i]->SetActive(active);
 	}
-
 }
 
 void GameObject::SetStatic(bool active)

@@ -83,17 +83,17 @@ void MonsterComponent::Start()
 	GetRandomColor();
 	if (MonsterColor == MONSTER_COLOR_RED)
 	{
-		mMF_Setting.SetLimlightSetting(MeshFilterSetting::COLOR_TYPE::RED, 1,1);
-		mMF_Setting.SetLimlightSettingMax(MeshFilterSetting::COLOR_TYPE::RED, 1,1);
-		mMF_Setting.SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED, 100);
-		mMF_Setting.SetEmissiveSettingMax(MeshFilterSetting::COLOR_TYPE::RED, 100);
+		mMF_Setting.SetLimlightSetting(MeshFilterSetting::COLOR_TYPE::RED, 0.5f,1);
+		mMF_Setting.SetLimlightSettingMax(MeshFilterSetting::COLOR_TYPE::RED, 0.5f,1);
+		mMF_Setting.SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED, 5);
+		mMF_Setting.SetEmissiveSettingMax(MeshFilterSetting::COLOR_TYPE::RED, 5);
 	}
 	else
 	{
-		mMF_Setting.SetLimlightSetting(MeshFilterSetting::COLOR_TYPE::BLUE, 1, 1);
-		mMF_Setting.SetLimlightSettingMax(MeshFilterSetting::COLOR_TYPE::BLUE, 1, 1);
-		mMF_Setting.SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::BLUE, 100);
-		mMF_Setting.SetEmissiveSettingMax(MeshFilterSetting::COLOR_TYPE::BLUE, 100);
+		mMF_Setting.SetLimlightSetting(MeshFilterSetting::COLOR_TYPE::BLUE, 0.5f, 1);
+		mMF_Setting.SetLimlightSettingMax(MeshFilterSetting::COLOR_TYPE::BLUE, 0.5f, 1);
+		mMF_Setting.SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::BLUE, 5);
+		mMF_Setting.SetEmissiveSettingMax(MeshFilterSetting::COLOR_TYPE::BLUE, 5);
 	}
 }
 
@@ -154,7 +154,7 @@ void MonsterComponent::OnTriggerStay(GameObject* Obj)
 			HitStart	 = true;
 
 			SetMonsterColor();
-			Sound_Play_SFX(Sound_Hit);
+			Sound_Play_SFX(SOUND_NAME[(int)MONSTER_STATE::HIT]);
 		}
 	}
 	else
@@ -207,6 +207,7 @@ void MonsterComponent::Attack()
 	{
 		int Damage = 10;
 		MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_HIT, &Damage);
+		Sound_Play_SFX(SOUND_NAME[(int)MONSTER_STATE::ATTACK]);
 	}
 
 	//공격 범위에 나갔을떄 다시 추격 상태로
@@ -447,7 +448,7 @@ void MonsterComponent::SetMonsterColor()
 		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_MONSTER_UI_UPDATE, &Data);
 
 		mMF_Setting.SetLimlightSetting(1, 0, 0, 5, 1);
-		mMF_Setting.SetLimlightSettingMax(0, 0, 0, 1, 1);
+		mMF_Setting.SetLimlightSettingMax(0, 0, 0, 0.5f, 1);
 	}
 	else
 	{
@@ -462,7 +463,7 @@ void MonsterComponent::SetMonsterColor()
 		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_MONSTER_UI_UPDATE, &Data);
 
 		mMF_Setting.SetLimlightSetting(0, 0, 1, 5, 1);
-		mMF_Setting.SetLimlightSettingMax(0, 0, 0, 1, 1);
+		mMF_Setting.SetLimlightSettingMax(0, 0, 0, 0.5f, 1);
 	}
 }
 

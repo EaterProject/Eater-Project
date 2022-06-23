@@ -43,14 +43,15 @@ void PlayerCamera::SetUp()
 	//ShowMouseCursor(MouseCursor);
 	//MouseCursorClip(MouseCursor);
 	//MainCam->ChoiceCameraAnimation("StartCam");
-	SetMousePosCenter();
-	GetWindowSize(&PastX, &PastY);
-	PastX = PastX / 2;
-	PastY = PastY / 2;
-	NowX = PastX;
-	NowY = PastY;
-	SetCursorPos(PastX, PastY);
 	//SetMousePosCenter();
+	//GetWindowSize(&PastX, &PastY);
+	//PastX = PastX / 2;
+	//PastY = PastY / 2;
+	//NowX = PastX;
+	//NowY = PastY;
+	SetCursorPos(960, 540);
+	//SetMousePosCenter();
+	
 }
 
 void PlayerCamera::Update()
@@ -71,16 +72,21 @@ void PlayerCamera::Update()
 	}
 
 	if (MouseCursor == false) { return; }
-	NowX = GetMousePosX();
-	NowY = GetMousePosY();
+	POINT Pos;
+	::GetCursorPos(&Pos);
+
+	NowX = Pos.x;
+	NowY = Pos.y;
 
 	//마우스 위치를 가져온다
-	float MosSpeed = 50;
+	float MosSpeed = 15;
 
 	float Dir = 4.25f;
 	float MosControl = 250;
-	X_Radian += -(NowX - 960) *DTime * MosSpeed;
-	Y_Radian +=  (NowY - 540) *DTime * MosSpeed;
+
+	X_Radian += -((NowX - 960)* MosSpeed) * DTime;
+	Y_Radian +=  ((NowY - 540) * MosSpeed) * DTime;
+
 
 	if (Y_Radian >= 120) { Y_Radian = 120; }
 	if (Y_Radian <= -80) { Y_Radian = -80; }
@@ -112,7 +118,7 @@ void PlayerCamera::Update()
 	}
 
 	//현재 윈도우 사이즈를 가져옴
-	SetMousePos(960, 540);
+	SetCursorPos(960, 540);
 	//(960, 540);
 }
 

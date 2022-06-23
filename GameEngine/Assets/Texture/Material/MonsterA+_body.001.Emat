@@ -1,21 +1,21 @@
 #EATERMAT
-@ORMMap monsterA_Emissive
-@Alpha 0
 @MaterialName MonsterA+_body.001
+@Alpha 0
+@ORMMap monsterA_ORM
 @LimColor_B 0.000000
 @DiffuseMap monsterA_BaseColor
 @NormalMap monsterA_Normal
 @EmissiveMap monsterA_Emissive
+@Emissive 0.000000
 @SkyLightIndex 0.000000
-@Emissive 10.000000
 @Roughness 0.000000
 @Metallic -0.080000
 @Tileing_X 1
 @Tileing_Y 1
 @AddColor_R 0.000000
 @AddColor_G 0.000000
-@LimFactor 0.400000
 @AddColor_B 0.000000
+@LimFactor 0.400000
 @LimColor_R 0.000000
 @LimColor_G 0.000000
 @LimWidth 0.000000

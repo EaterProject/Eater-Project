@@ -101,7 +101,7 @@ void Boss::SetUp()
 	mState = (int)BOSS_STATE::IDLE;
 
 	//위치값 설정
-	mTransform->SetPosition(-44.0f, 6.0f, 62.0f);
+	mTransform->SetPosition(-45.09f, 6.8f, 70.0f);
 	StartPoint = { -44.0f,6.0f,62.0f };
 	mTransform->SetScale(1.5f, 1.5f, 1.5f);
 
@@ -112,8 +112,8 @@ void Boss::SetUp()
 void Boss::Start()
 {
 	mMF_Setting.Setting(this->gameobject);
-	mMF_Setting.SetLimlightSetting(1.0f, 1.0f, 1.0f, 1.0f, 1.0f);
-	mMF_Setting.SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED, 10.0f);
+	mMF_Setting.SetLimlightSetting(1.0f, 1.0f, 1.0f, 0.5f, 0.5f);
+	mMF_Setting.SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED, 7.0f);
 }
 
 void Boss::Update()
@@ -487,8 +487,8 @@ void Boss::Boss_Rendom_Attack_Ready()
 {
 	if (FirstState() == true)
 	{
-		mMF_Setting.SetLimlightSetting(1, 1, 1, 1, 1);
-		mMF_Setting.SetLimlightSettingMax(1, 0, 0, 6, 1);
+		mMF_Setting.SetLimlightSetting(1, 1, 1, 0.5f, 0.5f);
+		mMF_Setting.SetLimlightSettingMax(1, 0, 0, 3, 1);
 	}
 	else
 	{
@@ -551,8 +551,8 @@ void Boss::Boss_Rendom_Attack_End()
 {
 	if (FirstState() == true)
 	{
-		mMF_Setting.SetLimlightSetting(1, 0, 0, 6, 1);
-		mMF_Setting.SetLimlightSettingMax(1, 1, 1, 1, 1);
+		mMF_Setting.SetLimlightSetting(1, 0, 0, 3, 1);
+		mMF_Setting.SetLimlightSettingMax(1.0f, 1.0f, 1.0f, 0.5f, 0.5f);
 	}
 	else
 	{

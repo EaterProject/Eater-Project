@@ -37,7 +37,7 @@ private:
 	std::vector<MonsterA*> MonsterA_List;
 	std::vector<MonsterB*> MonsterB_List;
 
-	float Range = 10;
+	float Range = 12;
 	int MonsterACount = 0;
 	int MonsterBCount = 0;
 };

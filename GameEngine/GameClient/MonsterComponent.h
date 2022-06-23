@@ -107,7 +107,7 @@ protected:
 	float	RotationSpeed		= 200;			//몬스터 회전하는 속도
 	int		PointNumber			= -1;			//몬스터 이동 포인터 인덱스
 	int		ComboCount			= 6;			//현재 콤보 카운터
-	int		MonsterScale		= 1.0f;			
+	float	MonsterScale		= 1.0f;			
 	int		MonsterType			= 0;
 protected:
 	void GetRandomColor();
