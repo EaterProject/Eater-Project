@@ -51,12 +51,12 @@ void ImageFont::SetTexture(std::string texture_name)
 
 void ImageFont::SetColor(float r, float g, float b)
 {
-	mColor = { r,g,b,255 };
+	mMF_Setting = { r,g,b,255 };
 }
 
 void ImageFont::SetColor(float r, float g, float b, float a)
 {
-	mColor = { r,g,b,a };
+	mMF_Setting = { r,g,b,a };
 }
 
 void ImageFont::SetFontNumber(int Number)
@@ -141,6 +141,14 @@ void ImageFont::SetLayer(int Layer)
 	for (int i = 0; i < (int)ImageList.size(); i++)
 	{
 		ImageList[i]->SetLayer(Layer);
+	}
+}
+
+void ImageFont::SetActive(bool IsActive)
+{
+	for (int i = 0; i < (int)ImageList.size(); i++)
+	{
+		ImageList[i]->gameobject->SetActive(IsActive);
 	}
 }
 

@@ -111,9 +111,9 @@ void Boss::SetUp()
 
 void Boss::Start()
 {
-	mColor.Setting(this->gameobject);
-	mColor.SetLimlightSetting(1.0f, 1.0f, 1.0f, 1.0f, 1.0f);
-	mColor.SetEmissiveSetting(ColorSetting::COLOR_TYPE::RED, 10.0f);
+	mMF_Setting.Setting(this->gameobject);
+	mMF_Setting.SetLimlightSetting(1.0f, 1.0f, 1.0f, 1.0f, 1.0f);
+	mMF_Setting.SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED, 10.0f);
 }
 
 void Boss::Update()
@@ -314,12 +314,12 @@ void Boss::Boss_Teleport_Ready()
 {
 	if (FirstState() == true)
 	{
-		mColor.SetLimlightSetting(1,1,1, 1, 10);
-		mColor.SetLimlightSettingMax(1, 1, 1, 50, 10);
+		mMF_Setting.SetLimlightSetting(1,1,1, 1, 10);
+		mMF_Setting.SetLimlightSettingMax(1, 1, 1, 50, 10);
 	}
 	else
 	{
-		mColor.Update(10);
+		mMF_Setting.LimLightUpdate(10);
 	}
 
 
@@ -340,12 +340,12 @@ void Boss::Boss_Teleport_Start()
 {
 	if (FirstState() == true)
 	{
-		mColor.SetLimlightSetting(1, 1, 1, 50, 10);
-		mColor.SetLimlightSettingMax(1, 1, 1, 1, 10);
+		mMF_Setting.SetLimlightSetting(1, 1, 1, 50, 10);
+		mMF_Setting.SetLimlightSettingMax(1, 1, 1, 1, 10);
 	}
 	else
 	{
-		mColor.Update(10);
+		mMF_Setting.LimLightUpdate(10);
 	}
 
 
@@ -368,7 +368,7 @@ void Boss::Boss_Teleport_Start()
 		mTransform->SetScale_X(1.5f);
 		SetState(BOSS_STATE::IDLE);
 
-		mColor.Default();
+		mMF_Setting.Default();
 	}
 }
 
@@ -487,12 +487,12 @@ void Boss::Boss_Rendom_Attack_Ready()
 {
 	if (FirstState() == true)
 	{
-		mColor.SetLimlightSetting(1, 1, 1, 1, 1);
-		mColor.SetLimlightSettingMax(1, 0, 0, 6, 1);
+		mMF_Setting.SetLimlightSetting(1, 1, 1, 1, 1);
+		mMF_Setting.SetLimlightSettingMax(1, 0, 0, 6, 1);
 	}
 	else
 	{
-		mColor.Update(0.5f);
+		mMF_Setting.LimLightUpdate(0.5f);
 	}
 
 
@@ -551,12 +551,12 @@ void Boss::Boss_Rendom_Attack_End()
 {
 	if (FirstState() == true)
 	{
-		mColor.SetLimlightSetting(1, 0, 0, 6, 1);
-		mColor.SetLimlightSettingMax(1, 1, 1, 1, 1);
+		mMF_Setting.SetLimlightSetting(1, 0, 0, 6, 1);
+		mMF_Setting.SetLimlightSettingMax(1, 1, 1, 1, 1);
 	}
 	else
 	{
-		mColor.Update(0.5);
+		mMF_Setting.LimLightUpdate(0.5);
 	}
 
 

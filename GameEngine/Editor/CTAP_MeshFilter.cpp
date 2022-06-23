@@ -93,8 +93,8 @@ void CTAP_MeshFilter::SetGameObject(MeshFilter* ObjectMeshFilter)
 		AddColor_R.SetWindowTextW(ChangeToCString(AddColorR));
 		AddColor_G.SetWindowTextW(ChangeToCString(AddColorG));
 		AddColor_B.SetWindowTextW(ChangeToCString(AddColorB));
-		COLORREF mColor = RGB(Add.x, Add.y, Add.z);
-		Custom_LimLightColor_Button.SetFaceColor(mColor);
+		COLORREF mMF_Setting = RGB(Add.x, Add.y, Add.z);
+		Custom_LimLightColor_Button.SetFaceColor(mMF_Setting);
 
 
 		Vector4 Lim = mMaterial->m_MaterialData->Material_Property->LimLightColor;
@@ -108,8 +108,8 @@ void CTAP_MeshFilter::SetGameObject(MeshFilter* ObjectMeshFilter)
 		LimLight_R_Edit.SetWindowTextW(ChangeToCString(Lim.x));
 		LimLight_G_Edit.SetWindowTextW(ChangeToCString(Lim.y));
 		LimLight_B_Edit.SetWindowTextW(ChangeToCString(Lim.z));
-		mColor = RGB(Lim.x, Lim.y, Lim.z);
-		Custom_LimLightColor_Button.SetFaceColor(mColor);
+		mMF_Setting = RGB(Lim.x, Lim.y, Lim.z);
+		Custom_LimLightColor_Button.SetFaceColor(mMF_Setting);
 
 
 		float LimFactor = mMaterial->m_MaterialData->Material_Property->LimLightFactor * 10.0f;

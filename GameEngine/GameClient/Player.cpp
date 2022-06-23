@@ -84,6 +84,10 @@ void Player::Start()
 	Hand->ChoiceChild(WeaponObject);
 	WeaponObject->ChoiceParent(Hand);
 	WeaponTR = WeaponObject->GetTransform();
+
+	mColor.Setting(this->gameobject);
+	mColor.SetLimlightSetting(MeshFilterSetting::COLOR_TYPE::RED, 1, 1);
+	MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_EMAGIN_NOW, &ChangeCount);
 }
 
 void Player::Update()
@@ -222,6 +226,15 @@ void Player::PlayerKeyinput()
 		ChangeCount++;
 		if (ChangeCount > 14){ChangeCount = 0;}
 		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_EMAGIN_NOW, &ChangeCount);
+
+		if((ChangeCount % 2) == 0)
+		{
+			mColor.SetLimlightSetting(MeshFilterSetting::COLOR_TYPE::RED, 1, 1);
+		}
+		else
+		{
+			mColor.SetLimlightSetting(MeshFilterSetting::COLOR_TYPE::BLUE, 1, 1);
+		}
 		Sound_Play_SFX("ChangeEmagin");
 	}
 	else if (GetKeyDown(VK_SPACE))
@@ -536,7 +549,7 @@ void Player::PlayerGroundCheck()
 			RayStartPoint = position;
 			break;
 		}
-		RayStartPoint.y = position.y + 2;
+		RayStartPoint.y = position.y + 0.5f;
 
 		//Ray °ª Á¶Á¤
 		RayCastHit[i];

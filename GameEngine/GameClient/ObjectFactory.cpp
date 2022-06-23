@@ -113,7 +113,7 @@ GameObject* ObjectFactory::CreateManaStone()
 		switch (i)
 		{
 		case 0:
-			mMana->SetMonsterCount(5, 0);
+			mMana->SetMonsterCount(4, 1);
 			break;
 		case 1:
 			mMana->SetMonsterCount(4, 1);

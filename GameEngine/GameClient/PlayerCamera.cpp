@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include "Transform.h"
 #include "EaterEngineAPI.h"
+#include "windows.h"
 
 PlayerCamera::PlayerCamera()
 {
@@ -42,13 +43,14 @@ void PlayerCamera::SetUp()
 	//ShowMouseCursor(MouseCursor);
 	//MouseCursorClip(MouseCursor);
 	//MainCam->ChoiceCameraAnimation("StartCam");
-	//SetMousePosCenter();
+	SetMousePosCenter();
 	GetWindowSize(&PastX, &PastY);
 	PastX = PastX / 2;
 	PastY = PastY / 2;
 	NowX = PastX;
 	NowY = PastY;
-	SetMousePos(PastX, PastY);
+	SetCursorPos(PastX, PastY);
+	//SetMousePosCenter();
 }
 
 void PlayerCamera::Update()
@@ -111,11 +113,12 @@ void PlayerCamera::Update()
 
 	//현재 윈도우 사이즈를 가져옴
 	SetMousePos(960, 540);
+	//(960, 540);
 }
 
 void PlayerCamera::Debug()
 {
-	DebugPrint("X : %.2f", mTransform->GetRotation().x);
-	DebugPrint("Y : %.2f", mTransform->GetRotation().y);
+	//DebugPrint("X : %.2f", mTransform->GetRotation().x);
+	//DebugPrint("Y : %.2f", mTransform->GetRotation().y);
 }
 

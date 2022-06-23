@@ -1,4 +1,4 @@
-#include "ColorSetting.h"
+#include "MeshFilterSetting.h"
 #include "EaterEngineAPI.h"
 #include "EngineData.h"
 
@@ -6,23 +6,17 @@
 #include "MeshFilter.h"
 #include "GameObject.h"
 
-ColorSetting::ColorSetting()
+MeshFilterSetting::MeshFilterSetting()
 {
-
-
-
 
 }
 
-ColorSetting::~ColorSetting()
+MeshFilterSetting::~MeshFilterSetting()
 {
-
-
-
-
+	Release();
 }
 
-void ColorSetting::Setting(GameObject* Object)
+void MeshFilterSetting::Setting(GameObject* Object)
 {
 	int Count =  Object->GetChildMeshCount();
 	if(Count == 0)
@@ -53,10 +47,9 @@ void ColorSetting::Setting(GameObject* Object)
 			MPBList.push_back(Block);
 		}
 	}
-	IsSetting = true;
 }
 
-void ColorSetting::SetLimlightSetting(float R, float G, float B, float mFactor, float mWidth)
+void MeshFilterSetting::SetLimlightSetting(float R, float G, float B, float mFactor, float mWidth)
 {
 	LimColor[0] = R;
 	LimColor[1] = G;
@@ -64,10 +57,10 @@ void ColorSetting::SetLimlightSetting(float R, float G, float B, float mFactor, 
 	LimColor[3] = mFactor;
 	LimColor[4] = mWidth;
 	LimLightUpdate();
-	IsTypeSetting = true;
+	IsSetting_LimLight = true;
 }
 
-void ColorSetting::SetLimlightSetting(COLOR_TYPE Type, float mFactor, float mWidth)
+void MeshFilterSetting::SetLimlightSetting(COLOR_TYPE Type, float mFactor, float mWidth)
 {
 	switch (Type)
 	{
@@ -95,20 +88,20 @@ void ColorSetting::SetLimlightSetting(COLOR_TYPE Type, float mFactor, float mWid
 	LimColor[3] = mFactor;
 	LimColor[4] = mWidth;
 	LimLightUpdate();
-	IsTypeSetting = true;
+	IsSetting_LimLight = true;
 }
 
-void ColorSetting::SetLimlightSettingMax(float R, float G, float B, float mFactor, float mWidth)
+void MeshFilterSetting::SetLimlightSettingMax(float R, float G, float B, float mFactor, float mWidth)
 {
 	LimColorMax[0] = R;
 	LimColorMax[1] = G;
 	LimColorMax[2] = B;
 	LimColorMax[3] = mFactor;
 	LimColorMax[4] = mWidth;
-	IsTypeSetting = true;
+	IsSetting_LimLight = true;
 }
 
-void ColorSetting::SetLimlightSettingMax(COLOR_TYPE Type, float mFactor, float mWidth)
+void MeshFilterSetting::SetLimlightSettingMax(COLOR_TYPE Type, float mFactor, float mWidth)
 {
 	switch (Type)
 	{
@@ -135,19 +128,20 @@ void ColorSetting::SetLimlightSettingMax(COLOR_TYPE Type, float mFactor, float m
 	}
 	LimColorMax[3] = mFactor;
 	LimColorMax[4] = mWidth;
-	IsTypeSetting = true;
+	IsSetting_LimLight = true;
 }
 
-void ColorSetting::SetEmissiveSetting(float R, float G, float B, float mFactor)
+void MeshFilterSetting::SetEmissiveSetting(float R, float G, float B, float mFactor)
 {
 	EmissiveColor[0] = R;
 	EmissiveColor[1] = G;
 	EmissiveColor[2] = B;
 	EmissiveColor[3] = mFactor;
 	EmissiveUpdate();
+	IsSetting_Emissive = true;
 }
 
-void ColorSetting::SetEmissiveSetting(COLOR_TYPE Type, float mFactor)
+void MeshFilterSetting::SetEmissiveSetting(COLOR_TYPE Type, float mFactor)
 {
 	switch (Type)
 	{
@@ -169,9 +163,48 @@ void ColorSetting::SetEmissiveSetting(COLOR_TYPE Type, float mFactor)
 	}
 	EmissiveColor[3] = mFactor;
 	EmissiveUpdate();
+	IsSetting_Emissive = true;
 }
 
-void ColorSetting::LimLightUpdate()
+void MeshFilterSetting::SetEmissiveSettingMax(float R, float G, float B, float mFactor)
+{
+	EmissiveColor[0] = R;
+	EmissiveColor[1] = G;
+	EmissiveColor[2] = B;
+	EmissiveColor[3] = mFactor;
+	IsSetting_Emissive = true;
+}
+
+void MeshFilterSetting::SetEmissiveSettingMax(COLOR_TYPE Type, float mFactor)
+{
+	switch (Type)
+	{
+		case COLOR_TYPE::RED:
+			EmissiveColor[0] = 1.0f;
+			EmissiveColor[1] = 0.0f;
+			EmissiveColor[2] = 0.0f;
+			break;
+		case COLOR_TYPE::GREEN:
+			EmissiveColor[0] = 0.0f;
+			EmissiveColor[1] = 1.0f;
+			EmissiveColor[2] = 0.0f;
+			break;
+		case COLOR_TYPE::BLUE:
+			EmissiveColor[0] = 0.0f;
+			EmissiveColor[1] = 0.0f;
+			EmissiveColor[2] = 1.0f;
+			break;
+		case COLOR_TYPE::WHITE:
+			EmissiveColor[0] = 1.0f;
+			EmissiveColor[1] = 1.0f;
+			EmissiveColor[2] = 1.0f;
+			break;
+	}
+	EmissiveColor[2] = mFactor;
+	IsSetting_Emissive = true;
+}
+
+void MeshFilterSetting::LimLightUpdate()
 {
 	//셋팅이 완료 되었을 경우에만 업데이트
 	int Count = (int)MPBList.size();
@@ -183,7 +216,7 @@ void ColorSetting::LimLightUpdate()
 	}
 }
 
-void ColorSetting::EmissiveUpdate()
+void MeshFilterSetting::EmissiveUpdate()
 {
 	int Count = (int)MPBList.size();
 	for (int i = 0; i < Count; i++)
@@ -193,10 +226,10 @@ void ColorSetting::EmissiveUpdate()
 	}
 }
 
-void ColorSetting::Update(float Speed)
+void MeshFilterSetting::LimLightUpdate(float Speed)
 {
 	//처음 한번만 값 증가,감소 여부 판단
-	if (IsTypeSetting == true)
+	if (IsSetting_LimLight == true)
 	{
 		for (int i = 0; i < 5; i++)
 		{
@@ -216,9 +249,7 @@ void ColorSetting::Update(float Speed)
 				LImColorOneFrame[i] = 0;
 			}
 		}
-		IsTypeSetting = false;
-		//IsLimLightColor_Setting		= false;
-		//IsLimLightColorMax_Setting	= false;
+		IsSetting_LimLight = false;
 	}
 	else
 	{
@@ -245,7 +276,56 @@ void ColorSetting::Update(float Speed)
 	}
 }
 
-void ColorSetting::Default()
+void MeshFilterSetting::EmissiveUpdate(float Speed)
+{
+	//처음 한번만 값 증가,감소 여부 판단
+	if (IsSetting_Emissive == true)
+	{
+		for (int i = 0; i < 5; i++)
+		{
+			if (EmissiveColor[i] > EmissiveColorMax[i])
+			{
+				EmissiveValue[i] = TYPE_DOWN;
+				EmissiveOneFrame[i] = EmissiveColor[i] - EmissiveColorMax[i];
+			}
+			else if (EmissiveColor[i] < EmissiveColorMax[i])
+			{
+				EmissiveValue[i] = TYPE_UP;
+				EmissiveOneFrame[i] = EmissiveColorMax[i] - EmissiveColor[i];
+			}
+			else
+			{
+				EmissiveValue[i] = NONE;
+				EmissiveOneFrame[i] = 0;
+			}
+		}
+		IsSetting_Emissive = false;
+	}
+	else
+	{
+		float DTime = GetDeltaTime();
+		for (int i = 0; i < 5; i++)
+		{
+			switch (EmissiveValue[i])
+			{
+			case 0: //증가a
+				EmissiveColor[i] += DTime * (EmissiveOneFrame[i] * Speed);
+				if (EmissiveColor[i] >= EmissiveColorMax[i]) { EmissiveValue[i] = TYPE_NONE; EmissiveColor[i] = EmissiveColorMax[i]; }
+				//DebugPrint("%.2f", LimColor[i]);
+				break;
+			case 1: //감소
+				EmissiveColor[i] -= DTime * (EmissiveOneFrame[i] * Speed);
+				if (EmissiveColor[i] <= EmissiveColorMax[i]) { EmissiveValue[i] = TYPE_NONE; EmissiveColor[i] = EmissiveColorMax[i]; }
+				break;
+			case 2: //변화량 없음
+				break;
+			}
+		}
+		EmissiveUpdate();
+	}
+}
+
+void MeshFilterSetting::Default()
 {
 	//기본 셋팅
 	LimColor[0] = 1.0f;
@@ -266,6 +346,15 @@ void ColorSetting::Default()
 		MPBList[i]->LimLightColor	= { LimColor[0],LimColor[1],LimColor[2] } ;
 		MPBList[i]->LimLightFactor	= LimColor[3];
 		MPBList[i]->LimLightWidth	= LimColor[4];
+	}
+}
+
+void MeshFilterSetting::Release()
+{
+	int Size = (int)MeshFilterList.size();
+	for (int i = 0; i < Size; i++)
+	{
+		MeshFilterList[i]->SetMaterialPropertyBlock(false);
 	}
 }
 

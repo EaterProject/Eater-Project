@@ -125,7 +125,9 @@ void Eater_LoadScene::LoadData(std::string& FilePath)
 			mOption->BLOOM_Threshold_Max = Data[14];
 			mOption->BLOOM_Factor = Data[15];
 			mOption->SkyLight_Factor = Data[16];
+			mOption->RenderingOption ^= RENDER_OPTION::RENDER_FOG;
 			RenderSetting();
+
 
 			GameObject* Obj = GetDirectionLight();
 			Light* mLight = Obj->GetComponent<Light>();

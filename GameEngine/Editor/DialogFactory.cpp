@@ -73,7 +73,7 @@ void DialogFactory::Initialize()
 	mSkySetting->Create(IDD_SKY_SETTING);
 	mSkySetting->ShowWindow(SW_HIDE);
 
-	mColor		= new CColorDialog(RGB(0,0,0),CC_FULLOPEN);
+	mMF_Setting		= new CColorDialog(RGB(0,0,0),CC_FULLOPEN);
 
 	mEditorManager = new EditorManager();
 	mEditorManager->Initialize();

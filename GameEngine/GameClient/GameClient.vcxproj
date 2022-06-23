@@ -177,7 +177,7 @@ copy /Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)" </Command>
     <ClInclude Include="BossWeapon.h" />
     <ClInclude Include="CameraManager.h" />
     <ClInclude Include="ClientTypeOption.h" />
-    <ClInclude Include="ColorSetting.h" />
+    <ClInclude Include="MeshFilterSetting.h" />
     <ClInclude Include="ComboFont.h" />
     <ClInclude Include="Drone.h" />
     <ClInclude Include="FontImage.h" />
@@ -216,7 +216,7 @@ copy /Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)" </Command>
     <ClCompile Include="BossFriend.cpp" />
     <ClCompile Include="BossWeapon.cpp" />
     <ClCompile Include="CameraManager.cpp" />
-    <ClCompile Include="ColorSetting.cpp" />
+    <ClCompile Include="MeshFilterSetting.cpp" />
     <ClCompile Include="ComboFont.cpp" />
     <ClCompile Include="Drone.cpp" />
     <ClCompile Include="FontImage.cpp" />

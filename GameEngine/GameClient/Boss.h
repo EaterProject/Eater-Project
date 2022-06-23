@@ -1,7 +1,7 @@
 #pragma once
 #include "Component.h"
 #include "ClientTypeOption.h"
-#include "ColorSetting.h"
+#include "MeshFilterSetting.h"
 #include <string>
 
 class AnimationController;
@@ -91,6 +91,6 @@ private:
 	BossFriend* Friend;
 	MeshFilter* ChildeMeshFilter[7];
 
-	ColorSetting mColor;
+	MeshFilterSetting mMF_Setting;
 };
 

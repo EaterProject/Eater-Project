@@ -24,9 +24,9 @@ void MonsterA::SetUp()
 	ModelName		= "MonsterA+";
 	AnimationName	= "MonsterA+";
 
-	//맞았을떄 줄어드는 값
-	NowHitMonsterScale	 = 1.25f;
-	NowHitMonsterScale_F = 0.15f;
+	//몬스터 크기
+	MonsterScale	= 1.5f;
+	MonsterType		= MONSTER_TYPE_A;
 
 	//사운드
 	Sound_Attack	= "Monster_A_Attack";

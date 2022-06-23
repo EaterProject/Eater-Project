@@ -26,6 +26,7 @@ public:
 	EATER_ENGINEDLL void SetPivot(PIVOT_TYPE mType);					//글자 사이의 간격
 	EATER_ENGINEDLL void SetPositionObject(GameObject* Object,Vector3 Pos);	//글자 사이의 간격
 	EATER_ENGINEDLL void SetLayer(int Layer);							//글자 사이의 간격
+	EATER_ENGINEDLL void SetActive(bool IsActive);							//글자 사이의 간격
 private:
 	std::vector<Image*>			ImageList;
 	std::vector<RectTransform*> TransformList;
@@ -39,7 +40,7 @@ private:
 
 	bool IsAwake = false;
 
-	Vector4 mColor		= { 255,255,255,255};
+	Vector4 mMF_Setting		= { 255,255,255,255};
 	Vector2 mPosition	= {0,0};
 	Vector2 mScale		= {1,1};
 };

@@ -74,13 +74,27 @@ void MonsterComponent::SetUp()
 	PointNumber = rand() % 5;
 	mTransform->SetPosition(SearchPoint[PointNumber]);
 
-	float Scale = NowHitMonsterScale + NowHitMonsterScale_F;
-	mTransform->SetScale(Scale, Scale, Scale);
+	mTransform->SetScale(MonsterScale, MonsterScale, MonsterScale);
 }
 
 void MonsterComponent::Start()
 {
-	mColor.Setting(this->gameobject);
+	mMF_Setting.Setting(this->gameobject);
+	GetRandomColor();
+	if (MonsterColor == MONSTER_COLOR_RED)
+	{
+		mMF_Setting.SetLimlightSetting(MeshFilterSetting::COLOR_TYPE::RED, 1,1);
+		mMF_Setting.SetLimlightSettingMax(MeshFilterSetting::COLOR_TYPE::RED, 1,1);
+		mMF_Setting.SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED, 100);
+		mMF_Setting.SetEmissiveSettingMax(MeshFilterSetting::COLOR_TYPE::RED, 100);
+	}
+	else
+	{
+		mMF_Setting.SetLimlightSetting(MeshFilterSetting::COLOR_TYPE::BLUE, 1, 1);
+		mMF_Setting.SetLimlightSettingMax(MeshFilterSetting::COLOR_TYPE::BLUE, 1, 1);
+		mMF_Setting.SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::BLUE, 100);
+		mMF_Setting.SetEmissiveSettingMax(MeshFilterSetting::COLOR_TYPE::BLUE, 100);
+	}
 }
 
 void MonsterComponent::Update()
@@ -139,19 +153,8 @@ void MonsterComponent::OnTriggerStay(GameObject* Obj)
 			HP			-= 20;
 			HitStart	 = true;
 
-			MONSTER_EMAGIN Data;
-			Data.R = 255;
-			Data.G = 0;
-			Data.B = 0;
-			Data.HP = HP;
-			Data.ComboCount = ComboCount;
-			Data.Object = this->gameobject;
-			MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_MONSTER_UI_UPDATE, &Data);
-			mColor.SetLimlightSetting(1, 0, 0, 5, 1);
-			mColor.SetLimlightSettingMax(0, 0, 0, 1, 1);
-			//사운드 출력
+			SetMonsterColor();
 			Sound_Play_SFX(Sound_Hit);
-			//MessageManager::GetGM()->SEND_Message(TARGET_UI,MESSAGE_UI_MONSTERUI);
 		}
 	}
 	else
@@ -257,6 +260,7 @@ void MonsterComponent::Dead()
 		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_MONSTER_UI_OFF, &Data);
 		IsUI_ON = false;
 	}
+	mMF_Setting.LimLightUpdate(1);
 }
 
 void MonsterComponent::Chase()
@@ -296,7 +300,7 @@ void MonsterComponent::Hit()
 	{
 		float End = mAnimation->GetEndFrame();
 		float Now = mAnimation->GetNowFrame();
-		mColor.Update(1);
+		mMF_Setting.LimLightUpdate(1);
 		if (Now >= End)
 		{
 			HitStart = false;
@@ -323,13 +327,27 @@ void MonsterComponent::PlayerDistanceCheck()
 	if (PlayerDistance <= ChaseRange && IsUI_ON == false) 
 	{
 		MONSTER_EMAGIN Data;
-		Data.R = 255;
-		Data.G = 0;
-		Data.B = 0;
-		Data.HP = HP;
-		Data.ComboCount = ComboCount;
-		Data.Object = this->gameobject;
-		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_MONSTER_UI_ON, &Data);
+		if (MonsterColor == MONSTER_COLOR_RED)
+		{
+			Data.R = 255;
+			Data.G = 0;
+			Data.B = 0;
+			Data.HP = HP;
+			Data.ComboCount = ComboCount;
+			Data.Object = this->gameobject;
+			MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_MONSTER_UI_ON, &Data);
+		}
+		else
+		{
+			Data.R = 0;
+			Data.G = 0;
+			Data.B = 255;
+			Data.HP = HP;
+			Data.Type = MONSTER_TYPE_A;
+			Data.ComboCount = ComboCount;
+			Data.Object = this->gameobject;
+			MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_MONSTER_UI_ON, &Data);
+		}
 		IsUI_ON		= true;
 	}
 
@@ -406,6 +424,45 @@ bool MonsterComponent::FirstState()
 	else
 	{
 		return false;
+	}
+}
+
+void MonsterComponent::GetRandomColor()
+{
+	MonsterColor = rand() % 2;
+}
+
+void MonsterComponent::SetMonsterColor()
+{
+	if (MonsterColor == MONSTER_COLOR_RED)
+	{
+		MONSTER_EMAGIN Data;
+		Data.R = 255;
+		Data.G = 0;
+		Data.B = 0;
+		Data.HP = HP;
+		Data.Type = MonsterType;
+		Data.ComboCount = ComboCount;
+		Data.Object = this->gameobject;
+		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_MONSTER_UI_UPDATE, &Data);
+
+		mMF_Setting.SetLimlightSetting(1, 0, 0, 5, 1);
+		mMF_Setting.SetLimlightSettingMax(0, 0, 0, 1, 1);
+	}
+	else
+	{
+		MONSTER_EMAGIN Data;
+		Data.R = 0;
+		Data.G = 0;
+		Data.B = 255;
+		Data.HP = HP;
+		Data.Type = MonsterType;
+		Data.ComboCount = ComboCount;
+		Data.Object = this->gameobject;
+		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_MONSTER_UI_UPDATE, &Data);
+
+		mMF_Setting.SetLimlightSetting(0, 0, 1, 5, 1);
+		mMF_Setting.SetLimlightSettingMax(0, 0, 0, 1, 1);
 	}
 }
 

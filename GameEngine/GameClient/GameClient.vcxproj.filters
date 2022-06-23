@@ -22,9 +22,6 @@
     <Filter Include="소스 파일\Scene\intro">
       <UniqueIdentifier>{6c66b294-6e2d-45e5-af55-b696ee34abf8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Scene\inGame">
-      <UniqueIdentifier>{e93e28d7-0fc6-4289-b4a5-74957091c4b2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Scene\Loading">
       <UniqueIdentifier>{f6aae002-8b2f-4f9e-9f7f-1cf3cad1c77d}</UniqueIdentifier>
     </Filter>
@@ -118,8 +115,17 @@
     <Filter Include="소스 파일\Component\Monster\Boss\BossFriend">
       <UniqueIdentifier>{4040c390-0112-4eda-9e64-01e308264590}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Color">
+    <Filter Include="소스 파일\Scene\inGame">
+      <UniqueIdentifier>{e93e28d7-0fc6-4289-b4a5-74957091c4b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\SettingClass">
       <UniqueIdentifier>{62e5fd0b-b3fc-40a3-8027-18d319b31a29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\SettingClass\MeshFilterSetting">
+      <UniqueIdentifier>{0256ba7d-ab8b-47ed-83a4-c798a8036ed5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\SettingClass\TransformSetting">
+      <UniqueIdentifier>{9d384a10-68ee-4d37-af3a-2ff860bcb9d7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -213,8 +219,8 @@
     <ClInclude Include="BossFriend.h">
       <Filter>소스 파일\Component\Monster\Boss\BossFriend</Filter>
     </ClInclude>
-    <ClInclude Include="ColorSetting.h">
-      <Filter>소스 파일\Color</Filter>
+    <ClInclude Include="MeshFilterSetting.h">
+      <Filter>소스 파일\SettingClass\MeshFilterSetting</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -296,8 +302,8 @@
     <ClCompile Include="Boss.cpp">
       <Filter>소스 파일\Component\Monster\Boss\Boss</Filter>
     </ClCompile>
-    <ClCompile Include="ColorSetting.cpp">
-      <Filter>소스 파일\Color</Filter>
+    <ClCompile Include="MeshFilterSetting.cpp">
+      <Filter>소스 파일\SettingClass\MeshFilterSetting</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -54,6 +54,11 @@
 #define MESSAGE_GLOBAL_GAMEEND	1							//게임이 종료되었다
 
 
+#define MONSTER_COLOR_RED 0
+#define MONSTER_COLOR_BLUE 1
+#define MONSTER_TYPE_A 0
+#define MONSTER_TYPE_B 1
+
 enum class MONSTER_STATE : int
 {
 	IDLE	= 0,	//대기
@@ -99,6 +104,7 @@ struct MONSTER_EMAGIN
 	float B = 255.f;
 	int ComboCount = 7;
 	int HP;
+	int Type;
 	void* Object;
 };
 

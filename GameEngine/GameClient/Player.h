@@ -1,5 +1,6 @@
 #pragma once
 #include "NetworkComponent.h"
+#include "MeshFilterSetting.h"
 #include <queue>
 #include "PlayerData.h"
 
@@ -90,6 +91,7 @@ private:
 	int	ComboCount;
 	float		ComboTime	= 0.0f;
 	float		HitTime		= 0.0f;
+	MeshFilterSetting		mColor;
 private:
 	///Animation 관련
 	std::string AnimationName;
@@ -118,7 +120,7 @@ private:
 	bool IsLeftRayCheck		= false;
 	int HitCount			= 0;
 private:
-	float AttackDir				= 0.75f; //공격 거리
+	float AttackDir				= 2.0f; //공격 거리
 	float AttackRange			= 1.5f;
 	const float Attack01_Dir	= 0.75f;
 	const float Attack02_Dir	= 0.75f;

@@ -47,6 +47,7 @@ private:
 	void Update_Combo_Check();	//크기 처리
 	
 	int GetActiveMonsterUI();
+	void SetMonsterUIActive(int index, bool IsActive);
 	bool UseCheck(GameObject* Obj);
 
 	RectTransform*	RT[15]		= { nullptr };
@@ -58,7 +59,7 @@ private:
 	//몬스터 UI들
 	Image*			Monster_Emagin_Back[5]	= { nullptr };
 	Image*			Monster_Emagin_Front[5] = { nullptr };
-	RectTransform*	MonSterTR_Back[5]		= { nullptr };
+	RectTransform*	MonsterTR_Back[5]		= { nullptr };
 	RectTransform*	MonsterTR_Front[5]		= { nullptr };
 	Slider*			MonsterSlider[5]		= { nullptr };
 	ImageFont*		MonsterFont[5]			= { nullptr };

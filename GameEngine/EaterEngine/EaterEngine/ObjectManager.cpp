@@ -343,7 +343,7 @@ void ObjectManager::PlayUpdate()
 	//컨퍼넌트들을 초기화된 값 셋팅
 	FunctionState = (int)FUNCTION_STATE::FUNCTION_START;
 	StartFunction.PlayOnce();
-
+	 
 	//가장 먼저실행되는 StartUpdate 함수 리스트(각 컨퍼넌트들의 초기화작업을 해줄때)
 	FunctionState = (int)FUNCTION_STATE::FUNCTION_SETAT_UPDATE;
 	StartUpdate.Play();

@@ -23,7 +23,7 @@ void BossWeapon::SetUp()
 {
 	mMeshFilter->SetModelName("Sphere");
 	//gameobject->SetActive(false);
-	//mColor.Setting(this->gameobject);
+	//mMF_Setting.Setting(this->gameobject);
 }
 
 void BossWeapon::Update()
@@ -64,14 +64,14 @@ void BossWeapon::Update()
 		}
 	}
 
-	//mColor.Update(1);
+	//mMF_Setting.Update(1);
 }
 
 
 void BossWeapon::SetShootingPoistion(Vector3 Start, Vector3 End)
 {
-	//mColor.SetLimlightSetting(0, 0, 0, 1, 1);
-	//mColor.SetLimlightSettingMax(1, 0, 0, 1, 1);
+	//mMF_Setting.SetLimlightSetting(0, 0, 0, 1, 1);
+	//mMF_Setting.SetLimlightSettingMax(1, 0, 0, 1, 1);
 
 	gameobject->SetActive(true);
 	//지점 설정

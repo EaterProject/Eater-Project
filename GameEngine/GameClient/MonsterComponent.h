@@ -1,7 +1,7 @@
 #pragma once
 #include "Component.h"
 #include "ClientTypeOption.h"
-#include "ColorSetting.h"
+#include "MeshFilterSetting.h"
 #include <string>
 #include <functional>
 class PhysRayCast;
@@ -10,7 +10,6 @@ class Transform;
 class AnimationController;
 class Collider;
 class Rigidbody;
-class MaterialPropertyBlock;
 class MonsterComponent : public Component
 {
 public:
@@ -108,17 +107,14 @@ protected:
 	float	RotationSpeed		= 200;			//몬스터 회전하는 속도
 	int		PointNumber			= -1;			//몬스터 이동 포인터 인덱스
 	int		ComboCount			= 6;			//현재 콤보 카운터
+	int		MonsterScale		= 1.0f;			
+	int		MonsterType			= 0;
 protected:
-	Vector3 NowLimLightColor	= { 1,0,0 };	//건들면 안됨
-	float	NowHitMonsterScale_F = 0.25f;		//맞았을때 커지는 스케일값 소수점
-	float	NowHitMonsterScale   = 1.0f;		//맞았을때 커지는 스케일값 소수점
-	float	NowLimLightFactor	= 2.0f;			//건들면 안됨
-	float	NowLimLightWidth	= 0.9f;			//건들면 안됨
-	bool	NowUpdateColor		= false;		//건들면 안됨
+	void GetRandomColor();
+	void SetMonsterColor();
+	int		MonsterColor		= 0;			//건들면 안됨
 protected:
-	ColorSetting	mColor;
-
-
+	MeshFilterSetting	mMF_Setting;
 	std::function<void()> HitFunction;
 
 };

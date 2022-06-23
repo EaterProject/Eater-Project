@@ -16,13 +16,12 @@ void InGame::Awake()
 	Logic = new GameLogic();
 
 	//Tool에서 만들어놓은 씬을 로드
-	Load("../Assets/Scene/test.Scene");
+	Load("../Assets/Scene/inGame.Scene");
 
 	// 오클루더 설정..
 	AddOccluder("Dome_program_0");
 	
 	BakeSkyLightMap("SkyLight_HDRI", false);
-	
 	BakeSkyLightMap("SkyLight_0", false);
 	BakeSkyLightMap("SkyLight_1", false);
 	
