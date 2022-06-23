@@ -45,21 +45,31 @@ void GameObject::SetActive(bool active)
 	{
 		ChildMeshList[i]->SetActive(active);
 	}
-}
 
-void GameObject::SetStatic(bool active)
-{
-	OneMeshData->Object_Data->IsStatic = active;
+	for (int i = 0; i < ChildBoneList.size(); i++)
+	{
+		ChildBoneList[i]->SetActive(active);
+	}
 }
 
 void GameObject::SetShadow(bool active)
 {
 	OneMeshData->Object_Data->IsShadow = active;
+
+	for (int i = 0; i < ChildMeshList.size(); i++)
+	{
+		ChildMeshList[i]->SetShadow(active);
+	}
 }
 
 void GameObject::SetCull(bool active)
 {
 	OneMeshData->Object_Data->IsCull = active;
+
+	for (int i = 0; i < ChildMeshList.size(); i++)
+	{
+		ChildMeshList[i]->SetCull(active);
+	}
 }
 
 void GameObject::SetDontDestroy(bool mDontDestroy)
@@ -263,6 +273,21 @@ void GameObject::ChoiceChild(GameObject* obj)
 	//나자신을 선택한 오브젝트의 자식으로 넣는다
 	transform->SetChild(obj->transform);
 	obj->transform->SetParent(transform);
+}
+
+bool GameObject::GetActive()
+{
+	return OneMeshData->Object_Data->IsActive;
+}
+
+bool GameObject::GetShadow()
+{
+	return OneMeshData->Object_Data->IsShadow;
+}
+
+bool GameObject::GetCull()
+{
+	return OneMeshData->Object_Data->IsCull;
 }
 
 void GameObject::PushChildMeshObject(GameObject* obj)

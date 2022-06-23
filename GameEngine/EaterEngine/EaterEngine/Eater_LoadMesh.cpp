@@ -278,6 +278,10 @@ void Eater_LoadMesh::LoadName(int index, LoadMeshData* model)
 	model->Name			= EATER_GET_MAP(index, "NodeName");
 	model->ParentName	= EATER_GET_MAP(index, "ParentName");
 	std::string Top		= EATER_GET_MAP(index, "TopNode");
+
+	model->IsActive = std::stoi(EATER_GET_MAP(index, "IsActive"));
+	model->IsShadow = std::stoi(EATER_GET_MAP(index, "IsShadow"));
+	model->IsCull	= std::stoi(EATER_GET_MAP(index, "IsCull"));
 	if (Top != "NO")
 	{
 		model->Top_Object = true;

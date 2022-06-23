@@ -86,6 +86,9 @@ void E_MeshManager::ChangeEaterFile_Skin(ParserData::CMesh* OneMesh)
 		{
 			EATER_SET_MAP("TopNode", "NO");
 		}
+		EATER_SET_MAP("IsActive", std::to_string(1));
+		EATER_SET_MAP("IsShadow", std::to_string(1));
+		EATER_SET_MAP("IsCull", std::to_string(1));
 		SetMatrix(OneMesh);
 	}
 	else if (OneMesh->m_MeshType == SKIN_MESH)
@@ -100,8 +103,10 @@ void E_MeshManager::ChangeEaterFile_Skin(ParserData::CMesh* OneMesh)
 		{
 			EATER_SET_MAP("TopNode", "NO");
 		}
+		EATER_SET_MAP("IsActive", std::to_string(1));
+		EATER_SET_MAP("IsShadow", std::to_string(1));
+		EATER_SET_MAP("IsCull", std::to_string(1));
 		SetMatrix(OneMesh);
-
 		if (BoneOffsetSave == false)
 		{
 			SetBoneOffset(OneMesh);
@@ -129,6 +134,10 @@ void E_MeshManager::SetDataName(ParserData::CMesh* mMesh)
 	{
 		EATER_SET_MAP("MaterialName", "NO");
 	}
+
+	EATER_SET_MAP("IsActive",std::to_string(1));
+	EATER_SET_MAP("IsShadow",std::to_string(1));
+	EATER_SET_MAP("IsCull",std::to_string(1));
 }
 
 void E_MeshManager::SetMatrix(ParserData::CMesh* mMesh)

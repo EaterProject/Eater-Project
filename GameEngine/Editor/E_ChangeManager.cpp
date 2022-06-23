@@ -89,11 +89,12 @@ void E_ChangeManager::Change_Material(int index, GameObject* Object)
 	if (mMaterialData != nullptr)
 	{
 		//원본값
-		std::string mMaterial = MF->GetMaterialName();
-		std::string mDiffuse = mMaterialData->GetDiffuseName();
-		std::string mNormal = mMaterialData->GetNormalName();
-		std::string mEmissive = mMaterialData->GetEmissiveName();
-		std::string mORM = mMaterialData->GetORMName();
+		std::string mMaterial	= MF->GetMaterialName();
+		std::string mDiffuse	= mMaterialData->GetDiffuseName();
+		std::string mNormal		= mMaterialData->GetNormalName();
+		std::string mEmissive	= mMaterialData->GetEmissiveName();
+		std::string mORM		= mMaterialData->GetORMName();
+
 
 		std::string Tileing_X = EATER_GET_MAP(index, "Tileing_X");
 		std::string Tileing_Y = EATER_GET_MAP(index, "Tileing_Y");
@@ -102,6 +103,7 @@ void E_ChangeManager::Change_Material(int index, GameObject* Object)
 		float mMetallicF = mMaterialData->m_MaterialData->Material_Property->MetallicFactor;
 		float mEmissiveF = mMaterialData->m_MaterialData->Material_Property->EmissiveFactor;
 		float mRoughnessF = mMaterialData->m_MaterialData->Material_Property->RoughnessFactor;
+		int	  mAlpha	 =	mMaterialData->m_MaterialData->Material_Property->Alpha;
 
 		float AddColor_R = mMaterialData->m_MaterialData->Material_Property->AddColor.x;
 		float AddColor_G = mMaterialData->m_MaterialData->Material_Property->AddColor.y;
@@ -116,7 +118,7 @@ void E_ChangeManager::Change_Material(int index, GameObject* Object)
 		//타일링 빼줘야함 ....
 
 		EATER_CHANGE_MAP(index, "MaterialName", mMaterial);
-		EATER_CHANGE_MAP(index, "Alpha", "0");
+		EATER_CHANGE_MAP(index, "Alpha", std::to_string(mAlpha));
 		EATER_CHANGE_MAP(index, "DiffuseMap", mDiffuse);
 		EATER_CHANGE_MAP(index, "NormalMap", mNormal);
 		EATER_CHANGE_MAP(index, "EmissiveMap", mEmissive);
@@ -339,6 +341,7 @@ void E_ChangeManager::Change_Name(int Nodeindex, MeshFilter* MF)
 	std::string MaterialName	= MF->GetMaterialName();
 	std::string ModelName		= MF->GetModelName();
 	std::string NodeName		= MF->gameobject->Name;
+	MF->gameobject->OneMeshData->Object_Data->IsActive;
 
 	//파일에서 읽은 이름과 현재 오브젝트의 메테리얼이름이같다면
 	//현재 메테리얼의 이름으로 변경해준다
@@ -352,6 +355,9 @@ void E_ChangeManager::Change_Name(int Nodeindex, MeshFilter* MF)
 		EATER_CHANGE_MAP(Nodeindex, "MaterialName", MaterialName);
 	}
 	EATER_CHANGE_MAP(Nodeindex, "NodeName", NodeName);
+	EATER_CHANGE_MAP(Nodeindex, "IsActive", std::to_string(MF->gameobject->OneMeshData->Object_Data->IsActive));
+	EATER_CHANGE_MAP(Nodeindex, "IsShadow", std::to_string(MF->gameobject->OneMeshData->Object_Data->IsShadow));
+	EATER_CHANGE_MAP(Nodeindex, "IsCull", std::to_string(MF->gameobject->OneMeshData->Object_Data->IsCull));
 }
 
 

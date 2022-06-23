@@ -410,6 +410,9 @@ public:
 	MESH_TYPE MeshType;				// 매쉬 타입
 
 	bool Top_Object = false;		//가장 최상위 오브젝트인지 여부
+	bool IsActive	= true;
+	bool IsShadow	= true;
+	bool IsCull		= true;
 
 	std::string ParentName = "";	//부모의 이름
 	std::string	Name = "";			//자기자신의 이름
