@@ -23,7 +23,11 @@
 #include "Button.h"
 #include "RectTransform.h"
 #include "Slider.h"
+#include "ParticleController.h"
+
 #include "EngineData.h"
+
+#include "MiniMapSystem.h"
 
 #include "./Profiler/Profiler.h"
 
@@ -60,6 +64,12 @@ void TestScene::Awake()
 
 	CreateUI();
 
+	BakeSkyLightMap("SkyLight_0", false);
+	BakeSkyLightMap("SkyLight_1", false);
+	SetSkyLight("SkyLight_0", 0);
+	SetSkyLight("SkyLight_1", 1);
+
+	SetSkyCube("SkyCube");
 
 	//CreateParticle(0,0,0);
 
@@ -68,27 +78,17 @@ void TestScene::Awake()
 
 	SetSkyCube("SkyCube");
 
-	Load("../Assets/Scene/TestScene.Scene");
+	//Load("../Assets/Scene/TestScene.Scene");
 
 	RenderOption* option = GetRenderOptionData();
 	//option->RenderingOption ^= RENDER_OPTION::RENDER_FOG;
 	option->RenderingOption ^= RENDER_OPTION::RENDER_SHADOW;
 	RenderSetting();
-
 }
 
 void TestScene::Update()
 {
-	//PROFILE_TIMER_START(PROFILE_OUTPUT::CONSOLE, "Update", 60);
-
-	//static int renderCount = 0;
-	//PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "Update Count %d", renderCount++);
-	//PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "Update Count %d", renderCount++);
-
 	ChangeCubeMap();
-	//DebugDrawLine(Vector3(0.0f, 0.0f, 0.0f), Vector3(0.0f, 50.0f, 0.0f), Vector4(1.0f, 0.0f, 0.0f, 1.0f));
-
-	//PROFILE_TIMER_END("Update");
 }
 
 void TestScene::End()
@@ -103,221 +103,69 @@ void TestScene::CreateMap()
 	Light* light = nullptr;
 	Slider* slider = nullptr;
 
-	//
-	//ParticleObj = Instance();
-	//ParticleObj->GetTransform()->Position.y += 50;
-	//Object = InstanceParticle("Particle12");
-	//ParticleObj->ChoiceChild(Object);
-	//ParticleSystem* particles = Object->GetComponent<ParticleSystem>();
-	//particles->SetMeshName("Quad");
-	//particles->SetRenderType(PARTICLE_RENDER_OPTION::VERTICAL_BILLBOARD);
-	//particles->SetDiffuseName("particle_hotCloud");
-	//particles->SetStartLifeTime(1.5f, 1.8f);
-	//particles->SetStartScale(4.0f, 7.0f);
-	//particles->SetStartRotation(-360, 360);
-	//particles->SetStartColor(Vector4(255, 174, 73, 28), Vector4(255, 111, 53, 255));
-	//particles->SetMaxParticles(60);
-	//particles->SetRateOverTime(25.0f);
-	//particles->SetShapeRadius(0.1875f);
-	//particles->SetStartForce(Vector3(0, 5, 0));
-	//particles->SetLifeTimeRotation(-15.0f, 15.0f);
-	//particles->SetTextureTiling(8, 8);
-	//particles->SetPlayTime(1, false);
-	//particles->Play();
+	/// 미니맵 설정
+	m_MiniMap = MiniMapSystem::Get();
+	m_MiniMap->CreateMiniMap("ingame_minimap", PIVOT_RIGHT_TOP, ROTATE_90, Vector2(186.0f), Vector2(-25.0f));
 
-	//Object = Instance_Light("Light", LIGHT_TYPE::POINT_LIGHT);
-	//Object->GetTransform()->Position.x += 10.0f;
-	//Object->GetTransform()->Position.y += 10.0f;
-	//
-	//Object = Instance_Light("Light", LIGHT_TYPE::SPOT_LIGHT);
-	//Object->GetTransform()->Position.x -= 10.0f;
-	//Object->GetTransform()->Position.y += 10.0f;
 
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("BossB");
-	//filter->SetAnimationName("BossB");
-	//Object->GetTransform()->Position.x -= 30;
-	//AC = Object->AddComponent<AnimationController>();
-	//AC->Choice("weak");
-	//
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("BossB");
-	//filter->SetAnimationName("BossB");
-	//AC = Object->AddComponent<AnimationController>();
-	//AC->Choice("weak");
-	//
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("BossB");
-	//filter->SetAnimationName("BossB");
-	//Object->GetTransform()->Position.x += 30;
-	//AC = Object->AddComponent<AnimationController>();
-	//AC->Choice("weak");
-
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("weapone");
-	//filter->SetAnimationName("weapone");
-	//Object->GetTransform()->Position.z += 20;
-	//AC = Object->AddComponent<AnimationController>();
-	//AC->Choice("attack");
-
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("MonsterA");
-	//filter->SetAnimationName("MonsterA");
-	//Object->GetTransform()->Scale = { 10.0f, 10.0f, 10.0f };
-	//Object->GetTransform()->Position.z -= 20;
-	//AC = Object->AddComponent<AnimationController>();
-	//AC->Choice("die");
-
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("MonsterA");
-	//filter->SetAnimationName("MonsterA");
-	//Object->GetTransform()->Position.x += 20;
-	//Object->GetTransform()->Position.z -= 20;
-	//AC = Object->AddComponent<AnimationController>();
-	//AC->Choice("idle");
-
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("Dome_Occluder");
-	//
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("Dome");
-	//
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("Outside_Grass");
-
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("organic_cactus");
-
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("Outside_Rock");
-	//
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("Outside_bossOBJ");
-	//
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("Outside_Other");
-	//
-	//Object = Instance();
-	//filter = Object->AddComponent<MeshFilter>();
-	//filter->SetModelName("Outside_Pebble");
-
-	GameObject* minimap = Instance_Image("UI");
-	IMG = minimap->GetComponent<Image>();
-	IMG->SetTexture("ingame_minimap");
-	RTR = minimap->GetComponent<RectTransform>();
-	RTR->SetPivot(PIVOT_TYPE::PIVOT_RIGHT_TOP);
-	RTR->AddPosition(-25.0f, -25.0f);
-	//RTR->SetRotation(0.0f, 0.0f, 180.0f);
-
-	GameObject* boss = Instance();
-	filter = boss->AddComponent<MeshFilter>();
+	m_Boss = Instance();
+	filter = m_Boss->AddComponent<MeshFilter>();
 	filter->SetModelName("BossB+");
 	filter->SetAnimationName("BossB+");
-	boss->GetTransform()->SetPosition(-44.0f, 6.0f, 62.0f);
-	boss->GetTransform()->SetScale(1.5f);
-	AC = boss->AddComponent<AnimationController>();
+	m_Boss->GetTransform()->SetPosition(-44.0f, 6.0f, 62.0f);
+	m_Boss->GetTransform()->SetScale(1.5f);
+	AC = m_Boss->AddComponent<AnimationController>();
 	ACList.push_back(AC);
-	TRList.push_back(boss->GetTransform());
+	TRList.push_back(m_Boss->GetTransform());
 
-	GameObject* obj = Instance_Image();
-	IMG = obj->GetComponent<Image>();
-	IMG->SetTexture("Minimap_Player");
-	RTR = obj->GetComponent<RectTransform>();
-	RTR->SetPivot(PIVOT_TYPE::PIVOT_IMAGE);
-	RTR->SetPositionObject(boss, Vector3(0.0f, 0.0f, 0.0f));
-	RTR->SetTargetImage(minimap, ROTATE_ANGLE::ROTATE_90);
-	RTR->SetTargetRotation(true);
-	RTR->SetTargetRatio(186.0f, 186.0f);
-
-	//Object = Instance_Slider();
-	//slider = Object->GetComponent<Slider>();
-	//slider->SetBackGroundTexture("ingame_player_hp_back");
-	//slider->SetFillTexture("ingame_player_hp");
-	//slider->SetPivot(PIVOT_TYPE::PIVOT_OBJECT);
-	//slider->SetFillColor(255, 0, 0, 0);
-	//slider->SetPositionObject(TRList[0], Vector3(0.0f, 6.0f, 0.0f));
-	//SliderList.push_back(slider);
-	//
-	Object = Instance_Image();
-	IMG = Object->GetComponent<Image>();
-	IMG->SetTexture("Emagin_Front");
-	IMG->SetColor(0, 255, 0);
-	IMG->SetLayer(1);
-	RTR = Object->GetComponent<RectTransform>();
-	RTR->SetPivot(PIVOT_TYPE::PIVOT_OBJECT);
-	//RTR->SetPosition(-120.0f, 0.0f);
-	RTR->SetScale(0.5f, 0.5f);
-	RTR->SetPositionObject(TRList[0], Vector3(0.0f, 6.0f, 0.0f));
+	/// 미니맵 아이콘 추가
+	m_MiniMap->CreateIcon("Minimap_Boss", m_Boss, false);
 
 
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
+	m_MonsterA = Instance();
+	filter = m_MonsterA->AddComponent<MeshFilter>();
 	filter->SetModelName("MonsterA+");
 	filter->SetAnimationName("MonsterA+");
-	Object->GetTransform()->SetPosition(15, 0, 62);
-	Object->GetTransform()->SetScale(1.2f, 1.2f, 1.2f);
-	AC = Object->AddComponent<AnimationController>();
+	m_MonsterA->GetTransform()->SetPosition(15, 0, 62);
+	m_MonsterA->GetTransform()->SetScale(1.2f, 1.2f, 1.2f);
+	AC = m_MonsterA->AddComponent<AnimationController>();
 	ACList.push_back(AC);
-	TRList.push_back(Object->GetTransform());
+	TRList.push_back(m_MonsterA->GetTransform());
 
-	//Object = Instance_Slider();
-	//slider = Object->GetComponent<Slider>();
-	//slider->SetBackGroundTexture("ingame_player_hp_back");
-	//slider->SetFillTexture("ingame_player_hp");
-	//slider->SetPivot(PIVOT_TYPE::PIVOT_OBJECT);
-	//slider->SetFillColor(255, 0, 0, 0);
-	//slider->SetPositionObject(TRList[1], Vector3(0.0f, 2.0f, 0.0f));
-	//SliderList.push_back(slider);
-	//
-	//Object = Instance_Image();
-	//IMG = Object->GetComponent<Image>();
-	//IMG->SetTexture("Emagin_Front");
-	//IMG->SetColor(0, 255, 0);
-	//RTR = Object->GetComponent<RectTransform>();
-	//RTR->SetPivot(PIVOT_TYPE::PIVOT_OBJECT);
-	//RTR->SetPosition(-120.0f, 0.0f);
-	//RTR->SetPositionObject(TRList[1], Vector3(0.0f, 2.0f, 0.0f));
+	/// 미니맵 아이콘 추가
+	m_MiniMap->CreateIcon("Minimap_Player", m_MonsterA, true);
 
-	Object = Instance();
-	filter = Object->AddComponent<MeshFilter>();
+
+	m_MonsterB = Instance();
+	filter = m_MonsterB->AddComponent<MeshFilter>();
 	filter->SetModelName("MonsterB+");
 	filter->SetAnimationName("MonsterB+");
-	Object->GetTransform()->SetPosition(23, 1, 56);
-	Object->GetTransform()->SetScale(3.0f, 3.0f, 3.0f);
-	AC = Object->AddComponent<AnimationController>();
+	m_MonsterB->GetTransform()->SetPosition(23, 1, 56);
+	m_MonsterB->GetTransform()->SetScale(3.0f, 3.0f, 3.0f);
+	AC = m_MonsterB->AddComponent<AnimationController>();
 	ACList.push_back(AC);
-	TRList.push_back(Object->GetTransform());
+	TRList.push_back(m_MonsterB->GetTransform());
 
-	//Object = Instance_Slider();
-	//slider = Object->GetComponent<Slider>();
-	//slider->SetBackGroundTexture("ingame_player_hp_back");
-	//slider->SetFillTexture("ingame_player_hp");
-	//slider->SetPivot(PIVOT_TYPE::PIVOT_OBJECT);
-	//slider->SetFillColor(255, 0, 0, 0);
-	//slider->SetPositionObject(TRList[2], Vector3(0.0f, 2.5f, 0.0f));
-	//SliderList.push_back(slider);
-	//
-	//Object = Instance_Image();
-	//IMG = Object->GetComponent<Image>();
-	//IMG->SetTexture("Emagin_Front");
-	//IMG->SetColor(0, 255, 0);
-	//RTR = Object->GetComponent<RectTransform>();
-	//RTR->SetPivot(PIVOT_TYPE::PIVOT_OBJECT);
-	//RTR->SetPosition(-120.0f, 0.0f);
-	//RTR->SetPositionObject(TRList[2], Vector3(0.0f, 2.5f, 0.0f));
+
+	/// 미니맵 아이콘 추가
+	m_MiniMap->CreateIcon("Minimap_Player", m_MonsterB, true);
+
+	GameObject* particle_1 = Instance_Particle("Particle1", "BossPush_circle");
+	GameObject* particle_2 = Instance_Particle("Particle2", "BossPush_magical");
+	GameObject* particle_3 = Instance_Particle("Particle3", "BossProjectile_aura");
+	GameObject* particle_4 = Instance_Particle("Particle4", "BossProjectile_circle");
+	GameObject* particle_5 = Instance_Particle("Particle5", "BossProjectile_dot");
+
+	Object = Instance();
+	m_ParticleController = Object->AddComponent<ParticleController>();
+	m_ParticleController->PushParticle("Particle_1", particle_1->GetComponent<ParticleSystem>(), 0.0f);
+	m_ParticleController->PushParticle("Particle_2", particle_2->GetComponent<ParticleSystem>(), 0.0f);
+	m_ParticleController->PushParticle("Particle_3", particle_3->GetComponent<ParticleSystem>(), 1.0f);
+	m_ParticleController->PushParticle("Particle_4", particle_4->GetComponent<ParticleSystem>(), 1.0f);
+	m_ParticleController->PushParticle("Particle_5", particle_5->GetComponent<ParticleSystem>(), 1.0f);
+	m_ParticleController->PushParticle("Particle_6", particle_1->GetComponent<ParticleSystem>(), 1.5f);
+	m_ParticleController->PushParticle("Particle_7", particle_2->GetComponent<ParticleSystem>(), 1.5f);
+
 
 	testobj = Instance_Terrain("Terrain");
 	Terrain* mTerrain = testobj->GetComponent<Terrain>();
@@ -581,42 +429,15 @@ void TestScene::ChangeCubeMap()
 	}
 	if (GetKeyUp('2'))
 	{
-		for (int i = 0; i < SliderList.size(); i++)
-		{
-			SliderList[i]->SetActive(true);
-		}
+		m_ParticleController->Play();
 	}
 	if (GetKeyUp('3'))
 	{
-		for (int i = 0; i < SliderList.size(); i++)
-		{
-			SliderList[i]->SetActive(false);
-		}
+		m_ParticleController->PopParticle("Particle_3");
+		m_ParticleController->PopParticle("Particle_4");
+		m_ParticleController->PopParticle("Particle_5");
 	}
-	if (GetKey('4'))
-	{
-		MaterialProperty* block = meshfilter->GetMaterialProperty();
 
-		if (up)
-		{
-			block->LimLightColor.x += 0.005f;
-		}
-		else
-		{
-			block->LimLightColor.x -= 0.005f;
-		}
-
-		if (block->LimLightColor.x > 1.0f)
-		{
-			block->LimLightColor.x = 1.0f;
-			up = false;
-		}
-		if (block->LimLightColor.x < 0.0f)
-		{
-			block->LimLightColor.x = 0.0f;
-			up = true;
-		}
-	}
 	if (GetKey(VK_LEFT))
 	{
 		for (int i = 0; i < TRList.size(); i++)

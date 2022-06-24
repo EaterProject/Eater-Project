@@ -12,6 +12,8 @@
 
 ParticleSystem::ParticleSystem()
 {
+	m_ParticleState				= PARTICLE_STATE::END_STATE;
+
 	m_SystemDesc				= new PARTICLE_SHARE_DESC();
 	m_ParticleDesc				= new PARTICLE_DESC();
 
@@ -62,7 +64,7 @@ void ParticleSystem::Start()
 
 void ParticleSystem::Update()
 {
-	float dTime = mTimeManager->DeltaTime();
+	float&& dTime = mTimeManager->DeltaTime();
 
 	if (m_Playing == false) return;
 
@@ -72,15 +74,27 @@ void ParticleSystem::Update()
 
 		if (m_TickTime >= m_NowDelayTime)
 		{
+			// 지연시간이 끝나면 최초 실행..
+			m_ParticleState = PARTICLE_STATE::START_STATE;
 			m_TickTime = 0.0f;
 			m_NowDelayTime = 0.0f;
 
-			// 지연시간이 끝나면 최초 실행..
-			StartPlay();
+			// 시작시 한개만 출력..
+			m_PlayCount = 1;
+
+			CreateParticle();
 		}
+
+		return;
 	}
-	else if (m_NowPlayTime > 0.0f)
+
+	if (m_NowPlayTime > 0.0f)
 	{
+		if (m_ParticleState == PARTICLE_STATE::PLAY_STATE)
+		{
+			m_ParticleState = PARTICLE_STATE::PLAY_STATE;
+		}
+
 		m_TickTime += dTime;
 		m_NowPlayTime -= dTime;
 
@@ -95,14 +109,15 @@ void ParticleSystem::Update()
 	{
 		if (m_Looping)
 		{
-			// 현재 파티클 출력할 시간이 지낫다면 실행..
-			if (m_RateOverTime <= m_TickTime)
-			{
-				m_PlayCount = (int)(m_TickTime / m_RateOverTime);
-				CreateParticle();
-			}
+			m_TickTime += dTime;
+			
+			// 시작시 한개만 출력..
+			m_PlayCount = 1;
 
-			m_NowPlayTime = 10.0f;
+			CreateParticle();
+
+			m_ParticleState = PARTICLE_STATE::START_STATE;
+			m_NowPlayTime = 10000.0f;
 		}
 		else
 		{
@@ -110,6 +125,7 @@ void ParticleSystem::Update()
 			StartNextParticle();
 
 			// 초기화..
+			m_ParticleState = PARTICLE_STATE::END_STATE;
 			m_Playing = false;
 			m_TickTime = 0.0f;
 			m_NowPlayTime = 0.0f;
@@ -326,6 +342,8 @@ void ParticleSystem::SetDiffuseName(std::string diffuseName)
 
 void ParticleSystem::Play(bool loop)
 {
+	if (m_Playing) return;
+
 	if (loop) m_Looping = true;
 
 	m_Playing = true;
@@ -336,7 +354,13 @@ void ParticleSystem::Play(bool loop)
 	m_NowDelayTime = m_DelayTime;
 
 	// 지연시간이 설정되지 않았다면 실행 즉시 파티클 한개 출력..
-	//if (m_DelayTime == 0.0f) StartPlay();
+	if (m_DelayTime == 0.0f)
+	{
+		// 시작시 한개만 출력..
+		m_PlayCount = 1;
+
+		CreateParticle();
+	}
 }
 
 void ParticleSystem::Stop()
@@ -355,6 +379,11 @@ void ParticleSystem::SetNextParticle(ParticleSystem* particle)
 std::string ParticleSystem::GetMeshName()
 {
 	return m_ParticleMeshName;
+}
+
+PARTICLE_STATE ParticleSystem::GetState()
+{
+	return m_ParticleState;
 }
 
 PARTICLE_RENDER_OPTION ParticleSystem::GetRenderType()
@@ -473,14 +502,6 @@ void ParticleSystem::DataUpdate()
 	{
 		particle->DataUpdate();
 	}
-}
-
-void ParticleSystem::StartPlay()
-{
-	// 시작시 한개만 출력..
-	m_PlayCount = 1;
-
-	CreateParticle();
 }
 
 void ParticleSystem::AddParticle()

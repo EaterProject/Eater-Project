@@ -31,8 +31,8 @@ void Loading::Update()
 {
 	if (ThreadRun == false)
 	{
-		//ChoiceScene("inGame");
-		ChoiceScene("TestScene");
+		ChoiceScene("inGame");
+		//ChoiceScene("TestScene");
 	}
 }
 
@@ -52,6 +52,7 @@ void Loading::ThreadFunction()
 	Load("../Assets/Model/Animation");
 	Load("../Assets/Model/MeshBuffer");
 	Load("../Assets/Model/ModelData");
+	Load("../Assets/Model/Particle");
 	Load("../Assets/Sound");
 
 	LoadTerrainMesh("../Assets/Model/TerrainModel/Terrain.fbx", "../Assets/Texture/Terrain/Terrain_RGB_1.png", "../Assets/Texture/Terrain/Terrain_RGB_2.png", SCALING);

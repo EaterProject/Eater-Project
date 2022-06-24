@@ -304,6 +304,9 @@ void Shadow_Pass::RenderUpdate(const InstanceRenderBuffer* instance, const Rende
 	if (meshData->m_Draw == false) return;
 
 	ObjectData* obj = meshData->m_ObjectData;
+
+	if (obj->IsShadow == false) return;
+
 	MeshRenderBuffer* mesh = instance->m_Mesh;
 
 	const Matrix& world = obj->World;

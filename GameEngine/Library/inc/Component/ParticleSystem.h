@@ -92,6 +92,7 @@ public:
 
 public:
 	EATER_ENGINEDLL std::string GetMeshName();
+	EATER_ENGINEDLL PARTICLE_STATE GetState();
 	EATER_ENGINEDLL PARTICLE_RENDER_OPTION GetRenderType();
 	EATER_ENGINEDLL int GetMaxParticles();
 	EATER_ENGINEDLL float GetDelayTime();
@@ -120,7 +121,6 @@ public:
 private:
 	void DataUpdate();
 
-	void StartPlay();
 	void AddParticle();
 
 	void CreateParticle();
@@ -130,7 +130,10 @@ private:
 	MeshFilter* m_MeshFilter;
 
 private:
+	PARTICLE_STATE m_ParticleState;
+
 	ParticleData* m_ParticleData;
+
 	PARTICLE_SHARE_DESC* m_SystemDesc;
 	PARTICLE_DESC* m_ParticleDesc;
 

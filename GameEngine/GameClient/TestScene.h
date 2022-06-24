@@ -11,6 +11,8 @@ class Camera;
 class Image;
 class Slider;
 class RectTransform;
+class MiniMapSystem;
+class ParticleController;
 
 class TestScene : public Scene
 {
@@ -33,6 +35,14 @@ private:
 	GameObject* Object1;
 	GameObject* testobj;
 	GameObject* ParticleObj;
+
+	MiniMapSystem* m_MiniMap;
+
+	GameObject* m_Boss;
+	GameObject* m_MonsterA;
+	GameObject* m_MonsterB;
+
+	ParticleController* m_ParticleController;
 
 	Camera* Cam1;
 	Camera* Cam2;

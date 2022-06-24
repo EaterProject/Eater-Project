@@ -27,6 +27,15 @@ MiniMapSystem* MiniMapSystem::Get()
 
 void MiniMapSystem::Release()
 {
+	if (g_Instance != nullptr)
+	{
+		g_Instance->Reset();
+		delete g_Instance;
+	}
+}
+
+void MiniMapSystem::Reset()
+{
 	Destroy(m_MiniMap);
 
 	DeleteIconList();
@@ -50,6 +59,11 @@ GameObject* MiniMapSystem::CreateMiniMap(std::string texture_name, PIVOT_TYPE pi
 	m_TargetRatio = target_ratio;
 
 	return m_MiniMap;
+}
+
+void MiniMapSystem::SetMiniMapActive(bool enable)
+{
+	m_MiniMap->SetActive(enable);
 }
 
 GameObject* MiniMapSystem::CreateIcon(std::string texture_name, GameObject* target, bool isRotate)
@@ -80,6 +94,9 @@ void MiniMapSystem::ChangeIconTarget(GameObject* target, GameObject* change_targ
 	// 현재 Target 기준 Icon 검색..
 	GameObject* target_icon = GetIcon(target);
 
+	// 검색한 Target Icon이 없는 경우..
+	if (target_icon == nullptr) return;
+
 	// Icon Target Object 변경..
 	target_icon->GetComponent<RectTransform>()->SetPositionObject(change_target);
 }
@@ -89,8 +106,22 @@ void MiniMapSystem::ChangeIconTexture(GameObject* target, std::string texture_na
 	// 현재 Target 기준 Icon 검색..
 	GameObject* target_icon = GetIcon(target);
 
+	// 검색한 Target Icon이 없는 경우..
+	if (target_icon == nullptr) return;
+
 	// Icon Texture 변경..
 	target_icon->GetComponent<Image>()->SetTexture(texture_name);
+}
+
+void MiniMapSystem::SetIconActive(GameObject* target, bool enable)
+{
+	// 현재 Target 기준 Icon 검색..
+	GameObject* target_icon = GetIcon(target);
+
+	// 검색한 Target Icon이 없는 경우..
+	if (target_icon == nullptr) return;
+
+	target_icon->SetActive(enable);
 }
 
 void MiniMapSystem::SetIconListActive(bool enable)
@@ -135,4 +166,9 @@ GameObject* MiniMapSystem::GetIcon(GameObject* target)
 	}
 
 	return nullptr;
+}
+
+GameObject* MiniMapSystem::GetMiniMap()
+{
+	return m_MiniMap;
 }
