@@ -3,6 +3,9 @@
 @ParentName RootNode
 @MeshName Sphere_0
 @MaterialName Sphere
+@IsActive 1
+@IsShadow 1
+@IsCull 1
 $WorldTM 4 4
 0.010000 0.000000 0.000000 0.000000
 0.000000 0.010000 0.000000 0.000000

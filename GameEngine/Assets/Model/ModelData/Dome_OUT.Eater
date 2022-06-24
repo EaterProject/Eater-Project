@@ -2,7 +2,10 @@
 @ParentName RootNode
 @NodeName Screw.056
 @MeshName Dome_OUT_0
-@MaterialName Dome_OUT_M_UpperWall
+@MaterialName Dome_OUT_M_OutsideUpperWall
+@IsActive 1
+@IsShadow 1
+@IsCull 1
 $WorldTM 4 4
 1.000000 0.000000 0.000000 0.000000
 0.000000 1.000000 0.000000 0.000000
@@ -17,7 +20,10 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Cube.056
 @MeshName Dome_OUT_1
-@MaterialName Dome_OUT_M_domePillar
+@MaterialName Dome_OUT_M_OutsidePillar
+@IsActive 1
+@IsShadow 1
+@IsCull 1
 $WorldTM 4 4
 -0.309017 0.000000 -0.951056 0.000000
 0.000000 1.000000 0.000000 0.000000
@@ -32,7 +38,10 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Cube.045
 @MeshName Dome_OUT_1
-@MaterialName Dome_OUT_M_domePillar
+@MaterialName Dome_OUT_M_OutsidePillar
+@IsActive 1
+@IsShadow 1
+@IsCull 1
 $WorldTM 4 4
 1.000000 0.000000 0.000000 0.000000
 0.000000 1.000000 0.000000 0.000000
@@ -47,7 +56,10 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Ceiling_low.003
 @MeshName Dome_OUT_2
-@MaterialName Dome_OUT_M_Ceiling
+@MaterialName Dome_OUT_M_OutsideCeiling
+@IsActive 1
+@IsShadow 1
+@IsCull 1
 $WorldTM 4 4
 1.000000 0.000000 0.000000 0.000000
 0.000000 1.000000 0.000000 0.000000
@@ -57,87 +69,105 @@ $LocalTM 4 4
 1.000000 0.000000 0.000000 0.000000
 0.000000 1.000000 0.000000 0.000000
 0.000000 0.000000 1.000000 0.000000
-0.000000 0.000000 0.000000 1.000000
-#STATIC
-@ParentName RootNode
-@NodeName Cube.057
-@MeshName Dome_OUT_3
-@MaterialName Dome_OUT_M_Outsidewall
-$WorldTM 4 4
--0.309017 0.000000 -0.951056 0.000000
-0.000000 1.000000 0.000000 0.000000
-0.951056 0.000000 -0.309017 0.000000
-0.000000 0.000000 0.000000 1.000000
-$LocalTM 4 4
--0.309017 0.000000 -0.951056 0.000000
-0.000000 1.000000 0.000000 0.000000
-0.951056 0.000000 -0.309017 0.000000
-0.000000 0.000000 0.000000 1.000000
-#STATIC
-@ParentName RootNode
-@NodeName Screw.041
-@MeshName Dome_OUT_4
-@MaterialName Dome_OUT_M_GateRound
-$WorldTM 4 4
-0.809017 0.000000 0.587785 0.000000
-0.000000 1.000000 0.000000 0.000000
--0.587785 0.000000 0.809017 0.000000
-0.000000 0.000000 0.000000 1.000000
-$LocalTM 4 4
-0.809017 0.000000 0.587785 0.000000
-0.000000 1.000000 0.000000 0.000000
--0.587785 0.000000 0.809017 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
 @ParentName RootNode
 @NodeName Screw.003
-@MeshName Dome_OUT_4
+@MeshName Dome_OUT_3
 @MaterialName Dome_OUT_M_GateRound
+@IsActive 1
+@IsShadow 1
+@IsCull 1
 $WorldTM 4 4
 -0.809017 0.000000 0.587785 0.000000
 0.000000 1.000000 0.000000 0.000000
 -0.587785 0.000000 -0.809017 0.000000
-0.000000 0.000000 0.000000 1.000000
+0.000000 -0.184835 0.000000 1.000000
 $LocalTM 4 4
 -0.809017 0.000000 0.587785 0.000000
 0.000000 1.000000 0.000000 0.000000
 -0.587785 0.000000 -0.809017 0.000000
-0.000000 0.000000 0.000000 1.000000
+0.000000 -0.184835 0.000000 1.000000
 #STATIC
 @ParentName RootNode
 @NodeName Screw.006
-@MeshName Dome_OUT_4
+@MeshName Dome_OUT_3
 @MaterialName Dome_OUT_M_GateRound
+@IsActive 1
+@IsShadow 1
+@IsCull 1
 $WorldTM 4 4
 -0.809017 0.000000 -0.587785 0.000000
 0.000000 1.000000 0.000000 0.000000
 0.587785 0.000000 -0.809017 0.000000
-0.000000 0.000000 0.000000 1.000000
+0.000000 -0.184835 0.000000 1.000000
 $LocalTM 4 4
 -0.809017 0.000000 -0.587785 0.000000
 0.000000 1.000000 0.000000 0.000000
 0.587785 0.000000 -0.809017 0.000000
+0.000000 -0.184835 0.000000 1.000000
+#STATIC
+@ParentName RootNode
+@NodeName Cube.072
+@MeshName Dome_OUT_4
+@MaterialName Dome_OUT_M_OutsideWall
+@IsActive 1
+@IsShadow 1
+@IsCull 1
+$WorldTM 4 4
+0.951057 0.000000 0.309017 0.000000
+0.000000 1.000000 0.000000 0.000000
+-0.309017 0.000000 0.951057 0.000000
+0.000000 0.000000 0.000000 1.000000
+$LocalTM 4 4
+0.951057 0.000000 0.309017 0.000000
+0.000000 1.000000 0.000000 0.000000
+-0.309017 0.000000 0.951057 0.000000
 0.000000 0.000000 0.000000 1.000000
 #STATIC
 @ParentName RootNode
-@NodeName Screw.007
-@MeshName Dome_OUT_4
+@NodeName Screw.001
+@MeshName Dome_OUT_3
 @MaterialName Dome_OUT_M_GateRound
+@IsActive 1
+@IsShadow 1
+@IsCull 1
+$WorldTM 4 4
+0.809017 0.000000 0.587785 0.000000
+0.000000 1.000000 0.000000 0.000000
+-0.587785 0.000000 0.809017 0.000000
+0.000000 -0.184835 0.000000 1.000000
+$LocalTM 4 4
+0.809017 0.000000 0.587785 0.000000
+0.000000 1.000000 0.000000 0.000000
+-0.587785 0.000000 0.809017 0.000000
+0.000000 -0.184835 0.000000 1.000000
+#STATIC
+@ParentName RootNode
+@NodeName Screw.007
+@MeshName Dome_OUT_3
+@MaterialName Dome_OUT_M_GateRound
+@IsActive 1
+@IsShadow 1
+@IsCull 1
 $WorldTM 4 4
 0.309017 0.000000 -0.951057 0.000000
 0.000000 1.000000 0.000000 0.000000
 0.951057 0.000000 0.309017 0.000000
-0.000000 0.000000 0.000000 1.000000
+0.000000 -0.184835 0.000000 1.000000
 $LocalTM 4 4
 0.309017 0.000000 -0.951057 0.000000
 0.000000 1.000000 0.000000 0.000000
 0.951057 0.000000 0.309017 0.000000
-0.000000 0.000000 0.000000 1.000000
+0.000000 -0.184835 0.000000 1.000000
 #STATIC
 @ParentName RootNode
 @NodeName Cube.055
 @MeshName Dome_OUT_1
-@MaterialName Dome_OUT_M_domePillar
+@MaterialName Dome_OUT_M_OutsidePillar
+@IsActive 1
+@IsShadow 1
+@IsCull 1
 $WorldTM 4 4
 0.809017 0.000000 -0.587785 0.000000
 0.000000 1.000000 0.000000 0.000000
@@ -152,7 +182,10 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Cube.054
 @MeshName Dome_OUT_1
-@MaterialName Dome_OUT_M_domePillar
+@MaterialName Dome_OUT_M_OutsidePillar
+@IsActive 1
+@IsShadow 1
+@IsCull 1
 $WorldTM 4 4
 0.309017 0.000000 -0.951057 0.000000
 0.000000 1.000000 0.000000 0.000000
@@ -167,7 +200,10 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Cube.053
 @MeshName Dome_OUT_1
-@MaterialName Dome_OUT_M_domePillar
+@MaterialName Dome_OUT_M_OutsidePillar
+@IsActive 1
+@IsShadow 1
+@IsCull 1
 $WorldTM 4 4
 -0.809017 0.000000 -0.587785 0.000000
 0.000000 1.000000 0.000000 0.000000
@@ -182,7 +218,10 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Cube.052
 @MeshName Dome_OUT_1
-@MaterialName Dome_OUT_M_domePillar
+@MaterialName Dome_OUT_M_OutsidePillar
+@IsActive 1
+@IsShadow 1
+@IsCull 1
 $WorldTM 4 4
 -1.000000 0.000000 0.000000 0.000000
 0.000000 1.000000 0.000000 0.000000
@@ -197,7 +236,10 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Cube.051
 @MeshName Dome_OUT_1
-@MaterialName Dome_OUT_M_domePillar
+@MaterialName Dome_OUT_M_OutsidePillar
+@IsActive 1
+@IsShadow 1
+@IsCull 1
 $WorldTM 4 4
 -0.809017 0.000000 0.587785 0.000000
 0.000000 1.000000 0.000000 0.000000
@@ -212,7 +254,10 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Cube.050
 @MeshName Dome_OUT_1
-@MaterialName Dome_OUT_M_domePillar
+@MaterialName Dome_OUT_M_OutsidePillar
+@IsActive 1
+@IsShadow 1
+@IsCull 1
 $WorldTM 4 4
 -0.309017 0.000000 0.951056 0.000000
 0.000000 1.000000 0.000000 0.000000
@@ -227,7 +272,10 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Cube.049
 @MeshName Dome_OUT_1
-@MaterialName Dome_OUT_M_domePillar
+@MaterialName Dome_OUT_M_OutsidePillar
+@IsActive 1
+@IsShadow 1
+@IsCull 1
 $WorldTM 4 4
 0.309017 0.000000 0.951057 0.000000
 0.000000 1.000000 0.000000 0.000000
@@ -242,7 +290,10 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Cube.048
 @MeshName Dome_OUT_1
-@MaterialName Dome_OUT_M_domePillar
+@MaterialName Dome_OUT_M_OutsidePillar
+@IsActive 1
+@IsShadow 1
+@IsCull 1
 $WorldTM 4 4
 0.809017 0.000000 0.587785 0.000000
 0.000000 1.000000 0.000000 0.000000

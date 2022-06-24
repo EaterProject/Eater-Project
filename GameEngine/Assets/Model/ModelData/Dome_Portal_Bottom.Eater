@@ -1,8 +1,11 @@
 #STATIC
-@NodeName Screw.069
 @ParentName RootNode
+@NodeName Screw.069
 @MeshName Dome_Portal_Bottom_0
 @MaterialName Dome_Portal_Bottom_M_Portal
+@IsActive 1
+@IsShadow 1
+@IsCull 1
 $WorldTM 4 4
 1.000000 0.000000 0.000000 0.000000
 0.000000 1.000000 0.000000 0.000000

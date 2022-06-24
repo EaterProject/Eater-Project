@@ -22,12 +22,32 @@ bool	Player::IsAttackTime = false;
 #define LERP(prev, next, time) ((prev * (1.0f - time)) + (next * time))
 Player::Player()
 {
-	mAnimation	= nullptr;
-	mTransform	= nullptr;
-	mMeshFilter = nullptr;
-	mCameraTR = nullptr;
-	AttackColliderObject= nullptr;
-	AttackCollider = nullptr;
+	mAnimation				= nullptr;
+	mTransform				= nullptr;
+	mMeshFilter				= nullptr;
+	mCameraTR				= nullptr;
+	AttackColliderObject	= nullptr;
+	AttackCollider			= nullptr;
+
+	ANIMATION_NAME[(int)PLAYER_STATE::IDLE]			= "idle";
+	ANIMATION_NAME[(int)PLAYER_STATE::ATTACK_01]	= "attack1";
+	ANIMATION_NAME[(int)PLAYER_STATE::ATTACK_02]	= "attack2";
+	ANIMATION_NAME[(int)PLAYER_STATE::SKILL_01]		= "skill1";
+	ANIMATION_NAME[(int)PLAYER_STATE::SKILL_02]		= "skill2";
+	ANIMATION_NAME[(int)PLAYER_STATE::JUMP]			= "evade";
+	ANIMATION_NAME[(int)PLAYER_STATE::MOVE]			= "move";
+	ANIMATION_NAME[(int)PLAYER_STATE::DEAD]			= "daed";
+
+
+	ANIMATION_SPEED[(int)PLAYER_STATE::IDLE]		= 1.5f;
+	ANIMATION_SPEED[(int)PLAYER_STATE::ATTACK_01]	= 1.5f;
+	ANIMATION_SPEED[(int)PLAYER_STATE::ATTACK_02]	= 1.75f;
+	ANIMATION_SPEED[(int)PLAYER_STATE::SKILL_01]	= 1.5f;
+	ANIMATION_SPEED[(int)PLAYER_STATE::SKILL_02]	= 1.5f;
+	ANIMATION_SPEED[(int)PLAYER_STATE::JUMP]		= 1.5f;
+	ANIMATION_SPEED[(int)PLAYER_STATE::MOVE]		= 1.0f;
+	ANIMATION_SPEED[(int)PLAYER_STATE::DEAD]		= 1.5f;
+
 
 	RayCastHit = new PhysRayCast[5]();
 	BasePos = Vector3(0, 0, 0);
@@ -54,7 +74,7 @@ void Player::Awake()
 	
 	//무기 오브젝트 가져오기
 	WeaponObject = Instance();
-	WeaponObject->AddComponent<MeshFilter>()->SetModelName("player_Weapon");
+	WeaponObject->AddComponent<MeshFilter>()->SetModelName("Player_Weapon");
 
 	//충돌 범위 가져오기
 	AttackColliderObject = FindGameObjectTag("PlayerCollider");
@@ -85,8 +105,15 @@ void Player::Start()
 	WeaponObject->ChoiceParent(Hand);
 	WeaponTR = WeaponObject->GetTransform();
 
-	mColor.Setting(this->gameobject);
-	mColor.SetLimlightSetting(MeshFilterSetting::COLOR_TYPE::RED, 1, 1);
+	mPlayerColor.Setting(this->gameobject);
+	mWeaponColor.Setting(WeaponObject);
+
+	mPlayerColor.SetLimlightSetting(MeshFilterSetting::COLOR_TYPE::RED,0.5f, 0.5f);
+	mWeaponColor.SetLimlightSetting(MeshFilterSetting::COLOR_TYPE::RED, 0.5f, 0.5f);
+
+	mPlayerColor.SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED, 2.0f);
+	mWeaponColor.SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED, 2.0f);
+
 	MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_EMAGIN_NOW, &ChangeCount);
 }
 
@@ -207,8 +234,15 @@ void Player::PlayerKeyinput()
 
 	if (GetKeyDown(VK_LBUTTON))
 	{
+		if (AttackKeyDownCount < 1)
+		{
+			mState |= PLAYER_STATE_ATTACK_01;
+		}
+		else
+		{
+			mState |= PLAYER_STATE_ATTACK_02;
+		}
 		AttackKeyDownCount++;
-		mState |= PLAYER_STATE_ATTACK_01;
 	}
 	else if (GetKeyDown(VK_RBUTTON))
 	{
@@ -229,11 +263,13 @@ void Player::PlayerKeyinput()
 
 		if((ChangeCount % 2) == 0)
 		{
-			mColor.SetLimlightSetting(MeshFilterSetting::COLOR_TYPE::RED, 1, 1);
+			mPlayerColor.SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED, 2);
+			mWeaponColor.SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED, 2);
 		}
 		else
 		{
-			mColor.SetLimlightSetting(MeshFilterSetting::COLOR_TYPE::BLUE, 1, 1);
+			mPlayerColor.SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::BLUE, 2);
+			mWeaponColor.SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::BLUE, 2);
 		}
 		Sound_Play_SFX("ChangeEmagin");
 	}
@@ -274,38 +310,34 @@ void Player::PlayerKeyinput()
 void Player::PlayerState_Attack()
 {
 	IsAttack = true;
-	IsMove = false;
-
 	/// 플레이어 공격상태일때 들어옵니다
-
-	Speed = 0;
+	int Type = 0;
 	if (mState & PLAYER_STATE_ATTACK_01)
 	{
-		AnimationName = "attack1";
-		mAnimation->Choice(AnimationName, Animation_Attack01_Speed, false);
+		Type = (int)PLAYER_STATE::ATTACK_01;
+		mAnimation->Choice(ANIMATION_NAME[Type], ANIMATION_SPEED[Type]);
 		Player_Attack_01();
 	}
 	else if (mState & PLAYER_STATE_ATTACK_02)
 	{
-		AnimationName = "attack2";
-		mAnimation->Choice(AnimationName,Animation_Attack02_Speed, false);
+		Type = (int)PLAYER_STATE::ATTACK_02;
+		mAnimation->Choice(ANIMATION_NAME[Type], ANIMATION_SPEED[Type]);
 		Player_Attack_02();
 	}
 	else if (mState & PLAYER_STATE_SKILL_01)
 	{
-		AnimationName = "skill1";
-		mAnimation->Choice(AnimationName, Animation_Skill01_Speed, false);
+		Type = (int)PLAYER_STATE::SKILL_01;
+		mAnimation->Choice(ANIMATION_NAME[Type], ANIMATION_SPEED[Type]);
 		Player_Skill_01();
 	}
 	else if (mState & PLAYER_STATE_SKILL_02)
 	{
-		AnimationName = "skill2";
-		mAnimation->Choice(AnimationName, Animation_Skill02_Speed, false);
-		AnimationSpeed = 2;
+		Type = (int)PLAYER_STATE::SKILL_02;
+		mAnimation->Choice(ANIMATION_NAME[Type], ANIMATION_SPEED[Type]);
 		Player_Skill_02();
 	}
+
 	mAnimation->Play();
-	AnimationSpeed = 1;
 }
 
 void Player::PlayerState_Base()
@@ -317,7 +349,7 @@ void Player::PlayerState_Base()
 	Speed = MaxSpeed;
 	if (mState & PLAYER_STATE_JUMP)
 	{
-		mAnimation->Choice("evade", Animation_Jump_Speed, true);
+		mAnimation->Choice("evade", ANIMATION_SPEED[(int)PLAYER_STATE::JUMP], true);
 		Player_Jump();
 	}
 	else
@@ -330,7 +362,7 @@ bool Player::PlayerEndFrameCheck()
 {
 	AttackEndFrame	= mAnimation->GetEndFrame();
 	NowFrame		= mAnimation->GetNowFrame();
-	if (NowFrame > AttackEndFrame)
+	if (NowFrame >= AttackEndFrame)
 	{
 		return true;
 	}
@@ -371,7 +403,6 @@ void Player::Player_Attack_01()
 		if (AttackKeyDownCount > 1)
 		{
 			mState = PLAYER_STATE_ATTACK_02;
-			AttackKeyDownCount = 0;
 		}
 		else
 		{
@@ -398,6 +429,7 @@ void Player::Player_Attack_02()
 	if (PlayerEndFrameCheck() == true)
 	{
 		Player_Move_Check();
+		AttackKeyDownCount = 0;
 	}
 }
 
@@ -493,14 +525,16 @@ void Player::Player_Hit(int HitPower)
 
 bool Player::Player_Move_Check()
 {
+	int Type = 0;
 	if (DirPos == BasePos)
 	{
 		WeaponTR->SetPosition(0.0f, -0.02f, 0.1f);
 		WeaponTR->SetRotate(186.0f, 31.0f, 0.0f);
 
 		mState = PLAYER_STATE_IDLE;
-		mAnimation->Choice("idle", Animation_Idle_Speed, true);
-		IsMove = false;
+		Type = (int)PLAYER_STATE::IDLE;
+		mAnimation->Choice(ANIMATION_NAME[Type], ANIMATION_SPEED[Type]);
+		AttackKeyDownCount = 0;
 		return false;
 	}
 	else
@@ -509,11 +543,11 @@ bool Player::Player_Move_Check()
 		WeaponTR->SetRotate(0.0f, 21.0f, -5.0f);
 
 		mState = PLAYER_STATE_MOVE; 
-		mAnimation->Choice("move", Animation_Move_Speed, true);
-		IsMove = true;
+		Type = (int)PLAYER_STATE::MOVE;
+		mAnimation->Choice(ANIMATION_NAME[Type], ANIMATION_SPEED[Type]);
+		AttackKeyDownCount = 0;
 		return true;
 	}
-	AttackKeyDownCount = 0;
 }
 
 void Player::PlayerAttackColliderUpdate()

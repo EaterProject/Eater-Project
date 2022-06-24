@@ -1,6 +1,11 @@
 #include "FM_MATERIAL.h"
 #include "FM_MATERIAL.h"
 
+void FM_MATERIAL::SetAlpha(bool mAlpha)
+{
+	Alpha = mAlpha;
+}
+
 void FM_MATERIAL::SetColor(float& R, float& G, float& B)
 {
 	AddColor_R = R;

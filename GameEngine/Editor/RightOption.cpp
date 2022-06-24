@@ -41,6 +41,9 @@ IMPLEMENT_DYNAMIC(RightOption, CustomDialog)
 RightOption*  RightOption::thisPointer = nullptr;
 RightOption::RightOption(CWnd* pParent /*=nullptr*/)
 	: CustomDialog(IDD_RIGHT_OPTION, pParent)
+	, mIsActive(FALSE)
+	, mIsShadow(FALSE)
+	, mIsCull(FALSE)
 {
 
 }
@@ -139,6 +142,9 @@ void RightOption::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EDIT1, AddTag_Edit);
 	DDX_Control(pDX, IDC_EDIT3, ParentName_Edit);
 	DDX_Control(pDX, IDC_EDIT6, ChildName_Eidt);
+	DDX_Check(pDX, IDC_CHECK1, mIsActive);
+	DDX_Check(pDX, IDC_CHECK2, mIsShadow);
+	DDX_Check(pDX, IDC_CHECK9, mIsCull);
 }
 
 BEGIN_MESSAGE_MAP(RightOption, CDialogEx)
@@ -163,6 +169,9 @@ BEGIN_MESSAGE_MAP(RightOption, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON11, &RightOption::OnBnClickedButton11)
 	ON_BN_CLICKED(IDC_BUTTON13, &RightOption::OnBnClickedButton13)
 	ON_BN_CLICKED(IDC_BUTTON27, &RightOption::OnBnClickedButton27)
+	ON_BN_CLICKED(IDC_CHECK1, &RightOption::OnIsActiveButton)
+	ON_BN_CLICKED(IDC_CHECK2, &RightOption::OnIsShadowButton)
+	ON_BN_CLICKED(IDC_CHECK9, &RightOption::OnIsCullButton)
 END_MESSAGE_MAP()
 
 RightOption* RightOption::GetThis()
@@ -472,6 +481,11 @@ void RightOption::OnChoice_Hirearchy_Item(NMHDR* pNMHDR, LRESULT* pResult)
 	//만약자식오브젝트를 눌렀다면 맨위 최상위부모를 가져온다
 	ChoiceObject = FindGameObjectParent(ChoiceItem);
 
+	mIsActive	= ChoiceObject->GetActive();
+	mIsShadow	= ChoiceObject->GetShadow();
+	mIsCull		= ChoiceObject->GetCull();
+	UpdateData(FALSE);
+
 	Delete_Hirearchy_Item(ChoiceItem);
 	Create_Hirearchy_Item(ChoiceObject, ChoiceItem);
 	Tag_Combo.SetCurSel(ChoiceObject->GetTag());
@@ -745,6 +759,25 @@ void RightOption::OnBnClickedButton27()
 
 	ParentObject->ChoiceChild(ChildTopObject);
 	ChildTopObject->ChoiceParent(ParentObject);
+}
 
-	int num = 0;
+
+void RightOption::OnIsActiveButton()
+{
+	UpdateData(true);
+	ChoiceObject->SetActive(mIsActive);
+}
+
+
+void RightOption::OnIsShadowButton()
+{
+	UpdateData(true);
+	ChoiceObject->SetShadow(mIsShadow);
+}
+
+
+void RightOption::OnIsCullButton()
+{
+	UpdateData(true);
+	ChoiceObject->SetCull(mIsCull);
 }

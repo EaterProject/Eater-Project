@@ -64,6 +64,7 @@ protected:
 	//처음 한번만 실행하기위한 변수들
 	bool HitStart		= false;    //Hit	 상태 시작 변수
 	bool HitFXStart		= false;	//Hit FX 상태 시작 변수
+	bool IsAttack		= false;
 protected:
 	///애니메이션 이름 변수들
 	std::string ModelName;
@@ -107,7 +108,7 @@ protected:
 	float	RotationSpeed		= 200;			//몬스터 회전하는 속도
 	int		PointNumber			= -1;			//몬스터 이동 포인터 인덱스
 	int		ComboCount			= 6;			//현재 콤보 카운터
-	int		MonsterScale		= 1.0f;			
+	float	MonsterScale		= 1.0f;			
 	int		MonsterType			= 0;
 protected:
 	void GetRandomColor();

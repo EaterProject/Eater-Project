@@ -108,16 +108,6 @@ void E_MaterialManager::Create(InstanceMaterial* m)
 	EATER_CLOSE_WRITE_FILE();
 }
 
-void E_MaterialManager::CreateBase(std::string Filename)
-{
-	Filename += "_Material";
-	EATER_OPEN_WRITE_FILE(Filename, "../Assets/Texture/Material/", ".Emat");
-	FM_MATERIAL* m = GET_FORMAT_MATERIAL();
-	m->Name = "Base";
-	SET_SAVE_MATERIAL();
-	EATER_CLOSE_WRITE_FILE();
-}
-
 std::string E_MaterialManager::CutStr(std::string& Path)
 {
 	size_t start = Path.rfind("/") + 1;

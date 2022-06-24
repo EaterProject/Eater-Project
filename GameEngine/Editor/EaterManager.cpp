@@ -51,14 +51,6 @@ void EaterManager::Initialize()
 
 }
 
-void EaterManager::CreateBaseObject()
-{
-	//¸ðµ¨ µ¥ÀÌÅÍ
-	mMeshManager->CreateBox();
-	mBufferManager->CreateBox();
-	mMaterialManager->CreateBase("box");
-}
-
 std::string EaterManager::CutFileName(std::string FilePath)
 {
 	size_t start	= FilePath.rfind("/") + 1;

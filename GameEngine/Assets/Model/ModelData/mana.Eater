@@ -3,6 +3,9 @@
 @NodeName manaA
 @MeshName Mana_0
 @MaterialName Mana_M_mana
+@IsActive 1
+@IsShadow 1
+@IsCull 1
 $WorldTM 4 4
 0.001876 0.002635 0.009462 0.000000
 0.008117 -0.005841 0.000017 0.000000
@@ -18,6 +21,9 @@ $LocalTM 4 4
 @NodeName manaB
 @MeshName Mana_1
 @MaterialName Mana_M_mana
+@IsActive 1
+@IsShadow 1
+@IsCull 1
 $WorldTM 4 4
 0.009998 0.000008 0.000175 0.000000
 -0.000018 0.009983 0.000576 0.000000

@@ -68,6 +68,9 @@ void SceneSave::Scene_Save(std::string SaveFilePath, std::string SaveFileName)
 		//공통 데이터 저장
 		EATER_SET_MAP("NAME", Object->Name);
 		EATER_SET_MAP("TAG", std::to_string(Object->GetTag()));
+		EATER_SET_MAP("IsActive", std::to_string(Object->GetActive()));
+		EATER_SET_MAP("IsShadow", std::to_string(Object->GetShadow()));
+		EATER_SET_MAP("IsCull", std::to_string(Object->GetCull()));
 
 		//컨퍼넌트 저장
 		SaveTransform(mTransform);
@@ -137,7 +140,7 @@ void SceneSave::SceneOption()
 
 	RenderOption* mOption = GetRenderOptionData();
 
-	EATER_SET_LIST_START("OPTION", 1, 17);
+	EATER_SET_LIST_START("OPTION", 2, 9);
 	EATER_SET_LIST(mOption->AO_Radius);
 	EATER_SET_LIST(mOption->AO_SurfaceEpsilon);
 	EATER_SET_LIST(mOption->AO_BlurCount);
@@ -146,7 +149,8 @@ void SceneSave::SceneOption()
 	EATER_SET_LIST(mOption->FOG_Color.z);
 	EATER_SET_LIST(mOption->FOG_MoveSpeed);
 	EATER_SET_LIST(mOption->FOG_StartDistance);
-	EATER_SET_LIST(mOption->FOG_DistanceOffset);
+	EATER_SET_LIST(mOption->FOG_DistanceOffset,true);
+
 	EATER_SET_LIST(mOption->FOG_DistanceValue);
 	EATER_SET_LIST(mOption->FOG_HeightOffset);
 	EATER_SET_LIST(mOption->FOG_HeightValue);
@@ -154,7 +158,18 @@ void SceneSave::SceneOption()
 	EATER_SET_LIST(mOption->BLOOM_Threshold_Min);
 	EATER_SET_LIST(mOption->BLOOM_Threshold_Max);
 	EATER_SET_LIST(mOption->BLOOM_Factor);
-	EATER_SET_LIST(mOption->SkyLight_Factor,true);
+	EATER_SET_LIST(mOption->SkyLight_Factor);
+	EATER_SET_LIST(mOption->SkyCube_Name, true);
+
+	Size = mOption->SkyLight_Name.size();
+
+	EATER_SET_LIST_START("SKYLIGHT_MAP", Size, 2);
+	for (int i = 0; i < Size; i++)
+	{
+		EATER_SET_LIST(std::to_string(i));
+		EATER_SET_LIST(mOption->SkyLight_Name[i], true);
+	}
+	
 
 	GameObject* Direction	= GetDirectionLight();
 	Light* mLight			= Direction->GetComponent<Light>();

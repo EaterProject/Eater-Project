@@ -1,0 +1,22 @@
+#EATERMAT
+@MaterialName Outside_Pebble_M_pebble_b
+@Alpha 0
+@DiffuseMap organic_pebble_B_BaseColor.png
+@NormalMap organic_pebble_B_Normal.png
+@EmissiveMap 0
+@ORMMap organic_pebble_B_ORM.png
+@Emissive 0.000000
+@Roughness 0.000000
+@Metallic 0.000000
+@Tileing_X 1.000000
+@Tileing_Y 1.000000
+@SkyLightIndex 0
+@AddColor_R 0.000000
+@AddColor_G 0.000000
+@AddColor_B 0.000000
+@LimColor_R 0.000000
+@LimColor_G 0.000000
+@LimColor_B 0.000000
+@LimFactor 0.000000
+@LimWidth 0.000000
+&

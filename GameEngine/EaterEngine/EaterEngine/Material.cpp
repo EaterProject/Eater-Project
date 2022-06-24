@@ -45,6 +45,15 @@ void Material::SetTextureTiling(float scale_x, float scale_y)
 	m_MaterialData->Material_Property->TexTM = DirectX::SimpleMath::Matrix::CreateScale(1.0f / scale_x, 1.0f / scale_y, 1.0f);
 }
 
+void Material::SetAlpha(bool enable)
+{
+	// Texture 변경..
+	m_MaterialData->Material_Property->Alpha = enable;
+
+	// Renderer Data 동기화..
+	GraphicEngine::Get()->PushChangeMaterial(m_MaterialData);
+}
+
 void Material::SetDiffuseTexture(std::string diffuseName)
 {
 	TextureBuffer* newTexture = LoadManager::GetTexture(diffuseName);

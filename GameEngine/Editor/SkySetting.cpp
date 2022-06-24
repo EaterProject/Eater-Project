@@ -82,6 +82,8 @@ void SkySetting::SetCheck(CString FileName)
 
 		SkyLight_Map_Edit.SetWindowTextW(ChangeToCString(SkyLightName));
 
+		PushSkyLightName(SkyLightName);
+
 		BakeConvertSkyLightMap(SkyLightName, SkyLightAngle, SkyLightThreshold, SkyLightHDRI, SkyLightIndex);
 	}
 	else if (DropRect(Edit_SkyCube_Rect) == true)
@@ -89,6 +91,8 @@ void SkySetting::SetCheck(CString FileName)
 		SkyCubeName = CutStringFileType(FileName);
 
 		SkyCube_Map_Edit.SetWindowTextW(ChangeToCString(SkyCubeName));
+
+		PushSkyCubeName(SkyCubeName);
 
 		BakeConvertSkyCubeMap(SkyCubeName, SkyCubeAngle, SkyCubeThreshold, SkyCubeHDRI);
 	}
@@ -358,4 +362,25 @@ void SkySetting::OnDeltaposSpin3(NMHDR* pNMHDR, LRESULT* pResult)
 	}
 	UpdateData(FALSE);
 	*pResult = 0;
+}
+
+void SkySetting::PushSkyLightName(std::string name)
+{
+	RenderOption* mOption = GetRenderOptionData();
+	auto& itor = mOption->SkyLight_Name.find(SkyLightIndex);
+
+	if (itor != mOption->SkyLight_Name.end())
+	{
+		itor->second = SkyLightName;
+	}
+	else
+	{
+		mOption->SkyLight_Name.insert({ SkyLightIndex, SkyLightName });
+	}
+}
+
+void SkySetting::PushSkyCubeName(std::string name)
+{
+	RenderOption* mOption = GetRenderOptionData();
+	mOption->SkyCube_Name = SkyCubeName;
 }

@@ -42,7 +42,6 @@ public:
 	std::string Name;													//이름
 public:
 	EATER_ENGINEDLL void SetActive(bool active);						//모든 컨퍼넌트 기능중지 여부
-	EATER_ENGINEDLL void SetStatic(bool active);						//오브젝트 정적 여부
 	EATER_ENGINEDLL void SetShadow(bool active);						//오브젝트 그림자 여부
 	EATER_ENGINEDLL void SetCull(bool active);							//오브젝트 컬링 여부
 	EATER_ENGINEDLL void SetDontDestroy(bool DontDestroy);				//씬이 넘어갈때 삭제여부
@@ -60,9 +59,13 @@ public:
 	EATER_ENGINEDLL int			GetChildMeshCount();					//자식 매쉬 객체의 개수를 가져옴
 	EATER_ENGINEDLL int			GetChildBoneCount();					//자식 본 객체의 개수를 가져옴
 	EATER_ENGINEDLL	Transform*	GetTransform();							//기본 컨퍼넌트인 Transform을 가져옴
-	EATER_ENGINEDLL Material*	GetMaterial();							//
+	EATER_ENGINEDLL Material*	GetMaterial();							//메테리얼 데이터 넣어주기
 	EATER_ENGINEDLL void ChoiceParent(GameObject* obj);					//나자신을 선택한 오브젝트의 자식으로 넣는다
 	EATER_ENGINEDLL void ChoiceChild(GameObject* obj);					//선택한 오브젝트를 나의 자식으로 넣는다
+
+	EATER_ENGINEDLL bool GetActive();
+	EATER_ENGINEDLL bool GetShadow();
+	EATER_ENGINEDLL bool GetCull();
 public:
 	Component* GetDeleteComponent(int i);	//삭제할 컨퍼넌트를 가져옴
 	int GetComponentCount();				//오브젝트의 컨퍼넌트 갯수를 가져옴

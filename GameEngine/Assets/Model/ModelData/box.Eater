@@ -1,8 +1,11 @@
 #STATIC
 @ParentName  RootNode
 @NodeName Cube
-@MeshName box_0
-@MaterialName box_Material
+@MeshName Box_0
+@MaterialName Box
+@IsActive 1
+@IsShadow 1
+@IsCull 1
 $WorldTM 4 4
 1.000000 0.000000 0.000000 0.000000
 0.000000 1.000000 0.000000 0.000000

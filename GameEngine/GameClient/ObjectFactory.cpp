@@ -100,7 +100,7 @@ GameObject* ObjectFactory::CreateMonsterB()
 GameObject* ObjectFactory::CreateManaStone()
 {
 	int ManaCount = ManaPoint_List.size();
-	for (int i = 0; i < 1; i++)
+	for (int i = 0; i < ManaCount; i++)
 	{
 		Vector3 point = ManaPoint_List[i]->GetTransform()->GetPosition();
 		
@@ -113,13 +113,19 @@ GameObject* ObjectFactory::CreateManaStone()
 		switch (i)
 		{
 		case 0:
-			mMana->SetMonsterCount(4, 1);
+			mMana->SetMonsterCount(3, 0);
 			break;
 		case 1:
-			mMana->SetMonsterCount(4, 1);
+			mMana->SetMonsterCount(3, 1);
 			break;
 		case 2:
+			mMana->SetMonsterCount(2, 2);
+			break;
+		case 3:
 			mMana->SetMonsterCount(3, 2);
+			break;
+		case 4:
+			mMana->SetMonsterCount(2, 3);
 			break;
 		}
 	}

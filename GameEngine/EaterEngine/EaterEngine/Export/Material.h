@@ -17,6 +17,8 @@ public:
 public:
 	EATER_ENGINEDLL void SetTextureTiling(float scale_x, float scale_y);
 
+	EATER_ENGINEDLL void SetAlpha(bool enable);
+
 	EATER_ENGINEDLL void SetDiffuseTexture(std::string diffuseName);
 	EATER_ENGINEDLL void SetNormalTexture(std::string noramlName);
 	EATER_ENGINEDLL void SetEmissiveTexture(std::string emissiveName);

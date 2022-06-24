@@ -81,4 +81,8 @@ public:
 	afx_msg void OnSkyLightHDRI();
 	afx_msg void OnColorGradingVolume();
 	afx_msg void OnDeltaposSpin3(NMHDR* pNMHDR, LRESULT* pResult);
+
+private:
+	void PushSkyLightName(std::string name);
+	void PushSkyCubeName(std::string name);
 };
