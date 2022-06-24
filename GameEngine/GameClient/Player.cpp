@@ -41,12 +41,12 @@ Player::Player()
 
 	ANIMATION_SPEED[(int)PLAYER_STATE::IDLE]		= 1.5f;
 	ANIMATION_SPEED[(int)PLAYER_STATE::ATTACK_01]	= 1.5f;
-	ANIMATION_SPEED[(int)PLAYER_STATE::ATTACK_02]	= 1.5f;
+	ANIMATION_SPEED[(int)PLAYER_STATE::ATTACK_02]	= 1.75f;
 	ANIMATION_SPEED[(int)PLAYER_STATE::SKILL_01]	= 1.5f;
 	ANIMATION_SPEED[(int)PLAYER_STATE::SKILL_02]	= 1.5f;
-	ANIMATION_SPEED[(int)PLAYER_STATE::JUMP] = 1.5f;
-	ANIMATION_SPEED[(int)PLAYER_STATE::MOVE] = 1.0f;
-	ANIMATION_SPEED[(int)PLAYER_STATE::DEAD] = 1.5f;
+	ANIMATION_SPEED[(int)PLAYER_STATE::JUMP]		= 1.5f;
+	ANIMATION_SPEED[(int)PLAYER_STATE::MOVE]		= 1.0f;
+	ANIMATION_SPEED[(int)PLAYER_STATE::DEAD]		= 1.5f;
 
 
 	RayCastHit = new PhysRayCast[5]();
@@ -236,9 +236,13 @@ void Player::PlayerKeyinput()
 	{
 		if (AttackKeyDownCount < 1)
 		{
-			AttackKeyDownCount++;
 			mState |= PLAYER_STATE_ATTACK_01;
 		}
+		else
+		{
+			mState |= PLAYER_STATE_ATTACK_02;
+		}
+		AttackKeyDownCount++;
 	}
 	else if (GetKeyDown(VK_RBUTTON))
 	{
@@ -311,25 +315,28 @@ void Player::PlayerState_Attack()
 	if (mState & PLAYER_STATE_ATTACK_01)
 	{
 		Type = (int)PLAYER_STATE::ATTACK_01;
+		mAnimation->Choice(ANIMATION_NAME[Type], ANIMATION_SPEED[Type]);
 		Player_Attack_01();
 	}
 	else if (mState & PLAYER_STATE_ATTACK_02)
 	{
 		Type = (int)PLAYER_STATE::ATTACK_02;
+		mAnimation->Choice(ANIMATION_NAME[Type], ANIMATION_SPEED[Type]);
 		Player_Attack_02();
 	}
 	else if (mState & PLAYER_STATE_SKILL_01)
 	{
 		Type = (int)PLAYER_STATE::SKILL_01;
+		mAnimation->Choice(ANIMATION_NAME[Type], ANIMATION_SPEED[Type]);
 		Player_Skill_01();
 	}
 	else if (mState & PLAYER_STATE_SKILL_02)
 	{
 		Type = (int)PLAYER_STATE::SKILL_02;
+		mAnimation->Choice(ANIMATION_NAME[Type], ANIMATION_SPEED[Type]);
 		Player_Skill_02();
 	}
 
-	mAnimation->Choice(ANIMATION_NAME[Type], ANIMATION_SPEED[Type]);
 	mAnimation->Play();
 }
 
@@ -396,7 +403,6 @@ void Player::Player_Attack_01()
 		if (AttackKeyDownCount > 1)
 		{
 			mState = PLAYER_STATE_ATTACK_02;
-			AttackKeyDownCount = 0;
 		}
 		else
 		{
@@ -423,6 +429,7 @@ void Player::Player_Attack_02()
 	if (PlayerEndFrameCheck() == true)
 	{
 		Player_Move_Check();
+		AttackKeyDownCount = 0;
 	}
 }
 
