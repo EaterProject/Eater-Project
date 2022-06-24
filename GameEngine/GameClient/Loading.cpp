@@ -17,7 +17,7 @@
 
 void Loading::Awake()
 {
-	Load("../Assets/Texture/UI");
+	Load("../Assets/Texture/UI/Loading");
 
 	RenderOption* option = GetRenderOptionData();
 	option->RenderingOption ^= RENDER_OPTION::RENDER_FOG;
@@ -31,8 +31,8 @@ void Loading::Update()
 {
 	if (ThreadRun == false)
 	{
-		ChoiceScene("inGame");
-		//ChoiceScene("TestScene");
+		//ChoiceScene("inGame");
+		ChoiceScene("TestScene");
 	}
 }
 
@@ -48,6 +48,10 @@ void Loading::ThreadFunction()
 	Load("../Assets/Texture/Terrain");
 	Load("../Assets/Texture/Material");
 	Load("../Assets/Texture/Particle");
+
+	Load("../Assets/Texture/UI/Font");
+	Load("../Assets/Texture/UI/InGame");
+
 
 	Load("../Assets/Model/Animation");
 	Load("../Assets/Model/MeshBuffer");

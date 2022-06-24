@@ -2,7 +2,9 @@
 #include "ParticleSystem.h"
 
 #include "TimeManager.h"
+#include "GameObject.h"
 #include "EaterEngineAPI.h"
+
 EATER_ENGINEDLL ParticleController::ParticleController()
 	:m_ControllerState(PARTICLE_STATE::END_STATE), m_TotalPlayTime(0.0f), m_PlayTime(0.0f), m_StartTime(0.0f), m_NowParticleListSize(0)
 {
@@ -58,22 +60,26 @@ void ParticleController::Update()
 	}
 }
 
-void ParticleController::PushParticle(std::string particle_name, ParticleSystem* particle, float start_time)
+void ParticleController::PushParticle(std::string particle_key, ParticleSystem* particle, float start_time)
 {
 	if (particle == nullptr) return;
 
-	ParticleNode node_itor = m_ParticleNodeDataList.find(particle_name);
+	ParticleNode&& node_itor = m_ParticleNodeDataList.find(particle_key);
 
 	// 해당 키에 대한 파티클이 삽입되어 있다면..
 	if (node_itor != m_ParticleNodeDataList.end()) return;
+
+	// 하이어라키 연결..
+	GameObject* object = particle->gameobject;
+	object->ChoiceParent(gameobject);
 
 	// 새로운 파티클 노드 데이터 생성..
 	NodeData* node_data = new NodeData();
 
 	// 파티클 노드 삽입..
-	m_ParticleNodeDataList.insert({ particle_name, node_data });
+	m_ParticleNodeDataList.insert({ particle_key, node_data });
 
-	ParticleList list_itor = m_ParticleSystemList.find(start_time);
+	ParticleList&& list_itor = m_ParticleSystemList.find(start_time);
 
 	// 파티클 리스트에서 위치하는 인덱스..
 	int list_index = 0;
@@ -102,10 +108,10 @@ void ParticleController::PushParticle(std::string particle_name, ParticleSystem*
 	SetTotalTime();
 }
 
-void ParticleController::PopParticle(std::string particle_name)
+void ParticleController::PopParticle(std::string particle_key)
 {
 	// 해당 노드 검색..
-	ParticleNode&& node_itor = m_ParticleNodeDataList.find(particle_name);
+	ParticleNode&& node_itor = m_ParticleNodeDataList.find(particle_key);
 
 	// 해당 키에 대한 파티클이 삽입되있지 않다면..
 	if (node_itor == m_ParticleNodeDataList.end()) return;
@@ -113,7 +119,7 @@ void ParticleController::PopParticle(std::string particle_name)
 	NodeData* node_data = node_itor->second;
 
 	// 해당 리스트 검색..
-	ParticleList list_itor = m_ParticleSystemList.find(node_data->Time_Key);
+	ParticleList&& list_itor = m_ParticleSystemList.find(node_data->Time_Key);
 
 	// 현재 노드의 데이터..
 	float time_key = node_data->Time_Key;
@@ -139,7 +145,7 @@ void ParticleController::PopParticle(std::string particle_name)
 	}
 
 	// 해당 노드 데이터 제거..
-	m_ParticleNodeDataList.erase(particle_name);
+	m_ParticleNodeDataList.erase(particle_key);
 
 	// TotalTime 재설정..
 	SetTotalTime();
@@ -147,6 +153,8 @@ void ParticleController::PopParticle(std::string particle_name)
 
 void ParticleController::Play()
 {
+	if (m_ControllerState != PARTICLE_STATE::END_STATE) return;
+
 	m_ControllerState = PARTICLE_STATE::START_STATE;
 
 	// 첫번째 요소부터 시작..
@@ -157,6 +165,19 @@ void ParticleController::Play()
 
 	// 현재 파티클 리스트에 대한 데이터 설정..
 	SetNowParticleList();
+}
+
+ParticleSystem* ParticleController::GetParticle(std::string particle_key)
+{
+	// 해당 노드 검색..
+	ParticleNode&& node_itor = m_ParticleNodeDataList.find(particle_key);
+
+	if (node_itor != m_ParticleNodeDataList.end())
+	{
+		return node_itor->second->Particle_Value;
+	}
+
+	return nullptr;
 }
 
 void ParticleController::UpdateController()

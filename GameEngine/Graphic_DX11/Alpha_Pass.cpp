@@ -252,7 +252,53 @@ void Alpha_Pass::RenderUpdate(const InstanceRenderBuffer* instance, const Render
 	break;
 	case OBJECT_TYPE::PARTICLE_SYSTEM:
 	{
-		ParticleUpdate(meshData->m_ParticleData);
+		ParticleData* particleSystem = meshData->m_ParticleData;
+		OneParticle* particle = nullptr;
+
+		const Matrix& local = obj->Local;
+		const Matrix& invView = g_GlobalData->MainCamera_Data->CamInvView;
+
+		Matrix converseTM = Matrix::Identity;
+
+		switch (particleSystem->RenderType)
+		{
+		case PARTICLE_RENDER_OPTION::BILLBOARD:
+			converseTM = invView;
+			break;
+		case PARTICLE_RENDER_OPTION::VERTICAL_BILLBOARD:
+			converseTM = invView;
+			converseTM._21 = 0; converseTM._22 = 1; converseTM._23 = 0;
+			break;
+		case PARTICLE_RENDER_OPTION::HORIZONTAL_BILLBOARD:
+			converseTM = Matrix::CreateRotationX(3.1415926535f * 0.5f);
+			break;
+		case PARTICLE_RENDER_OPTION::MESH:
+			break;
+		default:
+			break;
+		}
+
+		for (int i = 0; i < particleSystem->Particle_Count; i++)
+		{
+			particle = particleSystem->m_Particles[i];
+
+			if (particle->Playing == false) continue;
+
+			// 파티클시스템 로컬기준 월드 적용..
+			Matrix&& result = *particle->Local * converseTM;
+
+			result._41 = world._41 + particle->Pos.x;
+			result._42 = world._42 + particle->Pos.y;
+			result._43 = world._43 + particle->Pos.z;
+
+			// Vertex Input Data 삽입..
+			m_ParticleData.World = result;
+			m_ParticleData.TexScale = particle->TexScale;
+			m_ParticleData.TexPos = particle->TexPos;
+			m_ParticleData.Color = particle->Color;
+
+			m_ParticleInstance[m_InstanceCount++] = m_ParticleData;
+		}
 
 		if (m_InstanceCount == 0) return;
 
@@ -465,104 +511,10 @@ void Alpha_Pass::RenderUpdate(const InstanceRenderBuffer* instance, const std::v
 
 	}
 	break;
-	case OBJECT_TYPE::PARTICLE_SYSTEM:
-	{
-		for (int i = 0; i < m_RenderCount; i++)
-		{
-			ParticleUpdate(meshlist[i]->m_ParticleData);
-		}
-
-		if (m_InstanceCount == 0) return;
-
-		// Instance Buffer Update..
-		UpdateBuffer(m_Particle_IB->InstanceBuf->Get(), &m_ParticleInstance[0], (size_t)m_Particle_IB->Stride * (size_t)m_InstanceCount);
-
-		// Veretex Shader Update..
-		CB_InstanceParticleMesh particleBuf;
-		particleBuf.gViewProj = viewproj;
-
-		m_ParticleInst_VS->ConstantBufferUpdate(&particleBuf);
-
-		m_ParticleInst_VS->Update();
-
-		// Pixel Shader Update..
-		if (mat->m_Albedo)
-		{
-			m_Particle_PS->SetShaderResourceView<gDiffuseMap>(mat->m_Albedo);
-		}
-
-		CB_ParticleOption particleOptionBuf;
-		particleOptionBuf.gStrength = meshlist[0]->m_ParticleData->Particle_Strength;
-
-		m_Particle_PS->ConstantBufferUpdate(&particleOptionBuf);
-
-		m_Particle_PS->Update();
-
-		ID3D11Buffer* vertexBuffers[2] = { mesh->m_VertexBuf, m_Particle_IB->InstanceBuf->Get() };
-		UINT strides[2] = { mesh->m_Stride, m_Particle_IB->Stride };
-		UINT offsets[2] = { 0,0 };
-
-		g_Context->IASetVertexBuffers(0, 2, vertexBuffers, strides, offsets);
-		g_Context->IASetIndexBuffer(mesh->m_IndexBuf, DXGI_FORMAT_R32_UINT, 0);
-		g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-		// Draw..
-		g_Context->DrawIndexedInstanced(mesh->m_IndexCount, m_InstanceCount, 0, 0, 0);
-	}
-	break;
 	default:
 		break;
 	}
 
 	// Alpha Mesh Instance Data Clear..
 	m_InstanceCount = 0;
-}
-
-void Alpha_Pass::ParticleUpdate(ParticleData* particleSystem)
-{
-	OneParticle* particle = nullptr;
-
-	const Matrix& invView = g_GlobalData->MainCamera_Data->CamInvView;
-	Matrix converseTM = Matrix::Identity;
-	Matrix particleWorld;
-
-	switch (particleSystem->RenderType)
-	{
-	case PARTICLE_RENDER_OPTION::BILLBOARD:
-		converseTM = invView;
-		break;
-	case PARTICLE_RENDER_OPTION::VERTICAL_BILLBOARD:
-		converseTM = invView;
-		converseTM._21 = 0; converseTM._22 = 1; converseTM._23 = 0;
-		break;
-	case PARTICLE_RENDER_OPTION::HORIZONTAL_BILLBOARD:
-		converseTM = Matrix::CreateRotationX(3.1415926535f / 2.0f);
-		break;
-	case PARTICLE_RENDER_OPTION::MESH:
-		break;
-	default:
-		break;
-	}
-
-	for (int i = 0; i < particleSystem->Particle_Count; i++)
-	{
-		particle = particleSystem->m_Particles[i];
-
-		if (particle->Playing == false) continue;
-
-		// Render Type에 맞는 행렬 변환..
-		particleWorld = *particle->World * converseTM;
-
-		particleWorld._41 = particle->World->_41;
-		particleWorld._42 = particle->World->_42;
-		particleWorld._43 = particle->World->_43;
-
-		// Vertex Input Data 삽입..
-		m_ParticleData.World = particleWorld;
-		m_ParticleData.TexScale = particle->TexScale;
-		m_ParticleData.TexPos = particle->TexPos;
-		m_ParticleData.Color = particle->Color;
-
-		m_ParticleInstance[m_InstanceCount++] = m_ParticleData;
-	}
 }

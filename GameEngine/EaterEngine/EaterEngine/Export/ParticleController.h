@@ -31,12 +31,13 @@ public:
 	void Update() override;
 
 public:
-	EATER_ENGINEDLL void PushParticle(std::string particle_name, ParticleSystem* particle, float start_time);
-	EATER_ENGINEDLL void PopParticle(std::string particle_name);
+	EATER_ENGINEDLL void PushParticle(std::string particle_key, ParticleSystem* particle, float start_time);
+	EATER_ENGINEDLL void PopParticle(std::string particle_key);
 
 	EATER_ENGINEDLL void Play();
 
 public:
+	EATER_ENGINEDLL ParticleSystem* GetParticle(std::string particle_key);
 	EATER_ENGINEDLL PARTICLE_STATE GetState();
 
 private:

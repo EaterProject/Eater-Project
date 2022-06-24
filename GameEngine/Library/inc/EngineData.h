@@ -243,10 +243,13 @@ public:
 	bool Playing;
 	Vector4 Color;
 
+	Vector3 Pos;
+
 	Vector2 TexScale;
 	Vector2 TexPos;
 
 	Matrix* World;
+	Matrix* Local;
 };
 
 class ParticleData
@@ -319,6 +322,7 @@ public:
 
 	std::vector<Matrix> BoneOffsetTM;				//본 오프셋 TM
 
+	Matrix Local;									//매쉬의 로컬 행렬
 	Matrix World;									//매쉬의 월드 행렬
 	Matrix InvWorld;								//매쉬의 월드 역행렬
 

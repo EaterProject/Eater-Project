@@ -517,7 +517,7 @@ DirectX::SimpleMath::Matrix* Transform::GetWorld()
 
 DirectX::SimpleMath::Matrix* Transform::GetLocal()
 {
-	return &Load_Local;
+	return &Local_M;
 }
 
 DirectX::SimpleMath::Vector3 Transform::GetPosition()
@@ -552,6 +552,11 @@ void Transform::SetParent(Transform* mParent)
 	IsUpdate = true;
 
 	Parent = mParent;
+}
+
+Transform* Transform::GetParent()
+{
+	return Parent;
 }
 
 void Transform::Child_Local_Update()
@@ -731,14 +736,14 @@ void Transform::UpdateTransform()
 	//	RotationXM = CreateXMRot4x4_Q();
 	//}
 
-	DirectX::SimpleMath::Matrix Master = (ScaleXM * RotationXM * PositionXM);
+	Local_M = (ScaleXM * RotationXM * PositionXM);
 	if (Parent != nullptr)
 	{
-		World_M = Load_Local * Master * Parent->World_M;
+		World_M = Load_Local * Local_M * Parent->World_M;
 	}
 	else
 	{
-		World_M = Load_Local * Master;
+		World_M = Load_Local * Local_M;
 	}
 
 	for (int i = 0; i < ChildList.size(); i++)
@@ -748,6 +753,7 @@ void Transform::UpdateTransform()
 	}
 
 	// Object Matrix ¿¬µ¿..
+	gameobject->OneMeshData->Object_Data->Local = Local_M;
 	gameobject->OneMeshData->Object_Data->World = World_M;
 	gameobject->OneMeshData->Object_Data->InvWorld = MathHelper::InverseTranspose(World_M);
 

@@ -332,7 +332,6 @@ GameObject* GameEngine::InstanceParticle(std::string ObjName, std::string FileNa
 		mParticle->SetLifeTimeForce(Data->LifeForce_Min, Data->LifeForce_Max);
 		mParticle->SetLifeTimeRotation(Data->LifeRotation.x, Data->LifeRotation.y);
 		mParticle->SetPlayTime(1, false);
-		mParticle->Play();
 	}
 
 	return temp;

@@ -22,9 +22,6 @@ public:
 	void RenderUpdate(const InstanceRenderBuffer* instance, const RenderData* meshData);
 
 private:
-	void ParticleUpdate(ParticleData* particleSystem);
-
-private:
 	VertexShader* m_ParticleInst_VS;
 	VertexShader* m_Mesh_VS;
 	VertexShader* m_MeshInst_VS;

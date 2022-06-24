@@ -104,59 +104,64 @@ void TestScene::CreateMap()
 	Slider* slider = nullptr;
 
 	/// 미니맵 설정
-	m_MiniMap = MiniMapSystem::Get();
-	m_MiniMap->CreateMiniMap("ingame_minimap", PIVOT_RIGHT_TOP, ROTATE_90, Vector2(186.0f), Vector2(-25.0f));
-
-
-	m_Boss = Instance();
-	filter = m_Boss->AddComponent<MeshFilter>();
-	filter->SetModelName("BossB+");
-	filter->SetAnimationName("BossB+");
-	m_Boss->GetTransform()->SetPosition(-44.0f, 6.0f, 62.0f);
-	m_Boss->GetTransform()->SetScale(1.5f);
-	AC = m_Boss->AddComponent<AnimationController>();
-	ACList.push_back(AC);
-	TRList.push_back(m_Boss->GetTransform());
-
-	/// 미니맵 아이콘 추가
-	m_MiniMap->CreateIcon("Minimap_Boss", m_Boss, false);
-
-
-	m_MonsterA = Instance();
-	filter = m_MonsterA->AddComponent<MeshFilter>();
-	filter->SetModelName("MonsterA+");
-	filter->SetAnimationName("MonsterA+");
-	m_MonsterA->GetTransform()->SetPosition(15, 0, 62);
-	m_MonsterA->GetTransform()->SetScale(1.2f, 1.2f, 1.2f);
-	AC = m_MonsterA->AddComponent<AnimationController>();
-	ACList.push_back(AC);
-	TRList.push_back(m_MonsterA->GetTransform());
-
-	/// 미니맵 아이콘 추가
-	m_MiniMap->CreateIcon("Minimap_Player", m_MonsterA, true);
-
-
-	m_MonsterB = Instance();
-	filter = m_MonsterB->AddComponent<MeshFilter>();
-	filter->SetModelName("MonsterB+");
-	filter->SetAnimationName("MonsterB+");
-	m_MonsterB->GetTransform()->SetPosition(23, 1, 56);
-	m_MonsterB->GetTransform()->SetScale(3.0f, 3.0f, 3.0f);
-	AC = m_MonsterB->AddComponent<AnimationController>();
-	ACList.push_back(AC);
-	TRList.push_back(m_MonsterB->GetTransform());
-
-
-	/// 미니맵 아이콘 추가
-	m_MiniMap->CreateIcon("Minimap_Player", m_MonsterB, true);
+	//m_MiniMap = MiniMapSystem::Get();
+	//m_MiniMap->CreateMiniMap("ingame_minimap", PIVOT_RIGHT_TOP, ROTATE_90, Vector2(186.0f), Vector2(-25.0f));
+	//
+	//
+	//m_Boss = Instance();
+	//filter = m_Boss->AddComponent<MeshFilter>();
+	//filter->SetModelName("BossB+");
+	//filter->SetAnimationName("BossB+");
+	//m_Boss->GetTransform()->SetPosition(-44.0f, 6.0f, 62.0f);
+	//m_Boss->GetTransform()->SetScale(1.5f);
+	//AC = m_Boss->AddComponent<AnimationController>();
+	//ACList.push_back(AC);
+	//TRList.push_back(m_Boss->GetTransform());
+	//
+	///// 미니맵 아이콘 추가
+	//m_MiniMap->CreateIcon("Minimap_Boss", m_Boss, false);
+	//
+	//
+	//m_MonsterA = Instance();
+	//filter = m_MonsterA->AddComponent<MeshFilter>();
+	//filter->SetModelName("MonsterA+");
+	//filter->SetAnimationName("MonsterA+");
+	//m_MonsterA->GetTransform()->SetPosition(15, 0, 62);
+	//m_MonsterA->GetTransform()->SetScale(1.2f, 1.2f, 1.2f);
+	//AC = m_MonsterA->AddComponent<AnimationController>();
+	//ACList.push_back(AC);
+	//TRList.push_back(m_MonsterA->GetTransform());
+	//
+	///// 미니맵 아이콘 추가
+	//m_MiniMap->CreateIcon("Minimap_Player", m_MonsterA, true);
+	//
+	//
+	//m_MonsterB = Instance();
+	//filter = m_MonsterB->AddComponent<MeshFilter>();
+	//filter->SetModelName("MonsterB+");
+	//filter->SetAnimationName("MonsterB+");
+	//m_MonsterB->GetTransform()->SetPosition(23, 1, 56);
+	//m_MonsterB->GetTransform()->SetScale(3.0f, 3.0f, 3.0f);
+	//AC = m_MonsterB->AddComponent<AnimationController>();
+	//ACList.push_back(AC);
+	//TRList.push_back(m_MonsterB->GetTransform());
+	//
+	//
+	///// 미니맵 아이콘 추가
+	//m_MiniMap->CreateIcon("Minimap_Player", m_MonsterB, true);
 
 	GameObject* particle_1 = Instance_Particle("Particle1", "BossPush_circle");
 	GameObject* particle_2 = Instance_Particle("Particle2", "BossPush_magical");
 	GameObject* particle_3 = Instance_Particle("Particle3", "BossProjectile_aura");
 	GameObject* particle_4 = Instance_Particle("Particle4", "BossProjectile_circle");
 	GameObject* particle_5 = Instance_Particle("Particle5", "BossProjectile_dot");
+	particle_1->GetTransform()->SetRotate_X(90.0f);
+	particle_2->GetTransform()->SetRotate_Y(90.0f);
+	particle_3->GetTransform()->SetRotate_X(90.0f);
+	particle_4->GetTransform()->SetRotate_Y(90.0f);
 
 	Object = Instance();
+	m_Controller = Object->GetTransform();
 	m_ParticleController = Object->AddComponent<ParticleController>();
 	m_ParticleController->PushParticle("Particle_1", particle_1->GetComponent<ParticleSystem>(), 0.0f);
 	m_ParticleController->PushParticle("Particle_2", particle_2->GetComponent<ParticleSystem>(), 0.0f);
@@ -444,6 +449,8 @@ void TestScene::ChangeCubeMap()
 		{
 			TRList[i]->AddPosition_X(-dTime * 50.0f);
 		}
+
+		m_Controller->AddPosition_X(-dTime * 50.0f);
 	}
 	if (GetKey(VK_RIGHT))
 	{
@@ -451,6 +458,8 @@ void TestScene::ChangeCubeMap()
 		{
 			TRList[i]->AddPosition_X(dTime * 50.0f);
 		}
+
+		m_Controller->AddPosition_X(dTime * 50.0f);
 	}
 	if (GetKey(VK_UP))
 	{
@@ -458,6 +467,8 @@ void TestScene::ChangeCubeMap()
 		{
 			TRList[i]->AddPosition_Z(dTime * 50.0f);
 		}
+
+		m_Controller->AddPosition_Z(dTime * 50.0f);
 	}
 	if (GetKey(VK_DOWN))
 	{
@@ -465,6 +476,8 @@ void TestScene::ChangeCubeMap()
 		{
 			TRList[i]->AddPosition_Z(-dTime * 50.0f);
 		}
+
+		m_Controller->AddPosition_Z(-dTime * 50.0f);
 	}
 	if (GetKey('Q'))
 	{
@@ -472,6 +485,8 @@ void TestScene::ChangeCubeMap()
 		{
 			TRList[i]->AddRotate_Y(-dTime * 50.0f);
 		}
+
+		m_Controller->AddRotate_Y(-dTime * 50.0f);
 	}
 	if (GetKey('E'))
 	{
@@ -479,6 +494,8 @@ void TestScene::ChangeCubeMap()
 		{
 			TRList[i]->AddRotate_Y(dTime * 50.0f);
 		}
+
+		m_Controller->AddRotate_Y(dTime * 50.0f);
 	}
 
 	//if (GetKeyUp('1'))

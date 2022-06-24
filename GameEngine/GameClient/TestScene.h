@@ -42,6 +42,7 @@ private:
 	GameObject* m_MonsterA;
 	GameObject* m_MonsterB;
 
+	Transform* m_Controller;
 	ParticleController* m_ParticleController;
 
 	Camera* Cam1;

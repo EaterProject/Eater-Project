@@ -24,6 +24,7 @@ void Particle::Awake()
 	m_Transform = gameobject->transform;
 
 	m_ParticleData->World = m_Transform->GetWorld();
+	m_ParticleData->Local = m_Transform->GetLocal();
 }
 
 void Particle::Start()
@@ -154,6 +155,7 @@ void Particle::Update()
 		if (m_AniType & POSITION_ANI)
 		{
 			m_NowPos = Vector3::Lerp(m_PrevPos, m_NextPos, m_OneTickFrame);
+			m_ParticleData->Pos = m_NowPos;
 			m_Transform->SetPosition(m_NowPos);
 		}
 		if (m_AniType & ROTATION_ANI)
@@ -278,6 +280,7 @@ void Particle::SetPlay(const PARTICLE_DESC* particleDesc)
 	m_OnePos = (particleDesc->StartForce + particleDesc->LifeForce) / (float)m_AniTotalFrame;
 	m_PrevPos = m_StartPos;
 	m_NextPos = m_PrevPos + m_OnePos;
+	m_ParticleData->Pos = m_PrevPos;
 	transform->SetPosition(m_PrevPos);
 
 	// Animation Type ¼³Á¤..
