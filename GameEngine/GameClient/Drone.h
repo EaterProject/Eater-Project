@@ -25,6 +25,7 @@ private:
 private:
 	const float DistanceOffset	= 4.0f; //플레이어 거리 오프셋
 	const float OffsetY			= 1.5f;	//드론위치 오프셋
+	float FollowSpeed = 2.0f;			//플레이어 쫒아가는 속도
 	bool IsCreate = false;
 };
 
