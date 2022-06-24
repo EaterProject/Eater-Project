@@ -19,6 +19,7 @@ IMPLEMENT_DYNAMIC(CTAP_MeshFilter, CustomDialog)
 CTAP_MeshFilter::CTAP_MeshFilter(CWnd* pParent /*=nullptr*/)
 	: CustomDialog(IDD_TAP_MESHFILTER, pParent)
 	, SkyLight_Index(0)
+	, mAlpha(FALSE)
 {
 
 }
@@ -272,6 +273,7 @@ void CTAP_MeshFilter::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_MFCCOLORBUTTON2, Custom_LimLightColor_Button);
 	DDX_Text(pDX, IDC_EDIT28, SkyLight_Index);
 	DDX_Control(pDX, IDC_SPIN3, SkyLight_Spin);
+	DDX_Check(pDX, IDC_CHECK1, mAlpha);
 }
 
 BOOL CTAP_MeshFilter::OnInitDialog()
@@ -332,6 +334,7 @@ BEGIN_MESSAGE_MAP(CTAP_MeshFilter, CDialogEx)
 	ON_BN_CLICKED(IDC_MFCCOLORBUTTON1, &CTAP_MeshFilter::OnCustom_Color_Button)
 	ON_BN_CLICKED(IDC_MFCCOLORBUTTON2, &CTAP_MeshFilter::OnCustom_LimLightColor_Button)
 	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN3, &CTAP_MeshFilter::OnDeltaposSpin3)
+	ON_BN_CLICKED(IDC_CHECK1, &CTAP_MeshFilter::OnAlphaButton)
 END_MESSAGE_MAP()
 
 LRESULT CTAP_MeshFilter::OnUserFun(WPARAM wParam, LPARAM lparam)
@@ -740,4 +743,15 @@ void CTAP_MeshFilter::OnDeltaposSpin3(NMHDR* pNMHDR, LRESULT* pResult)
 	}
 	UpdateData(FALSE);
 	*pResult = 0;
+}
+
+
+void CTAP_MeshFilter::OnAlphaButton()
+{
+	if (mMaterial != nullptr && mMaterial->m_MaterialData != nullptr && mMaterial->m_MaterialData->Material_Property != nullptr) 
+	{
+		UpdateData(true);
+		mMaterial->SetAlpha(mAlpha);
+		UpdateData(false);
+	}
 }

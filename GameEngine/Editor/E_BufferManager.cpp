@@ -67,70 +67,9 @@ void E_BufferManager::ChangeEaterFile_Pos(ParserData::CModel* FBXMesh, std::stri
 	EATER_CLOSE_WRITE_FILE();
 }
 
-void E_BufferManager::ChangeEaterFile_NavMEsh(ParserData::CModel* FBXMesh, std::string NewFileName)
-{
-	int Size = (int)FBXMesh->m_MeshList.size();
-	for (int i = 0; i < Size; i++)
-	{
-		ParserData::CMesh* mMesh = FBXMesh->m_MeshList[i];
-		std::string FileName = NewFileName;
-		EATER_OPEN_WRITE_FILE(FileName, "../Assets/Model/MeshBuffer/", ".Nav");
-		EATER_SET_NODE("NAVIGATION");
-		SetNavigationBuffer(mMesh);
-		//Demo::MeshLoad(FileName);
-	}
-	EATER_CLOSE_WRITE_FILE();
-}
-
 void E_BufferManager::SetFileName(std::string& FileName)
 {
 	SaveFileName = FileName;
-}
-
-void E_BufferManager::CreateBox()
-{
-	EATER_OPEN_WRITE_FILE("box_0", "../Assets/Model/MeshBuffer/",".Emesh");
-	EATER_SET_NODE("STATIC_BUFFER");
-	EATER_SET_LIST_START("Vertex", 24, 11);
-	SetVertexBuffer(1.000000, 1.000000, 1.000000, 0.625000, 0.500000, 0.000000, 1.000000, 0.000000, -1.000000, 0.000000, 0.000000);
-	SetVertexBuffer(1.000000, -1.000000, 1.000000, 0.375000, 0.500000, 0.000000, -1.000000, 0.000000, 1.000000, 0.000000, 0.000000);
-	SetVertexBuffer(1.000000, 1.000000, -1.000000, 0.625000, 0.250000, 0.000000, 1.000000, 0.000000, -1.000000, 0.000000, 0.000000);
-	SetVertexBuffer(1.000000, -1.000000, -1.000000, 0.375000, 0.250000, 0.000000, 0.000000, -1.000000, 0.000000, 1.000000, 0.000000);
-	SetVertexBuffer(-1.000000, 1.000000, 1.000000, 0.875000, 0.500000, 0.000000, 1.000000, 0.000000, -1.000000, 0.000000, 0.000000);
-	SetVertexBuffer(-1.000000, -1.000000, 1.000000, 0.375000, 0.750000, -1.000000, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000);
-	SetVertexBuffer(-1.000000, 1.000000, -1.000000, 0.875000, 0.250000, 0.000000, 1.000000, 0.000000, -1.000000, 0.000000, 0.000000);
-	SetVertexBuffer(-1.000000, -1.000000, -1.000000, 0.375000, 0.000000, 0.000000, 0.000000, -1.000000, 0.000000, 1.000000, 0.000000);
-	SetVertexBuffer(1.000000, 1.000000, -1.000000, 0.625000, 0.250000, 0.000000, 0.000000, -1.000000, 0.000000, 1.000000, 0.000000);
-	SetVertexBuffer(-1.000000, 1.000000, -1.000000, 0.625000, 0.000000, 0.000000, 0.000000, -1.000000, 0.000000, 1.000000, 0.000000);
-	SetVertexBuffer(-1.000000, -1.000000, -1.000000, 0.375000, 1.000000, -1.000000, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000);
-	SetVertexBuffer(-1.000000, 1.000000, -1.000000, 0.625000, 1.000000, -1.000000, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000);
-	SetVertexBuffer(-1.000000, 1.000000, 1.000000, 0.625000, 0.750000, -1.000000, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000);
-	SetVertexBuffer(-1.000000, -1.000000, 1.000000, 0.125000, 0.500000, 0.000000, -1.000000, 0.000000, 1.000000, 0.000000, 0.000000);
-	SetVertexBuffer(1.000000, -1.000000, -1.000000, 0.375000, 0.250000, 0.000000, -1.000000, 0.000000, 1.000000, 0.000000, 0.000000);
-	SetVertexBuffer(-1.000000, -1.000000, -1.000000, 0.125000, 0.250000, 0.000000, -1.000000, 0.000000, 1.000000, 0.000000, 0.000000);
-	SetVertexBuffer(1.000000, -1.000000, 1.000000, 0.375000, 0.500000, 1.000000, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000);
-	SetVertexBuffer(1.000000, 1.000000, 1.000000, 0.625000, 0.500000, 1.000000, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000);
-	SetVertexBuffer(1.000000, 1.000000, -1.000000, 0.625000, 0.250000, 1.000000, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000);
-	SetVertexBuffer(1.000000, -1.000000, -1.000000, 0.375000, 0.250000, 1.000000, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000);
-	SetVertexBuffer(-1.000000, -1.000000, 1.000000, 0.375000, 0.750000, 0.000000, 0.000000, 1.000000, 0.000000, 1.000000, 0.000000);
-	SetVertexBuffer(-1.000000, 1.000000, 1.000000, 0.625000, 0.750000, 0.000000, 0.000000, 1.000000, 0.000000, 1.000000, 0.000000);
-	SetVertexBuffer(1.000000, 1.000000, 1.000000, 0.625000, 0.500000, 0.000000, 0.000000, 1.000000, 0.000000, 1.000000, 0.000000);
-	SetVertexBuffer(1.000000, -1.000000, 1.000000, 0.375000, 0.500000, 0.000000, 0.000000, 1.000000, 0.000000, 1.000000, 0.000000);
-
-	EATER_SET_LIST_START("Index", 12, 3);
-	EATER_SET_LIST(0); EATER_SET_LIST(6); EATER_SET_LIST(4, true);
-	EATER_SET_LIST(6); EATER_SET_LIST(0); EATER_SET_LIST(2, true);
-	EATER_SET_LIST(3); EATER_SET_LIST(9); EATER_SET_LIST(8, true);
-	EATER_SET_LIST(9); EATER_SET_LIST(3); EATER_SET_LIST(7, true);
-	EATER_SET_LIST(10); EATER_SET_LIST(12); EATER_SET_LIST(11, true);
-	EATER_SET_LIST(12); EATER_SET_LIST(10); EATER_SET_LIST(5, true);
-	EATER_SET_LIST(13); EATER_SET_LIST(14); EATER_SET_LIST(1, true);
-	EATER_SET_LIST(14); EATER_SET_LIST(13); EATER_SET_LIST(15, true);
-	EATER_SET_LIST(16); EATER_SET_LIST(18); EATER_SET_LIST(17, true);
-	EATER_SET_LIST(18); EATER_SET_LIST(16); EATER_SET_LIST(19, true);
-	EATER_SET_LIST(20); EATER_SET_LIST(22); EATER_SET_LIST(21, true);
-	EATER_SET_LIST(22); EATER_SET_LIST(20); EATER_SET_LIST(23, true);
-	EATER_CLOSE_WRITE_FILE();
 }
 
 void E_BufferManager::SetVertexBuffer(ParserData::CMesh* mMesh)
@@ -186,98 +125,6 @@ void E_BufferManager::SetIndexBuffer(ParserData::CMesh* mMesh)
 		ParserData::CIndexList* index = mMesh->m_IndexList[i];
 		EATER_SET_INDEX(index->m_Index[0], index->m_Index[1], index->m_Index[2]);
 	}
-}
-
-void E_BufferManager::SetNavigationBuffer(ParserData::CMesh* mMesh)
-{
-	//int VertexCount = (int)mMesh->m_VertexList.size();
-	//int IndexCount	= (int)mMesh->m_IndexList.size();
-	//Data.clear();
-	//Data.resize(IndexCount);
-	//for (int i = 0; i < IndexCount; i++)
-	//{
-	//	OneTriangle* OneData = new OneTriangle();
-	//	//한개의 페이스를 가져온다
-	//	int Point01Index  = mMesh->m_IndexList[i]->m_Index[0];
-	//	int Point02Index  = mMesh->m_IndexList[i]->m_Index[1];
-	//	int Point03Index  = mMesh->m_IndexList[i]->m_Index[2];
-	//
-	//	//페이스에 해당하는 버텍스 3개를 가져온다
-	//	OneData->VertexPos[0] = mMesh->m_VertexList[Point01Index]->m_Pos;
-	//	OneData->VertexPos[1] = mMesh->m_VertexList[Point02Index]->m_Pos;
-	//	OneData->VertexPos[2] = mMesh->m_VertexList[Point03Index]->m_Pos;
-	//
-	//	//중심점위치를 구한다
-	//	OneData->CreateCenterPoint();
-	//	//인덱스 값 넣어주기
-	//	OneData->Index = i;
-	//
-	//	for (int j = 0; j < IndexCount; j++)
-	//	{
-	//		//같은 인덱스는 비교하지않는다
-	//		if (i == j) { continue; }
-	//
-	//		int Count = 0;
-	//		for (int k = 0; k < 3; k++)
-	//		{
-	//			if (Point01Index == mMesh->m_IndexList[j]->m_Index[k])
-	//			{
-	//				Count++;
-	//			}
-	//		}
-	//
-	//		for (int k = 0; k < 3; k++)
-	//		{
-	//			if (Point02Index == mMesh->m_IndexList[j]->m_Index[k])
-	//			{
-	//				Count++;
-	//			}
-	//		}
-	//
-	//		for (int k = 0; k < 3; k++)
-	//		{
-	//			if (Point03Index == mMesh->m_IndexList[j]->m_Index[k])
-	//			{
-	//				Count++;
-	//			}
-	//		}
-	//
-	//		//만약 같은인덱스가 2개이상이라면 인접한 삼각형이라 생각한다
-	//		if(Count >= 2)
-	//		{
-	//			for (int m = 0; m < 3; m++)
-	//			{
-	//				if (OneData->FriendFace[m] == -1)
-	//				{
-	//					OneData->FriendFace[m] = j;
-	//					break;
-	//				}
-	//			}
-	//		}
-	//	}
-	//	Data[OneData->Index] = OneData;
-	//}
-	//
-	////모두 구했으니 값을 저장한다
-	//int Count = (int)Data.size();
-	//EATER_SET_LIST_START("TRIANGLE", Count, 16);
-	//for (int i = 0; i < Count; i++)
-	//{
-	//	EATER_SET_LIST((int)Data[i]->Index);
-	//	for (int j = 0; j < 3; j++)
-	//	{
-	//		EATER_SET_LIST(Data[i]->VertexPos[j].x);
-	//		EATER_SET_LIST(Data[i]->VertexPos[j].y);
-	//		EATER_SET_LIST(Data[i]->VertexPos[j].z);
-	//	}
-	//	EATER_SET_LIST(Data[i]->CenterPoint.x);
-	//	EATER_SET_LIST(Data[i]->CenterPoint.y);
-	//	EATER_SET_LIST(Data[i]->CenterPoint.z);
-	//
-	//	EATER_SET_LIST(Data[i]->FriendFace[0]);
-	//	EATER_SET_LIST(Data[i]->FriendFace[1]);
-	//	EATER_SET_LIST(Data[i]->FriendFace[2],true);
-	//}
 }
 
 void E_BufferManager::SetSkinVertexBuffer(ParserData::CMesh* mMesh)

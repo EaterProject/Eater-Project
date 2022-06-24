@@ -83,17 +83,17 @@ void MonsterComponent::Start()
 	GetRandomColor();
 	if (MonsterColor == MONSTER_COLOR_RED)
 	{
-		mMF_Setting.SetLimlightSetting(MeshFilterSetting::COLOR_TYPE::RED, 1,1);
-		mMF_Setting.SetLimlightSettingMax(MeshFilterSetting::COLOR_TYPE::RED, 1,1);
-		mMF_Setting.SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED, 100);
-		mMF_Setting.SetEmissiveSettingMax(MeshFilterSetting::COLOR_TYPE::RED, 100);
+		mMF_Setting.SetLimlightSetting(MeshFilterSetting::COLOR_TYPE::RED, 0.5f,1);
+		mMF_Setting.SetLimlightSettingMax(MeshFilterSetting::COLOR_TYPE::RED, 0.5f,1);
+		mMF_Setting.SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED, 5);
+		mMF_Setting.SetEmissiveSettingMax(MeshFilterSetting::COLOR_TYPE::RED, 5);
 	}
 	else
 	{
-		mMF_Setting.SetLimlightSetting(MeshFilterSetting::COLOR_TYPE::BLUE, 1, 1);
-		mMF_Setting.SetLimlightSettingMax(MeshFilterSetting::COLOR_TYPE::BLUE, 1, 1);
-		mMF_Setting.SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::BLUE, 100);
-		mMF_Setting.SetEmissiveSettingMax(MeshFilterSetting::COLOR_TYPE::BLUE, 100);
+		mMF_Setting.SetLimlightSetting(MeshFilterSetting::COLOR_TYPE::BLUE, 0.5f, 1);
+		mMF_Setting.SetLimlightSettingMax(MeshFilterSetting::COLOR_TYPE::BLUE, 0.5f, 1);
+		mMF_Setting.SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::BLUE, 5);
+		mMF_Setting.SetEmissiveSettingMax(MeshFilterSetting::COLOR_TYPE::BLUE, 5);
 	}
 }
 
@@ -103,31 +103,25 @@ void MonsterComponent::Update()
 	{
 	case (int)MONSTER_STATE::IDLE:
 		PlayerDistanceCheck();
-		UpdateColor();
 		Idle();
 		break;
 	case (int)MONSTER_STATE::MOVE:
 		PlayerDistanceCheck();
-		UpdateColor();
 		Move();
 		break;
 	case (int)MONSTER_STATE::ATTACK:
 		PlayerDistanceCheck();
-		UpdateColor();
 		Attack();
 		break;
 	case (int)MONSTER_STATE::CHASE:
 		PlayerDistanceCheck();
-		UpdateColor();
 		Chase();
 		break;
 	case (int)MONSTER_STATE::HIT:
 		PlayerDistanceCheck();
-		UpdateColor();
 		Hit();
 		break;
 	case (int)MONSTER_STATE::DEAD:
-		UpdateColor();
 		Dead();
 		break;
 	}
@@ -146,15 +140,14 @@ void MonsterComponent::OnTriggerStay(GameObject* Obj)
 		{
 			if (MonsterState == (int)MONSTER_STATE::DEAD) { return; }
 
-			MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_ATTACK_OK);
-			//색을 바꾸는 함수포인터를 넣고 상태변화
 			SetMonsterState(MONSTER_STATE::HIT);
 			
 			HP			-= 20;
 			HitStart	 = true;
 
+			MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_ATTACK_OK);
 			SetMonsterColor();
-			Sound_Play_SFX(Sound_Hit);
+			Sound_Play_SFX(SOUND_NAME[(int)MONSTER_STATE::HIT]);
 		}
 	}
 	else
@@ -207,6 +200,7 @@ void MonsterComponent::Attack()
 	{
 		int Damage = 10;
 		MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_HIT, &Damage);
+		Sound_Play_SFX(SOUND_NAME[(int)MONSTER_STATE::ATTACK]);
 	}
 
 	//공격 범위에 나갔을떄 다시 추격 상태로
@@ -295,6 +289,13 @@ void MonsterComponent::Chase()
 
 void MonsterComponent::Hit()
 {
+	if (FirstState() == true)
+	{
+
+
+
+	}
+
 	//공격 당했을때
 	if (HP > 0)
 	{
@@ -394,18 +395,6 @@ void MonsterComponent::SetMonsterState(MONSTER_STATE State)
 	mRigidbody->SetVelocity(0, 0, 0);
 }
 
-void MonsterComponent::UpdateColor()
-{
-	if (HitFunction != nullptr)
-	{
-		HitFunction();
-	}
-	else
-	{
-		return;
-	}
-}
-
 void MonsterComponent::SetState(MONSTER_STATE mState)
 {
 	//상태를 넣어준다
@@ -447,7 +436,7 @@ void MonsterComponent::SetMonsterColor()
 		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_MONSTER_UI_UPDATE, &Data);
 
 		mMF_Setting.SetLimlightSetting(1, 0, 0, 5, 1);
-		mMF_Setting.SetLimlightSettingMax(0, 0, 0, 1, 1);
+		mMF_Setting.SetLimlightSettingMax(0, 0, 0, 0.5f, 1);
 	}
 	else
 	{
@@ -462,7 +451,7 @@ void MonsterComponent::SetMonsterColor()
 		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_MONSTER_UI_UPDATE, &Data);
 
 		mMF_Setting.SetLimlightSetting(0, 0, 1, 5, 1);
-		mMF_Setting.SetLimlightSettingMax(0, 0, 0, 1, 1);
+		mMF_Setting.SetLimlightSettingMax(0, 0, 0, 0.5f, 1);
 	}
 }
 

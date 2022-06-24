@@ -25,8 +25,12 @@ void MonsterA::SetUp()
 	AnimationName	= "MonsterA+";
 
 	//몬스터 크기
-	MonsterScale	= 1.5f;
+	MonsterScale	= 1.25f;
 	MonsterType		= MONSTER_TYPE_A;
+	SOUND_NAME[int(MONSTER_STATE::HIT)] = "Monster_A_Hit";
+	SOUND_NAME[int(MONSTER_STATE::MOVE)] = "Monster_A_Walking";
+	SOUND_NAME[int(MONSTER_STATE::ATTACK)] = "Monster_A_Attack";
+
 
 	//사운드
 	Sound_Attack	= "Monster_A_Attack";

@@ -99,4 +99,6 @@ public:
 	int SkyLight_Index;
 	afx_msg void OnDeltaposSpin3(NMHDR* pNMHDR, LRESULT* pResult);
 	CSpinButtonCtrl SkyLight_Spin;
+	BOOL mAlpha;
+	afx_msg void OnAlphaButton();
 };

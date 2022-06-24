@@ -29,6 +29,10 @@ void MonsterB::SetUp()
 	MonsterScale = 3.0f;
 	MonsterType = MONSTER_TYPE_B;
 
+	SOUND_NAME[int(MONSTER_STATE::HIT)] = "Monster_B_Hit";
+	SOUND_NAME[int(MONSTER_STATE::MOVE)] = "Monster_B_Walking";
+	SOUND_NAME[int(MONSTER_STATE::ATTACK)] = "Monster_B_Attack";
+
 	//»ç¿îµå
 	Sound_Attack = "Monster_B_Attack";
 	Sound_move	 = "Monster_B_Walking";

@@ -40,28 +40,6 @@ void E_MeshManager::SetFileName(std::string& FileName)
 	SaveFileName = FileName;
 }
 
-void E_MeshManager::CreateBox()
-{
-	EATER_OPEN_WRITE_FILE("box", "../Assets/Model/ModelData/");
-	EATER_SET_NODE("STATIC");
-	EATER_SET_MAP("ParentName ", "RootNode");
-	EATER_SET_MAP("NodeName", "Cube");
-	EATER_SET_MAP("MeshName", "box_0");
-	EATER_SET_MAP("MaterialName", "box_Material");
-	EATER_SET_LIST_START("WorldTM", 4, 4);
-	EATER_SET_LIST(1.0f);	EATER_SET_LIST(0.0f);	EATER_SET_LIST(0.0f);	EATER_SET_LIST(0.0f, true);
-	EATER_SET_LIST(0.0f);	EATER_SET_LIST(1.0f);	EATER_SET_LIST(0.0f);	EATER_SET_LIST(0.0f, true);
-	EATER_SET_LIST(0.0f);	EATER_SET_LIST(0.0f);	EATER_SET_LIST(1.0f);	EATER_SET_LIST(0.0f, true);
-	EATER_SET_LIST(0.0f);	EATER_SET_LIST(0.0f);	EATER_SET_LIST(0.0f);	EATER_SET_LIST(1.0f, true);
-
-	EATER_SET_LIST_START("LocalTM", 4, 4);
-	EATER_SET_LIST(1.0f);	EATER_SET_LIST(0.0f);	EATER_SET_LIST(0.0f);	EATER_SET_LIST(0.0f, true);
-	EATER_SET_LIST(0.0f);	EATER_SET_LIST(1.0f);	EATER_SET_LIST(0.0f);	EATER_SET_LIST(0.0f, true);
-	EATER_SET_LIST(0.0f);	EATER_SET_LIST(0.0f);	EATER_SET_LIST(1.0f);	EATER_SET_LIST(0.0f, true);
-	EATER_SET_LIST(0.0f);	EATER_SET_LIST(0.0f);	EATER_SET_LIST(0.0f);	EATER_SET_LIST(1.0f, true);
-	EATER_CLOSE_WRITE_FILE();
-}
-
 void E_MeshManager::ChangeEaterFile_Static(ParserData::CMesh* OneMesh)
 {
 	EATER_SET_NODE("STATIC");
@@ -86,6 +64,9 @@ void E_MeshManager::ChangeEaterFile_Skin(ParserData::CMesh* OneMesh)
 		{
 			EATER_SET_MAP("TopNode", "NO");
 		}
+		EATER_SET_MAP("IsActive", std::to_string(1));
+		EATER_SET_MAP("IsShadow", std::to_string(1));
+		EATER_SET_MAP("IsCull", std::to_string(1));
 		SetMatrix(OneMesh);
 	}
 	else if (OneMesh->m_MeshType == SKIN_MESH)
@@ -100,8 +81,10 @@ void E_MeshManager::ChangeEaterFile_Skin(ParserData::CMesh* OneMesh)
 		{
 			EATER_SET_MAP("TopNode", "NO");
 		}
+		EATER_SET_MAP("IsActive", std::to_string(1));
+		EATER_SET_MAP("IsShadow", std::to_string(1));
+		EATER_SET_MAP("IsCull", std::to_string(1));
 		SetMatrix(OneMesh);
-
 		if (BoneOffsetSave == false)
 		{
 			SetBoneOffset(OneMesh);
@@ -129,6 +112,10 @@ void E_MeshManager::SetDataName(ParserData::CMesh* mMesh)
 	{
 		EATER_SET_MAP("MaterialName", "NO");
 	}
+
+	EATER_SET_MAP("IsActive",std::to_string(1));
+	EATER_SET_MAP("IsShadow",std::to_string(1));
+	EATER_SET_MAP("IsCull",std::to_string(1));
 }
 
 void E_MeshManager::SetMatrix(ParserData::CMesh* mMesh)

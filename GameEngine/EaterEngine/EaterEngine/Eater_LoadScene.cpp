@@ -39,6 +39,9 @@ void Eater_LoadScene::LoadData(std::string& FilePath)
 		{
 			GameObject* Obj = Instance();
 			Obj->SetTag(std::stoi(EATER_GET_MAP(i, "TAG")));
+			Obj->SetActive(std::stoi(EATER_GET_MAP(i, "IsActive")));
+			Obj->SetActive(std::stoi(EATER_GET_MAP(i, "IsShadow")));
+			Obj->SetActive(std::stoi(EATER_GET_MAP(i, "IsCull")));
 			Obj->Name = EATER_GET_MAP(i, "NAME");
 
 			//트랜스폼은 기본
@@ -106,45 +109,60 @@ void Eater_LoadScene::LoadData(std::string& FilePath)
 
 			RenderOption* mOption = GetRenderOptionData();
 			Find = EATER_GET_LIST_CHOICE(i, "OPTION");
-			std::vector<float> Data;
-			EATER_GET_LIST(&Data, i);
-			mOption->AO_Radius = Data[0];
-			mOption->AO_SurfaceEpsilon = Data[1];
-			mOption->AO_BlurCount = Data[2];
-			mOption->FOG_Color.x = Data[3];
-			mOption->FOG_Color.y = Data[4];
-			mOption->FOG_Color.z = Data[5];
-			mOption->FOG_MoveSpeed = Data[6];
-			mOption->FOG_StartDistance = Data[7];
-			mOption->FOG_DistanceOffset = Data[8];
-			mOption->FOG_DistanceValue = Data[9];
-			mOption->FOG_HeightOffset = Data[10];
-			mOption->FOG_HeightValue = Data[11];
-			mOption->SkyCube_Size = Data[12];
-			mOption->BLOOM_Threshold_Min = Data[13];
-			mOption->BLOOM_Threshold_Max = Data[14];
-			mOption->BLOOM_Factor = Data[15];
-			mOption->SkyLight_Factor = Data[16];
-			mOption->RenderingOption ^= RENDER_OPTION::RENDER_FOG;
+			std::vector<std::string> Data;
+			EATER_GET_LIST(&Data, 0);
+			mOption->AO_Radius = std::stof(Data[0]);
+			mOption->AO_SurfaceEpsilon = std::stof(Data[1]);
+			mOption->AO_BlurCount = std::stof(Data[2]);
+			mOption->FOG_Color.x = std::stof(Data[3]);
+			mOption->FOG_Color.y = std::stof(Data[4]);
+			mOption->FOG_Color.z = std::stof(Data[5]);
+			mOption->FOG_MoveSpeed = std::stof(Data[6]);
+			mOption->FOG_StartDistance = std::stof(Data[7]);
+			mOption->FOG_DistanceOffset = std::stof(Data[8]);
+
+			EATER_GET_LIST(&Data, 1);
+			mOption->FOG_DistanceValue = std::stof(Data[0]);
+			mOption->FOG_HeightOffset = std::stof(Data[1]);
+			mOption->FOG_HeightValue = std::stof(Data[2]);
+			mOption->SkyCube_Size = std::stof(Data[3]);
+			mOption->BLOOM_Threshold_Min = std::stof(Data[4]);
+			mOption->BLOOM_Threshold_Max = std::stof(Data[5]);
+			mOption->BLOOM_Factor = std::stof(Data[6]);
+			mOption->SkyLight_Factor = std::stof(Data[7]);
+			mOption->SkyCube_Name = Data[8];
 			RenderSetting();
 
+			SetSkyCube(mOption->SkyCube_Name);
+			Find = EATER_GET_LIST_CHOICE(i, "SKYLIGHT_MAP");
+			for (int i = 0; i < Find; i++)
+			{
+				std::vector<std::string> Name;
+				EATER_GET_LIST(&Name, i);
 
+				BakeSkyLightMap(Name[1], false);
+				SetSkyLight(Name[1], std::stoi(Name[0]));
+			}
+
+			mOption->RenderingOption ^= RENDER_OPTION::RENDER_FOG;
+
+			std::vector<float> Data_F;
 			GameObject* Obj = GetDirectionLight();
 			Light* mLight = Obj->GetComponent<Light>();
 			EATER_GET_LIST_CHOICE(i, "Direction");
-			EATER_GET_LIST(&Data, i);
+			EATER_GET_LIST(&Data_F, i);
 
-			mLight->SetAngle(Data[0]);
-			mLight->SetAttenuate((Data[1]));
-			mLight->SetRange((Data[2]));
-			mLight->SetPower((Data[3]));
+			mLight->SetAngle(Data_F[0]);
+			mLight->SetAttenuate((Data_F[1]));
+			mLight->SetRange((Data_F[2]));
+			mLight->SetPower((Data_F[3]));
 
 			float R, G, B;
-			R = (Data[4]);
-			G = (Data[5]);
-			B = (Data[6]);
+			R = (Data_F[4]);
+			G = (Data_F[5]);
+			B = (Data_F[6]);
 			mLight->SetColor(R, G, B);
-			Obj->GetTransform()->SetRotate(Data[7], Data[8], Data[9]);
+			Obj->GetTransform()->SetRotate(Data_F[7], Data_F[8], Data_F[9]);
 		}
 	}
 	EATER_CLOSE_READ_FILE();

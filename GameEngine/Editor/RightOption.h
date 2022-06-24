@@ -116,4 +116,10 @@ public:
 	afx_msg void OnBnClickedButton27();
 	CEdit ParentName_Edit;
 	CEdit ChildName_Eidt;
+	afx_msg void OnIsActiveButton();
+	afx_msg void OnIsShadowButton();
+	afx_msg void OnIsCullButton();
+	BOOL mIsActive;
+	BOOL mIsShadow;
+	BOOL mIsCull;
 };

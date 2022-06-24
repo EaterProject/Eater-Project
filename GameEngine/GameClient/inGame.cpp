@@ -21,14 +21,14 @@ void InGame::Awake()
 	// 오클루더 설정..
 	AddOccluder("Dome_program_0");
 	
-	BakeSkyLightMap("SkyLight_HDRI", false);
-	BakeSkyLightMap("SkyLight_0", false);
-	BakeSkyLightMap("SkyLight_1", false);
-	
-	SetSkyLight("SkyLight_0", 0);
-	SetSkyLight("SkyLight_1", 1);
-	
-	SetSkyCube("SkyCube");
+	//BakeSkyLightMap("SkyLight_HDRI", false);
+	//BakeSkyLightMap("SkyLight_0", false);
+	//BakeSkyLightMap("SkyLight_1", false);
+	//
+	//SetSkyLight("SkyLight_0", 0);
+	//SetSkyLight("SkyLight_1", 1);
+	//
+	//SetSkyCube("SkyCube");
 	
 	//로직매니저 초기화
 	Logic->Initialize();

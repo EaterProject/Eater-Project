@@ -144,11 +144,10 @@ GameObject* EditorToolScene::Create_Particle(std::string Name)
 
 GameObject* EditorToolScene::Create_Box()
 {
-	GameObject* box = Instance("box");
+	GameObject* box = Instance("Box");
 	MeshFilter* mMeshFileter = box->AddComponent<MeshFilter>();
-	mMeshFileter->SetMeshName("box_0");
-	mMeshFileter->SetModelName("box");
-	box->Name = FindMeshName("box");
+	mMeshFileter->SetModelName("Box");
+	box->Name = FindMeshName("Box");
 	ObjectList.insert({ box->Name,box });
 	return box;
 }
@@ -157,7 +156,6 @@ GameObject* EditorToolScene::Create_Sphere()
 {
 	GameObject* box = Instance("Sphere");
 	MeshFilter* mMeshFileter = box->AddComponent<MeshFilter>();
-	mMeshFileter->SetMeshName("Sphere_0");
 	mMeshFileter->SetModelName("Sphere");
 	box->Name = FindMeshName("Sphere");
 	ObjectList.insert({ box->Name,box });
@@ -168,7 +166,6 @@ GameObject* EditorToolScene::Create_MonKey()
 {
 	GameObject* box = Instance("Monkey");
 	MeshFilter* mMeshFileter = box->AddComponent<MeshFilter>();
-	mMeshFileter->SetMeshName("Monkey_0");
 	mMeshFileter->SetModelName("Monkey");
 	box->Name = FindMeshName("Monkey");
 	ObjectList.insert({ box->Name,box });
