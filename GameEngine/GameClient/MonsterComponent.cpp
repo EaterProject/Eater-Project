@@ -25,7 +25,7 @@ MonsterComponent::MonsterComponent()
 
 	ANIMATION_TIME[(int)MONSTER_STATE::IDLE]	= 0.75f;
 	ANIMATION_TIME[(int)MONSTER_STATE::ATTACK]	= 0.8f;
-	ANIMATION_TIME[(int)MONSTER_STATE::HIT]		= 1.0f;
+	ANIMATION_TIME[(int)MONSTER_STATE::HIT]		= 0.75f;
 	ANIMATION_TIME[(int)MONSTER_STATE::MOVE]	= 0.75f;
 	ANIMATION_TIME[(int)MONSTER_STATE::CHASE]	= 1.0f;
 	ANIMATION_TIME[(int)MONSTER_STATE::DEAD]	= 0.75f;
@@ -141,13 +141,12 @@ void MonsterComponent::OnTriggerStay(GameObject* Obj)
 			if (MonsterState == (int)MONSTER_STATE::DEAD) { return; }
 
 			SetMonsterState(MONSTER_STATE::HIT);
-			
 			HP			-= 20;
-			HitStart	 = true;
-
 			MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_ATTACK_OK);
 			SetMonsterColor();
+
 			Sound_Play_SFX(SOUND_NAME[(int)MONSTER_STATE::HIT]);
+			HitStart	 = true;
 		}
 	}
 	else
@@ -198,9 +197,17 @@ void MonsterComponent::Attack()
 {
 	if (mAnimation->EventCheck() == true)
 	{
-		int Damage = 10;
-		MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_HIT, &Damage);
-		Sound_Play_SFX(SOUND_NAME[(int)MONSTER_STATE::ATTACK]);
+		if (IsAttack == false)
+		{
+			int Damage = 10;
+			MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_HIT, &Damage);
+			Sound_Play_SFX(SOUND_NAME[(int)MONSTER_STATE::ATTACK]);
+			IsAttack = true;
+		}
+	}
+	else
+	{
+		IsAttack = false;
 	}
 
 	//공격 범위에 나갔을떄 다시 추격 상태로
@@ -285,6 +292,7 @@ void MonsterComponent::Chase()
 			mRigidbody->SetVelocity(DirPoint.x, 0, DirPoint.z);
 		}
 	}
+	IsAttack = false;
 }
 
 void MonsterComponent::Hit()

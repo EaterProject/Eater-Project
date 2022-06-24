@@ -64,6 +64,7 @@ protected:
 	//처음 한번만 실행하기위한 변수들
 	bool HitStart		= false;    //Hit	 상태 시작 변수
 	bool HitFXStart		= false;	//Hit FX 상태 시작 변수
+	bool IsAttack		= false;
 protected:
 	///애니메이션 이름 변수들
 	std::string ModelName;
