@@ -3,6 +3,9 @@
 @ParentName RootNode
 @MeshName Cylinder_0
 @MaterialName Cylinder
+@IsActive 1
+@IsShadow 1
+@IsCull 1
 $WorldTM 4 4
 100.000000 0.000000 0.000000 0.000000
 0.000000 -0.000016 100.000000 0.000000

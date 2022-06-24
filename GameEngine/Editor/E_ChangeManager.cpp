@@ -25,8 +25,9 @@ void E_ChangeManager::Change_Static(int index, GameObject* Object)
 	std::string ParentName		= EATER_GET_MAP(index, "ParentName");
 	std::string NodeName		= EATER_GET_MAP(index, "NodeName");
 
-	//오브젝트의 이름이 모델이름과 같다면 최상위로 묶어놓은 오브젝트
-	//파일에서 ParentName이 RootNode라고 되어있는 모두 변경해줘야한다
+	//1. 매쉬필터에서 만든 최상위 오브젝트 일때
+	//2. FBX에서 뽑은 최상위 오브젝트 일때
+	//3. 최상위가 아닌 오브젝트 일때
 	std::string ObjectOriginalName = GetOriginalName(Object->Name);
 	if (ObjectOriginalName == ModelName && ParentName == "RootNode")
 	{
@@ -340,7 +341,7 @@ void E_ChangeManager::Change_Name(int Nodeindex, MeshFilter* MF)
 	std::string BufferName		= MF->GetBufferName();
 	std::string MaterialName	= MF->GetMaterialName();
 	std::string ModelName		= MF->GetModelName();
-	std::string NodeName		= MF->gameobject->Name;
+	//std::string NodeName		= MF->gameobject->Name;
 	MF->gameobject->OneMeshData->Object_Data->IsActive;
 
 	//파일에서 읽은 이름과 현재 오브젝트의 메테리얼이름이같다면
@@ -354,7 +355,8 @@ void E_ChangeManager::Change_Name(int Nodeindex, MeshFilter* MF)
 	{
 		EATER_CHANGE_MAP(Nodeindex, "MaterialName", MaterialName);
 	}
-	EATER_CHANGE_MAP(Nodeindex, "NodeName", NodeName);
+	//EATER_CHANGE_MAP(Nodeindex, "NodeName", NodeName);
+
 	EATER_CHANGE_MAP(Nodeindex, "IsActive", std::to_string(MF->gameobject->OneMeshData->Object_Data->IsActive));
 	EATER_CHANGE_MAP(Nodeindex, "IsShadow", std::to_string(MF->gameobject->OneMeshData->Object_Data->IsShadow));
 	EATER_CHANGE_MAP(Nodeindex, "IsCull", std::to_string(MF->gameobject->OneMeshData->Object_Data->IsCull));

@@ -1,8 +1,11 @@
 #STATIC
-@ParentName RootNode
 @NodeName weapon
-@MeshName player_Weapon_0
-@MaterialName player_Weapon_weapon
+@ParentName RootNode
+@IsActive 1
+@MeshName Player_Weapon_0
+@MaterialName Player_Weapon_weapon
+@IsShadow 1
+@IsCull 1
 $WorldTM 4 4
 1.000000 0.000000 0.000000 0.000000
 0.000000 1.000000 0.000000 0.000000

@@ -42,8 +42,6 @@ public:
 
 	void Create_Material_File(GameObject* Object, std::string& FilePath);
 	void Create_Particle_File(GameObject* Object,std::string& FilePath);
-
-	void CreateBaseObject();
 private:
 	static const int E_STATIC_MESH = 0;
 	static const int E_SKIN_MESH = 1;

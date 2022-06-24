@@ -1,8 +1,11 @@
 #BONE
-@NodeName all
 @ParentName Armature
+@NodeName all
 @BoneIndex 0
 @TopNode YES
+@IsActive 1
+@IsShadow 1
+@IsCull 1
 $WorldTM 4 4
 1.000000 0.000000 0.000000 0.000000
 0.000000 -0.000000 -1.000000 0.000000
@@ -14,10 +17,13 @@ $LocalTM 4 4
 0.000000 1.000000 -0.000000 0.000000
 0.000000 -0.335873 0.000000 1.000000
 #BONE
-@NodeName down
 @ParentName all
+@NodeName down
 @BoneIndex 1
 @TopNode NO
+@IsActive 1
+@IsShadow 1
+@IsCull 1
 $WorldTM 4 4
 1.000000 0.000000 0.000000 0.000000
 0.000000 -0.000000 -1.000000 0.000000
@@ -29,10 +35,13 @@ $LocalTM 4 4
 0.000000 0.000000 1.000000 0.000000
 0.000000 0.000000 -2.274691 1.000000
 #BONE
-@NodeName down_end
 @ParentName down
+@NodeName down_end
 @BoneIndex 2
 @TopNode NO
+@IsActive 1
+@IsShadow 1
+@IsCull 1
 $WorldTM 4 4
 1.000000 0.000000 0.000000 0.000000
 0.000000 -0.000000 -1.000000 0.000000
@@ -44,10 +53,13 @@ $LocalTM 4 4
 0.000000 -0.000000 1.000000 0.000000
 0.000000 0.000000 1.000000 1.000000
 #BONE
-@NodeName middle02
 @ParentName all
+@NodeName middle02
 @BoneIndex 3
 @TopNode NO
+@IsActive 1
+@IsShadow 1
+@IsCull 1
 $WorldTM 4 4
 1.000000 0.000000 0.000000 0.000000
 0.000000 -0.000000 -1.000000 0.000000
@@ -59,10 +71,13 @@ $LocalTM 4 4
 0.000000 0.000000 1.000000 0.000000
 0.000000 -0.000000 -1.161106 1.000000
 #BONE
-@NodeName middle02_end
 @ParentName middle02
+@NodeName middle02_end
 @BoneIndex 4
 @TopNode NO
+@IsActive 1
+@IsShadow 1
+@IsCull 1
 $WorldTM 4 4
 1.000000 0.000000 0.000000 0.000000
 0.000000 -0.000000 -1.000000 0.000000
@@ -74,10 +89,13 @@ $LocalTM 4 4
 0.000000 -0.000000 1.000000 0.000000
 0.000000 0.000000 1.000000 1.000000
 #BONE
-@NodeName middle01
 @ParentName all
+@NodeName middle01
 @BoneIndex 5
 @TopNode NO
+@IsActive 1
+@IsShadow 1
+@IsCull 1
 $WorldTM 4 4
 1.000000 0.000000 0.000000 0.000000
 0.000000 -0.000000 -1.000000 0.000000
@@ -89,10 +107,13 @@ $LocalTM 4 4
 0.000000 0.000000 1.000000 0.000000
 0.000000 0.000000 0.002379 1.000000
 #BONE
-@NodeName middle01_end
 @ParentName middle01
+@NodeName middle01_end
 @BoneIndex 6
 @TopNode NO
+@IsActive 1
+@IsShadow 1
+@IsCull 1
 $WorldTM 4 4
 1.000000 0.000000 0.000000 0.000000
 0.000000 -0.000000 -1.000000 0.000000
@@ -104,10 +125,13 @@ $LocalTM 4 4
 0.000000 -0.000000 1.000000 0.000000
 0.000000 -0.000000 1.000000 1.000000
 #BONE
-@NodeName up
 @ParentName all
+@NodeName up
 @BoneIndex 7
 @TopNode NO
+@IsActive 1
+@IsShadow 1
+@IsCull 1
 $WorldTM 4 4
 1.000000 0.000000 0.000000 0.000000
 0.000000 -0.000000 -1.000000 0.000000
@@ -119,10 +143,13 @@ $LocalTM 4 4
 0.000000 0.000000 1.000000 0.000000
 0.000000 -0.000000 1.109880 1.000000
 #BONE
-@NodeName up_end
 @ParentName up
+@NodeName up_end
 @BoneIndex 8
 @TopNode NO
+@IsActive 1
+@IsShadow 1
+@IsCull 1
 $WorldTM 4 4
 1.000000 0.000000 0.000000 0.000000
 0.000000 -0.000000 -1.000000 0.000000
@@ -134,11 +161,17 @@ $LocalTM 4 4
 0.000000 -0.000000 1.000000 0.000000
 0.000000 0.000000 1.000000 1.000000
 #SKIN
-@NodeName mesh_down
 @ParentName RootNode
+@NodeName mesh_down
 @MeshName Dome_Portal+_0
 @MaterialName Dome_Portal+_M_Portal
+@IsActive 1
+@IsShadow 1
+@IsCull 1
 @TopNode YES
+@IsActive 1
+@IsShadow 1
+@IsCull 1
 $WorldTM 4 4
 1.000000 0.000000 0.000000 0.000000
 0.000000 1.000000 0.000000 0.000000
@@ -148,7 +181,7 @@ $LocalTM 4 4
 1.000000 0.000000 0.000000 0.000000
 0.000000 1.000000 0.000000 0.000000
 0.000000 0.000000 1.000000 0.000000
-0.000000 0.205748 0.000000 1.000000
+-0.000000 0.205748 0.000000 1.000000
 $BoneOffset 9 16
 1.000000 0.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 0.000000 -1.000000 0.000000 0.000000 -0.000000 -0.000000 -2.068943 1.000000
 1.000000 0.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 0.000000 -1.000000 0.000000 0.000000 -0.000000 0.000000 0.205748 1.000000
@@ -160,11 +193,17 @@ $BoneOffset 9 16
 1.000000 0.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 0.000000 -1.000000 0.000000 0.000000 -0.000000 -0.000000 -3.178823 1.000000
 1.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 0.000000 0.000000 0.000000 1.000000
 #SKIN
-@NodeName mesh_up
 @ParentName RootNode
+@NodeName mesh_up
 @MeshName Dome_Portal+_1
 @MaterialName Dome_Portal+_M_Portal
+@IsActive 1
+@IsShadow 1
+@IsCull 1
 @TopNode YES
+@IsActive 1
+@IsShadow 1
+@IsCull 1
 $WorldTM 4 4
 1.000000 0.000000 0.000000 0.000000
 0.000000 1.000000 0.000000 0.000000
@@ -176,11 +215,17 @@ $LocalTM 4 4
 0.000000 0.000000 1.000000 0.000000
 0.000000 1.694368 0.000000 1.000000
 #SKIN
-@NodeName mesh_middle02
 @ParentName RootNode
+@NodeName mesh_middle02
 @MeshName Dome_Portal+_2
 @MaterialName Dome_Portal+_M_Portal
+@IsActive 1
+@IsShadow 1
+@IsCull 1
 @TopNode YES
+@IsActive 1
+@IsShadow 1
+@IsCull 1
 $WorldTM 4 4
 1.000000 0.000000 0.000000 0.000000
 0.000000 1.000000 0.000000 0.000000
@@ -192,11 +237,17 @@ $LocalTM 4 4
 0.000000 0.000000 1.000000 0.000000
 -0.000000 1.891994 0.000000 1.000000
 #SKIN
-@NodeName mesh_middle01
 @ParentName RootNode
+@NodeName mesh_middle01
 @MeshName Dome_Portal+_3
 @MaterialName Dome_Portal+_M_Portal
+@IsActive 1
+@IsShadow 1
+@IsCull 1
 @TopNode YES
+@IsActive 1
+@IsShadow 1
+@IsCull 1
 $WorldTM 4 4
 1.000000 0.000000 0.000000 0.000000
 0.000000 1.000000 0.000000 0.000000

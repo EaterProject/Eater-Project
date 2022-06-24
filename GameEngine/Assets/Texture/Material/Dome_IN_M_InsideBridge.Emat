@@ -1,10 +1,10 @@
 #EATERMAT
-@MaterialName player_weapon2_Material
+@MaterialName Dome_IN_M_InsideBridge
 @Alpha 0
-@DiffuseMap 0
-@NormalMap 0
+@DiffuseMap Dome_InsideBridge_BaseColor.png
+@NormalMap Dome_InsideBridge_Normal.png
 @EmissiveMap 0
-@ORMMap 0
+@ORMMap Dome_InsideBridge_ORM.png
 @Emissive 0.000000
 @Roughness 0.000000
 @Metallic 0.000000

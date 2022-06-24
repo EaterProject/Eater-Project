@@ -74,7 +74,7 @@ void Player::Awake()
 	
 	//무기 오브젝트 가져오기
 	WeaponObject = Instance();
-	WeaponObject->AddComponent<MeshFilter>()->SetModelName("player_Weapon");
+	WeaponObject->AddComponent<MeshFilter>()->SetModelName("Player_Weapon");
 
 	//충돌 범위 가져오기
 	AttackColliderObject = FindGameObjectTag("PlayerCollider");
@@ -108,10 +108,12 @@ void Player::Start()
 	mPlayerColor.Setting(this->gameobject);
 	mWeaponColor.Setting(WeaponObject);
 
-	Test = 4;
-	mPlayerColor.SetLimlightSetting(MeshFilterSetting::COLOR_TYPE::RED, 0.8f, 0.5);
-	mPlayerColor.SetEmissiveSettingMax(1.0f, 1.0f, 1.0f, Test);
-	mWeaponColor.SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED, 5);
+	mPlayerColor.SetLimlightSetting(MeshFilterSetting::COLOR_TYPE::RED,0.5f, 0.5f);
+	mWeaponColor.SetLimlightSetting(MeshFilterSetting::COLOR_TYPE::RED, 0.5f, 0.5f);
+
+	mPlayerColor.SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED, 2.0f);
+	mWeaponColor.SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED, 2.0f);
+
 	MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_EMAGIN_NOW, &ChangeCount);
 }
 
@@ -257,13 +259,13 @@ void Player::PlayerKeyinput()
 
 		if((ChangeCount % 2) == 0)
 		{
-			mPlayerColor.SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED, Test);
-			mWeaponColor.SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED, 20);
+			mPlayerColor.SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED, 2);
+			mWeaponColor.SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED, 2);
 		}
 		else
 		{
-			mPlayerColor.SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::BLUE, Test);
-			mWeaponColor.SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::BLUE, 20);
+			mPlayerColor.SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::BLUE, 2);
+			mWeaponColor.SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::BLUE, 2);
 		}
 		Sound_Play_SFX("ChangeEmagin");
 	}

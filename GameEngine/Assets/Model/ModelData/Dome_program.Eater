@@ -3,6 +3,9 @@
 @NodeName Program.002
 @MeshName Dome_program_0
 @MaterialName NO
+@IsActive 1
+@IsShadow 1
+@IsCull 1
 $WorldTM 4 4
 1.000000 0.000000 0.000000 0.000000
 0.000000 1.000000 0.000000 0.000000

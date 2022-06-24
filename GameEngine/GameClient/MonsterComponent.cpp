@@ -103,31 +103,25 @@ void MonsterComponent::Update()
 	{
 	case (int)MONSTER_STATE::IDLE:
 		PlayerDistanceCheck();
-		UpdateColor();
 		Idle();
 		break;
 	case (int)MONSTER_STATE::MOVE:
 		PlayerDistanceCheck();
-		UpdateColor();
 		Move();
 		break;
 	case (int)MONSTER_STATE::ATTACK:
 		PlayerDistanceCheck();
-		UpdateColor();
 		Attack();
 		break;
 	case (int)MONSTER_STATE::CHASE:
 		PlayerDistanceCheck();
-		UpdateColor();
 		Chase();
 		break;
 	case (int)MONSTER_STATE::HIT:
 		PlayerDistanceCheck();
-		UpdateColor();
 		Hit();
 		break;
 	case (int)MONSTER_STATE::DEAD:
-		UpdateColor();
 		Dead();
 		break;
 	}
@@ -146,13 +140,12 @@ void MonsterComponent::OnTriggerStay(GameObject* Obj)
 		{
 			if (MonsterState == (int)MONSTER_STATE::DEAD) { return; }
 
-			MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_ATTACK_OK);
-			//색을 바꾸는 함수포인터를 넣고 상태변화
 			SetMonsterState(MONSTER_STATE::HIT);
 			
 			HP			-= 20;
 			HitStart	 = true;
 
+			MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_ATTACK_OK);
 			SetMonsterColor();
 			Sound_Play_SFX(SOUND_NAME[(int)MONSTER_STATE::HIT]);
 		}
@@ -296,6 +289,13 @@ void MonsterComponent::Chase()
 
 void MonsterComponent::Hit()
 {
+	if (FirstState() == true)
+	{
+
+
+
+	}
+
 	//공격 당했을때
 	if (HP > 0)
 	{
@@ -393,18 +393,6 @@ void MonsterComponent::SetMonsterState(MONSTER_STATE State)
 
 	//속력 리셋
 	mRigidbody->SetVelocity(0, 0, 0);
-}
-
-void MonsterComponent::UpdateColor()
-{
-	if (HitFunction != nullptr)
-	{
-		HitFunction();
-	}
-	else
-	{
-		return;
-	}
 }
 
 void MonsterComponent::SetState(MONSTER_STATE mState)

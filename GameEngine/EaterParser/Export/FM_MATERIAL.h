@@ -33,7 +33,7 @@ public:
 	float LimFactor		= 0;
 	float LimWidth		= 0;
 
-
+	void SetAlpha(bool mAlpha);
 	void SetColor(float& R, float& G, float& B);
 	void SetColor(float&& R, float&& G, float&& B);
 	void SetColor(int& R, int& G, int& B);

@@ -116,7 +116,7 @@ private:
 	bool IsLeftRayCheck		= false;
 	int HitCount			= 0;
 private:
-	float AttackDir				= 2.0f; //공격 거리
+	float AttackDir				= 1.0f; //공격 거리
 	float AttackRange			= 1.5f;
 	const float Attack01_Dir	= 0.75f;
 	const float Attack02_Dir	= 0.75f;

@@ -18,10 +18,13 @@ class Component;
 class RenderOption
 {
 public:
+	RenderOption() 
+	{
+		SkyLight_Name.insert({ 0,"Default"});
+	};
 	UINT DebugOption = 0;
 	UINT RenderingOption = 0;
 	UINT PostProcessOption = 0;
-
 public:
 	// SSAO Option
 	float AO_Radius = 0.25f;							// 샘플링시 비교할 Texel 반지름	(0.0 ~ 5.0)
@@ -49,9 +52,11 @@ public:
 	// SkyCube Option
 	float SkyCube_Size = 500.0f;						// SkyCube Map 크기				(1.0 ~ 5000.0)
 	bool SkyCube_HDR = true;							// SkyCube HDR 여부
+	std::string SkyCube_Name;							// SkyCube Name
 
 	// SkyLight Option
 	float SkyLight_Factor = 1.0f;						// SkyLight 강도					(0.0 ~ 5.0)
+	std::map<UINT, std::string> SkyLight_Name;			// Key : SkyLight Index & Value : SkyLight Name
 };
 
 // Animation Data

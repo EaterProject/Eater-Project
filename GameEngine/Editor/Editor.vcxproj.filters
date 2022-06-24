@@ -115,9 +115,6 @@
     <Filter Include="소스 파일\MFC\Dialog\TAP\TAP_Collider">
       <UniqueIdentifier>{6af54049-bd2c-42f2-b488-5497433fd4a5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\MFC\Dialog\TAP\TAP_Rigidbody">
-      <UniqueIdentifier>{fd871840-f6f3-4811-8621-a70b2c6736b7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\MFC\Dialog\TAP\TAP_Transform">
       <UniqueIdentifier>{a95c39aa-a8b8-42cf-afd7-af4530b8c5e5}</UniqueIdentifier>
     </Filter>
@@ -174,6 +171,9 @@
     </Filter>
     <Filter Include="소스 파일\Manager\Eater\EaterInterface">
       <UniqueIdentifier>{375afa2a-81b6-4da0-b72a-c255d1dba0b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MFC\Dialog\TAP\TAP_Transform\TAP_Rigidbody">
+      <UniqueIdentifier>{fd871840-f6f3-4811-8621-a70b2c6736b7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -283,7 +283,7 @@
       <Filter>소스 파일\MFC\Dialog\TAP\TAP_Collider</Filter>
     </ClInclude>
     <ClInclude Include="CTAP_Rigidbody.h">
-      <Filter>소스 파일\MFC\Dialog\TAP\TAP_Rigidbody</Filter>
+      <Filter>소스 파일\MFC\Dialog\TAP\TAP_Transform\TAP_Rigidbody</Filter>
     </ClInclude>
     <ClInclude Include="LoadTerrain.h">
       <Filter>소스 파일\MFC\Dialog\Assets\ChangeDataType\LoadTerrain</Filter>
@@ -414,7 +414,7 @@
       <Filter>소스 파일\MFC\Dialog\TAP\TAP_Collider</Filter>
     </ClCompile>
     <ClCompile Include="CTAP_Rigidbody.cpp">
-      <Filter>소스 파일\MFC\Dialog\TAP\TAP_Rigidbody</Filter>
+      <Filter>소스 파일\MFC\Dialog\TAP\TAP_Transform\TAP_Rigidbody</Filter>
     </ClCompile>
     <ClCompile Include="LoadTerrain.cpp">
       <Filter>소스 파일\MFC\Dialog\Assets\ChangeDataType\LoadTerrain</Filter>
