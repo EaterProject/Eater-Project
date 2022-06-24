@@ -24,8 +24,6 @@ void ParticleController::Update()
 		
 		m_ControllerState = PARTICLE_STATE::PLAY_STATE;
 
-		DebugPrint(" State : PLAY_STATE\n StartTime : %f\n PlayTime : %f\n TotalPlayTime : %f\n", m_StartTime, m_PlayTime, m_TotalPlayTime);
-
 		m_PlayTime = dTime;
 
 		// Particle System List Update..
@@ -52,7 +50,6 @@ void ParticleController::Update()
 		if (m_TotalPlayTime <= m_PlayTime)
 		{
 			m_ControllerState = PARTICLE_STATE::END_STATE;
-			DebugPrint(" State : END_STATE\n StartTime : %f\n PlayTime : %f\n TotalPlayTime : %f\n", m_StartTime, m_PlayTime, m_TotalPlayTime);
 		}
 	}
 		break;
@@ -151,7 +148,6 @@ void ParticleController::PopParticle(std::string particle_name)
 void ParticleController::Play()
 {
 	m_ControllerState = PARTICLE_STATE::START_STATE;
-	DebugPrint(" State : END_STATE\n StartTime : %f\n PlayTime : %f\n TotalPlayTime : %f\n", m_StartTime, m_PlayTime, m_TotalPlayTime);
 
 	// 첫번째 요소부터 시작..
 	m_NowParticleList = m_ParticleSystemList.begin();
@@ -179,7 +175,6 @@ void ParticleController::UpdateController()
 		if (m_NowParticleList == m_ParticleSystemList.end())
 		{
 			m_ControllerState = PARTICLE_STATE::PLAY_STAY_STATE;
-			DebugPrint(" State : PLAY_STAY_STATE\n StartTime : %f\n PlayTime : %f\n TotalPlayTime : %f\n", m_StartTime, m_PlayTime, m_TotalPlayTime);
 		}
 		else
 		{
