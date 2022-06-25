@@ -59,13 +59,15 @@ void CameraManager::Update()
 			switch (CinematicType)
 			{
 			case MESSAGE_CAMERA_CINEMATIC_GAME_START:
-				MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_GAMESTART);
+				//MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_GAMESTART);
 				break;
 			case MESSAGE_CAMERA_CINEMATIC_GAME_END:
 				break;
 			case MESSAGE_CAMERA_CINEMATIC_BOSS_START:
 				break;
 			case MESSAGE_CAMERA_CINEMATIC_BOSS_END:
+				break;
+			case MESSAGE_CAMERA_CINEMATIC_TITLE:
 				break;
 			}
 

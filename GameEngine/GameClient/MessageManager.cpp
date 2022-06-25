@@ -228,16 +228,22 @@ void MessageManager::SEND_GATE_Message(int MessageType, void* Data)
 void MessageManager::SEND_CAMERA_Message(int MessageType, void* Data)
 {
 	///카메라 메세지 모음
-
 	switch (MessageType)
 	{
 	case MESSAGE_CAMERA_CINEMATIC_GAME_START:
+		break;
 	case MESSAGE_CAMERA_CINEMATIC_GAME_END:
+		break;
 	case MESSAGE_CAMERA_CINEMATIC_BOSS_START:
+		break;
 	case MESSAGE_CAMERA_CINEMATIC_BOSS_END:
-		mCameraManager->SetCinematic(MessageType,*(reinterpret_cast<std::string*>(Data)));
+		//mCameraManager->SetCinematic(MessageType,*(reinterpret_cast<std::string*>(Data)));
+		break;
+	case MESSAGE_CAMERA_CINEMATIC_TITLE:
+		mCameraManager->SetCinematic(MessageType, *(reinterpret_cast<std::string*>(Data)));
 		break;
 	case MESSAGE_CAMERA_CHANGE_DEBUG:
+		break;
 	case MESSAGE_CAMERA_CHANGE_PLAYER:
 		mCameraManager->Change(MessageType);
 		break;
@@ -266,8 +272,8 @@ void MessageManager::InGameStart()
 	mCanvas->Set_InGameUI_Active(true);
 
 	//카메라,플레이어 생성
-	SEND_Message(TARGET_CAMERA_MANAGER, MESSAGE_CAMERA_CHANGE_PLAYER);
 	SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_ACTIVE_TRUE);
+	SEND_Message(TARGET_CAMERA_MANAGER, MESSAGE_CAMERA_CHANGE_PLAYER);
 
 	//사운드 재생
 	Sound_Play_BGM("InGame_InDoor");
