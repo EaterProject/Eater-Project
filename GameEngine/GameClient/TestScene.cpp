@@ -197,9 +197,9 @@ void TestScene::CreateUI()
 	//ui_rectTR->SetRotation(0.0f, 0.0f, -90.0f);
 
 	/// 버튼 설정
-	//GameObject* ui_object = Instance_Button();
-	//RectTransform* ui_rectTR = ui_object->GetComponent<RectTransform>();
-	//Button* button = ui_object->GetComponent<Button>();
+	//ui_object = Instance_UI();
+	//ui_rectTR = ui_object->GetComponent<RectTransform>();
+	//button = ui_object->AddComponent<Button>();
 	//button->SetBoundaryOffset(-50.0f, 50.0f, 50.0f, -50.0f);
 	//button->SetTexture("out_button");
 	//button->SetPivot(PIVOT_TYPE::PIVOT_MIDDLE_CENTER);

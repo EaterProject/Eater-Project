@@ -110,30 +110,32 @@ class MaterialProperty
 public:
 	bool IsRelocation = false;			
 
-	bool Alpha = false;					// Alpha Material
-	bool OutLine = false;				// Out Line
+	bool OutLine = false;									// Out Line
 
-	UINT SkyLightIndex = 0;				// SkyLight Index
+	bool Alpha = false;										// Alpha Material
+	float AlphaFactor = 1.0f;								// Alpha 수치
 
-	Vector3 AddColor = Vector3(0.0f, 0.0f, 0.0f);	// Add Color
+	SHADER_TYPE Shader_Type = SHADER_TYPE::SHADER_DEFAULT;	// Shader Type
 
-	float AlphaFactor = 1.0f;			// Alpha 수치
+	UINT SkyLightIndex = 0;									// SkyLight Index
 
-	float RoughnessFactor = 0.0f;		// Roughness 강도 (0 ~ 1)
-	float MetallicFactor = 0.0f;		// Metallic 강도 (0 ~ 1)
+	Vector3 AddColor = Vector3(0.0f, 0.0f, 0.0f);			// Add Color
 
-	Vector3 EmissiveColor = Vector3(1.0f, 1.0f, 1.0f);	// Emissive Color
-	float EmissiveFactor = 1.0f;		// Emissive 강도
+	float RoughnessFactor = 0.0f;							// Roughness 강도 (0 ~ 1)
+	float MetallicFactor = 0.0f;							// Metallic 강도 (0 ~ 1)
 
-	Vector3 LimLightColor = Vector3(0.0f, 0.0f, 0.0f);	// LimLight Color
-	float LimLightFactor = 0.0f;		// LimLight 강도
-	float LimLightWidth = 0.0f;			// LimLight 범위
+	Vector3 EmissiveColor = Vector3(1.0f, 1.0f, 1.0f);		// Emissive Color
+	float EmissiveFactor = 1.0f;							// Emissive 강도
 
-	Vector3 OutLineColor = Vector3(1.0f, 1.0f, 1.0f);	// OutLine Color
-	float OutLineWidth = 0.0f;			// OutLine 범위
+	Vector3 LimLightColor = Vector3(0.0f, 0.0f, 0.0f);		// LimLight Color
+	float LimLightFactor = 0.0f;							// LimLight 강도
+	float LimLightWidth = 0.0f;								// LimLight 범위
 
-	Vector2 Tile;						// X, Y Tiling
-	Matrix TexTM;						// Material의 텍스쳐 행렬
+	Vector3 OutLineColor = Vector3(1.0f, 1.0f, 1.0f);		// OutLine Color
+	float OutLineWidth = 0.0f;								// OutLine 범위
+
+	Vector2 Tile;											// X, Y Tiling
+	Matrix TexTM;											// Material의 텍스쳐 행렬
 
 public:
 	MaterialProperty& operator=(const MaterialProperty& material_property)
