@@ -11,6 +11,8 @@ class Camera;
 class Image;
 class Slider;
 class RectTransform;
+class MiniMapSystem;
+class ParticleController;
 
 class TestScene : public Scene
 {
@@ -34,14 +36,24 @@ private:
 	GameObject* testobj;
 	GameObject* ParticleObj;
 
+	MiniMapSystem* m_MiniMap;
+
+	GameObject* m_Boss;
+	GameObject* m_MonsterA;
+	GameObject* m_MonsterB;
+
+	Transform* m_Controller;
+	ParticleController* m_ParticleController;
+
 	Camera* Cam1;
 	Camera* Cam2;
 	Transform* Cam2TR;
 
 	MeshFilter* meshfilter;
 	bool up;
-	bool up1;
+	bool IsPlus;
 
+	float factor = 1.0f;
 	float angle = 0.0f;
 
 	AnimationController* AC;

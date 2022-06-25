@@ -2,6 +2,7 @@
 #include "EngineData.h"
 #include "RenderData.h"
 #include "RenderDataConverter.h"
+#include "RenderManagerBase.h"
 
 RenderDataConverter::RenderDataConverter()
 {
@@ -11,6 +12,11 @@ RenderDataConverter::RenderDataConverter()
 RenderDataConverter::~RenderDataConverter()
 {
 
+}
+
+void RenderDataConverter::Initialize(IRenderManager* renderManager)
+{
+	m_RenderManager = renderManager;
 }
 
 void RenderDataConverter::ConvertMeshData(MeshData* originData, RenderData* renderData)
@@ -86,8 +92,8 @@ void RenderDataConverter::ConvertInstanceData(MeshData* originData, RenderData* 
 	AnimationRenderBuffer* convertAnimation = GetAnimation(animationIndex);
 
 	// Render Data 삽입..
-	renderData->m_Mesh = convertMesh;
-	renderData->m_Material = convertMaterial;
+	renderData->m_Mesh		= convertMesh;
+	renderData->m_Material	= convertMaterial;
 	renderData->m_Animation = convertAnimation;
 
 	// Mesh & Material & Animation Buffer 기준 Instance Layer 검색 및 등록..
@@ -276,6 +282,16 @@ void RenderDataConverter::ConvertResource(MaterialBuffer* origin, MaterialRender
 	convert->m_Normal	= (origin->Normal == nullptr)	? nullptr : (ID3D11ShaderResourceView*)origin->Normal->pTextureBuf;
 	convert->m_Emissive = (origin->Emissive == nullptr) ? nullptr : (ID3D11ShaderResourceView*)origin->Emissive->pTextureBuf;
 	convert->m_ORM		= (origin->ORM == nullptr)		? nullptr : (ID3D11ShaderResourceView*)origin->ORM->pTextureBuf;
+
+	// Material 관련 Layer 재배치 여부..
+	if (convert->m_MaterialProperty->IsRelocation)
+	{
+		// Layer 재배치 실행..
+		m_RenderManager->RelocationLayer(convert);
+
+		// Layer 재배치 상태 변경..
+		convert->m_MaterialProperty->IsRelocation = false;
+	}
 }
 
 template<>

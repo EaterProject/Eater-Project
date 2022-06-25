@@ -11,6 +11,10 @@ using namespace DirectX;
 using namespace SimpleMath;
 
 Light* Light::g_DirLight = nullptr;
+const Matrix Light::g_TexSpace = Matrix(0.5f, 0.0f, 0.0f, 0.0f,
+										0.0f, -0.5f, 0.0f, 0.0f,
+										0.0f, 0.0f, 1.0f, 0.0f,
+										0.5f, 0.5f, 0.0f, 1.0f);
 
 Light::Light()
 	:m_LightType(LIGHT_TYPE::NONE_LIGHT), m_Transform(nullptr)
@@ -357,12 +361,15 @@ void Light::SetLightViewProj()
 	{
 	case DIRECTION_LIGHT:
 		m_DirectionLight->LightViewProj = lightView * lightProj;
+		m_DirectionLight->LightViewProjTex = m_DirectionLight->LightViewProj * g_TexSpace;
 		break;
 	case POINT_LIGHT:
 		m_PointLight->LightViewProj = lightView * lightProj;
+		m_PointLight->LightViewProjTex = m_PointLight->LightViewProj * g_TexSpace;
 		break;
 	case SPOT_LIGHT:
 		m_SpotLight->LightViewProj = lightView * lightProj;
+		m_SpotLight->LightViewProjTex = m_SpotLight->LightViewProj * g_TexSpace;
 		break;
 	default:
 		return;

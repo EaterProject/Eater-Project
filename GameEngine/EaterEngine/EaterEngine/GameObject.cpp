@@ -114,6 +114,11 @@ int GameObject::GetTag()
 	return Tag;
 }
 
+UINT GameObject::GetIndex()
+{
+	return OneMeshData->Object_Data->ObjectIndex;
+}
+
 GameObject* GameObject::GetChildBone(std::string FindName)
 {
 	GameObject* FindObject = nullptr;

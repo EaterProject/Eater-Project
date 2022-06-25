@@ -1,6 +1,8 @@
 #pragma once
 #include <windows.h>
 
+interface IRenderManager;
+
 class MeshData;
 class RenderData;
 
@@ -20,9 +22,12 @@ class UILayer;
 interface IRenderDataConverter
 {
 public:
-	virtual void ConvertMeshData(MeshData* originData, RenderData* renderData) abstract;	// Mesh Data -> Render Data 변환..
+	virtual void Initialize(IRenderManager* renderManager) abstract;
+
+public:
+	virtual void ConvertMeshData(MeshData* originData, RenderData* renderData) abstract;		// Mesh Data -> Render Data 변환..
 	virtual void ConvertInstanceData(MeshData* originData, RenderData* renderData) abstract;	// Mesh Data -> Render Data 변환..
-	virtual void ConvertUIData(MeshData* originData, RenderData* renderData) abstract;	// Mesh Data -> Render Data 변환..
+	virtual void ConvertUIData(MeshData* originData, RenderData* renderData) abstract;			// Mesh Data -> Render Data 변환..
 
 	virtual void ResourceUpdate() abstract;		// 현재 프레임에 생성 & 삽입 Resource Update..
 

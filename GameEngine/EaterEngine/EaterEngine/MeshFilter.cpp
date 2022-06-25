@@ -14,9 +14,12 @@
 #include "TextureManager.h"
 #include "GraphicEngineAPI.h"
 #include "MaterialManager.h"
+
 #include "Profiler/Profiler.h"
+#include "TimeManager.h"
 
 MeshFilter::MeshFilter()
+	:isMaterialBlock(false)
 {
 	ModelName = "";
 
@@ -211,6 +214,16 @@ void MeshFilter::SetMetallicFactor(float metallicFactor)
 	m_Material->SetMetallicFactor(metallicFactor);
 }
 
+void MeshFilter::SetAlpha(bool enable)
+{
+	m_Material->SetAlpha(enable);
+}
+
+void MeshFilter::SetAlphaFactor(float alphaFactor)
+{
+	m_Material->SetAlphaFactor(alphaFactor);
+}
+
 void MeshFilter::SetSkyLightIndex(int skyLightIndex)
 {
 	m_Material->SetSkyLightIndex(skyLightIndex);
@@ -219,12 +232,47 @@ void MeshFilter::SetSkyLightIndex(int skyLightIndex)
 void MeshFilter::SetMaterialPropertyBlock(bool enable)
 {
 	// 활성화와 동시에 기존 Property Data 복사..
-	if (enable)
+	if (isMaterialBlock == false && enable == true)
 	{
 		(*(MaterialProperty*)m_PropertyBlock) = (*m_Material->m_MaterialData->Material_Property);
-	}
 
-	gameobject->OneMeshData->Object_Data->IsMaterialBlock = enable;
+		GraphicEngine::Get()->PushMaterialBlockInstance(gameobject->OneMeshData);
+
+		m_PropertyBlock->Alpha = false;
+
+		isMaterialBlock = true;
+	}
+	else if(isMaterialBlock == true && enable == false)
+	{
+		GraphicEngine::Get()->PopMaterialBlockInstance(gameobject->OneMeshData);
+
+		m_PropertyBlock->Alpha = false;
+	
+		isMaterialBlock = false;
+	}
+}
+
+void MeshFilter::SetMaterialPropertyBlock(bool enable, bool alpha)
+{
+	// 활성화와 동시에 기존 Property Data 복사..
+	if (isMaterialBlock == false && enable == true)
+	{
+		(*(MaterialProperty*)m_PropertyBlock) = (*m_Material->m_MaterialData->Material_Property);
+
+		m_PropertyBlock->Alpha = alpha;
+
+		GraphicEngine::Get()->PushMaterialBlockInstance(gameobject->OneMeshData);
+
+		isMaterialBlock = true;
+	}
+	else if (isMaterialBlock == true && enable == false)
+	{
+		GraphicEngine::Get()->PopMaterialBlockInstance(gameobject->OneMeshData);
+
+		m_PropertyBlock->Alpha = false;
+
+		isMaterialBlock = false;
+	}
 }
 
 std::string MeshFilter::GetBufferName()

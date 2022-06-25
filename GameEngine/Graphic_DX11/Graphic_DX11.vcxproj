@@ -197,6 +197,7 @@ copy/Y "$(OutDir)$(TargetName).lib"      "..\\Library\lib"</Command>
     <ClInclude Include="BlendStateDefine.h" />
     <ClInclude Include="Bloom_Pass.h" />
     <ClInclude Include="Blur_Pass.h" />
+    <ClInclude Include="ConstantBufferManager.h" />
     <ClInclude Include="ConvertData.h" />
     <ClInclude Include="CullingData.h" />
     <ClInclude Include="Culling_Pass.h" />
@@ -279,6 +280,7 @@ copy/Y "$(OutDir)$(TargetName).lib"      "..\\Library\lib"</Command>
     <ClCompile Include="BakingFactory.cpp" />
     <ClCompile Include="Bloom_Pass.cpp" />
     <ClCompile Include="Blur_Pass.cpp" />
+    <ClCompile Include="ConstantBufferManager.cpp" />
     <ClCompile Include="Culling_Pass.cpp" />
     <ClCompile Include="Delegate.cpp" />
     <ClCompile Include="DrawBuffer.cpp" />

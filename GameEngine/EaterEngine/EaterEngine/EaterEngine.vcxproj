@@ -249,6 +249,7 @@ copy /Y "$(ProjectDir)Network\lib\Release\*lib"  "$(TargetDir)"</Command>
     <ClInclude Include="Export\Button.h" />
     <ClInclude Include="Export\Image.h" />
     <ClInclude Include="Export\ImageFont.h" />
+    <ClInclude Include="Export\ParticleController.h" />
     <ClInclude Include="Export\RectTransform.h" />
     <ClInclude Include="Export\Slider.h" />
     <ClInclude Include="GlobalDataManager.h" />
@@ -347,6 +348,7 @@ copy /Y "$(ProjectDir)Network\lib\Release\*lib"  "$(TargetDir)"</Command>
     <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="LoadManager.cpp" />
     <ClCompile Include="Particle.cpp" />
+    <ClCompile Include="ParticleController.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="PhysManager.cpp" />
     <ClCompile Include="Rigidbody.cpp" />

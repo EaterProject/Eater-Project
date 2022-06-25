@@ -34,8 +34,8 @@ public:
 	EATER_ENGINEDLL void SetPosition(DirectX::SimpleMath::Vector2 pos);
 
 	// Object & Image Pivot Àü¿ë
-	EATER_ENGINEDLL void SetPositionObject(GameObject* object, DirectX::SimpleMath::Vector3 offset);
-	EATER_ENGINEDLL void SetPositionObject(Transform* object, DirectX::SimpleMath::Vector3 offset);
+	EATER_ENGINEDLL void SetPositionObject(GameObject* object, DirectX::SimpleMath::Vector3 offset = DirectX::SimpleMath::Vector3(0.0f));
+	EATER_ENGINEDLL void SetPositionObject(Transform* object, DirectX::SimpleMath::Vector3 offset = DirectX::SimpleMath::Vector3(0.0f));
 	EATER_ENGINEDLL void SetPosition3D(float x, float y, float z);
 	EATER_ENGINEDLL void SetPosition3D(DirectX::SimpleMath::Vector3 pos);
 

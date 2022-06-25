@@ -266,7 +266,6 @@ void MeshFilterSetting::LimLightUpdate(float Speed)
 			case 1: //감소
 				LimColor[i] -= DTime * (LImColorOneFrame[i] * Speed);
 				if (LimColor[i] <= LimColorMax[i]) { LimColorValue[i] = TYPE_NONE; LimColor[i] = LimColorMax[i]; }
-				DebugPrint("%.2f", LimColor[i]);
 				break;
 			case 2: //변화량 없음
 				break;

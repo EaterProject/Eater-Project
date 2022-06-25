@@ -65,8 +65,14 @@ public:
 	void DeleteMaterial(MaterialBuffer* material) override;
 	void DeleteAnimation(AnimationBuffer* animation) override;
 
+	void PushMaterialBlockInstance(MeshData* instance) override;
+	void PopMaterialBlockInstance(MeshData* instance) override;
+
 	void Render() override;
 	void* PickingRender(int x, int y) override;
+
+private:
+	void RelocationLayer(MaterialRenderBuffer* material) override;
 
 private:
 	void PreUpdate();
@@ -91,40 +97,45 @@ private:
 private:
 	template<typename T>
 	void PushFunction(T* pass);
+	
 	void ConvertPushInstance();									// 현재 프레임 진행중 추가된 Instance 변환..
 	void ConvertChangeInstance();								// 현재 프레임 진행중 변경된 Instance 변환..
-
-	void PushOpacityRenderData(RenderData* renderData);			// Opacity Mesh Render Data 삽입..
-	void PushTransparencyRenderData(RenderData* renderData);	// Transparency Mesh Render Data 삽입..
+	void PushMaterialBlockInstance();							// 현재 프레임 진행중 추가된 Material Block Instance 삽입..
+	
+	void PushMeshRenderData(RenderData* renderData);			// Mesh Render Data 삽입..
 	void PushUIRenderData(RenderData* renderData);				// UI Mesh Render Data 삽입..
 	void PushUnRenderData(RenderData* renderData);				// Un Render Data 삽입..
 
-	void ChangeOpacityRenderData(MeshData* meshData);			// Opacity Mesh Render Data 변환..
-	void ChangeTransparencyRenderData(MeshData* meshData);		// Transparency Mesh Render Data 변환..
+	void ChangeMeshRenderData(MeshData* meshData);				// Mesh Render Data 변환..
 	void ChangeUIRenderData(MeshData* meshData);				// UI Mesh Render Data 변환..
 	void ChangeUnRenderData(MeshData* meshData);				// Un Render Data 변환..
 
-	void DeleteOpacityRenderData(MeshData* meshData);			// Opacity Mesh Render Data 제거..
-	void DeleteTransparencyRenderData(MeshData* meshData);		// Transparency Mesh Render Data 제거..
-	void DeleteUIRenderData(MeshData* meshData);				// UI Mesh Render Data 제거..
-	void DeleteUnRenderData(MeshData* meshData);				// Un Render Data 제거..
+	void DeleteMeshRenderData(RenderData* renderData);			// Mesh Render Data 제거..
+	void DeleteUIRenderData(RenderData* renderData);			// UI Mesh Render Data 제거..
+	void DeleteUnRenderData(RenderData* renderData);			// Un Render Data 제거..
 
 	template<typename Layer>
 	void CheckEmptyLayer(std::vector<Layer*>& layerList);				// 비어있는 Layer 검사 및 제거..
 	
 	template<typename Layer>
-	void FindLayer(std::vector<Layer*>& layerList, Layer* layer);	// 해당 Layer 검색 및 추가..
+	void FindLayer(std::vector<Layer*>& layerList, Layer* layer);		// 해당 Layer 검색 및 추가..
+
+	template<typename Layer>
+	void DeleteLayer(std::vector<Layer*>& layerList, Layer* layer);		// 해당 Layer 검색 및 삭제..
 
 	bool SortDistance(RenderData* obj1, RenderData* obj2);
 
 private:
-	Microsoft::WRL::ComPtr<IDXGISwapChain> m_SwapChain;
-
-private:
 	std::queue<MeshData*> m_PushInstanceList;
 	std::queue<MeshData*> m_ChangeInstanceList;
+	std::queue<MeshData*> m_BlockInstanceList;
 
-	std::queue<RenderData*> m_RenderQueue;
+	int m_BlockQueueMax = 0;
+	int m_OpacityBlockSize = 0;
+	int m_TransparencyBlockSize = 0;
+
+	std::vector<RenderData*> m_OpacityBlockList;
+	std::vector<RenderData*> m_TransparencyBlockList;
 
 	std::vector<InstanceLayer*> m_OpacityMeshList;
 	std::vector<InstanceLayer*> m_TransparencyMeshList;
@@ -165,6 +176,9 @@ private:
 	OutLine_Pass*		m_OutLine;
 	Combine_Pass*		m_Combine;
 	Debug_Pass*			m_Debug;
+
+private:
+	Microsoft::WRL::ComPtr<IDXGISwapChain> m_SwapChain;
 };
 
 template<typename Layer>

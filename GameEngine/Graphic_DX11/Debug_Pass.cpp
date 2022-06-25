@@ -265,6 +265,8 @@ void Debug_Pass::RenderUpdate(const RenderData* meshData)
 		break;
 	case OBJECT_TYPE::PARTICLE_SYSTEM:
 	{
+		const Matrix& local = meshData->m_ObjectData->Local;
+		
 		/// Particle Icon Draw
 		option.gColor = Vector3(1.0f, 1.0f, 1.0f);
 
@@ -291,9 +293,11 @@ void Debug_Pass::RenderUpdate(const RenderData* meshData)
 
 		Vector3 radius = particles->Area_Radius;
 
-		world._11 = radius.x; world._22 = radius.y; world._33 = radius.z;
+		Matrix result;
+		result._11 = radius.x;	result._22 = radius.y;	result._33 = radius.z;
+		result._41 = world._41;	result._42 = world._42;	result._42 = world._42;
 
-		object.gWorldViewProj = world * viewproj;
+		object.gWorldViewProj = result * viewproj;
 
 		m_Debug_VS->ConstantBufferUpdate(&object);
 		m_Debug_VS->Update();
@@ -322,18 +326,22 @@ void Debug_Pass::RenderUpdate(const RenderData* meshData)
 			break;
 		}
 
+		Matrix particleWorld;
+
 		for (int i = 0; i < particles->Particle_Count; i++)
 		{
 			OneParticle* particle = particles->m_Particles[i];
 
 			if (particle->Playing == false) continue;
 
-			Matrix particleWorld = *particle->World * converseTM;
-			particleWorld._41 = particle->World->_41;
-			particleWorld._42 = particle->World->_42;
-			particleWorld._43 = particle->World->_43;
+			// 파티클시스템 로컬기준 월드 적용..
+			Matrix&& result = *particle->Local * converseTM;
 
-			object.gWorldViewProj = particleWorld * viewproj;
+			result._41 = world._41 + particle->Pos.x;
+			result._42 = world._42 + particle->Pos.y;
+			result._43 = world._43 + particle->Pos.z;
+
+			object.gWorldViewProj = result * viewproj;
 
 			m_Debug_VS->ConstantBufferUpdate(&object);
 			m_Debug_VS->Update();

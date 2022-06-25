@@ -17,7 +17,9 @@ public:
 public:
 	void BeginRender();
 	void RenderUpdate(const InstanceRenderBuffer* instance, const std::vector<RenderData*>& meshlist);
-	void RenderUpdate(const InstanceRenderBuffer* instance, const RenderData* mesh);
+	void RenderUpdate(const InstanceRenderBuffer* instance, const RenderData* meshData);
+
+	void BlockRenderUpdate(const RenderData* meshData);
 
 private:
 	void SetShaderList();

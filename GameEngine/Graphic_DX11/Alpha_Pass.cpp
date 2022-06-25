@@ -58,6 +58,10 @@ void Alpha_Pass::Start(int width, int height)
 
 	m_Mesh_VS = g_Shader->GetShader("StaticMesh_VS");
 	m_MeshInst_VS = g_Shader->GetShader("StaticMesh_Instance_VS");
+
+	m_Skin_VS = g_Shader->GetShader("SkinMesh_VS");
+	m_SkinInst_VS = g_Shader->GetShader("SkinMesh_Instance_VS");
+
 	m_Mesh_PS = g_Shader->GetShader("OIT_Mesh_PS_Option7");
 
 	m_Mesh_IB = g_Resource->GetInstanceBuffer<IB_Mesh>();
@@ -124,15 +128,8 @@ void Alpha_Pass::ApplyOption()
 	}
 }
 
-void Alpha_Pass::BeginRender()
-{
-
-}
-
 void Alpha_Pass::RenderUpdate(const InstanceRenderBuffer* instance, const RenderData* meshData)
 {
-	if (meshData->m_Draw == false) return;
-
 	const CameraData* cam = g_GlobalData->MainCamera_Data;
 	const ObjectData* obj = meshData->m_ObjectData;
 	const MeshRenderBuffer* mesh = instance->m_Mesh;
@@ -145,6 +142,17 @@ void Alpha_Pass::RenderUpdate(const InstanceRenderBuffer* instance, const Render
 	const Matrix& proj = cam->CamProj;
 	const Matrix& viewproj = cam->CamViewProj;
 
+	// Constant Buffer Setting..
+	CB_Material materialBuf;
+	materialBuf.gAddColor = matSub->AddColor;
+	materialBuf.gRoughnessFactor = matSub->RoughnessFactor;
+	materialBuf.gMetallicFactor = matSub->MetallicFactor;
+	materialBuf.gEmissiveColor = matSub->EmissiveColor * matSub->EmissiveFactor;
+	materialBuf.gLimLightColor = matSub->LimLightColor * matSub->LimLightFactor;
+	materialBuf.gLimLightWidth = matSub->LimLightWidth;
+	materialBuf.gSkyLightIndex = matSub->SkyLightIndex;
+
+	// Instance Draw..
 	switch (instance->m_Type)
 	{                   
 	case OBJECT_TYPE::BASE:
@@ -157,51 +165,6 @@ void Alpha_Pass::RenderUpdate(const InstanceRenderBuffer* instance, const Render
 		objectBuf.gProj = proj;
 
 		// Pixel Shader Update..
-		CB_Material materialBuf;
-		materialBuf.gAddColor = matSub->AddColor;
-		materialBuf.gRoughnessFactor = matSub->RoughnessFactor;
-		materialBuf.gMetallicFactor = matSub->MetallicFactor;
-		materialBuf.gEmissiveColor = matSub->EmissiveColor * matSub->EmissiveFactor;
-		materialBuf.gLimLightColor = matSub->LimLightColor * matSub->LimLightFactor;
-		materialBuf.gLimLightWidth = matSub->LimLightWidth;
-		materialBuf.gSkyLightIndex = matSub->SkyLightIndex;
-
-		CameraData* cam = g_GlobalData->MainCamera_Data;
-
-		Matrix& texSpace = g_GlobalData->TexSpace;
-
-		CB_Light lightBuf;
-		lightBuf.gDirLightCount = (UINT)g_GlobalData->DirectionLightList.size();
-		lightBuf.gPointLightCount = (UINT)g_GlobalData->PointLightList.size();
-		lightBuf.gSpotLightCount = (UINT)g_GlobalData->SpotLightList.size();
-
-		for (UINT d = 0; d < lightBuf.gDirLightCount; d++)
-		{
-			if (d >= DIRECTION_LIGHT_COUNT) break;
-
-			lightBuf.gDirLights[d] = *g_GlobalData->DirectionLightList[d];
-			lightBuf.gDirLights[d].LightViewProj *= texSpace;
-		}
-		for (UINT p = 0; p < lightBuf.gPointLightCount; p++)
-		{
-			if (p >= POINT_LIGHT_COUNT) break;
-
-			lightBuf.gPointLights[p] = *g_GlobalData->PointLightList[p];
-			lightBuf.gPointLights[p].LightViewProj *= texSpace;
-		}
-		for (UINT s = 0; s < lightBuf.gSpotLightCount; s++)
-		{
-			if (s >= SPOT_LIGHT_COUNT) break;
-
-			lightBuf.gSpotLights[s] = *g_GlobalData->SpotLightList[s];
-			lightBuf.gSpotLights[s].LightViewProj *= texSpace;
-		}
-
-		CB_LightSub lightsubBuf;
-		lightsubBuf.gEyePosW = cam->CamPos;
-		lightsubBuf.gViewProjTex = cam->CamView * cam->CamProj * texSpace;
-		lightsubBuf.gIBLFactor = g_RenderOption->SkyLight_Factor;
-
 		if (mat->m_Albedo)
 		{
 			materialBuf.gOption |= ALBEDO_MAP;
@@ -232,8 +195,8 @@ void Alpha_Pass::RenderUpdate(const InstanceRenderBuffer* instance, const Render
 		m_Mesh_VS->Update();
 
 		m_Mesh_PS->ConstantBufferUpdate(&materialBuf);		
-		m_Mesh_PS->ConstantBufferUpdate(&lightsubBuf);
-		m_Mesh_PS->ConstantBufferUpdate(&lightBuf);
+		m_Mesh_PS->ConstantBufferUpdate(&ConstantBufferManager::LIGHT_BUFFER);
+		m_Mesh_PS->ConstantBufferUpdate(&ConstantBufferManager::LIGHT_SUB_BUFFER);
 
 		m_Mesh_PS->Update();
 
@@ -247,12 +210,111 @@ void Alpha_Pass::RenderUpdate(const InstanceRenderBuffer* instance, const Render
 	break;
 	case OBJECT_TYPE::SKINNING:
 	{
+		AnimationData* animation = meshData->m_AnimationData;
 
+		// Vertex Shader Update..
+		CB_SkinMesh objectBuf;
+		objectBuf.gWorld = world;
+		objectBuf.gInvWorld = invWorld;
+		objectBuf.gView = view;
+		objectBuf.gProj = proj;
+		objectBuf.gPrevAnimationIndex = animation->PrevAnimationIndex + animation->PrevFrameIndex;
+		objectBuf.gNextAnimationIndex = animation->NextAnimationIndex + animation->NextFrameIndex;
+		objectBuf.gFrameTime = animation->FrameTime;
+
+		m_Skin_VS->ConstantBufferUpdate(&objectBuf);
+		m_Skin_VS->SetShaderResourceView<gAnimationBuffer>(meshData->m_Animation->m_AnimationBuf);
+
+		m_Skin_VS->Update();
+
+		// Pixel Shader Update..
+		if (mat->m_Albedo)
+		{
+			materialBuf.gOption |= ALBEDO_MAP;
+			m_Mesh_PS->SetShaderResourceView<gDiffuseMap>(mat->m_Albedo);
+		}
+		if (mat->m_Normal)
+		{
+			materialBuf.gOption |= NORMAL_MAP;
+			m_Mesh_PS->SetShaderResourceView<gNormalMap>(mat->m_Normal);
+		}
+		if (mat->m_Emissive)
+		{
+			materialBuf.gOption |= EMISSIVE_MAP;
+			m_Mesh_PS->SetShaderResourceView<gEmissiveMap>(mat->m_Emissive);
+		}
+		if (mat->m_ORM)
+		{
+			materialBuf.gOption |= ORM_MAP;
+			m_Mesh_PS->SetShaderResourceView<gORMMap>(mat->m_ORM);
+		}
+		if (matSub->LimLightFactor > 0.0f)
+		{
+			materialBuf.gOption |= LIM_LIGHT;
+		}
+
+		m_Mesh_PS->ConstantBufferUpdate(&materialBuf);
+		m_Mesh_PS->ConstantBufferUpdate(&ConstantBufferManager::LIGHT_BUFFER);
+		m_Mesh_PS->ConstantBufferUpdate(&ConstantBufferManager::LIGHT_SUB_BUFFER);
+
+		m_Mesh_PS->Update();
+
+		// Draw..
+		g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		g_Context->IASetVertexBuffers(0, 1, &mesh->m_VertexBuf, &mesh->m_Stride, &mesh->m_Offset);
+		g_Context->IASetIndexBuffer(mesh->m_IndexBuf, DXGI_FORMAT_R32_UINT, 0);
+
+		g_Context->DrawIndexed(mesh->m_IndexCount, 0, 0);
 	}
 	break;
 	case OBJECT_TYPE::PARTICLE_SYSTEM:
 	{
-		ParticleUpdate(meshData->m_ParticleData);
+		ParticleData* particleSystem = meshData->m_ParticleData;
+		OneParticle* particle = nullptr;
+
+		const Matrix& invView = g_GlobalData->MainCamera_Data->CamInvView;
+
+		Matrix converseTM = Matrix::Identity;
+
+		switch (particleSystem->RenderType)
+		{
+		case PARTICLE_RENDER_OPTION::BILLBOARD:
+			converseTM = invView;
+			break;
+		case PARTICLE_RENDER_OPTION::VERTICAL_BILLBOARD:
+			converseTM = invView;
+			converseTM._21 = 0; converseTM._22 = 1; converseTM._23 = 0;
+			break;
+		case PARTICLE_RENDER_OPTION::HORIZONTAL_BILLBOARD:
+			converseTM = Matrix::CreateRotationX(3.1415926535f * 0.5f);
+			break;
+		case PARTICLE_RENDER_OPTION::MESH:
+			break;
+		default:
+			break;
+		}
+
+		for (int i = 0; i < particleSystem->Particle_Count; i++)
+		{
+			particle = particleSystem->m_Particles[i];
+
+			if (particle->Playing == false) continue;
+
+			// 파티클시스템 로컬기준 월드 적용..
+			Matrix&& result = *particle->Local * converseTM;
+
+			result._41 = world._41 + particle->Pos.x;
+			result._42 = world._42 + particle->Pos.y;
+			result._43 = world._43 + particle->Pos.z;
+
+			// Vertex Input Data 삽입..
+			m_ParticleData.World = result;
+			m_ParticleData.TexScale = particle->TexScale;
+			m_ParticleData.TexPos = particle->TexPos;
+			m_ParticleData.Color = particle->Color;
+
+			m_ParticleInstance[m_InstanceCount++] = m_ParticleData;
+		}
 
 		if (m_InstanceCount == 0) return;
 
@@ -306,7 +368,12 @@ void Alpha_Pass::RenderUpdate(const InstanceRenderBuffer* instance, const std::v
 
 	if (m_RenderCount == 1)
 	{
-		RenderUpdate(instance, meshlist[0]);
+		m_RenderData = meshlist[0];
+
+		// 현재 패스에서 그리지 않아야 할 경우..
+		if (m_RenderData->m_Draw == false || m_RenderData->m_Block == true) return;
+
+		RenderUpdate(instance, m_RenderData);
 		return;
 	}
 
@@ -318,11 +385,63 @@ void Alpha_Pass::RenderUpdate(const InstanceRenderBuffer* instance, const std::v
 	const Matrix& view = cam->CamView;
 	const Matrix& proj = cam->CamProj;
 	const Matrix& viewproj = cam->CamViewProj;
+	const Matrix& viewprojtex = cam->CamViewProjTex;
+
+	// Pixel Shader Update..
+	CB_Material materialBuf;
+	materialBuf.gAddColor = matSub->AddColor;
+	materialBuf.gRoughnessFactor = matSub->RoughnessFactor;
+	materialBuf.gMetallicFactor = matSub->MetallicFactor;
+	materialBuf.gEmissiveColor = matSub->EmissiveColor * matSub->EmissiveFactor;
+	materialBuf.gLimLightColor = matSub->LimLightColor * matSub->LimLightFactor;
+	materialBuf.gLimLightWidth = matSub->LimLightWidth;
+	materialBuf.gSkyLightIndex = matSub->SkyLightIndex;
+
+	if (mat->m_Albedo)
+	{
+		materialBuf.gOption |= ALBEDO_MAP;
+		m_Mesh_PS->SetShaderResourceView<gDiffuseMap>(mat->m_Albedo);
+	}
+	if (mat->m_Normal)
+	{
+		materialBuf.gOption |= NORMAL_MAP;
+		m_Mesh_PS->SetShaderResourceView<gNormalMap>(mat->m_Normal);
+	}
+	if (mat->m_Emissive)
+	{
+		materialBuf.gOption |= EMISSIVE_MAP;
+		m_Mesh_PS->SetShaderResourceView<gEmissiveMap>(mat->m_Emissive);
+	}
+	if (mat->m_ORM)
+	{
+		materialBuf.gOption |= ORM_MAP;
+		m_Mesh_PS->SetShaderResourceView<gORMMap>(mat->m_ORM);
+	}
+	if (matSub->LimLightFactor > 0.0f)
+	{
+		materialBuf.gOption |= LIM_LIGHT;
+	}
+
+	m_Mesh_PS->ConstantBufferUpdate(&materialBuf);
+	m_Mesh_PS->ConstantBufferUpdate(&ConstantBufferManager::LIGHT_BUFFER);
+	m_Mesh_PS->ConstantBufferUpdate(&ConstantBufferManager::LIGHT_SUB_BUFFER);
+
+	m_Mesh_PS->Update();
 
 	switch (instance->m_Type)
 	{
 	case OBJECT_TYPE::BASE:
 	{
+		// Vertex Shader Constant Buffer Update..
+		CB_InstanceStaticMesh objectBuf;
+		objectBuf.gView = view;
+		objectBuf.gProj = proj;
+
+		// Vertex Shader Update..
+		m_MeshInst_VS->ConstantBufferUpdate(&objectBuf);
+
+		m_MeshInst_VS->Update();
+
 		int loopCount = 0;
 		int renderCount = 0;
 		int nowCount = 0;
@@ -340,7 +459,8 @@ void Alpha_Pass::RenderUpdate(const InstanceRenderBuffer* instance, const std::v
 			{
 				m_RenderData = meshlist[i + renderCount];
 
-				if (m_RenderData->m_Draw == false) continue;
+				// 현재 패스에서 그리지 않아야 할 경우..
+				if (m_RenderData->m_Draw == false || m_RenderData->m_Block == true) continue;
 
 				// 해당 Instance Data 삽입..
 				m_MeshData.World = m_RenderData->m_ObjectData->World;
@@ -354,94 +474,6 @@ void Alpha_Pass::RenderUpdate(const InstanceRenderBuffer* instance, const std::v
 
 			// Instance Buffer Update..
 			UpdateBuffer(m_Mesh_IB->InstanceBuf->Get(), &m_MeshInstance[0], (size_t)m_Mesh_IB->Stride * (size_t)m_InstanceCount);
-
-			// Vertex Shader Update..
-			CB_InstanceStaticMesh objectBuf;
-			objectBuf.gView = view;
-			objectBuf.gProj = proj;
-
-			// Pixel Shader Update..
-			CB_Material materialBuf;
-			materialBuf.gAddColor = matSub->AddColor;
-			materialBuf.gRoughnessFactor = matSub->RoughnessFactor;
-			materialBuf.gMetallicFactor = matSub->MetallicFactor;
-			materialBuf.gEmissiveColor = matSub->EmissiveColor * matSub->EmissiveFactor;
-			materialBuf.gLimLightColor = matSub->LimLightColor * matSub->LimLightFactor;
-			materialBuf.gLimLightWidth = matSub->LimLightWidth;
-			materialBuf.gSkyLightIndex = matSub->SkyLightIndex;
-
-			CameraData* cam = g_GlobalData->MainCamera_Data;
-
-			Matrix& texSpace = g_GlobalData->TexSpace;
-
-			CB_Light lightBuf;
-			lightBuf.gDirLightCount = (UINT)g_GlobalData->DirectionLightList.size();
-			lightBuf.gPointLightCount = (UINT)g_GlobalData->PointLightList.size();
-			lightBuf.gSpotLightCount = (UINT)g_GlobalData->SpotLightList.size();
-
-			for (UINT d = 0; d < lightBuf.gDirLightCount; d++)
-			{
-				if (d >= DIRECTION_LIGHT_COUNT) break;
-
-				lightBuf.gDirLights[d] = *g_GlobalData->DirectionLightList[d];
-				lightBuf.gDirLights[d].LightViewProj *= texSpace;
-			}
-			for (UINT p = 0; p < lightBuf.gPointLightCount; p++)
-			{
-				if (p >= POINT_LIGHT_COUNT) break;
-
-				lightBuf.gPointLights[p] = *g_GlobalData->PointLightList[p];
-				lightBuf.gPointLights[p].LightViewProj *= texSpace;
-			}
-			for (UINT s = 0; s < lightBuf.gSpotLightCount; s++)
-			{
-				if (s >= SPOT_LIGHT_COUNT) break;
-
-				lightBuf.gSpotLights[s] = *g_GlobalData->SpotLightList[s];
-				lightBuf.gSpotLights[s].LightViewProj *= texSpace;
-			}
-
-			CB_LightSub lightsubBuf;
-			lightsubBuf.gEyePosW = cam->CamPos;
-			lightsubBuf.gViewProjTex = cam->CamView * cam->CamProj * texSpace;
-			lightsubBuf.gIBLFactor = g_RenderOption->SkyLight_Factor;
-
-			if (mat->m_Albedo)
-			{
-				materialBuf.gOption |= ALBEDO_MAP;
-				m_Mesh_PS->SetShaderResourceView<gDiffuseMap>(mat->m_Albedo);
-			}
-			if (mat->m_Normal)
-			{
-				materialBuf.gOption |= NORMAL_MAP;
-				m_Mesh_PS->SetShaderResourceView<gNormalMap>(mat->m_Normal);
-			}
-			if (mat->m_Emissive)
-			{
-				materialBuf.gOption |= EMISSIVE_MAP;
-				m_Mesh_PS->SetShaderResourceView<gEmissiveMap>(mat->m_Emissive);
-			}
-			if (mat->m_ORM)
-			{
-				materialBuf.gOption |= ORM_MAP;
-				m_Mesh_PS->SetShaderResourceView<gORMMap>(mat->m_ORM);
-			}
-			if (matSub->LimLightFactor > 0.0f)
-			{
-				materialBuf.gOption |= LIM_LIGHT;
-			}
-
-			// Vertex Shader Update..
-			m_MeshInst_VS->ConstantBufferUpdate(&objectBuf);
-
-			m_MeshInst_VS->Update();
-
-			// Pixel Shader Update..
-			m_Mesh_PS->ConstantBufferUpdate(&materialBuf);
-			m_Mesh_PS->ConstantBufferUpdate(&lightsubBuf);
-			m_Mesh_PS->ConstantBufferUpdate(&lightBuf);
-
-			m_Mesh_PS->Update();
 
 			ID3D11Buffer* vertexBuffers[2] = { mesh->m_VertexBuf, m_Mesh_IB->InstanceBuf->Get() };
 			UINT strides[2] = { mesh->m_Stride, m_Mesh_IB->Stride };
@@ -465,51 +497,6 @@ void Alpha_Pass::RenderUpdate(const InstanceRenderBuffer* instance, const std::v
 
 	}
 	break;
-	case OBJECT_TYPE::PARTICLE_SYSTEM:
-	{
-		for (int i = 0; i < m_RenderCount; i++)
-		{
-			ParticleUpdate(meshlist[i]->m_ParticleData);
-		}
-
-		if (m_InstanceCount == 0) return;
-
-		// Instance Buffer Update..
-		UpdateBuffer(m_Particle_IB->InstanceBuf->Get(), &m_ParticleInstance[0], (size_t)m_Particle_IB->Stride * (size_t)m_InstanceCount);
-
-		// Veretex Shader Update..
-		CB_InstanceParticleMesh particleBuf;
-		particleBuf.gViewProj = viewproj;
-
-		m_ParticleInst_VS->ConstantBufferUpdate(&particleBuf);
-
-		m_ParticleInst_VS->Update();
-
-		// Pixel Shader Update..
-		if (mat->m_Albedo)
-		{
-			m_Particle_PS->SetShaderResourceView<gDiffuseMap>(mat->m_Albedo);
-		}
-
-		CB_ParticleOption particleOptionBuf;
-		particleOptionBuf.gStrength = meshlist[0]->m_ParticleData->Particle_Strength;
-
-		m_Particle_PS->ConstantBufferUpdate(&particleOptionBuf);
-
-		m_Particle_PS->Update();
-
-		ID3D11Buffer* vertexBuffers[2] = { mesh->m_VertexBuf, m_Particle_IB->InstanceBuf->Get() };
-		UINT strides[2] = { mesh->m_Stride, m_Particle_IB->Stride };
-		UINT offsets[2] = { 0,0 };
-
-		g_Context->IASetVertexBuffers(0, 2, vertexBuffers, strides, offsets);
-		g_Context->IASetIndexBuffer(mesh->m_IndexBuf, DXGI_FORMAT_R32_UINT, 0);
-		g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-		// Draw..
-		g_Context->DrawIndexedInstanced(mesh->m_IndexCount, m_InstanceCount, 0, 0, 0);
-	}
-	break;
 	default:
 		break;
 	}
@@ -518,51 +505,113 @@ void Alpha_Pass::RenderUpdate(const InstanceRenderBuffer* instance, const std::v
 	m_InstanceCount = 0;
 }
 
-void Alpha_Pass::ParticleUpdate(ParticleData* particleSystem)
+void Alpha_Pass::BlockRenderUpdate(const RenderData* meshData)
 {
-	OneParticle* particle = nullptr;
+	const CameraData* cam = g_GlobalData->MainCamera_Data;
+	const ObjectData* obj = meshData->m_ObjectData;
+	const MeshRenderBuffer* mesh = meshData->m_Mesh;
+	const MaterialRenderBuffer* mat = meshData->m_Material;
+	const MaterialProperty* matSub = obj->Material_Block;
 
-	const Matrix& invView = g_GlobalData->MainCamera_Data->CamInvView;
-	Matrix converseTM = Matrix::Identity;
-	Matrix particleWorld;
+	const Matrix& world = obj->World;
+	const Matrix& invWorld = obj->InvWorld;
+	const Matrix& view = cam->CamView;
+	const Matrix& proj = cam->CamProj;
+	const Matrix& viewproj = cam->CamViewProj;
 
-	switch (particleSystem->RenderType)
+	// Pixel Shader Update..
+	CB_Material materialBuf;
+	materialBuf.gAddColor = matSub->AddColor;
+	materialBuf.gRoughnessFactor = matSub->RoughnessFactor;
+	materialBuf.gMetallicFactor = matSub->MetallicFactor;
+	materialBuf.gEmissiveColor = matSub->EmissiveColor * matSub->EmissiveFactor;
+	materialBuf.gLimLightColor = matSub->LimLightColor * matSub->LimLightFactor;
+	materialBuf.gLimLightWidth = matSub->LimLightWidth;
+	materialBuf.gSkyLightIndex = matSub->SkyLightIndex;
+	materialBuf.gAlphaFactor = matSub->AlphaFactor;
+
+	if (mat->m_Albedo)
 	{
-	case PARTICLE_RENDER_OPTION::BILLBOARD:
-		converseTM = invView;
-		break;
-	case PARTICLE_RENDER_OPTION::VERTICAL_BILLBOARD:
-		converseTM = invView;
-		converseTM._21 = 0; converseTM._22 = 1; converseTM._23 = 0;
-		break;
-	case PARTICLE_RENDER_OPTION::HORIZONTAL_BILLBOARD:
-		converseTM = Matrix::CreateRotationX(3.1415926535f / 2.0f);
-		break;
-	case PARTICLE_RENDER_OPTION::MESH:
-		break;
-	default:
-		break;
+		materialBuf.gOption |= ALBEDO_MAP;
+		m_Mesh_PS->SetShaderResourceView<gDiffuseMap>(mat->m_Albedo);
+	}
+	if (mat->m_Normal)
+	{
+		materialBuf.gOption |= NORMAL_MAP;
+		m_Mesh_PS->SetShaderResourceView<gNormalMap>(mat->m_Normal);
+	}
+	if (mat->m_Emissive)
+	{
+		materialBuf.gOption |= EMISSIVE_MAP;
+		m_Mesh_PS->SetShaderResourceView<gEmissiveMap>(mat->m_Emissive);
+	}
+	if (mat->m_ORM)
+	{
+		materialBuf.gOption |= ORM_MAP;
+		m_Mesh_PS->SetShaderResourceView<gORMMap>(mat->m_ORM);
+	}
+	if (matSub->LimLightFactor > 0.0f)
+	{
+		materialBuf.gOption |= LIM_LIGHT;
 	}
 
-	for (int i = 0; i < particleSystem->Particle_Count; i++)
+	m_Mesh_PS->ConstantBufferUpdate(&materialBuf);
+	m_Mesh_PS->ConstantBufferUpdate(&ConstantBufferManager::LIGHT_BUFFER);
+	m_Mesh_PS->ConstantBufferUpdate(&ConstantBufferManager::LIGHT_SUB_BUFFER);
+
+	m_Mesh_PS->Update();
+
+	switch (obj->ObjType)
 	{
-		particle = particleSystem->m_Particles[i];
+	case OBJECT_TYPE::BASE:
+	{
+		// Vertex Shader Update..
+		CB_StaticMesh objectBuf;
+		objectBuf.gWorld = world;
+		objectBuf.gInvWorld = invWorld;
+		objectBuf.gView = view;
+		objectBuf.gProj = proj;
 
-		if (particle->Playing == false) continue;
+		m_Mesh_VS->ConstantBufferUpdate(&objectBuf);
 
-		// Render Type에 맞는 행렬 변환..
-		particleWorld = *particle->World * converseTM;
+		m_Mesh_VS->Update();
 
-		particleWorld._41 = particle->World->_41;
-		particleWorld._42 = particle->World->_42;
-		particleWorld._43 = particle->World->_43;
+		// Draw..
+		g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		g_Context->IASetVertexBuffers(0, 1, &mesh->m_VertexBuf, &mesh->m_Stride, &mesh->m_Offset);
+		g_Context->IASetIndexBuffer(mesh->m_IndexBuf, DXGI_FORMAT_R32_UINT, 0);
 
-		// Vertex Input Data 삽입..
-		m_ParticleData.World = particleWorld;
-		m_ParticleData.TexScale = particle->TexScale;
-		m_ParticleData.TexPos = particle->TexPos;
-		m_ParticleData.Color = particle->Color;
+		g_Context->DrawIndexed(mesh->m_IndexCount, 0, 0);
+	}
+	break;
+	case OBJECT_TYPE::SKINNING:
+	{
+		AnimationData* animation = meshData->m_AnimationData;
 
-		m_ParticleInstance[m_InstanceCount++] = m_ParticleData;
+		// Vertex Shader Update..
+		CB_SkinMesh objectBuf;
+		objectBuf.gWorld = world;
+		objectBuf.gInvWorld = invWorld;
+		objectBuf.gView = view;
+		objectBuf.gProj = proj;
+		objectBuf.gPrevAnimationIndex = animation->PrevAnimationIndex + animation->PrevFrameIndex;
+		objectBuf.gNextAnimationIndex = animation->NextAnimationIndex + animation->NextFrameIndex;
+		objectBuf.gFrameTime = animation->FrameTime;
+
+		m_Skin_VS->ConstantBufferUpdate(&objectBuf);
+		m_Skin_VS->SetShaderResourceView<gAnimationBuffer>(meshData->m_Animation->m_AnimationBuf);
+
+		m_Skin_VS->Update();
+
+		// Draw..
+		g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		g_Context->IASetVertexBuffers(0, 1, &mesh->m_VertexBuf, &mesh->m_Stride, &mesh->m_Offset);
+		g_Context->IASetIndexBuffer(mesh->m_IndexBuf, DXGI_FORMAT_R32_UINT, 0);
+
+		g_Context->DrawIndexed(mesh->m_IndexCount, 0, 0);
+	}
+	break;
+	default:
+		break;
 	}
 }

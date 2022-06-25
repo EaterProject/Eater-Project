@@ -196,6 +196,12 @@
     <Filter Include="소스 파일\Component\UI\Font">
       <UniqueIdentifier>{76f135c2-a334-45a1-8bb0-bbe254e6ec1b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Component\ParticleSystem\System">
+      <UniqueIdentifier>{f67e86d1-9245-4232-ac9f-8a65c306ba11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\ParticleSystem\Controller">
+      <UniqueIdentifier>{20c6851e-e0e9-4628-9600-61031c691c9f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -278,9 +284,6 @@
     </ClInclude>
     <ClInclude Include="Export\Rigidbody.h">
       <Filter>소스 파일\Component\Rigidbody</Filter>
-    </ClInclude>
-    <ClInclude Include="Export\ParticleSystem.h">
-      <Filter>소스 파일\Component\ParticleSystem</Filter>
     </ClInclude>
     <ClInclude Include="NetworkManager.h">
       <Filter>소스 파일\Manager\NetworkManager</Filter>
@@ -390,6 +393,12 @@
     <ClInclude Include="Export\ImageFont.h">
       <Filter>소스 파일\Component\UI\Font</Filter>
     </ClInclude>
+    <ClInclude Include="Export\ParticleSystem.h">
+      <Filter>소스 파일\Component\ParticleSystem\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Export\ParticleController.h">
+      <Filter>소스 파일\Component\ParticleSystem\Controller</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -466,9 +475,6 @@
     </ClCompile>
     <ClCompile Include="NetworkManager.cpp">
       <Filter>소스 파일\Manager\NetworkManager</Filter>
-    </ClCompile>
-    <ClCompile Include="ParticleSystem.cpp">
-      <Filter>소스 파일\Component\ParticleSystem</Filter>
     </ClCompile>
     <ClCompile Include="Particle.cpp">
       <Filter>소스 파일\Component\ParticleSystem\Particle</Filter>
@@ -559,6 +565,12 @@
     </ClCompile>
     <ClCompile Include="ImageFont.cpp">
       <Filter>소스 파일\Component\UI\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleSystem.cpp">
+      <Filter>소스 파일\Component\ParticleSystem\System</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleController.cpp">
+      <Filter>소스 파일\Component\ParticleSystem\Controller</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

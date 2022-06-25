@@ -54,8 +54,6 @@ private:
 	float	NowAnimationFrame = 0;
 	int		NowFrameIndex;
 private:
-
-
 	Transform* tranform;
 
 	//프로젝션 행렬 생성하기
@@ -83,4 +81,6 @@ public:
 	static std::vector<Camera*> CamList;
 	//메인카메라
 	static Camera* g_MainCam;
+
+	static const Matrix g_TexSpace;
 };

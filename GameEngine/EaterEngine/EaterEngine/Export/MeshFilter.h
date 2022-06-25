@@ -57,9 +57,13 @@ public:
 	EATER_ENGINEDLL void SetRoughnessFactor(float roughnessFactor);
 	EATER_ENGINEDLL void SetMetallicFactor(float metallicFactor);
 	
+	EATER_ENGINEDLL void SetAlpha(bool enable);
+	EATER_ENGINEDLL void SetAlphaFactor(float alphaFactor);
+
 	EATER_ENGINEDLL void SetSkyLightIndex(int skyLightIndex);
 
 	EATER_ENGINEDLL void SetMaterialPropertyBlock(bool enable);
+	EATER_ENGINEDLL void SetMaterialPropertyBlock(bool enable, bool alpha);
 
 	EATER_ENGINEDLL std::string GetBufferName();
 	EATER_ENGINEDLL std::string GetModelName();
@@ -110,6 +114,8 @@ private:
 	bool isLoad_Material;		//매터리얼 로드여부
 	bool isLoad_Texture;		//텍스쳐 로드여부
 	bool isLoad_Animation;		//애니메이션 로드여부
+
+	bool isMaterialBlock;
 
 	std::string ModelName;				//로드한 모델 이름
 	std::string AnimationName;			//로드한 애니메이션 이름

@@ -17,7 +17,7 @@
 
 void Loading::Awake()
 {
-	Load("../Assets/Texture/UI");
+	Load("../Assets/Texture/UI/Loading");
 
 	RenderOption* option = GetRenderOptionData();
 	option->RenderingOption ^= RENDER_OPTION::RENDER_FOG;
@@ -49,9 +49,14 @@ void Loading::ThreadFunction()
 	Load("../Assets/Texture/Material");
 	Load("../Assets/Texture/Particle");
 
+	Load("../Assets/Texture/UI/Font");
+	Load("../Assets/Texture/UI/InGame");
+
+
 	Load("../Assets/Model/Animation");
 	Load("../Assets/Model/MeshBuffer");
 	Load("../Assets/Model/ModelData");
+	Load("../Assets/Model/Particle");
 	Load("../Assets/Sound");
 
 	LoadTerrainMesh("../Assets/Model/TerrainModel/Terrain.fbx", "../Assets/Texture/Terrain/Terrain_RGB_1.png", "../Assets/Texture/Terrain/Terrain_RGB_2.png", SCALING);
