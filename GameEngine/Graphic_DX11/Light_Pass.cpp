@@ -39,10 +39,6 @@ Light_Pass::~Light_Pass()
 
 }
 
-void Light_Pass::Create(int width, int height)
-{
-}
-
 void Light_Pass::Start(int width, int height)
 {
 	// Shader ¼³Á¤..

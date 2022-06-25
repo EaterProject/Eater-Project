@@ -6,7 +6,6 @@ public:
 	~Sky_Pass();
 
 public:
-	void Create(int width, int height) override;
 	void Start(int width, int height) override;
 
 	void OnResize(int width, int height) override;
@@ -22,6 +21,7 @@ public:
 
 private:
 	void SetShaderList();
+	void SetSkyCubeDefaultTexture();
 
 private:
 	DrawBuffer* m_Box_DB;
@@ -37,6 +37,9 @@ private:
 
 	ID3D11RenderTargetView* m_OutPut_RTV;
 	ID3D11DepthStencilView* m_Defalt_DSV;
+
+private:
+	ID3D11ShaderResourceView* m_Default_SkyCube;
 
 private:
 	Matrix m_EnvironmentWorld;

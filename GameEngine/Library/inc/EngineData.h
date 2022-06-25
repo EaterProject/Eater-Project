@@ -115,7 +115,7 @@ public:
 	bool Alpha = false;										// Alpha Material
 	float AlphaFactor = 1.0f;								// Alpha ¼öÄ¡
 
-	SHADER_TYPE Shader_Type = SHADER_TYPE::SHADER_DEFAULT;	// Shader Type
+	SHADER_OPTION Shader_Option = SHADER_DEFAULT;			// Shader Option
 
 	UINT SkyLightIndex = 0;									// SkyLight Index
 

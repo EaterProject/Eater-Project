@@ -16,7 +16,6 @@ public:
 
 	void BeginRender();
 	void RenderUpdate();
-	void RenderUpdate_CS();
 
 private:
 	void SetShaderList();

@@ -1,16 +1,16 @@
 #pragma once
-class Fog_Pass : public RenderPassBase
+class DissolvePass : public RenderPassBase
 {
 public:
-	Fog_Pass();
-	~Fog_Pass();
+	DissolvePass();
+	~DissolvePass();
 
 public:
+	void Create(int width, int height) override;
 	void Start(int width, int height) override;
 
 	void Release() override;
 
-	void ApplyOption() override;
 	void PreUpdate() override;
 
 private:
@@ -19,6 +19,6 @@ private:
 	void SetShaderConstantBuffer();
 
 private:
-	float m_FogTimer;
+	float m_DissolveTimer;
 };
 

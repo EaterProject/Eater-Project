@@ -44,12 +44,6 @@ Alpha_Pass::~Alpha_Pass()
 
 }
 
-void Alpha_Pass::Create(int width, int height)
-{
-
-
-}
-
 void Alpha_Pass::Start(int width, int height)
 {
 	// Shader ¼³Á¤..
@@ -70,14 +64,8 @@ void Alpha_Pass::Start(int width, int height)
 	m_ParticleInstance.resize(500);
 }
 
-void Alpha_Pass::OnResize(int width, int height)
-{
-
-}
-
 void Alpha_Pass::InstanceResize(size_t& renderMaxCount, size_t& unRenderMaxCount)
 {
-	//m_ParticleInstance.resize(renderMaxCount);
 	m_MeshInstance.resize(renderMaxCount);
 }
 

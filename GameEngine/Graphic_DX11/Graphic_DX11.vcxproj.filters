@@ -280,6 +280,9 @@
     <Filter Include="소스 파일\Manager\ConstantBuffer">
       <UniqueIdentifier>{3373cdfe-bfd0-41c6-b185-f916170520c0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\RenderPass\PostProcess\Dissolve">
+      <UniqueIdentifier>{cb056397-b691-4314-9319-8d3c668ae359}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -531,6 +534,9 @@
     <ClInclude Include="ConstantBufferManager.h">
       <Filter>소스 파일\Manager\ConstantBuffer</Filter>
     </ClInclude>
+    <ClInclude Include="DissolvePass.h">
+      <Filter>소스 파일\RenderPass\PostProcess\Dissolve</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="D3D11Graphic.cpp">
@@ -667,6 +673,9 @@
     </ClCompile>
     <ClCompile Include="ConstantBufferManager.cpp">
       <Filter>소스 파일\Manager\ConstantBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="DissolvePass.cpp">
+      <Filter>소스 파일\RenderPass\PostProcess\Dissolve</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -868,6 +877,9 @@
       <Filter>소스 파일\Shader\HLSL\Header</Filter>
     </None>
     <None Include="..\Assets\Shader\SamplerState_Header.hlsli">
+      <Filter>소스 파일\Shader\HLSL\Header</Filter>
+    </None>
+    <None Include="..\Assets\Shader\Dissolve_Header.hlsli">
       <Filter>소스 파일\Shader\HLSL\Header</Filter>
     </None>
   </ItemGroup>

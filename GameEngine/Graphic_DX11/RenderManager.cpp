@@ -78,7 +78,7 @@ RenderManager::RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, I
 	CREATE_PASS(Fog_Pass,		m_Fog);
 	CREATE_PASS(Culling_Pass,	m_Culling);
 	CREATE_PASS(Picking_Pass,	m_Picking);
-	CREATE_PASS(OutLine_Pass,	m_OutLine);
+	//CREATE_PASS(OutLine_Pass,	m_OutLine);
 	CREATE_PASS(Combine_Pass,	m_Combine);
 	CREATE_PASS(Debug_Pass,		m_Debug);
 

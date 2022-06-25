@@ -1,5 +1,5 @@
-#ifndef INSTANCE_HEADER
-#define INSTANCE_HEADER
+#ifndef DISSOLVE_HEADER
+#define DISSOLVE_HEADER
 
 cbuffer cbDessolveOption
 {

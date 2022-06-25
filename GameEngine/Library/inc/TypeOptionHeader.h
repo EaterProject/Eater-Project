@@ -77,11 +77,11 @@ typedef enum ROTATE_ANGLE
 }ROTATE_ANGLE;
 
 // Shader Type
-typedef enum SHADER_TYPE
+typedef enum SHADER_OPTION
 {
 	SHADER_DEFAULT,			// 기본
 	SHADER_BURN				// 타들어가는 효과
-}SHADER_TYPE;
+}SHADER_OPTION;
 
 // Particle Animation Option
 typedef enum PARTICLE_ANIMATION_OPTION : UINT

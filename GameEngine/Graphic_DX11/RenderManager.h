@@ -144,9 +144,9 @@ private:
 
 	std::vector<RenderPassBase*> m_RenderPassList;
 
+	Eater::Delegate<int, int> SetResizeFunction;
 	Eater::Delegate<int, int> OnResizeFunction;
 	Eater::Delegate<size_t&, size_t&> InstanceResizeFunction;
-	Eater::Delegate<int, int> SetResizeFunction;
 	Eater::Delegate<> ApplyOptionFunction;
 	Eater::Delegate<> PreUpdateFunction;
 

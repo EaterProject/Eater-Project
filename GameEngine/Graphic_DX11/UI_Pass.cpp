@@ -33,11 +33,6 @@ UI_Pass::~UI_Pass()
 
 }
 
-void UI_Pass::Create(int width, int height)
-{
-
-}
-
 void UI_Pass::Start(int width, int height)
 {
 	m_UI_VS = g_Shader->GetShader("UI_VS");
