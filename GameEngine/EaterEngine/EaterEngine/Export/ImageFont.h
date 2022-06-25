@@ -13,7 +13,7 @@ public:
 	virtual ~ImageFont();
 
 	void Awake() override;
-
+	void SetUp() override;
 
 	EATER_ENGINEDLL void SetTexture(std::string TextureName);			//넣고 싶은 숫자 이미지
 	EATER_ENGINEDLL void SetColor(float R, float G, float B);			//컬러 값
@@ -23,7 +23,7 @@ public:
 	EATER_ENGINEDLL void SetPosition(float X,float Y);					//위치
 	EATER_ENGINEDLL void SetOffset(float FontOffset);					//글자 사이의 간격
 	EATER_ENGINEDLL void SetScale(float X,float Y);						//글자 사이의 간격
-	EATER_ENGINEDLL void SetPivot(PIVOT_TYPE mType);					//글자 사이의 간격
+	EATER_ENGINEDLL void SetPivot(PIVOT_TYPE type);					//글자 사이의 간격
 	EATER_ENGINEDLL void SetPositionObject(GameObject* Object,Vector3 Pos);	//글자 사이의 간격
 	EATER_ENGINEDLL void SetLayer(int Layer);							//글자 사이의 간격
 	EATER_ENGINEDLL void SetActive(bool IsActive);							//글자 사이의 간격
@@ -43,5 +43,6 @@ private:
 	Vector4 mMF_Setting		= { 255,255,255,255};
 	Vector2 mPosition	= {0,0};
 	Vector2 mScale		= {1,1};
+	PIVOT_TYPE mType;
 };
 

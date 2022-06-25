@@ -27,6 +27,8 @@
 #include "CameraManager.h"
 #include "BossWeapon.h"
 #include "BossFriend.h"
+#include "UIEffect.h"
+#include "UITitle.h"
 
 
 
@@ -144,6 +146,20 @@ GameObject* ObjectFactory::CreateUICanvas()
 	GameObject* Object_PlayerState = Instance();
 	Object_PlayerState->AddComponent<UICanvas>();
 	return Object_PlayerState;
+}
+
+GameObject* ObjectFactory::CreateUIEffect()
+{
+	GameObject* Object_Effect = Instance();
+	Object_Effect->AddComponent<UIEffect>();
+	return Object_Effect;
+}
+
+GameObject* ObjectFactory::CreateUITitle()
+{
+	GameObject* Object_Title = Instance();
+	Object_Title->AddComponent<UITitle>();
+	return Object_Title;
 }
 
 GameObject* ObjectFactory::CreateBoss()

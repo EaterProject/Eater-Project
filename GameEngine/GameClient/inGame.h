@@ -11,9 +11,10 @@ public:
 	virtual void Awake();
 	virtual void Update();
 	virtual void End();
-public:
+private:
 	GameLogic* Logic;
 	GameObject* DebugCam;
 	GameObject* MainCame;
 	RenderOption* Option;
+	bool IsStart = false;
 };

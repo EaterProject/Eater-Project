@@ -71,6 +71,7 @@ public:
 	GameObject* Instance_Image(std::string ObjName = "Image");
 	GameObject* Instance_Slider(std::string ObjName = "Slider");
 	GameObject* Instance_ImageFont(std::string ObjName = "Font");
+	GameObject* Instance_Button(std::string ObjName = "Button");
 
 public:
 	///еб╠в

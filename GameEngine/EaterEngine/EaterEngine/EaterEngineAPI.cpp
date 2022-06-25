@@ -94,6 +94,11 @@ void GetWindowSize(int* X, int* Y)
 	 return gGameEngine->Instance_ImageFont(ObjName);
  }
 
+ GameObject* Instance_Button(std::string ObjName)
+ {
+	 return gGameEngine->Instance_Button(ObjName);
+ }
+
  GameObject* FindGameObjectTag(std::string TagName)
  {
 	 return gGameEngine->FindGameObjectTag(TagName);
