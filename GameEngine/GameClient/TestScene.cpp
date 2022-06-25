@@ -196,6 +196,25 @@ void TestScene::CreateUI()
 	//ui_rectTR->AddPosition(25.0f, 75.0f);
 	//ui_rectTR->SetRotation(0.0f, 0.0f, -90.0f);
 
+	/// 버튼 설정
+	//GameObject* ui_object = Instance_Button();
+	//RectTransform* ui_rectTR = ui_object->GetComponent<RectTransform>();
+	//Button* button = ui_object->GetComponent<Button>();
+	//button->SetBoundaryOffset(-50.0f, 50.0f, 50.0f, -50.0f);
+	//button->SetTexture("out_button");
+	//button->SetPivot(PIVOT_TYPE::PIVOT_MIDDLE_CENTER);
+	//button->SetPosition(50, -50);
+	//button->PushTextureList("down_button");
+	//button->PushTextureList("in_button");
+	//button->PushTextureList("out_button");
+	//button->PushTextureList("pressdown_button");
+	//button->PushTextureList("up_button");
+	//button->PushEvent(Eater::Bind(&TestScene::InButton, this), Button::IN_BUTTON);
+	//button->PushEvent(Eater::Bind(&TestScene::OutButton, this), Button::OUT_BUTTON);
+	//button->PushEvent(Eater::Bind(&TestScene::DownButton, this), Button::DOWN_BUTTON);
+	//button->PushEvent(Eater::Bind(&TestScene::UpButton, this), Button::UP_BUTTON);
+	//button->PushEvent(Eater::Bind(&TestScene::PressDownButton, this), Button::PRESS_DOWN_BUTTON);
+
 	ui_object = Instance_UI("UI");
 	ui_image = ui_object->AddComponent<Image>();
 	ui_image->SetTexture("ingame_combo");
@@ -521,4 +540,29 @@ void TestScene::ChangeCubeMap()
 	//	SetSkyLight("TestSky");
 	//}
 
+}
+
+void TestScene::InButton()
+{
+	button->SetTexture("in_button");
+}
+
+void TestScene::OutButton()
+{
+	button->SetTexture("out_button");
+}
+
+void TestScene::DownButton()
+{
+	button->SetTexture("down_button");
+}
+
+void TestScene::UpButton()
+{
+	button->SetTexture("up_button");
+}
+
+void TestScene::PressDownButton()
+{
+	button->SetTexture("pressdown_button");
 }
