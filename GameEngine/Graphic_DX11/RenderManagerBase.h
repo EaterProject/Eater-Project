@@ -62,6 +62,12 @@ public:
 	virtual void DeleteMaterial(MaterialBuffer* material) abstract;
 	virtual void DeleteAnimation(AnimationBuffer* animation) abstract;
 
+	// Block Render Data Push..
+	virtual void PushMaterialBlockInstance(MeshData* instance) abstract;
+
+	// Block Render Data Pop..
+	virtual void PopMaterialBlockInstance(MeshData* instance) abstract;
+
 public:
 	// Render Update..
 	virtual void Render() abstract;

@@ -145,7 +145,11 @@ public:
 };
 
 // Material Property Block
-class MaterialPropertyBlock : public MaterialProperty {};
+class MaterialPropertyBlock : public MaterialProperty 
+{
+public:
+	int Queue_Index;
+};
 
 // Material Buffer
 class MaterialBuffer : public Resources
@@ -296,12 +300,14 @@ public:
 public:
 	bool Culling = false;
 
-	Matrix CamInvView;	// Camera Inverse XY View Matrix
-	Matrix CamView;		// Camera View Matrix
-	Matrix CamProj;		// Camera Proj Matrix
+	Matrix CamInvView;		// Camera Inverse XY View Matrix
+	Matrix CamView;			// Camera View Matrix
+	Matrix CamProj;			// Camera Proj Matrix
+	Matrix CamProjTex;		// Camera Proj Tex Matrix
 	Matrix CamOrthoProj;	// Camera Orth Proj Matrix
-	Matrix CamViewProj;	// Camera View Proj Matrix
-	Vector3 CamPos;		// Camera Pos
+	Matrix CamViewProj;		// Camera View Proj Matrix
+	Matrix CamViewProjTex;	// Camera View Proj Tex Matrix
+	Vector3 CamPos;			// Camera Pos
 
 	BoundingFrustum BoundFrustum;	// Bounding Frustum
 	BoundingFrustum OriginFrustum;	// Bounding Frustum
@@ -330,7 +336,6 @@ public:
 	Matrix World;									//매쉬의 월드 행렬
 	Matrix InvWorld;								//매쉬의 월드 역행렬
 
-	bool IsMaterialBlock = false;
 	MaterialPropertyBlock* Material_Block;
 
 public:
@@ -387,8 +392,6 @@ class GlobalData
 {
 public:
 	float Time;		// Delta Time
-
-	Matrix TexSpace;	// Texture Space Matrix
 
 	CameraData* MainCamera_Data;
 	std::vector<CameraData*> CameraList;

@@ -196,10 +196,9 @@ void SSAO_Pass::RenderUpdate()
 	g_Context->RSSetViewports(1, m_HalfScreen_VP);
 
 	CameraData* cam = g_GlobalData->MainCamera_Data;
-	Matrix& proj = cam->CamProj;
 
 	CB_SsaoObject objectBuf;
-	objectBuf.gViewToTexSpace = proj * g_GlobalData->TexSpace;
+	objectBuf.gViewToTexSpace = cam->CamProjTex;
 
 	m_Ssao_PS->ConstantBufferUpdate(&objectBuf);
 

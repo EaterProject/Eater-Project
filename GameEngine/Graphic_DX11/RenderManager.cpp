@@ -39,6 +39,8 @@
 #include "OutLine_Pass.h"
 #include "Debug_Pass.h"
 
+#include "ConstantBufferManager.h"
+
 #include <algorithm>
 
 #include "./Profiler/Profiler.h"
@@ -50,6 +52,7 @@ m_RenderPassList.push_back(MemberName);	\
 PushFunction(MemberName);	\
 
 RenderManager::RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, IGraphicResourceManager* resource, IShaderManager* shader, IRenderDataConverter* converter, RenderOption* renderOption)
+	:m_BlockQueueMax(100)
 {
 	// Rendering Initialize..
 	RenderPassBase::Initialize(graphic->GetDevice(), graphic->GetContext(), factory, resource, shader, renderOption);
@@ -78,6 +81,9 @@ RenderManager::RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, I
 	CREATE_PASS(OutLine_Pass,	m_OutLine);
 	CREATE_PASS(Combine_Pass,	m_Combine);
 	CREATE_PASS(Debug_Pass,		m_Debug);
+
+	m_OpacityBlockList.resize(m_BlockQueueMax, nullptr);
+	m_TransparencyBlockList.resize(m_BlockQueueMax, nullptr);
 }
 
 RenderManager::~RenderManager()
@@ -238,6 +244,9 @@ void RenderManager::RelocationLayer(MaterialRenderBuffer* material)
 
 void RenderManager::PreUpdate()
 {
+	// Global Constant Buffer Update..
+	ConstantBufferManager::Update();
+
 	// PreUpdate 함수 리스트 실행..
 	PreUpdateFunction();
 }
@@ -271,7 +280,7 @@ void RenderManager::RenderSetting()
 
 void RenderManager::SetGlobalData(GlobalData* globalData)
 {
-	RenderPassBase::g_GlobalData = globalData;
+	RenderPassBase::SetGlobalData(globalData);
 }
 
 void RenderManager::SetSkyCube(TextureBuffer* resource)
@@ -399,6 +408,72 @@ void RenderManager::DeleteAnimation(AnimationBuffer* animation)
 	m_Converter->DeleteAnimation(animation->BufferIndex);
 }
 
+void RenderManager::PushMaterialBlockInstance(MeshData* instance)
+{
+	m_BlockInstanceList.push(instance);
+}
+
+void RenderManager::PopMaterialBlockInstance(MeshData* instance)
+{
+	MaterialPropertyBlock* material_block = instance->Object_Data->Material_Block;
+	
+	RenderData* render_data = m_Converter->GetRenderData(instance->Object_Data->ObjectIndex);
+
+	if (render_data == nullptr) return;
+
+	// 해당 Block Alpha 상태에 따른 삭제..
+	if (material_block->Alpha)
+	{
+		// 삽입시 저장해뒀던 해당 위치를 비워준다..
+		m_TransparencyBlockList[material_block->Queue_Index] = nullptr;
+
+		// Render Data Block 비활성화..
+		render_data->m_Block = false;
+
+		// 만약 현재 인덱스가 가장 큰 상태라면..
+		if (material_block->Queue_Index == m_TransparencyBlockSize - 1)
+		{
+			// 역순으로 돌면서 최대 사이즈 재설정..
+			for (int i = material_block->Queue_Index - 1; i >= 0; i--)
+			{
+				if (m_TransparencyBlockList[i] != nullptr)
+				{
+					m_TransparencyBlockSize = i + 1;
+					break;
+				}
+			}
+		}
+
+		// 해당 인덱스 초기화..
+		material_block->Queue_Index = -1;
+	}
+	else
+	{
+		// 삽입시 저장해뒀던 해당 위치를 비워준다..
+		m_OpacityBlockList[material_block->Queue_Index] = nullptr;
+
+		// Render Data Block 비활성화..
+		render_data->m_Block = false;
+
+		// 만약 현재 인덱스가 가장 큰 상태라면..
+		if (material_block->Queue_Index == m_OpacityBlockSize - 1)
+		{
+			// 역순으로 돌면서 최대 사이즈 재설정..
+			for (int i = material_block->Queue_Index - 1; i >= 0; i--)
+			{
+				if (m_OpacityBlockList[i] != nullptr)
+				{
+					m_OpacityBlockSize = i + 1;
+					break;
+				}
+			}
+		}
+
+		// 해당 인덱스 초기화..
+		material_block->Queue_Index = -1;
+	}
+}
+
 void RenderManager::ConvertRenderData()
 {
 	// Render Resource 동기화 작업..
@@ -409,6 +484,9 @@ void RenderManager::ConvertRenderData()
 
 	// 현재 프레임 동안 변경된 Render Data Convert 작업..
 	ConvertChangeInstance();
+
+	// 현재 프레임 동안 추가된 Material Block Render Data 삽입..
+	PushMaterialBlockInstance();
 }
 
 void RenderManager::SelectRenderData()
@@ -555,6 +633,15 @@ void RenderManager::DeferredRender()
 
 		m_Deferred->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_InstanceList);
 	}
+
+	for (int i = 0; i < m_OpacityBlockSize; i++)
+	{
+		m_RenderData = m_OpacityBlockList[i];
+
+		if (m_RenderData == nullptr || m_RenderData->m_Draw == false) continue;
+
+		m_Deferred->BlockRenderUpdate(m_RenderData);
+	}
 }
 
 void RenderManager::SSAORender()
@@ -586,6 +673,15 @@ void RenderManager::AlphaRender()
 		m_InstanceLayer = m_TransparencyMeshList[i];
 
 		m_Alpha->RenderUpdate(m_InstanceLayer->m_Instance, m_InstanceLayer->m_InstanceList);
+	}
+
+	for (int i = 0; i < m_TransparencyBlockSize; i++)
+	{
+		m_RenderData = m_TransparencyBlockList[i];
+
+		if (m_RenderData == nullptr || m_RenderData->m_Draw == false) continue;
+
+		m_Alpha->BlockRenderUpdate(m_RenderData);
 	}
 
 	GPU_BEGIN_EVENT_DEBUG_NAME("OIT Pass");
@@ -822,6 +918,79 @@ void RenderManager::ConvertChangeInstance()
 	CheckEmptyLayer(m_UIRenderMeshList);
 }
 
+void RenderManager::PushMaterialBlockInstance()
+{
+	// Queue가 비어있다면 처리하지 않는다..
+	if (m_BlockInstanceList.empty()) return;
+
+	// 현재 프레임 진행중 쌓아둔 변경된 Render Data List 삽입 작업..
+	while (!m_BlockInstanceList.empty())
+	{
+		// 해당 원본 Mesh Data 추출..
+		MeshData* originMeshData = m_BlockInstanceList.front();
+
+		// 해당 Render Data 추출..
+		RenderData* convertRenderData = (RenderData*)originMeshData->Render_Data;
+
+		assert(convertRenderData != nullptr);
+
+		// 해당 Material Block 추출..
+		MaterialPropertyBlock* material_block = originMeshData->Object_Data->Material_Block;
+
+		// 해당 Block Alpha 상태에 따른 삽입..
+		if (material_block->Alpha)
+		{
+			for (int index = 0; index < m_BlockQueueMax; index++)
+			{
+				// 빈 공간에 넣어준다..
+				if (m_TransparencyBlockList[index] == nullptr)
+				{
+					m_TransparencyBlockList[index] = convertRenderData;
+
+					// Render Data Block 활성화..
+					convertRenderData->m_Block = true;
+
+					// 현재 리스트 내부에서의 인덱스 저장..
+					material_block->Queue_Index = index;
+
+					// 현재 가장 큰 인덱스일 경우 최대 사이즈를 재설정..
+					if (index >= m_TransparencyBlockSize)
+					{
+						m_TransparencyBlockSize = index + 1;
+					}
+					break;
+				}
+			}
+		}
+		else
+		{
+			for (int index = 0; index < m_BlockQueueMax; index++)
+			{
+				// 빈 공간에 넣어준다..
+				if (m_OpacityBlockList[index] == nullptr)
+				{
+					m_OpacityBlockList[index] = convertRenderData;
+
+					// Render Data Block 활성화..
+					convertRenderData->m_Block = true;
+
+					// 현재 리스트 내부에서의 인덱스 저장..
+					material_block->Queue_Index = index;
+
+					// 현재 가장 큰 인덱스일 경우 최대 사이즈를 재설정..
+					if (index >= m_OpacityBlockSize)
+					{
+						m_OpacityBlockSize = index + 1;
+					}
+					break;
+				}
+			}
+		}
+
+		m_BlockInstanceList.pop();
+	}
+}
+
 void RenderManager::PushMeshRenderData(RenderData* renderData)
 {
 	// 그릴수 없는 상태인 경우 Layer에 삽입하지 않는다..
@@ -838,7 +1007,7 @@ void RenderManager::PushMeshRenderData(RenderData* renderData)
 	case OBJECT_TYPE::BASE:
 	case OBJECT_TYPE::SKINNING:
 	case OBJECT_TYPE::TERRAIN:
-	{
+	{			
 		// Culling 전용 List 삽입..
 		m_Culling->PushCullingMesh(renderData);
 
@@ -849,6 +1018,7 @@ void RenderManager::PushMeshRenderData(RenderData* renderData)
 		}
 		else
 		{
+
 			FindLayer(m_OpacityMeshList, instanceLayer);
 		}
 	}

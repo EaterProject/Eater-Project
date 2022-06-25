@@ -165,6 +165,16 @@ void Graphic_DX11::DeleteAnimation(AnimationBuffer* animation)
 	m_RenderManager->DeleteAnimation(animation);
 }
 
+void Graphic_DX11::PushMaterialBlockInstance(MeshData* instance)
+{
+	m_RenderManager->PushMaterialBlockInstance(instance);
+}
+
+void Graphic_DX11::PopMaterialBlockInstance(MeshData* instance)
+{
+	m_RenderManager->PopMaterialBlockInstance(instance);
+}
+
 void Graphic_DX11::DeleteTexture(TextureBuffer* resource)
 {
 	ID3D11ShaderResourceView* texture = (ID3D11ShaderResourceView*)resource->pTextureBuf;

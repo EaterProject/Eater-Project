@@ -17,14 +17,17 @@ public:
 	void ApplyOption() override;
 
 public:
-	void BeginRender();
 	void RenderUpdate(const InstanceRenderBuffer* instance, const std::vector<RenderData*>& meshlist);
 	void RenderUpdate(const InstanceRenderBuffer* instance, const RenderData* meshData);
+
+	void BlockRenderUpdate(const RenderData* meshData);
 
 private:
 	VertexShader* m_ParticleInst_VS;
 	VertexShader* m_Mesh_VS;
 	VertexShader* m_MeshInst_VS;
+	VertexShader* m_Skin_VS;
+	VertexShader* m_SkinInst_VS;
 	PixelShader* m_Particle_PS;
 	PixelShader* m_Mesh_PS;
 

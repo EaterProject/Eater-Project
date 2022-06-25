@@ -72,6 +72,9 @@ public:
 	virtual GRAPHIC_DX11_DLL void DeleteMaterial(MaterialBuffer* material) abstract;
 	virtual GRAPHIC_DX11_DLL void DeleteAnimation(AnimationBuffer* animation) abstract;
 
+	virtual GRAPHIC_DX11_DLL void PushMaterialBlockInstance(MeshData* instance) abstract;
+	virtual GRAPHIC_DX11_DLL void PopMaterialBlockInstance(MeshData* instance) abstract;
+
 	virtual GRAPHIC_DX11_DLL void DeleteTexture(TextureBuffer* resource) abstract;
 	virtual GRAPHIC_DX11_DLL void DeleteSkyLight(SkyLightBuffer* resource) abstract;
 

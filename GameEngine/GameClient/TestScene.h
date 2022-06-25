@@ -51,8 +51,9 @@ private:
 
 	MeshFilter* meshfilter;
 	bool up;
-	bool up1;
+	bool IsPlus;
 
+	float factor = 1.0f;
 	float angle = 0.0f;
 
 	AnimationController* AC;
