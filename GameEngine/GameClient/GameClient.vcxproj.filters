@@ -234,6 +234,9 @@
     <ClInclude Include="UITitle.h">
       <Filter>소스 파일\Component\UI\UITitle</Filter>
     </ClInclude>
+    <ClInclude Include="MiniMapSystem.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameClient.cpp">
@@ -322,6 +325,9 @@
     </ClCompile>
     <ClCompile Include="UITitle.cpp">
       <Filter>소스 파일\Component\UI\UITitle</Filter>
+    </ClCompile>
+    <ClCompile Include="MiniMapSystem.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
