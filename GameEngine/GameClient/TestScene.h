@@ -11,6 +11,9 @@ class Camera;
 class Image;
 class Slider;
 class RectTransform;
+class MiniMapSystem;
+class Button;
+class ParticleController;
 
 class TestScene : public Scene
 {
@@ -28,20 +31,38 @@ public:
 	void CreateParticle(float x, float y, float z);
 	void ChangeCubeMap();
 
+	void InButton();
+	void OutButton();
+	void DownButton();
+	void UpButton();
+	void PressDownButton();
+
 private:
 	GameObject* Object;
 	GameObject* Object1;
 	GameObject* testobj;
 	GameObject* ParticleObj;
 
+	MiniMapSystem* m_MiniMap;
+
+	GameObject* m_Boss;
+	GameObject* m_MonsterA;
+	GameObject* m_MonsterB;
+
+	Transform* m_Controller;
+	ParticleController* m_ParticleController;
+
 	Camera* Cam1;
 	Camera* Cam2;
 	Transform* Cam2TR;
 
+	Button* button;
+
 	MeshFilter* meshfilter;
 	bool up;
-	bool up1;
+	bool IsPlus;
 
+	float factor = 1.0f;
 	float angle = 0.0f;
 
 	AnimationController* AC;

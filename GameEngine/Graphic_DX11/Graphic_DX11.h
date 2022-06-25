@@ -44,6 +44,9 @@ public:
 	void DeleteMaterial(MaterialBuffer* material) override;
 	void DeleteAnimation(AnimationBuffer* animation) override;
 
+	void PushMaterialBlockInstance(MeshData* instance);
+	void PopMaterialBlockInstance(MeshData* instance);
+
 	void DeleteTexture(TextureBuffer* resource) override;
 	void DeleteSkyLight(SkyLightBuffer* resource) override;
 

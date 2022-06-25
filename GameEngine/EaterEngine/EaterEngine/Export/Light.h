@@ -24,6 +24,8 @@ public:
 
 	static void SetDirectionLight(Light* light);
 
+	static const Matrix g_TexSpace;
+
 public:
 	void Awake() override;
 	void Start() override;

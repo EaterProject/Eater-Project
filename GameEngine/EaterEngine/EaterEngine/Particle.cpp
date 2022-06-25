@@ -11,7 +11,9 @@
 #define LERP(prev, next, time) ((prev * (1.0f - time)) + (next * time))
 
 Particle::Particle()
+	:m_Play(false), m_Pause(false)
 {
+
 }
 
 Particle::~Particle()
@@ -24,6 +26,7 @@ void Particle::Awake()
 	m_Transform = gameobject->transform;
 
 	m_ParticleData->World = m_Transform->GetWorld();
+	m_ParticleData->Local = m_Transform->GetLocal();
 }
 
 void Particle::Start()
@@ -37,7 +40,7 @@ void Particle::Start()
 
 void Particle::Update()
 {
-	if (m_Playing == false) return;
+	if (m_Pause == true || m_Play == false) return;
 
 	// 해당 파티클 업데이트..
 	if (m_LifeTime > 0.0f)
@@ -154,6 +157,7 @@ void Particle::Update()
 		if (m_AniType & POSITION_ANI)
 		{
 			m_NowPos = Vector3::Lerp(m_PrevPos, m_NextPos, m_OneTickFrame);
+			m_ParticleData->Pos = m_NowPos;
 			m_Transform->SetPosition(m_NowPos);
 		}
 		if (m_AniType & ROTATION_ANI)
@@ -169,13 +173,13 @@ void Particle::Update()
 	}
 	else
 	{
-		Reset();
+		Stop();
 	}
 }
 
-void Particle::SetPlay(const PARTICLE_DESC* particleDesc)
+void Particle::Play(const PARTICLE_DESC* particleDesc)
 {
-	m_Playing = true;
+	m_Play = true;
 
 	// Animation Type 재설정..
 	m_AniType = 0;
@@ -260,8 +264,10 @@ void Particle::SetPlay(const PARTICLE_DESC* particleDesc)
 		break;
 	}
 
+	Transform* transform = gameobject->transform;
+
 	m_NextScale = m_PrevScale + m_OneScale;
-	m_Transform->SetScale(m_PrevScale);
+	transform->SetScale(m_PrevScale);
 
 	// 파티클 회전 설정..
 	m_StartRot = particleDesc->StartRot;
@@ -269,14 +275,15 @@ void Particle::SetPlay(const PARTICLE_DESC* particleDesc)
 	m_PrevRot = m_StartRot;
 	m_NextRot = m_PrevRot + m_OneRot;
 	m_NowRot.z = m_PrevRot;
-	m_Transform->SetRotate(m_NowRot);
+	transform->SetRotate(m_NowRot);
 
 	// 파티클 위치 설정..
 	m_StartPos = particleDesc->StartPos;
 	m_OnePos = (particleDesc->StartForce + particleDesc->LifeForce) / (float)m_AniTotalFrame;
 	m_PrevPos = m_StartPos;
 	m_NextPos = m_PrevPos + m_OnePos;
-	m_Transform->SetPosition(m_PrevPos);
+	m_ParticleData->Pos = m_PrevPos;
+	transform->SetPosition(m_PrevPos);
 
 	// Animation Type 설정..
 	if (m_OneColor != XMVectorZero())	m_AniType |= COLOR_ANI;
@@ -284,6 +291,29 @@ void Particle::SetPlay(const PARTICLE_DESC* particleDesc)
 	if (m_OneRot != 0.0f)				m_AniType |= ROTATION_ANI;
 	if (m_OneScale != 0.0f)				m_AniType |= SCALE_ANI;
 	if (m_TexTotalFrame > 1)			m_AniType |= TEXTURE_ANI;
+}
+
+void Particle::Resume()
+{
+	m_Pause = false;
+}
+
+void Particle::Pause()
+{
+	m_Pause = true;
+}
+
+void Particle::Stop()
+{
+	m_ParticleData->Playing = false;
+
+	m_Play = false;
+	m_Pause = false;
+	m_LifeTime = 0.0f;
+	m_TexNowTime = 0.0f;
+	m_TexFrame = 1;
+	m_AniNowTime = 0.0f;
+	m_AniFrame = 1;
 }
 
 void Particle::DataUpdate()
@@ -310,18 +340,6 @@ void Particle::DataUpdate()
 
 	m_ParticleData->TexPos = Vector2(0.0f, 0.0f);
 	m_ParticleData->TexScale = Vector2(1.0f / m_SystemDesc->Tile_Width, 1.0f / m_SystemDesc->Tile_Height);
-}
-
-void Particle::Reset()
-{
-	m_ParticleData->Playing = false;
-
-	m_Playing = false;
-	m_LifeTime = 0.0f;
-	m_TexNowTime = 0.0f;
-	m_TexFrame = 1;
-	m_AniNowTime = 0.0f;
-	m_AniFrame = 1;
 }
 
 void Particle::Release()

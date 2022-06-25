@@ -123,52 +123,16 @@ void Light_Pass::ApplyOption()
 
 void Light_Pass::RenderUpdate()
 {
-	CameraData* cam = g_GlobalData->MainCamera_Data;
-
-	Matrix& texSpace = g_GlobalData->TexSpace;
-
 	g_Context->OMSetRenderTargets(1, &m_OutPut_RTV, nullptr);
 	g_Context->ClearRenderTargetView(m_OutPut_RTV, reinterpret_cast<const float*>(&DXColors::NonBlack));
 	g_Context->RSSetViewports(1, m_Screen_VP);
-
-	CB_Light lightBuf;
-	lightBuf.gDirLightCount = (UINT)g_GlobalData->DirectionLightList.size();
-	lightBuf.gPointLightCount = (UINT)g_GlobalData->PointLightList.size();
-	lightBuf.gSpotLightCount = (UINT)g_GlobalData->SpotLightList.size();
-
-	for (UINT d = 0; d < lightBuf.gDirLightCount; d++)
-	{
-		if (d >= DIRECTION_LIGHT_COUNT) break;
-
-		lightBuf.gDirLights[d] = *g_GlobalData->DirectionLightList[d];
-		lightBuf.gDirLights[d].LightViewProj *= texSpace;
-	}
-	for (UINT p = 0; p < lightBuf.gPointLightCount; p++)
-	{
-		if (p >= POINT_LIGHT_COUNT) break;
-		
-		lightBuf.gPointLights[p] = *g_GlobalData->PointLightList[p];
-		lightBuf.gPointLights[p].LightViewProj *= texSpace;
-	}
-	for (UINT s = 0; s < lightBuf.gSpotLightCount; s++)
-	{
-		if (s >= SPOT_LIGHT_COUNT) break;
-		
-		lightBuf.gSpotLights[s] = *g_GlobalData->SpotLightList[s];
-		lightBuf.gSpotLights[s].LightViewProj *= texSpace;
-	}
-
-	CB_LightSub lightsubBuf;
-	lightsubBuf.gEyePosW = cam->CamPos;
-	lightsubBuf.gViewProjTex = cam->CamView * cam->CamProj * texSpace;
-	lightsubBuf.gIBLFactor = g_RenderOption->SkyLight_Factor;
 
 	// Vertex Shader Update..
 	m_Light_VS->Update();
 
 	// Pixel Shader Update..
-	m_Light_PS->ConstantBufferUpdate(&lightBuf);
-	m_Light_PS->ConstantBufferUpdate(&lightsubBuf);
+	m_Light_PS->ConstantBufferUpdate(&ConstantBufferManager::LIGHT_BUFFER);
+	m_Light_PS->ConstantBufferUpdate(&ConstantBufferManager::LIGHT_SUB_BUFFER);
 	m_Light_PS->Update();
 
 	g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);

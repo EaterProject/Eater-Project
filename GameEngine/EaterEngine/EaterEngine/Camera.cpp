@@ -15,6 +15,10 @@
 using namespace DirectX;
 std::vector<Camera*> Camera::CamList;
 Camera* Camera::g_MainCam = nullptr;
+const Matrix  Camera::g_TexSpace = Matrix(0.5f, 0.0f, 0.0f, 0.0f,
+										  0.0f, -0.5f, 0.0f, 0.0f,
+										  0.0f, 0.0f, 1.0f, 0.0f,
+										  0.5f, 0.5f, 0.0f, 1.0f);
 
 Camera::Camera()
 {
@@ -241,6 +245,7 @@ void Camera::CreateProj(int winsizeX, int WinSizeY)
 
 	// Camera Data 재설정..
 	mCameraData->CamProj = mProj;
+	mCameraData->CamProjTex = mProj * gTexSpace;
 	mCameraData->CamOrthoProj = mOrthoProj;
 
 	// Camera Frustum 설정..
@@ -277,6 +282,7 @@ void Camera::CreateView()
 	mCameraData->CamView = mView;
 	mCameraData->CamInvView = mView.Invert();
 	mCameraData->CamViewProj = mView * mProj;
+	mCameraData->CamViewProjTex = mCameraData->CamViewProj * g_TexSpace;
 	mCameraData->CamPos = tranform->GetPosition();
 	mCameraData->OriginFrustum.Transform(mCameraData->BoundFrustum, mCameraData->CamInvView);
 }

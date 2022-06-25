@@ -277,6 +277,9 @@
     <Filter Include="소스 파일\RenderPass\Sky">
       <UniqueIdentifier>{1f2868c2-31f0-4f27-9f9a-67378c5c245e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Manager\ConstantBuffer">
+      <UniqueIdentifier>{3373cdfe-bfd0-41c6-b185-f916170520c0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -525,6 +528,9 @@
     <ClInclude Include="UI_Pass.h">
       <Filter>소스 파일\RenderPass\UI</Filter>
     </ClInclude>
+    <ClInclude Include="ConstantBufferManager.h">
+      <Filter>소스 파일\Manager\ConstantBuffer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="D3D11Graphic.cpp">
@@ -658,6 +664,9 @@
     </ClCompile>
     <ClCompile Include="UI_Pass.cpp">
       <Filter>소스 파일\RenderPass\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="ConstantBufferManager.cpp">
+      <Filter>소스 파일\Manager\ConstantBuffer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

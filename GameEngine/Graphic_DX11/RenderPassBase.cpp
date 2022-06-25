@@ -34,6 +34,15 @@ void RenderPassBase::Initialize(Microsoft::WRL::ComPtr<ID3D11Device> device, Mic
 	g_Shader = shaderManager;
 
 	g_RenderOption = renderOption;
+
+	ConstantBufferManager::g_RenderOption = renderOption;
+}
+
+void RenderPassBase::SetGlobalData(GlobalData* globalData)
+{
+	g_GlobalData = globalData;
+
+	ConstantBufferManager::g_GlobalData = globalData;
 }
 
 void RenderPassBase::GraphicReset()

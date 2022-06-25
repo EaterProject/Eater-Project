@@ -130,6 +130,8 @@ struct CB_Material : public cbMaterial
 	float gMetallicFactor = 0.0f;
 
 	UINT gSkyLightIndex = 0;
+
+	float gAlphaFactor = 1.0f;
 };
 
 SHADER_CONSTANT_BUFFER(cbCamera)

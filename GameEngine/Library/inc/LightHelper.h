@@ -27,6 +27,7 @@ struct DirectionalLightData
 	Vector3 Direction = Vector3(-0.707f, -1.0f, 0.707f);
 	float Pad;
 
+	Matrix LightViewProjTex = Matrix();
 	Matrix LightViewProj = Matrix();
 };
 
@@ -40,6 +41,7 @@ struct PointLightData
 	Vector3 Position = Vector3(0.0f, 0.0f, 0.0f);
 	float Power = 1.0f;
 
+	Matrix LightViewProjTex = Matrix();
 	Matrix LightViewProj = Matrix();
 };
 
@@ -60,6 +62,7 @@ struct SpotLightData
 	float AttRange = 0.0f;
 	Vector2 Pad = Vector2(0.0f, 0.0f);
 
+	Matrix LightViewProjTex = Matrix();
 	Matrix LightViewProj = Matrix();
 };
 

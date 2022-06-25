@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include "ConstantBufferManager.h"
 
 interface IShaderManager;
 interface IFactoryManager;
@@ -54,6 +55,7 @@ protected:
 
 public:
 	static void Initialize(Microsoft::WRL::ComPtr<ID3D11Device> device, Microsoft::WRL::ComPtr<ID3D11DeviceContext> context, IFactoryManager* factory, IGraphicResourceManager* resource, IShaderManager* shader, RenderOption* renderOption);
+	static void SetGlobalData(GlobalData* globalData);
 	static void GraphicReset();
 	static void Reset();
 

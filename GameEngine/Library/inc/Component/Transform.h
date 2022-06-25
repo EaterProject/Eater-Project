@@ -114,6 +114,9 @@ public:
 	EATER_ENGINEDLL void SetChild(Transform* mChild);
 	//부모 객체 넣기
 	EATER_ENGINEDLL void SetParent(Transform* mParent);
+
+	EATER_ENGINEDLL Transform* GetParent();
+
 	//자식객체 로컬 업데이트
 	void Child_Local_Update();
 
@@ -163,7 +166,7 @@ private:
 
 	//게임 오브젝트의 위치 회전 크기값을 모두곱한 월드 행렬
 	DirectX::SimpleMath::Matrix World_M;
-
+	DirectX::SimpleMath::Matrix Local_M;
 private:
 	const float ConvertPI = 180 / 3.141592f;
 

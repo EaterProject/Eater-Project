@@ -21,6 +21,7 @@ cbuffer cbMaterial : register(b0)
     float gMetallicFactor   : packoffset(c3.x);
     
     uint gSkyLightIndex     : packoffset(c3.y);
+    float gAlphaFactor      : packoffset(c3.z);
 };
 
 cbuffer cbLightSub : register(b1)
@@ -73,6 +74,7 @@ void OIT_Mesh_PS(MeshPixelIn pin)
     if (gOption & ALBEDO_MAP)
     {
         albedo = gDiffuseMap.Sample(gSamWrapLinear, pin.Tex);
+        albedo.a *= gAlphaFactor;
         clip(albedo.a - 0.001f);
     }
     if (gOption & NORMAL_MAP)

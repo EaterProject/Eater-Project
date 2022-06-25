@@ -15,6 +15,7 @@ public:
 public:
 	void Awake() override;
 	void Start() override;
+
 public:
 	EATER_ENGINEDLL void SetTexture(std::string texture_name);
 	EATER_ENGINEDLL void PushTextureList(std::string texture_name);

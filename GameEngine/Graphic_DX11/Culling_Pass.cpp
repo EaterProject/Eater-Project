@@ -176,6 +176,7 @@ void Culling_Pass::OcclusionCullingQuery()
 	bool isCulling = g_GlobalData->OccluderList.empty();
 
 	CameraData* cam = g_GlobalData->MainCamera_Data;
+	ObjectData* obj = nullptr;
 
 	Matrix& view = cam->CamView;
 	Matrix& proj = cam->CamProj;
@@ -194,8 +195,10 @@ void Culling_Pass::OcclusionCullingQuery()
 		// 모든 오브젝트 Draw 초기화..
 		m_RenderData->m_Draw = false;
 
+		obj = m_RenderData->m_ObjectData;
+
 		// 활성화 되있는 Object만 Culling..
-		if (m_RenderData->m_ObjectData->IsActive == false) continue;
+		if (obj->IsCull == false || obj->IsActive == false) continue;
 
 		// 현재 오클루터 설정 상태..
 		if (isCulling == true)
@@ -283,12 +286,16 @@ void Culling_Pass::DrawStateUpdate()
 	// 실질적인 Render Count 초기화..
 	m_RenderCount = 0;
 
+	ObjectData* obj = nullptr;
+
 	for (int i = 0; i < CullingRenderMeshList.size(); i++)
 	{
 		m_RenderData = CullingRenderMeshList[i];
 
+		obj = m_RenderData->m_ObjectData;
+
 		// 활성화 되있는 Object만 Culling..
-		if (m_RenderData->m_ObjectData->IsActive == false) continue;
+		if (obj->IsCull == false || obj->IsActive == false) continue;
 
 		// Culling 결과에 대한 Draw 상태 업데이트..
 		m_RenderData->m_Draw = (bool)m_ResultList[m_RenderCount++];
