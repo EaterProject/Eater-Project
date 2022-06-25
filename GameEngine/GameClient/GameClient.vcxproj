@@ -211,6 +211,8 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="TestScene.h" />
+    <ClInclude Include="UIEffect.h" />
+    <ClInclude Include="UITitle.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Boss.cpp" />
@@ -248,6 +250,8 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="UICanvas.cpp" />
     <ClCompile Include="TestScene.cpp" />
+    <ClCompile Include="UIEffect.cpp" />
+    <ClCompile Include="UITitle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GameClient.rc" />

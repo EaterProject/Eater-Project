@@ -9,6 +9,7 @@
 #include "Transform.h"
 #include "ClientTypeOption.h"
 #include <string>
+#include "EaterEngineAPI.h"
 
 //클라이언트 컨퍼넌트
 #include "PlayerCamera.h"
@@ -22,6 +23,8 @@
 #include "Boss.h"
 #include "CameraManager.h"
 #include "ManaStone.h"
+#include "UIEffect.h"
+#include "UITitle.h"
 
 MessageManager* MessageManager::instance = nullptr;
 MessageManager::MessageManager()
@@ -63,9 +66,11 @@ void MessageManager::Initialize(ObjectFactory* Factory)
 	CREATE_MESSAGE(TARGET_CAMERA_MANAGER);
 	CREATE_MESSAGE(TARGET_GATE_MANAGER);
 	CREATE_MESSAGE(TARGET_UI);
+	CREATE_MESSAGE(TARGET_UI_EFFECT);
+	CREATE_MESSAGE(TARGET_UI_TITLE);
 	CREATE_MESSAGE(TARGET_PLAYER);
-	CREATE_MESSAGE(TARGET_MANA);
-	CREATE_MESSAGE(TARGET_BOSS);
+	//CREATE_MESSAGE(TARGET_MANA);
+	//CREATE_MESSAGE(TARGET_BOSS);
 }
 
 void MessageManager::Release()
@@ -141,14 +146,16 @@ GameObject* MessageManager::CREATE_MESSAGE(int CREATE_TYPE)
 		return mFactory->CreateBossWeapon();
 	case TARGET_BOSS_FRIEND:
 		return mFactory->CreateBossFriend();
+	case TARGET_UI_EFFECT:
+		Object = mFactory->CreateUIEffect();
+		mEffect = Object->GetComponent<UIEffect>();
+		return Object;
+	case TARGET_UI_TITLE:
+		Object = mFactory->CreateUITitle();
+		mTiltle = Object->GetComponent<UITitle>();
+		return Object;
 	}
 
-	return nullptr;
-}
-
-GameObject* MessageManager::GET_MESSAGE(int GET_TYPE)
-{
-	
 	return nullptr;
 }
 
@@ -174,16 +181,16 @@ void MessageManager::SEND_UI_Message(int MessageType, void* Data)
 		mCanvas->Set_Combo_Now(*(reinterpret_cast<int*>(Data)));
 		break;
 	case MESSAGE_UI_HP_NOW:
-		mCanvas->Set_HP_Now(*(reinterpret_cast<int*>(Data)));
+		mCanvas->Set_Player_HP(*(reinterpret_cast<int*>(Data)));
 		break;
 	case MESSAGE_UI_HP_MAX:
-		mCanvas->Set_HP_Max(*(reinterpret_cast<int*>(Data)));
+		mCanvas->Set_Player_HP_Max(*(reinterpret_cast<int*>(Data)));
 		break;
 	case MESSAGE_UI_EMAGIN_NOW:
-		mCanvas->Set_Emagin_Now(*(reinterpret_cast<int*>(Data)));
+		mCanvas->Set_Player_Emagin(*(reinterpret_cast<int*>(Data)));
 		break;
 	case MESSAGE_UI_EMAGIN_MAX:
-		mCanvas->Set_Emagin_Max(*(reinterpret_cast<int*>(Data)));
+		mCanvas->Set_Player_Emagin_Max(*(reinterpret_cast<int*>(Data)));
 		break;
 	case MESSAGE_UI_MONSTER_UI_ON:
 		mCanvas->Set_Monster_UI_ON(Data);
@@ -194,8 +201,11 @@ void MessageManager::SEND_UI_Message(int MessageType, void* Data)
 	case MESSAGE_UI_MONSTER_UI_UPDATE:
 		mCanvas->Set_Monster_UI_SET_DATA(Data);
 		break;
-	case MESSAGE_UI_RENDER:
-		mCanvas->Set_ALLRender(*(reinterpret_cast<int*>(Data)));
+	case MESSAGE_UI_FADE_IN:
+		mEffect->Fade_IN(Data);
+		break;
+	case MESSAGE_UI_FADE_OUT:
+		mEffect->Fade_OUT(Data);
 		break;
 	}
 }
@@ -239,13 +249,44 @@ void MessageManager::SEND_GLOBAL_Message(int MessageType, void* Data)
 	switch (MessageType)
 	{
 	case MESSAGE_GLOBAL_GAMESTART:	//게임 시작
-		//CREATE_MESSAGE(TARGET_UI);
-		//CREATE_MESSAGE(TARGET_PLAYER);
-		//SEND_Message(TARGET_CAMERA_MANAGER, MESSAGE_CAMERA_CHANGE_PLAYER);
+		InGameStart();
 		break;
 	case MESSAGE_GLOBAL_GAMEEND:	//게임 종료
+		InGameEnd();
+		break;
+	case MESSAGE_GLOBAL_TITLE:	//게임 종료
+		TitleStart();
 		break;
 	}
+}
+
+void MessageManager::InGameStart()
+{
+	mTiltle->SetTitleUIActive(false);
+	mCanvas->Set_InGameUI_Active(true);
+
+	//카메라,플레이어 생성
+	SEND_Message(TARGET_CAMERA_MANAGER, MESSAGE_CAMERA_CHANGE_PLAYER);
+	SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_ACTIVE_TRUE);
+
+	//사운드 재생
+	Sound_Play_BGM("InGame_InDoor");
+}
+
+void MessageManager::TitleStart()
+{
+	mTiltle->SetTitleUIActive(true);
+	mCanvas->Set_InGameUI_Active(false);
+	
+
+	//SEND_Message(TARGET_UI,)
+	//SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_ACTIVE_FALSE);
+
+	Sound_Play_BGM("Title");
+}
+
+void MessageManager::InGameEnd()
+{
 
 
 

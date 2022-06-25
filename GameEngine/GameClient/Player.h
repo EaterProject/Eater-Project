@@ -123,4 +123,4 @@ private:
 	const float Skill01_Dir		= 0.75f;
 	const float Skill02_Dir		= 0.75f;
 	const float Skill03_Dir		= 0.75f;
-};
+}; 

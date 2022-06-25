@@ -127,8 +127,11 @@
     <Filter Include="소스 파일\SettingClass\TransformSetting">
       <UniqueIdentifier>{9d384a10-68ee-4d37-af3a-2ff860bcb9d7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Manager\MiniMapSystem">
-      <UniqueIdentifier>{b83de304-6083-4414-bdd9-d1fd549a4f64}</UniqueIdentifier>
+    <Filter Include="소스 파일\Component\UI\UIEffect">
+      <UniqueIdentifier>{f9f09752-4818-4dea-b574-cabcd2e9c8e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\UI\UITitle">
+      <UniqueIdentifier>{893c3c5a-30b9-44ee-ac17-9a98540e8911}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -225,8 +228,11 @@
     <ClInclude Include="MeshFilterSetting.h">
       <Filter>소스 파일\SettingClass\MeshFilterSetting</Filter>
     </ClInclude>
-    <ClInclude Include="MiniMapSystem.h">
-      <Filter>소스 파일\Manager\MiniMapSystem</Filter>
+    <ClInclude Include="UIEffect.h">
+      <Filter>소스 파일\Component\UI\UIEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="UITitle.h">
+      <Filter>소스 파일\Component\UI\UITitle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -311,8 +317,11 @@
     <ClCompile Include="MeshFilterSetting.cpp">
       <Filter>소스 파일\SettingClass\MeshFilterSetting</Filter>
     </ClCompile>
-    <ClCompile Include="MiniMapSystem.cpp">
-      <Filter>소스 파일\Manager\MiniMapSystem</Filter>
+    <ClCompile Include="UIEffect.cpp">
+      <Filter>소스 파일\Component\UI\UIEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="UITitle.cpp">
+      <Filter>소스 파일\Component\UI\UITitle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
