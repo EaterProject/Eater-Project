@@ -108,12 +108,16 @@ public:
 class MaterialProperty
 {
 public:
+	bool IsRelocation = false;			
+
 	bool Alpha = false;					// Alpha Material
 	bool OutLine = false;				// Out Line
 
 	UINT SkyLightIndex = 0;				// SkyLight Index
 
 	Vector3 AddColor = Vector3(0.0f, 0.0f, 0.0f);	// Add Color
+
+	float AlphaFactor = 1.0f;			// Alpha 수치
 
 	float RoughnessFactor = 0.0f;		// Roughness 강도 (0 ~ 1)
 	float MetallicFactor = 0.0f;		// Metallic 강도 (0 ~ 1)

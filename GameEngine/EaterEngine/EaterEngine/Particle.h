@@ -49,9 +49,13 @@ public:
 	void Update() override;
 
 public:
-	void SetPlay(const PARTICLE_DESC* particleDesc);
+	void Play(const PARTICLE_DESC* particleDesc);
+	void Resume();
+	void Pause();
+	void Stop();
+
 	void DataUpdate();
-	void Reset();
+
 public:
 	void Release();
 
@@ -63,7 +67,8 @@ private:
 
 	UINT m_AniType;
 
-	bool m_Playing;
+	bool m_Play;
+	bool m_Pause;
 
 	int m_Index;
 

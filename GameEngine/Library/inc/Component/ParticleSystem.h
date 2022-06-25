@@ -86,6 +86,7 @@ public:
 	EATER_ENGINEDLL void SetDiffuseName(std::string diffuseName);
 
 	EATER_ENGINEDLL void Play(bool loop = false);										// 파티클 시스템 플레이 시간 및 반복 여부
+	EATER_ENGINEDLL void Pause();														// 파티클 시스템 중지
 	EATER_ENGINEDLL void Stop();														// 파티클 시스템 중지
 
 	EATER_ENGINEDLL void SetNextParticle(ParticleSystem* particle);
@@ -119,6 +120,7 @@ public:
 	void Release();
 
 private:
+	void Resume();
 	void DataUpdate();
 
 	void AddParticle();
@@ -144,7 +146,9 @@ private:
 	std::string m_DiffuseName;
 
 	bool m_Looping;				// 반복 재생 여부
-	bool m_Playing;				// 재생 여부
+	bool m_Play;				// 재생 여부
+	bool m_Pause;				// 일시정지 여부
+
 	int m_MaxParticle;			// 최대 파티클 개수
 	int m_PlayCount;			// 이번에 실행할 파티클 개수
 

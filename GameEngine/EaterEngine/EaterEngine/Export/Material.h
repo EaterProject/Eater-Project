@@ -31,6 +31,8 @@ public:
 	EATER_ENGINEDLL void SetRoughnessFactor(float roughnessFactor);
 	EATER_ENGINEDLL void SetMetallicFactor(float metallicFactor);
 
+	EATER_ENGINEDLL void SetAlphaFactor(float alphaFactor);
+
 	EATER_ENGINEDLL void SetSkyLightIndex(int skyLightIndex);
 
 public:

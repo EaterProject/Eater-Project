@@ -47,8 +47,13 @@ void Material::SetTextureTiling(float scale_x, float scale_y)
 
 void Material::SetAlpha(bool enable)
 {
+	if (m_MaterialData->Material_Property->Alpha == enable) return;
+
 	// Texture 변경..
 	m_MaterialData->Material_Property->Alpha = enable;
+
+	// Layer 변경을 위한 상태 업데이트..
+	m_MaterialData->Material_Property->IsRelocation = true;
 
 	// Renderer Data 동기화..
 	GraphicEngine::Get()->PushChangeMaterial(m_MaterialData);
@@ -121,6 +126,11 @@ void Material::SetRoughnessFactor(float roughnessFactor)
 void Material::SetMetallicFactor(float metallicFactor)
 {
 	m_MaterialData->Material_Property->MetallicFactor = metallicFactor;
+}
+
+void Material::SetAlphaFactor(float alphaFactor)
+{
+	m_MaterialData->Material_Property->AlphaFactor = alphaFactor;
 }
 
 void Material::SetSkyLightIndex(int skyLightIndex)

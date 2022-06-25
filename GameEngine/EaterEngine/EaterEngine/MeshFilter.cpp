@@ -211,6 +211,11 @@ void MeshFilter::SetMetallicFactor(float metallicFactor)
 	m_Material->SetMetallicFactor(metallicFactor);
 }
 
+void MeshFilter::SetAlphaFactor(float alphaFactor)
+{
+	m_Material->SetAlphaFactor(alphaFactor);
+}
+
 void MeshFilter::SetSkyLightIndex(int skyLightIndex)
 {
 	m_Material->SetSkyLightIndex(skyLightIndex);

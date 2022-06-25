@@ -29,6 +29,9 @@ ParticleSystem::ParticleSystem()
 	m_RandomLifeTimeForce		= new Eater::RandomVector3();
 	m_RandomLifeTimeRotation	= new Eater::RandomFloat();
 
+	m_Play = false;
+	m_Pause = false;
+
 	// 초기 강도 설정..
 	SetStrength(1.0f);
 }
@@ -64,9 +67,9 @@ void ParticleSystem::Start()
 
 void ParticleSystem::Update()
 {
-	float&& dTime = mTimeManager->DeltaTime();
+	if (m_Pause == true || m_Play == false) return;
 
-	if (m_Playing == false) return;
+	float&& dTime = mTimeManager->DeltaTime();
 
 	if (m_NowDelayTime > 0.0f)
 	{
@@ -126,7 +129,7 @@ void ParticleSystem::Update()
 
 			// 초기화..
 			m_ParticleState = PARTICLE_STATE::END_STATE;
-			m_Playing = false;
+			m_Play = false;
 			m_TickTime = 0.0f;
 			m_NowPlayTime = 0.0f;
 		}
@@ -342,11 +345,19 @@ void ParticleSystem::SetDiffuseName(std::string diffuseName)
 
 void ParticleSystem::Play(bool loop)
 {
-	if (m_Playing) return;
+	m_Looping = loop;
 
-	if (loop) m_Looping = true;
+	// 일시정지 중이라면 다시 재개..
+	if (m_Pause)
+	{
+		Resume();
+		return;
+	};
 
-	m_Playing = true;
+	if (m_Play) return;
+
+	// 초기값 설정..
+	m_Play = true;
 	m_TickTime = 0.0f;
 	m_NowPlayTime = m_PlayTime;
 
@@ -363,12 +374,28 @@ void ParticleSystem::Play(bool loop)
 	}
 }
 
+void ParticleSystem::Pause()
+{
+	m_Pause = true;
+
+	for (int i = 0; i < m_Particles.size(); i++)
+	{
+		m_Particles[i]->Pause();
+	}
+}
+
 void ParticleSystem::Stop()
 {
-	m_Playing = false;
+	m_Play = false;
+	m_Pause = false;
 	m_TickTime = 0.0f;
 	m_NowPlayTime = 0.0f;
 	m_NowDelayTime = 0.0f;
+
+	for (int i = 0; i < m_Particles.size(); i++)
+	{
+		m_Particles[i]->Stop();
+	}
 }
 
 void ParticleSystem::SetNextParticle(ParticleSystem* particle)
@@ -495,6 +522,16 @@ std::string ParticleSystem::GetTextureName()
 	return m_DiffuseName;
 }
 
+void ParticleSystem::Resume()
+{
+	for (int i = 0; i < m_Particles.size(); i++)
+	{
+		m_Particles[i]->Resume();
+	}
+
+	m_Pause = false;
+}
+
 void ParticleSystem::DataUpdate()
 {
 	// Data 변경시 호출하면 Particle Data Update..
@@ -550,7 +587,7 @@ void ParticleSystem::CreateParticle()
 		for (Particle* particle : m_Particles)
 		{
 			// 실행 상태의 파티클이 아닌경우 출력..
-			if (particle->m_Playing == false)
+			if (particle->m_Play == false)
 			{
 				// Particle Data 설정..
 				m_ParticleDesc->LifeTime = m_RandomLifeTime->GetRandomNumber();
@@ -562,7 +599,7 @@ void ParticleSystem::CreateParticle()
 				m_ParticleDesc->LifeRot = m_RandomLifeTimeRotation->GetRandomNumber();
 				m_ParticleDesc->LifeForce = m_RandomLifeTimeForce->GetRandomNumber();
 
-				particle->SetPlay(m_ParticleDesc);
+				particle->Play(m_ParticleDesc);
 				break;
 			}
 		}

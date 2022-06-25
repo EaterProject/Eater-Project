@@ -26,6 +26,9 @@ public:
 	~RenderDataConverter();
 
 public:
+	void Initialize(IRenderManager* renderManager) override;
+
+public:
 	void ConvertMeshData(MeshData* originData, RenderData* renderData) override;	// Mesh Data -> Render Data 변환..
 	void ConvertInstanceData(MeshData* originData, RenderData* renderData) override;	// Mesh Data -> Render Data 변환..
 	void ConvertUIData(MeshData* originData, RenderData* renderData) override;	// Mesh Data -> Render Data 변환..
@@ -108,6 +111,9 @@ private:
 
 	std::unordered_map<UINT, InstanceLayer*> m_InstanceLayerList;	// Instance Resource를 공유하는 Mesh List Layer..
 	std::unordered_map<UINT, UILayer*> m_UILayerList;				// UI Layer Order에 따른 UI List Layer..
+
+private:
+	IRenderManager* m_RenderManager;
 };
 
 template<typename Origin, typename Convert>

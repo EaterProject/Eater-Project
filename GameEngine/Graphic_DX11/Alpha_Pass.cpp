@@ -255,7 +255,6 @@ void Alpha_Pass::RenderUpdate(const InstanceRenderBuffer* instance, const Render
 		ParticleData* particleSystem = meshData->m_ParticleData;
 		OneParticle* particle = nullptr;
 
-		const Matrix& local = obj->Local;
 		const Matrix& invView = g_GlobalData->MainCamera_Data->CamInvView;
 
 		Matrix converseTM = Matrix::Identity;

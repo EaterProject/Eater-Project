@@ -11,7 +11,9 @@
 #define LERP(prev, next, time) ((prev * (1.0f - time)) + (next * time))
 
 Particle::Particle()
+	:m_Play(false), m_Pause(false)
 {
+
 }
 
 Particle::~Particle()
@@ -38,7 +40,7 @@ void Particle::Start()
 
 void Particle::Update()
 {
-	if (m_Playing == false) return;
+	if (m_Pause == true || m_Play == false) return;
 
 	// 해당 파티클 업데이트..
 	if (m_LifeTime > 0.0f)
@@ -171,13 +173,13 @@ void Particle::Update()
 	}
 	else
 	{
-		Reset();
+		Stop();
 	}
 }
 
-void Particle::SetPlay(const PARTICLE_DESC* particleDesc)
+void Particle::Play(const PARTICLE_DESC* particleDesc)
 {
-	m_Playing = true;
+	m_Play = true;
 
 	// Animation Type 재설정..
 	m_AniType = 0;
@@ -291,6 +293,29 @@ void Particle::SetPlay(const PARTICLE_DESC* particleDesc)
 	if (m_TexTotalFrame > 1)			m_AniType |= TEXTURE_ANI;
 }
 
+void Particle::Resume()
+{
+	m_Pause = false;
+}
+
+void Particle::Pause()
+{
+	m_Pause = true;
+}
+
+void Particle::Stop()
+{
+	m_ParticleData->Playing = false;
+
+	m_Play = false;
+	m_Pause = false;
+	m_LifeTime = 0.0f;
+	m_TexNowTime = 0.0f;
+	m_TexFrame = 1;
+	m_AniNowTime = 0.0f;
+	m_AniFrame = 1;
+}
+
 void Particle::DataUpdate()
 {
 	// Frame 설정..
@@ -315,18 +340,6 @@ void Particle::DataUpdate()
 
 	m_ParticleData->TexPos = Vector2(0.0f, 0.0f);
 	m_ParticleData->TexScale = Vector2(1.0f / m_SystemDesc->Tile_Width, 1.0f / m_SystemDesc->Tile_Height);
-}
-
-void Particle::Reset()
-{
-	m_ParticleData->Playing = false;
-
-	m_Playing = false;
-	m_LifeTime = 0.0f;
-	m_TexNowTime = 0.0f;
-	m_TexFrame = 1;
-	m_AniNowTime = 0.0f;
-	m_AniFrame = 1;
 }
 
 void Particle::Release()

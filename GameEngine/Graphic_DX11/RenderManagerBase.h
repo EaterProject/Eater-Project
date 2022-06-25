@@ -12,8 +12,13 @@
 /// - 내부적으로 Render방식에 따른 정렬은 해준다.
 /// 
 
+class MaterialRenderBuffer;
+
 interface IRenderManager
 {
+public:
+	friend class RenderDataConverter;
+
 public:
 	virtual void Create(int width, int height) abstract;
 	virtual void Start(int width, int height) abstract;
@@ -62,4 +67,7 @@ public:
 	virtual void Render() abstract;
 
 	virtual void* PickingRender(int x, int y) abstract;
+
+private:
+	virtual void RelocationLayer(MaterialRenderBuffer* material) abstract;
 };

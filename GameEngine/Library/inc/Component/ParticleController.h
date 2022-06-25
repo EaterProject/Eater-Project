@@ -35,6 +35,8 @@ public:
 	EATER_ENGINEDLL void PopParticle(std::string particle_key);
 
 	EATER_ENGINEDLL void Play();
+	EATER_ENGINEDLL void Pause();
+	EATER_ENGINEDLL void Stop();
 
 public:
 	EATER_ENGINEDLL ParticleSystem* GetParticle(std::string particle_key);
@@ -46,8 +48,12 @@ private:
 	void SetTotalTime();
 	void SetNowParticleList();
 
+	void Resume();
+
 private:
 	PARTICLE_STATE m_ControllerState;
+
+	bool m_Pause;
 
 	float m_TotalPlayTime;
 	float m_PlayTime;

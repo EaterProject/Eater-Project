@@ -155,10 +155,10 @@ void TestScene::CreateMap()
 	GameObject* particle_3 = Instance_Particle("Particle3", "BossProjectile_aura");
 	GameObject* particle_4 = Instance_Particle("Particle4", "BossProjectile_circle");
 	GameObject* particle_5 = Instance_Particle("Particle5", "BossProjectile_dot");
-	particle_1->GetTransform()->SetRotate_X(90.0f);
-	particle_2->GetTransform()->SetRotate_Y(90.0f);
-	particle_3->GetTransform()->SetRotate_X(90.0f);
-	particle_4->GetTransform()->SetRotate_Y(90.0f);
+	//particle_1->GetTransform()->SetRotate_X(90.0f);
+	//particle_2->GetTransform()->SetRotate_Y(90.0f);
+	//particle_3->GetTransform()->SetRotate_X(90.0f);
+	//particle_4->GetTransform()->SetRotate_Y(90.0f);
 
 	Object = Instance();
 	m_Controller = Object->GetTransform();
@@ -438,9 +438,11 @@ void TestScene::ChangeCubeMap()
 	}
 	if (GetKeyUp('3'))
 	{
-		m_ParticleController->PopParticle("Particle_3");
-		m_ParticleController->PopParticle("Particle_4");
-		m_ParticleController->PopParticle("Particle_5");
+		m_ParticleController->Pause();
+	}
+	if (GetKeyUp('4'))
+	{
+		m_ParticleController->Stop();
 	}
 
 	if (GetKey(VK_LEFT))

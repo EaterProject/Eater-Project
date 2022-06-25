@@ -402,6 +402,11 @@ void RightOption::OnChoice_Hirearchy_Item(GameObject* Obj)
 	Component_TapList.DeleteAllItems();
 
 	ChoiceObject = Obj;
+
+	mIsActive = ChoiceObject->GetActive();
+	mIsShadow = ChoiceObject->GetShadow();
+	mIsCull = ChoiceObject->GetCull();
+
 	//만약자식오브젝트를 눌렀다면 맨위 최상위부모를 가져온다
 	//ChoiceObject = FindGameObjectParent(ChoiceItem);
 

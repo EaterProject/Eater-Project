@@ -122,6 +122,8 @@ void CTAP_MeshFilter::SetGameObject(MeshFilter* ObjectMeshFilter)
 		LimLight_Factor_Edit.SetWindowTextW(ChangeToCString(LimFactor / 10.0f));
 		LimLight_Width_Edit.SetWindowTextW(ChangeToCString(LimWidth / 10.0f));
 		SkyLight_Index = mMaterial->m_MaterialData->Material_Property->SkyLightIndex;
+
+		mAlpha = mMaterial->m_MaterialData->Material_Property->Alpha;
 	}
 	else
 	{
@@ -156,6 +158,8 @@ void CTAP_MeshFilter::SetGameObject(MeshFilter* ObjectMeshFilter)
 		LimLight_Factor_Edit.SetWindowTextW(L"0");
 		LimLight_Width_Edit.SetWindowTextW(L"0");
 		SkyLight_Index = 0;
+
+		mAlpha = false;
 	}
 	UpdateData(FALSE);
 }

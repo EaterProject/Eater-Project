@@ -58,6 +58,7 @@ RenderManager::RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, I
 
 	// Render Data Converter 생성..
 	m_Converter = converter;
+	m_Converter->Initialize(this);
 
 	// Render Pass 생성..
 	CREATE_PASS(Deferred_Pass,	m_Deferred);
@@ -156,6 +157,83 @@ void RenderManager::Release()
 	}
 
 	m_RenderPassList.clear();
+}
+
+void RenderManager::RelocationLayer(MaterialRenderBuffer* material)
+{
+	std::queue<InstanceLayer*> layer_list;
+	std::queue<int> index_list;
+
+	const MaterialProperty* material_property = material->m_MaterialProperty;
+
+	if (material_property->Alpha)
+	{
+		// Opacity Layer List 내부에서 해당 Layer 검색..
+		for (int index = 0; index < m_OpacityMeshList.size(); index++)
+		{
+			if (m_OpacityMeshList[index]->m_Instance->m_Material == material)
+			{
+				layer_list.push(m_OpacityMeshList[index]);
+				index_list.push(index);
+			}
+		}
+
+		// 해당 Material 관련 Layer 전부 제거..
+		while (!layer_list.empty())
+		{
+			InstanceLayer* change_layer = layer_list.front();
+			int delete_index = index_list.front();
+
+			// 해당 Layer 제거..
+			m_OpacityMeshList.erase(std::next(m_OpacityMeshList.begin(), delete_index));
+
+			// Opacity -> Transparency 변경이므로 Transparency가 아닐 경우는 없어야한다..
+			assert(material_property->Alpha != false);
+
+			// Layer 삽입..
+			m_TransparencyMeshList.push_back(change_layer);
+
+			layer_list.pop();
+			index_list.pop();
+		}
+
+		// Layer 정렬..
+		std::sort(m_TransparencyMeshList.begin(), m_TransparencyMeshList.end(), [](InstanceLayer* layer1, InstanceLayer* layer2) {return layer1->m_Instance->m_Type < layer2->m_Instance->m_Type; });
+	}
+	else
+	{
+		// Transparency Layer List 내부에서 해당 Layer 검색..
+		for (int index = 0; index < m_TransparencyMeshList.size(); index++)
+		{
+			if (m_TransparencyMeshList[index]->m_Instance->m_Material == material)
+			{
+				layer_list.push(m_TransparencyMeshList[index]);
+				index_list.push(index);
+			}
+		}
+
+		// 해당 Material 관련 Layer 전부 제거..
+		while (!layer_list.empty())
+		{
+			InstanceLayer* change_layer = layer_list.front();
+			int delete_index = index_list.front();
+
+			// 해당 Layer 제거..
+			m_TransparencyMeshList.erase(std::next(m_TransparencyMeshList.begin(), delete_index));
+
+			// Transparency -> Opacity 변경이므로 Opacity가 아닐 경우는 없어야한다..
+			assert(material_property->Alpha != true);
+
+			// Layer 삽입..
+			m_OpacityMeshList.push_back(change_layer);
+
+			layer_list.pop();
+			index_list.pop();
+		}
+
+		// Layer 정렬..
+		std::sort(m_OpacityMeshList.begin(), m_OpacityMeshList.end(), [](InstanceLayer* layer1, InstanceLayer* layer2) {return layer1->m_Instance->m_Type < layer2->m_Instance->m_Type; });
+	}
 }
 
 void RenderManager::PreUpdate()
@@ -273,25 +351,30 @@ void RenderManager::DeleteInstance(MeshData* instance)
 {
 	if (instance == nullptr) return;
 
+	RenderData* renderData = (RenderData*)instance->Render_Data;
+	
 	// Object Type에 따른 Render Mesh Data 제거..
 	switch (instance->Object_Data->ObjType)
 	{
 	case OBJECT_TYPE::BASE:
 	case OBJECT_TYPE::SKINNING:
 	case OBJECT_TYPE::TERRAIN:
-		DeleteOpacityRenderData(instance);
-		break;
 	case OBJECT_TYPE::PARTICLE_SYSTEM:
-		DeleteTransparencyRenderData(instance);
+		DeleteMeshRenderData(renderData);
 		break;
 	case OBJECT_TYPE::PARTICLE:
 		break;
 	case OBJECT_TYPE::UI:
-		DeleteUIRenderData(instance);
+		DeleteUIRenderData(renderData);
 		break;
 	default:
-		DeleteUnRenderData(instance);
+		DeleteUnRenderData(renderData);
 		break;
+	}
+
+	if (renderData == RenderPassBase::g_Picking)
+	{
+		RenderPassBase::g_Picking = nullptr;
 	}
 }
 
@@ -665,10 +748,8 @@ void RenderManager::ConvertPushInstance()
 		case OBJECT_TYPE::BASE:
 		case OBJECT_TYPE::SKINNING:
 		case OBJECT_TYPE::TERRAIN:
-			PushOpacityRenderData(convertRenderData);
-			break;
 		case OBJECT_TYPE::PARTICLE_SYSTEM:
-			PushTransparencyRenderData(convertRenderData);
+			PushMeshRenderData(convertRenderData);
 			break;
 		case OBJECT_TYPE::UI:
 			PushUIRenderData(convertRenderData);
@@ -720,10 +801,8 @@ void RenderManager::ConvertChangeInstance()
 		case OBJECT_TYPE::BASE:
 		case OBJECT_TYPE::SKINNING:
 		case OBJECT_TYPE::TERRAIN:
-			ChangeOpacityRenderData(originMeshData);
-			break;
 		case OBJECT_TYPE::PARTICLE_SYSTEM:
-			ChangeTransparencyRenderData(originMeshData);
+			ChangeMeshRenderData(originMeshData);
 			break;
 		case OBJECT_TYPE::UI:
 			ChangeUIRenderData(originMeshData);
@@ -743,7 +822,7 @@ void RenderManager::ConvertChangeInstance()
 	CheckEmptyLayer(m_UIRenderMeshList);
 }
 
-void RenderManager::PushOpacityRenderData(RenderData* renderData)
+void RenderManager::PushMeshRenderData(RenderData* renderData)
 {
 	// 그릴수 없는 상태인 경우 Layer에 삽입하지 않는다..
 	if (renderData->m_InstanceLayerIndex == -1) return;
@@ -754,33 +833,34 @@ void RenderManager::PushOpacityRenderData(RenderData* renderData)
 	// 해당 Layer에 Render Data 삽입..
 	instanceLayer->PushRenderData(renderData);
 
-	// Culling 전용 List 삽입..
-	m_Culling->PushCullingMesh(renderData);
+	switch (renderData->m_ObjectData->ObjType)
+	{
+	case OBJECT_TYPE::BASE:
+	case OBJECT_TYPE::SKINNING:
+	case OBJECT_TYPE::TERRAIN:
+	{
+		// Culling 전용 List 삽입..
+		m_Culling->PushCullingMesh(renderData);
 
-	// 해당 Layer가 등록되어 있는지 확인..
-	if (instanceLayer->m_Instance->m_Material->m_MaterialProperty->Alpha)
+		// 해당 Layer가 등록되어 있는지 확인..
+		if (instanceLayer->m_Instance->m_Material->m_MaterialProperty->Alpha)
+		{
+			FindLayer(m_TransparencyMeshList, instanceLayer);
+		}
+		else
+		{
+			FindLayer(m_OpacityMeshList, instanceLayer);
+		}
+	}
+		break;
+	case OBJECT_TYPE::PARTICLE_SYSTEM:
 	{
 		FindLayer(m_TransparencyMeshList, instanceLayer);
 	}
-	else
-	{
-		FindLayer(m_OpacityMeshList, instanceLayer);
+		break;
+	default:
+		break;
 	}
-}
-
-void RenderManager::PushTransparencyRenderData(RenderData* renderData)
-{
-	// 해당 Layer 검색..
-	InstanceLayer* layer = m_Converter->GetInstanceLayer(renderData->m_InstanceLayerIndex);
-
-	// 해당 Layer에 Render Data 삽입..
-	layer->PushRenderData(renderData);
-
-	// Culling 전용 List 삽입..
-	///m_Culling->PushCullingMesh(renderData);
-
-	// 해당 Layer가 등록되어 있는지 확인..
-	FindLayer(m_TransparencyMeshList, layer);
 }
 
 void RenderManager::PushUIRenderData(RenderData* renderData)
@@ -800,7 +880,7 @@ void RenderManager::PushUnRenderData(RenderData* renderData)
 	m_UnRenderMeshList.push_back(renderData);
 }
 
-void RenderManager::ChangeOpacityRenderData(MeshData* meshData)
+void RenderManager::ChangeMeshRenderData(MeshData* meshData)
 {
 	// Render Data 변환..
 	RenderData* renderData = (RenderData*)meshData->Render_Data;
@@ -809,10 +889,10 @@ void RenderManager::ChangeOpacityRenderData(MeshData* meshData)
 	UINT prev_LayerIndex = renderData->m_InstanceLayerIndex;
 
 	// 현재 변경 전 Layer 검색..
-	InstanceLayer* layer = m_Converter->GetInstanceLayer(prev_LayerIndex);
+	InstanceLayer* instanceLayer = m_Converter->GetInstanceLayer(prev_LayerIndex);
 
 	// 해당 Layer가 없을 경우는 없어야한다..
-	assert(layer != nullptr);
+	assert(instanceLayer != nullptr);
 
 	// Render Data 재설정..
 	m_Converter->ConvertInstanceData(meshData, renderData);
@@ -821,68 +901,46 @@ void RenderManager::ChangeOpacityRenderData(MeshData* meshData)
 	if (prev_LayerIndex == renderData->m_InstanceLayerIndex) return;
 
 	// 해당 Render Data List에서 제거..
-	layer->PopRenderData(renderData);
+	instanceLayer->PopRenderData(renderData);
 
 	// 현재 Layer가 비어있는 상태라면 Layer 제거..
-	if (layer->m_InstanceList.empty())
+	if (instanceLayer->m_InstanceList.empty())
 	{
 		m_Converter->DeleteInstanceLayer(renderData->m_InstanceLayerIndex);
 	}
 
 	// 재설정된 Layer 검색..
-	layer = m_Converter->GetInstanceLayer(renderData->m_InstanceLayerIndex);
+	instanceLayer = m_Converter->GetInstanceLayer(renderData->m_InstanceLayerIndex);
 
 	// 현재 Layer에 Instance 추가..
-	layer->PushRenderData(renderData);
+	instanceLayer->PushRenderData(renderData);
 
 	// 해당 Layer가 등록되어 있는지 확인..
-	if (layer->m_Instance->m_Material->m_MaterialProperty->Alpha)
+	switch (renderData->m_ObjectData->ObjType)
 	{
-		FindLayer(m_TransparencyMeshList, layer);
-	}
-	else
+	case OBJECT_TYPE::BASE:
+	case OBJECT_TYPE::SKINNING:
+	case OBJECT_TYPE::TERRAIN:
 	{
-		FindLayer(m_OpacityMeshList, layer);
+		// 해당 Layer가 등록되어 있는지 확인..
+		if (instanceLayer->m_Instance->m_Material->m_MaterialProperty->Alpha)
+		{
+			FindLayer(m_TransparencyMeshList, instanceLayer);
+		}
+		else
+		{
+			FindLayer(m_OpacityMeshList, instanceLayer);
+		}
 	}
-}
-
-void RenderManager::ChangeTransparencyRenderData(MeshData* meshData)
-{
-	// Render Data 변환..
-	RenderData* renderData = (RenderData*)meshData->Render_Data;
-
-	// 변경 전 Layer Index 저장..
-	UINT prev_LayerIndex = renderData->m_InstanceLayerIndex;
-
-	// 현재 변경 전 Layer 검색..
-	InstanceLayer* layer = m_Converter->GetInstanceLayer(prev_LayerIndex);
-
-	// 해당 Layer가 없을 경우는 없어야한다..
-	assert(layer != nullptr);
-
-	// Render Data 재설정..
-	m_Converter->ConvertInstanceData(meshData, renderData);
-
-	// Layer가 변동이 없을 경우 처리하지 않는다..
-	if (prev_LayerIndex == renderData->m_InstanceLayerIndex) return;
-
-	// 해당 Render Data List에서 제거..
-	layer->PopRenderData(renderData);
-
-	// 현재 Layer가 비어있는 상태라면 Layer 제거..
-	if (layer->m_InstanceList.empty())
+		break;
+	case OBJECT_TYPE::PARTICLE_SYSTEM:
 	{
-		m_Converter->DeleteInstanceLayer(renderData->m_InstanceLayerIndex);
+		FindLayer(m_TransparencyMeshList, instanceLayer);
 	}
-
-	// 재설정된 Layer 검색..
-	layer = m_Converter->GetInstanceLayer(renderData->m_InstanceLayerIndex);
-
-	// 현재 Layer에 Instance 추가..
-	layer->PushRenderData(renderData);
-
-	// 해당 Layer가 등록되어 있는지 확인..
-	FindLayer(m_TransparencyMeshList, layer);
+		break;
+	default:
+		break;
+	}
 }
 
 void RenderManager::ChangeUIRenderData(MeshData* meshData)
@@ -932,17 +990,8 @@ void RenderManager::ChangeUnRenderData(MeshData* meshData)
 
 }
 
-void RenderManager::DeleteOpacityRenderData(MeshData* meshData)
+void RenderManager::DeleteMeshRenderData(RenderData* renderData)
 {
-	// Render Data 변환..
-	RenderData* renderData = (RenderData*)meshData->Render_Data;
-
-	/// Test
-	if (renderData == RenderPassBase::g_Picking)
-	{
-		RenderPassBase::g_Picking = nullptr;
-	}
-
 	// Render Data의 List 내에서의 Index..
 	UINT layerIndex = renderData->m_InstanceLayerIndex;
 	UINT renderDataIndex = renderData->m_ObjectData->ObjectIndex;
@@ -969,39 +1018,8 @@ void RenderManager::DeleteOpacityRenderData(MeshData* meshData)
 	}
 }
 
-void RenderManager::DeleteTransparencyRenderData(MeshData* meshData)
+void RenderManager::DeleteUIRenderData(RenderData* renderData)
 {
-	// Render Data 변환..
-	RenderData* renderData = (RenderData*)meshData->Render_Data;
-
-	// Render Data의 List 내에서의 Index..
-	UINT layerIndex = renderData->m_InstanceLayerIndex;
-	UINT renderDataIndex = renderData->m_ObjectData->ObjectIndex;
-
-	// 해당 Layer 검색..
-	InstanceLayer* layer = m_Converter->GetInstanceLayer(layerIndex);
-
-	// 해당 Instance Layer에서 제거...
-	layer->PopRenderData(renderData);
-
-	// 해당 Render Data 제거..
-	m_Converter->DeleteRenderData(renderDataIndex + 1);
-
-	// Layer 빈곳 체크..
-	CheckEmptyLayer(m_TransparencyMeshList);
-
-	// 현재 Layer가 비어있는 상태라면 Layer 제거..
-	if (layer->m_InstanceList.empty())
-	{
-		m_Converter->DeleteInstanceLayer(layerIndex);
-	}
-}
-
-void RenderManager::DeleteUIRenderData(MeshData* meshData)
-{
-	// Render Data 변환..
-	RenderData* renderData = (RenderData*)meshData->Render_Data;
-
 	// Render Data의 List 내에서의 Index..
 	UINT layerIndex = renderData->m_UI->m_BufferLayer;
 	UINT bufferIndex = renderData->m_UI->m_BufferIndex;
@@ -1029,11 +1047,8 @@ void RenderManager::DeleteUIRenderData(MeshData* meshData)
 	}
 }
 
-void RenderManager::DeleteUnRenderData(MeshData* meshData)
+void RenderManager::DeleteUnRenderData(RenderData* renderData)
 {
-	// Render Data 변환..
-	RenderData* renderData = (RenderData*)meshData->Render_Data;
-
 	// Render Data의 List 내에서의 Index..
 	int index = -1;
 
@@ -1110,6 +1125,21 @@ void RenderManager::FindLayer(std::vector<UILayer*>& layerList, UILayer* layer)
 
 	// Layer 정렬..
 	std::sort(layerList.begin(), layerList.end(), [](UILayer* layer1, UILayer* layer2) {return layer1->m_LayerIndex < layer2->m_LayerIndex; });
+}
+
+template<typename Layer>
+void RenderManager::DeleteLayer(std::vector<Layer*>& layerList, Layer* layer)
+{
+	for (int index = 0; index < layerList.size(); index++)
+	{
+		// 해당 Layer List Index 검색..
+		if (layerList[index] == layer)
+		{
+			// 해당 Layer가 비어있다면 Layer 삭제..
+			layerList.erase(std::next(layerList.begin(), index));
+			break;
+		}
+	}
 }
 
 bool RenderManager::SortDistance(RenderData* obj1, RenderData* obj2)

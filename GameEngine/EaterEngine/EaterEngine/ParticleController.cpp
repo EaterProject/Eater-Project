@@ -6,7 +6,7 @@
 #include "EaterEngineAPI.h"
 
 EATER_ENGINEDLL ParticleController::ParticleController()
-	:m_ControllerState(PARTICLE_STATE::END_STATE), m_TotalPlayTime(0.0f), m_PlayTime(0.0f), m_StartTime(0.0f), m_NowParticleListSize(0)
+	:m_ControllerState(PARTICLE_STATE::END_STATE), m_TotalPlayTime(0.0f), m_PlayTime(0.0f), m_StartTime(0.0f), m_NowParticleListSize(0), m_Pause(false)
 {
 
 }
@@ -18,6 +18,8 @@ ParticleController::~ParticleController()
 
 void ParticleController::Update()
 {
+	if (m_Pause) return;
+
 	switch (m_ControllerState)
 	{
 	case PARTICLE_STATE::START_STATE:
@@ -153,6 +155,13 @@ void ParticleController::PopParticle(std::string particle_key)
 
 void ParticleController::Play()
 {
+	// 일시정지 중이라면 다시 재개..
+	if (m_Pause)
+	{
+		Resume();
+		return;
+	}
+
 	if (m_ControllerState != PARTICLE_STATE::END_STATE) return;
 
 	m_ControllerState = PARTICLE_STATE::START_STATE;
@@ -165,6 +174,67 @@ void ParticleController::Play()
 
 	// 현재 파티클 리스트에 대한 데이터 설정..
 	SetNowParticleList();
+}
+
+void ParticleController::Pause()
+{
+	if (m_NowParticleList == m_ParticleSystemList.end()) return;
+
+	ParticleList play_particle = m_NowParticleList;
+
+	// 현재 재생중인 모든 파티클 일시 정지..
+	while (play_particle != m_ParticleSystemList.end())
+	{
+		for (auto& particle : play_particle->second)
+		{
+			particle.Particle_Value->Pause();
+		}
+
+		play_particle--;
+	}
+
+	m_Pause = true;
+}
+
+void ParticleController::Stop()
+{
+	if (m_NowParticleList == m_ParticleSystemList.end()) return;
+
+	ParticleList play_particle = m_NowParticleList;
+
+	// 현재 재생중인 모든 파티클 정지..
+	while (play_particle != m_ParticleSystemList.end())
+	{
+		for (auto& particle : play_particle->second)
+		{
+			particle.Particle_Value->Stop();
+		}
+
+		play_particle--;
+	}
+
+	m_ControllerState = PARTICLE_STATE::END_STATE;
+	m_Pause = false;
+}
+
+void ParticleController::Resume()
+{
+	if (m_NowParticleList == m_ParticleSystemList.end()) return;
+
+	ParticleList play_particle = m_NowParticleList;
+
+	// 현재 재생중인 모든 파티클 정지..
+	while (play_particle != m_ParticleSystemList.end())
+	{
+		for (auto& particle : play_particle->second)
+		{
+			particle.Particle_Value->Play();
+		}
+
+		play_particle--;
+	}
+
+	m_Pause = false;
 }
 
 ParticleSystem* ParticleController::GetParticle(std::string particle_key)
@@ -195,6 +265,7 @@ void ParticleController::UpdateController()
 		// 만약 모든 파티클 리스트가 재생된 상태라면..
 		if (m_NowParticleList == m_ParticleSystemList.end())
 		{
+			m_NowParticleList = --m_ParticleSystemList.end();
 			m_ControllerState = PARTICLE_STATE::PLAY_STAY_STATE;
 		}
 		else
