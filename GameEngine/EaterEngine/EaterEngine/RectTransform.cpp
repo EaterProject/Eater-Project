@@ -71,8 +71,8 @@ void RectTransform::TransformUpdate()
 	gameobject->OneMeshData->UI_Buffer->UI_Property->World = WorldXM;
 
 	// 최종 출력 범위 설정..
-	float half_width = ImageSize.x * Scale.x * 0.5f;
-	float half_height = ImageSize.y * Scale.y * 0.5f;
+	float half_width = ImageSize.x * Scale.x;
+	float half_height = ImageSize.y * Scale.y;
 
 	RectPosition.left	= PositionXM._41 - half_width;
 	RectPosition.top	= PositionXM._42 - half_height;
