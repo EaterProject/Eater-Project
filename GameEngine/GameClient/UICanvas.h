@@ -19,29 +19,51 @@ public:
 	void Update() override;
 
 	void Set_Combo_Now(int Number);
-	void Set_HP_Now(int Number);
-	void Set_HP_Max(int Number);
-	void Set_Emagin_Now(int Number);
-	void Set_Emagin_Max(int Number);
 
-	
+	//몬스터 UI
 	void Set_Monster_UI_ON(void* Emagin);		//몬스터 UI를 켠다
 	void Set_Monster_UI_OFF(void* Emagin);		//몬스터 UI를 끈다
 	void Set_Monster_UI_SET_DATA(void* Emagin);	//몬스터 데이터를 넘긴다
 
-	void Set_ALLRender(bool Render);
+	//플레이어 현재 체력 설정
+	void Set_Player_HP(int Number);
+	void Set_Player_HP_Max(int Number);
+	void Set_Player_UI_Active(bool Active);
 
-	
+	//플레이어 이메진 설정
+	void Set_Player_Emagin(int Number);
+	void Set_Player_Emagin_Max(int Number);
+
+	//초록 마나 카운트 설정
+	void Set_Mana_Green_Count(int Number);
+	void Set_Mana_Orange_Count(int Number);
+
+	//드론 텍스쳐
+	void Set_Drone_Text(int Number);
+
+	void Set_InGameUI_Active(bool Active);
 private:
 	//생성 함수
-	void Create_Combo_UI();
-	void Create_HP_UI();
-	void Create_Skill_UI();
-	void Create_Emagin_Color_UI();
-	void Create_Emagin_UI();
-	void Create_Effect_UI();
+	void Create_Player_Emagin(float X,float Y);
+	void Create_Player_HP(float X,float Y);
+	void Create_Player_Mana(float X,float Y);
+	void Create_Player_Emagin_Color(float X, float Y);
+	void Create_Dron_Text(float X, float Y);
 	void Create_Monster_UI();
+	void Create_Effect_UI();
+	void Create_Skill_UI(float X,float Y);
 
+	//감추기 함수
+	void Active_Player_HP(bool Active);
+	void Active_Player_Emagin(bool Active);
+	void Active_Player_Emagin_Color(bool Active);
+	void Active_Player_Skill(bool Active);
+	void Active_Mana_Count(bool Active);
+	void Active_Dron_Text(bool Active);
+
+
+	void Create_Combo_UI();
+	void Create_Emagin_UI();
 
 	void Update_Hit_Check();	//알파값 처리
 	void Update_Combo_Check();	//크기 처리
@@ -50,11 +72,33 @@ private:
 	void SetMonsterUIActive(int index, bool IsActive);
 	bool UseCheck(GameObject* Obj);
 
-	RectTransform*	RT[15]		= { nullptr };
-	Image*			Images[15]	= { nullptr };
-	FontImage*		mFont[5]	= { nullptr };
 	ComboFont*		mCombo		= nullptr;
 
+	//플레이어 체력 UI
+	ImageFont*		Player_HP[2];		//플레이어 체력 폰트
+	Slider*			Player_HP_Slider;		//플레이어 체력 폰트
+	Image*			Player_HP_BAR;
+	RectTransform*	Player_RECT;
+
+	//플레이어 이매진 UI
+	ImageFont*		Player_EMAGIN[2];	//플레이어 이메진 폰트
+	RectTransform*	Player_EMAGIN_RECT[2];
+	Image*			Player_EMAGIN_CHANGE;
+
+	//플레이어 이메진 Color UI
+	Image*			Player_EMAGIN_COLOR[2];
+
+	//플레이어 마나석
+	ImageFont*		Player_MANA[2];
+	Image*			Player_MANA_ICON;
+	RectTransform*	Player_MANA_RECT;
+
+	//드론 텍스쳐
+	Image*			Dron_Text;
+	RectTransform*	Dron_Rect;
+
+	//플레이어 스킬
+	Slider*			Player_Skill[3];
 
 	//몬스터 UI들
 	Image*			Monster_Emagin_Back[5]	= { nullptr };
@@ -71,38 +115,5 @@ private:
 
 	float PosX = 0;
 	float PosY = 350;
-
-
-	//폰트 리스트
-	const int Font_Emagin_Now		= 0;
-	const int Font_Emagin_Max		= 1;
-	const int Font_HP_Now			= 2;
-	const int Font_HP_Max			= 3;
-	const int Font_Monster_Emagin	= 4;
-
-	//이미지 HP 관련
-	const int Image_Space_Index		= 0;
-	const int Image_HP_Space		= 1;
-	const int Image_HP_Slider		= 2;
-
-	//이미지 이메진 관련
-	const int Image_Emagin_Back		= 3;
-	const int Image_Emagin_Front	= 4;
-	const int Image_Emagin_Change	= 5;
-	const int Image_Emagin_Space	= 6;
-
-	//이미지 스킬 관련
-	const int Image_Skill_Space		= 7;
-	const int Image_Skill_E			= 8;
-	const int Image_Skill_Right		= 9;
-
-	//이미지 스킬 관련
-	const int Image_PlayerHit_Effect	= 10;
-
-	const int Image_Monster_Emagin_Back	= 11;
-	const int Image_Monster_Emagin_Front= 12;
-
-	const int Image_Monster_HP_Front	= 13;
-	const int Image_Monster_HP_Back		= 14;
 };
 

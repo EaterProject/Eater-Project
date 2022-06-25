@@ -10,6 +10,7 @@ public:
 	virtual ~CameraManager();
 
 	void Awake() override;
+	void Start() override;
 	void Update() override;
 
 	void SetPlayerCamera(GameObject* Obj);

@@ -36,6 +36,7 @@
 #include "Image.h"
 #include "Slider.h"
 #include "ImageFont.h"
+#include "Button.h"
 
 #include "Profiler/Profiler.h"
 
@@ -422,6 +423,14 @@ GameObject* GameEngine::Instance_ImageFont(std::string ObjName)
 {
 	GameObject* Obj = CreateInstance();
 	Obj->AddComponent<ImageFont>();
+	return Obj;
+}
+
+GameObject* GameEngine::Instance_Button(std::string ObjName)
+{
+	GameObject* Obj = Instance_UI();
+	Obj->AddComponent<Image>();
+	Obj->AddComponent<Button>();
 	return Obj;
 }
 

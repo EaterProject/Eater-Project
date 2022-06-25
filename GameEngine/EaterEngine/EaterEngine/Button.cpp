@@ -31,13 +31,15 @@ void Button::Start()
 
 void Button::Update()
 {
+
+
 	const LPPOINT& mouse_point = mKeyInputManger->GetClientMousePos();
 
 	//PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "Mouse Point : %d, %d", mouse_point->x, mouse_point->y);
 
-	if (m_Rect->left < mouse_point->x && m_Rect->right > mouse_point->x)
+	if (m_Rect->left <= mouse_point->x && m_Rect->right >= mouse_point->x)
 	{
-		if (m_Rect->top < mouse_point->y && m_Rect->bottom > mouse_point->y)
+		if (m_Rect->top <= mouse_point->y && m_Rect->bottom >= mouse_point->y)
 		{
 			// 마우스가 버튼 위에 있는 경우..
 			if (m_State == OUT_BUTTON)
@@ -165,7 +167,55 @@ void Button::PushEvent(std::function<void()>& eventFunc, State type)
 	}
 }
 
+void Button::PushEvent(std::function<void()>&& eventFunc, State type)
+{
+	switch (type)
+	{
+	case Button::OUT_BUTTON:
+		m_OutButtonEvent += eventFunc;
+		break;
+	case Button::IN_BUTTON:
+		m_InButtonEvent += eventFunc;
+		break;
+	case Button::DOWN_BUTTON:
+		m_DownButtonEvent += eventFunc;
+		break;
+	case Button::UP_BUTTON:
+		m_UpButtonEvent += eventFunc;
+		break;
+	case Button::PRESS_DOWN_BUTTON:
+		m_PressDownButtonEvent += eventFunc;
+		break;
+	default:
+		break;
+	}
+}
+
 void Button::PopEvent(std::function<void()>& eventFunc, State type)
+{
+	switch (type)
+	{
+	case Button::OUT_BUTTON:
+		m_OutButtonEvent -= eventFunc;
+		break;
+	case Button::IN_BUTTON:
+		m_InButtonEvent -= eventFunc;
+		break;
+	case Button::DOWN_BUTTON:
+		m_DownButtonEvent -= eventFunc;
+		break;
+	case Button::UP_BUTTON:
+		m_UpButtonEvent -= eventFunc;
+		break;
+	case Button::PRESS_DOWN_BUTTON:
+		m_PressDownButtonEvent -= eventFunc;
+		break;
+	default:
+		break;
+	}
+}
+
+void Button::PopEvent(std::function<void()>&& eventFunc, State type)
 {
 	switch (type)
 	{

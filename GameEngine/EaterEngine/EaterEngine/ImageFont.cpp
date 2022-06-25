@@ -17,18 +17,19 @@ ImageFont::~ImageFont()
 
 void ImageFont::Awake()
 {
-	IsAwake = true;
 	for (int i = 0; i < FontCount; i++)
 	{
 		GameObject* Object = Instance_Image();
-		Image*			mImage	= Object->GetComponent<Image>();
-		RectTransform*	mRect	= Object->GetComponent<RectTransform>();
+		Image* mImage = Object->GetComponent<Image>();
+		RectTransform* mRect = Object->GetComponent<RectTransform>();
 
 		ImageList.push_back(mImage);
 		TransformList.push_back(mRect);
 	}
+}
 
-
+void ImageFont::SetUp()
+{
 	for (int i = 0; i < (int)ImageList.size(); i++)
 	{
 		std::string Name;
@@ -37,9 +38,10 @@ void ImageFont::Awake()
 			Name = FontImageName + std::to_string(j);
 			ImageList[i]->PushTextureList(Name);
 		}
-
-		ImageList[i]->SetTexture(Name = FontImageName + std::to_string(0));
-		TransformList[i]->SetPosition((mPosition.x)+ (i * OffsetX), mPosition.y);
+		ImageList[i]->SetTexture(FontImageName + std::to_string(0));
+		ImageList[i]->SetColor(mMF_Setting);
+		TransformList[i]->SetPivot(mType);
+		TransformList[i]->SetPosition((mPosition.x) + (i * OffsetX), mPosition.y);
 		TransformList[i]->SetScale(mScale);
 	}
 }
@@ -120,12 +122,9 @@ void ImageFont::SetScale(float X, float Y)
 	mScale = { X,Y };
 }
 
-void ImageFont::SetPivot(PIVOT_TYPE mType)
+void ImageFont::SetPivot(PIVOT_TYPE type)
 {
-	for(int i = 0; i < (int)ImageList.size();i++)
-	{
-		TransformList[i]->SetPivot(mType);
-	}
+	mType = type;
 }
 
 void ImageFont::SetPositionObject(GameObject* Object, Vector3 Pos)

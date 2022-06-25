@@ -16,26 +16,13 @@ void InGame::Awake()
 	Logic = new GameLogic();
 
 	//Tool에서 만들어놓은 씬을 로드
-	Load("../Assets/Scene/inGame.Scene");
+	Load("../Assets/Scene/test.Scene");
 
 	// 오클루더 설정..
 	AddOccluder("Dome_program_0");
-	
-	//BakeSkyLightMap("SkyLight_HDRI", false);
-	//BakeSkyLightMap("SkyLight_0", false);
-	//BakeSkyLightMap("SkyLight_1", false);
-	//
-	//SetSkyLight("SkyLight_0", 0);
-	//SetSkyLight("SkyLight_1", 1);
-	//
-	//SetSkyCube("SkyCube");
-	
+		
 	//로직매니저 초기화
 	Logic->Initialize();
-
-	DebugCam = GetDebugCamera();
-	MainCame = GetMainCamera();
-
 
 	GameObject* testobj = Instance_Terrain("Terrain");
 	Terrain* mTerrain = testobj->GetComponent<Terrain>();
@@ -57,28 +44,10 @@ void InGame::Update()
 		RenderSetting();
 	}
 
-	//if (mKeyManager->GetKeyUp(VK_F1))
-	//{
-	//	// Debug On/Off
-	//	mRenderOption->DebugOption ^= DEBUG_OPTION::DEBUG_MODE;
-	//
-	//}
-
-	//if (GetKeyDown(VK_F10))
-	//{
-	//	DebugCam->GetComponent<Camera>()->ChoiceMainCam();
-	//}
-	//if(GetKeyDown(VK_F11))
-	//{
-	//	MainCame->GetComponent<Camera>()->ChoiceMainCam();
-	//}
-	//
-	//
-	//
 	Logic->Update();
 }
 
 void InGame::End()
 {
-	//Logic->Release();
+
 }

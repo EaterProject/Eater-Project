@@ -47,6 +47,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 	int screenHeight = GetSystemMetrics(SM_CYSCREEN);    // 현재 모니터 세로 해상도
 
 	RECT R = { 0, 0, 1920, 1080 };
+	//RECT R = { 0, 0, 960, 540 };
 	AdjustWindowRect(&R, WS_OVERLAPPEDWINDOW, false);
 	int width = R.right - R.left;
 	int height = R.bottom - R.top;

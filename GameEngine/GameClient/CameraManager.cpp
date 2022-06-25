@@ -8,6 +8,7 @@
 #include "CameraDebugKeyInput.h"
 #include "GameObject.h"
 #include "PlayerCamera.h"
+#include "Transform.h"
 
 CameraManager::CameraManager()
 {
@@ -37,6 +38,15 @@ void CameraManager::Awake()
 
 	GameObject* mDebugCamera = GetDebugCamera();
 	mDebug = mDebugCamera->GetComponent<Camera>();
+}
+
+void CameraManager::Start()
+{
+	//타이틀 씬을 위한 카메라 각도 조정
+	Transform* mTransform = gameobject->GetTransform();
+	mTransform->SetPosition(-2.410f, 2.453f, 19.626f);
+	mTransform->SetRotate(1.570f, 53.320f, 0.00f);
+	mCinematic->ChoiceMainCam();
 }
 
 

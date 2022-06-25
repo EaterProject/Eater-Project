@@ -19,6 +19,8 @@ class UICanvas;
 class GateDoor;
 class Boss;
 class CameraManager;
+class UIEffect;
+class UITitle;
 enum class  CLIENT_OBJECT_TYPE
 {
 	MONATER_A,
@@ -45,9 +47,6 @@ public:
 
 	///Factory에게 생성 메세지를 보낸다(생성할 대상의 Target 메세지)
 	GameObject* CREATE_MESSAGE(int CREATE_TYPE);
-
-	///게임상에 한개만 존재하는 객체를 가져오라는 메세지
-	GameObject* GET_MESSAGE(int GET_TYPE);
 private:
 	//Target 메세지에 따른 호출
 	void SEND_Player_Message(int MessageType,void* Data);
@@ -57,12 +56,18 @@ private:
 	void SEND_CAMERA_Message(int MessageType, void* Data);
 	void SEND_GLOBAL_Message(int MessageType, void* Data);
 private:
+	void InGameStart();
+	void TitleStart();
+	void InGameEnd();
+private:
 	std::vector<GameObject*>		ManaPoint_List;
 private:
 	Boss*				mBoss			= nullptr;
 	GateDoor*			mGate			= nullptr;
 	Player*				mPlayer			= nullptr;
 	UICanvas*			mCanvas			= nullptr;
+	UIEffect*			mEffect			= nullptr;
+	UITitle*			mTiltle = nullptr;
 	CameraManager*		mCameraManager  = nullptr;
 private:
 	ObjectFactory* mFactory;

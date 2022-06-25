@@ -29,7 +29,10 @@ public:
 
 public:
 	EATER_ENGINEDLL void PushEvent(std::function<void()>& eventFunc, State type);
+	EATER_ENGINEDLL void PushEvent(std::function<void()>&& eventFunc, State type);
 	EATER_ENGINEDLL void PopEvent(std::function<void()>& eventFunc, State type);
+	EATER_ENGINEDLL void PopEvent(std::function<void()>&& eventFunc, State type);
+
 	EATER_ENGINEDLL void ResetEvent(State type);
 	EATER_ENGINEDLL void ResetAllEvent();
 

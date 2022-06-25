@@ -40,8 +40,8 @@ Player::Player()
 
 
 	ANIMATION_SPEED[(int)PLAYER_STATE::IDLE]		= 1.5f;
-	ANIMATION_SPEED[(int)PLAYER_STATE::ATTACK_01]	= 1.5f;
-	ANIMATION_SPEED[(int)PLAYER_STATE::ATTACK_02]	= 1.75f;
+	ANIMATION_SPEED[(int)PLAYER_STATE::ATTACK_01]	= 1.25f;
+	ANIMATION_SPEED[(int)PLAYER_STATE::ATTACK_02]	= 1.85f;
 	ANIMATION_SPEED[(int)PLAYER_STATE::SKILL_01]	= 1.5f;
 	ANIMATION_SPEED[(int)PLAYER_STATE::SKILL_02]	= 1.5f;
 	ANIMATION_SPEED[(int)PLAYER_STATE::JUMP]		= 1.5f;
@@ -161,6 +161,16 @@ void Player::SetMessageRECV(int Type, void* Data)
 	case MESSAGE_PLAYER_ATTACK_OK:
 		ComboCount++;
 		MessageManager::GetGM()->SEND_Message(TARGET_UI,MESSAGE_UI_COMBO,&ComboCount);
+		break;
+	case MESSAGE_PLAYER_ACTIVE_TRUE:
+		gameobject->SetActive(true);
+		WeaponObject->SetActive(true);
+		AttackColliderObject->SetActive(true);
+		break;
+	case MESSAGE_PLAYER_ACTIVE_FALSE:
+		gameobject->SetActive(false);
+		WeaponObject->SetActive(false);
+		AttackColliderObject->SetActive(false);
 		break;
 	}
 }
