@@ -142,8 +142,8 @@
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy/Y "$(ProjectDir)lib\*.lib" "$(SolutionDir)Library\lib"
-copy/Y "$(ProjectDir)lib\*.dll" "$(SolutionDir)Library\lib"
+      <Command>copy/Y "$(TargetDir)lib\*.lib" "$(SolutionDir)Library\lib"
+copy/Y "$(TargetDir)lib\*.dll" "$(SolutionDir)Library\lib"
 copy /Y "$(ProjectDir)Export\*.h" "$(SolutionDir)Library\inc\PhysX"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -172,8 +172,8 @@ copy /Y "$(ProjectDir)Export\*.h" "$(SolutionDir)Library\inc\PhysX"</Command>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy/Y "$(ProjectDir)lib\*.lib" "$(SolutionDir)Library\lib"
-copy/Y "$(ProjectDir)lib\*.dll" "$(SolutionDir)Library\lib"
+      <Command>copy/Y "$(TargetDir)lib\*.lib" "$(SolutionDir)Library\lib"
+copy/Y "$(TargetDir)lib\*.dll" "$(SolutionDir)Library\lib"
 copy /Y "$(ProjectDir)Export\*.h" "$(SolutionDir)Library\inc\PhysX"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

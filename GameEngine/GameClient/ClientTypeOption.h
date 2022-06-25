@@ -50,8 +50,10 @@
 #define MESSAGE_CAMERA_CINEMATIC_BOSS_START 1				//시네마틱 실행
 #define MESSAGE_CAMERA_CINEMATIC_BOSS_END 2					//시네마틱 실행
 #define MESSAGE_CAMERA_CINEMATIC_GAME_END 3					//시네마틱 실행
-#define MESSAGE_CAMERA_CHANGE_PLAYER 4						//플레이어 카메라로 변환	//인자 값 : 없음
-#define MESSAGE_CAMERA_CHANGE_DEBUG 5						//디버그 카메라로 변환	//인자 값 : 없음
+#define MESSAGE_CAMERA_CINEMATIC_TITLE 4					//시네마틱 실행
+
+#define MESSAGE_CAMERA_CHANGE_PLAYER 5						//플레이어 카메라로 변환	//인자 값 : 없음
+#define MESSAGE_CAMERA_CHANGE_DEBUG 6						//디버그 카메라로 변환	//인자 값 : 없음
 
 //Global Message
 #define MESSAGE_GLOBAL_GAMESTART 0							//게임이 시작되었다

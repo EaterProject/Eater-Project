@@ -190,7 +190,10 @@ copy /Y "$(ProjectDir)Export\*.h" "$(SolutionDir)Library\inc\Component"
 copy /Y "$(ProjectDir)Network\inc\GameClientGameServerPacketDefine.h" "$(SolutionDir)Library\inc\Network"
 copy /Y "$(ProjectDir)Network\inc\PortIPDefine.h" "$(SolutionDir)Library\inc\Network"
 copy /Y "$(ProjectDir)Network\lib\Debug\*dll"  "$(TargetDir)"
-copy /Y "$(ProjectDir)Network\lib\Debug\*lib"  "$(TargetDir)"</Command>
+copy /Y "$(ProjectDir)Network\lib\Debug\*lib"  "$(TargetDir)"
+
+copy /Y "$(SolutionDir)Library\lib\*.dll" "$(TargetDir)"
+copy /Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -221,20 +224,18 @@ copy /Y "$(ProjectDir)Network\lib\Debug\*lib"  "$(TargetDir)"</Command>
     </Link>
     <PostBuildEvent>
       <Command>copy/Y "$(TargetDir)*.lib"   "$(SolutionDir)Library\lib"
-
 copy/Y "$(TargetDir)*.dll"   "$(SolutionDir)Library\lib"
-
-
 
 copy /Y "$(ProjectDir)Export\*.h" "$(SolutionDir)Library\inc\Component"
 
 copy /Y "$(ProjectDir)Network\inc\GameClientGameServerPacketDefine.h" "$(SolutionDir)Library\inc\Network"
 copy /Y "$(ProjectDir)Network\inc\PortIPDefine.h" "$(SolutionDir)Library\inc\Network"
 
-
 copy /Y "$(ProjectDir)Network\lib\Release\*dll"  "$(TargetDir)"
+copy /Y "$(ProjectDir)Network\lib\Release\*lib"  "$(TargetDir)"
 
-copy /Y "$(ProjectDir)Network\lib\Release\*lib"  "$(TargetDir)"</Command>
+copy /Y "$(SolutionDir)Library\lib\*.dll" "$(TargetDir)"
+copy /Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

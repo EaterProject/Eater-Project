@@ -132,7 +132,9 @@ void UITitle::StartButton_Enter()
 void UITitle::StartButton_Click()
 {
 	IsStart = true;
+	std::string Name = "TitleCam";
 	MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_FADE_IN, &IsFade);
+	MessageManager::GetGM()->SEND_Message(TARGET_CAMERA_MANAGER, MESSAGE_CAMERA_CINEMATIC_TITLE, &Name);
 }
 
 void UITitle::StartButton_Exit()
