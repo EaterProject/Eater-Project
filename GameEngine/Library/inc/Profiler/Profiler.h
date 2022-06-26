@@ -16,6 +16,7 @@
 ///	   #define RELEASE_PROFILE
 ///    #include "Profile.h"
 
+#if defined(DEBUG) || defined(_DEBUG)
 // Log Profiling
 // # 해당 Log Message 출력.
 // #Prameters
@@ -23,7 +24,6 @@
 //  2. message	: Log Message
 #define PROFILE_LOG(out, message, ...)				Log(out, 1, __FILE__, __FUNCTION__, __LINE__, message, ##__VA_ARGS__)
 
-#if defined(DEBUG) || defined(_DEBUG)
 // COM Result Profiling
 // # 해당 COM Result Message 출력.
 // # COM 전용 HRESULT Macro + 추가 Message 출력.
@@ -49,14 +49,14 @@
 //  1. key		: Timer Key Name
 #define PROFILE_TIMER_END(key, ...)					TimerEnd(key, ##__VA_ARGS__);
 #else
-//#define PROFILE_LOG(out, message, ...)
+#define PROFILE_LOG(out, message, ...)
 #define PROFILE_RESULT(out, x, message, ...)
 #define PROFILE_TIMER_START(out, frame, key, ...)
 #define PROFILE_TIMER_END(key, ...)					
 #endif
 
-PROFILER_DLL void Log(PROFILE_OUTPUT outputType, long result, const char* file, const char* func, int&& line, const char* message, ...);
 #if defined(DEBUG) || defined(_DEBUG)
+PROFILER_DLL void Log(PROFILE_OUTPUT outputType, long result, const char* file, const char* func, int&& line, const char* message, ...);
 PROFILER_DLL void TimerStart(PROFILE_OUTPUT outputType, const char* file, const char* func, int&& line, int&& totalFrame, const char* timerKey, ...);
 PROFILER_DLL void TimerEnd(const char* timerKey, ...);
 #endif

@@ -253,9 +253,6 @@
     <Filter Include="소스 파일\Shader\HLSL\PostProcess\Blur">
       <UniqueIdentifier>{73e8d335-a5dc-4ceb-bd58-aab15bfbea16}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Helper\Delegate">
-      <UniqueIdentifier>{c3c1be08-7c0d-457a-808e-ec8cd13bb516}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Core">
       <UniqueIdentifier>{59ada70c-c0ea-439b-a1b4-c4c7e113e25c}</UniqueIdentifier>
     </Filter>
@@ -279,9 +276,6 @@
     </Filter>
     <Filter Include="소스 파일\Manager\ConstantBuffer">
       <UniqueIdentifier>{3373cdfe-bfd0-41c6-b185-f916170520c0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\RenderPass\PostProcess\Dissolve">
-      <UniqueIdentifier>{cb056397-b691-4314-9319-8d3c668ae359}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -522,9 +516,6 @@
     <ClInclude Include="Blur_Pass.h">
       <Filter>소스 파일\RenderPass\PostProcess\Blur</Filter>
     </ClInclude>
-    <ClInclude Include="Delegate.h">
-      <Filter>소스 파일\Helper\Delegate</Filter>
-    </ClInclude>
     <ClInclude Include="RenderDataConverterBase.h">
       <Filter>소스 파일\Converter</Filter>
     </ClInclude>
@@ -533,9 +524,6 @@
     </ClInclude>
     <ClInclude Include="ConstantBufferManager.h">
       <Filter>소스 파일\Manager\ConstantBuffer</Filter>
-    </ClInclude>
-    <ClInclude Include="DissolvePass.h">
-      <Filter>소스 파일\RenderPass\PostProcess\Dissolve</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -665,17 +653,11 @@
     <ClCompile Include="Blur_Pass.cpp">
       <Filter>소스 파일\RenderPass\PostProcess\Blur</Filter>
     </ClCompile>
-    <ClCompile Include="Delegate.cpp">
-      <Filter>소스 파일\Helper\Delegate</Filter>
-    </ClCompile>
     <ClCompile Include="UI_Pass.cpp">
       <Filter>소스 파일\RenderPass\UI</Filter>
     </ClCompile>
     <ClCompile Include="ConstantBufferManager.cpp">
       <Filter>소스 파일\Manager\ConstantBuffer</Filter>
-    </ClCompile>
-    <ClCompile Include="DissolvePass.cpp">
-      <Filter>소스 파일\RenderPass\PostProcess\Dissolve</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

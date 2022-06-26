@@ -453,6 +453,11 @@ GameObject* GameEngine::FindGameObjectName(std::string& ObjName)
 	return mObjectManager->FindGameObjectString(ObjName);
 }
 
+TextureBuffer* GameEngine::GetTexture(std::string& TextureName)
+{
+	return mLoadManager->GetTexture(TextureName);
+}
+
 void GameEngine::Destroy(GameObject* obj)
 {
 	mObjectManager->PushDeleteObject(obj);

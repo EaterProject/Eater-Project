@@ -396,15 +396,13 @@ struct CB_OutLineOption : public cbOutLineOption
 SHADER_CONSTANT_BUFFER(cbDissolveOption)
 struct CB_DissolveOption : public cbDissolveOption
 {
-	float gOuterEdge = 0.1f;
-	float gOuterFactor = 300.0f;
-	float gInnerEdge = 0.1f;
-	float gInnerFactor = 500.0f;
+	DirectX::SimpleMath::Vector3 gEdgeColor = DirectX::SimpleMath::Vector3(10.0f, 0.0f, 0.0f);
+	float gThickness = 0.01f;
 
-	DirectX::SimpleMath::Vector3 gInnerColor = DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.0f);
-	float gThickness;
-
-	DirectX::SimpleMath::Vector3 gOuterColor = DirectX::SimpleMath::Vector3(10.0f, 0.0f, 0.0f);
+	float gOuterEdge = 0.0f;
+	float gOuterFactor = 25.0f;
+	float gInnerEdge = 0.0f;
+	float gInnerFactor = 100.0f;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////

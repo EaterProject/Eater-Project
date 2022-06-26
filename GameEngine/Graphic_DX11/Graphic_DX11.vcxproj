@@ -201,8 +201,6 @@ copy/Y "$(OutDir)$(TargetName).lib"      "..\\Library\lib"</Command>
     <ClInclude Include="ConvertData.h" />
     <ClInclude Include="CullingData.h" />
     <ClInclude Include="Culling_Pass.h" />
-    <ClInclude Include="Delegate.h" />
-    <ClInclude Include="DissolvePass.h" />
     <ClInclude Include="DrawBuffer.h" />
     <ClInclude Include="DrawBufferDefine.h" />
     <ClInclude Include="Debug_Pass.h" />
@@ -283,8 +281,6 @@ copy/Y "$(OutDir)$(TargetName).lib"      "..\\Library\lib"</Command>
     <ClCompile Include="Blur_Pass.cpp" />
     <ClCompile Include="ConstantBufferManager.cpp" />
     <ClCompile Include="Culling_Pass.cpp" />
-    <ClCompile Include="Delegate.cpp" />
-    <ClCompile Include="DissolvePass.cpp" />
     <ClCompile Include="DrawBuffer.cpp" />
     <ClCompile Include="ComputeShader.cpp" />
     <ClCompile Include="D3D11Graphic.cpp" />

@@ -35,6 +35,7 @@ class EaterSound;
 class GameObject;
 class ModelData;
 class Material;
+class TextureBuffer;
 class RenderOption;
 
 class GameEngine
@@ -79,6 +80,9 @@ public:
 	void FindGameObjectTags(std::string& TagName,std::vector<GameObject*>* ObjectList);
 	int	 FindTagNumber(std::string& TagName);
 	GameObject* FindGameObjectName(std::string& ObjName);
+
+public:
+	TextureBuffer* GetTexture(std::string& TextureName);
 
 public:
 	///ªË¡¶
