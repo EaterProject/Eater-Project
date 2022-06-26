@@ -25,9 +25,6 @@
     <Filter Include="소스 파일\Scene\Loading">
       <UniqueIdentifier>{f6aae002-8b2f-4f9e-9f7f-1cf3cad1c77d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Component\PlayerCamera">
-      <UniqueIdentifier>{925263ad-cb58-4a06-824c-b8133a6978b0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Component\ManaStone">
       <UniqueIdentifier>{b125c172-305a-4d80-a3cb-ba9fc70063ea}</UniqueIdentifier>
     </Filter>
@@ -45,9 +42,6 @@
     </Filter>
     <Filter Include="소스 파일\Manager\ObjectFactory">
       <UniqueIdentifier>{149e5443-6586-42a9-ba32-44b86d569a72}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Component\Potal">
-      <UniqueIdentifier>{ab9e2d53-63ff-4400-b7b1-760e7edf6fea}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\Component\Monster">
       <UniqueIdentifier>{1eff42a5-4092-4861-964a-31ca9bdc475c}</UniqueIdentifier>
@@ -133,6 +127,30 @@
     <Filter Include="소스 파일\Component\UI\UITitle">
       <UniqueIdentifier>{893c3c5a-30b9-44ee-ac17-9a98540e8911}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Component\UI\UIStore">
+      <UniqueIdentifier>{bc92b0b7-018e-4e42-95d8-5e16eb6bf474}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\MiniMapSystem">
+      <UniqueIdentifier>{760946bc-e540-4aee-8888-a5df4eebf8dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\UI\UIOption">
+      <UniqueIdentifier>{15528012-047d-4647-ab54-cf2897221b1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\Player\PlayerObject">
+      <UniqueIdentifier>{29bb8882-2d86-499d-95d4-b4cc9b90e623}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\Player\PlayerCamera">
+      <UniqueIdentifier>{7d8101c0-7f76-4434-ba97-7d38af02b9ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\Player\PlayerPotal">
+      <UniqueIdentifier>{7062dc88-490f-43ef-afe0-a4954ee6bd26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\Player\PlayerCollider">
+      <UniqueIdentifier>{a94d78de-c827-43ee-bab8-2f215b623ba0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\Store">
+      <UniqueIdentifier>{ee46d329-a111-4a32-bfd3-9c02801a7d2f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -156,9 +174,6 @@
     <ClInclude Include="Loading.h">
       <Filter>소스 파일\Scene\Loading</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerCamera.h">
-      <Filter>소스 파일\Component\PlayerCamera</Filter>
-    </ClInclude>
     <ClInclude Include="MonsterA.h">
       <Filter>소스 파일\Component\Monster\MonsterA</Filter>
     </ClInclude>
@@ -167,9 +182,6 @@
     </ClInclude>
     <ClInclude Include="TestScene.h">
       <Filter>소스 파일\Scene\TestScene</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>소스 파일\Component\Player</Filter>
     </ClInclude>
     <ClInclude Include="GameManager.h">
       <Filter>소스 파일\Manager\GameManager</Filter>
@@ -234,8 +246,26 @@
     <ClInclude Include="UITitle.h">
       <Filter>소스 파일\Component\UI\UITitle</Filter>
     </ClInclude>
+    <ClInclude Include="UIStore.h">
+      <Filter>소스 파일\Component\UI\UIStore</Filter>
+    </ClInclude>
     <ClInclude Include="MiniMapSystem.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>소스 파일\Manager\MiniMapSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="UIOption.h">
+      <Filter>소스 파일\Component\UI\UIOption</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>소스 파일\Component\Player\PlayerObject</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerCamera.h">
+      <Filter>소스 파일\Component\Player\PlayerCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerCollider.h">
+      <Filter>소스 파일\Component\Player\PlayerCollider</Filter>
+    </ClInclude>
+    <ClInclude Include="Store.h">
+      <Filter>소스 파일\Component\Store</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -251,9 +281,6 @@
     <ClCompile Include="Loading.cpp">
       <Filter>소스 파일\Scene\Loading</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerCamera.cpp">
-      <Filter>소스 파일\Component\PlayerCamera</Filter>
-    </ClCompile>
     <ClCompile Include="MonsterA.cpp">
       <Filter>소스 파일\Component\Monster\MonsterA</Filter>
     </ClCompile>
@@ -262,9 +289,6 @@
     </ClCompile>
     <ClCompile Include="TestScene.cpp">
       <Filter>소스 파일\Scene\TestScene</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>소스 파일\Component\Player</Filter>
     </ClCompile>
     <ClCompile Include="GameManager.cpp">
       <Filter>소스 파일\Manager\GameManager</Filter>
@@ -326,8 +350,26 @@
     <ClCompile Include="UITitle.cpp">
       <Filter>소스 파일\Component\UI\UITitle</Filter>
     </ClCompile>
+    <ClCompile Include="UIStore.cpp">
+      <Filter>소스 파일\Component\UI\UIStore</Filter>
+    </ClCompile>
     <ClCompile Include="MiniMapSystem.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Manager\MiniMapSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="UIOption.cpp">
+      <Filter>소스 파일\Component\UI\UIOption</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>소스 파일\Component\Player\PlayerObject</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerCamera.cpp">
+      <Filter>소스 파일\Component\Player\PlayerCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerCollider.cpp">
+      <Filter>소스 파일\Component\Player\PlayerCollider</Filter>
+    </ClCompile>
+    <ClCompile Include="Store.cpp">
+      <Filter>소스 파일\Component\Store</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

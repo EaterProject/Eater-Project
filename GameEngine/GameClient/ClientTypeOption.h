@@ -20,6 +20,8 @@
 #define TARGET_BOSS_FRIEND 16
 #define TARGET_UI_EFFECT 17
 #define TARGET_UI_TITLE 18
+#define TARGET_UI_STORE 19
+#define TARGET_STORE 20
 
 //Player Message
 #define MESSAGE_PLAYER_HIT    0				//플레이어가 맞았다
@@ -44,6 +46,9 @@
 #define MESSAGE_UI_MONSTER_UI_UPDATE 7		//몬스터 UI를 업데이트	//인자 값 : MONSTER_EMAGIN 구조체
 #define MESSAGE_UI_FADE_IN 8				//페이드 인
 #define MESSAGE_UI_FADE_OUT 9				//페이드 아웃
+#define MESSAGE_UI_STORE_ACTIVE	10			//UI 스토어 엑티브
+#define MESSAGE_UI_PLAYER_ACTIVE 11			//UI 플레이어 UI
+
 
 //Camera Message
 #define MESSAGE_CAMERA_CINEMATIC_GAME_START 0				//시네마틱 실행

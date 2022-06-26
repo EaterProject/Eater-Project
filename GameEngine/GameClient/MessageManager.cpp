@@ -25,6 +25,7 @@
 #include "ManaStone.h"
 #include "UIEffect.h"
 #include "UITitle.h"
+#include "UIStore.h"
 
 MessageManager* MessageManager::instance = nullptr;
 MessageManager::MessageManager()
@@ -68,7 +69,9 @@ void MessageManager::Initialize(ObjectFactory* Factory)
 	CREATE_MESSAGE(TARGET_UI);
 	CREATE_MESSAGE(TARGET_UI_EFFECT);
 	CREATE_MESSAGE(TARGET_UI_TITLE);
+	CREATE_MESSAGE(TARGET_UI_STORE);
 	CREATE_MESSAGE(TARGET_PLAYER);
+	CREATE_MESSAGE(TARGET_STORE);
 	//CREATE_MESSAGE(TARGET_MANA);
 	//CREATE_MESSAGE(TARGET_BOSS);
 }
@@ -154,6 +157,12 @@ GameObject* MessageManager::CREATE_MESSAGE(int CREATE_TYPE)
 		Object = mFactory->CreateUITitle();
 		mTiltle = Object->GetComponent<UITitle>();
 		return Object;
+	case TARGET_UI_STORE:
+		Object = mFactory->CreateUIStore();
+		mStore = Object->GetComponent<UIStore>();
+		return Object;
+	case TARGET_STORE:
+		return  mFactory->CreateStore();
 	}
 
 	return nullptr;
@@ -206,6 +215,12 @@ void MessageManager::SEND_UI_Message(int MessageType, void* Data)
 		break;
 	case MESSAGE_UI_FADE_OUT:
 		mEffect->Fade_OUT(Data);
+		break;
+	case MESSAGE_UI_STORE_ACTIVE:
+		mStore->Set_Store_Active(*(reinterpret_cast<bool*>(Data)));
+		break;
+	case MESSAGE_UI_PLAYER_ACTIVE:
+		mCanvas->Set_Player_UI_Active(*(reinterpret_cast<bool*>(Data)));
 		break;
 	}
 }

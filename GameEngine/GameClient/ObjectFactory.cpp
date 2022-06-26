@@ -29,6 +29,9 @@
 #include "BossFriend.h"
 #include "UIEffect.h"
 #include "UITitle.h"
+#include "UIStore.h"
+#include "PlayerCollider.h"
+#include "Store.h"
 
 
 
@@ -52,7 +55,8 @@ GameObject* ObjectFactory::CreatePlayer()
 	//플레이어와 카메라 오브젝트를 생성
 	GameObject* PlayerObject		= Instance();
 	
-	GameObject* PlayerCollider		= Instance();
+	GameObject* PointCollider		= Instance();
+	GameObject* AttackCollider		= Instance();
 	GameObject* DroneObject			= Instance();
 	GameObject* PlayerPoint			= FindGameObjectTag("PlayerPoint");
 	
@@ -62,13 +66,20 @@ GameObject* ObjectFactory::CreatePlayer()
 	PlayerObject->AddComponent<MeshFilter>();
 	PlayerObject->AddComponent<AnimationController>();
 
+	//플레이어 충돌검사 콜라이더
+	AttackCollider->AddComponent<Collider>();
+	AttackCollider->AddComponent<Rigidbody>();
+	AttackCollider->AddComponent<PlayerCollider>();
+
+	//플레이어 생성위치 설정
 	Vector3 position = PlayerPoint->GetTransform()->GetPosition();
 	PlayerObject->GetTransform()->SetPosition(position);
 
 	//콜라이더 객체 생성
-	PlayerCollider->SetTag("PlayerCollider");
-	PlayerCollider->AddComponent<Collider>();
+	PointCollider->SetTag("PlayerCollider");
+	PointCollider->AddComponent<Collider>();
 	
+	//드론객체 생성
 	DroneObject->AddComponent<MeshFilter>();
 	DroneObject->AddComponent<Drone>();
 
@@ -162,6 +173,13 @@ GameObject* ObjectFactory::CreateUITitle()
 	return Object_Title;
 }
 
+GameObject* ObjectFactory::CreateUIStore()
+{
+	GameObject* Object_Store = Instance();
+	Object_Store->AddComponent<UIStore>();
+	return Object_Store;
+}
+
 GameObject* ObjectFactory::CreateBoss()
 {
 	GameObject* Object_Boss = Instance();
@@ -217,6 +235,15 @@ GameObject* ObjectFactory::CreateBossFriend()
 	Object->AddComponent<MeshFilter>();
 	Object->AddComponent<BossFriend>();
 	Object->AddComponent<AnimationController>();
+	return Object;
+}
+
+GameObject* ObjectFactory::CreateStore()
+{
+	GameObject* Object = Instance();
+	Object->AddComponent<MeshFilter>();
+	Object->AddComponent<Collider>();
+	Object->AddComponent<Store>();
 	return Object;
 }
 
