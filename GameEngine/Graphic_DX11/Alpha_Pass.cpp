@@ -33,6 +33,7 @@
 #define EMISSIVE_MAP    0x00000100
 #define ORM_MAP         0x00001000
 #define LIM_LIGHT       0x00010000
+#define DISSOLVE        0x00100000
 
 Alpha_Pass::Alpha_Pass()
 {
@@ -177,6 +178,10 @@ void Alpha_Pass::RenderUpdate(const InstanceRenderBuffer* instance, const Render
 		{
 			materialBuf.gOption |= LIM_LIGHT;
 		}
+		if (matSub->Dissolve)
+		{
+			materialBuf.gOption |= DISSOLVE;
+		}
 
 		m_Mesh_VS->ConstantBufferUpdate(&objectBuf);
 
@@ -239,6 +244,10 @@ void Alpha_Pass::RenderUpdate(const InstanceRenderBuffer* instance, const Render
 		if (matSub->LimLightFactor > 0.0f)
 		{
 			materialBuf.gOption |= LIM_LIGHT;
+		}
+		if (matSub->Dissolve)
+		{
+			materialBuf.gOption |= DISSOLVE;
 		}
 
 		m_Mesh_PS->ConstantBufferUpdate(&materialBuf);
@@ -409,6 +418,10 @@ void Alpha_Pass::RenderUpdate(const InstanceRenderBuffer* instance, const std::v
 	{
 		materialBuf.gOption |= LIM_LIGHT;
 	}
+	if (matSub->Dissolve)
+	{
+		materialBuf.gOption |= DISSOLVE;
+	}
 
 	m_Mesh_PS->ConstantBufferUpdate(&materialBuf);
 	m_Mesh_PS->ConstantBufferUpdate(&ConstantBufferManager::LIGHT_BUFFER);
@@ -541,6 +554,10 @@ void Alpha_Pass::BlockRenderUpdate(const RenderData* meshData)
 	if (matSub->LimLightFactor > 0.0f)
 	{
 		materialBuf.gOption |= LIM_LIGHT;
+	}
+	if (matSub->Dissolve)
+	{
+		materialBuf.gOption |= DISSOLVE;
 	}
 
 	m_Mesh_PS->ConstantBufferUpdate(&materialBuf);

@@ -77,6 +77,12 @@ void MeshFilter::Start()
 	isLoad_Material = true;
 	isLoad_Texture = true;
 	isLoad_Animation = true;
+
+	if (m_Material)
+	{
+		SetMaterialPropertyBlock(true, true);
+		m_Material->m_MaterialData->Material_Property->Dissolve = true;
+	}
 }
 
 void MeshFilter::SetModelName(std::string mModelName)

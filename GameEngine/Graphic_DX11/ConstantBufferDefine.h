@@ -389,6 +389,23 @@ struct CB_OutLineOption : public cbOutLineOption
 	float gPad;
 };
 
+/////////////////////////////////////////////////////////////////////////////////////////////
+//// Dissolve Constant Buffer
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+SHADER_CONSTANT_BUFFER(cbDissolveOption)
+struct CB_DissolveOption : public cbDissolveOption
+{
+	float gOuterEdge = 0.1f;
+	float gOuterFactor = 300.0f;
+	float gInnerEdge = 0.1f;
+	float gInnerFactor = 500.0f;
+
+	DirectX::SimpleMath::Vector3 gInnerColor = DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.0f);
+	float gThickness;
+
+	DirectX::SimpleMath::Vector3 gOuterColor = DirectX::SimpleMath::Vector3(10.0f, 0.0f, 0.0f);
+};
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 //// Debug Constant Buffer

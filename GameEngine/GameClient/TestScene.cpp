@@ -62,7 +62,7 @@ void TestScene::Awake()
 
 	CreateMap();
 
-	CreateUI();
+	//CreateUI();
 
 	BakeSkyLightMap("SkyLight_0", false);
 	BakeSkyLightMap("SkyLight_1", false);
@@ -104,51 +104,51 @@ void TestScene::CreateMap()
 	Slider* slider = nullptr;
 
 	/// 미니맵 설정
-	//m_MiniMap = MiniMapSystem::Get();
-	//m_MiniMap->CreateMiniMap("ingame_minimap", PIVOT_RIGHT_TOP, ROTATE_90, Vector2(186.0f), Vector2(-25.0f));
-	//
-	//
-	//m_Boss = Instance();
-	//filter = m_Boss->AddComponent<MeshFilter>();
-	//filter->SetModelName("BossB+");
-	//filter->SetAnimationName("BossB+");
-	//m_Boss->GetTransform()->SetPosition(-44.0f, 6.0f, 62.0f);
-	//m_Boss->GetTransform()->SetScale(1.5f);
-	//AC = m_Boss->AddComponent<AnimationController>();
-	//ACList.push_back(AC);
-	//TRList.push_back(m_Boss->GetTransform());
-	//
-	///// 미니맵 아이콘 추가
-	//m_MiniMap->CreateIcon("Minimap_Boss", m_Boss, false);
-	//
-	//
-	//m_MonsterA = Instance();
-	//filter = m_MonsterA->AddComponent<MeshFilter>();
-	//filter->SetModelName("MonsterA+");
-	//filter->SetAnimationName("MonsterA+");
-	//m_MonsterA->GetTransform()->SetPosition(15, 0, 62);
-	//m_MonsterA->GetTransform()->SetScale(1.2f, 1.2f, 1.2f);
-	//AC = m_MonsterA->AddComponent<AnimationController>();
-	//ACList.push_back(AC);
-	//TRList.push_back(m_MonsterA->GetTransform());
-	//
-	///// 미니맵 아이콘 추가
-	//m_MiniMap->CreateIcon("Minimap_Player", m_MonsterA, true);
-	//
-	//
-	//m_MonsterB = Instance();
-	//filter = m_MonsterB->AddComponent<MeshFilter>();
-	//filter->SetModelName("MonsterB+");
-	//filter->SetAnimationName("MonsterB+");
-	//m_MonsterB->GetTransform()->SetPosition(23, 1, 56);
-	//m_MonsterB->GetTransform()->SetScale(3.0f, 3.0f, 3.0f);
-	//AC = m_MonsterB->AddComponent<AnimationController>();
-	//ACList.push_back(AC);
-	//TRList.push_back(m_MonsterB->GetTransform());
-	//
-	//
-	///// 미니맵 아이콘 추가
-	//m_MiniMap->CreateIcon("Minimap_Player", m_MonsterB, true);
+	m_MiniMap = MiniMapSystem::Get();
+	m_MiniMap->CreateMiniMap("ingame_minimap", PIVOT_RIGHT_TOP, ROTATE_90, Vector2(186.0f), Vector2(-25.0f));
+
+
+	m_Boss = Instance();
+	filter = m_Boss->AddComponent<MeshFilter>();
+	filter->SetModelName("BossB+");
+	filter->SetAnimationName("BossB+");
+	m_Boss->GetTransform()->SetPosition(0, 7, -15);
+	m_Boss->GetTransform()->SetScale(1.5f);
+	AC = m_Boss->AddComponent<AnimationController>();
+	ACList.push_back(AC);
+	TRList.push_back(m_Boss->GetTransform());
+
+	/// 미니맵 아이콘 추가
+	m_MiniMap->CreateIcon("Minimap_Boss", m_Boss, false);
+
+
+	m_MonsterA = Instance();
+	filter = m_MonsterA->AddComponent<MeshFilter>();
+	filter->SetModelName("MonsterA+");
+	filter->SetAnimationName("MonsterA+");
+	m_MonsterA->GetTransform()->SetPosition(5, 7, -15);
+	m_MonsterA->GetTransform()->SetScale(1.2f, 1.2f, 1.2f);
+	AC = m_MonsterA->AddComponent<AnimationController>();
+	ACList.push_back(AC);
+	TRList.push_back(m_MonsterA->GetTransform());
+
+	/// 미니맵 아이콘 추가
+	m_MiniMap->CreateIcon("Minimap_Player", m_MonsterA, true);
+
+
+	m_MonsterB = Instance();
+	filter = m_MonsterB->AddComponent<MeshFilter>();
+	filter->SetModelName("MonsterB+");
+	filter->SetAnimationName("MonsterB+");
+	m_MonsterB->GetTransform()->SetPosition(-5, 7, -15);
+	m_MonsterB->GetTransform()->SetScale(3.0f, 3.0f, 3.0f);
+	AC = m_MonsterB->AddComponent<AnimationController>();
+	ACList.push_back(AC);
+	TRList.push_back(m_MonsterB->GetTransform());
+
+
+	/// 미니맵 아이콘 추가
+	m_MiniMap->CreateIcon("Minimap_Player", m_MonsterB, true);
 
 	GameObject* particle_1 = Instance_Particle("Particle1", "BossPush_circle");
 	GameObject* particle_2 = Instance_Particle("Particle2", "BossPush_magical");
@@ -440,7 +440,6 @@ void TestScene::CreateParticle(float x, float y, float z)
 
 void TestScene::ChangeCubeMap()
 {
-
 	float dTime = GetDeltaTime();
 
 	if (GetKey('1'))
@@ -464,59 +463,59 @@ void TestScene::ChangeCubeMap()
 		m_ParticleController->Stop();
 	}
 
-	if (GetKey(VK_LEFT))
-	{
-		for (int i = 0; i < TRList.size(); i++)
-		{
-			TRList[i]->AddPosition_X(-dTime * 50.0f);
-		}
-
-		m_Controller->AddPosition_X(-dTime * 50.0f);
-	}
-	if (GetKey(VK_RIGHT))
-	{
-		for (int i = 0; i < TRList.size(); i++)
-		{
-			TRList[i]->AddPosition_X(dTime * 50.0f);
-		}
-
-		m_Controller->AddPosition_X(dTime * 50.0f);
-	}
-	if (GetKey(VK_UP))
-	{
-		for (int i = 0; i < TRList.size(); i++)
-		{
-			TRList[i]->AddPosition_Z(dTime * 50.0f);
-		}
-
-		m_Controller->AddPosition_Z(dTime * 50.0f);
-	}
-	if (GetKey(VK_DOWN))
-	{
-		for (int i = 0; i < TRList.size(); i++)
-		{
-			TRList[i]->AddPosition_Z(-dTime * 50.0f);
-		}
-
-		m_Controller->AddPosition_Z(-dTime * 50.0f);
-	}
-	if (GetKey('Q'))
-	{
-		for (int i = 0; i < TRList.size(); i++)
-		{
-			TRList[i]->AddRotate_Y(-dTime * 50.0f);
-		}
-
-		m_Controller->AddRotate_Y(-dTime * 50.0f);
-	}
-	if (GetKey('E'))
+	//if (GetKey(VK_LEFT))
+	//{
+	//	for (int i = 0; i < TRList.size(); i++)
+	//	{
+	//		TRList[i]->AddPosition_X(-dTime * 50.0f);
+	//	}
+	//
+	//	m_Controller->AddPosition_X(-dTime * 50.0f);
+	//}
+	//if (GetKey(VK_RIGHT))
+	//{
+	//	for (int i = 0; i < TRList.size(); i++)
+	//	{
+	//		TRList[i]->AddPosition_X(dTime * 50.0f);
+	//	}
+	//
+	//	m_Controller->AddPosition_X(dTime * 50.0f);
+	//}
+	//if (GetKey(VK_UP))
+	//{
+	//	for (int i = 0; i < TRList.size(); i++)
+	//	{
+	//		TRList[i]->AddPosition_Z(dTime * 50.0f);
+	//	}
+	//
+	//	m_Controller->AddPosition_Z(dTime * 50.0f);
+	//}
+	//if (GetKey(VK_DOWN))
+	//{
+	//	for (int i = 0; i < TRList.size(); i++)
+	//	{
+	//		TRList[i]->AddPosition_Z(-dTime * 50.0f);
+	//	}
+	//
+	//	m_Controller->AddPosition_Z(-dTime * 50.0f);
+	//}
+	//if (GetKey('Q'))
+	//{
+	//	for (int i = 0; i < TRList.size(); i++)
+	//	{
+	//		TRList[i]->AddRotate_Y(-dTime * 50.0f);
+	//	}
+	//
+	//	m_Controller->AddRotate_Y(-dTime * 50.0f);
+	//}
+	if (GetKey('R'))
 	{
 		for (int i = 0; i < TRList.size(); i++)
 		{
 			TRList[i]->AddRotate_Y(dTime * 50.0f);
 		}
 
-		m_Controller->AddRotate_Y(dTime * 50.0f);
+		//m_Controller->AddRotate_Y(dTime * 50.0f);
 	}
 
 	//if (GetKeyUp('1'))

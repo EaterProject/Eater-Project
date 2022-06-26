@@ -34,6 +34,7 @@
 #include "Bloom_Pass.h"
 #include "Combine_Pass.h"
 #include "Fog_Pass.h"
+#include "DissolvePass.h"
 #include "Picking_Pass.h"
 #include "Culling_Pass.h"
 #include "OutLine_Pass.h"
@@ -76,6 +77,7 @@ RenderManager::RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, I
 	CREATE_PASS(Blur_Pass,		m_Blur);
 	CREATE_PASS(Bloom_Pass,		m_Bloom);
 	CREATE_PASS(Fog_Pass,		m_Fog);
+	CREATE_PASS(Dissolve_Pass,	m_Dissolve);
 	CREATE_PASS(Culling_Pass,	m_Culling);
 	CREATE_PASS(Picking_Pass,	m_Picking);
 	//CREATE_PASS(OutLine_Pass,	m_OutLine);

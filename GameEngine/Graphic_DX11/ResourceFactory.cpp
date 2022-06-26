@@ -1211,6 +1211,23 @@ void GraphicResourceFactory::CreateGraphicResource()
 
 	// Noise Texture 持失..
 	CreateImage(gNoiseVolume::GetName(), gNoiseVolume::GetHashCode(), "Noise/NoiseVolume.dds");
+	//CreateImage(gNoiseTexture::GetName(), gNoiseTexture::GetHashCode(), "Noise/Dissolve_16.png");
+	CreateImage(gNoise1::GetName(), gNoise1::GetHashCode(), "Noise/Dissolve_01.png");
+	CreateImage(gNoise2::GetName(), gNoise2::GetHashCode(), "Noise/Dissolve_02.png");
+	CreateImage(gNoise3::GetName(), gNoise3::GetHashCode(), "Noise/Dissolve_03.png");
+	CreateImage(gNoise4::GetName(), gNoise4::GetHashCode(), "Noise/Dissolve_04.png");
+	CreateImage(gNoise5::GetName(), gNoise5::GetHashCode(), "Noise/Dissolve_05.png");
+	CreateImage(gNoise6::GetName(), gNoise6::GetHashCode(), "Noise/Dissolve_06.png");
+	CreateImage(gNoise7::GetName(), gNoise7::GetHashCode(), "Noise/Dissolve_07.png");
+	CreateImage(gNoise8::GetName(), gNoise8::GetHashCode(), "Noise/Dissolve_08.png");
+	CreateImage(gNoise9::GetName(), gNoise9::GetHashCode(), "Noise/Dissolve_09.png");
+	CreateImage(gNoise10::GetName(), gNoise10::GetHashCode(), "Noise/Dissolve_10.png");
+	CreateImage(gNoise11::GetName(), gNoise11::GetHashCode(), "Noise/Dissolve_11.png");
+	CreateImage(gNoise12::GetName(), gNoise12::GetHashCode(), "Noise/Dissolve_12.png");
+	CreateImage(gNoise13::GetName(), gNoise13::GetHashCode(), "Noise/Dissolve_13.png");
+	CreateImage(gNoise14::GetName(), gNoise14::GetHashCode(), "Noise/Dissolve_14.png");
+	CreateImage(gNoise15::GetName(), gNoise15::GetHashCode(), "Noise/Dissolve_15.png");
+	CreateImage(gNoise16::GetName(), gNoise16::GetHashCode(), "Noise/Dissolve_16.png");
 
 	// Default SkyCube 持失..
 	CreateImage(gDefalut_SkyCube::GetName(), gDefalut_SkyCube::GetHashCode(), "LUT/Default_LUT.dds");

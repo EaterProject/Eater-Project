@@ -110,14 +110,12 @@ class MaterialProperty
 public:
 	bool IsRelocation = false;			
 
-	bool OutLine = false;									// Out Line
-
-	bool Alpha = false;										// Alpha Material
-	float AlphaFactor = 1.0f;								// Alpha 수치
-
 	SHADER_OPTION Shader_Option = SHADER_DEFAULT;			// Shader Option
 
 	UINT SkyLightIndex = 0;									// SkyLight Index
+
+	bool Alpha = false;										// Alpha 여부
+	float AlphaFactor = 1.0f;								// Alpha 수치
 
 	Vector3 AddColor = Vector3(0.0f, 0.0f, 0.0f);			// Add Color
 
@@ -131,8 +129,13 @@ public:
 	float LimLightFactor = 0.0f;							// LimLight 강도
 	float LimLightWidth = 0.0f;								// LimLight 범위
 
+	bool OutLine = false;									// Out Line 여부
 	Vector3 OutLineColor = Vector3(1.0f, 1.0f, 1.0f);		// OutLine Color
 	float OutLineWidth = 0.0f;								// OutLine 범위
+
+	bool Dissolve = true;									// Dissolve 여부
+	Vector4 Innercolor = Vector4(1.0f, 0.0f, 0.0f, 1.0f);	// 경계 안쪽 색상
+	Vector4 Outercolor = Vector4(1.0f, 1.0f, 1.0f, 1.0f);	// 경계 바깥쪽 색상
 
 	Vector2 Tile;											// X, Y Tiling
 	Matrix TexTM;											// Material의 텍스쳐 행렬

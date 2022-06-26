@@ -1,74 +1,50 @@
 #ifndef DISSOLVE_HEADER
 #define DISSOLVE_HEADER
 
-cbuffer cbDessolveOption
+#include "SamplerState_Header.hlsli"
+
+cbuffer cbDissolveOption
 {
-    int gOctaves = 6;
-    float gThickness = 0.1f;
-    float gOuterEdge = 0.5f;
-    float gInnerEdge = 0.6f;
-    float gTime;
+    float gOuterEdge    : packoffset(c0.x);
+    float gOuterFactor  : packoffset(c0.y);
+    float gInnerEdge    : packoffset(c0.z);
+    float gInnerFactor  : packoffset(c0.w);
     
-    float gStartTime;
-    float gDuration;
+    float3 gInnerColor  : packoffset(c1.x);
+    float gThickness    : packoffset(c1.w);
     
-    float4 gFireColor;
-    float4 gAshColor;
+    float3 gOuterColor  : packoffset(c2.x);
 };
     
+Texture2D gNoiseTexture;
 
-float FBM(in float2 coord)
+float4 DissolveEffect(in float4 color, in float2 uv)
 {
-    float value = 0.0f;
-    float scale = 0.5f;
-    
-    for (int i = 0; i < gOctaves; i++)
-    {
-        value += noise(coord) * scale;
-        coord *= 2.0f;
-        scale *= 0.5f;
-    }
-    
-    return value;
-}
-
-float4 BurningEffect(in float4 color, in float2 uv)
-{
-    float noise = 0.0f;
-    float scale = 0.5f;
-    
     float4 outColor = color;
+    float factor = gNoiseTexture.Sample(gSamWrapLinear, uv).r;
     
-    for (int i = 0; i < gOctaves; i++)
+    factor *= factor;
+    
+    if (factor < gInnerEdge)
     {
-        noise += noise(uv) * scale;
-        uv *= 2.0f;
-        scale *= 0.5f;
-    }
-    
-    float outer_edge = (gTime - gStartTime) / gDuration;
-    float inner_edge = outer_edge + gThickness;
-    
-    if (noise < gInnerEdge)
-    {
-        float grad_factor = clamp((gInnerEdge - noise) / gThickness, 0.0f, 1.0f);
+        float grad_factor = smoothstep(0.0f, 1.0f, (gInnerEdge - factor) * gThickness);
         
-        float4 fire_grad = lerp(gFireColor, gAshColor, grad_factor);
+        float3 burn_grad = lerp(gInnerColor, gOuterColor, grad_factor);
         
-        float inner_fade = clamp((gInnerEdge - noise) / 0.05f, 0.0f, 1.0f); // 수치 올리면 끝부분이 부드러워짐 
+        float inner_fade = smoothstep(0.0f, 1.0f, (gInnerEdge - factor) * gInnerFactor); // 수치 올리면 끝부분이 부드러워짐 
         
-        outColor = lerp(color, fire_grad, inner_fade);
+        outColor.rgb = lerp(color.rgb, burn_grad, inner_fade);
         
         outColor.a = 0.0f;
     }
     
-    if (noise < gOuterEdge)
+    if (factor < gOuterEdge)
     {
-        outColor.a = clamp(1.0f - (gOuterEdge - noise) / 0.03f, 0.0f, 1.0f);
+        outColor.a = smoothstep(0.0f, 1.0f, 1.0f - (gOuterEdge - factor) * gOuterFactor);
     }
     
     outColor.a *= color.a;
     
-    return color;
+    return outColor;
 }
 #endif

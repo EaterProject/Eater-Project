@@ -6,6 +6,7 @@
 #include "PBR_Header.hlsli"
 #include "IBL_Header.hlsli"
 #include "Fog_Header.hlsli"
+#include "Dissolve_Header.hlsli"
 
 cbuffer cbMaterial : register(b0)
 {
@@ -127,6 +128,7 @@ void OIT_Mesh_PS(MeshPixelIn pin)
     
     litColor += PBR_SpotLight(ViewDirection, normal, gSpotLights, gSpotLightCount, pin.PosW,
                                 albedo.rgb, 1.0f, roughness, metallic, shadows);
+    
     switch (gSkyLightIndex)
     {
     case 0:
@@ -160,6 +162,15 @@ void OIT_Mesh_PS(MeshPixelIn pin)
     default:
         break;
     }
+
+    if (gOption & DISSOLVE)
+    {
+        float4 finalColor = DissolveEffect(float4(litColor, albedo.a), pin.Tex);
+        clip(finalColor.a - 0.001f);
+        litColor = finalColor.rgb;
+        albedo.a = finalColor.a;
+    }
+
     
     uint pixelCount = gPieceLinkBuffer.IncrementCounter();
     

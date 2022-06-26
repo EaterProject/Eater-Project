@@ -15,6 +15,7 @@ class FXAA_Pass;
 class Blur_Pass;
 class Bloom_Pass;
 class Fog_Pass;
+class Dissolve_Pass;
 class Culling_Pass;
 class Picking_Pass;
 class OutLine_Pass;
@@ -171,6 +172,7 @@ private:
 	Blur_Pass*			m_Blur;
 	Bloom_Pass*			m_Bloom;
 	Fog_Pass*			m_Fog;
+	Dissolve_Pass*		m_Dissolve;
 	Culling_Pass*		m_Culling;
 	Picking_Pass*		m_Picking;
 	OutLine_Pass*		m_OutLine;
