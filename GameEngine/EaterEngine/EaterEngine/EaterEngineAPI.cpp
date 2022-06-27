@@ -210,9 +210,23 @@ void SetColorGradingBaseTexture(std::string mPath)
 	gGameEngine->SetColorGradingBaseTexture(mPath);
 }
 
+void SetColorGradingBaseTexture(TextureBuffer* base_lut)
+{
+	gGameEngine->SetColorGradingBaseTexture(base_lut);
+}
+
 void SetColorGradingBlendTexture(std::string mPath)
 {
 	gGameEngine->SetColorGradingBlendTexture(mPath);
+}
+void SetColorGradingBlendTexture(TextureBuffer* blend_lut)
+{
+	gGameEngine->SetColorGradingBlendTexture(blend_lut);
+}
+
+void SetColorGradingBlendFactor(float blend_factor)
+{
+	gGameEngine->SetColorGradingBlendFactor(blend_factor);
 }
 
 ModelData* GetLoadMeshData(std::string mPath)
@@ -243,6 +257,11 @@ int GetLoadMaterialCount()
 int GetLoadBufferCount()
 {
 	return gGameEngine->LoadBufferCount();
+}
+
+void SetFullScreenBlur(bool enable, UINT blur_count /*= 0*/)
+{
+	gGameEngine->SetFullScreenBlur(enable, blur_count);
 }
 
 void AddOccluder(std::string mMeshName)
@@ -535,3 +554,4 @@ int GetMousePosY()
  {
 	 gGameEngine->NETWORK_CONNECT(ServerPort, Local_Connect_IP);
  }
+

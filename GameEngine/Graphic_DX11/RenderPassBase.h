@@ -6,6 +6,7 @@ interface IShaderManager;
 interface IFactoryManager;
 interface IGraphicResourceManager;
 
+class RenderTexture;
 class ShaderBase;
 
 class RenderOption;
@@ -66,6 +67,8 @@ protected:
 protected:
 	static Microsoft::WRL::ComPtr<ID3D11Device> g_Device;
 	static Microsoft::WRL::ComPtr<ID3D11DeviceContext> g_Context;
+
+	static RenderTexture* g_BindingRenderTarget;
 
 	static IFactoryManager* g_Factory;
 	static IGraphicResourceManager* g_Resource;

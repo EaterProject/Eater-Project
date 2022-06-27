@@ -18,6 +18,7 @@ private:
 
 	DrawBuffer* m_Screen_DB;
 
+	RenderTexture* m_Output_RT;
 	RenderTexture* m_Origin_RT;
 
 private:

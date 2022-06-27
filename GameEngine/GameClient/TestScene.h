@@ -44,6 +44,10 @@ public:
 	void CreateParicleController();
 	void CreateDissolve();
 
+	void SetColorGrading();
+	void SetScreenBlur();
+
+
 private:
 	void SetMaterialBlock(GameObject* object, std::vector<MaterialPropertyBlock*>& blocklist, bool alpha);
 
@@ -55,18 +59,25 @@ private:
 
 	MiniMapSystem* m_MiniMap;
 
+	GameObject* m_Mana;
 	GameObject* m_Boss;
 	GameObject* m_MonsterA;
 	GameObject* m_MonsterB;
 
+	MeshFilter* m_ManaFilter;
 	MeshFilter* m_BossFilter;
 	MeshFilter* m_MonsterAFilter;
 	MeshFilter* m_MonsterBFilter;
 
 	std::vector<TextureBuffer*> m_NoiseTextureList;
 	int TextureIndex = 0;
-	int TextureCount = 20;
+	int TextureCount = 16;
 
+	int BlurCount = 1;
+
+	float BlendFactor = 0.0f;
+
+	std::vector<MaterialPropertyBlock*> m_ManaBlock;
 	std::vector<MaterialPropertyBlock*> m_BossBlock;
 	std::vector<MaterialPropertyBlock*> m_MonsterABlock;
 	std::vector<MaterialPropertyBlock*> m_MonsterBBlock;

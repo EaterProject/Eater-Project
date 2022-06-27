@@ -1126,7 +1126,7 @@ void GraphicResourceFactory::CreateMainRenderTarget(Hash_Code hash_code, UINT wi
 	Microsoft::WRL::ComPtr<ID3D11UnorderedAccessView> uav = nullptr;
 
 	// Swap Chain, Render Target View Resize
-	m_Result = g_Graphic->CreateBackBuffer(width, height, tex2D.GetAddressOf(), rtv.GetAddressOf(), srv.GetAddressOf());
+	m_Result = g_Graphic->CreateBackBuffer(width, height, tex2D.GetAddressOf(), rtv.GetAddressOf(), srv.GetAddressOf(), uav.GetAddressOf());
 
 	if (FAILED(m_Result))
 	{

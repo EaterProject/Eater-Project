@@ -483,6 +483,11 @@ void GameEngine::ChoiceScene(std::string name)
 	mSceneManager->SceneStart();
 }
 
+void GameEngine::SetFullScreenBlur(bool enable, UINT blur_count)
+{
+	mGraphicManager->SetFullScreenBlur(enable, blur_count);
+}
+
 ///로드 관련 함수들
 void GameEngine::LoadTerrain(std::string mMeshName, std::string mMaskName1, std::string mMaskName2, UINT parsingMode)
 {
@@ -581,11 +586,26 @@ void GameEngine::SetColorGradingBaseTexture(std::string& Path)
 	mGraphicManager->SetColorGradingBaseTexture(lut);
 }
 
+void GameEngine::SetColorGradingBaseTexture(TextureBuffer* base_lut)
+{
+	mGraphicManager->SetColorGradingBaseTexture(base_lut);
+}
+
 void GameEngine::SetColorGradingBlendTexture(std::string& Path)
 {
 	TextureBuffer* lut = mLoadManager->GetTexture(Path);
 
 	mGraphicManager->SetColorGradingBlendTexture(lut);
+}
+
+void GameEngine::SetColorGradingBlendTexture(TextureBuffer* blend_lut)
+{
+	mGraphicManager->SetColorGradingBlendTexture(blend_lut);
+}
+
+void GameEngine::SetColorGradingBlendFactor(float blend_factor)
+{
+	mGraphicManager->SetColorGradingBlendFactor(blend_factor);
 }
 
 void GameEngine::AddOccluder(std::string mMeshName)

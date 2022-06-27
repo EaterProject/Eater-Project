@@ -36,12 +36,15 @@ public:
 	virtual void SetGlobalData(GlobalData* globalData) abstract;
 
 public:
+	virtual void SetFullScreenBlur(bool enable, UINT blur_count) abstract;
+
+public:
 	// Environment Map Setting..
 	virtual void SetSkyCube(TextureBuffer* resource) abstract;
 	virtual void SetSkyLight(SkyLightBuffer* resource, UINT index) abstract;
 	virtual void SetColorGradingBaseTexture(TextureBuffer* lut_resource) abstract;
 	virtual void SetColorGradingBlendTexture(TextureBuffer* lut_resource) abstract;
-	virtual void SetColorGradingFactor(float factor) abstract;
+	virtual void SetColorGradingBlendFactor(float blend_factor) abstract;
 
 public:
 	// Render Data Push..

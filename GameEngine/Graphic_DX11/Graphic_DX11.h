@@ -23,10 +23,15 @@ public:
 	void SetGlobalData(GlobalData* globalData) override;
 
 public:
+	void SetFullScreenBlur(bool enable, UINT blur_count) override;
+
+public:
 	void SetSkyCube(TextureBuffer* resource) override;
 	void SetSkyLight(SkyLightBuffer* resource, UINT index) override;
+
 	void SetColorGradingBaseTexture(TextureBuffer* lut_resource) override;
 	void SetColorGradingBlendTexture(TextureBuffer* lut_resource) override;
+	void SetColorGradingBlendFactor(float blend_factor) override;
 
 public:
 	void PushInstance(MeshData* instance) override;

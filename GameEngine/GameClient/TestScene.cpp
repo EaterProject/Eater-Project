@@ -205,6 +205,11 @@ void TestScene::CreateDissolve()
 		m_NoiseTextureList.push_back(GetTexture(texName + std::to_string(i)));
 	}
 
+	m_Mana = Instance();
+	m_ManaFilter = m_Mana->AddComponent<MeshFilter>();
+	m_ManaFilter->SetModelName("Mana");
+	m_Mana->GetTransform()->SetPosition(0, 7, 15);
+
 	m_Boss = Instance();
 	m_BossFilter = m_Boss->AddComponent<MeshFilter>();
 	m_BossFilter->SetModelName("BossB+");
@@ -261,6 +266,54 @@ void TestScene::CreateDissolve()
 	//m_MonsterBBlock->SetDissolve(DISSOLVE_OPTION::DISSOLVE_FADEIN, m_NoiseTextureList[TextureIndex], Vector3(1.0f, 0.0f, 0.0f), 10.0f, 2.0f, 0.01f, 25.0f, 100.0f);
 }
 
+void TestScene::SetColorGrading()
+{
+	/// 만약 아무런 효과를 넣지 않고 싶다면 해당 텍스쳐에 nullptr을 삽입하면
+	/// Default 색상으로 설정됨
+	//SetColorGradingBaseTexture(nullptr);
+	//SetColorGradingBlendTexture(nullptr);
+
+	/// 미리 텍스쳐 받아놨다가 스왑하는 방식
+	TextureBuffer* base_texture = GetTexture("Hollywood");
+	TextureBuffer* blend_texture = GetTexture("Night");
+	
+	SetColorGradingBaseTexture(base_texture);
+	SetColorGradingBlendTexture(blend_texture);
+	
+	/// blend_factor는 곧 BlendTexture 가중치 
+	/// blend_factor가 0 이면 BaseTexture만 출력
+	/// bledn_factor가 1 이면 BlendTexture만 출력
+	SetColorGradingBlendFactor(0.5f);
+
+	/// 설정 당시 이름값으로 설정하는 방식
+	SetColorGradingBaseTexture("Hollywood");
+	SetColorGradingBlendTexture("Night");
+
+	/// blend_factor는 곧 BlendTexture 가중치 
+	/// blend_factor가 0 이면 BaseTexture만 출력
+	/// bledn_factor가 1 이면 BlendTexture만 출력
+	SetColorGradingBlendFactor(0.5f);
+}
+
+void TestScene::SetScreenBlur()
+{
+	// UI를 제외한 모든 랜더링이 끝난 이후 블러처리 실행..
+
+	bool blur = true;
+	UINT blur_count = 2;
+
+	if (blur == true)
+	{
+		// 전체화면 블러 사용 활성화
+		SetFullScreenBlur(true, blur_count);
+	}
+	else
+	{
+		// 전체화면 블러 사용 비성화
+		SetFullScreenBlur(false);
+	}
+}
+
 void TestScene::SetMaterialBlock(GameObject* object, std::vector<MaterialPropertyBlock*>& blocklist, bool alpha)
 {
 	int Count = object->GetChildMeshCount();
@@ -298,92 +351,124 @@ void TestScene::ChangeCubeMap()
 			ACList[i]->Play();
 		}
 	}
-	//if (GetKeyUp('2'))
-	//{
-	//	m_ParticleController->Play();
-	//}
-	//if (GetKeyUp('3'))
-	//{
-	//	m_ParticleController->Pause();
-	//}
-	//if (GetKeyUp('4'))
-	//{
-	//	m_ParticleController->Stop();
-	//}
 
+	/// Color Grading Blending
 	if (GetKeyUp('2'))
 	{
-		SetMaterialBlock(m_Boss, m_BossBlock, true);
-		SetMaterialBlock(m_MonsterA, m_MonsterABlock, true);
-		SetMaterialBlock(m_MonsterB, m_MonsterBBlock, true);
+		TextureBuffer* base_texture = GetTexture("Hollywood");
+		TextureBuffer* blend_texture = GetTexture("Night");
+
+		SetColorGradingBaseTexture(base_texture);
+		SetColorGradingBlendTexture(blend_texture);
 	}
 	if (GetKeyUp('3'))
 	{
-		for (auto& block : m_BossBlock)
-		{
-			block->SetDissolve(DISSOLVE_OPTION::DISSOLVE_FADEOUT, m_NoiseTextureList[TextureIndex], Vector3(1.0f, 0.0f, 0.0f), 10.0f, 2.0f, 0.01f, 25.0f, 100.0f);
-		}
+		SetColorGradingBaseTexture("Hollywood");
+		SetColorGradingBlendTexture("Action");
 	}
-	if (GetKeyUp('4'))
+	if (GetKey('4'))
 	{
-		for (auto& block : m_MonsterABlock)
-		{
-			block->SetDissolve(DISSOLVE_OPTION::DISSOLVE_FADEIN, m_NoiseTextureList[TextureIndex], Vector3(1.0f, 0.0f, 0.0f), 10.0f, 2.0f, 0.01f, 25.0f, 100.0f);
-		}
-	}
-	if (GetKeyUp('5'))
-	{
-		for (auto& block : m_MonsterBBlock)
-		{
-			block->SetDissolve(DISSOLVE_OPTION::DISSOLVE_FADEIN, m_NoiseTextureList[TextureIndex], Vector3(1.0f, 0.0f, 0.0f), 10.0f, 2.0f, 0.01f, 25.0f, 100.0f);
-		}
-	}
-	if (GetKeyUp('6'))
-	{
-		TextureIndex++;
+		BlendFactor += dTime * 0.5f;
 
-		if (TextureIndex > TextureCount - 1)
+		if (BlendFactor > 1.0f)
 		{
-			TextureIndex = 0;
+			BlendFactor = 0.0f;
 		}
+
+		SetColorGradingBlendFactor(BlendFactor);
 	}
 
+	/// Dissolve
+	//if (GetKeyUp('2'))
+	//{
+	//	SetMaterialBlock(m_Mana, m_ManaBlock, true);
+	//	SetMaterialBlock(m_Boss, m_BossBlock, true);
+	//	SetMaterialBlock(m_MonsterA, m_MonsterABlock, true);
+	//	SetMaterialBlock(m_MonsterB, m_MonsterBBlock, true);
+	//}
+	//if (GetKeyUp('3'))
+	//{
+	//	for (auto& block : m_ManaBlock)
+	//	{
+	//		block->SetDissolve(DISSOLVE_OPTION::DISSOLVE_FADEOUT, m_NoiseTextureList[15], Vector3(1.0f, 0.0f, 0.0f), 10.0f, 3.219f, 0.972f, 9.252f, 69.836f);
+	//	}
+	//	for (auto& block : m_BossBlock)
+	//	{
+	//		block->SetDissolve(DISSOLVE_OPTION::DISSOLVE_FADEOUT, m_NoiseTextureList[15], Vector3(1.0f, 0.0f, 0.0f), 10.0f, 3.219f, 0.972f, 9.252f, 69.836f);
+	//	}
+	//	for (auto& block : m_MonsterABlock)
+	//	{
+	//		block->SetDissolve(DISSOLVE_OPTION::DISSOLVE_FADEIN, m_NoiseTextureList[15], Vector3(0.0f, 1.0f, 0.0f), 10.0f, 3.219f, 0.972f, 9.252f, 69.836f);
+	//	}
+	//	for (auto& block : m_MonsterBBlock)
+	//	{
+	//		block->SetDissolve(DISSOLVE_OPTION::DISSOLVE_FADEIN, m_NoiseTextureList[15], Vector3(0.0f, 0.0f, 1.0f), 10.0f, 3.219f, 0.972f, 9.252f, 69.836f);
+	//	}
+	//}
+	//if (GetKeyUp('4'))
+	//{
+	//	for (auto& block : m_ManaBlock)
+	//	{
+	//		block->SetDissolve(DISSOLVE_OPTION::DISSOLVE_FADEOUT, m_NoiseTextureList[14], Vector3(0.0f, 0.0f, 1.0f), 10.0f, 3.219f, 0.934f, 9.252f, 69.836f);
+	//	}
+	//	for (auto& block : m_BossBlock)
+	//	{
+	//		block->SetDissolve(DISSOLVE_OPTION::DISSOLVE_FADEOUT, m_NoiseTextureList[14], Vector3(0.0f, 0.0f, 1.0f), 10.0f, 3.219f, 0.934f, 9.252f, 69.836f);
+	//	}
+	//	for (auto& block : m_MonsterABlock)
+	//	{
+	//		block->SetDissolve(DISSOLVE_OPTION::DISSOLVE_FADEOUT, m_NoiseTextureList[14], Vector3(1.0f, 0.0f, 0.0f), 10.0f, 3.219f, 0.934f, 9.252f, 69.836f);
+	//	}
+	//	for (auto& block : m_MonsterBBlock)
+	//	{
+	//		block->SetDissolve(DISSOLVE_OPTION::DISSOLVE_FADEOUT, m_NoiseTextureList[14], Vector3(0.0f, 1.0f, 0.0f), 10.0f, 3.219f, 0.934f, 9.252f, 69.836f);
+	//	}
+	//}
+	//if (GetKeyUp('5'))
+	//{
+	//	for (auto& block : m_ManaBlock)
+	//	{
+	//		block->SetDissolve(DISSOLVE_OPTION::DISSOLVE_FADEOUT, m_NoiseTextureList[0], Vector3(0.0f, 1.0f, 0.0f), 10.0f, 1.418f, 0.719f, 9.490f, 14.016f);
+	//	}
+	//	for (auto& block : m_BossBlock)
+	//	{
+	//		block->SetDissolve(DISSOLVE_OPTION::DISSOLVE_FADEOUT, m_NoiseTextureList[0], Vector3(0.0f, 1.0f, 0.0f), 10.0f, 1.418f, 0.719f, 9.490f, 14.016f);
+	//	}
+	//	for (auto& block : m_MonsterABlock)
+	//	{
+	//		block->SetDissolve(DISSOLVE_OPTION::DISSOLVE_FADEOUT, m_NoiseTextureList[0], Vector3(0.0f, 0.0f, 1.0f), 10.0f, 1.418f, 0.719f, 9.490f, 14.016f);
+	//	}
+	//	for (auto& block : m_MonsterBBlock)
+	//	{
+	//		block->SetDissolve(DISSOLVE_OPTION::DISSOLVE_FADEOUT, m_NoiseTextureList[0], Vector3(1.0f, 0.0f, 0.0f), 10.0f, 1.418f, 0.719f, 9.490f, 14.016f);
+	//	}
+	//}
+	//if (GetKeyUp('6'))
+	//{
+	//	TextureIndex++;
+	//
+	//	if (TextureIndex > TextureCount - 1)
+	//	{
+	//		TextureIndex = 0;
+	//	}
+	//}
 
-	//if (GetKey(VK_LEFT))
+	/// FullScreen Blur
+	//if (GetKeyUp('7'))
 	//{
-	//	for (int i = 0; i < TRList.size(); i++)
+	//	SetFullScreenBlur(true, BlurCount);
+	//	BlurCount++;
+	//	if (BlurCount > 5)
 	//	{
-	//		TRList[i]->AddPosition_X(-dTime * 50.0f);
+	//		BlurCount = 1;
 	//	}
 	//}
-	//if (GetKey(VK_RIGHT))
+	//
+	//if (GetKeyUp('8'))
 	//{
-	//	for (int i = 0; i < TRList.size(); i++)
-	//	{
-	//		TRList[i]->AddPosition_X(dTime * 50.0f);
-	//	}
+	//	SetFullScreenBlur(false);
 	//}
-	//if (GetKey(VK_UP))
-	//{
-	//	for (int i = 0; i < TRList.size(); i++)
-	//	{
-	//		TRList[i]->AddPosition_Z(dTime * 50.0f);
-	//	}
-	//}
-	//if (GetKey(VK_DOWN))
-	//{
-	//	for (int i = 0; i < TRList.size(); i++)
-	//	{
-	//		TRList[i]->AddPosition_Z(-dTime * 50.0f);
-	//	}
-	//}
-	//if (GetKey('Q'))
-	//{
-	//	for (int i = 0; i < TRList.size(); i++)
-	//	{
-	//		TRList[i]->AddRotate_Y(-dTime * 50.0f);
-	//	}
-	//}
+
 	if (GetKey('R'))
 	{
 		for (int i = 0; i < TRList.size(); i++)
