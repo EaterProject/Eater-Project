@@ -96,6 +96,7 @@ public:
 	EATER_ENGINEDLL PARTICLE_STATE GetState();
 	EATER_ENGINEDLL PARTICLE_RENDER_OPTION GetRenderType();
 	EATER_ENGINEDLL int GetMaxParticles();
+	EATER_ENGINEDLL float GetTotalPlayTime();
 	EATER_ENGINEDLL float GetDelayTime();
 	EATER_ENGINEDLL float GetRateOverTime();
 	EATER_ENGINEDLL float GetStrength();

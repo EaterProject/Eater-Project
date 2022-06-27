@@ -43,6 +43,7 @@ void TestScene::Awake()
 
 	CreateMap();
 	CreateDissolve();
+	CreateParicleController();
 
 	BakeSkyLightMap("SkyLight_0", false);
 	BakeSkyLightMap("SkyLight_1", false);
@@ -178,15 +179,17 @@ void TestScene::CreateButton()
 
 void TestScene::CreateParicleController()
 {
+	/// 한 묶음의 파티클들을 생성
 	GameObject* particle_1 = Instance_Particle("Particle1", "BossPush_circle");
 	GameObject* particle_2 = Instance_Particle("Particle2", "BossPush_magical");
 	GameObject* particle_3 = Instance_Particle("Particle3", "BossProjectile_aura");
 	GameObject* particle_4 = Instance_Particle("Particle4", "BossProjectile_circle");
 	GameObject* particle_5 = Instance_Particle("Particle5", "BossProjectile_dot");
 
-	Object = Instance();
+	/// 파티클 컨트롤러를 통해 해당 파티클을 출력 시간과 함께 푸쉬
+	Object = Instance_ParticleController();
 	m_Controller = Object->GetTransform();
-	m_ParticleController = Object->AddComponent<ParticleController>();
+	m_ParticleController = Object->GetComponent<ParticleController>();
 	m_ParticleController->PushParticle("Particle_1", particle_1->GetComponent<ParticleSystem>(), 0.0f);
 	m_ParticleController->PushParticle("Particle_2", particle_2->GetComponent<ParticleSystem>(), 0.0f);
 	m_ParticleController->PushParticle("Particle_3", particle_3->GetComponent<ParticleSystem>(), 1.0f);
@@ -194,6 +197,26 @@ void TestScene::CreateParicleController()
 	m_ParticleController->PushParticle("Particle_5", particle_5->GetComponent<ParticleSystem>(), 1.0f);
 	m_ParticleController->PushParticle("Particle_6", particle_1->GetComponent<ParticleSystem>(), 1.5f);
 	m_ParticleController->PushParticle("Particle_7", particle_2->GetComponent<ParticleSystem>(), 1.5f);
+
+	/// 푸쉬할때 설정한 키값을 기반으로 해당 파티클을 가져올 수 있음
+	ParticleSystem* system_1 = m_ParticleController->GetParticle("Particle_1");
+	ParticleSystem* system_2 = m_ParticleController->GetParticle("Particle_2");
+	ParticleSystem* system_3 = m_ParticleController->GetParticle("Particle_3");
+	ParticleSystem* system_4 = m_ParticleController->GetParticle("Particle_4");
+	ParticleSystem* system_5 = m_ParticleController->GetParticle("Particle_5");
+
+	/// 현재 파티클 컨트롤러 상태 가져오기
+	PARTICLE_STATE state = m_ParticleController->GetState();
+
+	/// 파티클 별 상태 가져오기
+	PARTICLE_STATE state_1 = system_1->GetState();
+	PARTICLE_STATE state_2 = system_2->GetState();
+	PARTICLE_STATE state_3 = system_3->GetState();
+	PARTICLE_STATE state_4 = system_4->GetState();
+	PARTICLE_STATE state_5 = system_5->GetState();
+
+	/// 등록된 모든 파티클의 실행되는 시간 (랜덤값이라 최대시간을 구해놓고 반환함)
+	float max_time = m_ParticleController->GetTotalPlayTime();
 }
 
 void TestScene::CreateDissolve()
@@ -352,31 +375,71 @@ void TestScene::ChangeCubeMap()
 		}
 	}
 
-	/// Color Grading Blending
+	/// Particle Controller
 	if (GetKeyUp('2'))
 	{
-		TextureBuffer* base_texture = GetTexture("Hollywood");
-		TextureBuffer* blend_texture = GetTexture("Night");
-
-		SetColorGradingBaseTexture(base_texture);
-		SetColorGradingBlendTexture(blend_texture);
+		m_ParticleController->Play();
 	}
 	if (GetKeyUp('3'))
 	{
-		SetColorGradingBaseTexture("Hollywood");
-		SetColorGradingBlendTexture("Action");
+		m_ParticleController->Pause();
 	}
-	if (GetKey('4'))
+	if (GetKeyUp('4'))
 	{
-		BlendFactor += dTime * 0.5f;
-
-		if (BlendFactor > 1.0f)
-		{
-			BlendFactor = 0.0f;
-		}
-
-		SetColorGradingBlendFactor(BlendFactor);
+		m_ParticleController->Stop();
 	}
+
+	if (GetKey(VK_LEFT))
+	{
+		m_Controller->AddPosition_X(-dTime * 50.0f);
+	}
+	if (GetKey(VK_RIGHT))
+	{
+		m_Controller->AddPosition_X(dTime * 50.0f);
+	}
+	if (GetKey(VK_UP))
+	{
+		m_Controller->AddPosition_Z(dTime * 50.0f);
+	}
+	if (GetKey(VK_DOWN))
+	{
+		m_Controller->AddPosition_Z(-dTime * 50.0f);
+	}
+	if (GetKey('Q'))
+	{
+		m_Controller->AddRotate_Y(-dTime * 50.0f);
+	}
+	if (GetKey('E'))
+	{
+		m_Controller->AddRotate_Y(dTime * 50.0f);
+	}
+
+
+	/// Color Grading Blending
+	//if (GetKeyUp('2'))
+	//{
+	//	TextureBuffer* base_texture = GetTexture("Hollywood");
+	//	TextureBuffer* blend_texture = GetTexture("Night");
+	//
+	//	SetColorGradingBaseTexture(base_texture);
+	//	SetColorGradingBlendTexture(blend_texture);
+	//}
+	//if (GetKeyUp('3'))
+	//{
+	//	SetColorGradingBaseTexture("Hollywood");
+	//	SetColorGradingBlendTexture("Action");
+	//}
+	//if (GetKey('4'))
+	//{
+	//	BlendFactor += dTime * 0.5f;
+	//
+	//	if (BlendFactor > 1.0f)
+	//	{
+	//		BlendFactor = 0.0f;
+	//	}
+	//
+	//	SetColorGradingBlendFactor(BlendFactor);
+	//}
 
 	/// Dissolve
 	//if (GetKeyUp('2'))

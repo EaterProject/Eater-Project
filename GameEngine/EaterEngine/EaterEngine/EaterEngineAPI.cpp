@@ -56,17 +56,22 @@ void GetWindowSize(int* X, int* Y)
 
  GameObject* Instance_Terrain(std::string ObjName)
  {
-	 return gGameEngine->InstanceTerrain(ObjName);
+	 return gGameEngine->Instance_Terrain(ObjName);
  }
 
  GameObject* Instance_Particle(std::string ObjName, std::string FileName)
  {
-	 return gGameEngine->InstanceParticle(ObjName, FileName);
+	 return gGameEngine->Instance_Particle(ObjName, FileName);
+ }
+
+ GameObject* Instance_ParticleController(std::string ObjName/*= "GameObject"*/)
+ {
+	 return gGameEngine->Instance_ParticleController(ObjName);
  }
 
  GameObject* Instance_Camera(std::string ObjName)
  {
-	 return gGameEngine->InstanceCamera(ObjName);
+	 return gGameEngine->Instance_Camera(ObjName);
  }
 
  GameObject* Instance_Light(std::string ObjName, LIGHT_TYPE type)
