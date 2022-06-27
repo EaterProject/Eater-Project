@@ -40,7 +40,9 @@ void FXAA_Pass::Start(int width, int height)
 
 	// Graphic View..
 	m_Origin_RT = g_Resource->GetRenderTexture<RT_OutPut1>();
-	m_OutPut_RTV = g_Resource->GetMainRenderTarget()->GetRTV()->Get();
+	m_Output_RT = g_Resource->GetMainRenderTarget();
+
+	m_OutPut_RTV = m_Output_RT->GetRTV()->Get();
 
 	// Shader Resource 설정..
 	m_FXAA_PS->SetShaderResourceView<gOriginMap>(m_Origin_RT->GetSRV()->Get());
@@ -53,7 +55,7 @@ void FXAA_Pass::Start(int width, int height)
 void FXAA_Pass::OnResize(int width, int height)
 {
 	// Graphic View..
-	m_OutPut_RTV = g_Resource->GetMainRenderTarget()->GetRTV()->Get();
+	m_OutPut_RTV = m_Output_RT->GetRTV()->Get();
 
 	// Shader Resource 재설정..
 	m_FXAA_PS->SetShaderResourceView<gOriginMap>(m_Origin_RT->GetSRV()->Get());
@@ -70,6 +72,9 @@ void FXAA_Pass::Release()
 
 void FXAA_Pass::RenderUpdate()
 {
+	// 현재 바인딩된 RenderTarget 설정..
+	g_BindingRenderTarget = m_Output_RT;
+
 	g_Context->OMSetRenderTargets(1, &m_OutPut_RTV, nullptr);
 
 	g_Context->ClearRenderTargetView(m_OutPut_RTV, reinterpret_cast<const float*>(&DXColors::NonBlack));

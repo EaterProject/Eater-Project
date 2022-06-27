@@ -22,9 +22,11 @@ public:
 	{
 		SkyLight_Name.insert({ 0,"Default"});
 	};
+
 	UINT DebugOption = 0;
 	UINT RenderingOption = 0;
 	UINT PostProcessOption = 0;
+
 public:
 	// SSAO Option
 	float AO_Radius = 0.25f;							// 샘플링시 비교할 Texel 반지름	(0.0 ~ 5.0)

@@ -31,6 +31,22 @@ public:
 	RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, IGraphicResourceManager* resource, IShaderManager* shader, IRenderDataConverter* converter, RenderOption* renderOption);
 	~RenderManager();
 
+private:
+	class GraphicRenderOption : public RenderOption
+	{
+	public:
+		bool FullScreenBlurOption;
+		UINT FullScreenBlurCount;
+
+	public:
+		GraphicRenderOption& operator=(const RenderOption& option)
+		{
+			memcpy(this, &option, sizeof(RenderOption));
+
+			return *this;
+		}
+	};
+
 public:
 	void Create(int width, int height) override;
 	void Start(int width, int height) override;
@@ -43,11 +59,14 @@ public:
 	void SetGlobalData(GlobalData* globalData) override;
 
 public:
+	void SetFullScreenBlur(bool enable, UINT blur_count) override;
+
+public:
 	void SetSkyCube(TextureBuffer* resource) override;
 	void SetSkyLight(SkyLightBuffer* resource, UINT index) override;
 	void SetColorGradingBaseTexture(TextureBuffer* lut_resource) override;
 	void SetColorGradingBlendTexture(TextureBuffer* lut_resource) override;
-	void SetColorGradingFactor(float factor) override;
+	void SetColorGradingBlendFactor(float blend_factor) override;
 
 public:
 	void PushInstance(MeshData* instance) override;
@@ -157,7 +176,7 @@ private:
 	IRenderDataConverter* m_Converter;
 
 	RenderOption* m_RenderOption;
-	RenderOption m_NowRenderOption;
+	GraphicRenderOption m_GraphicRenderOption;
 
 	Deferred_Pass*		m_Deferred;
 	Light_Pass*			m_Light;

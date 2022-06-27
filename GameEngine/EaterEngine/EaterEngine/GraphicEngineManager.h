@@ -86,6 +86,10 @@ public:
 	void SetSkyLight(SkyLightBuffer* skyLight, UINT index);
 	void SetColorGradingBaseTexture(TextureBuffer* lut_resource);
 	void SetColorGradingBlendTexture(TextureBuffer* lut_resource);
+	void SetColorGradingBlendFactor(float blend_factor);
+
+public:
+	void SetFullScreenBlur(bool enable, UINT blur_count);
 
 private:
 	GraphicEngine* GEngine;

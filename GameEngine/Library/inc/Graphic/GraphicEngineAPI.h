@@ -49,11 +49,14 @@ public:
 	virtual GRAPHIC_DX11_DLL void SetGlobalData(GlobalData* globalData) abstract;
 
 public:
+	virtual GRAPHIC_DX11_DLL void SetFullScreenBlur(bool enable, UINT blur_count) abstract;
+
+public:
 	virtual GRAPHIC_DX11_DLL void SetSkyCube(TextureBuffer* resource) abstract;
 	virtual GRAPHIC_DX11_DLL void SetSkyLight(SkyLightBuffer* resource, UINT index) abstract;
 	virtual GRAPHIC_DX11_DLL void SetColorGradingBaseTexture(TextureBuffer* lut_resource) abstract;
 	virtual GRAPHIC_DX11_DLL void SetColorGradingBlendTexture(TextureBuffer* lut_resource) abstract;
-	//virtual GRAPHIC_DX11_DLL void SetColorGradingFactor(float factor) abstract;
+	virtual GRAPHIC_DX11_DLL void SetColorGradingBlendFactor(float blend_factor) abstract;
 
 public:
 	/// Render Mesh Data & Rendering Function..

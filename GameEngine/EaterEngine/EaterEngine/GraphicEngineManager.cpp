@@ -184,3 +184,13 @@ void GraphicEngineManager::SetColorGradingBlendTexture(TextureBuffer* lut_resour
 {
 	GEngine->SetColorGradingBlendTexture(lut_resource);
 }
+
+void GraphicEngineManager::SetColorGradingBlendFactor(float blend_factor)
+{
+	GEngine->SetColorGradingBlendFactor(blend_factor);
+}
+
+void GraphicEngineManager::SetFullScreenBlur(bool enable, UINT blur_count /*= 0*/)
+{
+	GEngine->SetFullScreenBlur(enable, blur_count);
+}

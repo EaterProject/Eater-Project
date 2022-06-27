@@ -76,8 +76,11 @@ extern "C" EATER_ENGINEDLL void SaveSpriteToVolumeTexture_LUT(std::string fileNa
 ///맵 설정
 extern "C" EATER_ENGINEDLL void SetSkyCube(std::string mPath);
 extern "C" EATER_ENGINEDLL void SetSkyLight(std::string mPath, UINT index);
-extern "C" EATER_ENGINEDLL void SetColorGradingBaseTexture(std::string mPath);
-extern "C" EATER_ENGINEDLL void SetColorGradingBlendTexture(std::string mPath);
+EATER_ENGINEDLL void SetColorGradingBaseTexture(std::string mPath);
+EATER_ENGINEDLL void SetColorGradingBaseTexture(TextureBuffer* base_lut);
+EATER_ENGINEDLL void SetColorGradingBlendTexture(std::string mPath);
+EATER_ENGINEDLL void SetColorGradingBlendTexture(TextureBuffer* blend_lut);
+extern "C" EATER_ENGINEDLL void SetColorGradingBlendFactor(float blend_factor);
 
 
 extern "C" EATER_ENGINEDLL int GetLoadMeshCount();		//로드된 메쉬 카운터
@@ -86,17 +89,19 @@ extern "C" EATER_ENGINEDLL int GetLoadAnimationCount();	//로드된 애니메이션 카운
 extern "C" EATER_ENGINEDLL int GetLoadMaterialCount();	//로드된 메테리얼 카운터
 extern "C" EATER_ENGINEDLL int GetLoadBufferCount();	//로드된 버퍼 카운터
 
-extern "C" EATER_ENGINEDLL void AddOccluder(std::string mMeshName);	//충돌 전용 매쉬 설정
+/// 그래픽 관련
+extern "C" EATER_ENGINEDLL void SetFullScreenBlur(bool enable, UINT blur_count = 0);	//현재 최종 화면 블러 설정
+extern "C" EATER_ENGINEDLL void AddOccluder(std::string mMeshName);						//컬링 전용 매쉬 설정
 
 ///키입력
-extern "C" EATER_ENGINEDLL bool  GetKeyDown(byte number);		//키다운
-extern "C" EATER_ENGINEDLL bool  GetKeyUp(byte number);			//키업
-extern "C" EATER_ENGINEDLL bool  GetKey(byte number);			//키누르고있을때
-extern "C" EATER_ENGINEDLL bool  GetTogle(byte number);			//키 토글
+extern "C" EATER_ENGINEDLL bool GetKeyDown(byte number);		//키다운
+extern "C" EATER_ENGINEDLL bool GetKeyUp(byte number);			//키업
+extern "C" EATER_ENGINEDLL bool GetKey(byte number);			//키누르고있을때
+extern "C" EATER_ENGINEDLL bool GetTogle(byte number);			//키 토글
 extern "C" EATER_ENGINEDLL int	GetMousePosX();					//마우스 위치 X
 extern "C" EATER_ENGINEDLL int	GetMousePosY();					//마우스 위치 Y
-extern "C" EATER_ENGINEDLL void  SetMousePos(float x,float y);	//마우스 위치 Y
-extern "C" EATER_ENGINEDLL void  SetMousePosCenter();			//마우스 위치 Y
+extern "C" EATER_ENGINEDLL void SetMousePos(float x,float y);	//마우스 위치 Y
+extern "C" EATER_ENGINEDLL void SetMousePosCenter();			//마우스 위치 Y
 extern "C" EATER_ENGINEDLL void ShowMouseCursor(bool Cursor);	//마우스 커서 보이기여부
 extern "C" EATER_ENGINEDLL void MouseCursorClip(bool Clip);		//마우스 커서 보이기여부
 

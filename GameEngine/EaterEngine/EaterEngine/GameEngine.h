@@ -93,6 +93,7 @@ public:
 	///스크린 관련
 	void PushScene(Scene* mScene, std::string name);	//씬 생성		
 	void ChoiceScene(std::string name);					//씬 선택
+	void SetFullScreenBlur(bool enable, UINT blur_count = 0);
 
 public:
 	///로드 관련 
@@ -124,7 +125,10 @@ public:
 	void SetSkyCube(std::string& Path);
 	void SetSkyLight(std::string& Path, UINT index);
 	void SetColorGradingBaseTexture(std::string& Path);
+	void SetColorGradingBaseTexture(TextureBuffer* base_lut);
 	void SetColorGradingBlendTexture(std::string& Path);
+	void SetColorGradingBlendTexture(TextureBuffer* blend_lut);
+	void SetColorGradingBlendFactor(float blend_factor);
 
 	///충돌체크 관련
 	void AddOccluder(std::string mMeshName);
