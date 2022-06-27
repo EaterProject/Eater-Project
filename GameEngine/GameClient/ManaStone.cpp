@@ -8,6 +8,9 @@
 #include "MonsterA.h"
 #include "MonsterB.h"
 #include "MessageManager.h"
+#include "Player.h"
+#include "Collider.h"
+#include "Rigidbody.h"
 
 std::vector<Vector3> ManaStone::MonsterMovePointDefault;
 ManaStone::ManaStone()
@@ -28,6 +31,8 @@ void ManaStone::Awake()
 {
 	mMeshFilter = gameobject->GetComponent<MeshFilter>();
 	mTransform	= gameobject->GetComponent<Transform>();
+	mCollider = gameobject->GetComponent<Collider>();
+	mRigidbody = gameobject->GetComponent<Rigidbody>();
 
 	//한번만 5방향의 꼭지점을 구한다
 	if ((int)MonsterMovePointDefault.size() == 0)
@@ -43,11 +48,22 @@ void ManaStone::Awake()
 void ManaStone::SetUp()
 {
 	mMeshFilter->SetModelName("Mana");
+	mCollider->SetCenter(0, 0.5f, 0);
+	mCollider->SetBoxCollider(0.5f,1, 0.5f);
+	mRigidbody->SetFreezeRotation(true, true, true);
+	mRigidbody->SetFreezePosition(true, true, true);
+	mRigidbody->SetMass(100);
+}
+
+void ManaStone::Start()
+{
+	mSetting.Setting(this->gameobject);
 }
 
 void ManaStone::Update()
 {
-	Debug();
+	mRigidbody->SetVelocity(0, 0, 0);
+	mSetting.LimLightUpdate(1);
 }
 
 void ManaStone::SetMonsterCount(int MonsterA, int MonsterB)
@@ -96,6 +112,23 @@ void ManaStone::CreateMonster(int MonsterACount, int MonsterBCount)
 	}
 }
 
+void ManaStone::Delete()
+{
+	//int A_Size = MonsterA_List.size();
+	//int B_Size = MonsterA_List.size();
+	//for (int i = 0; i < A_Size; i++)
+	//{
+	//	Destroy(MonsterA_List[i]->gameobject);
+	//}
+	//
+	//for (int i = 0; i < B_Size; i++)
+	//{
+	//	Destroy(MonsterB_List[i]->gameobject);
+	//}
+
+	Destroy(this->gameobject);
+}
+
 void ManaStone::Debug()
 {
 	Vector3 Point = mTransform->GetPosition();
@@ -114,13 +147,47 @@ void ManaStone::Debug()
 		DebugDrawLine(Point, MonsterPoint, Vector3(0, 0, 1));
 		DebugDrawCircle(Range * 0.25f, MonsterPoint, Vector3(0, 0, 0), Vector3(0, 0, 1));
 
-
 		////5방향에 대한 원
 		for (int j = 0; j < 5; j++)
 		{
 			Vector3 Point = GetMonsterPoint(MonsterPoint, j, Range * 0.25f);
 			Point.y = 2.0f;
 			DebugDrawCircle(0.25f, Point, Vector3(0, 0, 0), Vector3(0, 1, 0));
+		}
+	}
+}
+
+void ManaStone::OnTriggerStay(GameObject* Obj)
+{
+	//플레이어 충돌체와 충돌했을때
+	if (HitStart == false)
+	{
+		//플레이어가 공격 상태일때
+		if (Player::GetAttackState() == true)
+		{
+			Sound_Play_SFX("ManaLeaf_Hit");
+			MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_ATTACK_OK);
+			mSetting.SetLimlightSetting(MeshFilterSetting::COLOR_TYPE::RED, 2.0f, 2.0f);
+			mSetting.SetLimlightSettingMax(MeshFilterSetting::COLOR_TYPE::RED, 0.0f, 0.0f);
+
+			HP -= Player::GetPlayerPower();
+			if (HP <= 0)
+			{
+				Delete();
+			}
+
+			HitStart = true;
+		}
+	}
+	else
+	{
+		if (Player::GetAttackState() == false)
+		{
+			//플레이어 상태가 공격상태가 아닐떄
+			if (Player::GetAttackState() == false)
+			{
+				HitStart = false;
+			}
 		}
 	}
 }
@@ -171,7 +238,7 @@ void ManaStone::CreateMonsterB(int index)
 	for (int i = 0; i < 5; i++)
 	{
 		Vector3 Point = GetPoint(index, i);
-		Point.y = mTransform->GetPosition().y;
+		Point.y = mTransform->GetPosition().y+3;
 		Monster->SetSearchPoint(i, Point);
 	}
 	MonsterB_List.push_back(Monster);

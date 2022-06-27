@@ -17,6 +17,9 @@
 
 Transform* Player::mTransform = nullptr;
 bool	Player::IsAttackTime = false;
+int		Player::ChangeCount = 0;
+int		Player::ComboCount = 0;
+float	Player::PlayerPower = 10;
 //PLAYER_STATE Player::mState;
 
 #define LERP(prev, next, time) ((prev * (1.0f - time)) + (next * time))
@@ -40,7 +43,7 @@ Player::Player()
 
 
 	ANIMATION_SPEED[(int)PLAYER_STATE::IDLE]		= 1.5f;
-	ANIMATION_SPEED[(int)PLAYER_STATE::ATTACK_01]	= 1.25f;
+	ANIMATION_SPEED[(int)PLAYER_STATE::ATTACK_01]	= 1.5f;
 	ANIMATION_SPEED[(int)PLAYER_STATE::ATTACK_02]	= 1.85f;
 	ANIMATION_SPEED[(int)PLAYER_STATE::SKILL_01]	= 1.5f;
 	ANIMATION_SPEED[(int)PLAYER_STATE::SKILL_02]	= 1.5f;
@@ -157,6 +160,9 @@ void Player::SetMessageRECV(int Type, void* Data)
 		Player_Hit(*(reinterpret_cast<int*>(Data)));
 		break;
 	case MESSAGE_PLAYER_HILL:
+		HP += 10;
+		if (HP >= HP_Max) { HP = HP_Max; }
+		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_HP_NOW, &HP);
 		break;
 	case MESSAGE_PLAYER_ATTACK_OK:
 		ComboCount++;
@@ -172,6 +178,9 @@ void Player::SetMessageRECV(int Type, void* Data)
 		WeaponObject->SetActive(false);
 		AttackColliderObject->SetActive(false);
 		break;
+	case MESSAGE_PLAYER_COMBO_RESET:
+		ComboCount = 0;
+		break;
 	}
 }
 
@@ -183,6 +192,21 @@ Transform* Player::GetPlayerTransform()
 bool Player::GetAttackState()
 {
 	return IsAttackTime;
+}
+
+int Player::GetPlayerColor()
+{
+	return ChangeCount % 2;
+}
+
+int Player::GetPlayerCombo()
+{
+	return ComboCount;
+}
+
+float Player::GetPlayerPower()
+{
+	return PlayerPower;
 }
 
 void Player::Healing(float HealingPower)
@@ -269,6 +293,7 @@ void Player::PlayerKeyinput()
 	{
 		ChangeCount++;
 		if (ChangeCount > 14){ChangeCount = 0;}
+
 		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_EMAGIN_NOW, &ChangeCount);
 
 		if((ChangeCount % 2) == 0)
@@ -579,29 +604,32 @@ void Player::PlayerGroundCheck()
 		{
 		case 0: //Front
 			RayStartPoint = position + mCameraTR->GetLocalPosition_Look();
+			RayStartPoint.y = position.y + 1;
 			break;
 		case 1: //Back
 			RayStartPoint = position + (mCameraTR->GetLocalPosition_Look() * -1);
+			RayStartPoint.y = position.y + 1;
 			break;
 		case 2: //Right
 			RayStartPoint = position + mCameraTR->GetLocalPosition_Right();
+			RayStartPoint.y = position.y + 1;
 			break; 
 		case 3: //Left
 			RayStartPoint = position + (mCameraTR->GetLocalPosition_Right() * -1);
+			RayStartPoint.y = position.y + 1;
 			break;
 		case 4: //Center
 			RayStartPoint = position;
+			RayStartPoint.y = position.y + 0.5f;
 			break;
 		}
-		RayStartPoint.y = position.y + 0.5f;
-
+		
 		//Ray °ª Á¶Á¤
-		RayCastHit[i];
 		RayCastHit[i].Origin		= RayStartPoint;
 		RayCastHit[i].Direction		= {0,-1,0};
-		RayCastHit[i].MaxDistance	= 10;
+		RayCastHit[i].MaxDistance	= 5;
 		bool isHit = RayCast(&RayCastHit[i]);
-	
+
 		switch (i)
 		{
 		case 0:

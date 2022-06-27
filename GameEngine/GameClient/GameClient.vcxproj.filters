@@ -151,6 +151,12 @@
     <Filter Include="소스 파일\Component\Store">
       <UniqueIdentifier>{ee46d329-a111-4a32-bfd3-9c02801a7d2f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Component\GateDoor\DoorCollider">
+      <UniqueIdentifier>{3e73b03b-d884-4f90-a2da-fb425f407a89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\GateDoor\GateDoor">
+      <UniqueIdentifier>{2964e18d-198c-410c-8c63-2bf198605b77}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -222,9 +228,6 @@
     <ClInclude Include="UICanvas.h">
       <Filter>소스 파일\Component\UI\UICanvas</Filter>
     </ClInclude>
-    <ClInclude Include="GateDoor.h">
-      <Filter>소스 파일\Component\GateDoor</Filter>
-    </ClInclude>
     <ClInclude Include="CameraManager.h">
       <Filter>소스 파일\Manager\CameraManager</Filter>
     </ClInclude>
@@ -266,6 +269,12 @@
     </ClInclude>
     <ClInclude Include="Store.h">
       <Filter>소스 파일\Component\Store</Filter>
+    </ClInclude>
+    <ClInclude Include="DoorCollider.h">
+      <Filter>소스 파일\Component\GateDoor\DoorCollider</Filter>
+    </ClInclude>
+    <ClInclude Include="GateDoor.h">
+      <Filter>소스 파일\Component\GateDoor\GateDoor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -326,9 +335,6 @@
     <ClCompile Include="UICanvas.cpp">
       <Filter>소스 파일\Component\UI\UICanvas</Filter>
     </ClCompile>
-    <ClCompile Include="GateDoor.cpp">
-      <Filter>소스 파일\Component\GateDoor</Filter>
-    </ClCompile>
     <ClCompile Include="CameraManager.cpp">
       <Filter>소스 파일\Manager\CameraManager</Filter>
     </ClCompile>
@@ -370,6 +376,12 @@
     </ClCompile>
     <ClCompile Include="Store.cpp">
       <Filter>소스 파일\Component\Store</Filter>
+    </ClCompile>
+    <ClCompile Include="DoorCollider.cpp">
+      <Filter>소스 파일\Component\GateDoor\DoorCollider</Filter>
+    </ClCompile>
+    <ClCompile Include="GateDoor.cpp">
+      <Filter>소스 파일\Component\GateDoor\GateDoor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -29,11 +29,13 @@
 #define MESSAGE_PLAYER_ATTACK_OK 2			//플레이어 공격이 성공하였다
 #define MESSAGE_PLAYER_ACTIVE_TRUE 3		//플레이어 Active TRUE
 #define MESSAGE_PLAYER_ACTIVE_FALSE 4		//플레이어 Active FALSE
+#define MESSAGE_PLAYER_COMBO_RESET 5
 
 //Gate Message
 #define MESSAGE_GATE_OPEN  0				//게이트 열기			//인자 값 : int
 #define MESSAGE_GATE_CLOSE 1				//게이트 닫기			//인자 값 : int
 #define MESSAGE_GATE_UNLOCK 2				//게이트 잠금 풀기		//인자 값 : int
+#define MESSAGE_GATE_LOCK 3					//게이트 잠금 열기		//인자 값 : int
 
 //UI Message
 #define MESSAGE_UI_COMBO 0					//콤보 폰트 값			//인자 값 : int

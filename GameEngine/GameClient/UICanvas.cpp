@@ -8,6 +8,7 @@
 #include "ComboFont.h"
 #include "Slider.h"
 #include "ImageFont.h";
+#include "MiniMapSystem.h"
 UICanvas::UICanvas()
 {
 	
@@ -23,19 +24,20 @@ void UICanvas::Awake()
 {
 	//Create_Emagin_Color_UI();
 	//Create_Emagin_UI();
-	//Create_Combo_UI();
 	//Create_Player_HP();
 	//Create_Skill_UI();
 	//Create_Effect_UI();
-	//Create_Monster_UI();
 
 	//플레이어 관련 UI
-	Create_Player_HP(50,350);
-	Create_Player_Emagin(50,300);
+	Create_Player_HP(50,400);
+	Create_Player_Emagin(50,350);
 	Create_Player_Mana(100, 400);
 	Create_Player_Emagin_Color(-200, 0);
 	Create_Dron_Text(0, -200);
-	Create_Skill_UI(375, 400);
+	Create_Skill_UI(375, 450);
+
+	Create_Combo_UI();
+	Create_Monster_UI();
 }
 
 void UICanvas::Start()
@@ -55,7 +57,7 @@ void UICanvas::Start()
 void UICanvas::Update()
 {
 	//Update_Hit_Check();
-	//Update_Combo_Check();
+	Update_Combo_Check();
 }
 
 void UICanvas::Set_Combo_Now(int Number)
@@ -65,16 +67,16 @@ void UICanvas::Set_Combo_Now(int Number)
 
 void UICanvas::Set_Player_Emagin(int Number)
 {
-	//int Count = Number % 2;
-	//switch (Count)
-	//{
-	//case 0:
-	//	Images[Image_Emagin_Front]->SetColor(255, 0, 0, 200);
-	//	break;
-	//case 1:
-	//	Images[Image_Emagin_Front]->SetColor(0, 0, 255, 200);
-	//	break;
-	//}
+	int Count = Number % 2;
+	switch (Count)
+	{
+	case 0:
+		Player_EMAGIN_COLOR[1]->SetColor(255, 0, 0, 200);
+		break;
+	case 1:
+		Player_EMAGIN_COLOR[1]->SetColor(0, 0, 255, 200);
+		break;
+	}
 
 	Player_EMAGIN[0]->SetFontNumber(Number);
 }
@@ -158,6 +160,8 @@ void UICanvas::Set_InGameUI_Active(bool Active)
 	Active_Dron_Text(Active);
 	Active_Player_Emagin_Color(Active);
 	Active_Player_Skill(Active);
+	MiniMapSystem::Get()->SetMiniMapActive(Active);
+	MiniMapSystem::Get()->SetIconListActive(Active);
 }
 
 void UICanvas::Set_Monster_UI_ON(void* Emagin)
@@ -203,7 +207,7 @@ void UICanvas::Set_Monster_UI_ON(void* Emagin)
 	//레이어 설정
 	Monster_Emagin_Back[MonsterIndex]->SetLayer(1);
 	Monster_Emagin_Front[MonsterIndex]->SetLayer(1);
-	MonsterFont[MonsterIndex]->SetLayer(2);
+	MonsterFont[MonsterIndex]->SetLayer(3);
 	MonsterObject[MonsterIndex] = Object;
 }
 
@@ -214,7 +218,6 @@ void UICanvas::Set_Monster_UI_OFF(void* Emagin)
 
 	for (int i = 0; i < 5; i++)
 	{
-		if (MonsterObject[i] == nullptr) { return; }
 		if (Object == MonsterObject[i])
 		{
 			MonsterObject[i] = nullptr;
@@ -267,8 +270,6 @@ void UICanvas::Set_Monster_UI_SET_DATA(void* Emagin)
 				MonsterTR_Front[i]->SetPositionObject(Object, Vector3(0.0, 2.5f, 0.0f));
 				MonsterTR_Back[i]->SetPositionObject(Object, Vector3(0.0, 2.5f, 0.0f));
 			}
-
-
 			break;
 		}
 	}
@@ -557,33 +558,6 @@ void UICanvas::Create_Skill_UI(float X, float Y)
 	Player_Skill[2]->SetPivot(PIVOT_MIDDLE_LEFT);
 	Player_Skill[2]->SetValueRange(0, 100);
 	Player_Skill[2]->SetFillRange(FILL_DOWN, 50);
-
-	//Object = Instance_UI();
-	//Images[Image_Skill_Space] = Object->AddComponent<Image>();
-	//Images[Image_Skill_Space]->SetTexture("ingame_skill_space");
-	//Rect = Object->GetComponent<RectTransform>();
-	//OffsetX += 60;
-	//Rect->SetPosition(PosX + OffsetX, PosY + 100);
-	//Rect->SetScale(0.65f, 0.65f);
-	//Rect->SetPivot(PIVOT_MIDDLE_LEFT);
-	//
-	//Object = Instance_UI();
-	//Images[Image_Skill_E] = Object->AddComponent<Image>();
-	//Images[Image_Skill_E]->SetTexture("ingame_skill_e");
-	//Rect = Object->GetComponent<RectTransform>();
-	//OffsetX += 60;
-	//Rect->SetPosition(PosX + OffsetX, PosY + 100);
-	//Rect->SetScale(0.65f, 0.65f);
-	//Rect->SetPivot(PIVOT_MIDDLE_LEFT);
-	//
-	//Object = Instance_UI();
-	//Images[Image_Skill_Right] = Object->AddComponent<Image>();
-	//Images[Image_Skill_Right]->SetTexture("ingame_skill_rb");
-	//Rect = Object->GetComponent<RectTransform>();
-	//OffsetX += 60;
-	//Rect->SetPosition(PosX + OffsetX, PosY + 100);
-	//Rect->SetScale(0.65f, 0.65f);
-	//Rect->SetPivot(PIVOT_MIDDLE_LEFT);
 }
 
 void UICanvas::Create_Monster_UI()
@@ -599,7 +573,7 @@ void UICanvas::Create_Monster_UI()
 		MonsterSlider[i]->SetBackGroundTexture("Monster_HP_Back");
 		MonsterSlider[i]->SetFillTexture("Monster_HP_Front");
 		MonsterSlider[i]->SetPosition(0, 0);
-
+		
 		//몬스터 이메진 뒤 이미지
 		Object = Instance_UI();
 		Monster_Emagin_Back[i] = Object->AddComponent<Image>();
@@ -607,7 +581,7 @@ void UICanvas::Create_Monster_UI()
 		Monster_Emagin_Back[i]->SetColor(255, 255, 255, 255);
 		MonsterTR_Back[i] = Object->GetComponent<RectTransform>();
 		MonsterTR_Back[i]->SetPosition(0, 0);
-
+		
 		//몬스터 이메진 앞 이미지
 		Object = Instance_UI();
 		Monster_Emagin_Front[i] = Object->AddComponent<Image>();
@@ -619,10 +593,10 @@ void UICanvas::Create_Monster_UI()
 		Object = Instance_ImageFont();
 		MonsterFont[i] = Object->GetComponent<ImageFont>();
 		MonsterFont[i]->SetTexture("number_");
-		MonsterFont[i]->SetFontCount(1);
+		MonsterFont[i]->SetFontCount(3);
 		MonsterFont[i]->SetOffset(25);
 		MonsterFont[i]->SetScale(0.5f, 0.5f);
-		MonsterFont[i]->SetPosition(-60, 0);
+		MonsterFont[i]->SetPosition(-112, 0);
 
 		SetMonsterUIActive(i, false);
 	}
@@ -659,8 +633,10 @@ bool UICanvas::UseCheck(GameObject* Obj)
 {
 	for (int i = 0; i < 5; i++)
 	{
-		if (MonsterObject[i] == nullptr) { continue; }
-		if (MonsterObject[i] == Obj) { return true; }
+		if (MonsterObject[i] == Obj) 
+		{
+			return true;
+		}
 	}
 	return false;
 }

@@ -125,7 +125,7 @@ void UITitle::SetTitleUIActive(bool Active)
 
 void UITitle::StartButton_Enter()
 {
-	Sound_Play_SFX("UI_Button_Click");
+	Sound_Play_SFX("UI_Button_Overlay");
 	Title_IMG[0]->SetTexture("Title_GameStart_ON");
 }
 
@@ -133,6 +133,7 @@ void UITitle::StartButton_Click()
 {
 	IsStart = true;
 	std::string Name = "TitleCam";
+	Sound_Play_SFX("UI_Button_Click");
 	MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_FADE_IN, &IsFade);
 	MessageManager::GetGM()->SEND_Message(TARGET_CAMERA_MANAGER, MESSAGE_CAMERA_CINEMATIC_TITLE, &Name);
 }
@@ -144,13 +145,13 @@ void UITitle::StartButton_Exit()
 
 void UITitle::OptionButton_Enter()
 {
-	Sound_Play_SFX("UI_Button_Click");
+	Sound_Play_SFX("UI_Button_Overlay");
 	Title_IMG[2]->SetTexture("Title_GameOption_ON");
 }
 
 void UITitle::OptionButton_Click()
 {
-
+	Sound_Play_SFX("UI_Button_Click");
 
 }
 
@@ -161,13 +162,13 @@ void UITitle::OptionButton_Exit()
 
 void UITitle::EndButton_Enter()
 {
-	Sound_Play_SFX("UI_Button_Click");
+	Sound_Play_SFX("UI_Button_Overlay");
 	Title_IMG[1]->SetTexture("Title_GameEnd_ON");
 }
 
 void UITitle::EndButton_Click()
 {
-
+	Sound_Play_SFX("UI_Button_Click");
 }
 
 void UITitle::EndButton_Exit()

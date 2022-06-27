@@ -58,7 +58,7 @@ void ImageFont::SetColor(float r, float g, float b)
 
 void ImageFont::SetColor(float r, float g, float b, float a)
 {
-	mMF_Setting = { r,g,b,a };
+	mMF_Setting = { r,g,b,255 };
 }
 
 void ImageFont::SetFontNumber(int Number)
@@ -85,6 +85,7 @@ void ImageFont::SetFontNumber(int Number)
 				int ComboNumber = Str_Number[Index] - 48;
 				std::string Name = FontImageName + std::to_string(ComboNumber);
 				ImageList[i]->SetTexture(Name);
+				TransformList[i]->SetPivot(mType);
 				Index++;
 			}
 		}

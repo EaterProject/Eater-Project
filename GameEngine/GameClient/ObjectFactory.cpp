@@ -8,6 +8,7 @@
 #include "AnimationController.h"
 #include "Rigidbody.h"
 #include "Transform.h"
+#include "MiniMapSystem.h"
 
 //클라이언트쪽 컨퍼넌트
 #include "Player.h"
@@ -59,6 +60,7 @@ GameObject* ObjectFactory::CreatePlayer()
 	GameObject* AttackCollider		= Instance();
 	GameObject* DroneObject			= Instance();
 	GameObject* PlayerPoint			= FindGameObjectTag("PlayerPoint");
+
 	
 	//플레이어 생성
 	PlayerObject->SetTag("Player");
@@ -83,6 +85,8 @@ GameObject* ObjectFactory::CreatePlayer()
 	DroneObject->AddComponent<MeshFilter>();
 	DroneObject->AddComponent<Drone>();
 
+	//미니맵 생성
+	MiniMapSystem::Get()->CreateIcon("Minimap_Player", PlayerObject, true);
 	return PlayerObject;
 }
 
@@ -119,6 +123,8 @@ GameObject* ObjectFactory::CreateManaStone()
 		
 
 		GameObject* Object_ManaStone = Instance("ManaStone");
+		Object_ManaStone->AddComponent<Rigidbody>();
+		Object_ManaStone->AddComponent<Collider>();
 		Object_ManaStone->AddComponent<MeshFilter>();
 		ManaStone* mMana = Object_ManaStone->AddComponent<ManaStone>();
 		Object_ManaStone->GetTransform()->SetPosition(point);
@@ -141,6 +147,8 @@ GameObject* ObjectFactory::CreateManaStone()
 			mMana->SetMonsterCount(2, 3);
 			break;
 		}
+
+		MiniMapSystem::Get()->CreateIcon("Minimap_Mana", Object_ManaStone);
 	}
 	return nullptr;
 }
@@ -188,6 +196,8 @@ GameObject* ObjectFactory::CreateBoss()
 	Object_Boss->AddComponent<AnimationController>();
 	Object_Boss->AddComponent<Collider>();
 	Object_Boss->AddComponent<Rigidbody>();
+
+	MiniMapSystem::Get()->CreateIcon("Minimap_Boss", Object_Boss);
 	return Object_Boss;
 }
 

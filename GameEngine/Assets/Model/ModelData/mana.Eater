@@ -2,8 +2,8 @@
 @ParentName RootNode
 @NodeName manaA
 @MeshName Mana_0
-@MaterialName Mana_M_mana
 @IsActive 1
+@MaterialName Mana_M_mana
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -20,8 +20,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName manaB
 @MeshName Mana_1
-@MaterialName Mana_M_mana
 @IsActive 1
+@MaterialName Mana_M_mana
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
