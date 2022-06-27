@@ -153,6 +153,7 @@ private:
 
 	int m_MaxParticle;			// 최대 파티클 개수
 	int m_PlayCount;			// 이번에 실행할 파티클 개수
+	int m_CreateCount;			// 이번에 실행할 파티클 개수
 
 	float m_Strength;			// 파티클 밝기 강도
 
@@ -176,7 +177,7 @@ private:
 	Range<float>		m_LifeTimeRotation;
 	Range<int>			m_Tiling;
 
-	Eater::RandomFloat*	m_RandomLifeTime;
+	Eater::RandomFloat*		m_RandomLifeTime;
 	Eater::RandomVector4*	m_RandomStartColor;
 	Eater::RandomVector3*	m_RandomStartPosition;
 	Eater::RandomVector3*	m_RandomStartForce;
@@ -185,4 +186,6 @@ private:
 	Eater::RandomFloat*	m_RandomStartSize;
 	Eater::RandomFloat*	m_RandomStartRotation;
 	Eater::RandomFloat*	m_RandomLifeTimeRotation;
+
+	Vector3 Zero_3 = Vector3(0.0f, 0.0f, 0.0f);
 };

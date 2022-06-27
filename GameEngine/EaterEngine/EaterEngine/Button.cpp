@@ -53,7 +53,6 @@ void Button::Update()
 			switch (m_State)
 			{
 			case Button::OUT_BUTTON:
-			case Button::UP_BUTTON:
 			{
 				m_State = IN_BUTTON;
 

@@ -47,52 +47,45 @@ void Particle::Update()
 	{
 		float dTime = mTimeManager->DeltaTime();
 
-		m_TexNowTime += dTime;
 		m_AniNowTime += dTime;
 		m_LifeTime -= dTime;
 
-		m_NextFrame = (int)(m_TexNowTime / m_TexOneFrame);
-
-		// Texture Animation..
-		if (m_TexFrame != m_NextFrame)
+		// UV 변경 및 설정..
+		if (m_AniType & TEXTURE_ANI)
 		{
-			m_TexFrame = m_NextFrame;
+			m_TexNowTime += dTime;
 
-			if (m_TexFrame >= m_TexTotalFrame)
-			{
-				m_TexNowFrame = m_TexTotalFrame - 1;
-			}
-			else
-			{
-				m_TexNowFrame = m_TexFrame;
-			}
+			m_NextFrame = (int)(m_TexNowTime * m_TexOneFrame);
 
-			// UV 변경 및 설정..
-			if (m_AniType & TEXTURE_ANI)
+			// Texture Animation..
+			if (m_TexNowFrame != m_NextFrame)
 			{
+				m_TexNowFrame = m_NextFrame;
+
+				if (m_TexNowFrame >= m_TexTotalFrame)
+				{
+					m_TexNowFrame = m_TexTotalFrame - 1;
+				}
+
 				// Texture 출력 영역 변경..
 				m_ParticleData->TexPos.x = (m_TexNowFrame % m_WidthCount) * m_ParticleData->TexScale.x;
 				m_ParticleData->TexPos.y = (m_TexNowFrame / m_WidthCount) * m_ParticleData->TexScale.y;
 			}
 		}
 
-		m_NextFrame = (int)(m_AniNowTime / m_AniOneFrame) + 1;
+		m_NextFrame = (int)(m_AniNowTime * m_AniOneFrame);
 		
 		// Pos & Rot & Scale & Color Animation..
-		if (m_AniFrame != m_NextFrame)
+		if (m_AniNowFrame != m_NextFrame)
 		{
-			m_AniFrame = m_NextFrame;
-			m_AniPrevFrame = m_AniFrame - 1;
-			m_AniNextFrame = m_AniFrame;
+			m_AniNowFrame = m_NextFrame;
+			m_AniPrevFrame = m_AniNowFrame - 1;
+			m_AniNextFrame = m_AniNowFrame;
 
-			if (m_AniPrevFrame < 0)
-			{
-				m_AniPrevFrame = 0;
-			}
 			if (m_AniNextFrame > m_AniTotalFrame)
 			{
 				m_AniNextFrame = m_AniTotalFrame;
-				m_AniPrevFrame = m_AniTotalFrame - 1;
+				m_AniPrevFrame = m_AniNextFrame - 1;
 			}
 
 			// Position Data 변경 및 설정..
@@ -146,7 +139,7 @@ void Particle::Update()
 			}
 		}
 
-		m_OneTickFrame = (m_AniNowTime / m_AniFrame) / m_AniOneFrame;
+		m_OneTickFrame = (m_AniNowTime / m_AniNextFrame) * m_AniOneFrame;
 
 		// 파티클 데이터 보간..
 		if (m_AniType & COLOR_ANI)
@@ -189,16 +182,16 @@ void Particle::Play(const PARTICLE_DESC* particleDesc)
 
 	// 현재 파티클 Data 설정..
 	m_ParticleData->Playing = true;
+	m_ParticleData->TexPos = Zero_2;
 
 	// Texture Frame Data 설정..
-	m_TexOneFrame = particleDesc->LifeTime / (float)m_TexTotalFrame;
-	m_TexFrame = 1;
+	m_TexOneFrame = 1.0f / (particleDesc->LifeTime / (float)m_TexTotalFrame);
 	m_TexNowFrame = 0;
 
 	// Animation Frame Data 설정..
-	m_AniOneFrame = particleDesc->LifeTime / (float)m_AniTotalFrame;
-	m_AniFrame = 1;
-	m_AniNextFrame = 0;
+	m_AniOneFrame = 1.0f / (particleDesc->LifeTime / (float)m_AniTotalFrame);
+	m_AniNowFrame = 0;
+	m_AniNextFrame = 1;
 
 	// 파티클 색상 설정..
 	Vector4 maxColor = particleDesc->StartColor * m_SystemDesc->LifeTimeMaxColor;
@@ -286,11 +279,14 @@ void Particle::Play(const PARTICLE_DESC* particleDesc)
 	transform->SetPosition(m_PrevPos);
 
 	// Animation Type 설정..
-	if (m_OneColor != XMVectorZero())	m_AniType |= COLOR_ANI;
-	if (m_OnePos != XMVectorZero())		m_AniType |= POSITION_ANI;
-	if (m_OneRot != 0.0f)				m_AniType |= ROTATION_ANI;
-	if (m_OneScale != 0.0f)				m_AniType |= SCALE_ANI;
-	if (m_TexTotalFrame > 1)			m_AniType |= TEXTURE_ANI;
+	m_AniType = m_SystemDesc->AniType;
+	
+	// Animation Type 설정..
+	//if (m_OneColor != Zero_4)			m_AniType |= COLOR_ANI;
+	//if (m_OnePos != Zero_3)				m_AniType |= POSITION_ANI;
+	//if (m_OneRot != 0.0f)				m_AniType |= ROTATION_ANI;
+	//if (m_OneScale != 0.0f)				m_AniType |= SCALE_ANI;
+	//if (m_TexTotalFrame > 1)			m_AniType |= TEXTURE_ANI;
 }
 
 void Particle::Resume()
@@ -306,14 +302,19 @@ void Particle::Pause()
 void Particle::Stop()
 {
 	m_ParticleData->Playing = false;
-
 	m_Play = false;
 	m_Pause = false;
 	m_LifeTime = 0.0f;
 	m_TexNowTime = 0.0f;
-	m_TexFrame = 1;
 	m_AniNowTime = 0.0f;
-	m_AniFrame = 1;
+	m_AniNowFrame = 0;
+	m_AniNextFrame = 1;
+	m_ParticleData->TexPos = Zero_2;
+	m_ParticleData->Color = Zero_4;
+	m_ParticleData->Pos = Zero_3;
+	m_Transform->SetPosition(Zero_3);
+	m_Transform->SetRotate(Zero_3);
+	m_Transform->SetScale(Zero_3);
 }
 
 void Particle::DataUpdate()

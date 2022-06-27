@@ -220,11 +220,33 @@ void TestScene::CreateParicleController()
 	///// 등록된 모든 파티클의 실행되는 시간 (랜덤값이라 최대시간을 구해놓고 반환함)
 	//float max_time = m_ParticleController->GetTotalPlayTime();
 
-	//m_MonsterB = Instance();
-	//m_MonsterBFilter = m_MonsterB->AddComponent<MeshFilter>();
-	//m_MonsterBFilter->SetModelName("MonsterB+");
-	//m_MonsterBFilter->SetAnimationName("MonsterB+");
-	//m_MonsterB->GetTransform()->SetScale(3.0f, 3.0f, 3.0f);
+	m_Boss = Instance();
+	m_BossFilter = m_Boss->AddComponent<MeshFilter>();
+	m_BossFilter->SetModelName("BossB+");
+	m_BossFilter->SetAnimationName("BossB+");
+	m_Boss->GetTransform()->SetPosition(0, 0, 0);
+	m_Boss->GetTransform()->SetScale(1.5f);
+	AC = m_Boss->AddComponent<AnimationController>();
+	AC->SetIsBoneUpdate(true);
+	ACList.push_back(AC);
+
+	m_MonsterA = Instance();
+	m_MonsterAFilter = m_MonsterA->AddComponent<MeshFilter>();
+	m_MonsterAFilter->SetModelName("MonsterA+");
+	m_MonsterAFilter->SetAnimationName("MonsterA+");
+	m_MonsterA->GetTransform()->SetPosition(5, 7, -15);
+	m_MonsterA->GetTransform()->SetScale(1.2f, 1.2f, 1.2f);
+	AC = m_MonsterA->AddComponent<AnimationController>();
+	ACList.push_back(AC);
+
+	m_MonsterB = Instance();
+	m_MonsterBFilter = m_MonsterB->AddComponent<MeshFilter>();
+	m_MonsterBFilter->SetModelName("MonsterB+");
+	m_MonsterBFilter->SetAnimationName("MonsterB+");
+	m_Boss->GetTransform()->SetPosition(-15, 0, 0);
+	m_MonsterB->GetTransform()->SetScale(3.0f, 3.0f, 3.0f);
+	AC = m_MonsterB->AddComponent<AnimationController>();
+	ACList.push_back(AC);
 
 	/// Particle Factory를 통한 생성 방식
 	ParticleController* controller = nullptr;
@@ -403,11 +425,17 @@ void TestScene::ChangeCubeMap()
 
 	if (GetKey('1'))
 	{
+		GameObject* Hand = m_Boss->GetChildBone("t1.L");
+		m_ParticleControllerList[0]->gameobject->ChoiceParent(Hand);
+
 		//for (int i = 0; i < ACList.size(); i++)
 		//{
 		//	ACList[i]->Choice("idle");
 		//	ACList[i]->Play();
 		//}
+
+		ACList[0]->Choice("attack5L");
+		ACList[0]->Play();
 	}
 
 	/// Particle Controller
@@ -435,22 +463,22 @@ void TestScene::ChangeCubeMap()
 		m_ParticleController->Stop();
 	}
 
-	//if (GetKey(VK_LEFT))
-	//{
-	//	m_Controller->AddPosition_X(-dTime * 50.0f);
-	//}
-	//if (GetKey(VK_RIGHT))
-	//{
-	//	m_Controller->AddPosition_X(dTime * 50.0f);
-	//}
-	//if (GetKey(VK_UP))
-	//{
-	//	m_Controller->AddPosition_Z(dTime * 50.0f);
-	//}
-	//if (GetKey(VK_DOWN))
-	//{
-	//	m_Controller->AddPosition_Z(-dTime * 50.0f);
-	//}
+	if (GetKey(VK_LEFT))
+	{
+		m_Boss->transform->AddPosition_X(-dTime * 50.0f);
+	}
+	if (GetKey(VK_RIGHT))
+	{
+		m_Boss->transform->AddPosition_X(dTime * 50.0f);
+	}
+	if (GetKey(VK_UP))
+	{
+		m_Boss->transform->AddPosition_Z(dTime * 50.0f);
+	}
+	if (GetKey(VK_DOWN))
+	{
+		m_Boss->transform->AddPosition_Z(-dTime * 50.0f);
+	}
 	//if (GetKey('Q'))
 	//{
 	//	m_Controller->AddRotate_Y(-dTime * 50.0f);

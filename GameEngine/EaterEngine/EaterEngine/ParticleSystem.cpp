@@ -79,15 +79,8 @@ void ParticleSystem::Update()
 		{
 			// 지연시간이 끝나면 최초 실행..
 			m_ParticleState = PARTICLE_STATE::START_STATE;
-			m_TickTime = 0.0f;
 			m_NowDelayTime = 0.0f;
-
-			// 시작시 한개만 출력..
-			m_PlayCount = 1;
-
-			CreateParticle();
 		}
-
 		return;
 	}
 
@@ -114,10 +107,11 @@ void ParticleSystem::Update()
 		{
 			m_TickTime += dTime;
 			
-			// 시작시 한개만 출력..
-			m_PlayCount = 1;
-
-			CreateParticle();
+			if (m_RateOverTime <= m_TickTime)
+			{
+				m_PlayCount = (int)(m_TickTime / m_RateOverTime);
+				CreateParticle();
+			}
 
 			m_ParticleState = PARTICLE_STATE::START_STATE;
 			m_NowPlayTime = 10000.0f;
@@ -125,7 +119,7 @@ void ParticleSystem::Update()
 		else
 		{
 			// 후 실행 파티클 실행..
-			StartNextParticle();
+			//StartNextParticle();
 
 			// 초기화..
 			m_ParticleState = PARTICLE_STATE::END_STATE;
@@ -195,6 +189,21 @@ void ParticleSystem::SetStartForce(Vector3 force)
 	m_StartForce.SetRange(force);
 
 	m_RandomStartForce->SetRange(force, force);
+
+	if (force != Zero_3)
+	{
+		m_SystemDesc->AniType |= POSITION_ANI;
+	}
+	else
+	{
+		if (m_LifeTimeForce.m_Min == Zero_3 && m_LifeTimeForce.m_Max == Zero_3)
+		{
+			if (m_SystemDesc->AniType & POSITION_ANI)
+			{
+				m_SystemDesc->AniType ^= POSITION_ANI;
+			}
+		}
+	}
 }
 
 void ParticleSystem::SetStartForce(Vector3 minForce, Vector3 maxForce)
@@ -202,6 +211,21 @@ void ParticleSystem::SetStartForce(Vector3 minForce, Vector3 maxForce)
 	m_StartForce.SetRange(minForce, maxForce);
 
 	m_RandomStartForce->SetRange(minForce, maxForce);
+
+	if (minForce != Zero_3 || maxForce != Zero_3)
+	{
+		m_SystemDesc->AniType |= POSITION_ANI;
+	}
+	else
+	{
+		if (m_LifeTimeForce.m_Min == Zero_3 && m_LifeTimeForce.m_Max == Zero_3)
+		{
+			if (m_SystemDesc->AniType & POSITION_ANI)
+			{
+				m_SystemDesc->AniType ^= POSITION_ANI;
+			}
+		}
+	}
 }
 
 void ParticleSystem::SetStartColor(Vector4 color)
@@ -265,6 +289,21 @@ void ParticleSystem::SetLifeTimeForce(Vector3 force)
 	m_LifeTimeForce.SetRange(force);
 
 	m_RandomLifeTimeForce->SetRange(force, force);
+
+	if (force != Zero_3)
+	{
+		m_SystemDesc->AniType |= POSITION_ANI;
+	}
+	else
+	{
+		if (m_StartForce.m_Min == Zero_3 && m_StartForce.m_Max == Zero_3)
+		{
+			if (m_SystemDesc->AniType & POSITION_ANI)
+			{
+				m_SystemDesc->AniType ^= POSITION_ANI;
+			}
+		}
+	}
 }
 
 void ParticleSystem::SetLifeTimeForce(Vector3 minForce, Vector3 maxForce)
@@ -272,6 +311,21 @@ void ParticleSystem::SetLifeTimeForce(Vector3 minForce, Vector3 maxForce)
 	m_LifeTimeForce.SetRange(minForce, maxForce);
 	
 	m_RandomLifeTimeForce->SetRange(minForce, maxForce);
+
+	if (minForce != Zero_3 || maxForce != Zero_3)
+	{
+		m_SystemDesc->AniType |= POSITION_ANI;
+	}
+	else
+	{
+		if (m_StartForce.m_Min == Zero_3 && m_StartForce.m_Max == Zero_3)
+		{
+			if (m_SystemDesc->AniType & POSITION_ANI)
+			{
+				m_SystemDesc->AniType ^= POSITION_ANI;
+			}
+		}
+	}
 }
 
 void ParticleSystem::SetLifeTimeColor(Vector4 minColor, Vector4 maxColor, PARTICLE_LIFETIME_OPTION option)
@@ -282,6 +336,18 @@ void ParticleSystem::SetLifeTimeColor(Vector4 minColor, Vector4 maxColor, PARTIC
 
 	m_SystemDesc->LifeTimeMinColor = minColor / 255.0f;
 	m_SystemDesc->LifeTimeMaxColor = maxColor / 255.0f;
+
+	if (minColor == maxColor)
+	{
+		if (m_SystemDesc->AniType & COLOR_ANI)
+		{
+			m_SystemDesc->AniType ^= COLOR_ANI;
+		}
+	}
+	else
+	{
+		m_SystemDesc->AniType |= COLOR_ANI;
+	}
 
 	DataUpdate();
 }
@@ -303,6 +369,18 @@ void ParticleSystem::SetLifeTimeScale(float minScale, float maxScale, PARTICLE_L
 		m_SystemDesc->LifeTimeMaxScale = minScale;
 	}
 
+	if (minScale == maxScale)
+	{
+		if (m_SystemDesc->AniType & SCALE_ANI)
+		{
+			m_SystemDesc->AniType ^= SCALE_ANI;
+		}
+	}
+	else
+	{
+		m_SystemDesc->AniType |= SCALE_ANI;
+	}
+
 	DataUpdate();
 }
 
@@ -311,6 +389,11 @@ void ParticleSystem::SetLifeTimeRotation(float rot)
 	m_LifeTimeRotation.SetRange(rot);
 
 	m_RandomLifeTimeRotation->SetRange(rot, rot);
+
+	if (m_SystemDesc->AniType & ROTATION_ANI)
+	{
+		m_SystemDesc->AniType ^= ROTATION_ANI;
+	}
 }
 
 void ParticleSystem::SetLifeTimeRotation(float minRot, float maxRot)
@@ -318,6 +401,18 @@ void ParticleSystem::SetLifeTimeRotation(float minRot, float maxRot)
 	m_LifeTimeRotation.SetRange(minRot, maxRot);
 	
 	m_RandomLifeTimeRotation->SetRange(minRot, maxRot);
+
+	if (minRot == maxRot)
+	{
+		if (m_SystemDesc->AniType & ROTATION_ANI)
+		{
+			m_SystemDesc->AniType ^= ROTATION_ANI;
+		}
+	}
+	else
+	{
+		m_SystemDesc->AniType |= ROTATION_ANI;
+	}
 }
 
 void ParticleSystem::SetTextureTiling(int count_x, int count_y)
@@ -328,6 +423,18 @@ void ParticleSystem::SetTextureTiling(int count_x, int count_y)
 	m_SystemDesc->Tile_Width = count_x;
 	m_SystemDesc->Tile_Height = count_y;
 	m_SystemDesc->Total_Frame = count_x * count_y;
+
+	if (count_x > 1 || count_y > 1)
+	{
+		m_SystemDesc->AniType |= TEXTURE_ANI;
+	}
+	else
+	{
+		if (m_SystemDesc->AniType & TEXTURE_ANI)
+		{
+			m_SystemDesc->AniType ^= TEXTURE_ANI;
+		}
+	}
 
 	DataUpdate();
 }
@@ -365,15 +472,6 @@ void ParticleSystem::Play()
 
 	// 지연시간 재설정..
 	m_NowDelayTime = m_DelayTime;
-
-	// 지연시간이 설정되지 않았다면 실행 즉시 파티클 한개 출력..
-	if (m_DelayTime == 0.0f)
-	{
-		// 시작시 한개만 출력..
-		m_PlayCount = 1;
-
-		CreateParticle();
-	}
 }
 
 void ParticleSystem::Pause()
@@ -607,13 +705,15 @@ void ParticleSystem::CreateParticle()
 				m_ParticleDesc->LifeForce = m_RandomLifeTimeForce->GetRandomNumber();
 
 				particle->Play(m_ParticleDesc);
+				m_CreateCount++;
 				break;
 			}
 		}
 	}
 
 	// 체크용 현재 시간 초기화..
-	m_TickTime = 0.0f;
+	m_TickTime -= m_CreateCount * m_RateOverTime;
+	m_CreateCount = 0;
 }
 
 void ParticleSystem::StartNextParticle()
