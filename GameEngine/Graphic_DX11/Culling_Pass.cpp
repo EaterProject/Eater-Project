@@ -192,16 +192,24 @@ void Culling_Pass::OcclusionCullingQuery()
 	{
 		m_RenderData = CullingRenderMeshList[i];
 
-		// 모든 오브젝트 Draw 초기화..
-		m_RenderData->m_Draw = false;
+		// 현재 오클루터 설정 상태..
+		if (isCulling == true)
+		{
+			m_RenderData->m_Draw = true;
+			continue;
+		}
 
 		obj = m_RenderData->m_ObjectData;
 
 		// 활성화 되있는 Object만 Culling..
-		if (obj->IsCull == false || obj->IsActive == false) continue;
+		if (obj->IsActive == false)
+		{
+			m_RenderData->m_Draw = false;
+			continue;
+		}
 
-		// 현재 오클루터 설정 상태..
-		if (isCulling == true)
+		// 모든 오브젝트 Draw 초기화..
+		if (obj->IsCull == false)
 		{
 			m_RenderData->m_Draw = true;
 			continue;

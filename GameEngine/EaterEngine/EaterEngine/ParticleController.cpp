@@ -118,6 +118,15 @@ void ParticleController::PushParticle(std::string particle_key, ParticleSystem* 
 	SetTotalTime();
 }
 
+void ParticleController::PushParticle(std::string particle_key, GameObject* particle, float start_time)
+{
+	ParticleSystem* system = particle->GetComponent<ParticleSystem>();
+
+	if (system == nullptr) return;
+
+	PushParticle(particle_key, system, start_time);
+}
+
 void ParticleController::PopParticle(std::string particle_key)
 {
 	// 해당 노드 검색..

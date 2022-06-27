@@ -29,6 +29,8 @@
 
 #include "MiniMapSystem.h"
 
+#include "ParticleFactory.h"
+
 #include "./Profiler/Profiler.h"
 
 void TestScene::Awake()
@@ -42,7 +44,7 @@ void TestScene::Awake()
 
 
 	CreateMap();
-	CreateDissolve();
+	//CreateDissolve();
 	CreateParicleController();
 
 	BakeSkyLightMap("SkyLight_0", false);
@@ -179,44 +181,78 @@ void TestScene::CreateButton()
 
 void TestScene::CreateParicleController()
 {
-	/// 한 묶음의 파티클들을 생성
-	GameObject* particle_1 = Instance_Particle("Particle1", "BossPush_circle");
-	GameObject* particle_2 = Instance_Particle("Particle2", "BossPush_magical");
-	GameObject* particle_3 = Instance_Particle("Particle3", "BossProjectile_aura");
-	GameObject* particle_4 = Instance_Particle("Particle4", "BossProjectile_circle");
-	GameObject* particle_5 = Instance_Particle("Particle5", "BossProjectile_dot");
+	///// 한 묶음의 파티클들을 생성
+	//GameObject* particle_1 = Instance_Particle("Particle1", "BossPush_circle");
+	//GameObject* particle_2 = Instance_Particle("Particle2", "BossPush_magical");
+	//GameObject* particle_3 = Instance_Particle("Particle3", "BossProjectile_aura");
+	//GameObject* particle_4 = Instance_Particle("Particle4", "BossProjectile_circle");
+	//GameObject* particle_5 = Instance_Particle("Particle5", "BossProjectile_dot");
+	//
+	///// 파티클 컨트롤러를 통해 해당 파티클을 출력 시간과 함께 푸쉬
+	//Object = Instance_ParticleController();
+	//m_Controller = Object->GetTransform();
+	//m_ParticleController = Object->GetComponent<ParticleController>();
+	//m_ParticleController->PushParticle("Particle_1", particle_1->GetComponent<ParticleSystem>(), 0.0f);
+	//m_ParticleController->PushParticle("Particle_2", particle_2->GetComponent<ParticleSystem>(), 0.0f);
+	//m_ParticleController->PushParticle("Particle_3", particle_3->GetComponent<ParticleSystem>(), 1.0f);
+	//m_ParticleController->PushParticle("Particle_4", particle_4->GetComponent<ParticleSystem>(), 1.0f);
+	//m_ParticleController->PushParticle("Particle_5", particle_5->GetComponent<ParticleSystem>(), 1.0f);
+	//m_ParticleController->PushParticle("Particle_6", particle_1->GetComponent<ParticleSystem>(), 1.5f);
+	//m_ParticleController->PushParticle("Particle_7", particle_2->GetComponent<ParticleSystem>(), 1.5f);
+	//
+	///// 푸쉬할때 설정한 키값을 기반으로 해당 파티클을 가져올 수 있음
+	//ParticleSystem* system_1 = m_ParticleController->GetParticle("Particle_1");
+	//ParticleSystem* system_2 = m_ParticleController->GetParticle("Particle_2");
+	//ParticleSystem* system_3 = m_ParticleController->GetParticle("Particle_3");
+	//ParticleSystem* system_4 = m_ParticleController->GetParticle("Particle_4");
+	//ParticleSystem* system_5 = m_ParticleController->GetParticle("Particle_5");
+	//
+	///// 현재 파티클 컨트롤러 상태 가져오기
+	//PARTICLE_STATE state = m_ParticleController->GetState();
+	//
+	///// 파티클 별 상태 가져오기
+	//PARTICLE_STATE state_1 = system_1->GetState();
+	//PARTICLE_STATE state_2 = system_2->GetState();
+	//PARTICLE_STATE state_3 = system_3->GetState();
+	//PARTICLE_STATE state_4 = system_4->GetState();
+	//PARTICLE_STATE state_5 = system_5->GetState();
+	//
+	///// 등록된 모든 파티클의 실행되는 시간 (랜덤값이라 최대시간을 구해놓고 반환함)
+	//float max_time = m_ParticleController->GetTotalPlayTime();
 
-	/// 파티클 컨트롤러를 통해 해당 파티클을 출력 시간과 함께 푸쉬
-	Object = Instance_ParticleController();
-	m_Controller = Object->GetTransform();
-	m_ParticleController = Object->GetComponent<ParticleController>();
-	m_ParticleController->PushParticle("Particle_1", particle_1->GetComponent<ParticleSystem>(), 0.0f);
-	m_ParticleController->PushParticle("Particle_2", particle_2->GetComponent<ParticleSystem>(), 0.0f);
-	m_ParticleController->PushParticle("Particle_3", particle_3->GetComponent<ParticleSystem>(), 1.0f);
-	m_ParticleController->PushParticle("Particle_4", particle_4->GetComponent<ParticleSystem>(), 1.0f);
-	m_ParticleController->PushParticle("Particle_5", particle_5->GetComponent<ParticleSystem>(), 1.0f);
-	m_ParticleController->PushParticle("Particle_6", particle_1->GetComponent<ParticleSystem>(), 1.5f);
-	m_ParticleController->PushParticle("Particle_7", particle_2->GetComponent<ParticleSystem>(), 1.5f);
+	//m_MonsterB = Instance();
+	//m_MonsterBFilter = m_MonsterB->AddComponent<MeshFilter>();
+	//m_MonsterBFilter->SetModelName("MonsterB+");
+	//m_MonsterBFilter->SetAnimationName("MonsterB+");
+	//m_MonsterB->GetTransform()->SetScale(3.0f, 3.0f, 3.0f);
 
-	/// 푸쉬할때 설정한 키값을 기반으로 해당 파티클을 가져올 수 있음
-	ParticleSystem* system_1 = m_ParticleController->GetParticle("Particle_1");
-	ParticleSystem* system_2 = m_ParticleController->GetParticle("Particle_2");
-	ParticleSystem* system_3 = m_ParticleController->GetParticle("Particle_3");
-	ParticleSystem* system_4 = m_ParticleController->GetParticle("Particle_4");
-	ParticleSystem* system_5 = m_ParticleController->GetParticle("Particle_5");
+	/// Particle Factory를 통한 생성 방식
+	ParticleController* controller = nullptr;
+	controller = ParticleFactory::Get()->CreateParticleController(PARTICLE_TYPE::BossMelee);
+	m_ParticleControllerList.push_back(controller);
 
-	/// 현재 파티클 컨트롤러 상태 가져오기
-	PARTICLE_STATE state = m_ParticleController->GetState();
+	controller = ParticleFactory::Get()->CreateParticleController(PARTICLE_TYPE::BossProjectile);
+	m_ParticleControllerList.push_back(controller);
 
-	/// 파티클 별 상태 가져오기
-	PARTICLE_STATE state_1 = system_1->GetState();
-	PARTICLE_STATE state_2 = system_2->GetState();
-	PARTICLE_STATE state_3 = system_3->GetState();
-	PARTICLE_STATE state_4 = system_4->GetState();
-	PARTICLE_STATE state_5 = system_5->GetState();
+	controller = ParticleFactory::Get()->CreateParticleController(PARTICLE_TYPE::BossPush);
+	m_ParticleControllerList.push_back(controller);
 
-	/// 등록된 모든 파티클의 실행되는 시간 (랜덤값이라 최대시간을 구해놓고 반환함)
-	float max_time = m_ParticleController->GetTotalPlayTime();
+	controller = ParticleFactory::Get()->CreateParticleController(PARTICLE_TYPE::CounterAttack);
+	m_ParticleControllerList.push_back(controller);
+
+	controller = ParticleFactory::Get()->CreateParticleController(PARTICLE_TYPE::HitSmoke);
+	m_ParticleControllerList.push_back(controller);
+
+	controller = ParticleFactory::Get()->CreateParticleController(PARTICLE_TYPE::MonsterExplode);
+	m_ParticleControllerList.push_back(controller);
+
+	controller = ParticleFactory::Get()->CreateParticleController(PARTICLE_TYPE::PlayerAttack);
+	m_ParticleControllerList.push_back(controller);
+
+	controller = ParticleFactory::Get()->CreateParticleController(PARTICLE_TYPE::PlayerHeal);
+	m_ParticleControllerList.push_back(controller);
+
+	m_ParticleController = m_ParticleControllerList[ControllerIndex];
 }
 
 void TestScene::CreateDissolve()
@@ -274,8 +310,8 @@ void TestScene::CreateDissolve()
 	m_MonsterBFilter = m_MonsterB->AddComponent<MeshFilter>();
 	m_MonsterBFilter->SetModelName("MonsterB+");
 	m_MonsterBFilter->SetAnimationName("MonsterB+");
-	m_MonsterB->GetTransform()->SetPosition(-5, 7, -15);
 	m_MonsterB->GetTransform()->SetScale(3.0f, 3.0f, 3.0f);
+	m_MonsterB->GetTransform()->SetPosition(-5, 7, -15);
 	AC = m_MonsterB->AddComponent<AnimationController>();
 	ACList.push_back(AC);
 	TRList.push_back(m_MonsterB->GetTransform());
@@ -321,7 +357,6 @@ void TestScene::SetColorGrading()
 void TestScene::SetScreenBlur()
 {
 	// UI를 제외한 모든 랜더링이 끝난 이후 블러처리 실행..
-
 	bool blur = true;
 	UINT blur_count = 2;
 
@@ -368,51 +403,62 @@ void TestScene::ChangeCubeMap()
 
 	if (GetKey('1'))
 	{
-		for (int i = 0; i < ACList.size(); i++)
-		{
-			ACList[i]->Choice("idle");
-			ACList[i]->Play();
-		}
+		//for (int i = 0; i < ACList.size(); i++)
+		//{
+		//	ACList[i]->Choice("idle");
+		//	ACList[i]->Play();
+		//}
 	}
 
 	/// Particle Controller
 	if (GetKeyUp('2'))
 	{
-		m_ParticleController->Play();
+		ControllerIndex++;
+
+		if (ControllerIndex > m_ParticleControllerList.size() - 1)
+		{
+			ControllerIndex = 0;
+		}
+
+		m_ParticleController = m_ParticleControllerList[ControllerIndex];
 	}
 	if (GetKeyUp('3'))
 	{
-		m_ParticleController->Pause();
+		m_ParticleController->Play();
 	}
 	if (GetKeyUp('4'))
+	{
+		m_ParticleController->Pause();
+	}
+	if (GetKeyUp('5'))
 	{
 		m_ParticleController->Stop();
 	}
 
-	if (GetKey(VK_LEFT))
-	{
-		m_Controller->AddPosition_X(-dTime * 50.0f);
-	}
-	if (GetKey(VK_RIGHT))
-	{
-		m_Controller->AddPosition_X(dTime * 50.0f);
-	}
-	if (GetKey(VK_UP))
-	{
-		m_Controller->AddPosition_Z(dTime * 50.0f);
-	}
-	if (GetKey(VK_DOWN))
-	{
-		m_Controller->AddPosition_Z(-dTime * 50.0f);
-	}
-	if (GetKey('Q'))
-	{
-		m_Controller->AddRotate_Y(-dTime * 50.0f);
-	}
-	if (GetKey('E'))
-	{
-		m_Controller->AddRotate_Y(dTime * 50.0f);
-	}
+	//if (GetKey(VK_LEFT))
+	//{
+	//	m_Controller->AddPosition_X(-dTime * 50.0f);
+	//}
+	//if (GetKey(VK_RIGHT))
+	//{
+	//	m_Controller->AddPosition_X(dTime * 50.0f);
+	//}
+	//if (GetKey(VK_UP))
+	//{
+	//	m_Controller->AddPosition_Z(dTime * 50.0f);
+	//}
+	//if (GetKey(VK_DOWN))
+	//{
+	//	m_Controller->AddPosition_Z(-dTime * 50.0f);
+	//}
+	//if (GetKey('Q'))
+	//{
+	//	m_Controller->AddRotate_Y(-dTime * 50.0f);
+	//}
+	//if (GetKey('E'))
+	//{
+	//	m_Controller->AddRotate_Y(dTime * 50.0f);
+	//}
 
 
 	/// Color Grading Blending

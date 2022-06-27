@@ -27,6 +27,9 @@ void Eater_LoadParticle::LoadData(std::string& Path)
 		mParticle->RateOverTime = std::stof(EATER_GET_MAP(i, "RateOverTime"));
 		mParticle->Strength		= std::stof(EATER_GET_MAP(i, "Strength"));
 
+		mParticle->PlayTime		= std::stof(EATER_GET_MAP(i, "PlayTime"));
+		mParticle->Loop			= std::stoi(EATER_GET_MAP(i, "Loop"));
+
 		std::vector<float> Data;
 		EATER_GET_LIST_CHOICE(i, "Radius");
 		EATER_GET_LIST(&Data, 0);

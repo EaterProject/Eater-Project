@@ -209,6 +209,7 @@
     <ClInclude Include="MessageManager.h" />
     <ClInclude Include="MonsterComponent.h" />
     <ClInclude Include="ObjectFactory.h" />
+    <ClInclude Include="ParticleFactory.h" />
     <ClInclude Include="PlayerCamera.h" />
     <ClInclude Include="UICanvas.h" />
     <ClInclude Include="Resource.h" />
@@ -250,6 +251,7 @@
     <ClCompile Include="MessageManager.cpp" />
     <ClCompile Include="MonsterComponent.cpp" />
     <ClCompile Include="ObjectFactory.cpp" />
+    <ClCompile Include="ParticleFactory.cpp" />
     <ClCompile Include="PlayerCamera.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="UICanvas.cpp" />

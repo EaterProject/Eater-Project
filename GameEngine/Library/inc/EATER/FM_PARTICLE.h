@@ -13,8 +13,10 @@ public:
 	int Particle_LifeTime_Color_Type;
 	int Particle_LifeTime_Scale_Type;
 
-	int MaxParticle;
-	float DelayTime;
+	int MaxParticle = 0;
+	float DelayTime = 0.0f;
+	float PlayTime	= 0.0f;
+	bool Loop		= false;
 
 	///생성범위
 	float ShapeRadius_X;

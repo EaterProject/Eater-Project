@@ -137,6 +137,9 @@ GameObject* EditorToolScene::Create_Particle(std::string Name)
 	GameObject* mParticle	= Instance_Particle("Particle",Name);
 	mParticle->Name			= FindMeshName(Name);
 
+	ParticleSystem* system = mParticle->GetComponent<ParticleSystem>();
+	system->Play();
+
 	ObjectList.insert({ mParticle->Name, mParticle });
 
 	return mParticle;
@@ -419,7 +422,8 @@ GameObject* EditorToolScene::Create_BaseParticle()
 	particles->SetLifeTimeRotation(-15.0f, 15.0f);
 	particles->SetLifeTimeScale(1, 1, PARTICLE_LIFETIME_OPTION::NONE);
 	particles->SetLifeTimeColor(Vector4(255, 255, 255, 255), Vector4(255, 255, 255, 255), PARTICLE_LIFETIME_OPTION::NONE);
-	particles->SetPlayTime(1, true);
+	particles->SetPlayTime(1);
+	particles->SetLoop(true);
 	particles->Play();
 
 	ObjectList.insert({ obj->Name, obj });

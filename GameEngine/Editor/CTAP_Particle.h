@@ -60,6 +60,8 @@ public:
 	float RateOverTime;
 	CSliderCtrl Strength_Slider;
 	CString Strength_Str;
+	BOOL Loop;
+	float PlayTime;
 
 
 	int StartColor_Min_Alpha;
@@ -84,4 +86,8 @@ public:
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 	afx_msg void OnLifeColor_Option();
 	afx_msg void OnLifeScale_Option();
+	afx_msg void OnStart_Button();
+	afx_msg void OnPause_Button();
+	afx_msg void OnStop_Button();
+	afx_msg void OnLoop_Button();
 };

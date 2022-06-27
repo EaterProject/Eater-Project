@@ -81,11 +81,12 @@ public:
 	EATER_ENGINEDLL void SetLifeTimeRotation(float minRot, float maxRot);				// 파티클 생성 후 랜덤 회전 범위
 
 	EATER_ENGINEDLL void SetTextureTiling(int count_x, int count_y);					// 파티클 텍스쳐 나눌 개수
-	EATER_ENGINEDLL void SetPlayTime(float playTime, bool loop = false);				// 파티클 시스템 플레이 시간 및 반복 여부
+	EATER_ENGINEDLL void SetPlayTime(float playTime);									// 파티클 시스템 플레이 시간
+	EATER_ENGINEDLL void SetLoop(bool loop);											// 파티클 시스템 플레이 반복 여부
 	
 	EATER_ENGINEDLL void SetDiffuseName(std::string diffuseName);
 
-	EATER_ENGINEDLL void Play(bool loop = false);										// 파티클 시스템 플레이 시간 및 반복 여부
+	EATER_ENGINEDLL void Play();														// 파티클 시스템 플레이 시간 및 반복 여부
 	EATER_ENGINEDLL void Pause();														// 파티클 시스템 중지
 	EATER_ENGINEDLL void Stop();														// 파티클 시스템 중지
 

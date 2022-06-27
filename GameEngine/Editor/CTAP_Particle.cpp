@@ -29,6 +29,8 @@ CTAP_Particle::CTAP_Particle(CWnd* pParent /*=nullptr*/)
 	, Tiling_Y(0)
 	, RateOverTime(0)
 	, Strength_Str(_T(""))
+	, Loop(FALSE)
+	, PlayTime(0)
 {
 
 }
@@ -83,6 +85,8 @@ void CTAP_Particle::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT64, RateOverTime);
 	DDX_Control(pDX, IDC_SLIDER21, Strength_Slider);
 	DDX_Text(pDX, IDC_EDIT65, Strength_Str);
+	DDX_Check(pDX, IDC_CHECK1, Loop);
+	DDX_Text(pDX, IDC_EDIT2, PlayTime);
 }
 
 BOOL CTAP_Particle::OnInitDialog()
@@ -167,8 +171,11 @@ void CTAP_Particle::UpDateSetting()
 	//최대 카운터 셋팅
 	CString Number;
 	mParticleSystem->SetMaxParticles(MaxParticle);
-	mParticleSystem->SetDelayTime(DelayTime);
 	//딜레시 시간 셋팅
+	mParticleSystem->SetDelayTime(DelayTime);
+	
+	mParticleSystem->SetPlayTime(PlayTime);
+	mParticleSystem->SetLoop(Loop);
 
 	//범위 조정 셋팅
 	int Check;
@@ -291,6 +298,10 @@ BEGIN_MESSAGE_MAP(CTAP_Particle, CDialogEx)
 	ON_WM_ERASEBKGND()
 	ON_CBN_SELCHANGE(IDC_COMBO4, &CTAP_Particle::OnLifeColor_Option)
 	ON_CBN_SELCHANGE(IDC_COMBO3, &CTAP_Particle::OnLifeScale_Option)
+	ON_BN_CLICKED(IDC_BUTTON2, &CTAP_Particle::OnStart_Button)
+	ON_BN_CLICKED(IDC_BUTTON3, &CTAP_Particle::OnPause_Button)
+	ON_BN_CLICKED(IDC_BUTTON4, &CTAP_Particle::OnStop_Button)
+	ON_BN_CLICKED(IDC_CHECK1, &CTAP_Particle::OnLoop_Button)
 END_MESSAGE_MAP()
 
 
@@ -331,6 +342,9 @@ void CTAP_Particle::SetGameObject(ParticleSystem* ObjectParticleSystem)
 	//RateOverTime
 	auto mRateOverTime = mParticleSystem->GetRateOverTime();
 	RateOverTime = mRateOverTime;
+
+	Loop = mParticleSystem->GetLoop();
+	PlayTime = mParticleSystem->GetPlayTime();
 
 	Strength_Slider.SetPos((int)(mParticleSystem->GetStrength() * 10.0f));
 	Strength_Str = ChangeToCString(mParticleSystem->GetStrength());
@@ -632,4 +646,39 @@ void CTAP_Particle::OnLifeScale_Option()
 		break;
 	}
 
+}
+
+
+void CTAP_Particle::OnStart_Button()
+{
+	mParticleSystem->Play();
+}
+
+
+void CTAP_Particle::OnPause_Button()
+{
+	mParticleSystem->Pause();
+}
+
+
+void CTAP_Particle::OnStop_Button()
+{
+	mParticleSystem->Stop();
+}
+
+
+void CTAP_Particle::OnLoop_Button()
+{
+	UpdateData(TRUE);
+	if (Loop)
+	{
+		mParticleSystem->SetLoop(true);
+		Loop = true;
+	}
+	else
+	{
+		mParticleSystem->SetLoop(false);
+		Loop = false;
+	}
+	UpdateData(FALSE);
 }

@@ -50,7 +50,7 @@ public:
 	afx_msg void OnUpPosition_X_Button();
 	afx_msg void OnDownPosition_X_Button();
 	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
-	afx_msg void OnBnClickedButton2();
+	afx_msg void OnStart_Button();
 	afx_msg void OnBnClickedButton13();
 	afx_msg void OnBnClickedButton25();
 	afx_msg void OnBnClickedButton23();

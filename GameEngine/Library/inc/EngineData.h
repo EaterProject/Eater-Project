@@ -478,6 +478,8 @@ public:
 	~LoadParticleData() = default;
 public:
 	std::string TextrueName;
+	float   PlayTime		= 0.0f;
+	bool	Loop			= true;
 	int		RenderType		= 0;
 	int		ColorType		= 0;
 	int		ScaleType		= 0;

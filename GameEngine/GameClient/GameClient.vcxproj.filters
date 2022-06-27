@@ -133,6 +133,12 @@
     <Filter Include="소스 파일\Component\UI\UITitle">
       <UniqueIdentifier>{893c3c5a-30b9-44ee-ac17-9a98540e8911}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Manager\ParticleFactory">
+      <UniqueIdentifier>{e9414aef-f97e-4812-8898-47a144f5dbb7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\MiniMapSystem">
+      <UniqueIdentifier>{ba763701-298a-4402-9853-b3e5fc590089}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -235,7 +241,10 @@
       <Filter>소스 파일\Component\UI\UITitle</Filter>
     </ClInclude>
     <ClInclude Include="MiniMapSystem.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>소스 파일\Manager\MiniMapSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleFactory.h">
+      <Filter>소스 파일\Manager\ParticleFactory</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -327,7 +336,10 @@
       <Filter>소스 파일\Component\UI\UITitle</Filter>
     </ClCompile>
     <ClCompile Include="MiniMapSystem.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Manager\MiniMapSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleFactory.cpp">
+      <Filter>소스 파일\Manager\ParticleFactory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

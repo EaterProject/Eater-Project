@@ -332,9 +332,13 @@ void ParticleSystem::SetTextureTiling(int count_x, int count_y)
 	DataUpdate();
 }
 
-void ParticleSystem::SetPlayTime(float playTime, bool loop /*= false*/)
+void ParticleSystem::SetPlayTime(float playTime)
 {
 	m_PlayTime = playTime;
+}
+
+void ParticleSystem::SetLoop(bool loop)
+{
 	m_Looping = loop;
 }
 
@@ -343,10 +347,8 @@ void ParticleSystem::SetDiffuseName(std::string diffuseName)
 	m_DiffuseName = diffuseName;
 }
 
-void ParticleSystem::Play(bool loop)
+void ParticleSystem::Play()
 {
-	m_Looping = loop;
-
 	// 일시정지 중이라면 다시 재개..
 	if (m_Pause)
 	{

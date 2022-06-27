@@ -306,7 +306,8 @@ void Eater_LoadScene::Load_Component_Particle(int index, GameObject* Object)
 	mParticle->SetLifeTimeRotation(std::stof(Data[22]), std::stof(Data[23]));
 	mParticle->SetRateOverTime(std::stof(Data[24]));
 	mParticle->SetMeshName("Quad");
-	mParticle->SetPlayTime(1, false);
+	mParticle->SetPlayTime(1);
+	mParticle->SetLoop(false);
 }
 
 void Eater_LoadScene::Load_Component_Collider(int index, GameObject* Object)
