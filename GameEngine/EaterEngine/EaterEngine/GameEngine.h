@@ -64,9 +64,10 @@ public:
 public:
 	///오브젝트 관련(오브젝트 매니저)
 	GameObject* Instance(std::string ObjName = "GameObject");			//obj 생성 (빈 게임오브젝트)
-	GameObject* InstanceTerrain(std::string ObjName = "Terrain");
-	GameObject* InstanceParticle(std::string ObjName = "Particle",std::string FileName = "Default");
-	GameObject* InstanceCamera(std::string ObjName = "Camera");
+	GameObject* Instance_Terrain(std::string ObjName = "Terrain");
+	GameObject* Instance_Particle(std::string ObjName = "Particle",std::string FileName = "Default");
+	GameObject* Instance_ParticleController(std::string ObjName = "ParticleController");
+	GameObject* Instance_Camera(std::string ObjName = "Camera");
 	GameObject* Instance_Light(std::string ObjName = "Light", LIGHT_TYPE type = LIGHT_TYPE::POINT_LIGHT);
 	GameObject* Instance_UI(std::string ObjName = "UI");
 	GameObject* Instance_Image(std::string ObjName = "Image");

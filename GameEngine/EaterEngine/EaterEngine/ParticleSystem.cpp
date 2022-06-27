@@ -423,6 +423,11 @@ int ParticleSystem::GetMaxParticles()
 	return m_MaxParticle;
 }
 
+float ParticleSystem::GetTotalPlayTime()
+{
+	return m_PlayTime + m_DelayTime + m_StartLifeTime.m_Max;
+}
+
 float ParticleSystem::GetDelayTime()
 {
 	return m_DelayTime;

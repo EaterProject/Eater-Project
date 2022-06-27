@@ -31,6 +31,7 @@ extern "C" EATER_ENGINEDLL void GetWindowSize(int* X,int *Y);
 extern "C" EATER_ENGINEDLL GameObject*	Instance(std::string ObjName= "GameObject");		//오브젝트 생성
 extern "C" EATER_ENGINEDLL GameObject*	Instance_Terrain(std::string ObjName= "GameObject");	//터레인 오브젝트 생성
 extern "C" EATER_ENGINEDLL GameObject*	Instance_Particle(std::string ObjName= "GameObject",std::string FileName = "Default");//파티클 오브젝트 생성
+extern "C" EATER_ENGINEDLL GameObject*	Instance_ParticleController(std::string ObjName= "GameObject");//파티클 오브젝트 생성
 extern "C" EATER_ENGINEDLL GameObject*	Instance_Camera(std::string ObjName= "GameObject");//오브젝트 생성
 extern "C" EATER_ENGINEDLL GameObject*	Instance_Light(std::string ObjName= "Light", LIGHT_TYPE type = LIGHT_TYPE::DIRECTION_LIGHT);//오브젝트 생성
 extern "C" EATER_ENGINEDLL GameObject*	Instance_UI(std::string ObjName= "UI");//오브젝트 생성
