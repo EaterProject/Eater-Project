@@ -51,12 +51,6 @@ void Debug_Pass::Create(int width, int height)
 	g_Factory->CreateViewPort<VP_MRT6>(debug_ratio * 5.0f, debug_ratio * 5.0f, debug_ratio, debug_ratio, (float)width, (float)height);
 	g_Factory->CreateViewPort<VP_MRT7>(debug_ratio * 5.0f, debug_ratio * 4.0f, debug_ratio, debug_ratio, (float)width, (float)height);
 	g_Factory->CreateViewPort<VP_MRT8>(debug_ratio * 5.0f, debug_ratio * 3.0f, debug_ratio, debug_ratio, (float)width, (float)height);
-
-	g_Factory->CreateImage<DirectionalLight_Icon>("Icon/Icon_Directionlight.png");
-	g_Factory->CreateImage<PointLight_Icon>("Icon/Icon_Pointlight.png");
-	g_Factory->CreateImage<SpotLight_Icon>("Icon/Icon_Spotlight.png");
-	g_Factory->CreateImage<Particle_Icon>("Icon/Icon_Particle.png");
-	g_Factory->CreateImage<Camera_Icon>("Icon/Icon_Camera.png");
 }
 
 void Debug_Pass::Start(int width, int height)

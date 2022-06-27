@@ -6,15 +6,14 @@
 #include "GameManager.h"
 #include "EaterEngineAPI.h"
 
-//#include "Dwmapi.h"
-//#pragma comment( lib, "Dwmapi.lib" )
-
 //#define _CRTDBG_MAP_ALLOC
 //#include <cstdlib>
 //#include <crtdbg.h>
 //
 //#ifdef _DEBUG
-//#define new new( _NORMAL_BLOCK , __FILE__ , __LINE__ )
+//#define DEBUG_NEW new(_NORMAL_BLOCK, __FILE__, __LINE__)
+//
+//#define new DEBUG_NEW
 //#endif
 
 // 윈도 프로시저의 전방선언
@@ -23,6 +22,8 @@ LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 // 메인 함수
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR    lpCmdLine, _In_ int nCmdShow)
 {
+	//_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
 	GameManager* GM = new GameManager();
 
 	/// 윈도를 등록한다.

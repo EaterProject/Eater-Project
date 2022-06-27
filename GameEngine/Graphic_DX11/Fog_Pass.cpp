@@ -1,27 +1,16 @@
 #include "DirectDefine.h"
 #include "RenderPassBase.h"
 #include "ShaderBase.h"
-#include "VertexShader.h"
-#include "PixelShader.h"
-#include "GraphicState.h"
 #include "GraphicView.h"
 #include "GraphicResource.h"
-#include "DrawBuffer.h"
-#include "RenderTarget.h"
-#include "VertexDefine.h"
 #include "EngineData.h"
 #include "Fog_Pass.h"
 
-#include "MathDefine.h"
 #include "FactoryManagerBase.h"
 #include "ResourceManagerBase.h"
 #include "ShaderManagerBase.h"
 #include "ConstantBufferDefine.h"
 #include "ShaderResourceViewDefine.h"
-#include "RenderTargetDefine.h"
-#include "ViewPortDefine.h"
-#include "DrawBufferDefine.h"
-#include "RenderData.h"
 
 Fog_Pass::Fog_Pass()
 	:m_FogTimer(0.0f)
@@ -34,12 +23,6 @@ Fog_Pass::~Fog_Pass()
 
 }
 
-void Fog_Pass::Create(int width, int height)
-{
-	// Noise Texture »ý¼º..
-	g_Factory->CreateImage<gNoiseVolume>("Noise/NoiseVolume.dds");
-}
-
 void Fog_Pass::Start(int width, int height)
 {
 	// Fog Shader List Up..
@@ -50,11 +33,6 @@ void Fog_Pass::Start(int width, int height)
 
 	// Set Fog Shader Constant Buffer..
 	SetShaderConstantBuffer();
-}
-
-void Fog_Pass::OnResize(int width, int height)
-{
-
 }
 
 void Fog_Pass::Release()

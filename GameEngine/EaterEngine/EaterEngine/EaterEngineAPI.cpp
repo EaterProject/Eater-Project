@@ -129,6 +129,11 @@ void GetWindowSize(int* X, int* Y)
 	 gGameEngine->DestroyAll();
  }
 
+ TextureBuffer* GetTexture(std::string TextureName)
+ {
+	 return gGameEngine->GetTexture(TextureName);
+ }
+
 ///¾À °ü·Ã
  void ChoiceScene(std::string name)
 {

@@ -14,6 +14,8 @@ class RectTransform;
 class MiniMapSystem;
 class Button;
 class ParticleController;
+class TextureBuffer;
+class MaterialPropertyBlock;
 
 class TestScene : public Scene
 {
@@ -27,8 +29,6 @@ public:
 	void End() override;
 
 	void CreateMap();
-	void CreateUI();
-	void CreateParticle(float x, float y, float z);
 	void ChangeCubeMap();
 
 	void InButton();
@@ -37,11 +37,21 @@ public:
 	void UpButton();
 	void PressDownButton();
 
+public:
+	/// 각각의 생성 예시용
+	void CreateMiniMap();
+	void CreateButton();
+	void CreateParicleController();
+	void CreateDissolve();
+
+private:
+	void SetMaterialBlock(GameObject* object, std::vector<MaterialPropertyBlock*>& blocklist, bool alpha);
+
 private:
 	GameObject* Object;
-	GameObject* Object1;
-	GameObject* testobj;
-	GameObject* ParticleObj;
+	Transform* Tr;
+	MeshFilter* Filter;
+	AnimationController* AC;
 
 	MiniMapSystem* m_MiniMap;
 
@@ -49,28 +59,24 @@ private:
 	GameObject* m_MonsterA;
 	GameObject* m_MonsterB;
 
+	MeshFilter* m_BossFilter;
+	MeshFilter* m_MonsterAFilter;
+	MeshFilter* m_MonsterBFilter;
+
+	std::vector<TextureBuffer*> m_NoiseTextureList;
+	int TextureIndex = 0;
+	int TextureCount = 20;
+
+	std::vector<MaterialPropertyBlock*> m_BossBlock;
+	std::vector<MaterialPropertyBlock*> m_MonsterABlock;
+	std::vector<MaterialPropertyBlock*> m_MonsterBBlock;
+
 	Transform* m_Controller;
 	ParticleController* m_ParticleController;
 
-	Camera* Cam1;
-	Camera* Cam2;
-	Transform* Cam2TR;
-
+	RectTransform* Rect_Tr;
 	Button* button;
 
-	MeshFilter* meshfilter;
-	bool up;
-	bool IsPlus;
-
-	float factor = 1.0f;
-	float angle = 0.0f;
-
-	AnimationController* AC;
-	Image* IMG;
-	RectTransform* RTR;
-
-	std::vector<Slider*> SliderList;
-	std::vector<Image*> IMGList;
 	std::vector<Transform*> TRList;
 	std::vector<AnimationController*> ACList;
 };

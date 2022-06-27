@@ -18,6 +18,7 @@ class PhysRayCast;
 class NetworkManagerComponent;
 class LoadMeshData;
 class ModelData;
+class TextureBuffer;
 class RenderOption;
 
 extern "C" EATER_ENGINEDLL void EngineInitialize(HWND _g_hWnd,bool ON_DEBUG);	//GameEngine 시작
@@ -46,6 +47,9 @@ extern "C" EATER_ENGINEDLL	int			FindTagNumber(std::string TagName);
 extern "C" EATER_ENGINEDLL GameObject*	FindGameObjectName(std::string ObjectName);
 extern "C" EATER_ENGINEDLL void			Destroy(GameObject* obj);//오브젝트 삭제
 extern "C" EATER_ENGINEDLL void			DestroyAll();//오브젝트 삭제
+
+///텍스쳐 찾기
+extern "C" EATER_ENGINEDLL TextureBuffer* GetTexture(std::string TextureName);
 
 ///스크린 생성하기
 template<typename T>

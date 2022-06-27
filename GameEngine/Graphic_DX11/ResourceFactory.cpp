@@ -33,6 +33,7 @@
 #include "MathDefine.h"
 #include "GeometryGenerator.h"
 #include "MathHelper.h"
+
 #include "Profiler/Profiler.h"
 
 #define MAX_VECTOR3(v3) max(max(abs(v3.x), abs(v3.y)), abs(v3.z))
@@ -58,6 +59,7 @@ void GraphicResourceFactory::Create(int width, int height)
 	CreateTextureRenderTarget(width, height);
 
 	/// Global Resource 持失..
+	CreateGraphicResource();
 	CreateDepthStencilStates();
 	CreateRasterizerStates();
 	CreateSamplerStates();
@@ -1196,6 +1198,26 @@ void GraphicResourceFactory::CreateTextureRenderTarget(UINT width, UINT height)
 	CreateRenderTexture(RT_OutPut1::GetName(), RT_OutPut1::GetHashCode(), &texDesc, nullptr, &rtvDesc, &srvDesc, &uavDesc);
 	CreateRenderTexture(RT_OutPut2::GetName(), RT_OutPut2::GetHashCode(), &texDesc, nullptr, &rtvDesc, &srvDesc, &uavDesc);
 	CreateRenderTexture(RT_OutPut3::GetName(), RT_OutPut3::GetHashCode(), &texDesc, nullptr, &rtvDesc, &srvDesc, &uavDesc);
+}
+
+void GraphicResourceFactory::CreateGraphicResource()
+{
+	// Icon 持失..
+	CreateImage(DirectionalLight_Icon::GetName(), DirectionalLight_Icon::GetHashCode(), "Icon/Icon_Directionlight.png");
+	CreateImage(PointLight_Icon::GetName(), PointLight_Icon::GetHashCode(), "Icon/Icon_Pointlight.png");
+	CreateImage(SpotLight_Icon::GetName(), SpotLight_Icon::GetHashCode(), "Icon/Icon_Spotlight.png");
+	CreateImage(Particle_Icon::GetName(), Particle_Icon::GetHashCode(), "Icon/Icon_Particle.png");
+	CreateImage(Camera_Icon::GetName(), Camera_Icon::GetHashCode(), "Icon/Icon_Camera.png");
+
+	// Noise Texture 持失..
+	CreateImage(gNoiseVolume::GetName(), gNoiseVolume::GetHashCode(), "Noise/NoiseVolume.dds");
+
+	// Default SkyCube 持失..
+	CreateImage(gDefalut_SkyCube::GetName(), gDefalut_SkyCube::GetHashCode(), "LUT/Default_LUT.dds");
+
+	// Default LookUpTable 持失..
+	CreateImage(gDefalut_LUT::GetName(), gDefalut_LUT::GetHashCode(), "LUT/Default_LUT.dds");
+
 }
 
 template<>

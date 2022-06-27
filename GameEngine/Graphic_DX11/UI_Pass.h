@@ -6,7 +6,6 @@ public:
 	~UI_Pass();
 	
 public:
-	void Create(int width, int height) override;
 	void Start(int width, int height) override;
 
 	void OnResize(int width, int height) override;

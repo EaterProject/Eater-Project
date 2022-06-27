@@ -365,6 +365,9 @@ void ShaderManager::AddConstantBufferUsage()
 	PushConstantBufferUsage<CB_OutLineStaticMesh>(CBUFFER_USAGE::DYNAMIC);
 	PushConstantBufferUsage<CB_OutLineSkinMesh>(CBUFFER_USAGE::DYNAMIC);
 
+	// Dissolve
+	PushConstantBufferUsage<CB_DissolveOption>(CBUFFER_USAGE::DYNAMIC);
+
 	// Debug..
 	PushConstantBufferUsage<CB_DebugObject>(CBUFFER_USAGE::DYNAMIC);
 	PushConstantBufferUsage<CB_DebugOption>(CBUFFER_USAGE::DYNAMIC);

@@ -110,30 +110,52 @@ class MaterialProperty
 public:
 	bool IsRelocation = false;			
 
-	bool Alpha = false;					// Alpha Material
-	bool OutLine = false;				// Out Line
+	UINT SkyLightIndex = 0;									// SkyLight Index
 
-	UINT SkyLightIndex = 0;				// SkyLight Index
+	bool Alpha = false;										// Alpha 여부
+	float AlphaFactor = 1.0f;								// Alpha 수치
 
-	Vector3 AddColor = Vector3(0.0f, 0.0f, 0.0f);	// Add Color
+	Vector3 AddColor = Vector3(0.0f, 0.0f, 0.0f);			// Add Color
 
-	float AlphaFactor = 1.0f;			// Alpha 수치
+	float RoughnessFactor = 0.0f;							// Roughness 강도 (0 ~ 1)
+	float MetallicFactor = 0.0f;							// Metallic 강도 (0 ~ 1)
 
-	float RoughnessFactor = 0.0f;		// Roughness 강도 (0 ~ 1)
-	float MetallicFactor = 0.0f;		// Metallic 강도 (0 ~ 1)
+	Vector3 EmissiveColor = Vector3(1.0f, 1.0f, 1.0f);		// Emissive Color
+	float EmissiveFactor = 1.0f;							// Emissive 강도
 
-	Vector3 EmissiveColor = Vector3(1.0f, 1.0f, 1.0f);	// Emissive Color
-	float EmissiveFactor = 1.0f;		// Emissive 강도
+	Vector3 LimLightColor = Vector3(0.0f, 0.0f, 0.0f);		// LimLight Color
+	float LimLightFactor = 0.0f;							// LimLight 강도
+	float LimLightWidth = 0.0f;								// LimLight 범위
 
-	Vector3 LimLightColor = Vector3(0.0f, 0.0f, 0.0f);	// LimLight Color
-	float LimLightFactor = 0.0f;		// LimLight 강도
-	float LimLightWidth = 0.0f;			// LimLight 범위
+	bool OutLine = false;									// Out Line 여부
+	Vector3 OutLineColor = Vector3(1.0f, 1.0f, 1.0f);		// OutLine Color
+	float OutLineWidth = 0.0f;								// OutLine 범위
 
-	Vector3 OutLineColor = Vector3(1.0f, 1.0f, 1.0f);	// OutLine Color
-	float OutLineWidth = 0.0f;			// OutLine 범위
+	bool Dissolve = false;									// Dissolve 여부
+	TextureBuffer* DissolveTexture;							// Dissolve Texture
+	DISSOLVE_OPTION DissolveOption;							// Dissolve 옵션
+	Vector3 DissolveEdgecolor = Vector3(1.0f, 0.0f, 0.0f);	// Dissolve 영역 색상
+	float DissolveTimer = 0.0f;								// Dissolve 현재 시간
+	float DissolvePlayTime = 2.0f;							// Dissolve 총 시간
+	float DissolveThickness = 0.01f;						// Dissolve 경계 두께 (0.0 ~ 1.0)
+	float DissolveOuterFactor = 25.0f;						// Dissolve 경계 바깥쪽 강도 (0.0 ~ 25.0)
+	float DissolveInnerFactor = 100.0f;						// Dissolve 경계 안쪽 강도 (0.0 ~ 10.0)
 
-	Vector2 Tile;						// X, Y Tiling
-	Matrix TexTM;						// Material의 텍스쳐 행렬
+	Vector2 Tile;											// X, Y Tiling
+	Matrix TexTM;											// Material의 텍스쳐 행렬
+
+public:
+	void SetDissolve(DISSOLVE_OPTION option, TextureBuffer* dissolve, Vector3 color, float colorFactor, float playTime, float thickness, float outerFactor, float innerFactor)
+	{
+		Dissolve = true;
+		DissolveTexture = dissolve;
+		DissolveOption = option;
+		DissolveEdgecolor = color * colorFactor;
+		DissolvePlayTime = playTime; 
+		DissolveThickness = thickness; 
+		DissolveOuterFactor = outerFactor; 
+		DissolveInnerFactor = innerFactor;
+	}
 
 public:
 	MaterialProperty& operator=(const MaterialProperty& material_property)
@@ -148,7 +170,7 @@ public:
 class MaterialPropertyBlock : public MaterialProperty 
 {
 public:
-	int Queue_Index;
+	int Queue_Index = -1;
 };
 
 // Material Buffer

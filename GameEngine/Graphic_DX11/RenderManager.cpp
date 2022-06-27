@@ -78,7 +78,7 @@ RenderManager::RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, I
 	CREATE_PASS(Fog_Pass,		m_Fog);
 	CREATE_PASS(Culling_Pass,	m_Culling);
 	CREATE_PASS(Picking_Pass,	m_Picking);
-	CREATE_PASS(OutLine_Pass,	m_OutLine);
+	//CREATE_PASS(OutLine_Pass,	m_OutLine);
 	CREATE_PASS(Combine_Pass,	m_Combine);
 	CREATE_PASS(Debug_Pass,		m_Debug);
 
@@ -420,6 +420,9 @@ void RenderManager::PopMaterialBlockInstance(MeshData* instance)
 	RenderData* render_data = m_Converter->GetRenderData(instance->Object_Data->ObjectIndex);
 
 	if (render_data == nullptr) return;
+
+	// 등록된 Material Block이 아닌경우..
+	if (material_block->Queue_Index == -1) return;
 
 	// 해당 Block Alpha 상태에 따른 삭제..
 	if (material_block->Alpha)
@@ -936,6 +939,9 @@ void RenderManager::PushMaterialBlockInstance()
 
 		// 해당 Material Block 추출..
 		MaterialPropertyBlock* material_block = originMeshData->Object_Data->Material_Block;
+
+		// 해당 Material Block이 이미 등록된 경우..
+		if (material_block->Queue_Index != -1) return;
 
 		// 해당 Block Alpha 상태에 따른 삽입..
 		if (material_block->Alpha)

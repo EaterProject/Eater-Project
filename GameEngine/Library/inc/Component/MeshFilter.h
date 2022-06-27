@@ -62,8 +62,8 @@ public:
 
 	EATER_ENGINEDLL void SetSkyLightIndex(int skyLightIndex);
 
-	EATER_ENGINEDLL void SetMaterialPropertyBlock(bool enable);
-	EATER_ENGINEDLL void SetMaterialPropertyBlock(bool enable, bool alpha);
+	EATER_ENGINEDLL void SetMaterialPropertyBlock(bool enable);					// Alpha 변경 없는 Property Block 생성
+	EATER_ENGINEDLL void SetMaterialPropertyBlock(bool enable, bool alpha);		// Alpha 변경 있는 Property Block 생성
 
 	EATER_ENGINEDLL std::string GetBufferName();
 	EATER_ENGINEDLL std::string GetModelName();

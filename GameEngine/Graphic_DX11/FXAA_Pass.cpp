@@ -31,11 +31,6 @@ FXAA_Pass::~FXAA_Pass()
 
 }
 
-void FXAA_Pass::Create(int width, int height)
-{
-
-}
-
 void FXAA_Pass::Start(int width, int height)
 {
 	m_Screen_VS = g_Shader->GetShader("Screen_VS");

@@ -31,8 +31,8 @@ void Loading::Update()
 {
 	if (ThreadRun == false)
 	{
-		ChoiceScene("inGame");
-		//ChoiceScene("TestScene");
+		//ChoiceScene("inGame");
+		ChoiceScene("TestScene");
 	}
 }
 
@@ -48,6 +48,7 @@ void Loading::ThreadFunction()
 	Load("../Assets/Texture/Terrain");
 	Load("../Assets/Texture/Material");
 	Load("../Assets/Texture/Particle");
+	Load("../Assets/Texture/Noise");
 
 	Load("../Assets/Texture/UI/Font");
 	Load("../Assets/Texture/UI/InGame");
