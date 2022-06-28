@@ -57,13 +57,13 @@ void ManaStone::SetUp()
 
 void ManaStone::Start()
 {
-	mSetting.Setting(this->gameobject);
+	//mSetting.Setting(this->gameobject);
 }
 
 void ManaStone::Update()
 {
 	mRigidbody->SetVelocity(0, 0, 0);
-	mSetting.LimLightUpdate(1);
+	//mSetting.LimLightUpdate(1);
 }
 
 void ManaStone::SetMonsterCount(int MonsterA, int MonsterB)
@@ -167,8 +167,8 @@ void ManaStone::OnTriggerStay(GameObject* Obj)
 		{
 			Sound_Play_SFX("ManaLeaf_Hit");
 			MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_ATTACK_OK);
-			mSetting.SetLimlightSetting(MeshFilterSetting::COLOR_TYPE::RED, 2.0f, 2.0f);
-			mSetting.SetLimlightSettingMax(MeshFilterSetting::COLOR_TYPE::RED, 0.0f, 0.0f);
+			//mSetting.SetLimlightSetting(MeshFilterSetting::COLOR_TYPE::RED, 2.0f, 2.0f);
+			//mSetting.SetLimlightSettingMax(MeshFilterSetting::COLOR_TYPE::RED, 0.0f, 0.0f);
 
 			HP -= Player::GetPlayerPower();
 			if (HP <= 0)
