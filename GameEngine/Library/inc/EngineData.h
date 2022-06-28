@@ -38,18 +38,18 @@ public:
 	float AO_FadeEnd = 2.0f;							// AO 너비를 결정하는 끝 지점		(0.0 ~ 10.0)
 
 	// Fog Option
-	Vector3 FOG_Color = Vector3(0.9f, 0.745f, 0.35f);	// Fog 색상
-	float FOG_MoveSpeed = 0.05f;						// Fog 움직이는 속도				(0.0 ~ 1.0)
-	float FOG_StartDistance = 50.0f;					// Fog 시작 거리					(0.0 ~ 1000.0)
-	float FOG_DistanceOffset = 8.0f;					// Fog 거리 오프셋				(0.0 ~ 100.0)
+	Vector3 FOG_Color = Vector3(0.85f, 0.57f, 0.365f);	// Fog 색상
+	float FOG_MoveSpeed = 0.07f;						// Fog 움직이는 속도				(0.0 ~ 1.0)
+	float FOG_StartDistance = 33.0f;					// Fog 시작 거리					(0.0 ~ 1000.0)
+	float FOG_DistanceOffset = 5.0f;					// Fog 거리 오프셋				(0.0 ~ 100.0)
 	float FOG_DistanceValue = 5.0f;						// Fog 거리 범위					(0.0 ~ 100.0)
 	float FOG_HeightOffset = 3.0f;						// Fog 높이 오프셋				(0.0 ~ 100.0)
-	float FOG_HeightValue = 3.0f;						// Fog 높이 범위					(0.0 ~ 100.0)
+	float FOG_HeightValue = 5.0f;						// Fog 높이 범위					(0.0 ~ 100.0)
 
 	// Bloom Option
 	float BLOOM_Threshold_Min = 1.0f;					// Bloom 추출 최소 영역			(0.0 ~ 2.0)
 	float BLOOM_Threshold_Max = 100.0f;					// Bloom 추출 최대 영역			(10.0 ~ 1000.0)
-	float BLOOM_Factor = 0.25f;							// Bloom 혼합률					(0.0 ~ 1.0)
+	float BLOOM_Factor = 0.15f;							// Bloom 혼합률					(0.0 ~ 1.0)
 
 	// SkyCube Option
 	float SkyCube_Size = 500.0f;						// SkyCube Map 크기				(1.0 ~ 5000.0)

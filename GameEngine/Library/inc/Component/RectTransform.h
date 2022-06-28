@@ -22,6 +22,14 @@ public:
 	EATER_ENGINEDLL RectTransform();
 	~RectTransform();
 
+private:
+	enum UPDATE_TYPE
+	{
+		NONE,
+		ONECE,
+		ALWAYS,
+	};
+
 public:
 	void TransformUpdate() override;
 
@@ -45,7 +53,7 @@ public:
 	EATER_ENGINEDLL void SetTargetRotation(bool enable);
 	EATER_ENGINEDLL void SetTargetRatio(float x, float y);
 	EATER_ENGINEDLL void SetTargetRatio(DirectX::SimpleMath::Vector2 ratio);
-	
+
 	EATER_ENGINEDLL void SetRotation(float angle);
 	EATER_ENGINEDLL void SetRotation(float x, float y, float z);
 	EATER_ENGINEDLL void SetRotation(DirectX::SimpleMath::Vector3 rot);
@@ -69,6 +77,7 @@ private:
 	void Resize(int width, int height);
 
 private:
+	void UpdateTransform();
 	void SetPositionOffset();
 
 public:
@@ -87,6 +96,8 @@ public:
 	DirectX::SimpleMath::Vector2 Scale;
 
 private:
+	UPDATE_TYPE UpdateType;
+
 	DirectX::SimpleMath::Vector2 Screen_Resize;
 	DirectX::SimpleMath::Vector2 Screen_Origin;
 	DirectX::SimpleMath::Vector2 Screen_Ratio;

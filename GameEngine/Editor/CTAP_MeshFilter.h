@@ -87,6 +87,7 @@ public:
 
 	CMFCColorButton Custom_AddColor_Button;
 	CMFCColorButton Custom_LimLightColor_Button;
+	CMFCColorButton Custum_Emissive_Color;
 
 	afx_msg void OnMaterialName_Button();
 	afx_msg void OnBnClickedButton24();
@@ -101,4 +102,5 @@ public:
 	CSpinButtonCtrl SkyLight_Spin;
 	BOOL mAlpha;
 	afx_msg void OnAlphaButton();
+	afx_msg void OnCustom_EmissiveColor_Button();
 };

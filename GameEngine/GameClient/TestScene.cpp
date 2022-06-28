@@ -44,8 +44,9 @@ void TestScene::Awake()
 
 
 	CreateMap();
-	//CreateDissolve();
-	CreateParicleController();
+	CreateMiniMap();
+	CreateDissolve();
+	//CreateParicleController();
 
 	BakeSkyLightMap("SkyLight_0", false);
 	BakeSkyLightMap("SkyLight_1", false);
@@ -465,18 +466,34 @@ void TestScene::ChangeCubeMap()
 
 	if (GetKey(VK_LEFT))
 	{
+		for (int i = 0; i < TRList.size(); i++)
+		{
+			TRList[i]->AddPosition_X(-dTime * 50.0f);
+		}
 		m_Boss->transform->AddPosition_X(-dTime * 50.0f);
 	}
 	if (GetKey(VK_RIGHT))
 	{
+		for (int i = 0; i < TRList.size(); i++)
+		{
+			TRList[i]->AddPosition_X(dTime * 50.0f);
+		}
 		m_Boss->transform->AddPosition_X(dTime * 50.0f);
 	}
 	if (GetKey(VK_UP))
 	{
+		for (int i = 0; i < TRList.size(); i++)
+		{
+			TRList[i]->AddPosition_Z(dTime * 50.0f);
+		}
 		m_Boss->transform->AddPosition_Z(dTime * 50.0f);
 	}
 	if (GetKey(VK_DOWN))
 	{
+		for (int i = 0; i < TRList.size(); i++)
+		{
+			TRList[i]->AddPosition_Z(-dTime * 50.0f);
+		}
 		m_Boss->transform->AddPosition_Z(-dTime * 50.0f);
 	}
 	//if (GetKey('Q'))

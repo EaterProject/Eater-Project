@@ -45,7 +45,7 @@ void AnimationController::Update()
 	AnimationFrameIndex();
 
 	// Bone Transform Update 여부..
-	if (IsBoneUpdate)
+	//if (IsBoneUpdate)
 	{
 		//Animator 컨퍼넌트들의 Play함수를 실행시킨다
 		int Size = AnimatorList.size();

@@ -278,6 +278,7 @@ void CTAP_MeshFilter::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT28, SkyLight_Index);
 	DDX_Control(pDX, IDC_SPIN3, SkyLight_Spin);
 	DDX_Check(pDX, IDC_CHECK1, mAlpha);
+	DDX_Control(pDX, IDC_MFCCOLORBUTTON3, Custum_Emissive_Color);
 }
 
 BOOL CTAP_MeshFilter::OnInitDialog()
@@ -339,6 +340,7 @@ BEGIN_MESSAGE_MAP(CTAP_MeshFilter, CDialogEx)
 	ON_BN_CLICKED(IDC_MFCCOLORBUTTON2, &CTAP_MeshFilter::OnCustom_LimLightColor_Button)
 	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN3, &CTAP_MeshFilter::OnDeltaposSpin3)
 	ON_BN_CLICKED(IDC_CHECK1, &CTAP_MeshFilter::OnAlphaButton)
+	ON_BN_CLICKED(IDC_MFCCOLORBUTTON3, &CTAP_MeshFilter::OnCustom_EmissiveColor_Button)
 END_MESSAGE_MAP()
 
 LRESULT CTAP_MeshFilter::OnUserFun(WPARAM wParam, LPARAM lparam)
@@ -757,5 +759,21 @@ void CTAP_MeshFilter::OnAlphaButton()
 		UpdateData(true);
 		mMaterial->SetAlpha(mAlpha);
 		UpdateData(false);
+	}
+}
+
+
+void CTAP_MeshFilter::OnCustom_EmissiveColor_Button()
+{
+	COLORREF mRGB = Custum_Emissive_Color.GetColor();
+	float R = GetRValue(mRGB) / 255.0f;
+	float G = GetGValue(mRGB) / 255.0f;
+	float B = GetBValue(mRGB) / 255.0f;
+
+	if (mMaterial != nullptr && mMaterial->m_MaterialData != nullptr)
+	{
+		mMaterial->m_MaterialData->Material_Property->EmissiveColor.x = R;
+		mMaterial->m_MaterialData->Material_Property->EmissiveColor.y = G;
+		mMaterial->m_MaterialData->Material_Property->EmissiveColor.z = B;
 	}
 }
