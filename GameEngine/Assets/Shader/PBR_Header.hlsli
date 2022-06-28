@@ -143,7 +143,7 @@ float3 PBR_PointLight(
     PointLight light;
     
     [unroll]
-    for (int i = 0; i < lightCount; i++)
+    for (uint i = 0; i < lightCount; i++)
     {
         light = lights[i];
         
@@ -196,7 +196,7 @@ float3 PBR_SpotLight(
     SpotLight light;
     
     [unroll]
-    for (int i = 0; i < lightCount; i++)
+    for (uint i = 0; i < lightCount; i++)
     {
         light = lights[i];
         

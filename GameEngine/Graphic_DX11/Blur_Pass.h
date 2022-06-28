@@ -15,12 +15,15 @@ public:
 
 	void RenderUpdate(RenderTexture* input, RenderTexture* output, UINT count);
 	void RenderUpdate(RenderTexture* input, UINT count);
-
+	void ScreenBlur(UINT count);
 private:
 	ComputeShader* m_BlurHorizon_CS;
 	ComputeShader* m_BlurVertical_CS;
 
 	RenderTexture* m_Blur_RT;
+
+	ID3D11ShaderResourceView* m_BlurSRV;
+	ID3D11UnorderedAccessView* m_BlurUAV;
 
 	ID3D11ShaderResourceView* m_NullSRV = nullptr;
 	ID3D11UnorderedAccessView* m_NullUAV = nullptr;

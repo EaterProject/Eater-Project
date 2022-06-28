@@ -6,7 +6,6 @@ public:
 	~Combine_Pass();
 
 public:
-	void Create(int width, int height) override;
 	void Start(int width, int height) override;
 	void OnResize(int width, int height) override;
 	void Release() override;
@@ -19,7 +18,7 @@ public:
 	void SetColorGradingDefaultTexture();
 	void SetColorGradingBaseTexture(TextureBuffer* lut_resource);
 	void SetColorGradingBlendTexture(TextureBuffer* lut_resource);
-	void SetColorGradingFactor(float factor);
+	void SetColorGradingBlendFactor(float blend_factor);
 
 private:
 	void SetShaderList();
@@ -27,7 +26,7 @@ private:
 	void SetConstantBuffer();
 
 public:
-	float m_ColorGradingFactor = 1.0f;
+	float m_ColorGradingBlendFactor = 0.0f;
 
 private:
 	VertexShader* m_Screen_VS;

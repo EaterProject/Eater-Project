@@ -76,6 +76,13 @@ typedef enum ROTATE_ANGLE
 	ROTATE_270
 }ROTATE_ANGLE;
 
+// Shader Type
+typedef enum DISSOLVE_OPTION
+{
+	DISSOLVE_FADEOUT,		// 서서히 사라짐
+	DISSOLVE_FADEIN			// 서서히 나타남
+}DISSOLVE_OPTION;
+
 // Particle Animation Option
 typedef enum PARTICLE_ANIMATION_OPTION : UINT
 {
@@ -107,10 +114,10 @@ typedef enum PARTICLE_LIFETIME_OPTION
 // Particle State
 typedef enum PARTICLE_STATE
 {
-	START_STATE,
-	PLAY_STATE,
-	PLAY_STAY_STATE,
-	END_STATE
+	START_STATE,		// 파티클 시작
+	PLAY_STATE,			// 파티클 진행중
+	PLAY_STAY_STATE,	// 파티클 생성 끝, 생성된 파티클 끝나길 기다리는 시간
+	END_STATE			// 최종적으로 파티클이 전부 끝난 경우
 }PARTICLE_STATE;
 
 // Object Type

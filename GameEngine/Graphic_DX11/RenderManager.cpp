@@ -78,7 +78,7 @@ RenderManager::RenderManager(ID3D11Graphic* graphic, IFactoryManager* factory, I
 	CREATE_PASS(Fog_Pass,		m_Fog);
 	CREATE_PASS(Culling_Pass,	m_Culling);
 	CREATE_PASS(Picking_Pass,	m_Picking);
-	CREATE_PASS(OutLine_Pass,	m_OutLine);
+	//CREATE_PASS(OutLine_Pass,	m_OutLine);
 	CREATE_PASS(Combine_Pass,	m_Combine);
 	CREATE_PASS(Debug_Pass,		m_Debug);
 
@@ -275,12 +275,18 @@ void RenderManager::RenderSetting()
 	ApplyOptionFunction();
 
 	// 현재 Render Option 저장..
-	m_NowRenderOption = *RenderPassBase::g_RenderOption;
+	m_GraphicRenderOption = *RenderPassBase::g_RenderOption;
 }
 
 void RenderManager::SetGlobalData(GlobalData* globalData)
 {
 	RenderPassBase::SetGlobalData(globalData);
+}
+
+void RenderManager::SetFullScreenBlur(bool enable, UINT blur_count)
+{
+	m_GraphicRenderOption.FullScreenBlurOption = enable;
+	m_GraphicRenderOption.FullScreenBlurCount = blur_count;
 }
 
 void RenderManager::SetSkyCube(TextureBuffer* resource)
@@ -303,9 +309,9 @@ void RenderManager::SetColorGradingBlendTexture(TextureBuffer* lut_resource)
 	m_Combine->SetColorGradingBlendTexture(lut_resource);
 }
 
-void RenderManager::SetColorGradingFactor(float factor)
+void RenderManager::SetColorGradingBlendFactor(float blend_factor)
 {
-	m_Combine->SetColorGradingFactor(factor);
+	m_Combine->SetColorGradingBlendFactor(blend_factor);
 }
 
 void RenderManager::PushInstance(MeshData* instance)
@@ -420,6 +426,9 @@ void RenderManager::PopMaterialBlockInstance(MeshData* instance)
 	RenderData* render_data = m_Converter->GetRenderData(instance->Object_Data->ObjectIndex);
 
 	if (render_data == nullptr) return;
+
+	// 등록된 Material Block이 아닌경우..
+	if (material_block->Queue_Index == -1) return;
 
 	// 해당 Block Alpha 상태에 따른 삭제..
 	if (material_block->Alpha)
@@ -610,7 +619,7 @@ void* RenderManager::PickingRender(int x, int y)
 
 void RenderManager::ShadowRender()
 {
-	if (m_NowRenderOption.RenderingOption & RENDER_OPTION::RENDER_SHADOW)
+	if (m_GraphicRenderOption.RenderingOption & RENDER_OPTION::RENDER_SHADOW)
 	{
 		m_Shadow->BeginRender();
 
@@ -646,7 +655,7 @@ void RenderManager::DeferredRender()
 
 void RenderManager::SSAORender()
 {
-	if (m_NowRenderOption.RenderingOption & RENDER_OPTION::RENDER_SSAO)
+	if (m_GraphicRenderOption.RenderingOption & RENDER_OPTION::RENDER_SSAO)
 	{
 		m_SSAO->RenderUpdate();
 	}
@@ -692,7 +701,7 @@ void RenderManager::AlphaRender()
 void RenderManager::PostProcessingRender()
 {
 	GPU_BEGIN_EVENT_DEBUG_NAME("Bloom Pass");
-	if (m_NowRenderOption.PostProcessOption & POSTPROCESS_OPTION::POSTPROCESS_BLOOM)
+	if (m_GraphicRenderOption.PostProcessOption & POSTPROCESS_OPTION::POSTPROCESS_BLOOM)
 	{
 		m_Bloom->RenderUpdate();
 	}
@@ -707,9 +716,16 @@ void RenderManager::PostProcessingRender()
 	GPU_END_EVENT_DEBUG_NAME();
 
 	GPU_BEGIN_EVENT_DEBUG_NAME("FXAA Pass");
-	if (m_NowRenderOption.PostProcessOption & POSTPROCESS_OPTION::POSTPROCESS_FXAA)
+	if (m_GraphicRenderOption.PostProcessOption & POSTPROCESS_OPTION::POSTPROCESS_FXAA)
 	{
 		m_FXAA->RenderUpdate();
+	}
+	GPU_END_EVENT_DEBUG_NAME();
+
+	GPU_BEGIN_EVENT_DEBUG_NAME("Screen Blur Pass");
+	if (m_GraphicRenderOption.FullScreenBlurOption)
+	{
+		m_Blur->ScreenBlur(m_GraphicRenderOption.FullScreenBlurCount);
 	}
 	GPU_END_EVENT_DEBUG_NAME();
 }
@@ -726,7 +742,7 @@ void RenderManager::UIRender()
 
 void RenderManager::DebugRender()
 {
-	if (m_NowRenderOption.DebugOption & DEBUG_OPTION::DEBUG_MODE)
+	if (m_GraphicRenderOption.DebugOption & DEBUG_OPTION::DEBUG_MODE)
 	{
 		GPU_MARKER_DEBUG_NAME("Object Debug");
 		m_Debug->BeginRender();
@@ -804,7 +820,7 @@ void RenderManager::DebugRender()
 		GPU_MARKER_DEBUG_NAME("Global Debug");
 		m_Debug->GlobalRender();
 
-		if (m_NowRenderOption.DebugOption & DEBUG_RENDERTARGET)
+		if (m_GraphicRenderOption.DebugOption & DEBUG_RENDERTARGET)
 		{
 			GPU_MARKER_DEBUG_NAME("MRT Debug");
 			m_Debug->MRTRender();
@@ -936,6 +952,9 @@ void RenderManager::PushMaterialBlockInstance()
 
 		// 해당 Material Block 추출..
 		MaterialPropertyBlock* material_block = originMeshData->Object_Data->Material_Block;
+
+		// 해당 Material Block이 이미 등록된 경우..
+		if (material_block->Queue_Index != -1) return;
 
 		// 해당 Block Alpha 상태에 따른 삽입..
 		if (material_block->Alpha)

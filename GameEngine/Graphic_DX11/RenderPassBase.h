@@ -6,6 +6,7 @@ interface IShaderManager;
 interface IFactoryManager;
 interface IGraphicResourceManager;
 
+class RenderTexture;
 class ShaderBase;
 
 class RenderOption;
@@ -33,13 +34,14 @@ public:
 	friend class RenderManager;
 
 public:
-	virtual void Create(int width, int height) abstract;
-	virtual void Start(int width, int height) abstract;
-	virtual void Release() abstract;
+	virtual void Create(int width, int height) {};
+	virtual void Start(int width, int height) {};
 
 	virtual void OnResize(int width, int height) {};
 
 	virtual void InstanceResize(size_t& renderMaxCount, size_t& unRenderMaxCount) {}
+
+	virtual void Release() abstract;
 
 public:
 	virtual void SetResize(int width, int height) {}
@@ -65,6 +67,8 @@ protected:
 protected:
 	static Microsoft::WRL::ComPtr<ID3D11Device> g_Device;
 	static Microsoft::WRL::ComPtr<ID3D11DeviceContext> g_Context;
+
+	static RenderTexture* g_BindingRenderTarget;
 
 	static IFactoryManager* g_Factory;
 	static IGraphicResourceManager* g_Resource;

@@ -85,6 +85,11 @@ void Graphic_DX11::SetGlobalData(GlobalData* globalData)
 	m_RenderManager->SetGlobalData(globalData);
 }
 
+void Graphic_DX11::SetFullScreenBlur(bool enable, UINT blur_count)
+{
+	m_RenderManager->SetFullScreenBlur(enable, blur_count);
+}
+
 void Graphic_DX11::SetSkyCube(TextureBuffer* resource)
 {
 	m_RenderManager->SetSkyCube(resource);
@@ -103,6 +108,11 @@ void Graphic_DX11::SetColorGradingBaseTexture(TextureBuffer* lut_resource)
 void Graphic_DX11::SetColorGradingBlendTexture(TextureBuffer* lut_resource)
 {
 	m_RenderManager->SetColorGradingBlendTexture(lut_resource);
+}
+
+void Graphic_DX11::SetColorGradingBlendFactor(float blend_factor)
+{
+	m_RenderManager->SetColorGradingBlendFactor(blend_factor);
 }
 
 void Graphic_DX11::PushInstance(MeshData* instance)

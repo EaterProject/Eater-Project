@@ -32,6 +32,8 @@ MeshFilter::MeshFilter()
 
 MeshFilter::~MeshFilter()
 {
+	GraphicEngine::Get()->PopMaterialBlockInstance(gameobject->OneMeshData);
+
 	delete m_PropertyBlock;
 
 	if (m_Material && m_Material->is_Default)
@@ -238,15 +240,11 @@ void MeshFilter::SetMaterialPropertyBlock(bool enable)
 
 		GraphicEngine::Get()->PushMaterialBlockInstance(gameobject->OneMeshData);
 
-		m_PropertyBlock->Alpha = false;
-
 		isMaterialBlock = true;
 	}
 	else if(isMaterialBlock == true && enable == false)
 	{
 		GraphicEngine::Get()->PopMaterialBlockInstance(gameobject->OneMeshData);
-
-		m_PropertyBlock->Alpha = false;
 	
 		isMaterialBlock = false;
 	}
@@ -268,8 +266,6 @@ void MeshFilter::SetMaterialPropertyBlock(bool enable, bool alpha)
 	else if (isMaterialBlock == true && enable == false)
 	{
 		GraphicEngine::Get()->PopMaterialBlockInstance(gameobject->OneMeshData);
-
-		m_PropertyBlock->Alpha = false;
 
 		isMaterialBlock = false;
 	}

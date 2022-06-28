@@ -35,6 +35,7 @@ class EaterSound;
 class GameObject;
 class ModelData;
 class Material;
+class TextureBuffer;
 class RenderOption;
 
 class GameEngine
@@ -63,9 +64,10 @@ public:
 public:
 	///오브젝트 관련(오브젝트 매니저)
 	GameObject* Instance(std::string ObjName = "GameObject");			//obj 생성 (빈 게임오브젝트)
-	GameObject* InstanceTerrain(std::string ObjName = "Terrain");
-	GameObject* InstanceParticle(std::string ObjName = "Particle",std::string FileName = "Default");
-	GameObject* InstanceCamera(std::string ObjName = "Camera");
+	GameObject* Instance_Terrain(std::string ObjName = "Terrain");
+	GameObject* Instance_Particle(std::string ObjName = "Particle",std::string FileName = "Default");
+	GameObject* Instance_ParticleController(std::string ObjName = "ParticleController");
+	GameObject* Instance_Camera(std::string ObjName = "Camera");
 	GameObject* Instance_Light(std::string ObjName = "Light", LIGHT_TYPE type = LIGHT_TYPE::POINT_LIGHT);
 	GameObject* Instance_UI(std::string ObjName = "UI");
 	GameObject* Instance_Image(std::string ObjName = "Image");
@@ -81,6 +83,9 @@ public:
 	GameObject* FindGameObjectName(std::string& ObjName);
 
 public:
+	TextureBuffer* GetTexture(std::string& TextureName);
+
+public:
 	///삭제
 	void Destroy(GameObject* obj);		//obj 삭제
 	void DestroyAll();
@@ -89,6 +94,7 @@ public:
 	///스크린 관련
 	void PushScene(Scene* mScene, std::string name);	//씬 생성		
 	void ChoiceScene(std::string name);					//씬 선택
+	void SetFullScreenBlur(bool enable, UINT blur_count = 0);
 
 public:
 	///로드 관련 
@@ -120,7 +126,10 @@ public:
 	void SetSkyCube(std::string& Path);
 	void SetSkyLight(std::string& Path, UINT index);
 	void SetColorGradingBaseTexture(std::string& Path);
+	void SetColorGradingBaseTexture(TextureBuffer* base_lut);
 	void SetColorGradingBlendTexture(std::string& Path);
+	void SetColorGradingBlendTexture(TextureBuffer* blend_lut);
+	void SetColorGradingBlendFactor(float blend_factor);
 
 	///충돌체크 관련
 	void AddOccluder(std::string mMeshName);

@@ -32,11 +32,6 @@ Combine_Pass::~Combine_Pass()
 
 }
 
-void Combine_Pass::Create(int width, int height)
-{
-	g_Factory->CreateImage<gDefalutLUT>("LUT/Default_LUT.dds");
-}
-
 void Combine_Pass::Start(int width, int height)
 {
 	// Shader..
@@ -51,11 +46,6 @@ void Combine_Pass::Start(int width, int height)
 
 	m_Bloom_RT = g_Resource->GetRenderTexture<RT_Bloom_Brightx4_2>();
 	m_OutLine_RT = g_Resource->GetRenderTexture<RT_OutLine>();
-
-	// Default 3D LUT..
-	ShaderResourceView* lutSRV = nullptr;
-	lutSRV = g_Resource->GetShaderResourceView<gDefalutLUT>();
-	if (lutSRV) m_Default_LUT = lutSRV->Get();
 
 	// Combine Shader List Up..
 	SetShaderList();
@@ -154,6 +144,13 @@ void Combine_Pass::RenderUpdate()
 
 void Combine_Pass::SetColorGradingDefaultTexture()
 {
+	// Default 3D LUT..
+	ShaderResourceView* lutSRV = g_Resource->GetShaderResourceView<gDefalut_LUT>();
+
+	if (lutSRV == nullptr) return;
+
+	m_Default_LUT = lutSRV->Get();
+
 	for (ShaderBase* shader : m_OptionShaderList)
 	{
 		shader->SetShaderResourceView<gBaseLUT>(m_Default_LUT);
@@ -181,14 +178,14 @@ void Combine_Pass::SetColorGradingBlendTexture(TextureBuffer* lut_resource)
 	}
 }
 
-void Combine_Pass::SetColorGradingFactor(float factor)
+void Combine_Pass::SetColorGradingBlendFactor(float blend_factor)
 {
-	m_ColorGradingFactor = factor;
+	m_ColorGradingBlendFactor = blend_factor;
 
 	CB_DrawFinal drawFinalBuf;
 	drawFinalBuf.gBloomFactor = g_RenderOption->BLOOM_Factor;
-	drawFinalBuf.gBaseLUTFactor = m_ColorGradingFactor;
-	drawFinalBuf.gBlendLUTFactor = 1.0f - m_ColorGradingFactor;
+	drawFinalBuf.gBaseLUTFactor = 1.0f - m_ColorGradingBlendFactor;
+	drawFinalBuf.gBlendLUTFactor = m_ColorGradingBlendFactor;
 
 	m_Combine_PS->ConstantBufferUpdate(&drawFinalBuf);
 }
@@ -221,8 +218,8 @@ void Combine_Pass::SetConstantBuffer()
 {
 	CB_DrawFinal drawFinalBuf;
 	drawFinalBuf.gBloomFactor = g_RenderOption->BLOOM_Factor;
-	drawFinalBuf.gBaseLUTFactor = m_ColorGradingFactor;
-	drawFinalBuf.gBlendLUTFactor = 1.0f - m_ColorGradingFactor;
+	drawFinalBuf.gBaseLUTFactor = 1.0f - m_ColorGradingBlendFactor;
+	drawFinalBuf.gBlendLUTFactor = m_ColorGradingBlendFactor;
 
 	for (ShaderBase* shader : m_OptionShaderList)
 	{

@@ -177,4 +177,24 @@ float2 SampleSphericalMap(float3 V)
     return UV;
 }
 
+float rand(float2 coord)
+{
+    return frac(sin(dot(coord, float2(12.9898f, 78.233f))) * 43758.5453123f);
+}
+
+float perlin_noise(float2 coord)
+{
+    float2 i = floor(coord);
+    float2 f = frac(coord);
+    
+    float a = rand(i);
+    float b = rand(i + float2(1.0f, 0.0f));
+    float c = rand(i + float2(0.0f, 1.0f));
+    float d = rand(i + float2(1.0f, 1.0f));
+    
+    float2 cublic = f * f * (3.0f - 2.0f * f);
+    
+    return lerp(a, b, cublic.x) + (c - a) * cublic.y * (1.0f - cublic.x) + (d - b) * cublic.x * cublic.y;
+}
+
 #endif

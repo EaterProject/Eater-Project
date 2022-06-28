@@ -37,6 +37,7 @@
 #include "Slider.h"
 #include "ImageFont.h"
 #include "Button.h"
+#include "ParticleController.h"
 
 #include "Profiler/Profiler.h"
 
@@ -138,7 +139,7 @@ void GameEngine::Start()
 	mLoadManager->Start();
 
 	//카메라처음 생성 키인풋을 받을수있도록 컨퍼넌트 붙임
-	DebugCamera = InstanceCamera("DebugCamera");
+	DebugCamera = Instance_Camera("DebugCamera");
 	DebugCamera->AddComponent<CameraDebugKeyInput>();
 	DebugCamera->SetDontDestroy(true);
 	DebugCamera->transform->SetPosition(0.0f, 10.0f, -25.0f);
@@ -238,7 +239,7 @@ GameObject* GameEngine::Instance(std::string ObjName)
 	return temp;
 }
 
-GameObject* GameEngine::InstanceTerrain(std::string ObjName)
+GameObject* GameEngine::Instance_Terrain(std::string ObjName)
 {
 	PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "[ Engine ][ Create ][ Terrain ] %s", ObjName.c_str());
 
@@ -256,7 +257,7 @@ GameObject* GameEngine::InstanceTerrain(std::string ObjName)
 	return temp;
 }
 
-GameObject* GameEngine::InstanceParticle(std::string ObjName, std::string FileName)
+GameObject* GameEngine::Instance_Particle(std::string ObjName, std::string FileName)
 {
 	PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "[ Engine ][ Create ][ Particle ] %s", ObjName.c_str());
 	
@@ -338,7 +339,19 @@ GameObject* GameEngine::InstanceParticle(std::string ObjName, std::string FileNa
 	return temp;
 }
 
-GameObject* GameEngine::InstanceCamera(std::string ObjName)
+GameObject* GameEngine::Instance_ParticleController(std::string ObjName /*= "ParticleController"*/)
+{
+	GameObject* Obj = CreateInstance();
+
+	Transform* Tr = Obj->AddComponent<Transform>();
+	Obj->transform = Tr;
+
+	Obj->AddComponent<ParticleController>();
+
+	return Obj;
+}
+
+GameObject* GameEngine::Instance_Camera(std::string ObjName)
 {
 	PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "[ Engine ][ Create ][ Camera ] %s", ObjName.c_str());
 	
@@ -453,6 +466,11 @@ GameObject* GameEngine::FindGameObjectName(std::string& ObjName)
 	return mObjectManager->FindGameObjectString(ObjName);
 }
 
+TextureBuffer* GameEngine::GetTexture(std::string& TextureName)
+{
+	return mLoadManager->GetTexture(TextureName);
+}
+
 void GameEngine::Destroy(GameObject* obj)
 {
 	mObjectManager->PushDeleteObject(obj);
@@ -476,6 +494,11 @@ void GameEngine::ChoiceScene(std::string name)
 	//씬 선택이 되면 씬자체의 Awack와 Start 함수 실행 그리고나서 컨퍼넌트의 Awack와 Start 도 실행 
 	mSceneManager->ChoiceScene(name);
 	mSceneManager->SceneStart();
+}
+
+void GameEngine::SetFullScreenBlur(bool enable, UINT blur_count)
+{
+	mGraphicManager->SetFullScreenBlur(enable, blur_count);
 }
 
 ///로드 관련 함수들
@@ -576,11 +599,26 @@ void GameEngine::SetColorGradingBaseTexture(std::string& Path)
 	mGraphicManager->SetColorGradingBaseTexture(lut);
 }
 
+void GameEngine::SetColorGradingBaseTexture(TextureBuffer* base_lut)
+{
+	mGraphicManager->SetColorGradingBaseTexture(base_lut);
+}
+
 void GameEngine::SetColorGradingBlendTexture(std::string& Path)
 {
 	TextureBuffer* lut = mLoadManager->GetTexture(Path);
 
 	mGraphicManager->SetColorGradingBlendTexture(lut);
+}
+
+void GameEngine::SetColorGradingBlendTexture(TextureBuffer* blend_lut)
+{
+	mGraphicManager->SetColorGradingBlendTexture(blend_lut);
+}
+
+void GameEngine::SetColorGradingBlendFactor(float blend_factor)
+{
+	mGraphicManager->SetColorGradingBlendFactor(blend_factor);
 }
 
 void GameEngine::AddOccluder(std::string mMeshName)

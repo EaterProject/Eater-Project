@@ -201,7 +201,6 @@ copy/Y "$(OutDir)$(TargetName).lib"      "..\\Library\lib"</Command>
     <ClInclude Include="ConvertData.h" />
     <ClInclude Include="CullingData.h" />
     <ClInclude Include="Culling_Pass.h" />
-    <ClInclude Include="Delegate.h" />
     <ClInclude Include="DrawBuffer.h" />
     <ClInclude Include="DrawBufferDefine.h" />
     <ClInclude Include="Debug_Pass.h" />
@@ -282,7 +281,6 @@ copy/Y "$(OutDir)$(TargetName).lib"      "..\\Library\lib"</Command>
     <ClCompile Include="Blur_Pass.cpp" />
     <ClCompile Include="ConstantBufferManager.cpp" />
     <ClCompile Include="Culling_Pass.cpp" />
-    <ClCompile Include="Delegate.cpp" />
     <ClCompile Include="DrawBuffer.cpp" />
     <ClCompile Include="ComputeShader.cpp" />
     <ClCompile Include="D3D11Graphic.cpp" />
@@ -670,6 +668,10 @@ copy/Y "$(OutDir)$(TargetName).lib"      "..\\Library\lib"</Command>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Assets\Shader\Dissolve_Header.hlsli">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
     <None Include="..\Assets\Shader\SamplerState_Header.hlsli">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>

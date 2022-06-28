@@ -59,6 +59,7 @@ private:
 	void CreateMainRenderTarget(Hash_Code hash_code, UINT width, UINT height);
 	void CreateTextureRenderTarget(UINT width, UINT height);
 
+	void CreateGraphicResource();
 	void CreateDepthStencilStates();
 	void CreateRasterizerStates();
 	void CreateSamplerStates();

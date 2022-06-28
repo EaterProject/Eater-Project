@@ -41,6 +41,7 @@ public:
 public:
 	EATER_ENGINEDLL ParticleSystem* GetParticle(std::string particle_key);
 	EATER_ENGINEDLL PARTICLE_STATE GetState();
+	EATER_ENGINEDLL float GetTotalPlayTime();
 
 private:
 	void UpdateController();

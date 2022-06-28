@@ -47,7 +47,7 @@ void D3D11Graphic::Initialize(HWND hwnd, int screenWidth, int screenHeight)
 	swapChainDesc.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
 
 	// 백 버퍼의 사용 설정..
-	swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+	swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT | DXGI_USAGE_SHADER_INPUT | DXGI_USAGE_UNORDERED_ACCESS;
 	swapChainDesc.OutputWindow = (HWND)hwnd;
 
 	// 멀티 샘플링을 끕니다..
@@ -403,7 +403,7 @@ HRESULT D3D11Graphic::CreateTextureBuffer(std::string filePath, ID3D11Resource**
 	return result;
 }
 
-HRESULT D3D11Graphic::CreateBackBuffer(UINT width, UINT height, ID3D11Texture2D** tex2D, ID3D11RenderTargetView** rtv, ID3D11ShaderResourceView** srv)
+HRESULT D3D11Graphic::CreateBackBuffer(UINT width, UINT height, ID3D11Texture2D** tex2D, ID3D11RenderTargetView** rtv, ID3D11ShaderResourceView** srv, ID3D11UnorderedAccessView** uav)
 {
 	HRESULT result;
 
@@ -432,6 +432,22 @@ HRESULT D3D11Graphic::CreateBackBuffer(UINT width, UINT height, ID3D11Texture2D*
 	{
 		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, result, "[ Graphic ][ Create ][ RenderTargetView ] 'BackBuffer' FAILED!!");
 		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, result, "[ Graphic ][ Create ][ RenderTargetView ] 'BackBuffer' FAILED!!");
+	}
+
+	result = m_Device->CreateShaderResourceView(*tex2D, nullptr, srv);
+
+	if (FAILED(result))
+	{
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, result, "[ Graphic ][ Create ][ RenderTargetView ] 'BackBuffer' FAILED!!");
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, result, "[ Graphic ][ Create ][ RenderTargetView ] 'BackBuffer' FAILED!!");
+	}
+
+	result = m_Device->CreateUnorderedAccessView(*tex2D, nullptr, uav);
+
+	if (FAILED(result))
+	{
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, result, "[ Graphic ][ Create ][ UnorderedAccessView ] 'BackBuffer' FAILED!!");
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, result, "[ Graphic ][ Create ][ UnorderedAccessView ] 'BackBuffer' FAILED!!");
 	}
 
 	return result;

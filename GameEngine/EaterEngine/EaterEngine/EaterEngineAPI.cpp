@@ -56,17 +56,22 @@ void GetWindowSize(int* X, int* Y)
 
  GameObject* Instance_Terrain(std::string ObjName)
  {
-	 return gGameEngine->InstanceTerrain(ObjName);
+	 return gGameEngine->Instance_Terrain(ObjName);
  }
 
  GameObject* Instance_Particle(std::string ObjName, std::string FileName)
  {
-	 return gGameEngine->InstanceParticle(ObjName, FileName);
+	 return gGameEngine->Instance_Particle(ObjName, FileName);
+ }
+
+ GameObject* Instance_ParticleController(std::string ObjName/*= "GameObject"*/)
+ {
+	 return gGameEngine->Instance_ParticleController(ObjName);
  }
 
  GameObject* Instance_Camera(std::string ObjName)
  {
-	 return gGameEngine->InstanceCamera(ObjName);
+	 return gGameEngine->Instance_Camera(ObjName);
  }
 
  GameObject* Instance_Light(std::string ObjName, LIGHT_TYPE type)
@@ -127,6 +132,11 @@ void GetWindowSize(int* X, int* Y)
  void DestroyAll()
  {
 	 gGameEngine->DestroyAll();
+ }
+
+ TextureBuffer* GetTexture(std::string TextureName)
+ {
+	 return gGameEngine->GetTexture(TextureName);
  }
 
 ///¾À °ü·Ã
@@ -205,9 +215,23 @@ void SetColorGradingBaseTexture(std::string mPath)
 	gGameEngine->SetColorGradingBaseTexture(mPath);
 }
 
+void SetColorGradingBaseTexture(TextureBuffer* base_lut)
+{
+	gGameEngine->SetColorGradingBaseTexture(base_lut);
+}
+
 void SetColorGradingBlendTexture(std::string mPath)
 {
 	gGameEngine->SetColorGradingBlendTexture(mPath);
+}
+void SetColorGradingBlendTexture(TextureBuffer* blend_lut)
+{
+	gGameEngine->SetColorGradingBlendTexture(blend_lut);
+}
+
+void SetColorGradingBlendFactor(float blend_factor)
+{
+	gGameEngine->SetColorGradingBlendFactor(blend_factor);
 }
 
 ModelData* GetLoadMeshData(std::string mPath)
@@ -238,6 +262,11 @@ int GetLoadMaterialCount()
 int GetLoadBufferCount()
 {
 	return gGameEngine->LoadBufferCount();
+}
+
+void SetFullScreenBlur(bool enable, UINT blur_count /*= 0*/)
+{
+	gGameEngine->SetFullScreenBlur(enable, blur_count);
 }
 
 void AddOccluder(std::string mMeshName)
@@ -530,3 +559,4 @@ int GetMousePosY()
  {
 	 gGameEngine->NETWORK_CONNECT(ServerPort, Local_Connect_IP);
  }
+

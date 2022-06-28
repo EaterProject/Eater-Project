@@ -6,7 +6,6 @@ public:
 	~FXAA_Pass();
 
 public:
-	void Create(int width, int height) override;
 	void Start(int width, int height) override;
 	void OnResize(int width, int height) override;
 	void Release() override;
@@ -19,6 +18,7 @@ private:
 
 	DrawBuffer* m_Screen_DB;
 
+	RenderTexture* m_Output_RT;
 	RenderTexture* m_Origin_RT;
 
 private:

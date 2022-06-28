@@ -36,11 +36,6 @@ Sky_Pass::~Sky_Pass()
 
 }
 
-void Sky_Pass::Create(int width, int height)
-{
-
-}
-
 void Sky_Pass::Start(int width, int height)
 {
 	m_SkyBox_VS = g_Shader->GetShader("SkyBox_VS");
@@ -57,8 +52,11 @@ void Sky_Pass::Start(int width, int height)
 	m_CubeMap_RS = g_Resource->GetRasterizerState<RS_CubeMap>()->Get();
 	m_CubeMap_DSS = g_Resource->GetDepthStencilState<DSS_CubeMap>()->Get();
 
-	// Environment & IBL Shader List Up..
+	// Sky & IBL Shader List Up..
 	SetShaderList();
+
+	// Set SkyCube Default Texture..
+	SetSkyCubeDefaultTexture();
 }
 
 void Sky_Pass::OnResize(int width, int height)
@@ -189,4 +187,20 @@ void Sky_Pass::SetShaderList()
 	PushShader("OIT_Mesh_PS_Option4");
 	PushShader("OIT_Mesh_PS_Option6");
 	PushShader("OIT_Mesh_PS_Option7");
+}
+
+void Sky_Pass::SetSkyCubeDefaultTexture()
+{
+	// Default SkyCube..
+	ShaderResourceView* skycubeSRV = nullptr;
+	skycubeSRV = g_Resource->GetShaderResourceView<gDefalut_SkyCube>();
+
+	if (skycubeSRV == nullptr) return;
+
+	m_Default_SkyCube = skycubeSRV->Get();
+
+	for (ShaderBase* shader : m_OptionShaderList)
+	{
+		shader->SetShaderResourceView<gSkyCube>(m_Default_SkyCube);
+	}
 }

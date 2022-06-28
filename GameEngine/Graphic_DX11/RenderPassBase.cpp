@@ -6,9 +6,12 @@
 #include "EngineData.h"
 #include "RenderData.h"
 #include "ShaderBase.h"
+#include "GraphicResource.h"
+#include "RenderTarget.h"
 
 Microsoft::WRL::ComPtr<ID3D11Device> RenderPassBase::g_Device = nullptr;
 Microsoft::WRL::ComPtr<ID3D11DeviceContext> RenderPassBase::g_Context = nullptr;
+RenderTexture* RenderPassBase::g_BindingRenderTarget = nullptr;
 IFactoryManager* RenderPassBase::g_Factory = nullptr;
 IGraphicResourceManager* RenderPassBase::g_Resource = nullptr;
 IShaderManager* RenderPassBase::g_Shader = nullptr;
