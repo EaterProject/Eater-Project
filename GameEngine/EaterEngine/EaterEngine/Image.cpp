@@ -7,7 +7,7 @@
 #include "GraphicEngineAPI.h"
 
 Image::Image()
-	:TextureIndex(-1)
+	:TextureIndex(-1), m_Start(false)
 {
 	m_UI = new UIBuffer();
 	m_UI->UI_Property = new UIProperty();
@@ -35,30 +35,27 @@ void Image::Awake()
 	gameobject->OneMeshData->Object_Data->ObjType = OBJECT_TYPE::UI;
 
 	gameobject->OneMeshData->UI_Buffer = m_UI;
-}
 
-void Image::Start()
-{
-	//클라이언트쪽에서 텍스쳐의 이름을 넣고 모두 끝난상태
-	if (isLoad_Texture)
-	{
-		SetTexture();
-	}
+	// 후 순위 설정 함수 리스트 실행..
+	StartFunction();
 
-	//실행도중 텍스쳐를 바꿀수있게 모두 true
-	isLoad_Texture = true;
+	// 함수 실행후 리스트 초기화..
+	StartFunction.Reset();
+
+	// 최초 설정이 끝난후 상태 변경..
+	m_Start = true;
 }
 
 void Image::SetTexture(std::string texture_name)
 {
-	if (isLoad_Texture == false)
+	TextureName = texture_name;
+
+	if (m_Start == false)
 	{
-		isLoad_Texture = true;
-		TextureName = texture_name;
+		StartFunction += Eater::Bind(static_cast<void(Image::*)(void)>(&Image::SetTexture), this);
 	}
 	else
 	{
-		TextureName = texture_name;
 		SetTexture();
 	}
 }
@@ -160,6 +157,130 @@ void Image::SetColor(float r, float g, float b, float a)
 	m_UI->UI_Property->ImageColor.y = g / 255.0f;
 	m_UI->UI_Property->ImageColor.z = b / 255.0f;
 	m_UI->UI_Property->ImageColor.w = a / 255.0f;
+}
+
+void Image::SetActive(bool enable)
+{
+	this->gameobject->SetActive(enable);
+}
+
+void Image::SetPivot(PIVOT_TYPE pivot_type)
+{
+	m_Pivot = pivot_type;
+
+	if (m_Start == false)
+	{
+		StartFunction += Eater::Bind(static_cast<void(Image::*)(void)>(&Image::SetPivot), this);
+	}
+	else
+	{
+		SetPivot();
+	}
+}
+
+void Image::SetPivot()
+{
+	m_Transform->SetPivot(m_Pivot);
+}
+
+void Image::SetPosition(float x, float y)
+{
+	m_Position = { x,y };
+
+	if (m_Start == false)
+	{
+		StartFunction += Eater::Bind(static_cast<void(Image::*)(void)>(&Image::SetPosition), this);
+	}
+	else
+	{
+		SetPosition();
+	}
+}
+
+void Image::SetPosition(DirectX::SimpleMath::Vector2 pos)
+{
+	m_Position = pos;
+
+	if (m_Start == false)
+	{
+		StartFunction += Eater::Bind(static_cast<void(Image::*)(void)>(&Image::SetPosition), this);
+	}
+	else
+	{
+		SetPosition();
+	}
+}
+
+void Image::SetPosition()
+{
+	m_Transform->SetPosition(m_Position);
+}
+
+void Image::SetRotation(float x, float y, float z)
+{
+	m_Rotation = { x,y,z };
+
+	if (m_Start == false)
+	{
+		StartFunction += Eater::Bind(static_cast<void(Image::*)(void)>(&Image::SetRotation), this);
+	}
+	else
+	{
+		SetRotation();
+	}
+}
+
+void Image::SetRotation(DirectX::SimpleMath::Vector3 rot)
+{
+	m_Rotation = rot;
+
+	if (m_Start == false)
+	{
+		StartFunction += Eater::Bind(static_cast<void(Image::*)(void)>(&Image::SetRotation), this);
+	}
+	else
+	{
+		SetRotation();
+	}
+}
+
+void Image::SetRotation()
+{
+	m_Transform->SetRotation(m_Rotation);
+}
+
+void Image::SetScale(float x, float y)
+{
+	m_Scale = { x,y };
+
+	if (m_Start == false)
+	{
+		StartFunction += Eater::Bind(static_cast<void(Image::*)(void)>(&Image::SetScale), this);
+	}
+	else
+	{
+		SetScale();
+	}
+}
+
+void Image::SetScale(DirectX::SimpleMath::Vector2 scale)
+{
+	m_Scale = scale;
+
+	if (m_Start == false)
+	{
+		StartFunction += Eater::Bind(static_cast<void(Image::*)(void)>(&Image::SetScale), this);
+	}
+	else
+	{
+		SetScale();
+	}
+}
+
+
+void Image::SetScale()
+{
+	m_Transform->SetScale(m_Scale);
 }
 
 void Image::SetFillRange(FILL_TYPE type, float range)

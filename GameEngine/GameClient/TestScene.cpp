@@ -24,6 +24,7 @@
 #include "RectTransform.h"
 #include "Slider.h"
 #include "ParticleController.h"
+#include "UIOption.h"
 
 #include "EngineData.h"
 
@@ -54,6 +55,11 @@ void TestScene::Awake()
 	SetSkyLight("SkyLight_1", 1);
 
 	SetSkyCube("SkyCube");
+
+	GameObject* ui = Instance();
+	ui->AddComponent<UIOption>();
+
+	SetFullScreenBlur(true, 2);
 
 	//Load("../Assets/Scene/TestScene.Scene");
 

@@ -340,7 +340,7 @@ void Button::SetPosition(float x, float y)
 	{
 		m_Pos.x = x;
 		m_Pos.y = y;
-		StartFunction += Eater::Bind(static_cast<void(Button::*)(void)>(&Button::SetPivot), this);
+		StartFunction += Eater::Bind(static_cast<void(Button::*)(void)>(&Button::SetPosition), this);
 	}
 }
 

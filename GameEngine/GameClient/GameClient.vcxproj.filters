@@ -157,6 +157,9 @@
     <Filter Include="소스 파일\Component\GateDoor\GateDoor">
       <UniqueIdentifier>{2964e18d-198c-410c-8c63-2bf198605b77}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Manager\ParticleFactory">
+      <UniqueIdentifier>{bf2f4ba0-49bb-4c2f-b75e-ff278c39776d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -276,6 +279,9 @@
     <ClInclude Include="GateDoor.h">
       <Filter>소스 파일\Component\GateDoor\GateDoor</Filter>
     </ClInclude>
+    <ClInclude Include="ParticleFactory.h">
+      <Filter>소스 파일\Manager\ParticleFactory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameClient.cpp">
@@ -382,6 +388,9 @@
     </ClCompile>
     <ClCompile Include="GateDoor.cpp">
       <Filter>소스 파일\Component\GateDoor\GateDoor</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleFactory.cpp">
+      <Filter>소스 파일\Manager\ParticleFactory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

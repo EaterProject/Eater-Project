@@ -31,8 +31,8 @@ void Loading::Update()
 {
 	if (ThreadRun == false)
 	{
-		ChoiceScene("inGame");
-		//ChoiceScene("TestScene");
+		//ChoiceScene("inGame");
+		ChoiceScene("TestScene");
 	}
 }
 
@@ -52,6 +52,7 @@ void Loading::ThreadFunction()
 
 	Load("../Assets/Texture/UI/Font");
 	Load("../Assets/Texture/UI/InGame");
+	Load("../Assets/Texture/UI/Setting");
 
 
 	Load("../Assets/Model/Animation");
