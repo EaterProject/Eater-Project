@@ -53,6 +53,7 @@ void Loading::ThreadFunction()
 	Load("../Assets/Texture/UI/Font");
 	Load("../Assets/Texture/UI/InGame");
 	Load("../Assets/Texture/UI/Setting");
+	Load("../Assets/Texture/UI/Pause");
 
 
 	Load("../Assets/Model/Animation");

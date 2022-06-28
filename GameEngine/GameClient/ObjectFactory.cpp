@@ -33,6 +33,8 @@
 #include "UIStore.h"
 #include "PlayerCollider.h"
 #include "Store.h"
+#include "UIOption.h"
+#include "UIPause.h"
 
 
 
@@ -186,6 +188,20 @@ GameObject* ObjectFactory::CreateUIStore()
 	GameObject* Object_Store = Instance();
 	Object_Store->AddComponent<UIStore>();
 	return Object_Store;
+}
+
+GameObject* ObjectFactory::CreateUIOption()
+{
+	GameObject* Object_Option = Instance();
+	Object_Option->AddComponent<UIOption>();
+	return Object_Option;
+}
+
+GameObject* ObjectFactory::CreateUIPause()
+{
+	GameObject* Object_Pause = Instance();
+	Object_Pause->AddComponent<UIPause>();
+	return Object_Pause;
 }
 
 GameObject* ObjectFactory::CreateBoss()

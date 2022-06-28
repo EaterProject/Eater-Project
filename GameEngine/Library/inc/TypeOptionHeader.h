@@ -67,6 +67,13 @@ typedef enum PIVOT_TYPE
 	PIVOT_IMAGE,
 }PIVOT_TYPE;
 
+// Font Pivot Type
+typedef enum FONT_PIVOT
+{
+	FONT_NONE,
+	FONT_CENTER,	// 피벗 기준 중앙으로 배치
+}FONT_PIVOT;
+
 // Pivot Rotate Type
 typedef enum ROTATE_ANGLE
 {

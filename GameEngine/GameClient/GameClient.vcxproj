@@ -221,6 +221,7 @@
     <ClInclude Include="TestScene.h" />
     <ClInclude Include="UIEffect.h" />
     <ClInclude Include="UIOption.h" />
+    <ClInclude Include="UIPause.h" />
     <ClInclude Include="UIStore.h" />
     <ClInclude Include="UITitle.h" />
   </ItemGroup>
@@ -266,6 +267,7 @@
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="UIEffect.cpp" />
     <ClCompile Include="UIOption.cpp" />
+    <ClCompile Include="UIPause.cpp" />
     <ClCompile Include="UIStore.cpp" />
     <ClCompile Include="UITitle.cpp" />
   </ItemGroup>

@@ -9,10 +9,6 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="리소스 파일">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="소스 파일\Component">
       <UniqueIdentifier>{0f1fe710-7256-4e0c-bc2f-cd66e5d514f8}</UniqueIdentifier>
     </Filter>
@@ -160,6 +156,13 @@
     <Filter Include="소스 파일\Manager\ParticleFactory">
       <UniqueIdentifier>{bf2f4ba0-49bb-4c2f-b75e-ff278c39776d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="소스 파일\Component\UI\UIPause">
+      <UniqueIdentifier>{60ca41d3-dccd-4568-9da6-9c612a4717ce}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -282,6 +285,9 @@
     <ClInclude Include="ParticleFactory.h">
       <Filter>소스 파일\Manager\ParticleFactory</Filter>
     </ClInclude>
+    <ClInclude Include="UIPause.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameClient.cpp">
@@ -392,18 +398,21 @@
     <ClCompile Include="ParticleFactory.cpp">
       <Filter>소스 파일\Manager\ParticleFactory</Filter>
     </ClCompile>
+    <ClCompile Include="UIPause.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GameClient.rc">
-      <Filter>리소스 파일</Filter>
+      <Filter>소스 파일\리소스 파일</Filter>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="small.ico">
-      <Filter>리소스 파일</Filter>
+      <Filter>소스 파일\리소스 파일</Filter>
     </Image>
     <Image Include="GameClient.ico">
-      <Filter>리소스 파일</Filter>
+      <Filter>소스 파일\리소스 파일</Filter>
     </Image>
   </ItemGroup>
 </Project>

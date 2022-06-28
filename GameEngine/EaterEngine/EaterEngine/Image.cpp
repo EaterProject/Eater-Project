@@ -14,6 +14,7 @@ Image::Image()
 	m_UI->UI_Property->ImageColor = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
 	m_UI->UI_Property->TexScale = Vector2(1.0f, 1.0f);
 	m_UI->UI_Property->TexFill = Vector2(1.0f, 1.0f);
+	m_UI->UI_Property->IsDraw = true;
 
 	UIManager::SetIndex(&m_UI->BufferIndex);
 }
@@ -132,6 +133,11 @@ void Image::PopTextureList(std::string texture_name)
 	{
 
 	}
+}
+
+void Image::SetDraw(bool enable)
+{
+	m_UI->UI_Property->IsDraw = enable;
 }
 
 void Image::SetColor(DirectX::SimpleMath::Vector3 image_color)

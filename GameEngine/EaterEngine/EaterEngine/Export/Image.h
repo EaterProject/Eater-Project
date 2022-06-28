@@ -21,6 +21,7 @@ public:
 	EATER_ENGINEDLL void PushTextureList(std::string texture_name);
 	EATER_ENGINEDLL void PopTextureList(std::string texture_name);
 
+	EATER_ENGINEDLL void SetDraw(bool enable);
 	EATER_ENGINEDLL void SetActive(bool enable);
 
 	EATER_ENGINEDLL void SetPivot(PIVOT_TYPE pivot_type);
@@ -58,6 +59,7 @@ private:
 	Eater::Delegate<> StartFunction;
 	
 	bool m_Start;
+	bool m_Draw;
 
 	PIVOT_TYPE m_Pivot;
 	Vector2 m_Position;

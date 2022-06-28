@@ -25,6 +25,7 @@
 #include "Slider.h"
 #include "ParticleController.h"
 #include "UIOption.h"
+#include "UIPause.h"
 
 #include "EngineData.h"
 
@@ -46,7 +47,7 @@ void TestScene::Awake()
 
 	CreateMap();
 	CreateMiniMap();
-	CreateDissolve();
+	//CreateDissolve();
 	//CreateParicleController();
 
 	BakeSkyLightMap("SkyLight_0", false);
@@ -57,7 +58,8 @@ void TestScene::Awake()
 	SetSkyCube("SkyCube");
 
 	GameObject* ui = Instance();
-	ui->AddComponent<UIOption>();
+	//ui->AddComponent<UIOption>();
+	ui->AddComponent<UIPause>();
 
 	SetFullScreenBlur(true, 2);
 
@@ -432,34 +434,36 @@ void TestScene::ChangeCubeMap()
 
 	if (GetKey('1'))
 	{
-		GameObject* Hand = m_Boss->GetChildBone("t1.L");
-		m_ParticleControllerList[0]->gameobject->ChoiceParent(Hand);
+		//GameObject* Hand = m_Boss->GetChildBone("t1.L");
+		//m_ParticleControllerList[0]->gameobject->ChoiceParent(Hand);
 
-		//for (int i = 0; i < ACList.size(); i++)
-		//{
-		//	ACList[i]->Choice("idle");
-		//	ACList[i]->Play();
-		//}
+		for (int i = 0; i < ACList.size(); i++)
+		{
+			ACList[i]->Choice("idle");
+			ACList[i]->Play();
+		}
 
-		ACList[0]->Choice("attack5L");
-		ACList[0]->Play();
+		//ACList[0]->Choice("attack5L");
+		//ACList[0]->Play();
 	}
 
 	/// Particle Controller
 	if (GetKeyUp('2'))
 	{
-		ControllerIndex++;
-
-		if (ControllerIndex > m_ParticleControllerList.size() - 1)
-		{
-			ControllerIndex = 0;
-		}
-
-		m_ParticleController = m_ParticleControllerList[ControllerIndex];
+		SetSlowDeltaTime(0.0f);
+		//ControllerIndex++;
+		//
+		//if (ControllerIndex > m_ParticleControllerList.size() - 1)
+		//{
+		//	ControllerIndex = 0;
+		//}
+		//
+		//m_ParticleController = m_ParticleControllerList[ControllerIndex];
 	}
 	if (GetKeyUp('3'))
 	{
-		m_ParticleController->Play();
+		SetSlowDeltaTime(1.0f);
+		//m_ParticleController->Play();
 	}
 	if (GetKeyUp('4'))
 	{

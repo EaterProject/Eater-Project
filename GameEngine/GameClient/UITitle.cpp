@@ -151,8 +151,9 @@ void UITitle::OptionButton_Enter()
 
 void UITitle::OptionButton_Click()
 {
+	int Message_Number = MESSAGE_GLOBAL_TITLE;
 	Sound_Play_SFX("UI_Button_Click");
-
+	MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_OPTION, &Message_Number);
 }
 
 void UITitle::OptionButton_Exit()

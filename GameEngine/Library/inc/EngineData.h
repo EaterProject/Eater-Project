@@ -245,7 +245,8 @@ public:
 class UIProperty
 {
 public:
-	UI_TYPE UI_Option;	// UI Option
+	bool IsDraw;			// UI Draw
+	UI_TYPE UI_Option;		// UI Option
 	
 	Vector2 TexScale;		// UI Texture Offset Scale
 	Vector2 TexPos;			// UI Texture Offset Position

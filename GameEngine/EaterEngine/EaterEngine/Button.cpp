@@ -3,18 +3,27 @@
 #include "RectTransform.h"
 #include "Image.h"
 #include "KeyinputManager.h"
+#include "GameEngine.h"
 
 #include "Profiler/Profiler.h"
 
 Button::Button()
 	:m_State(OUT_BUTTON), m_Start(false)
 {
+	Screen_Ratio = { 1.0f, 1.0f };
 
+	Screen_Resize.x = GameEngine::WinSizeWidth;
+	Screen_Resize.y = GameEngine::WinSizeHeight;
+
+	Screen_Origin.x = GameEngine::WinSizeWidth;
+	Screen_Origin.y = GameEngine::WinSizeHeight;
+
+	GameEngine::ResizeFunction += Eater::Bind(&Button::Resize, this);
 }
 
 Button::~Button()
 {
-
+	GameEngine::ResizeFunction -= Eater::Bind(&Button::Resize, this);
 }
 
 void Button::Awake()
@@ -45,9 +54,9 @@ void Button::Update()
 
 	//PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "Mouse Point : %d, %d", mouse_point->x, mouse_point->y);
 
-	if (m_Rect->left + m_Left_Offset < mouse_point->x && m_Rect->right + m_Right_Offset > mouse_point->x)
+	if (m_Rect->left + m_Left_Offset <= mouse_point->x && m_Rect->right + m_Right_Offset >= mouse_point->x)
 	{
-		if (m_Rect->top + m_Top_Offset < mouse_point->y && m_Rect->bottom + m_Bottom_Offset > mouse_point->y)
+		if (m_Rect->top + m_Top_Offset <= mouse_point->y && m_Rect->bottom + m_Bottom_Offset >= mouse_point->y)
 		{
 			// 마우스가 버튼 위에 있는 경우..
 			switch (m_State)
@@ -173,6 +182,11 @@ void Button::Update()
 		// 등록된 이벤트 실행..
 		m_OutButtonEvent();
 	}
+}
+
+void Button::SetActive(bool active)
+{
+	gameobject->SetActive(active);
 }
 
 void Button::PushEvent(std::function<void()>& eventFunc, State type)
@@ -310,6 +324,20 @@ void Button::SetBoundaryOffset(float left, float right, float top, float bottom)
 	m_Right_Offset = right;
 	m_Top_Offset = top;
 	m_Bottom_Offset = bottom;
+}
+
+void Button::Resize(int width, int height)
+{
+	float ratio_x = (float)width / Screen_Resize.x;
+	float ratio_y = (float)height / Screen_Resize.y;
+
+	Screen_Ratio.x = (float)width / Screen_Origin.x;
+	Screen_Ratio.y = (float)height / Screen_Origin.y;
+
+	m_Left_Offset *= ratio_x;
+	m_Right_Offset *= ratio_x;
+	m_Top_Offset *= ratio_y;
+	m_Bottom_Offset *= ratio_y;
 }
 
 void Button::SetPivot(PIVOT_TYPE pivot_type)

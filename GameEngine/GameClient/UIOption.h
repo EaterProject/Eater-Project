@@ -40,7 +40,11 @@ private:
 
 public:
 	void Awake() override;
-	void Update() override;
+	void Start() override;
+
+public:
+	void SetOptionUIActive(bool active);
+	void SetPrevTarget(int target);
 
 private:
 	void ClickButtonSetting(OPTION option, float left_x, float right_x, float y);
@@ -53,6 +57,7 @@ private:
 	void SetBackGroundVolumeDown();
 	void SetSFXVolumeUp();
 	void SetSFXVolumeDown();
+	void SetClearTime();
 	void SetGraphicIBL();
 	void SetGraphicSSAO();
 	void SetGraphicShadow();
@@ -61,21 +66,27 @@ private:
 	void SetGraphicColorGrading();
 	void SetGraphicFXAA();
 	void SetGraphicHDR();
+	void SetReturnIn();
+	void SetReturnOut();
+	void SetReturnClick();
 
 private:
 	RenderOption* GraphicOption;
 
-	bool IsUpdate;
+	bool IsClick;
 
-	Image* BackGround;
+	int PrevTarget;
+
+	float ValueChangeTime;
+	float NowTime;
+
+	Image* BackGroundImage;
+	Button* ReturnButton;
 
 	Image* ScreenText;
 	ImageFont* SoundText[3];
 	Image* GraphicText[8];
 
 	ControlButton ClickButton[12];
-
-	ControlButton ScreenButton;
-	ControlButton ActiveButton;
 };
 
