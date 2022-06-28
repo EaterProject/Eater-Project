@@ -726,7 +726,7 @@ void CTAP_MeshFilter::OnDeltaposSpin3(NMHDR* pNMHDR, LRESULT* pResult)
 	if (pNMUpDown->iDelta > 0)
 	{
 		SkyLight_Index++;
-		if (mMaterial->m_MaterialData != nullptr)
+		if (mMaterial->m_MaterialData != nullptr && mMaterial != nullptr)
 		{
 			mMaterial->m_MaterialData->Material_Property->SkyLightIndex = SkyLight_Index;
 		}

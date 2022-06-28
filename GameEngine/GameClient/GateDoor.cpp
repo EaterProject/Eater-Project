@@ -3,6 +3,8 @@
 #include "EaterEngineAPI.h"
 #include "GameObject.h"
 #include "Transform.h"
+#include "Collider.h"
+#include "DoorCollider.h"
 GateDoor::GateDoor()
 {
 }
@@ -13,28 +15,59 @@ GateDoor::~GateDoor()
 
 void GateDoor::Awake()
 {
+	
 	Door[0] = MessageManager::GetGM()->CREATE_MESSAGE(TARGET_GATE_IN);
 	Door[1] = MessageManager::GetGM()->CREATE_MESSAGE(TARGET_GATE_OUT);
+
 	Door[2] = MessageManager::GetGM()->CREATE_MESSAGE(TARGET_GATE_IN);
 	Door[3] = MessageManager::GetGM()->CREATE_MESSAGE(TARGET_GATE_OUT);
+
 	Door[4] = MessageManager::GetGM()->CREATE_MESSAGE(TARGET_GATE_IN);
 	Door[5] = MessageManager::GetGM()->CREATE_MESSAGE(TARGET_GATE_OUT);
+
+	Door[6] = MessageManager::GetGM()->CREATE_MESSAGE(TARGET_GATE_IN);
+	Door[7] = MessageManager::GetGM()->CREATE_MESSAGE(TARGET_GATE_OUT);
+
+
+	for (int i = 0; i < 4; i++)
+	{
+		GateColliderObject[i] = Instance();
+		GateColliderObject[i]->AddComponent<Collider>();
+		GateCollider[i] = GateColliderObject[i]->AddComponent<DoorCollider>();
+		GateCollider[i]->SetGateNumber(i);
+	}
+
 }
 
 void GateDoor::Start()
 {
-	Door[0]->GetTransform()->SetRotate(0.0f, 324.0f, 0.0f);
-	Door[1]->GetTransform()->SetRotate(0.0f, 324.0f, 0.0f);
+	Door[0]->GetTransform()->SetRotate(0.0f, -108.0f, 0.0f);
+	Door[1]->GetTransform()->SetRotate(0.0f, -108.0f, 0.0f);
 
-	Door[2]->GetTransform()->SetRotate(0.0f, 36.0f, 0.0f);
-	Door[3]->GetTransform()->SetRotate(0.0f, 36.0f, 0.0f);
+	Door[2]->GetTransform()->SetRotate(0.0f, 324.0f, 0.0f);
+	Door[3]->GetTransform()->SetRotate(0.0f, 324.0f, 0.0f);
 
-	Door[4]->GetTransform()->SetRotate(0.0f, 144.0f, 0.0f);
-	Door[5]->GetTransform()->SetRotate(0.0f, 144.0f, 0.0f);
+	Door[4]->GetTransform()->SetRotate(0.0f, 36.0f, 0.0f);
+	Door[5]->GetTransform()->SetRotate(0.0f, 36.0f, 0.0f);
+
+	Door[6]->GetTransform()->SetRotate(0.0f, 144.0f, 0.0f);
+	Door[7]->GetTransform()->SetRotate(0.0f, 144.0f, 0.0f);
+
+	for (int i = 0; i < 8; i++)
+	{
+		DoorMesh[i].Setting(Door[i]);
+		DoorMesh[i].SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED,2);
+	}
+
+	SetUnLock(0);
+	SetLock(1);
+	SetLock(2);
+	SetLock(3);
 }
 
 void GateDoor::SetOpen(int Number)
 {
+	Sound_Play_SFX("Gate_Open");
 	switch(Number)
 	{
 	case 0:
@@ -46,11 +79,15 @@ void GateDoor::SetOpen(int Number)
 	case 2:
 		Open(4, 5);
 		break;
+	case 3:
+		Open(6, 7);
+		break;
 	}
 }
 
 void GateDoor::SetClose(int Number)
 {
+	Sound_Play_SFX("Gate_Close");
 	switch (Number)
 	{
 	case 0:
@@ -62,7 +99,64 @@ void GateDoor::SetClose(int Number)
 	case 2:
 		Close(4, 5);
 		break;
+	case 3:
+		Close(6, 7);
+		break;
 	}
+}
+
+void GateDoor::SetLock(int Number)
+{
+	if (Number >= 4) { return; }
+	switch (Number)
+	{
+	case 0:
+		DoorMesh[0].SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED, 2);
+		DoorMesh[1].SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED, 2);
+		break;
+	case 1:
+		DoorMesh[2].SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED, 2);
+		DoorMesh[3].SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED, 2);
+		break;
+	case 2:
+		DoorMesh[4].SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED, 2);
+		DoorMesh[5].SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED, 2);
+		break;
+	case 3:
+		DoorMesh[6].SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED, 2);
+		DoorMesh[7].SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED, 2);
+		break;
+	}
+
+
+
+	GateCollider[Number]->Lock = true;
+}
+
+void GateDoor::SetUnLock(int Number)
+{
+	if (Number >= 4) { return; }
+	if (Number >= 4) { return; }
+	switch (Number)
+	{
+	case 0:
+		DoorMesh[0].SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::BLUE, 2);
+		DoorMesh[1].SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::BLUE, 2);
+		break;
+	case 1:
+		DoorMesh[2].SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::BLUE, 2);
+		DoorMesh[3].SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::BLUE, 2);
+		break;
+	case 2:
+		DoorMesh[4].SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::BLUE, 2);
+		DoorMesh[5].SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::BLUE, 2);
+		break;
+	case 3:
+		DoorMesh[6].SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::BLUE, 2);
+		DoorMesh[7].SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::BLUE, 2);
+		break;
+	}
+	GateCollider[Number]->Lock = false;
 }
 
 void GateDoor::Update()

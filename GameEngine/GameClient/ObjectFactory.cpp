@@ -8,6 +8,7 @@
 #include "AnimationController.h"
 #include "Rigidbody.h"
 #include "Transform.h"
+#include "MiniMapSystem.h"
 
 //클라이언트쪽 컨퍼넌트
 #include "Player.h"
@@ -29,6 +30,9 @@
 #include "BossFriend.h"
 #include "UIEffect.h"
 #include "UITitle.h"
+#include "UIStore.h"
+#include "PlayerCollider.h"
+#include "Store.h"
 
 
 
@@ -52,9 +56,11 @@ GameObject* ObjectFactory::CreatePlayer()
 	//플레이어와 카메라 오브젝트를 생성
 	GameObject* PlayerObject		= Instance();
 	
-	GameObject* PlayerCollider		= Instance();
+	GameObject* PointCollider		= Instance();
+	GameObject* AttackCollider		= Instance();
 	GameObject* DroneObject			= Instance();
 	GameObject* PlayerPoint			= FindGameObjectTag("PlayerPoint");
+
 	
 	//플레이어 생성
 	PlayerObject->SetTag("Player");
@@ -62,16 +68,25 @@ GameObject* ObjectFactory::CreatePlayer()
 	PlayerObject->AddComponent<MeshFilter>();
 	PlayerObject->AddComponent<AnimationController>();
 
+	//플레이어 충돌검사 콜라이더
+	AttackCollider->AddComponent<Collider>();
+	AttackCollider->AddComponent<Rigidbody>();
+	AttackCollider->AddComponent<PlayerCollider>();
+
+	//플레이어 생성위치 설정
 	Vector3 position = PlayerPoint->GetTransform()->GetPosition();
 	PlayerObject->GetTransform()->SetPosition(position);
 
 	//콜라이더 객체 생성
-	PlayerCollider->SetTag("PlayerCollider");
-	PlayerCollider->AddComponent<Collider>();
+	PointCollider->SetTag("PlayerCollider");
+	PointCollider->AddComponent<Collider>();
 	
+	//드론객체 생성
 	DroneObject->AddComponent<MeshFilter>();
 	DroneObject->AddComponent<Drone>();
 
+	//미니맵 생성
+	MiniMapSystem::Get()->CreateIcon("Minimap_Player", PlayerObject, true);
 	return PlayerObject;
 }
 
@@ -108,6 +123,8 @@ GameObject* ObjectFactory::CreateManaStone()
 		
 
 		GameObject* Object_ManaStone = Instance("ManaStone");
+		Object_ManaStone->AddComponent<Rigidbody>();
+		Object_ManaStone->AddComponent<Collider>();
 		Object_ManaStone->AddComponent<MeshFilter>();
 		ManaStone* mMana = Object_ManaStone->AddComponent<ManaStone>();
 		Object_ManaStone->GetTransform()->SetPosition(point);
@@ -130,6 +147,8 @@ GameObject* ObjectFactory::CreateManaStone()
 			mMana->SetMonsterCount(2, 3);
 			break;
 		}
+
+		MiniMapSystem::Get()->CreateIcon("Minimap_Mana", Object_ManaStone);
 	}
 	return nullptr;
 }
@@ -162,6 +181,13 @@ GameObject* ObjectFactory::CreateUITitle()
 	return Object_Title;
 }
 
+GameObject* ObjectFactory::CreateUIStore()
+{
+	GameObject* Object_Store = Instance();
+	Object_Store->AddComponent<UIStore>();
+	return Object_Store;
+}
+
 GameObject* ObjectFactory::CreateBoss()
 {
 	GameObject* Object_Boss = Instance();
@@ -170,6 +196,8 @@ GameObject* ObjectFactory::CreateBoss()
 	Object_Boss->AddComponent<AnimationController>();
 	Object_Boss->AddComponent<Collider>();
 	Object_Boss->AddComponent<Rigidbody>();
+
+	MiniMapSystem::Get()->CreateIcon("Minimap_Boss", Object_Boss);
 	return Object_Boss;
 }
 
@@ -217,6 +245,15 @@ GameObject* ObjectFactory::CreateBossFriend()
 	Object->AddComponent<MeshFilter>();
 	Object->AddComponent<BossFriend>();
 	Object->AddComponent<AnimationController>();
+	return Object;
+}
+
+GameObject* ObjectFactory::CreateStore()
+{
+	GameObject* Object = Instance();
+	Object->AddComponent<MeshFilter>();
+	Object->AddComponent<Collider>();
+	Object->AddComponent<Store>();
 	return Object;
 }
 

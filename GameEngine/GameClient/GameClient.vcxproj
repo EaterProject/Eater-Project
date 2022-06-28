@@ -181,6 +181,7 @@
     <ClInclude Include="BossWeapon.h" />
     <ClInclude Include="CameraManager.h" />
     <ClInclude Include="ClientTypeOption.h" />
+    <ClInclude Include="DoorCollider.h" />
     <ClInclude Include="MeshFilterSetting.h" />
     <ClInclude Include="ComboFont.h" />
     <ClInclude Include="Drone.h" />
@@ -211,12 +212,16 @@
     <ClInclude Include="ObjectFactory.h" />
     <ClInclude Include="ParticleFactory.h" />
     <ClInclude Include="PlayerCamera.h" />
+    <ClInclude Include="PlayerCollider.h" />
+    <ClInclude Include="Store.h" />
     <ClInclude Include="UICanvas.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="TestScene.h" />
     <ClInclude Include="UIEffect.h" />
+    <ClInclude Include="UIOption.h" />
+    <ClInclude Include="UIStore.h" />
     <ClInclude Include="UITitle.h" />
   </ItemGroup>
   <ItemGroup>
@@ -224,6 +229,7 @@
     <ClCompile Include="BossFriend.cpp" />
     <ClCompile Include="BossWeapon.cpp" />
     <ClCompile Include="CameraManager.cpp" />
+    <ClCompile Include="DoorCollider.cpp" />
     <ClCompile Include="MeshFilterSetting.cpp" />
     <ClCompile Include="ComboFont.cpp" />
     <ClCompile Include="Drone.cpp" />
@@ -254,9 +260,13 @@
     <ClCompile Include="ParticleFactory.cpp" />
     <ClCompile Include="PlayerCamera.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerCollider.cpp" />
+    <ClCompile Include="Store.cpp" />
     <ClCompile Include="UICanvas.cpp" />
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="UIEffect.cpp" />
+    <ClCompile Include="UIOption.cpp" />
+    <ClCompile Include="UIStore.cpp" />
     <ClCompile Include="UITitle.cpp" />
   </ItemGroup>
   <ItemGroup>

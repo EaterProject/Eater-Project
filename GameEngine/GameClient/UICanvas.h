@@ -75,7 +75,7 @@ private:
 	ComboFont*		mCombo		= nullptr;
 
 	//플레이어 체력 UI
-	ImageFont*		Player_HP[2];		//플레이어 체력 폰트
+	ImageFont*		Player_HP[2];			//플레이어 체력 폰트
 	Slider*			Player_HP_Slider;		//플레이어 체력 폰트
 	Image*			Player_HP_BAR;
 	RectTransform*	Player_RECT;

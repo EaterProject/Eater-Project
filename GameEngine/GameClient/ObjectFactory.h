@@ -30,16 +30,18 @@ public:
 	~ObjectFactory();
 public:
 	void Release();
-		
+	
 	GameObject* CreatePlayer();			//플레이어 객체를 생성
 	GameObject* CreateMonsterA();		//몬스터 객체를 생성
 	GameObject* CreateMonsterB();		//몬스터 객체를 생성
 	GameObject* CreateManaStone();		//마나석 객체를 생성
 	GameObject* CreateFontImage();		//폰트 이미지 생성
 
+
 	GameObject* CreateUICanvas();		//플레이어 스테이트 UI생성
 	GameObject* CreateUIEffect();		//이펙트 UI
 	GameObject* CreateUITitle();		//타이틀 UI
+	GameObject* CreateUIStore();		//상점 UI
 
 	GameObject* CreateGate_In();		//게이트 객체 생성
 	GameObject* CreateGate_Out();		//게이트 객체 생성
@@ -49,6 +51,8 @@ public:
 	GameObject* CreateBoss();			//보스 객체 생성
 	GameObject* CreateBossWeapon();		//보스 무기 생성
 	GameObject* CreateBossFriend();		//보스 분신 생성
+
+	GameObject* CreateStore();
 private:
 	//게임상에 한개만 존재하는 오브젝트를 따로 보관
 	std::vector<GameObject*> ManaPoint_List;

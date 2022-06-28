@@ -140,8 +140,21 @@ void MonsterComponent::OnTriggerStay(GameObject* Obj)
 		{
 			if (MonsterState == (int)MONSTER_STATE::DEAD) { return; }
 
+			if (Player::GetPlayerColor() == MonsterColor)
+			{
+				HP -= 15;
+				if(Player::GetPlayerCombo() >= ComboCount)
+				{
+					MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_HILL);
+				}
+			}
+			else
+			{
+				HP -= 10;
+			}
+
+
 			SetMonsterState(MONSTER_STATE::HIT);
-			HP			-= 20;
 			MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_ATTACK_OK);
 			SetMonsterColor();
 
