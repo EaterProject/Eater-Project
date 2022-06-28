@@ -21,6 +21,7 @@ class Boss;
 class CameraManager;
 class UIEffect;
 class UITitle;
+class UIStore;
 enum class  CLIENT_OBJECT_TYPE
 {
 	MONATER_A,
@@ -67,7 +68,8 @@ private:
 	Player*				mPlayer			= nullptr;
 	UICanvas*			mCanvas			= nullptr;
 	UIEffect*			mEffect			= nullptr;
-	UITitle*			mTiltle = nullptr;
+	UITitle*			mTiltle			= nullptr;
+	UIStore*			mStore			= nullptr;
 	CameraManager*		mCameraManager  = nullptr;
 private:
 	ObjectFactory* mFactory;

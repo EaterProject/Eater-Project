@@ -55,15 +55,17 @@ void GameLogic::Update()
 	//}
 	//
 	//
-	//if (GetKeyDown(VK_NUMPAD0))
-	//{
-	//	MessageManager::GetGM()->SEND_Message(TARGET_CAMERA_MANAGER, MESSAGE_CAMERA_CHANGE_PLAYER);
-	//}
-	//
-	//if (GetKeyDown(VK_NUMPAD1))
-	//{
-	//	MessageManager::GetGM()->SEND_Message(TARGET_CAMERA_MANAGER, MESSAGE_CAMERA_CHANGE_DEBUG);
-	//}
+	if (GetKeyDown(VK_NUMPAD0))
+	{
+		int num = 0;
+		MessageManager::GetGM()->SEND_Message(TARGET_GATE_MANAGER, MESSAGE_GATE_LOCK,&num);
+	}
+
+	if (GetKeyDown(VK_NUMPAD1))
+	{
+		int num = 0;
+		MessageManager::GetGM()->SEND_Message(TARGET_GATE_MANAGER, MESSAGE_GATE_UNLOCK, &num);
+	}
 	//
 	//
 	//if (GetKeyDown(VK_NUMPAD2))

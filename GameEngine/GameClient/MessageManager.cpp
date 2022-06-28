@@ -10,6 +10,7 @@
 #include "ClientTypeOption.h"
 #include <string>
 #include "EaterEngineAPI.h"
+#include "MiniMapSystem.h"
 
 //클라이언트 컨퍼넌트
 #include "PlayerCamera.h"
@@ -25,6 +26,7 @@
 #include "ManaStone.h"
 #include "UIEffect.h"
 #include "UITitle.h"
+#include "UIStore.h"
 
 MessageManager* MessageManager::instance = nullptr;
 MessageManager::MessageManager()
@@ -60,7 +62,10 @@ void MessageManager::Initialize(ObjectFactory* Factory)
 
 	//포탈 태그가 붙어있는 오브젝트를 모두 가져와 리스트에 담아놓는다
 	FindGameObjectTags("ManaPoint", &mFactory->ManaPoint_List);
-	
+
+	//미니맵 생성
+	MiniMapSystem* m_MiniMap = MiniMapSystem::Get();
+	m_MiniMap->CreateMiniMap("ingame_minimap", PIVOT_RIGHT_TOP, ROTATE_90, Vector2(186.0f), Vector2(-25.0f));
 
 	//플레이어 생성
 	CREATE_MESSAGE(TARGET_CAMERA_MANAGER);
@@ -68,9 +73,11 @@ void MessageManager::Initialize(ObjectFactory* Factory)
 	CREATE_MESSAGE(TARGET_UI);
 	CREATE_MESSAGE(TARGET_UI_EFFECT);
 	CREATE_MESSAGE(TARGET_UI_TITLE);
+	CREATE_MESSAGE(TARGET_UI_STORE);
 	CREATE_MESSAGE(TARGET_PLAYER);
-	//CREATE_MESSAGE(TARGET_MANA);
-	//CREATE_MESSAGE(TARGET_BOSS);
+	CREATE_MESSAGE(TARGET_STORE);
+	CREATE_MESSAGE(TARGET_MANA);
+	CREATE_MESSAGE(TARGET_BOSS);
 }
 
 void MessageManager::Release()
@@ -154,6 +161,12 @@ GameObject* MessageManager::CREATE_MESSAGE(int CREATE_TYPE)
 		Object = mFactory->CreateUITitle();
 		mTiltle = Object->GetComponent<UITitle>();
 		return Object;
+	case TARGET_UI_STORE:
+		Object = mFactory->CreateUIStore();
+		mStore = Object->GetComponent<UIStore>();
+		return Object;
+	case TARGET_STORE:
+		return  mFactory->CreateStore();
 	}
 
 	return nullptr;
@@ -207,6 +220,12 @@ void MessageManager::SEND_UI_Message(int MessageType, void* Data)
 	case MESSAGE_UI_FADE_OUT:
 		mEffect->Fade_OUT(Data);
 		break;
+	case MESSAGE_UI_STORE_ACTIVE:
+		mStore->Set_Store_Active(*(reinterpret_cast<bool*>(Data)));
+		break;
+	case MESSAGE_UI_PLAYER_ACTIVE:
+		mCanvas->Set_InGameUI_Active(*(reinterpret_cast<bool*>(Data)));
+		break;
 	}
 }
 
@@ -221,6 +240,12 @@ void MessageManager::SEND_GATE_Message(int MessageType, void* Data)
 		break;
 	case MESSAGE_GATE_CLOSE:
 		mGate->SetClose(*reinterpret_cast<int*>(Data));
+		break;
+	case MESSAGE_GATE_LOCK:
+		mGate->SetLock(*reinterpret_cast<int*>(Data));
+		break;
+	case MESSAGE_GATE_UNLOCK:
+		mGate->SetUnLock(*reinterpret_cast<int*>(Data));
 		break;
 	}
 }
@@ -276,7 +301,7 @@ void MessageManager::InGameStart()
 	SEND_Message(TARGET_CAMERA_MANAGER, MESSAGE_CAMERA_CHANGE_PLAYER);
 
 	//사운드 재생
-	Sound_Play_BGM("InGame_InDoor");
+	Sound_Play_BGM("InGame_OutDoor");
 }
 
 void MessageManager::TitleStart()
@@ -288,7 +313,7 @@ void MessageManager::TitleStart()
 	//SEND_Message(TARGET_UI,)
 	//SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_ACTIVE_FALSE);
 
-	Sound_Play_BGM("Title");
+	//Sound_Play_BGM("Title");
 }
 
 void MessageManager::InGameEnd()

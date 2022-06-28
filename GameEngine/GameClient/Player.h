@@ -36,6 +36,9 @@ public:
 
 	static Transform* GetPlayerTransform();
 	static bool GetAttackState();
+	static int	GetPlayerColor();
+	static int	GetPlayerCombo();
+	static float GetPlayerPower();
 	void Healing(float HealingPower);
 private:
 	void PlayerKeyinput();				//플레이어 키인풋
@@ -82,16 +85,20 @@ private:
 	///State관련
 	unsigned int mState = 0x00000000;
 	int AttackKeyDownCount	= 0;
-	int ChangeCount			= 0;
+	static int ChangeCount;
 	int HP					= 100;
+	int HP_Max				= 150;
 	float Speed				= 10;
 	const float MaxSpeed	= 10;
 	bool IsAttack			= false;
 	bool IsMove				= false;
 	bool IsHit				= false;
 	bool IsCreate			= false;
-	static bool IsAttackTime;
-	int	ComboCount;
+
+	static bool		IsAttackTime;
+	static int		ComboCount;
+	static float	PlayerPower;
+
 	float		Test = 0.0f;
 	float		ComboTime	= 0.0f;
 	float		HitTime		= 0.0f;

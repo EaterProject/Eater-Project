@@ -20,6 +20,8 @@
 #define TARGET_BOSS_FRIEND 16
 #define TARGET_UI_EFFECT 17
 #define TARGET_UI_TITLE 18
+#define TARGET_UI_STORE 19
+#define TARGET_STORE 20
 
 //Player Message
 #define MESSAGE_PLAYER_HIT    0				//플레이어가 맞았다
@@ -27,11 +29,13 @@
 #define MESSAGE_PLAYER_ATTACK_OK 2			//플레이어 공격이 성공하였다
 #define MESSAGE_PLAYER_ACTIVE_TRUE 3		//플레이어 Active TRUE
 #define MESSAGE_PLAYER_ACTIVE_FALSE 4		//플레이어 Active FALSE
+#define MESSAGE_PLAYER_COMBO_RESET 5
 
 //Gate Message
 #define MESSAGE_GATE_OPEN  0				//게이트 열기			//인자 값 : int
 #define MESSAGE_GATE_CLOSE 1				//게이트 닫기			//인자 값 : int
 #define MESSAGE_GATE_UNLOCK 2				//게이트 잠금 풀기		//인자 값 : int
+#define MESSAGE_GATE_LOCK 3					//게이트 잠금 열기		//인자 값 : int
 
 //UI Message
 #define MESSAGE_UI_COMBO 0					//콤보 폰트 값			//인자 값 : int
@@ -44,6 +48,9 @@
 #define MESSAGE_UI_MONSTER_UI_UPDATE 7		//몬스터 UI를 업데이트	//인자 값 : MONSTER_EMAGIN 구조체
 #define MESSAGE_UI_FADE_IN 8				//페이드 인
 #define MESSAGE_UI_FADE_OUT 9				//페이드 아웃
+#define MESSAGE_UI_STORE_ACTIVE	10			//UI 스토어 엑티브
+#define MESSAGE_UI_PLAYER_ACTIVE 11			//UI 플레이어 UI
+
 
 //Camera Message
 #define MESSAGE_CAMERA_CINEMATIC_GAME_START 0				//시네마틱 실행

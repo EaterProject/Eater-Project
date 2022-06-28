@@ -35,7 +35,6 @@ public:
 	bool GetStopPoint(const Vector3& Pos);
 	void SetMovePoint(float x, float y, float z);
 	void SetMonsterState(MONSTER_STATE State);
-	void UpdateColor();
 	void SetState(MONSTER_STATE mState);
 	bool FirstState();
 protected:

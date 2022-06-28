@@ -349,8 +349,8 @@ void Eater_LoadScene::Load_Component_Collider(int index, GameObject* Object)
 		break;
 	}
 
-	mPhys->SetTrigger(std::stoi(Data[4]));
-	mPhys->SetCenter(std::stof(Data[5]), std::stof(Data[6]), std::stof(Data[7]));
+	mCollider->SetTrigger(std::stoi(Data[4]));
+	mCollider->SetCenter(std::stof(Data[5]), std::stof(Data[6]), std::stof(Data[7]));
 
 	mCollider->SetMaterial_Dynamic(std::stof(Data[8]));
 	mCollider->SetMaterial_Restitution(std::stof(Data[9]));
