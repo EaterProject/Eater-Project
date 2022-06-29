@@ -108,6 +108,8 @@ extern "C" EATER_ENGINEDLL void MouseCursorClip(bool Clip);		//마우스 커서 보이�
 
 ///윈도우 관련
 extern "C" EATER_ENGINEDLL void WindowFocus(bool focus);		//현재 윈도우 포커싱 상태
+extern "C" EATER_ENGINEDLL void SetWindowSize(int width, int height);		//현재 윈도우 창 상태
+extern "C" EATER_ENGINEDLL void SetWindowFullScreen();			//현재 윈도우 창 상태
 extern "C" EATER_ENGINEDLL GameObject* Picking(int x, int y);	//현재 윈도우 클릭 지점
 
 ///카메라 관련

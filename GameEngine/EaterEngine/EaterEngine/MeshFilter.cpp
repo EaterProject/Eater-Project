@@ -19,11 +19,12 @@
 #include "TimeManager.h"
 
 MeshFilter::MeshFilter()
-	:isMaterialBlock(false)
 {
 	ModelName = "";
 
 	m_PropertyBlock = new MaterialPropertyBlock();
+
+	MaterialBlockState = PropertyBlockState::DISABLE;
 
 	//Component Terrain보다 먼저 실행되어야함
 	SetUp_Order = FUNCTION_ORDER_FIRST;
@@ -235,41 +236,125 @@ void MeshFilter::SetMaterialPropertyBlock(bool enable)
 {
 	if (m_Material == nullptr) return;
 
-	// 활성화와 동시에 기존 Property Data 복사..
-	if (isMaterialBlock == false && enable == true)
+	if (enable)
 	{
-		(*(MaterialProperty*)m_PropertyBlock) = (*m_Material->m_MaterialData->Material_Property);
+		switch (MaterialBlockState)
+		{
+		case PropertyBlockState::DISABLE:
+		{
+			// 활성화와 동시에 기존 Property Data 복사..
+			(*(MaterialProperty*)m_PropertyBlock) = (*m_Material->m_MaterialData->Material_Property);
 
-		GraphicEngine::Get()->PushMaterialBlockInstance(gameobject->OneMeshData);
+			GraphicEngine::Get()->PushMaterialBlockInstance(gameobject->OneMeshData);
 
-		isMaterialBlock = true;
+			MaterialBlockState = PropertyBlockState::OPACITY;
+		}
+		break;
+		case PropertyBlockState::OPACITY:
+			break;
+		case PropertyBlockState::TRANSPARENCY:
+		{
+			GraphicEngine::Get()->PopMaterialBlockInstance(gameobject->OneMeshData);
+
+			GraphicEngine::Get()->PushMaterialBlockInstance(gameobject->OneMeshData);
+
+			MaterialBlockState = PropertyBlockState::OPACITY;
+		}
+		break;
+		default:
+			break;
+		}
 	}
-	else if(isMaterialBlock == true && enable == false)
+	else
 	{
-		GraphicEngine::Get()->PopMaterialBlockInstance(gameobject->OneMeshData);
-	
-		isMaterialBlock = false;
+		switch (MaterialBlockState)
+		{
+		case PropertyBlockState::DISABLE:
+		break;
+		case PropertyBlockState::OPACITY:
+		case PropertyBlockState::TRANSPARENCY:
+		{
+			GraphicEngine::Get()->PopMaterialBlockInstance(gameobject->OneMeshData);
+
+			MaterialBlockState = PropertyBlockState::DISABLE;
+		}
+		break;
+		default:
+			break;
+		}
 	}
 }
 
 void MeshFilter::SetMaterialPropertyBlock(bool enable, bool alpha)
 {
-	// 활성화와 동시에 기존 Property Data 복사..
-	if (isMaterialBlock == false && enable == true)
+	if (enable)
 	{
-		(*(MaterialProperty*)m_PropertyBlock) = (*m_Material->m_MaterialData->Material_Property);
+		switch (MaterialBlockState)
+		{
+		case PropertyBlockState::DISABLE:
+		{
+			// 활성화와 동시에 기존 Property Data 복사..
+			(*(MaterialProperty*)m_PropertyBlock) = (*m_Material->m_MaterialData->Material_Property);
 
-		m_PropertyBlock->Alpha = alpha;
+			m_PropertyBlock->Alpha = alpha;
 
-		GraphicEngine::Get()->PushMaterialBlockInstance(gameobject->OneMeshData);
+			GraphicEngine::Get()->PushMaterialBlockInstance(gameobject->OneMeshData);
 
-		isMaterialBlock = true;
+			if (alpha)
+			{
+				MaterialBlockState = PropertyBlockState::TRANSPARENCY;
+			}
+			else
+			{
+				MaterialBlockState = PropertyBlockState::OPACITY;
+			}
+		}
+			break;
+		case PropertyBlockState::OPACITY:
+		{
+			if (alpha = true)
+			{
+				GraphicEngine::Get()->PopMaterialBlockInstance(gameobject->OneMeshData);
+
+				GraphicEngine::Get()->PushMaterialBlockInstance(gameobject->OneMeshData);
+
+				MaterialBlockState = PropertyBlockState::OPACITY;
+			}
+		}
+			break;
+		case PropertyBlockState::TRANSPARENCY:
+		{
+			if (alpha == false)
+			{
+				GraphicEngine::Get()->PopMaterialBlockInstance(gameobject->OneMeshData);
+
+				GraphicEngine::Get()->PushMaterialBlockInstance(gameobject->OneMeshData);
+
+				MaterialBlockState = PropertyBlockState::OPACITY;
+			}
+		}
+			break;
+		default:
+			break;
+		}
 	}
-	else if (isMaterialBlock == true && enable == false)
+	else
 	{
-		GraphicEngine::Get()->PopMaterialBlockInstance(gameobject->OneMeshData);
+		switch (MaterialBlockState)
+		{
+		case PropertyBlockState::DISABLE:
+			break;
+		case PropertyBlockState::OPACITY:
+		case PropertyBlockState::TRANSPARENCY:
+		{
+			GraphicEngine::Get()->PopMaterialBlockInstance(gameobject->OneMeshData);
 
-		isMaterialBlock = false;
+			MaterialBlockState = PropertyBlockState::DISABLE;
+		}
+			break;
+		default:
+			break;
+		}
 	}
 }
 

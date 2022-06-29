@@ -301,13 +301,17 @@ void UIOption::SetScreenSize()
 	if (ClickButton[SCREEN_SIZE].Value)
 	{
 		ScreenText->SetTexture("Setting_FullScreen");
+		SetWindowFullScreen();
 	}
 	else
 	{
 		ScreenText->SetTexture("Setting_Window");
+		
+		SetWindowSize(1920, 1080);
 	}
 
 	// 해당 상태의 해상도로 화면 변경..
+	
 }
 
 void UIOption::SetMasterVolumeUp()
