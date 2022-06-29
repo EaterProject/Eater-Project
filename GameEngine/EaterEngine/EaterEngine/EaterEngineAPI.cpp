@@ -332,6 +332,20 @@ int GetMousePosY()
 	 gGameEngine->SetFocus(focus);
  }
 
+ void SetWindowSize(int width, int height)
+ {
+	 if (gGameEngine == nullptr) return;
+
+	 gGameEngine->SetWindowSize(width, height);
+ }
+
+ void SetWindowFullScreen()
+ {
+	 if (gGameEngine == nullptr) return;
+
+	 gGameEngine->SetWindowFullScreen();
+ }
+
  GameObject* Picking(int x, int y)
  {
 	 if (gGameEngine == nullptr) return nullptr;

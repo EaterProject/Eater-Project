@@ -38,6 +38,14 @@ public:
 	virtual ~MeshFilter();
 
 public:
+	enum PropertyBlockState
+	{
+		DISABLE,
+		OPACITY,
+		TRANSPARENCY
+	};
+
+public:
 	virtual void Start() override;
 
 public:
@@ -115,7 +123,7 @@ private:
 	bool isLoad_Texture;		//텍스쳐 로드여부
 	bool isLoad_Animation;		//애니메이션 로드여부
 
-	bool isMaterialBlock;
+	PropertyBlockState MaterialBlockState;
 
 	std::string ModelName;				//로드한 모델 이름
 	std::string AnimationName;			//로드한 애니메이션 이름

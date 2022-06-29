@@ -111,10 +111,8 @@ void UIPause::SetResumeClick()
 	Sound_Play_SFX("UI_Button_Click");
 
 	/// 게임상으로 복귀
-
-
-	// 전체 화면 블러 해제..
-	SetFullScreenBlur(false);
+	// Pasue UI Off..
+	SetPauseUIActive(false);
 }
 
 void UIPause::SetOptionIn()
