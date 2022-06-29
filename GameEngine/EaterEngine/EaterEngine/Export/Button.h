@@ -27,6 +27,8 @@ public:
 	void Update() override;
 
 public:
+	EATER_ENGINEDLL void SetActive(bool active);
+	
 	EATER_ENGINEDLL void PushEvent(std::function<void()>& eventFunc, State type);
 	EATER_ENGINEDLL void PushEvent(std::function<void()>&& eventFunc, State type);
 	EATER_ENGINEDLL void PopEvent(std::function<void()>& eventFunc, State type);
@@ -50,6 +52,9 @@ public:
 	EATER_ENGINEDLL void PushTextureList(std::string texture_name);
 
 private:
+	void Resize(int width, int height);
+
+private:
 	void SetPivot();
 	void SetPosition();
 	void SetRotation();
@@ -69,6 +74,11 @@ private:
 	Image* m_Image;
 	RectTransform* m_Transform;
 	RectPoint* m_Rect;
+
+private:
+	DirectX::SimpleMath::Vector2 Screen_Resize;
+	DirectX::SimpleMath::Vector2 Screen_Origin;
+	DirectX::SimpleMath::Vector2 Screen_Ratio;
 
 	float m_Left_Offset;
 	float m_Right_Offset;

@@ -380,6 +380,9 @@ void EaterParser::SaveParticle()
 	//파티클 데이터를 저장
 	std::string SetData = "";
 	SetData += NODE_TYPE + std::string("EATER_PARTICLE") + LINE_TYPE;
+	SetData += MAP_TYPE + std::string("PlayTime") + SP_TYPE + std::to_string(mParticle_Data->PlayTime) + LINE_TYPE;
+	SetData += MAP_TYPE + std::string("Loop") + SP_TYPE + std::to_string(mParticle_Data->Loop) + LINE_TYPE;
+
 	SetData += MAP_TYPE + std::string("TextureName") + SP_TYPE + mParticle_Data->TextureName + LINE_TYPE;
 	SetData += MAP_TYPE + std::string("RenderType") + SP_TYPE + std::to_string(mParticle_Data->Particle_Render_Type) + LINE_TYPE;
 	SetData += MAP_TYPE + std::string("ColorType") + SP_TYPE + std::to_string(mParticle_Data->Particle_LifeTime_Color_Type) + LINE_TYPE;

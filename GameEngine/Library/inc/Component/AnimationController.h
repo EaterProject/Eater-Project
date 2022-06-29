@@ -33,6 +33,7 @@ public:
 	EATER_ENGINEDLL void Stop();	//멈춤
 	EATER_ENGINEDLL void Pause();	//중지
 	EATER_ENGINEDLL void SetFrame(int index);
+	EATER_ENGINEDLL void SetIsBoneUpdate(bool enable);
 
 	EATER_ENGINEDLL int GetNowFrame();					//선택한 애니메이션 프레임
 	EATER_ENGINEDLL int GetEndFrame();					//선택한 애니메이션 끝 프레임
@@ -72,6 +73,7 @@ private:
 
 	bool ChangeAnimation;
 
+	bool	IsBoneUpdate;
 	bool	mStop;
 	bool	mLoop;
 	bool	mPlay;
@@ -84,5 +86,6 @@ private:
 	float	mPlayTime;		//애니메이션을 한바퀴 도는 시간 
 	float 	mTime;			//현재 재생타임
 	float 	mFrameTime;		//현재 프레임 재생타임
+
 };
 

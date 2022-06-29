@@ -81,11 +81,12 @@ public:
 	EATER_ENGINEDLL void SetLifeTimeRotation(float minRot, float maxRot);				// 파티클 생성 후 랜덤 회전 범위
 
 	EATER_ENGINEDLL void SetTextureTiling(int count_x, int count_y);					// 파티클 텍스쳐 나눌 개수
-	EATER_ENGINEDLL void SetPlayTime(float playTime, bool loop = false);				// 파티클 시스템 플레이 시간 및 반복 여부
+	EATER_ENGINEDLL void SetPlayTime(float playTime);									// 파티클 시스템 플레이 시간
+	EATER_ENGINEDLL void SetLoop(bool loop);											// 파티클 시스템 플레이 반복 여부
 	
 	EATER_ENGINEDLL void SetDiffuseName(std::string diffuseName);
 
-	EATER_ENGINEDLL void Play(bool loop = false);										// 파티클 시스템 플레이 시간 및 반복 여부
+	EATER_ENGINEDLL void Play();														// 파티클 시스템 플레이 시간 및 반복 여부
 	EATER_ENGINEDLL void Pause();														// 파티클 시스템 중지
 	EATER_ENGINEDLL void Stop();														// 파티클 시스템 중지
 
@@ -152,6 +153,7 @@ private:
 
 	int m_MaxParticle;			// 최대 파티클 개수
 	int m_PlayCount;			// 이번에 실행할 파티클 개수
+	int m_CreateCount;			// 이번에 실행할 파티클 개수
 
 	float m_Strength;			// 파티클 밝기 강도
 
@@ -175,7 +177,7 @@ private:
 	Range<float>		m_LifeTimeRotation;
 	Range<int>			m_Tiling;
 
-	Eater::RandomFloat*	m_RandomLifeTime;
+	Eater::RandomFloat*		m_RandomLifeTime;
 	Eater::RandomVector4*	m_RandomStartColor;
 	Eater::RandomVector3*	m_RandomStartPosition;
 	Eater::RandomVector3*	m_RandomStartForce;
@@ -184,4 +186,6 @@ private:
 	Eater::RandomFloat*	m_RandomStartSize;
 	Eater::RandomFloat*	m_RandomStartRotation;
 	Eater::RandomFloat*	m_RandomLifeTimeRotation;
+
+	Vector3 Zero_3 = Vector3(0.0f, 0.0f, 0.0f);
 };

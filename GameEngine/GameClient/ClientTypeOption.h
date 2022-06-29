@@ -22,6 +22,8 @@
 #define TARGET_UI_TITLE 18
 #define TARGET_UI_STORE 19
 #define TARGET_STORE 20
+#define TARGET_UI_OPTION 21
+#define TARGET_UI_PAUSE 22
 
 //Player Message
 #define MESSAGE_PLAYER_HIT    0				//플레이어가 맞았다
@@ -66,6 +68,8 @@
 #define MESSAGE_GLOBAL_GAMESTART 0							//게임이 시작되었다
 #define MESSAGE_GLOBAL_GAMEEND	1							//게임이 종료되었다
 #define MESSAGE_GLOBAL_TITLE 2								//타이틀
+#define MESSAGE_GLOBAL_OPTION 3								//옵션
+#define MESSAGE_GLOBAL_RESUME 4								//일시정지
 
 
 #define MONSTER_COLOR_RED 0

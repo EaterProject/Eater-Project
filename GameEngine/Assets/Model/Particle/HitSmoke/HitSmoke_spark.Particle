@@ -1,4 +1,6 @@
 #EATER_PARTICLE
+@PlayTime 0.990000
+@Loop 0
 @TextureName particle_embers4
 @RenderType 0
 @ColorType 2
@@ -22,7 +24,7 @@ $StartLifeTime 1 2
 $StartScale 1 2
 1.000000 1.000000
 $StartRotation 1 2
-180.000000 0.000000
+0.000000 180.000000
 $LifeForce 2 3
 0.000000 0.000000 0.000000
 0.000000 0.000000 0.000000

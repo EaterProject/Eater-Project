@@ -1,12 +1,14 @@
 #EATER_PARTICLE
+@PlayTime 0.990000
+@Loop 0
 @TextureName Spark
 @RenderType 0
 @ColorType 3
 @ScaleType 0
-@MaxParticle 3
+@MaxParticle 4
 @DelayTime 0.000000
 @RateOverTime 25.000000
-@Strength 10.000000
+@Strength 100.000000
 $Radius 1 3
 0.500000 0.000000 0.500000
 $Tiling 1 2
@@ -22,7 +24,7 @@ $StartLifeTime 1 2
 $StartScale 1 2
 1.500000 1.700000
 $StartRotation 1 2
-0.000000 360.000000
+360.000000 0.000000
 $LifeForce 2 3
 0.000000 0.000000 0.000000
 0.000000 0.000000 0.000000

@@ -464,7 +464,7 @@ int GetMousePosY()
 
   void SetSlowDeltaTime(float mSlow)
  {
-	  gGameEngine;
+	  gGameEngine->SetSlowTime(mSlow);
  }
 
  bool RayCast(PhysRayCast* ray)

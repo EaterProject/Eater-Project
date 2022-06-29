@@ -5,7 +5,7 @@
 @MeshName drone_0
 @MaterialName drone_droone
 @IsShadow 1
-@IsCull 1
+@IsCull 0
 $WorldTM 4 4
 -1.000000 0.000000 -0.000007 0.000000
 0.000000 1.000000 0.000000 0.000000

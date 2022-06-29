@@ -201,8 +201,8 @@ SHADER_CONSTANT_BUFFER(cbSsaoOption)
 struct CB_SsaoOption : public cbSsaoOption
 {
 	float    gOcclusionRadius = 0.1f;
-	float    gOcclusionFadeStart = 0.2f;
-	float    gOcclusionFadeEnd = 4.0f;
+	float    gOcclusionFadeStart = 0.01f;
+	float    gOcclusionFadeEnd = 2.0f;
 	float    gSurfaceEpsilon = 0.05f;
 };
 

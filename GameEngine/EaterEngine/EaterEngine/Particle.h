@@ -21,6 +21,8 @@ typedef struct PARTICLE_SHARE_DESC
 
 typedef struct PARTICLE_DESC
 {
+	UINT AniType;
+
 	float LifeTime;
 
 	float StartScale;
@@ -82,12 +84,11 @@ private:
 
 	int m_TexTotalFrame;
 	int m_TexNowFrame;
-	int m_TexFrame;
 
 	int m_AniTotalFrame;
 	int m_AniPrevFrame;
 	int m_AniNextFrame;
-	int m_AniFrame;
+	int m_AniNowFrame;
 
 	int m_ColorTurningFrame;
 	int m_ScaleTurningFrame;
@@ -120,4 +121,9 @@ private:
 	DirectX::SimpleMath::Vector4 m_PrevColor;
 	DirectX::SimpleMath::Vector4 m_NowColor;
 	DirectX::SimpleMath::Vector4 m_NextColor;
+
+
+	Vector2 Zero_2 = Vector2(0.0f, 0.0f);
+	Vector3 Zero_3 = Vector3(0.0f, 0.0f, 0.0f);
+	Vector4 Zero_4 = Vector4(0.0f, 0.0f, 0.0f, 0.0f);
 };

@@ -233,6 +233,8 @@ void MeshFilter::SetSkyLightIndex(int skyLightIndex)
 
 void MeshFilter::SetMaterialPropertyBlock(bool enable)
 {
+	if (m_Material == nullptr) return;
+
 	// 활성화와 동시에 기존 Property Data 복사..
 	if (isMaterialBlock == false && enable == true)
 	{

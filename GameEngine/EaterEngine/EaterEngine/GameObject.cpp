@@ -33,6 +33,8 @@ GameObject::~GameObject()
 
 void GameObject::SetActive(bool active)
 {
+	if (active == OneMeshData->Object_Data->IsActive) return;
+
 	OneMeshData->Object_Data->IsActive = active;
 
 	std::vector<Component*>::iterator it = ComponentList.begin();

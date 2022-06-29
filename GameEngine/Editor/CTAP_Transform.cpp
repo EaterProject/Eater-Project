@@ -36,7 +36,7 @@ BEGIN_MESSAGE_MAP(CTAP_Transform, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON21, &CTAP_Transform::OnUpPosition_X_Button)
 	ON_BN_CLICKED(IDC_BUTTON22, &CTAP_Transform::OnDownPosition_X_Button)
 	ON_WM_HSCROLL()
-	ON_BN_CLICKED(IDC_BUTTON2, &CTAP_Transform::OnBnClickedButton2)
+	ON_BN_CLICKED(IDC_BUTTON2, &CTAP_Transform::OnStart_Button)
 	ON_BN_CLICKED(IDC_BUTTON13, &CTAP_Transform::OnBnClickedButton13)
 	ON_BN_CLICKED(IDC_BUTTON25, &CTAP_Transform::OnBnClickedButton25)
 	ON_BN_CLICKED(IDC_BUTTON23, &CTAP_Transform::OnBnClickedButton23)
@@ -332,7 +332,7 @@ void CTAP_Transform::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 }
 
 
-void CTAP_Transform::OnBnClickedButton2()
+void CTAP_Transform::OnStart_Button()
 {
 	Vector3 rotation = ObjectTransform->GetRotation();
 	ObjectTransform->SetRotate(0.0f, rotation.y, rotation.z);

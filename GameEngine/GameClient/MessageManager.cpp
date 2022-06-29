@@ -27,6 +27,8 @@
 #include "UIEffect.h"
 #include "UITitle.h"
 #include "UIStore.h"
+#include "UIOption.h"
+#include "UIPause.h"
 
 MessageManager* MessageManager::instance = nullptr;
 MessageManager::MessageManager()
@@ -78,6 +80,8 @@ void MessageManager::Initialize(ObjectFactory* Factory)
 	CREATE_MESSAGE(TARGET_STORE);
 	CREATE_MESSAGE(TARGET_MANA);
 	CREATE_MESSAGE(TARGET_BOSS);
+	CREATE_MESSAGE(TARGET_UI_OPTION);
+	CREATE_MESSAGE(TARGET_UI_PAUSE);
 }
 
 void MessageManager::Release()
@@ -167,6 +171,14 @@ GameObject* MessageManager::CREATE_MESSAGE(int CREATE_TYPE)
 		return Object;
 	case TARGET_STORE:
 		return  mFactory->CreateStore();
+	case TARGET_UI_OPTION:
+		Object = mFactory->CreateUIOption();
+		mOption = Object->GetComponent<UIOption>();
+		return Object;
+	case TARGET_UI_PAUSE:
+		Object = mFactory->CreateUIPause();
+		mPause = Object->GetComponent<UIPause>();
+		return Object;
 	}
 
 	return nullptr;
@@ -285,8 +297,13 @@ void MessageManager::SEND_GLOBAL_Message(int MessageType, void* Data)
 	case MESSAGE_GLOBAL_GAMEEND:	//게임 종료
 		InGameEnd();
 		break;
-	case MESSAGE_GLOBAL_TITLE:	//게임 종료
+	case MESSAGE_GLOBAL_TITLE:		//게임 종료
 		TitleStart();
+		break;
+	case MESSAGE_GLOBAL_OPTION:		//옵션
+		OptionStart(*(int*)(Data));
+		break;
+	case MESSAGE_GLOBAL_RESUME:		//일시정지
 		break;
 	}
 }
@@ -295,6 +312,8 @@ void MessageManager::InGameStart()
 {
 	mTiltle->SetTitleUIActive(false);
 	mCanvas->Set_InGameUI_Active(true);
+	mOption->SetOptionUIActive(false);
+	mPause->SetPauseUIActive(false);
 
 	//카메라,플레이어 생성
 	SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_ACTIVE_TRUE);
@@ -308,12 +327,31 @@ void MessageManager::TitleStart()
 {
 	mTiltle->SetTitleUIActive(true);
 	mCanvas->Set_InGameUI_Active(false);
-	
+	mOption->SetOptionUIActive(false);
+	mPause->SetPauseUIActive(false);
+
 
 	//SEND_Message(TARGET_UI,)
 	//SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_ACTIVE_FALSE);
 
 	//Sound_Play_BGM("Title");
+}
+
+void MessageManager::OptionStart(int prev_state)
+{
+	mTiltle->SetTitleUIActive(false);
+	mCanvas->Set_InGameUI_Active(false);
+	mPause->SetPauseUIActive(false);
+	mOption->SetOptionUIActive(true);
+	mOption->SetPrevTarget(prev_state);
+}
+
+void MessageManager::PauseStart()
+{
+	mTiltle->SetTitleUIActive(false);
+	mCanvas->Set_InGameUI_Active(false);
+	mOption->SetOptionUIActive(false);
+	mPause->SetPauseUIActive(true);
 }
 
 void MessageManager::InGameEnd()
@@ -322,6 +360,8 @@ void MessageManager::InGameEnd()
 
 
 
+	// 윈도우 종료..
+	PostQuitMessage(WM_QUIT);
 }
 
 

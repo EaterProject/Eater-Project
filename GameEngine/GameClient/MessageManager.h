@@ -22,6 +22,8 @@ class CameraManager;
 class UIEffect;
 class UITitle;
 class UIStore;
+class UIOption;
+class UIPause;
 enum class  CLIENT_OBJECT_TYPE
 {
 	MONATER_A,
@@ -59,6 +61,8 @@ private:
 private:
 	void InGameStart();
 	void TitleStart();
+	void OptionStart(int prev_state);
+	void PauseStart();
 	void InGameEnd();
 private:
 	std::vector<GameObject*>		ManaPoint_List;
@@ -70,6 +74,8 @@ private:
 	UIEffect*			mEffect			= nullptr;
 	UITitle*			mTiltle			= nullptr;
 	UIStore*			mStore			= nullptr;
+	UIOption*			mOption			= nullptr;
+	UIPause*			mPause			= nullptr;
 	CameraManager*		mCameraManager  = nullptr;
 private:
 	ObjectFactory* mFactory;

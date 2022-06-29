@@ -1,4 +1,6 @@
 #EATER_PARTICLE
+@PlayTime 0.990000
+@Loop 0
 @TextureName Dot02
 @RenderType 2
 @ColorType 2
@@ -6,7 +8,7 @@
 @MaxParticle 1
 @DelayTime 0.000000
 @RateOverTime 20.000000
-@Strength 10.000000
+@Strength 15.100000
 $Radius 1 3
 0.000000 0.000000 0.000000
 $Tiling 1 2
@@ -30,7 +32,7 @@ $LifeColor 2 4
 0.000000 255.000000 0.000000 0.000000
 0.000000 255.000000 0.000000 255.000000
 $LifeScale 1 2
-0.500000 1.000000
+0.500000 1.200000
 $LifeRotation 1 2
 0.000000 0.000000
 &

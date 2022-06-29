@@ -273,7 +273,7 @@ void SceneSave::SaveLight(Light* mLight)
 void SceneSave::SaveParticle(ParticleSystem* mParticleSystem)
 {
 	//46
-	EATER_SET_LIST_START("Particle", 2, 25);
+	EATER_SET_LIST_START("Particle", 2, 26);
 
 	EATER_SET_LIST(mParticleSystem->GetTextureName());		//0
 	switch (mParticleSystem->GetRenderType())
@@ -291,6 +291,7 @@ void SceneSave::SaveParticle(ParticleSystem* mParticleSystem)
 		EATER_SET_LIST("MESH");
 		break;
 	}
+
 	EATER_SET_LIST(mParticleSystem->GetMaxParticles());		//2
 	EATER_SET_LIST(mParticleSystem->GetDelayTime());		//3
 	
@@ -324,6 +325,7 @@ void SceneSave::SaveParticle(ParticleSystem* mParticleSystem)
 	auto StartLifeTime = mParticleSystem->GetStartLifeTime();
 	EATER_SET_LIST(StartLifeTime.m_Min);					//23
 	EATER_SET_LIST(StartLifeTime.m_Max,true);				//24
+	
 	
 	auto StartScale = mParticleSystem->GetStartScale();
 	EATER_SET_LIST(StartScale.m_Min);						//25

@@ -58,6 +58,8 @@ void GraphicResourceManager::OnResize(int width, int height)
 	srv = m_BackBuffer->GetSRV();
 	uav = m_BackBuffer->GetUAV();
 
+	m_BackBuffer->OnResize(width, height);
+
 	m_Graphic->CreateBackBuffer((UINT)width, (UINT)height, tex2D->ReleaseGetAddress(), rtv->ReleaseGetAddress(), srv->ReleaseGetAddress(), uav->ReleaseGetAddress());
 
 	// DepthStecilView Resize..

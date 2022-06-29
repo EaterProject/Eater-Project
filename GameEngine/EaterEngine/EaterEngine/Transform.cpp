@@ -71,7 +71,7 @@ DirectX::SimpleMath::Vector3 Transform::GetLocalPosition_UP()
 
 DirectX::SimpleMath::Vector3 Transform::GetLocalPosition_Right()
 {
-	return  Local_Right;
+	return Local_Right;
 }
 
 DirectX::SimpleMath::Vector3 Transform::GetLocalPosition_Look()

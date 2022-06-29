@@ -12,6 +12,8 @@ AnimationController::AnimationController()
 {
 	ChangeAnimation = false;
 
+	IsBoneUpdate = false;
+
 	mStop = false;
 	mLoop = true;
 
@@ -42,15 +44,17 @@ void AnimationController::Update()
 	// 현재 Animation Frame 재설정..
 	AnimationFrameIndex();
 
-	//PROFILE_TIMER_START(PROFILE_OUTPUT::VS_CODE, 60, "%d Animation Lerp", SkinObject->OneMeshData->Object_Data->ObjectIndex);
-
-	//Animator 컨퍼넌트들의 Play함수를 실행시킨다
-	int Size = AnimatorList.size();
-	for (int i = 0; i < Size; i++)
+	// Bone Transform Update 여부..
+	//if (IsBoneUpdate)
 	{
-		if (AnimatorList[i] == nullptr) { continue; }
+		//Animator 컨퍼넌트들의 Play함수를 실행시킨다
+		int Size = AnimatorList.size();
+		for (int i = 0; i < Size; i++)
+		{
+			if (AnimatorList[i] == nullptr) { continue; }
 
-		AnimatorList[i]->Play(mPrevFrame, mNextFrame, mFrameTime, mLoop);
+			AnimatorList[i]->Play(mPrevFrame, mNextFrame, mFrameTime, mLoop);
+		}
 	}
 }
 
@@ -252,6 +256,11 @@ void AnimationController::SetFrame(int index)
 	// 애니메이션 오프셋 설정..
 	mAnimationData->PrevFrameIndex = mPrevFrame * NowAnimationBuffer->FrameOffset;
 	mAnimationData->NextFrameIndex = mNextFrame * NowAnimationBuffer->FrameOffset;
+}
+
+void AnimationController::SetIsBoneUpdate(bool enable)
+{
+	IsBoneUpdate = enable;
 }
 
 int AnimationController::GetNowFrame()

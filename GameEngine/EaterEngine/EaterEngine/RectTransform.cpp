@@ -11,6 +11,8 @@
 
 RectTransform::RectTransform()
 {
+	UpdateType			= UPDATE_TYPE::ONECE;
+
 	PivotType			= PIVOT_TYPE::PIVOT_MIDDLE_CENTER;
 	ImageSize			= { 0.0f, 0.0f };
 	Position			= { 0.0f, 0.0f };
@@ -48,81 +50,109 @@ RectTransform::~RectTransform()
 
 void RectTransform::TransformUpdate()
 {
-	// Position Offset 설정..
-	SetPositionOffset();
-
-	// Position Matrix..
-	PositionXM._41 = Position_Offset.x + Position.x;
-	PositionXM._42 = Position_Offset.y + Position.y;
-
-	// Rotation Matrix..
-	float radX = Rotation.x * 3.141592f / 180.0f;
-	float radY = Rotation.y * 3.141592f / 180.0f;
-	float radZ = Rotation.z * 3.141592f / 180.0f;
-
-	RotationXM = DirectX::XMMatrixRotationRollPitchYaw(radX, radY + XM_PI, radZ + XM_PI);
-
-	// Scale Matrix..
-	ScaleXM._11 = ImageSize.x * Scale.x;
-	ScaleXM._22 = ImageSize.y * Scale.y;
-
-	// 최종 Matrix 설정..
-	WorldXM = ScaleXM * RotationXM * PositionXM;
-	gameobject->OneMeshData->UI_Buffer->UI_Property->World = WorldXM;
-
-	// 최종 출력 범위 설정..
-	float half_width = ImageSize.x * Scale.x;
-	float half_height = ImageSize.y * Scale.y;
-
-	RectPosition.left	= PositionXM._41 - half_width;
-	RectPosition.top	= PositionXM._42 - half_height;
-	RectPosition.right	= PositionXM._41 + half_width;
-	RectPosition.bottom = PositionXM._42 + half_height;
-	RectPosition.size	= { ImageSize.x * Scale.x * 2.0f, ImageSize.y * Scale.y * 2.0f };
-	RectPosition.center = { PositionXM._41, PositionXM._42 };
+	switch (UpdateType)
+	{
+	case RectTransform::ONECE:
+		UpdateTransform();
+		UpdateType = NONE;
+		break;
+	case RectTransform::ALWAYS:
+		UpdateTransform();
+		break;
+	default:
+		break;
+	}
 }
 
 void RectTransform::SetImageSize(float x, float y)
 {
+	if (UpdateType != UPDATE_TYPE::ALWAYS)
+	{
+		UpdateType = UPDATE_TYPE::ONECE;
+	}
+
 	ImageSize.x = x;
 	ImageSize.y = y;
 }
 
 void RectTransform::SetImageSize(DirectX::SimpleMath::Vector2 imagesize)
 {
+	if (UpdateType != UPDATE_TYPE::ALWAYS)
+	{
+		UpdateType = UPDATE_TYPE::ONECE;
+	}
+
 	ImageSize = imagesize;
 }
 
 void RectTransform::SetPivot(PIVOT_TYPE pivot_type)
 {
+	if (UpdateType != UPDATE_TYPE::ALWAYS)
+	{
+		UpdateType = UPDATE_TYPE::ONECE;
+	}
+
 	PivotType = pivot_type;
 }
 
 void RectTransform::SetPosition(float x, float y)
 {
-	Position.x =  Screen_Ratio.x * x;
+	if (UpdateType != UPDATE_TYPE::ALWAYS)
+	{
+		UpdateType = UPDATE_TYPE::ONECE;
+	}
+
+	Position.x = Screen_Ratio.x * x;
 	Position.y =  Screen_Ratio.y * y;
 }
 
 void RectTransform::SetPosition(DirectX::SimpleMath::Vector2 pos)
 {
+	if (UpdateType != UPDATE_TYPE::ALWAYS)
+	{
+		UpdateType = UPDATE_TYPE::ONECE;
+	}
+
 	Position = Screen_Ratio * pos;
 }
 
 void RectTransform::SetPositionObject(GameObject* object, DirectX::SimpleMath::Vector3 offset)
 {
+	if (object == nullptr)
+	{
+		PivotType = PIVOT_TYPE::PIVOT_LEFT_TOP;
+		UpdateType = UPDATE_TYPE::ONECE;
+		return;
+	}
+
+	UpdateType = UPDATE_TYPE::ALWAYS;
+
 	Transform3D = object->GetTransform();
 	Position3D_Offset = offset;
 }
 
 void RectTransform::SetPositionObject(Transform* object, DirectX::SimpleMath::Vector3 offset)
 {
+	if (object == nullptr)
+	{
+		PivotType = PIVOT_TYPE::PIVOT_LEFT_TOP;
+		UpdateType = UPDATE_TYPE::ONECE;
+		return;
+	}
+
+	UpdateType = UPDATE_TYPE::ALWAYS;
+
 	Transform3D = object;
 	Position3D_Offset = offset;
 }
 
 void RectTransform::SetPosition3D(float x, float y, float z)
 {
+	if (UpdateType != UPDATE_TYPE::ALWAYS)
+	{
+		UpdateType = UPDATE_TYPE::ONECE;
+	}
+
 	Vector2 screen_pos = Camera::g_MainCam->WorldToScreen(x, y, z);
 
 	Position.x = screen_pos.x * Screen_Resize.x;
@@ -131,6 +161,11 @@ void RectTransform::SetPosition3D(float x, float y, float z)
 
 void RectTransform::SetPosition3D(DirectX::SimpleMath::Vector3 pos)
 {
+	if (UpdateType != UPDATE_TYPE::ALWAYS)
+	{
+		UpdateType = UPDATE_TYPE::ONECE;
+	}
+
 	Vector2 screen_pos = Camera::g_MainCam->WorldToScreen(pos);
 
 	Position.x = screen_pos.x * Screen_Resize.x;
@@ -139,6 +174,15 @@ void RectTransform::SetPosition3D(DirectX::SimpleMath::Vector3 pos)
 
 void RectTransform::SetTargetImage(GameObject* object, ROTATE_ANGLE rotate_angle)
 {
+	if (object == nullptr)
+	{
+		PivotType = PIVOT_TYPE::PIVOT_LEFT_TOP;
+		UpdateType = UPDATE_TYPE::ONECE;
+		return;
+	}
+
+	UpdateType = UPDATE_TYPE::ALWAYS;
+
 	TargetRectPosition = object->GetComponent<RectTransform>()->GetRectPoint();
 	RotateAngle = rotate_angle;
 
@@ -163,6 +207,15 @@ void RectTransform::SetTargetImage(GameObject* object, ROTATE_ANGLE rotate_angle
 
 void RectTransform::SetTargetImage(RectTransform* object, ROTATE_ANGLE rotate_angle)
 {
+	if (object == nullptr)
+	{
+		PivotType = PIVOT_TYPE::PIVOT_LEFT_TOP;
+		UpdateType = UPDATE_TYPE::ONECE;
+		return;
+	}
+
+	UpdateType = UPDATE_TYPE::ALWAYS;
+
 	TargetRectPosition = object->GetRectPoint();
 	RotateAngle = rotate_angle;
 
@@ -203,6 +256,11 @@ void RectTransform::SetTargetRatio(float x, float y)
 
 void RectTransform::SetRotation(float x, float y, float z)
 {
+	if (UpdateType != UPDATE_TYPE::ALWAYS)
+	{
+		UpdateType = UPDATE_TYPE::ONECE;
+	}
+
 	Rotation.x = x;
 	Rotation.y = y;
 	Rotation.z = z;
@@ -210,39 +268,74 @@ void RectTransform::SetRotation(float x, float y, float z)
 
 void RectTransform::SetRotation(DirectX::SimpleMath::Vector3 rot)
 {
+	if (UpdateType != UPDATE_TYPE::ALWAYS)
+	{
+		UpdateType = UPDATE_TYPE::ONECE;
+	}
+
 	Rotation = rot;
 }
 
 void RectTransform::SetRotation(float angle)
 {
+	if (UpdateType != UPDATE_TYPE::ALWAYS)
+	{
+		UpdateType = UPDATE_TYPE::ONECE;
+	}
+
 	Rotation.z = angle;
 }
 
 void RectTransform::SetScale(float x, float y)
 {
+	if (UpdateType != UPDATE_TYPE::ALWAYS)
+	{
+		UpdateType = UPDATE_TYPE::ONECE;
+	}
+
 	Scale.x = Screen_Ratio.x * x * 0.5f;
 	Scale.y = Screen_Ratio.y * y * 0.5f;
 }
 
 void RectTransform::SetScale(DirectX::SimpleMath::Vector2 scale)
 {
+	if (UpdateType != UPDATE_TYPE::ALWAYS)
+	{
+		UpdateType = UPDATE_TYPE::ONECE;
+	}
+
 	Scale.x = Screen_Ratio.x * scale.x * 0.5f;
 	Scale.y = Screen_Ratio.y * scale.y * 0.5f;
 }
 
 void RectTransform::AddPosition(float x, float y)
 {
+	if (UpdateType != UPDATE_TYPE::ALWAYS)
+	{
+		UpdateType = UPDATE_TYPE::ONECE;
+	}
+
 	Position.x += Screen_Ratio.x * x;
 	Position.y += Screen_Ratio.y * y;
 }
 
 void RectTransform::AddPosition(DirectX::SimpleMath::Vector2 pos)
 {
+	if (UpdateType != UPDATE_TYPE::ALWAYS)
+	{
+		UpdateType = UPDATE_TYPE::ONECE;
+	}
+
 	Position += Screen_Ratio * pos;
 }
 
 void RectTransform::AddRotation(float x, float y, float z)
 {
+	if (UpdateType != UPDATE_TYPE::ALWAYS)
+	{
+		UpdateType = UPDATE_TYPE::ONECE;
+	}
+
 	Rotation.x += x;
 	Rotation.y += y;
 	Rotation.z += z;
@@ -250,17 +343,32 @@ void RectTransform::AddRotation(float x, float y, float z)
 
 void RectTransform::AddRotation(DirectX::SimpleMath::Vector3 rot)
 {
+	if (UpdateType != UPDATE_TYPE::ALWAYS)
+	{
+		UpdateType = UPDATE_TYPE::ONECE;
+	}
+
 	Rotation += rot;
 }
 
 void RectTransform::AddScale(float x, float y)
 {
+	if (UpdateType != UPDATE_TYPE::ALWAYS)
+	{
+		UpdateType = UPDATE_TYPE::ONECE;
+	}
+
 	Scale.x += Screen_Ratio.x * x * 0.5f;
 	Scale.y += Screen_Ratio.y * y * 0.5f;
 }
 
 void RectTransform::AddScale(DirectX::SimpleMath::Vector2 scale)
 {
+	if (UpdateType != UPDATE_TYPE::ALWAYS)
+	{
+		UpdateType = UPDATE_TYPE::ONECE;
+	}
+
 	Scale += Screen_Ratio * scale * 0.5f;
 }
 
@@ -271,6 +379,11 @@ RectPoint* RectTransform::GetRectPoint()
 
 void RectTransform::Resize(int width, int height)
 {
+	if (UpdateType != UPDATE_TYPE::ALWAYS)
+	{
+		UpdateType = UPDATE_TYPE::ONECE;
+	}
+
 	float ratio_x = (float)width / Screen_Resize.x;
 	float ratio_y = (float)height / Screen_Resize.y;
 
@@ -285,6 +398,42 @@ void RectTransform::Resize(int width, int height)
 
 	Screen_Resize.x = width;
 	Screen_Resize.y = height;
+}
+
+void RectTransform::UpdateTransform()
+{
+	// Position Offset 설정..
+	SetPositionOffset();
+
+	// Position Matrix..
+	PositionXM._41 = Position_Offset.x + Position.x;
+	PositionXM._42 = Position_Offset.y + Position.y;
+
+	// Rotation Matrix..
+	float radX = Rotation.x * 3.141592f / 180.0f;
+	float radY = Rotation.y * 3.141592f / 180.0f;
+	float radZ = Rotation.z * 3.141592f / 180.0f;
+
+	RotationXM = DirectX::XMMatrixRotationRollPitchYaw(radX, radY + XM_PI, radZ + XM_PI);
+
+	// Scale Matrix..
+	ScaleXM._11 = ImageSize.x * Scale.x;
+	ScaleXM._22 = ImageSize.y * Scale.y;
+
+	// 최종 Matrix 설정..
+	WorldXM = ScaleXM * RotationXM * PositionXM;
+	gameobject->OneMeshData->UI_Buffer->UI_Property->World = WorldXM;
+
+	// 최종 출력 범위 설정..
+	float half_width = ImageSize.x * Scale.x;
+	float half_height = ImageSize.y * Scale.y;
+
+	RectPosition.left = PositionXM._41 - half_width;
+	RectPosition.top = PositionXM._42 - half_height;
+	RectPosition.right = PositionXM._41 + half_width;
+	RectPosition.bottom = PositionXM._42 + half_height;
+	RectPosition.size = { ImageSize.x * Scale.x * 2.0f, ImageSize.y * Scale.y * 2.0f };
+	RectPosition.center = { PositionXM._41, PositionXM._42 };
 }
 
 void RectTransform::SetPositionOffset()

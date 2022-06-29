@@ -5,7 +5,7 @@
 @MeshName Player_Weapon_0
 @MaterialName Player_Weapon_weapon
 @IsShadow 1
-@IsCull 1
+@IsCull 0
 $WorldTM 4 4
 1.000000 0.000000 0.000000 0.000000
 0.000000 1.000000 0.000000 0.000000

@@ -84,6 +84,9 @@ private:
 
 	Transform* m_Controller;
 	ParticleController* m_ParticleController;
+	std::vector<ParticleController*> m_ParticleControllerList;
+
+	int ControllerIndex = 0;
 
 	RectTransform* Rect_Tr;
 	Button* button;

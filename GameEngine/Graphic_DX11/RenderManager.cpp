@@ -1197,8 +1197,32 @@ void RenderManager::DeleteMeshRenderData(RenderData* renderData)
 	// 해당 Culling Render Data 제거..
 	m_Culling->PopCullingMesh(renderData);
 
+	// Render Buffer..
+	InstanceRenderBuffer* renderBuffer = layer->m_Instance;
+
 	// Layer 빈곳 체크..
-	CheckEmptyLayer(m_OpacityMeshList);
+	switch (renderBuffer->m_Type)
+	{
+	case OBJECT_TYPE::BASE:
+	case OBJECT_TYPE::SKINNING:
+	case OBJECT_TYPE::TERRAIN:
+	{
+		if (renderBuffer->m_Material->m_MaterialProperty->Alpha)
+		{
+			CheckEmptyLayer(m_TransparencyMeshList);
+		}
+		else
+		{
+			CheckEmptyLayer(m_OpacityMeshList);
+		}
+	}
+		break;
+	case OBJECT_TYPE::PARTICLE_SYSTEM:
+		CheckEmptyLayer(m_TransparencyMeshList);
+		break;
+	default:
+		break;
+	}
 
 	// 현재 Layer가 비어있는 상태라면 Layer 제거..
 	if (layer->m_InstanceList.empty())

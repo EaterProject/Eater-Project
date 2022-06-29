@@ -29,6 +29,8 @@ void Terrain::Awake()
 
 	// »õ·Î¿î Material Layer »ðÀÔ..
 	gameobject->OneMeshData->Terrain_Data = m_TerrainData;
+
+	gameobject->SetCull(false);
 }
 
 void Terrain::SetUp()

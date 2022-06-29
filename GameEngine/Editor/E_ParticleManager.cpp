@@ -46,6 +46,9 @@ void E_ParticleManager::CreateEaterFile(GameObject* Obj)
 	Data->Particle_LifeTime_Scale_Type	= (int)mParticleSystem->GetLifeTimeScaleOption();
 	Data->Particle_LifeTime_Color_Type	= (int)mParticleSystem->GetLifeTimeColorOption();
 
+	Data->PlayTime	= mParticleSystem->GetPlayTime();
+	Data->Loop		=  mParticleSystem->GetLoop();
+
 	Data->TextureName = mParticleSystem->GetTextureName();
 	Data->MaxParticle = mParticleSystem->GetMaxParticles();
 	Data->DelayTime = mParticleSystem->GetDelayTime();

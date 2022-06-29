@@ -216,6 +216,8 @@ DirectX::SimpleMath::Matrix Camera::GetView()
 
 void Camera::CreateProj(int winsizeX, int WinSizeY)
 {
+	if (winsizeX == 0 || WinSizeY == 0) return;
+
 	///모르면 MSDN 참고 
 	///XMMatrixPerspectiveFovLH 함수 검색하면됨
 	

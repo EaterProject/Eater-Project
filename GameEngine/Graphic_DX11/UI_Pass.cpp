@@ -88,11 +88,12 @@ void UI_Pass::RenderUpdate(std::vector<RenderData*>& meshlist)
 		m_RenderData = meshlist[i];
 
 		ui = m_RenderData->m_UI;
+		ui_property = ui->m_UIProperty;
 
 		// 활성화 상태의 UI가 아니라면 그리지 않는다..
+		if (ui_property->IsDraw == false) continue;
 		if (m_RenderData->m_ObjectData->IsActive == false) continue;
 
-		ui_property = ui->m_UIProperty;
 
 		// Vertex Shader Update..
 		objectBuf.gWorldViewProj = ui_property->World * proj;

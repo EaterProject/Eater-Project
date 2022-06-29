@@ -210,6 +210,7 @@
     <ClInclude Include="MessageManager.h" />
     <ClInclude Include="MonsterComponent.h" />
     <ClInclude Include="ObjectFactory.h" />
+    <ClInclude Include="ParticleFactory.h" />
     <ClInclude Include="PlayerCamera.h" />
     <ClInclude Include="PlayerCollider.h" />
     <ClInclude Include="Store.h" />
@@ -220,6 +221,7 @@
     <ClInclude Include="TestScene.h" />
     <ClInclude Include="UIEffect.h" />
     <ClInclude Include="UIOption.h" />
+    <ClInclude Include="UIPause.h" />
     <ClInclude Include="UIStore.h" />
     <ClInclude Include="UITitle.h" />
   </ItemGroup>
@@ -256,6 +258,7 @@
     <ClCompile Include="MessageManager.cpp" />
     <ClCompile Include="MonsterComponent.cpp" />
     <ClCompile Include="ObjectFactory.cpp" />
+    <ClCompile Include="ParticleFactory.cpp" />
     <ClCompile Include="PlayerCamera.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerCollider.cpp" />
@@ -264,6 +267,7 @@
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="UIEffect.cpp" />
     <ClCompile Include="UIOption.cpp" />
+    <ClCompile Include="UIPause.cpp" />
     <ClCompile Include="UIStore.cpp" />
     <ClCompile Include="UITitle.cpp" />
   </ItemGroup>
@@ -271,8 +275,11 @@
     <ResourceCompile Include="GameClient.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="GameClient.ico" />
-    <Image Include="small.ico" />
+    <Image Include="..\Assets\Texture\UI\Icon\EaterIcon.ico" />
+    <Image Include="..\Assets\Texture\UI\Icon\EaterIconAlpha.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cursor1.cur" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
