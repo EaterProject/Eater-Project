@@ -275,8 +275,11 @@
     <ResourceCompile Include="GameClient.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="GameClient.ico" />
-    <Image Include="small.ico" />
+    <Image Include="..\Assets\Texture\UI\Icon\EaterIcon.ico" />
+    <Image Include="..\Assets\Texture\UI\Icon\EaterIconAlpha.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cursor1.cur" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

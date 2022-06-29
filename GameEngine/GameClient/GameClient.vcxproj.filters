@@ -286,7 +286,7 @@
       <Filter>소스 파일\Manager\ParticleFactory</Filter>
     </ClInclude>
     <ClInclude Include="UIPause.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>소스 파일\Component\UI\UIPause</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -399,7 +399,7 @@
       <Filter>소스 파일\Manager\ParticleFactory</Filter>
     </ClCompile>
     <ClCompile Include="UIPause.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Component\UI\UIPause</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -408,11 +408,16 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="small.ico">
+    <Image Include="..\Assets\Texture\UI\Icon\EaterIcon.ico">
       <Filter>소스 파일\리소스 파일</Filter>
     </Image>
-    <Image Include="GameClient.ico">
+    <Image Include="..\Assets\Texture\UI\Icon\EaterIconAlpha.ico">
       <Filter>소스 파일\리소스 파일</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cursor1.cur">
+      <Filter>소스 파일\리소스 파일</Filter>
+    </None>
   </ItemGroup>
 </Project>

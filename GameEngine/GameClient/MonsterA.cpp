@@ -31,7 +31,6 @@ void MonsterA::SetUp()
 	SOUND_NAME[int(MONSTER_STATE::MOVE)] = "Monster_A_Walking";
 	SOUND_NAME[int(MONSTER_STATE::ATTACK)] = "Monster_A_Attack";
 
-
 	//»ç¿îµå
 	Sound_Attack	= "Monster_A_Attack";
 	Sound_move		= "Monster_A_Walking";

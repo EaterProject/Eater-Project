@@ -32,7 +32,7 @@ void FontImage::SetFontNumber(int Number)
 			ComboNumber = Str_Number[0] - 48;
 			Com_Image[0]->SetTexture(FontName + std::to_string(0));
 			Com_Image[1]->SetTexture(FontName + std::to_string(ComboNumber));
-			Com_Image[2]->SetTexture("");
+			Com_Image[2]->SetDraw(false);
 
 			Com_Rect[0]->SetPosition(PosX + (OffsetX * 0), PosY);
 			Com_Rect[1]->SetPosition(PosX + (OffsetX * 1), PosY);
@@ -45,7 +45,7 @@ void FontImage::SetFontNumber(int Number)
 			Com_Image[0]->SetTexture(FontName + std::to_string(ComboNumber));
 			ComboNumber = Str_Number[1] - 48;
 			Com_Image[1]->SetTexture(FontName + std::to_string(ComboNumber));
-			Com_Image[2]->SetTexture("");
+			Com_Image[2]->SetDraw(false);
 
 			Com_Rect[0]->SetPosition(PosX + (OffsetX * 0), PosY);
 			Com_Rect[1]->SetPosition(PosX + (OffsetX * 1), PosY);

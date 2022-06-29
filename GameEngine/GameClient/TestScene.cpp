@@ -58,8 +58,8 @@ void TestScene::Awake()
 	SetSkyCube("SkyCube");
 
 	GameObject* ui = Instance();
-	//ui->AddComponent<UIOption>();
-	ui->AddComponent<UIPause>();
+	ui->AddComponent<UIOption>();
+	//ui->AddComponent<UIPause>();
 
 	SetFullScreenBlur(true, 2);
 

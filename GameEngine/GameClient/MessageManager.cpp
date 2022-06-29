@@ -176,7 +176,7 @@ GameObject* MessageManager::CREATE_MESSAGE(int CREATE_TYPE)
 		mOption = Object->GetComponent<UIOption>();
 		return Object;
 	case TARGET_UI_PAUSE:
-		Object = mFactory->CreateUIOption();
+		Object = mFactory->CreateUIPause();
 		mPause = Object->GetComponent<UIPause>();
 		return Object;
 	}
@@ -360,6 +360,8 @@ void MessageManager::InGameEnd()
 
 
 
+	// 윈도우 종료..
+	PostQuitMessage(WM_QUIT);
 }
 
 

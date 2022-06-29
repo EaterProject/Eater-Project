@@ -170,6 +170,9 @@ void UITitle::EndButton_Enter()
 void UITitle::EndButton_Click()
 {
 	Sound_Play_SFX("UI_Button_Click");
+
+	/// 게임 종료
+	MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_GAMEEND);
 }
 
 void UITitle::EndButton_Exit()
