@@ -236,12 +236,16 @@ void MeshFilter::SetMaterialPropertyBlock(bool enable)
 {
 	if (m_Material == nullptr) return;
 
+	// 활성화 상태 여부에 따른 처리..
 	if (enable)
 	{
+		// 현재 상태에 따른 처리..
 		switch (MaterialBlockState)
 		{
 		case PropertyBlockState::DISABLE:
 		{
+			// 만약 Material Property Block 활성화 상태가 아니라면
+			// 이 함수는 Opacty 전용이기에 Opacity Material Block을 부여해준다..
 			// 활성화와 동시에 기존 Property Data 복사..
 			(*(MaterialProperty*)m_PropertyBlock) = (*m_Material->m_MaterialData->Material_Property);
 
@@ -254,10 +258,14 @@ void MeshFilter::SetMaterialPropertyBlock(bool enable)
 			break;
 		case PropertyBlockState::TRANSPARENCY:
 		{
+			// 만약 Transparency 상태에서 Opacity를 사용할 경우
+			// Transparency Queue에서 제거해준 다음
 			GraphicEngine::Get()->PopMaterialBlockInstance(gameobject->OneMeshData);
 
+			// 새로운 Opacity Queue에 삽입
 			GraphicEngine::Get()->PushMaterialBlockInstance(gameobject->OneMeshData);
 
+			m_PropertyBlock->Alpha = false;
 			MaterialBlockState = PropertyBlockState::OPACITY;
 		}
 		break;
@@ -276,6 +284,7 @@ void MeshFilter::SetMaterialPropertyBlock(bool enable)
 		{
 			GraphicEngine::Get()->PopMaterialBlockInstance(gameobject->OneMeshData);
 
+			m_PropertyBlock->Alpha = false;
 			MaterialBlockState = PropertyBlockState::DISABLE;
 		}
 		break;
@@ -296,6 +305,7 @@ void MeshFilter::SetMaterialPropertyBlock(bool enable, bool alpha)
 			// 활성화와 동시에 기존 Property Data 복사..
 			(*(MaterialProperty*)m_PropertyBlock) = (*m_Material->m_MaterialData->Material_Property);
 
+			// Alpha 상태 변경..
 			m_PropertyBlock->Alpha = alpha;
 
 			GraphicEngine::Get()->PushMaterialBlockInstance(gameobject->OneMeshData);
@@ -318,6 +328,7 @@ void MeshFilter::SetMaterialPropertyBlock(bool enable, bool alpha)
 
 				GraphicEngine::Get()->PushMaterialBlockInstance(gameobject->OneMeshData);
 
+				m_PropertyBlock->Alpha = true;
 				MaterialBlockState = PropertyBlockState::OPACITY;
 			}
 		}
@@ -330,6 +341,7 @@ void MeshFilter::SetMaterialPropertyBlock(bool enable, bool alpha)
 
 				GraphicEngine::Get()->PushMaterialBlockInstance(gameobject->OneMeshData);
 
+				m_PropertyBlock->Alpha = false;
 				MaterialBlockState = PropertyBlockState::OPACITY;
 			}
 		}
