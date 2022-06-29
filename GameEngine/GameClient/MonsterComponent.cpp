@@ -59,7 +59,7 @@ void MonsterComponent::SetUp()
 	mColider->SetMaterial_Restitution(0);
 	mColider->SetMaterial_Static(1);
 	mRigidbody->SetFreezeRotation(true, true, true);
-	mRigidbody->SetVelocity(0, 0, 0);
+	mRigidbody->SetVelocity(0, -9.8f, 0);
 
 	mMeshFilter->SetModelName(ModelName);
 	mMeshFilter->SetAnimationName(AnimationName);
@@ -146,6 +146,8 @@ void MonsterComponent::OnTriggerStay(GameObject* Obj)
 				if(Player::GetPlayerCombo() >= ComboCount)
 				{
 					MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_HILL);
+					SetMonsterState(MONSTER_STATE::DEAD);
+					return;
 				}
 			}
 			else
@@ -153,8 +155,8 @@ void MonsterComponent::OnTriggerStay(GameObject* Obj)
 				HP -= 10;
 			}
 
-
 			SetMonsterState(MONSTER_STATE::HIT);
+
 			MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_ATTACK_OK);
 			SetMonsterColor();
 
@@ -198,7 +200,7 @@ void MonsterComponent::Move()
 	{
 		//목표지점의 도달하지 않았을때
 		mTransform->Slow_Y_Rotation(SearchPoint[PointNumber], RotationSpeed, MonsterFront_Z);
-		mRigidbody->SetVelocity(DirPoint.x, 0, DirPoint.z);
+		mRigidbody->SetVelocity(DirPoint.x, -9.8f, DirPoint.z);
 	}
 	else
 	{
@@ -413,7 +415,7 @@ void MonsterComponent::SetMonsterState(MONSTER_STATE State)
 	AttackTime	= 0;
 
 	//속력 리셋
-	mRigidbody->SetVelocity(0, 0, 0);
+	mRigidbody->SetVelocity(0, -9.8f, 0);
 }
 
 void MonsterComponent::SetState(MONSTER_STATE mState)

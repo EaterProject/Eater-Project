@@ -11,6 +11,7 @@
 #include "Player.h"
 #include "Collider.h"
 #include "Rigidbody.h"
+#include "MiniMapSystem.h"
 
 std::vector<Vector3> ManaStone::MonsterMovePointDefault;
 ManaStone::ManaStone()
@@ -127,6 +128,7 @@ void ManaStone::Delete()
 	//}
 
 	Destroy(this->gameobject);
+	MiniMapSystem::Get()->DeleteIcon(this->gameobject);
 }
 
 void ManaStone::Debug()

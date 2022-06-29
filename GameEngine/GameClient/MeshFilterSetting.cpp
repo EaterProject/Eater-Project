@@ -27,6 +27,7 @@ void MeshFilterSetting::Setting(GameObject* Object)
 
 		mMeshFilter->SetMaterialPropertyBlock(true);
 		MaterialPropertyBlock* Block = mMeshFilter->GetMaterialPropertyBlock();
+
 		MPBList.push_back(Block);
 	}
 	else
@@ -202,6 +203,15 @@ void MeshFilterSetting::SetEmissiveSettingMax(COLOR_TYPE Type, float mFactor)
 	}
 	EmissiveColor[2] = mFactor;
 	IsSetting_Emissive = true;
+}
+
+void MeshFilterSetting::SetDissolveSetting(DISSOLVE_OPTION mOption, std::string& TextureName)
+{
+	mDissolveOption = mOption;
+	mDissolveName	= TextureName;
+
+
+
 }
 
 void MeshFilterSetting::LimLightUpdate()

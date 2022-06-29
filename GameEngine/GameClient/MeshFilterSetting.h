@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include "EngineData.h"
 
 class MeshFilter;
 class GameObject;
@@ -31,8 +32,18 @@ public:
 	void SetEmissiveSettingMax(float R, float G, float B, float mFactor);
 	void SetEmissiveSettingMax(COLOR_TYPE Type, float mFactor);
 
+	void SetDissolveSetting(DISSOLVE_OPTION mOption,std::string& TextureName);
+	//void SetDissolveSetting(DISSOLVE_OPTION mOption,std::string& TextureName);
+
+
+	//void SetDissolve(DISSOLVE_OPTION mOption, std::string& TextureName,Vector3& mColor);
+	//void SetDissolve(DISSOLVE_OPTION mOption, std::string&& TextureName, Vector3&& mColor);
+
 	void LimLightUpdate(float Speed);
 	void EmissiveUpdate(float Speed);
+
+
+
 	void Default();
 	void Release();
 private:
@@ -59,5 +70,12 @@ private:
 	const int TYPE_UP	= 0;	//값이 증가
 	const int TYPE_DOWN = 1;	//값이 감소
 	const int TYPE_NONE = 2;	//값이 변화량 없음
+
+
+
+	DISSOLVE_OPTION mDissolveOption;
+	std::string mDissolveName;
+	float DissolveColor[3];
+
 };
 

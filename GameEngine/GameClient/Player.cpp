@@ -630,6 +630,18 @@ void Player::PlayerGroundCheck()
 		RayCastHit[i].MaxDistance	= 5;
 		bool isHit = RayCast(&RayCastHit[i]);
 
+		if (isHit == true)
+		{
+			float Offset_Min = mTransform->GetPosition().y - 1.0f;
+			float Offset_Max = mTransform->GetPosition().y + 1.0f;
+			float Point_Y = RayCastHit[i].Hit.HitPoint.y;
+			if (Point_Y <= Offset_Min || Point_Y >= Offset_Max)
+			{
+				isHit = false;
+			}
+		}
+
+
 		switch (i)
 		{
 		case 0:
