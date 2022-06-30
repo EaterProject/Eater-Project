@@ -709,6 +709,7 @@ void Deferred_Pass::BlockRenderUpdate(const RenderData* meshData)
 	break;
 	case OBJECT_TYPE::SKINNING:
 	{
+		if (meshData->m_Animation == nullptr) { return; }
 		AnimationData* animation = meshData->m_AnimationData;
 
 		// Vertex Shader Update..

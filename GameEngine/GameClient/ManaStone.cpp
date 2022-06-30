@@ -11,6 +11,7 @@
 #include "Player.h"
 #include "Collider.h"
 #include "Rigidbody.h"
+#include "MiniMapSystem.h"
 
 std::vector<Vector3> ManaStone::MonsterMovePointDefault;
 ManaStone::ManaStone()
@@ -52,18 +53,17 @@ void ManaStone::SetUp()
 	mCollider->SetBoxCollider(0.5f,1, 0.5f);
 	mRigidbody->SetFreezeRotation(true, true, true);
 	mRigidbody->SetFreezePosition(true, true, true);
-	mRigidbody->SetMass(100);
+	mTransform->SetScale(1.7f, 1.7f, 1.7f);
 }
 
 void ManaStone::Start()
 {
-	//mSetting.Setting(this->gameobject);
+	mSetting.Setting(this->gameobject);
 }
 
 void ManaStone::Update()
 {
-	mRigidbody->SetVelocity(0, 0, 0);
-	//mSetting.LimLightUpdate(1);
+	mSetting.LimLightUpdate(1);
 }
 
 void ManaStone::SetMonsterCount(int MonsterA, int MonsterB)
@@ -127,6 +127,7 @@ void ManaStone::Delete()
 	//}
 
 	Destroy(this->gameobject);
+	MiniMapSystem::Get()->DeleteIcon(this->gameobject);
 }
 
 void ManaStone::Debug()
@@ -160,20 +161,30 @@ void ManaStone::Debug()
 void ManaStone::OnTriggerStay(GameObject* Obj)
 {
 	//플레이어 충돌체와 충돌했을때
-	if (HitStart == false)
+	if (HitStart == false && DeadStart == false)
 	{
 		//플레이어가 공격 상태일때
 		if (Player::GetAttackState() == true)
 		{
 			Sound_Play_SFX("ManaLeaf_Hit");
 			MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_ATTACK_OK);
-			//mSetting.SetLimlightSetting(MeshFilterSetting::COLOR_TYPE::RED, 2.0f, 2.0f);
-			//mSetting.SetLimlightSettingMax(MeshFilterSetting::COLOR_TYPE::RED, 0.0f, 0.0f);
+			mSetting.SetLimlightSetting(MeshFilterSetting::COLOR_TYPE::RED, 2.0f, 2.0f);
+			mSetting.SetLimlightSettingMax(MeshFilterSetting::COLOR_TYPE::RED, 0.0f, 0.0f);
 
 			HP -= Player::GetPlayerPower();
 			if (HP <= 0)
 			{
-				Delete();
+				mSetting.SetDissolveOption(DISSOLVE_FADEOUT);
+				mSetting.SetDissolveTexture("Dissolve_1");
+				mSetting.SetDissolveColor(255.0f, 0, 0);
+				mSetting.SetDissolveColorFactor(10.0f);
+				mSetting.SetDissolvePlayTime(8.0f);
+				mSetting.SetDissolveWidth(0.1f);
+				mSetting.SetDissolveInnerFactor(100.0f);
+				mSetting.SetDissolveOuterFactor(25.0f);
+				mSetting.PlayDissolve();
+				DeadStart = true;
+				MiniMapSystem::Get()->DeleteIcon(this->gameobject);
 			}
 
 			HitStart = true;
@@ -224,7 +235,7 @@ void ManaStone::CreateMonsterA(int index)
 	for (int i = 0; i < 5; i++)
 	{
 		Vector3 Point = GetPoint(index, i);
-		Point.y = mTransform->GetPosition().y+1;
+		Point.y = mTransform->GetPosition().y+2;
 		Monster->SetSearchPoint(i, Point);
 	}
 	MonsterA_List.push_back(Monster);

@@ -31,6 +31,7 @@ void ComboFont::SetComboNumber(int Number)
 	UI_Slider->SetValueRange(0, MaxTime);
 	SetFontNumber(Number);
 	ComboTime = MaxTime;
+	FontUpdte = true;
 }
 
 void ComboFont::SetComboTimeMax(int Number)
@@ -55,7 +56,6 @@ void ComboFont::Awake()
 	UI_Image->SetTexture("combo_title");
 	UI_Rect->SetPosition(PosX + 240, PosY + 20);
 
-
 	GameObject* Object  = Instance_Slider();
 	UI_Slider = Object->GetComponent<Slider>();
 	UI_Slider->SetBackGroundTexture("combo_Silder_Back");
@@ -63,7 +63,6 @@ void ComboFont::Awake()
 	UI_Slider->SetPosition(PosX + 150, PosY + 70);
 	UI_Slider->SetValueRange(0, 100);
 	UI_Slider->SetFillRange(FILL_LEFT, 50);
-
 
 	for (int i = 0; i < 3; i++)
 	{
@@ -73,11 +72,7 @@ void ComboFont::Awake()
 	UI_Slider->SetBackGroundColor(255, 255, 255, 0);
 	UI_Image->SetColor(255, 255, 255, 0);
 
-}
-
-void ComboFont::Start()
-{
-	SetFontNumber(0);
+	FontUpdte = false;
 }
 
 void ComboFont::UpdateFontAnimation()
@@ -92,6 +87,8 @@ void ComboFont::UpdateFontAnimation()
 			Com_Rect[1]->SetScale(FontSizeUPTimeMax, FontSizeUPTimeMax);
 			Com_Rect[2]->SetScale(FontSizeUPTimeMax, FontSizeUPTimeMax);
 			FontSizeUPTime = FontSizeUPTimeMin;
+
+			IsAlpha = true;
 			FontUpdte = false;
 		}
 		else
@@ -101,7 +98,7 @@ void ComboFont::UpdateFontAnimation()
 			Com_Rect[2]->SetScale(FontSizeUPTime, FontSizeUPTime);
 		}
 	}
-	else
+	else if(IsAlpha == true)
 	{
 		//사이즈 조절이 완료되고 알파값 조절
 		if (FontIdleTime >= MaxTime)
@@ -109,14 +106,12 @@ void ComboFont::UpdateFontAnimation()
 			if (FontAlpha > 0)
 			{
 				FontAlpha -= GetDeltaTime() * 255;
-				for (int i = 0; i < 3; i++)
-				{
-					Com_Image[i]->SetColor(255, 255, 255, FontAlpha);
-				}
+				for (int i = 0; i < 3; i++){Com_Image[i]->SetColor(255, 255, 255, FontAlpha);}
 				UI_Slider->SetFillColor(255, 255, 255, FontAlpha);
 				UI_Slider->SetBackGroundColor(255, 255, 255, FontAlpha);
 				UI_Image->SetColor(255, 255, 255, FontAlpha);
-				MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_COMBO_RESET);
+				//MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_COMBO_RESET);
+				FontUpdte = false;
 			}
 		}
 		else
@@ -124,7 +119,6 @@ void ComboFont::UpdateFontAnimation()
 			FontIdleTime += GetDeltaTime();
 			UI_Slider->SetFillRange(FILL_RIGHT, ComboTime);
 		}
-
 	}
 	ComboTime -= GetDeltaTime();
 }

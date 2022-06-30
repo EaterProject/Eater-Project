@@ -24,7 +24,7 @@ void PhysManager::Release()
 
 void PhysManager::Update(float m_Time)
 {
-	PhysX_Update(1.0f /60.0f);
+	PhysX_Update(m_Time);
 }
 
 bool PhysManager::RayCast(PhysRayCast* ray)

@@ -39,6 +39,7 @@ public:
 	static int	GetPlayerColor();
 	static int	GetPlayerCombo();
 	static float GetPlayerPower();
+	static float GetPlayerComboPower();
 	void Healing(float HealingPower);
 private:
 	void PlayerKeyinput();				//플레이어 키인풋
@@ -98,6 +99,7 @@ private:
 	static bool		IsAttackTime;
 	static int		ComboCount;
 	static float	PlayerPower;
+	static float	PlayerComboPower;
 
 	float		Test = 0.0f;
 	float		ComboTime	= 0.0f;

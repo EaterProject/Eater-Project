@@ -319,6 +319,7 @@ void TestScene::CreateDissolve()
 	/// 수치 값은 기획자들이 적어줄꺼임
 	//m_BossBlock->SetDissolve(DISSOLVE_OPTION::DISSOLVE_FADEOUT, m_NoiseTextureList[TextureIndex], Vector3(1.0f, 0.0f, 0.0f), 10.0f, 2.0f, 0.01f, 25.0f, 100.0f);
 
+
 	m_MonsterA = Instance();
 	m_MonsterAFilter = m_MonsterA->AddComponent<MeshFilter>();
 	m_MonsterAFilter->SetModelName("MonsterA+");

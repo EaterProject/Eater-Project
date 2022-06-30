@@ -3,9 +3,9 @@
 @Alpha 0
 @ORMMap 0
 @LimColor_B 0.000000
-@DiffuseMap organic_mana3_BaseColor
-@NormalMap organic_mana3_Normal
-@EmissiveMap organic_mana3_ORM
+@DiffuseMap organic_mana_BaseColor
+@NormalMap organic_mana_Normal
+@EmissiveMap organic_mana_ORM
 @Emissive 0.000000
 @SkyLightIndex 0.000000
 @Roughness 0.000000
