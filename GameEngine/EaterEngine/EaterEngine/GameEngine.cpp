@@ -774,6 +774,35 @@ void GameEngine::SetFocus(bool focus)
 	mKeyManager->SetFocus(focus);
 }
 
+void GameEngine::SetWindowSize(int width, int height)
+{
+	int screen_width = GetSystemMetrics(SM_CXSCREEN);
+	int screen_height = GetSystemMetrics(SM_CYSCREEN);
+
+	//SetWindowLong(mHwnd, GWL_STYLE, WS_DLGFRAME | WS_THICKFRAME);
+
+	SetWindowPos(mHwnd, NULL, (screen_width / 2) - (width / 2), (screen_height / 2) - (height / 2), width, height, 0);
+}
+
+void GameEngine::SetWindowFullScreen()
+{
+	int screen_width = GetSystemMetrics(SM_CXSCREEN);
+	int screen_height = GetSystemMetrics(SM_CYSCREEN);
+
+	LONG info = GetWindowLong(mHwnd, GWL_STYLE);
+
+	ShowWindow(mHwnd, SW_MAXIMIZE);
+
+	SetWindowLong(mHwnd, GWL_STYLE,
+		info & ~(WS_DLGFRAME | WS_THICKFRAME));
+
+	SetWindowPos(mHwnd, HWND_TOPMOST, -1, -1, screen_width + 3, screen_height + 3, SWP_FRAMECHANGED);
+
+	//SetWindowLong(mHwnd, GWL_EXSTYLE,
+	//	info & ~(WS_EX_DLGMODALFRAME |
+	//		WS_EX_WINDOWEDGE | WS_EX_CLIENTEDGE | WS_EX_STATICEDGE));
+}
+
 void* GameEngine::Picking(int x, int y)
 {
 	return mGraphicManager->PickingRender(x, y);

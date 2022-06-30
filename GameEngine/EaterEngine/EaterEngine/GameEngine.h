@@ -170,6 +170,8 @@ public:
 public:
 	///윈도우 관련
 	void SetFocus(bool focus);
+	void SetWindowSize(int width, int height);
+	void SetWindowFullScreen();
 	void* Picking(int x, int y);
 
 public:
