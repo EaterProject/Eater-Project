@@ -32,21 +32,29 @@ public:
 	void SetEmissiveSettingMax(float R, float G, float B, float mFactor);
 	void SetEmissiveSettingMax(COLOR_TYPE Type, float mFactor);
 
-	void SetDissolveSetting(DISSOLVE_OPTION mOption,std::string& TextureName);
-	//void SetDissolveSetting(DISSOLVE_OPTION mOption,std::string& TextureName);
-
-
-	//void SetDissolve(DISSOLVE_OPTION mOption, std::string& TextureName,Vector3& mColor);
-	//void SetDissolve(DISSOLVE_OPTION mOption, std::string&& TextureName, Vector3&& mColor);
+	void SetDissolveTexture(std::string& mTexture);
+	void SetDissolveTexture(std::string&& mTexture);
+	void SetDissolveOption(DISSOLVE_OPTION mOption);
 
 	void LimLightUpdate(float Speed);
 	void EmissiveUpdate(float Speed);
 
-
-
 	void Default();
-	void Release();
+	void ReSet();
+
+	//디졸브 옵션
+	void SetDissolveColor(Vector3 mColor);
+	void SetDissolveColor(float R,float G,float B);
+	void SetDissolveColorFactor(float mFactor);
+	void SetDissolvePlayTime(float mTime);
+	void SetDissolveWidth(float mWidth);
+	void SetDissolveOuterFactor(float mFactor);
+	void SetDissolveInnerFactor(float mFactor);
+	bool PlayDissolve();
+	
 private:
+	GameObject* mTopObject = nullptr;
+
 	void LimLightUpdate();
 	void EmissiveUpdate();
 	std::vector<MeshFilter*> MeshFilterList;
@@ -70,12 +78,19 @@ private:
 	const int TYPE_UP	= 0;	//값이 증가
 	const int TYPE_DOWN = 1;	//값이 감소
 	const int TYPE_NONE = 2;	//값이 변화량 없음
+	
 
-
-
+	//디졸브 전용
 	DISSOLVE_OPTION mDissolveOption;
 	std::string mDissolveName;
-	float DissolveColor[3];
+	Vector3 mDissolveColor;
+	float DissolveColorFactor;
 
+	//디졸브 옵션 값
+	float DissolvePlayTime		= 1.0f;
+	float DissolveOuterFactor	= 1.0f;
+	float DissolveInnerFactor	= 1.0f;
+	float DissolveWidth			= 1.0f;
+	bool IsDissolvePlay			= false;
 };
 

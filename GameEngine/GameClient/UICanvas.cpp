@@ -56,7 +56,6 @@ void UICanvas::Start()
 
 void UICanvas::Update()
 {
-	//Update_Hit_Check();
 	Update_Combo_Check();
 }
 
@@ -241,7 +240,6 @@ void UICanvas::Set_Monster_UI_SET_DATA(void* Emagin)
 
 	for (int i = 0; i < 5; i++)
 	{
-		if (MonsterObject[i] == nullptr) { return; }
 		if (Object == MonsterObject[i])
 		{
 			Monster_Emagin_Front[i]->SetColor(mEmagin->R, mEmagin->G, mEmagin->B, 255);
@@ -604,10 +602,7 @@ void UICanvas::Create_Monster_UI()
 
 void UICanvas::Update_Combo_Check()
 {
-	if (mCombo != nullptr)
-	{
-		mCombo->UpdateFontAnimation();
-	}
+	mCombo->UpdateFontAnimation();
 }
 
 int UICanvas::GetActiveMonsterUI()

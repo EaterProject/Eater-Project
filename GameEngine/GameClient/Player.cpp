@@ -19,7 +19,9 @@ Transform* Player::mTransform = nullptr;
 bool	Player::IsAttackTime = false;
 int		Player::ChangeCount = 0;
 int		Player::ComboCount = 0;
-float	Player::PlayerPower = 10;
+
+float	Player::PlayerPower		 = 15;
+float	Player::PlayerComboPower = 25;
 //PLAYER_STATE Player::mState;
 
 #define LERP(prev, next, time) ((prev * (1.0f - time)) + (next * time))
@@ -114,8 +116,8 @@ void Player::Start()
 	mPlayerColor.SetLimlightSetting(MeshFilterSetting::COLOR_TYPE::RED,0.5f, 0.5f);
 	mWeaponColor.SetLimlightSetting(MeshFilterSetting::COLOR_TYPE::RED, 0.5f, 0.5f);
 
-	mPlayerColor.SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED, 2.0f);
-	mWeaponColor.SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED, 2.0f);
+	mPlayerColor.SetEmissiveSetting(231, 39, 9, 2.2);
+	mWeaponColor.SetEmissiveSetting(231, 39, 9, 2.2);
 
 	MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_EMAGIN_NOW, &ChangeCount);
 }
@@ -180,6 +182,7 @@ void Player::SetMessageRECV(int Type, void* Data)
 		break;
 	case MESSAGE_PLAYER_COMBO_RESET:
 		ComboCount = 0;
+		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_COMBO, &ComboCount);
 		break;
 	}
 }
@@ -207,6 +210,11 @@ int Player::GetPlayerCombo()
 float Player::GetPlayerPower()
 {
 	return PlayerPower;
+}
+
+float Player::GetPlayerComboPower()
+{
+	return PlayerComboPower;
 }
 
 void Player::Healing(float HealingPower)
@@ -298,13 +306,13 @@ void Player::PlayerKeyinput()
 
 		if((ChangeCount % 2) == 0)
 		{
-			mPlayerColor.SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED, 2);
-			mWeaponColor.SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED, 2);
+			mPlayerColor.SetEmissiveSetting(231,39,9, 2.2);
+			mWeaponColor.SetEmissiveSetting(231,39,9, 2.2);
 		}
 		else
 		{
-			mPlayerColor.SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::BLUE, 2);
-			mWeaponColor.SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::BLUE, 2);
+			mPlayerColor.SetEmissiveSetting(22,71,243, 2.2);
+			mWeaponColor.SetEmissiveSetting(22,71,243, 2.2);
 		}
 		Sound_Play_SFX("ChangeEmagin");
 	}

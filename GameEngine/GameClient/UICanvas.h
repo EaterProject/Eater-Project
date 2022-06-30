@@ -50,7 +50,6 @@ private:
 	void Create_Player_Emagin_Color(float X, float Y);
 	void Create_Dron_Text(float X, float Y);
 	void Create_Monster_UI();
-	void Create_Effect_UI();
 	void Create_Skill_UI(float X,float Y);
 
 	//감추기 함수
@@ -63,9 +62,7 @@ private:
 
 
 	void Create_Combo_UI();
-	void Create_Emagin_UI();
 
-	void Update_Hit_Check();	//알파값 처리
 	void Update_Combo_Check();	//크기 처리
 	
 	int GetActiveMonsterUI();
@@ -110,7 +107,8 @@ private:
 	GameObject*		MonsterObject[5]		= { nullptr };
 	bool			MonsterActiveUI[5]		= { false };
 
-	bool isHit  = false;
+	bool isHit		= false;
+	bool isCombo	= false;
 	float Alpha = 0;
 
 	float PosX = 0;

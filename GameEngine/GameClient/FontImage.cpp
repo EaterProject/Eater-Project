@@ -98,7 +98,7 @@ void FontImage::Setting(int mPosX, int mPosY, std::string mFontName, float SizeX
 	OffsetX = NumberOffset;
 	FontName = mFontName;
 
-	FontUpdte = true;
+	//FontUpdte = true;
 	for (int i = 0; i < 3; i++)
 	{
 		ImageObject[i] = Instance_UI();

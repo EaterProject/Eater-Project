@@ -31,11 +31,25 @@ void MonsterA::SetUp()
 	SOUND_NAME[int(MONSTER_STATE::MOVE)] = "Monster_A_Walking";
 	SOUND_NAME[int(MONSTER_STATE::ATTACK)] = "Monster_A_Attack";
 
+
 	//»ç¿îµå
-	Sound_Attack	= "Monster_A_Attack";
-	Sound_move		= "Monster_A_Walking";
 	/////////////////////////////////////////////
 	MonsterComponent::SetUp();
+}
+
+void MonsterA::Start()
+{
+	MonsterComponent::Start();
+	if (MonsterColor == MONSTER_COLOR_RED)
+	{
+		mMF_Setting.SetLimlightSetting(MeshFilterSetting::COLOR_TYPE::RED, 0.5f, 1);
+		mMF_Setting.SetEmissiveSetting(245, 44, 13, 2.9);
+	}
+	else
+	{
+		mMF_Setting.SetLimlightSetting(MeshFilterSetting::COLOR_TYPE::BLUE, 0.5f, 1);
+		mMF_Setting.SetEmissiveSetting(40,92,255, 2.9f);
+	}
 }
 
 void MonsterA::Update()
