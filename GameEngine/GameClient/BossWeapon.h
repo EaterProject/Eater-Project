@@ -3,6 +3,8 @@
 #include "MeshFilterSetting.h"
 class MeshFilter;
 class Transform;
+class GameObject;
+class ParticleController;
 class BossWeapon :public Component
 {
 public:
@@ -11,6 +13,7 @@ public:
 
 	void Awake() override;
 	void SetUp() override;
+	void Start() override;
 	void Update() override;
 
 
@@ -19,6 +22,11 @@ public:
 	bool ShootingReady();
 private:
 	void RandomUpdate();
+
+	GameObject* mParticleObj[3]				= { nullptr };
+	GameObject* mParticleManagerObject		= nullptr;
+	ParticleController* mParticleManager	= nullptr;
+
 	
 	MeshFilter* mMeshFilter = nullptr;
 	Transform*	mTransform	= nullptr;

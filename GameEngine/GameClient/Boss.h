@@ -13,6 +13,7 @@ class PhysRayCast;
 class BossWeapon;
 class BossFriend;
 class MaterialPropertyBlock;
+class ParticleController;
 class Boss :public Component
 {
 public:
@@ -92,5 +93,6 @@ private:
 	MeshFilter* ChildeMeshFilter[7];
 
 	MeshFilterSetting mMF_Setting;
+	ParticleController* mParticle;
 };
 

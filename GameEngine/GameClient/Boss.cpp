@@ -16,6 +16,8 @@
 #include "AnimationController.h"
 #include "BossWeapon.h"
 #include "BossFriend.h"
+#include "ParticleController.h"
+#include "ParticleFactory.h"
 Boss::Boss()
 {
 	//애니메이션 이름 셋팅
@@ -72,6 +74,7 @@ void Boss::Awake()
 	mMeshFilter = gameobject->GetComponent<MeshFilter>();
 	mColider	= gameobject->GetComponent<Collider>();
 	mRigidbody	= gameobject->GetComponent<Rigidbody>();
+	mParticle = ParticleFactory::Get()->CreateParticleController(PARTICLE_TYPE::BossMelee);
 
 	for (int i = 0; i < 5; i++)
 	{
@@ -113,7 +116,10 @@ void Boss::Start()
 {
 	mMF_Setting.Setting(this->gameobject);
 	mMF_Setting.SetLimlightSetting(1.0f, 1.0f, 1.0f, 0.5f, 0.5f);
-	mMF_Setting.SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED, 7.0f);
+	mMF_Setting.SetEmissiveSetting(231,39,9, 2.9f);
+
+	GameObject* Hand = gameobject->GetChildBone("t1.L");
+	mParticle->gameobject->ChoiceParent(Hand);
 }
 
 void Boss::Update()
@@ -203,10 +209,7 @@ void Boss::OnTriggerStay(GameObject* Obj)
 	else
 	{
 		//플레이어 상태가 공격상태가 아닐떄
-		if (Player::GetAttackState() == false)
-		{
-			IsHit = false;
-		}
+		if (Player::GetAttackState() == false){IsHit = false;}
 	}
 
 }
@@ -401,6 +404,15 @@ void Boss::Boss_Create()
 
 void Boss::Boss_Closer_Attack_L()
 {
+	if (FirstState() == true)
+	{
+		GameObject* Hand = gameobject->GetChildBone("t1.L");
+		mParticle->gameobject->ChoiceParent(Hand);
+		mParticle->Play();
+	}
+
+
+
 	//왼쪽 근접 공격
 	int End = mAnimation->GetEndFrame();
 	int Now = mAnimation->GetNowFrame();
@@ -408,18 +420,27 @@ void Boss::Boss_Closer_Attack_L()
 	if (Now >= End)
 	{
 		SetState(BOSS_STATE::IDLE);
+		mParticle->Stop();
 	}
 	mTransform->Slow_Y_Rotation(mPlayerTR->GetPosition(), 150, false);
 }
 
 void Boss::Boss_Closer_Attack_R()
 {
+	if (FirstState() == true)
+	{
+		GameObject* Hand = gameobject->GetChildBone("t1.R");
+		mParticle->gameobject->ChoiceParent(Hand);
+		mParticle->Play();
+	}
+
 	//오른쪽 근접 공격
 	int End = mAnimation->GetEndFrame();
 	int Now = mAnimation->GetNowFrame();
 	if (Now >= End)
 	{
 		SetState(BOSS_STATE::IDLE);
+		mParticle->Stop();
 	}
 	mTransform->Slow_Y_Rotation(mPlayerTR->GetPosition(), 150, false);
 }
@@ -488,7 +509,7 @@ void Boss::Boss_Rendom_Attack_Ready()
 	if (FirstState() == true)
 	{
 		mMF_Setting.SetLimlightSetting(1, 1, 1, 0.5f, 0.5f);
-		mMF_Setting.SetLimlightSettingMax(1, 0, 0, 3, 1);
+		mMF_Setting.SetLimlightSettingMax(1, 0, 0, 3, 0.5f);
 	}
 	else
 	{
@@ -518,8 +539,11 @@ void Boss::Boss_Rendom_Attack_Play()
 	{
 		Vector3 Start = mTransform->GetPosition();
 		Start.y += 7.0f;
-		Weapon[WeaponIndex]->SetShootingPoistion(Start, SkillPoint[WeaponIndex]);
-		IsShooting = true;
+		if (WeaponIndex < 5)
+		{
+			Weapon[WeaponIndex]->SetShootingPoistion(Start, SkillPoint[WeaponIndex]);
+			IsShooting = true;
+		}
 	}
 
 	if(IsShooting == true)
@@ -530,7 +554,7 @@ void Boss::Boss_Rendom_Attack_Play()
 			IsShooting = false;
 		}
 	}
-
+	
 	if (WeaponIndex >= 5)
 	{
 		if (RendomSkillPlayTime >= RendomSkillPlayTimeMax)
@@ -551,7 +575,7 @@ void Boss::Boss_Rendom_Attack_End()
 {
 	if (FirstState() == true)
 	{
-		mMF_Setting.SetLimlightSetting(1, 0, 0, 3, 1);
+		mMF_Setting.SetLimlightSetting(1, 0, 0, 3, 0.5f);
 		mMF_Setting.SetLimlightSettingMax(1.0f, 1.0f, 1.0f, 0.5f, 0.5f);
 	}
 	else

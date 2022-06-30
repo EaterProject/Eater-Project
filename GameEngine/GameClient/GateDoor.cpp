@@ -56,7 +56,7 @@ void GateDoor::Start()
 	for (int i = 0; i < 8; i++)
 	{
 		DoorMesh[i].Setting(Door[i]);
-		DoorMesh[i].SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED,2);
+		DoorMesh[i].SetEmissiveSetting( 1,0,0,4.4);
 	}
 
 	SetUnLock(0);
@@ -111,20 +111,20 @@ void GateDoor::SetLock(int Number)
 	switch (Number)
 	{
 	case 0:
-		DoorMesh[0].SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED, 2);
-		DoorMesh[1].SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED, 2);
+		DoorMesh[0].SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED, 2.9);
+		DoorMesh[1].SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED, 2.9);
 		break;
 	case 1:
-		DoorMesh[2].SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED, 2);
-		DoorMesh[3].SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED, 2);
+		DoorMesh[2].SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED, 2.9);
+		DoorMesh[3].SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED, 2.9);
 		break;
 	case 2:
-		DoorMesh[4].SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED, 2);
-		DoorMesh[5].SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED, 2);
+		DoorMesh[4].SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED, 2.9);
+		DoorMesh[5].SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED, 2.9);
 		break;
 	case 3:
-		DoorMesh[6].SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED, 2);
-		DoorMesh[7].SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED, 2);
+		DoorMesh[6].SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED, 2.9);
+		DoorMesh[7].SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED, 2.9);
 		break;
 	}
 
@@ -140,20 +140,20 @@ void GateDoor::SetUnLock(int Number)
 	switch (Number)
 	{
 	case 0:
-		DoorMesh[0].SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::BLUE, 2);
-		DoorMesh[1].SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::BLUE, 2);
+		DoorMesh[0].SetEmissiveSetting(255,167,96, 1.9);
+		DoorMesh[1].SetEmissiveSetting(255,167,96, 1.9);
 		break;
 	case 1:
-		DoorMesh[2].SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::BLUE, 2);
-		DoorMesh[3].SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::BLUE, 2);
+		DoorMesh[2].SetEmissiveSetting(255,167,96, 1.9);
+		DoorMesh[3].SetEmissiveSetting(255,167,96, 1.9);
 		break;
 	case 2:
-		DoorMesh[4].SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::BLUE, 2);
-		DoorMesh[5].SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::BLUE, 2);
+		DoorMesh[4].SetEmissiveSetting(255,167,96, 1.9);
+		DoorMesh[5].SetEmissiveSetting(255,167,96, 1.9);
 		break;
 	case 3:
-		DoorMesh[6].SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::BLUE, 2);
-		DoorMesh[7].SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::BLUE, 2);
+		DoorMesh[6].SetEmissiveSetting(255,167,96, 1.9);
+		DoorMesh[7].SetEmissiveSetting(255,167,96, 1.9);
 		break;
 	}
 	GateCollider[Number]->Lock = false;

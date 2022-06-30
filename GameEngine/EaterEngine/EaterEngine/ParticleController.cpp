@@ -258,6 +258,26 @@ void ParticleController::Stop()
 	m_Pause = false;
 }
 
+void ParticleController::SetPosition(float x, float y, float z)
+{
+	//if (m_NowParticleList == m_ParticleSystemList.end()) return;
+	//
+	//ParticleList play_particle = m_NowParticleList;
+	//
+	//// 현재 재생중인 모든 파티클 일시 정지..
+	//while (play_particle != m_ParticleSystemList.end())
+	//{
+	//	for (auto& particle : play_particle->second)
+	//	{
+	//		particle.Particle_Value->Pause();
+	//	}
+	//
+	//	play_particle--;
+	//}
+	//
+	//m_Pause = true;
+}
+
 void ParticleController::Resume()
 {
 	if (m_NowParticleList == m_ParticleSystemList.end()) return;

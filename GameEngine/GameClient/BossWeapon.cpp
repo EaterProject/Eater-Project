@@ -3,6 +3,8 @@
 #include "MeshFilter.h"
 #include "Transform.h"
 #include "EaterEngineAPI.h"
+#include "ParticleController.h"
+#include "ParticleFactory.h"
 BossWeapon::BossWeapon()
 {
 
@@ -15,15 +17,36 @@ BossWeapon::~BossWeapon()
 
 void BossWeapon::Awake()
 {
+	//mParticleObj[0] = Instance_Particle("Particle1", "BossProjectile_aura");
+	//mParticleObj[1] = Instance_Particle("Particle2", "BossProjectile_circle");
+	//mParticleObj[2] = Instance_Particle("Particle3", "BossProjectile_dot");
+
+	mParticleManager = ParticleFactory::Get()->CreateParticleController(PARTICLE_TYPE::BossProjectile);
+	
+
 	mMeshFilter = gameobject->GetComponent<MeshFilter>();
 	mTransform	= gameobject->GetTransform();
 }
 
 void BossWeapon::SetUp()
 {
-	mMeshFilter->SetModelName("Sphere");
+	mMeshFilter->SetModelName("BossB_ball");
 	//gameobject->SetActive(false);
-	//mMF_Setting.Setting(this->gameobject);
+	mMF_Setting.Setting(this->gameobject);
+}
+
+void BossWeapon::Start()
+{
+	mParticleManager->Play();
+	mParticleManager->gameobject->ChoiceParent(this->gameobject);
+
+	//ParticleController* PC = nullptr;
+	//PC =  mParticleObj[0]->GetComponent<ParticleController>();
+	//PC->Play();
+	//PC =  mParticleObj[1]->GetComponent<ParticleController>();
+	//PC->Play();
+	//PC =  mParticleObj[2]->GetComponent<ParticleController>();
+	//PC->Play();
 }
 
 void BossWeapon::Update()
@@ -32,16 +55,15 @@ void BossWeapon::Update()
 
 	if (IsSizeUpdate == true)
 	{
-		if (mTransform->GetScale().x >= 1.0f)
+		if (mTransform->GetScale().x >= 5.0f)
 		{
-			mTransform->SetScale(1.0f, 1.0f, 1.0f);
 			IsSizeUpdate = false;
 			IsShooting = true;
 			IsReady = true;
 		}
 		else
 		{
-			float DTime = GetDeltaTime() * 2;
+			float DTime = GetDeltaTime() * 5;
 			mTransform->AddScale(DTime, DTime, DTime);
 			IsReady = false;
 		}
@@ -54,6 +76,7 @@ void BossWeapon::Update()
 			mTransform->GetPosition().z >= End_Shooting_Pos.z - 0.25f && mTransform->GetPosition().z <= End_Shooting_Pos.z + 0.25f)
 		{
 			IsStart = false;
+			mParticleManager->Stop();
 		}
 		else
 		{

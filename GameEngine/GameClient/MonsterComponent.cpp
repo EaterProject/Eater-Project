@@ -13,6 +13,8 @@
 #include "Collider.h"
 #include "Rigidbody.h"
 #include "PhysData.h"
+#include "ParticleController.h"
+#include "ParticleFactory.h"
 
 MonsterComponent::MonsterComponent()
 {
@@ -49,6 +51,8 @@ void MonsterComponent::Awake()
 	mAnimation	= gameobject->GetComponent<AnimationController>();
 	mColider	= gameobject->GetComponent<Collider>();
 	mRigidbody  = gameobject->GetComponent<Rigidbody>();
+
+	
 }
 
 void MonsterComponent::SetUp()
@@ -79,6 +83,11 @@ void MonsterComponent::Start()
 {
 	mMF_Setting.Setting(this->gameobject);
 	GetRandomColor();
+
+	if (mParticleController != nullptr)
+	{
+		mParticleController->gameobject->ChoiceParent(this->gameobject);
+	}
 }
 
 void MonsterComponent::Update()
@@ -210,6 +219,7 @@ void MonsterComponent::Attack()
 
 	if (mAnimation->EventCheck() == true)
 	{
+		if(mParticleController != nullptr) { mParticleController->Play(); }
 		if (IsAttack == false)
 		{
 			int Damage = 10;
@@ -222,6 +232,15 @@ void MonsterComponent::Attack()
 	else
 	{
 		IsAttack = false;
+
+		if (mParticleController != nullptr)
+		{
+			PARTICLE_STATE mState = mParticleController->GetState();
+			if (mState == PLAY_STATE)
+			{
+				mParticleController->Stop();
+			}
+		}
 	}
 
 	//공격 범위에 나갔을떄 다시 추격 상태로
@@ -292,7 +311,7 @@ void MonsterComponent::Dead()
 		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_MONSTER_UI_OFF, &Data);
 		IsUI_ON = false;
 
-		if (mMF_Setting.PlayDissolve() == false)
+		if (mMF_Setting.EndDissolve() == false) 
 		{
 			gameobject->SetActive(false);
 		}
