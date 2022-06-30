@@ -43,9 +43,6 @@
     <Filter Include="소스 파일\Manager\Eater">
       <UniqueIdentifier>{def07274-cb07-48a0-befa-9f0048202ba6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Manager\YAML">
-      <UniqueIdentifier>{beff09d7-6ed3-4b7a-93c4-b679b49e6fcf}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Manager\FBX">
       <UniqueIdentifier>{7b53c1b6-4e4f-4feb-b74d-e1141258f0ea}</UniqueIdentifier>
     </Filter>
@@ -175,6 +172,9 @@
     <Filter Include="소스 파일\MFC\Dialog\TAP\TAP_Transform\TAP_Rigidbody">
       <UniqueIdentifier>{fd871840-f6f3-4811-8621-a70b2c6736b7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Manager\Struct\YAML">
+      <UniqueIdentifier>{beff09d7-6ed3-4b7a-93c4-b679b49e6fcf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -208,7 +208,7 @@
       <Filter>소스 파일\Manager\Editor</Filter>
     </ClInclude>
     <ClInclude Include="YamlManager.h">
-      <Filter>소스 파일\Manager\YAML</Filter>
+      <Filter>소스 파일\Manager\Struct\YAML</Filter>
     </ClInclude>
     <ClInclude Include="FBXManager.h">
       <Filter>소스 파일\Manager\FBX</Filter>
@@ -339,7 +339,7 @@
       <Filter>소스 파일\Manager\Editor</Filter>
     </ClCompile>
     <ClCompile Include="YamlManager.cpp">
-      <Filter>소스 파일\Manager\YAML</Filter>
+      <Filter>소스 파일\Manager\Struct\YAML</Filter>
     </ClCompile>
     <ClCompile Include="FBXManager.cpp">
       <Filter>소스 파일\Manager\FBX</Filter>

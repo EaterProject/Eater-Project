@@ -55,7 +55,6 @@ void Loading::ThreadFunction()
 	Load("../Assets/Texture/UI/Setting");
 	Load("../Assets/Texture/UI/Pause");
 
-
 	Load("../Assets/Model/Animation");
 	Load("../Assets/Model/MeshBuffer");
 	Load("../Assets/Model/ModelData");

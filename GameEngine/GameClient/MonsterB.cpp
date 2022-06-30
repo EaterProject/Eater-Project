@@ -33,11 +33,34 @@ void MonsterB::SetUp()
 	SOUND_NAME[int(MONSTER_STATE::MOVE)] = "Monster_B_Walking";
 	SOUND_NAME[int(MONSTER_STATE::ATTACK)] = "Monster_B_Attack";
 
-	//»ç¿îµå
-	Sound_Attack = "Monster_B_Attack";
-	Sound_move	 = "Monster_B_Walking";
+	if (MonsterColor == MONSTER_COLOR_RED)
+	{
+		mMF_Setting.SetLimlightSetting(MeshFilterSetting::COLOR_TYPE::RED, 0.5f, 1);
+		mMF_Setting.SetEmissiveSetting(245, 81, 61, 4.1f *10);
+	}
+	else
+	{
+		mMF_Setting.SetLimlightSetting(MeshFilterSetting::COLOR_TYPE::BLUE, 0.5f, 1);
+		mMF_Setting.SetEmissiveSetting(26, 68, 236, 4.1f * 10);
+	}
+
 	/////////////////////////////////////////////
 	MonsterComponent::SetUp();
+}
+
+void MonsterB::Start()
+{
+	MonsterComponent::Start();
+	if (MonsterColor == MONSTER_COLOR_RED)
+	{
+		mMF_Setting.SetLimlightSetting(MeshFilterSetting::COLOR_TYPE::RED, 0.5f, 1);
+		mMF_Setting.SetEmissiveSetting(245, 81, 61, 4.1f);
+	}
+	else
+	{
+		mMF_Setting.SetLimlightSetting(MeshFilterSetting::COLOR_TYPE::BLUE, 0.5f, 1);
+		mMF_Setting.SetEmissiveSetting(26, 68, 236, 4.1f);
+	}
 }
 
 void MonsterB::Update()

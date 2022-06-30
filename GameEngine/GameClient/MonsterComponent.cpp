@@ -54,12 +54,12 @@ void MonsterComponent::Awake()
 void MonsterComponent::SetUp()
 {
 	//Collider설정
-	mColider->SetSphereCollider(0.5f);
-	mColider->SetCenter(0, 0.5f, 0);
+	mColider->SetBoxCollider(0.25f, 1,0.25f);
+	mColider->SetCenter(0, 1, 0);
+	mColider->SetMaterial_Dynamic(0);
 	mColider->SetMaterial_Restitution(0);
-	mColider->SetMaterial_Static(1);
+	mColider->SetMaterial_Static(0);
 	mRigidbody->SetFreezeRotation(true, true, true);
-	mRigidbody->SetVelocity(0, 0, 0);
 
 	mMeshFilter->SetModelName(ModelName);
 	mMeshFilter->SetAnimationName(AnimationName);
@@ -70,10 +70,8 @@ void MonsterComponent::SetUp()
 
 	//몬스터 초기 상태 지정
 	MonsterState = (int)MONSTER_STATE::IDLE;
-
 	PointNumber = rand() % 5;
 	mTransform->SetPosition(SearchPoint[PointNumber]);
-
 	mTransform->SetScale(MonsterScale, MonsterScale, MonsterScale);
 }
 
@@ -81,24 +79,11 @@ void MonsterComponent::Start()
 {
 	mMF_Setting.Setting(this->gameobject);
 	GetRandomColor();
-	if (MonsterColor == MONSTER_COLOR_RED)
-	{
-		mMF_Setting.SetLimlightSetting(MeshFilterSetting::COLOR_TYPE::RED, 0.5f,1);
-		mMF_Setting.SetLimlightSettingMax(MeshFilterSetting::COLOR_TYPE::RED, 0.5f,1);
-		mMF_Setting.SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED, 5);
-		mMF_Setting.SetEmissiveSettingMax(MeshFilterSetting::COLOR_TYPE::RED, 5);
-	}
-	else
-	{
-		mMF_Setting.SetLimlightSetting(MeshFilterSetting::COLOR_TYPE::BLUE, 0.5f, 1);
-		mMF_Setting.SetLimlightSettingMax(MeshFilterSetting::COLOR_TYPE::BLUE, 0.5f, 1);
-		mMF_Setting.SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::BLUE, 5);
-		mMF_Setting.SetEmissiveSettingMax(MeshFilterSetting::COLOR_TYPE::BLUE, 5);
-	}
 }
 
 void MonsterComponent::Update()
 {
+	mRigidbody->SetVelocity(0.0f,-9.8f,0.0f);
 	switch (MonsterState)
 	{
 	case (int)MONSTER_STATE::IDLE:
@@ -125,9 +110,6 @@ void MonsterComponent::Update()
 		Dead();
 		break;
 	}
-
-	mAnimation->Choice(ANIMATION_NAME[MonsterState], ANIMATION_TIME[MonsterState]);
-	mAnimation->Play();
 }
 
 void MonsterComponent::OnTriggerStay(GameObject* Obj)
@@ -140,24 +122,29 @@ void MonsterComponent::OnTriggerStay(GameObject* Obj)
 		{
 			if (MonsterState == (int)MONSTER_STATE::DEAD) { return; }
 
+			//플레이어와 몬스터의 색이 같을때
 			if (Player::GetPlayerColor() == MonsterColor)
 			{
-				HP -= 15;
-				if(Player::GetPlayerCombo() >= ComboCount)
+				//플레이어 콤보가 나의 콤보를 넘어갔을때
+				if (Player::GetPlayerCombo() >= ComboCount)
 				{
-					MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_HILL);
+					//플레이어 콤보를 리셋 시킨다
+					MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_COMBO_RESET);
+					HP -= 100;
+				}
+				else
+				{
+					MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_ATTACK_OK);
+					HP -= Player::GetPlayerComboPower();
 				}
 			}
 			else
 			{
-				HP -= 10;
+				HP -= Player::GetPlayerPower();
 			}
 
-
-			SetMonsterState(MONSTER_STATE::HIT);
-			MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_ATTACK_OK);
 			SetMonsterColor();
-
+			SetMonsterState(MONSTER_STATE::HIT);
 			Sound_Play_SFX(SOUND_NAME[(int)MONSTER_STATE::HIT]);
 			HitStart	 = true;
 		}
@@ -177,6 +164,13 @@ void MonsterComponent::OnTriggerStay(GameObject* Obj)
 
 void MonsterComponent::Move()
 {
+	//처음 상태가 변경되었을때만 실행
+	if (FirstState() == true)
+	{
+		mAnimation->Choice(ANIMATION_NAME[MonsterState], ANIMATION_TIME[MonsterState]);
+		mAnimation->Play();
+	}
+
 	//추격상태 체크
 	if (ChaseRange > PlayerDistance)
 	{
@@ -198,7 +192,7 @@ void MonsterComponent::Move()
 	{
 		//목표지점의 도달하지 않았을때
 		mTransform->Slow_Y_Rotation(SearchPoint[PointNumber], RotationSpeed, MonsterFront_Z);
-		mRigidbody->SetVelocity(DirPoint.x, 0, DirPoint.z);
+		mRigidbody->SetVelocity(DirPoint.x, -9.8f, DirPoint.z);
 	}
 	else
 	{
@@ -208,12 +202,19 @@ void MonsterComponent::Move()
 
 void MonsterComponent::Attack()
 {
+	if (FirstState() == true)
+	{
+		mAnimation->Choice(ANIMATION_NAME[MonsterState], ANIMATION_TIME[MonsterState]);
+		mAnimation->Play();
+	}
+
 	if (mAnimation->EventCheck() == true)
 	{
 		if (IsAttack == false)
 		{
 			int Damage = 10;
 			MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_HIT, &Damage);
+			MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_PLAYER_HIT,nullptr);
 			Sound_Play_SFX(SOUND_NAME[(int)MONSTER_STATE::ATTACK]);
 			IsAttack = true;
 		}
@@ -234,21 +235,24 @@ void MonsterComponent::Attack()
 
 void MonsterComponent::Idle()
 {
-	//추격상태 체크
-	if (ChaseRange > PlayerDistance)
+	if (FirstState() == true)
 	{
-		SetMonsterState(MONSTER_STATE::CHASE);
-	}
+		mAnimation->Choice(ANIMATION_NAME[MonsterState], ANIMATION_TIME[MonsterState]);
+		mAnimation->Play();
 
-	//처음 한번 만 실행
-	if (FirstState() == false)
-	{
 		//이동 해야하는 넘버 설정
 		PointNumber		= rand() % 5;
 		//몇초까지 Idle상태로 있을것인지 설정
 		Idle_MaxTime	= (rand() % Idle_MaxTime_Max) + Idle_MaxTime_Min;
 		SetMovePoint(SearchPoint[PointNumber].x, 0, SearchPoint[PointNumber].z);
 	}
+
+	//추격상태 체크
+	if (ChaseRange > PlayerDistance)
+	{
+		SetMonsterState(MONSTER_STATE::CHASE);
+	}
+
 
 	//대기시간이 지났는지 않지났는지 체크
 	if (IdleTime <= Idle_MaxTime)
@@ -264,21 +268,50 @@ void MonsterComponent::Idle()
 
 void MonsterComponent::Dead()
 {
-	float End = mAnimation->GetEndFrame();
-	float Now = mAnimation->GetNowFrame();
-	if (Now >= End)
+	if (FirstState() == true)
 	{
-		gameobject->SetActive(false);
+		mAnimation->Choice(ANIMATION_NAME[MonsterState], ANIMATION_TIME[MonsterState]);
+		mAnimation->Play();
+		mMF_Setting.SetDissolveOption(DISSOLVE_FADEOUT);
+		mMF_Setting.SetDissolveTexture("Dissolve_1");
+		mMF_Setting.SetDissolveColor(255.0f, 0, 0);
+		mMF_Setting.SetDissolveColorFactor(10.0f);
+		mMF_Setting.SetDissolvePlayTime(8.0f);
+		mMF_Setting.SetDissolveWidth(0.1f);
+		mMF_Setting.SetDissolveInnerFactor(100.0f);
+		mMF_Setting.SetDissolveOuterFactor(25.0f);
+	}
+
+	int End = mAnimation->GetEndFrame();
+	int Now = mAnimation->GetNowFrame();
+	if (Now == End)
+	{
+		mAnimation->Pause();
 		MONSTER_EMAGIN Data;
 		Data.Object = this->gameobject;
 		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_MONSTER_UI_OFF, &Data);
 		IsUI_ON = false;
+
+		if (mMF_Setting.PlayDissolve() == false)
+		{
+			gameobject->SetActive(false);
+		}
 	}
-	mMF_Setting.LimLightUpdate(1);
+	else
+	{
+		mMF_Setting.LimLightUpdate(1);
+	}
 }
 
 void MonsterComponent::Chase()
 {
+	if (FirstState() == true)
+	{
+		mAnimation->Choice(ANIMATION_NAME[MonsterState], ANIMATION_TIME[MonsterState]);
+		mAnimation->Play();
+	}
+
+
 	ChaseTime += GetDeltaTime();
 	if (AttackRange > PlayerDistance)
 	{
@@ -312,9 +345,8 @@ void MonsterComponent::Hit()
 {
 	if (FirstState() == true)
 	{
-
-
-
+		mAnimation->Choice(ANIMATION_NAME[MonsterState], ANIMATION_TIME[MonsterState]);
+		mAnimation->Play();
 	}
 
 	//공격 당했을때
@@ -411,9 +443,6 @@ void MonsterComponent::SetMonsterState(MONSTER_STATE State)
 	IdleTime	= 0;
 	HitTime		= 0;
 	AttackTime	= 0;
-
-	//속력 리셋
-	mRigidbody->SetVelocity(0, 0, 0);
 }
 
 void MonsterComponent::SetState(MONSTER_STATE mState)
@@ -456,7 +485,7 @@ void MonsterComponent::SetMonsterColor()
 		Data.Object = this->gameobject;
 		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_MONSTER_UI_UPDATE, &Data);
 
-		mMF_Setting.SetLimlightSetting(1, 0, 0, 5, 1);
+		mMF_Setting.SetLimlightSetting(1, 0, 0, 2.5f, 0.5);
 		mMF_Setting.SetLimlightSettingMax(0, 0, 0, 0.5f, 1);
 	}
 	else
@@ -471,7 +500,7 @@ void MonsterComponent::SetMonsterColor()
 		Data.Object = this->gameobject;
 		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_MONSTER_UI_UPDATE, &Data);
 
-		mMF_Setting.SetLimlightSetting(0, 0, 1, 5, 1);
+		mMF_Setting.SetLimlightSetting(0, 0, 1, 2.5f, 0.5f);
 		mMF_Setting.SetLimlightSettingMax(0, 0, 0, 0.5f, 1);
 	}
 }
@@ -480,10 +509,10 @@ bool MonsterComponent::GetStopPoint(const Vector3& Pos)
 {
 	Transform* mTransform = gameobject->GetTransform();
 	Vector3 position = mTransform->GetPosition();
-	if (position.x > (Pos.x - 0.25f) &&
-		position.x < (Pos.x + 0.25f) &&
-		position.z > (Pos.z - 0.25f) &&
-		position.z < (Pos.z + 0.25f))
+	if (position.x >= (Pos.x - 0.5f) &&
+		position.x <= (Pos.x + 0.5f) &&
+		position.z >= (Pos.z - 0.5f) &&
+		position.z <= (Pos.z + 0.5f))
 	{
 		return true;
 

@@ -13,20 +13,22 @@ MeshFilterSetting::MeshFilterSetting()
 
 MeshFilterSetting::~MeshFilterSetting()
 {
-	Release();
+	ReSet();
 }
 
 void MeshFilterSetting::Setting(GameObject* Object)
 {
-	int Count =  Object->GetChildMeshCount();
+	mTopObject = Object;
+	int Count = mTopObject->GetChildMeshCount();
 	if(Count == 0)
 	{
-		MeshFilter* mMeshFilter = Object->GetComponent<MeshFilter>();
+		MeshFilter* mMeshFilter = mTopObject->GetComponent<MeshFilter>();
 		MeshFilterList.push_back(mMeshFilter);
-		GameObjectList.push_back(Object);
+		GameObjectList.push_back(mTopObject);
 
 		mMeshFilter->SetMaterialPropertyBlock(true);
 		MaterialPropertyBlock* Block = mMeshFilter->GetMaterialPropertyBlock();
+
 		MPBList.push_back(Block);
 	}
 	else
@@ -133,9 +135,9 @@ void MeshFilterSetting::SetLimlightSettingMax(COLOR_TYPE Type, float mFactor, fl
 
 void MeshFilterSetting::SetEmissiveSetting(float R, float G, float B, float mFactor)
 {
-	EmissiveColor[0] = R;
-	EmissiveColor[1] = G;
-	EmissiveColor[2] = B;
+	EmissiveColor[0] = R /255;
+	EmissiveColor[1] = G /255;
+	EmissiveColor[2] = B /255;
 	EmissiveColor[3] = mFactor;
 	EmissiveUpdate();
 	IsSetting_Emissive = true;
@@ -168,9 +170,9 @@ void MeshFilterSetting::SetEmissiveSetting(COLOR_TYPE Type, float mFactor)
 
 void MeshFilterSetting::SetEmissiveSettingMax(float R, float G, float B, float mFactor)
 {
-	EmissiveColor[0] = R;
-	EmissiveColor[1] = G;
-	EmissiveColor[2] = B;
+	EmissiveColor[0] = R / 255.0f;
+	EmissiveColor[1] = G / 255.0f;
+	EmissiveColor[2] = B / 255.0f;
 	EmissiveColor[3] = mFactor;
 	IsSetting_Emissive = true;
 }
@@ -202,6 +204,114 @@ void MeshFilterSetting::SetEmissiveSettingMax(COLOR_TYPE Type, float mFactor)
 	}
 	EmissiveColor[2] = mFactor;
 	IsSetting_Emissive = true;
+}
+
+void MeshFilterSetting::SetDissolveTexture(std::string& mTexture)
+{
+	mDissolveName = mTexture;
+}
+
+void MeshFilterSetting::SetDissolveTexture(std::string&& mTexture)
+{
+	mDissolveName = mTexture;
+}
+
+void MeshFilterSetting::SetDissolveOption(DISSOLVE_OPTION mOption)
+{
+	mDissolveOption = mOption;
+}
+
+void MeshFilterSetting::SetDissolveColor(Vector3 mColor)
+{
+	mDissolveColor.x = mColor.x;
+	mDissolveColor.y = mColor.y;
+	mDissolveColor.z = mColor.z;
+}
+
+void MeshFilterSetting::SetDissolveColor(float R, float G, float B)
+{
+	mDissolveColor.x = R;
+	mDissolveColor.y = G;
+	mDissolveColor.z = B;
+}
+
+void MeshFilterSetting::SetDissolveColorFactor(float mFactor)
+{
+	DissolveColorFactor = mFactor;
+}
+
+void MeshFilterSetting::SetDissolvePlayTime(float mTime)
+{
+	DissolvePlayTime = mTime;
+}
+
+void MeshFilterSetting::SetDissolveWidth(float mWidth)
+{
+	DissolveWidth = mWidth;
+}
+
+void MeshFilterSetting::SetDissolveOuterFactor(float mFactor)
+{
+	DissolveOuterFactor = mFactor;
+}
+
+void MeshFilterSetting::SetDissolveInnerFactor(float mFactor)
+{
+	DissolveInnerFactor = mFactor;
+}
+
+bool MeshFilterSetting::PlayDissolve()
+{
+	if (IsDissolvePlay == true) { return true; }
+	//만약 림라이트나 이미시브를 건들고있다면 메테리얼 블록을 돌려주고 시작
+	ReSet();
+
+	MaterialPropertyBlock* MPB = nullptr;
+	int Count = mTopObject->GetChildMeshCount();
+	if (Count != 0)
+	{
+		for (int i = 0; i < Count; i++)
+		{
+			GameObject* mObject = mTopObject->GetChildMesh(i);
+			MeshFilter* mMeshFilter = mObject->GetComponent<MeshFilter>();
+			mMeshFilter->SetMaterialPropertyBlock(true, true);
+			MPB = mMeshFilter->GetMaterialPropertyBlock();
+
+			//디졸브 실행
+			MPB->SetDissolve
+			(
+				mDissolveOption,			
+				GetTexture(mDissolveName),
+				mDissolveColor,
+				DissolveColorFactor,
+				DissolvePlayTime,
+				DissolveWidth,
+				DissolveOuterFactor,
+				DissolveInnerFactor
+			);
+		}
+		IsDissolvePlay = true;
+		return (MPB != nullptr) ? IsDissolvePlay :  false;
+	}
+	else
+	{
+		MeshFilter* mMeshFilter = mTopObject->GetComponent<MeshFilter>();
+		mMeshFilter->SetMaterialPropertyBlock(true, true);
+		MPB = mMeshFilter->GetMaterialPropertyBlock();
+
+		//디졸브 실행
+		MPB->SetDissolve
+		(
+			mDissolveOption,
+			GetTexture(mDissolveName),
+			mDissolveColor,
+			DissolveColorFactor,
+			DissolvePlayTime,
+			DissolveWidth,
+			DissolveOuterFactor,
+			DissolveInnerFactor
+		);
+	}
 }
 
 void MeshFilterSetting::LimLightUpdate()
@@ -261,7 +371,6 @@ void MeshFilterSetting::LimLightUpdate(float Speed)
 			case 0: //증가a
 				LimColor[i] += DTime * (LImColorOneFrame[i] * Speed);
 				if (LimColor[i] >= LimColorMax[i]) { LimColorValue[i] = TYPE_NONE; LimColor[i] = LimColorMax[i]; }
-				//DebugPrint("%.2f", LimColor[i]);
 				break;
 			case 1: //감소
 				LimColor[i] -= DTime * (LImColorOneFrame[i] * Speed);
@@ -348,7 +457,7 @@ void MeshFilterSetting::Default()
 	}
 }
 
-void MeshFilterSetting::Release()
+void MeshFilterSetting::ReSet()
 {
 	int Size = (int)MeshFilterList.size();
 	for (int i = 0; i < Size; i++)

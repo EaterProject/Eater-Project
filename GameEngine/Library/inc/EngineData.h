@@ -152,7 +152,7 @@ public:
 		Dissolve = true;
 		DissolveTexture = dissolve;
 		DissolveOption = option;
-		DissolveEdgecolor = color * colorFactor;
+		DissolveEdgecolor = (color / 255.0f) * colorFactor;
 		DissolvePlayTime = playTime; 
 		DissolveThickness = thickness; 
 		DissolveOuterFactor = outerFactor; 

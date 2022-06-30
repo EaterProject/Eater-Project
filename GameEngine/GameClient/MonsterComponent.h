@@ -69,10 +69,6 @@ protected:
 	std::string ModelName;
 	std::string AnimationName;
 
-	std::string Sound_Hit			= "Monster_Hit";
-	std::string Sound_move;
-	std::string Sound_Attack;
-
 	bool IsUI_ON = false;
 	bool IsUI_OFF = false;
 protected:

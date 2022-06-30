@@ -31,7 +31,7 @@
 #define MESSAGE_PLAYER_ATTACK_OK 2			//플레이어 공격이 성공하였다
 #define MESSAGE_PLAYER_ACTIVE_TRUE 3		//플레이어 Active TRUE
 #define MESSAGE_PLAYER_ACTIVE_FALSE 4		//플레이어 Active FALSE
-#define MESSAGE_PLAYER_COMBO_RESET 5
+#define MESSAGE_PLAYER_COMBO_RESET 5		//플레이어 콤보 리셋
 
 //Gate Message
 #define MESSAGE_GATE_OPEN  0				//게이트 열기			//인자 값 : int
@@ -52,6 +52,7 @@
 #define MESSAGE_UI_FADE_OUT 9				//페이드 아웃
 #define MESSAGE_UI_STORE_ACTIVE	10			//UI 스토어 엑티브
 #define MESSAGE_UI_PLAYER_ACTIVE 11			//UI 플레이어 UI
+#define MESSAGE_UI_PLAYER_HIT 12			//플레이어 피격
 
 
 //Camera Message

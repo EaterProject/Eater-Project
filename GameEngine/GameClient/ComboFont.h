@@ -13,7 +13,6 @@ public:
 
 
 	void Awake() override;
-	void Start() override;
 	void UpdateFontAnimation();
 
 	void SetComboNumber(int Number);
@@ -29,5 +28,7 @@ private:
 	float NowTime = 0.0f;
 
 	float ComboTime = 0.0f;
+
+	bool IsAlpha = false;
 };
 

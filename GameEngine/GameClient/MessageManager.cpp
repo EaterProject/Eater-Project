@@ -238,6 +238,9 @@ void MessageManager::SEND_UI_Message(int MessageType, void* Data)
 	case MESSAGE_UI_PLAYER_ACTIVE:
 		mCanvas->Set_InGameUI_Active(*(reinterpret_cast<bool*>(Data)));
 		break;
+	case MESSAGE_UI_PLAYER_HIT:
+		mEffect->PlayerHit(nullptr);
+		break;
 	}
 }
 
