@@ -689,7 +689,7 @@ void RenderManager::AlphaRender()
 		m_RenderData = m_TransparencyBlockList[i];
 
 		if (m_RenderData == nullptr || m_RenderData->m_Draw == false) continue;
-
+		
 		m_Alpha->BlockRenderUpdate(m_RenderData);
 	}
 
