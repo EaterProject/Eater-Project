@@ -297,6 +297,7 @@ void MeshFilter::SetMaterialPropertyBlock(bool enable)
 void MeshFilter::SetMaterialPropertyBlock(bool enable, bool alpha)
 {
 	if (m_Material == nullptr) return;
+	
 	if (enable)
 	{
 		switch (MaterialBlockState)

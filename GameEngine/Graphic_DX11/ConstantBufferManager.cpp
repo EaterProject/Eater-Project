@@ -6,6 +6,11 @@ RenderOption* ConstantBufferManager::g_RenderOption = nullptr;
 CB_Light ConstantBufferManager::LIGHT_BUFFER;
 CB_LightSub ConstantBufferManager::LIGHT_SUB_BUFFER;
 
+const Matrix ConstantBufferManager::g_TexSpace = Matrix(0.5f, 0.0f, 0.0f, 0.0f,
+	0.0f, -0.5f, 0.0f, 0.0f,
+	0.0f, 0.0f, 1.0f, 0.0f,
+	0.5f, 0.5f, 0.0f, 1.0f);
+
 void ConstantBufferManager::Update()
 {
 	const CameraData* cam = g_GlobalData->MainCamera_Data;
@@ -21,18 +26,21 @@ void ConstantBufferManager::Update()
 		if (d >= DIRECTION_LIGHT_COUNT) break;
 
 		LIGHT_BUFFER.gDirLights[d] = *g_GlobalData->DirectionLightList[d];
+		LIGHT_BUFFER.gDirLights[d].LightViewProj *= g_TexSpace;
 	}
 	for (UINT p = 0; p < LIGHT_BUFFER.gPointLightCount; p++)
 	{
 		if (p >= POINT_LIGHT_COUNT) break;
 
 		LIGHT_BUFFER.gPointLights[p] = *g_GlobalData->PointLightList[p];
+		//LIGHT_BUFFER.gPointLights[p].LightViewProj *= g_TexSpace;
 	}
 	for (UINT s = 0; s < LIGHT_BUFFER.gSpotLightCount; s++)
 	{
 		if (s >= SPOT_LIGHT_COUNT) break;
 
 		LIGHT_BUFFER.gSpotLights[s] = *g_GlobalData->SpotLightList[s];
+		//LIGHT_BUFFER.gSpotLights[s].LightViewProj *= g_TexSpace;
 	}
 
 	// Light Sub Buffer

@@ -23,7 +23,7 @@ public:
 private:
 	static GlobalData* g_GlobalData;
 	static RenderOption* g_RenderOption;
-
+	static const Matrix g_TexSpace;
 public:
 	static CB_Light		LIGHT_BUFFER;
 	static CB_LightSub	LIGHT_SUB_BUFFER;
