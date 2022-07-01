@@ -52,7 +52,7 @@ void TestScene::Awake()
 	CreateMap();
 	//CreateMiniMap();
 	//CreateDissolve();
-	//CreateParicleController();
+	CreateParicleController();
 
 	//GameObject* ui = Instance();
 	//ui->AddComponent<UIOption>();
@@ -236,23 +236,23 @@ void TestScene::CreateParicleController()
 	AC->SetIsBoneUpdate(true);
 	ACList.push_back(AC);
 
-	m_MonsterA = Instance();
-	m_MonsterAFilter = m_MonsterA->AddComponent<MeshFilter>();
-	m_MonsterAFilter->SetModelName("MonsterA+");
-	m_MonsterAFilter->SetAnimationName("MonsterA+");
-	m_MonsterA->GetTransform()->SetPosition(5, 7, -15);
-	m_MonsterA->GetTransform()->SetScale(1.2f, 1.2f, 1.2f);
-	AC = m_MonsterA->AddComponent<AnimationController>();
-	ACList.push_back(AC);
+	//m_MonsterA = Instance();
+	//m_MonsterAFilter = m_MonsterA->AddComponent<MeshFilter>();
+	//m_MonsterAFilter->SetModelName("MonsterA+");
+	//m_MonsterAFilter->SetAnimationName("MonsterA+");
+	//m_MonsterA->GetTransform()->SetPosition(5, 7, -15);
+	//m_MonsterA->GetTransform()->SetScale(1.2f, 1.2f, 1.2f);
+	//AC = m_MonsterA->AddComponent<AnimationController>();
+	//ACList.push_back(AC);
 
-	m_MonsterB = Instance();
-	m_MonsterBFilter = m_MonsterB->AddComponent<MeshFilter>();
-	m_MonsterBFilter->SetModelName("MonsterB+");
-	m_MonsterBFilter->SetAnimationName("MonsterB+");
-	m_Boss->GetTransform()->SetPosition(-15, 0, 0);
-	m_MonsterB->GetTransform()->SetScale(3.0f, 3.0f, 3.0f);
-	AC = m_MonsterB->AddComponent<AnimationController>();
-	ACList.push_back(AC);
+	//m_MonsterB = Instance();
+	//m_MonsterBFilter = m_MonsterB->AddComponent<MeshFilter>();
+	//m_MonsterBFilter->SetModelName("MonsterB+");
+	//m_MonsterBFilter->SetAnimationName("MonsterB+");
+	//m_Boss->GetTransform()->SetPosition(-15, 0, 0);
+	//m_MonsterB->GetTransform()->SetScale(3.0f, 3.0f, 3.0f);
+	//AC = m_MonsterB->AddComponent<AnimationController>();
+	//ACList.push_back(AC);
 
 	/// Particle Factory를 통한 생성 방식
 	ParticleController* controller = nullptr;
@@ -448,20 +448,18 @@ void TestScene::ChangeCubeMap()
 	/// Particle Controller
 	if (GetKeyUp('2'))
 	{
-		SetSlowDeltaTime(0.0f);
-		//ControllerIndex++;
-		//
-		//if (ControllerIndex > m_ParticleControllerList.size() - 1)
-		//{
-		//	ControllerIndex = 0;
-		//}
-		//
-		//m_ParticleController = m_ParticleControllerList[ControllerIndex];
+		ControllerIndex++;
+		
+		if (ControllerIndex > m_ParticleControllerList.size() - 1)
+		{
+			ControllerIndex = 0;
+		}
+		
+		m_ParticleController = m_ParticleControllerList[ControllerIndex];
 	}
 	if (GetKeyUp('3'))
 	{
-		SetSlowDeltaTime(1.0f);
-		//m_ParticleController->Play();
+		m_ParticleController->Play();
 	}
 	if (GetKeyUp('4'))
 	{
@@ -470,6 +468,18 @@ void TestScene::ChangeCubeMap()
 	if (GetKeyUp('5'))
 	{
 		m_ParticleController->Stop();
+	}
+
+	if (GetKey('6'))
+	{
+		Size += dTime * 10.0f;
+
+		if (Size > 5.0f)
+		{
+			Size = 0.5f;
+		}
+
+		m_ParticleController->SetScale(Size);
 	}
 
 	if (GetKey(VK_LEFT))

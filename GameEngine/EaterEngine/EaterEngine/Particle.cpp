@@ -161,7 +161,7 @@ void Particle::Update()
 		if (m_AniType & SCALE_ANI)
 		{
 			m_NowScale = LERP(m_PrevScale, m_NextScale, m_OneTickFrame);
-			m_Transform->SetScale(m_NowScale);
+			m_Transform->SetScale(m_NowScale * m_SystemDesc->Scale.x, m_NowScale * m_SystemDesc->Scale.y);
 		}
 	}
 	else
@@ -280,7 +280,7 @@ void Particle::Play(const PARTICLE_DESC* particleDesc)
 
 	// Animation Type 설정..
 	m_AniType = m_SystemDesc->AniType;
-	
+
 	// Animation Type 설정..
 	//if (m_OneColor != Zero_4)			m_AniType |= COLOR_ANI;
 	//if (m_OnePos != Zero_3)				m_AniType |= POSITION_ANI;

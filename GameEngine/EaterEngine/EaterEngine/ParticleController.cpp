@@ -5,8 +5,6 @@
 #include "GameObject.h"
 #include "EaterEngineAPI.h"
 
-#include "Profiler/Profiler.h"
-
 EATER_ENGINEDLL ParticleController::ParticleController()
 	:m_ControllerState(PARTICLE_STATE::END_STATE), m_TotalPlayTime(0.0f), m_PlayTime(0.0f), m_StartTime(0.0f), m_NowParticleListSize(0), m_Pause(false)
 {
@@ -29,9 +27,6 @@ void ParticleController::Update()
 		float&& dTime = mTimeManager->DeltaTime();
 		
 		m_ControllerState = PARTICLE_STATE::PLAY_STATE;
-		PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "PARTICLE_STATE : START_STATE -> PLAY_STATE");
-		PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "TOTAL_TIME : %.2f", m_TotalPlayTime);
-		PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "PLAY_TIME : %.2f", m_PlayTime);
 
 		m_PlayTime = dTime;
 
@@ -58,9 +53,6 @@ void ParticleController::Update()
 		// 모든 파티클들이 끝났을 경우 상태 변경..
 		if (m_TotalPlayTime <= m_PlayTime)
 		{
-			PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "PARTICLE_STATE : PLAY_STAY_STATE -> END_STATE");
-			PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "TOTAL_TIME : %.2f", m_TotalPlayTime);
-			PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "PLAY_TIME : %.2f", m_PlayTime);
 			m_ControllerState = PARTICLE_STATE::END_STATE;
 		}
 	}
@@ -144,6 +136,10 @@ void ParticleController::PopParticle(std::string particle_key)
 	float time_key = node_data->Time_Key;
 	int list_index = node_data->List_Index;
 
+	// 하이어라키 제거..
+	GameObject* object = node_data->Particle_Value->gameobject;
+	object->DisconnectParent();
+
 	// 해당 리스트 내부에 존재하는 파티클 제거..
 	delete node_data;
 
@@ -170,6 +166,46 @@ void ParticleController::PopParticle(std::string particle_key)
 	SetTotalTime();
 }
 
+void ParticleController::SetScale(float& scale)
+{
+	for (auto& node : m_ParticleNodeDataList)
+	{
+		node.second->Particle_Value->SetScale(scale);
+	}
+}
+
+void ParticleController::SetScale(float&& scale)
+{
+	for (auto& node : m_ParticleNodeDataList)
+	{
+		node.second->Particle_Value->SetScale(scale);
+	}
+}
+
+void ParticleController::SetScale(float& x, float& y)
+{
+	for (auto& node : m_ParticleNodeDataList)
+	{
+		node.second->Particle_Value->SetScale(x, y);
+	}
+}
+
+void ParticleController::SetScale(float&& x, float&& y)
+{
+	for (auto& node : m_ParticleNodeDataList)
+	{
+		node.second->Particle_Value->SetScale(x, y);
+	}
+}
+
+void ParticleController::SetScale(DirectX::SimpleMath::Vector2 scale)
+{
+	for (auto& node : m_ParticleNodeDataList)
+	{
+		node.second->Particle_Value->SetScale(scale);
+	}
+}
+
 void ParticleController::Play()
 {
 	// 일시정지 중이라면 다시 재개..
@@ -181,10 +217,7 @@ void ParticleController::Play()
 
 	if (m_ControllerState != PARTICLE_STATE::END_STATE) return;
 
-	PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "PARTICLE_STATE : END_STATE -> START_STATE");
 	m_ControllerState = PARTICLE_STATE::START_STATE;
-	PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "TOTAL_TIME : %.2f", m_TotalPlayTime);
-	PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "PLAY_TIME : %.2f", m_PlayTime);
 
 	// 첫번째 요소부터 시작..
 	m_NowParticleList = m_ParticleSystemList.begin();
@@ -232,27 +265,6 @@ void ParticleController::Stop()
 
 		play_particle--;
 	}
-
-	switch (m_ControllerState)
-	{
-	case START_STATE:
-		PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "PARTICLE_STATE : START_STATE -> END_STATE");
-		break;
-	case PLAY_STATE:
-		PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "PARTICLE_STATE : PLAY_STATE -> END_STATE");
-		break;
-	case PLAY_STAY_STATE:
-		PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "PARTICLE_STATE : PLAY_STAY_STATE -> END_STATE");
-		break;
-	case END_STATE:
-		PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "PARTICLE_STATE : END_STATE -> END_STATE");
-		break;
-	default:
-		break;
-	}
-
-	PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "TOTAL_TIME : %.2f", m_TotalPlayTime);
-	PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "PLAY_TIME : %.2f", m_PlayTime);
 
 	m_ControllerState = PARTICLE_STATE::END_STATE;
 	m_Pause = false;
@@ -308,10 +320,6 @@ void ParticleController::UpdateController()
 		{
 			m_NowParticleList = --m_ParticleSystemList.end();
 			m_ControllerState = PARTICLE_STATE::PLAY_STAY_STATE;
-
-			PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "PARTICLE_STATE : PLAY_STATE -> PLAY_STAY_STATE");
-			PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "TOTAL_TIME : %.2f", m_TotalPlayTime);
-			PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "PLAY_TIME : %.2f", m_PlayTime);
 		}
 		else
 		{

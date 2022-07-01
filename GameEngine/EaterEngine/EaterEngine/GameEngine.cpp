@@ -797,10 +797,6 @@ void GameEngine::SetWindowFullScreen()
 		info & ~(WS_DLGFRAME | WS_THICKFRAME));
 
 	SetWindowPos(mHwnd, HWND_TOPMOST, -1, -1, screen_width + 3, screen_height + 3, SWP_FRAMECHANGED);
-
-	//SetWindowLong(mHwnd, GWL_EXSTYLE,
-	//	info & ~(WS_EX_DLGMODALFRAME |
-	//		WS_EX_WINDOWEDGE | WS_EX_CLIENTEDGE | WS_EX_STATICEDGE));
 }
 
 void* GameEngine::Picking(int x, int y)

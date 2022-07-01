@@ -282,6 +282,16 @@ void GameObject::ChoiceChild(GameObject* obj)
 	obj->transform->SetParent(transform);
 }
 
+void GameObject::DisconnectParent()
+{
+	transform->DisconnectParent();
+}
+
+void GameObject::DisconnectChild(GameObject* obj)
+{
+	transform->DisconnectChild(obj);
+}
+
 bool GameObject::GetActive()
 {
 	return OneMeshData->Object_Data->IsActive;

@@ -503,6 +503,31 @@ void ParticleSystem::SetNextParticle(ParticleSystem* particle)
 	m_NextParticles.push_back(particle);
 }
 
+void ParticleSystem::SetScale(float& scale)
+{
+	m_SystemDesc->Scale = { scale, scale };
+}
+
+void ParticleSystem::SetScale(float&& scale)
+{
+	m_SystemDesc->Scale = { scale, scale };
+}
+
+void ParticleSystem::SetScale(float& x, float& y)
+{
+	m_SystemDesc->Scale = { x,y };
+}
+
+void ParticleSystem::SetScale(float&& x, float&& y)
+{
+	m_SystemDesc->Scale = { x,y };
+}
+
+void ParticleSystem::SetScale(DirectX::SimpleMath::Vector2 scale)
+{
+	m_SystemDesc->Scale = scale;
+}
+
 std::string ParticleSystem::GetMeshName()
 {
 	return m_ParticleMeshName;

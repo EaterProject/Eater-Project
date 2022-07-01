@@ -87,6 +87,7 @@ private:
 	std::vector<ParticleController*> m_ParticleControllerList;
 
 	int ControllerIndex = 0;
+	float Size = 1.0f;
 
 	RectTransform* Rect_Tr;
 	Button* button;

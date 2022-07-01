@@ -88,6 +88,7 @@ void Shadow_Pass::Start(int width, int height)
 	m_Mesh_IB = g_Resource->GetInstanceBuffer<IB_MeshDepth>();
 	m_SkinMesh_IB = g_Resource->GetInstanceBuffer<IB_SkinMeshDepth>();
 
+
 	m_Shadow_DS = g_Resource->GetDepthStencil<DS_Shadow>();
 	m_Shadow_DS->SetRatio(4.0f, 4.0f);
 	

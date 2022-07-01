@@ -35,6 +35,12 @@ public:
 	EATER_ENGINEDLL void PushParticle(std::string particle_key, GameObject* particle, float start_time);
 	EATER_ENGINEDLL void PopParticle(std::string particle_key);
 
+	EATER_ENGINEDLL void SetScale(float& scale);
+	EATER_ENGINEDLL void SetScale(float&& scale);
+	EATER_ENGINEDLL void SetScale(float& x, float& y);
+	EATER_ENGINEDLL void SetScale(float&& x, float&& y);
+	EATER_ENGINEDLL void SetScale(DirectX::SimpleMath::Vector2 scale);
+	
 	EATER_ENGINEDLL void Play();
 	EATER_ENGINEDLL void Pause();
 	EATER_ENGINEDLL void Stop();
