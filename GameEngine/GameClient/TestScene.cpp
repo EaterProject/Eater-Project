@@ -41,34 +41,31 @@ void TestScene::Awake()
 
 	BakeSkyLightMap("SkyLight_0", false);
 	BakeSkyLightMap("SkyLight_1", false);
-
-	//AddOccluder("Dome_Occluder_0");
-
-
-	CreateMap();
-	CreateMiniMap();
-	//CreateDissolve();
-	//CreateParicleController();
-
-	BakeSkyLightMap("SkyLight_0", false);
-	BakeSkyLightMap("SkyLight_1", false);
 	SetSkyLight("SkyLight_0", 0);
 	SetSkyLight("SkyLight_1", 1);
 
 	SetSkyCube("SkyCube");
 
-	GameObject* ui = Instance();
-	ui->AddComponent<UIOption>();
+	//AddOccluder("Dome_Occluder_0");
+
+
+	CreateMap();
+	//CreateMiniMap();
+	//CreateDissolve();
+	//CreateParicleController();
+
+	//GameObject* ui = Instance();
+	//ui->AddComponent<UIOption>();
 	//ui->AddComponent<UIPause>();
 
-	SetFullScreenBlur(true, 2);
+	//SetFullScreenBlur(true, 2);
 
-	//Load("../Assets/Scene/TestScene.Scene");
+	Load("../Assets/Scene/DomeLightOnly02.Scene");
 
-	RenderOption* option = GetRenderOptionData();
+	//RenderOption* option = GetRenderOptionData();
 	//option->RenderingOption ^= RENDER_OPTION::RENDER_FOG;
-	option->RenderingOption ^= RENDER_OPTION::RENDER_SHADOW;
-	RenderSetting();
+	//option->RenderingOption ^= RENDER_OPTION::RENDER_SHADOW;
+	//RenderSetting();
 }
 
 void TestScene::Update()

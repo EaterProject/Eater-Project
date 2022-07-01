@@ -28,6 +28,8 @@
 #include "ShaderResourceViewDefine.h"
 #include "InstanceBufferDefine.h"
 
+#include "Profiler/Profiler.h"
+
 #define ALBEDO_MAP		0x00000001
 #define NORMAL_MAP		0x00000010
 #define EMISSIVE_MAP    0x00000100
@@ -634,6 +636,7 @@ void Alpha_Pass::BlockRenderUpdate(const RenderData* meshData)
 		materialBuf.gOption |= DISSOLVE;
 
 		matSub->DissolveTimer += g_GlobalData->Time / matSub->DissolvePlayTime;
+		PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "%.3f", matSub->DissolveTimer);
 
 		if (matSub->DissolveTimer > 1.0f)
 		{
