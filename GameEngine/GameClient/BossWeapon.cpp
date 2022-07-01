@@ -87,6 +87,7 @@ void BossWeapon::Update()
 		}
 	}
 
+	mTransform->AddRotate_X(GetDeltaTime()* 400);
 	//mMF_Setting.Update(1);
 }
 

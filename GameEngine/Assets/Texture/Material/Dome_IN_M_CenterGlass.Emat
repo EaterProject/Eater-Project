@@ -2,11 +2,11 @@
 @MaterialName Dome_IN_M_CenterGlass
 @Alpha 1
 @ORMMap Dome_CenterGlass_ORM
-@LimColor_B 0.000000
+@LimColor_B 0.800000
 @DiffuseMap Dome_CenterGlass_BaseColor
 @NormalMap Dome_CenterGlass_Normal
 @EmissiveMap Dome_CenterGlass_Emissive
-@Emissive 0.000000
+@Emissive 0.700000
 @SkyLightIndex 1.000000
 @Roughness 0.000000
 @Metallic 0.000000
@@ -15,8 +15,8 @@
 @AddColor_R 0.000000
 @AddColor_G 0.000000
 @AddColor_B 0.000000
-@LimFactor 0.000000
-@LimColor_R 0.000000
-@LimColor_G 0.000000
-@LimWidth 0.000000
+@LimFactor 1.600000
+@LimColor_R 0.301961
+@LimColor_G 0.603922
+@LimWidth 2.100000
 &

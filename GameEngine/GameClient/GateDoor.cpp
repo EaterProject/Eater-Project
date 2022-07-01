@@ -128,8 +128,6 @@ void GateDoor::SetLock(int Number)
 		break;
 	}
 
-
-
 	GateCollider[Number]->Lock = true;
 }
 
@@ -140,20 +138,20 @@ void GateDoor::SetUnLock(int Number)
 	switch (Number)
 	{
 	case 0:
-		DoorMesh[0].SetEmissiveSetting(255,167,96, 1.9);
-		DoorMesh[1].SetEmissiveSetting(255,167,96, 1.9);
+		DoorMesh[0].SetEmissiveSetting(255, 167, 96, 2.1);
+		DoorMesh[1].SetEmissiveSetting(255, 167, 96, 2.1);
 		break;
 	case 1:
-		DoorMesh[2].SetEmissiveSetting(255,167,96, 1.9);
-		DoorMesh[3].SetEmissiveSetting(255,167,96, 1.9);
+		DoorMesh[2].SetEmissiveSetting(255, 167, 96, 2.1);
+		DoorMesh[3].SetEmissiveSetting(255, 167, 96, 2.1);
 		break;
 	case 2:
-		DoorMesh[4].SetEmissiveSetting(255,167,96, 1.9);
-		DoorMesh[5].SetEmissiveSetting(255,167,96, 1.9);
+		DoorMesh[4].SetEmissiveSetting(255, 167, 96, 2.1);
+		DoorMesh[5].SetEmissiveSetting(255, 167, 96, 2.1);
 		break;
 	case 3:
-		DoorMesh[6].SetEmissiveSetting(255,167,96, 1.9);
-		DoorMesh[7].SetEmissiveSetting(255,167,96, 1.9);
+		DoorMesh[6].SetEmissiveSetting(255,167,96, 2.1);
+		DoorMesh[7].SetEmissiveSetting(255, 167, 96, 2.1);
 		break;
 	}
 	GateCollider[Number]->Lock = false;

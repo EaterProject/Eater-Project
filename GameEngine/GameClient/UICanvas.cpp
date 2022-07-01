@@ -33,7 +33,7 @@ void UICanvas::Awake()
 	Create_Player_Emagin(50,350);
 	Create_Player_Mana(100, 400);
 	Create_Player_Emagin_Color(-200, 0);
-	Create_Dron_Text(0, -200);
+	//Create_Dron_Text(0, -200);
 	Create_Skill_UI(375, 450);
 
 	Create_Combo_UI();
@@ -51,7 +51,7 @@ void UICanvas::Start()
 	Set_Mana_Green_Count(13);
 	Set_Mana_Orange_Count(41);
 	
-	Set_Drone_Text(0);
+	//Active_Dron_Text(false);
 }
 
 void UICanvas::Update()
@@ -97,58 +97,58 @@ void UICanvas::Set_Mana_Orange_Count(int Number)
 
 void UICanvas::Set_Drone_Text(int Number)
 {
-	Sound_Play_SFX("Drone_Text_01");
-	switch (Number)
-	{
-	case 0 :
-		Dron_Text->SetTexture("00_DroneText_GameStart");
-		break;
-	case 1:
-		Dron_Text->SetTexture("01_DroneText_GameStart1");
-		break;
-	case 2:
-		Dron_Text->SetTexture("02_DroneText_GameStart2");
-		break;
-	case 3:
-		Dron_Text->SetTexture("03_DroneText_FirstOutDoom");
-		break;
-	case 4:
-		Dron_Text->SetTexture("04_DroneText_FirstOutDoom1");
-		break;
-	case 5:
-		Dron_Text->SetTexture("05_DroneText_VendingMashine");
-		break;
-	case 6:
-		Dron_Text->SetTexture("06_DroneText_Sell");
-		break;
-	case 7:
-		Dron_Text->SetTexture("07_DroneText_SellFalse");
-		break;
-	case 8:
-		Dron_Text->SetTexture("08_DroneText_BossSpawn");
-		break;
-	case 9:
-		Dron_Text->SetTexture("09_DroneText_BossZone");
-		break;
-	case 10:
-		Dron_Text->SetTexture("10_DroneText_BossZone1");
-		break;
-	case 11:
-		Dron_Text->SetTexture("11_DroneText_ManaSpawn");
-		break;
-	case 12:
-		Dron_Text->SetTexture("12_DroneText_PureMana");
-		break;
-	case 13:
-		Dron_Text->SetTexture("13_DroneText_CoreMana");
-		break;
-	case 14:
-		Dron_Text->SetTexture("14_DroneText_PlayerDead");
-		break;
-	case 15:
-		Dron_Text->SetTexture("15_DroneText_PlayerHeal");
-		break;
-	}
+	//Sound_Play_SFX("Drone_Text_01");
+	//switch (Number)
+	//{
+	//case 0 :
+	//	Dron_Text->SetTexture("00_DroneText_GameStart");
+	//	break;
+	//case 1:
+	//	Dron_Text->SetTexture("01_DroneText_GameStart1");
+	//	break;
+	//case 2:
+	//	Dron_Text->SetTexture("02_DroneText_GameStart2");
+	//	break;
+	//case 3:
+	//	Dron_Text->SetTexture("03_DroneText_FirstOutDoom");
+	//	break;
+	//case 4:
+	//	Dron_Text->SetTexture("04_DroneText_FirstOutDoom1");
+	//	break;
+	//case 5:
+	//	Dron_Text->SetTexture("05_DroneText_VendingMashine");
+	//	break;
+	//case 6:
+	//	Dron_Text->SetTexture("06_DroneText_Sell");
+	//	break;
+	//case 7:
+	//	Dron_Text->SetTexture("07_DroneText_SellFalse");
+	//	break;
+	//case 8:
+	//	Dron_Text->SetTexture("08_DroneText_BossSpawn");
+	//	break;
+	//case 9:
+	//	Dron_Text->SetTexture("09_DroneText_BossZone");
+	//	break;
+	//case 10:
+	//	Dron_Text->SetTexture("10_DroneText_BossZone1");
+	//	break;
+	//case 11:
+	//	Dron_Text->SetTexture("11_DroneText_ManaSpawn");
+	//	break;
+	//case 12:
+	//	Dron_Text->SetTexture("12_DroneText_PureMana");
+	//	break;
+	//case 13:
+	//	Dron_Text->SetTexture("13_DroneText_CoreMana");
+	//	break;
+	//case 14:
+	//	Dron_Text->SetTexture("14_DroneText_PlayerDead");
+	//	break;
+	//case 15:
+	//	Dron_Text->SetTexture("15_DroneText_PlayerHeal");
+	//	break;
+	//}
 }
 
 void UICanvas::Set_InGameUI_Active(bool Active)
@@ -519,7 +519,7 @@ void UICanvas::Active_Mana_Count(bool Active)
 
 void UICanvas::Active_Dron_Text(bool Active)
 {
-	Dron_Text->gameobject->SetActive(Active);
+	//Dron_Text->gameobject->SetActive(Active);
 }
 
 void UICanvas::Create_Skill_UI(float X, float Y)

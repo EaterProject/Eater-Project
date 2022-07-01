@@ -24,6 +24,7 @@ class UITitle;
 class UIStore;
 class UIOption;
 class UIPause;
+class UIBoss;
 enum class  CLIENT_OBJECT_TYPE
 {
 	MONATER_A,
@@ -76,6 +77,7 @@ private:
 	UIStore*			mStore			= nullptr;
 	UIOption*			mOption			= nullptr;
 	UIPause*			mPause			= nullptr;
+	UIBoss*				mBossUI			= nullptr;
 	CameraManager*		mCameraManager  = nullptr;
 private:
 	ObjectFactory* mFactory;

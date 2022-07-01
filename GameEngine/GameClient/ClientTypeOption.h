@@ -24,6 +24,7 @@
 #define TARGET_STORE 20
 #define TARGET_UI_OPTION 21
 #define TARGET_UI_PAUSE 22
+#define TARGET_UI_BOSS 23
 
 //Player Message
 #define MESSAGE_PLAYER_HIT    0				//플레이어가 맞았다

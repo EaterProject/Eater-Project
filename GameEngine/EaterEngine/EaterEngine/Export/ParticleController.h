@@ -50,12 +50,9 @@ public:
 
 private:
 	void UpdateController();
-
 	void SetTotalTime();
 	void SetNowParticleList();
-
 	void Resume();
-
 private:
 	PARTICLE_STATE m_ControllerState;
 
@@ -71,6 +68,5 @@ private:
 
 	std::map<float, std::vector<ParticleData>> m_ParticleSystemList;
 	std::unordered_map<std::string, NodeData*> m_ParticleNodeDataList;
-	std::vector<Transform*>	mTransformList;
 };
 

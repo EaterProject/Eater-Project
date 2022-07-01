@@ -35,6 +35,7 @@
 #include "Store.h"
 #include "UIOption.h"
 #include "UIPause.h"
+#include "UIBoss.h"
 
 
 
@@ -119,7 +120,7 @@ GameObject* ObjectFactory::CreateMonsterB()
 GameObject* ObjectFactory::CreateManaStone()
 {
 	int ManaCount = ManaPoint_List.size();
-	for (int i = 0; i < 1; i++)
+	for (int i = 0; i < ManaCount; i++)
 	{
 		Vector3 point = ManaPoint_List[i]->GetTransform()->GetPosition();
 		
@@ -134,7 +135,7 @@ GameObject* ObjectFactory::CreateManaStone()
 		switch (i)
 		{
 		case 0:
-			mMana->SetMonsterCount(3, 1);
+			mMana->SetMonsterCount(3, 0);
 			break;
 		case 1:
 			mMana->SetMonsterCount(3, 1);
@@ -202,6 +203,13 @@ GameObject* ObjectFactory::CreateUIPause()
 	GameObject* Object_Pause = Instance();
 	Object_Pause->AddComponent<UIPause>();
 	return Object_Pause;
+}
+
+GameObject* ObjectFactory::CreateUIBoss()
+{
+	GameObject* Object_BossUI = Instance();
+	Object_BossUI->AddComponent<UIBoss>();
+	return Object_BossUI;
 }
 
 GameObject* ObjectFactory::CreateBoss()

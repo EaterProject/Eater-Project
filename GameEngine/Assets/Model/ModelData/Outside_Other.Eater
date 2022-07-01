@@ -2,8 +2,8 @@
 @ParentName RootNode
 @NodeName Bridge3
 @MeshName Outside_Other_0
-@MaterialName Outside_Other_M_Railroad_b
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_b
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -20,8 +20,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Bridge4
 @MeshName Outside_Other_0
-@MaterialName Outside_Other_M_Railroad_b
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_b
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -38,8 +38,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Railroad_low7.001
 @MeshName Outside_Other_1
-@MaterialName Outside_Other_M_Railroad_a
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_a
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -56,8 +56,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName 01gate_67
 @MeshName Outside_Other_2
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -74,8 +74,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName aaaaad_56
 @MeshName Outside_Other_3
-@MaterialName Outside_Other_M_gate00_largescify
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_largescify
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -92,8 +92,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName board11
 @MeshName Outside_Other_4
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -110,8 +110,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName board21
 @MeshName Outside_Other_5
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -128,8 +128,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName board22
 @MeshName Outside_Other_5
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -146,8 +146,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName board23
 @MeshName Outside_Other_5
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -164,8 +164,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName board26
 @MeshName Outside_Other_6
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -182,8 +182,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName board27
 @MeshName Outside_Other_6
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -200,8 +200,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName board32
 @MeshName Outside_Other_4
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -218,8 +218,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName board37
 @MeshName Outside_Other_5
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -236,8 +236,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Railroad_low9
 @MeshName Outside_Other_7
-@MaterialName Outside_Other_M_Railroad_b
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_b
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -254,8 +254,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName board38
 @MeshName Outside_Other_5
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -272,8 +272,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName board39
 @MeshName Outside_Other_6
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -290,8 +290,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName board40
 @MeshName Outside_Other_4
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -308,8 +308,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName board41
 @MeshName Outside_Other_5
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -326,8 +326,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName board42
 @MeshName Outside_Other_5
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -344,8 +344,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName board43
 @MeshName Outside_Other_6
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -362,8 +362,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName board44
 @MeshName Outside_Other_8
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -380,8 +380,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName board45
 @MeshName Outside_Other_5
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -398,8 +398,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName board46
 @MeshName Outside_Other_5
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -416,8 +416,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName board47
 @MeshName Outside_Other_5
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -434,8 +434,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Railroad_low10
 @MeshName Outside_Other_1
-@MaterialName Outside_Other_M_Railroad_a
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_a
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -452,8 +452,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName board48
 @MeshName Outside_Other_4
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -470,8 +470,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName board49
 @MeshName Outside_Other_8
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -488,8 +488,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName board51
 @MeshName Outside_Other_9
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -506,8 +506,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName board52
 @MeshName Outside_Other_8
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -524,8 +524,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName board53
 @MeshName Outside_Other_5
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -542,8 +542,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName board54
 @MeshName Outside_Other_5
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -560,8 +560,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName board55
 @MeshName Outside_Other_8
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -578,8 +578,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName board56
 @MeshName Outside_Other_5
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -596,8 +596,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName board57
 @MeshName Outside_Other_5
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -614,8 +614,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName board58
 @MeshName Outside_Other_5
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -632,8 +632,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Railroad_low11
 @MeshName Outside_Other_1
-@MaterialName Outside_Other_M_Railroad_a
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_a
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -650,8 +650,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName board59
 @MeshName Outside_Other_4
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -668,8 +668,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName board60
 @MeshName Outside_Other_5
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -686,8 +686,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName board61
 @MeshName Outside_Other_5
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -704,8 +704,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName board62
 @MeshName Outside_Other_4
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -722,8 +722,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName board63
 @MeshName Outside_Other_5
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -740,8 +740,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName board64
 @MeshName Outside_Other_5
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -758,8 +758,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName board65
 @MeshName Outside_Other_5
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -776,8 +776,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName board66
 @MeshName Outside_Other_10
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -794,8 +794,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName board67
 @MeshName Outside_Other_10
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -812,8 +812,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName board68
 @MeshName Outside_Other_5
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -830,8 +830,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Railroad_low12
 @MeshName Outside_Other_7
-@MaterialName Outside_Other_M_Railroad_b
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_b
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -848,8 +848,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName board69
 @MeshName Outside_Other_5
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -866,8 +866,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName board70
 @MeshName Outside_Other_5
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -884,8 +884,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName board71
 @MeshName Outside_Other_5
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -902,8 +902,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName board72
 @MeshName Outside_Other_5
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -920,8 +920,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName board73
 @MeshName Outside_Other_10
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -938,8 +938,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName board74
 @MeshName Outside_Other_10
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -956,8 +956,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName board75_83
 @MeshName Outside_Other_10
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -974,8 +974,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName board76
 @MeshName Outside_Other_5
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -992,8 +992,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName bossb_cutighthouse01
 @MeshName Outside_Other_11
-@MaterialName Outside_Other_M_lighthouse_cut
 @IsActive 1
+@MaterialName Outside_Other_M_lighthouse_cut
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1010,8 +1010,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName bossb_cutighthouse02
 @MeshName Outside_Other_11
-@MaterialName Outside_Other_M_lighthouse_cut
 @IsActive 1
+@MaterialName Outside_Other_M_lighthouse_cut
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1028,8 +1028,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Railroad_low12.001
 @MeshName Outside_Other_1
-@MaterialName Outside_Other_M_Railroad_a
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_a
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1046,8 +1046,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName bossb_cutighthouse03
 @MeshName Outside_Other_11
-@MaterialName Outside_Other_M_lighthouse_cut
 @IsActive 1
+@MaterialName Outside_Other_M_lighthouse_cut
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1064,8 +1064,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName bossb_cutighthouse04
 @MeshName Outside_Other_11
-@MaterialName Outside_Other_M_lighthouse_cut
 @IsActive 1
+@MaterialName Outside_Other_M_lighthouse_cut
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1082,8 +1082,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName bossb_cutighthouse05
 @MeshName Outside_Other_11
-@MaterialName Outside_Other_M_lighthouse_cut
 @IsActive 1
+@MaterialName Outside_Other_M_lighthouse_cut
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1100,8 +1100,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName bossb_lighthouse_8
 @MeshName Outside_Other_12
-@MaterialName Outside_Other_M_lighthouse
 @IsActive 1
+@MaterialName Outside_Other_M_lighthouse
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1118,8 +1118,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName BridgeCrack2
 @MeshName Outside_Other_13
-@MaterialName Outside_Other_M_Railroad_b
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_b
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1136,8 +1136,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName BridgeCrack7
 @MeshName Outside_Other_13
-@MaterialName Outside_Other_M_Railroad_b
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_b
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1154,8 +1154,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName BridgeCrack_3
 @MeshName Outside_Other_13
-@MaterialName Outside_Other_M_Railroad_b
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_b
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1172,8 +1172,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Cube3
 @MeshName Outside_Other_14
-@MaterialName Outside_Other_M_gate00_drumcan
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_drumcan
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1190,8 +1190,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Cube6_21
 @MeshName Outside_Other_15
-@MaterialName Outside_Other_M_gate02_waste
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_waste
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1208,8 +1208,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Cube12
 @MeshName Outside_Other_15
-@MaterialName Outside_Other_M_gate02_waste
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_waste
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1226,8 +1226,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Railroad_low13
 @MeshName Outside_Other_7
-@MaterialName Outside_Other_M_Railroad_b
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_b
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1244,8 +1244,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Cube14
 @MeshName Outside_Other_15
-@MaterialName Outside_Other_M_gate02_waste
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_waste
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1262,8 +1262,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Cube15
 @MeshName Outside_Other_15
-@MaterialName Outside_Other_M_gate02_waste
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_waste
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1280,8 +1280,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Cube16
 @MeshName Outside_Other_16
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1298,8 +1298,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Cube18
 @MeshName Outside_Other_15
-@MaterialName Outside_Other_M_gate02_waste
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_waste
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1316,8 +1316,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Cube19
 @MeshName Outside_Other_15
-@MaterialName Outside_Other_M_gate02_waste
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_waste
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1334,8 +1334,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Cube21
 @MeshName Outside_Other_15
-@MaterialName Outside_Other_M_gate02_waste
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_waste
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1352,8 +1352,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Cube_2
 @MeshName Outside_Other_17
-@MaterialName Outside_Other_M_gate04_container_l
 @IsActive 1
+@MaterialName Outside_Other_M_gate04_container_l
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1370,8 +1370,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Cylinder2_8
 @MeshName Outside_Other_18
-@MaterialName Outside_Other_m_gate04_tank
 @IsActive 1
+@MaterialName Outside_Other_m_gate04_tank
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1388,8 +1388,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Cylinder3_3
 @MeshName Outside_Other_18
-@MaterialName Outside_Other_m_gate04_tank
 @IsActive 1
+@MaterialName Outside_Other_m_gate04_tank
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1406,8 +1406,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Cylinder4
 @MeshName Outside_Other_18
-@MaterialName Outside_Other_m_gate04_tank
 @IsActive 1
+@MaterialName Outside_Other_m_gate04_tank
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1424,8 +1424,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Railroad_low13.001
 @MeshName Outside_Other_1
-@MaterialName Outside_Other_M_Railroad_a
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_a
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1442,8 +1442,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Cylinder5
 @MeshName Outside_Other_19
-@MaterialName Outside_Other_M_gate00_drumcan
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_drumcan
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1460,8 +1460,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Cylinder6_16
 @MeshName Outside_Other_20
-@MaterialName Outside_Other_M_gate03_enertgystore_a
 @IsActive 1
+@MaterialName Outside_Other_M_gate03_enertgystore_a
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1478,8 +1478,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Cylinder8
 @MeshName Outside_Other_19
-@MaterialName Outside_Other_M_gate00_drumcan
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_drumcan
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1496,8 +1496,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Cylinder10
 @MeshName Outside_Other_19
-@MaterialName Outside_Other_M_gate00_drumcan
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_drumcan
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1514,8 +1514,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Cylinder21
 @MeshName Outside_Other_21
-@MaterialName Outside_Other_M_gate02_waste
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_waste
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1532,8 +1532,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Cylinder22_10
 @MeshName Outside_Other_22
-@MaterialName Outside_Other_M_gate02_pipe
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_pipe
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1550,8 +1550,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Cylinder23
 @MeshName Outside_Other_21
-@MaterialName Outside_Other_M_gate02_waste
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_waste
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1568,8 +1568,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Cylinder24
 @MeshName Outside_Other_22
-@MaterialName Outside_Other_M_gate02_pipe
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_pipe
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1586,8 +1586,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Cylinder25
 @MeshName Outside_Other_22
-@MaterialName Outside_Other_M_gate02_pipe
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_pipe
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1604,8 +1604,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Cylinder26
 @MeshName Outside_Other_22
-@MaterialName Outside_Other_M_gate02_pipe
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_pipe
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1622,8 +1622,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Railroad_low14
 @MeshName Outside_Other_7
-@MaterialName Outside_Other_M_Railroad_b
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_b
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1640,8 +1640,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Cylinder27
 @MeshName Outside_Other_21
-@MaterialName Outside_Other_M_gate02_waste
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_waste
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1658,8 +1658,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Cylinder28
 @MeshName Outside_Other_22
-@MaterialName Outside_Other_M_gate02_pipe
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_pipe
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1676,8 +1676,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Cylinder29
 @MeshName Outside_Other_22
-@MaterialName Outside_Other_M_gate02_pipe
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_pipe
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1694,8 +1694,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Cylinder30
 @MeshName Outside_Other_22
-@MaterialName Outside_Other_M_gate02_pipe
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_pipe
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1712,8 +1712,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Cylinder31
 @MeshName Outside_Other_21
-@MaterialName Outside_Other_M_gate02_waste
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_waste
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1730,8 +1730,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Cylinder32
 @MeshName Outside_Other_22
-@MaterialName Outside_Other_M_gate02_pipe
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_pipe
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1748,8 +1748,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Cylinder33
 @MeshName Outside_Other_21
-@MaterialName Outside_Other_M_gate02_waste
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_waste
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1766,8 +1766,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Cylinder34
 @MeshName Outside_Other_22
-@MaterialName Outside_Other_M_gate02_pipe
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_pipe
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1784,8 +1784,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Cylinder35
 @MeshName Outside_Other_22
-@MaterialName Outside_Other_M_gate02_pipe
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_pipe
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1802,8 +1802,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Cylinder36
 @MeshName Outside_Other_22
-@MaterialName Outside_Other_M_gate02_pipe
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_pipe
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1820,8 +1820,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Railroad_low14.001
 @MeshName Outside_Other_1
-@MaterialName Outside_Other_M_Railroad_a
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_a
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1838,8 +1838,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Cylinder37
 @MeshName Outside_Other_22
-@MaterialName Outside_Other_M_gate02_pipe
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_pipe
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1856,8 +1856,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Cylinder38
 @MeshName Outside_Other_22
-@MaterialName Outside_Other_M_gate02_pipe
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_pipe
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1874,8 +1874,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Cylinder39
 @MeshName Outside_Other_21
-@MaterialName Outside_Other_M_gate02_waste
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_waste
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1892,8 +1892,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Cylinder48
 @MeshName Outside_Other_23
-@MaterialName Outside_Other_M_gate02_pipe
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_pipe
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1910,8 +1910,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Cylinder49
 @MeshName Outside_Other_23
-@MaterialName Outside_Other_M_gate02_pipe
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_pipe
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1928,8 +1928,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Day6_Cylinder_001_15
 @MeshName Outside_Other_24
-@MaterialName Outside_Other_M_gate03_background
 @IsActive 1
+@MaterialName Outside_Other_M_gate03_background
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1946,8 +1946,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Day62_5
 @MeshName Outside_Other_25
-@MaterialName Outside_Other_M_gate03_background
 @IsActive 1
+@MaterialName Outside_Other_M_gate03_background
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1964,8 +1964,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Day63_8
 @MeshName Outside_Other_26
-@MaterialName Outside_Other_M_gate03_background
 @IsActive 1
+@MaterialName Outside_Other_M_gate03_background
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -1982,8 +1982,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Day65
 @MeshName Outside_Other_26
-@MaterialName Outside_Other_M_gate03_background
 @IsActive 1
+@MaterialName Outside_Other_M_gate03_background
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2000,8 +2000,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName fence60
 @MeshName Outside_Other_4
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2018,8 +2018,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Bridge5
 @MeshName Outside_Other_0
-@MaterialName Outside_Other_M_Railroad_b
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_b
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2036,8 +2036,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Railroad_low15
 @MeshName Outside_Other_7
-@MaterialName Outside_Other_M_Railroad_b
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_b
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2054,8 +2054,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName fence_Body_fence01a_reference_smd_mesh_4
 @MeshName Outside_Other_27
-@MaterialName Outside_Other_M_gate00_fence
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_fence
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2072,8 +2072,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName fence_Body_fence01a_reference_smd_mesh_7
 @MeshName Outside_Other_27
-@MaterialName Outside_Other_M_gate00_fence
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_fence
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2090,8 +2090,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName fence_Body_fence01a_reference_smd_mesh_8
 @MeshName Outside_Other_27
-@MaterialName Outside_Other_M_gate00_fence
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_fence
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2108,8 +2108,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName fence_Body_fence01a_reference_smd_mesh_9
 @MeshName Outside_Other_28
-@MaterialName Outside_Other_M_gate00_fence
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_fence
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2126,8 +2126,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName fence_Body_fence01a_reference_smd_mesh_10
 @MeshName Outside_Other_28
-@MaterialName Outside_Other_M_gate00_fence
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_fence
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2144,8 +2144,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName fence_Body_fence01a_reference_smd_mesh_11
 @MeshName Outside_Other_28
-@MaterialName Outside_Other_M_gate00_fence
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_fence
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2162,8 +2162,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName fence_Body_fence01a_reference_smd_mesh_16
 @MeshName Outside_Other_27
-@MaterialName Outside_Other_M_gate00_fence
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_fence
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2180,8 +2180,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName fence_Body_fence01a_reference_smd_mesh_17
 @MeshName Outside_Other_27
-@MaterialName Outside_Other_M_gate00_fence
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_fence
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2198,8 +2198,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName fence_Body_fence01a_reference_smd_mesh_18
 @MeshName Outside_Other_27
-@MaterialName Outside_Other_M_gate00_fence
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_fence
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2216,8 +2216,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName fence_Body_fence01a_reference_smd_mesh_19
 @MeshName Outside_Other_27
-@MaterialName Outside_Other_M_gate00_fence
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_fence
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2234,8 +2234,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Railroad_low15.001
 @MeshName Outside_Other_1
-@MaterialName Outside_Other_M_Railroad_a
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_a
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2252,8 +2252,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName fence_Body_fence01a_reference_smd_mesh_20
 @MeshName Outside_Other_27
-@MaterialName Outside_Other_M_gate00_fence
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_fence
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2270,8 +2270,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName fence_Body_fence01a_reference_smd_mesh_22
 @MeshName Outside_Other_27
-@MaterialName Outside_Other_M_gate00_fence
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_fence
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2288,8 +2288,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName fgsfgsgd_science_box_l_003_frozen4
 @MeshName Outside_Other_29
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2306,8 +2306,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName fgsfgsgd_woodbox_002_frozen6_23
 @MeshName Outside_Other_30
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2324,8 +2324,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName fgsfgsgd_woodbox_002_frozen7
 @MeshName Outside_Other_30
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2342,8 +2342,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName fgsfgsgd_woodbox_002_frozen8
 @MeshName Outside_Other_30
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2360,8 +2360,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName fgsfgsgd_woodbox_002_frozen9
 @MeshName Outside_Other_30
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2378,8 +2378,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName fgsfgsgd_woodbox_002_frozen10
 @MeshName Outside_Other_16
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2396,8 +2396,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName fgsfgsgd_woodbox_002_frozen11
 @MeshName Outside_Other_30
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2414,8 +2414,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName fgsfgsgd_woodbox_002_frozen12
 @MeshName Outside_Other_30
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2432,8 +2432,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Railroad_low16
 @MeshName Outside_Other_7
-@MaterialName Outside_Other_M_Railroad_b
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_b
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2450,8 +2450,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName fgsfgsgd_woodbox_002_frozen13
 @MeshName Outside_Other_30
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2468,8 +2468,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName fgsfgsgd_woodbox_002_frozen14
 @MeshName Outside_Other_31
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2486,8 +2486,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName fgsfgsgd_woodbox_002_frozen15
 @MeshName Outside_Other_30
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2504,8 +2504,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName fgsfgsgd_woodbox_002_frozen16
 @MeshName Outside_Other_31
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2522,8 +2522,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName fgsfgsgd_woodbox_002_frozen17
 @MeshName Outside_Other_31
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2540,8 +2540,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName fgsfgsgd_woodbox_002_frozen18
 @MeshName Outside_Other_31
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2558,8 +2558,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName fgsfgsgd_woodbox_002_frozen19
 @MeshName Outside_Other_31
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2576,8 +2576,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName fgsfgsgd_woodbox_002_frozen20
 @MeshName Outside_Other_30
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2594,8 +2594,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName fgsfgsgd_woodbox_002_frozen21
 @MeshName Outside_Other_31
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2612,8 +2612,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName fgsfgsgd_woodbox_002_frozen23
 @MeshName Outside_Other_31
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2630,8 +2630,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Railroad_low16.001
 @MeshName Outside_Other_1
-@MaterialName Outside_Other_M_Railroad_a
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_a
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2648,8 +2648,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName fgsfgsgd_woodbox_002_frozen24
 @MeshName Outside_Other_31
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2666,8 +2666,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_drumcan2
 @MeshName Outside_Other_19
-@MaterialName Outside_Other_M_gate00_drumcan
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_drumcan
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2684,8 +2684,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_drumcan3
 @MeshName Outside_Other_32
-@MaterialName Outside_Other_M_gate00_drumcan
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_drumcan
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2702,8 +2702,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_drumcan4
 @MeshName Outside_Other_33
-@MaterialName Outside_Other_M_gate00_drumcan
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_drumcan
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2720,8 +2720,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_drumcan5
 @MeshName Outside_Other_34
-@MaterialName Outside_Other_M_gate00_drumcan
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_drumcan
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2738,8 +2738,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_drumcan6
 @MeshName Outside_Other_19
-@MaterialName Outside_Other_M_gate00_drumcan
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_drumcan
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2756,8 +2756,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_drumcan7
 @MeshName Outside_Other_19
-@MaterialName Outside_Other_M_gate00_drumcan
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_drumcan
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2774,8 +2774,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_drumcan8
 @MeshName Outside_Other_32
-@MaterialName Outside_Other_M_gate00_drumcan
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_drumcan
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2792,8 +2792,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_drumcan9
 @MeshName Outside_Other_34
-@MaterialName Outside_Other_M_gate00_drumcan
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_drumcan
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2810,8 +2810,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_drumcan10
 @MeshName Outside_Other_33
-@MaterialName Outside_Other_M_gate00_drumcan
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_drumcan
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2828,8 +2828,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Railroad_low_111
 @MeshName Outside_Other_35
-@MaterialName Outside_Other_M_Railroad_a
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_a
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2846,8 +2846,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_drumcan11
 @MeshName Outside_Other_19
-@MaterialName Outside_Other_M_gate00_drumcan
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_drumcan
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2864,8 +2864,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_drumcan12
 @MeshName Outside_Other_32
-@MaterialName Outside_Other_M_gate00_drumcan
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_drumcan
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2882,8 +2882,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_drumcan13
 @MeshName Outside_Other_32
-@MaterialName Outside_Other_M_gate00_drumcan
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_drumcan
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2900,8 +2900,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_drumcan14
 @MeshName Outside_Other_34
-@MaterialName Outside_Other_M_gate00_drumcan
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_drumcan
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2918,8 +2918,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_drumcan15
 @MeshName Outside_Other_34
-@MaterialName Outside_Other_M_gate00_drumcan
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_drumcan
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2936,8 +2936,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_drumcan16
 @MeshName Outside_Other_32
-@MaterialName Outside_Other_M_gate00_drumcan
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_drumcan
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2954,8 +2954,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_drumcan17
 @MeshName Outside_Other_34
-@MaterialName Outside_Other_M_gate00_drumcan
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_drumcan
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2972,8 +2972,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_drumcan18
 @MeshName Outside_Other_32
-@MaterialName Outside_Other_M_gate00_drumcan
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_drumcan
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -2990,8 +2990,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_drumcan19
 @MeshName Outside_Other_34
-@MaterialName Outside_Other_M_gate00_drumcan
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_drumcan
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3008,8 +3008,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_drumcan20
 @MeshName Outside_Other_32
-@MaterialName Outside_Other_M_gate00_drumcan
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_drumcan
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3026,8 +3026,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Bridge2_0
 @MeshName Outside_Other_0
-@MaterialName Outside_Other_M_Railroad_b
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_b
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3044,8 +3044,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_drumcan21
 @MeshName Outside_Other_33
-@MaterialName Outside_Other_M_gate00_drumcan
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_drumcan
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3062,8 +3062,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_drumcan22
 @MeshName Outside_Other_19
-@MaterialName Outside_Other_M_gate00_drumcan
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_drumcan
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3080,8 +3080,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_drumcan23
 @MeshName Outside_Other_34
-@MaterialName Outside_Other_M_gate00_drumcan
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_drumcan
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3098,8 +3098,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_drumcan24
 @MeshName Outside_Other_32
-@MaterialName Outside_Other_M_gate00_drumcan
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_drumcan
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3116,8 +3116,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_drumcan25
 @MeshName Outside_Other_33
-@MaterialName Outside_Other_M_gate00_drumcan
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_drumcan
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3134,8 +3134,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_drumcan26
 @MeshName Outside_Other_32
-@MaterialName Outside_Other_M_gate00_drumcan
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_drumcan
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3152,8 +3152,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_drumcan27
 @MeshName Outside_Other_34
-@MaterialName Outside_Other_M_gate00_drumcan
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_drumcan
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3170,8 +3170,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_drumcan_03_6
 @MeshName Outside_Other_19
-@MaterialName Outside_Other_M_gate00_drumcan
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_drumcan
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3188,8 +3188,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_drumcan_04_3
 @MeshName Outside_Other_32
-@MaterialName Outside_Other_M_gate00_drumcan
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_drumcan
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3206,8 +3206,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_factory2_9
 @MeshName Outside_Other_36
-@MaterialName Outside_Other_M_gate00_windTurbine
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_windTurbine
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3224,8 +3224,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Bridge_low7
 @MeshName Outside_Other_37
-@MaterialName Outside_Other_M_Railroad_b
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_b
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3242,8 +3242,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_factory3
 @MeshName Outside_Other_36
-@MaterialName Outside_Other_M_gate00_windTurbine
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_windTurbine
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3260,8 +3260,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_factory4
 @MeshName Outside_Other_36
-@MaterialName Outside_Other_M_gate00_windTurbine
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_windTurbine
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3278,8 +3278,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_factory5
 @MeshName Outside_Other_36
-@MaterialName Outside_Other_M_gate00_windTurbine
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_windTurbine
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3296,8 +3296,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_factory6
 @MeshName Outside_Other_36
-@MaterialName Outside_Other_M_gate00_windTurbine
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_windTurbine
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3314,8 +3314,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_factory7
 @MeshName Outside_Other_36
-@MaterialName Outside_Other_M_gate00_windTurbine
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_windTurbine
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3332,8 +3332,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_factory8_17
 @MeshName Outside_Other_36
-@MaterialName Outside_Other_M_gate00_windTurbine
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_windTurbine
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3350,8 +3350,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_factory9
 @MeshName Outside_Other_36
-@MaterialName Outside_Other_M_gate00_windTurbine
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_windTurbine
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3368,8 +3368,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_factory10
 @MeshName Outside_Other_36
-@MaterialName Outside_Other_M_gate00_windTurbine
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_windTurbine
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3386,8 +3386,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_factory11
 @MeshName Outside_Other_36
-@MaterialName Outside_Other_M_gate00_windTurbine
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_windTurbine
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3404,8 +3404,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_factory_18
 @MeshName Outside_Other_36
-@MaterialName Outside_Other_M_gate00_windTurbine
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_windTurbine
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3422,8 +3422,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Railroad_low8
 @MeshName Outside_Other_38
-@MaterialName Outside_Other_M_Railroad_b
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_b
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3440,8 +3440,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_fence_01_37
 @MeshName Outside_Other_39
-@MaterialName Outside_Other_M_gate02_pillar
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_pillar
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3458,8 +3458,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_fence_2
 @MeshName Outside_Other_39
-@MaterialName Outside_Other_M_gate02_pillar
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_pillar
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3476,8 +3476,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_fence_02_40
 @MeshName Outside_Other_40
-@MaterialName Outside_Other_M_gate02_pillar
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_pillar
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3494,8 +3494,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_fence_4
 @MeshName Outside_Other_40
-@MaterialName Outside_Other_M_gate02_pillar
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_pillar
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3512,8 +3512,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_fence_5
 @MeshName Outside_Other_40
-@MaterialName Outside_Other_M_gate02_pillar
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_pillar
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3530,8 +3530,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_fence_6
 @MeshName Outside_Other_40
-@MaterialName Outside_Other_M_gate02_pillar
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_pillar
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3548,8 +3548,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_fence_7
 @MeshName Outside_Other_40
-@MaterialName Outside_Other_M_gate02_pillar
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_pillar
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3566,8 +3566,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_fence_8
 @MeshName Outside_Other_40
-@MaterialName Outside_Other_M_gate02_pillar
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_pillar
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3584,8 +3584,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_fence_9
 @MeshName Outside_Other_40
-@MaterialName Outside_Other_M_gate02_pillar
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_pillar
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3602,8 +3602,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_fence_10
 @MeshName Outside_Other_40
-@MaterialName Outside_Other_M_gate02_pillar
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_pillar
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3620,8 +3620,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Bridge6_85
 @MeshName Outside_Other_0
-@MaterialName Outside_Other_M_Railroad_b
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_b
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3638,8 +3638,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_fence_11
 @MeshName Outside_Other_40
-@MaterialName Outside_Other_M_gate02_pillar
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_pillar
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3656,8 +3656,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_fence_12
 @MeshName Outside_Other_40
-@MaterialName Outside_Other_M_gate02_pillar
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_pillar
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3674,8 +3674,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_fence_14
 @MeshName Outside_Other_40
-@MaterialName Outside_Other_M_gate02_pillar
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_pillar
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3692,8 +3692,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_1
 @MeshName Outside_Other_41
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3710,8 +3710,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_01_5
 @MeshName Outside_Other_41
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3728,8 +3728,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_02_2
 @MeshName Outside_Other_42
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3746,8 +3746,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_3
 @MeshName Outside_Other_42
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3764,8 +3764,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_4
 @MeshName Outside_Other_42
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3782,8 +3782,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_04_68
 @MeshName Outside_Other_43
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3800,8 +3800,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_5
 @MeshName Outside_Other_43
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3818,8 +3818,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Bridge7_86
 @MeshName Outside_Other_0
-@MaterialName Outside_Other_M_Railroad_b
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_b
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3836,8 +3836,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_05_65
 @MeshName Outside_Other_44
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3854,8 +3854,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_6
 @MeshName Outside_Other_42
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3872,8 +3872,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_06_62
 @MeshName Outside_Other_45
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3890,8 +3890,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_7
 @MeshName Outside_Other_44
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3908,8 +3908,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_07_54
 @MeshName Outside_Other_46
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3926,8 +3926,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_8
 @MeshName Outside_Other_47
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3944,8 +3944,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_08_57
 @MeshName Outside_Other_48
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3962,8 +3962,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_9
 @MeshName Outside_Other_41
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3980,8 +3980,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_09_63
 @MeshName Outside_Other_49
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -3998,8 +3998,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_10
 @MeshName Outside_Other_42
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4016,8 +4016,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Bridge8
 @MeshName Outside_Other_0
-@MaterialName Outside_Other_M_Railroad_b
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_b
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4034,8 +4034,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Bridge11
 @MeshName Outside_Other_0
-@MaterialName Outside_Other_M_Railroad_b
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_b
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4052,8 +4052,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_11
 @MeshName Outside_Other_41
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4070,8 +4070,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_12
 @MeshName Outside_Other_42
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4088,8 +4088,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_13
 @MeshName Outside_Other_42
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4106,8 +4106,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_14
 @MeshName Outside_Other_44
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4124,8 +4124,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_15
 @MeshName Outside_Other_44
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4142,8 +4142,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_16
 @MeshName Outside_Other_44
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4160,8 +4160,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_17
 @MeshName Outside_Other_44
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4178,8 +4178,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_18
 @MeshName Outside_Other_42
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4196,8 +4196,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_19
 @MeshName Outside_Other_45
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4214,8 +4214,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_20
 @MeshName Outside_Other_44
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4232,8 +4232,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Bridge_low16
 @MeshName Outside_Other_7
-@MaterialName Outside_Other_M_Railroad_b
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_b
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4250,8 +4250,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_21
 @MeshName Outside_Other_44
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4268,8 +4268,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_22
 @MeshName Outside_Other_43
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4286,8 +4286,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_23
 @MeshName Outside_Other_44
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4304,8 +4304,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_24
 @MeshName Outside_Other_45
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4322,8 +4322,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_25
 @MeshName Outside_Other_42
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4340,8 +4340,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_26
 @MeshName Outside_Other_44
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4358,8 +4358,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_27
 @MeshName Outside_Other_42
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4376,8 +4376,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_28
 @MeshName Outside_Other_43
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4394,8 +4394,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_29
 @MeshName Outside_Other_45
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4412,8 +4412,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_30
 @MeshName Outside_Other_42
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4430,8 +4430,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Bridge_low16.001
 @MeshName Outside_Other_1
-@MaterialName Outside_Other_M_Railroad_a
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_a
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4448,8 +4448,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_31
 @MeshName Outside_Other_48
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4466,8 +4466,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_32
 @MeshName Outside_Other_43
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4484,8 +4484,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_33
 @MeshName Outside_Other_44
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4502,8 +4502,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_34
 @MeshName Outside_Other_41
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4520,8 +4520,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_35
 @MeshName Outside_Other_43
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4538,8 +4538,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_36
 @MeshName Outside_Other_44
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4556,8 +4556,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_37
 @MeshName Outside_Other_43
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4574,8 +4574,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_38
 @MeshName Outside_Other_41
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4592,8 +4592,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_39
 @MeshName Outside_Other_41
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4610,8 +4610,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_40
 @MeshName Outside_Other_44
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4628,8 +4628,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Bridge_low17_2
 @MeshName Outside_Other_7
-@MaterialName Outside_Other_M_Railroad_b
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_b
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4646,8 +4646,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_41
 @MeshName Outside_Other_43
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4664,8 +4664,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_42
 @MeshName Outside_Other_44
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4682,8 +4682,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_43
 @MeshName Outside_Other_43
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4700,8 +4700,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_44
 @MeshName Outside_Other_44
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4718,8 +4718,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_45
 @MeshName Outside_Other_43
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4736,8 +4736,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_46
 @MeshName Outside_Other_44
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4754,8 +4754,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_49
 @MeshName Outside_Other_41
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4772,8 +4772,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_ground_cable_51
 @MeshName Outside_Other_43
-@MaterialName Outside_Other_M_gate00_ground_cable
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_ground_cable
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4790,8 +4790,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_largebackground_21
 @MeshName Outside_Other_50
-@MaterialName Outside_Other_M_gate00_largebackground
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_largebackground
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4808,8 +4808,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_panel_02
 @MeshName Outside_Other_10
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4826,8 +4826,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Bridge_low17_2.001
 @MeshName Outside_Other_1
-@MaterialName Outside_Other_M_Railroad_a
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_a
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4844,8 +4844,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_panel_3
 @MeshName Outside_Other_10
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4862,8 +4862,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_panel_03_58
 @MeshName Outside_Other_6
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4880,8 +4880,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_panel_5
 @MeshName Outside_Other_4
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4898,8 +4898,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_panel_7
 @MeshName Outside_Other_4
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4916,8 +4916,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_panel_8
 @MeshName Outside_Other_4
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4934,8 +4934,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_panel_9
 @MeshName Outside_Other_4
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4952,8 +4952,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_panel_10
 @MeshName Outside_Other_8
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4970,8 +4970,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_panel_11
 @MeshName Outside_Other_5
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -4988,8 +4988,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_panel_12
 @MeshName Outside_Other_4
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5006,8 +5006,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_panel_13
 @MeshName Outside_Other_5
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5024,8 +5024,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName BridgeCrack3_41
 @MeshName Outside_Other_38
-@MaterialName Outside_Other_M_Railroad_b
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_b
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5042,8 +5042,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_panel_14
 @MeshName Outside_Other_8
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5060,8 +5060,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_panel_16
 @MeshName Outside_Other_4
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5078,8 +5078,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_postbox2_9
 @MeshName Outside_Other_51
-@MaterialName Outside_Other_M_gate00_drumcan
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_drumcan
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5096,8 +5096,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_rcstructure
 @MeshName Outside_Other_52
-@MaterialName Outside_Other_M_gate00_rcstructure
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_rcstructure
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5114,8 +5114,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_rcstructure_02_2
 @MeshName Outside_Other_53
-@MaterialName Outside_Other_M_gate00_rcstructure
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_rcstructure
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5132,8 +5132,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_rcstructure_b_005_2
 @MeshName Outside_Other_54
-@MaterialName Outside_Other_M_gate00_rcstructure
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_rcstructure
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5150,8 +5150,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_roadclosed2
 @MeshName Outside_Other_14
-@MaterialName Outside_Other_M_gate00_drumcan
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_drumcan
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5168,8 +5168,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_roadclosed_14
 @MeshName Outside_Other_14
-@MaterialName Outside_Other_M_gate00_drumcan
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_drumcan
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5186,8 +5186,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_sign_00s7
 @MeshName Outside_Other_55
-@MaterialName Outside_Other_M_gate00_etcsign
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_etcsign
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5204,8 +5204,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_sign_00s8
 @MeshName Outside_Other_55
-@MaterialName Outside_Other_M_gate00_etcsign
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_etcsign
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5222,8 +5222,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName BridgeCrack4_5
 @MeshName Outside_Other_38
-@MaterialName Outside_Other_M_Railroad_b
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_b
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5240,8 +5240,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_sign_1
 @MeshName Outside_Other_56
-@MaterialName Outside_Other_M_gate00_etcsign
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_etcsign
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5258,8 +5258,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_sign_5
 @MeshName Outside_Other_56
-@MaterialName Outside_Other_M_gate00_etcsign
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_etcsign
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5276,8 +5276,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_sign_7
 @MeshName Outside_Other_57
-@MaterialName Outside_Other_M_gate00_etcsign
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_etcsign
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5294,8 +5294,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_sign_8
 @MeshName Outside_Other_55
-@MaterialName Outside_Other_M_gate00_etcsign
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_etcsign
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5312,8 +5312,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_sign_10
 @MeshName Outside_Other_57
-@MaterialName Outside_Other_M_gate00_etcsign
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_etcsign
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5330,8 +5330,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_sign_11
 @MeshName Outside_Other_58
-@MaterialName Outside_Other_M_gate00_etcsign
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_etcsign
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5348,8 +5348,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_sign_13
 @MeshName Outside_Other_58
-@MaterialName Outside_Other_M_gate00_etcsign
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_etcsign
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5366,8 +5366,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_sign_14
 @MeshName Outside_Other_57
-@MaterialName Outside_Other_M_gate00_etcsign
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_etcsign
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5384,8 +5384,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_sign_15
 @MeshName Outside_Other_59
-@MaterialName Outside_Other_M_gate00_etcsign
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_etcsign
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5402,8 +5402,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_sign_16
 @MeshName Outside_Other_60
-@MaterialName Outside_Other_M_gate00_etcsign
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_etcsign
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5420,8 +5420,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_Railroad2
 @MeshName Outside_Other_7
-@MaterialName Outside_Other_M_Railroad_b
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_b
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5438,8 +5438,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_sign_17
 @MeshName Outside_Other_58
-@MaterialName Outside_Other_M_gate00_etcsign
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_etcsign
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5456,8 +5456,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_sign_20
 @MeshName Outside_Other_61
-@MaterialName Outside_Other_M_gate00_etcsign
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_etcsign
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5474,8 +5474,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_sign_21
 @MeshName Outside_Other_58
-@MaterialName Outside_Other_M_gate00_etcsign
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_etcsign
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5492,8 +5492,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_sign_22
 @MeshName Outside_Other_57
-@MaterialName Outside_Other_M_gate00_etcsign
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_etcsign
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5510,8 +5510,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_sign_23
 @MeshName Outside_Other_56
-@MaterialName Outside_Other_M_gate00_etcsign
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_etcsign
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5528,8 +5528,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_sign_27
 @MeshName Outside_Other_56
-@MaterialName Outside_Other_M_gate00_etcsign
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_etcsign
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5546,8 +5546,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_sign_28
 @MeshName Outside_Other_56
-@MaterialName Outside_Other_M_gate00_etcsign
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_etcsign
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5564,8 +5564,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_sign_29
 @MeshName Outside_Other_56
-@MaterialName Outside_Other_M_gate00_etcsign
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_etcsign
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5582,8 +5582,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_sign_30
 @MeshName Outside_Other_56
-@MaterialName Outside_Other_M_gate00_etcsign
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_etcsign
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5600,8 +5600,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_sign_31
 @MeshName Outside_Other_56
-@MaterialName Outside_Other_M_gate00_etcsign
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_etcsign
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5618,8 +5618,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_Railroad2.001
 @MeshName Outside_Other_1
-@MaterialName Outside_Other_M_Railroad_a
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_a
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5636,8 +5636,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_sign_32
 @MeshName Outside_Other_56
-@MaterialName Outside_Other_M_gate00_etcsign
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_etcsign
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5654,8 +5654,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_sign_36
 @MeshName Outside_Other_62
-@MaterialName Outside_Other_M_gate00_etcsign
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_etcsign
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5672,8 +5672,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_sign_49
 @MeshName Outside_Other_56
-@MaterialName Outside_Other_M_gate00_etcsign
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_etcsign
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5690,8 +5690,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_streetlamp_L_11
 @MeshName Outside_Other_63
-@MaterialName Outside_Other_M_gate00_streetlamp
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_streetlamp
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5708,8 +5708,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_streetlamp_S6
 @MeshName Outside_Other_64
-@MaterialName Outside_Other_M_gate00_streetlamp
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_streetlamp
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5726,8 +5726,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_trainrail8
 @MeshName Outside_Other_65
-@MaterialName Outside_Other_M_gate00_trainrail
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_trainrail
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5744,8 +5744,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_trainrail9
 @MeshName Outside_Other_65
-@MaterialName Outside_Other_M_gate00_trainrail
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_trainrail
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5762,8 +5762,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate01_container_02_12
 @MeshName Outside_Other_17
-@MaterialName Outside_Other_M_gate04_container_l
 @IsActive 1
+@MaterialName Outside_Other_M_gate04_container_l
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5780,8 +5780,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate01_container_02_13
 @MeshName Outside_Other_66
-@MaterialName Outside_Other_M_gate04_container_m
 @IsActive 1
+@MaterialName Outside_Other_M_gate04_container_m
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5798,8 +5798,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate01_container_03_20
 @MeshName Outside_Other_66
-@MaterialName Outside_Other_M_gate04_container_m
 @IsActive 1
+@MaterialName Outside_Other_M_gate04_container_m
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5816,8 +5816,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_Railroad3
 @MeshName Outside_Other_7
-@MaterialName Outside_Other_M_Railroad_b
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_b
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5834,8 +5834,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate01_container_8
 @MeshName Outside_Other_67
-@MaterialName Outside_Other_M_gate04_container_s
 @IsActive 1
+@MaterialName Outside_Other_M_gate04_container_s
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5852,8 +5852,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate01_container_s2
 @MeshName Outside_Other_67
-@MaterialName Outside_Other_M_gate04_container_s
 @IsActive 1
+@MaterialName Outside_Other_M_gate04_container_s
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5870,8 +5870,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate01_container_s3
 @MeshName Outside_Other_67
-@MaterialName Outside_Other_M_gate04_container_s
 @IsActive 1
+@MaterialName Outside_Other_M_gate04_container_s
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5888,8 +5888,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate01_container_s4
 @MeshName Outside_Other_67
-@MaterialName Outside_Other_M_gate04_container_s
 @IsActive 1
+@MaterialName Outside_Other_M_gate04_container_s
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5906,8 +5906,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate01_container_s5
 @MeshName Outside_Other_66
-@MaterialName Outside_Other_M_gate04_container_m
 @IsActive 1
+@MaterialName Outside_Other_M_gate04_container_m
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5924,8 +5924,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate01_container_s6
 @MeshName Outside_Other_67
-@MaterialName Outside_Other_M_gate04_container_s
 @IsActive 1
+@MaterialName Outside_Other_M_gate04_container_s
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5942,8 +5942,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate01_container_s_3
 @MeshName Outside_Other_67
-@MaterialName Outside_Other_M_gate04_container_s
 @IsActive 1
+@MaterialName Outside_Other_M_gate04_container_s
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5960,8 +5960,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate01_sign_13
 @MeshName Outside_Other_68
-@MaterialName Outside_Other_M_gate04_sign
 @IsActive 1
+@MaterialName Outside_Other_M_gate04_sign
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5978,8 +5978,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate02_factoryenergy2
 @MeshName Outside_Other_69
-@MaterialName Outside_Other_M_gate02_factoryenergy
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_factoryenergy
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -5996,8 +5996,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate02_factoryenergy4
 @MeshName Outside_Other_69
-@MaterialName Outside_Other_M_gate02_factoryenergy
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_factoryenergy
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6014,8 +6014,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Bridge9
 @MeshName Outside_Other_0
-@MaterialName Outside_Other_M_Railroad_b
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_b
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6032,8 +6032,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_Railroad3.001
 @MeshName Outside_Other_1
-@MaterialName Outside_Other_M_Railroad_a
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_a
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6050,8 +6050,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate02_factoryenergy_6
 @MeshName Outside_Other_69
-@MaterialName Outside_Other_M_gate02_factoryenergy
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_factoryenergy
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6068,8 +6068,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate02_pillar_001
 @MeshName Outside_Other_70
-@MaterialName Outside_Other_M_gate02_pillar
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_pillar
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6086,8 +6086,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate02_pillar_001_43
 @MeshName Outside_Other_71
-@MaterialName Outside_Other_M_gate02_pillar
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_pillar
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6104,8 +6104,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate02_pillar_001_44
 @MeshName Outside_Other_72
-@MaterialName Outside_Other_M_gate02_pillar
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_pillar
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6122,8 +6122,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate02_pillar_2
 @MeshName Outside_Other_72
-@MaterialName Outside_Other_M_gate02_pillar
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_pillar
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6140,8 +6140,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate02_waste_c2
 @MeshName Outside_Other_73
-@MaterialName Outside_Other_M_gate02_waste
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_waste
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6158,8 +6158,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate02_waste_c3
 @MeshName Outside_Other_74
-@MaterialName Outside_Other_M_gate02_waste
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_waste
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6176,8 +6176,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate02_waste_c4
 @MeshName Outside_Other_74
-@MaterialName Outside_Other_M_gate02_waste
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_waste
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6194,8 +6194,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate02_waste_c5
 @MeshName Outside_Other_73
-@MaterialName Outside_Other_M_gate02_waste
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_waste
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6212,8 +6212,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate02_waste_c_3
 @MeshName Outside_Other_73
-@MaterialName Outside_Other_M_gate02_waste
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_waste
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6230,8 +6230,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_Railroad4
 @MeshName Outside_Other_7
-@MaterialName Outside_Other_M_Railroad_b
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_b
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6248,8 +6248,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate02_waste_d2
 @MeshName Outside_Other_74
-@MaterialName Outside_Other_M_gate02_waste
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_waste
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6266,8 +6266,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate02_waste_d3
 @MeshName Outside_Other_74
-@MaterialName Outside_Other_M_gate02_waste
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_waste
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6284,8 +6284,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate02_waste_d4
 @MeshName Outside_Other_74
-@MaterialName Outside_Other_M_gate02_waste
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_waste
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6302,8 +6302,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate02_waste_d_12
 @MeshName Outside_Other_74
-@MaterialName Outside_Other_M_gate02_waste
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_waste
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6320,8 +6320,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate03_energystorage_b3_4
 @MeshName Outside_Other_75
-@MaterialName Outside_Other_M_gate03_enertgystore_b
 @IsActive 1
+@MaterialName Outside_Other_M_gate03_enertgystore_b
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6338,8 +6338,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate03_energystorage_c2_5
 @MeshName Outside_Other_76
-@MaterialName Outside_Other_M_gate03_enertgystore_b
 @IsActive 1
+@MaterialName Outside_Other_M_gate03_enertgystore_b
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6356,8 +6356,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate03_energystorage_c3
 @MeshName Outside_Other_76
-@MaterialName Outside_Other_M_gate03_enertgystore_b
 @IsActive 1
+@MaterialName Outside_Other_M_gate03_enertgystore_b
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6374,8 +6374,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate03_energystorage_c4
 @MeshName Outside_Other_76
-@MaterialName Outside_Other_M_gate03_enertgystore_b
 @IsActive 1
+@MaterialName Outside_Other_M_gate03_enertgystore_b
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6392,8 +6392,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate03_energystorage_c5
 @MeshName Outside_Other_76
-@MaterialName Outside_Other_M_gate03_enertgystore_b
 @IsActive 1
+@MaterialName Outside_Other_M_gate03_enertgystore_b
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6410,8 +6410,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate03_energystorage_c_2
 @MeshName Outside_Other_76
-@MaterialName Outside_Other_M_gate03_enertgystore_b
 @IsActive 1
+@MaterialName Outside_Other_M_gate03_enertgystore_b
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6428,8 +6428,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_Railroad5
 @MeshName Outside_Other_7
-@MaterialName Outside_Other_M_Railroad_b
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_b
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6446,8 +6446,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate03_house_5
 @MeshName Outside_Other_77
-@MaterialName Outside_Other_M_gate03_house
 @IsActive 1
+@MaterialName Outside_Other_M_gate03_house
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6464,8 +6464,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate03_house_etc_8
 @MeshName Outside_Other_78
-@MaterialName Outside_Other_M_gate03_house
 @IsActive 1
+@MaterialName Outside_Other_M_gate03_house
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6482,8 +6482,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate04_container_part_001_28
 @MeshName Outside_Other_79
-@MaterialName Outside_Other_M_gate04_container_part
 @IsActive 1
+@MaterialName Outside_Other_M_gate04_container_part
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6500,8 +6500,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate04_container_part_002_40
 @MeshName Outside_Other_80
-@MaterialName Outside_Other_M_gate04_container_part
 @IsActive 1
+@MaterialName Outside_Other_M_gate04_container_part
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6518,8 +6518,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate04_container_part_3
 @MeshName Outside_Other_79
-@MaterialName Outside_Other_M_gate04_container_part
 @IsActive 1
+@MaterialName Outside_Other_M_gate04_container_part
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6536,8 +6536,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate04_container_part_003_31
 @MeshName Outside_Other_81
-@MaterialName Outside_Other_M_gate04_container_part
 @IsActive 1
+@MaterialName Outside_Other_M_gate04_container_part
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6554,8 +6554,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate04_container_part_004_15
 @MeshName Outside_Other_82
-@MaterialName Outside_Other_M_gate04_container_part
 @IsActive 1
+@MaterialName Outside_Other_M_gate04_container_part
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6572,8 +6572,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate04_container_part_005_34
 @MeshName Outside_Other_83
-@MaterialName Outside_Other_M_gate04_container_part
 @IsActive 1
+@MaterialName Outside_Other_M_gate04_container_part
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6590,8 +6590,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate04_container_part_006_18
 @MeshName Outside_Other_84
-@MaterialName Outside_Other_M_gate04_container_part
 @IsActive 1
+@MaterialName Outside_Other_M_gate04_container_part
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6608,8 +6608,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate04_container_part_7
 @MeshName Outside_Other_83
-@MaterialName Outside_Other_M_gate04_container_part
 @IsActive 1
+@MaterialName Outside_Other_M_gate04_container_part
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6626,8 +6626,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_Railroad5.001
 @MeshName Outside_Other_1
-@MaterialName Outside_Other_M_Railroad_a
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_a
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6644,8 +6644,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate04_container_part_007_21
 @MeshName Outside_Other_85
-@MaterialName Outside_Other_M_gate04_container_part
 @IsActive 1
+@MaterialName Outside_Other_M_gate04_container_part
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6662,8 +6662,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate04_container_part_8
 @MeshName Outside_Other_85
-@MaterialName Outside_Other_M_gate04_container_part
 @IsActive 1
+@MaterialName Outside_Other_M_gate04_container_part
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6680,8 +6680,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate04_container_part_008_24
 @MeshName Outside_Other_86
-@MaterialName Outside_Other_M_gate04_container_part
 @IsActive 1
+@MaterialName Outside_Other_M_gate04_container_part
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6698,8 +6698,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate04_container_part_10
 @MeshName Outside_Other_85
-@MaterialName Outside_Other_M_gate04_container_part
 @IsActive 1
+@MaterialName Outside_Other_M_gate04_container_part
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6716,8 +6716,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate04_container_part_010_54
 @MeshName Outside_Other_87
-@MaterialName Outside_Other_M_gate04_container_part
 @IsActive 1
+@MaterialName Outside_Other_M_gate04_container_part
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6734,8 +6734,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate04_container_part_11
 @MeshName Outside_Other_84
-@MaterialName Outside_Other_M_gate04_container_part
 @IsActive 1
+@MaterialName Outside_Other_M_gate04_container_part
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6752,8 +6752,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate04_container_part_011_12
 @MeshName Outside_Other_88
-@MaterialName Outside_Other_M_gate04_container_part
 @IsActive 1
+@MaterialName Outside_Other_M_gate04_container_part
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6770,8 +6770,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate04_container_part_12
 @MeshName Outside_Other_88
-@MaterialName Outside_Other_M_gate04_container_part
 @IsActive 1
+@MaterialName Outside_Other_M_gate04_container_part
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6788,8 +6788,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate04_container_part_012_43
 @MeshName Outside_Other_89
-@MaterialName Outside_Other_M_gate04_container_part
 @IsActive 1
+@MaterialName Outside_Other_M_gate04_container_part
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6806,8 +6806,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate04_container_part_13
 @MeshName Outside_Other_81
-@MaterialName Outside_Other_M_gate04_container_part
 @IsActive 1
+@MaterialName Outside_Other_M_gate04_container_part
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6824,8 +6824,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_Railroad6
 @MeshName Outside_Other_7
-@MaterialName Outside_Other_M_Railroad_b
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_b
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6842,8 +6842,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate04_container_part_14
 @MeshName Outside_Other_85
-@MaterialName Outside_Other_M_gate04_container_part
 @IsActive 1
+@MaterialName Outside_Other_M_gate04_container_part
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6860,8 +6860,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate04_container_part_15
 @MeshName Outside_Other_83
-@MaterialName Outside_Other_M_gate04_container_part
 @IsActive 1
+@MaterialName Outside_Other_M_gate04_container_part
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6878,8 +6878,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate04_container_part_16
 @MeshName Outside_Other_87
-@MaterialName Outside_Other_M_gate04_container_part
 @IsActive 1
+@MaterialName Outside_Other_M_gate04_container_part
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6896,8 +6896,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate04_container_part_17
 @MeshName Outside_Other_90
-@MaterialName Outside_Other_M_gate04_container_part
 @IsActive 1
+@MaterialName Outside_Other_M_gate04_container_part
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6914,8 +6914,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate04_container_part_18
 @MeshName Outside_Other_85
-@MaterialName Outside_Other_M_gate04_container_part
 @IsActive 1
+@MaterialName Outside_Other_M_gate04_container_part
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6932,8 +6932,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate04_container_part_19
 @MeshName Outside_Other_81
-@MaterialName Outside_Other_M_gate04_container_part
 @IsActive 1
+@MaterialName Outside_Other_M_gate04_container_part
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6950,8 +6950,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate04_container_part_20
 @MeshName Outside_Other_90
-@MaterialName Outside_Other_M_gate04_container_part
 @IsActive 1
+@MaterialName Outside_Other_M_gate04_container_part
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6968,8 +6968,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate04_container_part_21
 @MeshName Outside_Other_85
-@MaterialName Outside_Other_M_gate04_container_part
 @IsActive 1
+@MaterialName Outside_Other_M_gate04_container_part
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -6986,8 +6986,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate04_container_part_22
 @MeshName Outside_Other_84
-@MaterialName Outside_Other_M_gate04_container_part
 @IsActive 1
+@MaterialName Outside_Other_M_gate04_container_part
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7004,8 +7004,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate04_container_part_23
 @MeshName Outside_Other_80
-@MaterialName Outside_Other_M_gate04_container_part
 @IsActive 1
+@MaterialName Outside_Other_M_gate04_container_part
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7022,8 +7022,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_Railroad7
 @MeshName Outside_Other_7
-@MaterialName Outside_Other_M_Railroad_b
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_b
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7040,8 +7040,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate04_container_part_24
 @MeshName Outside_Other_88
-@MaterialName Outside_Other_M_gate04_container_part
 @IsActive 1
+@MaterialName Outside_Other_M_gate04_container_part
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7058,8 +7058,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate04_container_part_25
 @MeshName Outside_Other_82
-@MaterialName Outside_Other_M_gate04_container_part
 @IsActive 1
+@MaterialName Outside_Other_M_gate04_container_part
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7076,8 +7076,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate04_container_part_26
 @MeshName Outside_Other_86
-@MaterialName Outside_Other_M_gate04_container_part
 @IsActive 1
+@MaterialName Outside_Other_M_gate04_container_part
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7094,8 +7094,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate04_container_part_27
 @MeshName Outside_Other_84
-@MaterialName Outside_Other_M_gate04_container_part
 @IsActive 1
+@MaterialName Outside_Other_M_gate04_container_part
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7112,8 +7112,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate04_container_part_28
 @MeshName Outside_Other_88
-@MaterialName Outside_Other_M_gate04_container_part
 @IsActive 1
+@MaterialName Outside_Other_M_gate04_container_part
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7130,8 +7130,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate04_container_part_37
 @MeshName Outside_Other_86
-@MaterialName Outside_Other_M_gate04_container_part
 @IsActive 1
+@MaterialName Outside_Other_M_gate04_container_part
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7148,8 +7148,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate04_container_part_48
 @MeshName Outside_Other_79
-@MaterialName Outside_Other_M_gate04_container_part
 @IsActive 1
+@MaterialName Outside_Other_M_gate04_container_part
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7166,8 +7166,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate04_container_part_57
 @MeshName Outside_Other_81
-@MaterialName Outside_Other_M_gate04_container_part
 @IsActive 1
+@MaterialName Outside_Other_M_gate04_container_part
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7184,8 +7184,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate04_container_part_60
 @MeshName Outside_Other_81
-@MaterialName Outside_Other_M_gate04_container_part
 @IsActive 1
+@MaterialName Outside_Other_M_gate04_container_part
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7202,8 +7202,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate04_container_part_63
 @MeshName Outside_Other_83
-@MaterialName Outside_Other_M_gate04_container_part
 @IsActive 1
+@MaterialName Outside_Other_M_gate04_container_part
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7220,8 +7220,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_Railroad7.001
 @MeshName Outside_Other_1
-@MaterialName Outside_Other_M_Railroad_a
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_a
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7238,8 +7238,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate04_train_2
 @MeshName Outside_Other_91
-@MaterialName Outside_Other_M_gate04_train
 @IsActive 1
+@MaterialName Outside_Other_M_gate04_train
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7256,8 +7256,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName map13
 @MeshName Outside_Other_3
-@MaterialName Outside_Other_M_gate00_largescify
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_largescify
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7274,8 +7274,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName map14
 @MeshName Outside_Other_3
-@MaterialName Outside_Other_M_gate00_largescify
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_largescify
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7292,8 +7292,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName map16
 @MeshName Outside_Other_3
-@MaterialName Outside_Other_M_gate00_largescify
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_largescify
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7310,8 +7310,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName map6666_Cube_009_frozen2
 @MeshName Outside_Other_30
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7328,8 +7328,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName map6666_Cube_009_frozen3
 @MeshName Outside_Other_30
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7346,8 +7346,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName map6666_Cube_009_frozen4
 @MeshName Outside_Other_29
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7364,8 +7364,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName map6666_Cube_009_frozen5
 @MeshName Outside_Other_29
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7382,8 +7382,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName map6666_Cube_009_frozen6
 @MeshName Outside_Other_29
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7400,8 +7400,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName map6666_Cube_009_frozen7
 @MeshName Outside_Other_30
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7418,8 +7418,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_Railroad8
 @MeshName Outside_Other_35
-@MaterialName Outside_Other_M_Railroad_a
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_a
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7436,8 +7436,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName map6666_Cube_009_frozen8
 @MeshName Outside_Other_30
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7454,8 +7454,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName map6666_Cube_009_frozen9
 @MeshName Outside_Other_30
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7472,8 +7472,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName map6666_Cube_009_frozen10
 @MeshName Outside_Other_16
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7490,8 +7490,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName map6666_Cube_009_frozen11
 @MeshName Outside_Other_16
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7508,8 +7508,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName map6666_Cube_009_frozen12_31
 @MeshName Outside_Other_16
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7526,8 +7526,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName map6666_Cube_009_frozen13
 @MeshName Outside_Other_16
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7544,8 +7544,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName map6666_Cube_009_frozen14
 @MeshName Outside_Other_16
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7562,8 +7562,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName map6666_Cube_009_frozen15
 @MeshName Outside_Other_16
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7580,8 +7580,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName map6666_Cube_009_frozen16
 @MeshName Outside_Other_30
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7598,8 +7598,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName map6666_Cube_009_frozen17
 @MeshName Outside_Other_29
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7616,8 +7616,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_Railroad_02_38
 @MeshName Outside_Other_35
-@MaterialName Outside_Other_M_Railroad_a
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_a
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7634,8 +7634,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName map6666_Cube_009_frozen18
 @MeshName Outside_Other_30
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7652,8 +7652,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName map6666_Cube_009_frozen23
 @MeshName Outside_Other_30
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7670,8 +7670,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName map6666_Cube_009_frozen28
 @MeshName Outside_Other_16
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7688,8 +7688,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName map6666_Cube_009_frozen29
 @MeshName Outside_Other_16
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7706,8 +7706,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName map6666_Cube_009_frozen_6
 @MeshName Outside_Other_16
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7724,8 +7724,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName map6666_Cylinder_001_frozen6
 @MeshName Outside_Other_31
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7742,8 +7742,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName map6666_Cylinder_001_frozen7
 @MeshName Outside_Other_31
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7760,8 +7760,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName map6666_Cylinder_001_frozen8
 @MeshName Outside_Other_31
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7778,8 +7778,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName map6666_Cylinder_001_frozen10_20
 @MeshName Outside_Other_31
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7796,8 +7796,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName map6666_Cylinder_001_frozen13
 @MeshName Outside_Other_31
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7814,8 +7814,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_Railroad_3
 @MeshName Outside_Other_7
-@MaterialName Outside_Other_M_Railroad_b
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_b
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7832,8 +7832,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName map6666_Cylinder_001_frozen14
 @MeshName Outside_Other_31
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7850,8 +7850,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName map6666_Cylinder_001_frozen15
 @MeshName Outside_Other_31
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7868,8 +7868,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName map6666_Cylinder_001_frozen22
 @MeshName Outside_Other_31
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7886,8 +7886,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName map6666_Cylinder_001_frozen23
 @MeshName Outside_Other_31
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7904,8 +7904,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName map6666_Cylinder_001_frozen24
 @MeshName Outside_Other_31
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7922,8 +7922,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName map6666_Cylinder_001_frozen25
 @MeshName Outside_Other_31
-@MaterialName Outside_Other_M_gate00_science_box
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_science_box
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7940,8 +7940,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName rebar_02_31
 @MeshName Outside_Other_92
-@MaterialName Outside_Other_M_gate02_pipe
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_pipe
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7958,8 +7958,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName rebar_3
 @MeshName Outside_Other_92
-@MaterialName Outside_Other_M_gate02_pipe
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_pipe
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7976,8 +7976,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName rebar_4
 @MeshName Outside_Other_92
-@MaterialName Outside_Other_M_gate02_pipe
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_pipe
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -7994,8 +7994,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName rebar_5
 @MeshName Outside_Other_92
-@MaterialName Outside_Other_M_gate02_pipe
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_pipe
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8012,8 +8012,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Bridge10
 @MeshName Outside_Other_0
-@MaterialName Outside_Other_M_Railroad_b
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_b
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8030,8 +8030,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName gate00_Railroad_3.001
 @MeshName Outside_Other_1
-@MaterialName Outside_Other_M_Railroad_a
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_a
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8048,8 +8048,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName rebar_7
 @MeshName Outside_Other_92
-@MaterialName Outside_Other_M_gate02_pipe
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_pipe
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8066,8 +8066,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName rebar_8
 @MeshName Outside_Other_92
-@MaterialName Outside_Other_M_gate02_pipe
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_pipe
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8084,8 +8084,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName rebar_9
 @MeshName Outside_Other_92
-@MaterialName Outside_Other_M_gate02_pipe
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_pipe
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8102,8 +8102,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName rebar_10
 @MeshName Outside_Other_92
-@MaterialName Outside_Other_M_gate02_pipe
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_pipe
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8120,8 +8120,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName rebar_11
 @MeshName Outside_Other_92
-@MaterialName Outside_Other_M_gate02_pipe
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_pipe
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8138,8 +8138,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName rebar_12
 @MeshName Outside_Other_92
-@MaterialName Outside_Other_M_gate02_pipe
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_pipe
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8156,8 +8156,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName rebar_13
 @MeshName Outside_Other_92
-@MaterialName Outside_Other_M_gate02_pipe
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_pipe
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8174,8 +8174,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName rebar_14
 @MeshName Outside_Other_92
-@MaterialName Outside_Other_M_gate02_pipe
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_pipe
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8192,8 +8192,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName rebar_16
 @MeshName Outside_Other_92
-@MaterialName Outside_Other_M_gate02_pipe
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_pipe
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8210,8 +8210,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName rebar_17
 @MeshName Outside_Other_92
-@MaterialName Outside_Other_M_gate02_pipe
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_pipe
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8228,8 +8228,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Railroad_low2_9
 @MeshName Outside_Other_1
-@MaterialName Outside_Other_M_Railroad_a
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_a
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8246,8 +8246,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName rebar_18
 @MeshName Outside_Other_92
-@MaterialName Outside_Other_M_gate02_pipe
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_pipe
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8264,8 +8264,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName rebar_19
 @MeshName Outside_Other_92
-@MaterialName Outside_Other_M_gate02_pipe
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_pipe
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8282,8 +8282,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName rebar_20
 @MeshName Outside_Other_92
-@MaterialName Outside_Other_M_gate02_pipe
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_pipe
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8300,8 +8300,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName rebar_21
 @MeshName Outside_Other_92
-@MaterialName Outside_Other_M_gate02_pipe
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_pipe
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8318,8 +8318,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName rebar_22
 @MeshName Outside_Other_92
-@MaterialName Outside_Other_M_gate02_pipe
 @IsActive 1
+@MaterialName Outside_Other_M_gate02_pipe
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8336,8 +8336,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName tire6
 @MeshName Outside_Other_93
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8354,8 +8354,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName tire7
 @MeshName Outside_Other_93
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8372,8 +8372,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName tire8
 @MeshName Outside_Other_93
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8390,8 +8390,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName tire10
 @MeshName Outside_Other_93
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8408,8 +8408,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName tire11
 @MeshName Outside_Other_93
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8426,8 +8426,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName 01gate_3
 @MeshName Outside_Other_2
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8444,8 +8444,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName tire26
 @MeshName Outside_Other_93
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8462,8 +8462,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName tire30
 @MeshName Outside_Other_93
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8480,8 +8480,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName tire37
 @MeshName Outside_Other_93
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8498,8 +8498,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName tire38
 @MeshName Outside_Other_93
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8516,8 +8516,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName tire41
 @MeshName Outside_Other_93
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8534,8 +8534,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName tire42
 @MeshName Outside_Other_93
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8552,8 +8552,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName tire46
 @MeshName Outside_Other_93
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8570,8 +8570,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName tire47
 @MeshName Outside_Other_93
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8588,8 +8588,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName tire48
 @MeshName Outside_Other_93
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8606,8 +8606,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName tire49
 @MeshName Outside_Other_93
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8624,8 +8624,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName 01gate_9
 @MeshName Outside_Other_9
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8642,8 +8642,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName tire50
 @MeshName Outside_Other_93
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8660,8 +8660,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName tire51
 @MeshName Outside_Other_93
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8678,8 +8678,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName tire52
 @MeshName Outside_Other_93
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8696,8 +8696,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName tire55
 @MeshName Outside_Other_93
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8714,8 +8714,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName tire56
 @MeshName Outside_Other_93
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8732,8 +8732,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName tire60
 @MeshName Outside_Other_93
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8750,8 +8750,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName tire61
 @MeshName Outside_Other_93
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8768,8 +8768,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName tire62
 @MeshName Outside_Other_93
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8786,8 +8786,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName tire63
 @MeshName Outside_Other_93
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8804,8 +8804,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName windTurbine2_182
 @MeshName Outside_Other_94
-@MaterialName Outside_Other_M_gate00_windTurbine
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_windTurbine
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8822,8 +8822,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName 01gate_10
 @MeshName Outside_Other_9
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8840,8 +8840,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName windTurbine3_183
 @MeshName Outside_Other_94
-@MaterialName Outside_Other_M_gate00_windTurbine
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_windTurbine
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8858,8 +8858,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName windTurbine4_283
 @MeshName Outside_Other_94
-@MaterialName Outside_Other_M_gate00_windTurbine
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_windTurbine
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8876,8 +8876,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName 01gate_12
 @MeshName Outside_Other_2
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8894,8 +8894,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName 01gate_14
 @MeshName Outside_Other_2
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8912,8 +8912,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName 01gate_15
 @MeshName Outside_Other_93
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8930,8 +8930,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName 01gate_16
 @MeshName Outside_Other_2
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8948,8 +8948,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName 01gate_17
 @MeshName Outside_Other_93
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8966,8 +8966,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Railroad_low3_113
 @MeshName Outside_Other_7
-@MaterialName Outside_Other_M_Railroad_b
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_b
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -8984,8 +8984,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName 01gate_18
 @MeshName Outside_Other_2
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -9002,8 +9002,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName 01gate_19
 @MeshName Outside_Other_2
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -9020,8 +9020,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName 01gate_20
 @MeshName Outside_Other_2
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -9038,8 +9038,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName 01gate_22
 @MeshName Outside_Other_2
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -9056,8 +9056,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName 01gate_23
 @MeshName Outside_Other_2
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -9074,8 +9074,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName 01gate_24
 @MeshName Outside_Other_93
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -9092,8 +9092,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName 01gate_25
 @MeshName Outside_Other_2
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -9110,8 +9110,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName 01gate_31
 @MeshName Outside_Other_9
-@MaterialName Outside_Other_M_gate00_panel
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_panel
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -9128,8 +9128,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName 01gate_32
 @MeshName Outside_Other_93
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -9146,8 +9146,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName 01gate_34
 @MeshName Outside_Other_93
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -9164,8 +9164,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Railroad_low3_113.001
 @MeshName Outside_Other_1
-@MaterialName Outside_Other_M_Railroad_a
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_a
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -9182,8 +9182,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName 01gate_35
 @MeshName Outside_Other_2
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -9200,8 +9200,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName 01gate_36
 @MeshName Outside_Other_2
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -9218,8 +9218,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName 01gate_37
 @MeshName Outside_Other_93
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -9236,8 +9236,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName 01gate_38
 @MeshName Outside_Other_93
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -9254,8 +9254,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName 01gate_39
 @MeshName Outside_Other_2
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -9272,8 +9272,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName 01gate_40
 @MeshName Outside_Other_2
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -9290,8 +9290,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName 01gate_41
 @MeshName Outside_Other_2
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -9308,8 +9308,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName 01gate_42
 @MeshName Outside_Other_2
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -9326,8 +9326,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName 01gate_44
 @MeshName Outside_Other_2
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -9344,8 +9344,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName 01gate_45
 @MeshName Outside_Other_2
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -9362,8 +9362,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Railroad_low4_6
 @MeshName Outside_Other_7
-@MaterialName Outside_Other_M_Railroad_b
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_b
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -9380,8 +9380,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName 01gate_46
 @MeshName Outside_Other_2
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -9398,8 +9398,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName 01gate_48
 @MeshName Outside_Other_2
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -9416,8 +9416,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName 01gate_49
 @MeshName Outside_Other_2
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -9434,8 +9434,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName 01gate_50
 @MeshName Outside_Other_2
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -9452,8 +9452,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName 01gate_51
 @MeshName Outside_Other_2
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -9470,8 +9470,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName 01gate_52
 @MeshName Outside_Other_93
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -9488,8 +9488,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName 01gate_53
 @MeshName Outside_Other_93
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -9506,8 +9506,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName 01gate_54
 @MeshName Outside_Other_93
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -9524,8 +9524,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName 01gate_55
 @MeshName Outside_Other_2
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -9542,8 +9542,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName 01gate_56
 @MeshName Outside_Other_2
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -9560,8 +9560,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName Railroad_low7
 @MeshName Outside_Other_7
-@MaterialName Outside_Other_M_Railroad_b
 @IsActive 1
+@MaterialName Outside_Other_M_Railroad_b
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -9578,8 +9578,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName 01gate_57
 @MeshName Outside_Other_2
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -9596,8 +9596,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName 01gate_58
 @MeshName Outside_Other_2
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -9614,8 +9614,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName 01gate_59
 @MeshName Outside_Other_2
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -9632,8 +9632,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName 01gate_60
 @MeshName Outside_Other_2
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -9650,8 +9650,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName 01gate_61
 @MeshName Outside_Other_2
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -9668,8 +9668,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName 01gate_62
 @MeshName Outside_Other_93
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -9686,8 +9686,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName 01gate_63
 @MeshName Outside_Other_2
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -9704,8 +9704,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName 01gate_64
 @MeshName Outside_Other_2
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -9722,8 +9722,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName 01gate_65
 @MeshName Outside_Other_93
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4
@@ -9740,8 +9740,8 @@ $LocalTM 4 4
 @ParentName RootNode
 @NodeName 01gate_66
 @MeshName Outside_Other_93
-@MaterialName Outside_Other_M_gate00_tire
 @IsActive 1
+@MaterialName Outside_Other_M_gate00_tire
 @IsShadow 1
 @IsCull 1
 $WorldTM 4 4

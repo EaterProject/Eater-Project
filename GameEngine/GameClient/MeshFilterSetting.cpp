@@ -316,6 +316,13 @@ void MeshFilterSetting::PlayDissolve()
 			IsDissolvePlay = &MPB->Dissolve;
 		}
 	}
+	else
+	{
+		if (*IsDissolvePlay == false)
+		{
+			IsDissolvePlay = nullptr;
+		}
+	}
 }
 
 const bool MeshFilterSetting::EndDissolve()

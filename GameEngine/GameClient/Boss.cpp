@@ -377,6 +377,7 @@ void Boss::Boss_Teleport_Start()
 
 void Boss::Boss_Create()
 {
+
 	int Now = mAnimation->GetNowFrame();
 	int End = mAnimation->GetEndFrame();
 
@@ -468,7 +469,10 @@ void Boss::Boss_Chase_Attack_Play()
 		Start = mTransform->GetPosition() + (Look * 3);
 		Start.y += 3.0f;
 
-		Weapon[WeaponIndex]->SetShootingPoistion(Start, mPlayerTR->GetPosition());
+		if (WeaponIndex < 5)
+		{
+			Weapon[WeaponIndex]->SetShootingPoistion(Start, mPlayerTR->GetPosition());
+		}
 
 		IsShooting = true;
 	}

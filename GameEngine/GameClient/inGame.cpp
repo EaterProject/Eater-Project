@@ -21,11 +21,11 @@ void InGame::Awake()
 	// 오클루더 설정..
 	AddOccluder("Dome_program_0");
 		
-	BakeSkyLightMap("SkyLight_0", false);
-	BakeSkyLightMap("Dome_HDR_5", false);
-	SetSkyLight("SkyLight_0", 0);
-	SetSkyLight("Dome_HDR_5", 1);
-
+	//BakeSkyLightMap("SkyLight_0", false);
+	//BakeSkyLightMap("Dome_HDR_5", false);
+	//SetSkyLight("SkyLight_0", 0);
+	//SetSkyLight("Dome_HDR_5", 1);
+	//
 	SetColorGradingBaseTexture("Dome_LUT_4");
 	/// Blend Factor
 	SetColorGradingBlendFactor(0.0f);
