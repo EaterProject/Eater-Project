@@ -411,8 +411,6 @@ void Boss::Boss_Closer_Attack_L()
 		mParticle->Play();
 	}
 
-
-
 	//¿ŞÂÊ ±ÙÁ¢ °ø°İ
 	int End = mAnimation->GetEndFrame();
 	int Now = mAnimation->GetNowFrame();
@@ -516,9 +514,9 @@ void Boss::Boss_Rendom_Attack_Ready()
 		mMF_Setting.LimLightUpdate(0.5f);
 	}
 
-
 	mTransform->SetPosition_X(StartPoint.x);
 	mTransform->SetPosition_Z(StartPoint.z);
+
 	int End = mAnimation->GetEndFrame();
 	int Now = mAnimation->GetNowFrame();
 	if (Now >= End)

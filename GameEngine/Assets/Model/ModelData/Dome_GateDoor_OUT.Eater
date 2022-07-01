@@ -1,8 +1,8 @@
 #STATIC
-@NodeName Screw.018
 @ParentName RootNode
-@IsActive 1
+@NodeName Screw.018
 @MeshName Dome_GateDoor_OUT_0
+@IsActive 1
 @MaterialName Dome_GateDoor_OUT_M_GateDoor
 @IsShadow 1
 @IsCull 1
@@ -17,10 +17,10 @@ $LocalTM 4 4
 0.000000 0.000000 1.000000 0.000000
 29.600000 0.000000 0.000000 1.000000
 #STATIC
-@NodeName Cube.005
 @ParentName RootNode
-@IsActive 1
+@NodeName Cube.005
 @MeshName Dome_GateDoor_OUT_1
+@IsActive 1
 @MaterialName Dome_GateDoor_OUT_M_GateDoor
 @IsShadow 1
 @IsCull 1

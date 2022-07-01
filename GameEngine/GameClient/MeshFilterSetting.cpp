@@ -320,7 +320,14 @@ void MeshFilterSetting::PlayDissolve()
 
 const bool MeshFilterSetting::EndDissolve()
 {
-	return *IsDissolvePlay;
+	if (IsDissolvePlay != nullptr)
+	{
+		return *IsDissolvePlay;
+	}
+	else
+	{
+		nullptr;
+	}
 }
 
 void MeshFilterSetting::LimLightUpdate()
