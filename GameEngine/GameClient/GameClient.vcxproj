@@ -178,10 +178,15 @@
   <ItemGroup>
     <ClInclude Include="Boss.h" />
     <ClInclude Include="BossFriend.h" />
+    <ClInclude Include="BossStateManager.h" />
     <ClInclude Include="BossWeapon.h" />
+    <ClInclude Include="Boss_BaseAttack.h" />
+    <ClInclude Include="Boss_ChaseAttack.h" />
+    <ClInclude Include="Boss_RendomAttack.h" />
     <ClInclude Include="CameraManager.h" />
     <ClInclude Include="ClientTypeOption.h" />
     <ClInclude Include="DoorCollider.h" />
+    <ClInclude Include="Boss_Idle.h" />
     <ClInclude Include="MeshFilterSetting.h" />
     <ClInclude Include="ComboFont.h" />
     <ClInclude Include="Drone.h" />
@@ -213,6 +218,7 @@
     <ClInclude Include="ParticleFactory.h" />
     <ClInclude Include="PlayerCamera.h" />
     <ClInclude Include="PlayerCollider.h" />
+    <ClInclude Include="State.h" />
     <ClInclude Include="Store.h" />
     <ClInclude Include="UIBoss.h" />
     <ClInclude Include="UICanvas.h" />
@@ -229,9 +235,14 @@
   <ItemGroup>
     <ClCompile Include="Boss.cpp" />
     <ClCompile Include="BossFriend.cpp" />
+    <ClCompile Include="BossStateManager.cpp" />
     <ClCompile Include="BossWeapon.cpp" />
+    <ClCompile Include="Boss_BaseAttack.cpp" />
+    <ClCompile Include="Boss_ChaseAttack.cpp" />
+    <ClCompile Include="Boss_RendomAttack.cpp" />
     <ClCompile Include="CameraManager.cpp" />
     <ClCompile Include="DoorCollider.cpp" />
+    <ClCompile Include="Boss_Idle.cpp" />
     <ClCompile Include="MeshFilterSetting.cpp" />
     <ClCompile Include="ComboFont.cpp" />
     <ClCompile Include="Drone.cpp" />
@@ -263,6 +274,7 @@
     <ClCompile Include="PlayerCamera.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerCollider.cpp" />
+    <ClCompile Include="State.cpp" />
     <ClCompile Include="Store.cpp" />
     <ClCompile Include="UIBoss.cpp" />
     <ClCompile Include="UICanvas.cpp" />

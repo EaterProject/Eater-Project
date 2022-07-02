@@ -4,6 +4,8 @@
 #include "MeshFilterSetting.h"
 #include <string>
 
+class State;
+
 class AnimationController;
 class MeshFilter;
 class Transform;
@@ -14,6 +16,7 @@ class BossWeapon;
 class BossFriend;
 class MaterialPropertyBlock;
 class ParticleController;
+class BossStateManager;
 class Boss :public Component
 {
 public:
@@ -36,12 +39,12 @@ private:
 	Transform*		mPlayerTR		= nullptr;
 	Rigidbody*		mRigidbody		= nullptr;
 private:
-	std::string ANIMATION_NAME[16];	//애니메이션 이름
-	float ANIMATION_TIME[16];		//애니메이션 시간
-	bool  STATE_START[16];			//상태 시작 여부
+	std::string ANIMATION_NAME[18];	//애니메이션 이름
+	float ANIMATION_TIME[18];		//애니메이션 시간
+	bool  STATE_START[18];			//상태 시작 여부
 private:
 	//상태에 대한 함수들
-	void Boss_Idle();
+	//void Boss_Idle();
 	void Boss_DEAD();
 	void Boss_Groggy_Start();
 	void Boss_Groggy_Play();
@@ -51,11 +54,16 @@ private:
 	void Boss_Create();
 	void Boss_Closer_Attack_L();
 	void Boss_Closer_Attack_R();
+
 	void Boss_Chase_Attack_Ready();
 	void Boss_Chase_Attack_Play();
-	void Boss_Rendom_Attack_Ready();
+	void Boss_Chase_Attack_End();
+
+	void Boss_Rendom_Attack_Start();
 	void Boss_Rendom_Attack_Play();
 	void Boss_Rendom_Attack_End();
+	void Boss_Rendom_Attack_Reset();
+
 	void Boss_Hit();
 private:
 	void	SetState(BOSS_STATE State);	//상태를 변환
@@ -68,21 +76,28 @@ private:
 	bool	IsSkill			= false;
 	bool	IsRight			= false;
 	bool	IsShooting		= false;
+	bool	IsUI_ON			= false;
 
-	int		mState			= 0;		//보스의 상태
+	int		mState			=  0;		//보스의 상태
 	int		FriendIndex		= -1;		//보스의 위치 인덱스
+	int		WeaponIndex		=  0;		//보스의 무기 인덱스
+	int		ColorIndex		=  0;		//보스의 컬러 인덱스
+	int		HP				= 3000;		//보스 체력
+	int		HP_MAX			= 3000;		//보스의 최대 체력
+	int		ComboCount		= 30;		//보스의 기본 콤보 카운터
 
 	float	AttackRange		= 3.5f;		//근접 공격 범위
 	float	FightRange		= 30.0f;	//보스와 싸울 수 있는 거리
 	float	SkillRange		= 10.0f;	//보스의 스킬 거리
 	float	PlayerDistance	= 0.0f;		//플레이어의 거리
-	float	HP				= 100;		//보스 체력
 	float	PositionY		= 6.0f;		//보스 Y축 오프셋
 
 	float	RendomSkillReadyTime		= 0.0f;
 	float	RendomSkillReadyTimeMax		= 5.0f;
 	float	RendomSkillPlayTime			= 0.0f;
 	float	RendomSkillPlayTimeMax		= 5.0f;
+	float	ChaseSkillPlayTime			= 0.0f;
+	float	ChaseSkillPlayTimeMax		= 5.0f;
 
 	Vector3 StartPoint;
 	Vector3	SkillPoint[5];
@@ -92,7 +107,13 @@ private:
 	BossFriend* Friend;
 	MeshFilter* ChildeMeshFilter[7];
 
-	MeshFilterSetting mMF_Setting;
-	ParticleController* mParticle;
+	MeshFilterSetting	mMF_Setting;
+	ParticleController* mParticle = nullptr;
+
+
+	State* mBossIdle;
+	State* mBossRendomAttack;
+	State* mBossChaseAttack;
+	State* mBossBaseAttack;
 };
 

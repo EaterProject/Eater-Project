@@ -15,7 +15,10 @@ public:
 	void Start() override;
 	void SetUp() override;
 
+	void SetBossMaxHP(int HP);
+	void SetBossHP(int HP);
 	void SetActive(bool mActive);
+	void SetColor(int mColorType);
 private:
 	Image* mBossName_Img;
 	RectTransform* mBossName_Rect;

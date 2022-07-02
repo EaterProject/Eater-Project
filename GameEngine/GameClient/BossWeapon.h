@@ -17,7 +17,7 @@ public:
 	void Update() override;
 
 
-	void SetShootingPoistion(Vector3 Start,Vector3 End);
+	void SetShootingPoistion(Vector3 Start,Vector3 End, float mScaleSpeed = 5.0f, float mMoveSpeed = 20.0f);
 	void Reset();
 	bool ShootingReady();
 private:
@@ -30,7 +30,8 @@ private:
 	
 	MeshFilter* mMeshFilter = nullptr;
 	Transform*	mTransform	= nullptr;
-	float Speed			= 20.0f;
+	float MoveSpeed		= 5.0f;
+	float ScaleSpeed	= 20.0f;
 	bool IsShooting		= false;
 	bool IsSizeUpdate	= false;
 	bool IsReady		= false;

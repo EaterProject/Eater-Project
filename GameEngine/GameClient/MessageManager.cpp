@@ -205,6 +205,7 @@ void MessageManager::SEND_BOSS_Message(int MessageType, void* Data)
 void MessageManager::SEND_UI_Message(int MessageType, void* Data)
 {
 	///UI 메세지 모음
+	//모든 UI메세지는 이쪽으로 들어옴
 
 	switch (MessageType)
 	{
@@ -247,6 +248,16 @@ void MessageManager::SEND_UI_Message(int MessageType, void* Data)
 	case MESSAGE_UI_PLAYER_HIT:
 		mEffect->PlayerHit(nullptr);
 		break;
+	case MESSAGE_UI_BOSS_ACTIVE:
+		mBossUI->SetActive(*(reinterpret_cast<bool*>(Data)));
+		break;
+	case MESSAGE_UI_BOSS_HP:
+		mBossUI->SetBossHP(*(reinterpret_cast<int*>(Data)));
+		break;
+	case MESSAGE_UI_BOSS_HP_MAX:
+		mBossUI->SetBossMaxHP(*(reinterpret_cast<int*>(Data)));
+		break;
+		
 	}
 }
 
