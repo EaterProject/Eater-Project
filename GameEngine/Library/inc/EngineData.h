@@ -245,6 +245,8 @@ public:
 class UIProperty
 {
 public:
+	std::string UI_Name;	
+
 	bool IsDraw;			// UI Draw
 	UI_TYPE UI_Option;		// UI Option
 	

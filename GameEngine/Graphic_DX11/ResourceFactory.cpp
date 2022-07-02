@@ -2034,9 +2034,10 @@ void GraphicResourceFactory::CreateRasterizerStates()
 	rasterizerDesc.CullMode = D3D11_CULL_BACK;
 	rasterizerDesc.FrontCounterClockwise = false;
 	rasterizerDesc.DepthClipEnable = true;
-	rasterizerDesc.DepthBias = 100000;
+	rasterizerDesc.DepthBias = 10000;
 	rasterizerDesc.DepthBiasClamp = 0.0f;
 	rasterizerDesc.SlopeScaledDepthBias = 1.0f;
+	rasterizerDesc.MultisampleEnable = true;
 
 	// Depth RasterizerState »ý¼º..
 	CreateRasterizerState(RS_Depth::GetName(), RS_Depth::GetHashCode(), &rasterizerDesc);

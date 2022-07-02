@@ -56,21 +56,23 @@
 
 
 //Camera Message
-#define MESSAGE_CAMERA_CINEMATIC_GAME_START 0				//시네마틱 실행
-#define MESSAGE_CAMERA_CINEMATIC_BOSS_START 1				//시네마틱 실행
-#define MESSAGE_CAMERA_CINEMATIC_BOSS_END 2					//시네마틱 실행
-#define MESSAGE_CAMERA_CINEMATIC_GAME_END 3					//시네마틱 실행
-#define MESSAGE_CAMERA_CINEMATIC_TITLE 4					//시네마틱 실행
+#define MESSAGE_CAMERA_CINEMATIC 0							//시네마틱 실행
+#define MESSAGE_CAMERA_CINEMATIC_GAME_START 1				//시네마틱 실행
+#define MESSAGE_CAMERA_CINEMATIC_BOSS_START 2				//시네마틱 실행
+#define MESSAGE_CAMERA_CINEMATIC_BOSS_END 3					//시네마틱 실행
+#define MESSAGE_CAMERA_CINEMATIC_GAME_END 4					//시네마틱 실행
+#define MESSAGE_CAMERA_CINEMATIC_TITLE 5					//시네마틱 실행
 
-#define MESSAGE_CAMERA_CHANGE_PLAYER 5						//플레이어 카메라로 변환	//인자 값 : 없음
-#define MESSAGE_CAMERA_CHANGE_DEBUG 6						//디버그 카메라로 변환	//인자 값 : 없음
+#define MESSAGE_CAMERA_CHANGE_PLAYER 6						//플레이어 카메라로 변환	//인자 값 : 없음
+#define MESSAGE_CAMERA_CHANGE_DEBUG 7						//디버그 카메라로 변환	//인자 값 : 없음
 
 //Global Message
 #define MESSAGE_GLOBAL_GAMESTART 0							//게임이 시작되었다
 #define MESSAGE_GLOBAL_GAMEEND	1							//게임이 종료되었다
 #define MESSAGE_GLOBAL_TITLE 2								//타이틀
 #define MESSAGE_GLOBAL_OPTION 3								//옵션
-#define MESSAGE_GLOBAL_RESUME 4								//일시정지
+#define MESSAGE_GLOBAL_PAUSE 4								//일시정지
+#define MESSAGE_GLOBAL_RESUME 5								//게임복귀
 
 
 #define MONSTER_COLOR_RED 0

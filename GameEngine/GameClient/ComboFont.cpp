@@ -122,3 +122,11 @@ void ComboFont::UpdateFontAnimation()
 	}
 	ComboTime -= GetDeltaTime();
 }
+
+void ComboFont::SetActive(bool Active)
+{
+	FontImage::SetActive(Active);
+
+	UI_Image->SetActive(Active);
+	UI_Slider->SetActive(Active);
+}

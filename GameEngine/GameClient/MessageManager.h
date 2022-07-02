@@ -63,7 +63,9 @@ private:
 	void TitleStart();
 	void OptionStart(int prev_state);
 	void PauseStart();
+	void InGameResume();
 	void InGameEnd();
+
 private:
 	std::vector<GameObject*>		ManaPoint_List;
 private:

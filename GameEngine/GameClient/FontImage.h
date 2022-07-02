@@ -10,6 +10,7 @@ public:
 	FontImage();
 	virtual ~FontImage();
 
+	void SetActive(bool Active);
 	void SetFontNumber(int Number);
 	void SetSize(float x, float Y);
 	virtual void UpdateFontAnimation();

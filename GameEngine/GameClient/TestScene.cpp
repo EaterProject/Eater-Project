@@ -26,6 +26,8 @@
 #include "ParticleController.h"
 #include "UIOption.h"
 #include "UIPause.h"
+#include "ClientTypeOption.h"
+#include "MessageManager.h"
 
 #include "EngineData.h"
 
@@ -52,7 +54,7 @@ void TestScene::Awake()
 	CreateMap();
 	//CreateMiniMap();
 	//CreateDissolve();
-	CreateParicleController();
+	//CreateParicleController();
 
 	//GameObject* ui = Instance();
 	//ui->AddComponent<UIOption>();
@@ -468,18 +470,6 @@ void TestScene::ChangeCubeMap()
 	if (GetKeyUp('5'))
 	{
 		m_ParticleController->Stop();
-	}
-
-	if (GetKey('6'))
-	{
-		Size += dTime * 10.0f;
-
-		if (Size > 5.0f)
-		{
-			Size = 0.5f;
-		}
-
-		m_ParticleController->SetScale(Size);
 	}
 
 	if (GetKey(VK_LEFT))

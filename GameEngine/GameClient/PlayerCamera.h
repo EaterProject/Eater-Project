@@ -16,6 +16,10 @@ public:
 	void SetUp() override;
 	void Update() override;
 	void Debug() override;
+
+public:
+	void SetMouseFix(bool Active);
+
 private:
 	GameObject* Userobject;
 	Camera*		MainCam;

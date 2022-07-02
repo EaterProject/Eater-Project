@@ -270,17 +270,15 @@ void MessageManager::SEND_CAMERA_Message(int MessageType, void* Data)
 	///카메라 메세지 모음
 	switch (MessageType)
 	{
-	case MESSAGE_CAMERA_CINEMATIC_GAME_START:
-		break;
-	case MESSAGE_CAMERA_CINEMATIC_GAME_END:
-		break;
-	case MESSAGE_CAMERA_CINEMATIC_BOSS_START:
-		break;
-	case MESSAGE_CAMERA_CINEMATIC_BOSS_END:
-		//mCameraManager->SetCinematic(MessageType,*(reinterpret_cast<std::string*>(Data)));
-		break;
-	case MESSAGE_CAMERA_CINEMATIC_TITLE:
+	case MESSAGE_CAMERA_CINEMATIC:
 		mCameraManager->SetCinematic(MessageType, *(reinterpret_cast<std::string*>(Data)));
+		break;
+	case MESSAGE_CAMERA_CINEMATIC_GAME_START:
+	case MESSAGE_CAMERA_CINEMATIC_GAME_END:
+	case MESSAGE_CAMERA_CINEMATIC_BOSS_START:
+	case MESSAGE_CAMERA_CINEMATIC_BOSS_END:
+	case MESSAGE_CAMERA_CINEMATIC_TITLE:
+		mCameraManager->SetCinematic(MessageType);
 		break;
 	case MESSAGE_CAMERA_CHANGE_DEBUG:
 		break;
@@ -304,9 +302,13 @@ void MessageManager::SEND_GLOBAL_Message(int MessageType, void* Data)
 		TitleStart();
 		break;
 	case MESSAGE_GLOBAL_OPTION:		//옵션
-		OptionStart(*(int*)(Data));
+		OptionStart(*reinterpret_cast<int*>(Data));
 		break;
-	case MESSAGE_GLOBAL_RESUME:		//일시정지
+	case MESSAGE_GLOBAL_PAUSE:		//일시정지
+		PauseStart();
+		break;
+	case MESSAGE_GLOBAL_RESUME:		//게임 복귀
+		InGameResume();
 		break;
 	}
 }
@@ -322,6 +324,12 @@ void MessageManager::InGameStart()
 	SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_ACTIVE_TRUE);
 	SEND_Message(TARGET_CAMERA_MANAGER, MESSAGE_CAMERA_CHANGE_PLAYER);
 
+	// 플레이어 키상태 설정..
+	mPlayer->SetKeyState(true);
+
+	// 마우스 고정..
+	mCameraManager->SetMouseFix(true);
+
 	//사운드 재생
 	Sound_Play_BGM("InGame_OutDoor");
 }
@@ -333,11 +341,16 @@ void MessageManager::TitleStart()
 	mOption->SetOptionUIActive(false);
 	mPause->SetPauseUIActive(false);
 
+	// 플레이어 키상태 설정..
+	mPlayer->SetKeyState(false);
+
+	// 마우스 고정..
+	mCameraManager->SetMouseFix(false);
 
 	//SEND_Message(TARGET_UI,)
 	//SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_ACTIVE_FALSE);
 
-	//Sound_Play_BGM("Title");
+	Sound_Play_BGM("Title");
 }
 
 void MessageManager::OptionStart(int prev_state)
@@ -347,6 +360,12 @@ void MessageManager::OptionStart(int prev_state)
 	mPause->SetPauseUIActive(false);
 	mOption->SetOptionUIActive(true);
 	mOption->SetPrevTarget(prev_state);
+
+	// 플레이어 키상태 설정..
+	mPlayer->SetKeyState(false);
+
+	// 마우스 고정..
+	mCameraManager->SetMouseFix(false);
 }
 
 void MessageManager::PauseStart()
@@ -355,6 +374,26 @@ void MessageManager::PauseStart()
 	mCanvas->Set_InGameUI_Active(false);
 	mOption->SetOptionUIActive(false);
 	mPause->SetPauseUIActive(true);
+
+	// 플레이어 키상태 설정..
+	mPlayer->SetKeyState(false);
+
+	// 마우스 고정..
+	mCameraManager->SetMouseFix(false);
+}
+
+void MessageManager::InGameResume()
+{
+	mTiltle->SetTitleUIActive(false);
+	mCanvas->Set_InGameUI_Active(true);
+	mOption->SetOptionUIActive(false);
+	mPause->SetPauseUIActive(false);
+
+	// 플레이어 키상태 설정..
+	mPlayer->SetKeyState(true);
+
+	// 마우스 고정..
+	mCameraManager->SetMouseFix(true);
 }
 
 void MessageManager::InGameEnd()
@@ -366,10 +405,3 @@ void MessageManager::InGameEnd()
 	// 윈도우 종료..
 	PostQuitMessage(WM_QUIT);
 }
-
-
-
-
-
-
-

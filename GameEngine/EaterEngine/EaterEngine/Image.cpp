@@ -94,6 +94,8 @@ void Image::SetTexture()
 	// Texture 변경..
 	m_UI->Albedo = nowTexture;
 
+	m_UI->UI_Property->UI_Name = nowTexture->Name;
+
 	// 그래픽 연동..
 	GraphicEngine::Get()->PushChangeInstance(gameobject->OneMeshData);
 

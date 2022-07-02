@@ -248,6 +248,7 @@ copy /Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)"</Command>
     <ClInclude Include="AnimationManager.h" />
     <ClInclude Include="Eater_LoadParticle.h" />
     <ClInclude Include="Export\Button.h" />
+    <ClInclude Include="Export\CinematicCamera.h" />
     <ClInclude Include="Export\Image.h" />
     <ClInclude Include="Export\ImageFont.h" />
     <ClInclude Include="Export\ParticleController.h" />
@@ -311,6 +312,7 @@ copy /Y "$(SolutionDir)Library\lib\*.lib" "$(TargetDir)"</Command>
     <ClCompile Include="AnimationManager.cpp" />
     <ClCompile Include="Animator.cpp" />
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="CinematicCamera.cpp" />
     <ClCompile Include="CameraDebugKeyInput.cpp" />
     <ClCompile Include="Eater_LoadParticle.cpp" />
     <ClCompile Include="ImageFont.cpp" />

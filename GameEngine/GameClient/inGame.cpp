@@ -9,6 +9,8 @@
 #include "RectTransform.h"
 #include "Camera.h"
 #include "EngineData.h"
+#include "MessageManager.h"
+#include "ClientTypeOption.h"
 
 void InGame::Awake()
 {
@@ -42,6 +44,15 @@ void InGame::Update()
 	{
 		Option->DebugOption ^= DEBUG_OPTION::DEBUG_MODE;
 		RenderSetting();
+	}
+
+	if (GetKeyDown('2'))
+	{
+		MessageManager::GetGM()->SEND_Message(TARGET_CAMERA_MANAGER, MESSAGE_CAMERA_CINEMATIC_GAME_END);
+	}
+	if (GetKeyDown('3'))
+	{
+		MessageManager::GetGM()->SEND_Message(TARGET_CAMERA_MANAGER, MESSAGE_CAMERA_CINEMATIC_BOSS_START);
 	}
 
 	Logic->Update();

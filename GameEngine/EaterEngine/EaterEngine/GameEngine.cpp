@@ -656,6 +656,12 @@ bool GameEngine::GetTogle(byte number)
 	return mKeyManager->GetKeyToggle(number);
 }
 
+void GameEngine::KeyReset()
+{
+	//모든 키 리셋
+	return mKeyManager->KeyReset();
+}
+
 int GameEngine::GetMousePosX()
 {
 	//마우스 위치 X좌표
@@ -698,6 +704,11 @@ void GameEngine::Sound_Pause_BGM(bool Pause)
 	mSoundManager->PauseSound(Sound_Category::BGM, Pause);
 }
 
+void GameEngine::Sound_VolumeSet_BGM(float volume)
+{
+	mSoundManager->VolumeSet(Sound_Category::BGM, volume);
+}
+
 void GameEngine::Sound_VolumeUP_BGM()
 {
 	mSoundManager->VolumeUp(Sound_Category::BGM);
@@ -738,6 +749,11 @@ void GameEngine::Sound_Pause_SFX(bool Pause)
 	mSoundManager->PauseSound(Sound_Category::SFX, Pause);
 }
 
+void GameEngine::Sound_VolumeSet_SFX(float volume)
+{
+	mSoundManager->VolumeSet(Sound_Category::SFX, volume);
+}
+
 void GameEngine::Sound_VolumeUP_SFX()
 {
 	mSoundManager->VolumeUp(Sound_Category::SFX);
@@ -768,6 +784,11 @@ void GameEngine::Sound_PitchDown_SFX()
 	mSoundManager->PitchDown(Sound_Category::SFX);
 }
 
+void GameEngine::Sound_VolumeSet_Master(float volume)
+{
+	mSoundManager->VolumeSet(Sound_Category::Master, volume);
+}
+
 void GameEngine::SetFocus(bool focus)
 {
 	// 현재 Window Focus 상태에 따라 상태변화는 여기에서..
@@ -779,7 +800,7 @@ void GameEngine::SetWindowSize(int width, int height)
 	int screen_width = GetSystemMetrics(SM_CXSCREEN);
 	int screen_height = GetSystemMetrics(SM_CYSCREEN);
 
-	//SetWindowLong(mHwnd, GWL_STYLE, WS_DLGFRAME | WS_THICKFRAME);
+	SetWindowLong(mHwnd, GWL_STYLE, WS_VISIBLE | WS_CLIPSIBLINGS | WS_CAPTION | WS_BORDER | WS_DLGFRAME | WS_SYSMENU | WS_GROUP | WS_TABSTOP | WS_MINIMIZEBOX | WS_MAXIMIZEBOX);
 
 	SetWindowPos(mHwnd, NULL, (screen_width / 2) - (width / 2), (screen_height / 2) - (height / 2), width, height, 0);
 }
