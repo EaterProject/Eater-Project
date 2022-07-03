@@ -26,7 +26,7 @@ private:
 	MeshFilter* mMeshFilter = nullptr;
 	Transform* mTransform = nullptr;
 
-
+	int PlayerLightIndex = -1;
 	int PlayerTag = 0;
 	int GateNumber = 0;
 

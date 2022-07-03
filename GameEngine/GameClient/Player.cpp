@@ -18,11 +18,11 @@
 Transform* Player::mTransform = nullptr;
 bool	Player::IsAttackTime = false;
 int		Player::ChangeCount = 0;
+int		Player::MaxChangeCount = 10;
 int		Player::ComboCount = 0;
 
-float	Player::PlayerPower		 = 15;
-float	Player::PlayerComboPower = 25;
-//PLAYER_STATE Player::mState;
+float	Player::PlayerPower		 = 10;
+float	Player::PlayerComboPower = 20;
 
 #define LERP(prev, next, time) ((prev * (1.0f - time)) + (next * time))
 Player::Player()
@@ -85,18 +85,6 @@ void Player::Awake()
 	AttackColliderObject = FindGameObjectTag("PlayerCollider");
 	AttackCollider = AttackColliderObject->GetComponent<Collider>();
 
-	int count = gameobject->GetChildMeshCount();
-	for (int i = 0; i < count; i++)
-	{
-		GameObject* object = gameobject->GetChildMesh(i);
-
-		MeshFilter* filter = object->GetComponent<MeshFilter>();
-
-		if (filter == nullptr) continue;
-
-		ChildMeshFilter.push_back(filter);
-	}
-
 	IsCreate = true;
 }
 
@@ -131,12 +119,22 @@ void Player::Start()
 	mPlayerColor.SetEmissiveSetting(231, 39, 9, 2.2);
 	mWeaponColor.SetEmissiveSetting(231, 39, 9, 2.2);
 
+	// 플레이어 관련된 매쉬필터 리스트 설정..
+	SetMeshFilterList();
+
+	// UI 초기화..
 	MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_EMAGIN_NOW, &ChangeCount);
+	MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_EMAGIN_MAX, &MaxChangeCount);
+	MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_HP_NOW, &HP);
+	MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_HP_MAX, &HP_Max);
 }
 
 void Player::Update()
 {
 	if (IsCreate == false) { return; }
+
+	//플레이어 스킬 쿨타임 체크
+	PlayerCoolTimeCheck();
 
 	//플레이어 땅 체크
 	PlayerGroundCheck();
@@ -173,7 +171,7 @@ void Player::SetMessageRECV(int Type, void* Data)
 	case MESSAGE_PLAYER_HIT:
 		Player_Hit(*(reinterpret_cast<int*>(Data)));
 		break;
-	case MESSAGE_PLAYER_HILL:
+	case MESSAGE_PLAYER_HEAL:
 		HP += 10;
 		if (HP >= HP_Max) { HP = HP_Max; }
 		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_HP_NOW, &HP);
@@ -198,6 +196,24 @@ void Player::SetMessageRECV(int Type, void* Data)
 		break;
 	case MESSAGE_PLAYER_LIGHT_CHANGE:
 		ChangeSkyLight(*(reinterpret_cast<int*>(Data)));
+		break;
+	case MESSAGE_PLAYER_GET_PUREMANA:
+		Get_PureMana(*(reinterpret_cast<int*>(Data)));
+		break;
+	case MESSAGE_PLAYER_GET_COREMANA:
+		Get_CoreMana(*(reinterpret_cast<int*>(Data)));
+		break;
+	case MESSAGE_PLAYER_UPGRADE_EMAGIN:
+		Upgrade_Change_Emagin();
+		break;
+	case MESSAGE_PLAYER_UPGRADE_HP:
+		Upgrade_Max_HP();
+		break;
+	case MESSAGE_PLAYER_UPGRADE_ATTACK:
+		Upgrade_Attack_Speed();
+		break;
+	case MESSAGE_PLAYER_UPGRADE_MOVE:
+		Upgrade_Move_Speed();
 		break;
 	}
 }
@@ -243,6 +259,56 @@ void Player::Healing(float HealingPower)
 	if (HP <= MaxHP)
 	{
 		HP += HealingPower;
+	}
+}
+
+void Player::PlayerCoolTimeCheck()
+{
+	float&& dTime = GetDeltaTime();
+
+	// E Skill
+	if (E_CoolTime > 0.0f)
+	{
+		E_CoolTime -= dTime;
+
+		if (E_CoolTime < 0.0f)
+		{
+			E_CoolTime = 0.0f;
+		}
+
+		Skill_E_CoolTime_Percent = 1.0f - (E_CoolTime / Skill_E_CoolTime);
+
+		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_SKILL_E, &Skill_E_CoolTime_Percent);
+	}
+
+	// Mouse Right Skill
+	if (MR_CoolTime > 0.0f)
+	{
+		MR_CoolTime -= dTime;
+
+		if (MR_CoolTime < 0.0f)
+		{
+			MR_CoolTime = 0.0f;
+		}
+
+		Skill_MR_CoolTime_Percent = 1.0f - (MR_CoolTime / Skill_MR_CoolTime);
+
+		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_SKILL_MR, &Skill_MR_CoolTime_Percent);
+	}
+
+	// Space Bar Skill
+	if (SPC_CoolTime > 0.0f)
+	{
+		SPC_CoolTime -= dTime;
+
+		if (SPC_CoolTime < 0.0f)
+		{
+			SPC_CoolTime = 0.0f;
+		}
+
+		Skill_SPC_CoolTime_Percent = 1.0f - (SPC_CoolTime / Skill_SPC_CoolTime);
+		
+		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_SKILL_SPC, &Skill_SPC_CoolTime_Percent);
 	}
 }
 
@@ -312,17 +378,25 @@ void Player::PlayerKeyinput()
 	{
 		if (IsAttack == false)
 		{
-			 mState |= PLAYER_STATE_SKILL_01;
+			if (MR_CoolTime <= 0.0f)
+			{
+				MR_CoolTime = Skill_MR_CoolTime;
+				mState |= PLAYER_STATE_SKILL_01;
+			}
 		}
 	}
 	else if (GetKeyDown('E'))
 	{
-		mState |= PLAYER_STATE_SKILL_02;
+		if (E_CoolTime <= 0.0f)
+		{
+			E_CoolTime = Skill_E_CoolTime;
+			mState |= PLAYER_STATE_SKILL_02;
+		}
 	}
 	else if (GetKeyDown('Q'))
 	{
 		ChangeCount++;
-		if (ChangeCount > 14){ChangeCount = 0;}
+		if (ChangeCount > MaxChangeCount){ChangeCount = 0;}
 
 		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_EMAGIN_NOW, &ChangeCount);
 
@@ -340,7 +414,11 @@ void Player::PlayerKeyinput()
 	}
 	else if (GetKeyDown(VK_SPACE))
 	{
-		mState |= PLAYER_STATE_JUMP;
+		if (SPC_CoolTime <= 0.0f)
+		{
+			SPC_CoolTime = Skill_SPC_CoolTime;
+			mState |= PLAYER_STATE_JUMP;
+		}
 	}
 
 	//이번프레임에 이동해야하는 방향
@@ -411,7 +489,7 @@ void Player::PlayerState_Base()
 	/// <summary>
 	/// 플레이어 공격상태가 아닐때 들어옵니다
 	/// </summary>
-	Speed = MaxSpeed;
+
 	if (mState & PLAYER_STATE_JUMP)
 	{
 		mAnimation->Choice("evade", ANIMATION_SPEED[(int)PLAYER_STATE::JUMP], true);
@@ -621,6 +699,143 @@ void Player::ChangeSkyLight(int index)
 	{
 		ChildMeshFilter[i]->SetSkyLightIndex(index);
 	}
+}
+
+void Player::SetMeshFilterList()
+{
+	MeshFilter* filter = WeaponObject->GetComponent<MeshFilter>();
+	ChildMeshFilter.push_back(filter);
+
+	int count = gameobject->GetChildMeshCount();
+	for (int i = 0; i < count; i++)
+	{
+		GameObject* object = gameobject->GetChildMesh(i);
+
+		filter = object->GetComponent<MeshFilter>();
+
+		if (filter == nullptr) continue;
+
+		ChildMeshFilter.push_back(filter);
+	}
+}
+
+void Player::Get_PureMana(int count)
+{
+	if (PureMana >= Max_Mana_Value) return;
+
+	// 퓨어 마나 최초 획득
+	if (IsGetPureMana == false)
+	{
+		IsGetPureMana = true;
+
+		MessageManager::GetGM()->SEND_Message(TARGET_DRONE, MESSAGE_DRONE_GET_PUREMANA);
+	}
+
+	PureMana += count;
+
+	if (PureMana >= Max_Mana_Value)
+	{
+		PureMana = Max_Mana_Value;
+	}
+
+	MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_PUREMANA, &PureMana);
+}
+
+void Player::Get_CoreMana(int count)
+{
+	if (CoreMana >= Max_Mana_Value) return;
+
+	// 코어 마나 최초 획득
+	if (IsGetCoreMana == false)
+	{
+		IsGetCoreMana = true;
+
+		MessageManager::GetGM()->SEND_Message(TARGET_DRONE, MESSAGE_DRONE_GET_COREMANA);
+	}
+
+	CoreMana += count;
+
+	if (CoreMana >= Max_Mana_Value)
+	{
+		CoreMana = Max_Mana_Value;
+	}
+
+	MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_COREMANA, &CoreMana);
+}
+
+void Player::Upgrade_Change_Emagin()
+{
+	if (MaxChangeCount >= Max_ChangeEmagin_Value) return;
+
+	if (PureMana < ChangeEmagin_PureMana_Count)
+	{
+		MessageManager::GetGM()->SEND_Message(TARGET_DRONE, MESSAGE_DRONE_PURCHASE_FAIL);
+		return;
+	}
+
+	MaxChangeCount += Upgrade_ChangeEmagin;
+	PureMana -= ChangeEmagin_PureMana_Count;
+
+	MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_EMAGIN_MAX, &MaxChangeCount);
+	MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_PUREMANA, &PureMana);
+	MessageManager::GetGM()->SEND_Message(TARGET_DRONE, MESSAGE_DRONE_PURCHASE_SUCCESS);
+}
+
+void Player::Upgrade_Max_HP()
+{
+	if (HP_Max >= Max_HP_Value) return;
+
+	if (CoreMana < HP_CoreMana_Count)
+	{
+		MessageManager::GetGM()->SEND_Message(TARGET_DRONE, MESSAGE_DRONE_PURCHASE_FAIL);
+		return;
+	}
+	
+	HP += Upgrade_HP;
+	HP_Max += Upgrade_HP;
+	CoreMana -= HP_CoreMana_Count;
+
+	MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_HP_NOW, &HP);
+	MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_HP_MAX, &HP_Max);
+	MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_COREMANA, &CoreMana);
+	MessageManager::GetGM()->SEND_Message(TARGET_DRONE, MESSAGE_DRONE_PURCHASE_SUCCESS);
+}
+
+void Player::Upgrade_Attack_Speed()
+{
+	if (Now_Attack_Speed >= Max_AttackSpeed_Animation) return;
+
+	if (PureMana < AttackSpeed_PureMana_Count)
+	{
+		MessageManager::GetGM()->SEND_Message(TARGET_DRONE, MESSAGE_DRONE_PURCHASE_FAIL);
+		return;
+	}
+
+	Now_Attack_Speed += Upgrade_AttackSpeed_1;
+	PureMana -= AttackSpeed_PureMana_Count;
+
+	ANIMATION_SPEED[(int)PLAYER_STATE::ATTACK_01] += Upgrade_AttackSpeed_1;
+	ANIMATION_SPEED[(int)PLAYER_STATE::ATTACK_02] += Upgrade_AttackSpeed_2;
+	ANIMATION_SPEED[(int)PLAYER_STATE::SKILL_01] += Upgrade_AttackSpeed_1;
+	ANIMATION_SPEED[(int)PLAYER_STATE::SKILL_02] += Upgrade_AttackSpeed_1;
+
+	MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_PUREMANA, &PureMana);
+	MessageManager::GetGM()->SEND_Message(TARGET_DRONE, MESSAGE_DRONE_PURCHASE_SUCCESS);
+}
+
+void Player::Upgrade_Move_Speed()
+{
+	if (Speed >= Max_Move_Speed_Value) return;
+
+	if (PureMana < MoveSpeed_PureMana_Count) return;
+
+	Speed += Upgrade_MoveSpeed_Value;
+	PureMana -= MoveSpeed_PureMana_Count;
+
+	ANIMATION_SPEED[(int)PLAYER_STATE::MOVE] += Upgrade_MoveSpeed_Animation;
+
+	MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_PUREMANA, &PureMana);
+	MessageManager::GetGM()->SEND_Message(TARGET_DRONE, MESSAGE_DRONE_PURCHASE_SUCCESS);
 }
 
 void Player::PlayerAttackColliderUpdate()

@@ -27,12 +27,6 @@ void Slider::Awake()
 	// 함수 실행후 리스트 초기화..
 	StartFunction.Reset();
 
-	// 항상 배경이 뒤로 오게 한다..
-	if (m_BackImage && m_FillImage)
-	{
-		m_FillImage->SetLayer(m_BackImage->GetLayer() + 1);
-	}
-
 	// 최초 설정이 끝난후 상태 변경..
 	m_Start = true;
 }
@@ -343,4 +337,25 @@ void Slider::SetFillRange(FILL_TYPE fill_type, float range)
 void Slider::SetFillRange()
 {
 	if (m_FillImage) m_FillImage->SetFillRange(m_FillType, m_FillRange);
+}
+
+void Slider::SetLayer(UINT order)
+{
+	m_Layer = order;
+
+	if (m_Start == false)
+	{
+		StartFunction += Eater::Bind(static_cast<void(Slider::*)(void)>(&Slider::SetLayer), this);
+	}
+	else
+	{
+		SetLayer();
+	}
+}
+
+void Slider::SetLayer()
+{
+	// 항상 배경이 뒤로 오게 한다..
+	if (m_BackImage) m_BackImage->SetLayer(m_Layer);
+	if (m_FillImage) m_FillImage->SetLayer(m_Layer + 1);
 }

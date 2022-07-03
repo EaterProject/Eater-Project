@@ -43,6 +43,7 @@ public:
 	static float GetPlayerComboPower();
 	void Healing(float HealingPower);
 private:
+	void PlayerCoolTimeCheck();			//플레이어 스킬 쿨타임 체크
 	void PlayerKeyinput();				//플레이어 키인풋
 	void PlayerAttackColliderUpdate();	//플레이어 공격 Collider
 	void PlayerGroundCheck();			//플레이어 땅체크
@@ -61,9 +62,51 @@ private:
 	bool Player_Move_Check();			//기본 상태 체크
 private:
 	void ChangeSkyLight(int index);
+	void SetMeshFilterList();
+
+	void Get_PureMana(int count);
+	void Get_CoreMana(int count);
+	void Upgrade_Change_Emagin();
+	void Upgrade_Max_HP();
+	void Upgrade_Attack_Speed();
+	void Upgrade_Move_Speed();
+private:
+	/// 수치 최대값 관련
+	const int ChangeEmagin_PureMana_Count = 10;
+	const int HP_CoreMana_Count = 1;
+	const int AttackSpeed_PureMana_Count = 15;
+	const int MoveSpeed_PureMana_Count = 5;
+
+	const int Max_Mana_Value = 99;
+
+	const int Max_ChangeEmagin_Value = 15;
+	const int Max_HP_Value = 5500;
+	const float Max_AttackSpeed_Animation = 2.1f;
+	const float Max_Move_Speed_Value = 10.0f;
+	const float Max_MoveSpeed_Animation = 1.35f;
+
+	/// 스킬 쿨타임
+	const float Skill_E_CoolTime = 1.0f;
+	const float Skill_MR_CoolTime = 1.0f;
+	const float Skill_SPC_CoolTime = 1.0f;
+
+	float Skill_E_CoolTime_Percent;
+	float Skill_MR_CoolTime_Percent;
+	float Skill_SPC_CoolTime_Percent;
+
+	/// 1회 강화 수치
+	const int Upgrade_ChangeEmagin = 1;
+	const int Upgrade_HP = 500;
+	const float Upgrade_AttackSpeed_1 = 0.12f;
+	const float Upgrade_AttackSpeed_2 = 0.15f;
+	const float Upgrade_MoveSpeed_Value = 0.5f;
+	const float Upgrade_MoveSpeed_Animation = 0.27f;
+
 private:
 	std::string ANIMATION_NAME[8]	= { "", };
 	float		ANIMATION_SPEED[8]	= { 0.0f };
+
+	float Now_Attack_Speed = 1.5f;
 
 	Vector3 DirPos;						//방향
 	Vector3 DirRot;						//회전
@@ -87,20 +130,28 @@ private:
 	GameObject*				AttackColliderObject;
 
 	std::vector<MeshFilter*> ChildMeshFilter;
+
 private:
 	///State관련
 	unsigned int mState = 0x00000000;
 	int AttackKeyDownCount	= 0;
+
 	static int ChangeCount;
-	int HP					= 100;
-	int HP_Max				= 150;
-	float Speed				= 10;
-	const float MaxSpeed	= 10;
+	static int MaxChangeCount;
+
+	int HP					= 3000;
+	int HP_Max				= 3000;
+
+	float Speed				= 7.5f;
+
 	bool IsAttack			= false;
 	bool IsMove				= false;
 	bool IsHit				= false;
 	bool IsCreate			= false;
 	bool IsKeyUpdate		= false;
+
+	bool IsGetPureMana		= false;
+	bool IsGetCoreMana		= false;
 
 	static bool		IsAttackTime;
 	static int		ComboCount;
@@ -112,6 +163,17 @@ private:
 	float		HitTime		= 0.0f;
 	MeshFilterSetting		mPlayerColor;
 	MeshFilterSetting		mWeaponColor;
+private:
+	///Mana 관련
+	int PureMana = 0;
+	int CoreMana = 0;
+
+private:
+	/// 스킬 쿨타임 관련
+	float E_CoolTime = 0.0f;
+	float MR_CoolTime = 0.0f;
+	float SPC_CoolTime = 0.0f;
+
 private:
 	///Animation 관련
 	int AnimationSpeed	= 5;

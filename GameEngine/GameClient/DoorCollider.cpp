@@ -90,15 +90,21 @@ void DoorCollider::OnTriggerStay(GameObject* Obj)
 			SetColorGradingBlendFactor(BlendFactor);
 		}
 
-		if (PlayerDistance >= 25.0f)
+		if (PlayerDistance > 30.0f)
 		{
-			int num = 0;
-			MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_LIGHT_CHANGE, &num);
+			if (PlayerLightIndex != 0)
+			{
+				PlayerLightIndex = 0;
+				MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_LIGHT_CHANGE, &PlayerLightIndex);
+			}
 		}
 		else
 		{
-			int num = 1;
-			MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_LIGHT_CHANGE, &num);
+			if (PlayerLightIndex != 1)
+			{
+				PlayerLightIndex = 1;
+				MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_LIGHT_CHANGE, &PlayerLightIndex);
+			}
 		}
 	}
 }

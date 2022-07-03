@@ -34,9 +34,14 @@ public:
 	void Set_Player_Emagin(int Number);
 	void Set_Player_Emagin_Max(int Number);
 
+	//플레이어 스킬 설정
+	void Set_Skill_E(float value);
+	void Set_Skill_MR(float value);
+	void Set_Skill_SPC(float value);
+
 	//초록 마나 카운트 설정
-	void Set_Mana_Green_Count(int Number);
-	void Set_Mana_Orange_Count(int Number);
+	void Set_Pure_Mana_Count(int Number);
+	void Set_Core_Mana_Count(int Number);
 
 	//드론 텍스쳐
 	void Set_Drone_Text(int Number);

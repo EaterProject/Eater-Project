@@ -56,5 +56,8 @@ private:
 	float HP  = 100;
 	int MonsterACount = 0;
 	int MonsterBCount = 0;
+
+	// 마나초당 코어마나 획득 개수
+	int CoreManaCount = 1;
 };
 

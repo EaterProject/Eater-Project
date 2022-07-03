@@ -121,6 +121,11 @@ void UITitle::Set_TitleUI_Active(bool Active)
 	}
 	TitleMainImage->SetActive(Active);
 	Title_IMG_Rect->SetPosition(200, Title_IMG_Rect->Position.y);
+
+	if (Active)
+	{
+		SetColorGradingBlendFactor(1.0f);
+	}
 }
 
 void UITitle::StartButton_Enter()

@@ -59,6 +59,7 @@ private:
 	//Target 메세지에 따른 호출
 	void SEND_Player_Message(int MessageType,void* Data);
 	void SEND_UI_Message(int MessageType, void* Data);
+	void SEND_DRONE_Message(int MessageType, void* Data);
 	void SEND_BOSS_Message(int MessageType, void* Data);
 	void SEND_GATE_Message(int MessageType, void* Data);
 	void SEND_CAMERA_Message(int MessageType, void* Data);

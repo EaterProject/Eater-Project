@@ -104,6 +104,7 @@ void MessageManager::SEND_Message(int Target, int MessageType, void* Data)
 		mPlayer->SetMessageRECV(MessageType, Data);
 		break;
 	case TARGET_DRONE:	//드론에게 메세지를 보낸다
+		SEND_DRONE_Message(MessageType, Data);
 		break;
 	case TARGET_BOSS:	//보스에게 메세지를 보낸다
 		SEND_BOSS_Message(MessageType, Data);
@@ -267,6 +268,56 @@ void MessageManager::SEND_UI_Message(int MessageType, void* Data)
 		break;
 	case MESSAGE_UI_BOSS_ACTIVE:
 		mBossUI->SetBossUIActive(*(reinterpret_cast<bool*>(Data)));
+		break;
+	case MESSAGE_UI_PUREMANA:
+		mCanvas->Set_Pure_Mana_Count(*(reinterpret_cast<int*>(Data)));
+		mStore->Set_Pure_Mana_Count(*(reinterpret_cast<int*>(Data)));
+		break;
+	case MESSAGE_UI_COREMANA:
+		mCanvas->Set_Core_Mana_Count(*(reinterpret_cast<int*>(Data)));
+		mStore->Set_Core_Mana_Count(*(reinterpret_cast<int*>(Data)));
+		break;
+	case MESSAGE_UI_SKILL_E:
+		mCanvas->Set_Skill_E(*(reinterpret_cast<float*>(Data)));
+		break;
+	case MESSAGE_UI_SKILL_MR:
+		mCanvas->Set_Skill_MR(*(reinterpret_cast<float*>(Data)));
+		break;
+	case MESSAGE_UI_SKILL_SPC:
+		mCanvas->Set_Skill_SPC(*(reinterpret_cast<float*>(Data)));
+		break;
+	}
+}
+
+void MessageManager::SEND_DRONE_Message(int MessageType, void* Data)
+{
+	switch (MessageType)
+	{
+	case MESSAGE_DRONE_GAME_START:
+		break;
+	case MESSAGE_DRONE_DOOM_OUT:
+		break;
+	case MESSAGE_DRONE_STORE:
+		break;
+	case MESSAGE_DRONE_PURCHASE_SUCCESS:
+		break;
+	case MESSAGE_DRONE_PURCHASE_FAIL:
+		break;
+	case MESSAGE_DRONE_BOSS_START:
+		break;
+	case MESSAGE_DRONE_BOSS_ZONE_IN:
+		break;
+	case MESSAGE_DRONE_MANA_CREATE:
+		break;
+	case MESSAGE_DRONE_GET_PUREMANA:
+		break;
+	case MESSAGE_DRONE_GET_COREMANA:
+		break;
+	case MESSAGE_DRONE_PLAYER_DIE:
+		break;
+	case MESSAGE_DRONE_PLAYER_HEAL:
+		break;
+	default:
 		break;
 	}
 }
