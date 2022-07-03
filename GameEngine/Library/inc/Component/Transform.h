@@ -76,6 +76,7 @@ public:
 	EATER_ENGINEDLL void SetScale_Y(float scale);
 	EATER_ENGINEDLL void SetScale_Z(float scale);
 	EATER_ENGINEDLL void SetScale(float scale);
+	EATER_ENGINEDLL void SetScale(float&& X, float&& Y);
 	EATER_ENGINEDLL void SetScale(float X, float Y, float Z);
 	EATER_ENGINEDLL void SetScale(DirectX::SimpleMath::Vector3& mScl);
 	EATER_ENGINEDLL void SetScale(DirectX::SimpleMath::Vector3&& mScl);
@@ -114,6 +115,9 @@ public:
 	EATER_ENGINEDLL void SetChild(Transform* mChild);
 	//부모 객체 넣기
 	EATER_ENGINEDLL void SetParent(Transform* mParent);
+
+	EATER_ENGINEDLL void DisconnectParent();
+	EATER_ENGINEDLL void DisconnectChild(GameObject* obj);
 
 	EATER_ENGINEDLL Transform* GetParent();
 

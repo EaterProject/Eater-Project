@@ -27,6 +27,7 @@ public:
 	EATER_ENGINEDLL void SetPivot(PIVOT_TYPE type);							//글자 사이의 간격
 	EATER_ENGINEDLL void SetPositionObject(GameObject* Object,Vector3 Pos);	//글자 사이의 간격
 	EATER_ENGINEDLL void SetLayer(int Layer);								//글자 사이의 간격
+	EATER_ENGINEDLL void SetDraw(bool IsActive);							//글자 사이의 간격
 	EATER_ENGINEDLL void SetActive(bool IsActive);							//글자 사이의 간격
 
 private:

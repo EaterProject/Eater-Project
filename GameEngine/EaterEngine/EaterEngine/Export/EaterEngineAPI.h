@@ -99,6 +99,7 @@ extern "C" EATER_ENGINEDLL bool GetKeyDown(byte number);		//키다운
 extern "C" EATER_ENGINEDLL bool GetKeyUp(byte number);			//키업
 extern "C" EATER_ENGINEDLL bool GetKey(byte number);			//키누르고있을때
 extern "C" EATER_ENGINEDLL bool GetTogle(byte number);			//키 토글
+extern "C" EATER_ENGINEDLL void KeyReset();						//키 리셋
 extern "C" EATER_ENGINEDLL int	GetMousePosX();					//마우스 위치 X
 extern "C" EATER_ENGINEDLL int	GetMousePosY();					//마우스 위치 Y
 extern "C" EATER_ENGINEDLL void SetMousePos(float x,float y);	//마우스 위치 Y
@@ -121,6 +122,7 @@ extern "C" EATER_ENGINEDLL GameObject * GetDirectionLight();	//현재 메인 카메라�
 EATER_ENGINEDLL void Sound_Play_BGM(std::string& Name);
 EATER_ENGINEDLL void Sound_Play_BGM(std::string&& Name);
 extern "C" EATER_ENGINEDLL void Sound_Pause_BGM(bool Pause);
+extern "C" EATER_ENGINEDLL void Sound_VolumeSet_BGM(float value);
 extern "C" EATER_ENGINEDLL void Sound_VolumeUP_BGM();
 extern "C" EATER_ENGINEDLL void Sound_VolumeDown_BGM();
 extern "C" EATER_ENGINEDLL void Sound_FrequencyUp_BGM();
@@ -130,12 +132,15 @@ extern "C" EATER_ENGINEDLL void Sound_PitchDown_BGM();
 EATER_ENGINEDLL void Sound_Play_SFX(std::string& SoundName);
 EATER_ENGINEDLL void Sound_Play_SFX(std::string&& SoundName);
 extern "C" EATER_ENGINEDLL void Sound_Pause_SFX(bool Pause);
+extern "C" EATER_ENGINEDLL void Sound_VolumeSet_SFX(float value);
 extern "C" EATER_ENGINEDLL void Sound_VolumeUP_SFX();
 extern "C" EATER_ENGINEDLL void Sound_VolumeDown_SFX();
 extern "C" EATER_ENGINEDLL void Sound_FrequencyUp_SFX();
 extern "C" EATER_ENGINEDLL void Sound_FrequencyDown_SFX();
 extern "C" EATER_ENGINEDLL void Sound_PitchUp_SFX();
 extern "C" EATER_ENGINEDLL void Sound_PitchDown_SFX();
+
+extern "C" EATER_ENGINEDLL void Sound_VolumeSet_Master(float value);
 
 ///시간 관련
 extern "C" EATER_ENGINEDLL float GetDeltaTime();

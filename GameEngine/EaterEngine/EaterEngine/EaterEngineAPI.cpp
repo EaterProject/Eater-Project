@@ -295,6 +295,11 @@ void AddOccluder(std::string mMeshName)
 	return gGameEngine->GetTogle(number);
 }
 
+ void KeyReset()
+ {
+
+ }
+
  int GetMousePosX()
 {
 	return gGameEngine->GetMousePosX();
@@ -390,6 +395,11 @@ int GetMousePosY()
 	 gGameEngine->Sound_Pause_BGM(Pause);
  }
 
+ void Sound_VolumeSet_BGM(float value)
+ {
+	 gGameEngine->Sound_VolumeSet_BGM(value);
+ }
+
  void Sound_VolumeUP_BGM()
  {
 	 gGameEngine->Sound_VolumeUP_BGM();
@@ -435,6 +445,11 @@ int GetMousePosY()
 	 gGameEngine->Sound_Pause_SFX(Pause);
  }
 
+ void Sound_VolumeSet_SFX(float value)
+ {
+	 gGameEngine->Sound_VolumeSet_SFX(value);
+ }
+
  void Sound_VolumeUP_SFX()
  {
 	 gGameEngine->Sound_VolumeUP_SFX();
@@ -463,6 +478,11 @@ int GetMousePosY()
  void Sound_PitchDown_SFX()
  {
 	 gGameEngine->Sound_PitchDown_SFX();
+ }
+
+ void Sound_VolumeSet_Master(float value)
+ {
+	 gGameEngine->Sound_VolumeSet_Master(value);
  }
 
  void Sound_Play_BGM(std::string Name)

@@ -62,6 +62,8 @@ public:
 	EATER_ENGINEDLL Material*	GetMaterial();							//메테리얼 데이터 넣어주기
 	EATER_ENGINEDLL void ChoiceParent(GameObject* obj);					//나자신을 선택한 오브젝트의 자식으로 넣는다
 	EATER_ENGINEDLL void ChoiceChild(GameObject* obj);					//선택한 오브젝트를 나의 자식으로 넣는다
+	EATER_ENGINEDLL void DisconnectParent();	
+	EATER_ENGINEDLL void DisconnectChild(GameObject* obj);
 
 	EATER_ENGINEDLL bool GetActive();
 	EATER_ENGINEDLL bool GetShadow();

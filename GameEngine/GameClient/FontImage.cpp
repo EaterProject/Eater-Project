@@ -14,6 +14,14 @@ FontImage::~FontImage()
 
 }
 
+void FontImage::SetActive(bool Active)
+{
+	for (int i = 0; i < 3; i++)
+	{
+		Com_Image[i]->SetActive(Active);
+	}
+}
+
 void FontImage::SetFontNumber(int Number)
 {
 	FontUpdte		= true;

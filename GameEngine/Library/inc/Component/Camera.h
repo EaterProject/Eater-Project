@@ -1,6 +1,7 @@
 #pragma once
 #include <DirectXMath.h>
 #include <vector>
+#include <queue>
 #include "Component.h"
 #include "EaterEngineDLL.h"
 
@@ -24,8 +25,6 @@ public:
 
 	//현재카메라를 메인카메라로 변경시킨다
 	EATER_ENGINEDLL void ChoiceMainCam();
-	EATER_ENGINEDLL void ChoiceCameraAnimation(std::string Name);
-	EATER_ENGINEDLL bool ChoiceCameraAnimationEnd();
 	//EATER_ENGINEDLL void LookAt(GameObject* obj);
 	//EATER_ENGINEDLL void LookAt(Vector3 Pos);
 	
@@ -49,7 +48,8 @@ public:
 private:
 	//카메라 애니메이션 데이터
 	bool isAnimation = false;
-	CameraAnimation* mAnimation;
+	std::queue<CameraAnimation*> AnimationList;
+	CameraAnimation* Cam_Animation = nullptr;
 	Camera*			 MainCamera;//메인 카메라를 잠시 저장하는 용도
 	float	NowAnimationFrame = 0;
 	int		NowFrameIndex;

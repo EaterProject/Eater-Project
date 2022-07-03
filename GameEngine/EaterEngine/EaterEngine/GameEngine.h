@@ -140,6 +140,7 @@ public:
 	bool  GetKeyUp(byte number);	//키업
 	bool  GetKey(byte number);		//키누르고있을때
 	bool  GetTogle(byte number);	//키 on/off
+	void  KeyReset();				//키 리셋
 	int GetMousePosX();			//마우스 위치 X
 	int GetMousePosY();			//마우스 위치 Y
 	void  SetMousePos(float x,float y);
@@ -151,6 +152,7 @@ public:
 	///사운드 관련
 	void Sound_Play_BGM(std::string& SoundName);
 	void Sound_Pause_BGM(bool Pause);
+	void Sound_VolumeSet_BGM(float volume);
 	void Sound_VolumeUP_BGM();
 	void Sound_VolumeDown_BGM();
 	void Sound_FrequencyUp_BGM();
@@ -160,12 +162,15 @@ public:
 
 	void Sound_Play_SFX(std::string& SoundName);
 	void Sound_Pause_SFX(bool Pause);
+	void Sound_VolumeSet_SFX(float volume);
 	void Sound_VolumeUP_SFX();
 	void Sound_VolumeDown_SFX();
 	void Sound_FrequencyUp_SFX();
 	void Sound_FrequencyDown_SFX();
 	void Sound_PitchUp_SFX();
 	void Sound_PitchDown_SFX();
+
+	void Sound_VolumeSet_Master(float volume);
 
 public:
 	///윈도우 관련

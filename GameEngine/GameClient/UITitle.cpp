@@ -132,10 +132,13 @@ void UITitle::StartButton_Enter()
 void UITitle::StartButton_Click()
 {
 	IsStart = true;
-	std::string Name = "TitleCam";
 	Sound_Play_SFX("UI_Button_Click");
+
 	MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_FADE_IN, &IsFade);
-	MessageManager::GetGM()->SEND_Message(TARGET_CAMERA_MANAGER, MESSAGE_CAMERA_CINEMATIC_TITLE, &Name);
+	MessageManager::GetGM()->SEND_Message(TARGET_CAMERA_MANAGER, MESSAGE_CAMERA_CINEMATIC_TITLE);
+
+	// 혹시 모르니 모든 키 리셋..
+	KeyReset();
 }
 
 void UITitle::StartButton_Exit()

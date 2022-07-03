@@ -11,9 +11,10 @@ public:
 	ComboFont();
 	virtual ~ComboFont();
 
-
 	void Awake() override;
 	void UpdateFontAnimation();
+
+	void SetActive(bool Active);
 
 	void SetComboNumber(int Number);
 	void SetComboTimeMax(int Number);

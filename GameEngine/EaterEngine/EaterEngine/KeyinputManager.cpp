@@ -4,14 +4,7 @@
 
 KeyinputManager::KeyinputManager()
 {
-	for (int i = 0; i < 256; i++)
-	{
-		isCurrent[i] = false;
-		isPrev[i] = false;
-		isDown[i] = false;
-		isUp[i] = false;
-		isToggle[i] = false;
-	}
+	KeyReset();
 }
 
 KeyinputManager::~KeyinputManager()
@@ -37,6 +30,18 @@ bool KeyinputManager::GetKeyUp(byte _keyNum)
 bool KeyinputManager::GetKeyToggle(byte _keyNum)
 {
 	return isToggle[_keyNum];
+}
+
+void KeyinputManager::KeyReset()
+{
+	for (int i = 0; i < 256; i++)
+	{
+		isCurrent[i] = false;
+		isPrev[i] = false;
+		isDown[i] = false;
+		isUp[i] = false;
+		isToggle[i] = false;
+	}
 }
 
 void KeyinputManager::KeyUpDate()
@@ -78,8 +83,6 @@ void KeyinputManager::KeyUpDate()
 		}
 		isPrev[i] = isCurrent[i];
 	}
-
-	int num = 0;
 }
 
 void KeyinputManager::UpdataMouseCursor()
@@ -134,5 +137,24 @@ void KeyinputManager::SetMousePos(int x, int y)
 
 void KeyinputManager::ShowMouse(bool show)
 {
-	ShowCursor(show);
+	if (show)
+	{
+		int count = -1;
+
+		while (count < 0)
+		{
+			count = ShowCursor(show);
+		}
+	}
+	else
+	{
+		int count = 0;
+
+		while (count > -1)
+		{
+			count = ShowCursor(show);
+		}
+	}
+
+
 }

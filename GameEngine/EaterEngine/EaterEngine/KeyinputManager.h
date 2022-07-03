@@ -14,6 +14,9 @@ public:
 	bool GetKeyUp(byte _keyNum);
 	//누를때 true 면 false 로 false 면 true로 
 	bool GetKeyToggle(byte _keyNum);
+
+	void KeyReset();
+
 	const LPPOINT GetMousePos();
 	const LPPOINT GetClientMousePos();
 

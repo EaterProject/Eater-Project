@@ -228,6 +228,9 @@ class CameraAnimation
 {
 public:
 	float OneFrame;
+	float TickFrame;
+	float TickFrameRatio;
+
 	int AddKeyCount;
 	std::vector<Vector3> Position;
 	std::vector<Vector3> Rotation;
@@ -245,6 +248,8 @@ public:
 class UIProperty
 {
 public:
+	std::string UI_Name;	
+
 	bool IsDraw;			// UI Draw
 	UI_TYPE UI_Option;		// UI Option
 	

@@ -93,6 +93,13 @@ public:
 	EATER_ENGINEDLL void SetNextParticle(ParticleSystem* particle);
 
 public:
+	EATER_ENGINEDLL void SetScale(float& scale);
+	EATER_ENGINEDLL void SetScale(float&& scale);
+	EATER_ENGINEDLL void SetScale(float& x, float& y);
+	EATER_ENGINEDLL void SetScale(float&& x, float&& y);
+	EATER_ENGINEDLL void SetScale(DirectX::SimpleMath::Vector2 scale);
+
+public:
 	EATER_ENGINEDLL std::string GetMeshName();
 	EATER_ENGINEDLL PARTICLE_STATE GetState();
 	EATER_ENGINEDLL PARTICLE_RENDER_OPTION GetRenderType();

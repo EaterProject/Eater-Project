@@ -9,6 +9,8 @@
 #include "Slider.h"
 #include "ImageFont.h";
 #include "MiniMapSystem.h"
+#include "MessageManager.h"
+
 UICanvas::UICanvas()
 {
 	
@@ -56,6 +58,22 @@ void UICanvas::Start()
 
 void UICanvas::Update()
 {
+	if (isActive)
+	{
+		if (GetKeyDown(VK_ESCAPE))
+		{
+			MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_PAUSE);
+		}
+		if (GetKeyDown(VK_F1))
+		{
+			MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_MANUAL);
+		}
+		if (GetKeyDown(VK_F2))
+		{
+			MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_CREDIT);
+		}
+	}
+
 	Update_Combo_Check();
 }
 
@@ -153,12 +171,22 @@ void UICanvas::Set_Drone_Text(int Number)
 
 void UICanvas::Set_InGameUI_Active(bool Active)
 {
+	isActive = Active;
+
+	mCombo->SetActive(Active);
+
 	Active_Player_HP(Active);
 	Active_Player_Emagin(Active);
 	Active_Mana_Count(Active);
 	Active_Dron_Text(Active);
 	Active_Player_Emagin_Color(Active);
 	Active_Player_Skill(Active);
+
+	for (int i = 0; i < 5; i++)
+	{
+		SetMonsterUIActive(i, Active);
+	}
+
 	MiniMapSystem::Get()->SetMiniMapActive(Active);
 	MiniMapSystem::Get()->SetIconListActive(Active);
 }
@@ -181,6 +209,7 @@ void UICanvas::Set_Monster_UI_ON(void* Emagin)
 	}
 	int MonsterIndex = GetActiveMonsterUI();
 	SetMonsterUIActive(MonsterIndex, true);
+	SetMonsterUIDraw(MonsterIndex, true);
 
 
 	MonsterTR_Back[MonsterIndex]->SetPivot(PIVOT_OBJECT);
@@ -223,6 +252,7 @@ void UICanvas::Set_Monster_UI_OFF(void* Emagin)
 			MonsterActiveUI[i] = false;
 
 			SetMonsterUIActive(i, false);
+			SetMonsterUIDraw(i, false);
 
 			MonsterTR_Back[i]->SetPositionObject(Object, Vector3(0.0, 20.0f, 0.0f));
 			MonsterTR_Front[i]->SetPositionObject(Object, Vector3(0.0, 20.0f, 0.0f));
@@ -320,8 +350,8 @@ void UICanvas::Create_Player_Emagin(float X, float Y)
 
 	//폰트 사이의 언더바 이미지
 	Object = Instance_UI();
-	Player_HP_BAR = Object->AddComponent<Image>();
-	Player_HP_BAR->SetTexture("Count_Space");
+	Player_EMAGIN_BAR = Object->AddComponent<Image>();
+	Player_EMAGIN_BAR->SetTexture("Count_Space");
 	Player_EMAGIN_RECT[1] = Object->GetComponent<RectTransform>();
 	Player_EMAGIN_RECT[1]->SetPosition(X + 110, Y);
 	Player_EMAGIN_RECT[1]->SetScale(0.75f, 0.75f);
@@ -361,8 +391,8 @@ void UICanvas::Create_Player_HP(float X, float Y)
 	Player_HP[0]->SetPosition(X, Y);
 	
 	//폰트 사이의 언더바 이미지
-	Object = Instance_UI();
-	Player_HP_BAR = Object->AddComponent<Image>();
+	Object = Instance_Image();
+	Player_HP_BAR = Object->GetComponent<Image>();
 	Player_HP_BAR->SetTexture("hp_Space");
 	Player_RECT = Object->GetComponent<RectTransform>();
 	Player_RECT->SetPosition(X+ 65, Y);
@@ -487,20 +517,21 @@ void UICanvas::Active_Player_HP(bool Active)
 	Player_HP[1]->SetActive(Active);
 
 	Player_HP_Slider->SetActive(Active);
-	Player_HP_BAR->gameobject->SetActive(Active);
+	Player_HP_BAR->SetActive(Active);
 }
 
 void UICanvas::Active_Player_Emagin(bool Active)
 {
 	Player_EMAGIN[0]->SetActive(Active);
 	Player_EMAGIN[1]->SetActive(Active);
-	Player_EMAGIN_CHANGE->gameobject->SetActive(Active);
+	Player_EMAGIN_CHANGE->SetActive(Active);
+	Player_EMAGIN_BAR->SetActive(Active);
 }
 
 void UICanvas::Active_Player_Emagin_Color(bool Active)
 {
-	Player_EMAGIN_COLOR[0]->gameobject->SetActive(Active);
-	Player_EMAGIN_COLOR[1]->gameobject->SetActive(Active);
+	Player_EMAGIN_COLOR[0]->SetActive(Active);
+	Player_EMAGIN_COLOR[1]->SetActive(Active);
 }
 
 void UICanvas::Active_Player_Skill(bool Active)
@@ -514,12 +545,12 @@ void UICanvas::Active_Mana_Count(bool Active)
 {
 	Player_MANA[0]->SetActive(Active);
 	Player_MANA[1]->SetActive(Active);
-	Player_MANA_ICON->gameobject->SetActive(Active);
+	Player_MANA_ICON->SetActive(Active);
 }
 
 void UICanvas::Active_Dron_Text(bool Active)
 {
-	//Dron_Text->gameobject->SetActive(Active);
+	//Dron_Text->SetActive(Active);
 }
 
 void UICanvas::Create_Skill_UI(float X, float Y)
@@ -597,6 +628,7 @@ void UICanvas::Create_Monster_UI()
 		MonsterFont[i]->SetPosition(-112, 0);
 
 		SetMonsterUIActive(i, false);
+		SetMonsterUIDraw(i, false);
 	}
 }
 
@@ -618,10 +650,18 @@ int UICanvas::GetActiveMonsterUI()
 
 void UICanvas::SetMonsterUIActive(int index, bool IsActive)
 {
-	Monster_Emagin_Back[index]->gameobject->SetActive(IsActive);
-	Monster_Emagin_Front[index]->gameobject->SetActive(IsActive);
+	Monster_Emagin_Back[index]->SetActive(IsActive);
+	Monster_Emagin_Front[index]->SetActive(IsActive);
 	MonsterFont[index]->SetActive(IsActive);
 	MonsterSlider[index]->SetActive(IsActive);
+}
+
+void UICanvas::SetMonsterUIDraw(int index, bool IsActive)
+{
+	Monster_Emagin_Back[index]->SetDraw(IsActive);
+	Monster_Emagin_Front[index]->SetDraw(IsActive);
+	MonsterFont[index]->SetDraw(IsActive);
+	MonsterSlider[index]->SetDraw(IsActive);
 }
 
 bool UICanvas::UseCheck(GameObject* Obj)

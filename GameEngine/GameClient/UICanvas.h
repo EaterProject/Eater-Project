@@ -67,6 +67,7 @@ private:
 	
 	int GetActiveMonsterUI();
 	void SetMonsterUIActive(int index, bool IsActive);
+	void SetMonsterUIDraw(int index, bool IsActive);
 	bool UseCheck(GameObject* Obj);
 
 	ComboFont*		mCombo		= nullptr;
@@ -81,6 +82,7 @@ private:
 	ImageFont*		Player_EMAGIN[2];	//플레이어 이메진 폰트
 	RectTransform*	Player_EMAGIN_RECT[2];
 	Image*			Player_EMAGIN_CHANGE;
+	Image*			Player_EMAGIN_BAR;
 
 	//플레이어 이메진 Color UI
 	Image*			Player_EMAGIN_COLOR[2];
@@ -113,5 +115,7 @@ private:
 
 	float PosX = 0;
 	float PosY = 350;
+
+	bool isActive = true;
 };
 

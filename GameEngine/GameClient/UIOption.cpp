@@ -72,6 +72,7 @@ void UIOption::Awake()
 	float height_second_line = 87.5f;
 
 	// 왼쪽 오른쪽 버튼 위치 설정..
+	ClickButton[SCREEN_SIZE].Value = 0;
 	ClickButtonSetting(SCREEN_SIZE,left_offset, right_offset, start_height);
 	start_height += height_first_line;
 	ClickButtonSetting(MASTER_VOL,	left_offset, right_offset, start_height);
@@ -107,7 +108,7 @@ void UIOption::Awake()
 	image->SetPosition(text_offset, start_height);
 	image->PushTextureList("Setting_Window");
 	image->PushTextureList("Setting_FullScreen");
-	image->SetTexture("Setting_FullScreen");
+	image->SetTexture("Setting_Window");
 	ScreenText = image;
 
 	start_height += height_first_line;
@@ -209,10 +210,6 @@ void UIOption::SetOptionUIActive(bool active)
 	{
 		SetFullScreenBlur(true, 2);
 	}
-	else
-	{
-		SetFullScreenBlur(false);
-	}
 }
 
 void UIOption::SetPrevTarget(int target)
@@ -309,9 +306,6 @@ void UIOption::SetScreenSize()
 		
 		SetWindowSize(1920, 1080);
 	}
-
-	// 해당 상태의 해상도로 화면 변경..
-	
 }
 
 void UIOption::SetMasterVolumeUp()
@@ -348,6 +342,9 @@ void UIOption::SetMasterVolumeUp()
 	{
 		ClickButton[MASTER_VOL].Value = 100;
 	}
+
+	// 사운드 설정..
+	Sound_VolumeSet_Master(ClickButton[MASTER_VOL].Value * 0.01f);
 
 	// 볼륨에 맞는 숫자 출력..
 	SoundText[0]->SetFontNumber(ClickButton[MASTER_VOL].Value);
@@ -388,6 +385,9 @@ void UIOption::SetMasterVolumeDown()
 		ClickButton[MASTER_VOL].Value = 0;
 	}
 
+	// 사운드 설정..
+	Sound_VolumeSet_Master(ClickButton[MASTER_VOL].Value * 0.01f);
+
 	// 볼륨에 맞는 숫자 출력..
 	SoundText[0]->SetFontNumber(ClickButton[MASTER_VOL].Value);
 }
@@ -426,6 +426,9 @@ void UIOption::SetBackGroundVolumeUp()
 	{
 		ClickButton[BACKGROUND_VOL].Value = 100;
 	}
+
+	// 사운드 설정..
+	Sound_VolumeSet_BGM(ClickButton[MASTER_VOL].Value * 0.01f);
 
 	// 볼륨에 맞는 숫자 출력..
 	SoundText[1]->SetFontNumber(ClickButton[BACKGROUND_VOL].Value);
@@ -466,6 +469,9 @@ void UIOption::SetBackGroundVolumeDown()
 		ClickButton[BACKGROUND_VOL].Value = 0;
 	}
 
+	// 사운드 설정..
+	Sound_VolumeSet_BGM(ClickButton[MASTER_VOL].Value * 0.01f);
+
 	// 볼륨에 맞는 숫자 출력..
 	SoundText[1]->SetFontNumber(ClickButton[BACKGROUND_VOL].Value);
 }
@@ -505,6 +511,9 @@ void UIOption::SetSFXVolumeUp()
 		ClickButton[SFX_VOL].Value = 100;
 	}
 
+	// 사운드 설정..
+	Sound_VolumeSet_SFX(ClickButton[MASTER_VOL].Value * 0.01f);
+
 	// 볼륨에 맞는 숫자 출력..
 	SoundText[2]->SetFontNumber(ClickButton[SFX_VOL].Value);
 }
@@ -543,6 +552,9 @@ void UIOption::SetSFXVolumeDown()
 	{
 		ClickButton[SFX_VOL].Value = 0;
 	}
+
+	// 사운드 설정..
+	Sound_VolumeSet_SFX(ClickButton[MASTER_VOL].Value * 0.01f);
 
 	// 볼륨에 맞는 숫자 출력..
 	SoundText[2]->SetFontNumber(ClickButton[SFX_VOL].Value);
@@ -719,11 +731,12 @@ void UIOption::SetReturnClick()
 	{
 	case MESSAGE_GLOBAL_TITLE:
 		MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_TITLE);
+		SetFullScreenBlur(false);
+		break;
+	case MESSAGE_GLOBAL_PAUSE:
+		MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_PAUSE);
 		break;
 	default:
 		break;
 	}
-
-	// 전체 화면 블러 해제..
-	SetFullScreenBlur(false);
 }

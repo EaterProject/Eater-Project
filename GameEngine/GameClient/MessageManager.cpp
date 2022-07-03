@@ -22,6 +22,7 @@
 #include "UICanvas.h"
 #include "GateDoor.h"
 #include "Boss.h"
+#include "Store.h"
 #include "CameraManager.h"
 #include "ManaStone.h"
 #include "UIEffect.h"
@@ -29,6 +30,8 @@
 #include "UIStore.h"
 #include "UIOption.h"
 #include "UIPause.h"
+#include "UIManual.h"
+#include "UICredit.h"
 #include "UIBoss.h"
 
 MessageManager* MessageManager::instance = nullptr;
@@ -83,6 +86,8 @@ void MessageManager::Initialize(ObjectFactory* Factory)
 	CREATE_MESSAGE(TARGET_BOSS);
 	CREATE_MESSAGE(TARGET_UI_OPTION);
 	CREATE_MESSAGE(TARGET_UI_PAUSE);
+	CREATE_MESSAGE(TARGET_UI_MANUAL);
+	CREATE_MESSAGE(TARGET_UI_CREDIT);
 	CREATE_MESSAGE(TARGET_UI_BOSS);
 }
 
@@ -111,6 +116,9 @@ void MessageManager::SEND_Message(int Target, int MessageType, void* Data)
 		break;
 	case TARGET_CAMERA_MANAGER:
 		SEND_CAMERA_Message(MessageType, Data);
+		break;
+	case TARGET_STORE:
+		SEND_STORE_Message(MessageType, Data);
 		break;
 	case TARGET_GLOBAL:
 		SEND_GLOBAL_Message(MessageType, Data);
@@ -144,8 +152,8 @@ GameObject* MessageManager::CREATE_MESSAGE(int CREATE_TYPE)
 	case TARGET_GATE_OUT:
 		return mFactory->CreateGate_Out();
 	case TARGET_GATE_MANAGER:
-		Object	= mFactory->CreateGate_Manager();
-		mGate	= Object->GetComponent<GateDoor>();
+		Object = mFactory->CreateGate_Manager();
+		mGate = Object->GetComponent<GateDoor>();
 		return Object;
 	case TARGET_CAMERA_MANAGER:
 		Object = mFactory->CreateCameraManager();
@@ -172,7 +180,9 @@ GameObject* MessageManager::CREATE_MESSAGE(int CREATE_TYPE)
 		mStore = Object->GetComponent<UIStore>();
 		return Object;
 	case TARGET_STORE:
-		return  mFactory->CreateStore();
+		Object = mFactory->CreateStore();
+		mStoreMachine = Object->GetComponent<Store>();
+		return Object;
 	case TARGET_UI_OPTION:
 		Object = mFactory->CreateUIOption();
 		mOption = Object->GetComponent<UIOption>();
@@ -181,6 +191,13 @@ GameObject* MessageManager::CREATE_MESSAGE(int CREATE_TYPE)
 		Object = mFactory->CreateUIPause();
 		mPause = Object->GetComponent<UIPause>();
 		return Object;
+	case TARGET_UI_MANUAL:
+		Object = mFactory->CreateUIManual();
+		mManual = Object->GetComponent<UIManual>();
+		return Object;
+	case TARGET_UI_CREDIT:
+		Object = mFactory->CreateUICredit();
+		mCredit = Object->GetComponent<UICredit>();
 	case TARGET_UI_BOSS:
 		Object = mFactory->CreateUIBoss();
 		mBossUI = Object->GetComponent<UIBoss>();
@@ -238,9 +255,6 @@ void MessageManager::SEND_UI_Message(int MessageType, void* Data)
 	case MESSAGE_UI_FADE_OUT:
 		mEffect->Fade_OUT(Data);
 		break;
-	case MESSAGE_UI_STORE_ACTIVE:
-		mStore->Set_Store_Active(*(reinterpret_cast<bool*>(Data)));
-		break;
 	case MESSAGE_UI_PLAYER_ACTIVE:
 		mCanvas->Set_InGameUI_Active(*(reinterpret_cast<bool*>(Data)));
 		break;
@@ -285,22 +299,32 @@ void MessageManager::SEND_CAMERA_Message(int MessageType, void* Data)
 	///카메라 메세지 모음
 	switch (MessageType)
 	{
-	case MESSAGE_CAMERA_CINEMATIC_GAME_START:
-		break;
-	case MESSAGE_CAMERA_CINEMATIC_GAME_END:
-		break;
-	case MESSAGE_CAMERA_CINEMATIC_BOSS_START:
-		break;
-	case MESSAGE_CAMERA_CINEMATIC_BOSS_END:
-		//mCameraManager->SetCinematic(MessageType,*(reinterpret_cast<std::string*>(Data)));
-		break;
-	case MESSAGE_CAMERA_CINEMATIC_TITLE:
+	case MESSAGE_CAMERA_CINEMATIC:
 		mCameraManager->SetCinematic(MessageType, *(reinterpret_cast<std::string*>(Data)));
+		break;
+	case MESSAGE_CAMERA_CINEMATIC_GAME_START:
+	case MESSAGE_CAMERA_CINEMATIC_GAME_END:
+	case MESSAGE_CAMERA_CINEMATIC_BOSS_START:
+	case MESSAGE_CAMERA_CINEMATIC_BOSS_END:
+	case MESSAGE_CAMERA_CINEMATIC_TITLE:
+		mCameraManager->SetCinematic(MessageType);
 		break;
 	case MESSAGE_CAMERA_CHANGE_DEBUG:
 		break;
 	case MESSAGE_CAMERA_CHANGE_PLAYER:
 		mCameraManager->Change(MessageType);
+		break;
+	}
+}
+
+void MessageManager::SEND_STORE_Message(int MessageType, void* Data)
+{
+	switch (MessageType)
+	{
+	case MESSAGE_STORE_EXIT:
+		mStoreMachine->StoreActive(MessageType);
+		break;
+	default:
 		break;
 	}
 }
@@ -319,9 +343,22 @@ void MessageManager::SEND_GLOBAL_Message(int MessageType, void* Data)
 		TitleStart();
 		break;
 	case MESSAGE_GLOBAL_OPTION:		//옵션
-		OptionStart(*(int*)(Data));
+		OptionStart(*reinterpret_cast<int*>(Data));
 		break;
-	case MESSAGE_GLOBAL_RESUME:		//일시정지
+	case MESSAGE_GLOBAL_PAUSE:		//일시정지
+		PauseStart();
+		break;
+	case MESSAGE_GLOBAL_RESUME:		//게임 복귀
+		InGameResume();
+		break;
+	case MESSAGE_GLOBAL_MANUAL:		//메뉴얼
+		ManualStart();
+		break;
+	case MESSAGE_GLOBAL_STORE:		//상점
+		StoreStart();
+		break;
+	case MESSAGE_GLOBAL_CREDIT:		//크래딧
+		CreditStart();
 		break;
 	}
 }
@@ -332,10 +369,19 @@ void MessageManager::InGameStart()
 	mCanvas->Set_InGameUI_Active(true);
 	mOption->SetOptionUIActive(false);
 	mPause->SetPauseUIActive(false);
+	mManual->SetManualUIActive(false);
+	mCredit->SetCreditUIActive(false);
+	mStore->Set_Store_Active(false);
 
 	//카메라,플레이어 생성
 	SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_ACTIVE_TRUE);
 	SEND_Message(TARGET_CAMERA_MANAGER, MESSAGE_CAMERA_CHANGE_PLAYER);
+
+	// 플레이어 키상태 설정..
+	mPlayer->SetKeyState(true);
+
+	// 마우스 고정..
+	mCameraManager->SetMouseFix(true);
 
 	//사운드 재생
 	Sound_Play_BGM("InGame_OutDoor");
@@ -347,12 +393,20 @@ void MessageManager::TitleStart()
 	mCanvas->Set_InGameUI_Active(false);
 	mOption->SetOptionUIActive(false);
 	mPause->SetPauseUIActive(false);
+	mManual->SetManualUIActive(false);
+	mCredit->SetCreditUIActive(false);
+	mStore->Set_Store_Active(false);
 
+	// 플레이어 키상태 설정..
+	mPlayer->SetKeyState(false);
+
+	// 마우스 고정..
+	mCameraManager->SetMouseFix(false);
 
 	//SEND_Message(TARGET_UI,)
 	//SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_ACTIVE_FALSE);
 
-	//Sound_Play_BGM("Title");
+	Sound_Play_BGM("Title");
 }
 
 void MessageManager::OptionStart(int prev_state)
@@ -361,7 +415,18 @@ void MessageManager::OptionStart(int prev_state)
 	mCanvas->Set_InGameUI_Active(false);
 	mPause->SetPauseUIActive(false);
 	mOption->SetOptionUIActive(true);
+	mManual->SetManualUIActive(false);
+	mCredit->SetCreditUIActive(false);
+	mStore->Set_Store_Active(false);
+
+	// 이전 상태 설정..
 	mOption->SetPrevTarget(prev_state);
+
+	// 플레이어 키상태 설정..
+	mPlayer->SetKeyState(false);
+
+	// 마우스 고정..
+	mCameraManager->SetMouseFix(false);
 }
 
 void MessageManager::PauseStart()
@@ -370,6 +435,32 @@ void MessageManager::PauseStart()
 	mCanvas->Set_InGameUI_Active(false);
 	mOption->SetOptionUIActive(false);
 	mPause->SetPauseUIActive(true);
+	mManual->SetManualUIActive(false);
+	mCredit->SetCreditUIActive(false);
+	mStore->Set_Store_Active(false);
+
+	// 플레이어 키상태 설정..
+	mPlayer->SetKeyState(false);
+
+	// 마우스 고정..
+	mCameraManager->SetMouseFix(false);
+}
+
+void MessageManager::InGameResume()
+{
+	mTiltle->SetTitleUIActive(false);
+	mCanvas->Set_InGameUI_Active(true);
+	mOption->SetOptionUIActive(false);
+	mPause->SetPauseUIActive(false);
+	mManual->SetManualUIActive(false);
+	mCredit->SetCreditUIActive(false);
+	mStore->Set_Store_Active(false);
+
+	// 플레이어 키상태 설정..
+	mPlayer->SetKeyState(true);
+
+	// 마우스 고정..
+	mCameraManager->SetMouseFix(true);
 }
 
 void MessageManager::InGameEnd()
@@ -382,9 +473,53 @@ void MessageManager::InGameEnd()
 	PostQuitMessage(WM_QUIT);
 }
 
+void MessageManager::ManualStart()
+{
+	mTiltle->SetTitleUIActive(false);
+	mCanvas->Set_InGameUI_Active(false);
+	mOption->SetOptionUIActive(false);
+	mPause->SetPauseUIActive(false);
+	mManual->SetManualUIActive(true);
+	mCredit->SetCreditUIActive(false);
+	mStore->Set_Store_Active(false);
 
+	// 플레이어 키상태 설정..
+	mPlayer->SetKeyState(false);
 
+	// 마우스 고정..
+	mCameraManager->SetMouseFix(false);
+}
 
+void MessageManager::StoreStart()
+{
+	mTiltle->SetTitleUIActive(false);
+	mCanvas->Set_InGameUI_Active(false);
+	mOption->SetOptionUIActive(false);
+	mPause->SetPauseUIActive(false);
+	mManual->SetManualUIActive(false);
+	mCredit->SetCreditUIActive(false);
+	mStore->Set_Store_Active(true);
 
+	// 플레이어 키상태 설정..
+	mPlayer->SetKeyState(false);
 
+	// 마우스 고정..
+	mCameraManager->SetMouseFix(false);
+}
 
+void MessageManager::CreditStart()
+{
+	mTiltle->SetTitleUIActive(false);
+	mCanvas->Set_InGameUI_Active(false);
+	mOption->SetOptionUIActive(false);
+	mPause->SetPauseUIActive(false);
+	mManual->SetManualUIActive(false);
+	mCredit->SetCreditUIActive(true);
+	mStore->Set_Store_Active(false);
+
+	// 플레이어 키상태 설정..
+	mPlayer->SetKeyState(false);
+
+	// 마우스 고정..
+	mCameraManager->SetMouseFix(false);
+}

@@ -110,9 +110,9 @@ void ParticleFactory::Initialize()
 	// 시간 조절
 	/// MonsterExplode
 	KeyList MonsterExplode_Key;
-	MonsterExplode_Key.push_back({ "MonsterExplode_dot",			0.0f });
-	MonsterExplode_Key.push_back({ "MonsterExplode_smokeExplode",	0.0f });
 	MonsterExplode_Key.push_back({ "MonsterExplode_smokeFloor",		0.0f });
+	MonsterExplode_Key.push_back({ "MonsterExplode_dot",			0.25f });
+	MonsterExplode_Key.push_back({ "MonsterExplode_smokeExplode",	0.25f });
 
 	// 두번 때림
 	/// PlayerAttack

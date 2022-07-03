@@ -20,7 +20,7 @@ PlayerCamera::PlayerCamera()
 	Y_Radian = 0;
 
 	CamOffSet = { 0,1.75f,0 };
-	MouseCursor = true;
+	MouseCursor = false;
 }
 
 PlayerCamera::~PlayerCamera()
@@ -49,7 +49,7 @@ void PlayerCamera::SetUp()
 	//PastY = PastY / 2;
 	//NowX = PastX;
 	//NowY = PastY;
-	SetCursorPos(960, 540);
+	//SetCursorPos(960, 540);
 	//SetMousePosCenter();
 	
 }
@@ -57,7 +57,9 @@ void PlayerCamera::SetUp()
 void PlayerCamera::Update()
 {
 	float DTime = GetDeltaTime();
-	if (GetKeyDown(VK_ESCAPE))
+
+	// 디버깅용..
+	if (GetKeyDown(VK_TAB))
 	{
 		if (MouseCursor == true)
 		{
@@ -72,6 +74,7 @@ void PlayerCamera::Update()
 	}
 
 	if (MouseCursor == false) { return; }
+
 	POINT Pos;
 	::GetCursorPos(&Pos);
 
@@ -119,12 +122,23 @@ void PlayerCamera::Update()
 
 	//현재 윈도우 사이즈를 가져옴
 	SetCursorPos(960, 540);
-	//(960, 540);
 }
 
 void PlayerCamera::Debug()
 {
 	//DebugPrint("X : %.2f", mTransform->GetRotation().x);
 	//DebugPrint("Y : %.2f", mTransform->GetRotation().y);
+}
+
+void PlayerCamera::SetMouseFix(bool Active)
+{
+	MouseCursor = Active;
+
+	if (MouseCursor)
+	{
+		SetCursorPos(960, 540);
+	}
+
+	ShowMouseCursor(Active ^ true);
 }
 

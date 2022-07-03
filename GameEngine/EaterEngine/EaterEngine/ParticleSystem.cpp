@@ -491,16 +491,36 @@ void ParticleSystem::Stop()
 	m_TickTime = 0.0f;
 	m_NowPlayTime = 0.0f;
 	m_NowDelayTime = 0.0f;
-
-	for (int i = 0; i < m_Particles.size(); i++)
-	{
-		m_Particles[i]->Stop();
-	}
 }
 
 void ParticleSystem::SetNextParticle(ParticleSystem* particle)
 {
 	m_NextParticles.push_back(particle);
+}
+
+void ParticleSystem::SetScale(float& scale)
+{
+	m_SystemDesc->Scale = { scale, scale };
+}
+
+void ParticleSystem::SetScale(float&& scale)
+{
+	m_SystemDesc->Scale = { scale, scale };
+}
+
+void ParticleSystem::SetScale(float& x, float& y)
+{
+	m_SystemDesc->Scale = { x,y };
+}
+
+void ParticleSystem::SetScale(float&& x, float&& y)
+{
+	m_SystemDesc->Scale = { x,y };
+}
+
+void ParticleSystem::SetScale(DirectX::SimpleMath::Vector2 scale)
+{
+	m_SystemDesc->Scale = scale;
 }
 
 std::string ParticleSystem::GetMeshName()
@@ -678,6 +698,7 @@ void ParticleSystem::AddParticle()
 		// Particle Data ¼³Á¤..
 		OneParticle* newParticleData = new OneParticle();
 		newParticle->m_ParticleData = newParticleData;
+		newParticle->Stop();
 
 		// Particle List »ðÀÔ..
 		m_Particles.push_back(newParticle);

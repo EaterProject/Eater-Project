@@ -18,6 +18,7 @@ public:
 
 public:
 	EATER_ENGINEDLL void SetActive(bool enable);
+	EATER_ENGINEDLL void SetDraw(bool enable);
 	EATER_ENGINEDLL void SetValueRange(float min, float max);
 
 	EATER_ENGINEDLL void SetPivot(PIVOT_TYPE pivot_type);

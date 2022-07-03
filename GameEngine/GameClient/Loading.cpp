@@ -54,6 +54,8 @@ void Loading::ThreadFunction()
 	Load("../Assets/Texture/UI/InGame");
 	Load("../Assets/Texture/UI/Setting");
 	Load("../Assets/Texture/UI/Pause");
+	Load("../Assets/Texture/UI/Manual");
+	Load("../Assets/Texture/UI/Credit");
 
 	Load("../Assets/Model/Animation");
 	Load("../Assets/Model/MeshBuffer");

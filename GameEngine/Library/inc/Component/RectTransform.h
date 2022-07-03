@@ -72,6 +72,7 @@ public:
 
 public:
 	EATER_ENGINEDLL RectPoint* GetRectPoint();
+	EATER_ENGINEDLL DirectX::SimpleMath::Vector2 GetPosition();
 
 private:
 	void Resize(int width, int height);

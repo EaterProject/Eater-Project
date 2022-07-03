@@ -17,6 +17,8 @@ typedef struct PARTICLE_SHARE_DESC
 
 	DirectX::SimpleMath::Vector4 LifeTimeMinColor = DirectX::SimpleMath::Vector4(1.0f, 1.0f, 1.0f, 1.0f);
 	DirectX::SimpleMath::Vector4 LifeTimeMaxColor = DirectX::SimpleMath::Vector4(1.0f, 1.0f, 1.0f, 1.0f);
+
+	DirectX::SimpleMath::Vector2 Scale = DirectX::SimpleMath::Vector2(1.0f, 1.0f);
 }PARTICLE_SHARE_DESC;
 
 typedef struct PARTICLE_DESC

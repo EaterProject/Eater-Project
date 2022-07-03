@@ -81,17 +81,6 @@ void UIPause::SetPauseUIActive(bool active)
 	{
 		// 전체 화면 블러..
 		SetFullScreenBlur(true, 2);
-
-		// 시간 정지..
-		SetSlowDeltaTime(0.0f);
-	}
-	else
-	{
-		// 전체 화면 블러 해제..
-		SetFullScreenBlur(false);
-
-		// 시간 재생..
-		SetSlowDeltaTime(1.0f);
 	}
 }
 
@@ -111,8 +100,13 @@ void UIPause::SetResumeClick()
 	Sound_Play_SFX("UI_Button_Click");
 
 	/// 게임상으로 복귀
-	// Pasue UI Off..
-	SetPauseUIActive(false);
+	MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_RESUME);
+
+	// 전체 화면 블러 해제..
+	SetFullScreenBlur(false);
+
+	// 혹시 모르니 모든 키 리셋..
+	KeyReset();
 }
 
 void UIPause::SetOptionIn()
@@ -130,13 +124,10 @@ void UIPause::SetOptionClick()
 {
 	Sound_Play_SFX("UI_Button_Click");
 
-	int target = MESSAGE_GLOBAL_RESUME;
+	int target = MESSAGE_GLOBAL_PAUSE;
 
 	/// 옵션으로 이동
 	MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_OPTION, &target);
-
-	// 전체 화면 블러 해제..
-	SetFullScreenBlur(false);
 }
 
 void UIPause::SetExitIn()
@@ -156,10 +147,4 @@ void UIPause::SetExitClick()
 
 	/// 게임 종료
 	MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_GAMEEND);
-
-	// 전체 화면 블러 해제..
-	SetFullScreenBlur(false);
-
-	// 시간 재생..
-	SetSlowDeltaTime(1.0f);
 }

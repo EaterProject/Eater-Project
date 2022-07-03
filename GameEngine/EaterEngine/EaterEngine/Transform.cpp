@@ -419,6 +419,14 @@ void Transform::SetScale(float scale)
 	Scale.z = scale;
 }
 
+void Transform::SetScale(float&& X, float&& Y)
+{
+	IsUpdate = true;
+
+	Scale.x = X;
+	Scale.y = Y;
+}
+
 void Transform::AddScale_X(float scale)
 {
 	IsUpdate = true;
@@ -552,6 +560,31 @@ void Transform::SetParent(Transform* mParent)
 	IsUpdate = true;
 
 	Parent = mParent;
+}
+
+void Transform::DisconnectParent()
+{
+	if (Parent == nullptr) return;
+
+	IsUpdate = true;
+
+	Parent->DisconnectChild(this->gameobject);
+
+	Parent = nullptr;
+}
+
+void Transform::DisconnectChild(GameObject* obj)
+{
+	IsUpdate = true;
+
+	for (auto& child : ChildList)
+	{
+		if (child == obj->transform)
+		{
+			obj->ChoiceParent(nullptr);
+			break;
+		}
+	}
 }
 
 Transform* Transform::GetParent()

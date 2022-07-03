@@ -228,11 +228,19 @@ void ImageFont::SetLayer(int Layer)
 	}
 }
 
+void ImageFont::SetDraw(bool IsActive)
+{
+	for (int i = 0; i < (int)ImageList.size(); i++)
+	{
+		ImageList[i]->SetDraw(IsActive);
+	}
+}
+
 void ImageFont::SetActive(bool IsActive)
 {
 	for (int i = 0; i < (int)ImageList.size(); i++)
 	{
-		ImageList[i]->gameobject->SetActive(IsActive);
+		ImageList[i]->SetActive(IsActive);
 	}
 }
 

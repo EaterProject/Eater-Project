@@ -33,6 +33,7 @@ public:
 	void Update() override;
 	
 	void SetMessageRECV(int Type, void* Data);
+	void SetKeyState(bool Active);
 
 	static Transform* GetPlayerTransform();
 	static bool GetAttackState();
@@ -95,6 +96,7 @@ private:
 	bool IsMove				= false;
 	bool IsHit				= false;
 	bool IsCreate			= false;
+	bool IsKeyUpdate		= false;
 
 	static bool		IsAttackTime;
 	static int		ComboCount;

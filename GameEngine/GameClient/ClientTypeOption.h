@@ -24,7 +24,9 @@
 #define TARGET_STORE 20
 #define TARGET_UI_OPTION 21
 #define TARGET_UI_PAUSE 22
-#define TARGET_UI_BOSS 23
+#define TARGET_UI_MANUAL 23
+#define TARGET_UI_CREDIT 24
+#define TARGET_UI_BOSS 25
 
 //Player Message
 #define MESSAGE_PLAYER_HIT    0				//플레이어가 맞았다
@@ -40,6 +42,10 @@
 #define MESSAGE_GATE_UNLOCK 2				//게이트 잠금 풀기		//인자 값 : int
 #define MESSAGE_GATE_LOCK 3					//게이트 잠금 열기		//인자 값 : int
 
+//Store Message
+#define MESSAGE_STORE_EXIT  0				//스토어 닫기
+#define MESSAGE_STORE_PAUSE  1				//스토어 일시정지 상태
+
 //UI Message
 #define MESSAGE_UI_COMBO 0					//콤보 폰트 값			//인자 값 : int
 #define MESSAGE_UI_HP_NOW 1					//체력 현재 폰트 값		//인자 값 : int
@@ -51,30 +57,35 @@
 #define MESSAGE_UI_MONSTER_UI_UPDATE 7		//몬스터 UI를 업데이트	//인자 값 : MONSTER_EMAGIN 구조체
 #define MESSAGE_UI_FADE_IN 8				//페이드 인
 #define MESSAGE_UI_FADE_OUT 9				//페이드 아웃
-#define MESSAGE_UI_STORE_ACTIVE	10			//UI 스토어 엑티브
-#define MESSAGE_UI_PLAYER_ACTIVE 11			//UI 플레이어 UI
-#define MESSAGE_UI_PLAYER_HIT 12			//플레이어 피격
+#define MESSAGE_UI_PLAYER_ACTIVE 10			//UI 플레이어 UI
+#define MESSAGE_UI_PLAYER_HIT 11			//플레이어 피격
+#define MESSAGE_UI_STORE_ACTIVE	12			//UI 스토어 엑티브
 #define MESSAGE_UI_BOSS_HP 13
 #define MESSAGE_UI_BOSS_HP_MAX 14
 #define MESSAGE_UI_BOSS_ACTIVE 15
 
 
 //Camera Message
-#define MESSAGE_CAMERA_CINEMATIC_GAME_START 0				//시네마틱 실행
-#define MESSAGE_CAMERA_CINEMATIC_BOSS_START 1				//시네마틱 실행
-#define MESSAGE_CAMERA_CINEMATIC_BOSS_END 2					//시네마틱 실행
-#define MESSAGE_CAMERA_CINEMATIC_GAME_END 3					//시네마틱 실행
-#define MESSAGE_CAMERA_CINEMATIC_TITLE 4					//시네마틱 실행
+#define MESSAGE_CAMERA_CINEMATIC 0							//시네마틱 실행
+#define MESSAGE_CAMERA_CINEMATIC_GAME_START 1				//시네마틱 실행
+#define MESSAGE_CAMERA_CINEMATIC_BOSS_START 2				//시네마틱 실행
+#define MESSAGE_CAMERA_CINEMATIC_BOSS_END 3					//시네마틱 실행
+#define MESSAGE_CAMERA_CINEMATIC_GAME_END 4					//시네마틱 실행
+#define MESSAGE_CAMERA_CINEMATIC_TITLE 5					//시네마틱 실행
 
-#define MESSAGE_CAMERA_CHANGE_PLAYER 5						//플레이어 카메라로 변환	//인자 값 : 없음
-#define MESSAGE_CAMERA_CHANGE_DEBUG 6						//디버그 카메라로 변환	//인자 값 : 없음
+#define MESSAGE_CAMERA_CHANGE_PLAYER 6						//플레이어 카메라로 변환	//인자 값 : 없음
+#define MESSAGE_CAMERA_CHANGE_DEBUG 7						//디버그 카메라로 변환	//인자 값 : 없음
 
 //Global Message
 #define MESSAGE_GLOBAL_GAMESTART 0							//게임이 시작되었다
 #define MESSAGE_GLOBAL_GAMEEND	1							//게임이 종료되었다
 #define MESSAGE_GLOBAL_TITLE 2								//타이틀
 #define MESSAGE_GLOBAL_OPTION 3								//옵션
-#define MESSAGE_GLOBAL_RESUME 4								//일시정지
+#define MESSAGE_GLOBAL_PAUSE 4								//일시정지
+#define MESSAGE_GLOBAL_RESUME 5								//게임복귀
+#define MESSAGE_GLOBAL_MANUAL 6								//조작법
+#define MESSAGE_GLOBAL_STORE 7								//상점
+#define MESSAGE_GLOBAL_CREDIT 8								//엔딩 크래딧
 
 
 #define MONSTER_COLOR_RED 0

@@ -76,7 +76,7 @@ void Player::Awake()
 	mTransform	= gameobject->GetTransform();
 	mMeshFilter = gameobject->GetComponent<MeshFilter>();
 	mAnimation	= gameobject->GetComponent<AnimationController>();
-	
+
 	//무기 오브젝트 가져오기
 	WeaponObject = Instance();
 	WeaponObject->AddComponent<MeshFilter>()->SetModelName("Player_Weapon");
@@ -187,6 +187,11 @@ void Player::SetMessageRECV(int Type, void* Data)
 	}
 }
 
+void Player::SetKeyState(bool Active)
+{
+	IsKeyUpdate = Active;
+}
+
 Transform* Player::GetPlayerTransform()
 {
 	return mTransform;
@@ -228,6 +233,8 @@ void Player::Healing(float HealingPower)
 
 void Player::PlayerKeyinput()
 {
+	if (IsKeyUpdate == false) return;
+
 	if (mCameraTR == nullptr) 
 	{
 		DebugPrint("카메라 연결 안되어있음");

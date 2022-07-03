@@ -43,6 +43,8 @@ public:
 	GameObject* CreateUIStore();		//상점 UI
 	GameObject* CreateUIOption();		//옵션 UI
 	GameObject* CreateUIPause();		//일시정지 UI
+	GameObject* CreateUIManual();		//메뉴얼 UI
+	GameObject* CreateUICredit();		//크래딧 UI
 	GameObject* CreateUIBoss();
 
 	GameObject* CreateGate_In();		//게이트 객체 생성

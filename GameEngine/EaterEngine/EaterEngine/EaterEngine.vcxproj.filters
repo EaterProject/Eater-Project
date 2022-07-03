@@ -399,6 +399,9 @@
     <ClInclude Include="Export\ParticleController.h">
       <Filter>소스 파일\Component\ParticleSystem\Controller</Filter>
     </ClInclude>
+    <ClInclude Include="Export\CinematicCamera.h">
+      <Filter>소스 파일\Component\Camera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -571,6 +574,9 @@
     </ClCompile>
     <ClCompile Include="ParticleController.cpp">
       <Filter>소스 파일\Component\ParticleSystem\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="CinematicCamera.cpp">
+      <Filter>소스 파일\Component\Camera</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

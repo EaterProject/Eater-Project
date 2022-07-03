@@ -164,6 +164,7 @@ void DHSound::VolumeSet(Sound_Category _Sound_Category, float _Set_Volume)
 	_Vol = GetVFP(_Sound_Category);
 
 	_Vol->Volume = _Set_Volume;
+
 	_CG->setVolume(_Set_Volume);
 }
 
