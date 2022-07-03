@@ -119,16 +119,26 @@ enum class BOSS_STATE : int
 	CHASE_ATTACK_PLAY = 8,	//추적 발사체 발사
 	CHASE_ATTACK_END = 9,	//추적 발사체 끝
 
-	RENDOM_ATTACK_START = 10,	//장판형 발사체 준비
-	RENDOM_ATTACK_PLAY = 11,	//장판형 발사체 발사
-	RENDOM_ATTACK_END = 12,		//장판형 발사체 발사
-	RENDOM_ATTACK_RESET = 13,	//장판형 발사체 발사
+	RENDOM_ATTACK_START		= 10,	//장판형 발사체 준비
+	RENDOM_ATTACK_PLAY		= 11,	//장판형 발사체 발사
+	RENDOM_ATTACK_END		= 12,		//장판형 발사체 발사
+	RENDOM_ATTACK_RESET		= 13,	//장판형 발사체 발사
+	RENDOM_ATTACK_ADDSKILL	= 14,	//장판형 발사체 발사
 
-	TELEPORT_READY = 14,	//보스 순간이동 준비
-	TELEPORT_START = 15,	//보스 순간이동 
+	TELEPORT_READY = 15,	//보스 순간이동 준비
+	TELEPORT_START = 16,	//보스 순간이동 
 
-	CREATE_FRIEND = 16,	//분신 소환
-	HIT = 17,	//맞았을떄
+	CREATE_FRIEND	= 17,	//분신 소환
+	HIT				= 18,	//맞았을떄
+	PHASE_UP_START	= 19,	//페이즈업
+	PHASE_UP_END	= 20,	//페이즈업
+
+	MISSILE_START	=21,
+	MISSILE_PLAY	=22,
+	MISSILE_END		=23,
+
+
+	RENDOM_ATTACK_BIG = 24,
 };
 
 enum class PLAYER_STATE : int

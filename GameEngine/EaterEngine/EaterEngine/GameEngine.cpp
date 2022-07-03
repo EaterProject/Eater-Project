@@ -709,6 +709,11 @@ void GameEngine::Sound_VolumeSet_BGM(float volume)
 	mSoundManager->VolumeSet(Sound_Category::BGM, volume);
 }
 
+void GameEngine::Sound_STOP_BGM()
+{
+	mSoundManager->StopSound(Sound_Category::BGM);
+}
+
 void GameEngine::Sound_VolumeUP_BGM()
 {
 	mSoundManager->VolumeUp(Sound_Category::BGM);

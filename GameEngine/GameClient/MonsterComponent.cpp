@@ -316,6 +316,7 @@ void MonsterComponent::Dead()
 		if (mMF_Setting.EndDissolve() == false) 
 		{
 			gameobject->SetActive(false);
+			Destroy(gameobject);
 		}
 	}
 	else
