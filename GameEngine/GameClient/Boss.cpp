@@ -128,7 +128,6 @@ void Boss::SetUp()
 	//위치값 설정
 	mTransform->SetPosition(-45.09f, 6.8f, 70.0f);
 	StartPoint = { -44.0f,6.0f,62.0f };
-	mTransform->SetScale(1.5f, 1.5f, 1.5f);
 
 	//스킬 포인트의 위치를 생성한다
 	CreateSkillPoint();
@@ -142,6 +141,8 @@ void Boss::Start()
 
 	GameObject* Hand = gameobject->GetChildBone("t1.L");
 	mParticle->gameobject->ChoiceParent(Hand);
+
+	mTransform->SetScale(1.7f, 1.7f, 1.7f);
 }
 
 void Boss::Update()
@@ -203,7 +204,7 @@ void Boss::Update()
 		Boss_Hit();
 		break;
 	}
-
+	BossColorUpdate();
 	mAnimation->Choice(ANIMATION_NAME[mState], ANIMATION_TIME[mState]);
 	mAnimation->Play();
 }
@@ -226,13 +227,22 @@ void Boss::OnTriggerStay(GameObject* Obj)
 		//플레이어 상태가 공격이거나,스킬상태일때
 		if (Player::GetAttackState() == true)
 		{
-			if (Player::GetPlayerCombo() >= 30)
+			if (Player::GetPlayerColor() == ColorType)
 			{
-				HP -= Player::GetPlayerPower();
-				MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_ATTACK_OK);
-				MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_COMBO_RESET);
-				MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_BOSS_HP,&HP);
-				SetState(BOSS_STATE::GROGGY_START);
+				if (Player::GetPlayerCombo() >= 30)
+				{
+					HP -= Player::GetPlayerComboPower();
+					MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_ATTACK_OK);
+					MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_COMBO_RESET);
+					MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_BOSS_HP, &HP);
+					SetState(BOSS_STATE::GROGGY_START);
+				}
+				else
+				{
+					HP -= Player::GetPlayerComboPower();
+					MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_ATTACK_OK);
+					MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_BOSS_HP, &HP);
+				}
 			}
 			else
 			{
@@ -240,8 +250,8 @@ void Boss::OnTriggerStay(GameObject* Obj)
 				MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_ATTACK_OK);
 				MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_BOSS_HP, &HP);
 			}
-
 			Sound_Play_SFX("Monster_Hit");
+			IsUpdateColor = true;
 			IsHit = true;
 		}
 	}
@@ -255,18 +265,28 @@ void Boss::OnTriggerStay(GameObject* Obj)
 
 void Boss::Boss_Idle()
 {
+	if (FirstState() == true)
+	{
+		if (ColorType == 0)
+		{
+			mMF_Setting.SetLimlightSetting(1.0f, 1.0f, 1.0f, 0.5f, 0.5f);
+			mMF_Setting.SetEmissiveSetting(231, 39, 9, 2.9f);
+		}
+		else
+		{
+			mMF_Setting.SetLimlightSetting(1.0f, 1.0f, 1.0f, 0.5f, 0.5f);
+			mMF_Setting.SetEmissiveSetting(40, 92, 255, 2.9f);
+		}
+	}
+	mMF_Setting.LimLightUpdate(1);
 	GroundCheck();
 	PlayerDistanceCheck();
 
 	if (mTransform->GetPosition().y > PositionY)
 	{
-		mTransform->AddPosition_Y(-GetDeltaTime());
-	}
-	else
-	{
 		mTransform->SetPosition_Y(PositionY);
 	}
-
+	
 	SkillCheck();
 }
 
@@ -310,6 +330,7 @@ void Boss::Boss_Groggy_End()
 	int Now = mAnimation->GetNowFrame();
 	if (Now >= End)
 	{
+		ColorType == 0 ? ColorType = 1 : ColorType = 0;
 		SetState(BOSS_STATE::IDLE);
 	}
 }
@@ -340,15 +361,6 @@ void Boss::Boss_Teleport_Ready()
 
 void Boss::Boss_Teleport_Start()
 {
-	if (FirstState() == true)
-	{
-
-	}
-	else
-	{
-
-	}
-
 
 	if (FriendIndex == -1)
 	{
@@ -371,7 +383,6 @@ void Boss::Boss_Teleport_Start()
 
 void Boss::Boss_Create()
 {
-
 	int Now = mAnimation->GetNowFrame();
 	int End = mAnimation->GetEndFrame();
 
@@ -382,7 +393,6 @@ void Boss::Boss_Create()
 		//플레이어와 가장 먼 위치에 생성
 		float	Max = 0;
 		int		Index = 0;
-		//스킬 포인트 위치를 새롭게 구한다
 		for (int i = 0; i < 5; i++)
 		{
 			int Dir = mPlayerTR->GetDistance(SkillPoint[i]);
@@ -539,10 +549,6 @@ void Boss::Boss_Rendom_Attack_Ready(int Phase)
 	if (Now >= End)
 	{
 		SetState(BOSS_STATE::RENDOM_ATTACK_PLAY);
-	}
-	else
-	{
-		mTransform->AddPosition_Y(GetDeltaTime());
 	}
 }
 
@@ -794,36 +800,6 @@ void Boss::SkillCheck()
 		bool Active = true;
 		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_BOSS_ACTIVE, &Active);
 	}
-
-	if (GetKeyDown(VK_NUMPAD7))
-	{
-		SetState(BOSS_STATE::TELEPORT_READY);
-	}
-
-
-	if (GetKeyDown(VK_NUMPAD4))
-	{
-		SetState(BOSS_STATE::CHASE_ATTACK_READY);
-	}
-
-	if (GetKeyDown(VK_NUMPAD5))
-	{
-		if (PlayerDistance < AttackRange)
-		{
-			//근접 공격이 가능한 상태
-			mTransform->Slow_Y_Rotation(mPlayerTR->GetPosition(), 150, false);
-			if (IsRight == false)
-			{
-				SetState(BOSS_STATE::CLOSER_ATTACK_L);
-				IsRight = true;
-			}
-			else
-			{
-				SetState(BOSS_STATE::CLOSER_ATTACK_R);
-				IsRight = false;
-			}
-		}
-	}
 }
 
 void Boss::PushPlayer()
@@ -847,7 +823,8 @@ void Boss::PushPlayer()
 		
 		if (Hit == false)
 		{
-			mPlayerTR->SetPosition(Point);
+			//mPlayerTR->SetPosition(Point);
+			MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_PUSH, &Point);
 			break;
 		}
 		else
@@ -856,5 +833,38 @@ void Boss::PushPlayer()
 			Index += 3;
 		}
 	}
-	
+
+}
+
+void Boss::BossColorUpdate()
+{
+	if (IsUpdateColor == false) { return; }
+	static float DTime = 0.0f;
+	if (ColorType == 0)
+	{
+		if (DTime >= 1.0f)
+		{
+			mMF_Setting.SetLimlightSetting(1.0f, 1.0f, 1.0f, 0.5f, 0.5f);
+			mMF_Setting.SetEmissiveSetting(231, 39, 9, 2.9f);
+
+			IsUpdateColor = false;
+			DTime = 0;
+		}
+		else
+		{
+			DTime += GetDeltaTime();
+		}
+	}
+	else
+	{
+		if (DTime >= 1.0f)
+		{
+			IsUpdateColor = false;
+			DTime = 0;
+		}
+		else
+		{
+			DTime += GetDeltaTime();
+		}
+	}
 }

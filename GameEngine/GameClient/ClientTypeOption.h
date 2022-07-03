@@ -35,6 +35,7 @@
 #define MESSAGE_PLAYER_ACTIVE_TRUE 3		//플레이어 Active TRUE
 #define MESSAGE_PLAYER_ACTIVE_FALSE 4		//플레이어 Active FALSE
 #define MESSAGE_PLAYER_COMBO_RESET 5		//플레이어 콤보 리셋
+#define	MESSAGE_PLAYER_PUSH 6				//플레이어 밀림
 
 //Gate Message
 #define MESSAGE_GATE_OPEN  0				//게이트 열기			//인자 값 : int

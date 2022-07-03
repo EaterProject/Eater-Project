@@ -59,6 +59,7 @@ private:
 	void Player_Jump();					//점프
 	void Player_Hit(int HitPower);
 	bool Player_Move_Check();			//기본 상태 체크
+	void Player_Push();
 private:
 	std::string ANIMATION_NAME[8]	= { "", };
 	float		ANIMATION_SPEED[8]	= { 0.0f };
@@ -69,6 +70,8 @@ private:
 	Vector3 BasePos;					//(0,0,0)인 벡터
 	Vector3 WeaponOffsetRot;			//무기 충돌체 초기 오프셋
 	Vector3 AttackStartRot;				//공격을 시작했을때의 방향
+	Vector3 PushPoint;
+	Vector3	PushNomal;
 	bool Attack_Rot;					//공격회전을 한번만 구하기위해
 
 	//컨퍼넌트
@@ -97,6 +100,7 @@ private:
 	bool IsHit				= false;
 	bool IsCreate			= false;
 	bool IsKeyUpdate		= false;
+	bool IsPush				= false;
 
 	static bool		IsAttackTime;
 	static int		ComboCount;
