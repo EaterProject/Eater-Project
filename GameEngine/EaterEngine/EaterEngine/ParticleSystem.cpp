@@ -491,11 +491,6 @@ void ParticleSystem::Stop()
 	m_TickTime = 0.0f;
 	m_NowPlayTime = 0.0f;
 	m_NowDelayTime = 0.0f;
-
-	for (int i = 0; i < m_Particles.size(); i++)
-	{
-		m_Particles[i]->Stop();
-	}
 }
 
 void ParticleSystem::SetNextParticle(ParticleSystem* particle)
@@ -703,6 +698,7 @@ void ParticleSystem::AddParticle()
 		// Particle Data ¼³Á¤..
 		OneParticle* newParticleData = new OneParticle();
 		newParticle->m_ParticleData = newParticleData;
+		newParticle->Stop();
 
 		// Particle List »ðÀÔ..
 		m_Particles.push_back(newParticle);

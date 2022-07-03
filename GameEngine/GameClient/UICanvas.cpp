@@ -64,6 +64,14 @@ void UICanvas::Update()
 		{
 			MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_PAUSE);
 		}
+		if (GetKeyDown(VK_F1))
+		{
+			MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_MANUAL);
+		}
+		if (GetKeyDown(VK_F2))
+		{
+			MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_CREDIT);
+		}
 	}
 
 	Update_Combo_Check();
@@ -173,6 +181,12 @@ void UICanvas::Set_InGameUI_Active(bool Active)
 	Active_Dron_Text(Active);
 	Active_Player_Emagin_Color(Active);
 	Active_Player_Skill(Active);
+
+	for (int i = 0; i < 5; i++)
+	{
+		SetMonsterUIActive(i, Active);
+	}
+
 	MiniMapSystem::Get()->SetMiniMapActive(Active);
 	MiniMapSystem::Get()->SetIconListActive(Active);
 }
@@ -195,6 +209,7 @@ void UICanvas::Set_Monster_UI_ON(void* Emagin)
 	}
 	int MonsterIndex = GetActiveMonsterUI();
 	SetMonsterUIActive(MonsterIndex, true);
+	SetMonsterUIDraw(MonsterIndex, true);
 
 
 	MonsterTR_Back[MonsterIndex]->SetPivot(PIVOT_OBJECT);
@@ -237,6 +252,7 @@ void UICanvas::Set_Monster_UI_OFF(void* Emagin)
 			MonsterActiveUI[i] = false;
 
 			SetMonsterUIActive(i, false);
+			SetMonsterUIDraw(i, false);
 
 			MonsterTR_Back[i]->SetPositionObject(Object, Vector3(0.0, 20.0f, 0.0f));
 			MonsterTR_Front[i]->SetPositionObject(Object, Vector3(0.0, 20.0f, 0.0f));
@@ -612,6 +628,7 @@ void UICanvas::Create_Monster_UI()
 		MonsterFont[i]->SetPosition(-112, 0);
 
 		SetMonsterUIActive(i, false);
+		SetMonsterUIDraw(i, false);
 	}
 }
 
@@ -633,10 +650,18 @@ int UICanvas::GetActiveMonsterUI()
 
 void UICanvas::SetMonsterUIActive(int index, bool IsActive)
 {
-	Monster_Emagin_Back[index]->gameobject->SetActive(IsActive);
-	Monster_Emagin_Front[index]->gameobject->SetActive(IsActive);
+	Monster_Emagin_Back[index]->SetActive(IsActive);
+	Monster_Emagin_Front[index]->SetActive(IsActive);
 	MonsterFont[index]->SetActive(IsActive);
 	MonsterSlider[index]->SetActive(IsActive);
+}
+
+void UICanvas::SetMonsterUIDraw(int index, bool IsActive)
+{
+	Monster_Emagin_Back[index]->SetDraw(IsActive);
+	Monster_Emagin_Front[index]->SetDraw(IsActive);
+	MonsterFont[index]->SetDraw(IsActive);
+	MonsterSlider[index]->SetDraw(IsActive);
 }
 
 bool UICanvas::UseCheck(GameObject* Obj)

@@ -29,8 +29,15 @@ private:
 
 	//카메라 애니메이션 데이터
 	bool isAnimation;
-	float NowAnimationFrame = 0;
-	int	NowFrameIndex;
+
+	float NowTickTime;
+	float NowFrameRatio;
+
+	int PrevFrameIndex;
+	int	NextFrameIndex;
+
+	Vector3 NowPostion;
+	Vector3 NowRotation;
 
 	std::queue<CameraAnimation*> AnimationList;
 	CameraAnimation* Cam_Animation;

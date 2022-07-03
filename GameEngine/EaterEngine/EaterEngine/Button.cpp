@@ -8,7 +8,7 @@
 #include "Profiler/Profiler.h"
 
 Button::Button()
-	:m_State(OUT_BUTTON), m_Start(false)
+	:m_State(OUT_BUTTON), m_Start(false), m_Layer(0)
 {
 	Screen_Ratio = { 1.0f, 1.0f };
 
@@ -498,5 +498,23 @@ void Button::PushTextureList()
 	}
 
 	m_TextureListName.clear();
+}
+
+void Button::SetLayer(UINT order)
+{
+	if (m_Start)
+	{
+		m_Image->SetLayer(order);
+	}
+	else
+	{
+		m_Layer = order;
+		StartFunction += Eater::Bind(static_cast<void(Button::*)(void)>(&Button::SetLayer), this);
+	}
+}
+
+void Button::SetLayer()
+{
+	m_Image->SetLayer(m_Layer);
 }
 

@@ -1,5 +1,5 @@
 #EATER_PARTICLE
-@PlayTime 0.990000
+@PlayTime 1.000000
 @Loop 0
 @TextureName Smoke27
 @RenderType 0
@@ -24,7 +24,7 @@ $StartLifeTime 1 2
 $StartScale 1 2
 1.000000 1.000000
 $StartRotation 1 2
-360.000000 0.000000
+0.000000 360.000000
 $LifeForce 2 3
 -1.000000 0.000000 -1.000000
 1.000000 -1.000000 1.000000

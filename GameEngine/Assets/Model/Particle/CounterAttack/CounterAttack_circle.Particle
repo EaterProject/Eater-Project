@@ -1,5 +1,5 @@
 #EATER_PARTICLE
-@PlayTime 0.990000
+@PlayTime 0.500000
 @Loop 0
 @TextureName Circle17
 @RenderType 0
@@ -7,7 +7,7 @@
 @ScaleType 1
 @MaxParticle 1
 @DelayTime 0.000000
-@RateOverTime 1.000000
+@RateOverTime 4.000000
 @Strength 23.600000
 $Radius 1 3
 0.000000 0.000000 0.000000

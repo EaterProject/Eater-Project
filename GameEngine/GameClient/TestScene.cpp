@@ -54,7 +54,7 @@ void TestScene::Awake()
 	CreateMap();
 	//CreateMiniMap();
 	//CreateDissolve();
-	//CreateParicleController();
+	CreateParicleController();
 
 	//GameObject* ui = Instance();
 	//ui->AddComponent<UIOption>();
@@ -228,15 +228,15 @@ void TestScene::CreateParicleController()
 	///// 등록된 모든 파티클의 실행되는 시간 (랜덤값이라 최대시간을 구해놓고 반환함)
 	//float max_time = m_ParticleController->GetTotalPlayTime();
 
-	m_Boss = Instance();
-	m_BossFilter = m_Boss->AddComponent<MeshFilter>();
-	m_BossFilter->SetModelName("BossB+");
-	m_BossFilter->SetAnimationName("BossB+");
-	m_Boss->GetTransform()->SetPosition(0, 0, 0);
-	m_Boss->GetTransform()->SetScale(1.5f);
-	AC = m_Boss->AddComponent<AnimationController>();
-	AC->SetIsBoneUpdate(true);
-	ACList.push_back(AC);
+	//m_Boss = Instance();
+	//m_BossFilter = m_Boss->AddComponent<MeshFilter>();
+	//m_BossFilter->SetModelName("BossB+");
+	//m_BossFilter->SetAnimationName("BossB+");
+	//m_Boss->GetTransform()->SetPosition(0, 0, 0);
+	//m_Boss->GetTransform()->SetScale(1.5f);
+	//AC = m_Boss->AddComponent<AnimationController>();
+	//AC->SetIsBoneUpdate(true);
+	//ACList.push_back(AC);
 
 	//m_MonsterA = Instance();
 	//m_MonsterAFilter = m_MonsterA->AddComponent<MeshFilter>();
@@ -247,14 +247,14 @@ void TestScene::CreateParicleController()
 	//AC = m_MonsterA->AddComponent<AnimationController>();
 	//ACList.push_back(AC);
 
-	//m_MonsterB = Instance();
-	//m_MonsterBFilter = m_MonsterB->AddComponent<MeshFilter>();
-	//m_MonsterBFilter->SetModelName("MonsterB+");
-	//m_MonsterBFilter->SetAnimationName("MonsterB+");
-	//m_Boss->GetTransform()->SetPosition(-15, 0, 0);
-	//m_MonsterB->GetTransform()->SetScale(3.0f, 3.0f, 3.0f);
-	//AC = m_MonsterB->AddComponent<AnimationController>();
-	//ACList.push_back(AC);
+	m_MonsterB = Instance();
+	m_MonsterBFilter = m_MonsterB->AddComponent<MeshFilter>();
+	m_MonsterBFilter->SetModelName("MonsterB+");
+	m_MonsterBFilter->SetAnimationName("MonsterB+");
+	m_MonsterB->GetTransform()->SetPosition(0, -1, 0);
+	m_MonsterB->GetTransform()->SetScale(3.0f, 3.0f, 3.0f);
+	AC = m_MonsterB->AddComponent<AnimationController>();
+	ACList.push_back(AC);
 
 	/// Particle Factory를 통한 생성 방식
 	ParticleController* controller = nullptr;
@@ -490,19 +490,19 @@ void TestScene::ChangeCubeMap()
 	}
 	if (GetKey(VK_UP))
 	{
-		for (int i = 0; i < TRList.size(); i++)
-		{
-			TRList[i]->AddPosition_Z(dTime * 50.0f);
-		}
-		m_Boss->transform->AddPosition_Z(dTime * 50.0f);
+		//for (int i = 0; i < TRList.size(); i++)
+		//{
+		//	TRList[i]->AddPosition_Z(dTime * 50.0f);
+		//}
+		m_MonsterB->transform->AddPosition_Y(dTime * 50.0f);
 	}
 	if (GetKey(VK_DOWN))
 	{
-		for (int i = 0; i < TRList.size(); i++)
-		{
-			TRList[i]->AddPosition_Z(-dTime * 50.0f);
-		}
-		m_Boss->transform->AddPosition_Z(-dTime * 50.0f);
+		//for (int i = 0; i < TRList.size(); i++)
+		//{
+		//	TRList[i]->AddPosition_Z(-dTime * 50.0f);
+		//}
+		m_MonsterB->transform->AddPosition_Y(-dTime * 50.0f);
 	}
 	//if (GetKey('Q'))
 	//{

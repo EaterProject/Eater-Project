@@ -41,8 +41,14 @@ void Slider::SetActive(bool enable)
 {
 	this->gameobject->SetActive(enable);
 
-	if (m_BackImage) m_BackImage->gameobject->SetActive(enable);
-	if (m_FillImage) m_FillImage->gameobject->SetActive(enable);
+	if (m_BackImage) m_BackImage->SetActive(enable);
+	if (m_FillImage) m_FillImage->SetActive(enable);
+}
+
+void Slider::SetDraw(bool enable)
+{
+	if (m_BackImage) m_BackImage->SetDraw(enable);
+	if (m_FillImage) m_FillImage->SetDraw(enable);
 }
 
 void Slider::SetValueRange(float min, float max)

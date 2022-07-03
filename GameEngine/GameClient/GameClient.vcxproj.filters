@@ -163,6 +163,12 @@
     <Filter Include="소스 파일\Component\UI\UIPause">
       <UniqueIdentifier>{60ca41d3-dccd-4568-9da6-9c612a4717ce}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Component\UI\UIManual">
+      <UniqueIdentifier>{591a1223-6697-4f18-9b5d-787c5fc8fbdd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\UI\UICredit">
+      <UniqueIdentifier>{b1567f1d-6de3-43b3-87c7-6d40fca6dee7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -288,6 +294,12 @@
     <ClInclude Include="UIPause.h">
       <Filter>소스 파일\Component\UI\UIPause</Filter>
     </ClInclude>
+    <ClInclude Include="UIManual.h">
+      <Filter>소스 파일\Component\UI\UIManual</Filter>
+    </ClInclude>
+    <ClInclude Include="UICredit.h">
+      <Filter>소스 파일\Component\UI\UICredit</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameClient.cpp">
@@ -400,6 +412,12 @@
     </ClCompile>
     <ClCompile Include="UIPause.cpp">
       <Filter>소스 파일\Component\UI\UIPause</Filter>
+    </ClCompile>
+    <ClCompile Include="UIManual.cpp">
+      <Filter>소스 파일\Component\UI\UIManual</Filter>
+    </ClCompile>
+    <ClCompile Include="UICredit.cpp">
+      <Filter>소스 파일\Component\UI\UICredit</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

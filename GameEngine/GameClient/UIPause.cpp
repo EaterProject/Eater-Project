@@ -81,9 +81,6 @@ void UIPause::SetPauseUIActive(bool active)
 	{
 		// 전체 화면 블러..
 		SetFullScreenBlur(true, 2);
-
-		// 시간 정지..
-		SetSlowDeltaTime(0.0f);
 	}
 }
 
@@ -107,9 +104,6 @@ void UIPause::SetResumeClick()
 
 	// 전체 화면 블러 해제..
 	SetFullScreenBlur(false);
-
-	// 시간 재생..
-	SetSlowDeltaTime(1.0f);
 
 	// 혹시 모르니 모든 키 리셋..
 	KeyReset();

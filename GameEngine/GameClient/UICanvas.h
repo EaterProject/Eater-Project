@@ -67,6 +67,7 @@ private:
 	
 	int GetActiveMonsterUI();
 	void SetMonsterUIActive(int index, bool IsActive);
+	void SetMonsterUIDraw(int index, bool IsActive);
 	bool UseCheck(GameObject* Obj);
 
 	ComboFont*		mCombo		= nullptr;

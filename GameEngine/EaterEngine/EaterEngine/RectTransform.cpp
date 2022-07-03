@@ -377,6 +377,11 @@ RectPoint* RectTransform::GetRectPoint()
 	return &RectPosition;
 }
 
+DirectX::SimpleMath::Vector2 RectTransform::GetPosition()
+{
+	return Position;
+}
+
 void RectTransform::Resize(int width, int height)
 {
 	if (UpdateType != UPDATE_TYPE::ALWAYS)

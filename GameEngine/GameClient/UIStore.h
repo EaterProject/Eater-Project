@@ -11,17 +11,11 @@ public:
 	virtual ~UIStore();
 
 	void Awake() override;
-	void Start() override;
-	void Update() override;
 
 	void Set_Store_Active(bool Active);
 
-	
 	void PurchaseItem(int Type);	//아이템 구매
 private:
-	void Store_ON();		//상점 들어가기
-	void Store_OFF();		//상점 나가기
-
 	void ChangeEmaginCount_Button_Exit();
 	void ChangeEmaginCount_Button_Enter();
 	void ChangeEmaginCount_Button_Click();
@@ -38,10 +32,6 @@ private:
 	void MoveSpeed_Button_Enter();
 	void MoveSpeed_Button_Click();
 
-	void GateOpen_Button_Exit();
-	void GateOpen_Button_Enter();
-	void GateOpen_Button_Click();
-
 	void OutStore_Button_Exit();
 	void OutStore_Button_Enter();
 	void OutStore_Button_Click();
@@ -49,12 +39,19 @@ private:
 	void Purchase_Item_Button_Exit();
 	void Purchase_Item_Button_Enter();
 	void Purchase_Item_Button_Click();
+
+	void ResetItem(int nowItem);
+
 private:
-	Button* Buttons[7];
-	Image*	Images[7];
-	RectTransform* mRect[7];
+	Button* Buttons[6];
+	Image*	Images[6];
+	RectTransform* mRect[6];
+
+	std::string ImageName_Off[6];
+	std::string ImageName_Text[4];
 
 	Image* StoreTitle;
+	Image* ItemText;
 
 	const int OffsetX = 454;
 	const int OffsetY = 191;
@@ -63,8 +60,9 @@ private:
 	const int MaxHP			= 1;
 	const int AttackSpeed	= 2;
 	const int MoveSpeed		= 3;
-	const int GateOpen		= 4;
-	const int Purchase_Item	= 5;
-	const int StoreOFF		= 6;
+	const int Purchase_Item	= 4;
+	const int StoreOFF		= 5;
+
+	bool SelectItem[6];
 };
 

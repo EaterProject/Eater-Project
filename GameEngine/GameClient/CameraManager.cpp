@@ -173,21 +173,22 @@ void CameraManager::SetMouseFix(bool Active)
 
 void CameraManager::GameStartCinematic()
 {
-	mCinematicCamera->PushCameraAnimation("06_Camera_Start");
+	mCinematicCamera->PushCameraAnimation("Camera_Start0");
+	mCinematicCamera->PushCameraAnimation("Camera_Start1");
+	mCinematicCamera->PushCameraAnimation("Camera_Start2");
+	mCinematicCamera->PushCameraAnimation("Camera_Start3");
 }
 
 void CameraManager::GameEndCinematic()
 {
-	mCinematicCamera->PushCameraAnimation("05_Camera_Ending");
+	mCinematicCamera->PushCameraAnimation("Camera_Ending");
 }
 
 void CameraManager::BossStartCinematic()
 {
-	mCinematicCamera->PushCameraAnimation("00_Camera_Boss_Spawn");
-	mCinematicCamera->PushCameraAnimation("01_Camera_Boss_Spawn1");
-	mCinematicCamera->PushCameraAnimation("02_Camera_Boss_Spawn2");
-	mCinematicCamera->PushCameraAnimation("03_Camera_Boss_Spawn3");
-	mCinematicCamera->PushCameraAnimation("04_Camera_Boss_Spawn4");
+	mCinematicCamera->PushCameraAnimation("Camera_BossSpawn_0");
+	mCinematicCamera->PushCameraAnimation("Camera_BossSpawn_1");
+	mCinematicCamera->PushCameraAnimation("Camera_BossSpawn_2");
 }
 
 void CameraManager::BossEndCinematic()
@@ -198,5 +199,5 @@ void CameraManager::BossEndCinematic()
 void CameraManager::TitleCinematic()
 {
 	//mCinematic->PushCameraAnimation("07_Camera_Title");
-	mCinematicCamera->PushCameraAnimation("TitleCam");
+	mCinematicCamera->PushCameraAnimation("Camera_Title");
 }

@@ -7,7 +7,7 @@
 #include "LoadManager.h"
 
 EATER_ENGINEDLL CinematicCamera::CinematicCamera()
-	:isAnimation(false), NowAnimationFrame(0), NowFrameIndex(0), Cam_Animation(nullptr), PrevCamera(nullptr)
+	:isAnimation(false), NowTickTime(0.0f), NowFrameRatio(0.0f), PrevFrameIndex(0), NextFrameIndex(0), Cam_Animation(nullptr), PrevCamera(nullptr)
 {
 	// 카메라 업데이트보다 먼저 업데이트 해야함..
 	DefaultUpdate_Order = FUNCTION_ORDER_FIRST;
@@ -36,14 +36,23 @@ void CinematicCamera::Update()
 		}
 		else
 		{
-			NowAnimationFrame += mTimeManager->DeltaTime();
-			if (NowAnimationFrame >= Cam_Animation->OneFrame)
+			NowTickTime += mTimeManager->DeltaTime();
+			
+			if (NowTickTime >= Cam_Animation->TickFrame)
 			{
-				NowAnimationFrame = 0;
+				NextFrameIndex += (int)(NowTickTime * Cam_Animation->TickFrameRatio);
+				PrevFrameIndex = NextFrameIndex - 1;
+
+				if (PrevFrameIndex < 0)
+				{
+					PrevFrameIndex = 0;
+				}
+
+				NowTickTime = 0.0f;
 			}
 		}
 
-		if (NowFrameIndex >= Cam_Animation->Position.size())
+		if (NextFrameIndex >= Cam_Animation->Position.size())
 		{
 			// 마지막 애니메이션일 경우..
 			if (AnimationList.empty())
@@ -51,19 +60,27 @@ void CinematicCamera::Update()
 				isAnimation = false;
 
 				// 이전 상태의 카메라로 변경..
-				PrevCamera->ChoiceMainCam();
+				if (PrevCamera)
+				{
+					PrevCamera->ChoiceMainCam();
+				}
 			}
 
 			// 현재 애니메이션 비우기..
 			Cam_Animation = nullptr;
 
-			NowFrameIndex = 0;
+			NextFrameIndex = 0;
+			PrevFrameIndex = 0;
 		}
 		else
 		{
-			tranform->SetPosition(Cam_Animation->Position[NowFrameIndex]);
-			tranform->SetRotate(Cam_Animation->Rotation[NowFrameIndex]);
-			NowFrameIndex++;
+			NowFrameRatio = NowTickTime * Cam_Animation->TickFrameRatio;
+
+			NowPostion = Vector3::Lerp(Cam_Animation->Position[PrevFrameIndex], Cam_Animation->Position[NextFrameIndex], NowFrameRatio);
+			NowRotation = Vector3::Lerp(Cam_Animation->Rotation[PrevFrameIndex], Cam_Animation->Rotation[NextFrameIndex], NowFrameRatio);
+
+			tranform->SetPosition(NowPostion);
+			tranform->SetRotate(NowRotation);
 		}
 	}
 }

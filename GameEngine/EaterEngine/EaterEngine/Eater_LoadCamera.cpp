@@ -25,6 +25,8 @@ void Eater_LoadCamera::LoadData(int index)
 	std::string AddKeyCount  = (EATER_GET_MAP(index, "AddKeyCount"));
 	CamAnime->OneFrame		= std::stof(OneFrame);
 	CamAnime->AddKeyCount	= std::stoi(AddKeyCount);
+	CamAnime->TickFrame = CamAnime->OneFrame / CamAnime->AddKeyCount;
+	CamAnime->TickFrameRatio = 1.0f / CamAnime->TickFrame;
 
 	int NodeCount = EATER_GET_LIST_CHOICE(index, "KEY");
 	for (int i = 0; i < NodeCount; i++)

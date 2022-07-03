@@ -50,6 +50,8 @@ public:
 
 	EATER_ENGINEDLL void SetTexture(std::string texture_name);
 	EATER_ENGINEDLL void PushTextureList(std::string texture_name);
+	
+	EATER_ENGINEDLL void SetLayer(UINT order);
 
 private:
 	void Resize(int width, int height);
@@ -61,6 +63,7 @@ private:
 	void SetScale();
 	void SetTexture();
 	void PushTextureList();
+	void SetLayer();
 
 private:
 	Eater::Delegate<> m_OutButtonEvent;
@@ -89,6 +92,8 @@ private:
 	Eater::Delegate<> StartFunction;
 	
 	bool m_Start;
+
+	UINT m_Layer;
 
 	PIVOT_TYPE m_Pivot;
 	DirectX::SimpleMath::Vector2 m_Pos;

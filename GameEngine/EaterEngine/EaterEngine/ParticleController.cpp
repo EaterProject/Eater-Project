@@ -5,6 +5,9 @@
 #include "GameObject.h"
 #include "EaterEngineAPI.h"
 
+#include "Profiler/Profiler.h"
+
+
 EATER_ENGINEDLL ParticleController::ParticleController()
 	:m_ControllerState(PARTICLE_STATE::END_STATE), m_TotalPlayTime(0.0f), m_PlayTime(0.0f), m_StartTime(0.0f), m_NowParticleListSize(0), m_Pause(false)
 {
@@ -53,6 +56,7 @@ void ParticleController::Update()
 		// 모든 파티클들이 끝났을 경우 상태 변경..
 		if (m_TotalPlayTime <= m_PlayTime)
 		{
+			m_PlayTime = 0.0f;
 			m_ControllerState = PARTICLE_STATE::END_STATE;
 		}
 	}
@@ -225,6 +229,9 @@ void ParticleController::Play()
 	// 현재 삽입된 파티클이 없다면..
 	if (m_NowParticleList == m_ParticleSystemList.end()) return;
 
+	// 플레이 시간 초기화..
+	m_PlayTime = 0.0f;
+
 	// 현재 파티클 리스트에 대한 데이터 설정..
 	SetNowParticleList();
 }
@@ -326,6 +333,8 @@ void ParticleController::UpdateController()
 			// 현재 파티클 리스트에 대한 데이터 설정..
 			SetNowParticleList();
 		}
+
+		PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "NextTime : %.3f\nParticleCount : %d", m_StartTime, m_NowParticleListSize);
 	}
 }
 

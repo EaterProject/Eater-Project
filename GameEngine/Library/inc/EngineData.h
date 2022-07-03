@@ -228,6 +228,9 @@ class CameraAnimation
 {
 public:
 	float OneFrame;
+	float TickFrame;
+	float TickFrameRatio;
+
 	int AddKeyCount;
 	std::vector<Vector3> Position;
 	std::vector<Vector3> Rotation;

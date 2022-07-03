@@ -24,6 +24,8 @@
 #define TARGET_STORE 20
 #define TARGET_UI_OPTION 21
 #define TARGET_UI_PAUSE 22
+#define TARGET_UI_MANUAL 23
+#define TARGET_UI_CREDIT 24
 
 //Player Message
 #define MESSAGE_PLAYER_HIT    0				//플레이어가 맞았다
@@ -39,6 +41,10 @@
 #define MESSAGE_GATE_UNLOCK 2				//게이트 잠금 풀기		//인자 값 : int
 #define MESSAGE_GATE_LOCK 3					//게이트 잠금 열기		//인자 값 : int
 
+//Store Message
+#define MESSAGE_STORE_EXIT  0				//스토어 닫기
+#define MESSAGE_STORE_PAUSE  1				//스토어 일시정지 상태
+
 //UI Message
 #define MESSAGE_UI_COMBO 0					//콤보 폰트 값			//인자 값 : int
 #define MESSAGE_UI_HP_NOW 1					//체력 현재 폰트 값		//인자 값 : int
@@ -50,9 +56,8 @@
 #define MESSAGE_UI_MONSTER_UI_UPDATE 7		//몬스터 UI를 업데이트	//인자 값 : MONSTER_EMAGIN 구조체
 #define MESSAGE_UI_FADE_IN 8				//페이드 인
 #define MESSAGE_UI_FADE_OUT 9				//페이드 아웃
-#define MESSAGE_UI_STORE_ACTIVE	10			//UI 스토어 엑티브
-#define MESSAGE_UI_PLAYER_ACTIVE 11			//UI 플레이어 UI
-#define MESSAGE_UI_PLAYER_HIT 12			//플레이어 피격
+#define MESSAGE_UI_PLAYER_ACTIVE 10			//UI 플레이어 UI
+#define MESSAGE_UI_PLAYER_HIT 11			//플레이어 피격
 
 
 //Camera Message
@@ -73,6 +78,9 @@
 #define MESSAGE_GLOBAL_OPTION 3								//옵션
 #define MESSAGE_GLOBAL_PAUSE 4								//일시정지
 #define MESSAGE_GLOBAL_RESUME 5								//게임복귀
+#define MESSAGE_GLOBAL_MANUAL 6								//조작법
+#define MESSAGE_GLOBAL_STORE 7								//상점
+#define MESSAGE_GLOBAL_CREDIT 8								//엔딩 크래딧
 
 
 #define MONSTER_COLOR_RED 0

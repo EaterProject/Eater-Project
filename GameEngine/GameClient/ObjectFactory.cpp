@@ -35,6 +35,8 @@
 #include "Store.h"
 #include "UIOption.h"
 #include "UIPause.h"
+#include "UIManual.h"
+#include "UICredit.h"
 
 
 
@@ -202,6 +204,22 @@ GameObject* ObjectFactory::CreateUIPause()
 	GameObject* Object_Pause = Instance();
 	Object_Pause->AddComponent<UIPause>();
 	return Object_Pause;
+}
+
+GameObject* ObjectFactory::CreateUIManual()
+{
+	GameObject* Object_Manual = Instance();
+	Object_Manual->AddComponent<UIManual>();
+
+	return Object_Manual;
+}
+
+GameObject* ObjectFactory::CreateUICredit()
+{
+	GameObject* Object_Credit = Instance();
+	Object_Credit->AddComponent<UICredit>();
+
+	return Object_Credit;
 }
 
 GameObject* ObjectFactory::CreateBoss()

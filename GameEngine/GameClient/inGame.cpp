@@ -46,6 +46,11 @@ void InGame::Update()
 		RenderSetting();
 	}
 
+	if (GetKeyDown('1'))
+	{
+		MessageManager::GetGM()->SEND_Message(TARGET_CAMERA_MANAGER, MESSAGE_CAMERA_CINEMATIC_GAME_START);
+	}
+
 	if (GetKeyDown('2'))
 	{
 		MessageManager::GetGM()->SEND_Message(TARGET_CAMERA_MANAGER, MESSAGE_CAMERA_CINEMATIC_GAME_END);

@@ -139,7 +139,7 @@ void Particle::Update()
 			}
 		}
 
-		m_OneTickFrame = (m_AniNowTime / m_AniNextFrame) * m_AniOneFrame;
+		m_OneTickFrame = m_AniNowTime / m_AniNextFrame;
 
 		// 파티클 데이터 보간..
 		if (m_AniType & COLOR_ANI)
@@ -192,6 +192,9 @@ void Particle::Play(const PARTICLE_DESC* particleDesc)
 	m_AniOneFrame = 1.0f / (particleDesc->LifeTime / (float)m_AniTotalFrame);
 	m_AniNowFrame = 0;
 	m_AniNextFrame = 1;
+
+	m_TexNowTime = 0.0f;
+	m_AniNowTime = 0.0f;
 
 	// 파티클 색상 설정..
 	Vector4 maxColor = particleDesc->StartColor * m_SystemDesc->LifeTimeMaxColor;
@@ -280,13 +283,6 @@ void Particle::Play(const PARTICLE_DESC* particleDesc)
 
 	// Animation Type 설정..
 	m_AniType = m_SystemDesc->AniType;
-
-	// Animation Type 설정..
-	//if (m_OneColor != Zero_4)			m_AniType |= COLOR_ANI;
-	//if (m_OnePos != Zero_3)				m_AniType |= POSITION_ANI;
-	//if (m_OneRot != 0.0f)				m_AniType |= ROTATION_ANI;
-	//if (m_OneScale != 0.0f)				m_AniType |= SCALE_ANI;
-	//if (m_TexTotalFrame > 1)			m_AniType |= TEXTURE_ANI;
 }
 
 void Particle::Resume()
@@ -312,9 +308,12 @@ void Particle::Stop()
 	m_ParticleData->TexPos = Zero_2;
 	m_ParticleData->Color = Zero_4;
 	m_ParticleData->Pos = Zero_3;
-	m_Transform->SetPosition(Zero_3);
-	m_Transform->SetRotate(Zero_3);
-	m_Transform->SetScale(Zero_3);
+
+	Transform* transform = gameobject->transform;
+
+	transform->SetPosition(Zero_3);
+	transform->SetRotate(Zero_3);
+	transform->SetScale(Zero_3);
 }
 
 void Particle::DataUpdate()
