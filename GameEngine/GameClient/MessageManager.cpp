@@ -29,6 +29,7 @@
 #include "UIStore.h"
 #include "UIOption.h"
 #include "UIPause.h"
+#include "UIBoss.h"
 
 MessageManager* MessageManager::instance = nullptr;
 MessageManager::MessageManager()
@@ -82,6 +83,7 @@ void MessageManager::Initialize(ObjectFactory* Factory)
 	CREATE_MESSAGE(TARGET_BOSS);
 	CREATE_MESSAGE(TARGET_UI_OPTION);
 	CREATE_MESSAGE(TARGET_UI_PAUSE);
+	CREATE_MESSAGE(TARGET_UI_BOSS);
 }
 
 void MessageManager::Release()
@@ -179,6 +181,10 @@ GameObject* MessageManager::CREATE_MESSAGE(int CREATE_TYPE)
 		Object = mFactory->CreateUIPause();
 		mPause = Object->GetComponent<UIPause>();
 		return Object;
+	case TARGET_UI_BOSS:
+		Object = mFactory->CreateUIBoss();
+		mBossUI = Object->GetComponent<UIBoss>();
+		return Object;
 	}
 
 	return nullptr;
@@ -240,6 +246,15 @@ void MessageManager::SEND_UI_Message(int MessageType, void* Data)
 		break;
 	case MESSAGE_UI_PLAYER_HIT:
 		mEffect->PlayerHit(nullptr);
+		break;
+	case MESSAGE_UI_BOSS_HP:
+		mBossUI->SetBossHP(*(reinterpret_cast<int*>(Data)));
+		break;
+	case MESSAGE_UI_BOSS_HP_MAX:
+		mBossUI->SetBossMaxHP(*(reinterpret_cast<int*>(Data)));
+		break;
+	case MESSAGE_UI_BOSS_ACTIVE:
+		mBossUI->SetActive(*(reinterpret_cast<bool*>(Data)));
 		break;
 	}
 }

@@ -50,7 +50,8 @@ public:
 	void SetDissolveWidth(float mWidth);
 	void SetDissolveOuterFactor(float mFactor);
 	void SetDissolveInnerFactor(float mFactor);
-	bool PlayDissolve();
+	void PlayDissolve();
+	const bool EndDissolve();
 	
 private:
 	GameObject* mTopObject = nullptr;
@@ -91,6 +92,6 @@ private:
 	float DissolveOuterFactor	= 1.0f;
 	float DissolveInnerFactor	= 1.0f;
 	float DissolveWidth			= 1.0f;
-	bool IsDissolvePlay			= false;
+	bool* IsDissolvePlay		= nullptr;
 };
 

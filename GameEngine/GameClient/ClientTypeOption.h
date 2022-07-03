@@ -24,6 +24,7 @@
 #define TARGET_STORE 20
 #define TARGET_UI_OPTION 21
 #define TARGET_UI_PAUSE 22
+#define TARGET_UI_BOSS 23
 
 //Player Message
 #define MESSAGE_PLAYER_HIT    0				//플레이어가 맞았다
@@ -53,6 +54,9 @@
 #define MESSAGE_UI_STORE_ACTIVE	10			//UI 스토어 엑티브
 #define MESSAGE_UI_PLAYER_ACTIVE 11			//UI 플레이어 UI
 #define MESSAGE_UI_PLAYER_HIT 12			//플레이어 피격
+#define MESSAGE_UI_BOSS_HP 13
+#define MESSAGE_UI_BOSS_HP_MAX 14
+#define MESSAGE_UI_BOSS_ACTIVE 15
 
 
 //Camera Message
@@ -80,53 +84,59 @@
 
 enum class MONSTER_STATE : int
 {
-	IDLE	= 0,	//대기
-	ATTACK	= 1,	//공격
-	HIT		= 2,	//공격 당함
-	MOVE	= 3,	//이동
-	CHASE	= 4,	//추격
-	DEAD	= 5,	//죽음
+	IDLE = 0,	//대기
+	ATTACK = 1,	//공격
+	HIT = 2,	//공격 당함
+	MOVE = 3,	//이동
+	CHASE = 4,	//추격
+	DEAD = 5,	//죽음
 };
 
 enum class BOSS_STATE : int
 {
 	//상태
-	GROGGY_START		= 0,	//그로기 상태 시작 단계
-	GROGGY_PLAY			= 1,	//그로기 상태 중간 단계
-	GROGGY_END			= 2,	//그로기 상태 끝 단계
-	IDLE				= 3,	//대기
-	DEAD				= 4,	//죽음
-	CLOSER_ATTACK_L		= 5,	//근접 공격 왼쪽
-	CLOSER_ATTACK_R		= 6,	//근접 공격 오른쪽
-	CHASE_ATTACK_READY	= 7,	//추적 발사체 준비
-	CHASE_ATTACK_PLAY	= 8,	//추적 발사체 발사
-	RANDOM_ATTACK_READY	= 9,	//장판형 발사체 준비
-	RANDOM_ATTACK_PLAY	= 10,	//장판형 발사체 발사
-	TELEPORT_READY		= 11,	//보스 순간이동 준비
-	TELEPORT_START		= 12,	//보스 순간이동 
-	CREATE_FRIEND		= 13,	//분신 소환
-	HIT					= 14,	//맞았을떄
-	RENDOM_ATTACK_END   = 15,	//
+	GROGGY_START = 0,		//그로기 상태 시작 단계
+	GROGGY_PLAY = 1,		//그로기 상태 중간 단계
+	GROGGY_END = 2,			//그로기 상태 끝 단계
+	IDLE = 3,				//대기
+	DEAD = 4,				//죽음
+	CLOSER_ATTACK_L = 5,	//근접 공격 왼쪽
+	CLOSER_ATTACK_R = 6,	//근접 공격 오른쪽
+
+	CHASE_ATTACK_READY = 7,	//추적 발사체 준비
+	CHASE_ATTACK_PLAY = 8,	//추적 발사체 발사
+	CHASE_ATTACK_END = 9,	//추적 발사체 끝
+
+	RENDOM_ATTACK_START = 10,	//장판형 발사체 준비
+	RENDOM_ATTACK_PLAY = 11,	//장판형 발사체 발사
+	RENDOM_ATTACK_END = 12,		//장판형 발사체 발사
+	RENDOM_ATTACK_RESET = 13,	//장판형 발사체 발사
+
+	TELEPORT_READY = 14,	//보스 순간이동 준비
+	TELEPORT_START = 15,	//보스 순간이동 
+
+	CREATE_FRIEND = 16,	//분신 소환
+	HIT = 17,	//맞았을떄
 };
 
 enum class PLAYER_STATE : int
 {
-	IDLE		= 0,
-	ATTACK_01	= 1,
-	ATTACK_02	= 2,
-	SKILL_01	= 3,
-	SKILL_02	= 4,
-	JUMP		= 5,
-	MOVE		= 6,
-	DEAD		= 7
+	IDLE = 0,
+	ATTACK_01 = 1,
+	ATTACK_02 = 2,
+	SKILL_01 = 3,
+	SKILL_02 = 4,
+	JUMP = 5,
+	MOVE = 6,
+	DEAD = 7
 };
 
 enum class MONSTER_COLOR : int
 {
-	RED,		
+	RED,
 	GREEN,
 	YELLOW,
-	BLUE
+	BLUE,
 };
 struct MONSTER_EMAGIN
 {

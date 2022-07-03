@@ -144,9 +144,6 @@
     <Filter Include="소스 파일\Component\Player\PlayerCollider">
       <UniqueIdentifier>{a94d78de-c827-43ee-bab8-2f215b623ba0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Component\Store">
-      <UniqueIdentifier>{ee46d329-a111-4a32-bfd3-9c02801a7d2f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Component\GateDoor\DoorCollider">
       <UniqueIdentifier>{3e73b03b-d884-4f90-a2da-fb425f407a89}</UniqueIdentifier>
     </Filter>
@@ -162,6 +159,12 @@
     </Filter>
     <Filter Include="소스 파일\Component\UI\UIPause">
       <UniqueIdentifier>{60ca41d3-dccd-4568-9da6-9c612a4717ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\Player\Store">
+      <UniqueIdentifier>{ee46d329-a111-4a32-bfd3-9c02801a7d2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\UI\UIBoss">
+      <UniqueIdentifier>{58bd628e-7306-4ad8-b30b-eb3da3a5c7a3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -274,7 +277,7 @@
       <Filter>소스 파일\Component\Player\PlayerCollider</Filter>
     </ClInclude>
     <ClInclude Include="Store.h">
-      <Filter>소스 파일\Component\Store</Filter>
+      <Filter>소스 파일\Component\Player\Store</Filter>
     </ClInclude>
     <ClInclude Include="DoorCollider.h">
       <Filter>소스 파일\Component\GateDoor\DoorCollider</Filter>
@@ -287,6 +290,9 @@
     </ClInclude>
     <ClInclude Include="UIPause.h">
       <Filter>소스 파일\Component\UI\UIPause</Filter>
+    </ClInclude>
+    <ClInclude Include="UIBoss.h">
+      <Filter>소스 파일\Component\UI\UIBoss</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -387,7 +393,7 @@
       <Filter>소스 파일\Component\Player\PlayerCollider</Filter>
     </ClCompile>
     <ClCompile Include="Store.cpp">
-      <Filter>소스 파일\Component\Store</Filter>
+      <Filter>소스 파일\Component\Player\Store</Filter>
     </ClCompile>
     <ClCompile Include="DoorCollider.cpp">
       <Filter>소스 파일\Component\GateDoor\DoorCollider</Filter>
@@ -400,6 +406,9 @@
     </ClCompile>
     <ClCompile Include="UIPause.cpp">
       <Filter>소스 파일\Component\UI\UIPause</Filter>
+    </ClCompile>
+    <ClCompile Include="UIBoss.cpp">
+      <Filter>소스 파일\Component\UI\UIBoss</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

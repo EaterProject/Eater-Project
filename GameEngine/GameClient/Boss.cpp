@@ -16,6 +16,9 @@
 #include "AnimationController.h"
 #include "BossWeapon.h"
 #include "BossFriend.h"
+#include "ParticleController.h"
+#include "ParticleFactory.h"
+
 Boss::Boss()
 {
 	//애니메이션 이름 셋팅
@@ -26,11 +29,17 @@ Boss::Boss()
 	ANIMATION_NAME[(int)BOSS_STATE::DEAD]					= "die";
 	ANIMATION_NAME[(int)BOSS_STATE::CLOSER_ATTACK_L]		= "attack5L";
 	ANIMATION_NAME[(int)BOSS_STATE::CLOSER_ATTACK_R]		= "attack5R";
+
 	ANIMATION_NAME[(int)BOSS_STATE::CHASE_ATTACK_READY]		= "recovery_1";
 	ANIMATION_NAME[(int)BOSS_STATE::CHASE_ATTACK_PLAY]		= "recovery_2";
-	ANIMATION_NAME[(int)BOSS_STATE::RANDOM_ATTACK_READY]	= "attack4_1";
-	ANIMATION_NAME[(int)BOSS_STATE::RANDOM_ATTACK_PLAY]		= "attack4_2";
-	ANIMATION_NAME[(int)BOSS_STATE::RENDOM_ATTACK_END]		= "attack5L";
+	ANIMATION_NAME[(int)BOSS_STATE::CHASE_ATTACK_END]		= "recovery_3";
+
+	ANIMATION_NAME[(int)BOSS_STATE::RENDOM_ATTACK_START]	= "attack4_1";
+	ANIMATION_NAME[(int)BOSS_STATE::RENDOM_ATTACK_PLAY]		= "attack4_2";
+	ANIMATION_NAME[(int)BOSS_STATE::RENDOM_ATTACK_END]		= "attack4_3";
+	ANIMATION_NAME[(int)BOSS_STATE::RENDOM_ATTACK_RESET]	= "attack4_4";
+
+
 	ANIMATION_NAME[(int)BOSS_STATE::TELEPORT_READY]			= "attack2_1";
 	ANIMATION_NAME[(int)BOSS_STATE::TELEPORT_START]			= "attack2_2";
 	ANIMATION_NAME[(int)BOSS_STATE::CREATE_FRIEND]			= "attack3";
@@ -41,12 +50,19 @@ Boss::Boss()
 	ANIMATION_TIME[(int)BOSS_STATE::GROGGY_END]				= 1.0f;
 	ANIMATION_TIME[(int)BOSS_STATE::IDLE]					= 1.0f;
 	ANIMATION_TIME[(int)BOSS_STATE::DEAD]					= 1.0f;
+
 	ANIMATION_TIME[(int)BOSS_STATE::CLOSER_ATTACK_L]		= 1.0f;
 	ANIMATION_TIME[(int)BOSS_STATE::CLOSER_ATTACK_R]		= 1.0f;
+
 	ANIMATION_TIME[(int)BOSS_STATE::CHASE_ATTACK_READY]		= 0.5f;
 	ANIMATION_TIME[(int)BOSS_STATE::CHASE_ATTACK_PLAY]		= 1.0f;
-	ANIMATION_TIME[(int)BOSS_STATE::RANDOM_ATTACK_READY]	= 0.5f;
-	ANIMATION_TIME[(int)BOSS_STATE::RANDOM_ATTACK_PLAY]		= 1.0f;
+	ANIMATION_TIME[(int)BOSS_STATE::CHASE_ATTACK_END]		= 1.0f;
+
+	ANIMATION_TIME[(int)BOSS_STATE::RENDOM_ATTACK_START]	= 0.5f;
+	ANIMATION_TIME[(int)BOSS_STATE::RENDOM_ATTACK_PLAY]		= 1.0f;
+	ANIMATION_TIME[(int)BOSS_STATE::RENDOM_ATTACK_END]		= 1.0f;
+	ANIMATION_TIME[(int)BOSS_STATE::RENDOM_ATTACK_RESET]	= 1.0f;
+
 	ANIMATION_TIME[(int)BOSS_STATE::TELEPORT_READY]			= 1.0f;
 	ANIMATION_TIME[(int)BOSS_STATE::TELEPORT_START]			= 1.0f;
 	ANIMATION_TIME[(int)BOSS_STATE::CREATE_FRIEND]			= 1.0f;
@@ -58,6 +74,14 @@ Boss::Boss()
 	{
 		STATE_START[i] = false;
 	}
+
+	SkillTime[Rendom_Time]		= 10.0f;
+
+	SkillTimeMax[Rendom_Time]	= 10.0f;	//장판 공격
+	SkillTimeMax[Chase_Time]	= 15.0f;	//일직선 공격
+	SkillTimeMax[Base_Time]		= 5.0f;		//기본 공격
+	SkillTimeMax[Teleport_Time] = 10.0f;	//텔레포트
+	SkillTimeMax[Groggy_Time]	= 10.0f;	//텔레포트
 }
 
 Boss::~Boss()
@@ -72,6 +96,7 @@ void Boss::Awake()
 	mMeshFilter = gameobject->GetComponent<MeshFilter>();
 	mColider	= gameobject->GetComponent<Collider>();
 	mRigidbody	= gameobject->GetComponent<Rigidbody>();
+	mParticle = ParticleFactory::Get()->CreateParticleController(PARTICLE_TYPE::BossMelee);
 
 	for (int i = 0; i < 5; i++)
 	{
@@ -113,12 +138,14 @@ void Boss::Start()
 {
 	mMF_Setting.Setting(this->gameobject);
 	mMF_Setting.SetLimlightSetting(1.0f, 1.0f, 1.0f, 0.5f, 0.5f);
-	mMF_Setting.SetEmissiveSetting(MeshFilterSetting::COLOR_TYPE::RED, 7.0f);
+	mMF_Setting.SetEmissiveSetting(231,39,9, 2.9f);
+
+	GameObject* Hand = gameobject->GetChildBone("t1.L");
+	mParticle->gameobject->ChoiceParent(Hand);
 }
 
 void Boss::Update()
 {
-
 	switch (mState)
 	{
 	case (int)BOSS_STATE::IDLE:
@@ -152,22 +179,28 @@ void Boss::Update()
 		Boss_Closer_Attack_R();
 		break;
 	case (int)BOSS_STATE::CHASE_ATTACK_READY:	//추격 발사체 시작
-		Boss_Chase_Attack_Ready();
+		Boss_Chase_Attack_Ready(BossPhase);
 		break;
 	case (int)BOSS_STATE::CHASE_ATTACK_PLAY:	//추격 발사체 공격
-		Boss_Chase_Attack_Play();
+		Boss_Chase_Attack_Play(BossPhase);
 		break;
-	case (int)BOSS_STATE::RANDOM_ATTACK_READY:	//장판형 발사체 시작
-		Boss_Rendom_Attack_Ready();
+	case (int)BOSS_STATE::CHASE_ATTACK_END:	//추격 발사체 공격
+		Boss_Chase_Attack_End(BossPhase);
 		break;
-	case (int)BOSS_STATE::RANDOM_ATTACK_PLAY:	//장판형 발사체 공격
-		Boss_Rendom_Attack_Play();
+	case (int)BOSS_STATE::RENDOM_ATTACK_START:	//장판형 발사체 시작
+		Boss_Rendom_Attack_Ready(BossPhase);
+		break;
+	case (int)BOSS_STATE::RENDOM_ATTACK_PLAY:	//장판형 발사체 공격
+		Boss_Rendom_Attack_Play(BossPhase);
+		break;
+	case (int)BOSS_STATE::RENDOM_ATTACK_END:	//장판형 발사체 공격
+		Boss_Rendom_Attack_End(BossPhase);
+		break;
+	case (int)BOSS_STATE::RENDOM_ATTACK_RESET:	//장판형 발사체 공격
+		Boss_Rendom_Attack_Reset(BossPhase);
 		break;
 	case (int)BOSS_STATE::HIT:	//장판형 발사체 공격
 		Boss_Hit();
-		break;
-	case (int)BOSS_STATE::RENDOM_ATTACK_END:	//장판형 발사체 공격
-		Boss_Rendom_Attack_End();
 		break;
 	}
 
@@ -193,9 +226,21 @@ void Boss::OnTriggerStay(GameObject* Obj)
 		//플레이어 상태가 공격이거나,스킬상태일때
 		if (Player::GetAttackState() == true)
 		{
-			HP -= 10;
-			MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_ATTACK_OK);
-			SetState(BOSS_STATE::GROGGY_START);
+			if (Player::GetPlayerCombo() >= 30)
+			{
+				HP -= Player::GetPlayerPower();
+				MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_ATTACK_OK);
+				MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_COMBO_RESET);
+				MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_BOSS_HP,&HP);
+				SetState(BOSS_STATE::GROGGY_START);
+			}
+			else
+			{
+				HP -= Player::GetPlayerPower();
+				MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_ATTACK_OK);
+				MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_BOSS_HP, &HP);
+			}
+
 			Sound_Play_SFX("Monster_Hit");
 			IsHit = true;
 		}
@@ -203,10 +248,7 @@ void Boss::OnTriggerStay(GameObject* Obj)
 	else
 	{
 		//플레이어 상태가 공격상태가 아닐떄
-		if (Player::GetAttackState() == false)
-		{
-			IsHit = false;
-		}
+		if (Player::GetAttackState() == false){IsHit = false;}
 	}
 
 }
@@ -215,28 +257,6 @@ void Boss::Boss_Idle()
 {
 	GroundCheck();
 	PlayerDistanceCheck();
-
-	if (PlayerDistance < AttackRange)
-	{
-		//근접 공격이 가능한 상태
-		mTransform->Slow_Y_Rotation(mPlayerTR->GetPosition(), 150, false);
-		if (IsRight == false)
-		{
-			SetState(BOSS_STATE::CLOSER_ATTACK_L);
-			IsRight = true;
-		}
-		else
-		{
-			SetState(BOSS_STATE::CLOSER_ATTACK_R);
-			IsRight = false; 
-		}
-	}
-	else if(PlayerDistance < FightRange && PlayerDistance > AttackRange)
-	{
-		//전투가 가능한 상태
-		mTransform->Slow_Y_Rotation(mPlayerTR->GetPosition(), 150, false);
-	}
-
 
 	if (mTransform->GetPosition().y > PositionY)
 	{
@@ -247,26 +267,7 @@ void Boss::Boss_Idle()
 		mTransform->SetPosition_Y(PositionY);
 	}
 
-
-	if (GetKeyDown(VK_NUMPAD7))
-	{
-		SetState(BOSS_STATE::TELEPORT_READY);
-	}
-
-	if (GetKeyDown(VK_NUMPAD8))
-	{
-		SetState(BOSS_STATE::RANDOM_ATTACK_READY);
-	}
-
-	if (GetKeyDown(VK_NUMPAD9))
-	{
-		SetState(BOSS_STATE::CREATE_FRIEND);
-	}
-
-	if (GetKeyDown(VK_NUMPAD4))
-	{
-		SetState(BOSS_STATE::CHASE_ATTACK_READY);
-	}
+	SkillCheck();
 }
 
 void Boss::Boss_DEAD()
@@ -292,11 +293,14 @@ void Boss::Boss_Groggy_Start()
 
 void Boss::Boss_Groggy_Play()
 {
-	int End = mAnimation->GetEndFrame();
-	int Now = mAnimation->GetNowFrame();
-	if (Now >= End)
+	if (SkillTime[Groggy_Time] >= SkillTimeMax[Groggy_Time])
 	{
 		SetState(BOSS_STATE::GROGGY_END);
+		SkillTime[Groggy_Time] = 0;
+	}
+	else
+	{
+		SkillTime[Groggy_Time] += GetDeltaTime();
 	}
 }
 
@@ -314,24 +318,22 @@ void Boss::Boss_Teleport_Ready()
 {
 	if (FirstState() == true)
 	{
-		mMF_Setting.SetLimlightSetting(1,1,1, 1, 10);
-		mMF_Setting.SetLimlightSettingMax(1, 1, 1, 50, 10);
+		mMF_Setting.SetDissolveOption(DISSOLVE_FADEOUT);
+		mMF_Setting.SetDissolveTexture("Dissolve_8");
+		mMF_Setting.SetDissolveColor(255.0f, 0, 0);
+		mMF_Setting.SetDissolveColorFactor(10.0f);
+		mMF_Setting.SetDissolvePlayTime(0.6f);
+		mMF_Setting.SetDissolveWidth(0.1f);
+		mMF_Setting.SetDissolveInnerFactor(100.0f);
+		mMF_Setting.SetDissolveOuterFactor(25.0f);
+		mMF_Setting.PlayDissolve();
 	}
-	else
+	
+	float End = mAnimation->GetEndFrame();
+	float Now = mAnimation->GetNowFrame();
+	bool IsTest = mMF_Setting.EndDissolve();
+	if (Now >= End)
 	{
-		mMF_Setting.LimLightUpdate(10);
-	}
-
-
-	if (mTransform->GetScale().x > 0.0f)
-	{
-		float mDTime = GetDeltaTime();
-		mTransform->AddScale_X(-GetDeltaTime() * 10);
-	}
-	else
-	{
-		mTransform->SetScale_X(0.0f);
-		Friend->gameobject->SetActive(false);
 		SetState(BOSS_STATE::TELEPORT_START);
 	}
 }
@@ -340,12 +342,11 @@ void Boss::Boss_Teleport_Start()
 {
 	if (FirstState() == true)
 	{
-		mMF_Setting.SetLimlightSetting(1, 1, 1, 50, 10);
-		mMF_Setting.SetLimlightSettingMax(1, 1, 1, 1, 10);
+
 	}
 	else
 	{
-		mMF_Setting.LimLightUpdate(10);
+
 	}
 
 
@@ -356,29 +357,28 @@ void Boss::Boss_Teleport_Start()
 	else
 	{
 		mTransform->SetPosition(SkillPoint[FriendIndex]);
+		Friend->Reset();
 	}
 
-	if (mTransform->GetScale().x < 1.5f)
+	float End = mAnimation->GetEndFrame();
+	float Now = mAnimation->GetNowFrame();
+	if (Now >= End)
 	{
-		float mDTime = GetDeltaTime();
-		mTransform->AddScale_X(mDTime*10);
-	}
-	else
-	{
-		mTransform->SetScale_X(1.5f);
 		SetState(BOSS_STATE::IDLE);
-
-		mMF_Setting.Default();
+		IsBossFriend = false;
 	}
 }
 
 void Boss::Boss_Create()
 {
+
 	int Now = mAnimation->GetNowFrame();
 	int End = mAnimation->GetEndFrame();
 
 	if (Now >= End)
 	{
+		IsBossFriend = true;
+
 		//플레이어와 가장 먼 위치에 생성
 		float	Max = 0;
 		int		Index = 0;
@@ -396,11 +396,19 @@ void Boss::Boss_Create()
 		Friend->SetPosition(SkillPoint[Index]);
 		FriendIndex = Index;
 		SetState(BOSS_STATE::IDLE);
+		PushPlayer();
 	}
 }
 
 void Boss::Boss_Closer_Attack_L()
 {
+	if (FirstState() == true)
+	{
+		GameObject* Hand = gameobject->GetChildBone("t1.L");
+		mParticle->gameobject->ChoiceParent(Hand);
+		mParticle->Play();
+	}
+
 	//왼쪽 근접 공격
 	int End = mAnimation->GetEndFrame();
 	int Now = mAnimation->GetNowFrame();
@@ -408,23 +416,32 @@ void Boss::Boss_Closer_Attack_L()
 	if (Now >= End)
 	{
 		SetState(BOSS_STATE::IDLE);
+		mParticle->Stop();
 	}
 	mTransform->Slow_Y_Rotation(mPlayerTR->GetPosition(), 150, false);
 }
 
 void Boss::Boss_Closer_Attack_R()
 {
+	if (FirstState() == true)
+	{
+		GameObject* Hand = gameobject->GetChildBone("t1.R");
+		mParticle->gameobject->ChoiceParent(Hand);
+		mParticle->Play();
+	}
+
 	//오른쪽 근접 공격
 	int End = mAnimation->GetEndFrame();
 	int Now = mAnimation->GetNowFrame();
 	if (Now >= End)
 	{
 		SetState(BOSS_STATE::IDLE);
+		mParticle->Stop();
 	}
 	mTransform->Slow_Y_Rotation(mPlayerTR->GetPosition(), 150, false);
 }
 
-void Boss::Boss_Chase_Attack_Ready()
+void Boss::Boss_Chase_Attack_Ready(int Phase)
 {
 	int End = mAnimation->GetEndFrame();
 	int Now = mAnimation->GetNowFrame();
@@ -435,8 +452,13 @@ void Boss::Boss_Chase_Attack_Ready()
 	mTransform->Slow_Y_Rotation(mPlayerTR->GetPosition(), 150, false);
 }
 
-void Boss::Boss_Chase_Attack_Play()
+void Boss::Boss_Chase_Attack_Play(int Phase)
 {
+	if (FirstState() == true)
+	{
+		CreateSkillPoint_Chase();
+	}
+
 	static int WeaponIndex = 0;
 	mTransform->Slow_Y_Rotation(mPlayerTR->GetPosition(), 150, false);
 	if (IsShooting == false)
@@ -449,7 +471,10 @@ void Boss::Boss_Chase_Attack_Play()
 		Start = mTransform->GetPosition() + (Look * 3);
 		Start.y += 3.0f;
 
-		Weapon[WeaponIndex]->SetShootingPoistion(Start, mPlayerTR->GetPosition());
+		if (WeaponIndex < 5)
+		{
+			Weapon[WeaponIndex]->SetShootingPoistion(Start, SkillPoint_01[WeaponIndex], 8, (WeaponIndex + 1) * 5);
+		}
 
 		IsShooting = true;
 	}
@@ -467,7 +492,7 @@ void Boss::Boss_Chase_Attack_Play()
 	{
 		if (RendomSkillPlayTime >= RendomSkillPlayTimeMax)
 		{
-			SetState(BOSS_STATE::IDLE);
+			SetState(BOSS_STATE::CHASE_ATTACK_END);
 			RendomSkillPlayTime = 0;
 			WeaponIndex = 0;
 			IsShooting = false;
@@ -483,26 +508,37 @@ void Boss::Boss_Chase_Attack_Play()
 	}
 }
 
-void Boss::Boss_Rendom_Attack_Ready()
+void Boss::Boss_Chase_Attack_End(int Phase)
+{
+	int End = mAnimation->GetEndFrame();
+	int Now = mAnimation->GetNowFrame();
+
+	if (Now >= End)
+	{
+		SetState(BOSS_STATE::IDLE);
+	}
+}
+
+void Boss::Boss_Rendom_Attack_Ready(int Phase)
 {
 	if (FirstState() == true)
 	{
 		mMF_Setting.SetLimlightSetting(1, 1, 1, 0.5f, 0.5f);
-		mMF_Setting.SetLimlightSettingMax(1, 0, 0, 3, 1);
+		mMF_Setting.SetLimlightSettingMax(1, 0, 0, 3, 0.5f);
 	}
 	else
 	{
 		mMF_Setting.LimLightUpdate(0.5f);
 	}
 
-
 	mTransform->SetPosition_X(StartPoint.x);
 	mTransform->SetPosition_Z(StartPoint.z);
+
 	int End = mAnimation->GetEndFrame();
 	int Now = mAnimation->GetNowFrame();
 	if (Now >= End)
 	{
-		SetState(BOSS_STATE::RANDOM_ATTACK_PLAY);
+		SetState(BOSS_STATE::RENDOM_ATTACK_PLAY);
 	}
 	else
 	{
@@ -510,7 +546,7 @@ void Boss::Boss_Rendom_Attack_Ready()
 	}
 }
 
-void Boss::Boss_Rendom_Attack_Play()
+void Boss::Boss_Rendom_Attack_Play(int Phase)
 {
 	static int WeaponIndex = 0;
 
@@ -518,8 +554,11 @@ void Boss::Boss_Rendom_Attack_Play()
 	{
 		Vector3 Start = mTransform->GetPosition();
 		Start.y += 7.0f;
-		Weapon[WeaponIndex]->SetShootingPoistion(Start, SkillPoint[WeaponIndex]);
-		IsShooting = true;
+		if (WeaponIndex < 5)
+		{
+			Weapon[WeaponIndex]->SetShootingPoistion(Start, SkillPoint[WeaponIndex]);
+			IsShooting = true;
+		}
 	}
 
 	if(IsShooting == true)
@@ -530,7 +569,7 @@ void Boss::Boss_Rendom_Attack_Play()
 			IsShooting = false;
 		}
 	}
-
+	
 	if (WeaponIndex >= 5)
 	{
 		if (RendomSkillPlayTime >= RendomSkillPlayTimeMax)
@@ -547,18 +586,17 @@ void Boss::Boss_Rendom_Attack_Play()
 	}
 }
 
-void Boss::Boss_Rendom_Attack_End()
+void Boss::Boss_Rendom_Attack_End(int Phase)
 {
 	if (FirstState() == true)
 	{
-		mMF_Setting.SetLimlightSetting(1, 0, 0, 3, 1);
+		mMF_Setting.SetLimlightSetting(1, 0, 0, 3, 0.5f);
 		mMF_Setting.SetLimlightSettingMax(1.0f, 1.0f, 1.0f, 0.5f, 0.5f);
 	}
 	else
 	{
 		mMF_Setting.LimLightUpdate(0.5);
 	}
-
 
 	int End = mAnimation->GetEndFrame();
 	int NOW = mAnimation->GetNowFrame();
@@ -571,6 +609,23 @@ void Boss::Boss_Rendom_Attack_End()
 		}
 	}
 
+	if (NOW >= End)
+	{
+		SetState(BOSS_STATE::RENDOM_ATTACK_RESET);
+	}
+}
+
+void Boss::Boss_Rendom_Attack_Reset(int Phase)
+{
+	int End = mAnimation->GetEndFrame();
+	int NOW = mAnimation->GetNowFrame();
+	if (mAnimation->EventCheck() == true)
+	{
+		for (int i = 0; i < 5; i++)
+		{
+			Weapon[i]->Reset();
+		}
+	}
 	if (NOW >= End)
 	{
 		SetState(BOSS_STATE::IDLE);
@@ -638,6 +693,26 @@ void Boss::CreateSkillPoint()
 	}
 }
 
+void Boss::CreateSkillPoint_Chase()
+{
+	Vector3 Look = mTransform->GetLocalPosition_Look();
+	Look.z *= -1;
+	for (int i = 0; i < 5; i++)
+	{
+		Vector3 mStart;
+		mStart = mTransform->GetPosition() + (Look * (i * 8));
+		SkillPoint_01[i] = mStart;
+
+		mRay->Direction = { 0,-1,0 };
+		mRay->MaxDistance = 10;
+		mRay->Origin = mStart;
+		mRay->Origin.y += 5;
+		//충돌된 곳에Y축만 가져온다
+		RayCast(mRay);
+		SkillPoint_01[i].y = mRay->Hit.HitPoint.y;
+	}
+}
+
 void Boss::GroundCheck()
 {
 	//Ray를 쏜다
@@ -648,4 +723,138 @@ void Boss::GroundCheck()
 	//충돌된 곳에Y축만 가져온다
 	RayCast(mRay);
 	PositionY = mRay->Hit.HitPoint.y + 0.5f;
+}
+
+void Boss::SkillCheck()
+{
+	float DTime = GetDeltaTime();
+
+
+	if (PlayerDistance < FightRange)
+	{
+		///근접 스킬 쿨계산
+		if (PlayerDistance < AttackRange)
+		{
+			if (SkillTime[Base_Time] >= SkillTimeMax[Base_Time])
+			{
+				SetState(BOSS_STATE::CLOSER_ATTACK_R);
+				SkillTime[Base_Time] = 0;
+			}
+			else
+			{
+				SkillTime[Base_Time] += DTime;
+			}
+
+			if (SkillTime[Teleport_Time] >= SkillTimeMax[Teleport_Time])
+			{
+				if (IsBossFriend == true)
+				{
+					SetState(BOSS_STATE::TELEPORT_READY);
+				}
+				else
+				{
+					SetState(BOSS_STATE::CREATE_FRIEND);
+				}
+				SkillTime[Teleport_Time] = 0;
+			}
+			else
+			{
+				SkillTime[Teleport_Time] += DTime;
+			}
+		}
+		else
+		{
+			///원거리 스킬을 체크
+
+			//장판형
+			if (SkillTime[Rendom_Time] >= SkillTimeMax[Rendom_Time])
+			{
+				SetState(BOSS_STATE::RENDOM_ATTACK_START);
+				SkillTime[Rendom_Time] = 0;
+			}
+			else
+			{
+				SkillTime[Rendom_Time] += DTime;
+			}
+
+			//일직선
+			if (SkillTime[Chase_Time] >= SkillTimeMax[Chase_Time])
+			{
+				SetState(BOSS_STATE::CHASE_ATTACK_READY);
+				SkillTime[Chase_Time] = 0;
+			}
+			else
+			{
+				SkillTime[Chase_Time] += DTime;
+			}
+		}
+
+		mTransform->Slow_Y_Rotation(mPlayerTR->GetPosition(), 150);
+
+		bool Active = true;
+		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_BOSS_ACTIVE, &Active);
+	}
+
+	if (GetKeyDown(VK_NUMPAD7))
+	{
+		SetState(BOSS_STATE::TELEPORT_READY);
+	}
+
+
+	if (GetKeyDown(VK_NUMPAD4))
+	{
+		SetState(BOSS_STATE::CHASE_ATTACK_READY);
+	}
+
+	if (GetKeyDown(VK_NUMPAD5))
+	{
+		if (PlayerDistance < AttackRange)
+		{
+			//근접 공격이 가능한 상태
+			mTransform->Slow_Y_Rotation(mPlayerTR->GetPosition(), 150, false);
+			if (IsRight == false)
+			{
+				SetState(BOSS_STATE::CLOSER_ATTACK_L);
+				IsRight = true;
+			}
+			else
+			{
+				SetState(BOSS_STATE::CLOSER_ATTACK_R);
+				IsRight = false;
+			}
+		}
+	}
+}
+
+void Boss::PushPlayer()
+{
+	Vector3 Look = mTransform->GetLocalPosition_Look();
+	Look.z *= -1;
+	Vector3 Point;
+
+	int Index = 1;
+	while (true)
+	{
+		Vector3 mStart;
+		mStart = mTransform->GetPosition() + (Look * Index);
+
+		mRay->Direction = { 0,-1,0 };
+		mRay->MaxDistance = 2;
+		mRay->Origin = mStart;
+		mRay->Origin.y += 0.5f;
+		//충돌된 곳에Y축만 가져온다
+		bool Hit = RayCast(mRay);
+		
+		if (Hit == false)
+		{
+			mPlayerTR->SetPosition(Point);
+			break;
+		}
+		else
+		{
+			Point = mRay->Hit.HitPoint;
+			Index += 3;
+		}
+	}
+	
 }

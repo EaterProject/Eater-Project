@@ -35,6 +35,7 @@
 #include "Store.h"
 #include "UIOption.h"
 #include "UIPause.h"
+#include "UIBoss.h"
 
 
 
@@ -56,14 +57,14 @@ void ObjectFactory::Release()
 GameObject* ObjectFactory::CreatePlayer()
 {
 	//플레이어와 카메라 오브젝트를 생성
-	GameObject* PlayerObject		= Instance();
-	
-	GameObject* PointCollider		= Instance();
-	GameObject* AttackCollider		= Instance();
-	GameObject* DroneObject			= Instance();
-	GameObject* PlayerPoint			= FindGameObjectTag("PlayerPoint");
+	GameObject* PlayerObject = Instance();
 
-	
+	GameObject* PointCollider = Instance();
+	GameObject* AttackCollider = Instance();
+	GameObject* DroneObject = Instance();
+	GameObject* PlayerPoint = FindGameObjectTag("PlayerPoint");
+
+
 	//플레이어 생성
 	PlayerObject->SetTag("Player");
 	PlayerObject->AddComponent<Player>();
@@ -82,7 +83,7 @@ GameObject* ObjectFactory::CreatePlayer()
 	//콜라이더 객체 생성
 	PointCollider->SetTag("PlayerCollider");
 	PointCollider->AddComponent<Collider>();
-	
+
 	//드론객체 생성
 	DroneObject->AddComponent<MeshFilter>();
 	DroneObject->AddComponent<Drone>();
@@ -122,7 +123,7 @@ GameObject* ObjectFactory::CreateManaStone()
 	for (int i = 0; i < ManaCount; i++)
 	{
 		Vector3 point = ManaPoint_List[i]->GetTransform()->GetPosition();
-		
+
 
 		GameObject* Object_ManaStone = Instance("ManaStone");
 		Object_ManaStone->AddComponent<Rigidbody>();
@@ -202,6 +203,13 @@ GameObject* ObjectFactory::CreateUIPause()
 	GameObject* Object_Pause = Instance();
 	Object_Pause->AddComponent<UIPause>();
 	return Object_Pause;
+}
+
+GameObject* ObjectFactory::CreateUIBoss()
+{
+	GameObject* Object_BossUI = Instance();
+	Object_BossUI->AddComponent<UIBoss>();
+	return Object_BossUI;
 }
 
 GameObject* ObjectFactory::CreateBoss()
