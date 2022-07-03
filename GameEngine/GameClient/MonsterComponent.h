@@ -10,6 +10,7 @@ class Transform;
 class AnimationController;
 class Collider;
 class Rigidbody;
+class ParticleController;
 class MonsterComponent : public Component
 {
 public:
@@ -111,6 +112,7 @@ protected:
 	int		MonsterColor		= 0;			//°Çµé¸é ¾ÈµÊ
 protected:
 	MeshFilterSetting	mMF_Setting;
+	ParticleController* mParticleController;
 	std::function<void()> HitFunction;
 
 };

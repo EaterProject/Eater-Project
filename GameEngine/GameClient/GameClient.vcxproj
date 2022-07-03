@@ -214,6 +214,7 @@
     <ClInclude Include="PlayerCamera.h" />
     <ClInclude Include="PlayerCollider.h" />
     <ClInclude Include="Store.h" />
+    <ClInclude Include="UIBoss.h" />
     <ClInclude Include="UICanvas.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
@@ -265,6 +266,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerCollider.cpp" />
     <ClCompile Include="Store.cpp" />
+    <ClCompile Include="UIBoss.cpp" />
     <ClCompile Include="UICanvas.cpp" />
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="UICredit.cpp" />

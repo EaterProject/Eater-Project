@@ -2,6 +2,7 @@
 #include "EaterEngineAPI.h"
 #include "Transform.h"
 #include "Collider.h"
+#include "ParticleFactory.h"
 MonsterB::MonsterB()
 {
 	
@@ -14,6 +15,7 @@ MonsterB::~MonsterB()
 
 void MonsterB::Awake()
 {
+	mParticleController = ParticleFactory::Get()->CreateParticleController(PARTICLE_TYPE::MonsterExplode);
 	MonsterComponent::Awake();
 }
 void MonsterB::SetUp()

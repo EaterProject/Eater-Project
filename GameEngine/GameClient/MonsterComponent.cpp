@@ -13,6 +13,8 @@
 #include "Collider.h"
 #include "Rigidbody.h"
 #include "PhysData.h"
+#include "ParticleController.h"
+#include "ParticleFactory.h"
 
 MonsterComponent::MonsterComponent()
 {
@@ -49,6 +51,8 @@ void MonsterComponent::Awake()
 	mAnimation	= gameobject->GetComponent<AnimationController>();
 	mColider	= gameobject->GetComponent<Collider>();
 	mRigidbody  = gameobject->GetComponent<Rigidbody>();
+
+	
 }
 
 void MonsterComponent::SetUp()
@@ -79,6 +83,12 @@ void MonsterComponent::Start()
 {
 	mMF_Setting.Setting(this->gameobject);
 	GetRandomColor();
+
+	if (mParticleController != nullptr)
+	{
+		mParticleController->gameobject->ChoiceParent(this->gameobject);
+		mParticleController->gameobject->GetTransform()->AddPosition(0, 0.5f, 0);
+	}
 }
 
 void MonsterComponent::Update()
@@ -210,6 +220,7 @@ void MonsterComponent::Attack()
 
 	if (mAnimation->EventCheck() == true)
 	{
+		if(mParticleController != nullptr) { mParticleController->Play(); }
 		if (IsAttack == false)
 		{
 			int Damage = 10;
@@ -222,6 +233,15 @@ void MonsterComponent::Attack()
 	else
 	{
 		IsAttack = false;
+
+		if (mParticleController != nullptr)
+		{
+			PARTICLE_STATE mState = mParticleController->GetState();
+			if (mState == PLAY_STATE)
+			{
+				mParticleController->Stop();
+			}
+		}
 	}
 
 	//공격 범위에 나갔을떄 다시 추격 상태로
@@ -291,8 +311,9 @@ void MonsterComponent::Dead()
 		Data.Object = this->gameobject;
 		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_MONSTER_UI_OFF, &Data);
 		IsUI_ON = false;
+		mMF_Setting.PlayDissolve();
 
-		if (mMF_Setting.PlayDissolve() == false)
+		if (mMF_Setting.EndDissolve() == false) 
 		{
 			gameobject->SetActive(false);
 		}
@@ -354,7 +375,7 @@ void MonsterComponent::Hit()
 	{
 		float End = mAnimation->GetEndFrame();
 		float Now = mAnimation->GetNowFrame();
-		mMF_Setting.LimLightUpdate(1);
+		mMF_Setting.LimLightUpdate(2.0f);
 		if (Now >= End)
 		{
 			HitStart = false;
@@ -484,9 +505,8 @@ void MonsterComponent::SetMonsterColor()
 		Data.ComboCount = ComboCount;
 		Data.Object = this->gameobject;
 		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_MONSTER_UI_UPDATE, &Data);
-
-		mMF_Setting.SetLimlightSetting(1, 0, 0, 2.5f, 0.5);
-		mMF_Setting.SetLimlightSettingMax(0, 0, 0, 0.5f, 1);
+		mMF_Setting.SetLimlightSetting(1, 1, 1, 2.2f, 1.0f);
+		mMF_Setting.SetLimlightSettingMax(1, 0, 0, 0.4f, 0.7);
 	}
 	else
 	{
@@ -499,9 +519,8 @@ void MonsterComponent::SetMonsterColor()
 		Data.ComboCount = ComboCount;
 		Data.Object = this->gameobject;
 		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_MONSTER_UI_UPDATE, &Data);
-
-		mMF_Setting.SetLimlightSetting(0, 0, 1, 2.5f, 0.5f);
-		mMF_Setting.SetLimlightSettingMax(0, 0, 0, 0.5f, 1);
+		mMF_Setting.SetLimlightSetting(1, 1, 1, 2.2f, 1.0f);
+		mMF_Setting.SetLimlightSettingMax(0, 0, 1, 0.4f, 0.7f);
 	}
 }
 

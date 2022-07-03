@@ -1,22 +1,22 @@
 #EATERMAT
 @MaterialName Dome_IN_M_InsidePillar
 @Alpha 0
-@DiffuseMap Dome_InsidePillar_BaseColor.png
-@NormalMap Dome_InsidePillar_Normal.png
-@EmissiveMap Dome_InsidePillar_Emissive.png
-@ORMMap Dome_InsidePillar_ORM.png
-@Emissive 0.000000
+@ORMMap Dome_InsidePillar_ORM
+@LimColor_B 0.000000
+@DiffuseMap Dome_InsidePillar_BaseColor
+@NormalMap Dome_InsidePillar_Normal
+@EmissiveMap Dome_InsidePillar_Emissive
+@Emissive 1.400000
+@SkyLightIndex 1.000000
 @Roughness 0.000000
 @Metallic 0.000000
-@Tileing_X 1.000000
-@Tileing_Y 1.000000
-@SkyLightIndex 0
+@Tileing_X 1
+@Tileing_Y 1
 @AddColor_R 0.000000
 @AddColor_G 0.000000
 @AddColor_B 0.000000
+@LimFactor 0.000000
 @LimColor_R 0.000000
 @LimColor_G 0.000000
-@LimColor_B 0.000000
-@LimFactor 0.000000
 @LimWidth 0.000000
 &

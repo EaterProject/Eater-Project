@@ -27,6 +27,8 @@ class UIOption;
 class UIPause;
 class UIManual;
 class UICredit;
+class UIBoss;
+
 enum class  CLIENT_OBJECT_TYPE
 {
 	MONATER_A,
@@ -88,6 +90,7 @@ private:
 	UIPause*			mPause			= nullptr;
 	UIManual*			mManual			= nullptr;
 	UICredit*			mCredit			= nullptr;
+	UIBoss*				mBossUI			= nullptr;
 	CameraManager*		mCameraManager  = nullptr;
 private:
 	ObjectFactory* mFactory;

@@ -260,27 +260,50 @@ void MeshFilterSetting::SetDissolveInnerFactor(float mFactor)
 	DissolveInnerFactor = mFactor;
 }
 
-bool MeshFilterSetting::PlayDissolve()
+void MeshFilterSetting::PlayDissolve()
 {
-	if (IsDissolvePlay == true) { return true; }
-	//만약 림라이트나 이미시브를 건들고있다면 메테리얼 블록을 돌려주고 시작
-	ReSet();
-
-	MaterialPropertyBlock* MPB = nullptr;
-	int Count = mTopObject->GetChildMeshCount();
-	if (Count != 0)
+	if (IsDissolvePlay == nullptr)
 	{
-		for (int i = 0; i < Count; i++)
+		//만약 림라이트나 이미시브를 건들고있다면 메테리얼 블록을 돌려주고 시작
+		ReSet();
+
+		MaterialPropertyBlock* MPB = nullptr;
+		int Count = mTopObject->GetChildMeshCount();
+		if (Count != 0)
 		{
-			GameObject* mObject = mTopObject->GetChildMesh(i);
-			MeshFilter* mMeshFilter = mObject->GetComponent<MeshFilter>();
+			for (int i = 0; i < Count; i++)
+			{
+				GameObject* mObject = mTopObject->GetChildMesh(i);
+				MeshFilter* mMeshFilter = mObject->GetComponent<MeshFilter>();
+				mMeshFilter->SetMaterialPropertyBlock(true, true);
+				MPB = mMeshFilter->GetMaterialPropertyBlock();
+
+				//디졸브 실행
+				MPB->SetDissolve
+				(
+					mDissolveOption,
+					GetTexture(mDissolveName),
+					mDissolveColor,
+					DissolveColorFactor,
+					DissolvePlayTime,
+					DissolveWidth,
+					DissolveOuterFactor,
+					DissolveInnerFactor
+				);
+			}
+
+			IsDissolvePlay = &MPB->Dissolve;
+		}
+		else
+		{
+			MeshFilter* mMeshFilter = mTopObject->GetComponent<MeshFilter>();
 			mMeshFilter->SetMaterialPropertyBlock(true, true);
 			MPB = mMeshFilter->GetMaterialPropertyBlock();
 
 			//디졸브 실행
 			MPB->SetDissolve
 			(
-				mDissolveOption,			
+				mDissolveOption,
 				GetTexture(mDissolveName),
 				mDissolveColor,
 				DissolveColorFactor,
@@ -289,28 +312,28 @@ bool MeshFilterSetting::PlayDissolve()
 				DissolveOuterFactor,
 				DissolveInnerFactor
 			);
+
+			IsDissolvePlay = &MPB->Dissolve;
 		}
-		IsDissolvePlay = true;
-		return (MPB != nullptr) ? IsDissolvePlay :  false;
 	}
 	else
 	{
-		MeshFilter* mMeshFilter = mTopObject->GetComponent<MeshFilter>();
-		mMeshFilter->SetMaterialPropertyBlock(true, true);
-		MPB = mMeshFilter->GetMaterialPropertyBlock();
+		if (*IsDissolvePlay == false)
+		{
+			IsDissolvePlay = nullptr;
+		}
+	}
+}
 
-		//디졸브 실행
-		MPB->SetDissolve
-		(
-			mDissolveOption,
-			GetTexture(mDissolveName),
-			mDissolveColor,
-			DissolveColorFactor,
-			DissolvePlayTime,
-			DissolveWidth,
-			DissolveOuterFactor,
-			DissolveInnerFactor
-		);
+const bool MeshFilterSetting::EndDissolve()
+{
+	if (IsDissolvePlay != nullptr)
+	{
+		return *IsDissolvePlay;
+	}
+	else
+	{
+		return false;
 	}
 }
 

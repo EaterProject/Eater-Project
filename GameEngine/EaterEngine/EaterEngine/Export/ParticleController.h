@@ -2,8 +2,10 @@
 #include "EaterEngineDLL.h"
 #include "Component.h"
 #include <map>
+#include <vector>
 
 class ParticleSystem;
+class Transform;
 class ParticleController : public Component
 {
 private:
@@ -45,6 +47,8 @@ public:
 	EATER_ENGINEDLL void Pause();
 	EATER_ENGINEDLL void Stop();
 
+	//현재 들어있는 파티클들을 움직여줌
+	EATER_ENGINEDLL void SetPosition(float x, float y, float z);
 public:
 	EATER_ENGINEDLL ParticleSystem* GetParticle(std::string particle_key);
 	EATER_ENGINEDLL PARTICLE_STATE GetState();
@@ -52,12 +56,9 @@ public:
 
 private:
 	void UpdateController();
-
 	void SetTotalTime();
 	void SetNowParticleList();
-
 	void Resume();
-
 private:
 	PARTICLE_STATE m_ControllerState;
 

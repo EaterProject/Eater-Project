@@ -18,11 +18,19 @@ void InGame::Awake()
 	Logic = new GameLogic();
 
 	//Tool에서 만들어놓은 씬을 로드
-	Load("../Assets/Scene/test.Scene");
+	Load("../Assets/Scene/InGame.Scene");
 
 	// 오클루더 설정..
 	AddOccluder("Dome_program_0");
 		
+	//BakeSkyLightMap("SkyLight_0", false);
+	//BakeSkyLightMap("Dome_HDR_5", false);
+	//SetSkyLight("SkyLight_0", 0);
+	//SetSkyLight("Dome_HDR_5", 1);
+	//
+	SetColorGradingBaseTexture("Dome_LUT_4");
+	/// Blend Factor
+	SetColorGradingBlendFactor(0.0f);
 	//로직매니저 초기화
 	Logic->Initialize();
 

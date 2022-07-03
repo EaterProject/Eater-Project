@@ -13,6 +13,7 @@ class PhysRayCast;
 class BossWeapon;
 class BossFriend;
 class MaterialPropertyBlock;
+class ParticleController;
 class Boss :public Component
 {
 public:
@@ -35,9 +36,9 @@ private:
 	Transform*		mPlayerTR		= nullptr;
 	Rigidbody*		mRigidbody		= nullptr;
 private:
-	std::string ANIMATION_NAME[16];	//애니메이션 이름
-	float ANIMATION_TIME[16];		//애니메이션 시간
-	bool  STATE_START[16];			//상태 시작 여부
+	std::string ANIMATION_NAME[18];	//애니메이션 이름
+	float ANIMATION_TIME[18];		//애니메이션 시간
+	bool  STATE_START[18];			//상태 시작 여부
 private:
 	//상태에 대한 함수들
 	void Boss_Idle();
@@ -45,46 +46,72 @@ private:
 	void Boss_Groggy_Start();
 	void Boss_Groggy_Play();
 	void Boss_Groggy_End();
+
 	void Boss_Teleport_Ready();
 	void Boss_Teleport_Start();
 	void Boss_Create();
+
 	void Boss_Closer_Attack_L();
 	void Boss_Closer_Attack_R();
-	void Boss_Chase_Attack_Ready();
-	void Boss_Chase_Attack_Play();
-	void Boss_Rendom_Attack_Ready();
-	void Boss_Rendom_Attack_Play();
-	void Boss_Rendom_Attack_End();
+
+	void Boss_Chase_Attack_Ready(int Phase);
+	void Boss_Chase_Attack_Play(int Phase);
+	void Boss_Chase_Attack_End(int Phase);
+
+	void Boss_Rendom_Attack_Ready(int Phase);
+	void Boss_Rendom_Attack_Play(int Phase);
+	void Boss_Rendom_Attack_End(int Phase);
+	void Boss_Rendom_Attack_Reset(int Phase);
 	void Boss_Hit();
 private:
 	void	SetState(BOSS_STATE State);	//상태를 변환
 	bool	FirstState();				//현재 상태가 처음인지 체크
 	float	PlayerDistanceCheck();		//플레이어의 거리를 체크
 	void	CreateSkillPoint();			//스킬 쏘는 위치를 생성
+	void	CreateSkillPoint_Chase();
 	void	GroundCheck();
+	void	SkillCheck();
+	void	PushPlayer();
 private:
+
 	bool	IsHit			= false;
 	bool	IsSkill			= false;
 	bool	IsRight			= false;
 	bool	IsShooting		= false;
+	bool	IsBossFriend	= false;
 
 	int		mState			= 0;		//보스의 상태
 	int		FriendIndex		= -1;		//보스의 위치 인덱스
+	int		BossPhase		= 0;
 
 	float	AttackRange		= 3.5f;		//근접 공격 범위
 	float	FightRange		= 30.0f;	//보스와 싸울 수 있는 거리
 	float	SkillRange		= 10.0f;	//보스의 스킬 거리
 	float	PlayerDistance	= 0.0f;		//플레이어의 거리
-	float	HP				= 100;		//보스 체력
+	int		HP				= 3000;		//보스 체력
 	float	PositionY		= 6.0f;		//보스 Y축 오프셋
 
-	float	RendomSkillReadyTime		= 0.0f;
-	float	RendomSkillReadyTimeMax		= 5.0f;
+private:
+	//스킬들 쿨타임
+	 
+	//장판공격 쿨타임
 	float	RendomSkillPlayTime			= 0.0f;
-	float	RendomSkillPlayTimeMax		= 5.0f;
+	float	RendomSkillPlayTimeMax		= 1.0f;
+	
+	float SkillTime[5]		= { 0.0f, };
+	float SkillTimeMax[5]	= { 0.0f, };
 
+
+	//각 스킬 쿨타임 
+	const int Rendom_Time	= 0;
+	const int Chase_Time	= 1;
+	const int Teleport_Time = 2;
+	const int Base_Time		= 3;
+	const int Groggy_Time	= 4;
+private:
 	Vector3 StartPoint;
 	Vector3	SkillPoint[5];
+	Vector3 SkillPoint_01[5];
 	PhysRayCast* mRay;
 
 	BossWeapon* Weapon[5];
@@ -92,5 +119,6 @@ private:
 	MeshFilter* ChildeMeshFilter[7];
 
 	MeshFilterSetting mMF_Setting;
+	ParticleController* mParticle;
 };
 
