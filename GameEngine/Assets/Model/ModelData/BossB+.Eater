@@ -1,8 +1,8 @@
 #BONE
-@ParentName Armature
 @NodeName Bone
-@BoneIndex 0
+@ParentName Armature
 @IsCull 1
+@BoneIndex 0
 @TopNode YES
 @IsActive 1
 @IsShadow 1
@@ -17,10 +17,10 @@ $LocalTM 4 4
 -0.000002 0.997307 -0.073346 0.000000
 -0.000002 1.670325 0.119291 1.000000
 #BONE
-@ParentName Bone
 @NodeName spine.003
-@BoneIndex 1
+@ParentName Bone
 @IsCull 1
+@BoneIndex 1
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -35,10 +35,10 @@ $LocalTM 4 4
 -0.000006 0.305804 0.952094 0.000000
 0.000716 -0.065147 0.077751 1.000000
 #BONE
-@ParentName spine.003
 @NodeName spine.002
-@BoneIndex 2
+@ParentName spine.003
 @IsCull 1
+@BoneIndex 2
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -53,10 +53,10 @@ $LocalTM 4 4
 0.000005 -0.592948 0.805241 0.000000
 -0.000000 -0.000000 0.239038 1.000000
 #BONE
-@ParentName spine.002
 @NodeName spine.001
-@BoneIndex 3
+@ParentName spine.002
 @IsCull 1
+@BoneIndex 3
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -71,10 +71,10 @@ $LocalTM 4 4
 -0.002233 -0.581116 0.813818 0.000000
 -0.000000 -0.000000 0.280307 1.000000
 #BONE
-@ParentName spine.001
 @NodeName neck2
-@BoneIndex 4
+@ParentName spine.001
 @IsCull 1
+@BoneIndex 4
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -89,10 +89,10 @@ $LocalTM 4 4
 0.002147 0.644335 0.764740 0.000000
 -0.000000 0.000000 0.315965 1.000000
 #BONE
-@ParentName neck2
 @NodeName neck1
-@BoneIndex 5
+@ParentName neck2
 @IsCull 1
+@BoneIndex 5
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -107,10 +107,10 @@ $LocalTM 4 4
 0.004682 -0.814691 0.579876 0.000000
 0.000000 -0.000000 0.211253 1.000000
 #BONE
-@ParentName neck1
 @NodeName head
-@BoneIndex 6
+@ParentName neck1
 @IsCull 1
+@BoneIndex 6
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -125,10 +125,10 @@ $LocalTM 4 4
 -0.003638 0.531653 0.846954 0.000000
 0.000000 -0.000000 0.167429 1.000000
 #BONE
-@ParentName head
 @NodeName head_end
-@BoneIndex 7
+@ParentName head
 @IsCull 1
+@BoneIndex 7
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -143,10 +143,10 @@ $LocalTM 4 4
 0.000000 -0.000000 1.000000 0.000000
 0.000000 0.000000 0.108930 1.000000
 #BONE
-@ParentName spine.001
 @NodeName shoulder.L
-@BoneIndex 8
+@ParentName spine.001
 @IsCull 1
+@BoneIndex 8
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -161,10 +161,10 @@ $LocalTM 4 4
 -0.697460 -0.292038 -0.654419 0.000000
 -0.113538 0.085220 0.271642 1.000000
 #BONE
-@ParentName shoulder.L
 @NodeName arm.L
-@BoneIndex 9
+@ParentName shoulder.L
 @IsCull 1
+@BoneIndex 9
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -179,10 +179,10 @@ $LocalTM 4 4
 0.074181 -0.180152 0.980837 0.000000
 -0.000000 -0.000000 0.163190 1.000000
 #BONE
-@ParentName arm.L
 @NodeName forearm.L
-@BoneIndex 10
+@ParentName arm.L
 @IsCull 1
+@BoneIndex 10
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -197,10 +197,10 @@ $LocalTM 4 4
 0.285769 -0.614164 0.735621 0.000000
 -0.000000 -0.000000 0.577545 1.000000
 #BONE
-@ParentName forearm.L
 @NodeName hand.L
-@BoneIndex 11
+@ParentName forearm.L
 @IsCull 1
+@BoneIndex 11
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -215,10 +215,10 @@ $LocalTM 4 4
 0.075004 0.353718 0.932340 0.000000
 -0.000000 0.000000 0.797291 1.000000
 #BONE
-@ParentName hand.L
 @NodeName s1.L
-@BoneIndex 12
+@ParentName hand.L
 @IsCull 1
+@BoneIndex 12
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -233,10 +233,10 @@ $LocalTM 4 4
 0.180693 -0.195106 0.963993 0.000000
 0.011455 0.006775 0.222122 1.000000
 #BONE
-@ParentName s1.L
 @NodeName s2.L
-@BoneIndex 13
+@ParentName s1.L
 @IsCull 1
+@BoneIndex 13
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -251,10 +251,10 @@ $LocalTM 4 4
 0.457623 0.047432 0.887880 0.000000
 -0.000000 -0.000000 0.242998 1.000000
 #BONE
-@ParentName s2.L
 @NodeName s3.L
-@BoneIndex 14
+@ParentName s2.L
 @IsCull 1
+@BoneIndex 14
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -269,10 +269,10 @@ $LocalTM 4 4
 0.300471 0.295656 0.906810 0.000000
 -0.000000 -0.000000 0.186697 1.000000
 #BONE
-@ParentName s3.L
 @NodeName s3.L_end
-@BoneIndex 15
+@ParentName s3.L
 @IsCull 1
+@BoneIndex 15
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -287,10 +287,10 @@ $LocalTM 4 4
 -0.000000 0.000000 1.000000 0.000000
 0.000000 0.000000 0.342159 1.000000
 #BONE
-@ParentName hand.L
 @NodeName F1.L
-@BoneIndex 16
+@ParentName hand.L
 @IsCull 1
+@BoneIndex 16
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -305,10 +305,10 @@ $LocalTM 4 4
 0.911833 0.293943 0.286633 0.000000
 0.067243 0.037212 0.110438 1.000000
 #BONE
-@ParentName F1.L
 @NodeName f2.L
-@BoneIndex 17
+@ParentName F1.L
 @IsCull 1
+@BoneIndex 17
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -323,10 +323,10 @@ $LocalTM 4 4
 0.144426 -0.770645 0.620683 0.000000
 0.000000 0.000000 0.111627 1.000000
 #BONE
-@ParentName f2.L
 @NodeName f3.L
-@BoneIndex 18
+@ParentName f2.L
 @IsCull 1
+@BoneIndex 18
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -341,10 +341,10 @@ $LocalTM 4 4
 -0.124607 -0.350222 0.928341 0.000000
 -0.000000 -0.000000 0.172533 1.000000
 #BONE
-@ParentName f3.L
 @NodeName f3.L_end
-@BoneIndex 19
+@ParentName f3.L
 @IsCull 1
+@BoneIndex 19
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -359,10 +359,10 @@ $LocalTM 4 4
 -0.000000 0.000000 1.000000 0.000000
 0.000000 -0.000000 0.138642 1.000000
 #BONE
-@ParentName hand.L
 @NodeName t1.L
-@BoneIndex 20
+@ParentName hand.L
 @IsCull 1
+@BoneIndex 20
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -377,10 +377,10 @@ $LocalTM 4 4
 0.063214 -0.380866 0.922467 0.000000
 -0.018113 -0.054305 0.233479 1.000000
 #BONE
-@ParentName t1.L
 @NodeName t2.L
-@BoneIndex 21
+@ParentName t1.L
 @IsCull 1
+@BoneIndex 21
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -395,10 +395,10 @@ $LocalTM 4 4
 0.374716 0.057303 0.925367 0.000000
 0.000000 0.000000 0.215466 1.000000
 #BONE
-@ParentName t2.L
 @NodeName t3.L
-@BoneIndex 22
+@ParentName t2.L
 @IsCull 1
+@BoneIndex 22
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -413,10 +413,10 @@ $LocalTM 4 4
 0.471089 0.119260 0.873986 0.000000
 0.000000 0.000000 0.178295 1.000000
 #BONE
-@ParentName t3.L
 @NodeName t3.L_end
-@BoneIndex 23
+@ParentName t3.L
 @IsCull 1
+@BoneIndex 23
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -431,10 +431,10 @@ $LocalTM 4 4
 0.000000 0.000000 1.000000 0.000000
 0.000000 0.000000 0.356756 1.000000
 #BONE
-@ParentName hand.L
 @NodeName l1.L
-@BoneIndex 24
+@ParentName hand.L
 @IsCull 1
+@BoneIndex 24
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -449,10 +449,10 @@ $LocalTM 4 4
 0.037327 -0.636680 0.770224 0.000000
 -0.042762 -0.092535 0.213688 1.000000
 #BONE
-@ParentName l1.L
 @NodeName l2.L
-@BoneIndex 25
+@ParentName l1.L
 @IsCull 1
+@BoneIndex 25
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -467,10 +467,10 @@ $LocalTM 4 4
 0.288678 0.219380 0.931953 0.000000
 0.000000 -0.000000 0.226672 1.000000
 #BONE
-@ParentName l2.L
 @NodeName l3.L
-@BoneIndex 26
+@ParentName l2.L
 @IsCull 1
+@BoneIndex 26
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -485,10 +485,10 @@ $LocalTM 4 4
 0.355757 0.009590 0.934529 0.000000
 0.000000 -0.000000 0.175012 1.000000
 #BONE
-@ParentName l3.L
 @NodeName l3.L_end
-@BoneIndex 27
+@ParentName l3.L
 @IsCull 1
+@BoneIndex 27
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -503,10 +503,10 @@ $LocalTM 4 4
 0.000000 0.000000 1.000000 0.000000
 0.000000 0.000000 0.295188 1.000000
 #BONE
-@ParentName spine.001
 @NodeName shoulder.R
-@BoneIndex 28
+@ParentName spine.001
 @IsCull 1
+@BoneIndex 28
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -521,10 +521,10 @@ $LocalTM 4 4
 0.694054 -0.293010 -0.657597 0.000000
 0.113458 0.085056 0.271129 1.000000
 #BONE
-@ParentName shoulder.R
 @NodeName arm.R
-@BoneIndex 29
+@ParentName shoulder.R
 @IsCull 1
+@BoneIndex 29
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -539,10 +539,10 @@ $LocalTM 4 4
 -0.074205 -0.180138 0.980838 0.000000
 -0.000000 0.000000 0.163190 1.000000
 #BONE
-@ParentName arm.R
 @NodeName forearm.R
-@BoneIndex 30
+@ParentName arm.R
 @IsCull 1
+@BoneIndex 30
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -557,10 +557,10 @@ $LocalTM 4 4
 -0.321554 -0.624550 0.711716 0.000000
 0.000000 -0.000000 0.577545 1.000000
 #BONE
-@ParentName forearm.R
 @NodeName hand.R
-@BoneIndex 31
+@ParentName forearm.R
 @IsCull 1
+@BoneIndex 31
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -575,10 +575,10 @@ $LocalTM 4 4
 -0.074941 0.353800 0.932314 0.000000
 0.000000 0.000000 0.797291 1.000000
 #BONE
-@ParentName hand.R
 @NodeName s1.R
-@BoneIndex 32
+@ParentName hand.R
 @IsCull 1
+@BoneIndex 32
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -593,10 +593,10 @@ $LocalTM 4 4
 -0.180694 -0.195209 0.963973 0.000000
 -0.011455 0.006751 0.222123 1.000000
 #BONE
-@ParentName s1.R
 @NodeName s2.R
-@BoneIndex 33
+@ParentName s1.R
 @IsCull 1
+@BoneIndex 33
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -611,10 +611,10 @@ $LocalTM 4 4
 -0.457623 0.047432 0.887880 0.000000
 -0.000000 0.000000 0.242998 1.000000
 #BONE
-@ParentName s2.R
 @NodeName s3.R
-@BoneIndex 34
+@ParentName s2.R
 @IsCull 1
+@BoneIndex 34
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -629,10 +629,10 @@ $LocalTM 4 4
 -0.300471 0.295657 0.906810 0.000000
 0.000000 0.000000 0.186697 1.000000
 #BONE
-@ParentName s3.R
 @NodeName s3.R_end
-@BoneIndex 35
+@ParentName s3.R
 @IsCull 1
+@BoneIndex 35
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -647,10 +647,10 @@ $LocalTM 4 4
 0.000000 0.000000 1.000000 0.000000
 0.000000 0.000000 0.342159 1.000000
 #BONE
-@ParentName hand.R
 @NodeName F1.R
-@BoneIndex 36
+@ParentName hand.R
 @IsCull 1
+@BoneIndex 36
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -665,10 +665,10 @@ $LocalTM 4 4
 -0.911834 0.293911 0.286664 0.000000
 -0.067243 0.037200 0.110442 1.000000
 #BONE
-@ParentName F1.R
 @NodeName f2.R
-@BoneIndex 37
+@ParentName F1.R
 @IsCull 1
+@BoneIndex 37
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -683,10 +683,10 @@ $LocalTM 4 4
 -0.144426 -0.770644 0.620684 0.000000
 0.000000 0.000000 0.111627 1.000000
 #BONE
-@ParentName f2.R
 @NodeName f3.R
-@BoneIndex 38
+@ParentName f2.R
 @IsCull 1
+@BoneIndex 38
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -701,10 +701,10 @@ $LocalTM 4 4
 0.124608 -0.350222 0.928341 0.000000
 -0.000000 -0.000000 0.172533 1.000000
 #BONE
-@ParentName f3.R
 @NodeName f3.R_end
-@BoneIndex 39
+@ParentName f3.R
 @IsCull 1
+@BoneIndex 39
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -719,10 +719,10 @@ $LocalTM 4 4
 0.000000 0.000000 1.000000 0.000000
 0.000000 0.000000 0.138642 1.000000
 #BONE
-@ParentName hand.R
 @NodeName t1.R
-@BoneIndex 40
+@ParentName hand.R
 @IsCull 1
+@BoneIndex 40
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -737,10 +737,10 @@ $LocalTM 4 4
 -0.063215 -0.380964 0.922426 0.000000
 0.018113 -0.054330 0.233473 1.000000
 #BONE
-@ParentName t1.R
 @NodeName t2.R
-@BoneIndex 41
+@ParentName t1.R
 @IsCull 1
+@BoneIndex 41
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -755,10 +755,10 @@ $LocalTM 4 4
 -0.374716 0.057303 0.925367 0.000000
 -0.000000 0.000000 0.215466 1.000000
 #BONE
-@ParentName t2.R
 @NodeName t3.R
-@BoneIndex 42
+@ParentName t2.R
 @IsCull 1
+@BoneIndex 42
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -773,10 +773,10 @@ $LocalTM 4 4
 -0.471089 0.119260 0.873986 0.000000
 -0.000000 0.000000 0.178295 1.000000
 #BONE
-@ParentName t3.R
 @NodeName t3.R_end
-@BoneIndex 43
+@ParentName t3.R
 @IsCull 1
+@BoneIndex 43
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -791,10 +791,10 @@ $LocalTM 4 4
 -0.000000 -0.000000 1.000000 0.000000
 -0.000000 0.000000 0.356756 1.000000
 #BONE
-@ParentName hand.R
 @NodeName l1.R
-@BoneIndex 44
+@ParentName hand.R
 @IsCull 1
+@BoneIndex 44
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -809,10 +809,10 @@ $LocalTM 4 4
 -0.037327 -0.636762 0.770156 0.000000
 0.042762 -0.092558 0.213678 1.000000
 #BONE
-@ParentName l1.R
 @NodeName l2.R
-@BoneIndex 45
+@ParentName l1.R
 @IsCull 1
+@BoneIndex 45
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -827,10 +827,10 @@ $LocalTM 4 4
 -0.288678 0.219380 0.931954 0.000000
 -0.000000 -0.000000 0.226672 1.000000
 #BONE
-@ParentName l2.R
 @NodeName l3.R
-@BoneIndex 46
+@ParentName l2.R
 @IsCull 1
+@BoneIndex 46
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -845,10 +845,10 @@ $LocalTM 4 4
 -0.355758 0.009590 0.934529 0.000000
 0.000000 0.000000 0.175012 1.000000
 #BONE
-@ParentName l3.R
 @NodeName l3.R_end
-@BoneIndex 47
+@ParentName l3.R
 @IsCull 1
+@BoneIndex 47
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -863,10 +863,10 @@ $LocalTM 4 4
 0.000000 0.000000 1.000000 0.000000
 0.000000 0.000000 0.295188 1.000000
 #BONE
-@ParentName spine.003
 @NodeName inner
-@BoneIndex 48
+@ParentName spine.003
 @IsCull 1
+@BoneIndex 48
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -881,10 +881,10 @@ $LocalTM 4 4
 0.000013 -0.866136 -0.499809 0.000000
 -0.000715 -0.205908 0.283346 1.000000
 #BONE
-@ParentName inner
 @NodeName inner_end
-@BoneIndex 49
+@ParentName inner
 @IsCull 1
+@BoneIndex 49
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -899,10 +899,10 @@ $LocalTM 4 4
 -0.000000 0.000000 1.000000 0.000000
 0.000000 0.000000 0.090000 1.000000
 #BONE
-@ParentName Bone
 @NodeName spine.004
-@BoneIndex 50
+@ParentName Bone
 @IsCull 1
+@BoneIndex 50
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -917,10 +917,10 @@ $LocalTM 4 4
 0.000004 0.043726 -0.999043 0.000000
 0.000000 -0.143091 0.005285 1.000000
 #BONE
-@ParentName spine.004
 @NodeName spine.005
-@BoneIndex 51
+@ParentName spine.004
 @IsCull 1
+@BoneIndex 51
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -935,10 +935,10 @@ $LocalTM 4 4
 -0.000002 -0.217204 0.976126 0.000000
 0.000000 -0.000000 0.523756 1.000000
 #BONE
-@ParentName spine.005
 @NodeName spine.006
-@BoneIndex 52
+@ParentName spine.005
 @IsCull 1
+@BoneIndex 52
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -953,10 +953,10 @@ $LocalTM 4 4
 -0.000004 -0.412834 0.910806 0.000000
 -0.000000 -0.000000 0.352253 1.000000
 #BONE
-@ParentName spine.006
 @NodeName spine.006_end
-@BoneIndex 53
+@ParentName spine.006
 @IsCull 1
+@BoneIndex 53
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -971,10 +971,10 @@ $LocalTM 4 4
 -0.000000 0.000000 1.000000 0.000000
 0.000000 0.000000 0.533253 1.000000
 #BONE
-@ParentName Bone
 @NodeName bone
-@BoneIndex 54
+@ParentName Bone
 @IsCull 1
+@BoneIndex 54
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -989,10 +989,10 @@ $LocalTM 4 4
 0.005924 -0.000957 -0.999982 0.000000
 -0.000167 1.061662 0.928060 1.000000
 #BONE
-@ParentName bone
 @NodeName sapin
-@BoneIndex 55
+@ParentName bone
 @IsCull 1
+@BoneIndex 55
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -1007,10 +1007,10 @@ $LocalTM 4 4
 -0.999327 0.022329 0.029118 0.000000
 0.022269 -0.013189 0.091007 1.000000
 #BONE
-@ParentName sapin
 @NodeName ball1
-@BoneIndex 56
+@ParentName sapin
 @IsCull 1
+@BoneIndex 56
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -1025,10 +1025,10 @@ $LocalTM 4 4
 -0.014079 -0.022337 0.999651 0.000000
 0.274831 1.201056 0.050747 1.000000
 #BONE
-@ParentName ball1
 @NodeName ball1_end
-@BoneIndex 57
+@ParentName ball1
 @IsCull 1
+@BoneIndex 57
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -1043,10 +1043,10 @@ $LocalTM 4 4
 0.000000 -0.000000 1.000000 0.000000
 0.000000 0.000000 0.120012 1.000000
 #BONE
-@ParentName sapin
 @NodeName ball2
-@BoneIndex 58
+@ParentName sapin
 @IsCull 1
+@BoneIndex 58
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -1061,10 +1061,10 @@ $LocalTM 4 4
 0.033083 -0.022867 0.999191 0.000000
 -0.671903 1.024951 0.030043 1.000000
 #BONE
-@ParentName ball2
 @NodeName ball2_end
-@BoneIndex 59
+@ParentName ball2
 @IsCull 1
+@BoneIndex 59
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -1079,10 +1079,10 @@ $LocalTM 4 4
 0.000000 -0.000000 1.000000 0.000000
 0.000000 0.000000 0.120226 1.000000
 #BONE
-@ParentName sapin
 @NodeName ball3
-@BoneIndex 60
+@ParentName sapin
 @IsCull 1
+@BoneIndex 60
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -1097,10 +1097,10 @@ $LocalTM 4 4
 -0.118669 -0.020975 0.992712 0.000000
 -1.195910 0.029578 -0.036890 1.000000
 #BONE
-@ParentName ball3
 @NodeName ball3_end
-@BoneIndex 61
+@ParentName ball3
 @IsCull 1
+@BoneIndex 61
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -1115,10 +1115,10 @@ $LocalTM 4 4
 0.000000 0.000000 1.000000 0.000000
 0.000000 0.000000 0.110453 1.000000
 #BONE
-@ParentName sapin
 @NodeName ball4
-@BoneIndex 62
+@ParentName sapin
 @IsCull 1
+@BoneIndex 62
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -1133,10 +1133,10 @@ $LocalTM 4 4
 0.033083 -0.022867 0.999191 0.000000
 -0.702166 -0.986011 -0.015416 1.000000
 #BONE
-@ParentName ball4
 @NodeName ball4_end
-@BoneIndex 63
+@ParentName ball4
 @IsCull 1
+@BoneIndex 63
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -1151,10 +1151,10 @@ $LocalTM 4 4
 -0.000000 0.000000 1.000000 0.000000
 0.000000 -0.000000 0.120226 1.000000
 #BONE
-@ParentName sapin
 @NodeName ball5
-@BoneIndex 64
+@ParentName sapin
 @IsCull 1
+@BoneIndex 64
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -1169,10 +1169,10 @@ $LocalTM 4 4
 -0.028294 -0.022165 0.999354 0.000000
 0.248918 -1.198198 -0.003201 1.000000
 #BONE
-@ParentName ball5
 @NodeName ball5_end
-@BoneIndex 65
+@ParentName ball5
 @IsCull 1
+@BoneIndex 65
 @TopNode NO
 @IsActive 1
 @IsShadow 1
@@ -1187,10 +1187,10 @@ $LocalTM 4 4
 -0.000000 0.000000 1.000000 0.000000
 0.000000 -0.000000 0.110000 1.000000
 #SKIN
-@ParentName RootNode
 @NodeName weapon
-@MeshName BossB+_0
+@ParentName RootNode
 @IsActive 1
+@MeshName BossB+_0
 @MaterialName BossB+_waphon
 @IsShadow 1
 @IsCull 1
@@ -1201,7 +1201,7 @@ $WorldTM 4 4
 0.000000 0.000000 -1.000000 0.000000
 0.000000 0.000000 0.000000 1.000000
 $LocalTM 4 4
--1.000000 0.000000 0.000000 0.000000
+-1.000000 0.000000 -0.000000 0.000000
 0.000000 1.000000 0.000000 0.000000
 0.000000 0.000000 -1.000000 0.000000
 0.000000 0.000000 0.000000 1.000000
@@ -1273,10 +1273,10 @@ $BoneOffset 66 16
 0.000268 -1.000000 -0.000088 0.000000 -1.000000 -0.000268 0.000000 0.000000 -0.000000 0.000088 -1.000000 0.000000 2.609676 1.210577 1.187294 1.000000
 1.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 0.000000 0.000000 0.000000 1.000000
 #SKIN
-@ParentName RootNode
 @NodeName body
-@MeshName BossB+_1
+@ParentName RootNode
 @IsActive 1
+@MeshName BossB+_1
 @MaterialName BossB+_body
 @IsShadow 1
 @IsCull 1
@@ -1292,10 +1292,10 @@ $LocalTM 4 4
 0.000000 0.000000 -1.000000 0.000000
 0.000000 0.000000 0.000000 1.000000
 #SKIN
-@ParentName RootNode
 @NodeName w1
+@ParentName RootNode
+@IsActive 1
 @MeshName BossB+_2
-@IsActive 1
 @MaterialName BossB+_waphon
 @IsShadow 1
 @IsCull 1
@@ -1311,10 +1311,10 @@ $LocalTM 4 4
 0.000000 0.000000 -1.000000 0.000000
 0.000000 0.000000 0.000000 1.000000
 #SKIN
-@ParentName RootNode
 @NodeName w2
+@ParentName RootNode
+@IsActive 1
 @MeshName BossB+_3
-@IsActive 1
 @MaterialName BossB+_waphon
 @IsShadow 1
 @IsCull 1
@@ -1330,10 +1330,10 @@ $LocalTM 4 4
 0.000000 0.000000 -1.000000 0.000000
 0.000000 0.000000 0.000000 1.000000
 #SKIN
-@ParentName RootNode
 @NodeName w3
+@ParentName RootNode
+@IsActive 1
 @MeshName BossB+_4
-@IsActive 1
 @MaterialName BossB+_waphon
 @IsShadow 1
 @IsCull 1
@@ -1349,10 +1349,10 @@ $LocalTM 4 4
 0.000000 0.000000 -1.000000 0.000000
 0.000000 0.000000 0.000000 1.000000
 #SKIN
-@ParentName RootNode
 @NodeName w4
-@MeshName BossB+_5
+@ParentName RootNode
 @IsActive 1
+@MeshName BossB+_5
 @MaterialName BossB+_waphon
 @IsShadow 1
 @IsCull 1
@@ -1368,10 +1368,10 @@ $LocalTM 4 4
 0.000000 0.000000 -1.000000 0.000000
 0.000000 0.000000 0.000000 1.000000
 #SKIN
-@ParentName RootNode
 @NodeName w5
-@MeshName BossB+_6
+@ParentName RootNode
 @IsActive 1
+@MeshName BossB+_6
 @MaterialName BossB+_waphon
 @IsShadow 1
 @IsCull 1

@@ -26,9 +26,9 @@ void UIBoss::Awake()
 	mBossName_Img->SetPivot(PIVOT_MIDDLE_TOP);
 	mBossName_Img->SetPosition(20, 100);
 
-	Object			= Instance_Slider();
-	mBossHP_Slider	= Object->GetComponent<Slider>();
-	mBossHP_Rect	= Object->GetComponent<RectTransform>();
+	Object = Instance_Slider();
+	mBossHP_Slider = Object->GetComponent<Slider>();
+	mBossHP_Rect = Object->GetComponent<RectTransform>();
 	mBossHP_Slider->SetBackGroundTexture("BossHP_Back");
 	mBossHP_Slider->SetFillTexture("BossHP_Front");
 	mBossHP_Slider->SetPosition(0, 150);
@@ -36,7 +36,7 @@ void UIBoss::Awake()
 	mBossHP_Slider->SetValueRange(0, 3000);
 	mBossHP_Slider->SetFillRange(FILL_LEFT, 3000);
 
-	
+
 	Object = Instance_ImageFont();
 	mBossCount_Font = Object->GetComponent<ImageFont>();
 	mBossCount_Font->SetTexture("number_");
@@ -56,12 +56,13 @@ void UIBoss::Awake()
 	mBossColor_Img->SetTexture("Boss_White_Color");
 	mBossColor_Img->SetPivot(PIVOT_MIDDLE_TOP);
 	mBossColor_Img->SetPosition(-400, 100);
-
+	mBossColor_Img->SetLayer(2);
 }
 
 void UIBoss::Start()
 {
 	mBossCount_Font->SetFontNumber(30);
+	mBossHP_Slider->SetValueRange(0, 3000);
 	SetActive(false);
 }
 
@@ -94,7 +95,7 @@ void UIBoss::SetColor(int mColorType)
 	{
 		mBossColor_Img->SetColor(255, 0, 0);
 	}
-	else if(mColorType == 1)	//ÆÄ¶û
+	else if (mColorType == 1)	//ÆÄ¶û
 	{
 		mBossColor_Img->SetColor(0, 0, 255);
 	}

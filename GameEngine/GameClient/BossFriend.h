@@ -18,10 +18,12 @@ public:
 
 	void SetPosition(Vector3 Pos);
 	void SetPosition(float x, float y,float z);
+	void Reset();
 private:
 	Transform*	mTransform = nullptr;
 	MeshFilter* mMeshFilter = nullptr;
 	AnimationController* mAnimation = nullptr;
 	MeshFilterSetting mSetting;
+	Vector3 StartPos;
 };
 

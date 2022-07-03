@@ -166,39 +166,6 @@
     <Filter Include="소스 파일\Component\UI\UIBoss">
       <UniqueIdentifier>{58bd628e-7306-4ad8-b30b-eb3da3a5c7a3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Manager\BossStateManager">
-      <UniqueIdentifier>{24fadec2-6450-4d52-ac4b-0912c91e0cae}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Manager\StatePattern">
-      <UniqueIdentifier>{71f5563e-29e8-4682-8504-86af80cb3e3e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Manager\StatePattern\StateInterface">
-      <UniqueIdentifier>{9e38b6cd-1265-41f2-a598-f9e1be876494}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Manager\StatePattern\StateManager">
-      <UniqueIdentifier>{e9e3a699-f9bc-4678-ad9c-ca042082f1e8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Manager\StatePattern\State">
-      <UniqueIdentifier>{64b7f2e4-4914-485b-97f7-e16f5550c707}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Manager\StatePattern\State\Attack">
-      <UniqueIdentifier>{dbefc9ae-f18b-406a-af48-ad265ce15f16}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Manager\StatePattern\State\Idle">
-      <UniqueIdentifier>{844cd46b-f3eb-4b0c-b64b-2e83559cfdbb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Manager\StatePattern\State\Idle\Boss_Idle">
-      <UniqueIdentifier>{42c34732-72ee-4175-9b43-55fd36551aae}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Manager\StatePattern\State\Attack\Boss_Chase_Attack">
-      <UniqueIdentifier>{5159f624-5291-4323-9a5d-10ec154e3a34}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Manager\StatePattern\State\Attack\Boss_Rendom_Attack">
-      <UniqueIdentifier>{21697fda-6dd4-4556-99de-bd61bc428fe7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Manager\StatePattern\State\Attack\Boss_Base_Attack">
-      <UniqueIdentifier>{da15d75c-a127-4ead-973f-04cf5e044df4}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -327,24 +294,6 @@
     <ClInclude Include="UIBoss.h">
       <Filter>소스 파일\Component\UI\UIBoss</Filter>
     </ClInclude>
-    <ClInclude Include="BossStateManager.h">
-      <Filter>소스 파일\Manager\BossStateManager</Filter>
-    </ClInclude>
-    <ClInclude Include="State.h">
-      <Filter>소스 파일\Manager\StatePattern\StateInterface</Filter>
-    </ClInclude>
-    <ClInclude Include="Boss_Idle.h">
-      <Filter>소스 파일\Manager\StatePattern\State\Idle\Boss_Idle</Filter>
-    </ClInclude>
-    <ClInclude Include="Boss_RendomAttack.h">
-      <Filter>소스 파일\Manager\StatePattern\State\Attack\Boss_Rendom_Attack</Filter>
-    </ClInclude>
-    <ClInclude Include="Boss_ChaseAttack.h">
-      <Filter>소스 파일\Manager\StatePattern\State\Attack\Boss_Chase_Attack</Filter>
-    </ClInclude>
-    <ClInclude Include="Boss_BaseAttack.h">
-      <Filter>소스 파일\Manager\StatePattern\State\Attack\Boss_Base_Attack</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameClient.cpp">
@@ -460,24 +409,6 @@
     </ClCompile>
     <ClCompile Include="UIBoss.cpp">
       <Filter>소스 파일\Component\UI\UIBoss</Filter>
-    </ClCompile>
-    <ClCompile Include="BossStateManager.cpp">
-      <Filter>소스 파일\Manager\BossStateManager</Filter>
-    </ClCompile>
-    <ClCompile Include="State.cpp">
-      <Filter>소스 파일\Manager\StatePattern\StateInterface</Filter>
-    </ClCompile>
-    <ClCompile Include="Boss_Idle.cpp">
-      <Filter>소스 파일\Manager\StatePattern\State\Idle\Boss_Idle</Filter>
-    </ClCompile>
-    <ClCompile Include="Boss_RendomAttack.cpp">
-      <Filter>소스 파일\Manager\StatePattern\State\Attack\Boss_Rendom_Attack</Filter>
-    </ClCompile>
-    <ClCompile Include="Boss_ChaseAttack.cpp">
-      <Filter>소스 파일\Manager\StatePattern\State\Attack\Boss_Chase_Attack</Filter>
-    </ClCompile>
-    <ClCompile Include="Boss_BaseAttack.cpp">
-      <Filter>소스 파일\Manager\StatePattern\State\Attack\Boss_Base_Attack</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

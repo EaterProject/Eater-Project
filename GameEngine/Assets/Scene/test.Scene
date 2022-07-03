@@ -42,6 +42,16 @@ $Transform 1 9
 $MeshFilter 1 3
 Dome_IN NO NO
 #GAMEOBJECT
+@NAME Dome_OUT
+@TAG 0
+@IsActive 1
+@IsShadow 1
+@IsCull 1
+$Transform 1 9
+0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 1.000000 1.000000 1.000000
+$MeshFilter 1 3
+Dome_OUT NO NO
+#GAMEOBJECT
 @NAME Light
 @TAG 0
 @IsActive 1

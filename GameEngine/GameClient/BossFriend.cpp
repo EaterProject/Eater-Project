@@ -21,6 +21,7 @@ void BossFriend::Awake()
 	mMeshFilter = gameobject->GetComponent<MeshFilter>();
 	mAnimation	= gameobject->GetComponent<AnimationController>();
 	mTransform->SetScale(1.5f, 1.5f, 1.5f);
+	StartPos = { -44.0f,-10,62.0f };
 }
 
 void BossFriend::SetUp()
@@ -54,12 +55,15 @@ void BossFriend::SetPosition(Vector3 Pos)
 {
 	gameobject->SetActive(true);
 	mTransform->SetPosition(Pos);
-	mSetting.PlayDissolve();
 }
 
 void BossFriend::SetPosition(float x, float y, float z)
 {
 	gameobject->SetActive(true);
 	mTransform->SetPosition(x, y, z);
-	mSetting.PlayDissolve();
+}
+
+void BossFriend::Reset()
+{
+	mTransform->SetPosition(StartPos);
 }

@@ -333,7 +333,7 @@ const bool MeshFilterSetting::EndDissolve()
 	}
 	else
 	{
-		nullptr;
+		return false;
 	}
 }
 

@@ -22,10 +22,10 @@ void BossWeapon::Awake()
 	//mParticleObj[2] = Instance_Particle("Particle3", "BossProjectile_dot");
 
 	//mParticleManager = ParticleFactory::Get()->CreateParticleController(PARTICLE_TYPE::BossProjectile);
-	
+
 
 	mMeshFilter = gameobject->GetComponent<MeshFilter>();
-	mTransform	= gameobject->GetTransform();
+	mTransform = gameobject->GetTransform();
 }
 
 void BossWeapon::SetUp()
@@ -33,6 +33,7 @@ void BossWeapon::SetUp()
 	mMeshFilter->SetModelName("BossB_ball");
 	mMF_Setting.Setting(this->gameobject);
 	//gameobject->SetActive(false);
+	StartPoint = { -44.0f,-10,62.0f };
 }
 
 void BossWeapon::Start()
@@ -86,44 +87,43 @@ void BossWeapon::Update()
 		}
 	}
 
-	mTransform->AddRotate_X(GetDeltaTime()* 400);
+	mTransform->AddRotate_X(GetDeltaTime() * 500);
 	//mMF_Setting.Update(1);
 }
 
 
-void BossWeapon::SetShootingPoistion(Vector3 Start, Vector3 End,float mScaleSpeed, float mMoveSpeed)
+void BossWeapon::SetShootingPoistion(Vector3 Start, Vector3 End, float mScaleSpeed, float mMoveSpeed)
 {
 	//mMF_Setting.SetLimlightSetting(0, 0, 0, 1, 1);
 	//mMF_Setting.SetLimlightSettingMax(1, 0, 0, 1, 1);
 
 	gameobject->SetActive(true);
 	//지점 설정
-	Start_Shooting_Pos	= Start;
-	End_Shooting_Pos	= End;
+	Start_Shooting_Pos = Start;
+	End_Shooting_Pos = End;
 
 	//현재 지점 설정
 	mTransform->SetPosition(Start);
 	mTransform->SetScale(0.0f, 0.0f, 0.0f);
-	
+
 	//방향벡터 구하기
 	ShootingNormalize = End - Start;
 	ShootingNormalize.Normalize();
 
-	IsSizeUpdate	= true;
-	IsStart			= true;
-	ScaleSpeed			= mScaleSpeed;
-	MoveSpeed			= mMoveSpeed;
+	IsSizeUpdate = true;
+	IsStart = true;
+	ScaleSpeed = mScaleSpeed;
+	MoveSpeed = mMoveSpeed;
 }
 
 void BossWeapon::Reset()
 {
-	mTransform->SetPosition(Start_Shooting_Pos);
+	mTransform->SetPosition(StartPoint);
 	mTransform->SetScale(0.0f, 0.0f, 0.0f);
-	IsShooting		= false;
-	IsSizeUpdate	= false;
-	IsReady			= false;
-	IsStart			= false;
-	gameobject->SetActive(false);
+	IsShooting = false;
+	IsSizeUpdate = false;
+	IsReady = false;
+	IsStart = false;
 }
 
 bool BossWeapon::ShootingReady()
