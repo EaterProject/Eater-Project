@@ -85,6 +85,18 @@ void Player::Awake()
 	AttackColliderObject = FindGameObjectTag("PlayerCollider");
 	AttackCollider = AttackColliderObject->GetComponent<Collider>();
 
+	int count = gameobject->GetChildMeshCount();
+	for (int i = 0; i < count; i++)
+	{
+		GameObject* object = gameobject->GetChildMesh(i);
+
+		MeshFilter* filter = object->GetComponent<MeshFilter>();
+
+		if (filter == nullptr) continue;
+
+		ChildMeshFilter.push_back(filter);
+	}
+
 	IsCreate = true;
 }
 
@@ -183,6 +195,9 @@ void Player::SetMessageRECV(int Type, void* Data)
 	case MESSAGE_PLAYER_COMBO_RESET:
 		ComboCount = 0;
 		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_COMBO, &ComboCount);
+		break;
+	case MESSAGE_PLAYER_LIGHT_CHANGE:
+		ChangeSkyLight(*(reinterpret_cast<int*>(Data)));
 		break;
 	}
 }
@@ -597,6 +612,14 @@ bool Player::Player_Move_Check()
 		mAnimation->Choice(ANIMATION_NAME[Type], ANIMATION_SPEED[Type]);
 		AttackKeyDownCount = 0;
 		return true;
+	}
+}
+
+void Player::ChangeSkyLight(int index)
+{
+	for (int i = 0; i < ChildMeshFilter.size(); i++)
+	{
+		ChildMeshFilter[i]->SetSkyLightIndex(index);
 	}
 }
 

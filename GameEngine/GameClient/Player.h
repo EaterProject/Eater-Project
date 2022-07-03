@@ -60,6 +60,8 @@ private:
 	void Player_Hit(int HitPower);
 	bool Player_Move_Check();			//기본 상태 체크
 private:
+	void ChangeSkyLight(int index);
+private:
 	std::string ANIMATION_NAME[8]	= { "", };
 	float		ANIMATION_SPEED[8]	= { 0.0f };
 
@@ -83,6 +85,8 @@ private:
 	//오브젝트
 	GameObject*				WeaponObject;
 	GameObject*				AttackColliderObject;
+
+	std::vector<MeshFilter*> ChildMeshFilter;
 private:
 	///State관련
 	unsigned int mState = 0x00000000;

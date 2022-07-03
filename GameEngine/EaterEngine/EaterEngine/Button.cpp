@@ -189,6 +189,11 @@ void Button::SetActive(bool active)
 	gameobject->SetActive(active);
 }
 
+void Button::SetDraw(bool active)
+{
+	m_Image->SetDraw(active);
+}
+
 void Button::PushEvent(std::function<void()>& eventFunc, State type)
 {
 	switch (type)

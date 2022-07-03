@@ -268,6 +268,7 @@ class UIBuffer
 public:
 	UINT BufferIndex = 0;				// UI Buffer Index
 	UINT BufferLayer = 0;				// UI Buffer Layer Order
+	UINT ChangeLayer = 0;				// UI Buffer Layer Order
 
 	TextureBuffer* Albedo = nullptr;	// DiffuseMap Texture
 

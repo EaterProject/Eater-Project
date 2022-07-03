@@ -53,7 +53,7 @@ void UIManual::Awake()
 	ReturnButton[COMBO]->PushEvent(Eater::Bind(&UIManual::SetReturnClick, this), Button::UP_BUTTON);
 }
 
-void UIManual::SetManualUIActive(bool active)
+void UIManual::Set_ManualUI_Active(bool active)
 {
 	ManualImage->SetActive(active);
 

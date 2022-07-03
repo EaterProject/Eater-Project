@@ -133,6 +133,7 @@ void UIStore::Set_Store_Active(bool Active)
 	{
 		Buttons[i]->SetActive(Active);
 	}
+
 	StoreTitle->SetActive(Active);
 	ItemText->SetActive(false);
 
@@ -310,7 +311,6 @@ void UIStore::OutStore_Button_Click()
 	// 전체화면 블러 해제..
 	SetFullScreenBlur(false);
 
-	MessageManager::GetGM()->SEND_Message(TARGET_STORE, MESSAGE_STORE_EXIT);
 	MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_RESUME);
 }
 
@@ -329,6 +329,8 @@ void UIStore::Purchase_Item_Button_Click()
 {
 	/// 선택한 아이템에 대한 구매 및 능력치 적용..
 
+
+
 	// 해당 아이템 관련 이미지 초기화..
 	for (int i = 0; i < 6; i++)
 	{
@@ -342,7 +344,6 @@ void UIStore::Purchase_Item_Button_Click()
 	// 전체화면 블러 해제..
 	SetFullScreenBlur(false);
 
-	MessageManager::GetGM()->SEND_Message(TARGET_STORE, MESSAGE_STORE_EXIT);
 	MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_RESUME);
 }
 

@@ -21,7 +21,7 @@ public:
 	void Awake() override;
 
 public:
-	void SetManualUIActive(bool active);
+	void Set_ManualUI_Active(bool active);
 
 private:
 	void SetNextIn();

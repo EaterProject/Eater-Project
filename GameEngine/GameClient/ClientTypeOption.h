@@ -35,16 +35,13 @@
 #define MESSAGE_PLAYER_ACTIVE_TRUE 3		//플레이어 Active TRUE
 #define MESSAGE_PLAYER_ACTIVE_FALSE 4		//플레이어 Active FALSE
 #define MESSAGE_PLAYER_COMBO_RESET 5		//플레이어 콤보 리셋
+#define MESSAGE_PLAYER_LIGHT_CHANGE 6		//플레이어 스카이 라이트 변경
 
 //Gate Message
 #define MESSAGE_GATE_OPEN  0				//게이트 열기			//인자 값 : int
 #define MESSAGE_GATE_CLOSE 1				//게이트 닫기			//인자 값 : int
 #define MESSAGE_GATE_UNLOCK 2				//게이트 잠금 풀기		//인자 값 : int
 #define MESSAGE_GATE_LOCK 3					//게이트 잠금 열기		//인자 값 : int
-
-//Store Message
-#define MESSAGE_STORE_EXIT  0				//스토어 닫기
-#define MESSAGE_STORE_PAUSE  1				//스토어 일시정지 상태
 
 //UI Message
 #define MESSAGE_UI_COMBO 0					//콤보 폰트 값			//인자 값 : int

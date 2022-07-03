@@ -327,7 +327,7 @@ void Image::SetFillRange(FILL_TYPE type, float range)
 
 void Image::SetLayer(UINT order)
 {
-	m_UI->BufferLayer = order;
+	m_UI->ChangeLayer = order;
 
 	// 그래픽 연동..
 	GraphicEngine::Get()->PushChangeInstance(gameobject->OneMeshData);

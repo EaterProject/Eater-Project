@@ -117,9 +117,6 @@ void MessageManager::SEND_Message(int Target, int MessageType, void* Data)
 	case TARGET_CAMERA_MANAGER:
 		SEND_CAMERA_Message(MessageType, Data);
 		break;
-	case TARGET_STORE:
-		SEND_STORE_Message(MessageType, Data);
-		break;
 	case TARGET_GLOBAL:
 		SEND_GLOBAL_Message(MessageType, Data);
 		break;
@@ -198,6 +195,7 @@ GameObject* MessageManager::CREATE_MESSAGE(int CREATE_TYPE)
 	case TARGET_UI_CREDIT:
 		Object = mFactory->CreateUICredit();
 		mCredit = Object->GetComponent<UICredit>();
+		return Object;
 	case TARGET_UI_BOSS:
 		Object = mFactory->CreateUIBoss();
 		mBossUI = Object->GetComponent<UIBoss>();
@@ -268,7 +266,7 @@ void MessageManager::SEND_UI_Message(int MessageType, void* Data)
 		mBossUI->SetBossMaxHP(*(reinterpret_cast<int*>(Data)));
 		break;
 	case MESSAGE_UI_BOSS_ACTIVE:
-		mBossUI->SetActive(*(reinterpret_cast<bool*>(Data)));
+		mBossUI->SetBossUIActive(*(reinterpret_cast<bool*>(Data)));
 		break;
 	}
 }
@@ -317,18 +315,6 @@ void MessageManager::SEND_CAMERA_Message(int MessageType, void* Data)
 	}
 }
 
-void MessageManager::SEND_STORE_Message(int MessageType, void* Data)
-{
-	switch (MessageType)
-	{
-	case MESSAGE_STORE_EXIT:
-		mStoreMachine->StoreActive(MessageType);
-		break;
-	default:
-		break;
-	}
-}
-
 void MessageManager::SEND_GLOBAL_Message(int MessageType, void* Data)
 {
 	switch (MessageType)
@@ -365,12 +351,12 @@ void MessageManager::SEND_GLOBAL_Message(int MessageType, void* Data)
 
 void MessageManager::InGameStart()
 {
-	mTiltle->SetTitleUIActive(false);
+	mTiltle->Set_TitleUI_Active(false);
 	mCanvas->Set_InGameUI_Active(true);
-	mOption->SetOptionUIActive(false);
-	mPause->SetPauseUIActive(false);
-	mManual->SetManualUIActive(false);
-	mCredit->SetCreditUIActive(false);
+	mOption->Set_OptionUI_Active(false);
+	mPause->Set_PauseUI_Active(false);
+	mManual->Set_ManualUI_Active(false);
+	mCredit->Set_CreditUI_Active(false);
 	mStore->Set_Store_Active(false);
 
 	//카메라,플레이어 생성
@@ -389,12 +375,13 @@ void MessageManager::InGameStart()
 
 void MessageManager::TitleStart()
 {
-	mTiltle->SetTitleUIActive(true);
+	mTiltle->Set_TitleUI_Active(true);
+
 	mCanvas->Set_InGameUI_Active(false);
-	mOption->SetOptionUIActive(false);
-	mPause->SetPauseUIActive(false);
-	mManual->SetManualUIActive(false);
-	mCredit->SetCreditUIActive(false);
+	mOption->Set_OptionUI_Active(false);
+	mPause->Set_PauseUI_Active(false);
+	mManual->Set_ManualUI_Active(false);
+	mCredit->Set_CreditUI_Active(false);
 	mStore->Set_Store_Active(false);
 
 	// 플레이어 키상태 설정..
@@ -411,12 +398,13 @@ void MessageManager::TitleStart()
 
 void MessageManager::OptionStart(int prev_state)
 {
-	mTiltle->SetTitleUIActive(false);
+	mOption->Set_OptionUI_Active(true);
+
+	mTiltle->Set_TitleUI_Active(false);
 	mCanvas->Set_InGameUI_Active(false);
-	mPause->SetPauseUIActive(false);
-	mOption->SetOptionUIActive(true);
-	mManual->SetManualUIActive(false);
-	mCredit->SetCreditUIActive(false);
+	mPause->Set_PauseUI_Active(false);
+	mManual->Set_ManualUI_Active(false);
+	mCredit->Set_CreditUI_Active(false);
 	mStore->Set_Store_Active(false);
 
 	// 이전 상태 설정..
@@ -431,13 +419,18 @@ void MessageManager::OptionStart(int prev_state)
 
 void MessageManager::PauseStart()
 {
-	mTiltle->SetTitleUIActive(false);
+	mPause->Set_PauseUI_Active(true);
+
+	mTiltle->Set_TitleUI_Active(false);
 	mCanvas->Set_InGameUI_Active(false);
-	mOption->SetOptionUIActive(false);
-	mPause->SetPauseUIActive(true);
-	mManual->SetManualUIActive(false);
-	mCredit->SetCreditUIActive(false);
+	mOption->Set_OptionUI_Active(false);
+	mManual->Set_ManualUI_Active(false);
+	mCredit->Set_CreditUI_Active(false);
 	mStore->Set_Store_Active(false);
+	mBossUI->Set_BossUI_Draw(false);
+
+	// 상점 상호작용 비활성화..
+	mStoreMachine->SetStoreActive(false);
 
 	// 플레이어 키상태 설정..
 	mPlayer->SetKeyState(false);
@@ -448,13 +441,18 @@ void MessageManager::PauseStart()
 
 void MessageManager::InGameResume()
 {
-	mTiltle->SetTitleUIActive(false);
 	mCanvas->Set_InGameUI_Active(true);
-	mOption->SetOptionUIActive(false);
-	mPause->SetPauseUIActive(false);
-	mManual->SetManualUIActive(false);
-	mCredit->SetCreditUIActive(false);
+	mBossUI->Set_BossUI_Draw(true);
+
+	mTiltle->Set_TitleUI_Active(false);
+	mOption->Set_OptionUI_Active(false);
+	mPause->Set_PauseUI_Active(false);
+	mManual->Set_ManualUI_Active(false);
+	mCredit->Set_CreditUI_Active(false);
 	mStore->Set_Store_Active(false);
+
+	// 상점 상호작용 활성화..
+	mStoreMachine->SetStoreActive(true);
 
 	// 플레이어 키상태 설정..
 	mPlayer->SetKeyState(true);
@@ -475,13 +473,17 @@ void MessageManager::InGameEnd()
 
 void MessageManager::ManualStart()
 {
-	mTiltle->SetTitleUIActive(false);
+	mManual->Set_ManualUI_Active(true);
+
+	mTiltle->Set_TitleUI_Active(false);
 	mCanvas->Set_InGameUI_Active(false);
-	mOption->SetOptionUIActive(false);
-	mPause->SetPauseUIActive(false);
-	mManual->SetManualUIActive(true);
-	mCredit->SetCreditUIActive(false);
+	mOption->Set_OptionUI_Active(false);
+	mPause->Set_PauseUI_Active(false);
+	mCredit->Set_CreditUI_Active(false);
 	mStore->Set_Store_Active(false);
+
+	// 상점 상호작용 비활성화..
+	mStoreMachine->SetStoreActive(false);
 
 	// 플레이어 키상태 설정..
 	mPlayer->SetKeyState(false);
@@ -492,13 +494,14 @@ void MessageManager::ManualStart()
 
 void MessageManager::StoreStart()
 {
-	mTiltle->SetTitleUIActive(false);
-	mCanvas->Set_InGameUI_Active(false);
-	mOption->SetOptionUIActive(false);
-	mPause->SetPauseUIActive(false);
-	mManual->SetManualUIActive(false);
-	mCredit->SetCreditUIActive(false);
 	mStore->Set_Store_Active(true);
+
+	mTiltle->Set_TitleUI_Active(false);
+	mCanvas->Set_InGameUI_Active(false);
+	mOption->Set_OptionUI_Active(false);
+	mPause->Set_PauseUI_Active(false);
+	mManual->Set_ManualUI_Active(false);
+	mCredit->Set_CreditUI_Active(false);
 
 	// 플레이어 키상태 설정..
 	mPlayer->SetKeyState(false);
@@ -509,12 +512,13 @@ void MessageManager::StoreStart()
 
 void MessageManager::CreditStart()
 {
-	mTiltle->SetTitleUIActive(false);
+	mCredit->Set_CreditUI_Active(true);
+
+	mTiltle->Set_TitleUI_Active(false);
 	mCanvas->Set_InGameUI_Active(false);
-	mOption->SetOptionUIActive(false);
-	mPause->SetPauseUIActive(false);
-	mManual->SetManualUIActive(false);
-	mCredit->SetCreditUIActive(true);
+	mOption->Set_OptionUI_Active(false);
+	mPause->Set_PauseUI_Active(false);
+	mManual->Set_ManualUI_Active(false);
 	mStore->Set_Store_Active(false);
 
 	// 플레이어 키상태 설정..

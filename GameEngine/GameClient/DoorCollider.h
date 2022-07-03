@@ -15,6 +15,7 @@ public:
 	void SetGateNumber(int num);
 
 	void OnTriggerEnter(GameObject* Obj);
+	void OnTriggerStay(GameObject* Obj);
 	void OnTriggerExit(GameObject* Obj);
 
 
@@ -30,6 +31,10 @@ private:
 	int GateNumber = 0;
 
 	bool isStart = false;
+
+	float PlayerDistance;
+	float BlendFactor;
+	Vector3 Zero = Vector3(0.0f, 0.0f, 0.0f);
 
 	GameObject* GroundCollider;
 };

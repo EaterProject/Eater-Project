@@ -62,7 +62,6 @@ private:
 	void SEND_BOSS_Message(int MessageType, void* Data);
 	void SEND_GATE_Message(int MessageType, void* Data);
 	void SEND_CAMERA_Message(int MessageType, void* Data);
-	void SEND_STORE_Message(int MessageType, void* Data);
 	void SEND_GLOBAL_Message(int MessageType, void* Data);
 private:
 	void InGameStart();

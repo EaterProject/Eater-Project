@@ -64,18 +64,11 @@ void Store::Debug()
 	DebugDrawCircle(3, mTransform->GetPosition(), Vector3(0, 0, 0), Vector3(1, 0, 0));
 }
 
-void Store::StoreActive(int Type)
+void Store::SetStoreActive(bool Active)
 {
-	switch (Type)
+	if (IsRange)
 	{
-	case MESSAGE_STORE_EXIT:
-		mStoreActive->SetActive(true);
-		break;
-	case MESSAGE_STORE_PAUSE:
-		mStoreActive->SetActive(false);
-		break;
-	default:
-		break;
+		mStoreActive->SetActive(Active);
 	}
 }
 

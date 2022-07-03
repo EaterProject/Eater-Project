@@ -15,7 +15,7 @@ public:
 	void Update() override;
 
 public:
-	void SetCreditUIActive(bool active);
+	void Set_CreditUI_Active(bool active);
 
 private:
 	bool StartCredit;

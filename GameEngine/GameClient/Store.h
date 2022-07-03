@@ -15,7 +15,7 @@ public:
 	void Update() override;
 	void Debug() override;
 
-	void StoreActive(int Type);
+	void SetStoreActive(bool Active);
 
 	void OnTriggerEnter(GameObject* Obj);
 	void OnTriggerExit(GameObject* Obj);

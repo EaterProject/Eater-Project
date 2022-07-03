@@ -21,7 +21,7 @@ public:
 	void Awake() override;
 
 public:
-	void SetPauseUIActive(bool active);
+	void Set_PauseUI_Active(bool active);
 
 private:
 	void SetResumeIn();

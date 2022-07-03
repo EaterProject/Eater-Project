@@ -732,12 +732,16 @@ void RenderManager::PostProcessingRender()
 
 void RenderManager::UIRender()
 {
+	m_UI->BeginRender();
+
 	for (int i = 0; i < m_UIRenderMeshList.size(); i++)
 	{
 		m_UILayer = m_UIRenderMeshList[i];
 
 		m_UI->RenderUpdate(m_UILayer->m_InstanceList);
 	}
+
+	m_UI->EndRender();
 }
 
 void RenderManager::DebugRender()
@@ -1149,6 +1153,10 @@ void RenderManager::ChangeUIRenderData(MeshData* meshData)
 	// 해당 Layer가 없을 경우는 없어야한다..
 	assert(layer != nullptr);
 
+	// Layer Order 설정..
+	renderData->m_UI->m_BufferIndex = meshData->UI_Buffer->ChangeLayer;
+	ui_Buffer->m_BufferLayer = meshData->UI_Buffer->ChangeLayer;
+
 	// Render Data 재설정..
 	m_Converter->ConvertUIData(meshData, renderData);
 
@@ -1161,7 +1169,7 @@ void RenderManager::ChangeUIRenderData(MeshData* meshData)
 	// 현재 Layer가 비어있는 상태라면 Layer 제거..
 	if (layer->m_InstanceList.empty())
 	{
-		m_Converter->DeleteUILayer(ui_Buffer->m_BufferLayer);
+		m_Converter->DeleteUILayer(prev_LayerIndex);
 	}
 
 	// 재설정된 Layer 검색..
