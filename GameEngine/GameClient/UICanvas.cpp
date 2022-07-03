@@ -550,7 +550,7 @@ void UICanvas::Active_Mana_Count(bool Active)
 
 void UICanvas::Active_Dron_Text(bool Active)
 {
-	Dron_Text->SetActive(Active);
+	//Dron_Text->SetActive(Active);
 }
 
 void UICanvas::Create_Skill_UI(float X, float Y)
