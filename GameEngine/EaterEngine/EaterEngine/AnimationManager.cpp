@@ -51,7 +51,9 @@ void AnimationManager::BakeAnimation()
 		{
 			ResetAnimationIndex(animation);
 
+			EnterCriticalSection(m_CriticalSection);
 			m_Graphic->PushChangeAnimation(animation->m_AnimationBuffer);
+			LeaveCriticalSection(m_CriticalSection);
 		}
 	}
 }
