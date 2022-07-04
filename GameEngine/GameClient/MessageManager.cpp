@@ -34,6 +34,7 @@
 #include "UIManual.h"
 #include "UICredit.h"
 #include "UIBoss.h"
+#include "DoorCollider.h"
 
 MessageManager* MessageManager::instance = nullptr;
 MessageManager::MessageManager()
@@ -209,8 +210,7 @@ GameObject* MessageManager::CREATE_MESSAGE(int CREATE_TYPE)
 		mSceneEffect = Object->GetComponent<SceneEffect>();
 		return Object;
 	case TARGET_TREE_SMOKE:
-
-		return;
+		return mFactory->CreateTreeSmoke();
 	}
 
 	return nullptr;
@@ -453,6 +453,7 @@ void MessageManager::InGameStart()
 	mCameraManager->SetMouseFix(true);
 
 	//사운드 재생
+	Sound_Stop_BGM();
 	Sound_Play_BGM("InGame_InDoor");
 }
 
@@ -477,6 +478,7 @@ void MessageManager::TitleStart()
 	//SEND_Message(TARGET_UI,)
 	//SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_ACTIVE_FALSE);
 
+	Sound_Stop_BGM();
 	Sound_Play_BGM("Title");
 }
 
@@ -568,6 +570,8 @@ void MessageManager::BossStart()
 	// 보스 등장 이펙트 실행..
 	mSceneEffect->Begin_Boss_Start_Effect();
 
+	DoorCollider::Boss_Start = true;
+
 	mManual->Set_ManualUI_Active(false);
 	mTiltle->Set_TitleUI_Active(false);
 	mCanvas->Set_InGameUI_Active(false);
@@ -635,7 +639,6 @@ void MessageManager::CreditStart()
 {
 	Sound_Stop_BGM();
 	Sound_Play_BGM("Ending");
-
 
 	mCredit->Set_CreditUI_Active(true);
 	mTiltle->Set_TitleUI_Active(false);

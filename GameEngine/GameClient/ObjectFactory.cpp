@@ -241,8 +241,14 @@ GameObject* ObjectFactory::CreateSceneEffect()
 GameObject* ObjectFactory::CreateTreeSmoke()
 {
 	ParticleController* Controller = ParticleFactory::Get()->CreateParticleController(PARTICLE_TYPE::ManaTreeSmoke);
-	ParticleSystem* Down = Controller->GetParticle("ManTree_smokeDOWN");
 	ParticleSystem* Up = Controller->GetParticle("ManTree_smokeUP");
+	ParticleSystem* Down = Controller->GetParticle("ManTree_smokeDOWN");
+
+	Controller->Play();
+
+	Up->gameobject->transform->SetPosition_Y(12.0f);
+
+	return Controller->gameobject;
 }
 
 GameObject* ObjectFactory::CreateBoss()
