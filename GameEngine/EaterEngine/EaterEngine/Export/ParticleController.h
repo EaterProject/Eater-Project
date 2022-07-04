@@ -31,6 +31,7 @@ public:
 
 public:
 	void Update() override;
+	void Awake() override;
 
 public:
 	EATER_ENGINEDLL void PushParticle(std::string particle_key, ParticleSystem* particle, float start_time);
@@ -49,6 +50,7 @@ public:
 
 	//현재 들어있는 파티클들을 움직여줌
 	EATER_ENGINEDLL void SetPosition(float x, float y, float z);
+	EATER_ENGINEDLL void SetPosition(Vector3 Pos);
 public:
 	EATER_ENGINEDLL ParticleSystem* GetParticle(std::string particle_key);
 	EATER_ENGINEDLL PARTICLE_STATE GetState();
@@ -71,6 +73,7 @@ private:
 	ParticleList m_NowParticleList;
 
 	int m_NowParticleListSize;
+	Transform* mTransform;
 
 	std::map<float, std::vector<ParticleData>> m_ParticleSystemList;
 	std::unordered_map<std::string, NodeData*> m_ParticleNodeDataList;

@@ -116,7 +116,10 @@ void Boss::Awake()
 	mMeshFilter = gameobject->GetComponent<MeshFilter>();
 	mColider	= gameobject->GetComponent<Collider>();
 	mRigidbody	= gameobject->GetComponent<Rigidbody>();
-	mParticle = ParticleFactory::Get()->CreateParticleController(PARTICLE_TYPE::BossMelee);
+
+	mBaseAttackParticle = ParticleFactory::Get()->CreateParticleController(PARTICLE_TYPE::BossMelee);
+	mPushParticle		= ParticleFactory::Get()->CreateParticleController(PARTICLE_TYPE::BossPush);
+	mCountAttackParticle = ParticleFactory::Get()->CreateParticleController(PARTICLE_TYPE::CounterAttack);
 
 	for (int i = 0; i < 6; i++)
 	{
@@ -169,7 +172,7 @@ void Boss::Start()
 	mMF_Setting.SetEmissiveSetting(231,39,9, 2.9f);
 
 	GameObject* Hand = gameobject->GetChildBone("t1.L");
-	mParticle->gameobject->ChoiceParent(Hand);
+	mBaseAttackParticle->gameobject->ChoiceParent(Hand);
 
 	mTransform->SetScale(1.7f, 1.7f, 1.7f);
 	mAnimation->Play();
@@ -285,6 +288,11 @@ void Boss::OnTriggerStay(GameObject* Obj)
 					MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_ATTACK_OK);
 					MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_COMBO_RESET);
 					MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_BOSS_HP, &HP);
+
+					Vector3 Pos = mTransform->GetPosition();
+					Pos.y += 3.0f;
+					mCountAttackParticle->SetPosition(Pos);
+					mCountAttackParticle->Play();
 					SetState(BOSS_STATE::GROGGY_START);
 				}
 				else
@@ -457,6 +465,15 @@ void Boss::Boss_Teleport_Start()
 
 void Boss::Boss_Create()
 {
+	if (FirstState() == true)
+	{
+		Vector3 Pos = mTransform->GetPosition();
+		Pos.y += 5.0f;
+		mPushParticle->SetPosition(Pos);
+		mPushParticle->Play();
+		PushPlayer();
+	}
+
 	int Now = mAnimation->GetNowFrame();
 	int End = mAnimation->GetEndFrame();
 
@@ -480,7 +497,6 @@ void Boss::Boss_Create()
 		Friend->SetPosition(SkillPoint[Index]);
 		FriendIndex = Index;
 		SetState(BOSS_STATE::IDLE);
-		PushPlayer();
 	}
 }
 
@@ -489,8 +505,8 @@ void Boss::Boss_Closer_Attack_L()
 	if (FirstState() == true)
 	{
 		GameObject* Hand = gameobject->GetChildBone("t1.L");
-		mParticle->gameobject->ChoiceParent(Hand);
-		mParticle->Play();
+		mBaseAttackParticle->gameobject->ChoiceParent(Hand);
+		mBaseAttackParticle->Play();
 		IsAttack = false;
 	}
 
@@ -512,7 +528,7 @@ void Boss::Boss_Closer_Attack_L()
 	if (Now >= End)
 	{
 		SetState(BOSS_STATE::IDLE);
-		mParticle->Stop();
+		mBaseAttackParticle->Stop();
 	}
 	mTransform->Slow_Y_Rotation(mPlayerTR->GetPosition(), 150, false);
 }
@@ -522,8 +538,8 @@ void Boss::Boss_Closer_Attack_R()
 	if (FirstState() == true)
 	{
 		GameObject* Hand = gameobject->GetChildBone("t1.R");
-		mParticle->gameobject->ChoiceParent(Hand);
-		mParticle->Play();
+		mBaseAttackParticle->gameobject->ChoiceParent(Hand);
+		mBaseAttackParticle->Play();
 		IsAttack = false;
 	}
 
@@ -544,7 +560,7 @@ void Boss::Boss_Closer_Attack_R()
 	if (Now >= End)
 	{
 		SetState(BOSS_STATE::IDLE);
-		mParticle->Stop();
+		mBaseAttackParticle->Stop();
 	}
 	mTransform->Slow_Y_Rotation(mPlayerTR->GetPosition(), 150, false);
 }
@@ -724,9 +740,12 @@ void Boss::Boss_Rendom_Attack_Reset(int Phase)
 	int NOW = mAnimation->GetNowFrame();
 	if (mAnimation->EventCheck() == true)
 	{
-		for (int i = 0; i < 5; i++)
+		if (FirstState() == true)
 		{
-			Weapon[i]->Explosion();
+			for (int i = 0; i < 5; i++)
+			{
+				Weapon[i]->Explosion();
+			}
 		}
 	}
 	if (NOW >= End)

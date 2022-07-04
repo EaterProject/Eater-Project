@@ -257,57 +257,57 @@ void Eater_LoadScene::Load_Component_Light(int index, GameObject* Object)
 
 void Eater_LoadScene::Load_Component_Particle(int index, GameObject* Object)
 {
-	ParticleSystem* mParticle = Object->AddComponent<ParticleSystem>();
+	ParticleSystem* mBaseAttackParticle = Object->AddComponent<ParticleSystem>();
 	std::vector<std::string> Data;
 	EATER_GET_LIST(&Data, 0);
-	mParticle->SetDiffuseName(Data[0]);
+	mBaseAttackParticle->SetDiffuseName(Data[0]);
 	std::string Type = Data[1];
-	if		(Type == "BILLBOARD"){mParticle->SetRenderType(BILLBOARD);}
-	else if (Type == "VERTICAL"){mParticle->SetRenderType(VERTICAL_BILLBOARD);}
-	else if (Type == "HORIZONTAL"){mParticle->SetRenderType(HORIZONTAL_BILLBOARD);}
-	else if (Type == "MESH"){mParticle->SetRenderType(MESH);}
-	mParticle->SetMaxParticles(std::stof(Data[2]));
-	mParticle->SetDelayTime(std::stof(Data[3]));
-	mParticle->SetShapeRadius(std::stof(Data[4]), std::stof(Data[5]), std::stof(Data[6]));
-	mParticle->SetTextureTiling(std::stoi(Data[7]), std::stoi(Data[8]));
+	if		(Type == "BILLBOARD"){mBaseAttackParticle->SetRenderType(BILLBOARD);}
+	else if (Type == "VERTICAL"){mBaseAttackParticle->SetRenderType(VERTICAL_BILLBOARD);}
+	else if (Type == "HORIZONTAL"){mBaseAttackParticle->SetRenderType(HORIZONTAL_BILLBOARD);}
+	else if (Type == "MESH"){mBaseAttackParticle->SetRenderType(MESH);}
+	mBaseAttackParticle->SetMaxParticles(std::stof(Data[2]));
+	mBaseAttackParticle->SetDelayTime(std::stof(Data[3]));
+	mBaseAttackParticle->SetShapeRadius(std::stof(Data[4]), std::stof(Data[5]), std::stof(Data[6]));
+	mBaseAttackParticle->SetTextureTiling(std::stoi(Data[7]), std::stoi(Data[8]));
 
 	Vector3 Min = {std::stof(Data[9]),std::stof(Data[10]),std::stof(Data[11]) };
 	Vector3 Max = {std::stof(Data[12]),std::stof(Data[13]),std::stof(Data[14]) };
-	mParticle->SetStartForce(Min, Max);
+	mBaseAttackParticle->SetStartForce(Min, Max);
 	
 	Vector4 Min4 = {std::stof(Data[15]) ,std::stof(Data[16]),std::stof(Data[17]),std::stof(Data[18])};
 	Vector4 Max4 = {std::stof(Data[19]) ,std::stof(Data[20]),std::stof(Data[21]),std::stof(Data[22])};
-	mParticle->SetStartColor(Min4, Max4);
-	mParticle->SetStartLifeTime(std::stof(Data[23]), std::stof(Data[24]));
+	mBaseAttackParticle->SetStartColor(Min4, Max4);
+	mBaseAttackParticle->SetStartLifeTime(std::stof(Data[23]), std::stof(Data[24]));
 	
 	
 	EATER_GET_LIST(&Data, 1);
-	mParticle->SetStartScale(std::stof(Data[0]), std::stof(Data[1]));
-	mParticle->SetStartRotation(std::stof(Data[2]), std::stof(Data[3]));
+	mBaseAttackParticle->SetStartScale(std::stof(Data[0]), std::stof(Data[1]));
+	mBaseAttackParticle->SetStartRotation(std::stof(Data[2]), std::stof(Data[3]));
 	
 	Min = { std::stof(Data[4]),std::stof(Data[5]),std::stof(Data[6]) };
 	Max = { std::stof(Data[7]),std::stof(Data[8]),std::stof(Data[9]) };
-	mParticle->SetLifeTimeForce(Min, Max);
+	mBaseAttackParticle->SetLifeTimeForce(Min, Max);
 	
 	Min4 = { std::stof(Data[10]) ,std::stof(Data[11]),std::stof(Data[12]),std::stof(Data[13]) };
 	Max4 = { std::stof(Data[14]) ,std::stof(Data[15]),std::stof(Data[16]),std::stof(Data[17]) };
 	Type = Data[18];
-	if (Type == "NONE") { mParticle->SetLifeTimeColor(Min4, Max4,NONE);}
-	else if(Type == "UP"){ mParticle->SetLifeTimeColor(Min4, Max4, UP);}
-	else if(Type == "DOWN"){ mParticle->SetLifeTimeColor(Min4, Max4, DOWN);}
-	else if(Type == "UPDOWN"){ mParticle->SetLifeTimeColor(Min4, Max4, UPDOWN);}
+	if (Type == "NONE") { mBaseAttackParticle->SetLifeTimeColor(Min4, Max4,NONE);}
+	else if(Type == "UP"){ mBaseAttackParticle->SetLifeTimeColor(Min4, Max4, UP);}
+	else if(Type == "DOWN"){ mBaseAttackParticle->SetLifeTimeColor(Min4, Max4, DOWN);}
+	else if(Type == "UPDOWN"){ mBaseAttackParticle->SetLifeTimeColor(Min4, Max4, UPDOWN);}
 	
 	Vector2 Scale = { std::stof(Data[19]), std::stof(Data[20]) };
 	Type = Data[21];
-	if (Type == "NONE") { mParticle->SetLifeTimeScale(Scale.x, Scale.y, NONE); }
-	else if (Type == "UP") { mParticle->SetLifeTimeScale(Scale.x, Scale.y, UP); }
-	else if (Type == "DOWN") { mParticle->SetLifeTimeScale(Scale.x, Scale.y, DOWN); }
-	else if (Type == "UPDOWN") { mParticle->SetLifeTimeScale(Scale.x, Scale.y, UPDOWN); }
-	mParticle->SetLifeTimeRotation(std::stof(Data[22]), std::stof(Data[23]));
-	mParticle->SetRateOverTime(std::stof(Data[24]));
-	mParticle->SetMeshName("Quad");
-	mParticle->SetPlayTime(1);
-	mParticle->SetLoop(false);
+	if (Type == "NONE") { mBaseAttackParticle->SetLifeTimeScale(Scale.x, Scale.y, NONE); }
+	else if (Type == "UP") { mBaseAttackParticle->SetLifeTimeScale(Scale.x, Scale.y, UP); }
+	else if (Type == "DOWN") { mBaseAttackParticle->SetLifeTimeScale(Scale.x, Scale.y, DOWN); }
+	else if (Type == "UPDOWN") { mBaseAttackParticle->SetLifeTimeScale(Scale.x, Scale.y, UPDOWN); }
+	mBaseAttackParticle->SetLifeTimeRotation(std::stof(Data[22]), std::stof(Data[23]));
+	mBaseAttackParticle->SetRateOverTime(std::stof(Data[24]));
+	mBaseAttackParticle->SetMeshName("Quad");
+	mBaseAttackParticle->SetPlayTime(1);
+	mBaseAttackParticle->SetLoop(false);
 }
 
 void Eater_LoadScene::Load_Component_Collider(int index, GameObject* Object)

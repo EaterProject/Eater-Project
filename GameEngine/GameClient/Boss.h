@@ -135,6 +135,9 @@ private:
 	MeshFilter* ChildeMeshFilter[7];
 
 	MeshFilterSetting mMF_Setting;
-	ParticleController* mParticle;
+
+	ParticleController* mBaseAttackParticle;
+	ParticleController* mPushParticle;
+	ParticleController* mCountAttackParticle;
 };
 

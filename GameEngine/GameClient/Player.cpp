@@ -11,6 +11,8 @@
 #include "PhysRay.h"
 #include "MessageManager.h"
 #include "ClientTypeOption.h"
+#include "ParticleController.h"
+#include "ParticleFactory.h"
 
 
 #include "PlayerCamera.h"
@@ -86,6 +88,8 @@ void Player::Awake()
 	AttackCollider = AttackColliderObject->GetComponent<Collider>();
 
 	IsCreate = true;
+	mAttackParticle = ParticleFactory::Get()->CreateParticleController(PARTICLE_TYPE::HitSmoke);
+	mHealParticle = ParticleFactory::Get()->CreateParticleController(PARTICLE_TYPE::PlayerHeal);
 }
 
 void Player::SetUp()
@@ -174,11 +178,17 @@ void Player::SetMessageRECV(int Type, void* Data)
 		Player_Hit(*(reinterpret_cast<int*>(Data)));
 		break;
 	case MESSAGE_PLAYER_HEAL:
+	{
 		HP += 10;
 		if (HP >= HP_Max) { HP = HP_Max; }
+		Vector3 Pos = mTransform->GetPosition();
+		Pos.y += 0.2f;
+		mHealParticle->SetPosition(Pos);
+		mHealParticle->Play();
 		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_HP_NOW, &HP);
 		MessageManager::GetGM()->SEND_Message(TARGET_DRONE, MESSAGE_DRONE_PLAYER_HEAL);
 		break;
+	}
 	case MESSAGE_PLAYER_ATTACK_OK:
 		ComboCount++;
 		MessageManager::GetGM()->SEND_Message(TARGET_UI,MESSAGE_UI_COMBO,&ComboCount);
@@ -195,7 +205,6 @@ void Player::SetMessageRECV(int Type, void* Data)
 		break;
 	case MESSAGE_PLAYER_COMBO_RESET:
 		ComboCount = 0;
-		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_COMBO, &ComboCount);
 		break;
 	case MESSAGE_PLAYER_PUSH:
 		IsPush = true;
@@ -489,6 +498,8 @@ void Player::PlayerState_Attack()
 		Player_Skill_02();
 	}
 
+	mAttackParticle->SetPosition(AttackColliderObject->GetTransform()->GetPosition());
+	mAttackParticle->Play();
 	mAnimation->Play();
 }
 

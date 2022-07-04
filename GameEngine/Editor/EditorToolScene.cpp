@@ -134,15 +134,15 @@ GameObject* EditorToolScene::Create_Camera()
 
 GameObject* EditorToolScene::Create_Particle(std::string Name)
 {
-	GameObject* mParticle	= Instance_Particle("Particle",Name);
-	mParticle->Name			= FindMeshName(Name);
+	GameObject* mBaseAttackParticle	= Instance_Particle("Particle",Name);
+	mBaseAttackParticle->Name			= FindMeshName(Name);
 
-	ParticleSystem* system = mParticle->GetComponent<ParticleSystem>();
+	ParticleSystem* system = mBaseAttackParticle->GetComponent<ParticleSystem>();
 	system->Play();
 
-	ObjectList.insert({ mParticle->Name, mParticle });
+	ObjectList.insert({ mBaseAttackParticle->Name, mBaseAttackParticle });
 
-	return mParticle;
+	return mBaseAttackParticle;
 }
 
 GameObject* EditorToolScene::Create_Box()
