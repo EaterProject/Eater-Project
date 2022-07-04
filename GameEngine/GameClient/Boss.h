@@ -95,6 +95,7 @@ private:
 	bool	IsBossFriend	= false;
 	bool	IsUpdateColor	= false;
 	bool	IsAttack		= false;
+	bool	IsStart			= false;
 
 	bool	IsStartFight	= false;
 	bool	IsEndFight		= false;

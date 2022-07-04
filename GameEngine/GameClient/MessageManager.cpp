@@ -453,6 +453,7 @@ void MessageManager::InGameStart()
 
 void MessageManager::TitleStart()
 {
+	mBossUI->SetBossUIActive(false);
 	mTiltle->Set_TitleUI_Active(true);
 
 	mCanvas->Set_InGameUI_Active(false);

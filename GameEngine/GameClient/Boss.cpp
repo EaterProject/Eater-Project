@@ -309,8 +309,7 @@ void Boss::OnTriggerStay(GameObject* Obj)
 				}
 				else
 				{
-					//HP -= Player::GetPlayerComboPower();
-					HP -= 3000;
+					HP -= Player::GetPlayerComboPower();
 					MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_ATTACK_OK);
 					MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_BOSS_HP, &HP);
 				}
@@ -999,6 +998,13 @@ bool Boss::FirstState()
 float Boss::PlayerDistanceCheck()
 {
 	PlayerDistance = mTransform->GetDistance(mPlayerTR->GetPosition());
+	if (IsStart == false && PlayerDistance <= FightRange)
+	{
+		IsStart = true;
+		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_BOSS_ACTIVE, &IsStart);
+	}
+
+
 	return PlayerDistance;
 }
 
