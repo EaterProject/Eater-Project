@@ -137,7 +137,9 @@ void TextureManager::BakeConvertSkyLightMap(std::string& Path, float angle, floa
 	}
 
 	// 변경한 SkyLight 적용..
+	EnterCriticalSection(m_CriticalSection);
 	m_Graphic->SetSkyLight(skyLight, index);
+	LeaveCriticalSection(m_CriticalSection);
 }
 
 void TextureManager::BakeConvertSkyCubeMap(std::string& Path, float angle, float threshold, bool hdri)
@@ -178,7 +180,9 @@ void TextureManager::BakeConvertSkyCubeMap(std::string& Path, float angle, float
 	}
 
 	// 변경한 SkyCube 적용..
+	EnterCriticalSection(m_CriticalSection);
 	m_Graphic->SetSkyCube(buffer);
+	LeaveCriticalSection(m_CriticalSection);
 }
 
 void TextureManager::SaveConvertSkyLightMap(std::string& Path, std::string& SaveName)
@@ -193,7 +197,9 @@ void TextureManager::SaveConvertSkyLightMap(std::string& Path, std::string& Save
 		return;
 	}
 
+	EnterCriticalSection(m_CriticalSection);
 	m_Graphic->SaveConvertCubeMap(buffer, SaveName);
+	LeaveCriticalSection(m_CriticalSection);
 }
 
 void TextureManager::SaveConvertSkyCubeMap(std::string& Path, std::string& SaveName)
@@ -208,7 +214,9 @@ void TextureManager::SaveConvertSkyCubeMap(std::string& Path, std::string& SaveN
 		return;
 	}
 
+	EnterCriticalSection(m_CriticalSection);
 	m_Graphic->SaveConvertCubeMap(buffer, SaveName);
+	LeaveCriticalSection(m_CriticalSection);
 }
 
 void TextureManager::SaveSpriteToVolumeTexture_LUT(std::string fileName, std::string saveName, UINT pixelSize)

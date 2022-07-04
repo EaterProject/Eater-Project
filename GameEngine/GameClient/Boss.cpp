@@ -310,7 +310,7 @@ void Boss::OnTriggerStay(GameObject* Obj)
 				else
 				{
 					//HP -= Player::GetPlayerComboPower();
-					HP -= 500;
+					HP -= 3000;
 					MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_ATTACK_OK);
 					MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_BOSS_HP, &HP);
 				}
@@ -385,11 +385,20 @@ void Boss::Boss_DEAD()
 	{
 		mAnimation->Pause();
 		mMF_Setting.PlayDissolve();
+		IsCredit = true;
+	}
 
-		if (mMF_Setting.EndDissolve() == false)
+	if (mMF_Setting.EndDissolve() == false)
+	{
+		if (IsCredit)
 		{
+			IsCredit = false;
 			gameobject->SetActive(false);
 			Destroy(this->gameobject);
+
+			bool Active = false;
+			MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_BOSS_ACTIVE, &Active);
+			MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_CREDIT);
 		}
 	}
 }
