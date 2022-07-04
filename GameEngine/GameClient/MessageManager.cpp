@@ -414,7 +414,7 @@ void MessageManager::SEND_GLOBAL_Message(int MessageType, void* Data)
 
 void MessageManager::InGameStart()
 {
-	mTiltle->SetTitleUIActive(false);
+	mTiltle->Set_TitleUI_Active(false);
 	mCanvas->Set_InGameUI_Active(true);
 	mOption->Set_OptionUI_Active(false);
 	mPause->Set_PauseUI_Active(false);
