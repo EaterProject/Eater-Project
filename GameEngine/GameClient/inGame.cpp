@@ -11,6 +11,7 @@
 #include "EngineData.h"
 #include "MessageManager.h"
 #include "ClientTypeOption.h"
+#include "MeshFilterSetting.h"
 
 void InGame::Awake()
 {
@@ -22,18 +23,16 @@ void InGame::Awake()
 
 	// 오클루더 설정..
 	AddOccluder("Dome_program_0");
-		
-	//BakeSkyLightMap("SkyLight_0", false);
-	//BakeSkyLightMap("Dome_HDR_5", false);
-	//SetSkyLight("SkyLight_0", 0);
-	//SetSkyLight("Dome_HDR_5", 1);
-	//
+
+	// Color Grading
 	SetColorGradingBaseTexture("LUT_outside");
 	SetColorGradingBlendTexture("Dome_LUT_4");
-	/// Blend Factor
 	SetColorGradingBlendFactor(0.0f);
+
 	//로직매니저 초기화
 	Logic->Initialize();
+
+	MeshFilterSetting::Initialize();
 
 	GameObject* testobj = Instance_Terrain("Terrain");
 	Terrain* mTerrain = testobj->GetComponent<Terrain>();
@@ -57,7 +56,7 @@ void InGame::Update()
 
 	if (GetKeyDown('1'))
 	{
-		MessageManager::GetGM()->SEND_Message(TARGET_CAMERA_MANAGER, MESSAGE_CAMERA_CINEMATIC_GAME_START);
+		MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_BOSS_START);
 	}
 
 	if (GetKeyDown('2'))

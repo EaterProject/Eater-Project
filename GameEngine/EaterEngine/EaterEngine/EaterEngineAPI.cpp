@@ -124,6 +124,11 @@ void GetWindowSize(int* X, int* Y)
 	 return gGameEngine->FindGameObjectName(ObjectName);
  }
 
+ Material* FindMaterialName(std::string MaterialName)
+ {
+	 return gGameEngine->FindMaterialName(MaterialName);
+ }
+
  void Destroy(GameObject* obj)
  {
 	 gGameEngine->Destroy(obj);
@@ -390,6 +395,11 @@ int GetMousePosY()
 	 gGameEngine->Sound_Play_BGM(Name);
  }
 
+ void Sound_Stop_BGM()
+ {
+	 gGameEngine->Sound_STOP_BGM();
+ }
+
  void Sound_Pause_BGM(bool Pause)
  {
 	 gGameEngine->Sound_Pause_BGM(Pause);
@@ -438,6 +448,11 @@ int GetMousePosY()
  void Sound_Play_SFX(std::string&& SoundName)
  {
 	 gGameEngine->Sound_Play_SFX(SoundName);
+ }
+
+ void Sound_Stop_SFX()
+ {
+	 gGameEngine->Sound_STOP_SFX();
  }
 
  void Sound_Pause_SFX(bool Pause)

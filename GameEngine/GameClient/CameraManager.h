@@ -5,7 +5,8 @@
 class Camera;
 class PlayerCamera;
 class CinematicCamera;
-class CameraManager :public Component
+
+class CameraManager : public Component
 {
 public:
 	CameraManager();
@@ -18,9 +19,8 @@ public:
 	void SetPlayerCamera(GameObject* Obj);
 	void Change(int Type);
 
-	void SetCinematic(int Type);
-	void SetCinematic(int Type, std::string& Name);
-	void SetCinematic(int Type, std::string&& Name);
+	void SetCinematic(int Type, std::string Data);
+	void SetCinematic(int Type, bool* Data = nullptr);
 
 	void SetMouseFix(bool Active);
 
@@ -32,6 +32,7 @@ private:
 	void TitleCinematic();
 
 private:
+	bool* Finish_Play;
 	bool IsCinematic_Play = false;
 	bool IsGameStart_Play = false;
 

@@ -5,7 +5,7 @@
 @MeshName BossB_ball_0
 @MaterialName BossB_ball_waphon
 @IsShadow 1
-@IsCull 1
+@IsCull 0
 $WorldTM 4 4
 1.000000 0.000000 0.000000 0.000000
 0.000000 -0.000000 1.000000 0.000000

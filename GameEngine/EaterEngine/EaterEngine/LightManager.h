@@ -9,8 +9,10 @@ public:
 	~LightManager();
 
 public:
+	static void ActiveLight(Light* light, bool Active);
 	static void PushLight(Light* light);
 	static void DeleteLight(Light* light);
+	static bool FindLight(Light* light);
 
 private:
 	static std::vector<Light*> g_DirectionLightList;

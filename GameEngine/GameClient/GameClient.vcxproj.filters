@@ -175,6 +175,9 @@
     <Filter Include="소스 파일\Component\SceneEffect">
       <UniqueIdentifier>{51757aa8-4c03-46c2-81a3-a8cdb07b4de1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Manager\DissolveManager">
+      <UniqueIdentifier>{4ddf07eb-6b12-445f-a037-7fe19d0275ee}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -312,6 +315,9 @@
     <ClInclude Include="SceneEffect.h">
       <Filter>소스 파일\Component\SceneEffect</Filter>
     </ClInclude>
+    <ClInclude Include="DissolveManager.h">
+      <Filter>소스 파일\Manager\DissolveManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameClient.cpp">
@@ -436,6 +442,9 @@
     </ClCompile>
     <ClCompile Include="SceneEffect.cpp">
       <Filter>소스 파일\Component\SceneEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="DissolveManager.cpp">
+      <Filter>소스 파일\Manager\DissolveManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

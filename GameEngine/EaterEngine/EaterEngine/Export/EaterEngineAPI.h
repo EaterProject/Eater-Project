@@ -13,6 +13,7 @@ namespace flatbuffers
 }
 
 class GameObject;
+class Material;
 class Scene;
 class PhysRayCast;
 class NetworkManagerComponent;
@@ -46,6 +47,7 @@ extern "C" EATER_ENGINEDLL	void		FindGameObjectTags(std::string TagName,std::vec
 extern "C" EATER_ENGINEDLL	int			FindTagNumber(std::string TagName);
 
 extern "C" EATER_ENGINEDLL GameObject*	FindGameObjectName(std::string ObjectName);
+extern "C" EATER_ENGINEDLL Material*	FindMaterialName(std::string MaterialName);
 extern "C" EATER_ENGINEDLL void			Destroy(GameObject* obj);//오브젝트 삭제
 extern "C" EATER_ENGINEDLL void			DestroyAll();//오브젝트 삭제
 
@@ -121,6 +123,7 @@ extern "C" EATER_ENGINEDLL GameObject * GetDirectionLight();	//현재 메인 카메라�
 ///사운드 관련
 EATER_ENGINEDLL void Sound_Play_BGM(std::string& Name);
 EATER_ENGINEDLL void Sound_Play_BGM(std::string&& Name);
+extern "C" EATER_ENGINEDLL void Sound_Stop_BGM();
 extern "C" EATER_ENGINEDLL void Sound_Pause_BGM(bool Pause);
 extern "C" EATER_ENGINEDLL void Sound_VolumeSet_BGM(float value);
 extern "C" EATER_ENGINEDLL void Sound_VolumeUP_BGM();
@@ -131,6 +134,7 @@ extern "C" EATER_ENGINEDLL void Sound_PitchUp_BGM();
 extern "C" EATER_ENGINEDLL void Sound_PitchDown_BGM();
 EATER_ENGINEDLL void Sound_Play_SFX(std::string& SoundName);
 EATER_ENGINEDLL void Sound_Play_SFX(std::string&& SoundName);
+extern "C" EATER_ENGINEDLL void Sound_Stop_SFX();
 extern "C" EATER_ENGINEDLL void Sound_Pause_SFX(bool Pause);
 extern "C" EATER_ENGINEDLL void Sound_VolumeSet_SFX(float value);
 extern "C" EATER_ENGINEDLL void Sound_VolumeUP_SFX();

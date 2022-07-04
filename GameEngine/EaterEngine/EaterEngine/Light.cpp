@@ -32,6 +32,8 @@ void Light::SetDirectionLight(Light* light)
 void Light::Awake()
 {
 	m_Transform = gameobject->GetTransform();
+
+	gameobject->PushActiveFuntion(Eater::Bind(&Light::SetActive, this));
 }
 
 void Light::Start()
@@ -303,6 +305,13 @@ void Light::SetCenterPos(DirectX::SimpleMath::Vector3 pos)
 void Light::SetShadowRadius(float radius)
 {
 	m_ShadowRadius = radius;
+}
+
+void Light::SetActive(bool Active)
+{
+	if (gameobject->GetActive() == Active) return;
+
+	LightManager::ActiveLight(this, Active);
 }
 
 void Light::SetIndex(UINT index)

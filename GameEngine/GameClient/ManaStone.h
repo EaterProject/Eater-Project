@@ -45,12 +45,14 @@ private:
 	MeshFilterSetting mSetting;
 
 	static std::vector<Vector3> MonsterMovePointDefault;
+	static int MaxManaCount;
+
 	Vector3 MovePoint[5];
 	std::vector<MonsterA*> MonsterA_List;
 	std::vector<MonsterB*> MonsterB_List;
 
 
-
+	bool Boss_Start = false;
 	bool HitStart = false;
 	bool DeadStart = false;
 	float Range = 12;

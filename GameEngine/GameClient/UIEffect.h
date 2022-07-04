@@ -16,6 +16,9 @@ public:
 	void Fade_IN(void* Data);
 	void Fade_OUT(void* Data);
 	void PlayerHit(void* Data);
+
+	void Set_UIEffect_Active(bool Active);
+
 private:
 	void CreateFade();
 
@@ -23,8 +26,8 @@ private:
 	void UpdateHit();
 
 	//페이드 인/아웃 변수들
-	Image* mImages[3] = { nullptr };
-	RectTransform* mRect[3] = { nullptr };
+	Image* mImages[2] = { nullptr };
+	RectTransform* mRect[2] = { nullptr };
 	bool IsFade			= false;
 	bool IsFade_IN		= false;
 	bool IsFade_OUT		= false;

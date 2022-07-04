@@ -62,7 +62,7 @@ void TestScene::Awake()
 
 	//SetFullScreenBlur(true, 2);
 
-	Load("../Assets/Scene/DomeLightOnly02.Scene");
+	//Load("../Assets/Scene/DomeLightOnly02.Scene");
 
 	//RenderOption* option = GetRenderOptionData();
 	//option->RenderingOption ^= RENDER_OPTION::RENDER_FOG;

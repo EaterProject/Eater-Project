@@ -5,15 +5,31 @@
 // ÄÄÆ÷³ÍÆ®
 #include "MeshFilter.h"
 #include "GameObject.h"
+#include "DissolveManager.h"
+
+DissolveManager* MeshFilterSetting::mDissolveManager = nullptr;
 
 MeshFilterSetting::MeshFilterSetting()
 {
-
 }
 
 MeshFilterSetting::~MeshFilterSetting()
 {
 	ReSet();
+}
+
+void MeshFilterSetting::Initialize()
+{
+	GameObject* dissolve = Instance();
+	mDissolveManager = dissolve->AddComponent<DissolveManager>();
+}
+
+void MeshFilterSetting::Release()
+{
+	if (mDissolveManager)
+	{
+		Destroy(mDissolveManager->gameobject);
+	}
 }
 
 void MeshFilterSetting::Setting(GameObject* Object)
@@ -290,6 +306,9 @@ void MeshFilterSetting::PlayDissolve()
 					DissolveOuterFactor,
 					DissolveInnerFactor
 				);
+
+				//µðÁ¹ºê ºí·Ï »ðÀÔ..
+				mDissolveManager->PushDissolve(MPB);
 			}
 
 			IsDissolvePlay = &MPB->Dissolve;
@@ -312,6 +331,9 @@ void MeshFilterSetting::PlayDissolve()
 				DissolveOuterFactor,
 				DissolveInnerFactor
 			);
+
+			//µðÁ¹ºê ºí·Ï »ðÀÔ..
+			mDissolveManager->PushDissolve(MPB);
 
 			IsDissolvePlay = &MPB->Dissolve;
 		}

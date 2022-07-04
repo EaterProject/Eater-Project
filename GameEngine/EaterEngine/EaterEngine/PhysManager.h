@@ -18,4 +18,6 @@ public:
 
 private:
 	PhysEngine* Phys;
+
+	float Frame;
 };

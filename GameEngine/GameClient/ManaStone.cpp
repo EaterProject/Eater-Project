@@ -17,6 +17,8 @@
 #include "ParticleFactory.h"
 
 std::vector<Vector3> ManaStone::MonsterMovePointDefault;
+int ManaStone::MaxManaCount = 5;
+
 ManaStone::ManaStone()
 {
 	mMeshFilter = nullptr;
@@ -55,7 +57,7 @@ void ManaStone::SetUp()
 {
 	mMeshFilter->SetModelName("Mana");
 	mCollider->SetCenter(0, 0.5f, 0);
-	mCollider->SetBoxCollider(0.5f,1, 0.5f);
+	mCollider->SetBoxCollider(0.1f,0.1f, 0.1f);
 	mRigidbody->SetFreezeRotation(true, true, true);
 	mRigidbody->SetFreezePosition(true, true, true);
 	mTransform->SetScale(1.7f, 1.7f, 1.7f);
@@ -202,6 +204,19 @@ void ManaStone::OnTriggerStay(GameObject* Obj)
 				mSetting.PlayDissolve();
 				DeadStart = true;
 				MiniMapSystem::Get()->DeleteIcon(this->gameobject);
+
+				// 보스 등장 전 마나 개수..
+				if (Boss_Start == false)
+				{
+					MaxManaCount--;
+
+					if (MaxManaCount <= 0)
+					{
+						Boss_Start = true;
+						MaxManaCount = 0;
+						MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_BOSS_START);
+					}
+				}
 
 				// 코어 마나 획득
 				MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_GET_COREMANA, &CoreManaCount);

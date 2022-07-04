@@ -394,10 +394,14 @@ void UIStore::Purchase_Item_Button_Enter()
 
 void UIStore::Purchase_Item_Button_Click()
 {
-	Sound_Play_SFX("UI_Button_Click");
-	
 	// 만약 선택중인 아이템이 없다면..
-	if (SelectItemID == -1) return;
+	if (SelectItemID == -1)
+	{
+		Sound_Play_SFX("UI_Button_Click");
+		return;
+	}
+
+	Sound_Play_SFX("VendingMachine");
 
 	/// 선택한 아이템에 대한 구매 및 능력치 적용..
 	switch (SelectItemID)

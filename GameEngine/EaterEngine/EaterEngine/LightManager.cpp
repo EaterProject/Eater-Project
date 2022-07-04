@@ -15,6 +15,28 @@ LightManager::~LightManager()
 
 }
 
+void LightManager::ActiveLight(Light* light, bool Active)
+{
+	bool Check = false;
+
+	if (Active)
+	{
+		Check = FindLight(light);
+
+		if (Check == true) return;
+
+		PushLight(light);
+	}
+	else
+	{
+		Check = FindLight(light);
+
+		if (Check == false) return;
+
+		DeleteLight(light);
+	}
+}
+
 void LightManager::PushLight(Light* light)
 {
 	// Light Type¿¡ µû¸¥ Global Data »ğÀÔ..
@@ -85,4 +107,39 @@ void LightManager::DeleteLight(Light* light)
 	{
 		(*lightList)[index]->SetIndex(index);
 	}
+}
+
+bool LightManager::FindLight(Light* light)
+{
+	switch (light->GetType())
+	{
+	case LIGHT_TYPE::DIRECTION_LIGHT:
+	{
+		if (g_DirectionLightList[light->m_LightIndex] == light)
+		{
+			return true;
+		}
+	}
+	return false;
+	case LIGHT_TYPE::POINT_LIGHT:
+	{
+		if (g_PointLightList[light->m_LightIndex] == light)
+		{
+			return true;
+		}
+	}
+	return false;
+	case LIGHT_TYPE::SPOT_LIGHT:
+	{
+		if (g_SpotLightList[light->m_LightIndex] == light)
+		{
+			return true;
+		}
+	}
+	return false;
+	default:
+		return false;
+	}
+
+	return false;
 }

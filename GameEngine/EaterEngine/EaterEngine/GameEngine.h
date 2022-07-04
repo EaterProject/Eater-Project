@@ -81,6 +81,7 @@ public:
 	void FindGameObjectTags(std::string& TagName,std::vector<GameObject*>* ObjectList);
 	int	 FindTagNumber(std::string& TagName);
 	GameObject* FindGameObjectName(std::string& ObjName);
+	Material* FindMaterialName(std::string MaterialName);
 
 public:
 	TextureBuffer* GetTexture(std::string& TextureName);
@@ -164,6 +165,7 @@ public:
 	void Sound_Play_SFX(std::string& SoundName);
 	void Sound_Pause_SFX(bool Pause);
 	void Sound_VolumeSet_SFX(float volume);
+	void Sound_STOP_SFX();
 	void Sound_VolumeUP_SFX();
 	void Sound_VolumeDown_SFX();
 	void Sound_FrequencyUp_SFX();

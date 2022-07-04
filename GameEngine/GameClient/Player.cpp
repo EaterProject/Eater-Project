@@ -18,6 +18,7 @@
 #include "PlayerCamera.h"
 
 Transform* Player::mTransform = nullptr;
+bool	Player::IsNoHit = false;
 bool	Player::IsAttackTime = false;
 int		Player::ChangeCount = 0;
 int		Player::MaxChangeCount = 10;
@@ -246,6 +247,11 @@ Transform* Player::GetPlayerTransform()
 	return mTransform;
 }
 
+bool Player::GetNoHitState()
+{
+	return IsNoHit;
+}
+
 bool Player::GetAttackState()
 {
 	return IsAttackTime;
@@ -278,6 +284,11 @@ void Player::Healing(float HealingPower)
 	{
 		HP += HealingPower;
 	}
+}
+
+void Player::SetNoHit(bool Active)
+{
+	IsNoHit = Active;
 }
 
 void Player::PlayerCoolTimeCheck()
@@ -671,7 +682,8 @@ void Player::Player_Jump()
 
 void Player::Player_Hit(int HitPower)
 {
-	if (IsHit == true){return;}
+	if (IsHit == true) { return; }
+	if (IsNoHit == true) { return; }
 
 	IsHit = true;
 	HP -= HitPower;

@@ -1,6 +1,9 @@
 #pragma once
 #include <Component.h>
 
+class Light;
+class MaterialProperty;
+class ParticleController;
 class RenderOption;
 
 class SceneEffect : public Component
@@ -19,6 +22,7 @@ private:
 
 public:
 	void Awake() override;
+	void Start() override;
 	void Update() override;
 
 public:
@@ -43,8 +47,16 @@ private:
 	
 	bool Fade_In_End = false;
 	bool Fade_Out_End = false;
+	bool Camera_End = false;
 
 private:
 	RenderOption* m_RenderOption;
+
+	MaterialProperty* m_ChangeMaterial;
+
+	ParticleController* m_BossFog;
+
+	Light* m_DirectionLight;
+	std::vector<GameObject*> m_BossLightList;
 };
 

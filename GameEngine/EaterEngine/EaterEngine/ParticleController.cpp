@@ -115,6 +115,9 @@ void ParticleController::PushParticle(std::string particle_key, ParticleSystem* 
 	node_data->Particle_Value = particle;
 	node_data->List_Index = list_index;
 
+	// 마지막 노드 설정..
+	m_NowParticleList = m_ParticleSystemList.begin();
+
 	// TotalTime 재설정..
 	SetTotalTime();
 }
@@ -263,9 +266,7 @@ void ParticleController::Pause()
 
 void ParticleController::Stop()
 {
-	if (m_NowParticleList == m_ParticleSystemList.end()) return;
-
-	ParticleList play_particle = m_NowParticleList;
+	ParticleList play_particle = m_ParticleSystemList.begin();
 
 	// 현재 재생중인 모든 파티클 정지..
 	while (play_particle != m_ParticleSystemList.end())
@@ -275,8 +276,10 @@ void ParticleController::Stop()
 			particle.Particle_Value->Stop();
 		}
 
-		play_particle--;
+		play_particle++;
 	}
+
+	m_NowParticleList = m_ParticleSystemList.begin();
 
 	m_ControllerState = PARTICLE_STATE::END_STATE;
 	m_Pause = false;
@@ -340,7 +343,7 @@ void ParticleController::UpdateController()
 		// 만약 모든 파티클 리스트가 재생된 상태라면..
 		if (m_NowParticleList == m_ParticleSystemList.end())
 		{
-			m_NowParticleList = --m_ParticleSystemList.end();
+			m_NowParticleList--;
 			m_ControllerState = PARTICLE_STATE::PLAY_STAY_STATE;
 		}
 		else
@@ -348,8 +351,6 @@ void ParticleController::UpdateController()
 			// 현재 파티클 리스트에 대한 데이터 설정..
 			SetNowParticleList();
 		}
-
-		PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "NextTime : %.3f\nParticleCount : %d", m_StartTime, m_NowParticleListSize);
 	}
 }
 

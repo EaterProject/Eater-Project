@@ -101,15 +101,16 @@
 #define MESSAGE_CAMERA_CHANGE_DEBUG 7						//디버그 카메라로 변환	//인자 값 : 없음
 
 //Global Message
-#define MESSAGE_GLOBAL_GAMESTART 0							//게임이 시작되었다
-#define MESSAGE_GLOBAL_GAMEEND	1							//게임이 종료되었다
-#define MESSAGE_GLOBAL_TITLE 2								//타이틀
-#define MESSAGE_GLOBAL_OPTION 3								//옵션
-#define MESSAGE_GLOBAL_PAUSE 4								//일시정지
-#define MESSAGE_GLOBAL_RESUME 5								//게임복귀
-#define MESSAGE_GLOBAL_MANUAL 6								//조작법
-#define MESSAGE_GLOBAL_STORE 7								//상점
-#define MESSAGE_GLOBAL_CREDIT 8								//엔딩 크래딧
+#define MESSAGE_GLOBAL_GAME_START 0							//게임이 시작되었다
+#define MESSAGE_GLOBAL_GAME_END	1							//게임이 종료되었다
+#define MESSAGE_GLOBAL_BOSS_START 2							//보스 등장
+#define MESSAGE_GLOBAL_TITLE 3								//타이틀
+#define MESSAGE_GLOBAL_OPTION 4								//옵션
+#define MESSAGE_GLOBAL_PAUSE 5								//일시정지
+#define MESSAGE_GLOBAL_RESUME 6								//게임복귀
+#define MESSAGE_GLOBAL_MANUAL 7								//조작법
+#define MESSAGE_GLOBAL_STORE 8								//상점
+#define MESSAGE_GLOBAL_CREDIT 9								//엔딩 크래딧
 
 
 #define MONSTER_COLOR_RED 0
@@ -183,6 +184,7 @@ enum class MONSTER_COLOR : int
 	YELLOW,
 	BLUE,
 };
+
 struct MONSTER_EMAGIN
 {
 	float R = 255.f;
@@ -194,4 +196,3 @@ struct MONSTER_EMAGIN
 	int Type;
 	void* Object;
 };
-

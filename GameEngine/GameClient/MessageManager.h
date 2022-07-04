@@ -72,6 +72,7 @@ private:
 	void PauseStart();
 	void InGameResume();
 	void InGameEnd();
+	void BossStart();
 	void ManualStart();
 	void StoreStart();
 	void CreditStart();

@@ -56,19 +56,9 @@ void CameraManager::Update()
 	{
 		if (mCinematicCamera->ChoiceCameraAnimationEnd() == true)
 		{
-			switch (CinematicType)
+			if (Finish_Play)
 			{
-			case MESSAGE_CAMERA_CINEMATIC_GAME_START:
-				//MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_GAMESTART);
-				break;
-			case MESSAGE_CAMERA_CINEMATIC_GAME_END:
-				break;
-			case MESSAGE_CAMERA_CINEMATIC_BOSS_START:
-				break;
-			case MESSAGE_CAMERA_CINEMATIC_BOSS_END:
-				break;
-			case MESSAGE_CAMERA_CINEMATIC_TITLE:
-				break;
+				*Finish_Play = true;
 			}
 
 			IsCinematic_Play = false;	
@@ -100,11 +90,11 @@ void CameraManager::Change(int Type)
 	}
 }
 
-void CameraManager::SetCinematic(int Type,std::string& Name)
+void CameraManager::SetCinematic(int Type, std::string Data)
 {
 	IsCinematic_Play = true;
 	CinematicType = Type;
-	
+
 	GameObject* Object = nullptr;
 	Object = GetMainCamera();
 	mMain = Object->GetComponent<Camera>();
@@ -113,10 +103,31 @@ void CameraManager::SetCinematic(int Type,std::string& Name)
 	Object = GetDebugCamera();
 	mDebug = Object->GetComponent<Camera>();
 
-	mCinematicCamera->PushCameraAnimation(Name);
+	//시네마틱 타입에 따른 카메라 애니메이션 설정..
+	switch (CinematicType)
+	{
+	case MESSAGE_CAMERA_CINEMATIC_GAME_START:
+		GameStartCinematic();
+		break;
+	case MESSAGE_CAMERA_CINEMATIC_GAME_END:
+		GameEndCinematic();
+		break;
+	case MESSAGE_CAMERA_CINEMATIC_BOSS_START:
+		BossStartCinematic();
+		break;
+	case MESSAGE_CAMERA_CINEMATIC_BOSS_END:
+		BossEndCinematic();
+		break;
+	case MESSAGE_CAMERA_CINEMATIC_TITLE:
+		TitleCinematic();
+		break;
+	case MESSAGE_CAMERA_CINEMATIC:
+		mCinematicCamera->PushCameraAnimation(Data);
+		break;
+	}
 }
 
-void CameraManager::SetCinematic(int Type, std::string&& Name)
+void CameraManager::SetCinematic(int Type, bool* Data)
 {
 	IsCinematic_Play = true;
 	CinematicType = Type;
@@ -129,21 +140,7 @@ void CameraManager::SetCinematic(int Type, std::string&& Name)
 	Object = GetDebugCamera();
 	mDebug = Object->GetComponent<Camera>();
 
-	mCinematicCamera->PushCameraAnimation(Name);
-}
-
-void CameraManager::SetCinematic(int Type)
-{
-	IsCinematic_Play = true;
-	CinematicType = Type;
-
-	GameObject* Object = nullptr;
-	Object = GetMainCamera();
-	mMain = Object->GetComponent<Camera>();
-
-	//디버깅 카메라
-	Object = GetDebugCamera();
-	mDebug = Object->GetComponent<Camera>();
+	Finish_Play = Data;
 
 	//시네마틱 타입에 따른 카메라 애니메이션 설정..
 	switch (CinematicType)

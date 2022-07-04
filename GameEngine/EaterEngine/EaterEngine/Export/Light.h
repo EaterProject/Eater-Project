@@ -52,6 +52,7 @@ public:
 	EATER_ENGINEDLL void SetCenterPos(DirectX::SimpleMath::Vector3 pos);
 	
 private:
+	void SetActive(bool Active);
 	void SetIndex(UINT index);
 	void SetLightViewProj();
 

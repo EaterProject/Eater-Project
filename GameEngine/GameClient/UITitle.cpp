@@ -108,7 +108,7 @@ void UITitle::Update()
 	{
 		IsFade = false;
 		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_FADE_OUT);
-		MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_GAMESTART);
+		MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_GAME_START);
 	}
 }
 
@@ -138,6 +138,7 @@ void UITitle::StartButton_Click()
 {
 	IsStart = true;
 	Sound_Play_SFX("UI_Button_Click");
+	Sound_Stop_BGM();
 
 	MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_FADE_IN, &IsFade);
 	MessageManager::GetGM()->SEND_Message(TARGET_CAMERA_MANAGER, MESSAGE_CAMERA_CINEMATIC_TITLE);
@@ -180,7 +181,7 @@ void UITitle::EndButton_Click()
 	Sound_Play_SFX("UI_Button_Click");
 
 	/// 게임 종료
-	MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_GAMEEND);
+	MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_GAME_END);
 }
 
 void UITitle::EndButton_Exit()

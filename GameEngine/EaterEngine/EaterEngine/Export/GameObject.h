@@ -6,7 +6,7 @@
 
 #include "EaterEngineDLL.h"
 #include "Component.h"
-
+#include "Utility.h"
 
 #define AWAKE				0x00000001
 #define START				0x00000010
@@ -78,6 +78,10 @@ public:
 	EATER_ENGINEDLL void PushChildBoneObject(GameObject* obj); //나의 자식으로 기본 게임오브젝트를 넣는다
 
 public:
+	void PushActiveFuntion(std::function<void(bool)> func);
+	void PopActiveFuntion(std::function<void(bool)> func);
+
+public:
 	///컨퍼넌트를 추가 시킨다
 	template<typename T>
 	T* AddComponent(typename std::enable_if<std::is_base_of<Component, T>::value, bool>::type t = std::is_base_of<Component, T>::value);
@@ -103,6 +107,8 @@ private:
 	std::vector<Component*> ComponentList;
 	std::vector<GameObject*> ChildMeshList;
 	std::vector<GameObject*> ChildBoneList;
+
+	Eater::Delegate<bool> ActiveFunctionList;
 
 	EATER_ENGINEDLL void PushStartComponentFunction(Component* con, unsigned int type);
 	EATER_ENGINEDLL void PushComponentFunction(Component* con, unsigned int type);
