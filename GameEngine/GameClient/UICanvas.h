@@ -57,6 +57,7 @@ public:
 	void Set_Drone_Text(int Number);
 
 	void Set_InGameUI_Active(bool Active);
+	void Set_Drone_Text_Pivot(PIVOT_TYPE pivot);
 private:
 	//积己 窃荐
 	void Create_Player_Emagin(float X,float Y);
@@ -77,6 +78,7 @@ private:
 
 
 	void Create_Combo_UI();
+
 
 	void Update_Combo_Check();	//农扁 贸府
 	

@@ -46,6 +46,7 @@ public:
 	GameObject* CreateUIManual();		//메뉴얼 UI
 	GameObject* CreateUICredit();		//크래딧 UI
 	GameObject* CreateUIBoss();
+	GameObject* CreateSceneEffect();
 
 	GameObject* CreateGate_In();		//게이트 객체 생성
 	GameObject* CreateGate_Out();		//게이트 객체 생성

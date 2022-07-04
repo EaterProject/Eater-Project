@@ -13,7 +13,7 @@
 
 UICanvas::UICanvas()
 {
-	
+
 
 }
 
@@ -31,11 +31,11 @@ void UICanvas::Awake()
 	//Create_Effect_UI();
 
 	//플레이어 관련 UI
-	Create_Player_HP(50,400);
-	Create_Player_Emagin(50,350);
+	Create_Player_HP(50, 400);
+	Create_Player_Emagin(50, 350);
 	Create_Player_Mana(100, 400);
 	Create_Player_Emagin_Color(-200, 0);
-	//Create_Dron_Text(0, -200);
+	Create_Dron_Text(0, -200);
 	Create_Skill_UI(375, 450);
 
 	Create_Combo_UI();
@@ -46,14 +46,14 @@ void UICanvas::Start()
 {
 	Set_Player_HP(80);
 	Set_Player_HP_Max(150);
-	
+
 	Set_Player_Emagin(0);
 	Set_Player_Emagin_Max(14);
-	
+
 	Set_Pure_Mana_Count(0);
 	Set_Core_Mana_Count(0);
-	
-	//Active_Dron_Text(false);
+
+	Active_Dron_Text(false);
 }
 
 void UICanvas::Update()
@@ -72,19 +72,72 @@ void UICanvas::Update()
 		{
 			MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_CREDIT);
 		}
+	}
 
-		switch (ShowText)
+	switch (ShowText)
+	{
+	case UICanvas::NONE:
+	{
+		// 큐에 쌓인 텍스트가 있다면..
+		if (mTextMessageQueue.empty() == false)
 		{
-		case UICanvas::NONE:
+			NowTextName = mTextMessageQueue.front();
+			mTextMessageQueue.pop();
+
+			// 드론 텍스트 활성화..
+			Dron_Text->SetActive(true);
+
+			// 드론 텍스트 변경..
+			Dron_Text->SetTexture(NowTextName);
+
+			ShowText = TEXT_STATE::FADE_IN;
+			PlayTime = Animtime;
+		}
+	}
+	break;
+	case UICanvas::FADE_IN:
+	{
+		PlayTime -= GetDeltaTime();
+
+		// 드론 텍스트 출력..
+		Dron_Text->SetAlpha(255.0f - (PlayTime * 4.0f * 255.0f));
+
+		if (PlayTime <= 0.0f)
 		{
+			PlayTime = ShowTime;
+			ShowText = TEXT_STATE::SHOW;
+
+			Dron_Text->SetAlpha(255.0f);
+		}
+	}
+	break;
+	case UICanvas::SHOW:
+	{
+		PlayTime -= GetDeltaTime();
+
+		if (PlayTime <= 0.0f)
+		{
+			PlayTime = Animtime;
+			ShowText = TEXT_STATE::FADE_OUT;
+		}
+	}
+	break;
+	case UICanvas::FADE_OUT:
+	{
+		PlayTime -= GetDeltaTime();
+
+		// 드론 텍스트 출력..
+		Dron_Text->SetAlpha(PlayTime * 4.0f * 255.0f);
+
+		if (PlayTime <= 0.0f)
+		{
+			PlayTime = Animtime;
+
 			// 큐에 쌓인 텍스트가 있다면..
 			if (mTextMessageQueue.empty() == false)
 			{
 				NowTextName = mTextMessageQueue.front();
 				mTextMessageQueue.pop();
-
-				// 드론 텍스트 활성화..
-				Dron_Text->SetActive(true);
 
 				// 드론 텍스트 변경..
 				Dron_Text->SetTexture(NowTextName);
@@ -92,71 +145,18 @@ void UICanvas::Update()
 				ShowText = TEXT_STATE::FADE_IN;
 				PlayTime = Animtime;
 			}
-		}
-			break;
-		case UICanvas::FADE_IN:
-		{
-			PlayTime -= GetDeltaTime();
-
-			// 드론 텍스트 출력..
-			Dron_Text->SetAlpha(255.0f - (PlayTime * 4.0f * 255.0f));
-
-			if (PlayTime <= 0.0f)
+			else
 			{
-				PlayTime = ShowTime;
-				ShowText = TEXT_STATE::SHOW;
+				ShowText = TEXT_STATE::NONE;
 
-				Dron_Text->SetAlpha(255.0f);
+				// 드론 텍스트 비활성화..
+				Dron_Text->SetActive(false);
 			}
 		}
-			break;
-		case UICanvas::SHOW:
-		{
-			PlayTime -= GetDeltaTime();
-
-			if (PlayTime <= 0.0f)
-			{
-				PlayTime = Animtime;
-				ShowText = TEXT_STATE::FADE_OUT;
-			}
-		}
-			break;
-		case UICanvas::FADE_OUT:
-		{
-			PlayTime -= GetDeltaTime();
-
-			// 드론 텍스트 출력..
-			Dron_Text->SetAlpha(PlayTime * 4.0f * 255.0f);
-
-			if (PlayTime <= 0.0f)
-			{
-				PlayTime = Animtime;
-
-				// 큐에 쌓인 텍스트가 있다면..
-				if (mTextMessageQueue.empty() == false)
-				{
-					NowTextName = mTextMessageQueue.front();
-					mTextMessageQueue.pop();
-
-					// 드론 텍스트 변경..
-					Dron_Text->SetTexture(NowTextName);
-
-					ShowText = TEXT_STATE::FADE_IN;
-					PlayTime = Animtime;
-				}
-				else
-				{
-					ShowText = TEXT_STATE::NONE;
-					
-					// 드론 텍스트 비활성화..
-					Dron_Text->SetActive(false);
-				}
-			}
-		}
-			break;
-		default:
-			break;
-		}
+	}
+	break;
+	default:
+		break;
 	}
 
 	Update_Combo_Check();
@@ -278,7 +278,6 @@ void UICanvas::Set_InGameUI_Active(bool Active)
 	Active_Player_HP(Active);
 	Active_Player_Emagin(Active);
 	Active_Mana_Count(Active);
-	Active_Dron_Text(Active);
 	Active_Player_Emagin_Color(Active);
 	Active_Player_Skill(Active);
 
@@ -299,7 +298,7 @@ void UICanvas::Set_Monster_UI_ON(void* Emagin)
 	if (UseCheck(Object) == true) { return; }
 
 	int OffsetY = 0.0f;
-	if(mEmagin->Type == MONSTER_TYPE_A)
+	if (mEmagin->Type == MONSTER_TYPE_A)
 	{
 		OffsetY = 2.0f;
 	}
@@ -322,7 +321,7 @@ void UICanvas::Set_Monster_UI_ON(void* Emagin)
 
 	//색 설정
 	Monster_Emagin_Front[MonsterIndex]->SetColor(mEmagin->R, mEmagin->G, mEmagin->B, 255);
-	
+
 	MonsterSlider[MonsterIndex]->SetValueRange(0.0f, mEmagin->MaxHP);
 	MonsterSlider[MonsterIndex]->SetFillRange(FILL_LEFT, mEmagin->HP);
 	MonsterSlider[MonsterIndex]->SetPivot(PIVOT_OBJECT);
@@ -444,7 +443,7 @@ void UICanvas::Create_Player_Emagin(float X, float Y)
 	Object = Instance_ImageFont();
 	Player_EMAGIN[0] = Object->GetComponent<ImageFont>();
 	Player_EMAGIN[0]->SetTexture("number_");
-	Player_EMAGIN[0]->SetPosition(X + 50,  Y -5);
+	Player_EMAGIN[0]->SetPosition(X + 50, Y - 5);
 	Player_EMAGIN[0]->SetFontCount(2);
 	Player_EMAGIN[0]->SetOffset(30);
 	Player_EMAGIN[0]->SetScale(0.75f, 0.75f);
@@ -463,7 +462,7 @@ void UICanvas::Create_Player_Emagin(float X, float Y)
 	Object = Instance_ImageFont();
 	Player_EMAGIN[1] = Object->GetComponent<ImageFont>();
 	Player_EMAGIN[1]->SetTexture("number_");
-	Player_EMAGIN[1]->SetPosition(X+125, Y);
+	Player_EMAGIN[1]->SetPosition(X + 125, Y);
 	Player_EMAGIN[1]->SetFontCount(2);
 	Player_EMAGIN[1]->SetOffset(20);
 	Player_EMAGIN[1]->SetScale(0.5f, 0.5f);
@@ -476,11 +475,16 @@ void UICanvas::Create_Combo_UI()
 	mCombo = Object->AddComponent<ComboFont>();
 }
 
+void UICanvas::Set_Drone_Text_Pivot(PIVOT_TYPE pivot)
+{
+	Dron_Text->SetPivot(pivot);
+}
+
 void UICanvas::Create_Player_HP(float X, float Y)
 {
-	GameObject*		Object	= nullptr;
-	RectTransform*	Rect	= nullptr;
-	Image*			Img		= nullptr;
+	GameObject* Object = nullptr;
+	RectTransform* Rect = nullptr;
+	Image* Img = nullptr;
 
 	//현재 체력 폰트
 	Object = Instance_ImageFont();
@@ -489,7 +493,7 @@ void UICanvas::Create_Player_HP(float X, float Y)
 	Player_HP[0]->SetPivot(PIVOT_MIDDLE_LEFT);
 	Player_HP[0]->SetFontCount(4, false);
 	Player_HP[0]->SetOffset(18);
-	Player_HP[0]->SetScale(0.5f,0.5f);
+	Player_HP[0]->SetScale(0.5f, 0.5f);
 	Player_HP[0]->SetPosition(X, Y);
 	Player_HP[0]->SetLayer(100);
 
@@ -540,7 +544,7 @@ void UICanvas::Create_Player_Mana(float X, float Y)
 	Player_MANA[0]->SetFontCount(2);
 	Player_MANA[0]->SetOffset(35);
 	Player_MANA[0]->SetScale(1, 1);
-	Player_MANA[0]->SetPosition(X-300, Y);
+	Player_MANA[0]->SetPosition(X - 300, Y);
 	Player_MANA[0]->SetColor(65, 197, 198);
 	Player_MANA[0]->SetLayer(100);
 
@@ -551,7 +555,7 @@ void UICanvas::Create_Player_Mana(float X, float Y)
 	Player_MANA[1]->SetFontCount(2);
 	Player_MANA[1]->SetOffset(35);
 	Player_MANA[1]->SetScale(1, 1);
-	Player_MANA[1]->SetPosition(X-200, Y);
+	Player_MANA[1]->SetPosition(X - 200, Y);
 	Player_MANA[1]->SetColor(213, 138, 19);
 	Player_MANA[1]->SetLayer(100);
 
@@ -595,12 +599,12 @@ void UICanvas::Create_Player_Emagin_Color(float X, float Y)
 
 void UICanvas::Create_Dron_Text(float X, float Y)
 {
-	GameObject*	Object = Instance_UI();
+	GameObject* Object = Instance_UI();
 	Dron_Text = Object->AddComponent<Image>();
-	Dron_Text->SetLayer(100);
+	Dron_Text->SetLayer(102);
 	Dron_Rect = Object->GetComponent<RectTransform>();
 	Dron_Rect->SetPosition(X, Y);
-	Dron_Rect->SetScale(1,1);
+	Dron_Rect->SetScale(1, 1);
 	Dron_Rect->SetPivot(PIVOT_MIDDLE_LEFT);
 
 	Dron_Text->PushTextureList("00_DroneText_GameStart");
@@ -661,22 +665,22 @@ void UICanvas::Active_Mana_Count(bool Active)
 
 void UICanvas::Active_Dron_Text(bool Active)
 {
-	//Dron_Text->SetActive(Active);
+	Dron_Text->SetActive(Active);
 }
 
 void UICanvas::Create_Skill_UI(float X, float Y)
 {
 	float OffsetX = 450;
-	GameObject*		Object		= nullptr;
-	RectTransform*	Rect		= nullptr;
-	Image*			Img			= nullptr;
+	GameObject* Object = nullptr;
+	RectTransform* Rect = nullptr;
+	Image* Img = nullptr;
 
 
 	Object = Instance_Slider();
 	Player_Skill[0] = Object->GetComponent<Slider>();
 	Player_Skill[0]->SetBackGroundTexture("ingame_skill_rb");
 	Player_Skill[0]->SetFillTexture("ingame_skill_rb_1");
-	Player_Skill[0]->SetPosition(X, Y );
+	Player_Skill[0]->SetPosition(X, Y);
 	Player_Skill[0]->SetPivot(PIVOT_MIDDLE_LEFT);
 	Player_Skill[0]->SetFillRange(FILL_DOWN, 1.0f);
 	Player_Skill[0]->SetLayer(100);
@@ -702,9 +706,9 @@ void UICanvas::Create_Skill_UI(float X, float Y)
 
 void UICanvas::Create_Monster_UI()
 {
-	for(int i = 0; i < 5; i++)
+	for (int i = 0; i < 5; i++)
 	{
-		GameObject* Object	= nullptr;
+		GameObject* Object = nullptr;
 		RectTransform* Rect = nullptr;
 
 		//몬스터 체력바 
@@ -713,7 +717,7 @@ void UICanvas::Create_Monster_UI()
 		MonsterSlider[i]->SetBackGroundTexture("Monster_HP_Back");
 		MonsterSlider[i]->SetFillTexture("Monster_HP_Front");
 		MonsterSlider[i]->SetPosition(0, 0);
-		
+
 		//몬스터 이메진 뒤 이미지
 		Object = Instance_UI();
 		Monster_Emagin_Back[i] = Object->AddComponent<Image>();
@@ -721,7 +725,7 @@ void UICanvas::Create_Monster_UI()
 		Monster_Emagin_Back[i]->SetColor(255, 255, 255, 255);
 		MonsterTR_Back[i] = Object->GetComponent<RectTransform>();
 		MonsterTR_Back[i]->SetPosition(0, 0);
-		
+
 		//몬스터 이메진 앞 이미지
 		Object = Instance_UI();
 		Monster_Emagin_Front[i] = Object->AddComponent<Image>();
@@ -753,7 +757,7 @@ int UICanvas::GetActiveMonsterUI()
 	for (int i = 0; i < 5; i++)
 	{
 		if (MonsterObject[i] == nullptr)
-		{ 
+		{
 			return i;
 		}
 	}
@@ -779,7 +783,7 @@ bool UICanvas::UseCheck(GameObject* Obj)
 {
 	for (int i = 0; i < 5; i++)
 	{
-		if (MonsterObject[i] == Obj) 
+		if (MonsterObject[i] == Obj)
 		{
 			return true;
 		}
