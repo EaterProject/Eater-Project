@@ -109,10 +109,12 @@ private:
 	float		ANIMATION_SPEED[8]	= { 0.0f };
 
 	float Now_Attack_Speed = 1.5f;
+	float MoveSoundTime = 0.0f;
 
 	Vector3 DirPos;						//방향
 	Vector3 DirRot;						//회전
 	Vector3 PastDirRot;					//과거의 방향
+	Vector3 PastDirPos;
 	Vector3 BasePos;					//(0,0,0)인 벡터
 	Vector3 WeaponOffsetRot;			//무기 충돌체 초기 오프셋
 	Vector3 AttackStartRot;				//공격을 시작했을때의 방향
@@ -147,6 +149,7 @@ private:
 	int HP_Max				= 3000;
 
 	float Speed				= 7.5f;
+	float SpeedMax			= 7.5f;
 
 	bool IsAttack			= false;
 	bool IsMove				= false;

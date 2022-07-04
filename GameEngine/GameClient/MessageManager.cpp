@@ -286,6 +286,9 @@ void MessageManager::SEND_UI_Message(int MessageType, void* Data)
 	case MESSAGE_UI_SKILL_SPC:
 		mCanvas->Set_Skill_SPC(*(reinterpret_cast<float*>(Data)));
 		break;
+	case MESSAGE_UI_BOSS_COLOR:
+		mBossUI->SetColor(*(reinterpret_cast<int*>(Data)));
+		break;
 	}
 }
 
