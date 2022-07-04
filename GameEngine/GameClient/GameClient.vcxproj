@@ -181,6 +181,7 @@
     <ClInclude Include="BossWeapon.h" />
     <ClInclude Include="CameraManager.h" />
     <ClInclude Include="ClientTypeOption.h" />
+    <ClInclude Include="DissolveManager.h" />
     <ClInclude Include="DoorCollider.h" />
     <ClInclude Include="MeshFilterSetting.h" />
     <ClInclude Include="ComboFont.h" />
@@ -234,6 +235,7 @@
     <ClCompile Include="BossFriend.cpp" />
     <ClCompile Include="BossWeapon.cpp" />
     <ClCompile Include="CameraManager.cpp" />
+    <ClCompile Include="DissolveManager.cpp" />
     <ClCompile Include="DoorCollider.cpp" />
     <ClCompile Include="MeshFilterSetting.cpp" />
     <ClCompile Include="ComboFont.cpp" />

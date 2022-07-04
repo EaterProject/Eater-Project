@@ -4,6 +4,8 @@
 #include "GameObject.h"
 #include "Image.h"
 #include "RectTransform.h"
+#include "Player.h"
+
 UIEffect::UIEffect()
 {
 
@@ -55,8 +57,19 @@ void UIEffect::Fade_OUT(void* Data)
 
 void UIEffect::PlayerHit(void* Data)
 {
-	IsHit = true;
-	mHitAlpha = 255.0f;
+	if (Player::GetNoHitState() == false)
+	{
+		IsHit = true;
+		mHitAlpha = 255.0f;
+	}
+}
+
+void UIEffect::Set_UIEffect_Active(bool Active)
+{
+	for (int i = 0; i < 2; i++)
+	{
+		mImages[i]->SetActive(Active);
+	}
 }
 
 void UIEffect::CreateFade()

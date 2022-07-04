@@ -377,10 +377,9 @@ void MessageManager::SEND_CAMERA_Message(int MessageType, void* Data)
 	case MESSAGE_CAMERA_CINEMATIC_BOSS_START:
 	case MESSAGE_CAMERA_CINEMATIC_BOSS_END:
 	case MESSAGE_CAMERA_CINEMATIC_TITLE:
-		mCameraManager->SetCinematic(MessageType);
+		mCameraManager->SetCinematic(MessageType, reinterpret_cast<bool*>(Data));
 		break;
 	case MESSAGE_CAMERA_CHANGE_DEBUG:
-		break;
 	case MESSAGE_CAMERA_CHANGE_PLAYER:
 		mCameraManager->Change(MessageType);
 		break;
@@ -391,11 +390,14 @@ void MessageManager::SEND_GLOBAL_Message(int MessageType, void* Data)
 {
 	switch (MessageType)
 	{
-	case MESSAGE_GLOBAL_GAMESTART:	//게임 시작
+	case MESSAGE_GLOBAL_GAME_START:	//게임 시작
 		InGameStart();
 		break;
-	case MESSAGE_GLOBAL_GAMEEND:	//게임 종료
+	case MESSAGE_GLOBAL_GAME_END:	//게임 종료
 		InGameEnd();
+		break;
+	case MESSAGE_GLOBAL_BOSS_START:	//보스 등장
+		BossStart();
 		break;
 	case MESSAGE_GLOBAL_TITLE:		//게임 종료
 		TitleStart();
@@ -533,6 +535,9 @@ void MessageManager::InGameResume()
 	// 상점 상호작용 활성화..
 	mStoreMachine->SetStoreActive(true);
 
+	// 플레이어 무적 상태 설정..
+	mPlayer->SetNoHit(false);
+
 	// 플레이어 키상태 설정..
 	mPlayer->SetKeyState(true);
 
@@ -548,6 +553,29 @@ void MessageManager::InGameEnd()
 
 	// 윈도우 종료..
 	PostQuitMessage(WM_QUIT);
+}
+
+void MessageManager::BossStart()
+{
+	// 보스 등장 이펙트 실행..
+	mSceneEffect->Begin_Boss_Start_Effect();
+
+	mManual->Set_ManualUI_Active(false);
+	mTiltle->Set_TitleUI_Active(false);
+	mCanvas->Set_InGameUI_Active(false);
+	mOption->Set_OptionUI_Active(false);
+	mPause->Set_PauseUI_Active(false);
+	mCredit->Set_CreditUI_Active(false);
+	mStore->Set_Store_Active(false);
+
+	// 플레이어 무적 상태 설정..
+	mPlayer->SetNoHit(true);
+
+	// 플레이어 키상태 설정..
+	mPlayer->SetKeyState(false);
+
+	// 마우스 고정..
+	mCameraManager->SetMouseFix(true);
 }
 
 void MessageManager::ManualStart()

@@ -5,12 +5,15 @@
 class MeshFilter;
 class GameObject;
 class MaterialPropertyBlock;
+class DissolveManager;
+
 class MeshFilterSetting
 {
 public:
 	MeshFilterSetting();
 	~MeshFilterSetting();
 
+public:
 	enum class COLOR_TYPE
 	{
 		RED,
@@ -19,7 +22,11 @@ public:
 		WHITE
 	};
 
+public:
+	static void Initialize();
+	static void Release();
 
+public:
 	void Setting(GameObject* Object);
 
 	void SetLimlightSetting(float R, float G, float B, float mFactor, float  mWidth);
@@ -58,9 +65,12 @@ private:
 
 	void LimLightUpdate();
 	void EmissiveUpdate();
+
 	std::vector<MeshFilter*> MeshFilterList;
 	std::vector<GameObject*> GameObjectList;
 	std::vector<MaterialPropertyBlock*> MPBList;
+
+	static DissolveManager* mDissolveManager;
 
 	float LimColor[5]		= { 1.0f };
 	float LimColorMax[5]	= { 1.0f };

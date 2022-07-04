@@ -184,42 +184,32 @@ void Alpha_Pass::RenderUpdate(const InstanceRenderBuffer* instance, const Render
 		{
 			materialBuf.gOption |= DISSOLVE;
 
-			matSub->DissolveTimer += g_GlobalData->Time / matSub->DissolvePlayTime;
+			CB_DissolveOption dissolveOptionBuf;
+			dissolveOptionBuf.gEdgeColor = matSub->DissolveEdgecolor;
+			dissolveOptionBuf.gOuterFactor = matSub->DissolveOuterFactor;
+			dissolveOptionBuf.gInnerFactor = matSub->DissolveInnerFactor;
+			dissolveOptionBuf.gThickness = 1.0f / matSub->DissolveThickness;
 
-			if (matSub->DissolveTimer > 1.0f)
+			switch (matSub->DissolveOption)
 			{
-				matSub->DissolveTimer = 0.0f;
-				matSub->Dissolve = false;
+			case DISSOLVE_OPTION::DISSOLVE_FADEOUT:
+				dissolveOptionBuf.gOuterEdge = matSub->DissolveTimer;
+				dissolveOptionBuf.gInnerEdge = dissolveOptionBuf.gOuterEdge + matSub->DissolveThickness;
+				break;
+			case DISSOLVE_OPTION::DISSOLVE_FADEIN:
+				dissolveOptionBuf.gOuterEdge = 1.0f - matSub->DissolveTimer;
+				dissolveOptionBuf.gInnerEdge = dissolveOptionBuf.gOuterEdge + matSub->DissolveThickness;
+				break;
+			default:
+				break;
 			}
-			else
+
+			if (matSub->DissolveTexture)
 			{
-				CB_DissolveOption dissolveOptionBuf;
-				dissolveOptionBuf.gEdgeColor = matSub->DissolveEdgecolor;
-				dissolveOptionBuf.gOuterFactor = matSub->DissolveOuterFactor;
-				dissolveOptionBuf.gInnerFactor = matSub->DissolveInnerFactor;
-				dissolveOptionBuf.gThickness = 1.0f / matSub->DissolveThickness;
-
-				switch (matSub->DissolveOption)
-				{
-				case DISSOLVE_OPTION::DISSOLVE_FADEOUT:
-					dissolveOptionBuf.gOuterEdge = matSub->DissolveTimer;
-					dissolveOptionBuf.gInnerEdge = dissolveOptionBuf.gOuterEdge + matSub->DissolveThickness;
-					break;
-				case DISSOLVE_OPTION::DISSOLVE_FADEIN:
-					dissolveOptionBuf.gOuterEdge = 1.0f - matSub->DissolveTimer;
-					dissolveOptionBuf.gInnerEdge = dissolveOptionBuf.gOuterEdge + matSub->DissolveThickness;
-					break;
-				default:
-					break;
-				}
-
-				if (matSub->DissolveTexture)
-				{
-					m_Mesh_PS->SetShaderResourceView<gNoiseTexture>((ID3D11ShaderResourceView*)matSub->DissolveTexture->pTextureBuf);
-				}
-
-				m_Mesh_PS->ConstantBufferUpdate(&dissolveOptionBuf);
+				m_Mesh_PS->SetShaderResourceView<gNoiseTexture>((ID3D11ShaderResourceView*)matSub->DissolveTexture->pTextureBuf);
 			}
+
+			m_Mesh_PS->ConstantBufferUpdate(&dissolveOptionBuf);
 		}
 
 		m_Mesh_VS->ConstantBufferUpdate(&objectBuf);
@@ -461,42 +451,32 @@ void Alpha_Pass::RenderUpdate(const InstanceRenderBuffer* instance, const std::v
 	{
 		materialBuf.gOption |= DISSOLVE;
 
-		matSub->DissolveTimer += g_GlobalData->Time / matSub->DissolvePlayTime;
+		CB_DissolveOption dissolveOptionBuf;
+		dissolveOptionBuf.gEdgeColor = matSub->DissolveEdgecolor;
+		dissolveOptionBuf.gOuterFactor = matSub->DissolveOuterFactor;
+		dissolveOptionBuf.gInnerFactor = matSub->DissolveInnerFactor;
+		dissolveOptionBuf.gThickness = 1.0f / matSub->DissolveThickness;
 
-		if (matSub->DissolveTimer > 1.0f)
+		switch (matSub->DissolveOption)
 		{
-			matSub->DissolveTimer = 0.0f;
-			matSub->Dissolve = false;
+		case DISSOLVE_OPTION::DISSOLVE_FADEOUT:
+			dissolveOptionBuf.gOuterEdge = matSub->DissolveTimer;
+			dissolveOptionBuf.gInnerEdge = dissolveOptionBuf.gOuterEdge + matSub->DissolveThickness;
+			break;
+		case DISSOLVE_OPTION::DISSOLVE_FADEIN:
+			dissolveOptionBuf.gOuterEdge = 1.0f - matSub->DissolveTimer;
+			dissolveOptionBuf.gInnerEdge = dissolveOptionBuf.gOuterEdge + matSub->DissolveThickness;
+			break;
+		default:
+			break;
 		}
-		else
+
+		if (matSub->DissolveTexture)
 		{
-			CB_DissolveOption dissolveOptionBuf;
-			dissolveOptionBuf.gEdgeColor = matSub->DissolveEdgecolor;
-			dissolveOptionBuf.gOuterFactor = matSub->DissolveOuterFactor;
-			dissolveOptionBuf.gInnerFactor = matSub->DissolveInnerFactor;
-			dissolveOptionBuf.gThickness = 1.0f / matSub->DissolveThickness;
-
-			switch (matSub->DissolveOption)
-			{
-			case DISSOLVE_OPTION::DISSOLVE_FADEOUT:
-				dissolveOptionBuf.gOuterEdge = matSub->DissolveTimer;
-				dissolveOptionBuf.gInnerEdge = dissolveOptionBuf.gOuterEdge + matSub->DissolveThickness;
-				break;
-			case DISSOLVE_OPTION::DISSOLVE_FADEIN:
-				dissolveOptionBuf.gOuterEdge = 1.0f - matSub->DissolveTimer;
-				dissolveOptionBuf.gInnerEdge = dissolveOptionBuf.gOuterEdge + matSub->DissolveThickness;
-				break;
-			default:
-				break;
-			}
-
-			if (matSub->DissolveTexture)
-			{
-				m_Mesh_PS->SetShaderResourceView<gNoiseTexture>((ID3D11ShaderResourceView*)matSub->DissolveTexture->pTextureBuf);
-			}
-
-			m_Mesh_PS->ConstantBufferUpdate(&dissolveOptionBuf);
+			m_Mesh_PS->SetShaderResourceView<gNoiseTexture>((ID3D11ShaderResourceView*)matSub->DissolveTexture->pTextureBuf);
 		}
+
+		m_Mesh_PS->ConstantBufferUpdate(&dissolveOptionBuf);
 	}
 
 	m_Mesh_PS->ConstantBufferUpdate(&materialBuf);
@@ -635,43 +615,32 @@ void Alpha_Pass::BlockRenderUpdate(const RenderData* meshData)
 	{
 		materialBuf.gOption |= DISSOLVE;
 
-		matSub->DissolveTimer += g_GlobalData->Time / matSub->DissolvePlayTime;
-		PROFILE_LOG(PROFILE_OUTPUT::VS_CODE, "%.3f", matSub->DissolveTimer);
+		CB_DissolveOption dissolveOptionBuf;
+		dissolveOptionBuf.gEdgeColor = matSub->DissolveEdgecolor;
+		dissolveOptionBuf.gOuterFactor = matSub->DissolveOuterFactor;
+		dissolveOptionBuf.gInnerFactor = matSub->DissolveInnerFactor;
+		dissolveOptionBuf.gThickness = 1.0f / matSub->DissolveThickness;
 
-		if (matSub->DissolveTimer > 1.0f)
+		switch (matSub->DissolveOption)
 		{
-			matSub->DissolveTimer = 0.0f;
-			matSub->Dissolve = false;
+		case DISSOLVE_OPTION::DISSOLVE_FADEOUT:
+			dissolveOptionBuf.gOuterEdge = matSub->DissolveTimer;
+			dissolveOptionBuf.gInnerEdge = dissolveOptionBuf.gOuterEdge + matSub->DissolveThickness;
+			break;
+		case DISSOLVE_OPTION::DISSOLVE_FADEIN:
+			dissolveOptionBuf.gOuterEdge = 1.0f - matSub->DissolveTimer;
+			dissolveOptionBuf.gInnerEdge = dissolveOptionBuf.gOuterEdge + matSub->DissolveThickness;
+			break;
+		default:
+			break;
 		}
-		else
+
+		if (matSub->DissolveTexture)
 		{
-			CB_DissolveOption dissolveOptionBuf;
-			dissolveOptionBuf.gEdgeColor = matSub->DissolveEdgecolor;
-			dissolveOptionBuf.gOuterFactor = matSub->DissolveOuterFactor;
-			dissolveOptionBuf.gInnerFactor = matSub->DissolveInnerFactor;
-			dissolveOptionBuf.gThickness = 1.0f / matSub->DissolveThickness;
-
-			switch (matSub->DissolveOption)
-			{
-			case DISSOLVE_OPTION::DISSOLVE_FADEOUT:
-				dissolveOptionBuf.gOuterEdge = matSub->DissolveTimer;
-				dissolveOptionBuf.gInnerEdge = dissolveOptionBuf.gOuterEdge + matSub->DissolveThickness;
-				break;
-			case DISSOLVE_OPTION::DISSOLVE_FADEIN:
-				dissolveOptionBuf.gOuterEdge = 1.0f - matSub->DissolveTimer;
-				dissolveOptionBuf.gInnerEdge = dissolveOptionBuf.gOuterEdge + matSub->DissolveThickness;
-				break;
-			default:
-				break;
-			}
-
-			if (matSub->DissolveTexture)
-			{
-				m_Mesh_PS->SetShaderResourceView<gNoiseTexture>((ID3D11ShaderResourceView*)matSub->DissolveTexture->pTextureBuf);
-			}
-
-			m_Mesh_PS->ConstantBufferUpdate(&dissolveOptionBuf);
+			m_Mesh_PS->SetShaderResourceView<gNoiseTexture>((ID3D11ShaderResourceView*)matSub->DissolveTexture->pTextureBuf);
 		}
+
+		m_Mesh_PS->ConstantBufferUpdate(&dissolveOptionBuf);
 	}
 
 	m_Mesh_PS->ConstantBufferUpdate(&materialBuf);

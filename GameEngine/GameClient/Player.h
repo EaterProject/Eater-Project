@@ -37,12 +37,15 @@ public:
 	void SetKeyState(bool Active);
 
 	static Transform* GetPlayerTransform();
+	static bool GetNoHitState();
 	static bool GetAttackState();
 	static int	GetPlayerColor();
 	static int	GetPlayerCombo();
 	static float GetPlayerPower();
 	static float GetPlayerComboPower();
 	void Healing(float HealingPower);
+	void SetNoHit(bool Active);
+
 private:
 	void PlayerCoolTimeCheck();			//플레이어 스킬 쿨타임 체크
 	void PlayerKeyinput();				//플레이어 키인풋
@@ -161,6 +164,7 @@ private:
 	bool IsGetPureMana		= false;
 	bool IsGetCoreMana		= false;
 
+	static bool		IsNoHit;
 	static bool		IsAttackTime;
 	static int		ComboCount;
 	static float	PlayerPower;

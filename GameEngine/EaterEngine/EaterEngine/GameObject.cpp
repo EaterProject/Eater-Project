@@ -35,6 +35,10 @@ void GameObject::SetActive(bool active)
 {
 	if (active == OneMeshData->Object_Data->IsActive) return;
 
+	// Active 관련 함수 호출..
+	ActiveFunctionList(active);
+
+	// Active 설정..
 	OneMeshData->Object_Data->IsActive = active;
 
 	std::vector<Component*>::iterator it = ComponentList.begin();
@@ -315,6 +319,16 @@ void GameObject::PushChildMeshObject(GameObject* obj)
 void GameObject::PushChildBoneObject(GameObject* obj)
 {
 	ChildBoneList.push_back(obj);
+}
+
+void GameObject::PushActiveFuntion(std::function<void(bool)> func)
+{
+	ActiveFunctionList += func;
+}
+
+void GameObject::PopActiveFuntion(std::function<void(bool)> func)
+{
+	ActiveFunctionList -= func;
 }
 
 Component* GameObject::GetComponent(int index)

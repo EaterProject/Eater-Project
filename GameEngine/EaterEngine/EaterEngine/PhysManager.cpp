@@ -5,6 +5,7 @@
 PhysManager::PhysManager()
 {
 	Phys = nullptr;
+	Frame = 1.0f / 60.0f;
 }
 
 PhysManager::~PhysManager()
@@ -24,7 +25,7 @@ void PhysManager::Release()
 
 void PhysManager::Update(float m_Time)
 {
-	PhysX_Update(m_Time);
+	PhysX_Update(Frame);
 }
 
 bool PhysManager::RayCast(PhysRayCast* ray)

@@ -33,14 +33,12 @@ void ConstantBufferManager::Update()
 		if (p >= POINT_LIGHT_COUNT) break;
 
 		LIGHT_BUFFER.gPointLights[p] = *g_GlobalData->PointLightList[p];
-		//LIGHT_BUFFER.gPointLights[p].LightViewProj *= g_TexSpace;
 	}
 	for (UINT s = 0; s < LIGHT_BUFFER.gSpotLightCount; s++)
 	{
 		if (s >= SPOT_LIGHT_COUNT) break;
 
 		LIGHT_BUFFER.gSpotLights[s] = *g_GlobalData->SpotLightList[s];
-		//LIGHT_BUFFER.gSpotLights[s].LightViewProj *= g_TexSpace;
 	}
 
 	// Light Sub Buffer

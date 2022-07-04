@@ -107,8 +107,8 @@ private:
 
 	TEXT_STATE ShowText;
 
-	const float Animtime = 0.25f;
-	const float ShowTime = 1.0f;
+	const float Animtime = 0.5f;
+	const float ShowTime = 2.0f;
 
 	float PlayTime = 0.0f;
 

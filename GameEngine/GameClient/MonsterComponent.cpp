@@ -59,8 +59,8 @@ void MonsterComponent::Awake()
 void MonsterComponent::SetUp()
 {
 	//Collider¼³Á¤
-	mColider->SetBoxCollider(0.25f, 1,0.25f);
-	mColider->SetCenter(0, 1, 0);
+	mColider->SetBoxCollider(0.25f, 3,0.25f);
+	mColider->SetCenter(0, 3, 0);
 	mColider->SetMaterial_Dynamic(0);
 	mColider->SetMaterial_Restitution(0);
 	mColider->SetMaterial_Static(0);
@@ -322,16 +322,21 @@ void MonsterComponent::Dead()
 		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_MONSTER_UI_OFF, &Data);
 		IsUI_ON = false;
 		mMF_Setting.PlayDissolve();
-
-		if (mMF_Setting.EndDissolve() == false) 
-		{
-			gameobject->SetActive(false);
-		}
-		Destroy(gameobject);
+		DissolveStart = true;
 	}
 	else
 	{
 		mMF_Setting.LimLightUpdate(1);
+	}
+
+	if (DissolveStart == true)
+	{
+		if (mMF_Setting.EndDissolve() == false)
+		{
+			DissolveStart = false;
+			gameobject->SetActive(false);
+			Destroy(gameobject);
+		}
 	}
 }
 

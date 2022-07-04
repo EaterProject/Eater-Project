@@ -467,6 +467,11 @@ GameObject* GameEngine::FindGameObjectName(std::string& ObjName)
 	return mObjectManager->FindGameObjectString(ObjName);
 }
 
+Material* GameEngine::FindMaterialName(std::string MaterialName)
+{
+	return mLoadManager->GetMaterial(MaterialName);
+}
+
 TextureBuffer* GameEngine::GetTexture(std::string& TextureName)
 {
 	return mLoadManager->GetTexture(TextureName);
@@ -757,6 +762,11 @@ void GameEngine::Sound_Pause_SFX(bool Pause)
 void GameEngine::Sound_VolumeSet_SFX(float volume)
 {
 	mSoundManager->VolumeSet(Sound_Category::SFX, volume);
+}
+
+void GameEngine::Sound_STOP_SFX()
+{
+	mSoundManager->StopSound(Sound_Category::SFX);
 }
 
 void GameEngine::Sound_VolumeUP_SFX()
