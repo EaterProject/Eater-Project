@@ -176,17 +176,19 @@ void Player::SetMessageRECV(int Type, void* Data)
 	switch (Type)
 	{
 	case MESSAGE_PLAYER_HIT:
+		Sound_Play_SFX("Player_Hit");
 		Player_Hit(*(reinterpret_cast<int*>(Data)));
 		break;
 	case MESSAGE_PLAYER_HEAL:
 	{
-		HP += 10;
+		HP += 100;
 		if (HP >= HP_Max) { HP = HP_Max; }
 		Vector3 Pos = mTransform->GetPosition();
 		Pos.y += 0.2f;
 		mHealParticle->SetPosition(Pos);
 		mHealParticle->Play();
 		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_HP_NOW, &HP);
+		Sound_Play_SFX("Player_Heal");
 		MessageManager::GetGM()->SEND_Message(TARGET_DRONE, MESSAGE_DRONE_PLAYER_HEAL);
 		break;
 	}
@@ -447,6 +449,7 @@ void Player::PlayerKeyinput()
 		{
 			SPC_CoolTime = Skill_SPC_CoolTime;
 			mState |= PLAYER_STATE_JUMP;
+			Sound_Play_SFX("Player_Evade");
 		}
 	}
 
@@ -458,12 +461,22 @@ void Player::PlayerKeyinput()
 
 	if (IsAttack == false)
 	{
-
 		mTransform->Slow_Y_Rotation(DirRot + position, 450);
 
 		//공격중이 아니고 회전값이 있을경우
 		if (DirPos != Vector3(0, 0, 0))
 		{
+			if (MoveSoundTime >= 0.75f)
+			{
+				Sound_Play_SFX("Player_Walking");
+				MoveSoundTime = 0;
+			}
+			else
+			{
+				MoveSoundTime += GetDeltaTime();
+			}
+
+			PastDirPos = DirPos;
 			mTransform->AddPosition(DirPos * Speed * GetDeltaTime());
 		}
 		Attack_Rot = false;
@@ -509,8 +522,6 @@ void Player::PlayerState_Attack()
 		Player_Skill_02();
 	}
 
-	mAttackParticle->SetPosition(AttackColliderObject->GetTransform()->GetPosition());
-	mAttackParticle->Play();
 	mAnimation->Play();
 }
 
@@ -523,7 +534,6 @@ void Player::PlayerState_Base()
 
 	if (mState & PLAYER_STATE_JUMP)
 	{
-		mAnimation->Choice("evade", ANIMATION_SPEED[(int)PLAYER_STATE::JUMP], true);
 		Player_Jump();
 	}
 	else
@@ -571,6 +581,12 @@ void Player::Player_Attack_01()
 		IsAttackTime = false;
 	}
 
+	if (mAnimation->GetNowFrame() == 32)
+	{
+		mAttackParticle->SetPosition(AttackColliderObject->GetTransform()->GetPosition());
+		mAttackParticle->Play();
+	}
+	
 	//망치를 살짝올리고 내려찍는 공격
 	if (PlayerEndFrameCheck() == true)
 	{
@@ -590,6 +606,13 @@ void Player::Player_Attack_02()
 	//망치를 뒤로 돌리고 크게 내려찍는 공격
 	WeaponTR->SetPosition(0.0f, -0.02f, 0.1f);
 	WeaponTR->SetRotate(186.0f, 31.0f, 0.0f);
+
+	if (mAnimation->GetNowFrame() == 35)
+	{
+		mAttackParticle->SetPosition(AttackColliderObject->GetTransform()->GetPosition());
+		mAttackParticle->Play();
+	}
+
 
 	if (mAnimation->EventCheck() == true)
 	{
@@ -621,6 +644,11 @@ void Player::Player_Skill_01()
 		IsAttackTime = false;
 	}
 
+	if (mAnimation->GetNowFrame() == 49)
+	{
+		mAttackParticle->SetPosition(AttackColliderObject->GetTransform()->GetPosition());
+		mAttackParticle->Play();
+	}
 
 	if (PlayerEndFrameCheck())
 	{
@@ -640,6 +668,12 @@ void Player::Player_Skill_02()
 	else
 	{
 		IsAttackTime = false;
+	}
+
+	if (mAnimation->GetNowFrame() == 72)
+	{
+		mAttackParticle->SetPosition(AttackColliderObject->GetTransform()->GetPosition());
+		mAttackParticle->Play();
 	}
 
 	if (PlayerEndFrameCheck())
@@ -673,10 +707,29 @@ void Player::Player_Jump()
 {
 	WeaponTR->SetPosition(0.0f, -0.02f, 0.1f);
 	WeaponTR->SetRotate(-22.0f, 33.0f, 2.0f);
+	mAnimation->Choice(ANIMATION_NAME[(int)PLAYER_STATE::JUMP] ,ANIMATION_SPEED[(int)PLAYER_STATE::JUMP]);
+	
+	int Now = mAnimation->GetNowFrame();
+	int End = mAnimation->GetEndFrame();
 
-	if (PlayerEndFrameCheck() == true)
+	if (mAnimation->EventCheck() == true && IsFrontRayCheck == true)
 	{
-		Player_Move_Check();
+		if (IsFrontRayCheck == true && IsBackRayCheck == true &&
+			IsRightRayCheck == true && IsLeftRayCheck == true)
+		{
+			Vector3 MovePos = PastDirPos * GetDeltaTime() * SpeedMax;
+			mTransform->AddPosition(MovePos.x, 0, MovePos.z);
+		}
+	}
+
+	if(Now>= End)
+	{
+		mState = PLAYER_STATE_IDLE;
+		IsHit = false;
+	}
+	else
+	{
+		IsHit = true;
 	}
 }
 
@@ -725,6 +778,7 @@ bool Player::Player_Move_Check()
 		return true;
 	}
 }
+
 void Player::Player_Push()
 {
 	static float PushTime = 0;
@@ -735,19 +789,19 @@ void Player::Player_Push()
 		if (PushTime >= 1.5f)
 		{
 			IsPush = false;
-			Speed = 10;
+			Speed = SpeedMax;
 			PushTime = 0;
 		}
 		else
 		{
 			PushTime += GetDeltaTime();
-			mTransform->AddPosition(PushNomal * 10 * GetDeltaTime());
+			mTransform->AddPosition(PushNomal * SpeedMax * GetDeltaTime());
 
 			if (IsFrontRayCheck == false || IsBackRayCheck == false ||
 				IsLeftRayCheck == false || IsRightRayCheck == false)
 			{
 				IsPush = false;
-				Speed = 10;
+				Speed = SpeedMax;
 				PushTime = 0;
 			}
 		}
@@ -891,6 +945,7 @@ void Player::Upgrade_Move_Speed()
 	if (PureMana < MoveSpeed_PureMana_Count) return;
 
 	Speed += Upgrade_MoveSpeed_Value;
+	SpeedMax += Upgrade_MoveSpeed_Value;
 	PureMana -= MoveSpeed_PureMana_Count;
 
 	ANIMATION_SPEED[(int)PLAYER_STATE::MOVE] += Upgrade_MoveSpeed_Animation;

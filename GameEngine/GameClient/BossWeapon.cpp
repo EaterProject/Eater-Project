@@ -52,6 +52,9 @@ void BossWeapon::Start()
 	//PC =  mParticleObj[2]->GetComponent<ParticleController>();
 	//PC->Play();
 	mPlayerTr = Player::GetPlayerTransform();
+
+	mProjectile->gameobject->ChoiceParent(this->gameobject);
+	mExplosionRange->gameobject->ChoiceParent(this->gameobject);
 }
 
 void BossWeapon::Update()
@@ -73,9 +76,14 @@ void BossWeapon::Update()
 			mTransform->AddScale(DTime, DTime, DTime);
 			IsReady = false;
 			ParticleSize += DTime;
-			mProjectile->SetScale(ParticleSize);
-			mProjectile->SetPosition(mTransform->GetPosition());
 		}
+
+		if (PARTICLE_STATE::PLAY_STATE == mExplosionRange->GetState())
+		{
+			mExplosionRange->Stop();
+		}
+
+		mProjectile->SetScale(ParticleSize);
 		mProjectile->Play();
 	}
 	else if (IsShooting == true)
@@ -87,14 +95,24 @@ void BossWeapon::Update()
 			IsStart = false;
 			if (IsGroundExplosion == true)
 			{
-				Explosion();
+				float Dir = mTransform->GetDistance(mPlayerTr->GetPosition());
+				if (Dir <= 2.8f)
+				{
+					int Damage = 600;
+					MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_HIT, &Damage);
+					MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_PLAYER_HIT);
+				}
+
+				mExplosion->SetPosition(mTransform->GetPosition());
+				mExplosion->Play();
+				Reset();
 				IsGroundExplosion = false;
 			}
 			else
 			{
-				mExplosionRange->SetPosition(mTransform->GetPosition());
 				mExplosionRange->Play();
 			}
+			mProjectile->SetScale(0);
 			mProjectile->Stop();
 		}
 		else
@@ -105,14 +123,11 @@ void BossWeapon::Update()
 			mTransform->AddPosition_Z(ShootingNormalize.z * DTime * MoveSpeed);
 			float Dir = mTransform->GetDistance(mPlayerTr->GetPosition());
 
-			mProjectile->SetPosition(mTransform->GetPosition());
 			if (Dir <= 1)
 			{
-				mExplosion->SetPosition(mTransform->GetPosition());
-				mExplosion->Play();
-				int Damage = 10;
+				int Damage = 300;
 				MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_HIT, &Damage);
-				MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_PLAYER_HIT, nullptr);
+				MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_PLAYER_HIT);
 				Reset();
 			}
 		}
@@ -182,17 +197,29 @@ void BossWeapon::Explosion()
 	float Dir = mTransform->GetDistance(mPlayerTr->GetPosition());
 	if (Dir <= 2.8f)
 	{
-		int Damage = 10;
+		int Damage = 600;
 		MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_HIT, &Damage);
-		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_PLAYER_HIT, nullptr);
+		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_PLAYER_HIT);
 	}
+
 	mExplosion->SetPosition(mTransform->GetPosition());
 	mExplosion->Play();
 
-	mExplosionRange->SetPosition(mTransform->GetPosition());
-	mExplosionRange->Stop();
-	
+	PARTICLE_STATE state;
+	state = mExplosionRange->GetState();
+	if (state == PARTICLE_STATE::PLAY_STATE)
+	{
+		mExplosionRange->Stop();
+	}
+
+	mTransform->SetPosition(StartPoint);
+	mTransform->SetScale(1, 1, 1);
+	IsShooting = false;
+	IsSizeUpdate = false;
+	IsReady = false;
+	IsStart = false;
+	ParticleSize = 0.0f;
+
 	Sound_Play_SFX("Boss_WeaponExplosion");
-	Reset();
 }
 

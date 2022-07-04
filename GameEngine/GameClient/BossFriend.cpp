@@ -42,6 +42,8 @@ void BossFriend::Start()
 	mSetting.SetDissolveWidth(0.9f);
 	mSetting.SetDissolveInnerFactor(69.83);
 	mSetting.SetDissolveOuterFactor(9.49);
+
+	mTransform->SetPosition(StartPos);
 }
 
 void BossFriend::Update()
