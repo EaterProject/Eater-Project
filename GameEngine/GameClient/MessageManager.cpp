@@ -294,28 +294,40 @@ void MessageManager::SEND_DRONE_Message(int MessageType, void* Data)
 	switch (MessageType)
 	{
 	case MESSAGE_DRONE_GAME_START:
+		mCanvas->Push_Game_Start_Text();
 		break;
 	case MESSAGE_DRONE_DOOM_OUT:
+		mCanvas->Push_Doom_Out_Text();
 		break;
 	case MESSAGE_DRONE_STORE:
+		mCanvas->Push_Store_Text();
 		break;
 	case MESSAGE_DRONE_PURCHASE_SUCCESS:
+		mCanvas->Push_Purchase_Success_Text();
 		break;
 	case MESSAGE_DRONE_PURCHASE_FAIL:
+		mCanvas->Push_Purchase_Fail_Text();
 		break;
 	case MESSAGE_DRONE_BOSS_START:
+		mCanvas->Push_Boss_Start_Text();
 		break;
 	case MESSAGE_DRONE_BOSS_ZONE_IN:
+		mCanvas->Push_Boss_Zone_In_Text();
 		break;
 	case MESSAGE_DRONE_MANA_CREATE:
+		mCanvas->Push_Mana_Create_Text();
 		break;
 	case MESSAGE_DRONE_GET_PUREMANA:
+		mCanvas->Push_Get_PureMana_Text();
 		break;
 	case MESSAGE_DRONE_GET_COREMANA:
+		mCanvas->Push_Get_CoreMana_Text();
 		break;
 	case MESSAGE_DRONE_PLAYER_DIE:
+		mCanvas->Push_Player_Die_Text();
 		break;
 	case MESSAGE_DRONE_PLAYER_HEAL:
+		mCanvas->Push_Player_Heal_Text();
 		break;
 	default:
 		break;

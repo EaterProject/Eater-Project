@@ -4,6 +4,8 @@
 #include "EaterEngineAPI.h"
 #include "Player.h"
 #include "MeshFilter.h"
+
+
 Drone::Drone()
 {
 	mTransform			= nullptr;
@@ -56,7 +58,3 @@ void Drone::Update()
 	//LookAt
 	mTransform->Slow_Y_Rotation(position, 75, true);
 }
-
-
-
-

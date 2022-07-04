@@ -72,6 +72,15 @@ void UICanvas::Update()
 		{
 			MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_CREDIT);
 		}
+
+		if (PlayTime <= 0.0f)
+		{
+
+		}
+		else
+		{
+
+		}
 	}
 
 	Update_Combo_Check();
@@ -701,3 +710,70 @@ bool UICanvas::UseCheck(GameObject* Obj)
 	}
 	return false;
 }
+
+
+void UICanvas::Push_Game_Start_Text()
+{
+	mTextMessageQueue.push("00_DroneText_GameStart");
+	mTextMessageQueue.push("01_DroneText_GameStart1");
+	mTextMessageQueue.push("02_DroneText_GameStart2");
+}
+
+void UICanvas::Push_Doom_Out_Text()
+{
+	mTextMessageQueue.push("03_DroneText_FirstOutDoom");
+	mTextMessageQueue.push("04_DroneText_FirstOutDoom1");
+}
+
+void UICanvas::Push_Store_Text()
+{
+	mTextMessageQueue.push("05_DroneText_VendingMashine");
+}
+
+void UICanvas::Push_Purchase_Success_Text()
+{
+	mTextMessageQueue.push("06_DroneText_Sell");
+}
+
+void UICanvas::Push_Purchase_Fail_Text()
+{
+	mTextMessageQueue.push("07_DroneText_SellFalse");
+
+}
+
+void UICanvas::Push_Boss_Start_Text()
+{
+	mTextMessageQueue.push("08_DroneText_BossSpawn");
+}
+
+void UICanvas::Push_Boss_Zone_In_Text()
+{
+	mTextMessageQueue.push("09_DroneText_BossZone");
+	mTextMessageQueue.push("10_DroneText_BossZone1");
+}
+
+void UICanvas::Push_Mana_Create_Text()
+{
+	mTextMessageQueue.push("11_DroneText_ManaSpawn");
+}
+
+void UICanvas::Push_Get_PureMana_Text()
+{
+	mTextMessageQueue.push("12_DroneText_PureMana");
+}
+
+void UICanvas::Push_Get_CoreMana_Text()
+{
+	mTextMessageQueue.push("13_DroneText_CoreMana");
+}
+
+void UICanvas::Push_Player_Die_Text()
+{
+	mTextMessageQueue.push("14_DroneText_PlayerDead");
+}
+
+void UICanvas::Push_Player_Heal_Text()
+{
+	mTextMessageQueue.push("15_DroneText_PlayerHeal");
+}
+

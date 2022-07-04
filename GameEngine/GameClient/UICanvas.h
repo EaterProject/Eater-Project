@@ -1,5 +1,6 @@
 #pragma once
 #include "Component.h"
+#include <queue>
 
 class Image;
 class RectTransform;
@@ -75,6 +76,30 @@ private:
 	void SetMonsterUIDraw(int index, bool IsActive);
 	bool UseCheck(GameObject* Obj);
 
+public:
+	void Push_Game_Start_Text();
+	void Push_Doom_Out_Text();
+	void Push_Store_Text();
+	void Push_Purchase_Success_Text();
+	void Push_Purchase_Fail_Text();
+	void Push_Boss_Start_Text();
+	void Push_Boss_Zone_In_Text();
+	void Push_Mana_Create_Text();
+	void Push_Get_PureMana_Text();
+	void Push_Get_CoreMana_Text();
+	void Push_Player_Die_Text();
+	void Push_Player_Heal_Text();
+
+private:
+	std::queue<std::string> mTextMessageQueue;
+
+	const float Animtime = 0.5f;
+	const float ShowTime = 1.0f;
+
+	float PlayTime = 0.0f;
+
+
+private:
 	ComboFont*		mCombo		= nullptr;
 
 	//플레이어 체력 UI
