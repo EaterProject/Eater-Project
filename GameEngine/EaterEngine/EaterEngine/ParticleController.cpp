@@ -29,8 +29,6 @@ void ParticleController::Update()
 	{
 		float&& dTime = mTimeManager->DeltaTime();
 		
-		m_ControllerState = PARTICLE_STATE::PLAY_STATE;
-
 		m_PlayTime = dTime;
 
 		// Particle System List Update..
@@ -350,6 +348,7 @@ void ParticleController::UpdateController()
 		{
 			// 현재 파티클 리스트에 대한 데이터 설정..
 			SetNowParticleList();
+			m_ControllerState = PARTICLE_STATE::PLAY_STATE;
 		}
 	}
 }
