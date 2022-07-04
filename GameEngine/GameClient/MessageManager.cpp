@@ -208,6 +208,9 @@ GameObject* MessageManager::CREATE_MESSAGE(int CREATE_TYPE)
 		Object = mFactory->CreateSceneEffect();
 		mSceneEffect = Object->GetComponent<SceneEffect>();
 		return Object;
+	case TARGET_TREE_SMOKE:
+
+		return;
 	}
 
 	return nullptr;

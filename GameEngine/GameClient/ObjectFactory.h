@@ -47,6 +47,7 @@ public:
 	GameObject* CreateUICredit();		//农贰调 UI
 	GameObject* CreateUIBoss();
 	GameObject* CreateSceneEffect();
+	GameObject* CreateTreeSmoke();
 
 	GameObject* CreateGate_In();		//霸捞飘 按眉 积己
 	GameObject* CreateGate_Out();		//霸捞飘 按眉 积己
