@@ -17,7 +17,7 @@
 #include "ParticleFactory.h"
 
 std::vector<Vector3> ManaStone::MonsterMovePointDefault;
-int ManaStone::MaxManaCount = 1;
+int ManaStone::MaxManaCount = 5;
 
 ManaStone::ManaStone()
 {
@@ -191,8 +191,7 @@ void ManaStone::OnTriggerStay(GameObject* Obj)
 			mSetting.SetLimlightSetting(MeshFilterSetting::COLOR_TYPE::RED, 1.50f, 2.0f);
 			mSetting.SetLimlightSettingMax(MeshFilterSetting::COLOR_TYPE::RED, 0.0f, 0.0f);
 
-			//HP -= Player::GetPlayerPower();
-			HP -= 100;
+			HP -= Player::GetPlayerPower();
 			if (HP <= 0)
 			{
 				mSetting.SetDissolveOption(DISSOLVE_FADEOUT);

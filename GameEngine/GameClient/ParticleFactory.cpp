@@ -135,6 +135,7 @@ void ParticleFactory::Initialize()
 	/// ManaTreeSmoke
 	KeyList ManaTreeSmoke_Key;
 	ManaTreeSmoke_Key.push_back({ "ManTree_smokeUP",	0.0f });
+	ManaTreeSmoke_Key.push_back({ "ManTree_smokeDOWN",	0.0f });
 
 	// 시간 조절
 	/// MonsterExplode

@@ -9,6 +9,8 @@
 #include "Transform.h"
 #include "Collider.h"
 
+bool DoorCollider::Boss_Start = false;
+
 DoorCollider::DoorCollider()
 {
 }
@@ -147,7 +149,14 @@ void DoorCollider::OnTriggerExit(GameObject* Obj)
 	if (PlayerDistance >= 30)
 	{
 		Sound_Stop_BGM();
-		Sound_Play_BGM("InGame_OutDoor");
+		if (Boss_Start)
+		{
+			Sound_Play_BGM("BossZone");
+		}
+		else
+		{
+			Sound_Play_BGM("InGame_OutDoor");
+		}
 	}
 	else
 	{
