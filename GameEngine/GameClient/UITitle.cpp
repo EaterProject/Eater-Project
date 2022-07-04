@@ -112,15 +112,20 @@ void UITitle::Update()
 	}
 }
 
-void UITitle::SetTitleUIActive(bool Active)
+void UITitle::Set_TitleUI_Active(bool Active)
 {
 	for (int i = 0; i < 3; i++)
 	{
-		Title_Button[i]->gameobject->SetActive(Active);
+		Title_Button[i]->SetActive(Active);
 		Title_Rect[i]->SetPosition(200, Title_Rect[i]->Position.y);
 	}
-	TitleMainImage->gameobject->SetActive(Active);
+	TitleMainImage->SetActive(Active);
 	Title_IMG_Rect->SetPosition(200, Title_IMG_Rect->Position.y);
+
+	if (Active)
+	{
+		SetColorGradingBlendFactor(1.0f);
+	}
 }
 
 void UITitle::StartButton_Enter()

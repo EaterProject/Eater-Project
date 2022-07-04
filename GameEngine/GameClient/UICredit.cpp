@@ -50,7 +50,7 @@ void UICredit::Update()
 	}
 }
 
-void UICredit::SetCreditUIActive(bool active)
+void UICredit::Set_CreditUI_Active(bool active)
 {
 	CreditImage->SetActive(active);
 

@@ -167,6 +167,11 @@ void Image::SetColor(float r, float g, float b, float a)
 	m_UI->UI_Property->ImageColor.w = a / 255.0f;
 }
 
+void Image::SetAlpha(float alpha)
+{
+	m_UI->UI_Property->ImageColor.w = alpha / 255.0f;
+}
+
 void Image::SetActive(bool enable)
 {
 	this->gameobject->SetActive(enable);
@@ -327,7 +332,7 @@ void Image::SetFillRange(FILL_TYPE type, float range)
 
 void Image::SetLayer(UINT order)
 {
-	m_UI->BufferLayer = order;
+	m_UI->ChangeLayer = order;
 
 	// 그래픽 연동..
 	GraphicEngine::Get()->PushChangeInstance(gameobject->OneMeshData);

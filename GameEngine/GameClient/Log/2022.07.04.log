@@ -1,3 +1,45 @@
-[TIME] 01:37:17 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
+[TIME] 01:07:16 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
+[ Engine ][ Bake ][ SkyLight Buffer ] 'DOME_HDR_5' Texture가 로드되지 않았습니다!!
+
+[TIME] 01:15:27 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
+[ Engine ][ Bake ][ SkyLight Buffer ] 'DOME_HDR_5' Texture가 로드되지 않았습니다!!
+
+[TIME] 01:19:09 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
+[ Engine ][ Bake ][ SkyLight Buffer ] 'DOME_HDR_5' Texture가 로드되지 않았습니다!!
+
+[TIME] 01:23:09 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
+[ Engine ][ Bake ][ SkyLight Buffer ] 'DOME_HDR_5' Texture가 로드되지 않았습니다!!
+
+[TIME] 01:24:52 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
+[ Engine ][ Bake ][ SkyLight Buffer ] 'DOME_HDR_5' Texture가 로드되지 않았습니다!!
+
+[TIME] 01:31:47 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
+[ Engine ][ Bake ][ SkyLight Buffer ] 'DOME_HDR_5' Texture가 로드되지 않았습니다!!
+
+[TIME] 01:41:50 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
+[ Engine ][ Bake ][ SkyLight Buffer ] 'DOME_HDR_5' Texture가 로드되지 않았습니다!!
+
+[TIME] 02:22:29 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
+[ Engine ][ Bake ][ SkyLight Buffer ] 'DOME_HDR_5' Texture가 로드되지 않았습니다!!
+
+[TIME] 02:28:44 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
+[ Engine ][ Bake ][ SkyLight Buffer ] 'DOME_HDR_5' Texture가 로드되지 않았습니다!!
+
+[TIME] 02:54:48 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
+[ Engine ][ Bake ][ SkyLight Buffer ] 'DOME_HDR_5' Texture가 로드되지 않았습니다!!
+
+[TIME] 03:01:36 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
+[ Engine ][ Bake ][ SkyLight Buffer ] 'DOME_HDR_5' Texture가 로드되지 않았습니다!!
+
+[TIME] 03:03:27 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
+[ Engine ][ Bake ][ SkyLight Buffer ] 'DOME_HDR_5' Texture가 로드되지 않았습니다!!
+
+[TIME] 03:44:56 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
+[ Engine ][ Bake ][ SkyLight Buffer ] 'DOME_HDR_5' Texture가 로드되지 않았습니다!!
+
+[TIME] 04:01:59 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
+[ Engine ][ Bake ][ SkyLight Buffer ] 'DOME_HDR_5' Texture가 로드되지 않았습니다!!
+
+[TIME] 04:11:43 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
 [ Engine ][ Bake ][ SkyLight Buffer ] 'DOME_HDR_5' Texture가 로드되지 않았습니다!!
 

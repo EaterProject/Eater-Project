@@ -11,7 +11,9 @@ public:
 	void OnResize(int width, int height) override;
 	void Release() override;
 
+	void BeginRender();
 	void RenderUpdate(std::vector<RenderData*>& meshlist);
+	void EndRender();
 
 private:
 	VertexShader* m_UI_VS;

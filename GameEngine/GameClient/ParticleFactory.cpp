@@ -77,18 +77,39 @@ const ParticleFactory::KeyList& ParticleFactory::GetParticleKeyList(PARTICLE_TYP
 
 void ParticleFactory::Initialize()
 {
+	/// BossFog
+	KeyList BossFog_Key;
+	BossFog_Key.push_back({ "BossFog_blind",	0.0f });
+	BossFog_Key.push_back({ "BossFog_fog",		0.0f });
+
 	/// BossMelee
 	KeyList BossMelee_Key;
 	BossMelee_Key.push_back({ "BossMelee_dot",		0.0f });
 	BossMelee_Key.push_back({ "BossMelee_lighting", 0.0f });
 	BossMelee_Key.push_back({ "BossMelee_spark",	0.0f });
 
-	// 타일링 문제
+	/// BossPage
+	KeyList BossPage_Key;
+	BossPage_Key.push_back({ "BossPage_energy",		0.0f });
+	BossPage_Key.push_back({ "BossPage_lightning",	0.0f });
+
 	/// BossProjectile
 	KeyList BossProjectile_Key;
 	BossProjectile_Key.push_back({ "BossProjectile_aura",	0.0f });
 	BossProjectile_Key.push_back({ "BossProjectile_circle", 0.0f });
 	BossProjectile_Key.push_back({ "BossProjectile_dot",	0.0f });
+
+	/// BossProjectileExplode
+	KeyList BossProjectileExplode_Key;
+	BossProjectileExplode_Key.push_back({ "BossProjectileExplode_dot",		0.0f });
+	BossProjectileExplode_Key.push_back({ "BossProjectileExplode_fire",		0.0f });
+	BossProjectileExplode_Key.push_back({ "BossProjectileExplode_flare",	0.0f });
+	
+	/// BossProjectileFloor
+	KeyList BossProjectileFloor_Key;
+	BossProjectileFloor_Key.push_back({ "BossProjectileFloor_circle",	0.0f });
+	BossProjectileFloor_Key.push_back({ "BossProjectileFloor_fire",		0.0f });
+	BossProjectileFloor_Key.push_back({ "BossProjectileFloor_flare",	0.0f });
 
 	/// BossPush
 	KeyList BossPush_Key;
@@ -106,6 +127,15 @@ void ParticleFactory::Initialize()
 	KeyList HitSmoke_Key;
 	HitSmoke_Key.push_back({ "HitSmoke_smoke",	0.0f });
 	HitSmoke_Key.push_back({ "HitSmoke_spark",	0.0f });
+
+	/// ManaSmoke
+	KeyList ManaSmoke_Key;
+	ManaSmoke_Key.push_back({ "Mana_smoke",	0.0f });
+	ManaSmoke_Key.push_back({ "Mana_spark",	0.0f });
+
+	/// ManaTreeSmoke
+	KeyList ManaTreeSmoke_Key;
+	ManaTreeSmoke_Key.push_back({ "ManTree_smokeUP",	0.0f });
 
 	// 시간 조절
 	/// MonsterExplode
@@ -127,15 +157,20 @@ void ParticleFactory::Initialize()
 	PlayerHeal_Key.push_back({ "PlayerHeal_dot",	0.0f });
 	PlayerHeal_Key.push_back({ "PlayerHeal_health",	0.0f });
 	PlayerHeal_Key.push_back({ "PlayerHeal_spark",	0.0f });
-
-	m_ParticleKeyList.insert({ PARTICLE_TYPE::BossMelee,		BossMelee_Key });
-	m_ParticleKeyList.insert({ PARTICLE_TYPE::BossProjectile,	BossProjectile_Key });
-	m_ParticleKeyList.insert({ PARTICLE_TYPE::BossPush,			BossPush_Key });
-	m_ParticleKeyList.insert({ PARTICLE_TYPE::CounterAttack,	CounterAttack_Key });
-	m_ParticleKeyList.insert({ PARTICLE_TYPE::HitSmoke,			HitSmoke_Key });
-	m_ParticleKeyList.insert({ PARTICLE_TYPE::MonsterExplode,	MonsterExplode_Key });
-	m_ParticleKeyList.insert({ PARTICLE_TYPE::PlayerAttack,		PlayerAttack_Key });
-	m_ParticleKeyList.insert({ PARTICLE_TYPE::PlayerHeal,		PlayerHeal_Key });
+	 
+	m_ParticleKeyList.insert({ PARTICLE_TYPE::BossFog,					BossFog_Key });
+	m_ParticleKeyList.insert({ PARTICLE_TYPE::BossMelee,				BossMelee_Key });
+	m_ParticleKeyList.insert({ PARTICLE_TYPE::BossProjectile,			BossProjectile_Key });
+	m_ParticleKeyList.insert({ PARTICLE_TYPE::BossProjectileExplode,	BossProjectileExplode_Key });
+	m_ParticleKeyList.insert({ PARTICLE_TYPE::BossProjectileFloor,		BossProjectileFloor_Key });
+	m_ParticleKeyList.insert({ PARTICLE_TYPE::BossPush,					BossPush_Key });
+	m_ParticleKeyList.insert({ PARTICLE_TYPE::CounterAttack,			CounterAttack_Key });
+	m_ParticleKeyList.insert({ PARTICLE_TYPE::HitSmoke,					HitSmoke_Key });
+	m_ParticleKeyList.insert({ PARTICLE_TYPE::ManaSmoke,				ManaSmoke_Key });
+	m_ParticleKeyList.insert({ PARTICLE_TYPE::ManaTreeSmoke,			ManaTreeSmoke_Key });
+	m_ParticleKeyList.insert({ PARTICLE_TYPE::MonsterExplode,			MonsterExplode_Key });
+	m_ParticleKeyList.insert({ PARTICLE_TYPE::PlayerAttack,				PlayerAttack_Key });
+	m_ParticleKeyList.insert({ PARTICLE_TYPE::PlayerHeal,				PlayerHeal_Key });
 }
 
 void ParticleFactory::Reset()

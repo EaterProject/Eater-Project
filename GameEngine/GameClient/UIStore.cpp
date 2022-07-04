@@ -4,6 +4,7 @@
 //Component
 #include "GameObject.h"
 #include "Image.h"
+#include "ImageFont.h"
 #include "Button.h"
 #include "RectTransform.h"
 
@@ -22,9 +23,39 @@ UIStore::~UIStore()
 
 void UIStore::Awake()
 {
+	GameObject* Object = nullptr;
+
+	Object = Instance_Image();
+	StoreTitle = Object->GetComponent<Image>();
+	StoreTitle->SetTexture("Store");
+
+	//마나 폰트
+	Object = Instance_ImageFont();
+	StoreMana[0] = Object->GetComponent<ImageFont>();
+	StoreMana[0]->SetTexture("number_");
+	StoreMana[0]->SetPivot(PIVOT_RIGHT_TOP);
+	StoreMana[0]->SetFontCount(2);
+	StoreMana[0]->SetOffset(35);
+	StoreMana[0]->SetScale(1, 1);
+	StoreMana[0]->SetPosition(-165, 65);
+	StoreMana[0]->SetColor(65, 197, 198);
+	StoreMana[0]->SetLayer(100);
+
+	Object = Instance_ImageFont();
+	StoreMana[1] = Object->GetComponent<ImageFont>();
+	StoreMana[1]->SetTexture("number_");
+	StoreMana[1]->SetPivot(PIVOT_RIGHT_TOP);
+	StoreMana[1]->SetFontCount(2);
+	StoreMana[1]->SetOffset(35);
+	StoreMana[1]->SetScale(1, 1);
+	StoreMana[1]->SetPosition(-65, 65);
+	StoreMana[1]->SetColor(213, 138, 19);
+	StoreMana[1]->SetLayer(100);
+
+	// 강화 버튼..
 	for (int i = 0; i < 6; i++)
 	{
-		GameObject* Object = Instance_Button();
+		Object = Instance_Button();
 		Buttons[i]	= Object->GetComponent<Button>();
 		Images[i]	= Object->GetComponent<Image>();
 		mRect[i]	= Object->GetComponent<RectTransform>();
@@ -110,12 +141,9 @@ void UIStore::Awake()
 		}
 	}
 
-	GameObject* Title = Instance_Image();
-	StoreTitle = Title->GetComponent<Image>();
-	StoreTitle->SetTexture("Store");
-
-	GameObject* TextImage = Instance_Image();
-	ItemText = TextImage->GetComponent<Image>();
+	// 툴팁 이미지..
+	Object = Instance_Image();
+	ItemText = Object->GetComponent<Image>();
 	ItemText->SetPivot(PIVOT_TYPE::PIVOT_LEFT_BOTTOM);
 	ItemText->SetPosition(100, -100);
 	ItemText->PushTextureList("VendingM_Index_AttackSpeed");
@@ -133,6 +161,12 @@ void UIStore::Set_Store_Active(bool Active)
 	{
 		Buttons[i]->SetActive(Active);
 	}
+
+	for (int i = 0; i < 2; i++)
+	{
+		StoreMana[i]->SetActive(Active);
+	}
+
 	StoreTitle->SetActive(Active);
 	ItemText->SetActive(false);
 
@@ -143,160 +177,191 @@ void UIStore::Set_Store_Active(bool Active)
 	}
 }
 
-void UIStore::PurchaseItem(int Type)
+void UIStore::Set_Pure_Mana_Count(int Number)
 {
+	StoreMana[0]->SetFontNumber(Number);
+}
 
+void UIStore::Set_Core_Mana_Count(int Number)
+{
+	StoreMana[1]->SetFontNumber(Number);
 }
 
 void UIStore::ChangeEmaginCount_Button_Exit()
 {
 	//Emagin 교체 횟수 증가
-	if (SelectItem[ChangeEmagin] == false)
+	if (SelectItem[CHANGE_EMAGIN] == false)
 	{
-		Images[ChangeEmagin]->SetTexture("ChangeEmagin_OFF");
+		Images[CHANGE_EMAGIN]->SetTexture("ChangeEmagin_OFF");
 	}
 }
 
 void UIStore::ChangeEmaginCount_Button_Enter()
 {
 	//Emagin 교체 횟수 증가
-	Images[ChangeEmagin]->SetTexture("ChangeEmagin_ON");
-	Sound_Play_SFX("UI_Button_Click");
+	Images[CHANGE_EMAGIN]->SetTexture("ChangeEmagin_ON");
+	Sound_Play_SFX("UI_Button_Overlay");
 }
 
 void UIStore::ChangeEmaginCount_Button_Click()
 {
 	//Emagin 교체 횟수 증가
-	SelectItem[ChangeEmagin] ^= true;
+	SelectItem[CHANGE_EMAGIN] ^= true;
 
-	if (SelectItem[ChangeEmagin])
+	if (SelectItem[CHANGE_EMAGIN])
 	{
-		Images[ChangeEmagin]->SetTexture("ChangeEmagin_ON");
+		Images[CHANGE_EMAGIN]->SetTexture("ChangeEmagin_ON");
 		ItemText->SetActive(true);
-		ItemText->SetTexture(ImageName_Text[ChangeEmagin]);
-		ResetItem(ChangeEmagin);
+		ItemText->SetTexture(ImageName_Text[CHANGE_EMAGIN]);
+
+		SelectItemID = CHANGE_EMAGIN;
+		ResetItem(CHANGE_EMAGIN);
 	}
 	else
 	{
+		Images[CHANGE_EMAGIN]->SetTexture("ChangeEmagin_OFF");
 		ItemText->SetActive(false);
-		Images[ChangeEmagin]->SetTexture("ChangeEmagin_OFF");
+
+		SelectItemID = -1;
 	}
+
+	Sound_Play_SFX("UI_Button_Click");
 }
 
 void UIStore::MaxHP_Button_Exit()
 {
 	//Max HP 증가
-	if (SelectItem[MaxHP] == false)
+	if (SelectItem[MAX_HP] == false)
 	{
-		Images[MaxHP]->SetTexture("MaxHP_OFF");
+		Images[MAX_HP]->SetTexture("MaxHP_OFF");
 	}
 }
 
 void UIStore::MaxHP_Button_Enter()
 {
 	//Max HP 증가
-	Images[MaxHP]->SetTexture("MaxHP_ON");
-	Sound_Play_SFX("UI_Button_Click");
+	Images[MAX_HP]->SetTexture("MaxHP_ON");
+	Sound_Play_SFX("UI_Button_Overlay");
 }
 
 void UIStore::MaxHP_Button_Click()
 {
 	//Max HP 증가
-	SelectItem[MaxHP] ^= true;
+	SelectItem[MAX_HP] ^= true;
 
-	if (SelectItem[MaxHP])
+	if (SelectItem[MAX_HP])
 	{
-		Images[MaxHP]->SetTexture("MaxHP_ON");
+		Images[MAX_HP]->SetTexture("MaxHP_ON");
 		ItemText->SetActive(true);
-		ItemText->SetTexture(ImageName_Text[MaxHP]);
-		ResetItem(MaxHP);
+		ItemText->SetTexture(ImageName_Text[MAX_HP]);
+
+		SelectItemID = MAX_HP;
+		ResetItem(MAX_HP);
 	}
 	else
 	{
+		Images[MAX_HP]->SetTexture("MaxHP_OFF");
 		ItemText->SetActive(false);
-		Images[MaxHP]->SetTexture("MaxHP_OFF");
+
+		SelectItemID = -1;
 	}
+
+	Sound_Play_SFX("UI_Button_Click");
 }
 
 void UIStore::AttackSpeed_Button_Exit()
 {
-	if (SelectItem[AttackSpeed] == false)
+	if (SelectItem[ATTACK_SPEED] == false)
 	{
-		Images[AttackSpeed]->SetTexture("AttackSpeed_OFF");
+		Images[ATTACK_SPEED]->SetTexture("AttackSpeed_OFF");
 	}
 }
 
 void UIStore::AttackSpeed_Button_Enter()
 {
-	Images[AttackSpeed]->SetTexture("AttackSpeed_ON");
-	Sound_Play_SFX("UI_Button_Click");
+	Images[ATTACK_SPEED]->SetTexture("AttackSpeed_ON");
+	Sound_Play_SFX("UI_Button_Overlay");
 }
 
 void UIStore::AttackSpeed_Button_Click()
 {
 	//공격 속도 증가
-	SelectItem[AttackSpeed] ^= true;
+	SelectItem[ATTACK_SPEED] ^= true;
 
-	if (SelectItem[AttackSpeed])
+	if (SelectItem[ATTACK_SPEED])
 	{
-		Images[AttackSpeed]->SetTexture("AttackSpeed_ON");
+		Images[ATTACK_SPEED]->SetTexture("AttackSpeed_ON");
 		ItemText->SetActive(true);
-		ItemText->SetTexture(ImageName_Text[AttackSpeed]);
-		ResetItem(AttackSpeed);
+		ItemText->SetTexture(ImageName_Text[ATTACK_SPEED]);
+
+		SelectItemID = ATTACK_SPEED;
+		ResetItem(ATTACK_SPEED);
 	}
 	else
 	{
+		Images[ATTACK_SPEED]->SetTexture("AttackSpeed_OFF");
 		ItemText->SetActive(false);
-		Images[AttackSpeed]->SetTexture("AttackSpeed_OFF");
+
+		SelectItemID = -1;
 	}
+
+	Sound_Play_SFX("UI_Button_Click");
 }
 
 void UIStore::MoveSpeed_Button_Exit()
 {
-	if (SelectItem[MoveSpeed] == false)
+	if (SelectItem[MOVE_SPEED] == false)
 	{
-		Images[MoveSpeed]->SetTexture("MoveSpeed_OFF");
+		Images[MOVE_SPEED]->SetTexture("MoveSpeed_OFF");
 	}
 }
 
 void UIStore::MoveSpeed_Button_Enter()
 {
-	Images[MoveSpeed]->SetTexture("MoveSpeed_ON");
-	Sound_Play_SFX("UI_Button_Click");
+	Images[MOVE_SPEED]->SetTexture("MoveSpeed_ON");
+	Sound_Play_SFX("UI_Button_Overlay");
 }
 
 void UIStore::MoveSpeed_Button_Click()
 {
 	// 이동속도 증가..
-	SelectItem[MoveSpeed] ^= true;
+	SelectItem[MOVE_SPEED] ^= true;
 
-	if (SelectItem[MoveSpeed])
+	if (SelectItem[MOVE_SPEED])
 	{
-		Images[MoveSpeed]->SetTexture("MoveSpeed_ON");
+		Images[MOVE_SPEED]->SetTexture("MoveSpeed_ON");
 		ItemText->SetActive(true);
-		ItemText->SetTexture(ImageName_Text[MoveSpeed]);
-		ResetItem(MoveSpeed);
+		ItemText->SetTexture(ImageName_Text[MOVE_SPEED]);
+
+		SelectItemID = MOVE_SPEED;
+		ResetItem(MOVE_SPEED);
 	}
 	else
 	{
+		Images[MOVE_SPEED]->SetTexture("MoveSpeed_OFF");
 		ItemText->SetActive(false);
-		Images[MoveSpeed]->SetTexture("MoveSpeed_OFF");
+
+		SelectItemID = -1;
 	}
+
+	Sound_Play_SFX("UI_Button_Click");
 }
 
 void UIStore::OutStore_Button_Exit()
 {
-	Images[StoreOFF]->SetTexture("Store_OUT_OFF");
+	Images[STORE_OFF]->SetTexture("Store_OUT_OFF");
 }
 
 void UIStore::OutStore_Button_Enter()
 {
-	Images[StoreOFF]->SetTexture("Store_OUT_ON");
-	Sound_Play_SFX("UI_Button_Click");
+	Images[STORE_OFF]->SetTexture("Store_OUT_ON");
+	Sound_Play_SFX("UI_Button_Overlay");
 }
 
 void UIStore::OutStore_Button_Click()
 {
+	Sound_Play_SFX("UI_Button_Click");
+	
 	// 해당 아이템 관련 이미지 초기화..
 	for (int i = 0; i < 6; i++)
 	{
@@ -304,46 +369,55 @@ void UIStore::OutStore_Button_Click()
 		Images[i]->SetTexture(ImageName_Off[i]);
 	}
 
+	// 선택중인 아이템 아이디 초기화..
+	SelectItemID = -1;
+
 	// 스토어 UI 해제..
 	Set_Store_Active(false);
 
 	// 전체화면 블러 해제..
 	SetFullScreenBlur(false);
 
-	MessageManager::GetGM()->SEND_Message(TARGET_STORE, MESSAGE_STORE_EXIT);
 	MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_RESUME);
 }
 
 void UIStore::Purchase_Item_Button_Exit()
 {
-	Images[Purchase_Item]->SetTexture("Purchase_OFF");
+	Images[PURCHASE_ITEM]->SetTexture("Purchase_OFF");
 }
 
 void UIStore::Purchase_Item_Button_Enter()
 {
-	Sound_Play_SFX("UI_Button_Click");
-	Images[Purchase_Item]->SetTexture("Purchase_ON");
+	Sound_Play_SFX("UI_Button_Overlay");
+	Images[PURCHASE_ITEM]->SetTexture("Purchase_ON");
 }
 
 void UIStore::Purchase_Item_Button_Click()
 {
-	/// 선택한 아이템에 대한 구매 및 능력치 적용..
+	Sound_Play_SFX("UI_Button_Click");
+	
+	// 만약 선택중인 아이템이 없다면..
+	if (SelectItemID == -1) return;
 
-	// 해당 아이템 관련 이미지 초기화..
-	for (int i = 0; i < 6; i++)
+	/// 선택한 아이템에 대한 구매 및 능력치 적용..
+	switch (SelectItemID)
 	{
-		SelectItem[i] = false;
-		Images[i]->SetTexture(ImageName_Off[i]);
+	case CHANGE_EMAGIN:
+		MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_UPGRADE_EMAGIN);
+		break;
+	case MAX_HP:
+		MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_UPGRADE_HP);
+		break;
+	case ATTACK_SPEED:
+		MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_UPGRADE_ATTACK);
+		break;
+	case MOVE_SPEED:
+		MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_UPGRADE_MOVE);
+		break;
+	default:
+		break;
 	}
 
-	// 스토어 UI 해제..
-	Set_Store_Active(false);
-
-	// 전체화면 블러 해제..
-	SetFullScreenBlur(false);
-
-	MessageManager::GetGM()->SEND_Message(TARGET_STORE, MESSAGE_STORE_EXIT);
-	MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_RESUME);
 }
 
 void UIStore::ResetItem(int nowItem)

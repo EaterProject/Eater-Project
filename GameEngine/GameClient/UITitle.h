@@ -12,7 +12,7 @@ public:
 	void Awake() override;
 	void Update() override;
 	
-	void SetTitleUIActive(bool Active);
+	void Set_TitleUI_Active(bool Active);
 private:
 	void StartButton_Enter();
 	void StartButton_Click();

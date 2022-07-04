@@ -98,14 +98,17 @@ protected:
 	float AttackRange			= 2.5f;			//공격 거리
 	float ChaseRange			= 5.5f;			//추격 거리
 protected:
+	float	Max_HP				= 100;			//현재 체력
 	float	HP					= 100;			//현재 체력
 	float	Speed				= 1.5f;			//이동 속도
 	float	AttackTime			= 0;			//현재 공격 시간
+	int		Damage				= 30;			//데미지
 	float	RotationSpeed		= 200;			//몬스터 회전하는 속도
 	int		PointNumber			= -1;			//몬스터 이동 포인터 인덱스
 	int		ComboCount			= 6;			//현재 콤보 카운터
 	float	MonsterScale		= 1.0f;			
 	int		MonsterType			= 0;
+	int		PureManaCount		= 0;			//퓨어마나 획득 개수
 protected:
 	void GetRandomColor();
 	void SetMonsterColor();

@@ -990,7 +990,6 @@ void Boss::SkillCheck()
 {
 	float DTime = GetDeltaTime();
 
-
 	if (PlayerDistance < FightRange)
 	{
 		///근접 스킬 쿨계산

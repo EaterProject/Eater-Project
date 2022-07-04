@@ -183,7 +183,7 @@ void UIOption::Start()
 	ClickButton[SFX_VOL].Value = 100;
 }
 
-void UIOption::SetOptionUIActive(bool active)
+void UIOption::Set_OptionUI_Active(bool active)
 {
 	BackGroundImage->SetActive(active);
 	ScreenText->SetActive(active);

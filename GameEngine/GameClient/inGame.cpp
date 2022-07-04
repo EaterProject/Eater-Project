@@ -28,7 +28,8 @@ void InGame::Awake()
 	//SetSkyLight("SkyLight_0", 0);
 	//SetSkyLight("Dome_HDR_5", 1);
 	//
-	SetColorGradingBaseTexture("Dome_LUT_4");
+	SetColorGradingBaseTexture("LUT_outside");
+	SetColorGradingBlendTexture("Dome_LUT_4");
 	/// Blend Factor
 	SetColorGradingBlendFactor(0.0f);
 	//로직매니저 초기화

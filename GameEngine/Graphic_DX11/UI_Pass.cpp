@@ -61,12 +61,8 @@ void UI_Pass::Release()
 
 }
 
-void UI_Pass::RenderUpdate(std::vector<RenderData*>& meshlist)
+void UI_Pass::BeginRender()
 {
-	m_RenderCount = (UINT)meshlist.size();
-
-	if (m_RenderCount == 0) return;
-
 	// Render State Update..
 	g_Context->OMSetBlendState(m_AlphaBlend_BS, 0, 0xffffffff);
 	g_Context->OMSetRenderTargets(1, &m_OutPut_RTV, nullptr);
@@ -74,6 +70,13 @@ void UI_Pass::RenderUpdate(std::vector<RenderData*>& meshlist)
 	g_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	g_Context->IASetVertexBuffers(0, 1, m_Screen_DB->VertexBuf->GetAddress(), &m_Screen_DB->Stride, &m_Screen_DB->Offset);
 	g_Context->IASetIndexBuffer(m_Screen_DB->IndexBuf->Get(), DXGI_FORMAT_R32_UINT, 0);
+}
+
+void UI_Pass::RenderUpdate(std::vector<RenderData*>& meshlist)
+{
+	m_RenderCount = (UINT)meshlist.size();
+
+	if (m_RenderCount == 0) return;
 
 	const Matrix& proj = g_GlobalData->MainCamera_Data->CamOrthoProj;
 
@@ -140,9 +143,12 @@ void UI_Pass::RenderUpdate(std::vector<RenderData*>& meshlist)
 			break;
 		}
 
-
 		g_Context->DrawIndexed(m_Screen_DB->IndexCount, 0, 0);
 	}
 
+}
+
+void UI_Pass::EndRender()
+{
 	g_Context->OMSetBlendState(0, 0, 0xffffffff);
 }

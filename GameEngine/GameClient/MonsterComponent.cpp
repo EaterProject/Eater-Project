@@ -223,7 +223,6 @@ void MonsterComponent::Attack()
 		if(mParticleController != nullptr) { mParticleController->Play(); }
 		if (IsAttack == false)
 		{
-			int Damage = 10;
 			MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_HIT, &Damage);
 			MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_PLAYER_HIT,nullptr);
 			Sound_Play_SFX(SOUND_NAME[(int)MONSTER_STATE::ATTACK]);
@@ -300,6 +299,9 @@ void MonsterComponent::Dead()
 		mMF_Setting.SetDissolveWidth(0.1f);
 		mMF_Setting.SetDissolveInnerFactor(100.0f);
 		mMF_Setting.SetDissolveOuterFactor(25.0f);
+
+		// Ç»¾î ¸¶³ª È¹µæ
+		MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_GET_PUREMANA, &PureManaCount);
 	}
 
 	int End = mAnimation->GetEndFrame();
@@ -409,6 +411,7 @@ void MonsterComponent::PlayerDistanceCheck()
 			Data.G = 0;
 			Data.B = 0;
 			Data.HP = HP;
+			Data.MaxHP = Max_HP;
 			Data.ComboCount = ComboCount;
 			Data.Object = this->gameobject;
 			MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_MONSTER_UI_ON, &Data);
@@ -419,6 +422,7 @@ void MonsterComponent::PlayerDistanceCheck()
 			Data.G = 0;
 			Data.B = 255;
 			Data.HP = HP;
+			Data.MaxHP = Max_HP;
 			Data.Type = MONSTER_TYPE_A;
 			Data.ComboCount = ComboCount;
 			Data.Object = this->gameobject;
@@ -502,6 +506,7 @@ void MonsterComponent::SetMonsterColor()
 		Data.G = 0;
 		Data.B = 0;
 		Data.HP = HP;
+		Data.MaxHP = Max_HP;
 		Data.Type = MonsterType;
 		Data.ComboCount = ComboCount;
 		Data.Object = this->gameobject;
@@ -516,6 +521,7 @@ void MonsterComponent::SetMonsterColor()
 		Data.G = 0;
 		Data.B = 255;
 		Data.HP = HP;
+		Data.MaxHP = Max_HP;
 		Data.Type = MonsterType;
 		Data.ComboCount = ComboCount;
 		Data.Object = this->gameobject;

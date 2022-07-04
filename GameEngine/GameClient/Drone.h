@@ -16,6 +16,7 @@ public:
 	void Awake();
 	void SetUp();
 	void Update();
+
 private:
 	Transform*	mTransform;
 	Transform*	mPlayerTR;

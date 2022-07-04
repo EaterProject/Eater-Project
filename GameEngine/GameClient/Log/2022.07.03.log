@@ -76,60 +76,27 @@
 [TIME] 17:24:27 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
 [ Engine ][ Bake ][ SkyLight Buffer ] 'DOME_HDR_5' Texture가 로드되지 않았습니다!!
 
-[TIME] 19:20:30 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
+[TIME] 20:46:00 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
 [ Engine ][ Bake ][ SkyLight Buffer ] 'DOME_HDR_5' Texture가 로드되지 않았습니다!!
 
-[TIME] 19:21:46 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
+[TIME] 21:13:40 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
 [ Engine ][ Bake ][ SkyLight Buffer ] 'DOME_HDR_5' Texture가 로드되지 않았습니다!!
 
-[TIME] 19:29:34 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
+[TIME] 21:26:51 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
 [ Engine ][ Bake ][ SkyLight Buffer ] 'DOME_HDR_5' Texture가 로드되지 않았습니다!!
 
-[TIME] 19:37:24 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
+[TIME] 21:41:40 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
 [ Engine ][ Bake ][ SkyLight Buffer ] 'DOME_HDR_5' Texture가 로드되지 않았습니다!!
 
-[TIME] 19:51:37 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
+[TIME] 22:01:47 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
 [ Engine ][ Bake ][ SkyLight Buffer ] 'DOME_HDR_5' Texture가 로드되지 않았습니다!!
 
-[TIME] 20:11:37 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
+[TIME] 22:59:48 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
 [ Engine ][ Bake ][ SkyLight Buffer ] 'DOME_HDR_5' Texture가 로드되지 않았습니다!!
 
-[TIME] 20:17:25 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
+[TIME] 23:08:29 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
 [ Engine ][ Bake ][ SkyLight Buffer ] 'DOME_HDR_5' Texture가 로드되지 않았습니다!!
 
-[TIME] 20:23:05 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
-[ Engine ][ Bake ][ SkyLight Buffer ] 'DOME_HDR_5' Texture가 로드되지 않았습니다!!
-
-[TIME] 20:27:33 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
-[ Engine ][ Bake ][ SkyLight Buffer ] 'DOME_HDR_5' Texture가 로드되지 않았습니다!!
-
-[TIME] 20:30:24 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
-[ Engine ][ Bake ][ SkyLight Buffer ] 'DOME_HDR_5' Texture가 로드되지 않았습니다!!
-
-[TIME] 20:47:19 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
-[ Engine ][ Bake ][ SkyLight Buffer ] 'DOME_HDR_5' Texture가 로드되지 않았습니다!!
-
-[TIME] 20:50:38 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
-[ Engine ][ Bake ][ SkyLight Buffer ] 'DOME_HDR_5' Texture가 로드되지 않았습니다!!
-
-[TIME] 20:53:50 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
-[ Engine ][ Bake ][ SkyLight Buffer ] 'DOME_HDR_5' Texture가 로드되지 않았습니다!!
-
-[TIME] 20:58:34 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
-[ Engine ][ Bake ][ SkyLight Buffer ] 'DOME_HDR_5' Texture가 로드되지 않았습니다!!
-
-[TIME] 21:03:08 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
-[ Engine ][ Bake ][ SkyLight Buffer ] 'DOME_HDR_5' Texture가 로드되지 않았습니다!!
-
-[TIME] 21:09:38 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
-[ Engine ][ Bake ][ SkyLight Buffer ] 'DOME_HDR_5' Texture가 로드되지 않았습니다!!
-
-[TIME] 21:27:03 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
-[ Engine ][ Bake ][ SkyLight Buffer ] 'DOME_HDR_5' Texture가 로드되지 않았습니다!!
-
-[TIME] 21:30:37 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
-[ Engine ][ Bake ][ SkyLight Buffer ] 'DOME_HDR_5' Texture가 로드되지 않았습니다!!
-
-[TIME] 21:36:57 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
+[TIME] 23:16:38 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
 [ Engine ][ Bake ][ SkyLight Buffer ] 'DOME_HDR_5' Texture가 로드되지 않았습니다!!
 
