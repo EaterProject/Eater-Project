@@ -34,7 +34,7 @@ void MonsterB::SetUp()
 	Speed			= 0.8f;
 	RotationSpeed	= 380.0f;
 	ComboCount		= 6;
-	Damage			= 60;
+	Damage			= 300;
 	PureManaCount	= 10;
 	//AttackRange		= 4.0f;
 	//ChaseRange		= 7.0f;

@@ -73,6 +73,7 @@
 #define MESSAGE_UI_SKILL_E 19
 #define MESSAGE_UI_SKILL_MR 20
 #define MESSAGE_UI_SKILL_SPC 21
+#define MESSAGE_UI_BOSS_COLOR 22
 
 //Drone Message
 #define MESSAGE_DRONE_GAME_START 0			//게임 시작시 텍스트

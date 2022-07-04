@@ -83,6 +83,9 @@ private:
 	void	SkillCheck();
 	void	PushPlayer();
 	void	BossColorUpdate();
+
+	void	StartFight();
+	void	EndFight();
 private:
 
 	bool	IsHit			= false;
@@ -92,6 +95,10 @@ private:
 	bool	IsBossFriend	= false;
 	bool	IsUpdateColor	= false;
 	bool	IsAttack		= false;
+
+	bool	IsStartFight	= false;
+	bool	IsEndFight		= false;
+
 
 	int		mState			= 0;		//보스의 상태
 	int		FriendIndex		= -1;		//보스의 위치 인덱스
