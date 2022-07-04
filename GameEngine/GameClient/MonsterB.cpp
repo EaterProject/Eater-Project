@@ -26,9 +26,22 @@ void MonsterB::SetUp()
 	ModelName		= "MonsterB+";
 	AnimationName	= "MonsterB+";
 	
-	//맞았을떄 줄어드는 값
-	Speed = 1.5f;
-	MonsterScale = 3.0f;
+	///수치
+	MonsterScale	= 3.0f;
+	HP				= 240.0f;
+	Max_HP			= HP;
+	Speed			= 0.8f;
+	RotationSpeed	= 380.0f;
+	ComboCount		= 6;
+	Damage			= 60;
+	PureManaCount	= 10;
+	//AttackRange		= 4.0f;
+	//ChaseRange		= 7.0f;
+
+	ANIMATION_TIME[(int)MONSTER_STATE::MOVE] = 0.4f;
+	ANIMATION_TIME[(int)MONSTER_STATE::CHASE] = 0.6f;
+	ANIMATION_TIME[(int)MONSTER_STATE::ATTACK] = 0.4f;
+
 	MonsterType = MONSTER_TYPE_B;
 
 	SOUND_NAME[int(MONSTER_STATE::HIT)] = "Monster_B_Hit";

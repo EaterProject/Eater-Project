@@ -1,5 +1,6 @@
 #pragma once
 #include "Component.h"
+#include <queue>
 
 class Image;
 class RectTransform;
@@ -34,9 +35,14 @@ public:
 	void Set_Player_Emagin(int Number);
 	void Set_Player_Emagin_Max(int Number);
 
+	//플레이어 스킬 설정
+	void Set_Skill_E(float value);
+	void Set_Skill_MR(float value);
+	void Set_Skill_SPC(float value);
+
 	//초록 마나 카운트 설정
-	void Set_Mana_Green_Count(int Number);
-	void Set_Mana_Orange_Count(int Number);
+	void Set_Pure_Mana_Count(int Number);
+	void Set_Core_Mana_Count(int Number);
 
 	//드론 텍스쳐
 	void Set_Drone_Text(int Number);
@@ -70,6 +76,30 @@ private:
 	void SetMonsterUIDraw(int index, bool IsActive);
 	bool UseCheck(GameObject* Obj);
 
+public:
+	void Push_Game_Start_Text();
+	void Push_Doom_Out_Text();
+	void Push_Store_Text();
+	void Push_Purchase_Success_Text();
+	void Push_Purchase_Fail_Text();
+	void Push_Boss_Start_Text();
+	void Push_Boss_Zone_In_Text();
+	void Push_Mana_Create_Text();
+	void Push_Get_PureMana_Text();
+	void Push_Get_CoreMana_Text();
+	void Push_Player_Die_Text();
+	void Push_Player_Heal_Text();
+
+private:
+	std::queue<std::string> mTextMessageQueue;
+
+	const float Animtime = 0.5f;
+	const float ShowTime = 1.0f;
+
+	float PlayTime = 0.0f;
+
+
+private:
 	ComboFont*		mCombo		= nullptr;
 
 	//플레이어 체력 UI

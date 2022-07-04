@@ -17,7 +17,8 @@ public:
 
 	void SetBossMaxHP(int HP);
 	void SetBossHP(int HP);
-	void SetActive(bool mActive);
+	void SetBossUIActive(bool mActive);
+	void Set_BossUI_Draw(bool mActive);
 	void SetColor(int mColorType);
 private:
 	Image* mBossName_Img;

@@ -36,6 +36,14 @@ void UIBoss::Awake()
 	mBossHP_Slider->SetValueRange(0, 3000);
 	mBossHP_Slider->SetFillRange(FILL_LEFT, 3000);
 
+	Object = Instance_Image();
+	mBossColor_Img = Object->GetComponent<Image>();
+	mBossColor_Rect = Object->GetComponent<RectTransform>();
+	mBossColor_Img->SetTexture("Boss_White_Color");
+	mBossColor_Img->SetPivot(PIVOT_MIDDLE_TOP);
+	mBossColor_Img->SetPosition(-400, 100);
+	mBossColor_Img->SetColor(255, 255, 255, 255);
+	mBossColor_Img->SetLayer(2);
 
 	Object = Instance_ImageFont();
 	mBossCount_Font = Object->GetComponent<ImageFont>();
@@ -49,21 +57,13 @@ void UIBoss::Awake()
 	mBossCount_Font->SetFontCount(2);
 	mBossCount_Font->SetScale(0.5f, 0.5f);
 	mBossCount_Font->SetLayer(3);
-
-	Object = Instance_Image();
-	mBossColor_Img = Object->GetComponent<Image>();
-	mBossColor_Rect = Object->GetComponent<RectTransform>();
-	mBossColor_Img->SetTexture("Boss_White_Color");
-	mBossColor_Img->SetPivot(PIVOT_MIDDLE_TOP);
-	mBossColor_Img->SetPosition(-400, 100);
-	mBossColor_Img->SetLayer(2);
 }
 
 void UIBoss::Start()
 {
 	mBossCount_Font->SetFontNumber(30);
 	mBossHP_Slider->SetValueRange(0, 3000);
-	SetActive(false);
+	SetBossUIActive(false);
 }
 
 void UIBoss::SetUp()
@@ -81,12 +81,25 @@ void UIBoss::SetBossHP(int HP)
 	mBossHP_Slider->SetFillRange(FILL_LEFT, HP);
 }
 
-void UIBoss::SetActive(bool mActive)
+void UIBoss::SetBossUIActive(bool mActive)
 {
 	mBossCount_Font->SetActive(mActive);
 	mBossColor_Img->SetActive(mActive);
 	mBossHP_Slider->SetActive(mActive);
 	mBossName_Img->SetActive(mActive);
+
+	mBossCount_Font->SetDraw(mActive);
+	mBossColor_Img->SetDraw(mActive);
+	mBossHP_Slider->SetDraw(mActive);
+	mBossName_Img->SetDraw(mActive);
+}
+
+void UIBoss::Set_BossUI_Draw(bool mActive)
+{
+	mBossCount_Font->SetDraw(mActive);
+	mBossColor_Img->SetDraw(mActive);
+	mBossHP_Slider->SetDraw(mActive);
+	mBossName_Img->SetDraw(mActive);
 }
 
 void UIBoss::SetColor(int mColorType)

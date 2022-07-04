@@ -8,6 +8,7 @@
 #include "MeshFilter.h"
 #include "Transform.h"
 #include "Collider.h"
+
 DoorCollider::DoorCollider()
 {
 }
@@ -73,6 +74,37 @@ void DoorCollider::OnTriggerEnter(GameObject* Obj)
 			bool ON = true;
 			MessageManager::GetGM()->SEND_Message(TARGET_GATE_MANAGER, MESSAGE_GATE_OPEN, &GateNumber);
 			GroundCollider->GetTransform()->SetPosition_Y(-0.9f);
+		}
+	}
+}
+
+void DoorCollider::OnTriggerStay(GameObject* Obj)
+{
+	if (Obj->GetTag() == 0)
+	{
+		PlayerDistance = Vector3::Distance(Zero, Obj->transform->GetPosition());
+
+		if (PlayerDistance >= 25.0f && PlayerDistance <= 30.0f)
+		{
+			BlendFactor = (30.0f - PlayerDistance) * 0.2f;
+			SetColorGradingBlendFactor(BlendFactor);
+		}
+
+		if (PlayerDistance > 30.0f)
+		{
+			if (PlayerLightIndex != 0)
+			{
+				PlayerLightIndex = 0;
+				MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_LIGHT_CHANGE, &PlayerLightIndex);
+			}
+		}
+		else
+		{
+			if (PlayerLightIndex != 1)
+			{
+				PlayerLightIndex = 1;
+				MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_LIGHT_CHANGE, &PlayerLightIndex);
+			}
 		}
 	}
 }

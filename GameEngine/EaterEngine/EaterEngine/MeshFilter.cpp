@@ -225,11 +225,21 @@ void MeshFilter::SetAlpha(bool enable)
 void MeshFilter::SetAlphaFactor(float alphaFactor)
 {
 	m_Material->SetAlphaFactor(alphaFactor);
+
+	if (MaterialBlockState != PropertyBlockState::DISABLE)
+	{
+		m_PropertyBlock->AlphaFactor = alphaFactor;
+	}
 }
 
 void MeshFilter::SetSkyLightIndex(int skyLightIndex)
 {
 	m_Material->SetSkyLightIndex(skyLightIndex);
+
+	if (MaterialBlockState != PropertyBlockState::DISABLE)
+	{
+		m_PropertyBlock->SkyLightIndex = skyLightIndex;
+	}
 }
 
 void MeshFilter::SetMaterialPropertyBlock(bool enable)

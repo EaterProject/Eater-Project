@@ -28,6 +28,7 @@ public:
 
 public:
 	EATER_ENGINEDLL void SetActive(bool active);
+	EATER_ENGINEDLL void SetDraw(bool active);
 	
 	EATER_ENGINEDLL void PushEvent(std::function<void()>& eventFunc, State type);
 	EATER_ENGINEDLL void PushEvent(std::function<void()>&& eventFunc, State type);

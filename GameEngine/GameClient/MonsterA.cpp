@@ -23,10 +23,26 @@ void MonsterA::SetUp()
 	//모델
 	ModelName		= "MonsterA+";
 	AnimationName	= "MonsterA+";
+	PureManaCount	= 5;
 
-	//몬스터 크기
-	MonsterScale	= 1.25f;
+	///수치
+	MonsterScale	= 1.2f;
+	HP				= 120.0f;
+	Max_HP			= HP;
+	Speed			= 1.5f;
+	RotationSpeed	= 380.0f;
+	ComboCount		= 3;
+	Damage			= 30;
+	PureManaCount	= 5;
+	//AttackRange		= 1.5f;
+	//ChaseRange		= 7.0f;
+
+	ANIMATION_TIME[(int)MONSTER_STATE::MOVE] = 0.9f;
+	ANIMATION_TIME[(int)MONSTER_STATE::CHASE] = 1.2f;
+	ANIMATION_TIME[(int)MONSTER_STATE::ATTACK] = 0.8f;
+
 	MonsterType		= MONSTER_TYPE_A;
+
 	SOUND_NAME[int(MONSTER_STATE::HIT)] = "Monster_A_Hit";
 	SOUND_NAME[int(MONSTER_STATE::MOVE)] = "Monster_A_Walking";
 	SOUND_NAME[int(MONSTER_STATE::ATTACK)] = "Monster_A_Attack";

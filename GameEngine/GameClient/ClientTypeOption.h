@@ -30,21 +30,24 @@
 
 //Player Message
 #define MESSAGE_PLAYER_HIT    0				//플레이어가 맞았다
-#define MESSAGE_PLAYER_HILL   1				//플레이어 에게 힐을 준다
+#define MESSAGE_PLAYER_HEAL   1				//플레이어 에게 힐을 준다
 #define MESSAGE_PLAYER_ATTACK_OK 2			//플레이어 공격이 성공하였다
 #define MESSAGE_PLAYER_ACTIVE_TRUE 3		//플레이어 Active TRUE
 #define MESSAGE_PLAYER_ACTIVE_FALSE 4		//플레이어 Active FALSE
 #define MESSAGE_PLAYER_COMBO_RESET 5		//플레이어 콤보 리셋
+#define MESSAGE_PLAYER_LIGHT_CHANGE 6		//플레이어 스카이 라이트 변경
+#define MESSAGE_PLAYER_GET_PUREMANA 7		//플레이어 퓨어마나 획득
+#define MESSAGE_PLAYER_GET_COREMANA 8		//플레이어 코어마나 획득
+#define MESSAGE_PLAYER_UPGRADE_EMAGIN 9		//플레이어 이메진 횟수 강화
+#define MESSAGE_PLAYER_UPGRADE_HP 10		//플레이어 체력 강화
+#define MESSAGE_PLAYER_UPGRADE_ATTACK 11	//플레이어 공격속도 강화
+#define MESSAGE_PLAYER_UPGRADE_MOVE 12		//플레이어 이동속도 강화
 
 //Gate Message
 #define MESSAGE_GATE_OPEN  0				//게이트 열기			//인자 값 : int
 #define MESSAGE_GATE_CLOSE 1				//게이트 닫기			//인자 값 : int
 #define MESSAGE_GATE_UNLOCK 2				//게이트 잠금 풀기		//인자 값 : int
 #define MESSAGE_GATE_LOCK 3					//게이트 잠금 열기		//인자 값 : int
-
-//Store Message
-#define MESSAGE_STORE_EXIT  0				//스토어 닫기
-#define MESSAGE_STORE_PAUSE  1				//스토어 일시정지 상태
 
 //UI Message
 #define MESSAGE_UI_COMBO 0					//콤보 폰트 값			//인자 값 : int
@@ -62,7 +65,26 @@
 #define MESSAGE_UI_STORE_ACTIVE	12			//UI 스토어 엑티브
 #define MESSAGE_UI_BOSS_HP 13
 #define MESSAGE_UI_BOSS_HP_MAX 14
-#define MESSAGE_UI_BOSS_ACTIVE 15
+#define MESSAGE_UI_BOSS_ACTIVE 16
+#define MESSAGE_UI_PUREMANA 17
+#define MESSAGE_UI_COREMANA 18
+#define MESSAGE_UI_SKILL_E 19
+#define MESSAGE_UI_SKILL_MR 20
+#define MESSAGE_UI_SKILL_SPC 21
+
+//Drone Message
+#define MESSAGE_DRONE_GAME_START 0			//게임 시작시 텍스트
+#define MESSAGE_DRONE_DOOM_OUT 1			//돔 외부로 나갈시 텍스트
+#define MESSAGE_DRONE_STORE 2				//자판기 앞 텍스트
+#define MESSAGE_DRONE_PURCHASE_SUCCESS 3	//자판기 구매 성공 텍스트
+#define MESSAGE_DRONE_PURCHASE_FAIL 4		//자판기 구매 실패 텍스트
+#define MESSAGE_DRONE_BOSS_START 5			//보스 등장 텍스트
+#define MESSAGE_DRONE_BOSS_ZONE_IN 6		//보스존 입장 텍스트
+#define MESSAGE_DRONE_MANA_CREATE 7			//마나초 생성 텍스트
+#define MESSAGE_DRONE_GET_PUREMANA 8		//몬스터 최초 사망 텍스트
+#define MESSAGE_DRONE_GET_COREMANA 9		//마나초 최초 제거 텍스트
+#define MESSAGE_DRONE_PLAYER_DIE 10			//플레이어 사망 텍스트
+#define MESSAGE_DRONE_PLAYER_HEAL 11		//플레이어 체력회복 텍스트
 
 
 //Camera Message
@@ -156,6 +178,7 @@ struct MONSTER_EMAGIN
 	float B = 255.f;
 	int ComboCount = 7;
 	int HP;
+	int MaxHP;
 	int Type;
 	void* Object;
 };

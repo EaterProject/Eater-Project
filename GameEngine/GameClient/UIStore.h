@@ -2,6 +2,7 @@
 #include <Component.h>
 
 class Image;
+class ImageFont;
 class Button;
 class RectTransform;
 class UIStore :public Component
@@ -10,11 +11,25 @@ public:
 	UIStore();
 	virtual ~UIStore();
 
+private:
+	enum BUTTON
+	{
+		CHANGE_EMAGIN,
+		MAX_HP,
+		ATTACK_SPEED,
+		MOVE_SPEED,
+		PURCHASE_ITEM,
+		STORE_OFF,
+	};
+
+public:
 	void Awake() override;
 
 	void Set_Store_Active(bool Active);
+	
+	void Set_Pure_Mana_Count(int Number);
+	void Set_Core_Mana_Count(int Number);
 
-	void PurchaseItem(int Type);	//아이템 구매
 private:
 	void ChangeEmaginCount_Button_Exit();
 	void ChangeEmaginCount_Button_Enter();
@@ -50,19 +65,14 @@ private:
 	std::string ImageName_Off[6];
 	std::string ImageName_Text[4];
 
+	ImageFont* StoreMana[2];
 	Image* StoreTitle;
 	Image* ItemText;
 
 	const int OffsetX = 454;
 	const int OffsetY = 191;
 
-	const int ChangeEmagin	= 0;
-	const int MaxHP			= 1;
-	const int AttackSpeed	= 2;
-	const int MoveSpeed		= 3;
-	const int Purchase_Item	= 4;
-	const int StoreOFF		= 5;
-
 	bool SelectItem[6];
+	int SelectItemID = -1;
 };
 

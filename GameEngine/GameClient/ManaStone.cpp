@@ -185,6 +185,9 @@ void ManaStone::OnTriggerStay(GameObject* Obj)
 				mSetting.PlayDissolve();
 				DeadStart = true;
 				MiniMapSystem::Get()->DeleteIcon(this->gameobject);
+
+				// ÄÚ¾î ¸¶³ª È¹µæ
+				MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_GET_COREMANA, &CoreManaCount);
 			}
 
 			HitStart = true;

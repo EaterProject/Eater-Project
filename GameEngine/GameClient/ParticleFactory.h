@@ -6,11 +6,17 @@
 
 enum class PARTICLE_TYPE
 {
+	BossFog,
 	BossMelee,
+	BossPage,
 	BossProjectile,
+	BossProjectileExplode,
+	BossProjectileFloor,
 	BossPush,
 	CounterAttack,
 	HitSmoke,
+	ManaSmoke,
+	ManaTreeSmoke,
 	MonsterExplode,
 	PlayerAttack,
 	PlayerHeal

@@ -43,7 +43,7 @@ public:
 	void Start() override;
 
 public:
-	void SetOptionUIActive(bool active);
+	void Set_OptionUI_Active(bool active);
 	void SetPrevTarget(int target);
 
 private:

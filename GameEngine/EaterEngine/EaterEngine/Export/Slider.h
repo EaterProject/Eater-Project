@@ -43,6 +43,8 @@ public:
 	EATER_ENGINEDLL void SetFillColor(float r, float g, float b, float a);
 	EATER_ENGINEDLL void SetFillRange(FILL_TYPE fill_type, float range);
 
+	EATER_ENGINEDLL void SetLayer(UINT order);
+
 private:
 	void SetPivot();
 	void SetPosition();
@@ -53,6 +55,7 @@ private:
 	void SetBackGroundColor();
 	void SetFillColor();
 	void SetFillRange();
+	void SetLayer();
 
 private:
 	Eater::Delegate<> StartFunction;
@@ -62,6 +65,7 @@ private:
 	Transform* m_TargetObject;
 
 	PIVOT_TYPE m_Pivot;
+	UINT m_Layer;
 	Vector2 m_Position;
 	Vector3 m_Position3D;
 	Vector3 m_Position3D_Offset;

@@ -50,8 +50,8 @@ void UICanvas::Start()
 	Set_Player_Emagin(0);
 	Set_Player_Emagin_Max(14);
 	
-	Set_Mana_Green_Count(13);
-	Set_Mana_Orange_Count(41);
+	Set_Pure_Mana_Count(0);
+	Set_Core_Mana_Count(0);
 	
 	//Active_Dron_Text(false);
 }
@@ -71,6 +71,15 @@ void UICanvas::Update()
 		if (GetKeyDown(VK_F2))
 		{
 			MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_CREDIT);
+		}
+
+		if (PlayTime <= 0.0f)
+		{
+
+		}
+		else
+		{
+
 		}
 	}
 
@@ -103,12 +112,27 @@ void UICanvas::Set_Player_Emagin_Max(int Number)
 	Player_EMAGIN[1]->SetFontNumber(Number);
 }
 
-void UICanvas::Set_Mana_Green_Count(int Number)
+void UICanvas::Set_Skill_E(float value)
+{
+	Player_Skill[2]->SetFillRange(FILL_TYPE::FILL_DOWN, value);
+}
+
+void UICanvas::Set_Skill_MR(float value)
+{
+	Player_Skill[0]->SetFillRange(FILL_TYPE::FILL_DOWN, value);
+}
+
+void UICanvas::Set_Skill_SPC(float value)
+{
+	Player_Skill[1]->SetFillRange(FILL_TYPE::FILL_DOWN, value);
+}
+
+void UICanvas::Set_Pure_Mana_Count(int Number)
 {
 	Player_MANA[0]->SetFontNumber(Number);
 }
 
-void UICanvas::Set_Mana_Orange_Count(int Number)
+void UICanvas::Set_Core_Mana_Count(int Number)
 {
 	Player_MANA[1]->SetFontNumber(Number);
 }
@@ -223,7 +247,7 @@ void UICanvas::Set_Monster_UI_ON(void* Emagin)
 	//색 설정
 	Monster_Emagin_Front[MonsterIndex]->SetColor(mEmagin->R, mEmagin->G, mEmagin->B, 255);
 	
-	MonsterSlider[MonsterIndex]->SetValueRange(0, 100);
+	MonsterSlider[MonsterIndex]->SetValueRange(0.0f, mEmagin->MaxHP);
 	MonsterSlider[MonsterIndex]->SetFillRange(FILL_LEFT, mEmagin->HP);
 	MonsterSlider[MonsterIndex]->SetPivot(PIVOT_OBJECT);
 	MonsterSlider[MonsterIndex]->SetPositionObject(Object, Vector3(0.0, OffsetY, 0.0f));
@@ -276,6 +300,7 @@ void UICanvas::Set_Monster_UI_SET_DATA(void* Emagin)
 
 			if (mEmagin->Type == MONSTER_TYPE_A)
 			{
+				MonsterSlider[i]->SetValueRange(0.0f, mEmagin->MaxHP);
 				MonsterSlider[i]->SetFillRange(FILL_LEFT, mEmagin->HP);
 				MonsterSlider[i]->SetPositionObject(Object, Vector3(0.0, 2.0f, 0.0f));
 
@@ -288,6 +313,7 @@ void UICanvas::Set_Monster_UI_SET_DATA(void* Emagin)
 			}
 			else
 			{
+				MonsterSlider[i]->SetValueRange(0.0f, mEmagin->MaxHP);
 				MonsterSlider[i]->SetFillRange(FILL_LEFT, mEmagin->HP);
 				MonsterSlider[i]->SetPositionObject(Object, Vector3(0.0, 2.5f, 0.0f));
 
@@ -385,17 +411,19 @@ void UICanvas::Create_Player_HP(float X, float Y)
 	Player_HP[0] = Object->GetComponent<ImageFont>();
 	Player_HP[0]->SetTexture("number_");
 	Player_HP[0]->SetPivot(PIVOT_MIDDLE_LEFT);
-	Player_HP[0]->SetFontCount(3);
+	Player_HP[0]->SetFontCount(4, false);
 	Player_HP[0]->SetOffset(18);
 	Player_HP[0]->SetScale(0.5f,0.5f);
 	Player_HP[0]->SetPosition(X, Y);
-	
+	Player_HP[0]->SetLayer(100);
+
 	//폰트 사이의 언더바 이미지
 	Object = Instance_Image();
 	Player_HP_BAR = Object->GetComponent<Image>();
 	Player_HP_BAR->SetTexture("hp_Space");
+	Player_HP_BAR->SetLayer(100);
 	Player_RECT = Object->GetComponent<RectTransform>();
-	Player_RECT->SetPosition(X+ 65, Y);
+	Player_RECT->SetPosition(X + 85, Y);
 	Player_RECT->SetScale(1.75f, 1.5f);
 	Player_RECT->SetPivot(PIVOT_MIDDLE_LEFT);
 
@@ -403,11 +431,12 @@ void UICanvas::Create_Player_HP(float X, float Y)
 	Object = Instance_ImageFont();
 	Player_HP[1] = Object->GetComponent<ImageFont>();
 	Player_HP[1]->SetTexture("number_");
-	Player_HP[1]->SetFontCount(3);
+	Player_HP[1]->SetFontCount(4, false);
 	Player_HP[1]->SetOffset(18);
 	Player_HP[1]->SetScale(0.5f, 0.5f);
-	Player_HP[1]->SetPosition(X + 75, Y);
+	Player_HP[1]->SetPosition(X + 95, Y);
 	Player_HP[1]->SetPivot(PIVOT_MIDDLE_LEFT);
+	Player_HP[1]->SetLayer(100);
 
 	//체력 슬라이더바 
 	Object = Instance_Slider();
@@ -418,6 +447,7 @@ void UICanvas::Create_Player_HP(float X, float Y)
 	Player_HP_Slider->SetPivot(PIVOT_MIDDLE_LEFT);
 	Player_HP_Slider->SetValueRange(0, 150);
 	Player_HP_Slider->SetFillRange(FILL_LEFT, 100);
+	Player_HP_Slider->SetLayer(100);
 }
 
 void UICanvas::Create_Player_Mana(float X, float Y)
@@ -436,6 +466,7 @@ void UICanvas::Create_Player_Mana(float X, float Y)
 	Player_MANA[0]->SetScale(1, 1);
 	Player_MANA[0]->SetPosition(X-300, Y);
 	Player_MANA[0]->SetColor(65, 197, 198);
+	Player_MANA[0]->SetLayer(100);
 
 	Object = Instance_ImageFont();
 	Player_MANA[1] = Object->GetComponent<ImageFont>();
@@ -446,11 +477,12 @@ void UICanvas::Create_Player_Mana(float X, float Y)
 	Player_MANA[1]->SetScale(1, 1);
 	Player_MANA[1]->SetPosition(X-200, Y);
 	Player_MANA[1]->SetColor(213, 138, 19);
-
+	Player_MANA[1]->SetLayer(100);
 
 	Object = Instance_UI();
 	Player_MANA_ICON = Object->AddComponent<Image>();
 	Player_MANA_ICON->SetTexture("Minimap_Mana");
+	Player_MANA_ICON->SetLayer(100);
 	Player_MANA_RECT = Object->GetComponent<RectTransform>();
 	Player_MANA_RECT->SetPosition(X - 350, Y);
 	Player_MANA_RECT->SetScale(1, 1);
@@ -468,6 +500,7 @@ void UICanvas::Create_Player_Emagin_Color(float X, float Y)
 	Player_EMAGIN_COLOR[0] = Object->AddComponent<Image>();
 	Player_EMAGIN_COLOR[0]->SetTexture("Emagin_Back");
 	Player_EMAGIN_COLOR[0]->SetColor(255, 255, 255, 255);
+	Player_EMAGIN_COLOR[0]->SetLayer(100);
 	Rect = Object->GetComponent<RectTransform>();
 	Rect->SetPosition(X, Y);
 	Rect->SetScale(1, 1);
@@ -477,6 +510,7 @@ void UICanvas::Create_Player_Emagin_Color(float X, float Y)
 	Player_EMAGIN_COLOR[1] = Object->AddComponent<Image>();
 	Player_EMAGIN_COLOR[1]->SetTexture("Emagin_Front");
 	Player_EMAGIN_COLOR[1]->SetColor(255, 255, 255, 255);
+	Player_EMAGIN_COLOR[1]->SetLayer(100);
 	Rect = Object->GetComponent<RectTransform>();
 	Rect->SetPosition(X, Y);
 	Rect->SetScale(1, 1);
@@ -487,6 +521,7 @@ void UICanvas::Create_Dron_Text(float X, float Y)
 {
 	GameObject*	Object = Instance_UI();
 	Dron_Text = Object->AddComponent<Image>();
+	Dron_Text->SetLayer(100);
 	Dron_Rect = Object->GetComponent<RectTransform>();
 	Dron_Rect->SetPosition(X, Y);
 	Dron_Rect->SetScale(1,1);
@@ -567,8 +602,8 @@ void UICanvas::Create_Skill_UI(float X, float Y)
 	Player_Skill[0]->SetFillTexture("ingame_skill_rb_1");
 	Player_Skill[0]->SetPosition(X, Y );
 	Player_Skill[0]->SetPivot(PIVOT_MIDDLE_LEFT);
-	Player_Skill[0]->SetValueRange(0, 100);
-	Player_Skill[0]->SetFillRange(FILL_DOWN, 50);
+	Player_Skill[0]->SetFillRange(FILL_DOWN, 1.0f);
+	Player_Skill[0]->SetLayer(100);
 
 	Object = Instance_Slider();
 	Player_Skill[1] = Object->GetComponent<Slider>();
@@ -576,8 +611,8 @@ void UICanvas::Create_Skill_UI(float X, float Y)
 	Player_Skill[1]->SetFillTexture("ingame_skill_space_1");
 	Player_Skill[1]->SetPosition(X + 80, Y);
 	Player_Skill[1]->SetPivot(PIVOT_MIDDLE_LEFT);
-	Player_Skill[1]->SetValueRange(0, 100);
-	Player_Skill[1]->SetFillRange(FILL_DOWN, 50);
+	Player_Skill[1]->SetFillRange(FILL_DOWN, 1.0f);
+	Player_Skill[1]->SetLayer(100);
 
 	Object = Instance_Slider();
 	Player_Skill[2] = Object->GetComponent<Slider>();
@@ -585,8 +620,8 @@ void UICanvas::Create_Skill_UI(float X, float Y)
 	Player_Skill[2]->SetFillTexture("ingame_skill_e_1");
 	Player_Skill[2]->SetPosition(X + 160, Y);
 	Player_Skill[2]->SetPivot(PIVOT_MIDDLE_LEFT);
-	Player_Skill[2]->SetValueRange(0, 100);
-	Player_Skill[2]->SetFillRange(FILL_DOWN, 50);
+	Player_Skill[2]->SetFillRange(FILL_DOWN, 1.0f);
+	Player_Skill[2]->SetLayer(100);
 }
 
 void UICanvas::Create_Monster_UI()
@@ -675,3 +710,70 @@ bool UICanvas::UseCheck(GameObject* Obj)
 	}
 	return false;
 }
+
+
+void UICanvas::Push_Game_Start_Text()
+{
+	mTextMessageQueue.push("00_DroneText_GameStart");
+	mTextMessageQueue.push("01_DroneText_GameStart1");
+	mTextMessageQueue.push("02_DroneText_GameStart2");
+}
+
+void UICanvas::Push_Doom_Out_Text()
+{
+	mTextMessageQueue.push("03_DroneText_FirstOutDoom");
+	mTextMessageQueue.push("04_DroneText_FirstOutDoom1");
+}
+
+void UICanvas::Push_Store_Text()
+{
+	mTextMessageQueue.push("05_DroneText_VendingMashine");
+}
+
+void UICanvas::Push_Purchase_Success_Text()
+{
+	mTextMessageQueue.push("06_DroneText_Sell");
+}
+
+void UICanvas::Push_Purchase_Fail_Text()
+{
+	mTextMessageQueue.push("07_DroneText_SellFalse");
+
+}
+
+void UICanvas::Push_Boss_Start_Text()
+{
+	mTextMessageQueue.push("08_DroneText_BossSpawn");
+}
+
+void UICanvas::Push_Boss_Zone_In_Text()
+{
+	mTextMessageQueue.push("09_DroneText_BossZone");
+	mTextMessageQueue.push("10_DroneText_BossZone1");
+}
+
+void UICanvas::Push_Mana_Create_Text()
+{
+	mTextMessageQueue.push("11_DroneText_ManaSpawn");
+}
+
+void UICanvas::Push_Get_PureMana_Text()
+{
+	mTextMessageQueue.push("12_DroneText_PureMana");
+}
+
+void UICanvas::Push_Get_CoreMana_Text()
+{
+	mTextMessageQueue.push("13_DroneText_CoreMana");
+}
+
+void UICanvas::Push_Player_Die_Text()
+{
+	mTextMessageQueue.push("14_DroneText_PlayerDead");
+}
+
+void UICanvas::Push_Player_Heal_Text()
+{
+	mTextMessageQueue.push("15_DroneText_PlayerHeal");
+}
+

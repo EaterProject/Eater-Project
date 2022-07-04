@@ -68,7 +68,7 @@ void UIPause::Awake()
 	PauseButton[PAUSE::EXIT] = button;
 }
 
-void UIPause::SetPauseUIActive(bool active)
+void UIPause::Set_PauseUI_Active(bool active)
 {
 	PauseImage->SetActive(active);
 
