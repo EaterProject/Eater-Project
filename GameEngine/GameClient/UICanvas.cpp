@@ -73,13 +73,89 @@ void UICanvas::Update()
 			MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_CREDIT);
 		}
 
-		if (PlayTime <= 0.0f)
+		switch (ShowText)
 		{
+		case UICanvas::NONE:
+		{
+			// 큐에 쌓인 텍스트가 있다면..
+			if (mTextMessageQueue.empty() == false)
+			{
+				NowTextName = mTextMessageQueue.front();
+				mTextMessageQueue.pop();
 
+				// 드론 텍스트 활성화..
+				Dron_Text->SetActive(true);
+
+				// 드론 텍스트 변경..
+				Dron_Text->SetTexture(NowTextName);
+
+				ShowText = TEXT_STATE::FADE_IN;
+				PlayTime = Animtime;
+			}
 		}
-		else
+			break;
+		case UICanvas::FADE_IN:
 		{
+			PlayTime -= GetDeltaTime();
 
+			// 드론 텍스트 출력..
+			Dron_Text->SetAlpha(255.0f - (PlayTime * 4.0f * 255.0f));
+
+			if (PlayTime <= 0.0f)
+			{
+				PlayTime = ShowTime;
+				ShowText = TEXT_STATE::SHOW;
+
+				Dron_Text->SetAlpha(255.0f);
+			}
+		}
+			break;
+		case UICanvas::SHOW:
+		{
+			PlayTime -= GetDeltaTime();
+
+			if (PlayTime <= 0.0f)
+			{
+				PlayTime = Animtime;
+				ShowText = TEXT_STATE::FADE_OUT;
+			}
+		}
+			break;
+		case UICanvas::FADE_OUT:
+		{
+			PlayTime -= GetDeltaTime();
+
+			// 드론 텍스트 출력..
+			Dron_Text->SetAlpha(PlayTime * 4.0f * 255.0f);
+
+			if (PlayTime <= 0.0f)
+			{
+				PlayTime = Animtime;
+
+				// 큐에 쌓인 텍스트가 있다면..
+				if (mTextMessageQueue.empty() == false)
+				{
+					NowTextName = mTextMessageQueue.front();
+					mTextMessageQueue.pop();
+
+					// 드론 텍스트 변경..
+					Dron_Text->SetTexture(NowTextName);
+
+					ShowText = TEXT_STATE::FADE_IN;
+					PlayTime = Animtime;
+				}
+				else
+				{
+					ShowText = TEXT_STATE::NONE;
+					
+					// 드론 텍스트 비활성화..
+					Dron_Text->SetActive(false);
+				}
+			}
+		}
+			break;
+		default:
+			break;
 		}
 	}
 

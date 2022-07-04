@@ -15,6 +15,15 @@ public:
 	UICanvas();
 	virtual ~UICanvas();
 
+private:
+	enum TEXT_STATE
+	{
+		NONE,
+		FADE_IN,
+		SHOW,
+		FADE_OUT
+	};
+public:
 	void Awake() override;
 	void Start() override;
 	void Update() override;
@@ -92,8 +101,11 @@ public:
 
 private:
 	std::queue<std::string> mTextMessageQueue;
+	std::string NowTextName;
 
-	const float Animtime = 0.5f;
+	TEXT_STATE ShowText;
+
+	const float Animtime = 0.25f;
 	const float ShowTime = 1.0f;
 
 	float PlayTime = 0.0f;
