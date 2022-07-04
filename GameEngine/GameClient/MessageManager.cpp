@@ -208,7 +208,7 @@ GameObject* MessageManager::CREATE_MESSAGE(int CREATE_TYPE)
 
 void MessageManager::SEND_Player_Message(int MessageType, void* Data)
 {
-	///Boss 메세지 모음
+	///Player 메세지 모음
 	mPlayer->SetMessageRECV(MessageType, Data);
 }
 

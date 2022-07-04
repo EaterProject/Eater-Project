@@ -148,6 +148,8 @@ void Player::Update()
 	//플레이어 공격당했을때 무적시간
 	PlayerHitTimeCheck();
 
+	Player_Push();
+
 	//공격상태일때 아닐떄를 먼저 체크
 	if (mState & (PLAYER_STATE_ATTACK_01 | PLAYER_STATE_ATTACK_02 | PLAYER_STATE_SKILL_01 | PLAYER_STATE_SKILL_02))
 	{
@@ -194,6 +196,11 @@ void Player::SetMessageRECV(int Type, void* Data)
 		ComboCount = 0;
 		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_COMBO, &ComboCount);
 		break;
+	case MESSAGE_PLAYER_PUSH:
+		IsPush = true;
+		PushPoint = *(reinterpret_cast<Vector3*>(Data)) - mTransform->GetPosition();
+		PushNomal = PushPoint;
+		PushNomal.Normalize();
 	case MESSAGE_PLAYER_LIGHT_CHANGE:
 		ChangeSkyLight(*(reinterpret_cast<int*>(Data)));
 		break;
@@ -692,6 +699,34 @@ bool Player::Player_Move_Check()
 		return true;
 	}
 }
+void Player::Player_Push()
+{
+	static float PushTime = 0;
+	if (IsPush == false){return;}
+	Speed = 0;
+	if (IsBackRayCheck == true)
+	{
+		if (PushTime >= 1.5f)
+		{
+			IsPush = false;
+			Speed = 10;
+			PushTime = 0;
+		}
+		else
+		{
+			PushTime += GetDeltaTime();
+			mTransform->AddPosition(PushNomal * 10 * GetDeltaTime());
+
+			if (IsFrontRayCheck == false || IsBackRayCheck == false ||
+				IsLeftRayCheck == false || IsRightRayCheck == false)
+			{
+				IsPush = false;
+				Speed = 10;
+				PushTime = 0;
+			}
+		}
+	}
+}
 
 void Player::ChangeSkyLight(int index)
 {
@@ -893,7 +928,6 @@ void Player::PlayerGroundCheck()
 				isHit = false;
 			}
 		}
-
 
 		switch (i)
 		{

@@ -35,13 +35,14 @@
 #define MESSAGE_PLAYER_ACTIVE_TRUE 3		//플레이어 Active TRUE
 #define MESSAGE_PLAYER_ACTIVE_FALSE 4		//플레이어 Active FALSE
 #define MESSAGE_PLAYER_COMBO_RESET 5		//플레이어 콤보 리셋
-#define MESSAGE_PLAYER_LIGHT_CHANGE 6		//플레이어 스카이 라이트 변경
-#define MESSAGE_PLAYER_GET_PUREMANA 7		//플레이어 퓨어마나 획득
-#define MESSAGE_PLAYER_GET_COREMANA 8		//플레이어 코어마나 획득
-#define MESSAGE_PLAYER_UPGRADE_EMAGIN 9		//플레이어 이메진 횟수 강화
-#define MESSAGE_PLAYER_UPGRADE_HP 10		//플레이어 체력 강화
-#define MESSAGE_PLAYER_UPGRADE_ATTACK 11	//플레이어 공격속도 강화
-#define MESSAGE_PLAYER_UPGRADE_MOVE 12		//플레이어 이동속도 강화
+#define	MESSAGE_PLAYER_PUSH 6				//플레이어 밀림
+#define MESSAGE_PLAYER_LIGHT_CHANGE 7		//플레이어 스카이 라이트 변경
+#define MESSAGE_PLAYER_GET_PUREMANA 8		//플레이어 퓨어마나 획득
+#define MESSAGE_PLAYER_GET_COREMANA 9		//플레이어 코어마나 획득
+#define MESSAGE_PLAYER_UPGRADE_EMAGIN 10		//플레이어 이메진 횟수 강화
+#define MESSAGE_PLAYER_UPGRADE_HP 11		//플레이어 체력 강화
+#define MESSAGE_PLAYER_UPGRADE_ATTACK 12	//플레이어 공격속도 강화
+#define MESSAGE_PLAYER_UPGRADE_MOVE 13		//플레이어 이동속도 강화
 
 //Gate Message
 #define MESSAGE_GATE_OPEN  0				//게이트 열기			//인자 값 : int
@@ -140,16 +141,26 @@ enum class BOSS_STATE : int
 	CHASE_ATTACK_PLAY = 8,	//추적 발사체 발사
 	CHASE_ATTACK_END = 9,	//추적 발사체 끝
 
-	RENDOM_ATTACK_START = 10,	//장판형 발사체 준비
-	RENDOM_ATTACK_PLAY = 11,	//장판형 발사체 발사
-	RENDOM_ATTACK_END = 12,		//장판형 발사체 발사
-	RENDOM_ATTACK_RESET = 13,	//장판형 발사체 발사
+	RENDOM_ATTACK_START		= 10,	//장판형 발사체 준비
+	RENDOM_ATTACK_PLAY		= 11,	//장판형 발사체 발사
+	RENDOM_ATTACK_END		= 12,		//장판형 발사체 발사
+	RENDOM_ATTACK_RESET		= 13,	//장판형 발사체 발사
+	RENDOM_ATTACK_ADDSKILL	= 14,	//장판형 발사체 발사
 
-	TELEPORT_READY = 14,	//보스 순간이동 준비
-	TELEPORT_START = 15,	//보스 순간이동 
+	TELEPORT_READY = 15,	//보스 순간이동 준비
+	TELEPORT_START = 16,	//보스 순간이동 
 
-	CREATE_FRIEND = 16,	//분신 소환
-	HIT = 17,	//맞았을떄
+	CREATE_FRIEND	= 17,	//분신 소환
+	HIT				= 18,	//맞았을떄
+	PHASE_UP_START	= 19,	//페이즈업
+	PHASE_UP_END	= 20,	//페이즈업
+
+	MISSILE_START	=21,
+	MISSILE_PLAY	=22,
+	MISSILE_END		=23,
+
+
+	RENDOM_ATTACK_BIG = 24,
 };
 
 enum class PLAYER_STATE : int

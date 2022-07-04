@@ -5,6 +5,8 @@
 #include "EaterEngineAPI.h"
 #include "ParticleController.h"
 #include "ParticleFactory.h"
+#include "Player.h"
+#include "MessageManager.h"
 BossWeapon::BossWeapon()
 {
 
@@ -48,6 +50,7 @@ void BossWeapon::Start()
 	//PC->Play();
 	//PC =  mParticleObj[2]->GetComponent<ParticleController>();
 	//PC->Play();
+	mPlayerTr = Player::GetPlayerTransform();
 }
 
 void BossWeapon::Update()
@@ -56,11 +59,12 @@ void BossWeapon::Update()
 
 	if (IsSizeUpdate == true)
 	{
-		if (mTransform->GetScale().x >= 5.0f)
+		if (mTransform->GetScale().x >= UpScale)
 		{
 			IsSizeUpdate = false;
 			IsShooting = true;
 			IsReady = true;
+			Sound_Play_SFX("Boss_ThrowWeapon");
 		}
 		else
 		{
@@ -76,7 +80,11 @@ void BossWeapon::Update()
 			mTransform->GetPosition().z >= End_Shooting_Pos.z - 0.4f && mTransform->GetPosition().z <= End_Shooting_Pos.z + 0.4f)
 		{
 			IsStart = false;
-			//mParticleManager->Stop();
+			if (IsGroundExplosion == true)
+			{
+				Explosion();
+				IsGroundExplosion = false;
+			}
 		}
 		else
 		{
@@ -84,6 +92,16 @@ void BossWeapon::Update()
 			mTransform->AddPosition_X(ShootingNormalize.x * DTime * MoveSpeed);
 			mTransform->AddPosition_Y(ShootingNormalize.y * DTime * MoveSpeed);
 			mTransform->AddPosition_Z(ShootingNormalize.z * DTime * MoveSpeed);
+
+			float Dir = mTransform->GetDistance(mPlayerTr->GetPosition());
+
+			if (Dir <= 1)
+			{
+				int Damage = 10;
+				MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_HIT, &Damage);
+				MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_PLAYER_HIT, nullptr);
+				Reset();
+			}
 		}
 	}
 
@@ -91,8 +109,19 @@ void BossWeapon::Update()
 	//mMF_Setting.Update(1);
 }
 
+void BossWeapon::Debug()
+{
+	DebugDrawSphere(1, mTransform->GetPosition(), Vector3(0,0,255));
+	DebugDrawSphere(2, mTransform->GetPosition(), Vector3(0,0,255));
+}
 
-void BossWeapon::SetShootingPoistion(Vector3 Start, Vector3 End, float mScaleSpeed, float mMoveSpeed)
+
+void BossWeapon::SetScale(float UpSize)
+{
+	UpScale =UpSize;
+}
+
+void BossWeapon::SetShootingPoistion(Vector3 Start, Vector3 End, float mScaleSpeed, float mMoveSpeed,bool GroundExplosion)
 {
 	//mMF_Setting.SetLimlightSetting(0, 0, 0, 1, 1);
 	//mMF_Setting.SetLimlightSettingMax(1, 0, 0, 1, 1);
@@ -104,22 +133,24 @@ void BossWeapon::SetShootingPoistion(Vector3 Start, Vector3 End, float mScaleSpe
 
 	//현재 지점 설정
 	mTransform->SetPosition(Start);
-	mTransform->SetScale(0.0f, 0.0f, 0.0f);
+	mTransform->SetScale(1, 1, 1);
 
 	//방향벡터 구하기
 	ShootingNormalize = End - Start;
 	ShootingNormalize.Normalize();
 
+	IsGroundExplosion = GroundExplosion;
 	IsSizeUpdate = true;
 	IsStart = true;
 	ScaleSpeed = mScaleSpeed;
 	MoveSpeed = mMoveSpeed;
+	Sound_Play_SFX("Boss_SpawnWeapon");
 }
 
 void BossWeapon::Reset()
 {
 	mTransform->SetPosition(StartPoint);
-	mTransform->SetScale(0.0f, 0.0f, 0.0f);
+	mTransform->SetScale(1,1, 1);
 	IsShooting = false;
 	IsSizeUpdate = false;
 	IsReady = false;
@@ -131,10 +162,17 @@ bool BossWeapon::ShootingReady()
 	return IsReady;
 }
 
-void BossWeapon::RandomUpdate()
+void BossWeapon::Explosion()
 {
+	float Dir = mTransform->GetDistance(mPlayerTr->GetPosition());
+	if (Dir <= 2)
+	{
+		int Damage = 10;
+		MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_HIT, &Damage);
+		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_PLAYER_HIT, nullptr);
+		Sound_Play_SFX("Boss_WeaponExplosion");
+	}
 
-
-
-
+	Reset();
 }
+
