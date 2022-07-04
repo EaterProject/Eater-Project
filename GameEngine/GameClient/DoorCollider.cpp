@@ -120,6 +120,12 @@ void DoorCollider::OnTriggerExit(GameObject* Obj)
 		num++;
 		MessageManager::GetGM()->SEND_Message(TARGET_GATE_MANAGER, MESSAGE_GATE_UNLOCK, &num);
 
+		if (FirstOut == false)
+		{
+			MessageManager::GetGM()->SEND_Message(TARGET_DRONE, MESSAGE_DRONE_DOOM_OUT);
+			FirstOut = true;
+		}
+
 		isStart = true;
 	}
 

@@ -186,6 +186,7 @@ void Player::SetMessageRECV(int Type, void* Data)
 		mHealParticle->SetPosition(Pos);
 		mHealParticle->Play();
 		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_HP_NOW, &HP);
+		MessageManager::GetGM()->SEND_Message(TARGET_DRONE, MESSAGE_DRONE_PLAYER_HEAL);
 		break;
 	}
 	case MESSAGE_PLAYER_ATTACK_OK:
@@ -210,6 +211,7 @@ void Player::SetMessageRECV(int Type, void* Data)
 		PushPoint = *(reinterpret_cast<Vector3*>(Data)) - mTransform->GetPosition();
 		PushNomal = PushPoint;
 		PushNomal.Normalize();
+		break;
 	case MESSAGE_PLAYER_LIGHT_CHANGE:
 		ChangeSkyLight(*(reinterpret_cast<int*>(Data)));
 		break;
@@ -677,6 +679,7 @@ void Player::Player_Hit(int HitPower)
 	{
 		//Á×¾úÀ»¶§
 		HP = 0;
+		MessageManager::GetGM()->SEND_Message(TARGET_DRONE, MESSAGE_DRONE_PLAYER_DIE);
 	}
 	else
 	{

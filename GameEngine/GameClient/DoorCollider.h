@@ -19,7 +19,7 @@ public:
 	void OnTriggerExit(GameObject* Obj);
 
 
-
+	bool FirstOut = false;
 	bool Lock = false;
 private:
 	Collider* mCollider = nullptr;

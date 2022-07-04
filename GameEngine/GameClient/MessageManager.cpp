@@ -25,6 +25,7 @@
 #include "Store.h"
 #include "CameraManager.h"
 #include "ManaStone.h"
+#include "SceneEffect.h"
 #include "UIEffect.h"
 #include "UITitle.h"
 #include "UIStore.h"
@@ -76,6 +77,7 @@ void MessageManager::Initialize(ObjectFactory* Factory)
 	//플레이어 생성
 	CREATE_MESSAGE(TARGET_CAMERA_MANAGER);
 	CREATE_MESSAGE(TARGET_GATE_MANAGER);
+	CREATE_MESSAGE(TARGET_SCENE_EFFECT);
 	CREATE_MESSAGE(TARGET_UI);
 	CREATE_MESSAGE(TARGET_UI_EFFECT);
 	CREATE_MESSAGE(TARGET_UI_TITLE);
@@ -201,6 +203,10 @@ GameObject* MessageManager::CREATE_MESSAGE(int CREATE_TYPE)
 		Object = mFactory->CreateUIBoss();
 		mBossUI = Object->GetComponent<UIBoss>();
 		return Object;
+	case TARGET_SCENE_EFFECT:
+		Object = mFactory->CreateSceneEffect();
+		mSceneEffect = Object->GetComponent<SceneEffect>();
+		return Object;
 	}
 
 	return nullptr;
@@ -293,40 +299,40 @@ void MessageManager::SEND_DRONE_Message(int MessageType, void* Data)
 {
 	switch (MessageType)
 	{
-	case MESSAGE_DRONE_GAME_START:
+	case MESSAGE_DRONE_GAME_START:			// O
 		mCanvas->Push_Game_Start_Text();
 		break;
-	case MESSAGE_DRONE_DOOM_OUT:
+	case MESSAGE_DRONE_DOOM_OUT:			// O
 		mCanvas->Push_Doom_Out_Text();
 		break;
-	case MESSAGE_DRONE_STORE:
+	case MESSAGE_DRONE_STORE:				// O
 		mCanvas->Push_Store_Text();
 		break;
-	case MESSAGE_DRONE_PURCHASE_SUCCESS:
+	case MESSAGE_DRONE_PURCHASE_SUCCESS:	// O
 		mCanvas->Push_Purchase_Success_Text();
 		break;
-	case MESSAGE_DRONE_PURCHASE_FAIL:
+	case MESSAGE_DRONE_PURCHASE_FAIL:		// O
 		mCanvas->Push_Purchase_Fail_Text();
 		break;
-	case MESSAGE_DRONE_BOSS_START:
+	case MESSAGE_DRONE_BOSS_START:			// 해야됨
 		mCanvas->Push_Boss_Start_Text();
 		break;
-	case MESSAGE_DRONE_BOSS_ZONE_IN:
+	case MESSAGE_DRONE_BOSS_ZONE_IN:		// O
 		mCanvas->Push_Boss_Zone_In_Text();
 		break;
-	case MESSAGE_DRONE_MANA_CREATE:
+	case MESSAGE_DRONE_MANA_CREATE:			// O
 		mCanvas->Push_Mana_Create_Text();
 		break;
-	case MESSAGE_DRONE_GET_PUREMANA:
+	case MESSAGE_DRONE_GET_PUREMANA:		// O
 		mCanvas->Push_Get_PureMana_Text();
 		break;
-	case MESSAGE_DRONE_GET_COREMANA:
+	case MESSAGE_DRONE_GET_COREMANA:		// O
 		mCanvas->Push_Get_CoreMana_Text();
 		break;
-	case MESSAGE_DRONE_PLAYER_DIE:
+	case MESSAGE_DRONE_PLAYER_DIE:			// O
 		mCanvas->Push_Player_Die_Text();
 		break;
-	case MESSAGE_DRONE_PLAYER_HEAL:
+	case MESSAGE_DRONE_PLAYER_HEAL:			// O
 		mCanvas->Push_Player_Heal_Text();
 		break;
 	default:
@@ -426,6 +432,10 @@ void MessageManager::InGameStart()
 	SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_ACTIVE_TRUE);
 	SEND_Message(TARGET_CAMERA_MANAGER, MESSAGE_CAMERA_CHANGE_PLAYER);
 
+	//드론 텍스트 출력
+	SEND_Message(TARGET_DRONE, MESSAGE_DRONE_GAME_START);
+	SEND_Message(TARGET_DRONE, MESSAGE_DRONE_MANA_CREATE);
+
 	// 플레이어 키상태 설정..
 	mPlayer->SetKeyState(true);
 
@@ -514,6 +524,9 @@ void MessageManager::InGameResume()
 	mCredit->Set_CreditUI_Active(false);
 	mStore->Set_Store_Active(false);
 
+	// 드론 텍스트 피벗 위치 교체
+	mCanvas->Set_Drone_Text_Pivot(PIVOT_TYPE::PIVOT_MIDDLE_LEFT);
+
 	// 상점 상호작용 활성화..
 	mStoreMachine->SetStoreActive(true);
 
@@ -565,6 +578,9 @@ void MessageManager::StoreStart()
 	mPause->Set_PauseUI_Active(false);
 	mManual->Set_ManualUI_Active(false);
 	mCredit->Set_CreditUI_Active(false);
+
+	// 드론 텍스트 피벗 위치 교체
+	mCanvas->Set_Drone_Text_Pivot(PIVOT_TYPE::PIVOT_MIDDLE_RIGHT);
 
 	// 플레이어 키상태 설정..
 	mPlayer->SetKeyState(false);

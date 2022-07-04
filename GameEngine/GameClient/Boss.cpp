@@ -1086,6 +1086,9 @@ void Boss::SkillCheck()
 
 		bool Active = true;
 		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_BOSS_ACTIVE, &Active);
+
+		/// 들어왔을때 한번만해야함
+		MessageManager::GetGM()->SEND_Message(TARGET_DRONE, MESSAGE_DRONE_BOSS_ZONE_IN);
 	}
 }
 

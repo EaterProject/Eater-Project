@@ -55,6 +55,7 @@ void Store::Update()
 			mStoreActive->SetActive(false);
 
 			MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_STORE);
+			MessageManager::GetGM()->SEND_Message(TARGET_DRONE, MESSAGE_DRONE_STORE);
 		}
 	}
 }

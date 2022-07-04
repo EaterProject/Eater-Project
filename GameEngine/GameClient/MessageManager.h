@@ -20,6 +20,7 @@ class GateDoor;
 class Boss;
 class Store;
 class CameraManager;
+class SceneEffect;
 class UIEffect;
 class UITitle;
 class UIStore;
@@ -82,6 +83,7 @@ private:
 	GateDoor*			mGate			= nullptr;
 	Player*				mPlayer			= nullptr;
 	Store*				mStoreMachine	= nullptr;
+	SceneEffect*		mSceneEffect	= nullptr;
 	UICanvas*			mCanvas			= nullptr;
 	UIEffect*			mEffect			= nullptr;
 	UITitle*			mTiltle			= nullptr;

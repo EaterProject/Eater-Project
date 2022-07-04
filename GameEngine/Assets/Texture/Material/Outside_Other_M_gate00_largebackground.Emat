@@ -1,22 +1,22 @@
 #EATERMAT
-@ORMMap gate00_largebackground_ORM
-@Alpha 0
 @MaterialName Outside_Other_M_gate00_largebackground
-@LimColor_B 0.603922
+@Alpha 0
+@ORMMap gate00_largebackground_ORM
+@LimColor_B 0.623529
 @DiffuseMap gate00_largebackground_BaseColor
 @NormalMap gate00_largebackground_Normal
 @EmissiveMap 0
-@SkyLightIndex 0.000000
 @Emissive 0.000000
+@SkyLightIndex 0.000000
 @Roughness 0.000000
 @Metallic 0.000000
 @Tileing_X 1
 @Tileing_Y 1
 @AddColor_R 0.000000
 @AddColor_G 0.000000
-@LimFactor 0.500000
 @AddColor_B 0.000000
-@LimColor_R 0.749020
-@LimColor_G 0.674510
-@LimWidth 2.600000
+@LimFactor 0.400000
+@LimColor_R 0.784314
+@LimColor_G 0.690196
+@LimWidth 3.500000
 &

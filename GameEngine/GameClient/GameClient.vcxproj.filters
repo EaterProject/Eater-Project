@@ -172,6 +172,9 @@
     <Filter Include="소스 파일\Component\UI\UIBoss">
       <UniqueIdentifier>{64e0b759-5c21-42d9-9b1c-421f06afa5d9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Component\SceneEffect">
+      <UniqueIdentifier>{51757aa8-4c03-46c2-81a3-a8cdb07b4de1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -306,6 +309,9 @@
     <ClInclude Include="UIBoss.h">
       <Filter>소스 파일\Component\UI\UIBoss</Filter>
     </ClInclude>
+    <ClInclude Include="SceneEffect.h">
+      <Filter>소스 파일\Component\SceneEffect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameClient.cpp">
@@ -427,6 +433,9 @@
     </ClCompile>
     <ClCompile Include="UIBoss.cpp">
       <Filter>소스 파일\Component\UI\UIBoss</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneEffect.cpp">
+      <Filter>소스 파일\Component\SceneEffect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
