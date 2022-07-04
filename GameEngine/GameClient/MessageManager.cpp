@@ -448,7 +448,7 @@ void MessageManager::InGameStart()
 	mCameraManager->SetMouseFix(true);
 
 	//사운드 재생
-	Sound_Play_BGM("InGame_OutDoor");
+	Sound_Play_BGM("InGame_InDoor");
 }
 
 void MessageManager::TitleStart()
@@ -557,6 +557,8 @@ void MessageManager::InGameEnd()
 
 void MessageManager::BossStart()
 {
+	Sound_Stop_BGM();
+	Sound_Play_BGM("BossZone");
 	// 보스 등장 이펙트 실행..
 	mSceneEffect->Begin_Boss_Start_Effect();
 
@@ -622,8 +624,11 @@ void MessageManager::StoreStart()
 
 void MessageManager::CreditStart()
 {
-	mCredit->Set_CreditUI_Active(true);
+	Sound_Stop_BGM();
+	Sound_Play_BGM("Ending");
 
+
+	mCredit->Set_CreditUI_Active(true);
 	mTiltle->Set_TitleUI_Active(false);
 	mCanvas->Set_InGameUI_Active(false);
 	mOption->Set_OptionUI_Active(false);

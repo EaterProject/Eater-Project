@@ -941,6 +941,8 @@ void Boss::Phase_UP_Start()
 			Weapon[i]->Reset();
 		}
 		BigWeapon->Reset();
+		Sound_Stop_BGM();
+		Sound_Play_BGM("BossZone_Phase2");
 	}
 
 	//페이즈 변경시작

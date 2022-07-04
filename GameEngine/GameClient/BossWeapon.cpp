@@ -202,13 +202,8 @@ void BossWeapon::Explosion()
 	mExplosion->SetPosition(mTransform->GetPosition());
 	mExplosion->Play();
 
-	PARTICLE_STATE state;
-	state = mExplosionRange->GetState();
-	if (state == PARTICLE_STATE::PLAY_STATE)
-	{
-		mExplosionRange->Stop();
-	}
 
+	mExplosionRange->Stop();
 	mTransform->SetPosition(StartPoint);
 	mTransform->SetScale(1, 1, 1);
 	IsShooting = false;

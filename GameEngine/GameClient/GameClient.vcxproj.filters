@@ -138,9 +138,6 @@
     <Filter Include="소스 파일\Component\Player\PlayerCamera">
       <UniqueIdentifier>{7d8101c0-7f76-4434-ba97-7d38af02b9ac}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Component\Player\PlayerPotal">
-      <UniqueIdentifier>{7062dc88-490f-43ef-afe0-a4954ee6bd26}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Component\Player\PlayerCollider">
       <UniqueIdentifier>{a94d78de-c827-43ee-bab8-2f215b623ba0}</UniqueIdentifier>
     </Filter>
@@ -177,6 +174,9 @@
     </Filter>
     <Filter Include="소스 파일\Manager\DissolveManager">
       <UniqueIdentifier>{4ddf07eb-6b12-445f-a037-7fe19d0275ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\Player\PlayerPotal">
+      <UniqueIdentifier>{23394d60-3218-4a7b-b06b-93c7be9ae221}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -318,6 +318,9 @@
     <ClInclude Include="DissolveManager.h">
       <Filter>소스 파일\Manager\DissolveManager</Filter>
     </ClInclude>
+    <ClInclude Include="PlayerPortal.h">
+      <Filter>소스 파일\Component\Player\PlayerPotal</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameClient.cpp">
@@ -445,6 +448,9 @@
     </ClCompile>
     <ClCompile Include="DissolveManager.cpp">
       <Filter>소스 파일\Manager\DissolveManager</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerPortal.cpp">
+      <Filter>소스 파일\Component\Player\PlayerPotal</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
