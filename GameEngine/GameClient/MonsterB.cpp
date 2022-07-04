@@ -16,6 +16,7 @@ MonsterB::~MonsterB()
 void MonsterB::Awake()
 {
 	mParticleController = ParticleFactory::Get()->CreateParticleController(PARTICLE_TYPE::MonsterExplode);
+	mParticleController->SetScale(3);
 	MonsterComponent::Awake();
 }
 void MonsterB::SetUp()

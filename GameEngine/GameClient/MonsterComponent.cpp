@@ -52,7 +52,8 @@ void MonsterComponent::Awake()
 	mColider	= gameobject->GetComponent<Collider>();
 	mRigidbody  = gameobject->GetComponent<Rigidbody>();
 
-	
+	mHitController = ParticleFactory::Get()->CreateParticleController(PARTICLE_TYPE::CounterAttack);
+	mHitController->SetScale(1);
 }
 
 void MonsterComponent::SetUp()
@@ -140,7 +141,14 @@ void MonsterComponent::OnTriggerStay(GameObject* Obj)
 				{
 					//플레이어 콤보를 리셋 시킨다
 					MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_COMBO_RESET);
-					HP -= 100;
+					MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_HEAL);
+
+					Vector3 Pos = mTransform->GetPosition();
+					Pos.y += 1.0f;
+					mHitController->SetPosition(Pos);
+					mHitController->SetScale(0.5f);
+					mHitController->Play();
+					HP -= 1000;
 				}
 				else
 				{
@@ -318,8 +326,8 @@ void MonsterComponent::Dead()
 		if (mMF_Setting.EndDissolve() == false) 
 		{
 			gameobject->SetActive(false);
-			Destroy(gameobject);
 		}
+		Destroy(gameobject);
 	}
 	else
 	{
