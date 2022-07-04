@@ -198,6 +198,5 @@ void CameraManager::BossEndCinematic()
 
 void CameraManager::TitleCinematic()
 {
-	//mCinematic->PushCameraAnimation("07_Camera_Title");
 	mCinematicCamera->PushCameraAnimation("Camera_Title");
 }

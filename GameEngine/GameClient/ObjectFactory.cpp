@@ -38,7 +38,7 @@
 #include "UIManual.h"
 #include "UICredit.h"
 #include "UIBoss.h"
-
+#include "SceneEffect.h"
 
 
 ObjectFactory::ObjectFactory()
@@ -228,6 +228,13 @@ GameObject* ObjectFactory::CreateUIBoss()
 	GameObject* Object_BossUI = Instance();
 	Object_BossUI->AddComponent<UIBoss>();
 	return Object_BossUI;
+}
+
+GameObject* ObjectFactory::CreateSceneEffect()
+{
+	GameObject* Object_SceneEffect = Instance();
+	Object_SceneEffect->AddComponent<SceneEffect>();
+	return Object_SceneEffect;
 }
 
 GameObject* ObjectFactory::CreateBoss()

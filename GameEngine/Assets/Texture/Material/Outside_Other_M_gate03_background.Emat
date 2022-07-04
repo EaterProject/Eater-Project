@@ -2,7 +2,7 @@
 @ORMMap gate03_background_ORM
 @Alpha 0
 @MaterialName Outside_Other_M_gate03_background
-@LimColor_B 0.603922
+@LimColor_B 0.564706
 @DiffuseMap gate03_background_BaseColor
 @NormalMap gate03_background_Normal
 @EmissiveMap 0
@@ -14,9 +14,9 @@
 @Tileing_Y 1
 @AddColor_R 0.000000
 @AddColor_G 0.000000
-@LimFactor 0.400000
+@LimFactor 0.500000
 @AddColor_B 0.000000
-@LimColor_R 0.749020
-@LimColor_G 0.674510
-@LimWidth 2.000000
+@LimColor_R 0.760784
+@LimColor_G 0.647059
+@LimWidth 1.900000
 &
