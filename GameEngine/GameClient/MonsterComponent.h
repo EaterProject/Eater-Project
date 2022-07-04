@@ -116,6 +116,7 @@ protected:
 protected:
 	MeshFilterSetting	mMF_Setting;
 	ParticleController* mParticleController;
+	ParticleController* mHitController;
 	std::function<void()> HitFunction;
 
 };

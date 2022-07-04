@@ -13,6 +13,9 @@
 #include "Rigidbody.h"
 #include "MiniMapSystem.h"
 
+#include "ParticleController.h"
+#include "ParticleFactory.h"
+
 std::vector<Vector3> ManaStone::MonsterMovePointDefault;
 ManaStone::ManaStone()
 {
@@ -44,6 +47,8 @@ void ManaStone::Awake()
 	srand((unsigned int)time(NULL));
 
 	CreateMonster(MonsterACount, MonsterBCount);
+	mAttackParticle		= ParticleFactory::Get()->CreateParticleController(PARTICLE_TYPE::ManaTreeSmoke);
+	mRangeParticle	= ParticleFactory::Get()->CreateParticleController(PARTICLE_TYPE::ManaSmoke);
 }
 
 void ManaStone::SetUp()
@@ -59,6 +64,13 @@ void ManaStone::SetUp()
 void ManaStone::Start()
 {
 	mSetting.Setting(this->gameobject);
+	mAttackParticle->Play();
+
+
+	Vector3 Pos = mTransform->GetPosition();
+	Pos.y += 1.5f;
+	mRangeParticle->SetPosition(Pos);
+	mRangeParticle->Play();
 }
 
 void ManaStone::Update()
@@ -128,6 +140,11 @@ void ManaStone::Delete()
 
 	Destroy(this->gameobject);
 	MiniMapSystem::Get()->DeleteIcon(this->gameobject);
+	mAttackParticle->Stop();
+	mRangeParticle->Stop();
+
+	mAttackParticle->gameobject->SetActive(false);
+	mRangeParticle->gameobject->SetActive(false);
 }
 
 void ManaStone::Debug()

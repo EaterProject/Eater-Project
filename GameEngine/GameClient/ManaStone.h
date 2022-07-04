@@ -10,6 +10,7 @@ class MonsterA;
 
 class Collider;
 class Rigidbody;
+class ParticleController;
 
 class ManaStone :public ClientComponent
 {
@@ -59,5 +60,8 @@ private:
 
 	// 마나초당 코어마나 획득 개수
 	int CoreManaCount = 1;
+
+	ParticleController* mAttackParticle;
+	ParticleController* mRangeParticle;
 };
 

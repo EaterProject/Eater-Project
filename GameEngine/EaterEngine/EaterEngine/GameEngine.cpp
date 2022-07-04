@@ -268,73 +268,73 @@ GameObject* GameEngine::Instance_Particle(std::string ObjName, std::string FileN
 	Transform* Tr = temp->AddComponent<Transform>();
 	temp->transform = Tr;
 	MeshFilter*		mMeshFilter = temp->AddComponent<MeshFilter>();
-	ParticleSystem* mParticle	= temp->AddComponent<ParticleSystem>();
+	ParticleSystem* mBaseAttackParticle	= temp->AddComponent<ParticleSystem>();
 
 	if (FileName != "Default")
 	{
 		LoadParticleData* Data = LoadManager::GetParticle(FileName);
-		mParticle->SetMeshName("Quad");
-		mParticle->SetDiffuseName(Data->TextrueName);
+		mBaseAttackParticle->SetMeshName("Quad");
+		mBaseAttackParticle->SetDiffuseName(Data->TextrueName);
 		switch (Data->RenderType)
 		{
 		case 0 :
-			mParticle->SetRenderType(PARTICLE_RENDER_OPTION::BILLBOARD);
+			mBaseAttackParticle->SetRenderType(PARTICLE_RENDER_OPTION::BILLBOARD);
 			break;
 		case 1:
-			mParticle->SetRenderType(PARTICLE_RENDER_OPTION::VERTICAL_BILLBOARD);
+			mBaseAttackParticle->SetRenderType(PARTICLE_RENDER_OPTION::VERTICAL_BILLBOARD);
 			break;
 		case 2:
-			mParticle->SetRenderType(PARTICLE_RENDER_OPTION::HORIZONTAL_BILLBOARD);
+			mBaseAttackParticle->SetRenderType(PARTICLE_RENDER_OPTION::HORIZONTAL_BILLBOARD);
 			break;
 		}
 
 		switch (Data->ColorType)
 		{
 		case 0:
-			mParticle->SetLifeTimeColor(Data->LifeColor_Min, Data->LifeColor_Max, NONE);
+			mBaseAttackParticle->SetLifeTimeColor(Data->LifeColor_Min, Data->LifeColor_Max, NONE);
 			break;
 		case 1:
-			mParticle->SetLifeTimeColor(Data->LifeColor_Min, Data->LifeColor_Max, UP);
+			mBaseAttackParticle->SetLifeTimeColor(Data->LifeColor_Min, Data->LifeColor_Max, UP);
 			break;
 		case 2:
-			mParticle->SetLifeTimeColor(Data->LifeColor_Min, Data->LifeColor_Max, DOWN);
+			mBaseAttackParticle->SetLifeTimeColor(Data->LifeColor_Min, Data->LifeColor_Max, DOWN);
 			break;
 		case 3:
-			mParticle->SetLifeTimeColor(Data->LifeColor_Min, Data->LifeColor_Max, UPDOWN);
+			mBaseAttackParticle->SetLifeTimeColor(Data->LifeColor_Min, Data->LifeColor_Max, UPDOWN);
 			break;
 		}
 
 		switch (Data->ScaleType)
 		{
 		case 0:
-			mParticle->SetLifeTimeScale(Data->LifeScale.x, Data->LifeScale.y, NONE);
+			mBaseAttackParticle->SetLifeTimeScale(Data->LifeScale.x, Data->LifeScale.y, NONE);
 			break;
 		case 1:
-			mParticle->SetLifeTimeScale(Data->LifeScale.x, Data->LifeScale.y, UP);
+			mBaseAttackParticle->SetLifeTimeScale(Data->LifeScale.x, Data->LifeScale.y, UP);
 			break;
 		case 2:
-			mParticle->SetLifeTimeScale(Data->LifeScale.x, Data->LifeScale.y, DOWN);
+			mBaseAttackParticle->SetLifeTimeScale(Data->LifeScale.x, Data->LifeScale.y, DOWN);
 			break;
 		case 3:
-			mParticle->SetLifeTimeScale(Data->LifeScale.x, Data->LifeScale.y, UPDOWN);
+			mBaseAttackParticle->SetLifeTimeScale(Data->LifeScale.x, Data->LifeScale.y, UPDOWN);
 			break;
 		}
 
-		mParticle->SetStrength(Data->Strength);
-		mParticle->SetMaxParticles(Data->MaxParticle);
-		mParticle->SetDelayTime(Data->DelayTime);
-		mParticle->SetRateOverTime(Data->RateOverTime);
-		mParticle->SetShapeRadius(Data->Radius.x, Data->Radius.y, Data->Radius.z);
-		mParticle->SetTextureTiling(Data->Tiling.x, Data->Tiling.y);
-		mParticle->SetStartForce(Data->StartForce_Min, Data->StartForce_Max);
-		mParticle->SetStartColor(Data->StartColor_Min, Data->StartColor_Max);
-		mParticle->SetStartLifeTime(Data->StartLifeTime.x, Data->StartLifeTime.y);
-		mParticle->SetStartScale(Data->StartScale.x, Data->StartScale.y);
-		mParticle->SetStartRotation(Data->StartRotation.x, Data->StartRotation.y);
-		mParticle->SetLifeTimeForce(Data->LifeForce_Min, Data->LifeForce_Max);
-		mParticle->SetLifeTimeRotation(Data->LifeRotation.x, Data->LifeRotation.y);
-		mParticle->SetPlayTime(Data->PlayTime);
-		mParticle->SetLoop(Data->Loop);
+		mBaseAttackParticle->SetStrength(Data->Strength);
+		mBaseAttackParticle->SetMaxParticles(Data->MaxParticle);
+		mBaseAttackParticle->SetDelayTime(Data->DelayTime);
+		mBaseAttackParticle->SetRateOverTime(Data->RateOverTime);
+		mBaseAttackParticle->SetShapeRadius(Data->Radius.x, Data->Radius.y, Data->Radius.z);
+		mBaseAttackParticle->SetTextureTiling(Data->Tiling.x, Data->Tiling.y);
+		mBaseAttackParticle->SetStartForce(Data->StartForce_Min, Data->StartForce_Max);
+		mBaseAttackParticle->SetStartColor(Data->StartColor_Min, Data->StartColor_Max);
+		mBaseAttackParticle->SetStartLifeTime(Data->StartLifeTime.x, Data->StartLifeTime.y);
+		mBaseAttackParticle->SetStartScale(Data->StartScale.x, Data->StartScale.y);
+		mBaseAttackParticle->SetStartRotation(Data->StartRotation.x, Data->StartRotation.y);
+		mBaseAttackParticle->SetLifeTimeForce(Data->LifeForce_Min, Data->LifeForce_Max);
+		mBaseAttackParticle->SetLifeTimeRotation(Data->LifeRotation.x, Data->LifeRotation.y);
+		mBaseAttackParticle->SetPlayTime(Data->PlayTime);
+		mBaseAttackParticle->SetLoop(Data->Loop);
 	}
 
 	return temp;

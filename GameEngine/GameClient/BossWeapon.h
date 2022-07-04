@@ -26,7 +26,10 @@ private:
 
 	GameObject* mParticleObj[3] = { nullptr };
 	GameObject* mParticleManagerObject = nullptr;
-	ParticleController* mParticleManager = nullptr;
+
+	ParticleController* mExplosion		= nullptr;
+	ParticleController* mExplosionRange = nullptr;
+	ParticleController* mProjectile		= nullptr;
 
 
 	MeshFilter* mMeshFilter = nullptr;
@@ -35,6 +38,7 @@ private:
 	float MoveSpeed = 5.0f;
 	float ScaleSpeed = 20.0f;
 	float UpScale = 5.0f;
+	float ParticleSize = 0.0f;
 	bool IsShooting = false;
 	bool IsSizeUpdate = false;
 	bool IsReady = false;

@@ -12,6 +12,7 @@ class Rigidbody;
 class FrameData;
 class Collider;
 class PhysRayCast;
+class ParticleController;
 
 #define PLAYER_STATE_IDLE		0x00000001
 #define PLAYER_STATE_ATTACK_01	0x00000010
@@ -204,4 +205,7 @@ private:
 	const float Skill01_Dir		= 0.75f;
 	const float Skill02_Dir		= 0.75f;
 	const float Skill03_Dir		= 0.75f;
+
+	ParticleController* mAttackParticle = nullptr;
+	ParticleController* mHealParticle = nullptr;
 }; 
