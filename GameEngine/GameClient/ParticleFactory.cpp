@@ -79,8 +79,7 @@ void ParticleFactory::Initialize()
 {
 	/// BossFog
 	KeyList BossFog_Key;
-	BossFog_Key.push_back({ "BossFog_fog2",		0.0f });
-	//BossFog_Key.push_back({ "BossFog_fog",		0.0f });
+	BossFog_Key.push_back({ "BossFog_fog",		0.0f });
 
 	/// BossMelee
 	KeyList BossMelee_Key;

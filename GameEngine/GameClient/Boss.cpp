@@ -309,8 +309,7 @@ void Boss::OnTriggerStay(GameObject* Obj)
 				}
 				else
 				{
-					//HP -= Player::GetPlayerComboPower();
-					HP -= 500;
+					HP -= Player::GetPlayerComboPower();
 					MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_ATTACK_OK);
 					MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_BOSS_HP, &HP);
 				}
@@ -385,11 +384,20 @@ void Boss::Boss_DEAD()
 	{
 		mAnimation->Pause();
 		mMF_Setting.PlayDissolve();
+		IsCredit = true;
+	}
 
-		if (mMF_Setting.EndDissolve() == false)
+	if (mMF_Setting.EndDissolve() == false)
+	{
+		if (IsCredit)
 		{
+			IsCredit = false;
 			gameobject->SetActive(false);
 			Destroy(this->gameobject);
+
+			bool Active = false;
+			MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_BOSS_ACTIVE, &Active);
+			MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_CREDIT);
 		}
 	}
 }
@@ -990,6 +998,13 @@ bool Boss::FirstState()
 float Boss::PlayerDistanceCheck()
 {
 	PlayerDistance = mTransform->GetDistance(mPlayerTR->GetPosition());
+	if (IsStart == false && PlayerDistance <= FightRange)
+	{
+		IsStart = true;
+		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_BOSS_ACTIVE, &IsStart);
+	}
+
+
 	return PlayerDistance;
 }
 

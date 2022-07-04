@@ -7,7 +7,7 @@
 #include "MessageManager.h"
 
 UICredit::UICredit()
-	:StartCredit(false), MoveSpeed(-200.0f), StartWidth(-50.0f), StartHeight(1758.5f), EndHeight(-2328.0f)
+	:StartCredit(false), MoveSpeed(-150.0f), StartWidth(-50.0f), StartHeight(2450.0f), EndHeight(-2450.0f)
 {
 
 }
@@ -41,7 +41,7 @@ void UICredit::Update()
 		if (CreditTransform->GetPosition().y < EndHeight)
 		{
 			StartCredit = false;
-			SetFullScreenBlur(false);
+			StartCamera = false;
 
 			CreditTransform->SetPosition(StartWidth, StartHeight);
 
@@ -59,6 +59,6 @@ void UICredit::Set_CreditUI_Active(bool active)
 	// 전체 화면 블러..
 	if (active)
 	{
-		SetFullScreenBlur(true, 4);
+		MessageManager::GetGM()->SEND_Message(TARGET_CAMERA_MANAGER, MESSAGE_CAMERA_CINEMATIC_GAME_END, &StartCamera);
 	}
 }

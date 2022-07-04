@@ -95,10 +95,11 @@ private:
 	bool	IsBossFriend	= false;
 	bool	IsUpdateColor	= false;
 	bool	IsAttack		= false;
+	bool	IsStart			= false;
 
 	bool	IsStartFight	= false;
 	bool	IsEndFight		= false;
-
+	bool    IsCredit		= false;
 
 	int		mState			= 0;		//보스의 상태
 	int		FriendIndex		= -1;		//보스의 위치 인덱스

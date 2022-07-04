@@ -18,6 +18,7 @@
 #include "MeshManager.h"
 #include "MaterialManager.h"
 #include "EaterSound.h"
+#include "GameEngine.h"
 #include "Profiler/Profiler.h"
 
 
@@ -458,7 +459,9 @@ void LoadManager::DeleteTexture(std::string Path)
 	}
 	else
 	{
+		EnterCriticalSection(&GameEngine::g_CS);
 		GraphicEngine::Get()->DeleteTexture(Find_it->second);
+		LeaveCriticalSection(&GameEngine::g_CS);
 
 		delete Find_it->second;
 
@@ -477,7 +480,9 @@ void LoadManager::DeleteSkyLight(std::string Path)
 	}
 	else
 	{
+		EnterCriticalSection(&GameEngine::g_CS);
 		GraphicEngine::Get()->DeleteSkyLight(Find_it->second);
+		LeaveCriticalSection(&GameEngine::g_CS);
 
 		delete Find_it->second;
 

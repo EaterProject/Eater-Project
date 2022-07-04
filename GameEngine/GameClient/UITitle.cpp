@@ -108,7 +108,25 @@ void UITitle::Update()
 	{
 		IsFade = false;
 		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_FADE_OUT);
+		MessageManager::GetGM()->SEND_Message(TARGET_CAMERA_MANAGER, MESSAGE_CAMERA_CINEMATIC_GAME_START, &IsGameStart);
+	}
+
+	if (IsGameStart == true)
+	{
+		IsGameStart = false;
+		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_FADE_IN, &IsGameStartFadeIn);
+	}
+
+	if (IsGameStartFadeIn == true)
+	{
+		IsGameStartFadeIn = false;
 		MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_GAME_START);
+		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_FADE_OUT, &IsGameStartFadeOut);
+	}
+
+	if (IsGameStartFadeOut == true)
+	{
+		IsGameStartFadeOut = false;
 	}
 }
 

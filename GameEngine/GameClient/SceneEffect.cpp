@@ -50,7 +50,7 @@ void SceneEffect::Awake()
 	// 보스 포그 생성..
 	m_BossFog = ParticleFactory::Get()->CreateParticleController(PARTICLE_TYPE::BossFog);
 
-	Transform* FogEffect = m_BossFog->GetParticle("BossFog_fog2")->gameobject->transform;
+	Transform* FogEffect = m_BossFog->GetParticle("BossFog_fog")->gameobject->transform;
 
 	FogEffect->SetPosition(-58.0f, 7.0f, 60.0f);
 }

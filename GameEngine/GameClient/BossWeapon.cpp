@@ -202,7 +202,6 @@ void BossWeapon::Explosion()
 	mExplosion->SetPosition(mTransform->GetPosition());
 	mExplosion->Play();
 
-
 	mExplosionRange->Stop();
 	mTransform->SetPosition(StartPoint);
 	mTransform->SetScale(1, 1, 1);

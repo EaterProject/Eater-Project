@@ -276,9 +276,9 @@ void FBXManager::SetMeshData(ParserData::CMesh* mMesh, LoadMeshData* SaveData)
 	if (meshBuffer == nullptr)
 	{
 		// Mesh »ý¼º..
-		EnterCriticalSection(m_CriticalSection);
 		meshBuffer = new Mesh();
 
+		EnterCriticalSection(m_CriticalSection);
 		m_Graphic->CreateMeshBuffer(mMesh, &meshBuffer->m_MeshData);
 		LeaveCriticalSection(m_CriticalSection);
 

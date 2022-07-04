@@ -78,6 +78,11 @@ void ManaStone::Start()
 void ManaStone::Update()
 {
 	mSetting.LimLightUpdate(2.8f);
+
+	if (DeadStart == true && mSetting.EndDissolve() == false)
+	{
+		Delete();
+	}
 }
 
 void ManaStone::SetMonsterCount(int MonsterA, int MonsterB)
