@@ -78,10 +78,7 @@ void BossWeapon::Update()
 			ParticleSize += DTime;
 		}
 
-		if (PARTICLE_STATE::PLAY_STATE == mExplosionRange->GetState())
-		{
-			mExplosionRange->Stop();
-		}
+		mExplosionRange->Stop();
 
 		mProjectile->SetScale(ParticleSize);
 		mProjectile->Play();
