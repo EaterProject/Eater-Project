@@ -153,6 +153,7 @@ public:
 	void Sound_Play_BGM(std::string& SoundName);
 	void Sound_Pause_BGM(bool Pause);
 	void Sound_VolumeSet_BGM(float volume);
+	void Sound_STOP_BGM();
 	void Sound_VolumeUP_BGM();
 	void Sound_VolumeDown_BGM();
 	void Sound_FrequencyUp_BGM();

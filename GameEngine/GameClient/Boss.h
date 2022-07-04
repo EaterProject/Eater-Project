@@ -36,9 +36,9 @@ private:
 	Transform*		mPlayerTR		= nullptr;
 	Rigidbody*		mRigidbody		= nullptr;
 private:
-	std::string ANIMATION_NAME[18];	//애니메이션 이름
-	float ANIMATION_TIME[18];		//애니메이션 시간
-	bool  STATE_START[18];			//상태 시작 여부
+	std::string ANIMATION_NAME[25];	//애니메이션 이름
+	float ANIMATION_TIME[25];		//애니메이션 시간
+	bool  STATE_START[25];			//상태 시작 여부
 private:
 	//상태에 대한 함수들
 	void Boss_Idle();
@@ -62,7 +62,17 @@ private:
 	void Boss_Rendom_Attack_Play(int Phase);
 	void Boss_Rendom_Attack_End(int Phase);
 	void Boss_Rendom_Attack_Reset(int Phase);
+	void Boss_Rendom_Attack_AddSkill();
+	void Boss_Rendom_Attack_Big();
+
+	void Boss_Guidedmissile_Attack_Start();
+	void Boss_Guidedmissile_Attack_Play();
+	void Boss_Guidedmissile_Attack_End();
+
+
 	void Boss_Hit();
+	void Phase_UP_Start();
+	void Phase_UP_End();
 private:
 	void	SetState(BOSS_STATE State);	//상태를 변환
 	bool	FirstState();				//현재 상태가 처음인지 체크
@@ -72,6 +82,7 @@ private:
 	void	GroundCheck();
 	void	SkillCheck();
 	void	PushPlayer();
+	void	BossColorUpdate();
 private:
 
 	bool	IsHit			= false;
@@ -79,10 +90,13 @@ private:
 	bool	IsRight			= false;
 	bool	IsShooting		= false;
 	bool	IsBossFriend	= false;
+	bool	IsUpdateColor	= false;
+	bool	IsAttack		= false;
 
 	int		mState			= 0;		//보스의 상태
 	int		FriendIndex		= -1;		//보스의 위치 인덱스
 	int		BossPhase		= 0;
+	int		ColorType		= 0;
 
 	float	AttackRange		= 3.5f;		//근접 공격 범위
 	float	FightRange		= 30.0f;	//보스와 싸울 수 있는 거리
@@ -98,8 +112,8 @@ private:
 	float	RendomSkillPlayTime			= 0.0f;
 	float	RendomSkillPlayTimeMax		= 1.0f;
 	
-	float SkillTime[5]		= { 0.0f, };
-	float SkillTimeMax[5]	= { 0.0f, };
+	float SkillTime[6]		= { 0.0f, };
+	float SkillTimeMax[6]	= { 0.0f, };
 
 
 	//각 스킬 쿨타임 
@@ -108,6 +122,7 @@ private:
 	const int Teleport_Time = 2;
 	const int Base_Time		= 3;
 	const int Groggy_Time	= 4;
+	const int Missile_Time	= 5;
 private:
 	Vector3 StartPoint;
 	Vector3	SkillPoint[5];
@@ -115,6 +130,7 @@ private:
 	PhysRayCast* mRay;
 
 	BossWeapon* Weapon[5];
+	BossWeapon* BigWeapon;
 	BossFriend* Friend;
 	MeshFilter* ChildeMeshFilter[7];
 
