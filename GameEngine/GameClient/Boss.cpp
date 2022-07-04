@@ -121,6 +121,11 @@ void Boss::Awake()
 	mPushParticle		= ParticleFactory::Get()->CreateParticleController(PARTICLE_TYPE::BossPush);
 	mCountAttackParticle = ParticleFactory::Get()->CreateParticleController(PARTICLE_TYPE::CounterAttack);
 
+	for (int i = 0; i < 5; i++)
+	{
+		mBossPhaseParticle[i] = ParticleFactory::Get()->CreateParticleController(PARTICLE_TYPE::BossPage);
+	}
+
 	for (int i = 0; i < 6; i++)
 	{
 		if (i < 5)
@@ -176,11 +181,21 @@ void Boss::Start()
 
 	mTransform->SetScale(1.7f, 1.7f, 1.7f);
 	mAnimation->Play();
+
+	int index = 0;
+	for (int i = 1; i <= 5; i++)
+	{
+		std::string BoneName = "ball" + std::to_string(i) + "_end";
+		GameObject* Obj = gameobject->GetChildBone(BoneName);
+		mBossPhaseParticle[index]->gameobject->ChoiceParent(Obj);
+		index++;
+	}
+
+	Set_Boss_Active(false);
 }
 
 void Boss::Update()
 {
-	StartFight();
 	switch (mState)
 	{
 	case (int)BOSS_STATE::IDLE:
@@ -337,6 +352,19 @@ void Boss::OnTriggerStay(GameObject* Obj)
 
 }
 
+void Boss::Set_Boss_Active(bool Active)
+{
+	gameobject->SetActive(Active);
+
+	BigWeapon->gameobject->SetActive(Active);
+	Friend->gameobject->SetActive(Active);
+
+	for (int i = 0; i < 5; i++)
+	{
+		Weapon[i]->gameobject->SetActive(Active);
+	}
+}
+
 void Boss::Boss_Idle()
 {
 	if (FirstState() == true)
@@ -384,6 +412,15 @@ void Boss::Boss_DEAD()
 	{
 		mAnimation->Pause();
 		mMF_Setting.PlayDissolve();
+
+		for (int i = 0; i < 5; i++)
+		{
+			Weapon[i]->Reset();
+			mBossPhaseParticle[i]->Stop();
+		}
+
+		BigWeapon->Reset();
+
 		IsCredit = true;
 	}
 
@@ -577,9 +614,9 @@ void Boss::Boss_Closer_Attack_R()
 	{
 		if (IsAttack == false && PlayerDistance <= AttackRange)
 		{
-			int Damage = 10;
+			int Damage = 150;
 			MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_HIT, &Damage);
-			MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_PLAYER_HIT, nullptr);
+			MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_PLAYER_HIT);
 			Sound_Play_SFX("Boss_Attack_5L");
 			IsAttack = true;
 		}
@@ -947,6 +984,7 @@ void Boss::Phase_UP_Start()
 		for (int i = 0; i < 5; i++)
 		{
 			Weapon[i]->Reset();
+			mBossPhaseParticle[i]->Play();
 		}
 		BigWeapon->Reset();
 		Sound_Stop_BGM();
@@ -1002,8 +1040,10 @@ float Boss::PlayerDistanceCheck()
 	{
 		IsStart = true;
 		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_BOSS_ACTIVE, &IsStart);
-	}
 
+		/// 들어왔을때 한번만해야함
+		MessageManager::GetGM()->SEND_Message(TARGET_DRONE, MESSAGE_DRONE_BOSS_ZONE_IN);
+	}
 
 	return PlayerDistance;
 }
@@ -1148,9 +1188,6 @@ void Boss::SkillCheck()
 
 		bool Active = true;
 		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_BOSS_ACTIVE, &Active);
-
-		/// 들어왔을때 한번만해야함
-		MessageManager::GetGM()->SEND_Message(TARGET_DRONE, MESSAGE_DRONE_BOSS_ZONE_IN);
 	}
 }
 
@@ -1219,26 +1256,4 @@ void Boss::BossColorUpdate()
 			DTime += GetDeltaTime();
 		}
 	}
-}
-
-void Boss::StartFight()
-{
-	if (IsStartFight == true) { return; }
-	//보스와 싸울수 있는거리에 들어왔을떄 한번 들어옴
-	MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_BOSS_COLOR, &ColorType);
-	bool Active = true;
-	MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_BOSS_ACTIVE, &Active);
-
-	IsStartFight = true;
-}
-
-void Boss::EndFight()
-{
-	if (IsEndFight == true) { return; }
-	//보스와 싸울수 있는 거리에 나갔을때
-
-
-
-
-	IsEndFight = true;
 }

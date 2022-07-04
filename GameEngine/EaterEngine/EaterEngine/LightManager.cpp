@@ -77,7 +77,7 @@ void LightManager::PushLight(Light* light)
 void LightManager::DeleteLight(Light* light)
 {
 	std::vector<Light*>* lightList = nullptr;
-	UINT index = light->m_LightIndex;
+	int index = light->m_LightIndex;
 	GlobalData* globalData = GlobalDataManager::g_GlobalData;
 
 	// Light Data 제거..
@@ -103,14 +103,19 @@ void LightManager::DeleteLight(Light* light)
 	}
 
 	// Light Index 재설정..
-	for (int index = 0; index < lightList->size(); index++)
+	for (int i = 0; i < lightList->size(); i++)
 	{
-		(*lightList)[index]->SetIndex(index);
+		(*lightList)[i]->SetIndex(i);
 	}
+
+	// 해당 Light Index 초기화..
+	light->m_LightIndex = -1;
 }
 
 bool LightManager::FindLight(Light* light)
 {
+	if (light->m_LightIndex == -1) return false;
+
 	switch (light->GetType())
 	{
 	case LIGHT_TYPE::DIRECTION_LIGHT:

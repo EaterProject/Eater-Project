@@ -1,5 +1,5 @@
 #EATER_PARTICLE
-@PlayTime 1.490000
+@PlayTime 0.100000
 @Loop 0
 @TextureName Flare5
 @RenderType 0
@@ -22,7 +22,7 @@ $StartColor 2 4
 $StartLifeTime 1 2
 1.500000 1.500000
 $StartScale 1 2
-0.750000 0.750000
+0.250000 0.250000
 $StartRotation 1 2
 0.000000 180.000000
 $LifeForce 2 3

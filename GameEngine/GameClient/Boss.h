@@ -27,6 +27,9 @@ public:
 	void Update() override;
 	void Debug() override;
 	void OnTriggerStay(GameObject* Obj) override;
+
+	void Set_Boss_Active(bool Active);
+
 private:
 	AnimationController* mAnimation = nullptr;
 	MeshFilter*		mMeshFilter		= nullptr;
@@ -84,8 +87,6 @@ private:
 	void	PushPlayer();
 	void	BossColorUpdate();
 
-	void	StartFight();
-	void	EndFight();
 private:
 
 	bool	IsHit			= false;
@@ -97,8 +98,6 @@ private:
 	bool	IsAttack		= false;
 	bool	IsStart			= false;
 
-	bool	IsStartFight	= false;
-	bool	IsEndFight		= false;
 	bool    IsCredit		= false;
 
 	int		mState			= 0;		//보스의 상태
@@ -147,5 +146,6 @@ private:
 	ParticleController* mBaseAttackParticle;
 	ParticleController* mPushParticle;
 	ParticleController* mCountAttackParticle;
+	ParticleController* mBossPhaseParticle[5];
 };
 

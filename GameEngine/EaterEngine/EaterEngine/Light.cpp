@@ -314,7 +314,7 @@ void Light::SetActive(bool Active)
 	LightManager::ActiveLight(this, Active);
 }
 
-void Light::SetIndex(UINT index)
+void Light::SetIndex(int index)
 {
 	m_LightIndex = index;
 }

@@ -17,7 +17,7 @@
 #include "ParticleFactory.h"
 
 std::vector<Vector3> ManaStone::MonsterMovePointDefault;
-int ManaStone::MaxManaCount = 5;
+int ManaStone::MaxManaCount = 1;
 
 ManaStone::ManaStone()
 {
@@ -49,7 +49,6 @@ void ManaStone::Awake()
 	srand((unsigned int)time(NULL));
 
 	CreateMonster(MonsterACount, MonsterBCount);
-	mAttackParticle		= ParticleFactory::Get()->CreateParticleController(PARTICLE_TYPE::ManaTreeSmoke);
 	mRangeParticle	= ParticleFactory::Get()->CreateParticleController(PARTICLE_TYPE::ManaSmoke);
 }
 
@@ -66,7 +65,6 @@ void ManaStone::SetUp()
 void ManaStone::Start()
 {
 	mSetting.Setting(this->gameobject);
-	mAttackParticle->Play();
 
 
 	Vector3 Pos = mTransform->GetPosition();
@@ -147,10 +145,8 @@ void ManaStone::Delete()
 
 	Destroy(this->gameobject);
 	MiniMapSystem::Get()->DeleteIcon(this->gameobject);
-	mAttackParticle->Stop();
 	mRangeParticle->Stop();
 
-	mAttackParticle->gameobject->SetActive(false);
 	mRangeParticle->gameobject->SetActive(false);
 }
 
@@ -195,7 +191,8 @@ void ManaStone::OnTriggerStay(GameObject* Obj)
 			mSetting.SetLimlightSetting(MeshFilterSetting::COLOR_TYPE::RED, 1.50f, 2.0f);
 			mSetting.SetLimlightSettingMax(MeshFilterSetting::COLOR_TYPE::RED, 0.0f, 0.0f);
 
-			HP -= Player::GetPlayerPower();
+			//HP -= Player::GetPlayerPower();
+			HP -= 100;
 			if (HP <= 0)
 			{
 				mSetting.SetDissolveOption(DISSOLVE_FADEOUT);
@@ -223,7 +220,6 @@ void ManaStone::OnTriggerStay(GameObject* Obj)
 					}
 				}
 
-				mAttackParticle->Stop();
 				mRangeParticle->Stop();
 				// ÄÚ¾î ¸¶³ª È¹µæ
 				MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_GET_COREMANA, &CoreManaCount);

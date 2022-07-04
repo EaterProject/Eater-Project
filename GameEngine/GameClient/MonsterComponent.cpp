@@ -243,11 +243,7 @@ void MonsterComponent::Attack()
 
 		if (mParticleController != nullptr)
 		{
-			PARTICLE_STATE mState = mParticleController->GetState();
-			if (mState == PLAY_STATE)
-			{
-				mParticleController->Stop();
-			}
+			mParticleController->Stop();
 		}
 	}
 
