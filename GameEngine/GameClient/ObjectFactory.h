@@ -58,6 +58,7 @@ public:
 	GameObject* CreateBossFriend();		//보스 분신 생성
 
 	GameObject* CreateStore();
+	GameObject* CreatePotal();
 private:
 	//게임상에 한개만 존재하는 오브젝트를 따로 보관
 	std::vector<GameObject*> ManaPoint_List;

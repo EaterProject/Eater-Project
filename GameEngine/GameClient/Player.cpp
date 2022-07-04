@@ -156,7 +156,11 @@ void Player::Update()
 	Player_Push();
 
 	//공격상태일때 아닐떄를 먼저 체크
-	if (mState & (PLAYER_STATE_ATTACK_01 | PLAYER_STATE_ATTACK_02 | PLAYER_STATE_SKILL_01 | PLAYER_STATE_SKILL_02))
+	if (mState == PLAYER_STATE_DEAD)
+	{
+		Player_Dead();
+	}
+	else if (mState & (PLAYER_STATE_ATTACK_01 | PLAYER_STATE_ATTACK_02 | PLAYER_STATE_SKILL_01 | PLAYER_STATE_SKILL_02))
 	{
 		PlayerState_Attack();
 	}
@@ -176,7 +180,7 @@ void Player::SetMessageRECV(int Type, void* Data)
 	switch (Type)
 	{
 	case MESSAGE_PLAYER_HIT:
-		Sound_Play_SFX("Player_Hit");
+		
 		Player_Hit(*(reinterpret_cast<int*>(Data)));
 		break;
 	case MESSAGE_PLAYER_HEAL:
@@ -346,6 +350,7 @@ void Player::PlayerCoolTimeCheck()
 void Player::PlayerKeyinput()
 {
 	if (IsKeyUpdate == false) return;
+
 
 	if (mCameraTR == nullptr) 
 	{
@@ -738,6 +743,8 @@ void Player::Player_Hit(int HitPower)
 	if (IsHit == true) { return; }
 	if (IsNoHit == true) { return; }
 
+	Sound_Play_SFX("Player_Hit");
+
 	IsHit = true;
 	HP -= HitPower;
 	if (HP <= 0)
@@ -745,11 +752,9 @@ void Player::Player_Hit(int HitPower)
 		//죽었을때
 		HP = 0;
 		MessageManager::GetGM()->SEND_Message(TARGET_DRONE, MESSAGE_DRONE_PLAYER_DIE);
+		mState = PLAYER_STATE_DEAD;
 	}
-	else
-	{
-		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_HP_NOW, &HP);
-	}
+	MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_HP_NOW, &HP);
 }
 
 bool Player::Player_Move_Check()
@@ -805,6 +810,27 @@ void Player::Player_Push()
 				PushTime = 0;
 			}
 		}
+	}
+}
+
+void Player::Player_Dead()
+{
+	mAnimation->Choice("daed");
+	int Now = mAnimation->GetNowFrame();
+	int End = mAnimation->GetEndFrame();
+	if (Now > End)
+	{
+		mAnimation->Stop();
+		mAnimation->SetFrame(0);
+		mTransform->SetPosition(-16, 0, 0);
+
+		bool Test = false;
+		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_FADE_IN, &Test);
+	}
+	else
+	{
+
+
 	}
 }
 

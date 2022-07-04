@@ -306,6 +306,11 @@ GameObject* ObjectFactory::CreateStore()
 	return Object;
 }
 
+GameObject* ObjectFactory::CreatePotal()
+{
+	return nullptr;
+}
+
 
 
 
