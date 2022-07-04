@@ -140,8 +140,8 @@ void ParticleFactory::Initialize()
 	/// MonsterExplode
 	KeyList MonsterExplode_Key;
 	MonsterExplode_Key.push_back({ "MonsterExplode_smokeFloor",		0.0f });
-	MonsterExplode_Key.push_back({ "MonsterExplode_dot",			0.25f });
-	MonsterExplode_Key.push_back({ "MonsterExplode_smokeExplode",	0.25f });
+	MonsterExplode_Key.push_back({ "MonsterExplode_dot",			0.0f });
+	MonsterExplode_Key.push_back({ "MonsterExplode_smokeExplode",	0.0f });
 
 	// 두번 때림
 	/// PlayerAttack
@@ -159,6 +159,7 @@ void ParticleFactory::Initialize()
 	 
 	m_ParticleKeyList.insert({ PARTICLE_TYPE::BossFog,					BossFog_Key });
 	m_ParticleKeyList.insert({ PARTICLE_TYPE::BossMelee,				BossMelee_Key });
+	m_ParticleKeyList.insert({ PARTICLE_TYPE::BossPage,					BossPage_Key });
 	m_ParticleKeyList.insert({ PARTICLE_TYPE::BossProjectile,			BossProjectile_Key });
 	m_ParticleKeyList.insert({ PARTICLE_TYPE::BossProjectileExplode,	BossProjectileExplode_Key });
 	m_ParticleKeyList.insert({ PARTICLE_TYPE::BossProjectileFloor,		BossProjectileFloor_Key });

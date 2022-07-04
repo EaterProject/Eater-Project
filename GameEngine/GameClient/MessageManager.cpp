@@ -91,6 +91,7 @@ void MessageManager::Initialize(ObjectFactory* Factory)
 	CREATE_MESSAGE(TARGET_UI_MANUAL);
 	CREATE_MESSAGE(TARGET_UI_CREDIT);
 	CREATE_MESSAGE(TARGET_UI_BOSS);
+	CREATE_MESSAGE(TARGET_TREE_SMOKE);
 }
 
 void MessageManager::Release()
@@ -207,6 +208,9 @@ GameObject* MessageManager::CREATE_MESSAGE(int CREATE_TYPE)
 		Object = mFactory->CreateSceneEffect();
 		mSceneEffect = Object->GetComponent<SceneEffect>();
 		return Object;
+	case TARGET_TREE_SMOKE:
+
+		return;
 	}
 
 	return nullptr;
@@ -274,6 +278,7 @@ void MessageManager::SEND_UI_Message(int MessageType, void* Data)
 		break;
 	case MESSAGE_UI_BOSS_ACTIVE:
 		mBossUI->SetBossUIActive(*(reinterpret_cast<bool*>(Data)));
+		mSceneEffect->Set_Boss_Zone_In(true);
 		break;
 	case MESSAGE_UI_PUREMANA:
 		mCanvas->Set_Pure_Mana_Count(*(reinterpret_cast<int*>(Data)));
@@ -570,6 +575,9 @@ void MessageManager::BossStart()
 	mPause->Set_PauseUI_Active(false);
 	mCredit->Set_CreditUI_Active(false);
 	mStore->Set_Store_Active(false);
+
+	// 보스 활성화..
+	mBoss->Set_Boss_Active(true);
 
 	// 플레이어 무적 상태 설정..
 	mPlayer->SetNoHit(true);

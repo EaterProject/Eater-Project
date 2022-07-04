@@ -820,20 +820,15 @@ void Player::Player_Dead()
 	int End = mAnimation->GetEndFrame();
 	if (Now > End)
 	{
-		mAnimation->Stop();
-		mAnimation->SetFrame(0);
+		mState = PLAYER_STATE_IDLE;
 		mTransform->SetPosition(-16, 0, 0);
-
-		bool Test = false;
-		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_FADE_IN, &Test);
+		//체력 초기화,콤보 초기화
+		HP = 3000;
+		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_HP_NOW, &HP);
+		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_COMBO, &ComboCount);
 	}
-	else
-	{
 
-
-	}
 }
-
 void Player::ChangeSkyLight(int index)
 {
 	for (int i = 0; i < ChildMeshFilter.size(); i++)
@@ -960,7 +955,7 @@ void Player::Upgrade_Attack_Speed()
 	ANIMATION_SPEED[(int)PLAYER_STATE::SKILL_01] += Upgrade_AttackSpeed_1;
 	ANIMATION_SPEED[(int)PLAYER_STATE::SKILL_02] += Upgrade_AttackSpeed_1;
 
-	MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_PUREMANA, &PureMana);
+	//MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_PUREMANA, &PureMana);
 	MessageManager::GetGM()->SEND_Message(TARGET_DRONE, MESSAGE_DRONE_PURCHASE_SUCCESS);
 }
 

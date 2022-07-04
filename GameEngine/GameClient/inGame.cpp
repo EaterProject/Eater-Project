@@ -44,6 +44,8 @@ void InGame::Awake()
 	mTerrain->SetTextureTiling(31.0f);
 
 	Option = GetRenderOptionData();
+	Option->RenderingOption = RENDER_SHADOW | RENDER_SSAO | RENDER_IBL | RENDER_FOG;
+	Option->PostProcessOption = POSTPROCESS_BLOOM | POSTPROCESS_HDR | POSTPROCESS_COLORGRADING | POSTPROCESS_FXAA;
 	RenderSetting();
 }
 

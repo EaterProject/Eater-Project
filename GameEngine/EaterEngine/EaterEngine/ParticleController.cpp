@@ -30,7 +30,7 @@ void ParticleController::Update()
 		float&& dTime = mTimeManager->DeltaTime();
 		
 		m_PlayTime = dTime;
-
+		
 		// Particle System List Update..
 		UpdateController();
 	}
@@ -225,7 +225,7 @@ void ParticleController::Play()
 		return;
 	}
 
-	if (m_ControllerState != PARTICLE_STATE::END_STATE) return;
+	//if (m_ControllerState != PARTICLE_STATE::END_STATE) return;
 
 	m_ControllerState = PARTICLE_STATE::START_STATE;
 

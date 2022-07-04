@@ -64,13 +64,13 @@ void SceneEffect::Update()
 {
 	switch (Scene_State)
 	{
-	case SceneEffect::FADE_IN:
+	case STATE::FADE_IN:
 	{
 		if (Fade_In_End)
 		{
 			Fade_In_End = false;
 			Camera_End = false;
-			Scene_State = FADE_OUT;
+			Scene_State = STATE::FADE_OUT;
 
 			Change_Boss_Start_Effect();
 
@@ -79,30 +79,51 @@ void SceneEffect::Update()
 		}
 	}
 	break;
-	case SceneEffect::FADE_OUT:
+	case STATE::FADE_OUT:
 	{
 		if (Fade_Out_End)
 		{
 			if (Camera_End)
 			{
 				Fade_Out_End = false;
-				Scene_State == NONE;
+				Camera_End = false;
+
+				Scene_State = STATE::NONE;
 				MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_RESUME);
 			}
 		}
 	}
 	break;
 	default:
+	{
+		if (Boss_Start)
+		{
+			if (Boss_Zone_In)
+			{
+				Boss_Start = false;
+				Boss_Zone_In = false;
+
+				m_BossFog->Stop();
+			}
+		}
+	}
 		break;
 	}
-
 }
 
 void SceneEffect::Begin_Boss_Start_Effect()
 {
+	// 보스 출현..
+	Boss_Start = true;
+
 	// 페이드 인 시작..
-	Scene_State = FADE_IN;
+	Scene_State = STATE::FADE_IN;
 	MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_FADE_IN, &Fade_In_End);
+}
+
+void SceneEffect::Set_Boss_Zone_In(bool Active)
+{
+	Boss_Zone_In = Active;
 }
 
 void SceneEffect::Change_Boss_Start_Effect()
