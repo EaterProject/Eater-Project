@@ -144,8 +144,6 @@ void Eater_LoadScene::LoadData(std::string& FilePath)
 				SetSkyLight(Name[1], std::stoi(Name[0]));
 			}
 
-			mOption->RenderingOption ^= RENDER_OPTION::RENDER_FOG;
-
 			std::vector<float> Data_F;
 			GameObject* Obj = GetDirectionLight();
 			Light* mLight = Obj->GetComponent<Light>();

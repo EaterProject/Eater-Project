@@ -18,6 +18,7 @@
 #include "MeshManager.h"
 #include "MaterialManager.h"
 #include "EaterSound.h"
+#include "GameEngine.h"
 #include "Profiler/Profiler.h"
 
 
@@ -458,7 +459,9 @@ void LoadManager::DeleteTexture(std::string Path)
 	}
 	else
 	{
+		EnterCriticalSection(&GameEngine::g_CS);
 		GraphicEngine::Get()->DeleteTexture(Find_it->second);
+		LeaveCriticalSection(&GameEngine::g_CS);
 
 		delete Find_it->second;
 
@@ -477,7 +480,9 @@ void LoadManager::DeleteSkyLight(std::string Path)
 	}
 	else
 	{
+		EnterCriticalSection(&GameEngine::g_CS);
 		GraphicEngine::Get()->DeleteSkyLight(Find_it->second);
+		LeaveCriticalSection(&GameEngine::g_CS);
 
 		delete Find_it->second;
 
@@ -504,6 +509,7 @@ void LoadManager::LoadFile(std::string& Path, UINT MODE)
 {
 	//파일 체크 텍스쳐, FBX, 자체포멧 ,구분하여 로드
 	//로드한 데이터는 LoadManager안에 리스트로 담긴다
+	Sleep(0);
 
 	std::size_t Start	= Path.rfind('.') + 1;
 	std::size_t End		= Path.length() - Start;

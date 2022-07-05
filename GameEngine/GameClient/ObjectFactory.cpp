@@ -39,6 +39,7 @@
 #include "UICredit.h"
 #include "UIBoss.h"
 #include "SceneEffect.h"
+#include "ParticleFactory.h"
 
 
 ObjectFactory::ObjectFactory()
@@ -237,6 +238,19 @@ GameObject* ObjectFactory::CreateSceneEffect()
 	return Object_SceneEffect;
 }
 
+GameObject* ObjectFactory::CreateTreeSmoke()
+{
+	ParticleController* Controller = ParticleFactory::Get()->CreateParticleController(PARTICLE_TYPE::ManaTreeSmoke);
+	ParticleSystem* Up = Controller->GetParticle("ManTree_smokeUP");
+	ParticleSystem* Down = Controller->GetParticle("ManTree_smokeDOWN");
+
+	Controller->Play();
+
+	Up->gameobject->transform->SetPosition_Y(12.0f);
+
+	return Controller->gameobject;
+}
+
 GameObject* ObjectFactory::CreateBoss()
 {
 	GameObject* Object_Boss = Instance();
@@ -304,6 +318,11 @@ GameObject* ObjectFactory::CreateStore()
 	Object->AddComponent<Collider>();
 	Object->AddComponent<Store>();
 	return Object;
+}
+
+GameObject* ObjectFactory::CreatePotal()
+{
+	return nullptr;
 }
 
 

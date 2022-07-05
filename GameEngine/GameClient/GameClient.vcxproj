@@ -213,6 +213,7 @@
     <ClInclude Include="ObjectFactory.h" />
     <ClInclude Include="ParticleFactory.h" />
     <ClInclude Include="PlayerCamera.h" />
+    <ClInclude Include="PlayerPortal.h" />
     <ClInclude Include="PlayerCollider.h" />
     <ClInclude Include="SceneEffect.h" />
     <ClInclude Include="Store.h" />
@@ -267,6 +268,7 @@
     <ClCompile Include="ParticleFactory.cpp" />
     <ClCompile Include="PlayerCamera.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerPortal.cpp" />
     <ClCompile Include="PlayerCollider.cpp" />
     <ClCompile Include="SceneEffect.cpp" />
     <ClCompile Include="Store.cpp" />

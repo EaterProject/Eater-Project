@@ -1,11 +1,11 @@
 #EATER_PARTICLE
-@PlayTime 1.000000
+@PlayTime 0.100000
 @Loop 0
 @TextureName Smoke27
 @RenderType 0
 @ColorType 3
 @ScaleType 1
-@MaxParticle 10
+@MaxParticle 20
 @DelayTime 0.000000
 @RateOverTime 60.000000
 @Strength 1.600000

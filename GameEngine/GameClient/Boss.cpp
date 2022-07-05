@@ -121,6 +121,11 @@ void Boss::Awake()
 	mPushParticle		= ParticleFactory::Get()->CreateParticleController(PARTICLE_TYPE::BossPush);
 	mCountAttackParticle = ParticleFactory::Get()->CreateParticleController(PARTICLE_TYPE::CounterAttack);
 
+	for (int i = 0; i < 5; i++)
+	{
+		mBossPhaseParticle[i] = ParticleFactory::Get()->CreateParticleController(PARTICLE_TYPE::BossPage);
+	}
+
 	for (int i = 0; i < 6; i++)
 	{
 		if (i < 5)
@@ -159,7 +164,7 @@ void Boss::SetUp()
 
 	//위치값 설정
 	mTransform->SetPosition(-45.09f, 6.8f, 70.0f);
-	StartPoint = { -44.0f,6.0f,62.0f };
+	StartPoint = { -44.0f,6.25f,62.0f };
 
 	//스킬 포인트의 위치를 생성한다
 	CreateSkillPoint();
@@ -176,11 +181,21 @@ void Boss::Start()
 
 	mTransform->SetScale(1.7f, 1.7f, 1.7f);
 	mAnimation->Play();
+
+	int index = 0;
+	for (int i = 1; i <= 5; i++)
+	{
+		std::string BoneName = "ball" + std::to_string(i) + "_end";
+		GameObject* Obj = gameobject->GetChildBone(BoneName);
+		mBossPhaseParticle[index]->gameobject->ChoiceParent(Obj);
+		index++;
+	}
+
+	Set_Boss_Active(false);
 }
 
 void Boss::Update()
 {
-	StartFight();
 	switch (mState)
 	{
 	case (int)BOSS_STATE::IDLE:
@@ -298,19 +313,16 @@ void Boss::OnTriggerStay(GameObject* Obj)
 
 					if (ColorType == 0)
 					{
-						mMF_Setting.SetLimlightSetting(1.0f, 1.0f, 1.0f, 0.5f, 0.5f);
 						mMF_Setting.SetEmissiveSetting(231, 39, 9, 2.9f);
 					}
 					else
 					{
-						mMF_Setting.SetLimlightSetting(1.0f, 1.0f, 1.0f, 0.5f, 0.5f);
 						mMF_Setting.SetEmissiveSetting(40, 92, 255, 2.9f);
 					}
 				}
 				else
 				{
-					//HP -= Player::GetPlayerComboPower();
-					HP -= 500;
+					HP -= Player::GetPlayerComboPower();
 					MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_ATTACK_OK);
 					MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_BOSS_HP, &HP);
 				}
@@ -336,6 +348,19 @@ void Boss::OnTriggerStay(GameObject* Obj)
 		if (Player::GetAttackState() == false){IsHit = false;}
 	}
 
+}
+
+void Boss::Set_Boss_Active(bool Active)
+{
+	gameobject->SetActive(Active);
+
+	BigWeapon->gameobject->SetActive(Active);
+	Friend->gameobject->SetActive(Active);
+
+	for (int i = 0; i < 5; i++)
+	{
+		Weapon[i]->gameobject->SetActive(Active);
+	}
 }
 
 void Boss::Boss_Idle()
@@ -386,10 +411,28 @@ void Boss::Boss_DEAD()
 		mAnimation->Pause();
 		mMF_Setting.PlayDissolve();
 
-		if (mMF_Setting.EndDissolve() == false)
+		for (int i = 0; i < 5; i++)
 		{
+			Weapon[i]->Reset();
+			mBossPhaseParticle[i]->Stop();
+		}
+
+		BigWeapon->Reset();
+
+		IsCredit = true;
+	}
+
+	if (mMF_Setting.EndDissolve() == false)
+	{
+		if (IsCredit)
+		{
+			IsCredit = false;
 			gameobject->SetActive(false);
 			Destroy(this->gameobject);
+
+			bool Active = false;
+			MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_BOSS_ACTIVE, &Active);
+			MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_CREDIT);
 		}
 	}
 }
@@ -408,6 +451,7 @@ void Boss::Boss_Groggy_Start()
 			Weapon[i]->Reset();
 		}
 		BigWeapon->Reset();
+		IsShooting = false;
 	}
 }
 
@@ -421,6 +465,7 @@ void Boss::Boss_Groggy_Play()
 	else
 	{
 		SkillTime[Groggy_Time] += GetDeltaTime();
+		IsShooting = false;
 	}
 }
 
@@ -431,27 +476,15 @@ void Boss::Boss_Groggy_End()
 	if (Now >= End)
 	{
 		SetState(BOSS_STATE::IDLE);
+		IsShooting = false;
 	}
 }
 
 void Boss::Boss_Teleport_Ready()
-{
-	if (FirstState() == true)
-	{
-		mMF_Setting.SetDissolveOption(DISSOLVE_FADEOUT);
-		mMF_Setting.SetDissolveTexture("Dissolve_8");
-		mMF_Setting.SetDissolveColor(255.0f, 0, 0);
-		mMF_Setting.SetDissolveColorFactor(10.0f);
-		mMF_Setting.SetDissolvePlayTime(0.6f);
-		mMF_Setting.SetDissolveWidth(0.1f);
-		mMF_Setting.SetDissolveInnerFactor(100.0f);
-		mMF_Setting.SetDissolveOuterFactor(25.0f);
-		mMF_Setting.PlayDissolve();
-	}
-	
+{	
 	float End = mAnimation->GetEndFrame();
 	float Now = mAnimation->GetNowFrame();
-	bool IsTest = mMF_Setting.EndDissolve();
+	//bool IsTest = mMF_Setting.EndDissolve();
 	if (Now >= End)
 	{
 		Sound_Play_SFX("Boss_Teleport");
@@ -534,7 +567,7 @@ void Boss::Boss_Closer_Attack_L()
 	int Now = mAnimation->GetNowFrame();
 	if (mAnimation->EventCheck() == true)
 	{
-		if (IsAttack == false && PlayerDistance <= AttackRange)
+		if (IsAttack == false && PlayerDistance < AttackRange)
 		{
 			int Damage = 150;
 			MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_HIT, &Damage);
@@ -567,11 +600,10 @@ void Boss::Boss_Closer_Attack_R()
 	int Now = mAnimation->GetNowFrame();
 	if (mAnimation->EventCheck() == true)
 	{
-		if (IsAttack == false && PlayerDistance <= AttackRange)
+		if (IsAttack == false && PlayerDistance < AttackRange)
 		{
-			int Damage = 10;
+			int Damage = 150;
 			MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_HIT, &Damage);
-			MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_PLAYER_HIT, nullptr);
 			Sound_Play_SFX("Boss_Attack_5L");
 			IsAttack = true;
 		}
@@ -681,8 +713,7 @@ void Boss::Boss_Rendom_Attack_Ready(int Phase)
 		mMF_Setting.LimLightUpdate(0.5f);
 	}
 
-	mTransform->SetPosition_X(StartPoint.x);
-	mTransform->SetPosition_Z(StartPoint.z);
+	mTransform->SetPosition(StartPoint);
 
 	int End = mAnimation->GetEndFrame();
 	int Now = mAnimation->GetNowFrame();
@@ -939,8 +970,11 @@ void Boss::Phase_UP_Start()
 		for (int i = 0; i < 5; i++)
 		{
 			Weapon[i]->Reset();
+			mBossPhaseParticle[i]->Play();
 		}
 		BigWeapon->Reset();
+		Sound_Stop_BGM();
+		Sound_Play_BGM("BossZone_Phase2");
 	}
 
 	//페이즈 변경시작
@@ -950,6 +984,7 @@ void Boss::Phase_UP_Start()
 	{
 		SetState(BOSS_STATE::PHASE_UP_END);
 		BossPhase = 1;
+		IsShooting = false;
 		Sound_Play_SFX("Boss_Voice_Attack3");
 	}
 }
@@ -988,6 +1023,16 @@ bool Boss::FirstState()
 float Boss::PlayerDistanceCheck()
 {
 	PlayerDistance = mTransform->GetDistance(mPlayerTR->GetPosition());
+	if (IsStart == false && PlayerDistance <= FightRange)
+	{
+		IsStart = true;
+		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_BOSS_ACTIVE, &IsStart);
+		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_BOSS_COLOR, &ColorType);
+
+		/// 들어왔을때 한번만해야함
+		MessageManager::GetGM()->SEND_Message(TARGET_DRONE, MESSAGE_DRONE_BOSS_ZONE_IN);
+	}
+
 	return PlayerDistance;
 }
 
@@ -1131,9 +1176,6 @@ void Boss::SkillCheck()
 
 		bool Active = true;
 		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_BOSS_ACTIVE, &Active);
-
-		/// 들어왔을때 한번만해야함
-		MessageManager::GetGM()->SEND_Message(TARGET_DRONE, MESSAGE_DRONE_BOSS_ZONE_IN);
 	}
 }
 
@@ -1169,59 +1211,4 @@ void Boss::PushPlayer()
 		}
 	}
 
-}
-
-void Boss::BossColorUpdate()
-{
-	if (IsUpdateColor == false) { return; }
-	static float DTime = 0.0f;
-	if (ColorType == 0)
-	{
-		if (DTime >= 1.0f)
-		{
-			mMF_Setting.SetLimlightSetting(1.0f, 1.0f, 1.0f, 0.5f, 0.5f);
-			mMF_Setting.SetEmissiveSetting(231, 39, 9, 2.9f);
-
-			IsUpdateColor = false;
-			DTime = 0;
-		}
-		else
-		{
-			DTime += GetDeltaTime();
-		}
-	}
-	else
-	{
-		if (DTime >= 1.0f)
-		{
-			IsUpdateColor = false;
-			DTime = 0;
-		}
-		else
-		{
-			DTime += GetDeltaTime();
-		}
-	}
-}
-
-void Boss::StartFight()
-{
-	if (IsStartFight == true) { return; }
-	//보스와 싸울수 있는거리에 들어왔을떄 한번 들어옴
-	MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_BOSS_COLOR, &ColorType);
-	bool Active = true;
-	MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_BOSS_ACTIVE, &Active);
-
-	IsStartFight = true;
-}
-
-void Boss::EndFight()
-{
-	if (IsEndFight == true) { return; }
-	//보스와 싸울수 있는 거리에 나갔을때
-
-
-
-
-	IsEndFight = true;
 }

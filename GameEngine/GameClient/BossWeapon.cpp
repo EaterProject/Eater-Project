@@ -41,16 +41,6 @@ void BossWeapon::SetUp()
 
 void BossWeapon::Start()
 {
-	//mParticleManager->Play();
-	//mParticleManager->gameobject->ChoiceParent(this->gameobject);
-
-	//ParticleController* PC = nullptr;
-	//PC =  mParticleObj[0]->GetComponent<ParticleController>();
-	//PC->Play();
-	//PC =  mParticleObj[1]->GetComponent<ParticleController>();
-	//PC->Play();
-	//PC =  mParticleObj[2]->GetComponent<ParticleController>();
-	//PC->Play();
 	mPlayerTr = Player::GetPlayerTransform();
 
 	mProjectile->gameobject->ChoiceParent(this->gameobject);
@@ -202,13 +192,7 @@ void BossWeapon::Explosion()
 	mExplosion->SetPosition(mTransform->GetPosition());
 	mExplosion->Play();
 
-	PARTICLE_STATE state;
-	state = mExplosionRange->GetState();
-	if (state == PARTICLE_STATE::PLAY_STATE)
-	{
-		mExplosionRange->Stop();
-	}
-
+	mExplosionRange->Stop();
 	mTransform->SetPosition(StartPoint);
 	mTransform->SetScale(1, 1, 1);
 	IsShooting = false;

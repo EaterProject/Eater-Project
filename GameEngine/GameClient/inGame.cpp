@@ -44,29 +44,34 @@ void InGame::Awake()
 	mTerrain->SetTextureTiling(31.0f);
 
 	Option = GetRenderOptionData();
+	Option->RenderingOption = RENDER_SHADOW | RENDER_SSAO | RENDER_IBL | RENDER_FOG;
+	Option->PostProcessOption = POSTPROCESS_BLOOM | POSTPROCESS_HDR | POSTPROCESS_COLORGRADING | POSTPROCESS_FXAA;
+	RenderSetting();
 }
 
 void InGame::Update()
 {
-	if (GetKeyDown(VK_F1)) 
+	if (GetKeyDown(VK_F5)) 
 	{
 		Option->DebugOption ^= DEBUG_OPTION::DEBUG_MODE;
 		RenderSetting();
 	}
 
-	if (GetKeyDown('1'))
-	{
-		MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_BOSS_START);
-	}
-
-	if (GetKeyDown('2'))
-	{
-		MessageManager::GetGM()->SEND_Message(TARGET_CAMERA_MANAGER, MESSAGE_CAMERA_CINEMATIC_GAME_END);
-	}
-	if (GetKeyDown('3'))
-	{
-		MessageManager::GetGM()->SEND_Message(TARGET_CAMERA_MANAGER, MESSAGE_CAMERA_CINEMATIC_BOSS_START);
-	}
+	//if (GetKeyDown('1'))
+	//{
+	//	//MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_BOSS_);
+	//}
+	//
+	//if (GetKeyDown('2'))
+	//{
+	//	bool test;
+	//	MessageManager::GetGM()->SEND_Message(TARGET_CAMERA_MANAGER, MESSAGE_CAMERA_CINEMATIC_GAME_END, &test);
+	//	MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_CREDIT);
+	//}
+	//if (GetKeyDown('3'))
+	//{
+	//	MessageManager::GetGM()->SEND_Message(TARGET_CAMERA_MANAGER, MESSAGE_CAMERA_CINEMATIC_BOSS_START);
+	//}
 
 	Logic->Update();
 }

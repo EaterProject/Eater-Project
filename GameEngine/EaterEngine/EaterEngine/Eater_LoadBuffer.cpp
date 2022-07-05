@@ -238,8 +238,8 @@ void Eater_LoadBuffer::LoadIndex(int index, ColliderBuffer* mMesh)
 Mesh* Eater_LoadBuffer::CreateBuffer(ParserData::CMesh* mesh)
 {
 	//버퍼를 만든다
-	EnterCriticalSection(m_CriticalSection);
 	Mesh* meshBuffer = new Mesh();
+	EnterCriticalSection(m_CriticalSection);
 	m_Graphic->CreateMeshBuffer(mesh, &meshBuffer->m_MeshData);
 	LeaveCriticalSection(m_CriticalSection);
 	return meshBuffer;

@@ -334,14 +334,16 @@ void MeshFilter::SetMaterialPropertyBlock(bool enable, bool alpha)
 			break;
 		case PropertyBlockState::OPACITY:
 		{
-			if (alpha = true)
+			if (alpha == true)
 			{
+				(*(MaterialProperty*)m_PropertyBlock) = (*m_Material->m_MaterialData->Material_Property);
+				
 				GraphicEngine::Get()->PopMaterialBlockInstance(gameobject->OneMeshData);
 
 				GraphicEngine::Get()->PushMaterialBlockInstance(gameobject->OneMeshData);
 
 				m_PropertyBlock->Alpha = true;
-				MaterialBlockState = PropertyBlockState::OPACITY;
+				MaterialBlockState = PropertyBlockState::TRANSPARENCY;
 			}
 		}
 			break;
@@ -349,6 +351,8 @@ void MeshFilter::SetMaterialPropertyBlock(bool enable, bool alpha)
 		{
 			if (alpha == false)
 			{
+				(*(MaterialProperty*)m_PropertyBlock) = (*m_Material->m_MaterialData->Material_Property);
+				
 				GraphicEngine::Get()->PopMaterialBlockInstance(gameobject->OneMeshData);
 
 				GraphicEngine::Get()->PushMaterialBlockInstance(gameobject->OneMeshData);

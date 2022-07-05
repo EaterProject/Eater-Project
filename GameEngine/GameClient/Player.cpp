@@ -156,7 +156,11 @@ void Player::Update()
 	Player_Push();
 
 	//공격상태일때 아닐떄를 먼저 체크
-	if (mState & (PLAYER_STATE_ATTACK_01 | PLAYER_STATE_ATTACK_02 | PLAYER_STATE_SKILL_01 | PLAYER_STATE_SKILL_02))
+	if (mState == PLAYER_STATE_DEAD)
+	{
+		Player_Dead();
+	}
+	else if (mState & (PLAYER_STATE_ATTACK_01 | PLAYER_STATE_ATTACK_02 | PLAYER_STATE_SKILL_01 | PLAYER_STATE_SKILL_02))
 	{
 		PlayerState_Attack();
 	}
@@ -176,7 +180,7 @@ void Player::SetMessageRECV(int Type, void* Data)
 	switch (Type)
 	{
 	case MESSAGE_PLAYER_HIT:
-		Sound_Play_SFX("Player_Hit");
+		
 		Player_Hit(*(reinterpret_cast<int*>(Data)));
 		break;
 	case MESSAGE_PLAYER_HEAL:
@@ -346,6 +350,7 @@ void Player::PlayerCoolTimeCheck()
 void Player::PlayerKeyinput()
 {
 	if (IsKeyUpdate == false) return;
+
 
 	if (mCameraTR == nullptr) 
 	{
@@ -725,11 +730,11 @@ void Player::Player_Jump()
 	if(Now>= End)
 	{
 		mState = PLAYER_STATE_IDLE;
-		IsHit = false;
+		IsNoHit = false;
 	}
 	else
 	{
-		IsHit = true;
+		IsNoHit = true;
 	}
 }
 
@@ -738,6 +743,7 @@ void Player::Player_Hit(int HitPower)
 	if (IsHit == true) { return; }
 	if (IsNoHit == true) { return; }
 
+	Sound_Play_SFX("Player_Hit");
 	IsHit = true;
 	HP -= HitPower;
 	if (HP <= 0)
@@ -745,11 +751,10 @@ void Player::Player_Hit(int HitPower)
 		//죽었을때
 		HP = 0;
 		MessageManager::GetGM()->SEND_Message(TARGET_DRONE, MESSAGE_DRONE_PLAYER_DIE);
+		mState = PLAYER_STATE_DEAD;
 	}
-	else
-	{
-		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_HP_NOW, &HP);
-	}
+	MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_HP_NOW, &HP);
+	MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_PLAYER_HIT);
 }
 
 bool Player::Player_Move_Check()
@@ -808,6 +813,22 @@ void Player::Player_Push()
 	}
 }
 
+void Player::Player_Dead()
+{
+	mAnimation->Choice("daed");
+	int Now = mAnimation->GetNowFrame();
+	int End = mAnimation->GetEndFrame();
+	if (Now > End)
+	{
+		mState = PLAYER_STATE_IDLE;
+		mTransform->SetPosition(-16, 0, 0);
+		//체력 초기화,콤보 초기화
+		HP = 3000;
+		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_HP_NOW, &HP);
+		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_COMBO, &ComboCount);
+	}
+
+}
 void Player::ChangeSkyLight(int index)
 {
 	for (int i = 0; i < ChildMeshFilter.size(); i++)
@@ -880,13 +901,19 @@ void Player::Get_CoreMana(int count)
 
 void Player::Upgrade_Change_Emagin()
 {
-	if (MaxChangeCount >= Max_ChangeEmagin_Value) return;
+	if (MaxChangeCount >= Max_ChangeEmagin_Value)
+	{
+		Sound_Play_SFX("UI_Button_Click");
+	}
 
 	if (PureMana < ChangeEmagin_PureMana_Count)
 	{
+		Sound_Play_SFX("UI_Button_Click");
 		MessageManager::GetGM()->SEND_Message(TARGET_DRONE, MESSAGE_DRONE_PURCHASE_FAIL);
 		return;
 	}
+
+	Sound_Play_SFX("VendingMachine");
 
 	MaxChangeCount += Upgrade_ChangeEmagin;
 	PureMana -= ChangeEmagin_PureMana_Count;
@@ -898,14 +925,20 @@ void Player::Upgrade_Change_Emagin()
 
 void Player::Upgrade_Max_HP()
 {
-	if (HP_Max >= Max_HP_Value) return;
+	if (HP_Max >= Max_HP_Value)
+	{
+		Sound_Play_SFX("UI_Button_Click");
+	}
 
 	if (CoreMana < HP_CoreMana_Count)
 	{
+		Sound_Play_SFX("UI_Button_Click");
 		MessageManager::GetGM()->SEND_Message(TARGET_DRONE, MESSAGE_DRONE_PURCHASE_FAIL);
 		return;
 	}
 	
+	Sound_Play_SFX("VendingMachine");
+
 	HP += Upgrade_HP;
 	HP_Max += Upgrade_HP;
 	CoreMana -= HP_CoreMana_Count;
@@ -918,14 +951,20 @@ void Player::Upgrade_Max_HP()
 
 void Player::Upgrade_Attack_Speed()
 {
-	if (Now_Attack_Speed >= Max_AttackSpeed_Animation) return;
+	if (Now_Attack_Speed >= Max_AttackSpeed_Animation)
+	{
+		Sound_Play_SFX("UI_Button_Click");
+	}
 
 	if (PureMana < AttackSpeed_PureMana_Count)
 	{
+		Sound_Play_SFX("UI_Button_Click");
 		MessageManager::GetGM()->SEND_Message(TARGET_DRONE, MESSAGE_DRONE_PURCHASE_FAIL);
 		return;
 	}
 
+	Sound_Play_SFX("VendingMachine");
+	
 	Now_Attack_Speed += Upgrade_AttackSpeed_1;
 	PureMana -= AttackSpeed_PureMana_Count;
 
@@ -940,9 +979,19 @@ void Player::Upgrade_Attack_Speed()
 
 void Player::Upgrade_Move_Speed()
 {
-	if (Speed >= Max_Move_Speed_Value) return;
+	if (Speed >= Max_Move_Speed_Value)
+	{
+		Sound_Play_SFX("UI_Button_Click");
+	}
 
-	if (PureMana < MoveSpeed_PureMana_Count) return;
+	if (PureMana < MoveSpeed_PureMana_Count)
+	{
+		Sound_Play_SFX("UI_Button_Click");
+		MessageManager::GetGM()->SEND_Message(TARGET_DRONE, MESSAGE_DRONE_PURCHASE_FAIL);
+		return;
+	}
+
+	Sound_Play_SFX("VendingMachine");
 
 	Speed += Upgrade_MoveSpeed_Value;
 	SpeedMax += Upgrade_MoveSpeed_Value;

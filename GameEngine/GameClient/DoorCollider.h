@@ -18,9 +18,11 @@ public:
 	void OnTriggerStay(GameObject* Obj);
 	void OnTriggerExit(GameObject* Obj);
 
+	static bool Boss_Start;
 
 	bool FirstOut = false;
 	bool Lock = false;
+
 private:
 	Collider* mCollider = nullptr;
 	MeshFilter* mMeshFilter = nullptr;

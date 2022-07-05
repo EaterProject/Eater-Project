@@ -79,8 +79,7 @@ void ParticleFactory::Initialize()
 {
 	/// BossFog
 	KeyList BossFog_Key;
-	BossFog_Key.push_back({ "BossFog_fog2",		0.0f });
-	//BossFog_Key.push_back({ "BossFog_fog",		0.0f });
+	BossFog_Key.push_back({ "BossFog_fog",		0.0f });
 
 	/// BossMelee
 	KeyList BossMelee_Key;
@@ -136,13 +135,14 @@ void ParticleFactory::Initialize()
 	/// ManaTreeSmoke
 	KeyList ManaTreeSmoke_Key;
 	ManaTreeSmoke_Key.push_back({ "ManTree_smokeUP",	0.0f });
+	ManaTreeSmoke_Key.push_back({ "ManTree_smokeDOWN",	0.0f });
 
 	// 시간 조절
 	/// MonsterExplode
 	KeyList MonsterExplode_Key;
 	MonsterExplode_Key.push_back({ "MonsterExplode_smokeFloor",		0.0f });
-	MonsterExplode_Key.push_back({ "MonsterExplode_dot",			0.25f });
-	MonsterExplode_Key.push_back({ "MonsterExplode_smokeExplode",	0.25f });
+	MonsterExplode_Key.push_back({ "MonsterExplode_dot",			0.0f });
+	MonsterExplode_Key.push_back({ "MonsterExplode_smokeExplode",	0.0f });
 
 	// 두번 때림
 	/// PlayerAttack
@@ -160,6 +160,7 @@ void ParticleFactory::Initialize()
 	 
 	m_ParticleKeyList.insert({ PARTICLE_TYPE::BossFog,					BossFog_Key });
 	m_ParticleKeyList.insert({ PARTICLE_TYPE::BossMelee,				BossMelee_Key });
+	m_ParticleKeyList.insert({ PARTICLE_TYPE::BossPage,					BossPage_Key });
 	m_ParticleKeyList.insert({ PARTICLE_TYPE::BossProjectile,			BossProjectile_Key });
 	m_ParticleKeyList.insert({ PARTICLE_TYPE::BossProjectileExplode,	BossProjectileExplode_Key });
 	m_ParticleKeyList.insert({ PARTICLE_TYPE::BossProjectileFloor,		BossProjectileFloor_Key });

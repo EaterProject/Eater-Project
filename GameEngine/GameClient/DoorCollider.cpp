@@ -9,6 +9,8 @@
 #include "Transform.h"
 #include "Collider.h"
 
+bool DoorCollider::Boss_Start = false;
+
 DoorCollider::DoorCollider()
 {
 }
@@ -73,13 +75,28 @@ void DoorCollider::OnTriggerEnter(GameObject* Obj)
 			int num = 0;
 			bool ON = true;
 			MessageManager::GetGM()->SEND_Message(TARGET_GATE_MANAGER, MESSAGE_GATE_OPEN, &GateNumber);
-			GroundCollider->GetTransform()->SetPosition_Y(-0.9f);
+			GroundCollider->GetTransform()->SetPosition_Y(-0.99f);
+
+
+			PlayerDistance = Vector3::Distance(Zero, Obj->transform->GetPosition());
+			if (PlayerDistance >= 30)
+			{
+				Sound_Stop_BGM();
+				Sound_Play_BGM("InGame_OutDoor");
+			}
+			else
+			{
+				Sound_Stop_BGM();
+				Sound_Play_BGM("InGame_InDoor");
+			}
 		}
 	}
 }
 
 void DoorCollider::OnTriggerStay(GameObject* Obj)
 {
+	if (Obj == nullptr) return;
+
 	if (Obj->GetTag() == 0)
 	{
 		PlayerDistance = Vector3::Distance(Zero, Obj->transform->GetPosition());
@@ -127,6 +144,26 @@ void DoorCollider::OnTriggerExit(GameObject* Obj)
 		}
 
 		isStart = true;
+	}
+
+
+	PlayerDistance = Vector3::Distance(Zero, Obj->transform->GetPosition());
+	if (PlayerDistance >= 30)
+	{
+		Sound_Stop_BGM();
+		if (Boss_Start)
+		{
+			Sound_Play_BGM("BossZone");
+		}
+		else
+		{
+			Sound_Play_BGM("InGame_OutDoor");
+		}
+	}
+	else
+	{
+		Sound_Stop_BGM();
+		Sound_Play_BGM("InGame_InDoor");
 	}
 
 	if (Lock == false)

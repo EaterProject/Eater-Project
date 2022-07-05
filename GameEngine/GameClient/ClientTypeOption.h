@@ -28,6 +28,7 @@
 #define TARGET_UI_CREDIT 24
 #define TARGET_UI_BOSS 25
 #define TARGET_SCENE_EFFECT 26
+#define TARGET_TREE_SMOKE 27
 
 //Player Message
 #define MESSAGE_PLAYER_HIT    0				//플레이어가 맞았다

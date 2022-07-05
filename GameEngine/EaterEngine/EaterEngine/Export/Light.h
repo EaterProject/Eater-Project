@@ -53,7 +53,7 @@ public:
 	
 private:
 	void SetActive(bool Active);
-	void SetIndex(UINT index);
+	void SetIndex(int index);
 	void SetLightViewProj();
 
 private:
@@ -68,7 +68,7 @@ private:
 
 	LIGHT_TYPE m_LightType;
 
-	UINT m_LightIndex;
+	int m_LightIndex;
 
 	DirectionalLightData* m_DirectionLight;
 	PointLightData* m_PointLight;

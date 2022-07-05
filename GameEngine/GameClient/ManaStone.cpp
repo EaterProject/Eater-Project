@@ -17,7 +17,7 @@
 #include "ParticleFactory.h"
 
 std::vector<Vector3> ManaStone::MonsterMovePointDefault;
-int ManaStone::MaxManaCount = 5;
+int ManaStone::MaxManaCount =5;
 
 ManaStone::ManaStone()
 {
@@ -49,7 +49,6 @@ void ManaStone::Awake()
 	srand((unsigned int)time(NULL));
 
 	CreateMonster(MonsterACount, MonsterBCount);
-	mAttackParticle		= ParticleFactory::Get()->CreateParticleController(PARTICLE_TYPE::ManaTreeSmoke);
 	mRangeParticle	= ParticleFactory::Get()->CreateParticleController(PARTICLE_TYPE::ManaSmoke);
 }
 
@@ -66,7 +65,6 @@ void ManaStone::SetUp()
 void ManaStone::Start()
 {
 	mSetting.Setting(this->gameobject);
-	mAttackParticle->Play();
 
 
 	Vector3 Pos = mTransform->GetPosition();
@@ -77,7 +75,26 @@ void ManaStone::Start()
 
 void ManaStone::Update()
 {
-	mSetting.LimLightUpdate(2.8f);
+	if (DeadStart == false)
+	{
+		mSetting.LimLightUpdate(2.8f);
+	}
+
+	if (DeadStart == true && mSetting.EndDissolve() == false)
+	{
+		DeadStart = false;
+
+		MiniMapSystem::Get()->DeleteIcon(this->gameobject);
+		gameobject->SetActive(false);
+
+		mRangeParticle->Stop();
+		mRangeParticle->gameobject->SetActive(false);
+
+		//Destroy(gameobject);
+		//Destroy(mRangeParticle->gameobject);
+
+		//Delete();
+	}
 }
 
 void ManaStone::SetMonsterCount(int MonsterA, int MonsterB)
@@ -140,12 +157,10 @@ void ManaStone::Delete()
 	//	Destroy(MonsterB_List[i]->gameobject);
 	//}
 
-	Destroy(this->gameobject);
+	gameobject->SetActive(false);
 	MiniMapSystem::Get()->DeleteIcon(this->gameobject);
-	mAttackParticle->Stop();
-	mRangeParticle->Stop();
 
-	mAttackParticle->gameobject->SetActive(false);
+	Destroy(gameobject);
 	mRangeParticle->gameobject->SetActive(false);
 }
 
@@ -191,6 +206,7 @@ void ManaStone::OnTriggerStay(GameObject* Obj)
 			mSetting.SetLimlightSettingMax(MeshFilterSetting::COLOR_TYPE::RED, 0.0f, 0.0f);
 
 			HP -= Player::GetPlayerPower();
+			//HP -= 100;
 			if (HP <= 0)
 			{
 				mSetting.SetDissolveOption(DISSOLVE_FADEOUT);
@@ -203,7 +219,6 @@ void ManaStone::OnTriggerStay(GameObject* Obj)
 				mSetting.SetDissolveOuterFactor(25.0f);
 				mSetting.PlayDissolve();
 				DeadStart = true;
-				MiniMapSystem::Get()->DeleteIcon(this->gameobject);
 
 				// 보스 등장 전 마나 개수..
 				if (Boss_Start == false)
@@ -218,7 +233,6 @@ void ManaStone::OnTriggerStay(GameObject* Obj)
 					}
 				}
 
-				mAttackParticle->Stop();
 				mRangeParticle->Stop();
 				// 코어 마나 획득
 				MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_GET_COREMANA, &CoreManaCount);

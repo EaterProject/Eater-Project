@@ -22,6 +22,7 @@ class ParticleController;
 #define PLAYER_STATE_SKILL_03	0x00100000
 #define PLAYER_STATE_JUMP		0x01000000
 #define PLAYER_STATE_MOVE		0x10000000
+#define PLAYER_STATE_DEAD		0x11111111
 
 class Player :public Component
 {
@@ -65,6 +66,7 @@ private:
 	void Player_Hit(int HitPower);
 	bool Player_Move_Check();			//기본 상태 체크
 	void Player_Push();
+	void Player_Dead();
 private:
 	void ChangeSkyLight(int index);
 	void SetMeshFilterList();
@@ -105,7 +107,7 @@ private:
 	const float Upgrade_AttackSpeed_1 = 0.12f;
 	const float Upgrade_AttackSpeed_2 = 0.15f;
 	const float Upgrade_MoveSpeed_Value = 0.5f;
-	const float Upgrade_MoveSpeed_Animation = 0.27f;
+	const float Upgrade_MoveSpeed_Animation = 0.1f;
 
 private:
 	std::string ANIMATION_NAME[8]	= { "", };
