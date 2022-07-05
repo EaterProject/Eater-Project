@@ -32,7 +32,7 @@ void MonsterA::SetUp()
 	Speed			= 1.5f;
 	RotationSpeed	= 380.0f;
 	ComboCount		= 3;
-	Damage			= 150;
+	Damage			= 200;
 	PureManaCount	= 5;
 	//AttackRange		= 1.5f;
 	//ChaseRange		= 7.0f;

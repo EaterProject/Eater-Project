@@ -9,6 +9,8 @@
 #include "Transform.h"
 #include "Collider.h"
 
+bool DoorCollider::Boss_Start = false;
+
 DoorCollider::DoorCollider()
 {
 }
@@ -93,6 +95,8 @@ void DoorCollider::OnTriggerEnter(GameObject* Obj)
 
 void DoorCollider::OnTriggerStay(GameObject* Obj)
 {
+	if (Obj == nullptr) return;
+
 	if (Obj->GetTag() == 0)
 	{
 		PlayerDistance = Vector3::Distance(Zero, Obj->transform->GetPosition());
@@ -147,7 +151,14 @@ void DoorCollider::OnTriggerExit(GameObject* Obj)
 	if (PlayerDistance >= 30)
 	{
 		Sound_Stop_BGM();
-		Sound_Play_BGM("InGame_OutDoor");
+		if (Boss_Start)
+		{
+			Sound_Play_BGM("BossZone");
+		}
+		else
+		{
+			Sound_Play_BGM("InGame_OutDoor");
+		}
 	}
 	else
 	{

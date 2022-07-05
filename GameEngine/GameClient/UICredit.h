@@ -18,7 +18,8 @@ public:
 	void Set_CreditUI_Active(bool active);
 
 private:
-	bool StartCredit;
+	bool StartCredit = false;
+	bool StartCamera = false;
 
 	float MoveSpeed;
 

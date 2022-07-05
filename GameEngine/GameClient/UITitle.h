@@ -40,6 +40,9 @@ private:
 	bool IsOption	= false;
 
 	bool IsFade		= false;
+	bool IsGameStart = false;
+	bool IsGameStartFadeOut = false;
+	bool IsGameStartFadeIn = false;
 
 	float ButtonUI_PosX = 200;
 };

@@ -1,5 +1,5 @@
 #EATER_PARTICLE
-@PlayTime 1.000000
+@PlayTime 0.100000
 @Loop 0
 @TextureName EmberExpl2
 @RenderType 0
@@ -7,7 +7,7 @@
 @ScaleType 1
 @MaxParticle 1
 @DelayTime 0.000000
-@RateOverTime 10.000000
+@RateOverTime 30.000000
 @Strength 10.000000
 $Radius 1 3
 0.000000 0.000000 0.000000
@@ -32,7 +32,7 @@ $LifeColor 2 4
 0.000000 255.000000 0.000000 255.000000
 0.000000 255.000000 0.000000 0.000000
 $LifeScale 1 2
-3.000000 4.000000
+1.000000 2.000000
 $LifeRotation 1 2
 0.000000 0.000000
 &

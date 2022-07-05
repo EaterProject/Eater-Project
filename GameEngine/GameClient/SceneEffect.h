@@ -27,6 +27,7 @@ public:
 
 public:
 	void Begin_Boss_Start_Effect();
+	void Set_Boss_Zone_In(bool Active);
 
 private:
 	void Change_Boss_Start_Effect();
@@ -48,6 +49,9 @@ private:
 	bool Fade_In_End = false;
 	bool Fade_Out_End = false;
 	bool Camera_End = false;
+
+	bool Boss_Start = false;
+	bool Boss_Zone_In = false;
 
 private:
 	RenderOption* m_RenderOption;

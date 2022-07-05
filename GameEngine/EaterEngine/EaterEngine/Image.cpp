@@ -5,6 +5,7 @@
 #include "UIManager.h"
 #include "LoadManager.h"
 #include "GraphicEngineAPI.h"
+#include "GameEngine.h"
 
 Image::Image()
 	:TextureIndex(-1), m_Start(false)
@@ -97,7 +98,9 @@ void Image::SetTexture()
 	m_UI->UI_Property->UI_Name = nowTexture->Name;
 
 	// 그래픽 연동..
+	EnterCriticalSection(&GameEngine::g_CS);
 	GraphicEngine::Get()->PushChangeInstance(gameobject->OneMeshData);
+	LeaveCriticalSection(&GameEngine::g_CS);
 
 	// 이미지 크기 재설정..
 	m_Transform->SetImageSize(m_UI->Albedo->Width, m_UI->Albedo->Height);
@@ -335,7 +338,9 @@ void Image::SetLayer(UINT order)
 	m_UI->ChangeLayer = order;
 
 	// 그래픽 연동..
+	EnterCriticalSection(&GameEngine::g_CS);
 	GraphicEngine::Get()->PushChangeInstance(gameobject->OneMeshData);
+	LeaveCriticalSection(&GameEngine::g_CS);
 }
 
 DirectX::SimpleMath::Vector2 Image::GetImageSize()

@@ -401,8 +401,6 @@ void UIStore::Purchase_Item_Button_Click()
 		return;
 	}
 
-	Sound_Play_SFX("VendingMachine");
-
 	/// 선택한 아이템에 대한 구매 및 능력치 적용..
 	switch (SelectItemID)
 	{

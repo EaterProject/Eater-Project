@@ -107,7 +107,7 @@ private:
 	const float Upgrade_AttackSpeed_1 = 0.12f;
 	const float Upgrade_AttackSpeed_2 = 0.15f;
 	const float Upgrade_MoveSpeed_Value = 0.5f;
-	const float Upgrade_MoveSpeed_Animation = 0.27f;
+	const float Upgrade_MoveSpeed_Animation = 0.1f;
 
 private:
 	std::string ANIMATION_NAME[8]	= { "", };

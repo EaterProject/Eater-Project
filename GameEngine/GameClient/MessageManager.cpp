@@ -34,6 +34,7 @@
 #include "UIManual.h"
 #include "UICredit.h"
 #include "UIBoss.h"
+#include "DoorCollider.h"
 
 MessageManager* MessageManager::instance = nullptr;
 MessageManager::MessageManager()
@@ -91,6 +92,7 @@ void MessageManager::Initialize(ObjectFactory* Factory)
 	CREATE_MESSAGE(TARGET_UI_MANUAL);
 	CREATE_MESSAGE(TARGET_UI_CREDIT);
 	CREATE_MESSAGE(TARGET_UI_BOSS);
+	CREATE_MESSAGE(TARGET_TREE_SMOKE);
 }
 
 void MessageManager::Release()
@@ -207,6 +209,8 @@ GameObject* MessageManager::CREATE_MESSAGE(int CREATE_TYPE)
 		Object = mFactory->CreateSceneEffect();
 		mSceneEffect = Object->GetComponent<SceneEffect>();
 		return Object;
+	case TARGET_TREE_SMOKE:
+		return mFactory->CreateTreeSmoke();
 	}
 
 	return nullptr;
@@ -274,6 +278,7 @@ void MessageManager::SEND_UI_Message(int MessageType, void* Data)
 		break;
 	case MESSAGE_UI_BOSS_ACTIVE:
 		mBossUI->SetBossUIActive(*(reinterpret_cast<bool*>(Data)));
+		mSceneEffect->Set_Boss_Zone_In(true);
 		break;
 	case MESSAGE_UI_PUREMANA:
 		mCanvas->Set_Pure_Mana_Count(*(reinterpret_cast<int*>(Data)));
@@ -300,6 +305,7 @@ void MessageManager::SEND_UI_Message(int MessageType, void* Data)
 
 void MessageManager::SEND_DRONE_Message(int MessageType, void* Data)
 {
+	Sound_Play_SFX("Drone_Text_01");
 	switch (MessageType)
 	{
 	case MESSAGE_DRONE_GAME_START:			// O
@@ -448,11 +454,13 @@ void MessageManager::InGameStart()
 	mCameraManager->SetMouseFix(true);
 
 	//사운드 재생
+	Sound_Stop_BGM();
 	Sound_Play_BGM("InGame_InDoor");
 }
 
 void MessageManager::TitleStart()
 {
+	mBossUI->SetBossUIActive(false);
 	mTiltle->Set_TitleUI_Active(true);
 
 	mCanvas->Set_InGameUI_Active(false);
@@ -471,6 +479,7 @@ void MessageManager::TitleStart()
 	//SEND_Message(TARGET_UI,)
 	//SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_ACTIVE_FALSE);
 
+	Sound_Stop_BGM();
 	Sound_Play_BGM("Title");
 }
 
@@ -562,6 +571,8 @@ void MessageManager::BossStart()
 	// 보스 등장 이펙트 실행..
 	mSceneEffect->Begin_Boss_Start_Effect();
 
+	DoorCollider::Boss_Start = true;
+
 	mManual->Set_ManualUI_Active(false);
 	mTiltle->Set_TitleUI_Active(false);
 	mCanvas->Set_InGameUI_Active(false);
@@ -569,6 +580,9 @@ void MessageManager::BossStart()
 	mPause->Set_PauseUI_Active(false);
 	mCredit->Set_CreditUI_Active(false);
 	mStore->Set_Store_Active(false);
+
+	// 보스 활성화..
+	mBoss->Set_Boss_Active(true);
 
 	// 플레이어 무적 상태 설정..
 	mPlayer->SetNoHit(true);
@@ -626,7 +640,6 @@ void MessageManager::CreditStart()
 {
 	Sound_Stop_BGM();
 	Sound_Play_BGM("Ending");
-
 
 	mCredit->Set_CreditUI_Active(true);
 	mTiltle->Set_TitleUI_Active(false);

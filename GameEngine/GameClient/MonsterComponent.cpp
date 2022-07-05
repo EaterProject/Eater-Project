@@ -163,7 +163,10 @@ void MonsterComponent::OnTriggerStay(GameObject* Obj)
 
 			SetMonsterColor();
 			SetMonsterState(MONSTER_STATE::HIT);
-			Sound_Play_SFX(SOUND_NAME[(int)MONSTER_STATE::HIT]);
+			if (Player::GetNoHitState() == false)
+			{
+				Sound_Play_SFX(SOUND_NAME[(int)MONSTER_STATE::HIT]);
+			}
 			HitStart	 = true;
 		}
 	}
@@ -232,8 +235,12 @@ void MonsterComponent::Attack()
 		if (IsAttack == false)
 		{
 			MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_HIT, &Damage);
-			MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_PLAYER_HIT,nullptr);
-			Sound_Play_SFX(SOUND_NAME[(int)MONSTER_STATE::ATTACK]);
+
+			if (Player::GetNoHitState() == false)
+			{
+				Sound_Play_SFX(SOUND_NAME[(int)MONSTER_STATE::ATTACK]);
+			}
+
 			IsAttack = true;
 		}
 	}
@@ -243,11 +250,7 @@ void MonsterComponent::Attack()
 
 		if (mParticleController != nullptr)
 		{
-			PARTICLE_STATE mState = mParticleController->GetState();
-			if (mState == PLAY_STATE)
-			{
-				mParticleController->Stop();
-			}
+			mParticleController->Stop();
 		}
 	}
 

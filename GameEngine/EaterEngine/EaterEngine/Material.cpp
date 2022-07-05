@@ -56,7 +56,9 @@ void Material::SetAlpha(bool enable)
 	m_MaterialData->Material_Property->IsRelocation = true;
 
 	// Renderer Data 동기화..
+	EnterCriticalSection(&GameEngine::g_CS);
 	GraphicEngine::Get()->PushChangeMaterial(m_MaterialData);
+	LeaveCriticalSection(&GameEngine::g_CS);
 }
 
 void Material::SetDiffuseTexture(std::string diffuseName)
@@ -67,7 +69,9 @@ void Material::SetDiffuseTexture(std::string diffuseName)
 	m_MaterialData->Albedo = newTexture;
 
 	// Renderer Data 동기화..
+	EnterCriticalSection(&GameEngine::g_CS);
 	GraphicEngine::Get()->PushChangeMaterial(m_MaterialData);
+	LeaveCriticalSection(&GameEngine::g_CS);
 }
 
 void Material::SetNormalTexture(std::string noramlName)
@@ -78,7 +82,9 @@ void Material::SetNormalTexture(std::string noramlName)
 	m_MaterialData->Normal = newTexture;
 
 	// Renderer Data 동기화..
+	EnterCriticalSection(&GameEngine::g_CS);
 	GraphicEngine::Get()->PushChangeMaterial(m_MaterialData);
+	LeaveCriticalSection(&GameEngine::g_CS);
 }
 
 void Material::SetEmissiveTexture(std::string emissiveName)
@@ -89,7 +95,9 @@ void Material::SetEmissiveTexture(std::string emissiveName)
 	m_MaterialData->Emissive = newTexture;
 
 	// Renderer Data 동기화..
+	EnterCriticalSection(&GameEngine::g_CS);
 	GraphicEngine::Get()->PushChangeMaterial(m_MaterialData);
+	LeaveCriticalSection(&GameEngine::g_CS);
 }
 
 void Material::SetORMTexture(std::string ormName)
@@ -100,7 +108,9 @@ void Material::SetORMTexture(std::string ormName)
 	m_MaterialData->ORM = newTexture;
 
 	// Renderer Data 동기화..
+	EnterCriticalSection(&GameEngine::g_CS);
 	GraphicEngine::Get()->PushChangeMaterial(m_MaterialData);
+	LeaveCriticalSection(&GameEngine::g_CS);
 }
 
 void Material::SetAddColor(DirectX::SimpleMath::Vector3 color)
