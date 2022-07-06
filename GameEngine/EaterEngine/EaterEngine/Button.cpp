@@ -343,6 +343,9 @@ void Button::Resize(int width, int height)
 	m_Right_Offset *= ratio_x;
 	m_Top_Offset *= ratio_y;
 	m_Bottom_Offset *= ratio_y;
+
+	Screen_Resize.x = width;
+	Screen_Resize.y = height;
 }
 
 void Button::SetPivot(PIVOT_TYPE pivot_type)

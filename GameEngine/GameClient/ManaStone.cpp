@@ -17,7 +17,7 @@
 #include "ParticleFactory.h"
 
 std::vector<Vector3> ManaStone::MonsterMovePointDefault;
-int ManaStone::MaxManaCount =1;
+int ManaStone::MaxManaCount =5;
 
 ManaStone::ManaStone()
 {
@@ -75,6 +75,14 @@ void ManaStone::Start()
 
 void ManaStone::Update()
 {
+	if (GetKeyDown(VK_NUMPAD3))
+	{
+		Boss_Start = true;
+		MaxManaCount = 0;
+		MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_BOSS_START);
+	}
+
+
 	if (DeadStart == false)
 	{
 		mSetting.LimLightUpdate(2.8f);

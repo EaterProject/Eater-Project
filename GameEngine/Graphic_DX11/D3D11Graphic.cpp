@@ -72,6 +72,29 @@ void D3D11Graphic::Initialize(HWND hwnd, int screenWidth, int screenHeight)
 		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, result, "[ Graphic ][ Create ][ Device ] FAILED!!");
 		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, result, "[ Graphic ][ Create ][ Device ] FAILED!!");
 	}
+
+
+	IDXGIDevice* dxgiDevice = nullptr;
+	result = m_Device->QueryInterface(__uuidof(IDXGIDevice), (void**)&dxgiDevice);
+
+	IDXGIAdapter* dxgiAdapter = nullptr;
+	result = dxgiDevice->GetParent(__uuidof(IDXGIAdapter), (void**)&dxgiAdapter);
+
+	IDXGIFactory* dxgiFactory = nullptr;
+	result = dxgiAdapter->GetParent(__uuidof(IDXGIFactory), (void**)&dxgiFactory);
+
+	result = dxgiFactory->MakeWindowAssociation(hwnd, DXGI_MWA_NO_ALT_ENTER);
+
+	if (FAILED(result))
+	{
+		PROFILE_RESULT(PROFILE_OUTPUT::LOG_FILE, result, "[ Graphic ][ Create ][ Device ] FAILED!!");
+		PROFILE_RESULT(PROFILE_OUTPUT::VS_CODE, result, "[ Graphic ][ Create ][ Device ] FAILED!!");
+	}
+
+	RELEASE_COM(dxgiDevice);
+	RELEASE_COM(dxgiAdapter);
+	RELEASE_COM(dxgiFactory);
+
 }
 
 void D3D11Graphic::Release()

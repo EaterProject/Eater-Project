@@ -24,8 +24,8 @@ int		Player::ChangeCount = 0;
 int		Player::MaxChangeCount = 10;
 int		Player::ComboCount = 0;
 
-float	Player::PlayerPower		 = 10;
-float	Player::PlayerComboPower = 20;
+float	Player::PlayerPower		 = 20;
+float	Player::PlayerComboPower = 40;
 
 #define LERP(prev, next, time) ((prev * (1.0f - time)) + (next * time))
 Player::Player()
@@ -48,7 +48,7 @@ Player::Player()
 
 
 	ANIMATION_SPEED[(int)PLAYER_STATE::IDLE]		= 1.5f;
-	ANIMATION_SPEED[(int)PLAYER_STATE::ATTACK_01]	= 1.5f;
+	ANIMATION_SPEED[(int)PLAYER_STATE::ATTACK_01]	= 1.8f;
 	ANIMATION_SPEED[(int)PLAYER_STATE::ATTACK_02]	= 1.85f;
 	ANIMATION_SPEED[(int)PLAYER_STATE::SKILL_01]	= 1.5f;
 	ANIMATION_SPEED[(int)PLAYER_STATE::SKILL_02]	= 1.5f;
@@ -137,6 +137,7 @@ void Player::Start()
 void Player::Update()
 {
 	if (IsCreate == false) { return; }
+	if (GetKeyDown(VK_NUMPAD0)){mTransform->SetPosition(-16, 0, 0);}
 
 	//플레이어 스킬 쿨타임 체크
 	PlayerCoolTimeCheck();
@@ -185,7 +186,7 @@ void Player::SetMessageRECV(int Type, void* Data)
 		break;
 	case MESSAGE_PLAYER_HEAL:
 	{
-		HP += 100;
+		HP += 300;
 		if (HP >= HP_Max) { HP = HP_Max; }
 		Vector3 Pos = mTransform->GetPosition();
 		Pos.y += 0.2f;
@@ -281,15 +282,6 @@ float Player::GetPlayerPower()
 float Player::GetPlayerComboPower()
 {
 	return PlayerComboPower;
-}
-
-void Player::Healing(float HealingPower)
-{
-	float MaxHP = LERP(0, HP, 0.7f);
-	if (HP <= MaxHP)
-	{
-		HP += HealingPower;
-	}
 }
 
 void Player::SetNoHit(bool Active)
@@ -828,7 +820,7 @@ void Player::Player_Dead()
 		mState = PLAYER_STATE_IDLE;
 		mTransform->SetPosition(-16, 0, 0);
 		//체력 초기화,콤보 초기화
-		HP = 3000;
+		HP = HP_Max;
 		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_HP_NOW, &HP);
 		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_COMBO, &ComboCount);
 	}
@@ -1057,6 +1049,7 @@ void Player::PlayerGroundCheck()
 		{
 			float Offset_Min = mTransform->GetPosition().y - 1.0f;
 			float Offset_Max = mTransform->GetPosition().y + 1.0f;
+
 			float Point_Y = RayCastHit[i].Hit.HitPoint.y;
 			if (Point_Y <= Offset_Min || Point_Y >= Offset_Max)
 			{

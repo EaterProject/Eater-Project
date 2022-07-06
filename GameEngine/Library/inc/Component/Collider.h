@@ -44,6 +44,9 @@ public:
 	EATER_ENGINEDLL bool GetTriggerEnter();
 	EATER_ENGINEDLL bool GetTriggerStay();
 	EATER_ENGINEDLL bool GetTriggerExit();
+
+
+	EATER_ENGINEDLL void DeletePhysCollider();
 private:
 	void FindPhysFunctionEnter(PhysData* Data, unsigned int Type);
 	void FindPhysFunctionStay(PhysData* Data, unsigned int Type);
