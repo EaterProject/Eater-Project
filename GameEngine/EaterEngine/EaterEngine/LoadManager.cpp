@@ -509,6 +509,7 @@ void LoadManager::LoadFile(std::string& Path, UINT MODE)
 {
 	//파일 체크 텍스쳐, FBX, 자체포멧 ,구분하여 로드
 	//로드한 데이터는 LoadManager안에 리스트로 담긴다
+	Sleep(0);
 
 	std::size_t Start	= Path.rfind('.') + 1;
 	std::size_t End		= Path.length() - Start;

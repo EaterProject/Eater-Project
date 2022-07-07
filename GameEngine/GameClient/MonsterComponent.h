@@ -43,7 +43,7 @@ protected:
 	MeshFilter*				mSkinFilter = nullptr;
 	Transform*				mTransform	= nullptr;
 	AnimationController*	mAnimation	= nullptr;
-	Collider*				mColider	= nullptr;
+	Collider*				mCollider	= nullptr;
 	Transform*				mPlayerTR	= nullptr;
 	Rigidbody*				mRigidbody	= nullptr;
 protected:
@@ -96,7 +96,7 @@ protected:
 	float ChaseEndTime			= 10.0f;		//추격을  중지하는 시간 
 protected:
 	///사정거리
-	float AttackRange			= 2.5f;			//공격 거리
+	float AttackRange			= 3.0f;			//공격 거리
 	float ChaseRange			= 5.5f;			//추격 거리
 protected:
 	float	Max_HP				= 100;			//현재 체력

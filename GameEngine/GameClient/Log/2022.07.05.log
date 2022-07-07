@@ -1,3 +1,0 @@
-[TIME] 01:43:14 [FILE] TextureManager.cpp [FUNC] TextureManager::BakeSkyLightMap [LINE] 56
-[ Engine ][ Bake ][ SkyLight Buffer ] 'DOME_HDR_5' Texture가 로드되지 않았습니다!!
-

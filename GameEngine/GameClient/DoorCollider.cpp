@@ -95,6 +95,8 @@ void DoorCollider::OnTriggerEnter(GameObject* Obj)
 
 void DoorCollider::OnTriggerStay(GameObject* Obj)
 {
+	if (Obj == nullptr) return;
+
 	if (Obj->GetTag() == 0)
 	{
 		PlayerDistance = Vector3::Distance(Zero, Obj->transform->GetPosition());

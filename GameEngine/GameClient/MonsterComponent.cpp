@@ -49,7 +49,7 @@ void MonsterComponent::Awake()
 	mTransform	= gameobject->GetTransform();
 	mMeshFilter = gameobject->GetComponent<MeshFilter>();
 	mAnimation	= gameobject->GetComponent<AnimationController>();
-	mColider	= gameobject->GetComponent<Collider>();
+	mCollider	= gameobject->GetComponent<Collider>();
 	mRigidbody  = gameobject->GetComponent<Rigidbody>();
 
 	mHitController = ParticleFactory::Get()->CreateParticleController(PARTICLE_TYPE::CounterAttack);
@@ -59,11 +59,11 @@ void MonsterComponent::Awake()
 void MonsterComponent::SetUp()
 {
 	//Collider¼³Á¤
-	mColider->SetBoxCollider(0.25f, 3,0.25f);
-	mColider->SetCenter(0, 3, 0);
-	mColider->SetMaterial_Dynamic(0);
-	mColider->SetMaterial_Restitution(0);
-	mColider->SetMaterial_Static(0);
+	mCollider->SetBoxCollider(0.5f, 3, 0.5f);
+	mCollider->SetCenter(0, 3, 0);
+	mCollider->SetMaterial_Dynamic(0);
+	mCollider->SetMaterial_Restitution(0);
+	mCollider->SetMaterial_Static(0);
 	mRigidbody->SetFreezeRotation(true, true, true);
 
 	mMeshFilter->SetModelName(ModelName);
@@ -163,7 +163,10 @@ void MonsterComponent::OnTriggerStay(GameObject* Obj)
 
 			SetMonsterColor();
 			SetMonsterState(MONSTER_STATE::HIT);
-			Sound_Play_SFX(SOUND_NAME[(int)MONSTER_STATE::HIT]);
+			if (Player::GetNoHitState() == false)
+			{
+				Sound_Play_SFX(SOUND_NAME[(int)MONSTER_STATE::HIT]);
+			}
 			HitStart	 = true;
 		}
 	}
@@ -232,8 +235,12 @@ void MonsterComponent::Attack()
 		if (IsAttack == false)
 		{
 			MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_HIT, &Damage);
-			MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_PLAYER_HIT,nullptr);
-			Sound_Play_SFX(SOUND_NAME[(int)MONSTER_STATE::ATTACK]);
+
+			if (Player::GetNoHitState() == false)
+			{
+				Sound_Play_SFX(SOUND_NAME[(int)MONSTER_STATE::ATTACK]);
+			}
+
 			IsAttack = true;
 		}
 	}
@@ -303,10 +310,13 @@ void MonsterComponent::Dead()
 		mMF_Setting.SetDissolveWidth(0.1f);
 		mMF_Setting.SetDissolveInnerFactor(100.0f);
 		mMF_Setting.SetDissolveOuterFactor(25.0f);
+		
+		mCollider->DeletePhysCollider();
 
 		// Ç»¾î ¸¶³ª È¹µæ
 		MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_GET_PUREMANA, &PureManaCount);
 	}
+
 
 	int End = mAnimation->GetEndFrame();
 	int Now = mAnimation->GetNowFrame();
@@ -331,7 +341,6 @@ void MonsterComponent::Dead()
 		{
 			DissolveStart = false;
 			gameobject->SetActive(false);
-			Destroy(gameobject);
 		}
 	}
 }

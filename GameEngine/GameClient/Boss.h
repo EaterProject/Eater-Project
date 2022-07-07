@@ -35,7 +35,7 @@ private:
 	MeshFilter*		mMeshFilter		= nullptr;
 	MeshFilter*		mSkinFilter		= nullptr;
 	Transform*		mTransform		= nullptr;
-	Collider*		mColider		= nullptr;
+	Collider*		mCollider		= nullptr;
 	Transform*		mPlayerTR		= nullptr;
 	Rigidbody*		mRigidbody		= nullptr;
 private:
@@ -72,7 +72,6 @@ private:
 	void Boss_Guidedmissile_Attack_Play();
 	void Boss_Guidedmissile_Attack_End();
 
-
 	void Boss_Hit();
 	void Phase_UP_Start();
 	void Phase_UP_End();
@@ -85,8 +84,6 @@ private:
 	void	GroundCheck();
 	void	SkillCheck();
 	void	PushPlayer();
-	void	BossColorUpdate();
-
 private:
 
 	bool	IsHit			= false;
@@ -104,8 +101,9 @@ private:
 	int		FriendIndex		= -1;		//보스의 위치 인덱스
 	int		BossPhase		= 0;
 	int		ColorType		= 0;
+	int		BossComboMax	= 11;
 
-	float	AttackRange		= 3.5f;		//근접 공격 범위
+	float	AttackRange		= 3.0f;		//근접 공격 범위
 	float	FightRange		= 30.0f;	//보스와 싸울 수 있는 거리
 	float	SkillRange		= 10.0f;	//보스의 스킬 거리
 	float	PlayerDistance	= 0.0f;		//플레이어의 거리

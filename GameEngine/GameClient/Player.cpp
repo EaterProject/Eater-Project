@@ -24,8 +24,8 @@ int		Player::ChangeCount = 0;
 int		Player::MaxChangeCount = 10;
 int		Player::ComboCount = 0;
 
-float	Player::PlayerPower		 = 10;
-float	Player::PlayerComboPower = 20;
+float	Player::PlayerPower		 = 20;
+float	Player::PlayerComboPower = 40;
 
 #define LERP(prev, next, time) ((prev * (1.0f - time)) + (next * time))
 Player::Player()
@@ -48,7 +48,7 @@ Player::Player()
 
 
 	ANIMATION_SPEED[(int)PLAYER_STATE::IDLE]		= 1.5f;
-	ANIMATION_SPEED[(int)PLAYER_STATE::ATTACK_01]	= 1.5f;
+	ANIMATION_SPEED[(int)PLAYER_STATE::ATTACK_01]	= 1.8f;
 	ANIMATION_SPEED[(int)PLAYER_STATE::ATTACK_02]	= 1.85f;
 	ANIMATION_SPEED[(int)PLAYER_STATE::SKILL_01]	= 1.5f;
 	ANIMATION_SPEED[(int)PLAYER_STATE::SKILL_02]	= 1.5f;
@@ -137,6 +137,7 @@ void Player::Start()
 void Player::Update()
 {
 	if (IsCreate == false) { return; }
+	if (GetKeyDown(VK_NUMPAD0)){mTransform->SetPosition(-16, 0, 0);}
 
 	//플레이어 스킬 쿨타임 체크
 	PlayerCoolTimeCheck();
@@ -180,22 +181,11 @@ void Player::SetMessageRECV(int Type, void* Data)
 	switch (Type)
 	{
 	case MESSAGE_PLAYER_HIT:
-		
 		Player_Hit(*(reinterpret_cast<int*>(Data)));
 		break;
 	case MESSAGE_PLAYER_HEAL:
-	{
-		HP += 100;
-		if (HP >= HP_Max) { HP = HP_Max; }
-		Vector3 Pos = mTransform->GetPosition();
-		Pos.y += 0.2f;
-		mHealParticle->SetPosition(Pos);
-		mHealParticle->Play();
-		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_HP_NOW, &HP);
-		Sound_Play_SFX("Player_Heal");
-		MessageManager::GetGM()->SEND_Message(TARGET_DRONE, MESSAGE_DRONE_PLAYER_HEAL);
+		Player_Heal();
 		break;
-	}
 	case MESSAGE_PLAYER_ATTACK_OK:
 		ComboCount++;
 		MessageManager::GetGM()->SEND_Message(TARGET_UI,MESSAGE_UI_COMBO,&ComboCount);
@@ -283,15 +273,6 @@ float Player::GetPlayerComboPower()
 	return PlayerComboPower;
 }
 
-void Player::Healing(float HealingPower)
-{
-	float MaxHP = LERP(0, HP, 0.7f);
-	if (HP <= MaxHP)
-	{
-		HP += HealingPower;
-	}
-}
-
 void Player::SetNoHit(bool Active)
 {
 	IsNoHit = Active;
@@ -356,6 +337,16 @@ void Player::PlayerKeyinput()
 	{
 		DebugPrint("카메라 연결 안되어있음");
 		return;
+	}
+
+	if (GetKeyDown(VK_SPACE))
+	{
+		if (SPC_CoolTime <= 0.0f)
+		{
+			SPC_CoolTime = Skill_SPC_CoolTime;
+			mState |= PLAYER_STATE_JUMP;
+			Sound_Play_SFX("Player_Evade");
+		}
 	}
 
 	if (GetKey('D'))
@@ -448,15 +439,8 @@ void Player::PlayerKeyinput()
 		}
 		Sound_Play_SFX("ChangeEmagin");
 	}
-	else if (GetKeyDown(VK_SPACE))
-	{
-		if (SPC_CoolTime <= 0.0f)
-		{
-			SPC_CoolTime = Skill_SPC_CoolTime;
-			mState |= PLAYER_STATE_JUMP;
-			Sound_Play_SFX("Player_Evade");
-		}
-	}
+
+	
 
 	//이번프레임에 이동해야하는 방향
 	DirPos.Normalize();
@@ -730,11 +714,11 @@ void Player::Player_Jump()
 	if(Now>= End)
 	{
 		mState = PLAYER_STATE_IDLE;
-		IsHit = false;
+		IsNoHit = false;
 	}
 	else
 	{
-		IsHit = true;
+		IsNoHit = true;
 	}
 }
 
@@ -744,7 +728,6 @@ void Player::Player_Hit(int HitPower)
 	if (IsNoHit == true) { return; }
 
 	Sound_Play_SFX("Player_Hit");
-
 	IsHit = true;
 	HP -= HitPower;
 	if (HP <= 0)
@@ -755,6 +738,7 @@ void Player::Player_Hit(int HitPower)
 		mState = PLAYER_STATE_DEAD;
 	}
 	MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_HP_NOW, &HP);
+	MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_PLAYER_HIT);
 }
 
 bool Player::Player_Move_Check()
@@ -786,10 +770,23 @@ bool Player::Player_Move_Check()
 
 void Player::Player_Push()
 {
+	//밀기가 시작되고
 	static float PushTime = 0;
 	if (IsPush == false){return;}
+
+	//캐릭터의 속력을 0으로 애니메이션은 움직이고 이동은 못하도록
 	Speed = 0;
-	if (IsBackRayCheck == true)
+
+	//만약 레이캐스트중 한개라도 충돌이 되지않았다면
+	if (IsFrontRayCheck == false || IsBackRayCheck == false ||
+		IsLeftRayCheck == false || IsRightRayCheck == false)
+	{
+		//미는것을 멈춘다
+		IsPush		= false;
+		Speed		= SpeedMax;
+		PushTime	= 0;
+	}
+	else
 	{
 		if (PushTime >= 1.5f)
 		{
@@ -801,14 +798,6 @@ void Player::Player_Push()
 		{
 			PushTime += GetDeltaTime();
 			mTransform->AddPosition(PushNomal * SpeedMax * GetDeltaTime());
-
-			if (IsFrontRayCheck == false || IsBackRayCheck == false ||
-				IsLeftRayCheck == false || IsRightRayCheck == false)
-			{
-				IsPush = false;
-				Speed = SpeedMax;
-				PushTime = 0;
-			}
 		}
 	}
 }
@@ -823,12 +812,26 @@ void Player::Player_Dead()
 		mState = PLAYER_STATE_IDLE;
 		mTransform->SetPosition(-16, 0, 0);
 		//체력 초기화,콤보 초기화
-		HP = 3000;
+		HP = HP_Max;
 		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_HP_NOW, &HP);
 		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_COMBO, &ComboCount);
 	}
 
 }
+
+void Player::Player_Heal()
+{
+	HP += 300;
+	if (HP >= HP_Max) { HP = HP_Max; }
+	Vector3 Pos = mTransform->GetPosition();
+	Pos.y += 0.2f;
+	mHealParticle->SetPosition(Pos);
+	mHealParticle->Play();
+	MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_HP_NOW, &HP);
+	Sound_Play_SFX("Player_Heal");
+	MessageManager::GetGM()->SEND_Message(TARGET_DRONE, MESSAGE_DRONE_PLAYER_HEAL);
+}
+
 void Player::ChangeSkyLight(int index)
 {
 	for (int i = 0; i < ChildMeshFilter.size(); i++)
@@ -1052,6 +1055,7 @@ void Player::PlayerGroundCheck()
 		{
 			float Offset_Min = mTransform->GetPosition().y - 1.0f;
 			float Offset_Max = mTransform->GetPosition().y + 1.0f;
+
 			float Point_Y = RayCastHit[i].Hit.HitPoint.y;
 			if (Point_Y <= Offset_Min || Point_Y >= Offset_Max)
 			{

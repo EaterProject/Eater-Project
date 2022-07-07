@@ -41,16 +41,6 @@ void BossWeapon::SetUp()
 
 void BossWeapon::Start()
 {
-	//mParticleManager->Play();
-	//mParticleManager->gameobject->ChoiceParent(this->gameobject);
-
-	//ParticleController* PC = nullptr;
-	//PC =  mParticleObj[0]->GetComponent<ParticleController>();
-	//PC->Play();
-	//PC =  mParticleObj[1]->GetComponent<ParticleController>();
-	//PC->Play();
-	//PC =  mParticleObj[2]->GetComponent<ParticleController>();
-	//PC->Play();
 	mPlayerTr = Player::GetPlayerTransform();
 
 	mProjectile->gameobject->ChoiceParent(this->gameobject);

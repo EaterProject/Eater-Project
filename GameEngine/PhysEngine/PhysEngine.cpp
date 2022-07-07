@@ -129,6 +129,8 @@ void PhysEngine::Create_Actor(PhysData* data)
 
 void  PhysEngine::Update_Actor(PhysData* data)
 {
+	if (data == nullptr) { return; }
+
 	if (data->isDinamic == true)
 	{
 		PxRigidDynamic* Dynamic = reinterpret_cast<PxRigidDynamic*>(data->ActorObj);
@@ -170,10 +172,24 @@ void PhysEngine::Delete_Actor(PhysData* data)
 	//한개의 엑터 삭제
 	if (data->ActorObj != nullptr)
 	{
+		if (data->mCollider != nullptr)
+		{
+			delete data->mCollider;
+			data->mCollider = nullptr;
+		}
+
+		if (data->mMeterial != nullptr)
+		{
+			delete data->mMeterial;
+			data->mMeterial = nullptr;
+		}
 		PxRigidStatic* rig = reinterpret_cast<PxRigidStatic*>(data->ActorObj);
 		rig->release();
+		rig = nullptr;
 	}
 	delete data;
+	data = nullptr;
+
 }
 
 bool PhysEngine::RayCast(PhysRayCast* ray)
@@ -309,6 +325,7 @@ void PhysEngine::CreateStart()
 
 void PhysEngine::UpdateDynamicPosition(PxRigidDynamic* Dynamic, PhysData* Data)
 {
+	if (Data == nullptr) { return; }
 	//위치값이 변경되었다면 변경된 값으로 업데이트
 	PxQuat Q = PxQuat(Data->Rotation.x, Data->Rotation.y, Data->Rotation.z, Data->Rotation.w);
 	PxVec3 P = PxVec3(Data->WorldPosition.x, Data->WorldPosition.y, Data->WorldPosition.z);
@@ -318,6 +335,8 @@ void PhysEngine::UpdateDynamicPosition(PxRigidDynamic* Dynamic, PhysData* Data)
 
 void PhysEngine::UpdateDynamicForce(PxRigidDynamic* Dynamic, PhysData* Data)
 {
+	if (Data == nullptr) { return; }
+
 	//포스값이 변경되었다면 변경된 값으로 업데이트
 	PxVec3 Force = PxVec3(Data->Force.x, Data->Force.y, Data->Force.z);
 	PxVec3 Pos = PxVec3(Data->WorldPosition.x, Data->WorldPosition.y, Data->WorldPosition.z);
@@ -327,6 +346,8 @@ void PhysEngine::UpdateDynamicForce(PxRigidDynamic* Dynamic, PhysData* Data)
 
 void PhysEngine::UpdateDynamicVelocity(PxRigidDynamic* Dynamic, PhysData* Data)
 {
+	if (Data == nullptr) { return; }
+
 	//속력값이 변경되었다면 변경된 값으로 업데이트
 	PxVec3 Velocity = Dynamic->getLinearVelocity();
 	PxVec3 Pox;
@@ -345,6 +366,8 @@ void PhysEngine::UpdateDynamicVelocity(PxRigidDynamic* Dynamic, PhysData* Data)
 
 void PhysEngine::UpdateStaticPosition(PxRigidStatic* Static, PhysData* Data)
 {
+	if (Data == nullptr) { return; }
+
 	PxQuat Q = PxQuat(Data->Rotation.x, Data->Rotation.y, Data->Rotation.z, Data->Rotation.w);
 	PxVec3 P = PxVec3(Data->WorldPosition.x, Data->WorldPosition.y, Data->WorldPosition.z);
 	Static->setGlobalPose(PxTransform(P, Q));

@@ -958,7 +958,10 @@ void RenderManager::PushMaterialBlockInstance()
 		MaterialPropertyBlock* material_block = originMeshData->Object_Data->Material_Block;
 
 		// 해당 Material Block이 이미 등록된 경우..
-		if (material_block->Queue_Index != -1) return;
+		if (material_block->Queue_Index != -1)
+		{
+			PopMaterialBlockInstance(originMeshData);
+		};
 
 		// 해당 Block Alpha 상태에 따른 삽입..
 		if (material_block->Alpha)

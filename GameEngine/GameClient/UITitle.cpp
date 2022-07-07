@@ -126,6 +126,7 @@ void UITitle::Update()
 
 	if (IsGameStartFadeOut == true)
 	{
+		MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_MANUAL);
 		IsGameStartFadeOut = false;
 	}
 }
