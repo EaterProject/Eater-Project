@@ -56,7 +56,7 @@ private:
 	bool HitStart = false;
 	bool DeadStart = false;
 	float Range = 12;
-	float HP  = 100;
+	float HP  = 60;
 	int MonsterACount = 0;
 	int MonsterBCount = 0;
 

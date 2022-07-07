@@ -31,7 +31,7 @@ void MonsterA::SetUp()
 	Max_HP			= HP;
 	Speed			= 1.5f;
 	RotationSpeed	= 380.0f;
-	ComboCount		= 3;
+	ComboCount		= 2;
 	Damage			= 200;
 	PureManaCount	= 5;
 	//AttackRange		= 1.5f;

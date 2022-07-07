@@ -60,8 +60,8 @@ Boss::Boss()
 	ANIMATION_TIME[(int)BOSS_STATE::IDLE]					= 1.0f;
 	ANIMATION_TIME[(int)BOSS_STATE::DEAD]					= 1.0f;
 
-	ANIMATION_TIME[(int)BOSS_STATE::CLOSER_ATTACK_L]		= 1.0f;
-	ANIMATION_TIME[(int)BOSS_STATE::CLOSER_ATTACK_R]		= 1.0f;
+	ANIMATION_TIME[(int)BOSS_STATE::CLOSER_ATTACK_L] = 0.8f;
+	ANIMATION_TIME[(int)BOSS_STATE::CLOSER_ATTACK_R] = 0.8f;
 
 	ANIMATION_TIME[(int)BOSS_STATE::CHASE_ATTACK_READY]		= 0.5f;
 	ANIMATION_TIME[(int)BOSS_STATE::CHASE_ATTACK_PLAY]		= 1.0f;
@@ -95,18 +95,20 @@ Boss::Boss()
 	}
 
 	SkillTime[Rendom_Time]		= 10.0f;
+	SkillTime[Groggy_Time]		= 0.0f;
 
 	SkillTimeMax[Rendom_Time]	= 8.0f;		//장판 공격
 	SkillTimeMax[Chase_Time]	= 6.0f;		//일직선 공격
 	SkillTimeMax[Base_Time]		= 5.0f;		//기본 공격
 	SkillTimeMax[Teleport_Time] = 4.0f;		//텔레포트
-	SkillTimeMax[Groggy_Time]	= 10.0f;	//그로기 상태
+	SkillTimeMax[Groggy_Time]	= 5.0f;	//그로기 상태
 	SkillTimeMax[Missile_Time]	= 6.0f;		//미사일 상태
 }
 
 Boss::~Boss()
 {
 	delete mRay;
+	mRay = nullptr;
 }
 
 void Boss::Awake()
@@ -114,7 +116,7 @@ void Boss::Awake()
 	mTransform	= gameobject->GetTransform();
 	mAnimation	= gameobject->GetComponent<AnimationController>();
 	mMeshFilter = gameobject->GetComponent<MeshFilter>();
-	mColider	= gameobject->GetComponent<Collider>();
+	mCollider	= gameobject->GetComponent<Collider>();
 	mRigidbody	= gameobject->GetComponent<Rigidbody>();
 
 	mBaseAttackParticle = ParticleFactory::Get()->CreateParticleController(PARTICLE_TYPE::BossMelee);
@@ -147,10 +149,13 @@ void Boss::Awake()
 
 void Boss::SetUp()
 {
-	mColider->SetSphereCollider(0.5f);
-	mColider->SetCenter(0, 0.75f, 0);
-	mColider->SetMaterial_Restitution(0);
-	mColider->SetMaterial_Dynamic(0);
+	mCollider->SetSphereCollider(0.5f);
+	mCollider->SetCenter(0, 0.75f, 0);
+
+	mCollider->SetMaterial_Dynamic(0);
+	mCollider->SetMaterial_Restitution(0);
+	mCollider->SetMaterial_Static(0);
+
 	mRigidbody->SetFreezeRotation(true, true, true);
 	mRigidbody->SetGravity(false);
 
@@ -196,6 +201,20 @@ void Boss::Start()
 
 void Boss::Update()
 {
+	//보스 마스터키...
+	if (GetKeyDown(VK_NUMPAD1))
+	{
+		mTransform->SetPosition(-45.09f, 6.8f, 70.0f);
+	}
+
+	if (GetKeyDown(VK_NUMPAD2))
+	{
+		SetState(BOSS_STATE::DEAD);
+		HP = 0;
+	}
+
+	if (HP <= 0) { SetState(BOSS_STATE::DEAD); }
+
 	switch (mState)
 	{
 	case (int)BOSS_STATE::IDLE:
@@ -276,6 +295,7 @@ void Boss::Update()
 	}
 
 	mAnimation->Choice(ANIMATION_NAME[mState], ANIMATION_TIME[mState]);
+	mAnimation->Play();
 }
 
 void Boss::Debug()
@@ -298,7 +318,7 @@ void Boss::OnTriggerStay(GameObject* Obj)
 		{
 			if (Player::GetPlayerColor() == ColorType)
 			{
-				if (Player::GetPlayerCombo() >= 30)
+				if (Player::GetPlayerCombo() >= BossComboMax)
 				{
 					HP -= Player::GetPlayerComboPower();
 					MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_ATTACK_OK);
@@ -334,8 +354,9 @@ void Boss::OnTriggerStay(GameObject* Obj)
 			}
 			Sound_Play_SFX("Boss_Hit");
 
-			if (BossPhase == 0 && HP <= 1500){SetState(BOSS_STATE::PHASE_UP_START);}
-			if (HP <= 0) { SetState(BOSS_STATE::DEAD); }
+			if (HP <= 0) { SetState(BOSS_STATE::DEAD);}
+
+			if (BossPhase == 0 && HP <= 1500 && HP > 0){SetState(BOSS_STATE::PHASE_UP_START);}
 
 			IsUpdateColor = true;
 			IsHit = true;
@@ -377,6 +398,7 @@ void Boss::Boss_Idle()
 			mMF_Setting.SetLimlightSetting(1.0f, 1.0f, 1.0f, 0.5f, 0.5f);
 			mMF_Setting.SetEmissiveSetting(40, 92, 255, 2.9f);
 		}
+
 	}
 	mMF_Setting.LimLightUpdate(1);
 	GroundCheck();
@@ -452,6 +474,21 @@ void Boss::Boss_Groggy_Start()
 		}
 		BigWeapon->Reset();
 		IsShooting = false;
+
+		mBaseAttackParticle->Stop();
+
+		if (ColorType == 0)
+		{
+			mMF_Setting.SetLimlightSetting(1.0f, 1.0f, 1.0f, 0.5f, 0.5f);
+			mMF_Setting.SetLimlightSettingMax(1, 0, 0, 3, 0.5f);
+			mMF_Setting.SetEmissiveSetting(231, 39, 9, 2.9f);
+		}
+		else
+		{
+			mMF_Setting.SetLimlightSetting(1.0f, 1.0f, 1.0f, 0.5f, 0.5f);
+			mMF_Setting.SetLimlightSettingMax(0, 0, 1, 3, 0.5f);
+			mMF_Setting.SetEmissiveSetting(40, 92, 255, 2.9f);
+		}
 	}
 }
 
@@ -701,11 +738,13 @@ void Boss::Boss_Rendom_Attack_Ready(int Phase)
 		{
 			mMF_Setting.SetLimlightSetting(1, 1, 1, 0.5f, 0.5f);
 			mMF_Setting.SetLimlightSettingMax(1, 0, 0, 3, 0.5f);
+			mMF_Setting.SetEmissiveSetting(231, 39, 9, 2.9f);
 		}
 		else
 		{
 			mMF_Setting.SetLimlightSetting(1, 1, 1, 0.5f, 0.5f);
 			mMF_Setting.SetLimlightSettingMax(0, 0, 1, 3, 0.5f);
+			mMF_Setting.SetEmissiveSetting(40, 92, 255, 2.9f);
 		}
 	}
 	else
@@ -779,11 +818,13 @@ void Boss::Boss_Rendom_Attack_End(int Phase)
 		{
 			mMF_Setting.SetLimlightSetting(1, 0, 0, 3, 0.5f);
 			mMF_Setting.SetLimlightSettingMax(1.0f, 1.0f, 1.0f, 0.5f, 0.5f);
+			mMF_Setting.SetEmissiveSetting(231, 39, 9, 2.9f);
 		}
 		else
 		{
 			mMF_Setting.SetLimlightSetting(0, 0, 1, 3, 0.5f);
 			mMF_Setting.SetLimlightSettingMax(1.0f, 1.0f, 1.0f, 0.5f, 0.5f);
+			mMF_Setting.SetEmissiveSetting(40, 92, 255, 2.9f);
 		}
 
 	}

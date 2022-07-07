@@ -35,7 +35,7 @@ private:
 	MeshFilter*		mMeshFilter		= nullptr;
 	MeshFilter*		mSkinFilter		= nullptr;
 	Transform*		mTransform		= nullptr;
-	Collider*		mColider		= nullptr;
+	Collider*		mCollider		= nullptr;
 	Transform*		mPlayerTR		= nullptr;
 	Rigidbody*		mRigidbody		= nullptr;
 private:
@@ -101,6 +101,7 @@ private:
 	int		FriendIndex		= -1;		//보스의 위치 인덱스
 	int		BossPhase		= 0;
 	int		ColorType		= 0;
+	int		BossComboMax	= 11;
 
 	float	AttackRange		= 3.0f;		//근접 공격 범위
 	float	FightRange		= 30.0f;	//보스와 싸울 수 있는 거리

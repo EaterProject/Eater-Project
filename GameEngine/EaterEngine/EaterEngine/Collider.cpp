@@ -16,7 +16,10 @@ Collider::Collider()
 
 Collider::~Collider()
 {
-	PhysX_Delete_Actor(mPhysData);
+	if (mPhysData != nullptr)
+	{
+		PhysX_Delete_Actor(mPhysData);
+	}
 }
 
 void Collider::Start()
@@ -65,9 +68,12 @@ void Collider::PhysicsUpdate()
 
 void Collider::Debug()
 {
+	if (mPhysData == nullptr) { return; }
 	Vector3 Pos = mTransform->GetPosition() + mPhysData->CenterPoint;
 	Vector4 Rot = mPhysData->Rotation;
 	Vector3 Scl = mPhysData->mCollider->GetSize();
+
+
 
 	switch (mPhysData->mCollider->GetType())
 	{
@@ -163,11 +169,19 @@ PhysCollider* Collider::GetCollider()
 	return mPhysData->mCollider;
 }
 
+void Collider::DeletePhysCollider()
+{
+	PhysX_Delete_Actor(mPhysData);
+	mPhysData = nullptr;
+}
+
 void Collider::FindPhysFunctionEnter(PhysData* Data, unsigned int Type)
 {
 	int MaxCount = mPhysData->Enter_Count;
 	int NowCount = MaxCount;
+
 	if (MaxCount <= 0) { return; }
+	if (Data == nullptr) { return; }
 
 	//충돌된 오브젝트에 대한 함수 실행
 	for (int i = 0; i < 10; i++)
@@ -207,10 +221,13 @@ void Collider::FindPhysFunctionStay(PhysData* Data, unsigned int Type)
 	int NowCount = MaxCount;
 
 	if (MaxCount <= 0) { return; }
+	if (Data == nullptr) { return; }
 
 	for (int i = 0; i < 10; i++)
 	{
 		if (Data->TriggerStay_List[i] == nullptr) { continue; }
+		if (Data->TriggerStay_List[i]->EaterObj == nullptr) { continue; }
+
 		GameObject* Object = reinterpret_cast<GameObject*>(Data->TriggerStay_List[i]->EaterObj);
 		gameobject->PlayPhysFunction(Object, Type);
 	}
@@ -222,11 +239,10 @@ void Collider::FindPhysFunctionExit(PhysData* Data, unsigned int Type)
 	int NowCount = MaxCount;
 
 	if (MaxCount <= 0) { return; }
+	if (Data == nullptr) { return; }
 
 	for (int i = 0; i < 10; i++)
 	{
-		if (Data->TriggerExit_List[i] == nullptr) { continue; }
-
 		PhysData* TargetData = Data->TriggerExit_List[i];
 		GameObject* Object = reinterpret_cast<GameObject*>(TargetData->EaterObj);
 		gameobject->PlayPhysFunction(Object, Type);

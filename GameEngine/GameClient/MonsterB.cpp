@@ -33,7 +33,7 @@ void MonsterB::SetUp()
 	Max_HP			= HP;
 	Speed			= 0.8f;
 	RotationSpeed	= 380.0f;
-	ComboCount		= 6;
+	ComboCount		= 4;
 	Damage			= 400;
 	PureManaCount	= 10;
 	//AttackRange		= 4.0f;

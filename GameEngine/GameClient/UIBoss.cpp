@@ -61,7 +61,7 @@ void UIBoss::Awake()
 
 void UIBoss::Start()
 {
-	mBossCount_Font->SetFontNumber(30);
+	mBossCount_Font->SetFontNumber(11);
 	mBossHP_Slider->SetValueRange(0, 3000);
 	SetBossUIActive(false);
 }

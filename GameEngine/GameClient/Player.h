@@ -44,7 +44,6 @@ public:
 	static int	GetPlayerCombo();
 	static float GetPlayerPower();
 	static float GetPlayerComboPower();
-	void Healing(float HealingPower);
 	void SetNoHit(bool Active);
 
 private:
@@ -67,6 +66,7 @@ private:
 	bool Player_Move_Check();			//기본 상태 체크
 	void Player_Push();
 	void Player_Dead();
+	void Player_Heal();
 private:
 	void ChangeSkyLight(int index);
 	void SetMeshFilterList();
@@ -88,13 +88,13 @@ private:
 
 	const int Max_ChangeEmagin_Value = 15;
 	const int Max_HP_Value = 5500;
-	const float Max_AttackSpeed_Animation = 2.1f;
+	const float Max_AttackSpeed_Animation = 2.4f;
 	const float Max_Move_Speed_Value = 10.0f;
 	const float Max_MoveSpeed_Animation = 1.35f;
 
 	/// 스킬 쿨타임
-	const float Skill_E_CoolTime = 1.0f;
-	const float Skill_MR_CoolTime = 1.0f;
+	const float Skill_E_CoolTime = 8.0f;
+	const float Skill_MR_CoolTime = 4.0f;
 	const float Skill_SPC_CoolTime = 1.0f;
 
 	float Skill_E_CoolTime_Percent;

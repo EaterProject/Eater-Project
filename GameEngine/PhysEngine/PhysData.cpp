@@ -36,6 +36,10 @@ PhysData::PhysData()
 PhysData::~PhysData()
 {
 	ActorObj = nullptr;
+	if (mMeterial != nullptr){delete	mMeterial;}
+	if (mCollider != nullptr) {delete	mCollider;}
+	mMeterial = nullptr;
+	mCollider = nullptr;
 }
 
 void PhysData::SetWorldPosition(float x, float y, float z)
