@@ -16,6 +16,7 @@
 #include "ParticleController.h"
 #include "ParticleFactory.h"
 
+
 std::vector<Vector3> ManaStone::MonsterMovePointDefault;
 int ManaStone::MaxManaCount =5;
 
