@@ -181,22 +181,11 @@ void Player::SetMessageRECV(int Type, void* Data)
 	switch (Type)
 	{
 	case MESSAGE_PLAYER_HIT:
-		
 		Player_Hit(*(reinterpret_cast<int*>(Data)));
 		break;
 	case MESSAGE_PLAYER_HEAL:
-	{
-		HP += 300;
-		if (HP >= HP_Max) { HP = HP_Max; }
-		Vector3 Pos = mTransform->GetPosition();
-		Pos.y += 0.2f;
-		mHealParticle->SetPosition(Pos);
-		mHealParticle->Play();
-		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_HP_NOW, &HP);
-		Sound_Play_SFX("Player_Heal");
-		MessageManager::GetGM()->SEND_Message(TARGET_DRONE, MESSAGE_DRONE_PLAYER_HEAL);
+		Player_Heal();
 		break;
-	}
 	case MESSAGE_PLAYER_ATTACK_OK:
 		ComboCount++;
 		MessageManager::GetGM()->SEND_Message(TARGET_UI,MESSAGE_UI_COMBO,&ComboCount);
@@ -350,6 +339,16 @@ void Player::PlayerKeyinput()
 		return;
 	}
 
+	if (GetKeyDown(VK_SPACE))
+	{
+		if (SPC_CoolTime <= 0.0f)
+		{
+			SPC_CoolTime = Skill_SPC_CoolTime;
+			mState |= PLAYER_STATE_JUMP;
+			Sound_Play_SFX("Player_Evade");
+		}
+	}
+
 	if (GetKey('D'))
 	{
 		if (IsRightRayCheck == true)
@@ -440,15 +439,8 @@ void Player::PlayerKeyinput()
 		}
 		Sound_Play_SFX("ChangeEmagin");
 	}
-	else if (GetKeyDown(VK_SPACE))
-	{
-		if (SPC_CoolTime <= 0.0f)
-		{
-			SPC_CoolTime = Skill_SPC_CoolTime;
-			mState |= PLAYER_STATE_JUMP;
-			Sound_Play_SFX("Player_Evade");
-		}
-	}
+
+	
 
 	//이번프레임에 이동해야하는 방향
 	DirPos.Normalize();
@@ -825,6 +817,18 @@ void Player::Player_Dead()
 		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_COMBO, &ComboCount);
 	}
 
+}
+void Player::Player_Heal()
+{
+	HP += 300;
+	if (HP >= HP_Max) { HP = HP_Max; }
+	Vector3 Pos = mTransform->GetPosition();
+	Pos.y += 0.2f;
+	mHealParticle->SetPosition(Pos);
+	mHealParticle->Play();
+	MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_HP_NOW, &HP);
+	Sound_Play_SFX("Player_Heal");
+	MessageManager::GetGM()->SEND_Message(TARGET_DRONE, MESSAGE_DRONE_PLAYER_HEAL);
 }
 void Player::ChangeSkyLight(int index)
 {

@@ -398,6 +398,7 @@ void Boss::Boss_Idle()
 			mMF_Setting.SetLimlightSetting(1.0f, 1.0f, 1.0f, 0.5f, 0.5f);
 			mMF_Setting.SetEmissiveSetting(40, 92, 255, 2.9f);
 		}
+
 	}
 	mMF_Setting.LimLightUpdate(1);
 	GroundCheck();
@@ -514,6 +515,7 @@ void Boss::Boss_Groggy_End()
 	{
 		SetState(BOSS_STATE::IDLE);
 		IsShooting = false;
+		mAnimation->Play();
 	}
 }
 

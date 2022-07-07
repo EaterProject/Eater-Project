@@ -66,6 +66,7 @@ private:
 	bool Player_Move_Check();			//기본 상태 체크
 	void Player_Push();
 	void Player_Dead();
+	void Player_Heal();
 private:
 	void ChangeSkyLight(int index);
 	void SetMeshFilterList();
