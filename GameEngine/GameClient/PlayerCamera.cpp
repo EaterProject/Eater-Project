@@ -59,7 +59,7 @@ void PlayerCamera::Update()
 	float DTime = GetDeltaTime();
 
 	// µð¹ö±ë¿ë..
-	if (GetKeyDown(VK_TAB))
+	if (GetKeyDown(VK_F11))
 	{
 		if (MouseCursor == true)
 		{

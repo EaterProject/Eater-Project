@@ -91,6 +91,8 @@ void Player::Awake()
 	IsCreate = true;
 	mAttackParticle = ParticleFactory::Get()->CreateParticleController(PARTICLE_TYPE::HitSmoke);
 	mHealParticle = ParticleFactory::Get()->CreateParticleController(PARTICLE_TYPE::PlayerHeal);
+	mHealParticle->gameobject->transform->SetPosition_Y(0.1f);
+	mHealParticle->gameobject->ChoiceParent(gameobject);
 }
 
 void Player::SetUp()
@@ -139,9 +141,6 @@ void Player::Update()
 	if (IsCreate == false) { return; }
 	if (GetKeyDown(VK_NUMPAD0)){mTransform->SetPosition(-16, 0, 0);}
 
-	//플레이어 스킬 쿨타임 체크
-	PlayerCoolTimeCheck();
-
 	//플레이어 땅 체크
 	PlayerGroundCheck();
 
@@ -161,13 +160,18 @@ void Player::Update()
 	{
 		Player_Dead();
 	}
+
+	if (mState & PLAYER_STATE_JUMP)
+	{
+		Player_Jump();
+	}
 	else if (mState & (PLAYER_STATE_ATTACK_01 | PLAYER_STATE_ATTACK_02 | PLAYER_STATE_SKILL_01 | PLAYER_STATE_SKILL_02))
 	{
 		PlayerState_Attack();
 	}
-	else
+	else 
 	{
-		PlayerState_Base();
+		Player_Move_Check();
 	}
 
 	DirPos = { 0,0,0 };
@@ -278,56 +282,6 @@ void Player::SetNoHit(bool Active)
 	IsNoHit = Active;
 }
 
-void Player::PlayerCoolTimeCheck()
-{
-	float&& dTime = GetDeltaTime();
-
-	// E Skill
-	if (E_CoolTime > 0.0f)
-	{
-		E_CoolTime -= dTime;
-
-		if (E_CoolTime < 0.0f)
-		{
-			E_CoolTime = 0.0f;
-		}
-
-		Skill_E_CoolTime_Percent = 1.0f - (E_CoolTime / Skill_E_CoolTime);
-
-		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_SKILL_E, &Skill_E_CoolTime_Percent);
-	}
-
-	// Mouse Right Skill
-	if (MR_CoolTime > 0.0f)
-	{
-		MR_CoolTime -= dTime;
-
-		if (MR_CoolTime < 0.0f)
-		{
-			MR_CoolTime = 0.0f;
-		}
-
-		Skill_MR_CoolTime_Percent = 1.0f - (MR_CoolTime / Skill_MR_CoolTime);
-
-		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_SKILL_MR, &Skill_MR_CoolTime_Percent);
-	}
-
-	// Space Bar Skill
-	if (SPC_CoolTime > 0.0f)
-	{
-		SPC_CoolTime -= dTime;
-
-		if (SPC_CoolTime < 0.0f)
-		{
-			SPC_CoolTime = 0.0f;
-		}
-
-		Skill_SPC_CoolTime_Percent = 1.0f - (SPC_CoolTime / Skill_SPC_CoolTime);
-		
-		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_SKILL_SPC, &Skill_SPC_CoolTime_Percent);
-	}
-}
-
 void Player::PlayerKeyinput()
 {
 	if (IsKeyUpdate == false) return;
@@ -341,12 +295,13 @@ void Player::PlayerKeyinput()
 
 	if (GetKeyDown(VK_SPACE))
 	{
-		if (SPC_CoolTime <= 0.0f)
+		if ((mState & PLAYER_STATE_JUMP) == 0)
 		{
-			SPC_CoolTime = Skill_SPC_CoolTime;
-			mState |= PLAYER_STATE_JUMP;
-			Sound_Play_SFX("Player_Evade");
+			mAnimation->SetFrame(0);
 		}
+
+		mState = PLAYER_STATE_JUMP;
+		Sound_Play_SFX("Player_Evade");
 	}
 
 	if (GetKey('D'))
@@ -386,7 +341,7 @@ void Player::PlayerKeyinput()
 			Pos.y = 0;
 			DirPos += -Pos;
 		}
-		DirRot += mCameraTR->GetLocalPosition_Look()* -1;
+		DirRot += mCameraTR->GetLocalPosition_Look() * -1;
 	}
 
 	if (GetKeyDown(VK_LBUTTON))
@@ -403,39 +358,28 @@ void Player::PlayerKeyinput()
 	}
 	else if (GetKeyDown(VK_RBUTTON))
 	{
-		if (IsAttack == false)
-		{
-			if (MR_CoolTime <= 0.0f)
-			{
-				MR_CoolTime = Skill_MR_CoolTime;
-				mState |= PLAYER_STATE_SKILL_01;
-			}
-		}
+		mState |= PLAYER_STATE_SKILL_01;
 	}
 	else if (GetKeyDown('E'))
 	{
-		if (E_CoolTime <= 0.0f)
-		{
-			E_CoolTime = Skill_E_CoolTime;
-			mState |= PLAYER_STATE_SKILL_02;
-		}
+		mState |= PLAYER_STATE_SKILL_02;
 	}
 	else if (GetKeyDown('Q'))
 	{
 		ChangeCount++;
-		if (ChangeCount > MaxChangeCount){ChangeCount = 0;}
+		if (ChangeCount > MaxChangeCount) { ChangeCount = 0; }
 
 		MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_EMAGIN_NOW, &ChangeCount);
 
-		if((ChangeCount % 2) == 0)
+		if ((ChangeCount % 2) == 0)
 		{
-			mPlayerColor.SetEmissiveSetting(231,39,9, 2.2);
-			mWeaponColor.SetEmissiveSetting(231,39,9, 2.2);
+			mPlayerColor.SetEmissiveSetting(231, 39, 9, 2.2);
+			mWeaponColor.SetEmissiveSetting(231, 39, 9, 2.2);
 		}
 		else
 		{
-			mPlayerColor.SetEmissiveSetting(22,71,243, 2.2);
-			mWeaponColor.SetEmissiveSetting(22,71,243, 2.2);
+			mPlayerColor.SetEmissiveSetting(22, 71, 243, 2.2);
+			mWeaponColor.SetEmissiveSetting(22, 71, 243, 2.2);
 		}
 		Sound_Play_SFX("ChangeEmagin");
 	}
@@ -486,7 +430,19 @@ void Player::PlayerState_Attack()
 	IsAttack = true;
 	/// 플레이어 공격상태일때 들어옵니다
 	int Type = 0;
-	if (mState & PLAYER_STATE_ATTACK_01)
+	if (mState & PLAYER_STATE_SKILL_02)
+	{
+		Type = (int)PLAYER_STATE::SKILL_02;
+		mAnimation->Choice(ANIMATION_NAME[Type], ANIMATION_SPEED[Type]);
+		Player_Skill_02();
+	}
+	else if (mState & PLAYER_STATE_SKILL_01)
+	{
+		Type = (int)PLAYER_STATE::SKILL_01;
+		mAnimation->Choice(ANIMATION_NAME[Type], ANIMATION_SPEED[Type]);
+		Player_Skill_01();
+	}
+	else if (mState & PLAYER_STATE_ATTACK_01)
 	{
 		Type = (int)PLAYER_STATE::ATTACK_01;
 		mAnimation->Choice(ANIMATION_NAME[Type], ANIMATION_SPEED[Type]);
@@ -497,18 +453,6 @@ void Player::PlayerState_Attack()
 		Type = (int)PLAYER_STATE::ATTACK_02;
 		mAnimation->Choice(ANIMATION_NAME[Type], ANIMATION_SPEED[Type]);
 		Player_Attack_02();
-	}
-	else if (mState & PLAYER_STATE_SKILL_01)
-	{
-		Type = (int)PLAYER_STATE::SKILL_01;
-		mAnimation->Choice(ANIMATION_NAME[Type], ANIMATION_SPEED[Type]);
-		Player_Skill_01();
-	}
-	else if (mState & PLAYER_STATE_SKILL_02)
-	{
-		Type = (int)PLAYER_STATE::SKILL_02;
-		mAnimation->Choice(ANIMATION_NAME[Type], ANIMATION_SPEED[Type]);
-		Player_Skill_02();
 	}
 
 	mAnimation->Play();
@@ -694,10 +638,13 @@ void Player::Player_Skill_03()
 
 void Player::Player_Jump()
 {
+	IsAttack = false;
+	IsAttackTime = false;
+
 	WeaponTR->SetPosition(0.0f, -0.02f, 0.1f);
 	WeaponTR->SetRotate(-22.0f, 33.0f, 2.0f);
 	mAnimation->Choice(ANIMATION_NAME[(int)PLAYER_STATE::JUMP] ,ANIMATION_SPEED[(int)PLAYER_STATE::JUMP]);
-	
+
 	int Now = mAnimation->GetNowFrame();
 	int End = mAnimation->GetEndFrame();
 
@@ -743,6 +690,9 @@ void Player::Player_Hit(int HitPower)
 
 bool Player::Player_Move_Check()
 {
+	IsAttack = false;
+	IsAttackTime = false;
+
 	int Type = 0;
 	if (DirPos == BasePos)
 	{
@@ -821,11 +771,9 @@ void Player::Player_Dead()
 
 void Player::Player_Heal()
 {
-	HP += 300;
+	HP += 100;
 	if (HP >= HP_Max) { HP = HP_Max; }
-	Vector3 Pos = mTransform->GetPosition();
-	Pos.y += 0.2f;
-	mHealParticle->SetPosition(Pos);
+
 	mHealParticle->Play();
 	MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_HP_NOW, &HP);
 	Sound_Play_SFX("Player_Heal");
@@ -1024,20 +972,20 @@ void Player::PlayerGroundCheck()
 		switch (i)
 		{
 		case 0: //Front
-			RayStartPoint = position + mCameraTR->GetLocalPosition_Look();
-			RayStartPoint.y = position.y + 1;
+			RayStartPoint = position + mCameraTR->GetLocalPosition_Look() * 0.65f;
+			RayStartPoint.y = position.y + 1.25f;
 			break;
 		case 1: //Back
-			RayStartPoint = position + (mCameraTR->GetLocalPosition_Look() * -1);
-			RayStartPoint.y = position.y + 1;
+			RayStartPoint = position + (mCameraTR->GetLocalPosition_Look() * -0.65f);
+			RayStartPoint.y = position.y + 1.25f;
 			break;
 		case 2: //Right
-			RayStartPoint = position + mCameraTR->GetLocalPosition_Right();
-			RayStartPoint.y = position.y + 1;
+			RayStartPoint = position + mCameraTR->GetLocalPosition_Right() * 0.65f;
+			RayStartPoint.y = position.y + 1.25f;
 			break; 
 		case 3: //Left
-			RayStartPoint = position + (mCameraTR->GetLocalPosition_Right() * -1);
-			RayStartPoint.y = position.y + 1;
+			RayStartPoint = position + (mCameraTR->GetLocalPosition_Right() * -0.65f);
+			RayStartPoint.y = position.y + 1.25f;
 			break;
 		case 4: //Center
 			RayStartPoint = position;
