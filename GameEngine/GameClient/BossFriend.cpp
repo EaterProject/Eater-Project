@@ -43,7 +43,7 @@ void BossFriend::Start()
 	mSetting.SetDissolveInnerFactor(69.83);
 	mSetting.SetDissolveOuterFactor(9.49);
 
-	mSetting.SetLimlightSetting(0.1f, 0.1f, 0.1f, 1.25f, 2.25f);
+	//mSetting.SetLimlightSetting(0.1f, 0.1f, 0.1f, 1.25f, 2.25f);
 
 	mTransform->SetPosition(StartPos);
 }
@@ -59,7 +59,7 @@ void BossFriend::PlayDissolve(float playtime, DISSOLVE_OPTION option)
 {
 	mSetting.SetDissolveOption(option);
 	mSetting.SetDissolvePlayTime(playtime);
-	mSetting.LimLightUpdate(0.0f);
+	//mSetting.LimLightUpdate(0.0f);
 	mSetting.PlayDissolve();
 }
 
