@@ -7,6 +7,8 @@
 #include "EaterEngineAPI.h"
 
 #include "resource.h"
+#include <atlbase.h> 
+
 
 //#define _CRTDBG_MAP_ALLOC
 //#include <cstdlib>

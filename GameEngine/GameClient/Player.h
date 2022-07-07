@@ -47,7 +47,6 @@ public:
 	void SetNoHit(bool Active);
 
 private:
-	void PlayerCoolTimeCheck();			//플레이어 스킬 쿨타임 체크
 	void PlayerKeyinput();				//플레이어 키인풋
 	void PlayerAttackColliderUpdate();	//플레이어 공격 Collider
 	void PlayerGroundCheck();			//플레이어 땅체크
@@ -91,11 +90,6 @@ private:
 	const float Max_AttackSpeed_Animation = 2.4f;
 	const float Max_Move_Speed_Value = 10.0f;
 	const float Max_MoveSpeed_Animation = 1.35f;
-
-	/// 스킬 쿨타임
-	const float Skill_E_CoolTime = 8.0f;
-	const float Skill_MR_CoolTime = 4.0f;
-	const float Skill_SPC_CoolTime = 1.0f;
 
 	float Skill_E_CoolTime_Percent;
 	float Skill_MR_CoolTime_Percent;
@@ -181,12 +175,6 @@ private:
 	///Mana 관련
 	int PureMana = 0;
 	int CoreMana = 0;
-
-private:
-	/// 스킬 쿨타임 관련
-	float E_CoolTime = 0.0f;
-	float MR_CoolTime = 0.0f;
-	float SPC_CoolTime = 0.0f;
 
 private:
 	///Animation 관련
