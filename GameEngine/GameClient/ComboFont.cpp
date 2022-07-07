@@ -110,7 +110,7 @@ void ComboFont::UpdateFontAnimation()
 				UI_Slider->SetFillColor(255, 255, 255, FontAlpha);
 				UI_Slider->SetBackGroundColor(255, 255, 255, FontAlpha);
 				UI_Image->SetColor(255, 255, 255, FontAlpha);
-				//MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_COMBO_RESET);
+				MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_COMBO_RESET);
 				FontUpdte = false;
 			}
 		}

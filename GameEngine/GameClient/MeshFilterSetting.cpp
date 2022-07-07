@@ -155,8 +155,8 @@ void MeshFilterSetting::SetEmissiveSetting(float R, float G, float B, float mFac
 	EmissiveColor[1] = G /255;
 	EmissiveColor[2] = B /255;
 	EmissiveColor[3] = mFactor;
-	EmissiveUpdate();
 	IsSetting_Emissive = true;
+	EmissiveUpdate();
 }
 
 void MeshFilterSetting::SetEmissiveSetting(COLOR_TYPE Type, float mFactor)

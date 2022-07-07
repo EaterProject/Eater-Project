@@ -170,6 +170,8 @@ void CameraManager::SetMouseFix(bool Active)
 
 void CameraManager::GameStartCinematic()
 {
+	SetMouseFix(true);
+
 	mCinematicCamera->PushCameraAnimation("Camera_Start0");
 	mCinematicCamera->PushCameraAnimation("Camera_Start1");
 	mCinematicCamera->PushCameraAnimation("Camera_Start2");

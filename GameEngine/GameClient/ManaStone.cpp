@@ -16,8 +16,9 @@
 #include "ParticleController.h"
 #include "ParticleFactory.h"
 
+
 std::vector<Vector3> ManaStone::MonsterMovePointDefault;
-int ManaStone::MaxManaCount = 5;
+int ManaStone::MaxManaCount =5;
 
 ManaStone::ManaStone()
 {
@@ -75,11 +76,32 @@ void ManaStone::Start()
 
 void ManaStone::Update()
 {
-	mSetting.LimLightUpdate(2.8f);
+	if (GetKeyDown(VK_NUMPAD3))
+	{
+		Boss_Start = true;
+		MaxManaCount = 0;
+		MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_BOSS_START);
+	}
+
+	if (DeadStart == false)
+	{
+		mSetting.LimLightUpdate(2.8f);
+	}
 
 	if (DeadStart == true && mSetting.EndDissolve() == false)
 	{
-		Delete();
+		DeadStart = false;
+
+		MiniMapSystem::Get()->DeleteIcon(this->gameobject);
+		gameobject->SetActive(false);
+
+		mRangeParticle->Stop();
+		mRangeParticle->gameobject->SetActive(false);
+
+		//Destroy(gameobject);
+		//Destroy(mRangeParticle->gameobject);
+
+		//Delete();
 	}
 }
 
@@ -143,10 +165,10 @@ void ManaStone::Delete()
 	//	Destroy(MonsterB_List[i]->gameobject);
 	//}
 
-	Destroy(this->gameobject);
+	gameobject->SetActive(false);
 	MiniMapSystem::Get()->DeleteIcon(this->gameobject);
-	mRangeParticle->Stop();
 
+	Destroy(gameobject);
 	mRangeParticle->gameobject->SetActive(false);
 }
 
@@ -192,6 +214,7 @@ void ManaStone::OnTriggerStay(GameObject* Obj)
 			mSetting.SetLimlightSettingMax(MeshFilterSetting::COLOR_TYPE::RED, 0.0f, 0.0f);
 
 			HP -= Player::GetPlayerPower();
+			//HP -= 100;
 			if (HP <= 0)
 			{
 				mSetting.SetDissolveOption(DISSOLVE_FADEOUT);
@@ -204,7 +227,6 @@ void ManaStone::OnTriggerStay(GameObject* Obj)
 				mSetting.SetDissolveOuterFactor(25.0f);
 				mSetting.PlayDissolve();
 				DeadStart = true;
-				MiniMapSystem::Get()->DeleteIcon(this->gameobject);
 
 				// 보스 등장 전 마나 개수..
 				if (Boss_Start == false)

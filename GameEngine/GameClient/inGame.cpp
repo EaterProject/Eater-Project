@@ -51,7 +51,7 @@ void InGame::Awake()
 
 void InGame::Update()
 {
-	if (GetKeyDown(VK_F1)) 
+	if (GetKeyDown(VK_F5)) 
 	{
 		Option->DebugOption ^= DEBUG_OPTION::DEBUG_MODE;
 		RenderSetting();

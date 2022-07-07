@@ -35,6 +35,10 @@ void TextureManager::LoadTexture(std::string& Path)
 	}
 	else
 	{
+		if (buffer->pTextureBuf == nullptr)
+		{
+			PROFILE_LOG(PROFILE_OUTPUT::LOG_FILE, "[ Engine ][ Create ][ Texture Buffer Pointer ] '%s' FAILED!!", Path.c_str());
+		}
 		std::string Name = CutFilePath(Path);
 		buffer->Name = Name;
 		LoadManager::TextureList.insert({ Name,buffer });

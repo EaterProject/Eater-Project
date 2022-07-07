@@ -305,6 +305,7 @@ void MessageManager::SEND_UI_Message(int MessageType, void* Data)
 
 void MessageManager::SEND_DRONE_Message(int MessageType, void* Data)
 {
+	Sound_Play_SFX("Drone_Text_01");
 	switch (MessageType)
 	{
 	case MESSAGE_DRONE_GAME_START:			// O
