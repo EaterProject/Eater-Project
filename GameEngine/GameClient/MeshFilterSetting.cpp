@@ -281,7 +281,7 @@ void MeshFilterSetting::PlayDissolve()
 	if (IsDissolvePlay == nullptr)
 	{
 		//만약 림라이트나 이미시브를 건들고있다면 메테리얼 블록을 돌려주고 시작
-		//ReSet();
+		ReSet();
 
 		MaterialPropertyBlock* MPB = nullptr;
 		int Count = mTopObject->GetChildMeshCount();

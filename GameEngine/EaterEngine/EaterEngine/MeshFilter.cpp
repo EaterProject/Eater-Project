@@ -587,7 +587,8 @@ void MeshFilter::DeleteChildObject()
 void MeshFilter::CreateStaticMesh(LoadMeshData* mMesh, GameObject* Object)
 {
 	MeshData* Data = Object->OneMeshData;
-	
+	Data->Object_Data->Name = mMesh->Name;
+
 	Object->SetActive(mMesh->IsActive);
 	Object->SetShadow(mMesh->IsShadow);
 	Object->SetCull(mMesh->IsCull);
@@ -618,6 +619,8 @@ void MeshFilter::CreateBoneMesh(LoadMeshData* mMesh, GameObject* Object)
 	int index = mMesh->BoneIndex;
 	BoneList[index] = Object;
 	Data->Object_Data->ObjType = OBJECT_TYPE::BONE;
+	Data->Object_Data->Name = mMesh->Name;
+
 	Object->Name = mMesh->Name;
 	Object->GetComponent<MeshFilter>()->ModelName = mMesh->ModelName;
 
@@ -656,6 +659,7 @@ void MeshFilter::CreateSkinMesh(LoadMeshData* mMesh, GameObject* Object)
 	Object->SetCull(mMesh->IsCull);
 
 	Data->Object_Data->ObjType = OBJECT_TYPE::SKINNING;
+	Data->Object_Data->Name = mMesh->Name;
 
 	int ChildCount = (int)mMesh->Child.size();
 	for (int i = 0; i < ChildCount; i++)

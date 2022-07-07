@@ -37,11 +37,13 @@ void BossFriend::Start()
 	mSetting.SetDissolveOption(DISSOLVE_FADEIN);
 	mSetting.SetDissolveTexture("Dissolve_16");
 	mSetting.SetDissolveColor(255.0f, 0, 0);
-	mSetting.SetDissolveColorFactor(5.0f);
-	mSetting.SetDissolvePlayTime(3);
-	mSetting.SetDissolveWidth(0.9f);
+	mSetting.SetDissolveColorFactor(10.0f);
+	mSetting.SetDissolvePlayTime(3.0f);
+	mSetting.SetDissolveWidth(0.75f);
 	mSetting.SetDissolveInnerFactor(69.83);
 	mSetting.SetDissolveOuterFactor(9.49);
+
+	mSetting.SetLimlightSetting(0.1f, 0.1f, 0.1f, 1.25f, 2.25f);
 
 	mTransform->SetPosition(StartPos);
 }
@@ -51,6 +53,14 @@ void BossFriend::Update()
 	mTransform->Slow_Y_Rotation(Player::GetPlayerTransform()->GetPosition(), 150);
 	//mAnimation->Choice("idle");
 	//mAnimation->Play();
+}
+
+void BossFriend::PlayDissolve(float playtime, DISSOLVE_OPTION option)
+{
+	mSetting.SetDissolveOption(option);
+	mSetting.SetDissolvePlayTime(playtime);
+	mSetting.LimLightUpdate(0.0f);
+	mSetting.PlayDissolve();
 }
 
 void BossFriend::SetPosition(Vector3 Pos)

@@ -521,7 +521,6 @@ void Boss::Boss_Teleport_Ready()
 {	
 	float End = mAnimation->GetEndFrame();
 	float Now = mAnimation->GetNowFrame();
-	//bool IsTest = mMF_Setting.EndDissolve();
 	if (Now >= End)
 	{
 		Sound_Play_SFX("Boss_Teleport");
@@ -531,7 +530,6 @@ void Boss::Boss_Teleport_Ready()
 
 void Boss::Boss_Teleport_Start()
 {
-
 	if (FriendIndex == -1)
 	{
 		mTransform->SetPosition(StartPoint);
@@ -546,8 +544,9 @@ void Boss::Boss_Teleport_Start()
 	float Now = mAnimation->GetNowFrame();
 	if (Now >= End)
 	{
-		SetState(BOSS_STATE::IDLE);
 		IsBossFriend = false;
+
+		SetState(BOSS_STATE::IDLE);
 	}
 }
 
@@ -561,14 +560,6 @@ void Boss::Boss_Create()
 		mPushParticle->Play();
 		PushPlayer();
 		Sound_Play_SFX("Boss_Push");
-	}
-
-	int Now = mAnimation->GetNowFrame();
-	int End = mAnimation->GetEndFrame();
-
-	if (Now >= End)
-	{
-		IsBossFriend = true;
 
 		//플레이어와 가장 먼 위치에 생성
 		float	Max = 0;
@@ -582,9 +573,21 @@ void Boss::Boss_Create()
 				Index = i;
 			}
 		}
+
+		FriendIndex = Index;
+
 		Friend->gameobject->SetActive(true);
 		Friend->SetPosition(SkillPoint[Index]);
-		FriendIndex = Index;
+		Friend->PlayDissolve(3.0f, DISSOLVE_FADEIN);
+	}
+
+	int Now = mAnimation->GetNowFrame();
+	int End = mAnimation->GetEndFrame();
+
+	if (Now >= End)
+	{
+		IsBossFriend = true;
+
 		SetState(BOSS_STATE::IDLE);
 	}
 }
@@ -598,6 +601,8 @@ void Boss::Boss_Closer_Attack_L()
 		mBaseAttackParticle->Play();
 		IsAttack = false;
 	}
+
+	PlayerDistanceCheck();
 
 	//왼쪽 근접 공격
 	int End = mAnimation->GetEndFrame();
@@ -632,6 +637,8 @@ void Boss::Boss_Closer_Attack_R()
 		IsAttack = false;
 	}
 
+	PlayerDistanceCheck();
+	
 	//오른쪽 근접 공격
 	int End = mAnimation->GetEndFrame();
 	int Now = mAnimation->GetNowFrame();

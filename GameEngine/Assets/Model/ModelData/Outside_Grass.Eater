@@ -1,10 +1,10 @@
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass50
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_0
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.009765 0.000516 0.002093 0.000000
@@ -17,12 +17,12 @@ $LocalTM 4 4
 -0.002067 0.000520 -0.009770 0.000000
 15.314834 -3.718736 -70.645714 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass51
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_0
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.012206 0.000645 0.002617 0.000000
@@ -35,12 +35,12 @@ $LocalTM 4 4
 -0.002584 0.000651 -0.012213 0.000000
 21.064835 -3.718736 -86.475708 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_cactus3
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_1
 @MaterialName Outside_Grass_M_cactus
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.009979 0.000000 -0.000648 0.000000
@@ -53,12 +53,12 @@ $LocalTM 4 4
 0.000648 0.000000 0.009979 0.000000
 -13.184313 0.436049 -64.155930 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass103
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_0
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.009014 -0.000188 0.004064 0.000000
@@ -71,12 +71,12 @@ $LocalTM 4 4
 -0.004055 -0.000370 -0.009012 0.000000
 -66.145088 2.154838 11.991844 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass105
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_0
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.001932 0.000709 0.001978 0.000000
@@ -89,12 +89,12 @@ $LocalTM 4 4
 -0.002072 0.000193 0.001954 0.000000
 -9.141256 -0.169807 29.939482 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass106
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_0
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.003526 0.000867 0.002413 0.000000
@@ -107,12 +107,12 @@ $LocalTM 4 4
 -0.002551 0.001594 0.003156 0.000000
 -13.728900 -0.415837 31.743937 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass108
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_0
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.000707 0.001097 -0.005842 0.000000
@@ -125,12 +125,12 @@ $LocalTM 4 4
 0.005647 -0.001962 0.000315 0.000000
 -32.619961 -0.238821 -36.532146 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass109
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_0
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.006225 -0.000486 0.004268 0.000000
@@ -143,12 +143,12 @@ $LocalTM 4 4
 -0.004295 0.000808 -0.006173 0.000000
 28.348166 0.033085 -22.205315 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass110
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_0
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.001118 -0.000044 0.007480 0.000000
@@ -161,12 +161,12 @@ $LocalTM 4 4
 -0.007455 -0.000622 0.001111 0.000000
 47.866810 0.394886 -18.653767 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass111
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_0
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.006392 0.001076 0.001711 0.000000
@@ -179,12 +179,12 @@ $LocalTM 4 4
 -0.001620 -0.000664 0.006471 0.000000
 0.716081 -0.038518 36.643566 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass112
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_0
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.001963 0.002328 -0.006327 0.000000
@@ -197,12 +197,12 @@ $LocalTM 4 4
 0.006580 0.002096 -0.001270 0.000000
 28.909109 0.417138 35.620930 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_mesh_grass_5
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_0
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.006338 0.000915 -0.002126 0.000000
@@ -215,12 +215,12 @@ $LocalTM 4 4
 0.002027 0.000799 0.006387 0.000000
 -19.342712 0.268592 -33.278690 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_mesh_grass_6
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_0
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.002221 0.000242 0.006367 0.000000
@@ -233,12 +233,12 @@ $LocalTM 4 4
 -0.006363 -0.000278 0.002230 0.000000
 -9.268949 0.729822 -36.442192 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_cactus6
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_1
 @MaterialName Outside_Grass_M_cactus
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.000818 -0.002012 -0.009761 0.000000
@@ -251,12 +251,12 @@ $LocalTM 4 4
 0.009938 0.000906 0.000646 0.000000
 -23.673735 1.067183 -54.502834 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_tumbleweed5
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_2
 @MaterialName Outside_Grass_M_tumbleweed
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.004887 0.000205 0.005613 0.000000
@@ -269,12 +269,12 @@ $LocalTM 4 4
 -0.003896 -0.005235 0.003584 0.000000
 -29.930223 0.899736 -17.769884 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_tumbleweed8
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_2
 @MaterialName Outside_Grass_M_tumbleweed
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.001048 -0.000243 -0.006971 0.000000
@@ -287,12 +287,12 @@ $LocalTM 4 4
 0.005996 0.003633 0.000775 0.000000
 -43.242702 1.716793 -37.534748 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_tumbleweed9
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_2
 @MaterialName Outside_Grass_M_tumbleweed
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.005669 -0.000431 0.011154 0.000000
@@ -305,12 +305,12 @@ $LocalTM 4 4
 -0.009463 0.006448 0.005059 0.000000
 -43.339600 2.132556 -38.542995 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_tumbleweed11
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_2
 @MaterialName Outside_Grass_M_tumbleweed
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.005699 -0.000396 -0.008208 0.000000
@@ -323,12 +323,12 @@ $LocalTM 4 4
 0.007166 0.005128 0.004728 0.000000
 -30.965567 1.151935 -45.447163 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_tumbleweed13
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_2
 @MaterialName Outside_Grass_M_tumbleweed
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.001008 -0.001848 -0.009902 0.000000
@@ -341,12 +341,12 @@ $LocalTM 4 4
 0.009855 -0.001877 0.001354 0.000000
 -52.284843 2.778403 -23.890165 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_tumbleweed15
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_2
 @MaterialName Outside_Grass_M_tumbleweed
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.000719 -0.005126 0.007372 0.000000
@@ -359,12 +359,12 @@ $LocalTM 4 4
 -0.002902 0.006866 0.005057 0.000000
 -54.056335 4.240572 -43.558231 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_tumbleweed16
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_2
 @MaterialName Outside_Grass_M_tumbleweed
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.001113 0.007826 -0.009028 0.000000
@@ -377,12 +377,12 @@ $LocalTM 4 4
 0.002966 0.008964 0.007405 0.000000
 -8.605783 1.257121 -54.030556 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_tumbleweed17
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_2
 @MaterialName Outside_Grass_M_tumbleweed
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.002141 0.001054 0.013447 0.000000
@@ -395,12 +395,12 @@ $LocalTM 4 4
 0.007633 -0.011320 -0.000328 0.000000
 -7.327842 1.350898 -47.433582 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_tumbleweed19
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_2
 @MaterialName Outside_Grass_M_tumbleweed
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.012957 -0.001178 -0.007465 0.000000
@@ -413,12 +413,12 @@ $LocalTM 4 4
 0.006116 0.007071 -0.011731 0.000000
 -47.828541 1.670353 -26.659086 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_tumbleweed21
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_2
 @MaterialName Outside_Grass_M_tumbleweed
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.002653 -0.000073 0.011583 0.000000
@@ -431,12 +431,12 @@ $LocalTM 4 4
 -0.010158 0.005696 0.002362 0.000000
 -8.661727 1.137109 -48.066853 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_cactus15
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_3
 @MaterialName Outside_Grass_M_cactus
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.007755 0.000000 -0.009157 0.000000
@@ -449,12 +449,12 @@ $LocalTM 4 4
 0.009157 0.000000 0.007755 0.000000
 -31.353189 2.619129 -65.904541 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_tumbleweed23
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_2
 @MaterialName Outside_Grass_M_tumbleweed
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.004745 -0.007535 -0.013741 0.000000
@@ -467,12 +467,12 @@ $LocalTM 4 4
 -0.010380 -0.009245 0.008654 0.000000
 -46.556416 1.401529 -20.059631 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_tumbleweed30
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_2
 @MaterialName Outside_Grass_M_tumbleweed
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.002898 -0.004602 -0.008392 0.000000
@@ -485,12 +485,12 @@ $LocalTM 4 4
 -0.006339 -0.005646 0.005285 0.000000
 -47.718304 1.912377 -19.757175 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_tumbleweed31
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_2
 @MaterialName Outside_Grass_M_tumbleweed
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.005235 0.008331 -0.000884 0.000000
@@ -503,12 +503,12 @@ $LocalTM 4 4
 0.008343 -0.005090 0.001436 0.000000
 -46.567471 1.530995 -26.153725 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_tumbleweed34
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_2
 @MaterialName Outside_Grass_M_tumbleweed
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.005545 0.005921 0.004230 0.000000
@@ -521,12 +521,12 @@ $LocalTM 4 4
 -0.005828 -0.000429 -0.007039 0.000000
 -42.833637 0.494066 -27.989838 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_tumbleweed36
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_2
 @MaterialName Outside_Grass_M_tumbleweed
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.008700 -0.006297 -0.000965 0.000000
@@ -539,12 +539,12 @@ $LocalTM 4 4
 -0.006369 0.008558 0.001569 0.000000
 -45.739738 1.123842 -26.822924 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_tumbleweed37
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_2
 @MaterialName Outside_Grass_M_tumbleweed
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.007682 -0.003103 0.009426 0.000000
@@ -557,12 +557,12 @@ $LocalTM 4 4
 0.009734 0.004678 -0.006393 0.000000
 -46.208920 1.308345 -25.075834 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_tumbleweed40
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_2
 @MaterialName Outside_Grass_M_tumbleweed
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.007265 0.011560 -0.001227 0.000000
@@ -575,12 +575,12 @@ $LocalTM 4 4
 0.011578 -0.007064 0.001994 0.000000
 -44.599297 1.037719 -24.987736 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_tumbleweed43
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_2
 @MaterialName Outside_Grass_M_tumbleweed
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.007328 -0.000344 0.006788 0.000000
@@ -593,12 +593,12 @@ $LocalTM 4 4
 -0.005950 0.005148 -0.006163 0.000000
 -44.989128 2.114478 -37.915623 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_tumbleweed44
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_2
 @MaterialName Outside_Grass_M_tumbleweed
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.004276 0.002826 -0.004276 0.000000
@@ -611,12 +611,12 @@ $LocalTM 4 4
 -0.002682 -0.005980 -0.001270 0.000000
 -31.078276 1.198755 -46.247513 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_tumbleweed45
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_2
 @MaterialName Outside_Grass_M_tumbleweed
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.008992 0.010042 -0.010105 0.000000
@@ -629,12 +629,12 @@ $LocalTM 4 4
 -0.013341 0.001744 -0.010138 0.000000
 -66.853630 3.580481 -8.209337 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_cactus50
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_3
 @MaterialName Outside_Grass_M_cactus
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.007106 0.000000 -0.008688 0.000000
@@ -647,12 +647,12 @@ $LocalTM 4 4
 0.008688 0.000000 -0.007106 0.000000
 -22.214243 1.138242 -57.446648 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_tumbleweed47
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_2
 @MaterialName Outside_Grass_M_tumbleweed
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.014671 0.005123 -0.006640 0.000000
@@ -665,12 +665,12 @@ $LocalTM 4 4
 -0.002493 -0.010110 -0.013309 0.000000
 -68.172523 4.116960 -14.917006 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_tumbleweed53.001
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_2
 @MaterialName Outside_Grass_M_tumbleweed
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.008364 -0.004513 0.002328 0.000000
@@ -683,12 +683,12 @@ $LocalTM 4 4
 -0.003425 -0.008326 -0.003834 0.000000
 -42.671650 2.697962 -46.924145 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_tumbleweed55
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_2
 @MaterialName Outside_Grass_M_tumbleweed
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.009982 -0.000480 0.002500 0.000000
@@ -701,12 +701,12 @@ $LocalTM 4 4
 0.002186 -0.006799 0.007424 0.000000
 -38.092205 4.495116 -65.733337 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_tumbleweed56
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_2
 @MaterialName Outside_Grass_M_tumbleweed
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.007449 0.004923 -0.007449 0.000000
@@ -719,12 +719,12 @@ $LocalTM 4 4
 -0.004672 -0.010416 -0.002212 0.000000
 -36.226311 4.299335 -65.916985 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_tumbleweed57
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_2
 @MaterialName Outside_Grass_M_tumbleweed
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.002183 -0.009045 0.006500 0.000000
@@ -737,12 +737,12 @@ $LocalTM 4 4
 0.008133 0.005820 0.005367 0.000000
 -22.108147 0.424209 -45.687992 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_tumbleweed58
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_2
 @MaterialName Outside_Grass_M_tumbleweed
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.007488 0.004181 0.002853 0.000000
@@ -755,12 +755,12 @@ $LocalTM 4 4
 0.004996 0.006923 0.002968 0.000000
 2.057549 1.084794 -47.695320 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_tumbleweed59
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_2
 @MaterialName Outside_Grass_M_tumbleweed
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.000274 0.003747 0.006430 0.000000
@@ -773,12 +773,12 @@ $LocalTM 4 4
 -0.004637 0.004947 -0.003080 0.000000
 49.119289 0.754726 -32.283298 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_tumbleweed60
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_2
 @MaterialName Outside_Grass_M_tumbleweed
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.007653 0.005435 -0.001680 0.000000
@@ -791,12 +791,12 @@ $LocalTM 4 4
 -0.002403 -0.005641 -0.007304 0.000000
 47.498550 0.813720 -31.331179 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_tumbleweed63
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_2
 @MaterialName Outside_Grass_M_tumbleweed
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.008766 -0.000311 0.002234 0.000000
@@ -809,12 +809,12 @@ $LocalTM 4 4
 -0.002071 0.004662 -0.007477 0.000000
 -45.814617 2.295367 -37.986473 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_tumbleweed66
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_2
 @MaterialName Outside_Grass_M_tumbleweed
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.008455 -0.000300 0.002155 0.000000
@@ -827,12 +827,12 @@ $LocalTM 4 4
 -0.001998 0.004497 -0.007212 0.000000
 -44.212852 1.908011 -38.443836 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_cactus53
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_3
 @MaterialName Outside_Grass_M_cactus
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.000638 0.000000 0.009980 0.000000
@@ -845,12 +845,12 @@ $LocalTM 4 4
 -0.009980 0.000000 -0.000638 0.000000
 -16.267965 0.983255 -51.488213 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_tumbleweed67
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_2
 @MaterialName Outside_Grass_M_tumbleweed
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.000370 0.009870 -0.001768 0.000000
@@ -863,12 +863,12 @@ $LocalTM 4 4
 -0.006247 -0.001611 -0.007685 0.000000
 47.691933 0.843362 -35.187386 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_tumbleweed68
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_2
 @MaterialName Outside_Grass_M_tumbleweed
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.000368 -0.002100 0.009770 0.000000
@@ -881,12 +881,12 @@ $LocalTM 4 4
 -0.006226 0.007695 0.001420 0.000000
 50.225471 1.250377 -17.427305 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_tumbleweed69
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_2
 @MaterialName Outside_Grass_M_tumbleweed
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.005276 0.003615 0.003272 0.000000
@@ -899,12 +899,12 @@ $LocalTM 4 4
 -0.004783 0.004772 0.002441 0.000000
 -35.973667 0.852812 -42.240173 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_tumbleweed70
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_2
 @MaterialName Outside_Grass_M_tumbleweed
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.007360 -0.000261 0.001876 0.000000
@@ -917,12 +917,12 @@ $LocalTM 4 4
 -0.001739 0.003915 -0.006278 0.000000
 -47.934307 2.426243 -36.628151 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_cactus54
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_1
 @MaterialName Outside_Grass_M_cactus
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.008893 0.000000 -0.001386 0.000000
@@ -935,12 +935,12 @@ $LocalTM 4 4
 0.001386 0.000000 0.008893 0.000000
 24.215328 0.410886 -36.022224 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_cactus55
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_3
 @MaterialName Outside_Grass_M_cactus
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.009980 0.000000 -0.000627 0.000000
@@ -953,12 +953,12 @@ $LocalTM 4 4
 0.000627 0.000000 0.009980 0.000000
 30.409000 0.226793 -15.208214 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_cactus56
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_3
 @MaterialName Outside_Grass_M_cactus
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.004783 0.000000 -0.008782 0.000000
@@ -971,12 +971,12 @@ $LocalTM 4 4
 0.008782 0.000000 -0.004783 0.000000
 47.849682 0.725638 -9.430301 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_cactus57
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_1
 @MaterialName Outside_Grass_M_cactus
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.005260 0.000000 -0.008505 0.000000
@@ -989,12 +989,12 @@ $LocalTM 4 4
 0.008505 0.000000 0.005260 0.000000
 42.487747 0.440993 -35.508862 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_cactus58
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_1
 @MaterialName Outside_Grass_M_cactus
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.008306 0.000000 0.005569 0.000000
@@ -1007,12 +1007,12 @@ $LocalTM 4 4
 -0.005569 0.000000 0.008306 0.000000
 25.762356 0.395161 68.070663 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass52
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_0
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.008098 0.000774 -0.012602 0.000000
@@ -1025,12 +1025,12 @@ $LocalTM 4 4
 0.012624 0.000781 -0.008064 0.000000
 16.284834 -3.718736 -79.355713 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_cactus59
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_3
 @MaterialName Outside_Grass_M_cactus
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.013909 0.000000 -0.001598 0.000000
@@ -1043,12 +1043,12 @@ $LocalTM 4 4
 0.001598 0.000000 0.013909 0.000000
 36.820469 2.929449 59.380840 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_cactus60
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_1
 @MaterialName Outside_Grass_M_cactus
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.008205 0.000000 0.005717 0.000000
@@ -1061,12 +1061,12 @@ $LocalTM 4 4
 -0.005717 0.000000 0.008205 0.000000
 35.135433 2.485500 57.325729 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_cactus61
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_3
 @MaterialName Outside_Grass_M_cactus
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.001026 0.000000 -0.009947 0.000000
@@ -1079,12 +1079,12 @@ $LocalTM 4 4
 0.009947 0.000000 -0.001026 0.000000
 35.229469 2.014659 54.316242 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_cactus62
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_3
 @MaterialName Outside_Grass_M_cactus
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.001805 0.000000 0.014891 0.000000
@@ -1097,12 +1097,12 @@ $LocalTM 4 4
 -0.014891 0.000000 -0.001805 0.000000
 18.210562 -0.384030 66.276588 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_cactus63
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_3
 @MaterialName Outside_Grass_M_cactus
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.007095 0.000000 0.012187 0.000000
@@ -1115,12 +1115,12 @@ $LocalTM 4 4
 -0.012187 0.000000 -0.007095 0.000000
 0.787460 0.396927 47.674442 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_cactus64
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_1
 @MaterialName Outside_Grass_M_cactus
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.004371 -0.000583 0.008975 0.000000
@@ -1133,12 +1133,12 @@ $LocalTM 4 4
 -0.008981 -0.000811 0.004321 0.000000
 -7.416659 0.276157 43.920052 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_cactus65
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_3
 @MaterialName Outside_Grass_M_cactus
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.021962 0.000000 -0.001297 0.000000
@@ -1151,12 +1151,12 @@ $LocalTM 4 4
 0.001297 0.000000 0.021962 0.000000
 28.207243 1.367932 60.369186 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_cactus66
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_1
 @MaterialName Outside_Grass_M_cactus
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.014912 0.000000 -0.001626 0.000000
@@ -1169,12 +1169,12 @@ $LocalTM 4 4
 0.001626 0.000000 0.014912 0.000000
 25.497099 0.937870 48.613285 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_cactus67
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_1
 @MaterialName Outside_Grass_M_cactus
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.014912 0.000000 -0.001626 0.000000
@@ -1187,12 +1187,12 @@ $LocalTM 4 4
 0.001626 0.000000 0.014912 0.000000
 29.672253 1.531922 66.371994 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_cactus68
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_3
 @MaterialName Outside_Grass_M_cactus
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.014921 0.000000 -0.013318 0.000000
@@ -1205,12 +1205,12 @@ $LocalTM 4 4
 0.013318 0.000000 0.014921 0.000000
 21.627382 -0.620487 71.882988 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_mesh_grass_4
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_0
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.011742 0.002658 -0.003364 0.000000
@@ -1223,12 +1223,12 @@ $LocalTM 4 4
 0.003754 -0.001636 0.011810 0.000000
 13.287287 -0.161408 -50.088692 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_cactus69
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_1
 @MaterialName Outside_Grass_M_cactus
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.012821 0.000000 0.006331 0.000000
@@ -1241,12 +1241,12 @@ $LocalTM 4 4
 -0.006331 0.000000 0.012821 0.000000
 27.094652 0.390724 69.689972 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_cactus70
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_3
 @MaterialName Outside_Grass_M_cactus
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.001361 0.000000 -0.016945 0.000000
@@ -1259,12 +1259,12 @@ $LocalTM 4 4
 0.016945 0.000000 -0.001361 0.000000
 25.285601 0.827997 62.236057 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_cactus71
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_3
 @MaterialName Outside_Grass_M_cactus
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.019965 0.000000 -0.001179 0.000000
@@ -1277,12 +1277,12 @@ $LocalTM 4 4
 0.001179 0.000000 0.019965 0.000000
 9.325175 0.306245 59.086029 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_cactus72
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_1
 @MaterialName Outside_Grass_M_cactus
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.001434 0.000000 0.009897 0.000000
@@ -1295,12 +1295,12 @@ $LocalTM 4 4
 -0.009897 0.000000 0.001434 0.000000
 12.784443 0.150318 59.395630 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_cactus73
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_1
 @MaterialName Outside_Grass_M_cactus
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.008442 0.000000 0.005360 0.000000
@@ -1313,12 +1313,12 @@ $LocalTM 4 4
 -0.005360 0.000000 -0.008442 0.000000
 10.486920 0.138146 58.272358 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_cactus74
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_1
 @MaterialName Outside_Grass_M_cactus
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.006265 0.000000 -0.007794 0.000000
@@ -1331,12 +1331,12 @@ $LocalTM 4 4
 0.007794 0.000000 0.006265 0.000000
 50.970337 0.771794 -16.502777 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_cactus75
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_3
 @MaterialName Outside_Grass_M_cactus
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.015000 0.000000 0.000000 0.000000
@@ -1349,12 +1349,12 @@ $LocalTM 4 4
 0.000000 0.000000 0.015000 0.000000
 21.415075 -0.034316 -26.236689 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_cactus76
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_1
 @MaterialName Outside_Grass_M_cactus
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.009992 0.000000 0.000409 0.000000
@@ -1367,12 +1367,12 @@ $LocalTM 4 4
 -0.000409 0.000000 0.009992 0.000000
 -13.868628 -0.222559 38.689358 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_cactus77
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_1
 @MaterialName Outside_Grass_M_cactus
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.001731 0.000000 0.006783 0.000000
@@ -1385,12 +1385,12 @@ $LocalTM 4 4
 -0.006783 0.000000 0.001731 0.000000
 -12.172315 -0.241929 40.784443 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_cactus78
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_3
 @MaterialName Outside_Grass_M_cactus
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.000610 0.000000 0.014987 0.000000
@@ -1403,12 +1403,12 @@ $LocalTM 4 4
 -0.014987 0.000000 -0.000610 0.000000
 40.353363 1.791736 51.471584 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_tumbleweed53
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_4
 @MaterialName Outside_Grass_M_tumbleweed
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.002210 0.004180 0.007702 0.000000
@@ -1421,12 +1421,12 @@ $LocalTM 4 4
 0.003379 0.006923 -0.004727 0.000000
 22.547548 0.994794 -37.265320 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_cactus79
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_1
 @MaterialName Outside_Grass_M_cactus
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.008393 0.000000 0.005436 0.000000
@@ -1439,12 +1439,12 @@ $LocalTM 4 4
 -0.005436 0.000000 0.008393 0.000000
 36.877945 1.567265 45.744278 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_cactus80
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_3
 @MaterialName Outside_Grass_M_cactus
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.018261 -0.000903 0.008108 0.000000
@@ -1457,12 +1457,12 @@ $LocalTM 4 4
 -0.008139 0.000650 -0.018258 0.000000
 36.935532 1.547500 46.569077 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_cactus81
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_3
 @MaterialName Outside_Grass_M_cactus
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.013040 0.000144 -0.007411 0.000000
@@ -1475,12 +1475,12 @@ $LocalTM 4 4
 0.007411 0.000543 -0.013030 0.000000
 41.325970 1.394978 46.962070 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_cactus82
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_1
 @MaterialName Outside_Grass_M_cactus
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.014912 0.000000 -0.001626 0.000000
@@ -1493,12 +1493,12 @@ $LocalTM 4 4
 0.001625 -0.000457 0.014905 0.000000
 40.532131 1.455641 47.345982 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_cactus83
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_1
 @MaterialName Outside_Grass_M_cactus
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.011809 0.000005 -0.002133 0.000000
@@ -1511,12 +1511,12 @@ $LocalTM 4 4
 0.002133 -0.000028 0.011809 0.000000
 49.269985 0.739014 -14.846669 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_cactus84
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_3
 @MaterialName Outside_Grass_M_cactus
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.007113 0.000000 -0.010881 0.000000
@@ -1529,12 +1529,12 @@ $LocalTM 4 4
 0.010881 0.000000 0.007113 0.000000
 37.578777 0.425403 -31.437613 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_cactus85
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_1
 @MaterialName Outside_Grass_M_cactus
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.011953 0.000005 0.001057 0.000000
@@ -1547,12 +1547,12 @@ $LocalTM 4 4
 -0.001057 -0.000028 -0.011953 0.000000
 49.312782 0.764955 -16.896776 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_cactus86
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_3
 @MaterialName Outside_Grass_M_cactus
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.021962 0.000000 -0.001297 0.000000
@@ -1565,12 +1565,12 @@ $LocalTM 4 4
 0.001297 0.000000 0.021962 0.000000
 28.035254 0.505612 44.864105 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_cactus87
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_3
 @MaterialName Outside_Grass_M_cactus
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.007167 0.000000 0.006974 0.000000
@@ -1583,12 +1583,12 @@ $LocalTM 4 4
 -0.006974 0.000000 -0.007167 0.000000
 -34.822151 1.848993 -48.560867 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_cactus88
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_1
 @MaterialName Outside_Grass_M_cactus
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.014936 -0.000091 0.001381 0.000000
@@ -1601,12 +1601,12 @@ $LocalTM 4 4
 -0.001383 -0.000448 0.014929 0.000000
 50.013206 1.029861 25.643278 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass53
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_0
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.008495 0.000645 -0.009147 0.000000
@@ -1619,12 +1619,12 @@ $LocalTM 4 4
 0.009170 0.000651 -0.008470 0.000000
 38.364834 -3.718736 -86.475708 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_cactus89
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_1
 @MaterialName Outside_Grass_M_cactus
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.004138 -0.000423 0.014412 0.000000
@@ -1637,12 +1637,12 @@ $LocalTM 4 4
 -0.014418 0.000173 -0.004135 0.000000
 45.673374 1.140344 22.015818 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_cactus90
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_1
 @MaterialName Outside_Grass_M_cactus
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.009982 0.000000 -0.000608 0.000000
@@ -1655,12 +1655,12 @@ $LocalTM 4 4
 0.000608 0.000000 0.009982 0.000000
 50.415642 0.674853 -24.398294 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_cactus91
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_1
 @MaterialName Outside_Grass_M_cactus
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.003979 0.000000 -0.008072 0.000000
@@ -1673,12 +1673,12 @@ $LocalTM 4 4
 0.008072 0.000000 -0.003979 0.000000
 50.818768 0.640276 -24.717455 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_cactus92
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_3
 @MaterialName Outside_Grass_M_cactus
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.004323 0.000000 -0.007894 0.000000
@@ -1691,12 +1691,12 @@ $LocalTM 4 4
 0.007894 0.000000 0.004323 0.000000
 45.685825 0.316130 -34.285885 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_cactus93
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_3
 @MaterialName Outside_Grass_M_cactus
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.001801 0.000000 0.014892 0.000000
@@ -1709,12 +1709,12 @@ $LocalTM 4 4
 -0.014892 0.000000 -0.001801 0.000000
 -6.117067 -0.078462 33.764534 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass58
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_0
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.003884 -0.000987 0.011183 0.000000
@@ -1727,12 +1727,12 @@ $LocalTM 4 4
 -0.011224 0.000083 -0.003891 0.000000
 -33.736164 -0.358387 8.580340 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass59
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_0
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.004158 0.003201 0.007669 0.000000
@@ -1745,12 +1745,12 @@ $LocalTM 4 4
 -0.007321 0.002645 -0.005074 0.000000
 -43.148304 0.132555 -3.108800 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass60
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_0
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.000782 0.000969 0.005492 0.000000
@@ -1763,12 +1763,12 @@ $LocalTM 4 4
 -0.005561 0.000282 -0.000842 0.000000
 -34.708225 -0.133004 -5.797670 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass61
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_5
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.001219 0.000805 0.011263 0.000000
@@ -1781,12 +1781,12 @@ $LocalTM 4 4
 -0.011166 0.001595 -0.001323 0.000000
 -42.001469 0.231369 -2.091045 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass62
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_5
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.006362 -0.000602 0.000220 0.000000
@@ -1799,12 +1799,12 @@ $LocalTM 4 4
 -0.000335 -0.001255 0.006260 0.000000
 -34.700901 -0.034763 -5.317386 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass54
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_0
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.007106 0.000387 0.002368 0.000000
@@ -1817,12 +1817,12 @@ $LocalTM 4 4
 -0.002387 0.000390 0.007099 0.000000
 37.524834 -3.438736 -87.205711 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass63
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_0
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.001591 -0.000505 -0.005379 0.000000
@@ -1835,12 +1835,12 @@ $LocalTM 4 4
 0.005238 -0.001515 -0.001407 0.000000
 -39.334709 0.210703 -11.808433 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass64
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_0
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.003068 -0.001858 -0.006086 0.000000
@@ -1853,12 +1853,12 @@ $LocalTM 4 4
 0.006289 -0.001916 -0.002586 0.000000
 -14.296575 -0.387300 33.870605 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass65
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_5
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.000802 0.000889 0.006618 0.000000
@@ -1871,12 +1871,12 @@ $LocalTM 4 4
 -0.006676 -0.000247 -0.000776 0.000000
 -14.276137 -0.218029 35.211327 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass66
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_0
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.003304 0.001377 -0.005669 0.000000
@@ -1889,12 +1889,12 @@ $LocalTM 4 4
 0.005393 0.001762 0.003571 0.000000
 -4.772137 -0.159040 38.260342 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass67
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_0
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.010336 0.000557 -0.006071 0.000000
@@ -1907,12 +1907,12 @@ $LocalTM 4 4
 0.005515 -0.004239 -0.009778 0.000000
 -36.343800 -0.294676 -4.527514 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass68
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_5
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.010186 -0.000420 0.005006 0.000000
@@ -1925,12 +1925,12 @@ $LocalTM 4 4
 -0.004931 0.001328 0.010144 0.000000
 -35.344345 -0.126084 -3.807085 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass69
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_5
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.002096 0.001723 0.006005 0.000000
@@ -1943,12 +1943,12 @@ $LocalTM 4 4
 -0.006183 -0.001476 -0.001735 0.000000
 -8.772426 -0.081038 31.265446 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass70
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_5
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.003886 0.001065 0.003126 0.000000
@@ -1961,12 +1961,12 @@ $LocalTM 4 4
 -0.003005 -0.000861 0.004029 0.000000
 -9.676811 -0.110563 29.799204 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass71
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_0
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.000953 0.000797 0.004612 0.000000
@@ -1979,12 +1979,12 @@ $LocalTM 4 4
 -0.004498 -0.001144 0.001127 0.000000
 -6.046392 -0.183202 32.766861 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass72
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_5
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.001209 0.000773 0.009018 0.000000
@@ -1997,12 +1997,12 @@ $LocalTM 4 4
 -0.008973 -0.001294 -0.001092 0.000000
 -10.611452 -0.156509 38.230103 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass55
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_0
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.008495 0.000645 -0.009147 0.000000
@@ -2015,12 +2015,12 @@ $LocalTM 4 4
 0.009170 0.000651 -0.008470 0.000000
 18.034834 -3.718736 -69.875710 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass73
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_5
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.006301 0.000955 0.002957 0.000000
@@ -2033,12 +2033,12 @@ $LocalTM 4 4
 -0.003074 0.000931 0.006249 0.000000
 -13.450335 -0.146344 33.294849 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass74
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_0
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.001071 0.001120 0.004540 0.000000
@@ -2051,12 +2051,12 @@ $LocalTM 4 4
 -0.004668 0.000545 0.000967 0.000000
 -16.902582 -0.246794 35.762142 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass75
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_5
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.003538 -0.000163 0.007865 0.000000
@@ -2069,12 +2069,12 @@ $LocalTM 4 4
 -0.007746 -0.001431 -0.003514 0.000000
 -36.902317 0.116582 -5.313277 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass76
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_5
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.009927 0.001192 0.000199 0.000000
@@ -2087,12 +2087,12 @@ $LocalTM 4 4
 -0.000495 -0.002507 -0.009668 0.000000
 -40.906971 0.164515 -3.919867 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass77
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_0
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.002297 0.001501 -0.011682 0.000000
@@ -2105,12 +2105,12 @@ $LocalTM 4 4
 0.011682 0.001228 0.002455 0.000000
 -9.026561 0.176456 -55.653816 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass78
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_0
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.002604 -0.003702 0.006917 0.000000
@@ -2123,12 +2123,12 @@ $LocalTM 4 4
 -0.007843 0.001066 -0.002382 0.000000
 -27.478333 -0.014747 -44.361187 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass79
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_0
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.002267 0.002439 -0.006325 0.000000
@@ -2141,12 +2141,12 @@ $LocalTM 4 4
 0.006747 0.001458 -0.001856 0.000000
 -25.395748 -0.010593 -21.297035 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass80
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_0
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.003227 0.001579 -0.002502 0.000000
@@ -2159,12 +2159,12 @@ $LocalTM 4 4
 0.002922 -0.001118 0.003062 0.000000
 -25.262098 0.263966 -21.989805 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass81
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_0
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.004120 -0.001804 -0.001350 0.000000
@@ -2177,12 +2177,12 @@ $LocalTM 4 4
 0.001100 -0.000846 0.004486 0.000000
 -30.617697 0.737919 -17.623989 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass82
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_0
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.009074 0.003318 -0.002578 0.000000
@@ -2195,12 +2195,12 @@ $LocalTM 4 4
 0.002272 0.001288 0.009653 0.000000
 32.821548 0.227828 17.406300 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass56
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_0
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.007106 0.000387 0.002368 0.000000
@@ -2213,12 +2213,12 @@ $LocalTM 4 4
 -0.002387 0.000390 0.007099 0.000000
 17.194834 -3.438736 -70.605713 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass83
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_0
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.002599 0.000142 0.008368 0.000000
@@ -2231,12 +2231,12 @@ $LocalTM 4 4
 -0.008324 -0.000863 0.002600 0.000000
 42.091431 1.122204 39.373287 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass84
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_0
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.005528 0.004935 -0.006714 0.000000
@@ -2249,12 +2249,12 @@ $LocalTM 4 4
 0.006726 -0.002114 -0.007092 0.000000
 -48.850349 1.181132 -23.841223 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass85
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_0
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.001560 0.000724 -0.005748 0.000000
@@ -2267,12 +2267,12 @@ $LocalTM 4 4
 0.005605 0.001319 0.001687 0.000000
 29.202150 0.127104 -17.566935 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass86
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_0
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.002862 0.000352 0.003294 0.000000
@@ -2285,12 +2285,12 @@ $LocalTM 4 4
 -0.003016 0.001526 -0.002783 0.000000
 -30.755960 0.530895 -19.596992 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass87
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_5
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.006699 0.001057 0.000111 0.000000
@@ -2303,12 +2303,12 @@ $LocalTM 4 4
 -0.000229 -0.000745 -0.006738 0.000000
 -38.179531 0.338628 -11.699999 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass88
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_0
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.004368 0.000652 -0.002741 0.000000
@@ -2321,12 +2321,12 @@ $LocalTM 4 4
 0.002817 -0.001079 0.004233 0.000000
 -39.025024 -0.358698 -28.346567 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass89
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_0
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.001557 -0.000126 0.006692 0.000000
@@ -2339,12 +2339,12 @@ $LocalTM 4 4
 -0.006499 -0.001616 -0.001542 0.000000
 35.209969 0.531234 20.009186 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass90
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_0
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.006663 -0.000142 0.002212 0.000000
@@ -2357,12 +2357,12 @@ $LocalTM 4 4
 -0.002210 -0.000127 -0.006664 0.000000
 40.994076 0.701846 34.710030 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass91
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_0
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.008623 0.004268 -0.010799 0.000000
@@ -2375,12 +2375,12 @@ $LocalTM 4 4
 0.009251 -0.005605 -0.009602 0.000000
 -57.453720 3.488636 -21.087622 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass92
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_0
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.003348 0.000430 -0.003952 0.000000
@@ -2393,12 +2393,12 @@ $LocalTM 4 4
 0.003858 -0.001599 0.003094 0.000000
 -39.090996 0.226162 -34.439964 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass57
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_0
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.008495 -0.000740 -0.009140 0.000000
@@ -2411,12 +2411,12 @@ $LocalTM 4 4
 0.009170 -0.000632 -0.008471 0.000000
 37.824833 -1.648736 -51.805714 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass93
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_5
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.010769 0.000438 0.000172 0.000000
@@ -2429,12 +2429,12 @@ $LocalTM 4 4
 -0.000270 -0.002523 -0.010477 0.000000
 -38.095821 0.290338 -6.373210 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass94
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_5
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.005037 0.001045 0.002681 0.000000
@@ -2447,12 +2447,12 @@ $LocalTM 4 4
 -0.002876 -0.001690 -0.004745 0.000000
 -12.909724 -0.157057 34.354095 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass95
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_5
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.002173 0.001662 0.005995 0.000000
@@ -2465,12 +2465,12 @@ $LocalTM 4 4
 -0.005802 -0.001751 0.002588 0.000000
 -8.811102 -0.081038 29.839758 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass96
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_5
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.005763 0.000743 0.002523 0.000000
@@ -2483,12 +2483,12 @@ $LocalTM 4 4
 -0.002628 0.001873 0.005451 0.000000
 -12.486036 -0.260140 32.012867 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass97
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_5
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.004634 0.001170 0.002314 0.000000
@@ -2501,12 +2501,12 @@ $LocalTM 4 4
 -0.002587 -0.001767 -0.004287 0.000000
 -12.936639 -0.165167 32.420948 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass98
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_5
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.004647 0.000643 0.002488 0.000000
@@ -2519,12 +2519,12 @@ $LocalTM 4 4
 -0.002568 -0.000985 -0.004542 0.000000
 -13.803997 -0.307114 32.253372 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass99
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_5
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.003557 -0.000475 -0.004558 0.000000
@@ -2537,12 +2537,12 @@ $LocalTM 4 4
 0.004430 -0.001831 -0.003266 0.000000
 -12.059422 -0.157057 33.667320 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass100
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_5
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.002876 0.000088 -0.007412 0.000000
@@ -2555,12 +2555,12 @@ $LocalTM 4 4
 0.007072 -0.002351 -0.002772 0.000000
 -39.151909 0.403287 -10.245781 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass101
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_5
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 0.006239 -0.000333 -0.001042 0.000000
@@ -2573,12 +2573,12 @@ $LocalTM 4 4
 0.001094 0.002064 0.005888 0.000000
 -13.460289 -0.147986 30.335480 1.000000
 #STATIC
-@ParentName RootNode
 @NodeName organic_grass102
+@ParentName RootNode
+@IsActive 1
 @MeshName Outside_Grass_0
 @MaterialName Outside_Grass_M_grass_b
-@IsActive 1
-@IsShadow 1
+@IsShadow 0
 @IsCull 1
 $WorldTM 4 4
 -0.006801 0.001034 0.001942 0.000000

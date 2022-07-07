@@ -156,7 +156,7 @@ private:
 	bool IsCreate			= false;
 	bool IsKeyUpdate		= false;
 	bool IsPush				= false;
-
+	bool IsJump				= false;
 	bool IsGetPureMana		= false;
 	bool IsGetCoreMana		= false;
 

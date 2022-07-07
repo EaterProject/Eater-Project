@@ -57,21 +57,10 @@ void InGame::Update()
 		RenderSetting();
 	}
 
-	//if (GetKeyDown('1'))
-	//{
-	//	//MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_BOSS_);
-	//}
-	//
-	//if (GetKeyDown('2'))
-	//{
-	//	bool test;
-	//	MessageManager::GetGM()->SEND_Message(TARGET_CAMERA_MANAGER, MESSAGE_CAMERA_CINEMATIC_GAME_END, &test);
-	//	MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_CREDIT);
-	//}
-	//if (GetKeyDown('3'))
-	//{
-	//	MessageManager::GetGM()->SEND_Message(TARGET_CAMERA_MANAGER, MESSAGE_CAMERA_CINEMATIC_BOSS_START);
-	//}
+	if (GetKeyDown(VK_NUMPAD4))
+	{
+		MessageManager::GetGM()->SEND_Message(TARGET_CAMERA_MANAGER, MESSAGE_CAMERA_CINEMATIC_SKIP);
+	}
 
 	Logic->Update();
 }

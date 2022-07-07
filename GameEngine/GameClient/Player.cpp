@@ -297,11 +297,11 @@ void Player::PlayerKeyinput()
 	{
 		if ((mState & PLAYER_STATE_JUMP) == 0)
 		{
+			Sound_Play_SFX("Player_Evade");
 			mAnimation->SetFrame(0);
 		}
 
 		mState = PLAYER_STATE_JUMP;
-		Sound_Play_SFX("Player_Evade");
 	}
 
 	if (GetKey('D'))

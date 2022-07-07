@@ -152,13 +152,13 @@ void Factory::CreateStaticActor(PhysData* Data, physx::PxShape* shape, physx::Px
 {
 	if (Data->isDinamic == true) { return; }
 	PxRigidStatic* body = m_Phys->createRigidStatic(*Tr);
-
+	
 	//const PxFilterData triggerFilterData(0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff);
 	//shape->setSimulationFilterData(triggerFilterData);
 
 	body->attachShape(*shape);
 	m_Scene->addActor(*body);
-
+	
 	//서로 연결
 	body->userData = Data;
 	Data->ActorObj = body;
@@ -194,6 +194,7 @@ void Factory::CreateActoer(PhysData* data)
 	{
 		shape->release();
 	}
+
 }
 
 

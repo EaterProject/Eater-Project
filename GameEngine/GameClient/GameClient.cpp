@@ -69,6 +69,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 	UpdateWindow(hWnd);
 
 	SetWindowLong(hWnd, GWL_STYLE, WS_VISIBLE | WS_CLIPSIBLINGS | WS_CAPTION | WS_BORDER | WS_DLGFRAME | WS_SYSMENU | WS_GROUP | WS_TABSTOP | WS_MINIMIZEBOX);
+	SetWindowPos(hWnd, HWND_TOPMOST, (screenWidth / 2) - (width / 2), (screenHeight / 2) - (height / 2), width, height, 0);
+	SetFocus(hWnd);
 
 	MSG msg;
 
