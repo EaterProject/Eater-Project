@@ -82,7 +82,6 @@ void ManaStone::Update()
 		MessageManager::GetGM()->SEND_Message(TARGET_GLOBAL, MESSAGE_GLOBAL_BOSS_START);
 	}
 
-
 	if (DeadStart == false)
 	{
 		mSetting.LimLightUpdate(2.8f);

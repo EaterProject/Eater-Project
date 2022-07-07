@@ -451,7 +451,6 @@ void Boss::Boss_DEAD()
 			IsCredit = false;
 			gameobject->SetActive(false);
 			Destroy(this->gameobject);
-			gameobject = nullptr;
 
 			bool Active = false;
 			MessageManager::GetGM()->SEND_Message(TARGET_UI, MESSAGE_UI_BOSS_ACTIVE, &Active);
@@ -515,7 +514,6 @@ void Boss::Boss_Groggy_End()
 	{
 		SetState(BOSS_STATE::IDLE);
 		IsShooting = false;
-		mAnimation->Play();
 	}
 }
 

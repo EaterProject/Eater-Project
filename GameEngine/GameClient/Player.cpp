@@ -818,6 +818,7 @@ void Player::Player_Dead()
 	}
 
 }
+
 void Player::Player_Heal()
 {
 	HP += 300;
@@ -830,6 +831,7 @@ void Player::Player_Heal()
 	Sound_Play_SFX("Player_Heal");
 	MessageManager::GetGM()->SEND_Message(TARGET_DRONE, MESSAGE_DRONE_PLAYER_HEAL);
 }
+
 void Player::ChangeSkyLight(int index)
 {
 	for (int i = 0; i < ChildMeshFilter.size(); i++)
