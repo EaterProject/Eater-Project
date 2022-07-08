@@ -9,13 +9,6 @@ public:
 	DissolveManager();
 	~DissolveManager();
 
-private:
-	struct DissolveData
-	{
-		int Index = -1;
-		MaterialPropertyBlock* DissolveBlock;
-	};
-
 public:
 	void Update() override;
 
@@ -30,7 +23,7 @@ private:
 	int MaxSize = 100;
 	int LastIndex = -1;
 
-	std::vector<DissolveData> DissolveList;
+	std::vector<MaterialPropertyBlock*> DissolveList;
 	MaterialPropertyBlock* NowBlock;
 };
 

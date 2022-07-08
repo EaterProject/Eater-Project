@@ -184,9 +184,15 @@ void PhysEngine::Delete_Actor(PhysData* data)
 			data->mMeterial = nullptr;
 		}
 		PxRigidStatic* rig = reinterpret_cast<PxRigidStatic*>(data->ActorObj);
+		m_Scene->removeActor(*rig);
+
 		rig->release();
 		rig = nullptr;
 	}
+
+	data->ActorObj = nullptr;
+	data->EaterObj = nullptr;
+
 	delete data;
 	data = nullptr;
 

@@ -186,9 +186,14 @@ void Collider::FindPhysFunctionEnter(PhysData* Data, unsigned int Type)
 	//충돌된 오브젝트에 대한 함수 실행
 	for (int i = 0; i < 10; i++)
 	{
-		if (Data->TriggerEnter_List[i] == nullptr) { continue; }
-
 		PhysData* TargetData = Data->TriggerEnter_List[i];
+		if (TargetData == nullptr) { continue; }
+		if ((unsigned long long)TargetData->EaterObj == 0xdddddddddddddddd)
+		{
+			Data->TriggerEnter_List[i] = nullptr;
+			continue;
+		}
+
 		GameObject* Object = reinterpret_cast<GameObject*>(TargetData->EaterObj);
 		gameobject->PlayPhysFunction(Object, Type);
 		NowCount--;
@@ -225,10 +230,16 @@ void Collider::FindPhysFunctionStay(PhysData* Data, unsigned int Type)
 
 	for (int i = 0; i < 10; i++)
 	{
-		if (Data->TriggerStay_List[i] == nullptr) { continue; }
-		if (Data->TriggerStay_List[i]->EaterObj == nullptr) { continue; }
+		PhysData* TargetData = Data->TriggerStay_List[i];
 
-		GameObject* Object = reinterpret_cast<GameObject*>(Data->TriggerStay_List[i]->EaterObj);
+		if (TargetData == nullptr) { continue; }
+		if ((unsigned long long)TargetData->EaterObj == 0xdddddddddddddddd)
+		{
+			Data->TriggerStay_List[i] = nullptr;
+			continue;
+		}
+
+		GameObject* Object = reinterpret_cast<GameObject*>(TargetData->EaterObj);
 		gameobject->PlayPhysFunction(Object, Type);
 	}
 }
@@ -244,6 +255,14 @@ void Collider::FindPhysFunctionExit(PhysData* Data, unsigned int Type)
 	for (int i = 0; i < 10; i++)
 	{
 		PhysData* TargetData = Data->TriggerExit_List[i];
+
+		if (TargetData == nullptr) { continue; }
+		if ((unsigned long long)TargetData->EaterObj == 0xdddddddddddddddd)
+		{
+			Data->TriggerExit_List[i] = nullptr;
+			continue;
+		}
+
 		GameObject* Object = reinterpret_cast<GameObject*>(TargetData->EaterObj);
 		gameobject->PlayPhysFunction(Object, Type);
 

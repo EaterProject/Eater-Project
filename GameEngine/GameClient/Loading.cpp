@@ -25,6 +25,11 @@ void Loading::Awake()
 	Load("../Assets/Texture/Particle");
 	Load("../Assets/Texture/Noise");
 
+	Load("../Assets/Model/Animation");
+	Load("../Assets/Model/MeshBuffer");
+	Load("../Assets/Model/ModelData");
+	Load("../Assets/Model/Particle");
+
 	RenderOption* option = GetRenderOptionData();
 	option->RenderingOption ^= RENDER_OPTION::RENDER_FOG;
 	RenderSetting();
@@ -49,10 +54,6 @@ void Loading::End()
 
 void Loading::ThreadFunction()
 {
-	Load("../Assets/Model/Animation");
-	Load("../Assets/Model/MeshBuffer");
-	Load("../Assets/Model/ModelData");
-	Load("../Assets/Model/Particle");
 	Load("../Assets/Sound");
 
 	LoadTerrainMesh("../Assets/Model/TerrainModel/Terrain.fbx", "../Assets/Texture/Terrain/Terrain_RGB_1.png", "../Assets/Texture/Terrain/Terrain_RGB_2.png", SCALING);

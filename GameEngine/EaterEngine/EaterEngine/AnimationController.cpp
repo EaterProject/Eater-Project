@@ -226,7 +226,6 @@ void AnimationController::Pause()
 {
 	mPlay = false;
 	mStop = true;
-	mNowFrame = 0;
 }
 
 void AnimationController::SetFrame(int index)
