@@ -156,6 +156,7 @@ private:
 	bool IsCreate			= false;
 	bool IsKeyUpdate		= false;
 	bool IsPush				= false;
+	bool IsDead				= false;
 	bool IsJump				= false;
 	bool IsGetPureMana		= false;
 	bool IsGetCoreMana		= false;
@@ -193,6 +194,8 @@ private:
 	bool IsBackRayCheck		= false;
 	bool IsRightRayCheck	= false;
 	bool IsLeftRayCheck		= false;
+	bool IsCenter_RayCheck	= false; // 왼쪽 앞 대각선
+
 	int HitCount			= 0;
 private:
 	float AttackDir				= 1.0f; //공격 거리

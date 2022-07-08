@@ -101,7 +101,7 @@ Boss::Boss()
 	SkillTimeMax[Chase_Time]	= 6.0f;		//일직선 공격
 	SkillTimeMax[Base_Time]		= 5.0f;		//기본 공격
 	SkillTimeMax[Teleport_Time] = 4.0f;		//텔레포트
-	SkillTimeMax[Groggy_Time]	= 5.0f;	//그로기 상태
+	SkillTimeMax[Groggy_Time]	= 3.0f;		//그로기 상태
 	SkillTimeMax[Missile_Time]	= 6.0f;		//미사일 상태
 }
 
@@ -1231,32 +1231,31 @@ void Boss::PushPlayer()
 {
 	Vector3 Look = mTransform->GetLocalPosition_Look();
 	Look.z *= -1;
-	Vector3 Point;
 
-	int Index = 1;
-	while (true)
-	{
-		Vector3 mStart;
-		mStart = mTransform->GetPosition() + (Look * Index);
-
-		mRay->Direction = { 0,-1,0 };
-		mRay->MaxDistance = 2;
-		mRay->Origin = mStart;
-		mRay->Origin.y += 0.5f;
-		//충돌된 곳에Y축만 가져온다
-		bool Hit = RayCast(mRay);
-		
-		if (Hit == false)
-		{
-			//mPlayerTR->SetPosition(Point);
-			MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_PUSH, &Point);
-			break;
-		}
-		else
-		{
-			Point = mRay->Hit.HitPoint;
-			Index += 3;
-		}
-	}
-
+	MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_PUSH, &Look);
+	//int Index = 1;
+	//while (true)
+	//{
+	//	Vector3 mStart;
+	//	mStart = mTransform->GetPosition() + (Look * Index);
+	//
+	//	mRay->Direction = { 0,-1,0 };
+	//	mRay->MaxDistance = 2;
+	//	mRay->Origin = mStart;
+	//	mRay->Origin.y += 0.5f;
+	//	//충돌된 곳에Y축만 가져온다
+	//	bool Hit = RayCast(mRay);
+	//	
+	//	if (Hit == false)
+	//	{
+	//		//mPlayerTR->SetPosition(Point);
+	//		MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_PUSH, &Look);
+	//		break;
+	//	}
+	//	else
+	//	{
+	//		Point = mRay->Hit.HitPoint;
+	//		Index += 3;
+	//	}
+	//}
 }
