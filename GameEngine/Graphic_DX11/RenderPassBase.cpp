@@ -64,6 +64,8 @@ void RenderPassBase::Reset()
 
 void RenderPassBase::UpdateBuffer(ID3D11Buffer* buffer, void* bufferData, size_t size)
 {
+	if (buffer == nullptr) { return; }
+
 	// Mapping SubResource Data..
 	D3D11_MAPPED_SUBRESOURCE mappedResource;
 	ZeroMemory(&mappedResource, sizeof(D3D11_MAPPED_SUBRESOURCE));
