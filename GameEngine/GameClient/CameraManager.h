@@ -21,6 +21,7 @@ public:
 
 	void SetCinematic(int Type, std::string Data);
 	void SetCinematic(int Type, bool* Data = nullptr);
+	void CinematicSkip();
 
 	void SetMouseFix(bool Active);
 

@@ -59,12 +59,13 @@ public:
 	void SetDissolveInnerFactor(float mFactor);
 	void PlayDissolve();
 	const bool EndDissolve();
-	
-private:
-	GameObject* mTopObject = nullptr;
 
 	void LimLightUpdate();
 	void EmissiveUpdate();
+	void AlphaUpdate(float alpha);
+
+private:
+	GameObject* mTopObject = nullptr;
 
 	std::vector<MeshFilter*> MeshFilterList;
 	std::vector<GameObject*> GameObjectList;

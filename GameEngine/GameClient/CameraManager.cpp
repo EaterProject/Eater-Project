@@ -163,6 +163,11 @@ void CameraManager::SetCinematic(int Type, bool* Data)
 	}
 }
 
+void CameraManager::CinematicSkip()
+{
+	mCinematicCamera->ClearCameraAnimation();
+}
+
 void CameraManager::SetMouseFix(bool Active)
 {
 	mPlayerCamera->SetMouseFix(Active);

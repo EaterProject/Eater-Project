@@ -101,7 +101,7 @@ Boss::Boss()
 	SkillTimeMax[Chase_Time]	= 6.0f;		//일직선 공격
 	SkillTimeMax[Base_Time]		= 5.0f;		//기본 공격
 	SkillTimeMax[Teleport_Time] = 4.0f;		//텔레포트
-	SkillTimeMax[Groggy_Time]	= 5.0f;	//그로기 상태
+	SkillTimeMax[Groggy_Time]	= 3.0f;		//그로기 상태
 	SkillTimeMax[Missile_Time]	= 6.0f;		//미사일 상태
 }
 
@@ -521,7 +521,6 @@ void Boss::Boss_Teleport_Ready()
 {	
 	float End = mAnimation->GetEndFrame();
 	float Now = mAnimation->GetNowFrame();
-	//bool IsTest = mMF_Setting.EndDissolve();
 	if (Now >= End)
 	{
 		Sound_Play_SFX("Boss_Teleport");
@@ -531,7 +530,6 @@ void Boss::Boss_Teleport_Ready()
 
 void Boss::Boss_Teleport_Start()
 {
-
 	if (FriendIndex == -1)
 	{
 		mTransform->SetPosition(StartPoint);
@@ -546,8 +544,9 @@ void Boss::Boss_Teleport_Start()
 	float Now = mAnimation->GetNowFrame();
 	if (Now >= End)
 	{
-		SetState(BOSS_STATE::IDLE);
 		IsBossFriend = false;
+
+		SetState(BOSS_STATE::IDLE);
 	}
 }
 
@@ -561,14 +560,6 @@ void Boss::Boss_Create()
 		mPushParticle->Play();
 		PushPlayer();
 		Sound_Play_SFX("Boss_Push");
-	}
-
-	int Now = mAnimation->GetNowFrame();
-	int End = mAnimation->GetEndFrame();
-
-	if (Now >= End)
-	{
-		IsBossFriend = true;
 
 		//플레이어와 가장 먼 위치에 생성
 		float	Max = 0;
@@ -582,9 +573,21 @@ void Boss::Boss_Create()
 				Index = i;
 			}
 		}
+
+		FriendIndex = Index;
+
 		Friend->gameobject->SetActive(true);
 		Friend->SetPosition(SkillPoint[Index]);
-		FriendIndex = Index;
+		Friend->PlayDissolve(3.0f, DISSOLVE_FADEIN);
+	}
+
+	int Now = mAnimation->GetNowFrame();
+	int End = mAnimation->GetEndFrame();
+
+	if (Now >= End)
+	{
+		IsBossFriend = true;
+
 		SetState(BOSS_STATE::IDLE);
 	}
 }
@@ -598,6 +601,8 @@ void Boss::Boss_Closer_Attack_L()
 		mBaseAttackParticle->Play();
 		IsAttack = false;
 	}
+
+	PlayerDistanceCheck();
 
 	//왼쪽 근접 공격
 	int End = mAnimation->GetEndFrame();
@@ -632,6 +637,8 @@ void Boss::Boss_Closer_Attack_R()
 		IsAttack = false;
 	}
 
+	PlayerDistanceCheck();
+	
 	//오른쪽 근접 공격
 	int End = mAnimation->GetEndFrame();
 	int Now = mAnimation->GetNowFrame();
@@ -1224,32 +1231,31 @@ void Boss::PushPlayer()
 {
 	Vector3 Look = mTransform->GetLocalPosition_Look();
 	Look.z *= -1;
-	Vector3 Point;
 
-	int Index = 1;
-	while (true)
-	{
-		Vector3 mStart;
-		mStart = mTransform->GetPosition() + (Look * Index);
-
-		mRay->Direction = { 0,-1,0 };
-		mRay->MaxDistance = 2;
-		mRay->Origin = mStart;
-		mRay->Origin.y += 0.5f;
-		//충돌된 곳에Y축만 가져온다
-		bool Hit = RayCast(mRay);
-		
-		if (Hit == false)
-		{
-			//mPlayerTR->SetPosition(Point);
-			MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_PUSH, &Point);
-			break;
-		}
-		else
-		{
-			Point = mRay->Hit.HitPoint;
-			Index += 3;
-		}
-	}
-
+	MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_PUSH, &Look);
+	//int Index = 1;
+	//while (true)
+	//{
+	//	Vector3 mStart;
+	//	mStart = mTransform->GetPosition() + (Look * Index);
+	//
+	//	mRay->Direction = { 0,-1,0 };
+	//	mRay->MaxDistance = 2;
+	//	mRay->Origin = mStart;
+	//	mRay->Origin.y += 0.5f;
+	//	//충돌된 곳에Y축만 가져온다
+	//	bool Hit = RayCast(mRay);
+	//	
+	//	if (Hit == false)
+	//	{
+	//		//mPlayerTR->SetPosition(Point);
+	//		MessageManager::GetGM()->SEND_Message(TARGET_PLAYER, MESSAGE_PLAYER_PUSH, &Look);
+	//		break;
+	//	}
+	//	else
+	//	{
+	//		Point = mRay->Hit.HitPoint;
+	//		Index += 3;
+	//	}
+	//}
 }

@@ -39,7 +39,7 @@ void BaseEventCallBack::onTrigger(PxTriggerPair* pairs, PxU32 count)
 		isOtherPush		= false;
 		PhysData* Other = reinterpret_cast<PhysData*>(pairs[i].otherActor->userData);
 		PhysData* Target = reinterpret_cast<PhysData*>(pairs[i].triggerActor->userData);
-
+		
 		if (pairs[i].status & PxPairFlag::eNOTIFY_TOUCH_FOUND)
 		{
 			Other->PushTriggerEnter_Data(Target);

@@ -15,7 +15,8 @@ public:
 	void SetUp() override;
 	void Start() override;
 	void Update() override;
-
+	
+	void PlayDissolve(float playtime, DISSOLVE_OPTION option);
 	void SetPosition(Vector3 Pos);
 	void SetPosition(float x, float y,float z);
 	void Reset();
