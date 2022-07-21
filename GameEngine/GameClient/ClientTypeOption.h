@@ -98,9 +98,10 @@
 #define MESSAGE_CAMERA_CINEMATIC_BOSS_END 3					//시네마틱 실행
 #define MESSAGE_CAMERA_CINEMATIC_GAME_END 4					//시네마틱 실행
 #define MESSAGE_CAMERA_CINEMATIC_TITLE 5					//시네마틱 실행
+#define MESSAGE_CAMERA_CINEMATIC_SKIP 6						//시네마틱 스킵
 
-#define MESSAGE_CAMERA_CHANGE_PLAYER 6						//플레이어 카메라로 변환	//인자 값 : 없음
-#define MESSAGE_CAMERA_CHANGE_DEBUG 7						//디버그 카메라로 변환	//인자 값 : 없음
+#define MESSAGE_CAMERA_CHANGE_PLAYER 7						//플레이어 카메라로 변환	//인자 값 : 없음
+#define MESSAGE_CAMERA_CHANGE_DEBUG 8						//디버그 카메라로 변환	//인자 값 : 없음
 
 //Global Message
 #define MESSAGE_GLOBAL_GAME_START 0							//게임이 시작되었다
@@ -128,6 +129,7 @@ enum class MONSTER_STATE : int
 	MOVE = 3,	//이동
 	CHASE = 4,	//추격
 	DEAD = 5,	//죽음
+	STAY = 6
 };
 
 enum class BOSS_STATE : int

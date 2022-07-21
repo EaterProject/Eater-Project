@@ -234,62 +234,10 @@ void Deferred_Pass::RenderUpdate(const InstanceRenderBuffer* instance, const std
 	const Matrix& view = cam->CamView;
 	const Matrix& proj = cam->CamProj;
 
-	// Pixel Shader Update..
-	CB_Material materialBuf;
-	materialBuf.gAddColor = matSub->AddColor;
-	materialBuf.gRoughnessFactor = matSub->RoughnessFactor;
-	materialBuf.gMetallicFactor = matSub->MetallicFactor;
-	materialBuf.gEmissiveColor = matSub->EmissiveColor * matSub->EmissiveFactor;
-	materialBuf.gLimLightColor = matSub->LimLightColor * matSub->LimLightFactor;
-	materialBuf.gLimLightWidth = matSub->LimLightWidth;
-	materialBuf.gSkyLightIndex = matSub->SkyLightIndex;
-
-	CB_Camera cameraBuf;
-	cameraBuf.gEyePos = cam->CamPos;
-
-	if (mat->m_Albedo)
-	{
-		materialBuf.gOption |= ALBEDO_MAP;
-		m_Deferred_PS->SetShaderResourceView<gDiffuseMap>(mat->m_Albedo);
-	}
-	if (mat->m_Normal)
-	{
-		materialBuf.gOption |= NORMAL_MAP;
-		m_Deferred_PS->SetShaderResourceView<gNormalMap>(mat->m_Normal);
-	}
-	if (mat->m_Emissive)
-	{
-		materialBuf.gOption |= EMISSIVE_MAP;
-		m_Deferred_PS->SetShaderResourceView<gEmissiveMap>(mat->m_Emissive);
-	}
-	if (mat->m_ORM)
-	{
-		materialBuf.gOption |= ORM_MAP;
-		m_Deferred_PS->SetShaderResourceView<gORMMap>(mat->m_ORM);
-	}
-	if (matSub->LimLightFactor > 0.0f)
-	{
-		materialBuf.gOption |= LIM_LIGHT;
-	}
-
-	m_Deferred_PS->ConstantBufferUpdate(&materialBuf);
-	m_Deferred_PS->ConstantBufferUpdate(&cameraBuf);
-
-	m_Deferred_PS->Update();
-
 	switch (instance->m_Type)
 	{
 	case OBJECT_TYPE::BASE:
 	{
-		// Vertex Shader Update..
-		CB_InstanceStaticMesh objectBuf;
-		objectBuf.gView = view;
-		objectBuf.gProj = proj;
-
-		m_MeshInst_VS->ConstantBufferUpdate(&objectBuf);
-
-		m_MeshInst_VS->Update();
-
 		int loopCount = 0;
 		int renderCount = 0;
 		int nowCount = 0;
@@ -316,8 +264,8 @@ void Deferred_Pass::RenderUpdate(const InstanceRenderBuffer* instance, const std
 				object = m_RenderData->m_ObjectData;
 
 				// ÇØ´ç Instance Data »ðÀÔ..
-				m_MeshData.World = m_RenderData->m_ObjectData->World;
-				m_MeshData.InvWorld = m_RenderData->m_ObjectData->InvWorld;
+				m_MeshData.World = object->World;
+				m_MeshData.InvWorld = object->InvWorld;
 
 				m_MeshInstance[m_InstanceCount++] = m_MeshData;
 			}
@@ -326,6 +274,58 @@ void Deferred_Pass::RenderUpdate(const InstanceRenderBuffer* instance, const std
 
 			// Instance Buffer Update..
 			UpdateBuffer(m_Mesh_IB->InstanceBuf->Get(), &m_MeshInstance[0], (size_t)m_Mesh_IB->Stride * (size_t)m_InstanceCount);
+
+			// Vertex Shader Update..
+			CB_InstanceStaticMesh objectBuf;
+			objectBuf.gView = view;
+			objectBuf.gProj = proj;
+
+			m_MeshInst_VS->ConstantBufferUpdate(&objectBuf);
+
+			m_MeshInst_VS->Update();
+
+			// Pixel Shader Update..
+			CB_Material materialBuf;
+			materialBuf.gAddColor = matSub->AddColor;
+			materialBuf.gRoughnessFactor = matSub->RoughnessFactor;
+			materialBuf.gMetallicFactor = matSub->MetallicFactor;
+			materialBuf.gEmissiveColor = matSub->EmissiveColor * matSub->EmissiveFactor;
+			materialBuf.gLimLightColor = matSub->LimLightColor * matSub->LimLightFactor;
+			materialBuf.gLimLightWidth = matSub->LimLightWidth;
+			materialBuf.gSkyLightIndex = matSub->SkyLightIndex;
+
+			CB_Camera cameraBuf;
+			cameraBuf.gEyePos = cam->CamPos;
+
+			if (mat->m_Albedo)
+			{
+				materialBuf.gOption |= ALBEDO_MAP;
+				m_Deferred_PS->SetShaderResourceView<gDiffuseMap>(mat->m_Albedo);
+			}
+			if (mat->m_Normal)
+			{
+				materialBuf.gOption |= NORMAL_MAP;
+				m_Deferred_PS->SetShaderResourceView<gNormalMap>(mat->m_Normal);
+			}
+			if (mat->m_Emissive)
+			{
+				materialBuf.gOption |= EMISSIVE_MAP;
+				m_Deferred_PS->SetShaderResourceView<gEmissiveMap>(mat->m_Emissive);
+			}
+			if (mat->m_ORM)
+			{
+				materialBuf.gOption |= ORM_MAP;
+				m_Deferred_PS->SetShaderResourceView<gORMMap>(mat->m_ORM);
+			}
+			if (matSub->LimLightFactor > 0.0f)
+			{
+				materialBuf.gOption |= LIM_LIGHT;
+			}
+
+			m_Deferred_PS->ConstantBufferUpdate(&materialBuf);
+			m_Deferred_PS->ConstantBufferUpdate(&cameraBuf);
+
+			m_Deferred_PS->Update();
 
 			ID3D11Buffer* vertexBuffers[2] = { mesh->m_VertexBuf, m_Mesh_IB->InstanceBuf->Get() };
 			UINT strides[2] = { mesh->m_Stride, m_Mesh_IB->Stride };
@@ -348,16 +348,6 @@ void Deferred_Pass::RenderUpdate(const InstanceRenderBuffer* instance, const std
 	break;
 	case OBJECT_TYPE::SKINNING:
 	{
-		// Vertex Shader Update..
-		CB_InstanceSkinMesh objectBuf;
-		objectBuf.gView = view;
-		objectBuf.gProj = proj;
-
-		m_SkinInst_VS->ConstantBufferUpdate(&objectBuf);
-		m_SkinInst_VS->SetShaderResourceView<gAnimationBuffer>(instance->m_Animation->m_AnimationBuf);
-
-		m_SkinInst_VS->Update();
-
 		int loopCount = 0;
 		int renderCount = 0;
 		int nowCount = 0;
@@ -397,7 +387,60 @@ void Deferred_Pass::RenderUpdate(const InstanceRenderBuffer* instance, const std
 			if (m_InstanceCount == 0) return;
 
 			// Instance Buffer Update..
-			UpdateBuffer(m_SkinMesh_IB->InstanceBuf->Get(), &m_SkinMeshInstance[0], (size_t)m_SkinMesh_IB->Stride * (size_t)m_InstanceCount);
+			UpdateBuffer(m_SkinMesh_IB->InstanceBuf->Get(), &m_SkinMeshInstance[0], (size_t)(m_SkinMesh_IB->Stride * m_InstanceCount));
+			
+			// Vertex Shader Update..
+			CB_InstanceSkinMesh objectBuf;
+			objectBuf.gView = view;
+			objectBuf.gProj = proj;
+
+			m_SkinInst_VS->ConstantBufferUpdate(&objectBuf);
+			m_SkinInst_VS->SetShaderResourceView<gAnimationBuffer>(instance->m_Animation->m_AnimationBuf);
+
+			m_SkinInst_VS->Update();
+			
+			// Pixel Shader Update..
+			CB_Material materialBuf;
+			materialBuf.gAddColor = matSub->AddColor;
+			materialBuf.gRoughnessFactor = matSub->RoughnessFactor;
+			materialBuf.gMetallicFactor = matSub->MetallicFactor;
+			materialBuf.gEmissiveColor = matSub->EmissiveColor * matSub->EmissiveFactor;
+			materialBuf.gLimLightColor = matSub->LimLightColor * matSub->LimLightFactor;
+			materialBuf.gLimLightWidth = matSub->LimLightWidth;
+			materialBuf.gSkyLightIndex = matSub->SkyLightIndex;
+
+			CB_Camera cameraBuf;
+			cameraBuf.gEyePos = cam->CamPos;
+
+			if (mat->m_Albedo)
+			{
+				materialBuf.gOption |= ALBEDO_MAP;
+				m_Deferred_PS->SetShaderResourceView<gDiffuseMap>(mat->m_Albedo);
+			}
+			if (mat->m_Normal)
+			{
+				materialBuf.gOption |= NORMAL_MAP;
+				m_Deferred_PS->SetShaderResourceView<gNormalMap>(mat->m_Normal);
+			}
+			if (mat->m_Emissive)
+			{
+				materialBuf.gOption |= EMISSIVE_MAP;
+				m_Deferred_PS->SetShaderResourceView<gEmissiveMap>(mat->m_Emissive);
+			}
+			if (mat->m_ORM)
+			{
+				materialBuf.gOption |= ORM_MAP;
+				m_Deferred_PS->SetShaderResourceView<gORMMap>(mat->m_ORM);
+			}
+			if (matSub->LimLightFactor > 0.0f)
+			{
+				materialBuf.gOption |= LIM_LIGHT;
+			}
+
+			m_Deferred_PS->ConstantBufferUpdate(&materialBuf);
+			m_Deferred_PS->ConstantBufferUpdate(&cameraBuf);
+
+			m_Deferred_PS->Update();
 
 			ID3D11Buffer* vertexBuffers[2] = { mesh->m_VertexBuf, m_SkinMesh_IB->InstanceBuf->Get() };
 			UINT strides[2] = { mesh->m_Stride, m_SkinMesh_IB->Stride };

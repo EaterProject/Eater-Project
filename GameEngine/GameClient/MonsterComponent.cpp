@@ -59,8 +59,9 @@ void MonsterComponent::Awake()
 void MonsterComponent::SetUp()
 {
 	//Collider¼³Á¤
-	mCollider->SetBoxCollider(0.5f, 3, 0.5f);
-	mCollider->SetCenter(0, 3, 0);
+	mCollider->SetBoxCollider(0.5f, 8, 0.5f);
+	//mCollider->SetSphereCollider(0.5);
+	mCollider->SetCenter(0, 8, 0);
 	mCollider->SetMaterial_Dynamic(0);
 	mCollider->SetMaterial_Restitution(0);
 	mCollider->SetMaterial_Static(0);

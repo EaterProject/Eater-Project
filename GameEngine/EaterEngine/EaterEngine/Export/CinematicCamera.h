@@ -19,6 +19,7 @@ public:
 
 public:
 	EATER_ENGINEDLL void PushCameraAnimation(std::string Name);
+	EATER_ENGINEDLL void ClearCameraAnimation();
 	EATER_ENGINEDLL bool ChoiceCameraAnimationEnd();
 	EATER_ENGINEDLL void ChoiceMainCam();
 	EATER_ENGINEDLL void SetChangeCamera(Camera* cam);

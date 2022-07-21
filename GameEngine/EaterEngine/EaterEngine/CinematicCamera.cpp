@@ -98,6 +98,14 @@ void CinematicCamera::PushCameraAnimation(std::string Name)
 	NowCamera->ChoiceMainCam();
 }
 
+void CinematicCamera::ClearCameraAnimation()
+{
+	while (!AnimationList.empty())
+	{
+		AnimationList.pop();
+	}
+}
+
 bool CinematicCamera::ChoiceCameraAnimationEnd()
 {
 	return (isAnimation == true) ? false : true;

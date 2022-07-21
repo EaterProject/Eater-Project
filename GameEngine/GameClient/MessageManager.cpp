@@ -389,6 +389,9 @@ void MessageManager::SEND_CAMERA_Message(int MessageType, void* Data)
 	case MESSAGE_CAMERA_CHANGE_PLAYER:
 		mCameraManager->Change(MessageType);
 		break;
+	case MESSAGE_CAMERA_CINEMATIC_SKIP:
+		mCameraManager->CinematicSkip();
+		break;
 	}
 }
 

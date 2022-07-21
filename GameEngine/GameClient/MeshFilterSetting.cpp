@@ -381,6 +381,15 @@ void MeshFilterSetting::EmissiveUpdate()
 	}
 }
 
+void MeshFilterSetting::AlphaUpdate(float alpha)
+{
+	int Count = (int)MPBList.size();
+	for (int i = 0; i < Count; i++)
+	{
+		MPBList[i]->AlphaFactor = alpha;
+	}
+}
+
 void MeshFilterSetting::LimLightUpdate(float Speed)
 {
 	//처음 한번만 값 증가,감소 여부 판단

@@ -226,7 +226,6 @@ void AnimationController::Pause()
 {
 	mPlay = false;
 	mStop = true;
-	mNowFrame = 0;
 }
 
 void AnimationController::SetFrame(int index)
@@ -235,6 +234,8 @@ void AnimationController::SetFrame(int index)
 
 	// 현재 프레임의 총 진행 시간 설정..
 	mTime = index * NowAnimation->m_TicksPerFrame;
+
+	mNowFrame = index;
 
 	// 해당 프레임 인덱스 설정..
 	mPrevFrame = index;
