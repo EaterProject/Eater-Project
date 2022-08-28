@@ -341,7 +341,8 @@ void MonsterComponent::Dead()
 		if (mMF_Setting.EndDissolve() == false)
 		{
 			DissolveStart = false;
-			gameobject->SetActive(false);
+			mTransform->SetPosition(0, 0, -400);
+			//gameobject->SetActive(false);
 		}
 	}
 }
